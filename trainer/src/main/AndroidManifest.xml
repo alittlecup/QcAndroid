@@ -529,7 +529,12 @@
         android:name=".activity.ExpChooseBrandActivity"
         android:label="@string/title_activity_my_home"
         android:screenOrientation="portrait"
-        />
+        >
+      <intent-filter>
+        <action android:name="${APP_PACKAGE}.chooseBrand"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
     <activity
         android:name=".activity.NotificationActivity"
         android:label="@string/title_activity_notification"
@@ -634,7 +639,12 @@
     <activity
         android:name=".activity.GuideActivity"
         android:screenOrientation="portrait"
-        />
+        >
+      <intent-filter>
+        <action android:name="${APP_PACKAGE}.guide"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
     <activity
         android:name=".activity.ChooseActivity"
         android:screenOrientation="portrait"
@@ -746,11 +756,23 @@
       </intent-filter>
 
     </activity>
+    <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+              android:theme="@style/Base.Theme.AppCompat"
+        />
+    <activity
+        android:name="com.commonsware.cwac.cam2.CameraActivity"
+        android:label="拍照预览"
+        android:theme="@style/QcAppThemeForCamera"
+        />
+    <activity android:name="cn.qingchengfit.recruit.views.organization.SearchActivity">
+    </activity>
     <service
         android:name=".service.FreshIntentService"
         android:exported="false"
         >
     </service>
+
+
   </application>
 
 </manifest>

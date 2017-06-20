@@ -22,8 +22,8 @@ package cn.qingchengfit.recruit.network.response;
  */
 
 public class JobListIndex {
-    public Number completion;
-    public int fair_count;
-    public String fair_banner;
-    public String avatar;
+  public Number completion;
+  public int fair_count;
+  public String fair_banner;
+  public String avatar;
 }

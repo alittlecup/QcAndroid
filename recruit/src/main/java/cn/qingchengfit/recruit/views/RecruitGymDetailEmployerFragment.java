@@ -51,101 +51,101 @@ import javax.inject.Inject;
  */
 public class RecruitGymDetailEmployerFragment extends BaseFragment implements RecruitGymDetailPresenter.MVPView {
 
-    @BindView(R2.id.img_gym) ImageView imgGym;
-    @BindView(R2.id.tv_gym_name) TextView tvGymName;
-    @BindView(R2.id.tv_address) TextView tvAddress;
-    @BindView(R2.id.img_right) ImageView imgRight;
-    @BindView(R2.id.recruit_gym_tab) TabLayout tab;
-    @BindView(R2.id.vp) ViewPager vp;
-    ArrayList<Fragment> fragments = new ArrayList<>();
-    RecruitPositionsInGymFragment hotFragment;
-    RecruitPositionsInGymFragment closeFragment;
-    RecruitPositionsInGymFragment specialFragment;
+  @BindView(R2.id.img_gym) ImageView imgGym;
+  @BindView(R2.id.tv_gym_name) TextView tvGymName;
+  @BindView(R2.id.tv_address) TextView tvAddress;
+  @BindView(R2.id.img_right) ImageView imgRight;
+  @BindView(R2.id.recruit_gym_tab) TabLayout tab;
+  @BindView(R2.id.vp) ViewPager vp;
+  ArrayList<Fragment> fragments = new ArrayList<>();
+  RecruitPositionsInGymFragment hotFragment;
+  RecruitPositionsInGymFragment closeFragment;
+  RecruitPositionsInGymFragment specialFragment;
 
-    @Inject RecruitGymDetailPresenter presenter;
-    Gym gym;
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  @Inject RecruitGymDetailPresenter presenter;
+  Gym gym;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
 
-    public static RecruitGymDetailEmployerFragment newInstance(Gym co) {
-        Bundle args = new Bundle();
-        args.putParcelable("gym", co);
-        RecruitGymDetailEmployerFragment fragment = new RecruitGymDetailEmployerFragment();
-        fragment.setArguments(args);
-        return fragment;
+  public static RecruitGymDetailEmployerFragment newInstance(Gym co) {
+    Bundle args = new Bundle();
+    args.putParcelable("gym", co);
+    RecruitGymDetailEmployerFragment fragment = new RecruitGymDetailEmployerFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    hotFragment = new RecruitPositionsInGymFragment();
+    closeFragment = new RecruitPositionsInGymFragment();
+    specialFragment = new RecruitPositionsInGymFragment();
+    fragments.add(hotFragment);
+    fragments.add(closeFragment);
+    fragments.add(specialFragment);
+    gym = getArguments().getParcelable("gym");
+  }
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_recruit_gym_detail_employer, container, false);
+    super.onCreateView(inflater, container, savedInstanceState);
+    unbinder = ButterKnife.bind(this, view);
+    delegatePresenter(presenter, this);
+    initToolbar(toolbar);
+    vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
+    tab.setupWithViewPager(vp);
+    onGym(gym);
+    presenter.queryGymDetail(gym.id);
+    return view;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitile.setText("公司详情");
+  }
+
+  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+    super.onChildViewCreated(fm, f, v, savedInstanceState);
+    if (f instanceof RecruitPositionsInGymFragment) {
+      presenter.queryPositionOfGym(gym.id, 1);
     }
+  }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        hotFragment = new RecruitPositionsInGymFragment();
-        closeFragment = new RecruitPositionsInGymFragment();
-        specialFragment = new RecruitPositionsInGymFragment();
-        fragments.add(hotFragment);
-        fragments.add(closeFragment);
-        fragments.add(specialFragment);
-        gym = getArguments().getParcelable("gym");
-    }
+  public void onGym(Gym service) {
+    imgRight.setVisibility(View.GONE);
+    if (service == null) return;
+    PhotoUtils.small(imgGym, service.photo);
+    tvGymName.setText(service.name);
+    tvAddress.setText(service.getAddressStr());
+  }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recruit_gym_detail_employer, container, false);
-        super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
-        initToolbar(toolbar);
-        vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
-        tab.setupWithViewPager(vp);
-        onGym(gym);
-        presenter.queryGymDetail(gym.id);
-        return view;
-    }
+  @Override public void onJobList(List<Job> jobs, int page, int totalCount) {
 
-    @Override public void initToolbar(@NonNull Toolbar toolbar) {
-        super.initToolbar(toolbar);
-        toolbarTitile.setText("公司详情");
-    }
+  }
 
-    @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
-        super.onChildViewCreated(fm, f, v, savedInstanceState);
-        if (f instanceof RecruitPositionsInGymFragment) {
-            presenter.queryPositionOfGym(gym.id, 1);
-        }
-    }
+  @Override public String getFragmentName() {
+    return RecruitGymDetailEmployerFragment.class.getName();
+  }
 
-    public void onGym(Gym service) {
-        imgRight.setVisibility(View.GONE);
-        if (service == null) return;
-        PhotoUtils.small(imgGym, service.photo);
-        tvGymName.setText(service.name);
-        tvAddress.setText(service.getAddressStr());
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 
-    @Override public void onJobList(List<Job> jobs, int page, int totalCount) {
+  /**
+   * 场馆介绍
+   */
+  @OnClick(R2.id.layout_gym_intro) public void onLayoutGymIntroClicked() {
+  }
 
-    }
+  /**
+   * 权限设置
+   */
+  @OnClick(R2.id.layout_permission) public void onLayoutPermissionClicked() {
+  }
 
-    @Override public String getFragmentName() {
-        return RecruitGymDetailEmployerFragment.class.getName();
-    }
-
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    /**
-     * 场馆介绍
-     */
-    @OnClick(R2.id.layout_gym_intro) public void onLayoutGymIntroClicked() {
-    }
-
-    /**
-     * 权限设置
-     */
-    @OnClick(R2.id.layout_permission) public void onLayoutPermissionClicked() {
-    }
-
-    /**
-     * 发布新职位
-     */
-    @OnClick(R2.id.btn_publish_new_position) public void onViewClicked() {
-    }
+  /**
+   * 发布新职位
+   */
+  @OnClick(R2.id.btn_publish_new_position) public void onViewClicked() {
+  }
 }

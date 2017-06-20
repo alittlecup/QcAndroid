@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="48dp"
-    android:height="48dp"
-    android:viewportWidth="48"
-    android:viewportHeight="48">
+        android:height="48dp"
+        android:viewportHeight="48"
+        android:viewportWidth="48"
+        android:width="48dp">
 
+  <group
+      android:translateX="-148.000000"
+      android:translateY="-452.000000">
     <group
-            android:translateX="-148.000000"
-            android:translateY="-452.000000">
-        <group
-                android:translateX="148.000000"
-                android:translateY="452.000000">
-            <path
-                android:fillColor="#FACB01"
-                android:strokeWidth="1"
-                android:pathData="M 2 0 L 46 0 Q 48 0 48 2 L 48 46 Q 48 48 46 48 L 2 48 Q 0 48 0 46 L 0 2 Q 0 0 2 0 Z" />
-            <path
-                android:fillColor="#FFFFFF"
-                android:strokeWidth="1"
-                android:pathData="M16.7098176,13.2011252 L12.9827052,13.8706048 C12.6760441,13.9268636
+        android:translateX="148.000000"
+        android:translateY="452.000000">
+      <path
+          android:fillColor="#FACB01"
+          android:pathData="M 2 0 L 46 0 Q 48 0 48 2 L 48 46 Q 48 48 46 48 L 2 48 Q 0 48 0 46 L 0 2 Q 0 0 2 0 Z"
+          android:strokeWidth="1"/>
+      <path
+          android:fillColor="#FFFFFF"
+          android:pathData="M16.7098176,13.2011252 L12.9827052,13.8706048 C12.6760441,13.9268636
 12.4696375,14.2250352 12.5227135,14.5400844 L16.7068689,33.2039381
 L16.7068689,13.2011252 L16.7098176,13.2011252 Z M12.7615554,20.0028129
 L10.3701882,20.9057665 C10.0782704,21.0154712 9.92788847,21.3530239
@@ -43,7 +42,8 @@ L27.6169287,21.6033755 C27.6169287,20.278481 28.7433187,19.2039381
 30.1321398,16.0028129 C31.0580206,16.0028129 31.8099301,16.7201125
 31.8099301,17.6033755 C31.8099301,18.4866385 31.0580206,19.2039381
 30.1321398,19.2039381 C31.520961,19.2039381 32.6473509,20.278481
-32.6473509,21.6033755 L32.6473509,22.4022504 Z" />
-        </group>
+32.6473509,21.6033755 L32.6473509,22.4022504 Z"
+          android:strokeWidth="1"/>
     </group>
+  </group>
 </vector>

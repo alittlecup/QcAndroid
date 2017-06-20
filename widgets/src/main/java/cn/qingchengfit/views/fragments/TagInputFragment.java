@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.QcTagGroup;
 import cn.qingchengfit.widgets.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import me.gujun.android.taggroup.TagGroup;
 
 /**
  * power by
@@ -32,7 +32,7 @@ import me.gujun.android.taggroup.TagGroup;
  * Created by Paper on 2017/6/15.
  */
 public class TagInputFragment extends BaseFragment {
-    TagGroup tagGroup;
+  QcTagGroup tagGroup;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tag_input, container, false);
@@ -55,6 +55,14 @@ public class TagInputFragment extends BaseFragment {
     public List<String> getTags() {
         return Arrays.asList(tagGroup.getTags());
     }
+
+  public void setTags(List<String> tags) {
+    tagGroup.setTags(tags);
+  }
+
+  public void setOnDelLister(QcTagGroup.OnTagChangeListener lister) {
+    tagGroup.setOnTagChangeListener(lister);
+  }
 
     @Override public String getFragmentName() {
         return TagInputFragment.class.getName();

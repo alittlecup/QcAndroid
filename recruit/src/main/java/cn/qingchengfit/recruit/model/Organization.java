@@ -25,70 +25,70 @@ import android.os.Parcelable;
  */
 
 public class Organization implements Parcelable {
-    public static final Creator<Organization> CREATOR = new Creator<Organization>() {
-        @Override public Organization createFromParcel(Parcel source) {
-            return new Organization(source);
-        }
-
-        @Override public Organization[] newArray(int size) {
-            return new Organization[size];
-        }
-    };
-    public String name;
-    public String contact;
-    public String photo;
-    public String id;
-
-    public Organization() {
+  public static final Creator<Organization> CREATOR = new Creator<Organization>() {
+    @Override public Organization createFromParcel(Parcel source) {
+      return new Organization(source);
     }
 
-    protected Organization(Parcel in) {
-        this.name = in.readString();
-        this.contact = in.readString();
-        this.photo = in.readString();
-        this.id = in.readString();
+    @Override public Organization[] newArray(int size) {
+      return new Organization[size];
     }
+  };
+  public String name;
+  public String contact;
+  public String photo;
+  public String id;
 
-    public String getName() {
-        return name;
-    }
+  public Organization() {
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  protected Organization(Parcel in) {
+    this.name = in.readString();
+    this.contact = in.readString();
+    this.photo = in.readString();
+    this.id = in.readString();
+  }
 
-    public String getContact() {
-        return contact;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getPhoto() {
-        return photo;
-    }
+  public String getContact() {
+    return contact;
+  }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
+  public void setContact(String contact) {
+    this.contact = contact;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getPhoto() {
+    return photo;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setPhoto(String photo) {
+    this.photo = photo;
+  }
 
-    @Override public int describeContents() {
-        return 0;
-    }
+  public String getId() {
+    return id;
+  }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.contact);
-        dest.writeString(this.photo);
-        dest.writeString(this.id);
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.name);
+    dest.writeString(this.contact);
+    dest.writeString(this.photo);
+    dest.writeString(this.id);
+  }
 }

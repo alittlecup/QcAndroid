@@ -24,11 +24,11 @@ import cn.qingchengfit.recruit.R;
  */
 
 public class RecruitPositionsInvitedFragment extends RecruitPositionsFragment {
-    @Override protected int getNoDataRes() {
-        return R.drawable.vd_recruit_empty_job_invited;
-    }
+  @Override protected int getNoDataRes() {
+    return R.drawable.vd_recruit_empty_job_invited;
+  }
 
-    @Override protected String getNoDataStr() {
-        return "您还没有收到任何邀约";
-    }
+  @Override protected String getNoDataStr() {
+    return "您还没有收到任何邀约";
+  }
 }

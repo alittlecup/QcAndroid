@@ -25,9 +25,9 @@ import java.util.List;
  */
 
 public class EventIntentCities {
-    public List<CityBean> cityBeens;
+  public List<CityBean> cityBeens;
 
-    public EventIntentCities(List<CityBean> cityBeens) {
-        this.cityBeens = cityBeens;
-    }
+  public EventIntentCities(List<CityBean> cityBeens) {
+    this.cityBeens = cityBeens;
+  }
 }

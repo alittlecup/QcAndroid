@@ -62,6 +62,7 @@
         />
 
     <TextView
+        android:id="@+id/tv_meeting_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -100,5 +101,6 @@
       tools:visibility="visible"
       style="@style/QcTextStyleStandardDark"
       />
+
   <include layout="@layout/layout_data_sync_from"/>
 </LinearLayout>

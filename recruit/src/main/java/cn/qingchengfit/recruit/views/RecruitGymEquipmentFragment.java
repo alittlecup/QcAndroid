@@ -15,7 +15,6 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.google.android.flexbox.FlexboxLayout;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
@@ -41,39 +40,39 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
  */
 @FragmentWithArgs public class RecruitGymEquipmentFragment extends BaseFragment {
 
-    @Arg Gym gym;
-    @BindView(R2.id.flexlayout) FlexboxLayout flexlayout;
+  @Arg Gym gym;
+  @BindView(R2.id.flexlayout) FlexboxLayout flexlayout;
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FragmentArgs.inject(this);
-    }
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    RecruitGymEquipmentFragmentBuilder.injectArguments(this);
+  }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recruit_gym_equipment, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        flexlayout.setDividerDrawableHorizontal(ContextCompat.getDrawable(getContext(), R.drawable.divider_translate_5dp));
-        flexlayout.setDividerDrawableVertical(ContextCompat.getDrawable(getContext(), R.drawable.divider_translate_5dp));
-        if (gym.facilities != null) {
-            for (String s : gym.facilities) {
-                TextView t = new TextView(getContext());
-                t.setText(s);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    t.setTextAppearance(R.style.QcTextStyleMediumDark);
-                } else {
-                    t.setTextAppearance(getContext(), R.style.QcTextStyleMediumDark);
-                }
-                flexlayout.addView(t);
-            }
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_recruit_gym_equipment, container, false);
+    unbinder = ButterKnife.bind(this, view);
+    flexlayout.setDividerDrawableHorizontal(ContextCompat.getDrawable(getContext(), R.drawable.divider_translate_5dp));
+    flexlayout.setDividerDrawableVertical(ContextCompat.getDrawable(getContext(), R.drawable.divider_translate_5dp));
+    if (gym.facilities != null) {
+      for (String s : gym.facilities) {
+        TextView t = new TextView(getContext());
+        t.setText(s);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+          t.setTextAppearance(R.style.QcTextStyleMediumDark);
+        } else {
+          t.setTextAppearance(getContext(), R.style.QcTextStyleMediumDark);
         }
-        return view;
+        flexlayout.addView(t);
+      }
     }
+    return view;
+  }
 
-    @Override public String getFragmentName() {
-        return RecruitGymEquipmentFragment.class.getName();
-    }
+  @Override public String getFragmentName() {
+    return RecruitGymEquipmentFragment.class.getName();
+  }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 }

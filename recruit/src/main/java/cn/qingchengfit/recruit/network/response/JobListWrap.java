@@ -26,5 +26,5 @@ import java.util.List;
  */
 
 public class JobListWrap extends QcListData {
-    public List<Job> jobs;
+  public List<Job> jobs;
 }

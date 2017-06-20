@@ -7,22 +7,22 @@ import cn.qingchengfit.network.QcRestRepository;
 import javax.inject.Inject;
 
 public class ResumeIntentsPresenter extends BasePresenter {
-    @Inject QcRestRepository qcRestRepository;
-    private MVPView view;
+  @Inject QcRestRepository qcRestRepository;
+  private MVPView view;
 
-    @Inject public ResumeIntentsPresenter() {
-    }
+  @Inject public ResumeIntentsPresenter() {
+  }
 
-    @Override public void attachView(PView v) {
-        view = (MVPView) v;
-    }
+  @Override public void attachView(PView v) {
+    view = (MVPView) v;
+  }
 
-    @Override public void unattachView() {
-        super.unattachView();
-        view = null;
-    }
+  @Override public void unattachView() {
+    super.unattachView();
+    view = null;
+  }
 
-    public interface MVPView extends CView {
-        void onIntents();
-    }
+  public interface MVPView extends CView {
+    void onIntents();
+  }
 }

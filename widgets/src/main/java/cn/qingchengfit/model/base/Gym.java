@@ -2,6 +2,7 @@ package cn.qingchengfit.model.base;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import java.util.List;
 
 /**
@@ -95,7 +96,11 @@ public class Gym implements Parcelable {
 
     public String getCityName() {
         if (gd_city != null) {
+          if (TextUtils.isEmpty(gd_city.name)) {
+            return "";
+          } else {
             return gd_city.name;
+          }
         } else if (gd_district != null) {
             if (gd_district.city != null) {
                 return gd_district.city.name;

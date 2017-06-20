@@ -43,42 +43,42 @@ import java.util.List;
  */
 public class RecruitManageFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R2.id.rv_gyms) RecyclerView rvGyms;
-    List<AbstractFlexibleItem> items = new ArrayList<>();
-    CommonFlexAdapter commonFlexAdapter;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  @BindView(R2.id.rv_gyms) RecyclerView rvGyms;
+  List<AbstractFlexibleItem> items = new ArrayList<>();
+  CommonFlexAdapter commonFlexAdapter;
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recruit_manage, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
-        commonFlexAdapter = new CommonFlexAdapter(items, this);
-        rvGyms.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvGyms.setAdapter(commonFlexAdapter);
-        return view;
-    }
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_recruit_manage, container, false);
+    unbinder = ButterKnife.bind(this, view);
+    initToolbar(toolbar);
+    commonFlexAdapter = new CommonFlexAdapter(items, this);
+    rvGyms.setLayoutManager(new LinearLayoutManager(getContext()));
+    rvGyms.setAdapter(commonFlexAdapter);
+    return view;
+  }
 
-    @Override public void initToolbar(@NonNull Toolbar toolbar) {
-        super.initToolbar(toolbar);
-        toolbarTitile.setText("招聘管理");
-    }
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitile.setText("招聘管理");
+  }
 
-    @Override public String getFragmentName() {
-        return RecruitManageFragment.class.getName();
-    }
+  @Override public String getFragmentName() {
+    return RecruitManageFragment.class.getName();
+  }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 
-    @OnClick(R2.id.layout_starred_resume) public void onLayoutStarredResumeClicked() {
-    }
+  @OnClick(R2.id.layout_starred_resume) public void onLayoutStarredResumeClicked() {
+  }
 
-    @OnClick(R2.id.btn_publish_new_position) public void onBtnPublishNewPositionClicked() {
-    }
+  @OnClick(R2.id.btn_publish_new_position) public void onBtnPublishNewPositionClicked() {
+  }
 
-    @Override public boolean onItemClick(int i) {
-        return false;
-    }
+  @Override public boolean onItemClick(int i) {
+    return false;
+  }
 }

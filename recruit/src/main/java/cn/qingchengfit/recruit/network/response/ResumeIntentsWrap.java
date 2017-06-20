@@ -24,5 +24,5 @@ import cn.qingchengfit.recruit.model.ResumeIntents;
  */
 
 public class ResumeIntentsWrap {
-    public ResumeIntents resume;
+  public ResumeIntents resume;
 }

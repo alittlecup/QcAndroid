@@ -1,7 +1,14 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'maven'
+
 def libs = rootProject.ext.libraries;
+
+//apt {
+//  arguments {
+//    fragmentArgsLib true
+//  }
+//}
 
 android {
   compileSdkVersion 25
@@ -14,6 +21,14 @@ android {
     versionName "1.0"
     vectorDrawables.useSupportLibrary true
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    javaCompileOptions {
+      annotationProcessorOptions {
+        //        className "com.hannesdorfmann.fragmentargs.processor.ArgProcessor"
+        arguments = [fragmentArgsLib               : 'true',
+                     fragmentArgsSupportAnnotations: 'true']
+      }
+    }
   }
   buildTypes {
     release {
@@ -30,7 +45,7 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-//  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
+  //  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
   compile project(path: ':widgets')
 
   compile "com.google.dagger:dagger:${libs.dagger}"

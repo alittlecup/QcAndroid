@@ -22,6 +22,6 @@ package cn.qingchengfit.recruit.network.response;
  */
 
 public class JobIndexWrap {
-    public int delivery_count;
-    public int invitation_count;
+  public int delivery_count;
+  public int invitation_count;
 }

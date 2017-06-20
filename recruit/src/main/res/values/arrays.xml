@@ -89,4 +89,11 @@
     <item>#FEA500</item>
     <item>#0DB14B</item>
   </string-array>
+  <string-array name="recruit_recomend_jobs">
+    <item>私人教练</item>
+    <item>瑜伽教练</item>
+    <item>团操教练</item>
+    <item>会籍</item>
+    <item>前台</item>
+  </string-array>
 </resources>

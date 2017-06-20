@@ -37,54 +37,52 @@ import retrofit2.http.Path;
 
 public interface PostApi {
 
-    //收藏职位
-    @POST("/api/user/job/favorites/") rx.Observable<QcResponse> starJob(@Body HashMap<String, Object> hashMap);
+  //收藏职位
+  @POST("/api/user/job/favorites/") rx.Observable<QcResponse> starJob(@Body HashMap<String, Object> hashMap);
 
-    //取消收藏职位
-    @DELETE("/api/user/job/favorites/{job_id}/") rx.Observable<QcResponse> cancelStarJob(@Path("job_id") String jobid);
+  //取消收藏职位
+  @DELETE("/api/user/job/favorites/{job_id}/") rx.Observable<QcResponse> cancelStarJob(@Path("job_id") String jobid);
 
-    //发送简历  body:{"job_id": xx}
-    @POST("/api/user/job/deliveries/") rx.Observable<QcResponse> sendResume(@Body HashMap<String, Object> hashMap);
+  //发送简历  body:{"job_id": xx}
+  @POST("/api/user/job/deliveries/") rx.Observable<QcResponse> sendResume(@Body HashMap<String, Object> hashMap);
 
-    /**
-     * 职位邀请
-     *
-     * @param hashMap body:{"job_id": xx, "user_id": xx}
-     */
-    @POST("/api/user/job/invitations/") rx.Observable<QcResponse> inviteSome(@Body HashMap<String, Object> hashMap);
+  /**
+   * 职位邀请
+   *
+   * @param hashMap body:{"job_id": xx, "user_id": xx}
+   */
+  @POST("/api/user/job/invitations/") rx.Observable<QcResponse> inviteSome(@Body HashMap<String, Object> hashMap);
 
-    /**
-     * 编辑我的简历
-     */
-    @PUT("/api/user/resume/") rx.Observable<QcResponse> updateResume(@Body ResumeBody body);
+  /**
+   * 编辑我的简历
+   */
+  @PUT("/api/user/resume/") rx.Observable<QcResponse> updateResume(@Body ResumeBody body);
 
-    /**
-     * 新增教育经历
-     */
-    @POST("/api/user/educations/") rx.Observable<QcResponse> addEducation(@Body Education education);
+  /**
+   * 新增教育经历
+   */
+  @POST("/api/user/educations/") rx.Observable<QcResponse> addEducation(@Body Education education);
 
-    @PUT("/api/user/educations/{id}/") rx.Observable<QcResponse> updateEducation(@Path("id") String educationid, @Body Education education);
+  @PUT("/api/user/educations/{id}/") rx.Observable<QcResponse> updateEducation(@Path("id") String educationid, @Body Education education);
 
-    @DELETE("/api/user/educations/{id}/") rx.Observable<QcResponse> delEducations(@Path("id") String educationid);
+  @DELETE("/api/user/educations/{id}/") rx.Observable<QcResponse> delEducations(@Path("id") String educationid);
 
-    /**
-     * 新增工作经历
-     */
-    @POST("/api/user/job/experiences/") rx.Observable<QcResponse> addWorkExp(@Body WorkExp workExp);
+  /**
+   * 新增工作经历
+   */
+  @POST("/api/user/job/experiences/") rx.Observable<QcResponse> addWorkExp(@Body WorkExp workExp);
 
-    @PUT("/api/user/job/experiences/{id}/") rx.Observable<QcResponse> updateWorkExp(@Path("id") String experience_id,
-        @Body WorkExp workExp);
+  @PUT("/api/user/job/experiences/{id}/") rx.Observable<QcResponse> updateWorkExp(@Path("id") String experience_id, @Body WorkExp workExp);
 
-    @POST("/api/user/job/certificates/") rx.Observable<QcResponse> addCertificate(@Body Certificate certificate);
+  @POST("/api/user/job/certificates/") rx.Observable<QcResponse> addCertificate(@Body Certificate certificate);
 
-    ;
+  ;
 
-    @PUT("/api/user/job/certificates/{id}/") rx.Observable<QcResponse> updateCertificate(@Path("id") String id,
-        @Body Certificate certificate);
+  @PUT("/api/user/job/certificates/{id}/") rx.Observable<QcResponse> updateCertificate(@Path("id") String id,
+      @Body Certificate certificate);
 
-    ;
+  ;
 
-    //新增组织
-    @POST("/api/organizations/") rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
-
+  //新增组织
+  @POST("/api/organizations/") rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
 }

@@ -1,6 +1,8 @@
-package cn.qingchengfit.recruit.views;
+package cn.qingchengfit.widgets;
 
-import cn.qingchengfit.recruit.R;
+import android.graphics.Rect;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 /**
  * power by
@@ -20,15 +22,26 @@ import cn.qingchengfit.recruit.R;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/6/1.
+ * Created by Paper on 2017/6/19.
  */
 
-public class RecruitPositionsStarredFragment extends RecruitPositionsFragment {
-  @Override protected int getNoDataRes() {
-    return R.drawable.vd_recruit_empty_job_starred;
+public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+  private int space;
+
+  public SpacesItemDecoration(int space) {
+    this.space = space;
   }
 
-  @Override protected String getNoDataStr() {
-    return "暂未收藏任何职位";
+  @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    outRect.left = space;
+    outRect.right = space;
+    outRect.bottom = space;
+
+    // Add top margin only for the first item to avoid double space between items
+    if (parent.getChildLayoutPosition(view) == 0) {
+      outRect.top = space;
+    } else {
+      outRect.top = 0;
+    }
   }
 }

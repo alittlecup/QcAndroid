@@ -25,102 +25,102 @@ import android.os.Parcelable;
  */
 
 public class Education implements Cloneable, Parcelable {
-    public static final Parcelable.Creator<Education> CREATOR = new Parcelable.Creator<Education>() {
-        @Override public Education createFromParcel(Parcel source) {
-            return new Education(source);
-        }
-
-        @Override public Education[] newArray(int size) {
-            return new Education[size];
-        }
-    };
-    public String id;
-    public String name;
-    public String major;
-    public String start;
-    public String end;
-    public int education;
-
-    private Education(Builder builder) {
-        id = builder.id;
-        name = builder.name;
-        major = builder.major;
-        start = builder.start;
-        end = builder.end;
-        education = builder.education;
+  public static final Parcelable.Creator<Education> CREATOR = new Parcelable.Creator<Education>() {
+    @Override public Education createFromParcel(Parcel source) {
+      return new Education(source);
     }
 
-    protected Education(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.major = in.readString();
-        this.start = in.readString();
-        this.end = in.readString();
-        this.education = in.readInt();
+    @Override public Education[] newArray(int size) {
+      return new Education[size];
+    }
+  };
+  public String id;
+  public String name;
+  public String major;
+  public String start;
+  public String end;
+  public int education;
+
+  private Education(Builder builder) {
+    id = builder.id;
+    name = builder.name;
+    major = builder.major;
+    start = builder.start;
+    end = builder.end;
+    education = builder.education;
+  }
+
+  protected Education(Parcel in) {
+    this.id = in.readString();
+    this.name = in.readString();
+    this.major = in.readString();
+    this.start = in.readString();
+    this.end = in.readString();
+    this.education = in.readInt();
+  }
+
+  public Education getPostBody() throws CloneNotSupportedException {
+    Education e = (Education) this.clone();
+    e.id = null;
+    return e;
+  }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.id);
+    dest.writeString(this.name);
+    dest.writeString(this.major);
+    dest.writeString(this.start);
+    dest.writeString(this.end);
+    dest.writeInt(this.education);
+  }
+
+  public static final class Builder {
+    private String id;
+    private String name;
+    private String major;
+    private String start;
+    private String end;
+    private int education;
+
+    public Builder() {
     }
 
-    public Education getPostBody() throws CloneNotSupportedException {
-        Education e = (Education) this.clone();
-        e.id = null;
-        return e;
+    public Builder id(String val) {
+      id = val;
+      return this;
     }
 
-    @Override public int describeContents() {
-        return 0;
+    public Builder name(String val) {
+      name = val;
+      return this;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.major);
-        dest.writeString(this.start);
-        dest.writeString(this.end);
-        dest.writeInt(this.education);
+    public Builder major(String val) {
+      major = val;
+      return this;
     }
 
-    public static final class Builder {
-        private String id;
-        private String name;
-        private String major;
-        private String start;
-        private String end;
-        private int education;
-
-        public Builder() {
-        }
-
-        public Builder id(String val) {
-            id = val;
-            return this;
-        }
-
-        public Builder name(String val) {
-            name = val;
-            return this;
-        }
-
-        public Builder major(String val) {
-            major = val;
-            return this;
-        }
-
-        public Builder start(String val) {
-            start = val;
-            return this;
-        }
-
-        public Builder end(String val) {
-            end = val;
-            return this;
-        }
-
-        public Builder education(int val) {
-            education = val;
-            return this;
-        }
-
-        public Education build() {
-            return new Education(this);
-        }
+    public Builder start(String val) {
+      start = val;
+      return this;
     }
+
+    public Builder end(String val) {
+      end = val;
+      return this;
+    }
+
+    public Builder education(int val) {
+      education = val;
+      return this;
+    }
+
+    public Education build() {
+      return new Education(this);
+    }
+  }
 }

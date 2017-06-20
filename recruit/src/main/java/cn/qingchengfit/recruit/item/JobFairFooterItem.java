@@ -15,34 +15,34 @@ import java.util.List;
 
 public class JobFairFooterItem extends AbstractFlexibleItem<JobFairFooterItem.JobFairFooterVH> {
 
-    int total;
+  int total;
 
-    public JobFairFooterItem(int total) {
-        this.total = total;
+  public JobFairFooterItem(int total) {
+    this.total = total;
+  }
+
+  @Override public int getLayoutRes() {
+    return R.layout.item_more_job_fair;
+  }
+
+  @Override public JobFairFooterVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    return new JobFairFooterVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  }
+
+  @Override public void bindViewHolder(FlexibleAdapter adapter, JobFairFooterVH holder, int position, List payloads) {
+    holder.tvTotal.setText(holder.tvTotal.getContext().getString(R.string.some_count_job_fair, total));
+  }
+
+  @Override public boolean equals(Object o) {
+    return false;
+  }
+
+  public class JobFairFooterVH extends FlexibleViewHolder {
+    @BindView(R2.id.tv_total) TextView tvTotal;
+
+    public JobFairFooterVH(View view, FlexibleAdapter adapter) {
+      super(view, adapter);
+      ButterKnife.bind(this, view);
     }
-
-    @Override public int getLayoutRes() {
-        return R.layout.item_more_job_fair;
-    }
-
-    @Override public JobFairFooterVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new JobFairFooterVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
-    }
-
-    @Override public void bindViewHolder(FlexibleAdapter adapter, JobFairFooterVH holder, int position, List payloads) {
-        holder.tvTotal.setText(holder.tvTotal.getContext().getString(R.string.some_count_job_fair, total));
-    }
-
-    @Override public boolean equals(Object o) {
-        return false;
-    }
-
-    public class JobFairFooterVH extends FlexibleViewHolder {
-        @BindView(R2.id.tv_total) TextView tvTotal;
-
-        public JobFairFooterVH(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
-            ButterKnife.bind(this, view);
-        }
-    }
+  }
 }

@@ -17,21 +17,21 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/9/18 2015.
  */
 public class AddGymBean {
-    @SerializedName("name") public String name;
-    @SerializedName("city") public int city;
-    @SerializedName("contact") public String contact;
-    @SerializedName("description") public String description;
-    @SerializedName("id") public String id;
-    @SerializedName("brand_name") public String brand_name;
-    @SerializedName("photo") public String photo;
-    @SerializedName("is_authenticated") public boolean is_authenticated;
-    @SerializedName("district") public DistrictEntity district;
+  @SerializedName("name") public String name;
+  @SerializedName("city") public int city;
+  @SerializedName("contact") public String contact;
+  @SerializedName("description") public String description;
+  @SerializedName("id") public String id;
+  @SerializedName("brand_name") public String brand_name;
+  @SerializedName("photo") public String photo;
+  @SerializedName("is_authenticated") public boolean is_authenticated;
+  @SerializedName("district") public DistrictEntity district;
 
-    public AddGymBean(String name, int city, String contact, String description, String brand_name) {
-        this.name = name;
-        this.city = city;
-        this.brand_name = brand_name;
-        this.contact = contact;
-        this.description = description;
-    }
+  public AddGymBean(String name, int city, String contact, String description, String brand_name) {
+    this.name = name;
+    this.city = city;
+    this.brand_name = brand_name;
+    this.contact = contact;
+    this.description = description;
+  }
 }

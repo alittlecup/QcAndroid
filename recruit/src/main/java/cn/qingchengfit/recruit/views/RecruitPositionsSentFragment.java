@@ -24,11 +24,11 @@ import cn.qingchengfit.recruit.R;
  */
 
 public class RecruitPositionsSentFragment extends RecruitPositionsFragment {
-    @Override protected int getNoDataRes() {
-        return R.drawable.vd_recruit_empty_job_sent;
-    }
+  @Override protected int getNoDataRes() {
+    return R.drawable.vd_recruit_empty_job_sent;
+  }
 
-    @Override protected String getNoDataStr() {
-        return "您还没有投递任何职位";
-    }
+  @Override protected String getNoDataStr() {
+    return "您还没有投递任何职位";
+  }
 }

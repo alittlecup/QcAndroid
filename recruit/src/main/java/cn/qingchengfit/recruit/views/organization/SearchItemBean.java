@@ -14,54 +14,54 @@ package cn.qingchengfit.recruit.views.organization;
  * Created by Paper on 15/12/24 2015.
  */
 public class SearchItemBean {
-    String name;
-    String city;
-    String img;
-    boolean isAuthor;
+  String name;
+  String city;
+  String img;
+  boolean isAuthor;
 
-    public SearchItemBean(String name, String img, String city, boolean isAuthor) {
-        this.name = name;
-        this.img = img;
-        this.city = city;
-        this.isAuthor = isAuthor;
-    }
+  public SearchItemBean(String name, String img, String city, boolean isAuthor) {
+    this.name = name;
+    this.img = img;
+    this.city = city;
+    this.isAuthor = isAuthor;
+  }
 
-    public SearchItemBean() {
-    }
+  public SearchItemBean() {
+  }
 
-    public SearchItemBean(String name) {
-        this.name = name;
-    }
+  public SearchItemBean(String name) {
+    this.name = name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getCity() {
-        return city;
-    }
+  public String getCity() {
+    return city;
+  }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+  public void setCity(String city) {
+    this.city = city;
+  }
 
-    public String getImg() {
-        return img;
-    }
+  public String getImg() {
+    return img;
+  }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
+  public void setImg(String img) {
+    this.img = img;
+  }
 
-    public boolean isAuthor() {
-        return isAuthor;
-    }
+  public boolean isAuthor() {
+    return isAuthor;
+  }
 
-    public void setIsAuthor(boolean isAuthor) {
-        this.isAuthor = isAuthor;
-    }
+  public void setIsAuthor(boolean isAuthor) {
+    this.isAuthor = isAuthor;
+  }
 }

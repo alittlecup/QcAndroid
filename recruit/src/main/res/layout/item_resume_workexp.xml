@@ -83,6 +83,7 @@
   </RelativeLayout>
 
   <include layout="@layout/divider_grey"/>
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -102,12 +103,14 @@
         tools:text="@string/test_short"
         style="@style/QcTextStyleMediumWarm"
         />
+
     <include
         layout="@layout/divider_grey"
         android:id="@+id/short_divider"
         android:layout_width="20dp"
         android:layout_height="1dp"
         />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"

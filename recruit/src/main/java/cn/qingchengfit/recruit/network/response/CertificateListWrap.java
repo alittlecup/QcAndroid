@@ -26,5 +26,5 @@ import java.util.List;
  */
 
 public class CertificateListWrap extends QcListData {
-    public List<Certificate> certificates;
+  public List<Certificate> certificates;
 }

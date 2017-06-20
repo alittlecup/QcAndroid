@@ -22,9 +22,9 @@ package cn.qingchengfit.recruit.event;
  */
 
 public class EventDownlowdCertification {
-    public String url;
+  public String url;
 
-    public EventDownlowdCertification(String url) {
-        this.url = url;
-    }
+  public EventDownlowdCertification(String url) {
+    this.url = url;
+  }
 }

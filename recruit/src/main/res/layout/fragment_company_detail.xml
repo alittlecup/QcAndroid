@@ -9,7 +9,9 @@
     >
 
   <include layout="@layout/common_simple_toolbar"/>
+
   <include layout="@layout/layout_recruit_gym_info"/>
+
   <Space
       android:layout_width="match_parent"
       android:layout_height="@dimen/activity_vertical_margin"
@@ -24,6 +26,7 @@
       app:pst_text_highlight_color="@color/green"
       app:pst_text_size="15sp"
       />
+
   <android.support.v4.view.ViewPager
       android:id="@+id/vp"
       android:layout_width="match_parent"

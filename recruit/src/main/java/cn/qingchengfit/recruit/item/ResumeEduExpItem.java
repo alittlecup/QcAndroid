@@ -18,38 +18,39 @@ import java.util.List;
 
 public class ResumeEduExpItem extends AbstractFlexibleItem<ResumeEduExpItem.ResumeEduExpVH> {
 
-    Education education;
+  Education education;
 
-    public ResumeEduExpItem(Education education) {
-        this.education = education;
-    }
+  public ResumeEduExpItem(Education education) {
+    this.education = education;
+  }
 
-    @Override public int getLayoutRes() {
-        return R.layout.item_edu_exp;
-    }
+  @Override public int getLayoutRes() {
+    return R.layout.item_edu_exp;
+  }
 
-    @Override public ResumeEduExpVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ResumeEduExpVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
-    }
+  @Override public ResumeEduExpVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    return new ResumeEduExpVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  }
 
-    @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeEduExpVH holder, int position, List payloads) {
-        holder.tvUniversityName.setText(education.name);
-        holder.tvDegree.setText(education.major + "|" + RecruitBusinessUtils.getDegree(holder.tvDegree.getContext(), education.education));
-        holder.tvPeriod.setText(DateUtils.date2YYMM(DateUtils.formatDateFromServer(education.start)) + "至" + DateUtils.date2YYMM(
-            DateUtils.formatDateFromServer(education.end)));
-    }
+  @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeEduExpVH holder, int position, List payloads) {
+    holder.tvUniversityName.setText(education.name);
+    holder.tvDegree.setText(education.major + "|" + RecruitBusinessUtils.getDegree(holder.tvDegree.getContext(), education.education));
+    holder.tvPeriod.setText(DateUtils.date2YYMM(DateUtils.formatDateFromServer(education.start)) + "至" + DateUtils.date2YYMM(
+        DateUtils.formatDateFromServer(education.end)));
+  }
 
-    @Override public boolean equals(Object o) {
-        return false;
-    }
+  @Override public boolean equals(Object o) {
+    return false;
+  }
 
-    public class ResumeEduExpVH extends FlexibleViewHolder {
-        @BindView(R2.id.tv_university_name) TextView tvUniversityName;
-        @BindView(R2.id.tv_degree) TextView tvDegree;
-        @BindView(R2.id.tv_period) TextView tvPeriod;
-        public ResumeEduExpVH(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
-            ButterKnife.bind(this, view);
-        }
+  public class ResumeEduExpVH extends FlexibleViewHolder {
+    @BindView(R2.id.tv_university_name) TextView tvUniversityName;
+    @BindView(R2.id.tv_degree) TextView tvDegree;
+    @BindView(R2.id.tv_period) TextView tvPeriod;
+
+    public ResumeEduExpVH(View view, FlexibleAdapter adapter) {
+      super(view, adapter);
+      ButterKnife.bind(this, view);
     }
+  }
 }

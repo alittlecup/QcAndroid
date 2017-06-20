@@ -26,5 +26,5 @@ import java.util.List;
  */
 
 public class EduExpListWrap extends QcListData {
-    public List<Education> educations;
+  public List<Education> educations;
 }

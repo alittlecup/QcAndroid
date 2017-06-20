@@ -24,5 +24,5 @@ import cn.qingchengfit.model.base.Gym;
  */
 
 public class GymWrap {
-    public Gym gym;
+  public Gym gym;
 }

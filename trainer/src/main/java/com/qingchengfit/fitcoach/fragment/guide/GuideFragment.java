@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -62,8 +61,8 @@ public class GuideFragment extends BaseFragment {
     Gson gson = new Gson();
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    private Unbinder unbinder;
-    private boolean isAddBrannd = false;
+
+  private boolean isAddBrannd = false;
     private Brand brand;
 
     public void setAddBrannd(boolean addBrannd) {
@@ -73,8 +72,6 @@ public class GuideFragment extends BaseFragment {
     public void setBrand(Brand brand) {
         this.brand = brand;
     }
-
-    ;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_container, container, false);
@@ -199,6 +196,5 @@ public class GuideFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 }

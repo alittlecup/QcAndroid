@@ -157,7 +157,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_workexepedit, container, false);
+      View view = inflater.inflate(R.layout.fragment_resume_workexepedit, container, false);
         unbinder = ButterKnife.bind(this, view);
         fragmentCallBack.showToolbar();
         fragmentCallBack.onToolbarMenu(0, 0, mTitle);

@@ -12,7 +12,6 @@ import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.views.VpFragment;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
@@ -37,42 +36,42 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
  * Created by Paper on 2017/5/31.
  */
 @FragmentWithArgs public class RecruitGymDescFragment extends VpFragment {
-    @Arg Gym gym;
-    @BindView(R2.id.tv_desc) TextView tvDesc;
+  @Arg Gym gym;
+  @BindView(R2.id.tv_desc) TextView tvDesc;
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FragmentArgs.inject(this);
-    }
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    RecruitGymDescFragmentBuilder.injectArguments(this);
+  }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recruit_gym_desc, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        setDesc(gym);
-        return view;
-    }
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_recruit_gym_desc, container, false);
+    unbinder = ButterKnife.bind(this, view);
+    setDesc(gym);
+    return view;
+  }
 
-    public void setDesc(Gym gym) {
-        getChildFragmentManager().beginTransaction()
-            .replace(R.id.frag_gym_menber_info,
-                RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(gym.member_count, gym.staff_count, gym.area,
-                    gym.coach_count))
-            .commit();
-        getChildFragmentManager().beginTransaction()
-            .replace(R.id.frag_gym_equipment, RecruitGymEquipmentFragmentBuilder.newRecruitGymEquipmentFragment(gym))
-            .commit();
-        tvDesc.setText(gym.description);
-    }
+  public void setDesc(Gym gym) {
+    getChildFragmentManager().beginTransaction()
+        .replace(R.id.frag_gym_menber_info,
+            RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(gym.member_count, gym.staff_count, gym.area,
+                gym.coach_count))
+        .commit();
+    getChildFragmentManager().beginTransaction()
+        .replace(R.id.frag_gym_equipment, RecruitGymEquipmentFragmentBuilder.newRecruitGymEquipmentFragment(gym))
+        .commit();
+    tvDesc.setText(gym.description);
+  }
 
-    @Override public String getFragmentName() {
-        return RecruitGymDescFragment.class.getName();
-    }
+  @Override public String getFragmentName() {
+    return RecruitGymDescFragment.class.getName();
+  }
 
-    @Override public String getTitle() {
-        return "公司介绍";
-    }
+  @Override public String getTitle() {
+    return "公司介绍";
+  }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 }

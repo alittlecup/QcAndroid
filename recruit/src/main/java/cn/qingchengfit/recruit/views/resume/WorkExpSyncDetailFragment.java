@@ -31,7 +31,6 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import com.bumptech.glide.Glide;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.Calendar;
@@ -64,117 +63,113 @@ import rx.schedulers.Schedulers;
  */
 @FragmentWithArgs public class WorkExpSyncDetailFragment extends BaseFragment {
 
-    @BindView(R2.id.host_img) ImageView hostImg;
-    @BindView(R2.id.host_qc_identify) ImageView hostQcIdentify;
-    @BindView(R2.id.workexpedit_gym_name) TextView workexpeditGymName;
-    @BindView(R2.id.host_address) TextView hostAddress;
-    @BindView(R2.id.host_layout) RelativeLayout hostLayout;
-    @BindView(R2.id.workexpedit_start_time) CommonInputView workexpeditStartTime;
-    @BindView(R2.id.workexpedit_start_end) CommonInputView workexpeditStartEnd;
-    @BindView(R2.id.workexpedit_city) CommonInputView workexpeditCity;
-    @BindView(R2.id.workexpedit_position) CommonInputView workexpeditPosition;
-    @BindView(R2.id.workexpedit_descripe) EditText workexpeditDescripe;
-    @BindView(R2.id.workexpedit_expe_layout) LinearLayout workexpeditExpeLayout;
-    @BindView(R2.id.tv_group) TextView tvGroup;
-    @BindView(R2.id.sw_group) ExpandedLayout swGroup;
-    @BindView(R2.id.tv_private) TextView tvPrivate;
-    @BindView(R2.id.sw_private) ExpandedLayout swPrivate;
-    @BindView(R2.id.tv_sales) TextView tvSales;
-    @BindView(R2.id.sw_sale) ExpandedLayout swSale;
-    @BindView(R2.id.rootview) ScrollView rootview;
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  @BindView(R2.id.host_img) ImageView hostImg;
+  @BindView(R2.id.host_qc_identify) ImageView hostQcIdentify;
+  @BindView(R2.id.workexpedit_gym_name) TextView workexpeditGymName;
+  @BindView(R2.id.host_address) TextView hostAddress;
+  @BindView(R2.id.host_layout) RelativeLayout hostLayout;
+  @BindView(R2.id.workexpedit_start_time) CommonInputView workexpeditStartTime;
+  @BindView(R2.id.workexpedit_start_end) CommonInputView workexpeditStartEnd;
+  @BindView(R2.id.workexpedit_city) CommonInputView workexpeditCity;
+  @BindView(R2.id.workexpedit_position) CommonInputView workexpeditPosition;
+  @BindView(R2.id.workexpedit_descripe) EditText workexpeditDescripe;
+  @BindView(R2.id.workexpedit_expe_layout) LinearLayout workexpeditExpeLayout;
+  @BindView(R2.id.tv_group) TextView tvGroup;
+  @BindView(R2.id.sw_group) ExpandedLayout swGroup;
+  @BindView(R2.id.tv_private) TextView tvPrivate;
+  @BindView(R2.id.sw_private) ExpandedLayout swPrivate;
+  @BindView(R2.id.tv_sales) TextView tvSales;
+  @BindView(R2.id.sw_sale) ExpandedLayout swSale;
+  @BindView(R2.id.rootview) ScrollView rootview;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
 
-    @Arg WorkExp experiencesEntity;
-    @Inject QcRestRepository qcRestRepository;
+  @Arg WorkExp experiencesEntity;
+  @Inject QcRestRepository qcRestRepository;
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FragmentArgs.inject(this);
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    WorkExpSyncDetailFragmentBuilder.injectArguments(this);
+  }
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_workexp_sync, container, false);
+    unbinder = ButterKnife.bind(this, view);
+    initToolbar(toolbar);
+    toolbarTitile.setText("工作经历详情");
+    toolbar.inflateMenu(R.menu.menu_save);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        putWorkExp();
+        return false;
+      }
+    });
+    workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
+    Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
+    Calendar c = Calendar.getInstance(Locale.getDefault());
+    c.setTime(d);
+    int year = c.get(Calendar.YEAR);
+    if (year == 3000) {
+      workexpeditStartEnd.setContent("至今");
+    } else {
+      workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(d));
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_workexp_sync, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
-        toolbarTitile.setText("工作经历详情");
-        toolbar.inflateMenu(R.menu.menu_save);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override public boolean onMenuItemClick(MenuItem item) {
-                putWorkExp();
-                return false;
+    workexpeditDescripe.setText(experiencesEntity.getDescription());
+    workexpeditPosition.setHint(experiencesEntity.getPosition());
+    if (experiencesEntity.getGym() != null) {
+      workexpeditGymName.setText(experiencesEntity.getGym().getName());
+      Glide.with(getContext()).load(experiencesEntity.getGym().getPhoto()).asBitmap().into(new CircleImgWrapper(hostImg, getContext()));
+      hostAddress.setText(experiencesEntity.getGym().getAddress());
+    }
+    workexpeditDescripe.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+      @Override public void onGlobalLayout() {
+        CompatUtils.removeGlobalLayout(workexpeditDescripe.getViewTreeObserver(), this);
+        swGroup.setExpanded(!experiencesEntity.isGroup_is_hidden());
+        swPrivate.setExpanded(!experiencesEntity.isPrivate_is_hidden());
+        swSale.setExpanded(!experiencesEntity.isSale_is_hidden());
+        tvGroup.setText(getString(R.string.exp_group, experiencesEntity.getGroup_course(), experiencesEntity.getGroup_user()));
+        tvPrivate.setText(getString(R.string.exp_group, experiencesEntity.getPrivate_course(), experiencesEntity.getPrivate_user()));
+        tvSales.setText(getString(R.string.exp_sale, CmStringUtils.getMoneyStr(experiencesEntity.getSale())));
+      }
+    });
+    return view;
+  }
+
+  void putWorkExp() {
+    showLoading();
+    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+        .updateWorkExp(experiencesEntity.id, new WorkExp.Builder().group_is_hidden(!swGroup.isExpanded())
+            .private_is_hidden(!swPrivate.isExpanded())
+            .sale_is_hidden(!swSale.isExpanded())
+            .description(workexpeditDescripe.getText().toString())
+            .start(workexpeditStartTime.getContent())
+            .end(workexpeditStartEnd.getContent().equals("至今") ? "3000-01-01" : workexpeditStartEnd.getContent())
+            .build())
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcResponse>() {
+          @Override public void call(QcResponse qcResponse) {
+            hideLoading();
+            if (qcResponse.status == 200) {
+              getActivity().onBackPressed();
+            } else {
+              ToastUtils.show(qcResponse.getMsg());
             }
-        });
-        workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
-        Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
-        Calendar c = Calendar.getInstance(Locale.getDefault());
-        c.setTime(d);
-        int year = c.get(Calendar.YEAR);
-        if (year == 3000) {
-            workexpeditStartEnd.setContent("至今");
-        } else {
-            workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(d));
-        }
+          }
+        }, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+            hideLoading();
+            ToastUtils.show(throwable.getMessage());
+          }
+        }));
+  }
 
-        workexpeditDescripe.setText(experiencesEntity.getDescription());
-        workexpeditPosition.setHint(experiencesEntity.getPosition());
-        if (experiencesEntity.getGym() != null) {
-            workexpeditGymName.setText(experiencesEntity.getGym().getName());
-            Glide.with(getContext())
-                .load(experiencesEntity.getGym().getPhoto())
-                .asBitmap()
-                .into(new CircleImgWrapper(hostImg, getContext()));
-            hostAddress.setText(experiencesEntity.getGym().getAddress());
-        }
-        workexpeditDescripe.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(workexpeditDescripe.getViewTreeObserver(), this);
-                swGroup.setExpanded(!experiencesEntity.isGroup_is_hidden());
-                swPrivate.setExpanded(!experiencesEntity.isPrivate_is_hidden());
-                swSale.setExpanded(!experiencesEntity.isSale_is_hidden());
-                tvGroup.setText(getString(R.string.exp_group, experiencesEntity.getGroup_course(), experiencesEntity.getGroup_user()));
-                tvPrivate.setText(
-                    getString(R.string.exp_group, experiencesEntity.getPrivate_course(), experiencesEntity.getPrivate_user()));
-                tvSales.setText(getString(R.string.exp_sale, CmStringUtils.getMoneyStr(experiencesEntity.getSale())));
-            }
-        });
-        return view;
-    }
+  @Override public String getFragmentName() {
+    return WorkExpSyncDetailFragment.class.getName();
+  }
 
-    void putWorkExp() {
-        showLoading();
-        RxRegiste(qcRestRepository.createGetApi(PostApi.class)
-            .updateWorkExp(experiencesEntity.id, new WorkExp.Builder().group_is_hidden(!swGroup.isExpanded())
-                .private_is_hidden(!swPrivate.isExpanded())
-                .sale_is_hidden(!swSale.isExpanded())
-                .description(workexpeditDescripe.getText().toString())
-                .start(workexpeditStartTime.getContent())
-                .end(workexpeditStartEnd.getContent().equals("至今") ? "3000-01-01" : workexpeditStartEnd.getContent())
-                .build())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponse>() {
-                @Override public void call(QcResponse qcResponse) {
-                    hideLoading();
-                    if (qcResponse.status == 200) {
-                        getActivity().onBackPressed();
-                    } else {
-                        ToastUtils.show(qcResponse.getMsg());
-                    }
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    hideLoading();
-                    ToastUtils.show(throwable.getMessage());
-                }
-            }));
-    }
-
-    @Override public String getFragmentName() {
-        return WorkExpSyncDetailFragment.class.getName();
-    }
-
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 }

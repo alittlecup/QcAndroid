@@ -17,15 +17,15 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/9/18 2015.
  */
 public class QcAddOrganizationResponse extends QcResponse {
-    @SerializedName("data") public AddGymData data;
+  @SerializedName("data") public AddGymData data;
 
-    public static class AddGymData {
-        @SerializedName("organization") public Organization gym;
-    }
+  public static class AddGymData {
+    @SerializedName("organization") public Organization gym;
+  }
 
-    public static class Organization {
-        @SerializedName("name") public String name;
-        @SerializedName("contact") public String contact;
-        @SerializedName("id") public String id;
-    }
+  public static class Organization {
+    @SerializedName("name") public String name;
+    @SerializedName("contact") public String contact;
+    @SerializedName("id") public String id;
+  }
 }

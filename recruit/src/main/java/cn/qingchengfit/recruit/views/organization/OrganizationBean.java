@@ -14,13 +14,13 @@ package cn.qingchengfit.recruit.views.organization;
  * Created by Paper on 15/9/18 2015.
  */
 public class OrganizationBean {
-    String name;
-    String contact;
-    String description;
+  String name;
+  String contact;
+  String description;
 
-    public OrganizationBean(String name, String contact, String description) {
-        this.name = name;
-        this.contact = contact;
-        this.description = description;
-    }
+  public OrganizationBean(String name, String contact, String description) {
+    this.name = name;
+    this.contact = contact;
+    this.description = description;
+  }
 }

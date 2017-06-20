@@ -16,35 +16,34 @@ import java.util.List;
 
 public class ResumeWebDescItem extends AbstractFlexibleItem<ResumeWebDescItem.ResumeWebDescVH> {
 
+  String desc;
 
-    String desc;
+  public ResumeWebDescItem(String desc) {
+    this.desc = desc;
+  }
 
-    public ResumeWebDescItem(String desc) {
-        this.desc = desc;
+  @Override public int getLayoutRes() {
+    return R.layout.item_resume_desc_detail;
+  }
+
+  @Override public ResumeWebDescVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    return new ResumeWebDescVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  }
+
+  @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeWebDescVH holder, int position, List payloads) {
+    holder.webview.loadData(CmStringUtils.getMobileHtml(desc), "text/html; charset=UTF-8", null);
+  }
+
+  @Override public boolean equals(Object o) {
+    return false;
+  }
+
+  public class ResumeWebDescVH extends FlexibleViewHolder {
+    @BindView(R2.id.webview) WebView webview;
+
+    public ResumeWebDescVH(View view, FlexibleAdapter adapter) {
+      super(view, adapter);
+      ButterKnife.bind(this, view);
     }
-
-    @Override public int getLayoutRes() {
-        return R.layout.item_resume_desc_detail;
-    }
-
-    @Override public ResumeWebDescVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ResumeWebDescVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
-    }
-
-    @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeWebDescVH holder, int position, List payloads) {
-        holder.webview.loadData(CmStringUtils.getMobileHtml(desc), "text/html; charset=UTF-8", null);
-    }
-
-    @Override public boolean equals(Object o) {
-        return false;
-    }
-
-    public class ResumeWebDescVH extends FlexibleViewHolder {
-        @BindView(R2.id.webview) WebView webview;
-
-        public ResumeWebDescVH(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
-            ButterKnife.bind(this, view);
-        }
-    }
+  }
 }

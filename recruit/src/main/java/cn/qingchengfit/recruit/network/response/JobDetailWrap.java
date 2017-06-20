@@ -24,5 +24,5 @@ import cn.qingchengfit.recruit.model.Job;
  */
 
 public class JobDetailWrap {
-    public Job job;
+  public Job job;
 }

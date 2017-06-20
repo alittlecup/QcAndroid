@@ -28,16 +28,16 @@ import java.util.List;
 
 public class RecruitPositionChooseItem extends RecruitPositionItem {
 
-    public RecruitPositionChooseItem(Job job) {
-        super(job);
-    }
+  public RecruitPositionChooseItem(Job job) {
+    super(job);
+  }
 
-    @Override public int getLayoutRes() {
-        return R.layout.item_recruit_postion_choose;
-    }
+  @Override public int getLayoutRes() {
+    return R.layout.item_recruit_postion_choose;
+  }
 
-    @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitPositionVH holder, int position, List payloads) {
-        super.bindViewHolder(adapter, holder, position, payloads);
-        if (holder.checkBox != null) holder.checkBox.setChecked(adapter.isSelected(position));
-    }
+  @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitPositionVH holder, int position, List payloads) {
+    super.bindViewHolder(adapter, holder, position, payloads);
+    if (holder.checkBox != null) holder.checkBox.setChecked(adapter.isSelected(position));
+  }
 }

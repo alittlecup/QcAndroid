@@ -50,90 +50,90 @@ import javax.inject.Inject;
  */
 public class RecruitGymDetailFragment extends BaseFragment implements RecruitGymDetailPresenter.MVPView {
 
-    @BindView(R2.id.img_gym) ImageView imgGym;
-    @BindView(R2.id.tv_gym_name) TextView tvGymName;
-    @BindView(R2.id.tv_address) TextView tvAddress;
-    @BindView(R2.id.img_right) ImageView imgRight;
-    @BindView(R2.id.recruit_gym_tab) PagerSlidingTabImageStrip tab;
-    @BindView(R2.id.vp) ViewPager vp;
-    ArrayList<Fragment> fragments = new ArrayList<>();
-    RecruitPositionsInGymFragment positionsFragment;
-    RecruitGymDescFragment descFragment;
+  @BindView(R2.id.img_gym) ImageView imgGym;
+  @BindView(R2.id.tv_gym_name) TextView tvGymName;
+  @BindView(R2.id.tv_address) TextView tvAddress;
+  @BindView(R2.id.img_right) ImageView imgRight;
+  @BindView(R2.id.recruit_gym_tab) PagerSlidingTabImageStrip tab;
+  @BindView(R2.id.vp) ViewPager vp;
+  ArrayList<Fragment> fragments = new ArrayList<>();
+  RecruitPositionsInGymFragment positionsFragment;
+  RecruitGymDescFragment descFragment;
 
-    @Inject RecruitGymDetailPresenter presenter;
-    Gym gym;
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  @Inject RecruitGymDetailPresenter presenter;
+  Gym gym;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
 
-    public static RecruitGymDetailFragment newInstance(Gym co) {
-        Bundle args = new Bundle();
-        args.putParcelable("gym", co);
-        RecruitGymDetailFragment fragment = new RecruitGymDetailFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+  public static RecruitGymDetailFragment newInstance(Gym co) {
+    Bundle args = new Bundle();
+    args.putParcelable("gym", co);
+    RecruitGymDetailFragment fragment = new RecruitGymDetailFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        gym = getArguments().getParcelable("gym");
-        descFragment = RecruitGymDescFragmentBuilder.newRecruitGymDescFragment(gym);
-        positionsFragment = new RecruitPositionsInGymFragment();
-        fragments.add(descFragment);
-        fragments.add(positionsFragment);
-    }
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    gym = getArguments().getParcelable("gym");
+    descFragment = RecruitGymDescFragmentBuilder.newRecruitGymDescFragment(gym);
+    positionsFragment = new RecruitPositionsInGymFragment();
+    fragments.add(descFragment);
+    fragments.add(positionsFragment);
+  }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_company_detail, container, false);
-        super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter, this);
-        initToolbar(toolbar);
-        vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
-        tab.setShouldExpand(true);
-        tab.setViewPager(vp);
-        tab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override public void onGlobalLayout() {
-                if (tab != null) {
-                    tab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    tab.notifyDataSetChanged();
-                }
-            }
-        });
-        onGym(gym);
-        presenter.queryGymDetail(gym.id);
-        return view;
-    }
-
-    @Override public void initToolbar(@NonNull Toolbar toolbar) {
-        super.initToolbar(toolbar);
-        toolbarTitile.setText("公司详情");
-    }
-
-    @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
-        super.onChildViewCreated(fm, f, v, savedInstanceState);
-        if (f instanceof RecruitPositionsInGymFragment) {
-            presenter.queryPositionOfGym(gym.id, 1);
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_company_detail, container, false);
+    super.onCreateView(inflater, container, savedInstanceState);
+    unbinder = ButterKnife.bind(this, view);
+    delegatePresenter(presenter, this);
+    initToolbar(toolbar);
+    vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
+    tab.setShouldExpand(true);
+    tab.setViewPager(vp);
+    tab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+      @Override public void onGlobalLayout() {
+        if (tab != null) {
+          tab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+          tab.notifyDataSetChanged();
         }
-    }
+      }
+    });
+    onGym(gym);
+    presenter.queryGymDetail(gym.id);
+    return view;
+  }
 
-    public void onGym(Gym service) {
-        imgRight.setVisibility(View.GONE);
-        if (service == null) return;
-        PhotoUtils.small(imgGym, service.photo);
-        tvGymName.setText(service.name);
-        tvAddress.setText(service.getAddressStr());
-        if (descFragment != null && descFragment.isAdded()) descFragment.setDesc(service);
-    }
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitile.setText("公司详情");
+  }
 
-    @Override public void onJobList(List<Job> jobs, int page, int totalCount) {
-        if (positionsFragment != null) positionsFragment.setData(jobs);
+  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+    super.onChildViewCreated(fm, f, v, savedInstanceState);
+    if (f instanceof RecruitPositionsInGymFragment) {
+      presenter.queryPositionOfGym(gym.id, 1);
     }
+  }
 
-    @Override public String getFragmentName() {
-        return RecruitGymDetailFragment.class.getName();
-    }
+  public void onGym(Gym service) {
+    imgRight.setVisibility(View.GONE);
+    if (service == null) return;
+    PhotoUtils.small(imgGym, service.photo);
+    tvGymName.setText(service.name);
+    tvAddress.setText(service.getAddressStr());
+    if (descFragment != null && descFragment.isAdded()) descFragment.setDesc(service);
+  }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
+  @Override public void onJobList(List<Job> jobs, int page, int totalCount) {
+    if (positionsFragment != null) positionsFragment.setData(jobs);
+  }
+
+  @Override public String getFragmentName() {
+    return RecruitGymDetailFragment.class.getName();
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 }

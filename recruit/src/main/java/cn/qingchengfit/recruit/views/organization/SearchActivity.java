@@ -26,31 +26,31 @@ import javax.inject.Inject;
  */
 public class SearchActivity extends BaseAcitivity implements SearchInterface, HasSupportFragmentInjector {
 
-    @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-    private FragmentManager mFragmentManager;
+  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+  private FragmentManager mFragmentManager;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        int type = getIntent().getIntExtra("type", SearchFragment.TYPE_GYM);
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.beginTransaction()
-            .replace(R.id.search_fraglayout, SearchFragment.newInstance(getIntent().getIntExtra("type", type)))
-            .commit();
-    }
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_search);
+    int type = getIntent().getIntExtra("type", SearchFragment.TYPE_GYM);
+    mFragmentManager = getSupportFragmentManager();
+    mFragmentManager.beginTransaction()
+        .replace(R.id.search_fraglayout, SearchFragment.newInstance(getIntent().getIntExtra("type", type)))
+        .commit();
+  }
 
-    @Override public void onSearchResult(int result, long id, String name, String address, String pic, boolean isAuth) {
-        Intent it = new Intent();
-        it.putExtra("id", id);
-        it.putExtra("username", name);
-        it.putExtra("address", address);
-        it.putExtra("pic", pic);
-        it.putExtra("isauth", isAuth);
-        setResult(result, it);
-        this.finish();
-    }
+  @Override public void onSearchResult(int result, long id, String name, String address, String pic, boolean isAuth) {
+    Intent it = new Intent();
+    it.putExtra("id", id);
+    it.putExtra("username", name);
+    it.putExtra("address", address);
+    it.putExtra("pic", pic);
+    it.putExtra("isauth", isAuth);
+    setResult(result, it);
+    this.finish();
+  }
 
-    @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-        return dispatchingFragmentInjector;
-    }
+  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+    return dispatchingFragmentInjector;
+  }
 }

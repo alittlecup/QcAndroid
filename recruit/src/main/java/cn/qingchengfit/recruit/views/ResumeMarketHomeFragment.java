@@ -55,107 +55,107 @@ import javax.inject.Inject;
  */
 public class ResumeMarketHomeFragment extends BaseFragment {
 
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-    @BindView(R2.id.et_search) EditText etSearch;
-    @BindView(R2.id.rv_jobfairs) RecyclerView rvJobfairs;
-    @Inject RecruitRouter router;
-    private CommonFlexAdapter jobFailsAdapter;
-    private FlexibleAdapter.OnItemClickListener jobFairsListener = new FlexibleAdapter.OnItemClickListener() {
-        @Override public boolean onItemClick(int i) {
-            if (jobFailsAdapter.getItem(i) instanceof JobFairItem) {
-                router.toJobFairDetail();
-            } else if (jobFailsAdapter.getItem(i) instanceof JobFairFooterItem) {
-                router.myJobFair();
-            }
-            return true;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
+  @BindView(R2.id.et_search) EditText etSearch;
+  @BindView(R2.id.rv_jobfairs) RecyclerView rvJobfairs;
+  @Inject RecruitRouter router;
+  private CommonFlexAdapter jobFailsAdapter;
+  private FlexibleAdapter.OnItemClickListener jobFairsListener = new FlexibleAdapter.OnItemClickListener() {
+    @Override public boolean onItemClick(int i) {
+      if (jobFailsAdapter.getItem(i) instanceof JobFairItem) {
+        router.toJobFairDetail();
+      } else if (jobFailsAdapter.getItem(i) instanceof JobFairFooterItem) {
+        router.myJobFair();
+      }
+      return true;
+    }
+  };
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_resume_market_home, container, false);
+    unbinder = ButterKnife.bind(this, view);
+    initToolbar(toolbar);
+    inflatJobFairs();
+    return view;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitile.setText("求职招聘");
+    toolbar.inflateMenu(R.menu.menu_i_seek_job);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        getActivity().onBackPressed();
+        return true;
+      }
+    });
+  }
+
+  @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+    if (nextAnim == R.anim.card_flip_left_in
+        || nextAnim == R.anim.card_flip_right_in
+        || nextAnim == R.anim.card_flip_left_out
+        || nextAnim == R.anim.card_flip_right_out) {
+      Animation animation;
+      if (nextAnim == R.anim.card_flip_left_in) {
+        animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 300);
+      } else if (nextAnim == R.anim.card_flip_right_in) {
+        animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 300);
+      } else if (nextAnim == R.anim.card_flip_left_out) {
+        animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 300);
+      } else {
+        animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 300);
+      }
+
+      animation.setAnimationListener(new Animation.AnimationListener() {
+        @Override public void onAnimationStart(Animation animation) {
+
         }
-    };
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_resume_market_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
-        inflatJobFairs();
-        return view;
-    }
-
-    @Override public void initToolbar(@NonNull Toolbar toolbar) {
-        super.initToolbar(toolbar);
-        toolbarTitile.setText("求职招聘");
-        toolbar.inflateMenu(R.menu.menu_i_seek_job);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override public boolean onMenuItemClick(MenuItem item) {
-                getActivity().onBackPressed();
-                return true;
-            }
-        });
-    }
-
-    @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if (nextAnim == R.anim.card_flip_left_in
-            || nextAnim == R.anim.card_flip_right_in
-            || nextAnim == R.anim.card_flip_left_out
-            || nextAnim == R.anim.card_flip_right_out) {
-            Animation animation;
-            if (nextAnim == R.anim.card_flip_left_in) {
-                animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 300);
-            } else if (nextAnim == R.anim.card_flip_right_in) {
-                animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 300);
-            } else if (nextAnim == R.anim.card_flip_left_out) {
-                animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 300);
-            } else {
-                animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 300);
-            }
-
-            animation.setAnimationListener(new Animation.AnimationListener() {
-                @Override public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override public void onAnimationEnd(Animation animation) {
-                    onFinishAnimation();
-                }
-
-                @Override public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            return animation;
-        } else {
-            return super.onCreateAnimation(transit, enter, nextAnim);
+        @Override public void onAnimationEnd(Animation animation) {
+          onFinishAnimation();
         }
-    }
 
-    public void inflatJobFairs() {
-        List<AbstractFlexibleItem> items = new ArrayList<>();
-        jobFailsAdapter = new CommonFlexAdapter(items, jobFairsListener);
-        SnapHelper snapHelper = new GravitySnapHelper(Gravity.START);
-        snapHelper.attachToRecyclerView(rvJobfairs);
-        rvJobfairs.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        rvJobfairs.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.divider_translate_5dp));
-        rvJobfairs.setAdapter(jobFailsAdapter);
-    }
+        @Override public void onAnimationRepeat(Animation animation) {
 
-    @Override protected void onFinishAnimation() {
-        super.onFinishAnimation();
-        jobFailsAdapter.addItem(new JobFairItem());
-        jobFailsAdapter.addItem(new JobFairItem());
-        jobFailsAdapter.addItem(new JobFairItem());
-        jobFailsAdapter.addItem(new JobFairItem());
-        jobFailsAdapter.addItem(new JobFairItem());
-        jobFailsAdapter.addItem(new JobFairItem());
-        jobFailsAdapter.addItem(new JobFairItem());
-        jobFailsAdapter.addItem(new JobFairItem());
-        jobFailsAdapter.addItem(new JobFairFooterItem(20));
+        }
+      });
+      return animation;
+    } else {
+      return super.onCreateAnimation(transit, enter, nextAnim);
     }
+  }
 
-    @Override public String getFragmentName() {
-        return ResumeMarketHomeFragment.class.getName();
-    }
+  public void inflatJobFairs() {
+    List<AbstractFlexibleItem> items = new ArrayList<>();
+    jobFailsAdapter = new CommonFlexAdapter(items, jobFairsListener);
+    SnapHelper snapHelper = new GravitySnapHelper(Gravity.START);
+    snapHelper.attachToRecyclerView(rvJobfairs);
+    rvJobfairs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+    rvJobfairs.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.divider_translate_5dp));
+    rvJobfairs.setAdapter(jobFailsAdapter);
+  }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    jobFailsAdapter.addItem(new JobFairItem());
+    jobFailsAdapter.addItem(new JobFairItem());
+    jobFailsAdapter.addItem(new JobFairItem());
+    jobFailsAdapter.addItem(new JobFairItem());
+    jobFailsAdapter.addItem(new JobFairItem());
+    jobFailsAdapter.addItem(new JobFairItem());
+    jobFailsAdapter.addItem(new JobFairItem());
+    jobFailsAdapter.addItem(new JobFairItem());
+    jobFailsAdapter.addItem(new JobFairFooterItem(20));
+  }
+
+  @Override public String getFragmentName() {
+    return ResumeMarketHomeFragment.class.getName();
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 }

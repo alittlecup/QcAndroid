@@ -24,9 +24,9 @@ import java.util.List;
  */
 
 public class EventIntentJobs {
-    public List<String> jobs;
+  public List<String> jobs;
 
-    public EventIntentJobs(List<String> jobs) {
-        this.jobs = jobs;
-    }
+  public EventIntentJobs(List<String> jobs) {
+    this.jobs = jobs;
+  }
 }

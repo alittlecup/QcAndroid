@@ -16,6 +16,8 @@
       android:layout_height="wrap_content"
       android:background="@color/white"
       android:minHeight="50dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
       />
 
   <include layout="@layout/divider_grey"/>
@@ -27,10 +29,11 @@
       style="@style/TextTitleHint"
       />
 
-  <me.gujun.android.taggroup.TagGroup
+  <cn.qingchengfit.widgets.QcTagGroup
       android:id="@+id/tg_recomend"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:minHeight="100dp"
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:paddingRight="@dimen/activity_horizontal_margin"
       android:paddingTop="4dp"
@@ -38,6 +41,7 @@
       app:atg_borderColor="@color/text_dark"
       app:atg_checkedBorderColor="?colorPrimary"
       app:atg_checkedTextColor="?colorPrimary"
+      app:atg_isAppendMode="false"
       app:atg_textColor="@color/text_dark"
 
       />

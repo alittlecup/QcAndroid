@@ -81,7 +81,8 @@ public class CitiesChooser {
             @Override public void onOptionsSelect(int i, int i1, int i2) {
                 if (onCityChoosenListener != null) {
                     if (options2Items.get(i).get(i1).startsWith(options1Items.get(i))) {
-                        onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), "", citiesData.provinces.get(i).id);
+                      onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), "",
+                          citiesData.provinces.get(i).cities.get(i1).districts.get(i1).id);
                     } else {
                         onCityChoosenListener.onCityChoosen(options1Items.get(i), options2Items.get(i).get(i1),
                             options3Items.get(i).get(i1).get(i2), citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);

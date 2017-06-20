@@ -24,5 +24,5 @@ import cn.qingchengfit.recruit.model.ResumeHome;
  */
 
 public class ResumeHomeWrap {
-    public ResumeHome resume;
+  public ResumeHome resume;
 }

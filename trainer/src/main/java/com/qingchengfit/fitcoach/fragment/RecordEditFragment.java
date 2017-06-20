@@ -180,7 +180,7 @@ public class RecordEditFragment extends BaseSettingFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_record_edit, container, false);
+      View view = inflater.inflate(R.layout.fragment_resume_record_edit, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (mType == 0) mType = 1;
         switch (mType) {

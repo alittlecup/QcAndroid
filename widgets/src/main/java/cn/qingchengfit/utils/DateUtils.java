@@ -447,7 +447,7 @@ public class DateUtils {
         }
     }
 
-    public int getAge(Date d) {
+  public static int getAge(Date d) {
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         int curYear = c.get(Calendar.YEAR);

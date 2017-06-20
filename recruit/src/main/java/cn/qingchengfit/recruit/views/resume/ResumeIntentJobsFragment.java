@@ -3,6 +3,8 @@ package cn.qingchengfit.recruit.views.resume;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,12 +19,12 @@ import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventIntentJobs;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TagInputFragment;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
+import cn.qingchengfit.widgets.QcTagGroup;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import me.gujun.android.taggroup.TagGroup;
 
 /**
  * power by
@@ -44,34 +46,34 @@ import me.gujun.android.taggroup.TagGroup;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/6/15.
  */
-@FragmentWithArgs
-public class ResumeIntentJobsFragment extends BaseFragment {
+@FragmentWithArgs public class ResumeIntentJobsFragment extends BaseFragment {
 
     @BindView(R2.id.toolbar) Toolbar toolbar;
     @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R2.id.tg_recomend) TagGroup tgRecomend;
+    @BindView(R2.id.tg_recomend) QcTagGroup tgRecomend;
 
     TagInputFragment tagInputFragment;
     @Arg ArrayList<String> jobs;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragmentArgs.inject(this);
+        ResumeIntentJobsFragmentBuilder.injectArguments(this);
         tagInputFragment = new TagInputFragment();
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_intent_jobs, container, false);
+        super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         initToolbar(toolbar);
-        tgRecomend.setOnTagClickListener(new TagGroup.OnTagClickListener() {
+        tgRecomend.setOnTagClickListener(new QcTagGroup.OnTagClickListener() {
             @Override public void onTagClick(String tag) {
                 if (tagInputFragment != null) {
                     tagInputFragment.insertTag(tag);
                 }
             }
         });
-        onRecomentTags(jobs);
+
         return view;
     }
 
@@ -88,6 +90,8 @@ public class ResumeIntentJobsFragment extends BaseFragment {
                 return true;
             }
         });
+
+        onRecomentTags(Arrays.asList(getResources().getStringArray(R.array.recruit_recomend_jobs)));
     }
 
     public void onRecomentTags(List<String> tags) {
@@ -98,6 +102,23 @@ public class ResumeIntentJobsFragment extends BaseFragment {
     @Override protected void onFinishAnimation() {
         super.onFinishAnimation();
         stuff(tagInputFragment);
+    }
+
+    @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+        super.onChildViewCreated(fm, f, v, savedInstanceState);
+        if (f instanceof TagInputFragment) {
+            tagInputFragment.setOnDelLister(new QcTagGroup.OnTagChangeListener() {
+                @Override public void onAppend(QcTagGroup tagGroup, String tag) {
+                    tgRecomend.checkTag(tgRecomend.indexTag(tag), true);
+                }
+
+                @Override public void onDelete(QcTagGroup tagGroup, String tag) {
+                    Arrays.asList(tgRecomend.getTags()).contains(tag);
+                    tgRecomend.checkTag(tgRecomend.indexTag(tag), false);
+                }
+            });
+            tagInputFragment.setTags(jobs);
+    }
     }
 
     @Override public int getLayoutRes() {

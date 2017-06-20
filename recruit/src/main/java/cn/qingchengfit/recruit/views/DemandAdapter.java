@@ -38,34 +38,34 @@ import java.util.List;
 
 public class DemandAdapter extends RecyclerView.Adapter<DemandAdapter.DemandVH> {
 
-    Context context;
-    List<Pair<Integer, String>> datas = new ArrayList<>();
+  Context context;
+  List<Pair<Integer, String>> datas = new ArrayList<>();
 
-    public DemandAdapter(Context context, List<Pair<Integer, String>> datas) {
-        this.context = context;
-        this.datas = datas;
+  public DemandAdapter(Context context, List<Pair<Integer, String>> datas) {
+    this.context = context;
+    this.datas = datas;
+  }
+
+  @Override public DemandVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    return new DemandVH(LayoutInflater.from(context).inflate(R.layout.item_recruit_demand, parent, false));
+  }
+
+  @Override public void onBindViewHolder(DemandVH holder, int position) {
+    holder.imgRecruitDemand.setImageResource(datas.get(position).first);
+    holder.tvContent.setText(datas.get(position).second);
+  }
+
+  @Override public int getItemCount() {
+    return datas.size();
+  }
+
+  public class DemandVH extends RecyclerView.ViewHolder {
+    @BindView(R2.id.img_recruit_demand) ImageView imgRecruitDemand;
+    @BindView(R2.id.tv_content) TextView tvContent;
+
+    public DemandVH(View itemView) {
+      super(itemView);
+      ButterKnife.bind(this, itemView);
     }
-
-    @Override public DemandVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DemandVH(LayoutInflater.from(context).inflate(R.layout.item_recruit_demand, parent, false));
-    }
-
-    @Override public void onBindViewHolder(DemandVH holder, int position) {
-        holder.imgRecruitDemand.setImageResource(datas.get(position).first);
-        holder.tvContent.setText(datas.get(position).second);
-    }
-
-    @Override public int getItemCount() {
-        return datas.size();
-    }
-
-    public class DemandVH extends RecyclerView.ViewHolder {
-        @BindView(R2.id.img_recruit_demand) ImageView imgRecruitDemand;
-        @BindView(R2.id.tv_content) TextView tvContent;
-
-        public DemandVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
+  }
 }

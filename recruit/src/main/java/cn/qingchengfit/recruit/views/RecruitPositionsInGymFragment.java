@@ -25,7 +25,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
  * Created by Paper on 2017/5/31.
  */
 public class RecruitPositionsInGymFragment extends RecruitPositionsFragment {
-    @Override protected AbstractFlexibleItem generatItem(Job job) {
-        return new RecruitPositionInGymItem(job);
-    }
+  @Override protected AbstractFlexibleItem generatItem(Job job) {
+    return new RecruitPositionInGymItem(job);
+  }
 }

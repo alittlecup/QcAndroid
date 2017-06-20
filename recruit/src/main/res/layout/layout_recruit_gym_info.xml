@@ -54,6 +54,7 @@
         />
 
   </LinearLayout>
+
   <ImageView
       android:id="@+id/img_right"
       android:layout_width="14dp"

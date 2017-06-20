@@ -244,13 +244,19 @@ import rx.schedulers.Schedulers;
                         if (qcResponse.status == 200) {
                             repoCoachService.createService((CoachService) qcResponse.data);
                             PreferenceUtils.setPrefString(getContext(), "initSystem", "");
-                            PreferenceUtils.setPrefString(getContext(), "coachservice_id", qcResponse.data.getId());
-                            RxBus.getBus().post(qcResponse.data);
-                            RxBus.getBus().post(new EventLoginChange());
-                            Intent toMain = new Intent(getActivity(), Main2Activity.class);
-                            toMain.putExtra(Main2Activity.ACTION, Main2Activity.INIT);
-                            toMain.putExtra("service", qcResponse.data);
-                            startActivity(toMain);
+                            if (getActivity().getIntent().getBooleanExtra("workexp", false)) {
+                                Intent r = new Intent();
+                                r.putExtra("gym", qcResponse.data);
+                                getActivity().setResult(Activity.RESULT_OK, r);
+                            } else {
+                                PreferenceUtils.setPrefString(getContext(), "coachservice_id", qcResponse.data.getId());
+                                RxBus.getBus().post(qcResponse.data);
+                                RxBus.getBus().post(new EventLoginChange());
+                                Intent toMain = new Intent(getActivity(), Main2Activity.class);
+                                toMain.putExtra(Main2Activity.ACTION, Main2Activity.INIT);
+                                toMain.putExtra("service", qcResponse.data);
+                                startActivity(toMain);
+                            }
                             getActivity().finish();
                         } else {
                             ToastUtils.showDefaultStyle(qcResponse.msg);

@@ -3,7 +3,9 @@ package cn.qingchengfit.router;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.utils.LogUtil;
 import java.util.HashMap;
 
 import static android.R.attr.action;
@@ -31,41 +33,51 @@ import static android.R.attr.action;
 
 public class BaseRouter {
 
-    HashMap<String, Class<?>> routers = new HashMap<>();
+  HashMap<String, Class<?>> routers = new HashMap<>();
 
-    public void routerTo(String module, String action, Context context, int request) {
-        if (routers.containsKey(module)) {
-            Intent it = new Intent(context, routers.get(module));
-            it.putExtra("action", action);
-            if (context instanceof Activity) {
-                ((Activity) context).startActivityForResult(it, request);
-            }
-        } else {
-            //没有指定模块 todo
-        }
+  public static void routerToWeb(String url, Context context) {
+    try {
+      Intent toWeb = new Intent();
+      toWeb.setData(Uri.parse("qccoach://openurl/" + url));
+      context.startActivity(toWeb);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
     }
+  }
 
-    public void routerTo(String module, String action, Fragment context, int request) {
-        if (routers.containsKey(module)) {
-            Intent it = new Intent(context.getContext(), routers.get(module));
-            it.putExtra("action", action);
-            context.startActivityForResult(it, request);
-        } else {
-            //没有指定模块 todo
-        }
+  public void routerTo(String module, String action, Context context, int request) {
+    if (routers.containsKey(module)) {
+      Intent it = new Intent(context, routers.get(module));
+      it.putExtra("action", action);
+      if (context instanceof Activity) {
+        ((Activity) context).startActivityForResult(it, request);
+      }
+    } else {
+      //没有指定模块 todo
     }
+  }
 
-    public void routerTo(String module, Context context) {
-        if (routers.containsKey(module)) {
-            Intent it = new Intent(context, routers.get(module));
-            it.putExtra("action", action);
-            context.startActivity(it);
-        } else {
-            //没有指定模块 todo
-        }
+  public void routerTo(String module, String action, Fragment context, int request) {
+    if (routers.containsKey(module)) {
+      Intent it = new Intent(context.getContext(), routers.get(module));
+      it.putExtra("action", action);
+      context.startActivityForResult(it, request);
+    } else {
+      //没有指定模块 todo
     }
+  }
 
-    public void registeRouter(String module, Class<?> activitycalss) {
-        routers.put(module, activitycalss);
+  public void routerTo(String module, Context context) {
+    if (routers.containsKey(module)) {
+      Intent it = new Intent(context, routers.get(module));
+      it.putExtra("action", action);
+      context.startActivity(it);
+    } else {
+      //没有指定模块 todo
     }
+  }
+
+  public void registeRouter(String module, Class<?> activitycalss) {
+    routers.put(module, activitycalss);
+  }
 }

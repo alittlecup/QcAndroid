@@ -7,4 +7,5 @@
     android:background="@drawable/bg_rect_square_img"
     android:contentDescription="@string/app_name"
     android:orientation="vertical"
+    android:padding="0.5dp"
     />

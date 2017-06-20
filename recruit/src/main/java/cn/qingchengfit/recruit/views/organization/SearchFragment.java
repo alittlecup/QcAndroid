@@ -28,7 +28,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
+import cn.qingchengfit.model.base.Brand;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
@@ -56,6 +57,7 @@ public class SearchFragment extends BaseFragment {
     public static final int TYPE_GYM = 0;
     public static final int TYPE_ORGANASITON = 1;
     public static final int RESULT_BRAND = 2;
+    public static final int RESULT_GYM = 3;
 
     public String keyword;
     SearchResultAdapter adapter;
@@ -74,7 +76,6 @@ public class SearchFragment extends BaseFragment {
     private List<SearchItemBean> strings;
     private InternalSearchHandler handler;
     private SearchInterface searchListener;
-    private Unbinder unbinder;
 
     public SearchFragment() {
     }
@@ -93,7 +94,7 @@ public class SearchFragment extends BaseFragment {
         handler = new InternalSearchHandler(getContext());
         if (getArguments() != null) {
             type = getArguments().getInt("type");
-        }
+    }
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -118,7 +119,7 @@ public class SearchFragment extends BaseFragment {
             searchviewEt.setHint("搜索健身房(至少输入三个字)");
             searchresultBtn.setText("添加健身房");
             searchresultHint.setText("没有匹配的健身房\n您可以添加该健身房");
-        }
+    }
 
         searchviewEt.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -181,7 +182,7 @@ public class SearchFragment extends BaseFragment {
                                     if (addGymBean.district != null && addGymBean.district.city != null && !TextUtils.isEmpty(
                                         addGymBean.district.city.name)) {
                                         ss.append(addGymBean.district.city.name).append("  ");
-                                    }
+                    }
                                     ss.append(addGymBean.brand_name);
                                     strings.add(
                                         new SearchItemBean(addGymBean.name, addGymBean.photo, ss.toString(), addGymBean.is_authenticated));
@@ -197,7 +198,7 @@ public class SearchFragment extends BaseFragment {
                                                 qcSerachGymRepsonse.getData().getGym().get(pos).photo,
                                                 qcSerachGymRepsonse.getData().getGym().get(pos).is_authenticated);
                                         }
-                                    }
+                    }
                                 });
                                 adapter.notifyDataSetChanged();
                             }
@@ -239,7 +240,7 @@ public class SearchFragment extends BaseFragment {
                                                 qcSearchOrganResponse.getData().getOrganizations().get(pos).getPhoto(),
                                                 qcSearchOrganResponse.getData().getOrganizations().get(pos).is_authenticated());
                                         }
-                                    }
+                    }
                                 });
                                 adapter.notifyDataSetChanged();
                             }
@@ -248,22 +249,32 @@ public class SearchFragment extends BaseFragment {
                 }, new Action1<Throwable>() {
                     @Override public void call(Throwable throwable) {
 
-                    }
+            }
                 }));
-        }
+    }
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == RESULT_BRAND) {
-                //Brand brand = (Brand) IntentUtils.getParcelable(data);
-                //getFragmentManager().beginTransaction()
-                //    .add(R.id.search_fraglayout, new AddGymFragmentBuilder(brand.getPhoto(), brand.getName(), brand.getId()).build())
-                //    .addToBackStack(null)
-                //    .commit();
-            }
+                Brand brand = (Brand) data.getParcelableExtra("fragment_result");
+                if (brand != null) {
+                    try {
+                        Intent guide = new Intent(getContext().getPackageName() + ".guide");
+                        guide.putExtra("brand", brand);
+                        guide.putExtra("workexp", true);
+                        startActivityForResult(guide, RESULT_GYM);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
         }
+            } else if (requestCode == RESULT_GYM) {
+                CoachService coachService = data.getParcelableExtra("gym");
+                searchListener.onSearchResult(100, Integer.parseInt(coachService.gym_id), coachService.name, coachService.brand_name,
+                    coachService.photo, false);
+            }
+    }
     }
 
     @OnClick(R2.id.searchview_clear) public void onClear() {
@@ -272,9 +283,12 @@ public class SearchFragment extends BaseFragment {
 
     @OnClick(R2.id.searchresult_btn) public void onAdd() {
         if (type == TYPE_GYM) {
-            // TODO: 2017/6/14 新增健身房
-            //Intent toChooseBrand = new Intent(getActivity(), ExpChooseBrandActivity.class);
-            //startActivityForResult(toChooseBrand, RESULT_BRAND);
+            try {
+                Intent toChooseBrand = new Intent(getContext().getPackageName() + ".chooseBrand");
+                startActivityForResult(toChooseBrand, RESULT_BRAND);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if (type == TYPE_ORGANASITON) {
             getFragmentManager().beginTransaction().add(R.id.search_fraglayout, new AddOganasitionFragment()).addToBackStack(null).commit();
         }
@@ -305,7 +319,7 @@ public class SearchFragment extends BaseFragment {
                                     if (addGymBean.district != null && addGymBean.district.city != null && !TextUtils.isEmpty(
                                         addGymBean.district.city.name)) {
                                         city.append(addGymBean.district.city.name).append("    ");
-                                    }
+                    }
                                     city.append(addGymBean.brand_name);
                                     LogUtil.e("city:"
                                         + addGymBean.district.toString()
@@ -371,19 +385,19 @@ public class SearchFragment extends BaseFragment {
                                                            qcSearchOrganResponse.getData().getOrganizations().get(pos).getPhoto(),
                                                            qcSearchOrganResponse.getData().getOrganizations().get(pos).is_authenticated());
                                                    }
-                                               }
+                               }
                                            });
 
                                            adapter.notifyDataSetChanged();
                                        } else {
                                            searchresultRv.setVisibility(View.GONE);
-                                       }
+                           }
                                    }
                                }
                            }
 
                 ));
-        }
+    }
     }
 
     @Override public void onDestroyView() {
@@ -398,7 +412,7 @@ public class SearchFragment extends BaseFragment {
         super.onAttach(context);
         if (context instanceof SearchInterface) {
             searchListener = (SearchInterface) context;
-        }
+    }
     }
 
     @Override public void onDetach() {
@@ -419,7 +433,7 @@ public class SearchFragment extends BaseFragment {
         public SearchResultVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-        }
+    }
     }
 
     class SearchResultAdapter extends RecyclerView.Adapter<SearchResultVH> implements View.OnClickListener {
@@ -499,7 +513,7 @@ public class SearchFragment extends BaseFragment {
         @Override public void onClick(View v) {
             LogUtil.e("onclick");
             if (listener != null) listener.onItemClick(v, (int) v.getTag());
-        }
+    }
     }
 
     public class InternalHandler extends Handler {
@@ -513,7 +527,7 @@ public class SearchFragment extends BaseFragment {
             super.handleMessage(msg);
             String s = msg.getData().getString("keyword");
             if (s != null && keyword.length() > 0 && s.equals(keyword)) searchResult(keyword);
-        }
+    }
     }
 
     public class InternalSearchHandler extends Handler {
@@ -527,6 +541,6 @@ public class SearchFragment extends BaseFragment {
             super.handleMessage(msg);
             String s = msg.getData().getString("keyword");
             if (s.equals(keyword) && keyword.length() > 2) searchResult(keyword);
-        }
+    }
     }
 }

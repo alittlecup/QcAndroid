@@ -1,0 +1,309 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_grey"
+    android:clipToPadding="true"
+    android:scrollbars="none"
+    >
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/backgroud_grey"
+      android:orientation="vertical"
+
+      >
+
+    <include layout="@layout/common_simple_toolbar"/>
+
+    <RelativeLayout
+        android:id="@+id/host_layout"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:background="@color/white"
+        >
+
+      <ImageView
+          android:id="@+id/host_img"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          />
+
+      <ImageView
+          android:id="@+id/host_qc_identify"
+          android:layout_width="14dp"
+          android:layout_height="14dp"
+          android:layout_alignBottom="@id/host_img"
+          android:layout_alignEnd="@id/host_img"
+          android:layout_alignRight="@id/host_img"
+          android:padding="1dp"
+          app:srcCompat="@drawable/vd_qc_logo"
+          />
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="70dp"
+          android:layout_marginStart="70dp"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/host_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            tools:text="很长很长才名字"
+            style="@style/Qc.TextCommonBlack"
+            />
+
+        <TextView
+            android:id="@+id/host_address"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            tools:text="很长  很长才名字"
+            style="@style/Qc.TextCommonGrey"
+            />
+      </LinearLayout>
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:src="@drawable/ic_arrow_right"
+          />
+
+    </RelativeLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <include
+        layout="@layout/divider_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/record_edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="@string/recordedit_name"
+        />
+
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/recordedit_date"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_lable="@string/recordedit_certificate_date"
+        app:civ_showdivier="false"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+
+    <RelativeLayout
+        android:id="@+id/comfirm_scroe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+        android:visibility="gone"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+
+          android:text="有无学分"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <Switch
+          android:id="@+id/comfirm_scroe_switch"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:checked="false"
+          />
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_alignParentBottom="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:background="@color/divider_white"
+          />
+    </RelativeLayout>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/recordedit_score"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:visibility="gone"
+        app:civ_inputnum="true"
+        app:civ_lable="@string/recordedit_score"
+        app:civ_showdivier="false"
+        >
+    </cn.qingchengfit.widgets.CommonInputView>
+
+    <include layout="@layout/divider_grey"/>
+
+    <include
+        layout="@layout/divider_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <RelativeLayout
+        android:id="@+id/comfirm_certification_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+        >
+
+      <TextView
+          android:id="@+id/comfirm_has_certification"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          android:text="有无证书"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <Switch
+          android:id="@+id/comfirm_certification_switch"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:checked="false"
+          />
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_alignParentBottom="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:background="@color/divider_white"
+          />
+    </RelativeLayout>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/recordedit_certificat_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:visibility="gone"
+        app:civ_lable="证书名称"
+        >
+    </cn.qingchengfit.widgets.CommonInputView>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/recordedit_datestart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:visibility="gone"
+        app:civ_clickable="true"
+        app:civ_lable="@string/recordedit_certificat_timestart"
+
+        >
+    </cn.qingchengfit.widgets.CommonInputView>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/recordedit_dateoff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:visibility="gone"
+        app:civ_clickable="true"
+        app:civ_lable="@string/recordedit_certificat_timeend"
+
+        >
+    </cn.qingchengfit.widgets.CommonInputView>
+
+    <RelativeLayout
+        android:id="@+id/recordedit_upimg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:visibility="gone"
+
+        >
+
+      <TextView
+          android:id="@+id/recordedit_upimg"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          android:text="上传照片"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <ImageView
+          android:id="@+id/advice_right_arrow"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:src="@drawable/ic_arrow_right"
+          />
+
+      <ImageView
+          android:id="@+id/recordedit_img"
+          android:layout_width="100dp"
+          android:layout_height="100dp"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_marginEnd="50dp"
+          android:layout_marginRight="50dp"
+          android:padding="5dp"
+          android:visibility="gone"
+
+          />
+
+    </RelativeLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <Button
+        android:id="@+id/recordedit_comfirm_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="确定"
+        />
+  </LinearLayout>
+</ScrollView>

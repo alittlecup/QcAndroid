@@ -20,48 +20,48 @@ import java.util.List;
 
 public class RecruitGymItem extends AbstractFlexibleItem<RecruitGymItem.RecruitGymVH> {
 
-    Gym gym;
-    private boolean hasUndo = false;
+  Gym gym;
+  private boolean hasUndo = false;
 
-    @Override public int getLayoutRes() {
-        return R.layout.item_recruit_gym;
+  @Override public int getLayoutRes() {
+    return R.layout.item_recruit_gym;
+  }
+
+  @Override public RecruitGymVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    return new RecruitGymVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  }
+
+  @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitGymVH holder, int position, List payloads) {
+    PhotoUtils.small(holder.imgGym, gym.photo);
+    holder.tvGymName.setText(gym.name);
+    holder.tvAddress.setText(gym.brand_name);
+    if (holder.tv_has_todo != null) {
+      if (hasUndo) {
+        holder.tv_has_todo.setVisibility(View.VISIBLE);
+        holder.tv_has_todo.setCompoundDrawablesWithIntrinsicBounds(
+            ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.dot_red), null, null, null);
+      } else {
+        holder.tv_has_todo.setVisibility(View.GONE);
+      }
     }
+  }
 
-    @Override public RecruitGymVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new RecruitGymVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public boolean equals(Object o) {
+    return false;
+  }
+
+  public class RecruitGymVH extends FlexibleViewHolder {
+
+    @BindView(R2.id.img_gym) ImageView imgGym;
+    @BindView(R2.id.tv_gym_name) TextView tvGymName;
+    @BindView(R2.id.tv_address) TextView tvAddress;
+    @BindView(R2.id.img_right) ImageView imgRight;
+    @BindView(R2.id.layout_gym_info) LinearLayout layoutGymInfo;
+    @BindView(R2.id.tv_has_undo) TextView tv_has_todo;
+
+    public RecruitGymVH(View view, FlexibleAdapter adapter) {
+      super(view, adapter);
+      ButterKnife.bind(this, view);
     }
-
-    @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitGymVH holder, int position, List payloads) {
-        PhotoUtils.small(holder.imgGym, gym.photo);
-        holder.tvGymName.setText(gym.name);
-        holder.tvAddress.setText(gym.brand_name);
-        if (holder.tv_has_todo != null) {
-            if (hasUndo) {
-                holder.tv_has_todo.setVisibility(View.VISIBLE);
-                holder.tv_has_todo.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.dot_red), null, null, null);
-            } else {
-                holder.tv_has_todo.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    @Override public boolean equals(Object o) {
-        return false;
-    }
-
-    public class RecruitGymVH extends FlexibleViewHolder {
-
-        @BindView(R2.id.img_gym) ImageView imgGym;
-        @BindView(R2.id.tv_gym_name) TextView tvGymName;
-        @BindView(R2.id.tv_address) TextView tvAddress;
-        @BindView(R2.id.img_right) ImageView imgRight;
-        @BindView(R2.id.layout_gym_info) LinearLayout layoutGymInfo;
-        @BindView(R2.id.tv_has_undo) TextView tv_has_todo;
-
-        public RecruitGymVH(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
-            ButterKnife.bind(this, view);
-        }
-    }
+  }
 }

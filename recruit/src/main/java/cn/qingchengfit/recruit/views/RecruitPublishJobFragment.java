@@ -35,69 +35,69 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  */
 public class RecruitPublishJobFragment extends BaseFragment {
 
-    @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recruit_publish_job, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
-    }
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_recruit_publish_job, container, false);
+    unbinder = ButterKnife.bind(this, view);
+    return view;
+  }
 
-    @Override public String getFragmentName() {
-        return RecruitPublishJobFragment.class.getName();
-    }
+  @Override public String getFragmentName() {
+    return RecruitPublishJobFragment.class.getName();
+  }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 
-    /**
-     * 职位名称
-     */
-    @OnClick(R2.id.civ_position_name) public void onCivPositionNameClicked() {
+  /**
+   * 职位名称
+   */
+  @OnClick(R2.id.civ_position_name) public void onCivPositionNameClicked() {
 
-    }
+  }
 
-    /**
-     * 薪资范围
-     */
-    @OnClick(R2.id.civ_salary_rank) public void onCivSalaryRankClicked() {
-    }
+  /**
+   * 薪资范围
+   */
+  @OnClick(R2.id.civ_salary_rank) public void onCivSalaryRankClicked() {
+  }
 
-    /**
-     * 职位描述
-     */
-    @OnClick(R2.id.civ_position_desc) public void onCivPositionDescClicked() {
-    }
+  /**
+   * 职位描述
+   */
+  @OnClick(R2.id.civ_position_desc) public void onCivPositionDescClicked() {
+  }
 
-    /**
-     * 任职要求
-     */
-    @OnClick(R2.id.civ_position_demands) public void onCivPositionDemandsClicked() {
-    }
+  /**
+   * 任职要求
+   */
+  @OnClick(R2.id.civ_position_demands) public void onCivPositionDemandsClicked() {
+  }
 
-    /**
-     * 职位要求
-     */
-    @OnClick(R2.id.civ_position_require) public void onCivPositionRequireClicked() {
-    }
+  /**
+   * 职位要求
+   */
+  @OnClick(R2.id.civ_position_require) public void onCivPositionRequireClicked() {
+  }
 
-    /**
-     * 职位福利
-     */
-    @OnClick(R2.id.civ_position_welfare) public void onCivPositionWelfareClicked() {
-    }
+  /**
+   * 职位福利
+   */
+  @OnClick(R2.id.civ_position_welfare) public void onCivPositionWelfareClicked() {
+  }
 
-    /**
-     * 场馆介绍
-     */
-    @OnClick(R2.id.civ_gym_desc) public void onCivGymDescClicked() {
-    }
+  /**
+   * 场馆介绍
+   */
+  @OnClick(R2.id.civ_gym_desc) public void onCivGymDescClicked() {
+  }
 
-    /**
-     * 场馆介绍
-     */
-    @OnClick(R2.id.btn_publish) public void onBtnPublishClicked() {
-    }
+  /**
+   * 场馆介绍
+   */
+  @OnClick(R2.id.btn_publish) public void onBtnPublishClicked() {
+  }
 }

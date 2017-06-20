@@ -14,5 +14,5 @@ package cn.qingchengfit.recruit.views.organization;
  * Created by Paper on 15/9/18 2015.
  */
 public interface SearchInterface {
-    void onSearchResult(int result, long id, String name, String address, String pic, boolean isAuth);
+  void onSearchResult(int result, long id, String name, String address, String pic, boolean isAuth);
 }

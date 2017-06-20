@@ -35,41 +35,41 @@ import javax.inject.Inject;
  */
 
 public class RecruitActivity extends BaseAcitivity implements HasSupportFragmentInjector {
-    @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-    @Inject RecruitRouter router;
+  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+  @Inject RecruitRouter router;
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recruit);
-        onNewIntent(getIntent());
-    }
+  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_recruit);
+    onNewIntent(getIntent());
+  }
 
-    @Override protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (intent.getData() != null) {
-            Uri uri = intent.getData();
-            switch (uri.getHost()) {
-                case "recruit":
-                    router.home();
-                    break;
-                case "resume":
-                    router.resumeHome();
-                    break;
-                case "job":
-                    break;
-                case "company":
-                    break;
-                case "fair":
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            //router.home();
-        }
+  @Override protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    if (intent.getData() != null) {
+      Uri uri = intent.getData();
+      switch (uri.getHost()) {
+        case "recruit":
+          router.home();
+          break;
+        case "resume":
+          router.resumeHome();
+          break;
+        case "job":
+          break;
+        case "company":
+          break;
+        case "fair":
+          break;
+        default:
+          break;
+      }
+    } else {
+      //router.home();
     }
+  }
 
-    @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-        return dispatchingFragmentInjector;
-    }
+  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+    return dispatchingFragmentInjector;
+  }
 }

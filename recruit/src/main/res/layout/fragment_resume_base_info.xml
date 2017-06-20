@@ -19,6 +19,7 @@
       >
 
     <include layout="@layout/common_simple_toolbar"/>
+
     <LinearLayout
         android:id="@+id/civ_header_layout"
         android:layout_width="match_parent"

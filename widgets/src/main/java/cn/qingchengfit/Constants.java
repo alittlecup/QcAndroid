@@ -1,5 +1,7 @@
 package cn.qingchengfit;
 
+import cn.qingchengfit.widgets.BuildConfig;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -22,6 +24,8 @@ package cn.qingchengfit;
  */
 
 public class Constants {
-    public static final String SEPARATE = "、";
-    public static final String SEPARATOR = "、";
+  public static final String SEPARATE = "、";
+  public static final String SEPARATOR = "、";
+
+  public static final String Server = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
 }

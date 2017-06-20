@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="100dp"
-    android:height="100dp"
-    android:viewportWidth="100"
-    android:viewportHeight="100">
+        android:height="100dp"
+        android:viewportHeight="100"
+        android:viewportWidth="100"
+        android:width="100dp">
 
+  <group
+      android:translateX="-556.000000"
+      android:translateY="-426.000000">
     <group
-            android:translateX="-556.000000"
-            android:translateY="-426.000000">
-        <group
-                android:translateX="556.000000"
-                android:translateY="426.000000">
-            <path
-                android:fillColor="#E0E0E0"
-                android:strokeWidth="1"
-                android:pathData="M 50 0 C 77.6142374915 0 100 22.3857625085 100 50 C 100 77.6142374915 77.6142374915 100 50 100 C 22.3857625085 100 0 77.6142374915 0 50 C 0 22.3857625085 22.3857625085 0 50 0 Z" />
-            <path
-                android:fillColor="#FFFFFF"
-                android:strokeWidth="1"
-                android:pathData="M44.3143116,72.4665502 C43.82766,72.4664494 43.3652044,72.2543138
+        android:translateX="556.000000"
+        android:translateY="426.000000">
+      <path
+          android:fillColor="#E0E0E0"
+          android:pathData="M 50 0 C 77.6142374915 0 100 22.3857625085 100 50 C 100 77.6142374915 77.6142374915 100 50 100 C 22.3857625085 100 0 77.6142374915 0 50 C 0 22.3857625085 22.3857625085 0 50 0 Z"
+          android:strokeWidth="1"/>
+      <path
+          android:fillColor="#FFFFFF"
+          android:pathData="M44.3143116,72.4665502 C43.82766,72.4664494 43.3652044,72.2543138
 43.0476759,71.8855247 C38.6435022,66.8945152 31.5332019,66.8436754
 31.3792302,66.8436754 C30.4326001,66.8496921 29.6603273,66.0871743
 29.6543106,65.1405443 C29.6482939,64.1939142 30.4108116,63.4216414
@@ -56,7 +55,8 @@ C48.2943367,61.0983391 49.0506763,60.3419994 49.9836685,60.3419994
 C50.9166607,60.3419994 51.6730003,61.0983391 51.6730003,62.0313312
 L51.6730003,72.2399503 C51.6768692,72.6918463 51.5010561,73.1267689
 51.1842414,73.4490319 C50.8674267,73.7712948 50.4355647,73.9544973
-49.9836684,73.9583333 L49.9836684,73.9583333 Z" />
-        </group>
+49.9836684,73.9583333 L49.9836684,73.9583333 Z"
+          android:strokeWidth="1"/>
     </group>
+  </group>
 </vector>
