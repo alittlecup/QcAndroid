@@ -14,6 +14,7 @@ import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
 import cn.qingchengfit.utils.LogUtil;
+import com.tencent.qcloud.timchat.chatmodel.RecruitModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -152,7 +153,7 @@ public class SeekPositionPresenter extends BasePresenter {
      */
     public void sendResume(String jobid) {
         HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("id", jobid);
+        params.put("job_id", jobid);
         RxRegiste(restRepository.createPostApi(PostApi.class)
             .sendResume(params)
             .subscribeOn(Schedulers.io())
@@ -168,6 +169,24 @@ public class SeekPositionPresenter extends BasePresenter {
                     view.onShowError(throwable.getMessage());
                 }
             }));
+    }
+
+    public RecruitModel getRecruitModel(Job job){
+        RecruitModel recruitModel = new RecruitModel();
+        recruitModel.id = job.id;
+        recruitModel.address = job.gd_district.city.name + job.gd_district.name + job.gym.name;
+        recruitModel.gender = job.gender;
+        recruitModel.photo = job.gym.photo;
+        recruitModel.max_age = job.max_age;
+        recruitModel.min_age = job.min_age;
+        recruitModel.max_height = job.max_height;
+        recruitModel.min_height = job.min_height;
+        recruitModel.max_salary = job.max_salary;
+        recruitModel.min_salary = job.min_salary;
+        recruitModel.max_work_year = job.max_work_year;
+        recruitModel.min_work_year = job.min_work_year;
+        recruitModel.name = job.name;
+        return recruitModel;
     }
 
     public List<String> filterSalary(){
@@ -193,8 +212,6 @@ public class SeekPositionPresenter extends BasePresenter {
         void starOK();
 
         void unStarOk();
-
-        void sendResumeOk();
 
         void onJobsIndex(Number completed, int fair_count, String avatar, String fiar_banner);
     }

@@ -2,9 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="303dp"
+    android:layout_width="330dp"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:orientation="vertical"
     >
 
@@ -14,6 +15,7 @@
       android:layout_marginTop="20dp"
       android:text="确定投递简历？"
       style="@style/QcTextStyleLargeDark"
+      android:layout_marginBottom="12dp"
       />
 
   <TextView
@@ -33,6 +35,7 @@
       android:text="完善我的简历"
       android:textColor="#6eb8f1"
       android:textSize="15sp"
+      android:layout_marginBottom="20dp"
       />
 
   <CheckBox
@@ -43,6 +46,7 @@
       android:textColor="@color/text_warm"
       android:visibility="gone"
       tools:visibility="visible"
+      android:layout_marginBottom="32dp"
       />
 
   <android.support.v4.widget.Space

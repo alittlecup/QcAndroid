@@ -80,9 +80,13 @@ public abstract class BaseFragment extends Fragment implements CView {
         view.setBackgroundResource(R.color.bg_grey);
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
-                return false;
+                return isBlockTouch();
             }
         });
+    }
+
+    public boolean isBlockTouch() {
+        return true;
     }
 
     @Override public void onAttach(Context context) {

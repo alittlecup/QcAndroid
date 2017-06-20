@@ -15,8 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import cn.qingchengfit.model.common.BriefInfo;
+import cn.qingchengfit.utils.BitmapUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.widgets.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import java.util.List;
 
 /**
@@ -74,14 +78,36 @@ public class RichTxtFragment extends BaseFragment {
                     et.append("\n");
                     et.append(briefInfo.getText());
                 } else {
-
+                    et.append("<img src=\"" + briefInfo.getImg() + "\" />");
+                    insertImg(briefInfo.getImg());
                 }
             }
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
+    public void insertImg(String url) {
+        final String tempUrl = "<img src=\"" + url + "\" />";
+        Glide.with(getContext()).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                Bitmap bitmap = BitmapUtils.getWidthScale(resource, et.getWidth());
+                SpannableString spannableString = new SpannableString(tempUrl);
+                ImageSpan imageSpan = new ImageSpan(getContext(), bitmap);
+                spannableString.setSpan(imageSpan, 0, tempUrl.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                // 将选择的图片追加到EditText中光标所在位置
+                int index = et.getSelectionStart();
+                // 获取光标所在位置
+                Editable edit_text = et.getEditableText();
+                if (index < 0 || index >= edit_text.length()) {
+                    edit_text.append(spannableString);
+                } else {
+                    edit_text.insert(index, spannableString);
+                }
+                edit_text.insert(index + spannableString.length(), "\n");
+            }
+        });
+    }
 
     public void insertImg(String url, String filePath) {
         String tempUrl = "<img src=\"" + url + "\" />";
@@ -107,5 +133,13 @@ public class RichTxtFragment extends BaseFragment {
             edit_text.insert(index, spannableString);
         }
         edit_text.insert(index + spannableString.length(), "\n");
+    }
+
+    public String getContent() {
+        return et.getText().toString();
+    }
+
+    @Override public boolean isBlockTouch() {
+        return false;
     }
 }

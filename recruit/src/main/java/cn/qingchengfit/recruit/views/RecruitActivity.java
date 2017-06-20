@@ -54,12 +54,19 @@ public class RecruitActivity extends BaseAcitivity implements HasSupportFragment
                     router.home();
                     break;
                 case "resume":
+                    router.resumeHome();
+                    break;
+                case "job":
+                    break;
+                case "company":
+                    break;
+                case "fair":
                     break;
                 default:
                     break;
             }
         } else {
-            router.home();
+            //router.home();
         }
     }
 

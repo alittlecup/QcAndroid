@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.os.Environment;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -84,6 +84,22 @@ public class BitmapUtils {
 
 
     }
+
+    public static Bitmap getWidthScale(Bitmap bm, int newWidth) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        // 设置想要的大小
+        int newHeight = height * newWidth / width;
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+    }
+
 
     //计算图片的缩放值
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {

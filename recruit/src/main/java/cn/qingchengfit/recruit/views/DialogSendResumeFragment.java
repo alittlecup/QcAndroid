@@ -1,11 +1,15 @@
 package cn.qingchengfit.recruit.views;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -14,7 +18,14 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.model.Job;
+import cn.qingchengfit.recruit.presenter.SeekPositionPresenter;
 import cn.qingchengfit.utils.LogUtil;
+import com.google.gson.Gson;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
+import com.tencent.qcloud.timchat.ui.qcchat.AddConversationProcessor;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -45,16 +56,32 @@ public class DialogSendResumeFragment extends DialogFragment {
     @BindView(R2.id.btn_sent) TextView btnSent;
     Unbinder unbinder;
     private int completedPersent = 0;
+    private OnSendResumeListener onSendResumeListener;
 
-    public static DialogSendResumeFragment newCompletedSend(int persent) {
+    public static DialogSendResumeFragment newCompletedSend(int persent, OnSendResumeListener listener) {
         DialogSendResumeFragment d = new DialogSendResumeFragment();
         d.completedPersent = persent;
+        d.setOnSendResumeListener(listener);
         return d;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            DisplayMetrics dm = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+            dialog.getWindow().setLayout((int) (dm.widthPixels * 0.75), ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+    }
+
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         View view = inflater.inflate(R.layout.dialog_send_resume, container, false);
         unbinder = ButterKnife.bind(this, view);
+        btnGoResume.setCompoundDrawablesWithIntrinsicBounds(0,0,btnGoResume.getMinimumWidth(),btnGoResume.getMinimumHeight());
         btnGoResume.setCompoundDrawablesWithIntrinsicBounds(null, null,
             ContextCompat.getDrawable(getContext(), R.drawable.vd_arrow_right_blue_11x5dp), null);
         if (completedPersent > 80) {
@@ -67,6 +94,10 @@ public class DialogSendResumeFragment extends DialogFragment {
             btnGoResume.setText("完善我的简历");
         }
         return view;
+    }
+
+    public void setOnSendResumeListener(OnSendResumeListener onSendResumeListener) {
+        this.onSendResumeListener = onSendResumeListener;
     }
 
     @Override public void onDestroyView() {
@@ -107,7 +138,14 @@ public class DialogSendResumeFragment extends DialogFragment {
      * 发送简历
      */
     @OnClick(R2.id.btn_sent) public void onBtnSentClicked() {
-        dismiss();
         LogUtil.d(this.getClass(), "发送简历");
+        dismiss();
+        if (onSendResumeListener != null){
+            onSendResumeListener.onSend();
+        }
+    }
+
+    public interface OnSendResumeListener{
+        void onSend();
     }
 }

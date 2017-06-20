@@ -197,7 +197,7 @@ import javax.inject.Inject;
      */
     @OnClick(R2.id.civ_birthday) public void onMofifyinfoBirthdayClicked() {
         if (timeDialogWindow == null) {
-            timeDialogWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH);
+            timeDialogWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         }
         timeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date date) {

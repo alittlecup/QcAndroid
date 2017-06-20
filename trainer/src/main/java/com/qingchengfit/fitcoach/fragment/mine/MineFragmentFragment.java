@@ -211,9 +211,7 @@ public class MineFragmentFragment extends BaseFragment {
                 startActivity(toStudnet);
                 break;
             case R.id.layout_my_resume:
-                baseRouter.routerTo("recruit", getActivity());
                 startActivity(new Intent("cn.qingchengfit.staffkit", Uri.parse("qccoach://resume/")));
-
                 break;
             case R.id.layout_my_courseplan:
                 Intent tCoursePlan = new Intent(getContext(), FragActivity.class);

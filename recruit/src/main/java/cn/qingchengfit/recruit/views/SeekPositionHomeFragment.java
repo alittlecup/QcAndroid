@@ -2,13 +2,10 @@ package cn.qingchengfit.recruit.views;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,7 +85,7 @@ public class SeekPositionHomeFragment extends BaseFragment
 
   @BindView(R2.id.et_search) EditText etSearch;
   @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
   @BindView(R2.id.smooth_app_bar_layout) AppBarLayout smoothAppBarLayout;
   @BindView(R2.id.qft_city) QcFilterToggle qftCity;
   @BindView(R2.id.qft_salary) QcFilterToggle qftSalary;
@@ -161,6 +158,10 @@ public class SeekPositionHomeFragment extends BaseFragment
     getChildFragmentManager().beginTransaction().hide(filterDamenFragment).commit();
     getChildFragmentManager().beginTransaction().hide(filterLeftRightFragment).commit();
     fragRecruitFilter.getLayoutParams().height = 0;
+  }
+
+  @Override public boolean isBlockTouch() {
+    return false;
   }
 
   @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
@@ -250,10 +251,6 @@ public class SeekPositionHomeFragment extends BaseFragment
   }
 
   @Override public void unStarOk() {
-
-  }
-
-  @Override public void sendResumeOk() {
 
   }
 

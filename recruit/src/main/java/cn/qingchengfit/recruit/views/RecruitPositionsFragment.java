@@ -55,6 +55,10 @@ public class RecruitPositionsFragment extends VpFragment {
     @Inject public RecruitPositionsFragment() {
     }
 
+    @Override public boolean isBlockTouch() {
+        return false;
+    }
+
     @Override public String getTitle() {
         return "招聘职位";
     }

@@ -19,6 +19,7 @@ import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.CitiesChooser;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;

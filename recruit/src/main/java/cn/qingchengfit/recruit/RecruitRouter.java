@@ -121,8 +121,8 @@ public class RecruitRouter extends InnerRouter {
     }
 
     public void toJobFairDetail() {
-
     }
+
     /**
      * 人才市场 人才浏览 或者叫 招聘版主页
      */

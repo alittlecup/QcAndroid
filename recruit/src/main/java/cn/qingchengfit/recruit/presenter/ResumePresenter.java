@@ -14,6 +14,7 @@ import cn.qingchengfit.recruit.network.response.CertificateListWrap;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
 import cn.qingchengfit.recruit.network.response.ResumeHomeWrap;
 import cn.qingchengfit.recruit.network.response.WorkExpListWrap;
+import com.tencent.qcloud.timchat.chatmodel.ResumeModel;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -49,6 +50,18 @@ public class ResumePresenter extends BasePresenter {
                     }
                 }
             }));
+    }
+
+    public ResumeModel dealResumeMessage(ResumeHome resumeHome){
+        ResumeModel resumeModel = new ResumeModel();
+        resumeModel.id = resumeHome.id;
+        resumeModel.username = resumeHome.username;
+        resumeModel.avatar = resumeHome.avatar;
+        resumeModel.birthday = resumeHome.birthday;
+        resumeModel.work_year = resumeHome.work_year;
+        resumeModel.gender = resumeHome.gender;
+        resumeModel.max_education = resumeHome.max_education;
+        return resumeModel;
     }
 
     public void queryEducations() {

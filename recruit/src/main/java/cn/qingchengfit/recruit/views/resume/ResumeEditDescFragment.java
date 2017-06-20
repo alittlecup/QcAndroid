@@ -96,7 +96,7 @@ public class ResumeEditDescFragment extends BaseFragment {
     }
 
     @OnClick(R2.id.btn_insert_img) public void onBtnInsertImgClicked() {
-        if (choosePictureFragmentDialog != null) choosePictureFragmentDialog = ChoosePictureFragmentNewDialog.newInstance();
+        if (choosePictureFragmentDialog == null) choosePictureFragmentDialog = ChoosePictureFragmentNewDialog.newInstance();
         choosePictureFragmentDialog.setResult(new ChoosePictureFragmentNewDialog.ChoosePicResult() {
             @Override public void onChoosefile(String filePath) {
 
@@ -110,6 +110,10 @@ public class ResumeEditDescFragment extends BaseFragment {
     }
 
     @OnClick(R2.id.btn_comfirm) public void onBtnComfirmClicked() {
+        if (richTxtFragment != null) richTxtFragment.getContent();
+    }
 
+    @Override public boolean isBlockTouch() {
+        return false;
     }
 }

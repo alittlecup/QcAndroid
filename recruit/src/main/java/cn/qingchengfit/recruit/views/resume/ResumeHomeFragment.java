@@ -286,7 +286,7 @@ public class ResumeHomeFragment extends BaseFragment
             commonFlexAdapter.addItem(new ResumeEmptyItem(5, getContext()));
         }
 
-        if (TextUtils.isEmpty(resumeHome.self_description)) {
+        if (!TextUtils.isEmpty(resumeHome.self_description)) {
             commonFlexAdapter.addItem(new ResumeTitleItem(6, getContext(), true));
             commonFlexAdapter.addItem(new ResumeWebDescItem(resumeHome.self_description));
         } else {

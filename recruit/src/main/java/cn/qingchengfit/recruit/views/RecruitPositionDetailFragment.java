@@ -2,6 +2,7 @@ package cn.qingchengfit.recruit.views;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
@@ -11,8 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,11 +23,17 @@ import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.model.Certificate;
+import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.Job;
+import cn.qingchengfit.recruit.model.ResumeHome;
+import cn.qingchengfit.recruit.model.WorkExp;
+import cn.qingchengfit.recruit.presenter.ResumePresenter;
 import cn.qingchengfit.recruit.presenter.SeekPositionPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PhotoUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.google.android.flexbox.AlignItems;
@@ -60,7 +67,8 @@ import javax.inject.Inject;
  * Created by Paper on 2017/5/26.
  */
 public class RecruitPositionDetailFragment extends BaseFragment
-    implements SeekPositionPresenter.MVPView {
+    implements SeekPositionPresenter.MVPView, DialogSendResumeFragment.OnSendResumeListener,
+    ResumePresenter.MVPView {
 
   @BindView(R2.id.rv_demands) RecyclerView rvDemands;
   @BindView(R2.id.rv_welfare) RecyclerView rvWelfare;
@@ -69,7 +77,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
   @BindView(R2.id.tv_address) TextView tvAddress;
   @BindView(R2.id.img_right) ImageView imgRight;
   @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
   @BindView(R2.id.tv_position_name) TextView tvPositionName;
   @BindView(R2.id.tv_salary) TextView tvSalary;
   @BindView(R2.id.img_created_by) ImageView imgCreatedBy;
@@ -77,8 +85,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
   @BindView(R2.id.tv_position_crated_at) TextView tvPositionCratedAt;
   @Inject RecruitRouter router;
   @Inject SeekPositionPresenter presenter;
+  @Inject ResumePresenter resumePresenter;
   @BindView(R2.id.tv_position_desc) TextView tvPositionDesc;
   @BindView(R2.id.tv_position_require) TextView tvPositionRequire;
+  @BindView(R2.id.layout_successed) LinearLayout layoutSuccessed;
   private Job job;
 
   public static RecruitPositionDetailFragment newInstance(Job job) {
@@ -99,9 +109,8 @@ public class RecruitPositionDetailFragment extends BaseFragment
     View view = inflater.inflate(R.layout.fragment_seek_position_detail, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
+    resumePresenter.attachView(this);
     initToolbar(toolbar);
-    //onJob(job);
-    //onGym(job.gym);
     presenter.queryDetail(job.id);
     return view;
   }
@@ -112,8 +121,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
     //toolbar.inflateMenu(R.dimen.);
   }
 
-  @Override
-  public void onJob(Job job) {
+  @Override public void onJob(Job job) {
     if (job == null) return;
     this.job = job;
     tvPositionName.setText(job.name);
@@ -181,18 +189,17 @@ public class RecruitPositionDetailFragment extends BaseFragment
   }
 
   @Override public void starOK() {
-
+    hideLoadingTrans();
+    layoutSuccessed.setVisibility(View.VISIBLE);
+    new Handler().postDelayed(new Runnable() {
+      @Override public void run() {
+        layoutSuccessed.setVisibility(View.GONE);
+      }
+    }, 1000);
   }
 
   @Override public void unStarOk() {
-
-  }
-
-  /**
-   * 发送简历成功
-   */
-  @Override public void sendResumeOk() {
-
+    ToastUtils.show("发送失败，请重试");
   }
 
   @Override
@@ -230,10 +237,14 @@ public class RecruitPositionDetailFragment extends BaseFragment
 
   /**
    * 与他联系
+   *
+   * 传给聊天页面参数中加入userAction，1001表示职位，1002表示简历
    */
   @OnClick(R2.id.btn_contact_him) public void onBtnContactHimClicked() {
-    AddConversationProcessor addConversationProcessor = new AddConversationProcessor(getContext().getApplicationContext());
-    String jobStr = "{userAction:15, type:2, address:\"北京朝阳区\", name:\"trytrytry\", iconUrl:\"http://zoneke-img.b0.upaiyun.com/45accede5e36007f542a60327cb5cde2.png!120x120\",max_salary:15,min_salary:10,min_height:100,max_height:150,min_work_year:3,max_work_year:8,gender:1,min_age:20,max_age:32}";
+    AddConversationProcessor addConversationProcessor =
+        new AddConversationProcessor(getContext().getApplicationContext());
+    Gson gson = new Gson();
+    String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
     addConversationProcessor.addRecruitConversation("qctest_" + job.created_by.id, "", jobStr);
   }
 
@@ -241,7 +252,36 @@ public class RecruitPositionDetailFragment extends BaseFragment
    * 发送简历
    */
   @OnClick(R2.id.btn_send_resume) public void onBtnSendResumeClicked() {
-    DialogSendResumeFragment.newCompletedSend(89)
+    DialogSendResumeFragment.newCompletedSend(89, this)
         .show(getChildFragmentManager(), DialogSendResumeFragment.class.getName());
+  }
+
+  @Override public void onSend() {
+    showLoadingTrans();
+    resumePresenter.queryResumeHome();
+  }
+
+  @Override public void onBaseInfo(ResumeHome resumeHome) {
+    presenter.sendResume(job.id);
+    AddConversationProcessor addConversationProcessor =
+        new AddConversationProcessor(getContext().getApplicationContext());
+    Gson gson = new Gson();
+    String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
+    String resumeStr = "{userAction:1002, data:"
+        + gson.toJson(resumePresenter.dealResumeMessage(resumeHome))
+        + "}";
+    addConversationProcessor.sendResumeOrRecruit("qctest_" + job.created_by.id, resumeStr, jobStr);
+  }
+
+  @Override public void onWorkExpList(List<WorkExp> workExps) {
+
+  }
+
+  @Override public void onEduExpList(List<Education> eduExps) {
+
+  }
+
+  @Override public void onCertiList(List<Certificate> certificates) {
+
   }
 }
