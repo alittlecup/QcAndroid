@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.views.fragments.LazyloadFragment;
 import com.qingchengfit.fitcoach.R;

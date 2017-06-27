@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.di.CourseComponent;
@@ -14,7 +14,7 @@ import com.qingchengfit.fitcoach.fragment.batch.list.CourseBatchDetailFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.RestRepository;
 
-public class CourseActivity extends BaseAcitivity {
+public class CourseActivity extends BaseActivity {
     public static final int TO_CHOOSE = 1;
     public static final int TO_CHOOSE_PLAN = 2;
     public static final int TO_GROUP_BATCH = 3;

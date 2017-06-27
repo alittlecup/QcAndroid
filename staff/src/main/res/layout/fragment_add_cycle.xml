@@ -26,7 +26,7 @@
         style="@style/TextTitleHint"
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/starttime"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -35,7 +35,7 @@
 
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/endtime"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -59,7 +59,7 @@
 
     <include layout="@layout/divider_grey"/>
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/week1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -69,7 +69,7 @@
         app:civ_showright="true"
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/week2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -80,7 +80,7 @@
 
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/week3"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -91,7 +91,7 @@
 
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/week4"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -102,7 +102,7 @@
 
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/week5"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -113,7 +113,7 @@
 
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/week6"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -124,7 +124,7 @@
 
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/week7"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"

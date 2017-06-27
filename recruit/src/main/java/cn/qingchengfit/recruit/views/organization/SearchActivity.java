@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -24,14 +24,15 @@ import javax.inject.Inject;
  * <p>
  * Created by Paper on 15/9/17 2015.
  */
-public class SearchActivity extends BaseAcitivity implements SearchInterface, HasSupportFragmentInjector {
+public class SearchActivity extends BaseActivity
+    implements SearchInterface, HasSupportFragmentInjector {
 
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
   private FragmentManager mFragmentManager;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_search);
+    setContentView(R.layout.activity_search_recruit);
     int type = getIntent().getIntExtra("type", SearchFragment.TYPE_GYM);
     mFragmentManager = getSupportFragmentManager();
     mFragmentManager.beginTransaction()

@@ -20,34 +20,34 @@ import android.webkit.JavascriptInterface;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.common.Contact;
+import cn.qingchengfit.model.common.PayEvent;
+import cn.qingchengfit.model.common.PlatformInfo;
+import cn.qingchengfit.model.common.ShareBean;
+import cn.qingchengfit.model.common.ToolbarAction;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.BitmapUtils;
 import cn.qingchengfit.utils.ChoosePicUtils;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PhoneFuncUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.fragments.ShareDialogFragment;
+import cn.qingchengfit.widgets.CustomSwipeRefreshLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
-import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.bean.Contact;
-import com.qingchengfit.fitcoach.bean.PayEvent;
-import com.qingchengfit.fitcoach.bean.PlatformInfo;
-import com.qingchengfit.fitcoach.bean.ShareBean;
-import com.qingchengfit.fitcoach.bean.ToolbarAction;
-import com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.tencent.mm.sdk.modelpay.PayReq;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.CookieSyncManager;
@@ -85,7 +85,8 @@ import rx.schedulers.Schedulers;
  * <p>
  * Created by Paper on 15/10/12 2015.
  */
-public class WebActivityWithShare extends BaseAcitivity implements WebActivityInterface, CustomSwipeRefreshLayout.CanChildScrollUpCallback {
+public class WebActivityWithShare extends BaseActivity
+    implements WebActivityInterface, CustomSwipeRefreshLayout.CanChildScrollUpCallback {
     //    OriginWebFragment originWebFragment;
     private TextView mToobarActionTextView;
     private Toolbar mToolbar;

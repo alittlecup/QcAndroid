@@ -33,6 +33,19 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 public class CmStringUtils {
 
+  public static String getMaybeInt(float s) {
+    int ret = (int) s;
+    if (ret == s) {
+      return ret + "";
+    } else {
+      return String.format(Locale.CHINA, "%.1f", s);
+    }
+  }
+
+  public static boolean isEmpty(String str) {
+    return (str == null || str.equalsIgnoreCase(""));
+  }
+
     public static String getMoneyStr(float fo) {
         try {
             boolean hasX = ((int) (fo * 100) % 100) != 0;
@@ -142,7 +155,7 @@ public class CmStringUtils {
             } else {
                 sb.append("<img src=\"");
                 sb.append(info.getImg());
-                sb.append("\" />");
+              sb.append("\"/>");
             }
         }
         return sb.toString();

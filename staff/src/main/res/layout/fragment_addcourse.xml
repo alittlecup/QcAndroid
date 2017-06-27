@@ -61,14 +61,14 @@
 
   <include layout="@layout/divider_grey_left_right"/>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/name"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       civ:civ_lable="@string/name_call"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/course_length"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -76,14 +76,14 @@
       civ:civ_lable="@string/course_length"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/min_num"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       civ:civ_lable="@string/course_min_num"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/course_plan"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -103,7 +103,7 @@
 
   <include layout="@layout/divider_grey"/>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/suit_gyms"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

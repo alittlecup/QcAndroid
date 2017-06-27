@@ -11,18 +11,18 @@
 
   <include layout="@layout/common_toolbar"/>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/name"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_lable="@string/name_call"
       civ:civ_showdivier="true"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/type"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_clickable="true"
       civ:civ_content="@string/cardtype_value"
       civ:civ_lable="@string/type"

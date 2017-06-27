@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/civ"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/qc_item_height"
     android:orientation="vertical"
     app:civ_inputnum="true"
     app:civ_nonnull="true"

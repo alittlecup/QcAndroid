@@ -12,7 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.qingchengfit.inject.model.GymWrapper;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;

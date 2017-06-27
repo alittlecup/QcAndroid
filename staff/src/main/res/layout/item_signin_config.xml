@@ -19,7 +19,7 @@
       app:sw_text_color="@color/qc_text_black"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/sw_signin_config_fee"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

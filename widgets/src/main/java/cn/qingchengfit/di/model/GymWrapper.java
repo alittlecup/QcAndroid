@@ -1,6 +1,6 @@
 package cn.qingchengfit.di.model;
 
-import cn.qingchengfit.RxBus;
+import android.text.TextUtils;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.GymUtils;
@@ -33,6 +33,7 @@ public class GymWrapper {
     private Brand brand;
     private boolean noService;
     private boolean isOutOfDate;
+  private boolean isSingleMode;
 
     private GymWrapper(Builder builder) {
         coachService = builder.coachService;
@@ -56,7 +57,7 @@ public class GymWrapper {
     }
 
     public boolean inBrand() {
-        return coachService == null;
+      return coachService == null || TextUtils.isEmpty(coachService.getId());
     }
 
     public boolean isPro() {
@@ -64,22 +65,23 @@ public class GymWrapper {
     }
 
     public HashMap<String, Object> getParams() {
-        return GymUtils.getParams(coachService);
+      return GymUtils.getParams(coachService, brand);
     }
 
-    //public HashMap<String,Object> getShopParams(){
-    //    if (!StringUtils.isEmpty(coachService.shop_id()) && StringUtils.isEmpty(coachService.brand_id())) {
-    //        HashMap<String, Object> hashMap = new HashMap<>();
-    //        hashMap.put("brand_id",coachService.brand_id());
-    //        hashMap.put("shop_id",coachService.shop_id());
-    //        return hashMap;
-    //    }else
-    //        return GymUtils.getParams(coachService,brand);
-    //}
+  public HashMap<String, Object> getShopParams() {
+    if (!TextUtils.isEmpty(coachService.shop_id()) && TextUtils.isEmpty(coachService.brand_id())) {
+      HashMap<String, Object> hashMap = new HashMap<>();
+      hashMap.put("brand_id", coachService.brand_id());
+      hashMap.put("shop_id", coachService.shop_id());
+      return hashMap;
+    } else {
+      return GymUtils.getParams(coachService, brand);
+    }
+  }
 
     public String id() {
         if (coachService != null) {
-            return coachService.id;
+          return coachService.id();
         } else {
             return "";
         }
@@ -88,14 +90,17 @@ public class GymWrapper {
     /**
      * 是否为单场馆模式
      */
-    // TODO: 2017/3/2
     public boolean singleMode() {
-        return false;
+      return isSingleMode;
     }
+
+  public void setSingleMode(boolean s) {
+    this.isSingleMode = s;
+  }
 
     public String model() {
         if (coachService != null) {
-            return coachService.model;
+          return coachService.model();
         } else {
             return "";
         }
@@ -111,53 +116,53 @@ public class GymWrapper {
 
     public String photo() {
         if (coachService != null) {
-            return coachService.photo;
+          return coachService.photo();
         } else {
             return "";
         }
     }
 
-    //public String phone() {
-    //    if (coachService != null) {
-    //        return coachService.phone;
-    //    } else {
-    //        return "";
-    //    }
-    //}
+  public String phone() {
+    if (coachService != null) {
+      return coachService.phone();
+    } else {
+      return "";
+    }
+  }
 
-    //public String shop_id() {
-    //    if (coachService != null) {
-    //        return coachService.shop_id;
-    //    } else {
-    //        return "";
-    //    }
-    //}
+  public String shop_id() {
+    if (coachService != null) {
+      return coachService.shop_id();
+    } else {
+      return "";
+    }
+  }
 
     public String name() {
         if (coachService != null) {
-            return coachService.name;
+          return coachService.name();
         } else {
             return "";
         }
     }
 
-    //public boolean can_trial() {
-    //    if (coachService != null) {
-    //        return coachService.can_trial;
-    //    } else {
-    //        return false;
-    //    }
-    //}
+  public boolean can_trial() {
+    if (coachService != null) {
+      return coachService.can_trial();
+    } else {
+      return false;
+    }
+  }
 
     public String brand_id() {
         if (brand != null) return brand.getId();
-        if (coachService != null) return coachService.brand_id;
+      if (coachService != null) return coachService.brand_id();
         return "";
     }
 
     public String brand_name() {
         if (brand != null) return brand.getName();
-        if (coachService != null) return coachService.brand_name;
+      if (coachService != null) return coachService.brand_name();
         return "";
     }
 
@@ -167,12 +172,13 @@ public class GymWrapper {
 
     public void setCoachService(CoachService coachService) {
         this.coachService = coachService;
-        if (coachService != null) RxBus.getBus().post(coachService);
     }
 
     public Brand getBrand() {
         if (brand == null && coachService != null) {
-            return new Brand.Builder().id(coachService.brand_id).name(coachService.brand_name).build();
+          return new Brand.Builder().id(coachService.brand_id())
+              .name(coachService.brand_name())
+              .build();
         }
         return brand;
     }

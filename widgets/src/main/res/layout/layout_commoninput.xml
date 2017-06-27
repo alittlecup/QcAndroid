@@ -3,14 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     >
 
   <RelativeLayout
       android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
+      android:layout_height="wrap_content"
       android:background="@color/white"
       android:descendantFocusability="afterDescendants"
+      android:minHeight="@dimen/qc_item_height"
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:paddingRight="@dimen/activity_horizontal_margin"
       >
@@ -20,8 +21,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="119dp"
+        tools:text="@string/test_long"
         style="@style/QcTextStyleStandardDark"
-        tools:text="标签"
         />
 
     <ImageView
@@ -43,24 +47,30 @@
         android:id="@+id/commoninput_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/commoninput_righticon"
+        android:layout_toStartOf="@id/commoninput_righticon"
         android:background="@color/transparent"
+        android:ellipsize="end"
         android:focusable="true"
-        android:gravity="end|center_vertical"
-        android:inputType="number"
-        android:maxLength="25"
-        android:minWidth="30dp"
+        android:gravity="end"
+        android:hint=""
+        android:imeOptions="actionDone"
+        android:lines="1"
+        android:maxWidth="200dp"
+        android:minWidth="90dp"
         style="@style/Qc.EditTextStyle"
         />
 
     <View
         android:id="@+id/commoninput_divider"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_divider_height"
+        android:layout_height="1px"
         android:layout_alignParentBottom="true"
-        android:background="@color/divider_white"
+        android:background="@color/divider_grey"
+
         >
     </View>
 
@@ -68,8 +78,9 @@
         android:id="@+id/disable"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
-        android:background="@color/half_white"
-        tools:visibility="gone"
+        android:background="#aaffffff"
+        android:clickable="true"
+        android:visibility="gone"
         />
   </RelativeLayout>
 

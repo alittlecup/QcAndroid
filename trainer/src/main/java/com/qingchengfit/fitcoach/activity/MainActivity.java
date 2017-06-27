@@ -26,14 +26,17 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.NetWorkUtils;
+import cn.qingchengfit.utils.PhoneFuncUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
@@ -44,8 +47,6 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
@@ -104,7 +105,7 @@ import static com.qingchengfit.fitcoach.App.diskLruCache;
 
 //import javax.inject.Inject;
 
-public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
+public class MainActivity extends BaseActivity implements OpenDrawerInterface {
 
     public static final String ACTION = "main_action";
     public static final int LOGOUT = 0;

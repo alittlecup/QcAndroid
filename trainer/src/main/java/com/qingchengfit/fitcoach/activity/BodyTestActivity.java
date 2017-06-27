@@ -36,7 +36,7 @@ public class BodyTestActivity extends AppCompatActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_frag);
+      setContentView(R.layout.activity_base_frag);
         mModel = getIntent().getStringExtra("model");
         mModelId = getIntent().getStringExtra("modelid");
         measureId = getIntent().getStringExtra("id");

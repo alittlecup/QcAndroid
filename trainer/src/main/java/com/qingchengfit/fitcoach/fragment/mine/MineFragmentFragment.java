@@ -16,10 +16,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.GuideWindow;
 import com.bumptech.glide.Glide;
@@ -30,7 +31,6 @@ import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
-import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.schedule.SpecialWebActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -211,7 +211,14 @@ public class MineFragmentFragment extends BaseFragment {
                 startActivity(toStudnet);
                 break;
             case R.id.layout_my_resume:
-                startActivity(new Intent("cn.qingchengfit.staffkit", Uri.parse("qccoach://resume/")));
+              try {
+                Intent intent = new Intent();
+                intent.setPackage(getContext().getPackageName());
+                intent.setData(Uri.parse("qccoach://resume/"));
+                startActivity(intent);
+              } catch (Exception e) {
+
+              }
                 break;
             case R.id.layout_my_courseplan:
                 Intent tCoursePlan = new Intent(getContext(), FragActivity.class);

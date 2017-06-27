@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.card;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;

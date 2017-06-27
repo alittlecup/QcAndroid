@@ -8,8 +8,112 @@
     android:orientation="vertical"
     >
 
-  <include layout="@layout/common_simple_toolbar"/>
+  <RelativeLayout
+      android:id="@+id/toolbar_layout"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      >
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?colorPrimary"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Qc.toolbarStyle"
+        app:popupTheme="@style/ToolbarStyle.Overflow"
+        app:theme="@style/Qc.toolbarStyle"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        />
+
+    <TextView
+        android:id="@+id/text_toolbar_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:padding="6dp"
+        android:text="取消"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:visibility="gone"
+        />
+
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        tools:text="测试"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/searchview"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:visibility="gone"
+        >
+
+      <FrameLayout
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="5"
+          >
+
+        <EditText
+            android:id="@+id/tb_searchview_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_searchview"
+            android:drawableLeft="@drawable/ic_search_black"
+            android:hint="搜索职位/公司"
+            android:imeOptions="actionDone"
+            android:lines="1"
+            android:maxLength="11"
+            android:maxLines="1"
+            android:paddingLeft="16dp"
+            />
+
+        <ImageView
+            android:id="@+id/tb_searchview_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/vd_close_grey_24dp"
+            />
+      </FrameLayout>
+
+      <Button
+          android:id="@+id/tb_searchview_cancle"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="5dp"
+          android:layout_weight="1"
+          android:background="@color/transparent"
+          android:text="@string/pickerview_cancel"
+          />
+    </LinearLayout>
+
+  </RelativeLayout>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
   <android.support.design.widget.CoordinatorLayout
       xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -38,7 +142,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="112dp"
+            android:layout_height="88dp"
+            android:layout_marginBottom="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             >
@@ -56,7 +161,7 @@
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="8dp"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/vd_recruit_applicant_sent"
                 />
@@ -64,7 +169,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="75dp"
+                android:layout_marginTop="62dp"
                 android:text="我投递的"
                 style="@style/QcTextStyleSmallDark"
                 />
@@ -84,12 +189,13 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="8dp"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/vd_recruit_applicant_invite"
                 />
 
             <View
+                android:id="@+id/v_has_invited"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_alignEnd="@id/img_invited"
@@ -97,6 +203,7 @@
                 android:layout_alignTop="@id/img_invited"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/qcw_shape_circle_red"
+                android:visibility="gone"
 
                 />
 
@@ -104,7 +211,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="75dp"
+                android:layout_marginTop="62dp"
                 android:text="收到的邀约"
                 style="@style/QcTextStyleSmallDark"
                 />
@@ -123,7 +230,7 @@
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="8dp"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/vd_recruit_applicant_starred"
                 />
@@ -131,7 +238,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="75dp"
+                android:layout_marginTop="62dp"
                 android:text="我的收藏"
                 style="@style/QcTextStyleSmallDark"
                 />
@@ -182,19 +289,34 @@
                 android:layout_toEndOf="@id/img_my_resume"
                 android:layout_toRightOf="@id/img_my_resume"
                 android:text="我的简历"
-                style="@style/QcTextStyleLargeDark"
+                style="@style/QcTextStyleStandardDark"
                 />
 
-            <TextView
-                android:id="@+id/tv_resume_completed"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/img_my_resume"
                 android:layout_toEndOf="@id/img_my_resume"
                 android:layout_toRightOf="@id/img_my_resume"
-                android:text="简历完善度"
-                style="@style/QcTextStyleXsGrey"
-                />
+                android:orientation="horizontal"
+                >
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="简历完善度"
+                  style="@style/QcTextStyleXsGrey"
+                  />
+
+              <TextView
+                  android:id="@+id/tv_resume_completed"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="50%"
+                  style="@style/QcTextStyleXsGrey"
+                  />
+            </LinearLayout>
+
           </RelativeLayout>
 
           <RelativeLayout
@@ -226,7 +348,7 @@
                 android:layout_toEndOf="@id/img_my_job_fair"
                 android:layout_toRightOf="@id/img_my_job_fair"
                 android:text="我的专场招聘会"
-                style="@style/QcTextStyleLargeDark"
+                style="@style/QcTextStyleStandardDark"
                 />
 
             <TextView
@@ -245,6 +367,13 @@
 
         <include layout="@layout/divider_grey"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_vertical_margin"
+            android:background="@color/bg_grey"
+            />
+
+        <include layout="@layout/divider_grey"/>
       </LinearLayout>
 
       <LinearLayout
@@ -308,21 +437,25 @@
           android:layout_height="match_parent"
           />
 
-      <View
-          android:id="@+id/filter_shadow"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@color/black"
-          android:alpha="0.4"/>
-
-      <FrameLayout
-          android:id="@+id/frag_recruit_filter"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@color/white"/>
-
 
     </FrameLayout>
-
   </android.support.design.widget.CoordinatorLayout>
+
+    <View
+        android:id="@+id/filter_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:alpha="0.4"
+        android:background="@color/black"
+        android:visibility="gone"
+        />
+
+    <FrameLayout
+        android:id="@+id/frag_recruit_filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        />
+  </FrameLayout>
 </LinearLayout>

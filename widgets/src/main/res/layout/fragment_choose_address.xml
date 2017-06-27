@@ -51,7 +51,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/address"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_hint="@string/please_input_detail_address"
       app:civ_lable="@string/detail_address"
       />

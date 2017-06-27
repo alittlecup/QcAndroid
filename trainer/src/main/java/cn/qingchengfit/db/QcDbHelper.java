@@ -38,7 +38,7 @@ public class QcDbHelper extends SQLiteOpenHelper {
     private static BriteDatabase briteDatabase;
 
     @Inject public QcDbHelper(App context, LoginStatus loginStatus) {
-        super(context, loginStatus.getUserId() + "trainer.db", null, 1);
+      super(context, loginStatus.getUserId() + "trainer.db", null, 2);
 
         SqlBrite sqlBrite;
         sqlBrite = SqlBrite.create(new SqlBrite.Logger() {
@@ -60,6 +60,10 @@ public class QcDbHelper extends SQLiteOpenHelper {
     }
 
     @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+      if (oldVersion < 2) {
+        db.execSQL("DROP TABLE " + CoachServiceModel.TABLE_NAME);
+        db.execSQL("DROP TABLE " + userModel.TABLE_NAME);
+      }
+      onCreate(db);
     }
 }

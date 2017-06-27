@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.model.dbaction;
 
 import android.support.annotation.NonNull;
-import cn.qingchengfit.inject.model.GymWrapper;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.usecase.bean.Permission;

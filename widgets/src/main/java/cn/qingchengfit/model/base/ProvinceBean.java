@@ -3,7 +3,6 @@ package cn.qingchengfit.model.base;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,15 +22,15 @@ import java.util.List;
  */
 public class ProvinceBean implements Parcelable {
     public static final Creator<ProvinceBean> CREATOR = new Creator<ProvinceBean>() {
-        public ProvinceBean createFromParcel(Parcel source) {
+      @Override public ProvinceBean createFromParcel(Parcel source) {
             return new ProvinceBean(source);
         }
 
-        public ProvinceBean[] newArray(int size) {
+      @Override public ProvinceBean[] newArray(int size) {
             return new ProvinceBean[size];
         }
     };
-    @SerializedName("code") public int id;
+  @SerializedName("code") public String id;
     @SerializedName("name") public String name;
     @SerializedName("cities") public List<CityBean> cities;
 
@@ -39,10 +38,9 @@ public class ProvinceBean implements Parcelable {
     }
 
     protected ProvinceBean(Parcel in) {
-        this.id = in.readInt();
+      this.id = in.readString();
         this.name = in.readString();
-        this.cities = new ArrayList<CityBean>();
-        in.readList(this.cities, List.class.getClassLoader());
+      this.cities = in.createTypedArrayList(CityBean.CREATOR);
     }
 
     @Override public int describeContents() {
@@ -50,8 +48,8 @@ public class ProvinceBean implements Parcelable {
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
+      dest.writeString(this.id);
         dest.writeString(this.name);
-        dest.writeList(this.cities);
+      dest.writeTypedList(this.cities);
     }
 }

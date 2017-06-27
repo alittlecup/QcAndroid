@@ -18,8 +18,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.StudentScoreAwardRuleBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -28,8 +28,8 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -244,7 +244,7 @@ public class ScoreAwardAddFragment extends BaseFragment implements ScoreAwardAdd
         switch (view.getId()) {
             case R.id.tv_date_start:
                 if (pwTime == null) {
-                    pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+                  pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
                 }
                 pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
                     Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
@@ -260,7 +260,7 @@ public class ScoreAwardAddFragment extends BaseFragment implements ScoreAwardAdd
                 break;
             case R.id.tv_date_end:
                 if (pwTime == null) {
-                    pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+                  pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
                 }
                 pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
                     Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);

@@ -12,6 +12,7 @@ import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.usecase.bean.Permission;
 import com.squareup.sqlbrite.BriteDatabase;
 import com.squareup.sqlbrite.SqlBrite;
+import com.squareup.sqldelight.SqlDelightStatement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -28,9 +29,9 @@ public class QCDbManager {
     private static final String TAG = "QCDbManager";
     // rx响应式数据库,
     public static BriteDatabase briteDatabase;
-
+  static QCDbOpenHelper dbOpenHelper;
     @Inject public QCDbManager(App application) {
-        QCDbOpenHelper dbOpenHelper;
+
 
         // sqlbrite 初始化,构造出响应式数据库,添加log
         SqlBrite sqlBrite;
@@ -63,7 +64,9 @@ public class QCDbManager {
     }
 
     public static Observable<QcStudentBean> getStudentById(String id) {
-        return briteDatabase.createQuery(QcStudentBean.TABLE_NAME, QcStudentBean.FACTORY.getStudentById(id).statement)
+      SqlDelightStatement statement = QcStudentBean.FACTORY.getStudentById(id);
+      return briteDatabase.createQuery(QcStudentBean.TABLE_NAME, statement.statement,
+          statement.args)
             .mapToOne(new Func1<Cursor, QcStudentBean>() {
                 @Override public QcStudentBean call(Cursor cursor) {
                     return QcStudentBean.MAPPER.map(cursor);
@@ -72,7 +75,9 @@ public class QCDbManager {
     }
 
     public static Observable<QcStudentBean> getStudentByPhone(String phone) {
-        return briteDatabase.createQuery(QcStudentBean.TABLE_NAME, QcStudentBean.FACTORY.getStudentByPhone(phone).statement)
+      SqlDelightStatement statement = QcStudentBean.FACTORY.getStudentByPhone(phone);
+      return briteDatabase.createQuery(QcStudentBean.TABLE_NAME, statement.statement,
+          statement.args)
             .mapToOne(new Func1<Cursor, QcStudentBean>() {
                 @Override public QcStudentBean call(Cursor cursor) {
                     return QcStudentBean.MAPPER.map(cursor);
@@ -81,7 +86,9 @@ public class QCDbManager {
     }
 
     public static Observable<List<QcStudentBean>> getStudentByBrand(String brandid) {
-        return briteDatabase.createQuery(QcStudentBean.TABLE_NAME, QcStudentBean.FACTORY.getStudentByBrand(brandid).statement)
+      SqlDelightStatement statement = QcStudentBean.FACTORY.getStudentByBrand(brandid);
+      return briteDatabase.createQuery(QcStudentBean.TABLE_NAME, statement.statement,
+          statement.args)
             .mapToList(new Func1<Cursor, QcStudentBean>() {
                 @Override public QcStudentBean call(Cursor cursor) {
                     return QcStudentBean.MAPPER.map(cursor);
@@ -90,9 +97,10 @@ public class QCDbManager {
     }
 
     public static Observable<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid) {
-        // TODO: 2017/6/13 第二个参数有问题
-        return briteDatabase.createQuery(QcStudentBean.TABLE_NAME,
-            QcStudentBean.FACTORY.getStudentByBrandAndKeyWord(brandid, 2L, getLikeString(keyword)).statement)
+      String sqlStr = "SELECT *\n"
+          + "FROM QcStudentBean WHERE (username LIKE ? or phone LIKE ?) and brand_id = ? ";
+        return briteDatabase.createQuery(QcStudentBean.TABLE_NAME, sqlStr, getLikeString(keyword),
+            getLikeString(keyword), brandid)
             .mapToList(new Func1<Cursor, QcStudentBean>() {
                 @Override public QcStudentBean call(Cursor cursor) {
                     return QcStudentBean.MAPPER.map(cursor);
@@ -101,9 +109,9 @@ public class QCDbManager {
     }
 
     public static Observable<List<QcStudentBean>> getStudentByKeyWord(final String keyword) {
-        // TODO: 2017/6/13 第二个参数有问题
-        return briteDatabase.createQuery(QcStudentBean.TABLE_NAME,
-            QcStudentBean.FACTORY.getStudentByKeyWord(2L, getLikeString(keyword)).statement).mapToList(new Func1<Cursor, QcStudentBean>() {
+      String sqlStr = "SELECT *\n" + "FROM QcStudentBean WHERE (username LIKE ? or phone LIKE ?)";
+        return briteDatabase.createQuery(QcStudentBean.TABLE_NAME, sqlStr, getLikeString(keyword),
+            getLikeString(keyword)).mapToList(new Func1<Cursor, QcStudentBean>() {
             @Override public QcStudentBean call(Cursor cursor) {
                 return QcStudentBean.MAPPER.map(cursor);
             }
@@ -111,9 +119,10 @@ public class QCDbManager {
     }
 
     public static Observable<List<QcStudentBean>> getStudentByKeyWordShop(String brandid, String shopid, final String keyword) {
-        // TODO: 2017/6/13 第二个参数有问题
-        return briteDatabase.createQuery(QcStudentBean.TABLE_NAME,
-            QcStudentBean.FACTORY.getStudentByKeyWordShop(2L, getLikeString(keyword), brandid, getLikeString(shopid)).statement)
+      String sqlStr = "SELECT *\n"
+          + "FROM QcStudentBean WHERE (username LIKE ? or phone LIKE ?) and brand_id = ? and supoort_gym_ids LIKE ?";
+      return briteDatabase.createQuery(QcStudentBean.TABLE_NAME, sqlStr, getLikeString(keyword),
+          getLikeString(keyword), brandid, "%," + shopid + ",%")
             .mapToList(new Func1<Cursor, QcStudentBean>() {
                 @Override public QcStudentBean call(Cursor cursor) {
                     return QcStudentBean.MAPPER.map(cursor);
@@ -122,7 +131,9 @@ public class QCDbManager {
     }
 
     public static Observable<List<QcStudentBean>> getStudentByGym(String shopid) {
-        return briteDatabase.createQuery(QcStudentBean.TABLE_NAME, QcStudentBean.FACTORY.getStudentByGym(getLikeString(shopid)).statement)
+      return briteDatabase.createQuery(QcStudentBean.TABLE_NAME,
+          QcStudentBean.FACTORY.getStudentByGym(getLikeString(shopid)).statement,
+          QcStudentBean.FACTORY.getStudentByGym(getLikeString(shopid)).args)
             .mapToList(new Func1<Cursor, QcStudentBean>() {
                 @Override public QcStudentBean call(Cursor cursor) {
                     return QcStudentBean.MAPPER.map(cursor);
@@ -267,7 +278,9 @@ public class QCDbManager {
     }
 
     public static Observable<List<CoachService>> getAllCoachServiceByBrand(String brandId) {
-        return briteDatabase.createQuery(CoachService.TABLE_NAME, CoachService.FACTORY.getAllCoachServiceByBrand(brandId).statement)
+      return briteDatabase.createQuery(CoachService.TABLE_NAME,
+          CoachService.FACTORY.getAllCoachServiceByBrand(brandId).statement,
+          CoachService.FACTORY.getAllCoachServiceByBrand(brandId).args)
             .mapToList(new Func1<Cursor, CoachService>() {
                 @Override public CoachService call(Cursor cursor) {
                     return CoachService.FACTORY.getAllCoachServiceByBrandMapper().map(cursor);
@@ -294,7 +307,9 @@ public class QCDbManager {
     }
 
     public static CoachService getGymNow(String gymid, String gymmodel) {
-        Cursor cursor = briteDatabase.query(CoachService.FACTORY.getByIdModel(gymid, gymmodel).statement);
+      SqlDelightStatement statement = CoachService.FACTORY.getByIdModel(gymid, gymmodel);
+      Cursor cursor =
+          dbOpenHelper.getReadableDatabase().rawQuery(statement.statement, statement.args);
         if (cursor == null || cursor.getCount() <= 0) {
             return null;
         }
@@ -305,7 +320,9 @@ public class QCDbManager {
     }
 
     public static CoachService getShopNameById(String brandId, String shopId) {
-        Cursor cursor = briteDatabase.query(CoachService.FACTORY.getByBrandIdAndShops(shopId, brandId).statement);
+      SqlDelightStatement statement = CoachService.FACTORY.getByBrandIdAndShops(shopId, brandId);
+      Cursor cursor =
+          dbOpenHelper.getReadableDatabase().rawQuery(statement.statement, statement.args);
         if (cursor == null || cursor.getCount() <= 0) {
             return null;
         }
@@ -316,7 +333,9 @@ public class QCDbManager {
     }
 
     public static Observable<List<CoachService>> getGymByModel(String id, String model) {
-        return briteDatabase.createQuery(CoachService.TABLE_NAME, CoachService.FACTORY.getByIdModel(id, model).statement)
+      return briteDatabase.createQuery(CoachService.TABLE_NAME,
+          CoachService.FACTORY.getByIdModel(id, model).statement,
+          CoachService.FACTORY.getByIdModel(id, model).args)
             .mapToList(new Func1<Cursor, CoachService>() {
                 @Override public CoachService call(Cursor cursor) {
                     return CoachService.FACTORY.getByIdModelMapper().map(cursor);
@@ -337,7 +356,6 @@ public class QCDbManager {
         }
         stringBuffer.append(");");
         return briteDatabase.createQuery(CoachService.TABLE_NAME, stringBuffer.toString())
-            //        return briteDatabase.createQuery(CoachService.TABLE_NAME, CoachService.GETBYBRANDIDANDSHOPS,  stringBuffer.toString(),brandid)
             .mapToList(new Func1<Cursor, CoachService>() {
                 @Override public CoachService call(Cursor cursor) {
                     return CoachService.FACTORY.getByBrandIdAndShopsMapper().map(cursor);
@@ -348,8 +366,6 @@ public class QCDbManager {
     ///////////////////////////////////////
 
     public static void writePermiss(final List<Permission> permissions) {
-        //        String sql = "DELETE FROM " + QCDb.PermissionTable.TABLE_NAME;
-        //        Cursor cursor = briteDatabase.query(sql);
         briteDatabase.execute(Permission.DELETEALLPERMISSION);
         BriteDatabase.Transaction transaction = briteDatabase.newTransaction();
         try {
@@ -373,7 +389,9 @@ public class QCDbManager {
     }
 
     public static boolean check(String shopid, String key) {
-        Cursor cursor = briteDatabase.query(Permission.FACTORY.getByShopIdAndKey(shopid, key).statement);
+      Cursor cursor = briteDatabase.getReadableDatabase()
+          .rawQuery(Permission.FACTORY.getByShopIdAndKey(shopid, key).statement,
+              Permission.FACTORY.getByShopIdAndKey(shopid, key).args);
         if (cursor == null || cursor.getCount() <= 0) {
             return false;
         }
@@ -384,15 +402,19 @@ public class QCDbManager {
 
     public static boolean checkMuti(String key, @NonNull List<String> shopids) {
         for (int i = 0; i < shopids.size(); i++) {
-            Cursor cursor = briteDatabase.query(Permission.FACTORY.getByShopIdAndKey(shopids.get(i), key).statement);
+          SqlDelightStatement statement = Permission.FACTORY.getByShopIdAndKey(shopids.get(i), key);
+          Cursor cursor =
+              briteDatabase.getReadableDatabase().rawQuery(statement.statement, statement.args);
             if (cursor == null || cursor.getCount() <= 0) {
                 return false;
             }
             cursor.moveToFirst();
             Permission permission = Permission.MAPPER.map(cursor);
+          cursor.close();
             if (permission == null || !permission.isValue()) {
                 return false;
             }
+
         }
         return true;
     }
@@ -400,7 +422,10 @@ public class QCDbManager {
     public static List<String> checkMutiTrue(String key, @NonNull List<String> shopids) {
         List<String> ret = new ArrayList<>();
         for (int i = 0; i < shopids.size(); i++) {
-            Cursor cursor = briteDatabase.query(Permission.FACTORY.getByShopIdAndKeyValue(shopids.get(i), key, true).statement);
+          SqlDelightStatement statement =
+              Permission.FACTORY.getByShopIdAndKeyValue(shopids.get(i), key, true);
+          Cursor cursor =
+              briteDatabase.getReadableDatabase().rawQuery(statement.statement, statement.args);
             if (cursor == null || cursor.getCount() <= 0) {
                 return ret;
             }
@@ -414,17 +439,24 @@ public class QCDbManager {
     }
 
     public static boolean checkAtLeastOne(String key) {
-        Cursor cursor = briteDatabase.query(Permission.FACTORY.getByKeyValue(key, true).statement);
+      SqlDelightStatement statement = Permission.FACTORY.getByKeyValue(key, true);
+      Cursor cursor =
+          briteDatabase.getReadableDatabase().rawQuery(statement.statement, statement.args);
         return cursor != null && cursor.getCount() > 0;
     }
 
     public static boolean checkNoOne(String key) {
-        Cursor cursor = briteDatabase.query(Permission.FACTORY.getByKeyValue(key, true).statement);
+      SqlDelightStatement statement = Permission.FACTORY.getByKeyValue(key, true);
+      Cursor cursor =
+          briteDatabase.getReadableDatabase().rawQuery(statement.statement, statement.args);
         return cursor == null || cursor.getCount() <= 0;
     }
 
     public static boolean checkAll(String key) {
-        Cursor cursor = briteDatabase.query(Permission.FACTORY.getByKey(key).statement);
+
+      SqlDelightStatement statement = Permission.FACTORY.getByKey(key);
+      Cursor cursor =
+          briteDatabase.getReadableDatabase().rawQuery(statement.statement, statement.args);
         if (cursor == null || cursor.getCount() <= 0) {
             return false;
         }
@@ -433,6 +465,7 @@ public class QCDbManager {
             Permission permission = Permission.MAPPER.map(cursor);
             if (permission == null || !permission.isValue()) return false;
         } while (cursor.moveToNext());
+      cursor.close();
         return true;
     }
 

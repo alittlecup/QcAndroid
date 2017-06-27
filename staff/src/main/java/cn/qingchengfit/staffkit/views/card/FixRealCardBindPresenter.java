@@ -1,16 +1,16 @@
 package cn.qingchengfit.staffkit.views.card;
 
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.CardBindStudents;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.rest.NetWorkThrowable;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.ArrayList;
 import java.util.HashMap;

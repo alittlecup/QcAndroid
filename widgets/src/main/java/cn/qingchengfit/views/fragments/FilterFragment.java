@@ -31,6 +31,7 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
     private CommonFlexAdapter commonFlexAdapter;
     private OnSelectListener onSelectListener;
 
+
     public void setOnSelectListener(OnSelectListener onSelectListener) {
         this.onSelectListener = onSelectListener;
     }
@@ -104,7 +105,7 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
             onSelectListener.onSelectItem(position);
         }
         commonFlexAdapter.toggleSelection(position);
-        commonFlexAdapter.notifyDataSetChanged();
+      commonFlexAdapter.notifyItemChanged(position);
         return true;
     }
 

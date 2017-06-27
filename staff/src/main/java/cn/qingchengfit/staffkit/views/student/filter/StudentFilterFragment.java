@@ -15,9 +15,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.views.student.followup.FollowUpFilterFragment;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -25,8 +25,8 @@ import cn.qingchengfit.widgets.CheckBoxButton;
 import cn.qingchengfit.widgets.QcRadioGroup;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -292,7 +292,7 @@ import java.util.Locale;
         switch (view.getId()) {
             case R.id.tv_student_filter_time_start:
                 if (pwTime == null) {
-                    pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+                  pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
                 }
                 pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
                     Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
@@ -308,7 +308,7 @@ import java.util.Locale;
                 break;
             case R.id.tv_student_filter_time_end:
                 if (pwTime == null) {
-                    pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+                  pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
                 }
                 pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
                     Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);

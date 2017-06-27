@@ -2,11 +2,13 @@ package cn.qingchengfit.model.base;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.widgets.AlphabetView;
 import com.qingcheng.model.base.QcStudentBeanModel;
+import com.squareup.sqldelight.ColumnAdapter;
 import com.squareup.sqldelight.RowMapper;
 import java.util.List;
 
@@ -29,8 +31,9 @@ public class QcStudentBean extends Personage implements Parcelable, com.qingchen
     public static final Factory<QcStudentBean> FACTORY = new Factory<>(new QcStudentBeanModel.Creator<QcStudentBean>() {
         @Override
         public QcStudentBean create(@Nullable String id, @Nullable String username, @Nullable String status, @Nullable String phone,
-            @Nullable String avatar, @Nullable String checkin_avatar, @Nullable Integer gender, @Nullable String head,
-            @Nullable String brand_id, @Nullable String join_at, @Nullable String joined_at, @Nullable String support_gym,
+            @Nullable String avatar, @Nullable String checkin_avatar, @Nullable Integer gender,
+            @Nullable String head, @Nullable String brand_id, @Nullable String join_at,
+            @Nullable String joined_at, @Nullable String support_gym,
             @Nullable String supoort_gym_ids) {
             return new Builder().id(id)
                 .username(username)
@@ -47,7 +50,15 @@ public class QcStudentBean extends Personage implements Parcelable, com.qingchen
                 .supoort_gym_ids(supoort_gym_ids)
                 .build();
         }
-    }, null);
+    }, new ColumnAdapter<Integer, Double>() {
+      @NonNull @Override public Integer decode(Double aDouble) {
+        return aDouble.intValue();
+      }
+
+      @Override public Double encode(@NonNull Integer integer) {
+        return (double) integer;
+      }
+    });
     public static final RowMapper<QcStudentBean> MAPPER = new Mapper<>(FACTORY);
     public static final Parcelable.Creator<QcStudentBean> CREATOR = new Parcelable.Creator<QcStudentBean>() {
         @Override public QcStudentBean createFromParcel(Parcel in) {

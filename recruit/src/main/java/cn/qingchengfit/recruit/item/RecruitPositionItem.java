@@ -1,6 +1,7 @@
 package cn.qingchengfit.recruit.item;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,16 +48,20 @@ public class RecruitPositionItem extends AbstractFlexibleItem<RecruitPositionIte
   @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitPositionVH holder, int position, List payloads) {
     holder.tvPositionName.setText(job.name);
     if (job.gym != null) {
-      holder.tvGymInfo.setText(job.gym.getAddressStr() + " · " + job.gym.name);
+      holder.tvGymInfo.setText(job.gym.getCityDistrict()
+          + (TextUtils.isEmpty(job.gym.getCityDistrict()) ? "" : " · ")
+          + job.gym.getBrand_name()
+          + job.gym.name);
       PhotoUtils.small(holder.imgGym, job.gym.photo);
     } else {
       holder.tvGymInfo.setText("");
     }
-    holder.tvSalary.setText((int) job.min_salary / 1000 + "-" + (int) job.max_salary / 1000 + "K");
-    holder.tvGender.setText(RecruitBusinessUtils.getGender(job.gender));
-    holder.tvHeight.setText(RecruitBusinessUtils.getHeight(job.min_height, job.max_height));
-    holder.tvAge.setText(RecruitBusinessUtils.getAge(job.min_age, job.max_age));
-    holder.tvWorkYear.setText(RecruitBusinessUtils.getWorkYear(job.min_work_year, job.max_work_year));
+    holder.tvSalary.setText(RecruitBusinessUtils.getSalary(job.min_salary, job.max_salary, "面议"));
+    holder.tvGender.setText(RecruitBusinessUtils.getGender(job.gender, "性别"));
+    holder.tvHeight.setText(RecruitBusinessUtils.getHeight(job.min_height, job.max_height, "身高"));
+    holder.tvAge.setText(RecruitBusinessUtils.getAge(job.min_age, job.max_age, "年龄"));
+    holder.tvWorkYear.setText(
+        RecruitBusinessUtils.getWorkYear(job.min_work_year, job.max_work_year, "经验"));
   }
 
   @Override public boolean equals(Object o) {

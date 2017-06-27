@@ -24,7 +24,6 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.student.MutiChooseStudentActivity;
 import cn.qingchengfit.staffkit.views.wardrobe.WardrobePayBottomFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.item.PayWardrobeItem;
@@ -32,8 +31,9 @@ import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeMainFragment;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import cn.qingchengfit.widgets.CommonInputView;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -159,7 +159,9 @@ public class WardrobeLongHireFragment extends BaseFragment implements WardrobeLo
 
                 break;
             case R.id.start_day: //开始时间
-                if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+              if (pwTime == null) {
+                pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+              }
                 pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
                     Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
                 pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
@@ -171,7 +173,9 @@ public class WardrobeLongHireFragment extends BaseFragment implements WardrobeLo
                 pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
                 break;
             case R.id.end_day://结束时间
-                if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+              if (pwTime == null) {
+                pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+              }
                 pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
                     Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
                 pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {

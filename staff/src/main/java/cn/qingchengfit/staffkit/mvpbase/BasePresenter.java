@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
+import cn.qingchengfit.RxBus;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;

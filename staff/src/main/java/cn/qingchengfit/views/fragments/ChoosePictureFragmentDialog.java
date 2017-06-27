@@ -18,8 +18,8 @@
 //import android.view.WindowManager;
 //import android.widget.TextView;
 //import cn.qingchengfit.staffkit.R;
-//import cn.qingchengfit.staffkit.rxbus.RxBus;
-//import cn.qingchengfit.staffkit.rxbus.event.EventChooseImage;
+//import cn.qingchengfit.RxBus;
+//import cn.qingchengfit.events.EventChooseImage;
 //import cn.qingchengfit.utils.FileUtils;
 //import cn.qingchengfit.utils.ToastUtils;
 //import com.commonsware.cwac.cam2.CameraActivity;

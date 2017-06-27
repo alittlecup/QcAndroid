@@ -22,7 +22,7 @@ public class QCDbOpenHelper extends SQLiteOpenHelper {
     }
 
     @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 12) {
+      if (oldVersion < QCDbConstant.AT_DB_VERSION) {
             db.execSQL("DROP TABLE " + QCDb.CardTable.TABLE_NAME);
             db.execSQL("DROP TABLE " + QcStudentBean.TABLE_NAME);
             db.execSQL("DROP TABLE " + CoachService.TABLE_NAME);

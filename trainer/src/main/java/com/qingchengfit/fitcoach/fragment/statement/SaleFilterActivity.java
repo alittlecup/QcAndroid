@@ -13,18 +13,18 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.fragment.statement.model.CardTpl;
 import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseSaleDetail;
@@ -55,7 +55,7 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/6/30 2016.
  */
-public class SaleFilterActivity extends BaseAcitivity {
+public class SaleFilterActivity extends BaseActivity {
     public static final String FILTER = "filter";
     public static final String CARD_TYPE = "card_type";
     public static final String TRADE_TYPE = "card_type";

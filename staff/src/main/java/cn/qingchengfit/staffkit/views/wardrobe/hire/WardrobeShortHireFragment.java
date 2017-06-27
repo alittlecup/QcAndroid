@@ -14,8 +14,9 @@ import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.body.HireWardrobeBody;
 import cn.qingchengfit.model.responese.Locker;
@@ -24,12 +25,11 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.rxbus.event.EventLongHire;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.student.MutiChooseStudentActivity;
 import cn.qingchengfit.staffkit.views.wardrobe.edit.WardrobeEditFragment;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 import javax.inject.Inject;
 
 /**

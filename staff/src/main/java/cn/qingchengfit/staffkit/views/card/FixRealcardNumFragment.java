@@ -14,8 +14,8 @@ import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.mvpbase.CommonPView;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 import javax.inject.Inject;
 
 /**

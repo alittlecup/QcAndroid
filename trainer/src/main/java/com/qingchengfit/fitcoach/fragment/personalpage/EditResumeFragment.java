@@ -15,7 +15,7 @@ import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyBrifeFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyInfoFragment;
 import com.qingchengfit.fitcoach.fragment.RecordFragment;
-import com.qingchengfit.fitcoach.fragment.WorkExepSettingFragment;
+//import com.qingchengfit.fitcoach.fragment.WorkExepSettingFragment;
 
 /**
  * power by
@@ -65,7 +65,7 @@ import com.qingchengfit.fitcoach.fragment.WorkExepSettingFragment;
                 fragmentCallBack.onFragmentChange(new RecordFragment());
                 break;
             case R.id.btn_work_exp:
-                fragmentCallBack.onFragmentChange(new WorkExepSettingFragment());
+              //fragmentCallBack.onFragmentChange(new WorkExepSettingFragment());
                 break;
             case R.id.btn_personal_intro:
                 fragmentCallBack.onFragmentChange(ModifyBrifeFragment.newInstance(desc));

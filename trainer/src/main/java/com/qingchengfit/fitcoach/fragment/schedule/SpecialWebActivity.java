@@ -4,15 +4,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.fragment.main.WebForHomeFragment;
 import com.qingchengfit.fitcoach.fragment.main.WebForResumeFragment;
 
-public class SpecialWebActivity extends BaseAcitivity {
+public class SpecialWebActivity extends BaseActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

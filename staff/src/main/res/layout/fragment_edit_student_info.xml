@@ -80,7 +80,7 @@
             />
       </RelativeLayout>
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/civ_name"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -156,7 +156,7 @@
 
       <include layout="@layout/divider_grey_left_right"/>
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/civ_birthday"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -164,14 +164,14 @@
           app:civ_lable="@string/birthday"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/civ_address"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           app:civ_lable="@string/address"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/support_shops"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -182,7 +182,7 @@
           app:civ_showright="true"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/civ_remark"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -202,7 +202,7 @@
           android:id="@+id/margin_divider_edit_student"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/civ_salers"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -214,7 +214,7 @@
 
       <include layout="@layout/divider_grey"/>
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/civ_coaches"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"

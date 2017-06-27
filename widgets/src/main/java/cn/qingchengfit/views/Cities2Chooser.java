@@ -88,10 +88,10 @@ public class Cities2Chooser {
                     } else {
                         if (options2Items.get(i).get(i1).startsWith(options1Items.get(i))) {
                           onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), "",
-                              citiesData.provinces.get(i - 1).cities.get(i1).id);
+                              citiesData.provinces.get(i - 1).cities.get(i1).getId());
                         } else {
                             onCityChoosenListener.onCityChoosen(options1Items.get(i), options2Items.get(i).get(i1), "",
-                                citiesData.provinces.get(i - 1).cities.get(i1).id);
+                                citiesData.provinces.get(i - 1).cities.get(i1).getId());
                         }
                     }
                 }

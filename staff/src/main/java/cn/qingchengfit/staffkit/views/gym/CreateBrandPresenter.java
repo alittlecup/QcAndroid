@@ -1,12 +1,12 @@
 package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.rxbus.event.LoadingEvent;
 import cn.qingchengfit.staffkit.usecase.InitUseCase;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;

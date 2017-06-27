@@ -13,7 +13,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/count"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       android:layout_marginTop="@dimen/little"
       app:civ_clickable="true"
       app:civ_content="1"
@@ -156,7 +156,7 @@
           <cn.qingchengfit.widgets.CommonInputView
               android:id="@+id/pay_online_money"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="@dimen/qc_item_height"
               app:civ_inputnum="true"
               app:civ_lable="单价（元）"
               app:civ_nonnull="true"
@@ -209,7 +209,7 @@
       <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/limit_who"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_clickable="true"
           app:civ_lable="可预约对象"
@@ -220,7 +220,7 @@
       <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/limit_num"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_clickable="true"
           app:civ_content="1"

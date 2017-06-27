@@ -23,8 +23,10 @@ import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -51,7 +53,8 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/6/14.
  */
-public class ResumeEduExpListFragment extends BaseFragment {
+public class ResumeEduExpListFragment extends BaseFragment
+    implements FlexibleAdapter.OnItemClickListener {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
@@ -114,5 +117,13 @@ public class ResumeEduExpListFragment extends BaseFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
+  }
+
+  @Override public boolean onItemClick(int i) {
+    IFlexible item = commonFlexAdapter.getItem(i);
+    if (item instanceof ResumeEduExpItem) {
+      router.editEduExp(((ResumeEduExpItem) item).getEducation());
+    }
+    return false;
   }
 }

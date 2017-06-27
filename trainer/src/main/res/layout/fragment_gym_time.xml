@@ -14,7 +14,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_mon"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="周一"
       >
@@ -23,7 +23,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_tus"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="周二"
       >
@@ -32,7 +32,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_wen"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="周三"
       >
@@ -41,7 +41,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_thu"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="周四"
       >
@@ -50,7 +50,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_fri"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="周五"
       >
@@ -59,7 +59,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_sat"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="周六"
       >
@@ -68,7 +68,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_sun"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="周日"
       >

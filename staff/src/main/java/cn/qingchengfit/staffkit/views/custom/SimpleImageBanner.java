@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.model.responese.Banner;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.WebActivity;
+import cn.qingchengfit.views.activity.WebActivity;
 import com.bumptech.glide.Glide;
 import com.flyco.banner.widget.Banner.BaseIndicatorBanner;
 

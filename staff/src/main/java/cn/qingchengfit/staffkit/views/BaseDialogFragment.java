@@ -5,10 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.util.ArrayMap;
 import butterknife.Unbinder;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.mvpbase.PresenterDelegate;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,7 +54,12 @@ public abstract class BaseDialogFragment extends DialogFragment {
     }
 
     @Override public void onAttach(Context context) {
+      try {
         AndroidSupportInjection.inject(this);
+      } catch (Exception e) {
+        LogUtil.e("inject", "android Inject not found");
+      }
+
         super.onAttach(context);
     }
 

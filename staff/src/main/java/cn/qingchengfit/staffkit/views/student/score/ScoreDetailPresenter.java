@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.student.score;
 
 import android.content.Intent;
 import android.support.v4.util.ArrayMap;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.Score;
 import cn.qingchengfit.model.responese.ScoreHistory;

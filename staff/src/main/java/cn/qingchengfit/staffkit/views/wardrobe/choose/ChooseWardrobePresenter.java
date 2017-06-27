@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.wardrobe.choose;
 
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.AllLockers;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.LockerRegion;

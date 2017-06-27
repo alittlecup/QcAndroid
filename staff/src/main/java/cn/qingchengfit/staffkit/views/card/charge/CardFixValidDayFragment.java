@@ -20,12 +20,12 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.PayEvent;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.Date;
 import javax.inject.Inject;
 import rx.functions.Action1;
@@ -69,7 +69,7 @@ public class CardFixValidDayFragment extends BaseFragment implements CardFixVali
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pwTime = new TimeDialogWindow(getContext(), Type.YEAR_MONTH_DAY);
+      pwTime = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

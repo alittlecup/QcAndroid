@@ -57,7 +57,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/brand_name"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_lable="@string/gym_brand_name"
       app:civ_nonnull="true"
       />

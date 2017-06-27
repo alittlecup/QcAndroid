@@ -55,7 +55,7 @@
         />
   </RelativeLayout>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/brand_name"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -64,7 +64,7 @@
       app:civ_text_color="@color/text_black"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/change_creator"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -76,7 +76,7 @@
       app:civ_text_color="@color/text_black"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/brand_id"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -87,10 +87,10 @@
 
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/brand_create"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="创建时间"
       app:civ_showdivier="false"

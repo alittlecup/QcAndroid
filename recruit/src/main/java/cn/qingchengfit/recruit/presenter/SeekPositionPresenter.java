@@ -5,6 +5,7 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.model.Job;
@@ -13,7 +14,8 @@ import cn.qingchengfit.recruit.network.PostApi;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
-import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.ListUtils;
+import com.tencent.qcloud.timchat.chatmodel.RecruitModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,7 @@ public class SeekPositionPresenter extends BasePresenter {
 
   protected MVPView view;
   @Inject QcRestRepository restRepository;
+  int page, totalPage = 1;
 
   @Inject public SeekPositionPresenter() {
   }
@@ -42,20 +45,31 @@ public class SeekPositionPresenter extends BasePresenter {
   /**
    * 查询职位列表（分页）
    */
-  public void queryList(final int page) {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryJobList(page)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
-          @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
-            view.onList(jobListWrapQcDataResponse.data.jobs, page, jobListWrapQcDataResponse.data.total_count);
-          }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            view.onShowError(throwable.getMessage());
-          }
-        }));
+  public void queryList(boolean init, HashMap<String, Object> params) {
+    params = ListUtils.mapRemoveNull(params);
+    if (init) {
+      page = totalPage = 1;
+    }
+    if (page <= totalPage) {
+      RxRegiste(restRepository.createGetApi(GetApi.class)
+          .queryJobList(page, params)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
+            @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
+              view.onList(jobListWrapQcDataResponse.data.jobs, page,
+                  jobListWrapQcDataResponse.data.total_count);
+              totalPage = jobListWrapQcDataResponse.data.pages;
+              page++;
+            }
+          }, new Action1<Throwable>() {
+            @Override public void call(Throwable throwable) {
+              view.onShowError(throwable.getMessage());
+            }
+          }));
+    } else {
+      view.onList(null, 1, 1);
+    }
   }
 
   public void queryIndex() {
@@ -65,14 +79,9 @@ public class SeekPositionPresenter extends BasePresenter {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobListIndex>>() {
           @Override public void call(QcDataResponse<JobListIndex> jobListIndexQcDataResponse) {
-            view.onJobsIndex(jobListIndexQcDataResponse.data.completion, jobListIndexQcDataResponse.data.fair_count,
-                jobListIndexQcDataResponse.data.avatar, jobListIndexQcDataResponse.data.fair_banner);
+            view.onJobsIndex(jobListIndexQcDataResponse.data);
           }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            view.onShowError(throwable.getMessage());
-          }
-        }));
+        }, new NetWorkThrowable()));
   }
 
   /**
@@ -89,12 +98,7 @@ public class SeekPositionPresenter extends BasePresenter {
             view.onJob(jobDetailWrapQcDataResponse.data.job);
             view.onGym(jobDetailWrapQcDataResponse.data.job.gym);
           }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            LogUtil.e(throwable.getMessage());
-            view.onShowError(throwable.getMessage());
-          }
-        }));
+        }, new NetWorkThrowable()));
   }
 
   /**
@@ -120,11 +124,7 @@ public class SeekPositionPresenter extends BasePresenter {
               view.starOK();
             }
           }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            view.onShowError(throwable.getMessage());
-          }
-        }));
+        }, new NetWorkThrowable()));
   }
 
   /**
@@ -138,14 +138,12 @@ public class SeekPositionPresenter extends BasePresenter {
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
             if (qcResponse.getStatus() == 200) {
-              view.starOK();
+              view.unStarOk();
+            } else {
+              view.onShowError(qcResponse.getMsg());
             }
           }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            view.onShowError(throwable.getMessage());
-          }
-        }));
+        }, new NetWorkThrowable()));
   }
 
   /**
@@ -161,7 +159,9 @@ public class SeekPositionPresenter extends BasePresenter {
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
             if (qcResponse.getStatus() == 200) {
-              view.starOK();
+              view.onPostResumeOk();
+            } else {
+              view.onShowError(qcResponse.getMsg());
             }
           }
         }, new Action1<Throwable>() {
@@ -171,23 +171,6 @@ public class SeekPositionPresenter extends BasePresenter {
         }));
   }
 
-  //public RecruitModel getRecruitModel(Job job){
-  //    RecruitModel recruitModel = new RecruitModel();
-  //    recruitModel.id = job.id;
-  //    recruitModel.address = job.gd_district.city.name + job.gd_district.name + job.gym.name;
-  //    recruitModel.gender = job.gender;
-  //    recruitModel.photo = job.gym.photo;
-  //    recruitModel.max_age = job.max_age;
-  //    recruitModel.min_age = job.min_age;
-  //    recruitModel.max_height = job.max_height;
-  //    recruitModel.min_height = job.min_height;
-  //    recruitModel.max_salary = job.max_salary;
-  //    recruitModel.min_salary = job.min_salary;
-  //    recruitModel.max_work_year = job.max_work_year;
-  //    recruitModel.min_work_year = job.min_work_year;
-  //    recruitModel.name = job.name;
-  //    return recruitModel;
-  //}
 
   public List<String> filterSalary() {
     List<String> salaryList = new ArrayList<>();
@@ -202,6 +185,24 @@ public class SeekPositionPresenter extends BasePresenter {
     return salaryList;
   }
 
+  public RecruitModel getRecruitModel(Job job) {
+    RecruitModel recruitModel = new RecruitModel();
+    recruitModel.id = job.id;
+    recruitModel.address = job.getAddress() + job.gym.name;
+    recruitModel.gender = job.gender;
+    recruitModel.photo = job.gym.photo;
+    recruitModel.max_age = job.max_age;
+    recruitModel.min_age = job.min_age;
+    recruitModel.max_height = job.max_height;
+    recruitModel.min_height = job.min_height;
+    recruitModel.max_salary = job.max_salary;
+    recruitModel.min_salary = job.min_salary;
+    recruitModel.max_work_year = job.max_work_year;
+    recruitModel.min_work_year = job.min_work_year;
+    recruitModel.name = job.name;
+    return recruitModel;
+  }
+
   public interface MVPView extends CView {
     void onJob(Job job);
 
@@ -213,6 +214,8 @@ public class SeekPositionPresenter extends BasePresenter {
 
     void unStarOk();
 
-    void onJobsIndex(Number completed, int fair_count, String avatar, String fiar_banner);
+    void onPostResumeOk();
+
+    void onJobsIndex(JobListIndex index);
   }
 }

@@ -67,11 +67,11 @@
   <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
   <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
   <!--/>-->
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       xmlns:civ="http://schemas.android.com/apk/res-auto"
       android:id="@+id/content"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_lable="@string/brand"
       civ:civ_showdivier="false"
       />

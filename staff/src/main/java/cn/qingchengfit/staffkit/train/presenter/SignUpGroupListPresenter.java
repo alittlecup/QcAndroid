@@ -1,10 +1,10 @@
 package cn.qingchengfit.staffkit.train.presenter;
 
 import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponseData;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.rest.NetWorkThrowable;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.train.model.GroupListResponse;
 import java.util.HashMap;

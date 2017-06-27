@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.CardTpl;
@@ -20,17 +21,16 @@ import cn.qingchengfit.model.responese.QcResponseSaleDetail;
 import cn.qingchengfit.model.responese.SaleFilter;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.rxbus.event.CardTypeEvent;
-import cn.qingchengfit.staffkit.views.BaseActivity;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.statement.filter.CardTypeChooseDialogFragment;
 import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.widgets.CommonInputView;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -194,7 +194,9 @@ public class SaleFilterActivity extends BaseActivity {
     }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_day:
-                if (pwTime == null) pwTime = new TimeDialogWindow(this, Type.YEAR_MONTH_DAY);
+              if (pwTime == null) {
+                pwTime = new TimeDialogWindow(this, TimePopupWindow.Type.YEAR_MONTH_DAY);
+              }
                 pwTime.setRange(1900, 2100);
                 pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                     @Override public void onTimeSelect(Date date) {
@@ -221,7 +223,9 @@ public class SaleFilterActivity extends BaseActivity {
                 pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
                 break;
             case R.id.end_day:
-                if (pwTime == null) pwTime = new TimeDialogWindow(this, Type.YEAR_MONTH_DAY);
+              if (pwTime == null) {
+                pwTime = new TimeDialogWindow(this, TimePopupWindow.Type.YEAR_MONTH_DAY);
+              }
                 pwTime.setRange(1900, 2100);
                 pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                     @Override public void onTimeSelect(Date date) {

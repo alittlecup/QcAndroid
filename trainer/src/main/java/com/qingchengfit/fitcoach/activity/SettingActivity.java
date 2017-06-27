@@ -10,19 +10,19 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
 import com.qingchengfit.fitcoach.fragment.ModifyBrifeFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyInfoFragment;
 import com.qingchengfit.fitcoach.fragment.RecordFragment;
-import com.qingchengfit.fitcoach.fragment.WorkExepSettingFragment;
 import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
 import com.qingchengfit.fitcoach.fragment.personalpage.EditHomeFragment;
 import com.qingchengfit.fitcoach.fragment.personalpage.EditResumeFragmentBuilder;
 
-public class SettingActivity extends BaseAcitivity implements FragmentCallBack, WebActivityInterface {
+public class SettingActivity extends BaseActivity
+    implements FragmentCallBack, WebActivityInterface {
 
     public static String TAG = SettingActivity.class.getName();
     FragmentManager fragmentManager;
@@ -47,7 +47,7 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
                 onFragmentChange(new RecordFragment(), false);
                 break;
             case 4:
-                onFragmentChange(new WorkExepSettingFragment(), false);
+              //onFragmentChange(new WorkExepSettingFragment(), false);
                 break;
             case 5:
                 onFragmentChange(ModifyBrifeFragment.newInstance(getIntent().getStringExtra("desc")), false);

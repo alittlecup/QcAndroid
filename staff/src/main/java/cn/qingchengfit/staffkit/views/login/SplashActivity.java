@@ -6,11 +6,12 @@ import android.support.annotation.UiThread;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.QcResponseData;
@@ -30,8 +31,12 @@ import cn.qingchengfit.utils.ToastUtils;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.baidu.android.pushservice.PushSettings;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.umeng.analytics.MobclickAgent;
 import dagger.android.AndroidInjection;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscription;
@@ -48,6 +53,7 @@ public class SplashActivity extends AppCompatActivity {
     @BindView(R.id.splash_registe_btn) TextView splashRegisteBtn;
     @BindView(R.id.splash_indicator) CircleIndicator splashIndicator;
     @BindView(R.id.main_loading) RelativeLayout mainLoading;
+  @BindView(R.id.img_gif) ImageView imgGif;
     @Inject RestRepository restRepository;
     @Inject QCDbManager manager;
     @Inject LoginStatus loginStatus;
@@ -69,7 +75,11 @@ public class SplashActivity extends AppCompatActivity {
             getString(BuildConfig.DEBUG ? R.string.baidu_api_debug : R.string.baidu_api));
         cn.qingchengfit.utils.ToastUtils.init(getApplicationContext());
         MobclickAgent.setDebugMode(BuildConfig.DEBUG);
-
+      Glide.with(this)
+          .load(R.mipmap.qc_logo_staff)
+          .dontAnimate()
+          .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+          .into((new GlideDrawableImageViewTarget(imgGif, 1)));
         if (getIntent() != null && getIntent().getData() != null && getIntent().getScheme() != null && getIntent().getScheme()
             .equalsIgnoreCase("qcstaff")) {
             try {
@@ -94,7 +104,7 @@ public class SplashActivity extends AppCompatActivity {
         if (PreferenceUtils.getPrefString(SplashActivity.this, Configs.PREFER_SESSION, null) != null && !TextUtils.isEmpty(staffid)) {
             App.staffId = staffid;
             sp = restRepository.getGet_api()
-                .qcGetSelfInfo(staffid)
+                .qcGetSelfInfo(staffid).delay(2500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Func1<QcResponseData<StaffResponse>, Observable<QcResponseData<GymList>>>() {

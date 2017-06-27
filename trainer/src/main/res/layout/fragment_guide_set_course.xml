@@ -89,7 +89,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/name"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_hint="@string/please_input_course_name"
       app:civ_lable="@string/name_call"
       app:civ_nonnull="true"
@@ -101,7 +101,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/time_long"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_hint="@string/input_course_time_long"
       app:civ_inputnum="true"
       app:civ_lable="@string/time_long_min"
@@ -115,7 +115,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/order_count"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_hint="@string/input_student_count"
       app:civ_inputnum="true"
       app:civ_lable="@string/single_ordre_count"

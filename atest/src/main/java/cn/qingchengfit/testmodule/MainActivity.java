@@ -2,19 +2,18 @@ package cn.qingchengfit.testmodule;
 
 import android.Manifest;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.qcloud.sdk.Constant;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.ui.qcchat.LoginProcessor;
 import tencent.tls.platform.TLSErrInfo;
 
-public class MainActivity extends BaseAcitivity implements LoginProcessor.OnLoginListener{
+public class MainActivity extends BaseActivity implements LoginProcessor.OnLoginListener {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

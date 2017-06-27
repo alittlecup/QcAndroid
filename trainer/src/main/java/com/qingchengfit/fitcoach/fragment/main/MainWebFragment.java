@@ -2,11 +2,12 @@ package com.qingchengfit.fitcoach.fragment.main;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.SensorsUtils;
+import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.WebFragment;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.SensorsUtils;
-import com.qingchengfit.fitcoach.activity.WebActivity;
-import com.qingchengfit.fitcoach.component.WebFragment;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
@@ -44,7 +45,7 @@ public class MainWebFragment extends WebFragment {
         return fragment;
     }
 
-    @Override public void initToolbar() {
+    @Override public void initToolbar(Toolbar toolbar) {
         mTitle.setText(R.string.explore);
     }
 
@@ -61,7 +62,7 @@ public class MainWebFragment extends WebFragment {
         if (isLoaded && mRefreshSwipeRefreshLayout != null) {
             mRefreshSwipeRefreshLayout.setRefreshing(false);
         }
-        SensorsUtils.track("AND_discover_tab_click", null);
+        SensorsUtils.track("AND_discover_tab_click", null, getContext());
     }
 
     @Override public void initWebClient() {
@@ -86,6 +87,9 @@ public class MainWebFragment extends WebFragment {
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
                 if (!url.startsWith("http")) {
+                    if (url.contains("qcstaff")) {
+                        url = url.replace("qcstaff", "qccoach");
+                    }
                     handleSchema(url);
                     return true;
                 }

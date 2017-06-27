@@ -20,11 +20,11 @@ import cn.qingchengfit.model.body.OptionBody;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.SwitcherLayout;
 import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 import javax.inject.Inject;
 
 /**

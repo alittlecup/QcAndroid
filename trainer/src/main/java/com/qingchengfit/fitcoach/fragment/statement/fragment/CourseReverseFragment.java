@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -151,13 +152,14 @@ import javax.inject.Inject;
   private void setInCome(CourseReportSchedule schedule) {
     if (schedule.total_account != 0) {
       if (schedule.total_times != 0) {
-        textReportReverseIncome.setText(
-            getSb(StringUtils.getFloatDot2(schedule.total_account) + "元+" + schedule.total_times + "次"));
+        textReportReverseIncome.setText(getSb(
+            StringUtils.getFloatDot2(schedule.total_account) + "元+" + CmStringUtils.getMaybeInt(
+                schedule.total_times) + "次"));
       } else {
         textReportReverseIncome.setText(getSb(StringUtils.getFloatDot2(schedule.total_account) + "元"));
       }
     } else if (schedule.total_times != 0) {
-      textReportReverseIncome.setText(getSb(schedule.total_times + "次"));
+      textReportReverseIncome.setText(getSb(CmStringUtils.getMaybeInt(schedule.total_times) + "次"));
     }
   }
 

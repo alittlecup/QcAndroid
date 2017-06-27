@@ -5,6 +5,7 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.GetApi;
@@ -19,6 +20,7 @@ import rx.schedulers.Schedulers;
 public class RecruitGymDetailPresenter extends BasePresenter {
   @Inject QcRestRepository restRepository;
   private MVPView view;
+  private int page = 1, total = 1;
 
   @Inject public RecruitGymDetailPresenter() {
   }
@@ -27,20 +29,24 @@ public class RecruitGymDetailPresenter extends BasePresenter {
     view = (MVPView) v;
   }
 
-  public void queryPositionOfGym(String gymid, final int page) {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryGymJobs(gymid, page)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
-          @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
-            view.onJobList(jobListWrapQcDataResponse.data.jobs, page, jobListWrapQcDataResponse.data.total_count);
-          }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            view.onShowError(throwable.getMessage());
-          }
-        }));
+  public void queryPositionOfGym(String gymid, final int init) {
+    if (init == 1) page = total = 1;
+    if (page <= total) {
+      RxRegiste(restRepository.createGetApi(GetApi.class)
+          .queryGymJobs(gymid, page)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
+            @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
+              view.onJobList(jobListWrapQcDataResponse.data.jobs, page,
+                  jobListWrapQcDataResponse.data.total_count);
+              total = jobListWrapQcDataResponse.data.pages;
+              page++;
+            }
+          }, new NetWorkThrowable()));
+    } else {
+      view.onJobList(null, 0, 0);
+    }
   }
 
   public void queryGymDetail(String gymid) {

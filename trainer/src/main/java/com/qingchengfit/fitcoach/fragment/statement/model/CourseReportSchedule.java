@@ -11,22 +11,22 @@ import com.qingchengfit.fitcoach.bean.CourseTypeSample;
 
 public class CourseReportSchedule implements Parcelable {
 
-    public static final Creator<CourseReportSchedule> CREATOR = new Creator<CourseReportSchedule>() {
-        @Override public CourseReportSchedule createFromParcel(Parcel source) {
-            return new CourseReportSchedule(source);
-        }
+  public static final Creator<CourseReportSchedule> CREATOR = new Creator<CourseReportSchedule>() {
+    @Override public CourseReportSchedule createFromParcel(Parcel source) {
+      return new CourseReportSchedule(source);
+    }
 
-        @Override public CourseReportSchedule[] newArray(int size) {
-            return new CourseReportSchedule[size];
-        }
-    };
+    @Override public CourseReportSchedule[] newArray(int size) {
+      return new CourseReportSchedule[size];
+    }
+  };
     public String id;
     public Shop shop;
     public String count;
     public String score;
     public float total_real_price;
     public String start;
-    public int total_times;
+  public float total_times;
     public int order_count;
     public float total_account;
     public CourseTypeSample course;
@@ -42,7 +42,7 @@ public class CourseReportSchedule implements Parcelable {
         this.score = in.readString();
         this.total_real_price = in.readFloat();
         this.start = in.readString();
-        this.total_times = in.readInt();
+      this.total_times = in.readFloat();
         this.order_count = in.readInt();
         this.total_account = in.readFloat();
         this.course = in.readParcelable(CourseTypeSample.class.getClassLoader());
@@ -60,7 +60,7 @@ public class CourseReportSchedule implements Parcelable {
         dest.writeString(this.score);
         dest.writeFloat(this.total_real_price);
         dest.writeString(this.start);
-        dest.writeInt(this.total_times);
+      dest.writeFloat(this.total_times);
         dest.writeInt(this.order_count);
         dest.writeFloat(this.total_account);
         dest.writeParcelable(this.course, flags);

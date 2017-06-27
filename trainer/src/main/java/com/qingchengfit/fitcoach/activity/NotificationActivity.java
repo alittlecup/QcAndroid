@@ -6,9 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import butterknife.ButterKnife;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.adapter.NotiFragmentAdater;
 import com.qingchengfit.fitcoach.bean.EventLatestNoti;
 import com.qingchengfit.fitcoach.bean.EventNotiFresh;
@@ -16,7 +16,8 @@ import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
 import com.qingchengfit.fitcoach.fragment.NotificationFragment;
 import rx.Observable;
 
-public class NotificationActivity extends BaseAcitivity implements FragmentCallBack, WebActivityInterface {
+public class NotificationActivity extends BaseActivity
+    implements FragmentCallBack, WebActivityInterface {
     public static final String TAG = NotificationActivity.class.getName();
 
     FragmentManager mFragmentManager;

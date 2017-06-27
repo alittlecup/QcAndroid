@@ -9,10 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.WebActivity;
-import cn.qingchengfit.staffkit.views.WebFragment;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.LogUtils;
 import cn.qingchengfit.utils.SensorsUtils;
+import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.WebFragment;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import timber.log.Timber;
@@ -63,7 +64,7 @@ public class QcVipFragment extends WebFragment {
 
     @Override protected void onVisible() {
         super.onVisible();
-        SensorsUtils.track("AND_discover_tab_click", null);
+      SensorsUtils.track("AND_discover_tab_click", null, getContext());
     }
 
     @Override public void initWebClient() {
@@ -86,6 +87,7 @@ public class QcVipFragment extends WebFragment {
             }
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+              LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
                 try {
                     if (url.startsWith("http")) {
                         WebActivity.startWeb(url, getContext());

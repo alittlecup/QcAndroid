@@ -15,7 +15,7 @@
       android:orientation="vertical"
       >
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/wardrobe_no"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -23,7 +23,7 @@
         civ:civ_nonnull="true"
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/wardrobe_district"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"

@@ -12,21 +12,28 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.DialogSheet;
+import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.ShareDialogFragment;
+import com.baidu.android.pushservice.PushManager;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.MainActivity;
-import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.fragment.AdviceFragment;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.fragment.CalSyncFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyPhoneFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyPwFragment;
+import com.tencent.qcloud.timchat.common.AppData;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import javax.inject.Inject;
 
 /**
@@ -130,6 +137,16 @@ public class SettingFragment extends BaseSettingFragment {
                 break;
             case R.id.setting_logout:
                 loginStatus.logout(getContext());
+              PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION, "");
+              PreferenceUtils.setPrefString(getContext(), "user_info", "");
+              PreferenceUtils.setPrefString(getContext(), "coach", "");
+
+              PushManager.stopWork(getContext().getApplicationContext());
+              MiPushClient.unregisterPush(getContext().getApplicationContext());
+              AppData.clear(getContext());
+              App.coachid = 0;
+              RxBus.getBus().post(new EventLoginChange());
+
                 Intent it = new Intent(getActivity(), Main2Activity.class);
                 it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 it.putExtra(Main2Activity.ACTION, Main2Activity.LOGOUT);

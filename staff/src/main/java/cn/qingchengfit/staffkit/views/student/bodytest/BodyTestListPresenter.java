@@ -1,16 +1,16 @@
 package cn.qingchengfit.staffkit.views.student.bodytest;
 
 import android.content.Intent;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.BodyTestBean;
 import cn.qingchengfit.model.responese.BodyTestPreview;
 import cn.qingchengfit.model.responese.BodyTestPreviews;
 import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.rest.NetWorkThrowable;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.ArrayList;
 import java.util.List;

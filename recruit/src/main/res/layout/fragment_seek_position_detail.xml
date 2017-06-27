@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_grey"
     >
 
   <LinearLayout
@@ -21,7 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:clipToPadding="false"
         android:orientation="vertical"
+        android:paddingBottom="30dp"
         >
 
       <LinearLayout
@@ -45,6 +48,8 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="1"
+              android:textSize="20sp"
+              android:textStyle="bold"
               tools:text="瑜伽教练"
               style="@style/QcTextStyleLargeDark"
               />
@@ -54,6 +59,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textColor="@color/red"
+              android:textSize="20sp"
               tools:text="11K-15K"
               style="@style/QcTextStyleLargeDark"
               />
@@ -68,14 +74,23 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             />
 
-        <android.support.v7.widget.RecyclerView
+        <cn.qingchengfit.widgets.QcTagGroup
             android:id="@+id/rv_welfare"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
+            app:atg_borderColor="@color/orange"
+            app:atg_textColor="@color/orange"
+            app:atg_textSize="@dimen/txt_stanrdant"
             />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_vertical_margin"
+            />
+
+        <include layout="@layout/divider_grey_left_right"/>
         <include layout="@layout/layout_recruit_gym_info"/>
 
         <include layout="@layout/divider_grey"/>
@@ -128,9 +143,9 @@
               />
         </LinearLayout>
 
-        <TextView
+        <cn.qingchengfit.views.fragments.TouchyWebView
             android:id="@+id/tv_position_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
@@ -176,7 +191,7 @@
               />
         </LinearLayout>
 
-        <TextView
+        <cn.qingchengfit.views.fragments.TouchyWebView
             android:id="@+id/tv_position_require"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -236,7 +251,7 @@
             android:layout_height="wrap_content"
             />
 
-
+        <include layout="@layout/divider_grey"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="104dp"
@@ -249,8 +264,8 @@
 
           <ImageView
               android:id="@+id/img_created_by"
-              android:layout_width="64dp"
-              android:layout_height="64dp"
+              android:layout_width="48dp"
+              android:layout_height="48dp"
               android:scaleType="centerCrop"
               />
 
@@ -297,6 +312,7 @@
       </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
+    <include layout="@layout/divider_grey"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -313,12 +329,14 @@
           >
 
         <ImageView
+            android:id="@+id/img_stared"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/vd_recruit_job_star"
             />
 
         <TextView
+            android:id="@+id/tv_starred"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="收藏职位"
@@ -347,33 +365,5 @@
           />
 
     </LinearLayout>
-  </LinearLayout>
-
-  <LinearLayout
-      android:id="@+id/layout_successed"
-      android:layout_width="120dp"
-      android:layout_height="120dp"
-      android:layout_gravity="center"
-      android:background="@color/black"
-      android:alpha="0.7"
-      android:orientation="vertical"
-      android:gravity="center"
-      android:visibility="gone"
-      >
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="36dp"
-        app:srcCompat="@drawable/vector_hook_white"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="投递成功"
-        android:textColor="@color/white"
-        android:layout_marginTop="16dp"
-        />
-
   </LinearLayout>
 </FrameLayout>

@@ -17,9 +17,9 @@ import butterknife.OnClick;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.CitiesChooser;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.LargeInputView;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 
 /**
  * power by

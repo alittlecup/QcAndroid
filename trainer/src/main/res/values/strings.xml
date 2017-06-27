@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">教练助手</string>
+  <string name="app_name">青橙健身教练</string>
   <!--<string name="oem_tag">coach-qingcheng</string>-->
   <string name="oem_tag">coach-qingcheng</string>
   <string name="hello_world">Hello world!</string>

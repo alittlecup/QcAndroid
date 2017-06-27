@@ -79,8 +79,12 @@ public class RestRepository implements Repository {
                 @Override public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request();
                     if (!request.method().equalsIgnoreCase("GET")) {
-                        String token = get_api.qcGetToken().execute().body().data.getToken();
+                      String token = "";
+                      try {
+                        token = get_api.qcGetToken().execute().body().data.getToken();
+                      } catch (Exception e) {
 
+                      }
                         request = request.newBuilder()
                             .addHeader("Connection", "close")
                             .addHeader("X-CSRFToken", token)

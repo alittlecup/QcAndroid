@@ -17,9 +17,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventFreshUnloginAd;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.MainActivity;
@@ -27,12 +30,8 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
-import cn.qingchengfit.staffkit.rxbus.event.EventFreshUnloginAd;
 import cn.qingchengfit.staffkit.rxbus.event.EventLoginChange;
 import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
-import cn.qingchengfit.staffkit.views.ShareDialogFragment;
-import cn.qingchengfit.staffkit.views.WebActivity;
 import cn.qingchengfit.staffkit.views.login.LoginActivity;
 import cn.qingchengfit.staffkit.views.setting.FixNotifySettingFragment;
 import cn.qingchengfit.staffkit.views.setting.FixPhoneFragment;
@@ -43,12 +42,18 @@ import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+import com.tencent.TIMManager;
+import com.tencent.qcloud.timchat.common.AppData;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import java.util.Date;
 import javax.inject.Inject;
 import org.json.JSONException;
@@ -80,6 +85,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
     @Inject RestRepository mRestRepository;
     @Inject SettingPresenter presenter;
     @Inject LoginStatus loginStatus;
+  @Inject BaseRouter baseRouter;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
@@ -191,10 +197,31 @@ public class SettingFragment extends BaseFragment implements SettingView {
     @OnClick(R.id.logout) public void onLogout() {
         if (getActivity() != null && getActivity() instanceof MainActivity) {
             loginStatus.logout(getContext());
+          App.staffId = "";
+          PushManager.stopWork(getContext().getApplicationContext());
+          AppData.clear(getContext());
+          TIMManager.getInstance().logout();
+          PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION, "");
+          PreferenceUtils.setPrefString(getContext(), Configs.PREFER_WORK_ID, "");
+          PreferenceUtils.setPrefString(getContext(), Configs.CUR_BRAND_ID, "");
+          MiPushClient.unregisterPush(getContext().getApplicationContext());
             RxBus.getBus().post(new EventLoginChange());
             onVisible();
         }
     }
+
+  @OnClick(R.id.civ_resume) public void onMyResume() {
+    baseRouter.routerTo("recruit", "resume", getContext(), 1001);
+  }
+
+  @OnClick(R.id.civ_orders) public void onOders() {
+    if (!loginStatus.isLogined()) {
+      baseRouter.toLogin(this);
+      return;
+    }
+    BaseRouter.routerToWeb(Configs.Server + Configs.HOST_ORDERS, getContext());
+  }
+
 
     @Override public String getFragmentName() {
         return SettingFragment.class.getName();

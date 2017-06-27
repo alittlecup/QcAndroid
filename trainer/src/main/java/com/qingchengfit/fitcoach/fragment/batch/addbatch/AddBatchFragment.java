@@ -20,6 +20,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.TimeRepeat;
 import cn.qingchengfit.utils.DateUtils;
@@ -35,7 +36,6 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
@@ -160,7 +160,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                 ToastUtils.show("请添加课程周期");
                 return true;
             }
-
+          showLoading();
             presenter.checkBatch(mType, body);
 
             return true;
@@ -286,7 +286,6 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
 
     //通过检查
     @Override public void checkOk() {
-        showLoading();
         presenter.arrangeBatch(body);
     }
 

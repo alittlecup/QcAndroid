@@ -26,6 +26,7 @@ import cn.qingchengfit.staffkit.views.adapter.BrandManageAdapterAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;

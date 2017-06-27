@@ -10,8 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.ToastUtils;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.bigkoo.pickerview.lib.ScreenInfo;
-import com.bigkoo.pickerview.lib.Type;
 import com.bigkoo.pickerview.lib.WheelTime;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -40,7 +40,7 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
     private OnTimeSelectListener timeSelectListener;
     private int interval = 1;
 
-    public TimePeriodChooser(Context context, Type type) {
+  public TimePeriodChooser(Context context, TimePopupWindow.Type type) {
         super(context, R.style.ChoosePicDialogStyle);
         //        this.setWidth(LayoutParams.FILL_PARENT);
         //        this.setHeight(LayoutParams.WRAP_CONTENT);
@@ -60,12 +60,12 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
         // ----时间转轮
         final View timepickerviewstart = rootView.findViewById(R.id.timepicker_start);
         ScreenInfo screenInfo1 = new ScreenInfo((Activity) context);
-        wheelTime_start = new WheelTime(timepickerviewstart, Type.HOURS_MINS);
+    wheelTime_start = new WheelTime(timepickerviewstart, TimePopupWindow.Type.HOURS_MINS);
         wheelTime_start.screenheight = screenInfo1.getHeight();
         // ----时间转轮
         final View timepickerviewend = rootView.findViewById(R.id.timepicker_end);
         ScreenInfo screenInfo2 = new ScreenInfo((Activity) context);
-        wheelTime_end = new WheelTime(timepickerviewend, Type.HOURS_MINS);
+    wheelTime_end = new WheelTime(timepickerviewend, TimePopupWindow.Type.HOURS_MINS);
         wheelTime_end.screenheight = screenInfo1.getHeight();
 
         //默认选中当前时间
@@ -82,7 +82,7 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
         setContentView(rootView);
     }
 
-    public TimePeriodChooser(Context context, Type type, int interval) {
+  public TimePeriodChooser(Context context, TimePopupWindow.Type type, int interval) {
         super(context, R.style.ChoosePicDialogStyle);
         //        this.setWidth(LayoutParams.FILL_PARENT);
         //        this.setHeight(LayoutParams.WRAP_CONTENT);
@@ -102,12 +102,12 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
         // ----时间转轮
         final View timepickerviewstart = rootView.findViewById(R.id.timepicker_start);
         ScreenInfo screenInfo1 = new ScreenInfo((Activity) context);
-        wheelTime_start = new WheelTime(timepickerviewstart, Type.HOURS_MINS);
+    wheelTime_start = new WheelTime(timepickerviewstart, TimePopupWindow.Type.HOURS_MINS);
         wheelTime_start.screenheight = screenInfo1.getHeight();
         // ----时间转轮
         final View timepickerviewend = rootView.findViewById(R.id.timepicker_end);
         ScreenInfo screenInfo2 = new ScreenInfo((Activity) context);
-        wheelTime_end = new WheelTime(timepickerviewend, Type.HOURS_MINS);
+    wheelTime_end = new WheelTime(timepickerviewend, TimePopupWindow.Type.HOURS_MINS);
         wheelTime_end.screenheight = screenInfo1.getHeight();
         this.interval = interval;
         //默认选中当前时间

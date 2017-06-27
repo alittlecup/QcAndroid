@@ -23,8 +23,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.responese.Shop;
@@ -41,7 +41,6 @@ import cn.qingchengfit.staffkit.usecase.bean.User_Student;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.EditTextActivityIntentBuilder;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
 import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
@@ -52,8 +51,9 @@ import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import cn.qingchengfit.widgets.CommonInputView;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
@@ -223,7 +223,8 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     }
 
     @OnClick(R.id.civ_birthday) public void onBirthday() {
-        final TimeDialogWindow pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+      final TimeDialogWindow pwTime =
+          new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(1900, 2100);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date date) {

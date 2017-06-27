@@ -54,14 +54,14 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/course_name"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_lable="@string/name_call"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/course_length"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_inputnum="true"
       civ:civ_lable="@string/time_long_min"
       />
@@ -69,7 +69,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/single_count"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_inputnum="true"
       civ:civ_lable="单节可约人数"
       />
@@ -77,7 +77,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/course_min_count"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_inputnum="true"
       civ:civ_lable="@string/course_min_num"
       />
@@ -85,7 +85,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/default_course_plan"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       android:visibility="gone"
       civ:civ_clickable="true"
       civ:civ_lable="@string/default_course_plan"

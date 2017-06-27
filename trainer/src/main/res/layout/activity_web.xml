@@ -36,7 +36,7 @@
         />
   </android.support.v7.widget.Toolbar>
 
-  <com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout
+  <cn.qingchengfit.widgets.CustomSwipeRefreshLayout
       android:id="@+id/refresh"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -52,7 +52,7 @@
 
     </com.tencent.smtt.sdk.WebView>
 
-  </com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout>
+  </cn.qingchengfit.widgets.CustomSwipeRefreshLayout>
 
   <LinearLayout
       android:id="@+id/no_newwork"

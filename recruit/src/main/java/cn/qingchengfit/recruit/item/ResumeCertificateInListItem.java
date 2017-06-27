@@ -1,10 +1,10 @@
 package cn.qingchengfit.recruit.item;
 
-import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -85,7 +85,7 @@ public class ResumeCertificateInListItem extends AbstractFlexibleItem<ResumeCert
     @BindView(R2.id.img_certificate) ImageView imgCertificate;
     @BindView(R2.id.layout_certificate_photo) LinearLayout layoutCertificatePhoto;
     @BindView(R2.id.layout_sync_from_qc) LinearLayout layoutSyncFromQc;
-    @BindView(R2.id.btn_down) AppCompatTextView btnDownload;
+    @BindView(R2.id.btn_down) FrameLayout btnDownload;
 
     public ResumeCertificateVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);

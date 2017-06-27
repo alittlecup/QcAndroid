@@ -1,6 +1,6 @@
 package cn.qingchengfit.inject.commpont;
 
-import cn.qingchengfit.staffkit.views.BaseActivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 

@@ -12,12 +12,12 @@ import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.fragment.AllocateCoachListFragment;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.views.BaseActivity;
 import cn.qingchengfit.staffkit.views.FragCallBack;
 import cn.qingchengfit.staffkit.views.custom.MyDrawerLayout;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterFragment;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterFragmentBuilder;
+import cn.qingchengfit.views.activity.BaseActivity;
 import rx.functions.Action1;
 
 /**

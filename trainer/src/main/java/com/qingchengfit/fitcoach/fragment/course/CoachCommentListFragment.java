@@ -109,7 +109,7 @@ public class CoachCommentListFragment extends BaseFragment {
             }
         });
         String shopid = getArguments().getString("shop");
-        HashMap<String, String> params = new HashMap<>();
+      HashMap<String, Object> params = new HashMap<>();
         if (GymUtils.isInBrand(coachService)) {
             params.put("brand_id", brand.getId());
             params.put("shop_id", shopid);

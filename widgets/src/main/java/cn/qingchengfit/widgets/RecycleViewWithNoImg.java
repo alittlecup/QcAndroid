@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.animation.Animation;
@@ -13,8 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.support.v7.widget.RecyclerView;
-
 import cn.qingchengfit.utils.MeasureUtils;
 
 
@@ -49,7 +48,7 @@ public class RecycleViewWithNoImg extends RelativeLayout implements CustomSwipeR
 
     public RecycleViewWithNoImg(Context context) {
         super(context);
-        inflate(context, R.layout.layout_srf_no_img, this);
+      inflate(context, R.layout.layout_srf_no_img_base, this);
         onFinishInflate();
     }
 
@@ -64,7 +63,7 @@ public class RecycleViewWithNoImg extends RelativeLayout implements CustomSwipeR
     }
 
     public void init(Context context, AttributeSet attrs) {
-        LayoutInflater.from(context).inflate(R.layout.layout_srf_no_img, this, true);
+      LayoutInflater.from(context).inflate(R.layout.layout_srf_no_img_base, this, true);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RecycleNoImg);
         hint = ta.getString(R.styleable.RecycleNoImg_rn_hint);
         noDataImgRes = ta.getResourceId(R.styleable.RecycleNoImg_rn_drawable, R.drawable.ic_login_password_display);
@@ -142,12 +141,12 @@ public class RecycleViewWithNoImg extends RelativeLayout implements CustomSwipeR
         swipeRefreshLayout.setRefreshing(isFresh);
     }
 
-    public void setAdapter(RecyclerView.Adapter adapter) {
-        recyclerView.setAdapter(adapter);
-    }
-
     public RecyclerView.Adapter getAdapter(){
         return recyclerView.getAdapter();
+    }
+
+  public void setAdapter(RecyclerView.Adapter adapter) {
+    recyclerView.setAdapter(adapter);
     }
 
     public void stopLoading(){

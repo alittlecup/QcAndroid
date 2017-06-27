@@ -43,6 +43,7 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
+          android:textStyle="bold"
           tools:text="私人教练"
           style="@style/QcTextStyleLargeDark"
           />
@@ -99,6 +100,7 @@
           android:paddingRight="4dp"
           android:paddingTop="2dp"
           tools:text="3-5年"
+          style="@style/QcTextStyleXsWarm"
           />
 
       <TextView
@@ -111,6 +113,7 @@
           android:paddingLeft="4dp"
           android:paddingRight="4dp"
           android:paddingTop="2dp"
+          style="@style/QcTextStyleXsWarm"
           />
 
       <TextView
@@ -123,6 +126,7 @@
           android:paddingLeft="4dp"
           android:paddingRight="4dp"
           android:paddingTop="2dp"
+          style="@style/QcTextStyleXsWarm"
           />
 
       <TextView
@@ -135,6 +139,7 @@
           android:paddingLeft="4dp"
           android:paddingRight="4dp"
           android:paddingTop="2dp"
+          style="@style/QcTextStyleXsWarm"
           />
 
     </LinearLayout>

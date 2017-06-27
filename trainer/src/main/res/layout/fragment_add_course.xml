@@ -40,7 +40,7 @@
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/btn_suit_gyms"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
         civ:civ_clickable="true"
         civ:civ_lable="@string/suit_gyms"
         civ:civ_showright="true"

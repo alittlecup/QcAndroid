@@ -24,6 +24,14 @@ public class ResumeEduExpItem extends AbstractFlexibleItem<ResumeEduExpItem.Resu
     this.education = education;
   }
 
+  public Education getEducation() {
+    return education;
+  }
+
+  public void setEducation(Education education) {
+    this.education = education;
+  }
+
   @Override public int getLayoutRes() {
     return R.layout.item_edu_exp;
   }

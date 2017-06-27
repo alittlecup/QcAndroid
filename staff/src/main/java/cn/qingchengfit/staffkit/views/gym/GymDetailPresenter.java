@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.GymDetail;
@@ -10,12 +10,12 @@ import cn.qingchengfit.model.responese.QcResponse;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.rest.NetWorkThrowable;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import cn.qingchengfit.utils.CrashUtils;

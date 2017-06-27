@@ -21,10 +21,8 @@ android {
     versionName "1.0"
     vectorDrawables.useSupportLibrary true
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     javaCompileOptions {
       annotationProcessorOptions {
-        //        className "com.hannesdorfmann.fragmentargs.processor.ArgProcessor"
         arguments = [fragmentArgsLib               : 'true',
                      fragmentArgsSupportAnnotations: 'true']
       }
@@ -36,6 +34,7 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+  //  resourcePrefix "recruit_"
 }
 
 

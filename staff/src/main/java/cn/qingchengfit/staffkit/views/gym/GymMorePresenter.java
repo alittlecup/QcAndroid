@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.gym;
 
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.UpdateModule;
 import cn.qingchengfit.model.responese.QcResponse;
 import cn.qingchengfit.model.responese.ResponseConstant;

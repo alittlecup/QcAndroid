@@ -1,9 +1,14 @@
 package cn.qingchengfit.utils;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import cn.qingchengfit.widgets.R;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.SizeReadyCallback;
 
 /**
  * Created by peggy on 16/5/26.
@@ -73,12 +78,30 @@ public class PhotoUtils {
         origin(v, getSmall(url), R.drawable.img_loadingimage, R.drawable.img_loadingimage);
     }
 
+  public static void small(ImageView v, String url, int loading) {
+    origin(v, getSmall(url), loading, loading);
+  }
+
     public static void middle(ImageView v, String url) {
         origin(v, getMiddle(url), R.drawable.img_loadingimage, R.drawable.img_loadingimage);
     }
 
     public static void origin(ImageView v, String url) {
         origin(v, url, R.drawable.img_loadingimage, R.drawable.img_loadingimage);
+    }
+
+  public static void loadWidth(final Context context, final String url, final ImageView v,
+      final int w) {
+    Glide.with(context).load(url).into(new SimpleTarget<GlideDrawable>() {
+      @Override public void onResourceReady(GlideDrawable resource,
+          GlideAnimation<? super GlideDrawable> glideAnimation) {
+      }
+    }).getSize(new SizeReadyCallback() {
+      @Override public void onSizeReady(int width, int height) {
+        int newH = height / width * w;
+        Glide.with(context).load(url).override(w, newH).into(v);
+      }
+    });
     }
 
     //public static void smallFile(ImageView v, String url){

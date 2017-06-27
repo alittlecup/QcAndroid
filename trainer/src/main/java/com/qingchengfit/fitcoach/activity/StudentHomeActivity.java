@@ -17,18 +17,19 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.FragmentAdapter;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.activity.WebActivity;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.BaseInfoBean;
 import com.qingchengfit.fitcoach.bean.CurentPermissions;
@@ -68,7 +69,7 @@ import rx.schedulers.Schedulers;
  * <p>
  * Created by Paper on 15/11/19 2015.
  */
-public class StudentHomeActivity extends BaseAcitivity {
+public class StudentHomeActivity extends BaseActivity {
 
     @BindView(R.id.add1) Button add1;
     @BindView(R.id.add2) Button add2;

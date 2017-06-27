@@ -14,10 +14,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.network.PostApi;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
@@ -74,6 +76,7 @@ import rx.schedulers.Schedulers;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    AddEduExpFragmentBuilder.injectArguments(this);
     simpleScrollPicker = new SimpleScrollPicker(getContext());
     timeDialogWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH);
   }
@@ -82,7 +85,19 @@ import rx.schedulers.Schedulers;
     View view = inflater.inflate(R.layout.fragment_add_edu_exp, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
+    initView();
     return view;
+  }
+
+  private void initView() {
+    if (education != null) {
+      curDegree = education.education;
+      civDegree.setContent(RecruitBusinessUtils.getDegree(getContext(), curDegree));
+      civSchoolName.setContent(education.name);
+      civSpeciality.setContent(education.major);
+      civInTime.setContent(DateUtils.getYYMMfromServer(education.start));
+      civOutTime.setContent(DateUtils.getYYMMfromServer(education.end));
+    }
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -124,6 +139,7 @@ import rx.schedulers.Schedulers;
                 @Override public void call(QcResponse qcResponse) {
                   hideLoading();
                   getActivity().onBackPressed();
+                  RxBus.getBus().post(new EventResumeFresh());
                   onShowError("添加成功！");
                 }
               }, new Action1<Throwable>() {
@@ -147,6 +163,7 @@ import rx.schedulers.Schedulers;
                   hideLoading();
                   if (qcResponse.getStatus() == 200) {
                     getActivity().onBackPressed();
+                    RxBus.getBus().post(new EventResumeFresh());
                     onShowError("修改成功！");
                   } else {
                     onShowError(qcResponse.getMsg());
@@ -216,11 +233,10 @@ import rx.schedulers.Schedulers;
         new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.add_resume_education_degree)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
-        if (pos == 0) return;
-        curDegree = pos;
+        curDegree = pos + 1;
         civDegree.setContent(d.get(pos));
       }
     });
-    simpleScrollPicker.show(d, 0);
+    simpleScrollPicker.show(d, curDegree > 0 ? curDegree - 1 : 0);
   }
 }

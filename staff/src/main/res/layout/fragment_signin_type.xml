@@ -57,7 +57,7 @@
 
   <include layout="@layout/divider_grey"/>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       android:visibility="gone"

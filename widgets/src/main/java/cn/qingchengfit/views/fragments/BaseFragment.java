@@ -24,7 +24,7 @@ import cn.qingchengfit.di.PresenterDelegate;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.R;
 import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
@@ -77,7 +77,6 @@ public abstract class BaseFragment extends Fragment implements CView {
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
-        view.setBackgroundResource(R.color.bg_grey);
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
                 return isBlockTouch();
@@ -114,14 +113,14 @@ public abstract class BaseFragment extends Fragment implements CView {
     }
 
     public void showLoading() {
-        if (getActivity() instanceof BaseAcitivity) {
-            ((BaseAcitivity) getActivity()).showLoading();
+      if (getActivity() instanceof BaseActivity) {
+        ((BaseActivity) getActivity()).showLoading();
         }
     }
 
     public void hideLoading() {
-        if (getActivity() instanceof BaseAcitivity) {
-            ((BaseAcitivity) getActivity()).hideLoading();
+      if (getActivity() instanceof BaseActivity) {
+        ((BaseActivity) getActivity()).hideLoading();
         }
     }
 
@@ -179,8 +178,8 @@ public abstract class BaseFragment extends Fragment implements CView {
     }
 
     public void showAlert(String res) {
-        if (getActivity() instanceof BaseAcitivity) {
-            ((BaseAcitivity) getActivity()).showAlert(res);
+      if (getActivity() instanceof BaseActivity) {
+        ((BaseActivity) getActivity()).showAlert(res);
         }
     }
 
@@ -254,16 +253,19 @@ public abstract class BaseFragment extends Fragment implements CView {
         }
     }
 
+  /**
+   * 用语页面为空的状态
+   */
     public void showLoadingTrans() {
-        if (getActivity() instanceof BaseAcitivity) {
-            ((BaseAcitivity) getActivity()).showLoadingTransparent();
-        }
+      if (getActivity() instanceof BaseActivity) {
+        ((BaseActivity) getActivity()).showLoadingTransparent();
+      }
     }
 
     public void hideLoadingTrans() {
-        if (getActivity() instanceof BaseAcitivity) {
-            ((BaseAcitivity) getActivity()).hideLoadingTransparent();
-        }
+      if (getActivity() instanceof BaseActivity) {
+        ((BaseActivity) getActivity()).hideLoadingTransparent();
+      }
     }
 
     @Override public void onShowError(String e) {

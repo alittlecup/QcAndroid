@@ -83,7 +83,7 @@ public class ResumeCertificateListFragment extends BaseFragment implements Flexi
     initToolbar(toolbar);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-    rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 15));
+    rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 1));
     rv.setAdapter(commonFlexAdapter);
     RxRegiste(restRepository.createGetApi(GetApi.class)
         .queryCertifications()

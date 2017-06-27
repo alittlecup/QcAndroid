@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.fragment.guide.GuideFragment;
 
-public class GuideActivity extends BaseAcitivity {
+public class GuideActivity extends BaseActivity {
 
     GuideFragment mFragment;
 

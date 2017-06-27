@@ -4,15 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.MainActivity;
-import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import java.util.List;
 

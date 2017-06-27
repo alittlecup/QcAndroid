@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import cn.qingchengfit.staffkit.App;
-import com.bigkoo.pickerview.lib.OptionsDialog;
+import com.bigkoo.pickerview.OptionsDialog;
 import java.util.ArrayList;
 
 /**

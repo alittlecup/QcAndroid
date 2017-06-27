@@ -42,13 +42,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/devDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/devDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/devDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/dev/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/dev/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/dev/debug" isTestSource="true" generated="true" />
@@ -56,6 +49,13 @@
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/androidTest/dev/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/dev/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/dev/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDevDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/dev/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/dev/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/dev/assets" type="java-resource" />
@@ -112,7 +112,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/shaders" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/build/bakApk" />
+      <excludeFolder url="file://$MODULE_DIR$/build/.DS_Store" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
@@ -120,13 +120,16 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-safeguard" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/multi-dex" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard-rules" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/shaders" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/tinker_intermediates" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/reports" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 24 Platform (4)" jdkType="Android SDK" />
@@ -134,40 +137,30 @@
     <orderEntry type="library" exported="" name="exifinterface-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="hugo-annotations-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="haha-1.3" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.6.1" level="project" />
-    <orderEntry type="library" exported="" name="tbs_sdk_v1.5.1.1047_25436_obfs_20160303_165058" level="project" />
     <orderEntry type="library" exported="" name="PhotoView-1.2.6" level="project" />
     <orderEntry type="library" exported="" name="pushservice-4.5.6.88" level="project" />
     <orderEntry type="library" exported="" name="transition-25.3.1" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-Twitter-2.6.1" level="project" />
-    <orderEntry type="library" exported="" name="youzan-sdk-v2.0.4" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-SinaWeibo-2.6.1" level="project" />
+    <orderEntry type="library" exported="" name="sqlbrite-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="flexible-adapter-5.0.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="library-1.1.4" level="project" />
     <orderEntry type="library" exported="" name="pushservice-4.5.3.48" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-Wechat-Core-2.6.1" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-Email-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="wup-1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="pinyin4j-2.5.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-annotations-8.6.0" level="project" />
     <orderEntry type="library" exported="" name="dagger-android-support-2.11" level="project" />
-    <orderEntry type="library" exported="" name="tbs_sdk_thirdapp_v2.4.0.1073_36840_sharewithdownload_obfs_20161011_194834" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-android-1.3.1" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-watcher-1.3.1" level="project" />
     <orderEntry type="library" exported="" name="fab-1.6.4" level="project" />
     <orderEntry type="library" exported="" name="library-1.4" level="project" />
     <orderEntry type="library" exported="" name="support-v4-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="support-media-compat-25.3.1" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-Wechat-Favorite-2.6.1" level="project" />
-    <orderEntry type="library" exported="" name="sqlbrite-0.7.0" level="project" />
     <orderEntry type="library" exported="" name="calligraphy-2.1.0" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-Core-2.6.1" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-Wechat-Moments-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="butterknife-8.6.0" level="project" />
     <orderEntry type="library" exported="" name="floatingactionbutton-1.10.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="support-compat-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="lottie-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="qrcodereaderview-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="stepper-indicator-1.0.6" level="project" />
     <orderEntry type="library" exported="" name="tag-1.6.0" level="project" />
@@ -182,8 +175,6 @@
     <orderEntry type="library" exported="" name="flexbox-0.3.0-alpha3" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-analyzer-1.3.1" level="project" />
     <orderEntry type="library" exported="" name="support-v13-25.3.1" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-QZone-2.6.1" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-TencentWeibo-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="upyun-android-sdk-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="glide-3.7.0" level="project" />
     <orderEntry type="library" exported="" name="support-core-utils-25.3.1" level="project" />
@@ -192,30 +183,25 @@
     <orderEntry type="library" exported="" name="tinker-android-anno-1.7.7" level="project" />
     <orderEntry type="library" exported="" name="core-0.8.5.5" level="project" />
     <orderEntry type="library" exported="" name="dagger-android-2.11" level="project" />
-    <orderEntry type="library" exported="" name="java-sdk-3.1" level="project" />
     <orderEntry type="library" exported="" name="tsl-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="runtime-0.6.1" level="project" />
-    <orderEntry type="library" exported="" name="sdk-1.0.5" level="project" />
-    <orderEntry type="library" exported="" name="okio-1.13.0" level="project" />
     <orderEntry type="library" exported="" name="percent-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="sdk-1.0.6" level="project" />
     <orderEntry type="library" exported="" name="weekview-1.0" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-QQ-2.6.1" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.7" level="project" />
+    <orderEntry type="library" exported="" name="chat-1.0.6" level="project" />
     <orderEntry type="library" exported="" name="rxandroid-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="tinkerpatch-android-sdk-1.1.3" level="project" />
     <orderEntry type="library" exported="" name="jg_filter_sdk_1.1" level="project" />
-    <orderEntry type="library" exported="" name="chat-1.0.5" level="project" />
-    <orderEntry type="library" exported="" name="okhttp-3.8.1" level="project" />
-    <orderEntry type="library" exported="" name="mid-sdk-2.20" level="project" />
     <orderEntry type="library" exported="" name="rxbinding-0.4.0" level="project" />
     <orderEntry type="library" exported="" name="multidex-1.0.1" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-Facebook-2.6.1" level="project" />
-    <orderEntry type="library" exported="" name="ShareSDK-ShortMessage-2.6.1" level="project" />
+    <orderEntry type="library" exported="" name="wechat-sdk-android-with-mta-1.3.4" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="rxpermissions-0.9.3" level="project" />
-    <orderEntry type="library" exported="" name="SensorsAnalyticsSDK-1.7.6" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="annotation-3.0.2" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-25.3.1" level="project" />
+    <orderEntry type="library" exported="" name="SensorsAnalyticsSDK-1.7.8" level="project" />
     <orderEntry type="library" exported="" name="android-image-cropper-2.4.5" level="project" />
     <orderEntry type="module" module-name="recruit" exported="" />
     <orderEntry type="module" module-name="widgets" exported="" />
@@ -238,13 +224,17 @@
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="analytics-6.1.1" level="project" />
     <orderEntry type="library" exported="" name="adapter-rxjava-2.3.0" level="project" />
+    <orderEntry type="library" exported="" name="tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143" level="project" />
+    <orderEntry type="library" exported="" name="java-sdk-3.1" level="project" />
+    <orderEntry type="library" exported="" name="okio-1.13.0" level="project" />
     <orderEntry type="library" exported="" name="retrofit-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="converter-gson-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="aspectjrt-1.8.9" level="project" />
-    <orderEntry type="library" exported="" name="gson-2.7" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.3.0" level="project" />
     <orderEntry type="library" exported="" name="eventbus-3.0.0" level="project" />
+    <orderEntry type="library" exported="" name="okhttp-3.8.1" level="project" />
     <orderEntry type="library" exported="" name="Bughd_android_sdk_v1.3.7" level="project" />
+    <orderEntry type="library" exported="" name="mid-sdk-2.20" level="project" />
     <orderEntry type="library" exported="" name="logging-interceptor-3.8.1" level="project" />
   </component>
 </module>

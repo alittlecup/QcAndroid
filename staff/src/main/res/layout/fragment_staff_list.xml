@@ -182,7 +182,7 @@
                 android:src="@drawable/ic_loading_outside"
                 />
 
-            <cn.qingchengfit.staffkit.views.custom.LoadingPointerView
+            <cn.qingchengfit.widgets.LoadingPointerView
                 android:id="@+id/pointer"
                 android:layout_width="60dp"
                 android:layout_height="60dp"

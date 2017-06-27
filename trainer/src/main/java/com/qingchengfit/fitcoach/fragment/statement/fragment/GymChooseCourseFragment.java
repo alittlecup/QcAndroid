@@ -2,12 +2,12 @@ package com.qingchengfit.fitcoach.fragment.statement.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.views.fragments.BottomListFragment;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.event.EventChooseCourse;
 import com.qingchengfit.fitcoach.fragment.course.SimpleTextItemItem;
 import com.qingchengfit.fitcoach.fragment.statement.item.ChooseCourseItem;
@@ -52,7 +52,7 @@ import rx.schedulers.Schedulers;
     }
 
     @Override public void loadData(List<AbstractFlexibleItem> ds) {
-        HashMap<String, String> prams = new HashMap<>();
+      HashMap<String, Object> prams = new HashMap<>();
         prams.put("id", id);
         prams.put("model", model);
         QcCloudClient.getApi().getApi.qcGetCoursesAll(App.coachid + "", prams)

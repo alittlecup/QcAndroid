@@ -46,7 +46,7 @@
         />
   </RelativeLayout>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/start_day"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -55,9 +55,9 @@
       app:civ_showright="true"
 
       >
-  </cn.qingchengfit.staffkit.views.custom.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/end_day"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -66,9 +66,9 @@
       app:civ_showright="true"
 
       >
-  </cn.qingchengfit.staffkit.views.custom.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/card_type"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -77,9 +77,9 @@
       app:civ_lable="@string/cardtype"
       app:civ_showright="true"
       >
-  </cn.qingchengfit.staffkit.views.custom.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/signin_type"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -89,7 +89,7 @@
       app:civ_showright="true"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/student"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

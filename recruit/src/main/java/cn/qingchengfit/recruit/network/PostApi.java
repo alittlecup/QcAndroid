@@ -74,6 +74,9 @@ public interface PostApi {
 
   @PUT("/api/user/job/experiences/{id}/") rx.Observable<QcResponse> updateWorkExp(@Path("id") String experience_id, @Body WorkExp workExp);
 
+  @DELETE("/api/user/job/experiences/{id}/") rx.Observable<QcResponse> delWorkExp(
+      @Path("id") String experience_id);
+
   @POST("/api/user/job/certificates/") rx.Observable<QcResponse> addCertificate(@Body Certificate certificate);
 
   ;

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import com.bumptech.glide.Glide;

@@ -78,10 +78,10 @@
           />
     </RelativeLayout>
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/period"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
         app:civ_clickable="true"
         app:civ_showdivier="false"
         />
@@ -146,10 +146,10 @@
 
     <include layout="@layout/divider_grey_left_right"/>
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/cv_cost"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
         app:civ_inputnum="true"
         app:civ_lable="金额(元)"
         app:civ_showdivier="false"

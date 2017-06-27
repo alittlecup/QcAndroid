@@ -1,8 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string-array name="filter_work_year">
+    <item>应届生</item>
+    <item>1&#8211;3年</item>
+    <item>3&#8211;5年</item>
+    <item>5&#8211;8年</item>
+    <item>8&#8211;10年</item>
+    <item>10年以上</item>
+    <item>不限</item>
+  </string-array>
+
+  <string-array name="filter_gender">
+    <item>男</item>
+    <item>女</item>
+    <item>不限</item>
+  </string-array>
+  <string-array name="filter_degree">
+    <item>初中</item>
+    <item>中专</item>
+    <item>高中</item>
+    <item>大专</item>
+    <item>本科</item>
+    <item>硕士</item>
+    <item>博士</item>
+    <item>不限</item>
+  </string-array>
+  <string-array name="filter_age">
+    <item>&#60;20岁</item>
+    <item>20&#8211;25</item>
+    <item>25&#8211;30</item>
+    <item>30&#8211;40</item>
+    <item>&gt;40岁</item>
+    <item>不限</item>
+  </string-array>
+  <string-array name="filter_height">
+    <item>&#60;160cm</item>
+    <item>160&#8211;170cm</item>
+    <item>170&#8211;180cm</item>
+    <item>180&#8211;190cm</item>
+    <item>&gt;190cm</item>
+    <item>不限</item>
+  </string-array>
+
+  <string-array name="filter_weight">
+    <item>&#60;50kg</item>
+    <item>50&#8211;60kg</item>
+    <item>60&#8211;70kg</item>
+    <item>70&#8211;80kg</item>
+    <item>&gt;80kg</item>
+    <item>不限</item>
+  </string-array>
+
+
   <string-array name="education_degree">
     <item>不限</item>
-    <item>中专及以下</item>
+    <item>初中</item>
+    <item>中专</item>
     <item>高中</item>
     <item>大专</item>
     <item>本科</item>
@@ -11,7 +64,8 @@
   </string-array>
   <string-array name="resume_education_degree">
     <item>取消</item>
-    <item>中专及以下</item>
+    <item>初中</item>
+    <item>中专</item>
     <item>高中</item>
     <item>大专</item>
     <item>本科</item>
@@ -30,6 +84,20 @@
   <string-array name="work_exp">
     <item>不限</item>
     <item>0年</item>
+    <item>1年</item>
+    <item>2年</item>
+    <item>3年</item>
+    <item>4年</item>
+    <item>5年</item>
+    <item>6年</item>
+    <item>7年</item>
+    <item>8年</item>
+    <item>9年</item>
+    <item>10年</item>
+    <item>10年以上</item>
+  </string-array>
+  <string-array name="resume_work_exp">
+    <item>应届生</item>
     <item>1年</item>
     <item>2年</item>
     <item>3年</item>

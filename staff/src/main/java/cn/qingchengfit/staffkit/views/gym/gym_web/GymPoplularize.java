@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.rxbus.event.EventPoplularize;
-import cn.qingchengfit.staffkit.views.ShareDialogFragment;
+import cn.qingchengfit.views.fragments.ShareDialogFragment;
 
 /**
  * power by

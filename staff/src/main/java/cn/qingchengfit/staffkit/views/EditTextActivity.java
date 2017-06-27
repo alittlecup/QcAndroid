@@ -16,6 +16,7 @@ import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import rx.functions.Action1;
 import se.emilsjolander.intentbuilder.Extra;
 import se.emilsjolander.intentbuilder.IntentBuilder;

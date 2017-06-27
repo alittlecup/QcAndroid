@@ -88,7 +88,6 @@
 //        if (commonFlexAdapter.getItem(i) instanceof Image120DelItem){
 //
 //        }else if (commonFlexAdapter.getItem(i) instanceof RectAddItem){
-//            // TODO: 2017/6/15 新增图片
 //        }
 //        return true;
 //    }

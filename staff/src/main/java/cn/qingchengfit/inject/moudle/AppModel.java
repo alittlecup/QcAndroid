@@ -1,7 +1,9 @@
 package cn.qingchengfit.inject.moudle;
 
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
@@ -29,15 +31,21 @@ import dagger.Provides;
     private LoginStatus loginStatus;
     private GymWrapper gymWrapper;
     private RestRepository restRepository;
-
+  private BaseRouter router;
+  private QcRestRepository qcrestRepository;
     public AppModel() {
     }
 
-    public AppModel(App app, LoginStatus loginStatus, GymWrapper gymWrapper, RestRepository restRepository) {
+  public AppModel(App app, SerPermissionImpl serPermission, LoginStatus loginStatus,
+      GymWrapper gymWrapper, RestRepository restRepository, BaseRouter router,
+      QcRestRepository qcrestRepository) {
         this.app = app;
+    this.serPermission = serPermission;
         this.loginStatus = loginStatus;
         this.gymWrapper = gymWrapper;
         this.restRepository = restRepository;
+    this.router = router;
+    this.qcrestRepository = qcrestRepository;
     }
 
     @Provides App provideApplicationContext() {
@@ -66,5 +74,13 @@ import dagger.Provides;
 
     @Provides GymWrapper provideGym() {
         return gymWrapper;
+    }
+
+  @Provides BaseRouter providerBaserouter() {
+    return router;
+  }
+
+  @Provides QcRestRepository providerQcRepository() {
+    return qcrestRepository;
     }
 }

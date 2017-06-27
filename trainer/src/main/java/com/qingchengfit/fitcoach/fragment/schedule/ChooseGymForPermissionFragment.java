@@ -2,13 +2,13 @@ package com.qingchengfit.fitcoach.fragment.schedule;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymDialogFragment;

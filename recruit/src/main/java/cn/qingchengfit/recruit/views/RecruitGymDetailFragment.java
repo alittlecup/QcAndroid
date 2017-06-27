@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -16,14 +17,21 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Gym;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.item.RecruitPositionInGymItem;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.presenter.RecruitGymDetailPresenter;
+import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -48,7 +56,9 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/5/27.
  */
-public class RecruitGymDetailFragment extends BaseFragment implements RecruitGymDetailPresenter.MVPView {
+public class RecruitGymDetailFragment extends BaseFragment
+    implements RecruitGymDetailPresenter.MVPView, FlexibleAdapter.EndlessScrollListener,
+    FlexibleAdapter.OnItemClickListener {
 
   @BindView(R2.id.img_gym) ImageView imgGym;
   @BindView(R2.id.tv_gym_name) TextView tvGymName;
@@ -61,9 +71,12 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
   RecruitGymDescFragment descFragment;
 
   @Inject RecruitGymDetailPresenter presenter;
+  @Inject RecruitRouter router;
+  @Inject QcRestRepository qcRestRepository;
   Gym gym;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  List<Job> tempJob = new ArrayList<>();
 
   public static RecruitGymDetailFragment newInstance(Gym co) {
     Bundle args = new Bundle();
@@ -78,11 +91,13 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
     gym = getArguments().getParcelable("gym");
     descFragment = RecruitGymDescFragmentBuilder.newRecruitGymDescFragment(gym);
     positionsFragment = new RecruitPositionsInGymFragment();
+    positionsFragment.setListener(this);
     fragments.add(descFragment);
     fragments.add(positionsFragment);
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_company_detail, container, false);
     super.onCreateView(inflater, container, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
@@ -91,14 +106,15 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
     vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
     tab.setShouldExpand(true);
     tab.setViewPager(vp);
-    tab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-      @Override public void onGlobalLayout() {
-        if (tab != null) {
-          tab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-          tab.notifyDataSetChanged();
-        }
-      }
-    });
+    tab.getViewTreeObserver()
+        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+          @Override public void onGlobalLayout() {
+            if (tab != null) {
+              tab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+              tab.notifyDataSetChanged();
+            }
+          }
+        });
     onGym(gym);
     presenter.queryGymDetail(gym.id);
     return view;
@@ -107,9 +123,23 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitile.setText("公司详情");
+    toolbar.inflateMenu(R.menu.menu_share);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        String title = gym != null ? gym.getBrand_name() + "|" + gym.getName() : "";
+        String content = "热招职位：" + RecruitBusinessUtils.getHotJob(tempJob);
+        String pic = gym != null ? gym.photo
+            : "http://zoneke-img.b0.upaiyun.com/977ad17699c4e4212b52000ed670091a.png";
+        String url = qcRestRepository.getHost() + "mobile/company/" + gym.id + "/";
+        ShareDialogFragment.newInstance(title, content, pic, url)
+            .show(getChildFragmentManager(), "");
+        return false;
+      }
+    });
   }
 
-  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+      Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof RecruitPositionsInGymFragment) {
       presenter.queryPositionOfGym(gym.id, 1);
@@ -126,7 +156,19 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
   }
 
   @Override public void onJobList(List<Job> jobs, int page, int totalCount) {
-    if (positionsFragment != null) positionsFragment.setData(jobs);
+    if (positionsFragment != null) {
+      if (jobs != null) {
+        if (page == 1) {
+          tempJob.clear();
+          tempJob.addAll(jobs);
+          positionsFragment.setData(jobs);
+        } else {
+          positionsFragment.addData(jobs);
+        }
+      } else {
+        positionsFragment.stopLoadMore();
+      }
+    }
   }
 
   @Override public String getFragmentName() {
@@ -135,5 +177,21 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
 
   @Override public void onDestroyView() {
     super.onDestroyView();
+  }
+
+  @Override public void noMoreLoad(int i) {
+    if (positionsFragment != null) positionsFragment.stopLoadMore();
+  }
+
+  @Override public void onLoadMore(int i, int i1) {
+    presenter.queryPositionOfGym(gym.id, 0);
+  }
+
+  @Override public boolean onItemClick(int i) {
+    IFlexible item = positionsFragment.getItem(i);
+    if (item instanceof RecruitPositionInGymItem) {
+      router.goJobDetail(((RecruitPositionInGymItem) item).getJob());
+    }
+    return true;
   }
 }

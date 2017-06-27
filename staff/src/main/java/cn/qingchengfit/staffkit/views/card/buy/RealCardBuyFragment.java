@@ -22,6 +22,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.inject.model.CardTypeWrapper;
 import cn.qingchengfit.model.body.CreateCardBody;
 import cn.qingchengfit.model.responese.CardStandard;
@@ -30,12 +31,10 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.rxbus.event.BuyCardNextEvent;
 import cn.qingchengfit.staffkit.views.adapter.StandardAdapter;
 import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
 import cn.qingchengfit.staffkit.views.card.charge.RealValueCardChargeView;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.EqualSpaceItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.ColorUtils;
@@ -43,8 +42,9 @@ import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import cn.qingchengfit.widgets.CommonInputView;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -228,7 +228,7 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pwTime = new TimeDialogWindow(getContext(), Type.YEAR_MONTH_DAY);
+      pwTime = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         if (getArguments() != null) {
         }
 

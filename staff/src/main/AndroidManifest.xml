@@ -87,7 +87,14 @@
         android:name="com.amap.api.v2.apikey"
         android:value="@string/gd_api"
         />
-
+    <meta-data
+        android:name="WX_ID"
+        android:value="@string/wechat_code"
+        />
+    <meta-data
+        android:name="APP_OEM"
+        android:value="@string/oem_tag"
+        />
     <provider
         android:name="android.support.v4.content.FileProvider"
         android:authorities="${file_provider}"
@@ -341,7 +348,14 @@
         android:launchMode="singleTask"
         android:screenOrientation="portrait"
         android:theme="@style/mainStyle"
-        />
+        >
+      <intent-filter>
+        <action android:name="cn.qingcheng.login"/>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
     <activity
         android:name=".views.gym.GymActivity"
         android:configChanges="keyboard"
@@ -462,7 +476,7 @@
         android:screenOrientation="portrait"
         />
     <activity
-        android:name=".views.WebActivity"
+        android:name="cn.qingchengfit.views.activity.WebActivity"
         android:screenOrientation="portrait"
         android:theme="@style/QcAppThemeForWeb"
         >
@@ -532,7 +546,6 @@
         android:name=".views.batch.BatchActivity"
         android:screenOrientation="portrait"
         >
-      android:screenOrientation="portrait">
     </activity>
     <activity
         android:name=".views.signin.SignInActivity"
@@ -591,7 +604,19 @@
     <activity
         android:name=".views.setting.SettingActivity"
         android:screenOrientation="portrait"
-        />
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="settings"
+            android:scheme="qcstaff"
+            />
+      </intent-filter>
+    </activity>
     <activity
         android:name=".views.student.followup.FollowUpActivity"
         android:screenOrientation="portrait"
@@ -729,6 +754,33 @@
         android:label="拍照预览"
         android:theme="@style/QcAppThemeForCamera"
         />
+    <activity android:name="cn.qingchengfit.recruit.views.RecruitActivity"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="recruit"
+            android:scheme="qcstaff"
+            />
+        <data
+            android:host="resume"
+            android:scheme="qcstaff"
+            />
+        <data
+            android:host="job"
+            android:scheme="qcstaff"
+            />
+
+      </intent-filter>
+
+    </activity>
+    <activity android:name="cn.qingchengfit.recruit.views.organization.SearchActivity">
+    </activity>
+
   </application>
 
 </manifest>

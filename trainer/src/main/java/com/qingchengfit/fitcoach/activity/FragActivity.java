@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.AddBelongGymFragment;
@@ -36,14 +36,14 @@ import com.qingchengfit.fitcoach.fragment.manage.EditGymFragmentBuilder;
  * <p>
  * Created by Paper on 15/10/12 2015.
  */
-public class FragActivity extends BaseAcitivity {
+public class FragActivity extends BaseActivity {
 
     Fragment fragment;
     CoachService mCoachService;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_frag);
+      setContentView(R.layout.activity_base_frag);
         int type = getIntent().getIntExtra("type", 0);
         mCoachService = getIntent().getParcelableExtra("service");
 

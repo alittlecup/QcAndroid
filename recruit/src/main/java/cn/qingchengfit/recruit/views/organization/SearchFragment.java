@@ -98,7 +98,7 @@ public class SearchFragment extends BaseFragment {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+      View view = inflater.inflate(R.layout.fragment_search_recruit, container, false);
         unbinder = ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

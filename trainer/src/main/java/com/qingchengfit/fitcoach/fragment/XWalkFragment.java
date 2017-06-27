@@ -13,7 +13,7 @@
 //import android.view.ViewGroup;
 //
 //import com.google.gson.Gson;
-//import com.qingchengfit.fitcoach.bean.Contact;
+//import cn.qingchengfit.model.common.Contact;
 //import com.paper.paperbaselibrary.utils.AppUtils;
 //import com.paper.paperbaselibrary.utils.LogUtil;
 //import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
@@ -25,7 +25,7 @@
 //import com.qingchengfit.fitcoach.activity.MainActivity;
 //import com.qingchengfit.fitcoach.activity.NotificationActivity;
 //import com.qingchengfit.fitcoach.bean.NewPushMsg;
-//import com.qingchengfit.fitcoach.bean.PlatformInfo;
+//import cn.qingchengfit.model.common.PlatformInfo;
 //
 //import org.xwalk.core.JavascriptInterface;
 //import org.xwalk.core.XWalkNavigationHistory;

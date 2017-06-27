@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.di;
 
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.RestRepository;
@@ -32,12 +33,20 @@ import dagger.Provides;
     Brand brand;
     RestRepository restRepository;
 
-    private CourseModule(Builder builder) {
+  private CourseModule(Builder builder) {
         coachService = builder.coachService;
         brand = builder.brand;
         restRepository = builder.restRepository;
     }
 
+  /**
+   * Fake gymwraper
+   */
+  @Provides GymWrapper provideGymWraper() {
+    return new GymWrapper.Builder().build();
+  }
+
+  ;
     @Provides CoachService provideService() {
         return this.coachService;
     }

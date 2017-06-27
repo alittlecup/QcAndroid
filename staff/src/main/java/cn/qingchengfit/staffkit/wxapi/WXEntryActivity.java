@@ -16,11 +16,11 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import org.json.JSONObject;
 
 /** 微信客户端回调activity示例 */
@@ -65,7 +65,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             if (!TextUtils.isEmpty(shareBean)) {
                 JSONObject jsonObject1 = new JSONObject(shareBean);
                 jsonObject1.put("qc_sharesuccess", "1");
-                SensorsUtils.track("page_share", jsonObject1.toString());
+              SensorsUtils.track("page_share", jsonObject1.toString(), this);
                 PreferenceUtils.setPrefString(this, "share_tmp", "");
             }
         } catch (Exception e) {

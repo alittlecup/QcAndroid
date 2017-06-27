@@ -17,6 +17,7 @@ CREATE TABLE CoachService (
   system_end TEXT,
   phone TEXT,
   address TEXT,
+  position TEXT,
   can_trial INTEGER AS Boolean DEFAULT 0,
   gd_district TEXT AS cn.qingchengfit.model.base.DistrictEntity
 );

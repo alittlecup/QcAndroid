@@ -26,7 +26,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.responese.CourseType;
 import cn.qingchengfit.model.responese.TeacherImpression;
 import cn.qingchengfit.staffkit.App;

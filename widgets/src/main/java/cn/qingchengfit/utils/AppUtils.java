@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -126,6 +127,31 @@ public class AppUtils {
         context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
         return typedValue.data;
     }
+
+  public static String getManifestData(Activity context, String dataname)
+      throws PackageManager.NameNotFoundException {
+    ApplicationInfo info = context.getPackageManager()
+        .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+    return info.metaData.getString(dataname);
+  }
+
+  public static int getCurApp(Context context) {
+    String packagename = context.getPackageName();
+    if (packagename.contains("coach")) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+
+  public static String getCurAppName(Context context) {
+    switch (getCurApp(context)) {
+      case 1:
+        return "Staff";
+      default:
+        return "Trainer";
+    }
+  }
 
     public boolean isAppOnForeground(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

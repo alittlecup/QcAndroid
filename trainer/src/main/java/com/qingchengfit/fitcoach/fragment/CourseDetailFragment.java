@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.DialogSheet;
@@ -23,7 +24,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.ImageIconBean;
@@ -278,7 +278,7 @@ public class CourseDetailFragment extends Fragment {
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override public void onPositive(MaterialDialog dialog) {
                             super.onPositive(dialog);
-                            HashMap<String, String> params = new HashMap<String, String>();
+                          HashMap<String, Object> params = new HashMap<String, Object>();
                             params.put("model", mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
                             params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
                             QcCloudClient.getApi().postApi.qcDelBatch(App.coachid + "", datas.get(pos).id, params)

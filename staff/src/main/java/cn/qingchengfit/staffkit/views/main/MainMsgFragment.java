@@ -21,8 +21,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.NotificationDeleted;
 import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.model.responese.NotificationMsg;
@@ -37,7 +38,6 @@ import cn.qingchengfit.staffkit.presenters.SystemMsgPresenter;
 import cn.qingchengfit.staffkit.rxbus.event.EventLoginChange;
 import cn.qingchengfit.staffkit.rxbus.event.EventNewPush;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.CommonNoDataItem;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.SystemMsgItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
@@ -254,7 +254,7 @@ public class MainMsgFragment extends BaseFragment
     }
 
     @Override public void onLoginFailed(TLSErrInfo tlsErrInfo) {
-        ToastUtils.show(tlsErrInfo.ErrCode + "  " + tlsErrInfo.Msg);
+      LogUtils.e("IM:---" + tlsErrInfo.ErrCode + "  " + tlsErrInfo.Msg);
     }
 
     @OnClick(R.id.fab_add_conversation) public void addCoversation() {

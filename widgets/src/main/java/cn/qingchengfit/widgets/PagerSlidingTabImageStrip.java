@@ -27,8 +27,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CompatUtils;
-
+import com.bumptech.glide.Glide;
 
 /*
  * Copyright (C) 2013 Andreas Stuetz <andreas.stuetz@gmail.com>
@@ -304,6 +305,23 @@ public class PagerSlidingTabImageStrip extends HorizontalScrollView implements V
     }
 
     /**
+     * add one icon tab
+     */
+    private void addAvatarTab(final int position, String img, String text) {
+      LinearLayout tab = (LinearLayout) LayoutInflater.from(getContext())
+          .inflate(R.layout.view_image_strip_avatar, null);
+      ImageView imageView = (ImageView) tab.findViewById(R.id.img);
+      TextView textView = (TextView) tab.findViewById(R.id.text);
+      Glide.with(getContext())
+          .load(img)
+          .asBitmap()
+          .placeholder(R.drawable.default_manage_male)
+          .into(new CircleImgWrapper(imageView, getContext()));
+      textView.setText(text);
+      addTab(position, tab);
+    }
+
+  /**
      * add one tab into tab container
      */
     private void addTab(final int position, View tab) {
@@ -469,6 +487,9 @@ public class PagerSlidingTabImageStrip extends HorizontalScrollView implements V
             } else if (mViewPager.getAdapter() instanceof ImageTabProvider) {
                 addImageTab(i, (((ImageTabProvider) mViewPager.getAdapter()).getShowRed(i)),
                     (((ImageTabProvider) mViewPager.getAdapter()).getTextStr(i)));
+            } else if (mViewPager.getAdapter() instanceof AvatarTabProvider) {
+              addAvatarTab(i, (((AvatarTabProvider) mViewPager.getAdapter()).getHeaderUrl(i)),
+                  (((ImageTabProvider) mViewPager.getAdapter()).getTextStr(i)));
             } else if (mViewPager.getAdapter() instanceof NumTabProvider) {
                 int num = ((NumTabProvider) mViewPager.getAdapter()).getNumber(i);
                 num = num < 0 ? 0 : num;
@@ -713,6 +734,12 @@ public class PagerSlidingTabImageStrip extends HorizontalScrollView implements V
         String getTextStr(int position);
 
         boolean getShowRed(int position);
+    }
+
+  public interface AvatarTabProvider {
+    String getTextStr(int position);
+
+    String getHeaderUrl(int position);
     }
 
     /**

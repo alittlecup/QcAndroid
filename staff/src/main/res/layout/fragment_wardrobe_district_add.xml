@@ -17,7 +17,7 @@
 
     <include layout="@layout/common_simple_toolbar"/>
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"

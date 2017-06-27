@@ -16,7 +16,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_gym"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       android:visibility="gone"
       app:civ_clickable="true"
       app:civ_lable="选择健身房"
@@ -26,7 +26,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_start"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="开始日期"
       >
@@ -35,7 +35,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_end"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="结束日期"
       >
@@ -44,7 +44,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_course"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_lable="选择课程"
       >
@@ -53,7 +53,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_student"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       android:visibility="gone"
       app:civ_clickable="true"
       app:civ_lable="选择学员"

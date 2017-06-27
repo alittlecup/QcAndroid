@@ -45,7 +45,7 @@ public class ProgressItem extends AbstractFlexibleItem<ProgressItem.ProgressVH> 
     }
 
     @Override public boolean equals(Object o) {
-        return false;
+      return o instanceof ProgressItem;
     }
 
     @Override public int getLayoutRes() {

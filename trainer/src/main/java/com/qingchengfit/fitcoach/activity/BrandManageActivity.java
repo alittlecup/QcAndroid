@@ -9,7 +9,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.brandmanange.BrandDetailFragment;
 
@@ -34,7 +34,7 @@ import com.qingchengfit.fitcoach.fragment.brandmanange.BrandDetailFragment;
  * Created by Paper on 2017/3/7.
  */
 
-public class BrandManageActivity extends BaseAcitivity {
+public class BrandManageActivity extends BaseActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;

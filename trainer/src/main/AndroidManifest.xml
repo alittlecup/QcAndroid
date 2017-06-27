@@ -83,7 +83,6 @@
   <!--这里com.tencent.imsdk改成app的包名-->
 
 
-
   <application
       android:name=".App"
       android:allowBackup="true"
@@ -117,6 +116,18 @@
         android:name="YZ_APP_SECRET"
         android:value="a42397223c2b842511ae3c1c9afcc31d"
         />
+    <meta-data
+        android:name="com.amap.api.v2.apikey"
+        android:value="@string/gd_key"
+        />
+    <meta-data
+        android:name="WX_ID"
+        android:value="@string/wechat_code"
+        />
+    <meta-data
+        android:name="APP_OEM"
+        android:value="@string/oem_tag"
+        />
 
     <activity
         android:name=".activity.MainActivity"
@@ -130,18 +141,11 @@
         android:screenOrientation="portrait"
         >
       <intent-filter>
-        <data
-            android:host="192.168.167.33"
-            android:path="/mi-tracker-web/download.html"
-            android:port="8088"
-            android:scheme="http"
-            />
-
         <action android:name="android.intent.action.VIEW"/>
-
+        <action android:name="cn.qingcheng.login"/>
         <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
       </intent-filter>
+
     </activity>
     <activity
         android:name=".activity.RegisterActivity"
@@ -215,7 +219,20 @@
         android:name=".activity.SettingActivity"
         android:label="@string/title_activity_setting"
         android:screenOrientation="portrait"
-        />
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="settings"
+            android:scheme="qccoach"
+            />
+      </intent-filter>
+    </activity>
+
 
     <receiver android:name=".reciever.NetWorkReciever">
       <intent-filter>
@@ -514,7 +531,6 @@
     </receiver>
 
 
-
     <activity
         android:name=".activity.TextInputActivity"
         android:label="@string/title_activity_text_input"
@@ -547,7 +563,7 @@
         android:screenOrientation="portrait"
         />
     <activity
-        android:name=".activity.WebActivity"
+        android:name="cn.qingchengfit.views.activity.WebActivity"
         android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
         android:label="@string/title_activity_notification"
         android:screenOrientation="portrait"
@@ -652,8 +668,10 @@
       <intent-filter>
         <action android:name="${APP_PACKAGE}"/>
         <action android:name="android.intent.action.VIEW"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
+
         <data
             android:host="choose"
             android:scheme="qccoach"
@@ -682,8 +700,10 @@
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <action android:name="cn.qingchengfit.staffkit"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
+
         <data
             android:host="news"
             android:scheme="qccoach"
@@ -740,11 +760,13 @@
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
-        <action android:name="cn.qingchengfit.staffkit"/>
-
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
 
+        <data
+            android:host="job"
+            android:scheme="qccoach"
+            />
         <data
             android:host="recruit"
             android:scheme="qccoach"
@@ -756,6 +778,8 @@
       </intent-filter>
 
     </activity>
+    <activity android:name="cn.qingchengfit.recruit.views.organization.SearchActivity">
+    </activity>
     <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
               android:theme="@style/Base.Theme.AppCompat"
         />
@@ -764,8 +788,8 @@
         android:label="拍照预览"
         android:theme="@style/QcAppThemeForCamera"
         />
-    <activity android:name="cn.qingchengfit.recruit.views.organization.SearchActivity">
-    </activity>
+
+
     <service
         android:name=".service.FreshIntentService"
         android:exported="false"

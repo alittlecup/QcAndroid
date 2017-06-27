@@ -13,7 +13,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/choose_gym"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       android:visibility="gone"
       app:civ_clickable="true"
       app:civ_lable="选择健身房"
@@ -23,7 +23,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/choose_name"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_lable="姓名 :"
       >
   </cn.qingchengfit.widgets.CommonInputView>

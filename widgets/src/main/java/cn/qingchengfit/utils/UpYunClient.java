@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import main.java.com.UpYun;
 import org.json.JSONException;
 import org.json.JSONObject;
 import rx.Observable;

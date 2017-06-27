@@ -1,7 +1,6 @@
 package cn.qingchengfit.recruit.item;
 
 import android.content.Context;
-import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PhotoUtils;
-import com.google.android.flexbox.FlexboxLayout;
+import cn.qingchengfit.widgets.QcTagGroup;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -56,7 +55,8 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
         PhotoUtils.small(holder.imgGym, workExp.gym.brand.photo);
         holder.tvGymBrand.setText(workExp.gym.brand.getName());
         holder.tvGymPosition.setText("职位：" + workExp.position);
-        holder.tvGymName.setText(workExp.gym.getCityName() + " · " + workExp.gym.name);
+        holder.tvGymName.setText(TextUtils.isEmpty(workExp.gym.getCityName()) ? ""
+            : (workExp.gym.getCityName() + " · ") + workExp.gym.name);
       }
     }
     holder.tvDuring.setText(DateUtils.getYYMMfromServer(workExp.start) + "至" + DateUtils.getYYMMfromServer(workExp.end));
@@ -74,19 +74,17 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
       holder.imgQcComfirm.setVisibility(View.VISIBLE);
       holder.tvTraierScore.setVisibility(View.VISIBLE);
       holder.flTrainerTags.setVisibility(View.VISIBLE);
+      holder.layoutSyncFromQc.setVisibility(View.VISIBLE);
+      holder.layoutScore.setVisibility(View.VISIBLE);
       holder.tvTraierScore.setText(CmStringUtils.getFloatDot1(workExp.coach_score));
       holder.tvCourseScore.setText(CmStringUtils.getFloatDot1(workExp.course_score));
       if (workExp.impression != null && workExp.impression.size() > 0) {
         holder.flTrainerTags.removeAllViews();
-        for (int i = 0; i < 5; i++) {
-          TextView tv = new TextView(context);
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            tv.setTextAppearance(R.style.QcTagStyle);
-          } else {
-            tv.setTextAppearance(context, R.style.QcTagStyle);
-          }
-          tv.setText(workExp.getImpressList().get(i));
-          holder.flTrainerTags.addView(tv);
+        int max = workExp.getImpressList().size() > 4 ? 5 : workExp.getImpressList().size();
+        if (max < 5) {
+          holder.flTrainerTags.setTags(workExp.getImpressList());
+        } else {
+          holder.flTrainerTags.setTags(workExp.getImpressList().subList(0, 5));
         }
         holder.tvShowAll.setVisibility(workExp.impression.size() > 5 ? View.VISIBLE : View.GONE);
       } else {
@@ -94,8 +92,9 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
         holder.tvShowAll.setVisibility(View.GONE);
       }
     } else {
+      holder.layoutScore.setVisibility(View.GONE);
       holder.imgQcComfirm.setVisibility(View.GONE);
-      holder.tvTraierScore.setVisibility(View.GONE);
+      holder.layoutSyncFromQc.setVisibility(View.GONE);
       holder.flTrainerTags.setVisibility(View.GONE);
       holder.tvShowAll.setVisibility(View.GONE);
     }
@@ -140,11 +139,13 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
     @BindView(R2.id.tv_private_count) TextView tvPrivateCount;
     @BindView(R2.id.tv_private_menber) TextView tvPrivateMenber;
     @BindView(R2.id.layout_private_menber_info) LinearLayout layoutPrivateMenberInfo;
+    @BindView(R2.id.layout_sync_from_qc) LinearLayout layoutSyncFromQc;
+    @BindView(R2.id.layout_score) LinearLayout layoutScore;
     @BindView(R2.id.tv_sale) TextView tvSale;
     @BindView(R2.id.layout_sale_info) LinearLayout layoutSaleInfo;
     @BindView(R2.id.tv_trainer_score) TextView tvTraierScore;
     @BindView(R2.id.tv_course_score) TextView tvCourseScore;
-    @BindView(R2.id.fl_trainer_tags) FlexboxLayout flTrainerTags;
+    @BindView(R2.id.fl_trainer_tags) QcTagGroup flTrainerTags;
     @BindView(R2.id.tv_desc) TextView tvDesc;
     @BindView(R2.id.tv_during) TextView tvDuring;
     @BindView(R2.id.tv_show_all) CompatTextView tvShowAll;
@@ -158,30 +159,13 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
           if (item instanceof ResumeWorkExpItem) {
             if (((ResumeWorkExpItem) item).showAll) {
               flTrainerTags.removeAllViews();
-              for (int i = 0; i < 5; i++) {
-                TextView tv = new TextView(context);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                  tv.setTextAppearance(R.style.QcTagStyle);
-                } else {
-                  tv.setTextAppearance(context, R.style.QcTagStyle);
-                }
-                tv.setText(((ResumeWorkExpItem) item).workExp.getImpressList().get(i));
-                flTrainerTags.addView(tv);
-              }
+              flTrainerTags.setTags(
+                  ((ResumeWorkExpItem) item).workExp.getImpressList().subList(0, 5));
               tvShowAll.setText("查看全部");
               ((ResumeWorkExpItem) item).showAll = false;
             } else {
               flTrainerTags.removeAllViews();
-              for (int i = 0; i < ((ResumeWorkExpItem) item).workExp.impression.size(); i++) {
-                TextView tv = new TextView(context);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                  tv.setTextAppearance(R.style.QcTagStyle);
-                } else {
-                  tv.setTextAppearance(context, R.style.QcTagStyle);
-                }
-                tv.setText(((ResumeWorkExpItem) item).workExp.getImpressList().get(i));
-                flTrainerTags.addView(tv);
-              }
+              flTrainerTags.setTags(((ResumeWorkExpItem) item).workExp.getImpressList());
               tvShowAll.setText("收起");
               ((ResumeWorkExpItem) item).showAll = true;
             }

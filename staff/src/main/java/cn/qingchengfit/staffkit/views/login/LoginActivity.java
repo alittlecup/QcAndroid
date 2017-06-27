@@ -10,10 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.custom.LoadingDialog;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.LoadingDialog;
 import dagger.android.AndroidInjection;
 import javax.inject.Inject;
 

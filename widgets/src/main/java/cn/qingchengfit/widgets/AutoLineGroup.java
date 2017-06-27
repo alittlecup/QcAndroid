@@ -3,10 +3,14 @@ package cn.qingchengfit.widgets;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import cn.qingchengfit.utils.MeasureUtils;
+import java.util.List;
+
+import static cn.qingchengfit.utils.MeasureUtils.dpToPx;
 
 /**
  * Created by fb on 2017/3/20.
@@ -46,8 +50,8 @@ public class AutoLineGroup extends ViewGroup implements CompoundButton.OnChecked
     private void init() {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         mScreenWidth = dm.widthPixels;
-        mHorizontalSpacing = MeasureUtils.dpToPx(10f, getResources());
-        mVerticalSpacing = MeasureUtils.dpToPx(10f, getResources());
+      mHorizontalSpacing = dpToPx(10f, getResources());
+      mVerticalSpacing = dpToPx(10f, getResources());
     }
 
     @Override
@@ -99,6 +103,54 @@ public class AutoLineGroup extends ViewGroup implements CompoundButton.OnChecked
                 View v = getChildAt(i);
                 if (v instanceof QcCheckable){
                     ((QcCheckable) v).addCheckedChangeListener(this);
+                }
+            }
+        }
+    }
+
+  public void addChildren(List<String> list) {
+    for (String s : list) {
+      CheckBoxButton btn = (CheckBoxButton) LayoutInflater.from(getContext())
+          .inflate(R.layout.layout_radiogroup_checkbox, null);
+      btn.setContent(s);
+      LayoutParams params = new LayoutParams(MeasureUtils.dpToPx(75f, getResources()),
+          MeasureUtils.dpToPx(30f, getResources()));
+      btn.addCheckedChangeListener(this);
+      addView(btn, params);
+    }
+  }
+
+  public void addChildren(String... list) {
+    for (String s : list) {
+      CheckBoxButton btn = (CheckBoxButton) LayoutInflater.from(getContext())
+          .inflate(R.layout.layout_radiogroup_checkbox, null);
+      btn.setContent(s);
+      LayoutParams params = new LayoutParams(MeasureUtils.dpToPx(75f, getResources()),
+          MeasureUtils.dpToPx(30f, getResources()));
+      btn.addCheckedChangeListener(this);
+      addView(btn, params);
+    }
+  }
+
+  public int getCheckPos() {
+    if (getChildCount() > 0) {
+      for (int i = 0; i < getChildCount(); i++) {
+        View v = getChildAt(i);
+        if (v instanceof QcCheckable) {
+          if (((QcCheckable) v).isChecked()) return i;
+        }
+      }
+      return -1;
+    }
+    return -1;
+  }
+
+  public void clearAllCheck() {
+    if (getChildCount() > 0) {
+      for (int i = 0; i < getChildCount(); i++) {
+        View v = getChildAt(i);
+        if (v instanceof QcCheckable) {
+          ((QcCheckable) v).setChecked(false);
                 }
             }
         }

@@ -47,7 +47,7 @@
         />
   </RelativeLayout>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/start_day"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -57,7 +57,7 @@
       app:civ_showright="true"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/end_day"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -67,7 +67,7 @@
       app:civ_showright="true"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/all_course"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -79,7 +79,7 @@
 
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/all_coach"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -91,7 +91,7 @@
 
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/all_student"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 /**
@@ -24,7 +25,7 @@ import android.view.View;
  * Created by Paper on 2017/3/9.
  */
 
-public class WebFragmentNoToolbar extends com.qingchengfit.fitcoach.component.WebFragment {
+public class WebFragmentNoToolbar extends cn.qingchengfit.views.fragments.WebFragment {
     public static WebFragmentNoToolbar newInstance(String url) {
         Bundle args = new Bundle();
         args.putString("url", url);
@@ -33,7 +34,7 @@ public class WebFragmentNoToolbar extends com.qingchengfit.fitcoach.component.We
         return fragment;
     }
 
-    @Override public void initToolbar() {
+  @Override public void initToolbar(Toolbar toolbar) {
         mToolbar.setVisibility(View.GONE);
         mTitle.setVisibility(View.GONE);
     }

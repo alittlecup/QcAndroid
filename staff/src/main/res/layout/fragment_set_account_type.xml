@@ -25,7 +25,7 @@
 
         >
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/order_sutdent_count"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -96,7 +96,7 @@
       <!--</LinearLayout>-->
 
       <!--<include layout="@layout/divider_grey"/>-->
-      <!--<cn.qingchengfit.staffkit.views.custom.ExpandedLayout-->
+      <!--<cn.qingchengfit.widgets.ExpandedLayout-->
       <!--android:id="@+id/pay_online"-->
       <!--android:layout_width="match_parent"-->
       <!--android:layout_height="wrap_content"-->
@@ -108,7 +108,7 @@
       <!--android:layout_height="wrap_content"-->
       <!--android:orientation="vertical"-->
       <!--&gt;-->
-      <!--<cn.qingchengfit.staffkit.views.custom.CommonInputView-->
+      <!--<cn.qingchengfit.widgets.CommonInputView-->
       <!--android:id="@+id/pay_online_money"-->
       <!--android:layout_width="match_parent"-->
       <!--android:layout_height="wrap_content"-->
@@ -155,8 +155,8 @@
 
       <!--</LinearLayout>-->
 
-      <!--</cn.qingchengfit.staffkit.views.custom.ExpandedLayout>-->
-      <!--<cn.qingchengfit.staffkit.views.custom.CommonInputView-->
+      <!--</cn.qingchengfit.widgets.ExpandedLayout>-->
+      <!--<cn.qingchengfit.widgets.CommonInputView-->
       <!--android:id="@+id/limit_num"-->
       <!--android:layout_width="match_parent"-->
       <!--android:layout_height="wrap_content"-->
@@ -166,7 +166,7 @@
       <!--app:civ_content="1"-->
       <!--android:visibility="gone"-->
       <!--/>-->
-      <!--<cn.qingchengfit.staffkit.views.custom.CommonInputView-->
+      <!--<cn.qingchengfit.widgets.CommonInputView-->
       <!--android:id="@+id/limit_who"-->
       <!--android:layout_width="match_parent"-->
       <!--android:layout_height="wrap_content"-->

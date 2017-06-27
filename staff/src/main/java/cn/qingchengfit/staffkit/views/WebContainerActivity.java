@@ -10,6 +10,8 @@ import android.view.View;
 import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
+import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.fragments.WebFragment;
 import rx.functions.Action1;
 
 public class WebContainerActivity extends BaseActivity implements FragCallBack {

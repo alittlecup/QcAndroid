@@ -55,7 +55,7 @@
 
   <include layout="@layout/divider_grey_margin"/>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/username"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -117,7 +117,7 @@
         />
   </RelativeLayout>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/phone"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -126,7 +126,7 @@
       app:civ_lable="@string/phone"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/city"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

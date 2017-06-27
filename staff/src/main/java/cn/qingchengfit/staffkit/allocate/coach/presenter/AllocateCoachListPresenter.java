@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.allocate.coach.presenter;
 
 import android.content.Intent;
-import cn.qingchengfit.inject.model.GymWrapper;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.response.QcResponseData;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.allocate.coach.model.Coach;

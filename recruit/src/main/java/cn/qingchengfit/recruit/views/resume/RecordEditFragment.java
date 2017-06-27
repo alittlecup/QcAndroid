@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
@@ -60,6 +61,7 @@ import rx.schedulers.Schedulers;
   public static final int TYPE_COMFIRM = 2;
   public static final int TYPE_COMPETITION = 3;
   @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.recordedit_score) CommonInputView recordeditScore;
   @BindView(R2.id.recordedit_dateoff) CommonInputView recordeditDateoff;
   @BindView(R2.id.recordedit_upimg) TextView recordeditUpimg;
@@ -130,7 +132,7 @@ import rx.schedulers.Schedulers;
     if (mType == 0) mType = 1;
     switch (mType) {
       case TYPE_MEETING:
-        toolbar.setTitle(mTitle ? "编辑认证信息" : "添加大会认证");
+        toolbarTitle.setText(mTitle ? "编辑认证信息" : "添加大会认证");
         recordEditName.setLabel("大会名称");
         //recordeditDate.setLabel("大会日期");
         recordeditUpimg.setText("上传参会凭证");
@@ -142,7 +144,7 @@ import rx.schedulers.Schedulers;
         break;
 
       case TYPE_COMFIRM:
-        toolbar.setTitle(mTitle ? "编辑认证信息" : "添加培训认证");
+        toolbarTitle.setText(mTitle ? "编辑认证信息" : "添加培训认证");
         recordEditName.setLabel("培训名称");
         //recordeditDate.setLabel("培训日期");
         comfirmHasCertification.setText("有无证书");
@@ -154,7 +156,7 @@ import rx.schedulers.Schedulers;
         mIsHidenImg = true;
         break;
       case TYPE_COMPETITION:
-        toolbar.setTitle(mTitle ? "编辑认证信息" : "添加赛事认证");
+        toolbarTitle.setText(mTitle ? "编辑认证信息" : "添加赛事认证");
         recordEditName.setLabel("赛事名称");
         //recordeditDate.setLabel("赛事日期");
         comfirmHasCertification.setText("有无奖项");
@@ -285,10 +287,6 @@ import rx.schedulers.Schedulers;
       Toast.makeText(getContext(), "请填写生效日期和失效日期", Toast.LENGTH_SHORT).show();
       return;
     }
-    if (comfirmScroeSwitch.isChecked() && TextUtils.isEmpty(recordeditScore.getContent())) {
-      Toast.makeText(getContext(), "请填写学分", Toast.LENGTH_SHORT).show();
-      return;
-    }
     if (comfirmCertificationSwitch.isChecked() && TextUtils.isEmpty(recordeditCertificatName.getContent())) {
       if (mType == 2) {
         Toast.makeText(getContext(), "请填写证书名称", Toast.LENGTH_SHORT).show();
@@ -296,18 +294,17 @@ import rx.schedulers.Schedulers;
       return;
     }
 
-    addCertificate.setGrade(recordeditScore.getContent());
+
     addCertificate.setName(recordEditName.getContent());
     addCertificate.setDate_of_issue(DateUtils.formatDateToServer(recordeditDate.getContent()));
+
     addCertificate.setStart(DateUtils.formatDateToServer(recordeditDatestart.getContent()));
     addCertificate.setCertificate_name(recordeditCertificatName.getContent());
     if (addCertificate.getType() == 0) addCertificate.setType(mType);
     if (!comfirmCertificationSwitch.isChecked()) {
-      addCertificate.setCertificate_name("");
-      addCertificate.setPhoto("");
+      addCertificate.setCertificate_name(null);
+      addCertificate.setPhoto(null);
     }
-    if (!comfirmScroeSwitch.isChecked()) addCertificate.setGrade("");
-
     String endtime = recordeditDateoff.getContent().trim();
     if (endtime.equalsIgnoreCase("长期有效")) {
       endtime = "3000-1-1";
@@ -323,11 +320,10 @@ import rx.schedulers.Schedulers;
       return;
     }
     if (!comfirmCertificationSwitch.isChecked() || comfirmCertificationLayout.getVisibility() == View.GONE) {
-      addCertificate.setStart("");
-      addCertificate.setEnd("");
+      addCertificate.setStart(null);
+      addCertificate.setEnd(null);
     }
-
-    showDialog();
+    showLoading();
     if (mTitle) {
       RxRegiste(restRepository.createGetApi(PostApi.class)
           .updateCertificate(certificatesEntity.getId(), addCertificate)
@@ -337,11 +333,7 @@ import rx.schedulers.Schedulers;
             @Override public void call(QcResponse qcResponse) {
               onResult(qcResponse);
             }
-          }, new Action1<Throwable>() {
-            @Override public void call(Throwable throwable) {
-              showAlert(throwable.getMessage());
-            }
-          }));
+          }, new NetWorkThrowable()));
     } else {
       RxRegiste(restRepository.createGetApi(PostApi.class)
           .addCertificate(addCertificate)
@@ -351,11 +343,7 @@ import rx.schedulers.Schedulers;
             @Override public void call(QcResponse qcResponse) {
               onResult(qcResponse);
             }
-          }, new Action1<Throwable>() {
-            @Override public void call(Throwable throwable) {
-              showAlert(throwable.getMessage());
-            }
-          }));
+          }, new NetWorkThrowable()));
     }
   }
 

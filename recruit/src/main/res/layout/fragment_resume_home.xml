@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_grey"
     android:orientation="vertical"
     >
 
@@ -52,12 +53,21 @@
 
   <include layout="@layout/divider_grey"/>
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/rv"
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/srl"
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
-      />
+      >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+  </android.support.v4.widget.SwipeRefreshLayout>
+
 
   <include layout="@layout/divider_grey"/>
 
@@ -85,9 +95,9 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
+        android:background="@drawable/btn_green"
         android:text="预览我的简历"
         android:textColor="@color/white"
-        style="@style/QcBtnPrimery"
         />
   </LinearLayout>
 </LinearLayout>

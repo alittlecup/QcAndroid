@@ -92,7 +92,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/brand_create"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       android:visibility="gone"
       app:civ_clickable="true"
       app:civ_lable="创建时间"

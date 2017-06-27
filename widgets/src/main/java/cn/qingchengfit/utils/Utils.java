@@ -29,6 +29,7 @@ import java.util.List;
  */
 
 public class Utils {
+
     public static int getOrientation(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof LinearLayoutManager) {
             return ((LinearLayoutManager) layoutManager).getOrientation();
@@ -38,7 +39,7 @@ public class Utils {
         return OrientationHelper.HORIZONTAL;
     }
 
-    public static int[] toIntArray(List<Integer> list){
+  public static int[] toIntArray(List<Integer> list){
                 int[] ret = new int[list.size()];
                 for(int i = 0;i < ret.length;i++)
                     ret[i] = list.get(i);

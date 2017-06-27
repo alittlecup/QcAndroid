@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.utils.LogUtil;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 
 /**

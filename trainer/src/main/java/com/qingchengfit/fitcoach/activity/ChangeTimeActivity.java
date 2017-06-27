@@ -8,7 +8,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.google.gson.Gson;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ChangeTimeActivity extends BaseAcitivity {
+public class ChangeTimeActivity extends BaseActivity {
 
     public static final String TAG = ChangeTimeActivity.class.getName();
 

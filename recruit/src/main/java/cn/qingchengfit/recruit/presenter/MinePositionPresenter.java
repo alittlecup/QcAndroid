@@ -17,6 +17,10 @@ import rx.schedulers.Schedulers;
 public class MinePositionPresenter extends BasePresenter {
 
   @Inject QcRestRepository restRepository;
+  /**
+   * 被邀请的职位
+   */
+  int page = 1, totalpage = 1;
   private MVPView view;
 
   @Inject public MinePositionPresenter() {
@@ -34,58 +38,85 @@ public class MinePositionPresenter extends BasePresenter {
   /**
    * 收藏的职位
    */
-  public void queryPositionOfStarred(final int page) {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryMyStared(page)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
-          @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
-            view.onJobList(jobListWrapQcDataResponse.data.jobs, page, jobListWrapQcDataResponse.data.total_count);
-          }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            view.onShowError(throwable.getMessage());
-          }
-        }));
+  public void queryPositionOfStarred(final int init) {
+    if (init == 1) {
+      page = totalpage = 1;
+    }
+    if (page <= totalpage) {
+      RxRegiste(restRepository.createGetApi(GetApi.class)
+          .queryMyStared(page)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
+            @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
+              view.onJobList(jobListWrapQcDataResponse.data.jobs, page,
+                  jobListWrapQcDataResponse.data.total_count);
+              page++;
+              totalpage = jobListWrapQcDataResponse.data.pages;
+            }
+          }, new Action1<Throwable>() {
+            @Override public void call(Throwable throwable) {
+              view.onShowError(throwable.getMessage());
+            }
+          }));
+    } else {
+      view.onJobList(null, 1, 1);
+    }
   }
 
   /**
    * 我投递的职位
    */
-  public void queryPositionOfSent(final int page) {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryMySent(page)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
-          @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
-            view.onJobList(jobListWrapQcDataResponse.data.jobs, page, jobListWrapQcDataResponse.data.total_count);
-          }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            view.onShowError(throwable.getMessage());
-          }
-        }));
+  public void queryPositionOfSent(final int init) {
+    if (init == 1) {
+      page = totalpage = 1;
+    }
+    if (page <= totalpage) {
+      RxRegiste(restRepository.createGetApi(GetApi.class)
+          .queryMySent(page)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
+            @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
+              view.onJobList(jobListWrapQcDataResponse.data.jobs, page,
+                  jobListWrapQcDataResponse.data.total_count);
+              page++;
+              totalpage = jobListWrapQcDataResponse.data.pages;
+            }
+          }, new Action1<Throwable>() {
+            @Override public void call(Throwable throwable) {
+              view.onShowError(throwable.getMessage());
+            }
+          }));
+    } else {
+      view.onJobList(null, 1, 1);
+    }
   }
 
-  /**
-   * 被邀请的职位
-   */
-  public void queryPositionOfInvited(final int page) {
-    RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryMyInvited(page)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
-          @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
-            view.onJobList(jobListWrapQcDataResponse.data.jobs, page, jobListWrapQcDataResponse.data.total_count);
-          }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            view.onShowError(throwable.getMessage());
-          }
-        }));
+  public void queryPositionOfInvited(final int init) {
+    if (init == 1) {
+      page = totalpage = 1;
+    }
+    if (page <= totalpage) {
+      RxRegiste(restRepository.createGetApi(GetApi.class)
+          .queryMyInvited(page)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
+            @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
+              view.onJobList(jobListWrapQcDataResponse.data.jobs, page,
+                  jobListWrapQcDataResponse.data.total_count);
+              page++;
+              totalpage = jobListWrapQcDataResponse.data.pages;
+            }
+          }, new Action1<Throwable>() {
+            @Override public void call(Throwable throwable) {
+              view.onShowError(throwable.getMessage());
+            }
+          }));
+    } else {
+      view.onJobList(null, 1, 1);
+    }
   }
 
   public interface MVPView extends CView {

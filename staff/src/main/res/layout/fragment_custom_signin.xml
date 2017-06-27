@@ -10,7 +10,7 @@
 
   <include layout="@layout/common_simple_toolbar"/>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_start"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -19,7 +19,7 @@
       app:civ_showright="true"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_end"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -29,7 +29,7 @@
 
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_cardtype"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -39,7 +39,7 @@
       app:civ_showright="true"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_signin_type"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

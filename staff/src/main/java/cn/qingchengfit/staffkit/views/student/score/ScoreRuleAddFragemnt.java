@@ -17,9 +17,9 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.model.responese.ScoreRuleCard;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 import java.util.ArrayList;
 import javax.inject.Inject;
 

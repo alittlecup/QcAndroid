@@ -3,7 +3,7 @@ package com.qingchengfit.fitcoach.fragment.batch;
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.di.CourseComponent;
 import com.qingchengfit.fitcoach.di.CourseModule;
@@ -11,7 +11,7 @@ import com.qingchengfit.fitcoach.di.DaggerCourseComponent;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.RestRepository;
 
-public class BatchActivity extends BaseAcitivity {
+public class BatchActivity extends BaseActivity {
 
     private CourseComponent component;
 

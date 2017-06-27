@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -52,6 +53,7 @@ public class CheckBoxButton extends LinearLayout implements QcCheckable{
     private Context mContext;
 
     private OnClickListener onClickListener;
+  private List<CompoundButton.OnCheckedChangeListener> mListener = new ArrayList<>();
 
     public CheckBoxButton(Context context) {
         super(context);
@@ -109,6 +111,10 @@ public class CheckBoxButton extends LinearLayout implements QcCheckable{
         ta.recycle();
     }
 
+  @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
+    return true;
+  }
+
     @Override protected void onFinishInflate() {
         super.onFinishInflate();
         setGravity(Gravity.CENTER);
@@ -162,20 +168,17 @@ public class CheckBoxButton extends LinearLayout implements QcCheckable{
         setTextColorAndbackGround();
     }
 
-
     public void setClick(OnClickListener listener) {
         this.onClickListener = listener;
-    }
-
-    public void setContent(String contentStr) {
-        content.setText(contentStr);
     }
 
     public String getContent(){
         return content.getText().toString();
     }
 
-    private List<CompoundButton.OnCheckedChangeListener> mListener = new ArrayList<>();
+  public void setContent(String contentStr) {
+    content.setText(contentStr);
+  }
 
     @Override public void addCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener) {
         mListener.add(listener);

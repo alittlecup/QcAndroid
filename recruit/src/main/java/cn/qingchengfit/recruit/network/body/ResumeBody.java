@@ -50,6 +50,7 @@ public class ResumeBody implements Parcelable {
   public Integer gender;
   public Float weight;
   public Float height;
+  public DistrictEntity gd_district;
   public List<String> exp_jobs;
   public List<String> exp_cities;
   public List<String> photos;
@@ -73,6 +74,7 @@ public class ResumeBody implements Parcelable {
     gender = builder.gender;
     weight = builder.weight;
     height = builder.height;
+    gd_district = builder.gd_district;
     exp_jobs = builder.exp_jobs;
     exp_cities = builder.exp_cities;
     photos = builder.photos;
@@ -97,6 +99,7 @@ public class ResumeBody implements Parcelable {
     this.gender = (Integer) in.readValue(Integer.class.getClassLoader());
     this.weight = (Float) in.readValue(Float.class.getClassLoader());
     this.height = (Float) in.readValue(Float.class.getClassLoader());
+    this.gd_district = in.readParcelable(DistrictEntity.class.getClassLoader());
     this.exp_jobs = in.createStringArrayList();
     this.exp_cities = in.createStringArrayList();
     this.photos = in.createStringArrayList();
@@ -104,6 +107,14 @@ public class ResumeBody implements Parcelable {
     this.min_salary = (Integer) in.readValue(Integer.class.getClassLoader());
     this.max_education = (Integer) in.readValue(Integer.class.getClassLoader());
     this.work_year = (Integer) in.readValue(Integer.class.getClassLoader());
+  }
+
+  public String getCity() {
+    if (gd_district != null && gd_district.city != null) {
+      return gd_district.city.getName();
+    } else {
+      return "";
+    }
   }
 
   @Override public int describeContents() {
@@ -125,6 +136,7 @@ public class ResumeBody implements Parcelable {
     dest.writeValue(this.gender);
     dest.writeValue(this.weight);
     dest.writeValue(this.height);
+    dest.writeParcelable(this.gd_district, flags);
     dest.writeStringList(this.exp_jobs);
     dest.writeStringList(this.exp_cities);
     dest.writeStringList(this.photos);
@@ -193,6 +205,7 @@ public class ResumeBody implements Parcelable {
 
     public Builder gd_district(DistrictEntity val) {
       gd_district = val;
+      if (gd_district != null) this.gd_district_id = val.id;
       return this;
     }
 

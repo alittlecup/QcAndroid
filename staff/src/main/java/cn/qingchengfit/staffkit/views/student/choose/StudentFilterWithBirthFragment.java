@@ -10,8 +10,8 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterFragment;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.Date;
 
 /**
@@ -55,7 +55,7 @@ public class StudentFilterWithBirthFragment extends StudentFilterFragment {
         switch (view.getId()) {
             case R.id.tv_student_birthday_start:
                 if (pwBirth == null) {
-                    pwBirth = new TimeDialogWindow(getActivity(), Type.MONTH_DAY);
+                  pwBirth = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.MONTH_DAY);
                 }
                 pwBirth.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                     @Override public void onTimeSelect(Date date) {
@@ -68,7 +68,7 @@ public class StudentFilterWithBirthFragment extends StudentFilterFragment {
                 break;
             case R.id.tv_student_birthday_end:
                 if (pwBirth == null) {
-                    pwBirth = new TimeDialogWindow(getActivity(), Type.MONTH_DAY);
+                  pwBirth = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.MONTH_DAY);
                 }
                 pwBirth.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                     @Override public void onTimeSelect(Date date) {

@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.presenters;
 
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.network.response.QcResponseData;
 import cn.qingchengfit.staffkit.App;

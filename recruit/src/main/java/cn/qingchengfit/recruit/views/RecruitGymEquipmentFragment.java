@@ -1,20 +1,17 @@
 package cn.qingchengfit.recruit.views;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import com.google.android.flexbox.FlexboxLayout;
+import cn.qingchengfit.widgets.QcTagGroup;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
@@ -41,7 +38,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 @FragmentWithArgs public class RecruitGymEquipmentFragment extends BaseFragment {
 
   @Arg Gym gym;
-  @BindView(R2.id.flexlayout) FlexboxLayout flexlayout;
+  @BindView(R2.id.flexlayout) QcTagGroup flexlayout;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -51,19 +48,8 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_gym_equipment, container, false);
     unbinder = ButterKnife.bind(this, view);
-    flexlayout.setDividerDrawableHorizontal(ContextCompat.getDrawable(getContext(), R.drawable.divider_translate_5dp));
-    flexlayout.setDividerDrawableVertical(ContextCompat.getDrawable(getContext(), R.drawable.divider_translate_5dp));
     if (gym.facilities != null) {
-      for (String s : gym.facilities) {
-        TextView t = new TextView(getContext());
-        t.setText(s);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-          t.setTextAppearance(R.style.QcTextStyleMediumDark);
-        } else {
-          t.setTextAppearance(getContext(), R.style.QcTextStyleMediumDark);
-        }
-        flexlayout.addView(t);
-      }
+      flexlayout.setTags(gym.facilities);
     }
     return view;
   }

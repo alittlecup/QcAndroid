@@ -15,10 +15,10 @@ import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.views.BaseActivity;
 import cn.qingchengfit.staffkit.views.FragCallBack;
 import cn.qingchengfit.staffkit.views.setting.brand.BrandDetailFragment;
 import cn.qingchengfit.staffkit.views.setting.brand.BrandManageFragment;
+import cn.qingchengfit.views.activity.BaseActivity;
 import java.util.LinkedList;
 import rx.functions.Action1;
 

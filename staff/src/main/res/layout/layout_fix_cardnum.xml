@@ -27,7 +27,7 @@
       android:orientation="horizontal"
       >
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/real_card_no"
         android:layout_width="0dp"
         android:layout_height="@dimen/qc_item_height"

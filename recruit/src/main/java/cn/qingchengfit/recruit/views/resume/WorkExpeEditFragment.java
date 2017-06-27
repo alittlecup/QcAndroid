@@ -2,28 +2,30 @@ package cn.qingchengfit.recruit.views.resume;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.network.PostApi;
 import cn.qingchengfit.recruit.views.organization.SearchActivity;
@@ -34,6 +36,7 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.ExpandedLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -80,8 +83,8 @@ import static android.text.TextUtils.isEmpty;
   @BindView(R2.id.workexpedit_private_class) CommonInputView workexpeditPrivateClass;
   @BindView(R2.id.workexpedit_private_num) CommonInputView workexpeditPrivateNum;
   @BindView(R2.id.workexpedit_sale) CommonInputView workexpeditSale;
-  @BindView(R2.id.workexpedit_comfirm_btn) Button workexpeditComfirmBtn;
-  @BindView(R2.id.rootview) ScrollView rootview;
+  //@BindView(R2.id.workexpedit_comfirm_btn) Button workexpeditComfirmBtn;
+  @BindView(R2.id.rootview) LinearLayout rootview;
   @BindView(R2.id.workexpedit_expe_layout) LinearLayout workexpeditExpeLayout;
   @BindView(R2.id.host_img) ImageView hostImg;
   @BindView(R2.id.host_qc_identify) ImageView hostQcIdentify;
@@ -90,6 +93,9 @@ import static android.text.TextUtils.isEmpty;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
   TimeDialogWindow pwTime;
   @Inject QcRestRepository restRepository;
+  @BindView(R2.id.sw_group) ExpandedLayout swGroup;
+  @BindView(R2.id.sw_private) ExpandedLayout swPrivate;
+  @BindView(R2.id.sw_sale) ExpandedLayout swSale;
   private MaterialDialog delDialog;
   private DialogSheet mDialogSheet;
 
@@ -138,14 +144,29 @@ import static android.text.TextUtils.isEmpty;
     pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
   }
 
-  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_workexepedit, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     toolbarTitile.setText(workExp == null ? "添加工作经验" : "编辑工作经验");
 
+    if (curGym != null) {
+      setGym(curGym);
+      if (workExp != null) workExp.gym = curGym;
+    }
+    return view;
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    setInfo();
+  }
+
+  public void setInfo() {
     if (workExp != null) {
-      workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(workExp.getStart())));
+      workexpeditStartTime.setContent(
+          DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(workExp.getStart())));
       Date d = DateUtils.formatDateFromServer(workExp.getEnd());
       Calendar c = Calendar.getInstance(Locale.getDefault());
       c.setTime(d);
@@ -165,24 +186,36 @@ import static android.text.TextUtils.isEmpty;
       workexpeditPrivateClass.setContent(Integer.toString(workExp.getPrivate_course()));
       workexpeditPrivateNum.setContent(Integer.toString(workExp.getPrivate_user()));
       workexpeditSale.setContent(workExp.getSale() + "");
+      swGroup.setExpanded(!workExp.isGroup_is_hidden());
+      swPrivate.setExpanded(!workExp.isPrivate_is_hidden());
+      swSale.setExpanded(!workExp.isSale_is_hidden());
     } else {
       workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(new Date()));
       workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(new Date()));
     }
-    if (curGym != null) {
-      setGym(curGym);
-      if (workExp != null) workExp.gym = curGym;
-    }
-    return view;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbar.inflateMenu(R.menu.menu_save);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        onComfirm();
+        return true;
+      }
+    });
   }
 
   public void setGym(Gym gym) {
     workexpeditGymName.setText(gym.getName());
-    Glide.with(getContext()).load(gym.getPhoto()).asBitmap().into(new CircleImgWrapper(hostImg, getActivity()));
+    Glide.with(getContext())
+        .load(gym.getPhoto())
+        .asBitmap()
+        .into(new CircleImgWrapper(hostImg, getActivity()));
     hostAddress.setText(gym.getAddress());
   }
 
-  @OnClick(R2.id.workexpedit_comfirm_btn) public void onComfirm() {
+  public void onComfirm() {
 
     String starttime = DateUtils.formatDateToServer(workexpeditStartTime.getContent());
     String endtime = DateUtils.formatDateToServer(workexpeditStartEnd.getContent());
@@ -207,7 +240,8 @@ import static android.text.TextUtils.isEmpty;
     if (endtime.equalsIgnoreCase("至今")) {
       endtime = "3000-1-1";
     }
-    if (DateUtils.formatDateFromYYYYMMDD(starttime).getTime() > DateUtils.formatDateFromYYYYMMDD(endtime).getTime()) {
+    if (DateUtils.formatDateFromYYYYMMDD(starttime).getTime() > DateUtils.formatDateFromYYYYMMDD(
+        endtime).getTime()) {
       Toast.makeText(getContext(), "结束时间不能早于开始时间", Toast.LENGTH_SHORT).show();
       return;
     }
@@ -222,6 +256,9 @@ import static android.text.TextUtils.isEmpty;
         .private_course(Integer.parseInt(privateClass))
         .private_user(Integer.parseInt(privateNum))
         .sale(Float.parseFloat(sale))
+        .group_is_hidden(!swGroup.isExpanded())
+        .private_is_hidden(!swPrivate.isExpanded())
+        .sale_is_hidden(!swSale.isExpanded())
         .gym(curGym)
         .build();
     if (workExp != null) {
@@ -230,22 +267,25 @@ import static android.text.TextUtils.isEmpty;
       ob = restRepository.createGetApi(PostApi.class).addWorkExp(body);
     }
     showLoading();
-    RxRegiste(ob.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Action1<QcResponse>() {
-      @Override public void call(QcResponse qcResponse) {
-        hideLoading();
-        if (qcResponse.status == 200) {
-          ToastUtils.show(workExp == null ? "添加成功" : "修改成功");
-          getActivity().onBackPressed();
-        } else {
-          ToastUtils.show(qcResponse.getMsg());
-        }
-      }
-    }, new Action1<Throwable>() {
-      @Override public void call(Throwable throwable) {
-        hideLoading();
-        ToastUtils.show(throwable.getMessage());
-      }
-    }));
+    RxRegiste(ob.observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
+        .subscribe(new Action1<QcResponse>() {
+          @Override public void call(QcResponse qcResponse) {
+            hideLoading();
+            if (qcResponse.status == 200) {
+              RxBus.getBus().post(new EventResumeFresh());
+              ToastUtils.show(workExp == null ? "添加成功" : "修改成功");
+              getActivity().onBackPressed();
+            } else {
+              ToastUtils.show(qcResponse.getMsg());
+            }
+          }
+        }, new Action1<Throwable>() {
+          @Override public void call(Throwable throwable) {
+            hideLoading();
+            ToastUtils.show(throwable.getMessage());
+          }
+        }));
   }
 
   @OnClick(R2.id.workexpedit_expe_layout) public void onDescripte() {
@@ -268,8 +308,8 @@ import static android.text.TextUtils.isEmpty;
         }
 
         if (!TextUtils.equals("至今", workexpeditStartEnd.getContent())
-            && DateUtils.formatDateFromYYYYMMDD(workexpeditStartEnd.getContent()).getTime() < DateUtils.formatDateFromYYYYMMDD(
-            workexpeditStartTime.getContent()).getTime()) {
+            && DateUtils.formatDateFromYYYYMMDD(workexpeditStartEnd.getContent()).getTime()
+            < DateUtils.formatDateFromYYYYMMDD(workexpeditStartTime.getContent()).getTime()) {
           Toast.makeText(getContext(), "起始时间不能晚于结束时间", Toast.LENGTH_SHORT).show();
           return;
         }
@@ -294,7 +334,8 @@ import static android.text.TextUtils.isEmpty;
           pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
           pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date date) {
-              if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(workexpeditStartTime.getContent()).getTime()) {
+              if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(
+                  workexpeditStartTime.getContent()).getTime()) {
                 Toast.makeText(getContext(), "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
                 return;
               }
@@ -307,7 +348,6 @@ import static android.text.TextUtils.isEmpty;
         }
       });
     }
-
     mDialogSheet.show();
   }
 
@@ -336,7 +376,10 @@ import static android.text.TextUtils.isEmpty;
         hostAddress.setVisibility(View.VISIBLE);
         hostAddress.setText(address);
       }
-      Glide.with(getContext()).load(data.getStringExtra("pic")).asBitmap().into(new CircleImgWrapper(hostImg, getContext()));
+      Glide.with(getContext())
+          .load(data.getStringExtra("pic"))
+          .asBitmap()
+          .into(new CircleImgWrapper(hostImg, getContext()));
     }
   }
 }

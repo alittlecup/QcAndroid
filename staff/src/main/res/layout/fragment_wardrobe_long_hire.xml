@@ -8,28 +8,28 @@
     android:orientation="vertical"
     >
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/choose_student"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_clickable="true"
       civ:civ_lable="@string/student"
       civ:civ_showright="true"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/start_day"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_clickable="true"
       civ:civ_lable="@string/start_day"
       civ:civ_showright="true"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/end_day"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_clickable="true"
       civ:civ_lable="@string/end_day"
       civ:civ_showright="true"
@@ -96,10 +96,10 @@
 
   <include layout="@layout/divider_grey_left_right"/>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/cv_cost"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       civ:civ_inputnum="true"
       civ:civ_lable="金额(元)"
       civ:civ_showdivier="false"

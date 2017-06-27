@@ -24,7 +24,7 @@
         android:orientation="vertical"
         >
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/cardname"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -32,10 +32,10 @@
           civ:civ_nonnull="true"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/type"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           civ:civ_clickable="true"
           civ:civ_hint="请选择"
           civ:civ_lable="@string/type"
@@ -44,10 +44,10 @@
           civ:civ_showright="true"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/desc"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           civ:civ_clickable="true"
           civ:civ_hint="选填"
           civ:civ_lable="简介"
@@ -171,7 +171,7 @@
 
       <include layout="@layout/divider_grey_margin"/>
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/support_gyms"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -205,10 +205,10 @@
           android:background="@color/divider_grey"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/pre_order_count"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           civ:civ_clickable="true"
           civ:civ_content="0"
@@ -219,10 +219,10 @@
 
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/during_count"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           civ:civ_clickable="true"
           civ:civ_content="0"
@@ -233,10 +233,10 @@
           tools:visibility="visible"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/limit_bug_count"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           civ:civ_clickable="true"
           civ:civ_content="0"
@@ -250,10 +250,10 @@
       <include layout="@layout/divider_grey"/>
 
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/set_card_standard"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           civ:civ_content="已设置"
           civ:civ_lable="设置会员卡规格"

@@ -3,7 +3,7 @@ package com.qingchengfit.fitcoach.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.CmBean;
@@ -11,7 +11,7 @@ import com.qingchengfit.fitcoach.fragment.guide.AddCycleFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragmentBuilder;
 import com.qingchengfit.fitcoach.fragment.schedule.ChooseScheduleGymFragmentBuilder;
 
-public class ChooseActivity extends BaseAcitivity {
+public class ChooseActivity extends BaseActivity {
 
     public static final int TO_CHOSSE_ADDRESS = 0;
     public static final int TO_CHOSSE_CIRCLE = 1;

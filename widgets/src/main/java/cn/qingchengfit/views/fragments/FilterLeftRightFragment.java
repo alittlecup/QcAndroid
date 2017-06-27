@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -31,12 +32,11 @@ public class FilterLeftRightFragment extends BaseFragment{
 
   @BindView(R2.id.filter_left_list) RecyclerView filterLeftList;
   @BindView(R2.id.filter_right_list) RecyclerView filterRightList;
+  List<AbstractFlexibleItem> leftItemList = new ArrayList<>();
+  List<AbstractFlexibleItem> rightItemList = new ArrayList<>();
   private CommonFlexAdapter leftAdapter, rightAdapter;
   private OnLeftRightSelectListener listener;
   private int lastPosition = -1;
-
-  List<AbstractFlexibleItem> leftItemList = new ArrayList<>();
-  List<AbstractFlexibleItem> rightItemList = new ArrayList<>();
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,

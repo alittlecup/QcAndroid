@@ -49,8 +49,7 @@ public class ResumeIntentItem extends AbstractFlexibleItem<ResumeIntentItem.Resu
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeIntentVH holder, int position, List payloads) {
-    String statu = Math.abs(stauts) < 5 ? statusStr[Math.abs(stauts)] : "";
-    holder.tvCurrentStatus.setText(statu);
+    holder.tvCurrentStatus.setText(stauts == 0 ? "未填写" : statusStr[stauts % 5 - 1]);
     Drawable d = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.dot_red));
     String color = context.getResources().getStringArray(R.array.resume_status_colors)[Math.abs(stauts) % 5];
     DrawableCompat.setTint(d, Color.parseColor(color));

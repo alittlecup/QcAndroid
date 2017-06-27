@@ -26,7 +26,7 @@
 
       <include layout="@layout/layout_course"/>
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/coach"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -36,7 +36,7 @@
 
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/space"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -47,7 +47,7 @@
           />
 
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/order_sutdent_count"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -128,7 +128,7 @@
           android:background="@color/divider_grey"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/pay_online"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -140,7 +140,7 @@
           app:civ_text_color="@color/text_black"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/pay_card"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -167,18 +167,18 @@
 
       <include layout="@layout/divider_grey"/>
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/starttime"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           app:civ_clickable="true"
           app:civ_lable="@string/start_day"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/endtime"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           app:civ_clickable="true"
           app:civ_lable="@string/end_day"
           app:civ_showdivier="false"

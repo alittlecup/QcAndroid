@@ -83,26 +83,6 @@ public class ResumePresenter extends BasePresenter {
         return resumeModel;
     }
 
-    public void queryEducations() {
-        RxRegiste(restRepository.createGetApi(GetApi.class)
-            .queryEducations()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcDataResponse<EduExpListWrap>>() {
-                @Override public void call(QcDataResponse<EduExpListWrap> eduExpListWrapQcDataResponse) {
-                    if (eduExpListWrapQcDataResponse.getStatus() == 200) {
-                        view.onEduExpList(eduExpListWrapQcDataResponse.data.educations);
-                    } else {
-                        view.onShowError(eduExpListWrapQcDataResponse.getMsg());
-                    }
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onShowError(throwable.getMessage());
-                }
-            }));
-    }
-
   public void queryWorkExps() {
     RxRegiste(restRepository.createGetApi(GetApi.class)
         .queryWorkExps()

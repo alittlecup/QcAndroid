@@ -18,13 +18,13 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.statement.filter.CoachChooseDialogFragment;
 import cn.qingchengfit.staffkit.views.statement.filter.CourseChooseDialogFragment;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import cn.qingchengfit.widgets.CommonInputView;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -140,7 +140,9 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
     }
 
     @OnClick(R.id.custom_statment_end) public void onClickEnd() {
-        if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+      if (pwTime == null) {
+        pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+      }
         pwTime.setRange(1900, 2100);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date date) {
@@ -173,7 +175,9 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
 
     @OnClick(R.id.custom_statment_start) public void onClickStart() {
 
-        if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+      if (pwTime == null) {
+        pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+      }
         pwTime.setRange(1900, 2100);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date date) {

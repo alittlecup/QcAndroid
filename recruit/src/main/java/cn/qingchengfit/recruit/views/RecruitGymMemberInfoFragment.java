@@ -37,9 +37,9 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 @FragmentWithArgs public class RecruitGymMemberInfoFragment extends BaseFragment {
 
   @Arg String strArea;
-  @Arg int staffNum;
-  @Arg int memberNum;
-  @Arg int trainerNum;
+  @Arg Integer staffNum;
+  @Arg Integer memberNum;
+  @Arg Integer trainerNum;
 
   @BindView(R2.id.tv_gym_area) TextView tvGymArea;
   @BindView(R2.id.tv_staff_num) TextView tvStaffNum;
@@ -50,15 +50,19 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
     super.onCreate(savedInstanceState);
     RecruitGymMemberInfoFragmentBuilder.injectArguments(this);
     if (strArea == null) strArea = "0";
+    if (staffNum == null) staffNum = 0;
+    if (memberNum == null) memberNum = 0;
+    if (trainerNum == null) trainerNum = 0;
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_gym_member_info, container, false);
     unbinder = ButterKnife.bind(this, view);
-    tvGymArea.setText(strArea + "㎡");
-    tvStaffNum.setText(staffNum + "人");
-    tvMenberNum.setText(memberNum + "人");
-    tvTrainerNum.setText(trainerNum + "人");
+    tvGymArea.setText(strArea.endsWith("0") ? "--" : (strArea + "㎡"));
+    tvStaffNum.setText(staffNum == 0 ? "--" : (staffNum + "人"));
+    tvMenberNum.setText(memberNum == 0 ? "--" : (memberNum + "人"));
+    tvTrainerNum.setText(trainerNum == 0 ? "--" : (trainerNum + "人"));
+    view.setBackgroundResource(R.color.white);
     return view;
   }
 

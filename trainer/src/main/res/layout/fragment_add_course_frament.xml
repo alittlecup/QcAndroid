@@ -33,7 +33,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
-        tools:src="@drawable/test_pic"
         />
   </RelativeLayout>
 

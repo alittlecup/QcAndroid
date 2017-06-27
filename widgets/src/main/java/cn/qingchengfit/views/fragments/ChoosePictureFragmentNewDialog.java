@@ -20,7 +20,7 @@ import android.widget.TextView;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.R;
 import com.commonsware.cwac.cam2.CameraActivity;
 import com.jakewharton.rxbinding.view.RxView;
@@ -199,7 +199,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
         }
         if (!TextUtils.isEmpty(filepath)) {
             if (mResult != null) mResult.onChoosefile(filepath);
-            if (getActivity() instanceof BaseAcitivity) ((BaseAcitivity) getActivity()).showLoading();
+          if (getActivity() instanceof BaseActivity) ((BaseActivity) getActivity()).showLoading();
 
             final String fp = filepath;
             spUpload = UpYunClient.rxUpLoad("/android/", fp)
@@ -207,7 +207,9 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override public void call(String s) {
-                        if (getActivity() instanceof BaseAcitivity) ((BaseAcitivity) getActivity()).hideLoading();
+                      if (getActivity() instanceof BaseActivity) {
+                        ((BaseActivity) getActivity()).hideLoading();
+                      }
                         if (mResult != null) {
                             mResult.onUploadComplete(fp, s);
                         }
@@ -215,7 +217,9 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
                     }
                 }, new Action1<Throwable>() {
                     @Override public void call(Throwable throwable) {
-                        if (getActivity() instanceof BaseAcitivity) ((BaseAcitivity) getActivity()).hideLoading();
+                      if (getActivity() instanceof BaseActivity) {
+                        ((BaseActivity) getActivity()).hideLoading();
+                      }
                         ToastUtils.show(throwable.getMessage());
                     }
                 });

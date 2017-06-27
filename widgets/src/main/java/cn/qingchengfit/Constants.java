@@ -26,6 +26,11 @@ import cn.qingchengfit.widgets.BuildConfig;
 public class Constants {
   public static final String SEPARATE = "、";
   public static final String SEPARATOR = "、";
+  public static final String EXTRA_GYM_SERVICE = "qingcheng.gym.service";
+  public static final String EXTRA_GYM_SINGLE = "qingcheng.gym.single";
+  public static final String EXTRA_GYM_STATUS = "qingcheng.gym.status";
+  public static final String EXTRA_BRAND = "qingcheng.brand";
+
 
   public static final String Server = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
 }

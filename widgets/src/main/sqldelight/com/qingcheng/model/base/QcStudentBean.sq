@@ -40,7 +40,7 @@ FROM QcStudentBean WHERE (username LIKE ?  or phone LIKE ?) ;
 
 getStudentByKeyWordShop:
 SELECT *
-FROM QcStudentBean WHERE (username LIKE ?  or phone LIKE ?) and brand_id = ? and supoort_gym_ids LIKE ?;
+FROM QcStudentBean WHERE (username or phone ) and brand_id  and supoort_gym_ids LIKE ?;
 
 getStudentByGym:
 SELECT *

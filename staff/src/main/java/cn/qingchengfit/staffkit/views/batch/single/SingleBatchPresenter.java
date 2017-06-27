@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.batch.single;
 
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.DelBatchScheduleBody;
 import cn.qingchengfit.model.body.SingleBatchBody;

@@ -38,7 +38,7 @@
 
   </LinearLayout>
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
@@ -46,7 +46,7 @@
       app:civ_text_color="@color/text_black"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/new_name_civ"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

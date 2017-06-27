@@ -452,7 +452,7 @@ public class DateUtils {
         c.setTime(new Date());
         int curYear = c.get(Calendar.YEAR);
         c.setTime(d);
-        return c.get(Calendar.YEAR) - curYear;
+    return curYear - c.get(Calendar.YEAR);
     }
 
 }

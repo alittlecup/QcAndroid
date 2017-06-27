@@ -8,12 +8,12 @@
 //import android.view.ViewGroup;
 //
 //import com.google.gson.Gson;
-//import com.qingchengfit.fitcoach.bean.Contact;
+//import cn.qingchengfit.model.common.Contact;
 //import com.paper.paperbaselibrary.utils.AppUtils;
 //import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 //import com.paper.paperbaselibrary.utils.PreferenceUtils;
 //import com.qingchengfit.fitcoach.R;
-//import com.qingchengfit.fitcoach.bean.PlatformInfo;
+//import cn.qingchengfit.model.common.PlatformInfo;
 //
 //import org.xwalk.core.JavascriptInterface;
 //import org.xwalk.core.XWalkView;

@@ -72,15 +72,15 @@ import java.util.List;
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     if (cityBeanList.size() > 0) {
-      chooseCityId1 = cityBeanList.get(0).id;
+      chooseCityId1 = cityBeanList.get(0).getId();
       civFirst.setContent(cityBeanList.get(0).getName());
     }
     if (cityBeanList.size() > 1) {
-      chooseCityId2 = cityBeanList.get(1).id;
+      chooseCityId2 = cityBeanList.get(1).getId();
       civSecond.setContent(cityBeanList.get(1).getName());
     }
     if (cityBeanList.size() > 2) {
-      chooseCityId3 = cityBeanList.get(2).id;
+      chooseCityId3 = cityBeanList.get(2).getId();
       civThird.setContent(cityBeanList.get(1).getName());
     }
     return view;

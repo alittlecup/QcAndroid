@@ -7,7 +7,7 @@ def pathPrefix = "${bakPath}/bak/"
 
 tinkerpatchSupport {
 
-  tinkerEnable = true
+  tinkerEnable = false
   appKey = "d979619bbc4846e5"
   reflectApplication = true
   appVersion = "${config.version_name}"

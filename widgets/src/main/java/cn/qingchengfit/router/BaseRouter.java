@@ -3,9 +3,9 @@ package cn.qingchengfit.router;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.views.activity.WebActivity;
 import java.util.HashMap;
 
 import static android.R.attr.action;
@@ -33,13 +33,12 @@ import static android.R.attr.action;
 
 public class BaseRouter {
 
+  public static final int RESULT_LOGIN = 201;
   HashMap<String, Class<?>> routers = new HashMap<>();
 
   public static void routerToWeb(String url, Context context) {
     try {
-      Intent toWeb = new Intent();
-      toWeb.setData(Uri.parse("qccoach://openurl/" + url));
-      context.startActivity(toWeb);
+      WebActivity.startWeb(url, context);
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
     }
@@ -67,6 +66,7 @@ public class BaseRouter {
     }
   }
 
+
   public void routerTo(String module, Context context) {
     if (routers.containsKey(module)) {
       Intent it = new Intent(context, routers.get(module));
@@ -79,5 +79,30 @@ public class BaseRouter {
 
   public void registeRouter(String module, Class<?> activitycalss) {
     routers.put(module, activitycalss);
+  }
+
+  public void toLogin(Fragment fragment) {
+    try {
+      Intent toLogin = new Intent();
+      toLogin.setPackage(fragment.getContext().getPackageName());
+      toLogin.setAction("cn.qingcheng.login");
+      toLogin.putExtra("web", true);
+      fragment.startActivityForResult(toLogin, RESULT_LOGIN);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+  }
+
+  public void toLogin(Activity fragment) {
+    try {
+      Intent toLogin = new Intent();
+      toLogin.setPackage(fragment.getPackageName());
+      toLogin.setAction("cn.qingcheng.login");
+      toLogin.putExtra("web", true);
+      fragment.startActivityForResult(toLogin, RESULT_LOGIN);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+
   }
 }

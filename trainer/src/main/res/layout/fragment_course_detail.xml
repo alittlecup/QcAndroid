@@ -424,7 +424,7 @@
               tools:text="暂无简介"
               />
 
-          <com.qingchengfit.fitcoach.component.TouchyWebView
+          <cn.qingchengfit.views.fragments.TouchyWebView
               android:id="@+id/web_desc"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"

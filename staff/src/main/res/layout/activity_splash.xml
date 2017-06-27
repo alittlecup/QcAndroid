@@ -61,13 +61,12 @@
       android:id="@+id/main_loading"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/white"
+      android:background="#151515"
       >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/splash_background"
         android:layerType="software"
         >
 
@@ -79,27 +78,21 @@
           android:orientation="vertical"
           >
 
-        <!--<ImageView-->
-        <!--android:layout_width="150dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="100dp"-->
-        <!--/>-->
-
 
         <ImageView
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="175dp"
-            android:src="@drawable/loading_logo"
-
+            android:id="@+id/img_gif"
+            android:layout_width="420dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="145dp"
+            android:scaleType="center"
             />
 
 
       </LinearLayout>
 
       <ImageView
-          android:layout_width="114dp"
-          android:layout_height="15dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
           android:layout_alignParentBottom="true"
           android:layout_centerHorizontal="true"
           android:layout_marginBottom="30dp"

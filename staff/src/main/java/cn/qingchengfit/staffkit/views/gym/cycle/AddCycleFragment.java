@@ -15,16 +15,16 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.CmBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.rxbus.event.RxbusBatchLooperConfictEvent;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import cn.qingchengfit.widgets.CommonInputView;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -237,7 +237,7 @@ import rx.functions.Action1;
 
     @OnClick({ R.id.starttime, R.id.endtime }) public void onChangetime(View view) {
         if (timeWindow == null) {
-            timeWindow = new TimeDialogWindow(getContext(), Type.HOURS_MINS, 5);
+          timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
         }
         if (view.getId() == R.id.starttime) {
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {

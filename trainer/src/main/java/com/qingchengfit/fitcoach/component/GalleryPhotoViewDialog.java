@@ -25,7 +25,8 @@ import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class GalleryPhotoViewDialog extends Dialog
-    implements ViewPager.OnPageChangeListener, View.OnClickListener, PhotoViewAttacher.OnPhotoTapListener {
+    implements ViewPager.OnPageChangeListener, View.OnClickListener,
+    PhotoViewAttacher.OnViewTapListener {
     ViewPaperAdapter viewPaperAdapter;
     ViewPager viewPager;
     View progress;
@@ -90,7 +91,7 @@ public class GalleryPhotoViewDialog extends Dialog
             tag.setPadding(12, 0, 0, 0);
             tagPanel.addView(tag);
             image.setOnClickListener(this);
-            image.setOnPhotoTapListener(this);
+          image.setOnViewTapListener(this);
         }
         viewPaperAdapter = new ViewPaperAdapter(pagerListView);
         viewPager.setAdapter(viewPaperAdapter);
@@ -118,7 +119,7 @@ public class GalleryPhotoViewDialog extends Dialog
             tag.setPadding(12, 0, 0, 0);
             tagPanel.addView(tag);
             image.setOnClickListener(this);
-            image.setOnPhotoTapListener(this);
+          image.setOnViewTapListener(this);
         }
         viewPaperAdapter = new ViewPaperAdapter(pagerListView);
         viewPager.setAdapter(viewPaperAdapter);
@@ -150,7 +151,7 @@ public class GalleryPhotoViewDialog extends Dialog
         //        this.dismiss();
     }
 
-    @Override public void onPhotoTap(View view, float x, float y) {
-        this.dismiss();
+  @Override public void onViewTap(View view, float v, float v1) {
+    this.dismiss();
     }
 }

@@ -11,7 +11,7 @@
   <include layout="@layout/common_simple_toolbar"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.ExpandedLayout
+  <cn.qingchengfit.widgets.ExpandedLayout
       android:id="@+id/sw_open"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -24,7 +24,7 @@
         android:layout_height="1px"
         android:background="@color/bg_grey"
         />
-  </cn.qingchengfit.staffkit.views.custom.ExpandedLayout>
+  </cn.qingchengfit.widgets.ExpandedLayout>
 
   <Space
       android:layout_width="match_parent"

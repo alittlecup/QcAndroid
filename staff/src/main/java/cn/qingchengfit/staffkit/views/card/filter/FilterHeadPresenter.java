@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.card.filter;
 
 import android.support.annotation.IntDef;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.FilterCardBean;

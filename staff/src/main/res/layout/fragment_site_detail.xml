@@ -15,14 +15,14 @@
 
     <include layout="@layout/common_simple_toolbar"/>
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         app:civ_lable="@string/site_name"
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/count"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -30,7 +30,7 @@
         app:civ_lable="@string/site_count"
         />
 
-    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/usage"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"

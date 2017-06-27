@@ -11,8 +11,8 @@ import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.views.BaseActivity;
 import cn.qingchengfit.staffkit.views.FragCallBack;
+import cn.qingchengfit.views.activity.BaseActivity;
 import rx.functions.Action1;
 
 public class CourseActivity extends BaseActivity implements FragCallBack {

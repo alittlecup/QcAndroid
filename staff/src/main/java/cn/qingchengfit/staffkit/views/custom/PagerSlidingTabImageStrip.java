@@ -378,8 +378,10 @@ public class PagerSlidingTabImageStrip extends HorizontalScrollView implements V
                 ImageView view = (ImageView) v.findViewById(R.id.img);
                 TextView name = (TextView) v.findViewById(R.id.text);
                 name.setTextColor(CompatUtils.getColor(getContext(), i == position ? R.color.text_black : R.color.text_grey));
+              if (view != null) {
                 view.getDrawable().mutate().setAlpha(i == position ? 255 : 70);
                 view.invalidate();
+              }
             } else if (v instanceof RelativeLayout) {
                 ImageView view = (ImageView) v.findViewById(R.id.img);
                 TextView name = (TextView) v.findViewById(R.id.text);

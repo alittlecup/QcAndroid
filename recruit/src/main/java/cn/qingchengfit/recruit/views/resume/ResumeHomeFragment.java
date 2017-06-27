@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -17,9 +17,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.Constants;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Gym;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitConstants;
@@ -46,11 +46,12 @@ import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.recruit.views.organization.SearchActivity;
 import cn.qingchengfit.recruit.views.organization.SearchFragment;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
-import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import cn.qingchengfit.widgets.QcLeftRightDivider;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -91,12 +92,14 @@ public class ResumeHomeFragment extends BaseFragment
   @BindView(R2.id.tv_resume_open) TextView tvResumeOpen;
   @BindView(R2.id.rv) RecyclerView rv;
   @BindView(R2.id.btn_open_resume) Button btnOpen;
+  @BindView(R2.id.srl) SwipeRefreshLayout srl;
   CommonFlexAdapter commonFlexAdapter;
 
   @Inject ResumePresenter presenter;
   @Inject ResumePostPresenter postPresenter;
   @Inject RecruitRouter router;
   @Inject LoginStatus loginStatus;
+  @Inject QcRestRepository qcRestRepository;
   ResumeHome resumeHome;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,8 +109,20 @@ public class ResumeHomeFragment extends BaseFragment
     delegatePresenter(postPresenter, this);
     initToolbar(toolbar);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
+    srl.setColorSchemeColors(AppUtils.getPrimaryColor(getContext()));
+    srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override public void onRefresh() {
+        srl.setRefreshing(false);
+        presenter.queryResumeHome();
+      }
+    });
     rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-    rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+    rv.addItemDecoration(
+        new QcLeftRightDivider(getContext(), 1, R.layout.item_resume_base_info, 0, 0));
+    rv.addItemDecoration(
+        new QcLeftRightDivider(getContext(), 1, R.layout.item_resume_work_intent, 0, 0));
+    rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, R.layout.item_edu_exp, 0, 0));
+
     rv.setAdapter(commonFlexAdapter);
     presenter.queryResumeHome();
     RxBusAdd(ResumeTitleItem.class).subscribe(new Action1<ResumeTitleItem>() {
@@ -185,7 +200,8 @@ public class ResumeHomeFragment extends BaseFragment
    * 预览简历
    */
   @OnClick(R2.id.btn_preview_resume) public void previewResume() {
-    BaseRouter.routerToWeb(Constants.Server + "mobile/resume/?id=" + loginStatus.getUserId(), getContext());
+    BaseRouter.routerToWeb(qcRestRepository.getHost() + "mobile/resume/?id=" + resumeHome.id,
+        getContext());
   }
 
   @Override public String getFragmentName() {
@@ -241,14 +257,15 @@ public class ResumeHomeFragment extends BaseFragment
 
     if (ListUtils.isEmpty(resumeHome.exp_cities)
         && ListUtils.isEmpty(resumeHome.exp_jobs)
-        && resumeHome.min_salary == -1
-        && resumeHome.max_salary == -1) {
+        && resumeHome.min_salary == null
+        && resumeHome.max_salary == null) {
       commonFlexAdapter.addItem(new ResumeTitleItem(1, getContext(), false));
       commonFlexAdapter.addItem(new ResumeEmptyItem(1, getContext()));
     } else {
       commonFlexAdapter.addItem(new ResumeTitleItem(1, getContext(), true));
       commonFlexAdapter.addItem(new ResumeIntentItem(getContext(), resumeHome.exp_jobs, resumeHome.exp_cities,
-          RecruitBusinessUtils.getSalary(resumeHome.min_salary, resumeHome.max_salary), resumeHome.status));
+          RecruitBusinessUtils.getSalary(resumeHome.min_salary, resumeHome.max_salary, "面议"),
+          resumeHome.status));
     }
     if (resumeHome.photos != null && resumeHome.photos.size() != 0) {
       commonFlexAdapter.addItem(new ResumeTitleItem(2, getContext(), true));

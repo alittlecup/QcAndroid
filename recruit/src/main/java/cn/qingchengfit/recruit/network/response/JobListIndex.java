@@ -26,4 +26,5 @@ public class JobListIndex {
   public int fair_count;
   public String fair_banner;
   public String avatar;
+  public String invited_at;
 }

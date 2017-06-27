@@ -80,8 +80,32 @@
 
       <include layout="@layout/divider_grey_margin"/>
 
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_resume"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="我的简历"
+          app:civ_showright="true"
+          app:civ_text_color="@color/text_dark"
+          />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_orders"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="我的订单"
+          app:civ_showright="true"
+          app:civ_text_color="@color/text_dark"
+          />
+
+      <include layout="@layout/divider_grey"/>
+
+      <include layout="@layout/divider_grey_margin"/>
+
+
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/setting_fixpw"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -91,7 +115,7 @@
           app:civ_text_color="@color/qc_text_black"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/setting_fixphone"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -108,7 +132,7 @@
       <include layout="@layout/divider_grey_margin"/>
 
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/setting_fix_notify"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -123,7 +147,7 @@
 
       <include layout="@layout/divider_grey_margin"/>
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/aboutus"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -133,7 +157,7 @@
           app:civ_text_color="@color/qc_text_black"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/report"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -143,7 +167,7 @@
           app:civ_text_color="@color/qc_text_black"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/share"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"

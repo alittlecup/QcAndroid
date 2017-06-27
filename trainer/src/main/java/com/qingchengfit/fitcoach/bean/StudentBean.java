@@ -30,7 +30,7 @@ public class StudentBean implements Parcelable {
     public String phone;
     public String gymStr;
     public String headerPic;
-    public boolean gender;
+  public int gender;
     public String systemUrl;
     public String head;
     public String id;
@@ -50,7 +50,7 @@ public class StudentBean implements Parcelable {
         this.phone = in.readString();
         this.gymStr = in.readString();
         this.headerPic = in.readString();
-        this.gender = in.readByte() != 0;
+      this.gender = in.readInt();
         this.systemUrl = in.readString();
         this.head = in.readString();
         this.id = in.readString();
@@ -72,7 +72,7 @@ public class StudentBean implements Parcelable {
         dest.writeString(this.phone);
         dest.writeString(this.gymStr);
         dest.writeString(this.headerPic);
-        dest.writeByte(this.gender ? (byte) 1 : (byte) 0);
+      dest.writeInt(this.gender);
         dest.writeString(this.systemUrl);
         dest.writeString(this.head);
         dest.writeString(this.id);

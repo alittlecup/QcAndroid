@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_click"
     android:orientation="vertical"
     >
 
+  <include layout="@layout/divider_white"/>
   <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="108dp"
@@ -84,23 +84,40 @@
         />
   </RelativeLayout>
 
+  <include layout="@layout/divider_grey"/>
   <include layout="@layout/layout_resume_certificate"/>
 
-  <cn.qingchengfit.support.widgets.CompatTextView
+  <FrameLayout
       android:id="@+id/btn_down"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:paddingBottom="10dp"
-      android:paddingLeft="20dp"
-      android:paddingRight="20dp"
-      android:paddingTop="10dp"
-      android:text="下载证书"
-      android:visibility="gone"
-      app:drawableStart="@drawable/vd_file_download_black_14dp"
-      tools:visibility="visible"
-      style="@style/QcTextStyleStandardDark"
-      />
+      android:background="#fbfbfb"
+      >
 
+    <cn.qingchengfit.support.widgets.CompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:text="下载证书"
+        android:visibility="gone"
+        app:drawableStart="@drawable/vd_file_download_black_14dp"
+        tools:visibility="visible"
+        style="@style/QcTextStyleStandardDark"
+        />
+
+  </FrameLayout>
+
+  <include layout="@layout/divider_grey"/>
   <include layout="@layout/layout_data_sync_from"/>
+
+  <include layout="@layout/divider_white"/>
+
+  <android.support.v4.widget.Space
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/activity_vertical_margin"
+      />
 </LinearLayout>

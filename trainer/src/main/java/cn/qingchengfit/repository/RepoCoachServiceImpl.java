@@ -1,5 +1,6 @@
 package cn.qingchengfit.repository;
 
+import android.database.Cursor;
 import cn.qingchengfit.db.QcDbHelper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.LogUtil;
@@ -8,6 +9,7 @@ import com.squareup.sqlbrite.BriteDatabase;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * power by
@@ -46,9 +48,7 @@ public class RepoCoachServiceImpl implements RepoCoachService {
 
     @Override public void createServices(List<CoachService> coachServices) {
         BriteDatabase.Transaction trans = helper.getBriteDatabase().newTransaction();
-
         try{
-
             helper.getBriteDatabase().delete(CoachService.TABLE_NAME,null);
             for (CoachService coacheService : coachServices) {
                 helper.getBriteDatabase().insert(CoachService.TABLE_NAME,CoachService.FACTORY.marshal(coacheService).asContentValues());
@@ -71,7 +71,11 @@ public class RepoCoachServiceImpl implements RepoCoachService {
     @Override public Observable<List<CoachService>> readAllServices() {
         return helper.getBriteDatabase()
             .createQuery(CoachServiceModel.TABLE_NAME, CoachService.FACTORY.getAllCoachService().statement)
-            .mapToList(cursor -> CoachService.FACTORY.getAllCoachServiceMapper().map(cursor))
+            .mapToList(new Func1<Cursor, CoachService>() {
+              @Override public CoachService call(Cursor cursor) {
+                return CoachService.FACTORY.getAllCoachServiceMapper().map(cursor);
+              }
+            })
             .asObservable();
     }
 

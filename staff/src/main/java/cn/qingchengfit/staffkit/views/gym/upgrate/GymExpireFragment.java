@@ -14,14 +14,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Router;
-import cn.qingchengfit.staffkit.views.BaseActivity;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.PopFromBottomActivity;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import javax.inject.Inject;
 
 /**

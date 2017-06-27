@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.student.attendance;
 
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.common.Attendance;
 import cn.qingchengfit.model.common.Attendances;

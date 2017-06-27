@@ -13,6 +13,7 @@ import cn.qingchengfit.recruit.network.body.ResumeBody;
 import cn.qingchengfit.recruit.views.MyPositionsInfoFragment;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.recruit.views.RecruitGymDetailFragment;
+import cn.qingchengfit.recruit.views.RecruitMyJobFairFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
 import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
@@ -29,6 +30,7 @@ import cn.qingchengfit.recruit.views.resume.ResumeIntentsCitiesFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeIntentsFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeShowImgsFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeWorkExpListFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeWorkExpPreviewFragment;
 import cn.qingchengfit.recruit.views.resume.WorkExpSyncDetailFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.WorkExpeEditFragmentBuilder;
 import cn.qingchengfit.router.InnerRouter;
@@ -85,23 +87,27 @@ public class RecruitRouter extends InnerRouter {
   }
 
   public void goJobDetail(Job job) {
-    doAction(RecruitPositionDetailFragment.newInstance(job));
+    add(RecruitPositionDetailFragment.newInstance(job));
+  }
+
+  public void initJobDetail(Job job) {
+    init(RecruitPositionDetailFragment.newInstance(job));
   }
 
   public void mySent() {
-    doAction(MyPositionsInfoFragment.newMySent());
+    add(MyPositionsInfoFragment.newMySent());
   }
 
   public void myStarred() {
-    doAction(MyPositionsInfoFragment.newMyStared());
+    add(MyPositionsInfoFragment.newMyStared());
   }
 
   public void myInvited() {
-    doAction(MyPositionsInfoFragment.newMyInvited());
+    add(MyPositionsInfoFragment.newMyInvited());
   }
 
   public void toGymDetial(Gym service) {
-    doAction(RecruitGymDetailFragment.newInstance(service));
+    add(RecruitGymDetailFragment.newInstance(service));
   }
 
   public void myResume() {
@@ -109,7 +115,7 @@ public class RecruitRouter extends InnerRouter {
   }
 
   public void myJobFair() {
-
+    add(new RecruitMyJobFairFragment());
   }
 
   public void toJobFairDetail() {
@@ -130,6 +136,10 @@ public class RecruitRouter extends InnerRouter {
     init(new ResumeHomeFragment());
   }
 
+  public void toMyResume() {
+    add(new ResumeHomeFragment());
+  }
+
   public void editResumeInfo(ResumeBody body) {
     add(new ResumeBaseInfoFragmentBuilder(body).build());
   }
@@ -138,6 +148,9 @@ public class RecruitRouter extends InnerRouter {
     add(new ResumeShowImgsFragmentBuilder(new ArrayList<String>(imgs)).build());
   }
 
+  public void workExpPreview(WorkExp workexp) {
+    add(ResumeWorkExpPreviewFragment.newInstance(workexp.id));
+  }
   public void editEduExp(Education education) {
     add(new AddEduExpFragmentBuilder().education(education).build());
   }

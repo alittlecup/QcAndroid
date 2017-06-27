@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     >
 
-  <com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout
+  <cn.qingchengfit.widgets.CustomSwipeRefreshLayout
 
       android:id="@+id/sfl"
       android:layout_width="match_parent"
@@ -219,7 +219,7 @@
 
 
     </android.support.design.widget.CoordinatorLayout>
-  </com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout>
+  </cn.qingchengfit.widgets.CustomSwipeRefreshLayout>
 
   <include layout="@layout/common_toolbar"/>
 </FrameLayout>

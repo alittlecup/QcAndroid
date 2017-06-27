@@ -129,7 +129,7 @@ public class EditCoursePresenter extends BasePresenter {
     }
 
     public void editCourseShops(String staffid, String courseid, String shopids) {
-        HashMap<String, String> params = GymUtils.getParams(coachService, brand);
+      HashMap<String, Object> params = GymUtils.getParams(coachService, brand);
         params.put("shop_ids", shopids);
         RxRegiste(restRepository.getPost_api()
             .qcEditCourseShops(staffid, courseid, params)

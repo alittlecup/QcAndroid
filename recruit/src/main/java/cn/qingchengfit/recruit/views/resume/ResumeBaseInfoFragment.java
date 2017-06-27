@@ -24,7 +24,9 @@ import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.network.body.ResumeBody;
 import cn.qingchengfit.recruit.presenter.ResumePostPresenter;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PhotoUtils;
+import cn.qingchengfit.utils.TypeConvertUtils;
 import cn.qingchengfit.views.CitiesChooser;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
@@ -59,7 +61,8 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/6/12.
  */
-@FragmentWithArgs public class ResumeBaseInfoFragment extends BaseFragment implements ResumePostPresenter.MVPView {
+@FragmentWithArgs public class ResumeBaseInfoFragment extends BaseFragment
+    implements ResumePostPresenter.MVPView {
 
   public final static int MIN_WEIGHT = 0;
   public final static int MAX_WEIGHT = 260;
@@ -95,7 +98,8 @@ import javax.inject.Inject;
     simpleScrollPicker = new SimpleScrollPicker(getContext());
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_base_info, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(postPresenter, this);
@@ -105,16 +109,21 @@ import javax.inject.Inject;
   }
 
   private void initView() {
-    int defaultImg = resumeBody.gender == 0 ? R.drawable.default_student_male : R.drawable.default_student_female;
-    PhotoUtils.origin(civHeaderPic, resumeBody.avatar, defaultImg, defaultImg);
+    int defaultImg = resumeBody.gender == 0 ? R.drawable.default_student_male
+        : R.drawable.default_student_female;
+    PhotoUtils.smallCircle(civHeaderPic, resumeBody.avatar, defaultImg, defaultImg);
     civName.setContent(resumeBody.username);
-    civBirthday.setContent(DateUtils.date2YYMM(DateUtils.formatDateFromServer(resumeBody.birthday)));
-    civCity.setContent(resumeBody.city);
-    civHeight.setContent((resumeBody.height == null || resumeBody.height == 0) ? "170" : resumeBody.height + "");
-    civWeight.setContent((resumeBody.weight == null || resumeBody.weight == 0) ? "55" : resumeBody.weight + "");
+    civBirthday.setContent(
+        DateUtils.date2YYMM(DateUtils.formatDateFromServer(resumeBody.birthday)));
+    civCity.setContent(resumeBody.getCity());
+    civHeight.setContent((resumeBody.height == null || resumeBody.height == 0) ? "170"
+        : resumeBody.height.intValue() + "");
+    civWeight.setContent((resumeBody.weight == null || resumeBody.weight == 0) ? "55"
+        : resumeBody.weight.intValue() + "");
     civGender.setContent(resumeBody.gender == 0 ? "男" : "女");
     civWorkexp.setContent(resumeBody.work_year + "");
     resumeBody.city = null;
+    etSignIn.setText(resumeBody.brief_description);
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -124,12 +133,12 @@ import javax.inject.Inject;
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         showLoading();
-        resumeBody.self_description = etSignIn.getText().toString();
+        resumeBody.brief_description = etSignIn.getText().toString();
         resumeBody.height = Float.parseFloat(civHeight.getContent());
         resumeBody.weight = Float.parseFloat(civWeight.getContent());
         resumeBody.birthday = DateUtils.YYMMToServer(civBirthday.getContent());
         resumeBody.username = civName.getContent();
-        resumeBody.brief_description = null;
+        resumeBody.self_description = null;
         postPresenter.editResume(resumeBody);
         return false;
       }
@@ -148,7 +157,9 @@ import javax.inject.Inject;
    * 点击头像
    */
   @OnClick(R2.id.civ_header_layout) public void onCivHeaderLayoutClicked() {
-    if (choosePictureFragmentNewDialog == null) choosePictureFragmentNewDialog = ChoosePictureFragmentNewDialog.newInstance(true);
+    if (choosePictureFragmentNewDialog == null) {
+      choosePictureFragmentNewDialog = ChoosePictureFragmentNewDialog.newInstance(true);
+    }
     choosePictureFragmentNewDialog.setResult(new ChoosePictureFragmentNewDialog.ChoosePicResult() {
       @Override public void onChoosefile(String filePath) {
       }
@@ -165,14 +176,15 @@ import javax.inject.Inject;
    * 性别
    */
   @OnClick(R2.id.civ_gender) public void onMofifyinfoGenderClicked() {
-    final ArrayList<String> d = new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.gender_2)));
+    final ArrayList<String> d = new ArrayList<>(
+        Arrays.asList(getContext().getResources().getStringArray(R.array.gender_2)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
         civGender.setContent(d.get(pos));
         resumeBody.gender = pos;
       }
     });
-    simpleScrollPicker.show(d, 0);
+    simpleScrollPicker.show(d, resumeBody.gender);
   }
 
   /**
@@ -197,6 +209,7 @@ import javax.inject.Inject;
   @OnClick(R2.id.civ_birthday) public void onMofifyinfoBirthdayClicked() {
     if (timeDialogWindow == null) {
       timeDialogWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH);
+      timeDialogWindow.setRange(1950, 2050);
     }
     timeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
@@ -204,7 +217,8 @@ import javax.inject.Inject;
         civBirthday.setContent(resumeBody.birthday);
       }
     });
-    timeDialogWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+    timeDialogWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0,
+        DateUtils.YYMM2date(civBirthday.getContent()));
   }
 
   /**
@@ -216,7 +230,15 @@ import javax.inject.Inject;
         civHeight.setContent(Integer.toString((MIN_HEIGHT + pos)));
       }
     });
-    simpleScrollPicker.show(MIN_HEIGHT, MAX_HEIGHT, 55 - MIN_HEIGHT);
+
+    int chooseHeight = 0;
+    try {
+      chooseHeight = Integer.parseInt(civHeight.getContent());
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+    simpleScrollPicker.show(MIN_HEIGHT, MAX_HEIGHT,
+        chooseHeight == 0 ? 170 - MIN_HEIGHT : chooseHeight);
   }
 
   /**
@@ -228,21 +250,23 @@ import javax.inject.Inject;
         civWeight.setContent(Integer.toString((MIN_WEIGHT + pos)));
       }
     });
-    simpleScrollPicker.show(MIN_WEIGHT, MAX_WEIGHT, 55 - MIN_WEIGHT);
+    simpleScrollPicker.show(MIN_WEIGHT, MAX_WEIGHT,
+        TypeConvertUtils.getInt(civWeight.getContent(), 55 - MIN_WEIGHT));
   }
 
   /**
    * 工作经验
    */
   @OnClick(R2.id.civ_workexp) public void onMofifyinfoWorkexpClicked() {
-    final ArrayList<String> d = new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.work_exp)));
+    final ArrayList<String> d = new ArrayList<>(
+        Arrays.asList(getContext().getResources().getStringArray(R.array.resume_work_exp)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
         civWorkexp.setContent(d.get(pos));
         resumeBody.work_year = pos;
       }
     });
-    simpleScrollPicker.show(d, 0);
+    simpleScrollPicker.show(d, resumeBody.work_year);
   }
 
   @Override public void onPostOk() {

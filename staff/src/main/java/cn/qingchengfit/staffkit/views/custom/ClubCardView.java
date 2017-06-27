@@ -17,6 +17,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.StringUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.qingchengfit.fitcoach.R;
@@ -26,7 +26,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class QRActivity extends BaseAcitivity implements QRCodeReaderView.OnQRCodeReadListener {
+public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCodeReadListener {
 
     public static final String LINK_URL = "com.qingcheng.qr.linkurl";
     public static final String LINK_MODULE = "com.qingcheng.qr.module";

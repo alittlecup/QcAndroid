@@ -1,6 +1,7 @@
 package cn.qingchengfit.network;
 
 import android.content.Context;
+import android.text.TextUtils;
 import cn.qingchengfit.network.response.QcResponToken;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -43,73 +44,105 @@ import retrofit2.http.GET;
 
 public class QcRestRepository {
 
-    private final OkHttpClient client;
-    private final Retrofit getApiAdapter;
-    private final Retrofit postApiAdapter;
+  private final OkHttpClient client;
+  private final Retrofit getApiAdapter;
+  private final Retrofit postApiAdapter;
+  private String host = "";
 
-    public QcRestRepository(final Context context, final String host, final String appOemTag) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+  public QcRestRepository(final Context context, final String host, final String appOemTag) {
+    this.host = host;
+    HttpLoggingInterceptor interceptor =
+        new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
 
-            @Override public void log(String message) {
-                LogUtil.d(message);
-            }
+          @Override public void log(String message) {
+            LogUtil.d(message);
+          }
         });
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        final OkHttpClient tokenClient = new OkHttpClient();
-        client = new OkHttpClient.Builder().addNetworkInterceptor(new Interceptor() {
-            @Override public Response intercept(Chain chain) throws IOException {
+    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    final OkHttpClient tokenClient = new OkHttpClient();
+    client = new OkHttpClient.Builder().addNetworkInterceptor(new Interceptor() {
+      @Override public Response intercept(Chain chain) throws IOException {
+        String token = "";
+        Request request = chain.request();
+        if (!request.method().equalsIgnoreCase("GET")) {
+          try {
+            token = QcRestRepository.this.createGetApi(GetCsrfToken.class)
+                .qcGetToken()
+                .execute()
+                .body().data.token;
+          } catch (Exception e) {
 
-                Request request = chain.request();
-                if (!request.method().equalsIgnoreCase("GET")) {
-                    String token = QcRestRepository.this.createGetApi(GetCsrfToken.class).qcGetToken().execute().body().data.token;
-                    request = request.newBuilder()
-                        .addHeader("X-CSRFToken", token)
-                        .addHeader("Cookie",
-                            "csrftoken=" + token + ";sessionid=" + PreferenceUtils.getPrefString(context, "session_id", ""))
-                        .addHeader("User-Agent", " FitnessTrainerAssistant/"
-                            + AppUtils.getAppVer(context)
-                            + " Android  OEM:"
-                            + appOemTag
-                            + "  QingchengApp/Trainer")
-                        .build();
-                } else {
-                    request = request.newBuilder()
-                        .addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(context, "session_id", ""))
-                        .addHeader("User-Agent", " FitnessTrainerAssistant/"
-                            + AppUtils.getAppVer(context)
-                            + " Android  OEM:"
-                            + appOemTag
-                            + "  QingchengApp/Trainer")
-                        .build();
-                }
-                return chain.proceed(request);
-            }
-        }).addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
+          }
 
-        Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
+          request = request.newBuilder()
+              .addHeader("X-CSRFToken", token)
+              .addHeader("Cookie", "csrftoken=" + token + ";sessionid=" + getSession(context))
+              .addHeader("User-Agent", " FitnessTrainerAssistant/"
+                  + AppUtils.getAppVer(context)
+                  + " Android  OEM:"
+                  + appOemTag
+                  + "  QingchengApp/"
+                  + AppUtils.getCurAppName(context))
+              .build();
+        } else {
+          request = request.newBuilder()
+              .addHeader("Cookie", "sessionid=" + getSession(context))
+              .addHeader("User-Agent", " FitnessTrainerAssistant/"
+                  + AppUtils.getAppVer(context)
+                  + " Android  OEM:"
+                  + appOemTag
+                  + "  QingchengApp/"
+                  + AppUtils.getCurAppName(context))
+              .build();
+        }
+        return chain.proceed(request);
+      }
+    }).addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
 
-        getApiAdapter = new Retrofit.Builder().baseUrl(host)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .build();
+    Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
 
-        postApiAdapter = new Retrofit.Builder().baseUrl(host)
-            .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .client(client)
-            .build();
+    getApiAdapter = new Retrofit.Builder().baseUrl(host)
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .build();
+
+    postApiAdapter = new Retrofit.Builder().baseUrl(host)
+        .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .client(client)
+        .build();
+  }
+
+  public static String getSession(Context context) {
+    String session1 = PreferenceUtils.getPrefString(context, "session_id", "");
+    String session2 = PreferenceUtils.getPrefString(context, "qingcheng.session", "");
+    if (TextUtils.isEmpty(session1) && TextUtils.isEmpty(session2)) {
+      return "";
+    } else {
+      if (!TextUtils.isEmpty(session1)) {
+        return session1;
+      } else if (!TextUtils.isEmpty(session2)) {
+        return session2;
+      } else {
+        return null;
+      }
     }
+  }
 
-    public <T> T createGetApi(final Class<T> service) {
-        return getApiAdapter.create(service);
-    }
+  public String getHost() {
+    return host;
+  }
 
-    public <T> T createPostApi(final Class<T> service) {
-        return postApiAdapter.create(service);
-    }
+  public <T> T createGetApi(final Class<T> service) {
+    return getApiAdapter.create(service);
+  }
 
-    public interface GetCsrfToken {
-        @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
-    }
+  public <T> T createPostApi(final Class<T> service) {
+    return postApiAdapter.create(service);
+  }
+
+  public interface GetCsrfToken {
+    @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
+  }
 }

@@ -13,9 +13,9 @@ import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.train.fragment.SignUpFormHomeFragment;
 import cn.qingchengfit.staffkit.train.fragment.TrainChooseGymFragment;
 import cn.qingchengfit.staffkit.train.moudle.TrainIds;
-import cn.qingchengfit.staffkit.views.BaseActivity;
 import cn.qingchengfit.staffkit.views.FragCallBack;
 import cn.qingchengfit.utils.LogUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import javax.inject.Inject;
 import rx.functions.Action1;
 

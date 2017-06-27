@@ -22,8 +22,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.BodyTestBody;
@@ -37,7 +37,6 @@ import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.ImageGridAdapter;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.GalleryPhotoViewDialog;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
@@ -47,9 +46,10 @@ import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -302,7 +302,9 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
     }
 
     public void chooseDate() {
-        if (pwTime == null) pwTime = new TimeDialogWindow(getContext(), Type.YEAR_MONTH_DAY);
+      if (pwTime == null) {
+        pwTime = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+      }
         pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
             Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {

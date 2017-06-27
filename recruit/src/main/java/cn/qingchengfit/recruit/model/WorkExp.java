@@ -424,16 +424,6 @@ public class WorkExp implements Cloneable, Parcelable {
       return this;
     }
 
-    public Builder coach_score(float val) {
-      coach_score = val;
-      return this;
-    }
-
-    public Builder course_score(float val) {
-      course_score = val;
-      return this;
-    }
-
     public Builder group_course(Integer val) {
       group_course = val;
       return this;
@@ -465,26 +455,6 @@ public class WorkExp implements Cloneable, Parcelable {
     }
 
     public Builder sale_is_hidden(Boolean val) {
-      sale_is_hidden = val;
-      return this;
-    }
-
-    public Builder is_hidden(boolean val) {
-      is_hidden = val;
-      return this;
-    }
-
-    public Builder group_is_hidden(boolean val) {
-      group_is_hidden = val;
-      return this;
-    }
-
-    public Builder private_is_hidden(boolean val) {
-      private_is_hidden = val;
-      return this;
-    }
-
-    public Builder sale_is_hidden(boolean val) {
       sale_is_hidden = val;
       return this;
     }

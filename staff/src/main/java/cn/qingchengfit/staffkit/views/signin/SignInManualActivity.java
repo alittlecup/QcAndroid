@@ -19,10 +19,10 @@ import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.views.BaseActivity;
 import cn.qingchengfit.staffkit.views.FragCallBack;
 import cn.qingchengfit.staffkit.views.signin.in.SignInManualFragment;
 import cn.qingchengfit.staffkit.views.signin.out.SignOutManualFragment;
+import cn.qingchengfit.views.activity.BaseActivity;
 import javax.inject.Inject;
 import rx.functions.Action1;
 

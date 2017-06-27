@@ -17,6 +17,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.widgets.LoadingPointerView;
 
 /**
  * power by

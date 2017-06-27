@@ -18,8 +18,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.CardTpl;
@@ -30,7 +30,6 @@ import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.CardTypeEvent;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.statement.detail.SaleDetailFragment;
 import cn.qingchengfit.staffkit.views.statement.filter.CardTypeChooseDialogFragment;
@@ -39,8 +38,9 @@ import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import cn.qingchengfit.widgets.CommonInputView;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -220,7 +220,9 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
     }
 
     @OnClick(R.id.custom_statment_end) public void onClickEnd() {
-        if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+      if (pwTime == null) {
+        pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+      }
         pwTime.setRange(1900, 2100);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date date) {
@@ -246,7 +248,9 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
     }
 
     @OnClick(R.id.custom_statment_start) public void onClickStart() {
-        if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+      if (pwTime == null) {
+        pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+      }
         pwTime.setRange(1900, 2100);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override public void onTimeSelect(Date date) {

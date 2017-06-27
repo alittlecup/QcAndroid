@@ -146,11 +146,15 @@ public class MyPositionsInfoFragment extends BaseFragment
   }
 
   @Override public void onJobList(List<Job> jobs, int page, int totalCount) {
-    positionsFragment.setTotalCount(totalCount);
-    if (page == 1) {
-      positionsFragment.setData(jobs);
+    if (jobs == null) {
+      positionsFragment.stopLoadMore();
     } else {
-      positionsFragment.addData(jobs);
+      positionsFragment.setTotalCount(totalCount);
+      if (page == 1) {
+        positionsFragment.setData(jobs);
+      } else {
+        positionsFragment.addData(jobs);
+      }
     }
   }
 
@@ -172,10 +176,19 @@ public class MyPositionsInfoFragment extends BaseFragment
   }
 
   @Override public void noMoreLoad(int i) {
-
+    positionsFragment.stopLoadMore();
   }
 
   @Override public void onLoadMore(int i, int i1) {
-
+    switch (type) {
+      case MY_INVITED:
+        presenter.queryPositionOfInvited(0);
+        break;
+      case MY_STARED:
+        presenter.queryPositionOfStarred(0);
+        break;
+      default:
+        presenter.queryPositionOfSent(0);
+    }
   }
 }

@@ -6,7 +6,7 @@ import butterknife.Unbinder;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.PresenterDelegate;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +34,14 @@ public abstract class BaseDialogFragment extends DialogFragment {
     private boolean isVisible;
 
     public void showLoading() {
-        if (getActivity() instanceof BaseAcitivity) {
-            ((BaseAcitivity) getActivity()).showLoading();
+      if (getActivity() instanceof BaseActivity) {
+        ((BaseActivity) getActivity()).showLoading();
         }
     }
 
     public void hideLoading() {
-        if (getActivity() instanceof BaseAcitivity) {
-            ((BaseAcitivity) getActivity()).hideLoading();
+      if (getActivity() instanceof BaseActivity) {
+        ((BaseActivity) getActivity()).hideLoading();
         }
     }
 

@@ -25,11 +25,9 @@ import cn.qingchengfit.model.responese.ImageThreeTextBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.views.WebActivity;
 import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
 import cn.qingchengfit.staffkit.views.custom.BottomPayDialog;
 import cn.qingchengfit.staffkit.views.custom.BottomPayDialogBuilder;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
 import cn.qingchengfit.utils.ColorUtils;
@@ -38,6 +36,8 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import java.util.ArrayList;
@@ -159,9 +159,7 @@ public class CompletedBuyFragment extends BaseFragment implements CompletedBuyVi
                     ToastUtils.show("请选择销售");
                     return;
                 }
-                //                body.app_id = getString(R.string.wechat_code);
                 showLoading();
-                //                body.user_name = null;
                 presenter.buyCard(body);
                 break;
         }
@@ -222,7 +220,8 @@ public class CompletedBuyFragment extends BaseFragment implements CompletedBuyVi
                     if (ret == 0) {
                         presenter.cacluScore(body.price, body.user_ids);
                     } else {
-                        ToastUtils.show("支付失败");
+                      onSuccess();
+                      //ToastUtils.show("支付失败");
                     }
                 }
             }

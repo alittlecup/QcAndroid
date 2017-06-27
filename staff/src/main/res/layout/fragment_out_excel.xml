@@ -14,7 +14,7 @@
       android:text="@string/out_excel_hint"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/title"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -24,7 +24,7 @@
       civ:civ_showright="true"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/email"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

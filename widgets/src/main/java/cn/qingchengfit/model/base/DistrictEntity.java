@@ -52,6 +52,18 @@ public class DistrictEntity implements Parcelable {
         this.name = in.readString();
     }
 
+  public String getName() {
+    return name;
+  }
+
+  public int getId() {
+    try {
+      return Integer.parseInt(id);
+    } catch (Exception e) {
+      return 0;
+    }
+  }
+
     @Override public int describeContents() {
         return 0;
     }

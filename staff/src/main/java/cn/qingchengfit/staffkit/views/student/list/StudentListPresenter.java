@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.student.list;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.StudentBean;

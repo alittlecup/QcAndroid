@@ -75,7 +75,6 @@ public class CoachServiceItem extends AbstractFlexibleItem<CoachServiceItem.Coac
     @Override public void bindViewHolder(FlexibleAdapter adapter, CoachServiceVH holder, int position, List payloads) {
 
         holder.itemGymName.setText(coachService.getName());
-
         holder.itemGymPhonenum.setText("联系方式：" + coachService.getPhone());
         holder.itemBrand.setText("我的职位：" + coachService.getPosition());
         holder.qcIdentify.setImageResource(GymUtils.getSystemEndDay(coachService) >= 0 ? R.drawable.ic_pro_green : R.drawable.ic_pro_free);

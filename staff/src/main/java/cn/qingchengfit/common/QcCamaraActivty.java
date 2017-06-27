@@ -1,6 +1,6 @@
 package cn.qingchengfit.common;
 
-import cn.qingchengfit.staffkit.views.BaseActivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 
 /**
  * power by

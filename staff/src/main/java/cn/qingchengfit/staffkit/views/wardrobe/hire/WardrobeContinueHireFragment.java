@@ -20,15 +20,15 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.wardrobe.WardrobeBaseInfoFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.WardrobePayBottomFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.item.PayWardrobeItem;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import cn.qingchengfit.widgets.CommonInputView;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -185,7 +185,9 @@ public class WardrobeContinueHireFragment extends BaseFragment implements Wardro
 
                 break;
             case R.id.period:
-                if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+              if (pwTime == null) {
+                pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+              }
                 pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
                     Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
                 pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {

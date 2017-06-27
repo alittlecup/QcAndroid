@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.card.buy;
 
 import android.content.Intent;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.CreateCardBody;
 import cn.qingchengfit.model.responese.CacluScore;
 import cn.qingchengfit.model.responese.QcResponseData;

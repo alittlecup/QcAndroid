@@ -14,13 +14,13 @@ import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.QRActivity;
-import cn.qingchengfit.staffkit.views.WebActivity;
 import cn.qingchengfit.staffkit.views.card.CardActivity;
 import cn.qingchengfit.staffkit.views.schedule.ScheduleActivity;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 
 /**
  * power by

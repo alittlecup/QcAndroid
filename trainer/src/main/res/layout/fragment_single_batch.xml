@@ -66,7 +66,7 @@
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/course_date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
         android:background="@color/white"
         app:civ_clickable="true"
         app:civ_hint="2016-09-09 周一"
@@ -78,7 +78,7 @@
     <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/course_time"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
         android:background="@color/white"
         app:civ_clickable="true"
         app:civ_hint="09:00"

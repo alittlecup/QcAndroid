@@ -25,8 +25,9 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.PushBody;
 import cn.qingchengfit.model.responese.GymList;
@@ -35,21 +36,20 @@ import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.model.responese.UpdateVersion;
+import cn.qingchengfit.recruit.views.RecruitActivity;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.reciever.PushReciever;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.rxbus.event.EventBrandChange;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.EventGoNotification;
 import cn.qingchengfit.staffkit.rxbus.event.EventLoginChange;
 import cn.qingchengfit.staffkit.rxbus.event.RxCloseAppEvent;
 import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
-import cn.qingchengfit.staffkit.views.BaseActivity;
 import cn.qingchengfit.staffkit.views.FragCallBack;
-import cn.qingchengfit.staffkit.views.WebActivity;
 import cn.qingchengfit.staffkit.views.adapter.MainPagerAdapter;
 import cn.qingchengfit.staffkit.views.custom.TabView;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
@@ -59,6 +59,8 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.activity.WebActivity;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
@@ -92,7 +94,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-
+  @Inject BaseRouter baseRouter;
     private boolean isDownloading = false;
     private DownloadManager downloadManager;
     private Subscription updateSp;
@@ -132,7 +134,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initInject();
-
+      initRouter();
         registeGlobleEvent();
         askPermission();
         update(false);
@@ -217,6 +219,11 @@ public class MainActivity extends BaseActivity implements FragCallBack {
             Manifest.permission.WRITE_SETTINGS, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
             .subscribe();
     }
+
+  private void initRouter() {
+    baseRouter.registeRouter("recruit", RecruitActivity.class);
+  }
+
 
     private void initBDPush() {
         String userid = PreferenceUtils.getPrefString(this, PushReciever.BD_USERLID, null);

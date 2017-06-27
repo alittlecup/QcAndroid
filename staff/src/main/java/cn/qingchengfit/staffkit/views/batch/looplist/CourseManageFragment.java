@@ -20,8 +20,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.SingleBatchBody;
 import cn.qingchengfit.model.responese.CourseManageBean;
 import cn.qingchengfit.model.responese.CourseSchedule;
@@ -30,7 +31,6 @@ import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.batch.single.SingleBatchFragmentBuilder;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
@@ -40,8 +40,8 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,22 +73,22 @@ public class CourseManageFragment extends BaseFragment implements CourseManageVi
     private TimeDialogWindow timeWindow;
     private TimePeriodChooser timeDialogWindow;
     private MaterialDialog delDialog;
-    private Toolbar.OnMenuItemClickListener mCancel = new Toolbar.OnMenuItemClickListener() {
+  private Toolbar.OnMenuItemClickListener mEditLis = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
             toolbar.getMenu().clear();
-            toolbar.inflateMenu(R.menu.menu_edit);
-            toolbar.setOnMenuItemClickListener(mEditLis);
-            courseManagerAdapter.setEditing(false);
+          toolbar.inflateMenu(R.menu.menu_cancel);
+          toolbar.setOnMenuItemClickListener(mCancel);
+          courseManagerAdapter.setEditing(true);
             courseManagerAdapter.notifyDataSetChanged();
             return true;
         }
     };
-    private Toolbar.OnMenuItemClickListener mEditLis = new Toolbar.OnMenuItemClickListener() {
+  private Toolbar.OnMenuItemClickListener mCancel = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
             toolbar.getMenu().clear();
-            toolbar.inflateMenu(R.menu.menu_cancel);
-            toolbar.setOnMenuItemClickListener(mCancel);
-            courseManagerAdapter.setEditing(true);
+          toolbar.inflateMenu(R.menu.menu_edit);
+          toolbar.setOnMenuItemClickListener(mEditLis);
+          courseManagerAdapter.setEditing(false);
             courseManagerAdapter.notifyDataSetChanged();
             return true;
         }
@@ -186,7 +186,7 @@ public class CourseManageFragment extends BaseFragment implements CourseManageVi
     public void chooseTime(final int pos) {
         if (mCourseType == Configs.TYPE_GROUP) {
             if (timeWindow == null) {
-                timeWindow = new TimeDialogWindow(getContext(), Type.HOURS_MINS, 5);
+              timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
             }
 
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
@@ -209,7 +209,8 @@ public class CourseManageFragment extends BaseFragment implements CourseManageVi
             timeWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, datas.get(pos).start);
         } else {
             if (timeDialogWindow == null) {
-                timeDialogWindow = new TimePeriodChooser(getContext(), Type.HOURS_MINS, 5);
+              timeDialogWindow =
+                  new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
             }
             timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
                 @Override public void onTimeSelect(Date start, Date end) {

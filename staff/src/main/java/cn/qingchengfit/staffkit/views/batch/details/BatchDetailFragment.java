@@ -26,8 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.ArrangeBatchBody;
 import cn.qingchengfit.model.common.Rule;
@@ -46,7 +46,6 @@ import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.BatchWeekLoopItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.batch.looplist.CourseManageFragment;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.custom.TimePeriodChooser;
 import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
@@ -58,10 +57,11 @@ import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
@@ -523,7 +523,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
 
         if (mType == Configs.TYPE_GROUP) {
             if (timeWindow == null) {
-                timeWindow = new TimeDialogWindow(getContext(), Type.HOURS_MINS, 5);
+              timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
             }
 
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
@@ -541,7 +541,8 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
             timeWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
         } else {
             if (timeDialogWindow == null) {
-                timeDialogWindow = new TimePeriodChooser(getContext(), Type.HOURS_MINS, 5);
+              timeDialogWindow =
+                  new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
             }
             timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
                 @Override public void onTimeSelect(Date start, Date end) {

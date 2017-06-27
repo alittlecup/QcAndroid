@@ -121,19 +121,18 @@ import rx.schedulers.Schedulers;
     this.resumeHome = resumeHome;
     civIntentCity.setContent(RecruitBusinessUtils.getStrFromCities(resumeHome.exp_cities));
     int st = resumeHome.status % 5;
+    body.status = st;
     if (st == 0) {
       civIntentStatus.setContent("未填写");
     } else {
-      civIntentStatus.setContent(curStatusArray.get(st));
+      civIntentStatus.setContent(curStatusArray.get(st - 1));
     }
     civIntentPostion.setContent(CmStringUtils.List2Str(resumeHome.exp_jobs));
-    if (resumeHome.min_salary > 100000) {
+    if (resumeHome.min_salary != null && resumeHome.min_salary > 100000) {
       civIntentSalay.setContent("100K以上");
-    } else if (resumeHome.min_salary < 0) {
-      civIntentSalay.setContent("面谈");
     } else {
       civIntentSalay.setContent(
-          CmStringUtils.getFloatDot1(resumeHome.min_salary / 1000) + "K-" + CmStringUtils.getFloatDot1(resumeHome.max_salary / 1000));
+          RecruitBusinessUtils.getSalary(resumeHome.min_salary, resumeHome.max_salary, "面议"));
     }
   }
 
@@ -207,10 +206,11 @@ import rx.schedulers.Schedulers;
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
         civIntentStatus.setContent(curStatusArray.get(pos));
-        body.status = pos;
+        body.status = pos + 1;
       }
     });
-    simpleScrollPicker.show(curStatusArray, 0);
+    simpleScrollPicker.show(curStatusArray,
+        (body.status == null || body.status == 0) ? 1 : body.status - 1);
   }
 
   /**
@@ -234,9 +234,9 @@ import rx.schedulers.Schedulers;
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
         if (left == 0) {
-          civIntentSalay.setContent("面谈");
-          body.min_salary = -1;
-          body.max_salary = -1;
+          civIntentSalay.setContent("面议");
+          body.min_salary = -1000;
+          body.max_salary = -1000;
         } else if (left == 100) {
           civIntentSalay.setContent("100K以上");
           body.min_salary = 100001;
@@ -248,18 +248,23 @@ import rx.schedulers.Schedulers;
           }
           civIntentSalay.setContent((left - MIN_SALARY) + "-" + (right - MIN_SALARY + 2) + "K");
           body.min_salary = (left - MIN_SALARY) * 1000;
-          body.max_education = (right - MIN_SALARY + 2) * 1000;
+          body.max_salary = (right - MIN_SALARY + 2) * 1000;
         }
       }
     });
     final ArrayList<String> l = new ArrayList<>();
     final ArrayList<String> r = new ArrayList<>();
-    l.add("面谈");
+    l.add("面议");
     for (int i = 0; i < 100; i++) {
       l.add(i + "K");
       r.add((i + 1) + "K");
     }
     l.add("100K以上");
+    //if (body.max_salary == -1 || body.min_salary == -1){
     twoScrollPicker.show(l, r, 0, 0);
+    //}else {
+    //  twoScrollPicker.show(l, r, body.min_salary%101+1, body.max_salary%100);
+    //}
+
   }
 }

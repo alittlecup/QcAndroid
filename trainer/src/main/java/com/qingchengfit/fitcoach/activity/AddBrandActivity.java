@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.utils.UpYunClient;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
@@ -29,7 +29,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class AddBrandActivity extends BaseAcitivity {
+public class AddBrandActivity extends BaseActivity {
 
     @BindView(R.id.btn) Button btn;
     @BindView(R.id.toolbar) Toolbar toolbar;

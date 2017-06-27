@@ -3,7 +3,6 @@ package cn.qingchengfit.model.base;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,63 +18,62 @@ import java.util.List;
  * <p>
  * Created by Paper on 15/9/18 2015.
  * 市信息
- *
  */
 public class CityBean implements Parcelable {
-    public static final Creator<CityBean> CREATOR = new Creator<CityBean>() {
-        public CityBean createFromParcel(Parcel source) {
-            return new CityBean(source);
-        }
-
-        public CityBean[] newArray(int size) {
-            return new CityBean[size];
-        }
-    };
-    @SerializedName("code") public int id;
-    @SerializedName("gd_province_id") public int province_id;
-    @SerializedName("name") public String name;
-    @SerializedName("districts") public List<DistrictBean> districts;
-
-    public CityBean() {
+  public static final Creator<CityBean> CREATOR = new Creator<CityBean>() {
+    @Override public CityBean createFromParcel(Parcel source) {
+      return new CityBean(source);
     }
 
-    public CityBean(int id, String name) {
-        this.id = id;
-        this.name = name;
+    @Override public CityBean[] newArray(int size) {
+      return new CityBean[size];
     }
+  };
+  @SerializedName("code") public String id;
+  @SerializedName("gd_province_id") public String province_id;
+  @SerializedName("name") public String name;
+  @SerializedName("districts") public List<DistrictBean> districts;
 
-    protected CityBean(Parcel in) {
-        this.id = in.readInt();
-        this.province_id = in.readInt();
-        this.name = in.readString();
-        this.districts = new ArrayList<DistrictBean>();
-        in.readList(this.districts, List.class.getClassLoader());
-    }
+  public CityBean(String id, String name) {
+    this.id = id;
+    this.name = name;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public CityBean(int id, String name) {
+    this.id = id + "";
+    this.name = name;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public CityBean() {
+  }
 
-    public String getName() {
-        return name;
-    }
+  protected CityBean(Parcel in) {
+    this.id = in.readString();
+    this.province_id = in.readString();
+    this.name = in.readString();
+    this.districts = in.createTypedArrayList(DistrictBean.CREATOR);
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  @Override public int describeContents() {
+    return 0;
+  }
 
-    @Override public int describeContents() {
-        return 0;
-    }
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.id);
+    dest.writeString(this.province_id);
+    dest.writeString(this.name);
+    dest.writeTypedList(this.districts);
+  }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeInt(this.province_id);
-        dest.writeString(this.name);
-        dest.writeList(this.districts);
+  public String getName() {
+    return name;
+  }
+
+  public int getId() {
+    try {
+      return Integer.parseInt(id);
+    } catch (Exception e) {
+      return 0;
     }
+  }
 }

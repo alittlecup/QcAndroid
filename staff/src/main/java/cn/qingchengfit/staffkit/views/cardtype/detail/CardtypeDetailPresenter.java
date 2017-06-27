@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.cardtype.detail;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CardStandard;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTplOption;

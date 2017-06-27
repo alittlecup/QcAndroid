@@ -85,11 +85,11 @@ public class ResumeHome implements Parcelable {
   public List<WorkExp> experiences;
   public List<Education> educations;
   public List<String> photos;
-  public float max_salary; //薪水
-  public float min_salary;
-  public float completion;
-  public int max_education;
-  public int work_year;
+  public Integer max_salary; //薪水
+  public Integer min_salary;
+  public Float completion;
+  public Integer max_education;
+  public Integer work_year;
 
   private ResumeHome(Builder builder) {
     id = builder.id;
@@ -140,11 +140,11 @@ public class ResumeHome implements Parcelable {
     this.experiences = in.createTypedArrayList(WorkExp.CREATOR);
     this.educations = in.createTypedArrayList(Education.CREATOR);
     this.photos = in.createStringArrayList();
-    this.max_salary = in.readFloat();
-    this.min_salary = in.readFloat();
-    this.completion = in.readFloat();
-    this.max_education = in.readInt();
-    this.work_year = in.readInt();
+    this.max_salary = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.min_salary = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.completion = (Float) in.readValue(Float.class.getClassLoader());
+    this.max_education = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.work_year = (Integer) in.readValue(Integer.class.getClassLoader());
   }
 
   @Override public int describeContents() {
@@ -172,11 +172,11 @@ public class ResumeHome implements Parcelable {
     dest.writeTypedList(this.experiences);
     dest.writeTypedList(this.educations);
     dest.writeStringList(this.photos);
-    dest.writeFloat(this.max_salary);
-    dest.writeFloat(this.min_salary);
-    dest.writeFloat(this.completion);
-    dest.writeInt(this.max_education);
-    dest.writeInt(this.work_year);
+    dest.writeValue(this.max_salary);
+    dest.writeValue(this.min_salary);
+    dest.writeValue(this.completion);
+    dest.writeValue(this.max_education);
+    dest.writeValue(this.work_year);
   }
 
   public static final class Builder {
@@ -200,11 +200,11 @@ public class ResumeHome implements Parcelable {
     private List<WorkExp> experiences;
     private List<Education> educations;
     private List<String> photos;
-    private float max_salary;
-    private float min_salary;
-    private float completion;
-    private int max_education;
-    private int work_year;
+    private Integer max_salary;
+    private Integer min_salary;
+    private Float completion;
+    private Integer max_education;
+    private Integer work_year;
 
     public Builder() {
     }
@@ -309,13 +309,28 @@ public class ResumeHome implements Parcelable {
       return this;
     }
 
-    public Builder max_salary(float val) {
+    public Builder max_salary(Integer val) {
       max_salary = val;
       return this;
     }
 
-    public Builder min_salary(float val) {
+    public Builder min_salary(Integer val) {
       min_salary = val;
+      return this;
+    }
+
+    public Builder completion(Float val) {
+      completion = val;
+      return this;
+    }
+
+    public Builder max_education(Integer val) {
+      max_education = val;
+      return this;
+    }
+
+    public Builder work_year(Integer val) {
+      work_year = val;
       return this;
     }
 

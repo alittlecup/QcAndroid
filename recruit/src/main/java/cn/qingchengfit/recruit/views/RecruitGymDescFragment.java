@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.views.VpFragment;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -44,7 +45,8 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
     RecruitGymDescFragmentBuilder.injectArguments(this);
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_gym_desc, container, false);
     unbinder = ButterKnife.bind(this, view);
     setDesc(gym);
@@ -54,12 +56,15 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
   public void setDesc(Gym gym) {
     getChildFragmentManager().beginTransaction()
         .replace(R.id.frag_gym_menber_info,
-            RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(gym.member_count, gym.staff_count, gym.area,
-                gym.coach_count))
+            RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(gym.member_count,
+                gym.staff_count, gym.area, gym.coach_count))
         .commit();
-    getChildFragmentManager().beginTransaction()
-        .replace(R.id.frag_gym_equipment, RecruitGymEquipmentFragmentBuilder.newRecruitGymEquipmentFragment(gym))
-        .commit();
+    if (!ListUtils.isEmpty(gym.facilities)) {
+      getChildFragmentManager().beginTransaction()
+          .replace(R.id.frag_gym_equipment,
+              RecruitGymEquipmentFragmentBuilder.newRecruitGymEquipmentFragment(gym))
+          .commit();
+    }
     tvDesc.setText(gym.description);
   }
 

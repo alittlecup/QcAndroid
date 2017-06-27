@@ -1,7 +1,9 @@
 package cn.qingchengfit.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * power by
@@ -45,5 +47,16 @@ public class ListUtils {
             }
         }
         return to;
+    }
+
+  public static HashMap<String, Object> mapRemoveNull(HashMap<String, Object> p) {
+    List<String> re = new ArrayList<>();
+    for (Map.Entry<String, Object> entry : p.entrySet()) {
+      if (entry.getValue() == null) re.add(entry.getKey());
+    }
+    for (String s : re) {
+      p.remove(s);
+    }
+    return p;
     }
 }

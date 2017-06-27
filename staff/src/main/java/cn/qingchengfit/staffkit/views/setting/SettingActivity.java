@@ -9,16 +9,16 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.views.BaseActivity;
 import cn.qingchengfit.staffkit.views.FragCallBack;
 import cn.qingchengfit.staffkit.views.main.SettingPresenter;
 import cn.qingchengfit.staffkit.views.main.SettingView;
+import cn.qingchengfit.views.activity.BaseActivity;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
 public class SettingActivity extends BaseActivity implements FragCallBack, SettingView {
 
-    public static final String ACTION = "action";
+  public static final String ACTION = "action";
     public static final int ACTION_FIX_SELF_INFO = 1;
     @Inject SettingPresenter presenter;
 

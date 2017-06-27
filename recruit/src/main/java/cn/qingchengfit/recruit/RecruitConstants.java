@@ -23,4 +23,5 @@ package cn.qingchengfit.recruit;
 
 public class RecruitConstants {
   public static final int RESUME_COMPLETED = 50;
+  public static final String RESUME_WEB_PATH = "/mobile/resume/?id=";
 }

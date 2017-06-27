@@ -37,11 +37,14 @@ public class CoachService implements Parcelable, CoachServiceModel {
         }
     };
     public static final Factory<CoachService> FACTORY = new Factory<>(new CoachServiceModel.Creator<CoachService>() {
-        @Override public CoachService create(@Nullable String id, @Nullable String model, @Nullable String gym_id, @Nullable Integer type,
-            @Nullable String name, @Nullable String color, @Nullable String photo, @Nullable String host, @Nullable String brand_name,
-            @Nullable String shop_id, @Nullable Integer courses_count, @Nullable Integer users_count, @Nullable String brand_id,
-            @Nullable String system_end, @Nullable String phone, @Nullable String address, @Nullable Boolean can_trial,
-            @Nullable DistrictEntity gd_district) {
+
+      @Override public CoachService create(@Nullable String id, @Nullable String model,
+          @Nullable String gym_id, @Nullable Integer type, @Nullable String name,
+          @Nullable String color, @Nullable String photo, @Nullable String host,
+          @Nullable String brand_name, @Nullable String shop_id, @Nullable Integer courses_count,
+          @Nullable Integer users_count, @Nullable String brand_id, @Nullable String system_end,
+          @Nullable String phone, @Nullable String address, @Nullable String position,
+          @Nullable Boolean can_trial, @Nullable DistrictEntity gd_district) {
             return new Builder().id(id)
                 .model(model)
                 .name(name)
@@ -53,22 +56,23 @@ public class CoachService implements Parcelable, CoachServiceModel {
                 .gd_district(gd_district)
                 .phone(phone)
                 .photo(photo)
-                .host(host)
+                .host(host).shop_id(shop_id).position(position)
                 .system_end(system_end)
                 .users_count(users_count == null ? 0 : users_count)
                 .courses_count(courses_count == null ? 0 : courses_count)
                 .build();
         }
     }, gd_districtAdapter);
-    public static final Parcelable.Creator<CoachService> CREATOR = new Parcelable.Creator<CoachService>() {
+  public static final Parcelable.Creator<CoachService> CREATOR =
+      new Parcelable.Creator<CoachService>() {
         @Override public CoachService createFromParcel(Parcel source) {
-            return new CoachService(source);
+          return new CoachService(source);
         }
 
         @Override public CoachService[] newArray(int size) {
-            return new CoachService[size];
+          return new CoachService[size];
         }
-    };
+      };
     public static RowMapper<CoachService> SELECT_ALL_MAPPER = FACTORY.getAllCoachServiceMapper();
     @SerializedName("model") public String model;
     @SerializedName("type") public int type;
@@ -89,6 +93,7 @@ public class CoachService implements Parcelable, CoachServiceModel {
     public String address;
     public String shop_id;
     public String position;
+  public boolean can_trial;
 
     private CoachService(Builder builder) {
         setModel(builder.model);
@@ -97,16 +102,20 @@ public class CoachService implements Parcelable, CoachServiceModel {
         setName(builder.name);
         setColor(builder.color);
         setPhoto(builder.photo);
-        phone = builder.phone;
+      setPhone(builder.phone);
         setHost(builder.host);
         setBrand_name(builder.brand_name);
         setCourses_count(builder.courses_count);
         setUsers_count(builder.users_count);
-        brand_id = builder.brand_id;
-        has_permission = builder.has_permission;
-        gd_district = builder.gd_district;
-        system_end = builder.system_end;
-        gym_id = builder.gym_id;
+      setBrand_id(builder.brand_id);
+      setHas_permission(builder.has_permission);
+      setGd_district(builder.gd_district);
+      setSystem_end(builder.system_end);
+      setGym_id(builder.gym_id);
+      setAddress(builder.address);
+      setShop_id(builder.shop_id);
+      setPosition(builder.position);
+      can_trial = builder.can_trial;
     }
 
     public CoachService() {
@@ -129,6 +138,10 @@ public class CoachService implements Parcelable, CoachServiceModel {
         this.gd_district = in.readParcelable(DistrictEntity.class.getClassLoader());
         this.system_end = in.readString();
         this.gym_id = in.readString();
+      this.address = in.readString();
+      this.shop_id = in.readString();
+      this.position = in.readString();
+      this.can_trial = in.readByte() != 0;
     }
 
     @Nullable @Override public String id() {
@@ -168,7 +181,7 @@ public class CoachService implements Parcelable, CoachServiceModel {
     }
 
     @Nullable @Override public String shop_id() {
-        return null;
+      return shop_id;
     }
 
     @Nullable @Override public Integer courses_count() {
@@ -188,15 +201,19 @@ public class CoachService implements Parcelable, CoachServiceModel {
     }
 
     @Nullable @Override public String phone() {
-        return null;
+      return phone;
     }
 
     @Nullable @Override public String address() {
         return address;
     }
 
+  @Nullable @Override public String position() {
+    return position;
+  }
+
     @Nullable @Override public Boolean can_trial() {
-        return null;
+      return can_trial;
     }
 
     @Nullable @Override public DistrictEntity gd_district() {
@@ -217,7 +234,7 @@ public class CoachService implements Parcelable, CoachServiceModel {
 
     public int getcityCode() {
         if (gd_district != null && gd_district.city != null) {
-            return gd_district.city.id;
+          return gd_district.city.getId();
         } else {
             return 0;
         }
@@ -404,6 +421,10 @@ public class CoachService implements Parcelable, CoachServiceModel {
         dest.writeParcelable(this.gd_district, flags);
         dest.writeString(this.system_end);
         dest.writeString(this.gym_id);
+      dest.writeString(this.address);
+      dest.writeString(this.shop_id);
+      dest.writeString(this.position);
+      dest.writeByte(this.can_trial ? (byte) 1 : (byte) 0);
     }
 
     public static final class Builder {
@@ -423,6 +444,10 @@ public class CoachService implements Parcelable, CoachServiceModel {
         private DistrictEntity gd_district;
         private String system_end;
         private String gym_id;
+      private String address;
+      private String shop_id;
+      private String position;
+      private boolean can_trial;
 
         public Builder() {
         }
@@ -504,6 +529,26 @@ public class CoachService implements Parcelable, CoachServiceModel {
 
         public Builder gym_id(String val) {
             gym_id = val;
+          return this;
+        }
+
+      public Builder address(String val) {
+        address = val;
+        return this;
+      }
+
+      public Builder shop_id(String val) {
+        shop_id = val;
+        return this;
+      }
+
+      public Builder position(String val) {
+        position = val;
+        return this;
+      }
+
+      public Builder can_trial(boolean val) {
+        can_trial = val;
             return this;
         }
 

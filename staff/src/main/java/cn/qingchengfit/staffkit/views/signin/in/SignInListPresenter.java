@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.signin.in;
 
 import android.content.Intent;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.SignInBody;
 import cn.qingchengfit.model.body.SignInIgnorBody;
 import cn.qingchengfit.model.responese.QcResponse;

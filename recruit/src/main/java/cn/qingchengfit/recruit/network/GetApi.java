@@ -11,6 +11,7 @@ import cn.qingchengfit.recruit.network.response.JobListWrap;
 import cn.qingchengfit.recruit.network.response.ResumeHomeWrap;
 import cn.qingchengfit.recruit.network.response.ResumeIntentsWrap;
 import cn.qingchengfit.recruit.network.response.WorkExpListWrap;
+import cn.qingchengfit.recruit.network.response.WorkExpWrap;
 import cn.qingchengfit.recruit.views.organization.QcSearchOrganResponse;
 import cn.qingchengfit.recruit.views.organization.QcSerachGymRepsonse;
 import java.util.HashMap;
@@ -43,7 +44,8 @@ import retrofit2.http.QueryMap;
 
 public interface GetApi {
 
-  @GET("/api/user/jobs/") rx.Observable<QcDataResponse<JobListWrap>> queryJobList(@Query("page") int page);
+  @GET("/api/user/jobs/") rx.Observable<QcDataResponse<JobListWrap>> queryJobList(
+      @Query("page") int page, @QueryMap HashMap<String, Object> hashMap);
 
   @GET("/api/user/job/index/") rx.Observable<QcDataResponse<JobIndexWrap>> queryJobIndex(@QueryMap HashMap<String, Object> hashMap);
 
@@ -100,6 +102,9 @@ public interface GetApi {
    * 工作经历
    */
   @GET("/api/user/job/experiences/") rx.Observable<QcDataResponse<WorkExpListWrap>> queryWorkExps();
+
+  @GET("/api/user/job/experiences/{id}/") rx.Observable<QcDataResponse<WorkExpWrap>> queryWorkExp(
+      @Path("id") String id);
 
   @GET("/api/user/job/certificates/") rx.Observable<QcDataResponse<CertificateListWrap>> queryCertifications();
 

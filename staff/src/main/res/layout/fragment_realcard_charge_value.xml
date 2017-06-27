@@ -174,20 +174,20 @@
 
         <include layout="@layout/divider_grey_margin"/>
 
-        <cn.qingchengfit.staffkit.views.custom.CommonInputView
+        <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/charge_sum"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/qc_item_height"
             android:visibility="gone"
             app:civ_inputnum="true"
             app:civ_lable="充值金额(元)"
             app:civ_nonnull="true"
             />
 
-        <cn.qingchengfit.staffkit.views.custom.CommonInputView
+        <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/datecard_starttime"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/qc_item_height"
             android:visibility="gone"
             app:civ_clickable="true"
             app:civ_hint="@string/common_please_choose"
@@ -196,10 +196,10 @@
             tools:visibility="visible"
             />
 
-        <cn.qingchengfit.staffkit.views.custom.CommonInputView
+        <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/datecard_endtime"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/qc_item_height"
             android:visibility="gone"
             app:civ_clickable="true"
             app:civ_hint="@string/common_please_choose"
@@ -210,10 +210,10 @@
             />
 
 
-        <cn.qingchengfit.staffkit.views.custom.CommonInputView
+        <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/imcome_sun"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/qc_item_height"
             android:visibility="gone"
             app:civ_inputnum="true"
             app:civ_lable="实收金额(元)"
@@ -241,10 +241,10 @@
 
           <include layout="@layout/divider_grey"/>
 
-          <cn.qingchengfit.staffkit.views.custom.CommonInputView
+          <cn.qingchengfit.widgets.CommonInputView
               android:id="@+id/starttime"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="@dimen/qc_item_height"
               android:visibility="gone"
               app:civ_clickable="true"
               app:civ_hint="@string/common_please_choose"
@@ -253,10 +253,10 @@
               tools:visibility="visible"
               />
 
-          <cn.qingchengfit.staffkit.views.custom.CommonInputView
+          <cn.qingchengfit.widgets.CommonInputView
               android:id="@+id/endtime"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="@dimen/qc_item_height"
               android:visibility="gone"
               app:civ_clickable="true"
               app:civ_hint="@string/common_please_choose"
@@ -268,10 +268,10 @@
 
         </LinearLayout>
 
-        <cn.qingchengfit.staffkit.views.custom.CommonInputView
+        <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/real_card_no"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/qc_item_height"
             android:visibility="gone"
             app:civ_hint="@string/option_choose"
             app:civ_inputnum="true"
@@ -279,7 +279,7 @@
             app:civ_showdivier="false"
             tools:visibility="visible"
             />
-        <!--<cn.qingchengfit.staffkit.views.custom.CommonInputView-->
+        <!--<cn.qingchengfit.widgets.CommonInputView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
         <!--app:civ_clickable="true"-->
@@ -290,7 +290,7 @@
         <!--app:civ_showright="true"-->
         <!--/>-->
 
-        <!--<cn.qingchengfit.staffkit.views.custom.CommonInputView-->
+        <!--<cn.qingchengfit.widgets.CommonInputView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
         <!--app:civ_clickable="true"-->

@@ -24,7 +24,7 @@ import android.app.Application;
  */
 public class App extends Application {
 
-    public AppTestComponent component;
+  //public AppTestComponent component;
 
     @Override public void onCreate() {
         super.onCreate();

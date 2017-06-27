@@ -9,7 +9,7 @@
 
   <include layout="@layout/common_toolbar"/>
 
-  <cn.qingchengfit.staffkit.views.custom.ExpandedLayout
+  <cn.qingchengfit.widgets.ExpandedLayout
       android:id="@+id/custom_switch"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         />
-  </cn.qingchengfit.staffkit.views.custom.ExpandedLayout>
+  </cn.qingchengfit.widgets.ExpandedLayout>
 
   <TextView
       android:id="@+id/costum_jacket_hint"

@@ -22,7 +22,7 @@
         android:orientation="vertical"
         >
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/test_date"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -30,7 +30,7 @@
           app:civ_lable="体测日期"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/height"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -39,7 +39,7 @@
           app:civ_lable="身高(cm)"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/weight"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -49,7 +49,7 @@
 
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/bmi"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -58,7 +58,7 @@
           app:civ_lable="BMI(kg/m^2)"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/body_fat_rate"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -68,7 +68,7 @@
 
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/left_upper"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -77,75 +77,75 @@
           app:civ_lable="左上臂围(cm)"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/right_upper"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_inputnum="true"
           app:civ_lable="右上臂围(cm)"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/chest"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_inputnum="true"
           app:civ_lable="胸围(cm)"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/waistline"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_inputnum="true"
           app:civ_lable="腰围(cm)"
 
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/hipline"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_inputnum="true"
           app:civ_lable="臀围(cm)"
 
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/left_thigh"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_inputnum="true"
           app:civ_lable="左大腿围(cm)"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/right_thigh"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_inputnum="true"
           app:civ_lable="右大腿围(cm)"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/left_calf"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_inputnum="true"
           app:civ_lable="左小腿围(cm)"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/right_calf"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_inputnum="true"
           app:civ_lable="右小腿围(cm)"

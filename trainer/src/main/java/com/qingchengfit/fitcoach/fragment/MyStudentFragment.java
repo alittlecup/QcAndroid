@@ -337,9 +337,9 @@ public class MyStudentFragment extends BaseFragment {
                         sb.append("手机:").append(student.phone);
                         bean.phone = sb.toString();
                         if (student.gender.equalsIgnoreCase("0")) {
-                            bean.gender = true;
+                          bean.gender = 0;
                         } else {
-                            bean.gender = false;
+                          bean.gender = 1;
                         }
                         if (TextUtils.isEmpty(keyWord)
                             || bean.username.contains(keyWord)
@@ -535,7 +535,7 @@ public class MyStudentFragment extends BaseFragment {
             holder.itemStudentName.setText(studentBean.username);
             holder.itemStudentPhonenum.setText(studentBean.phone);
             //holder.itemHeaderLoop.setBackgroundDrawable(new LoopView(studentBean.color));
-            if (studentBean.gender) {//男
+          if (studentBean.gender == 0) {//男
                 holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_male);
             } else {
                 holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_female);
@@ -559,8 +559,10 @@ public class MyStudentFragment extends BaseFragment {
             Glide.with(App.AppContex)
                 .load(PhotoUtils.getSmall(studentBean.headerPic))
                 .asBitmap()
-                .placeholder(studentBean.gender ? R.drawable.default_student_male : R.drawable.default_student_female)
-                .error(studentBean.gender ? R.drawable.default_student_male : R.drawable.default_student_female)
+                .placeholder(studentBean.gender == 0 ? R.drawable.default_student_male
+                    : R.drawable.default_student_female)
+                .error(studentBean.gender == 0 ? R.drawable.default_student_male
+                    : R.drawable.default_student_female)
                 .into(new CircleImgWrapper(holder.itemStudentHeader, getContext()));
         }
 

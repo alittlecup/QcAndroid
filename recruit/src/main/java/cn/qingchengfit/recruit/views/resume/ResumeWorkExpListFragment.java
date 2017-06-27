@@ -18,7 +18,6 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.event.EventResumeFresh;
-import cn.qingchengfit.recruit.item.ResumeWorkExpItem;
 import cn.qingchengfit.recruit.item.ResumeWorkExpSimpleItem;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
@@ -151,8 +150,8 @@ public class ResumeWorkExpListFragment extends BaseFragment implements ResumePre
   }
 
   @Override public boolean onItemClick(int i) {
-    if (commonFlexAdapter.getItem(i) instanceof ResumeWorkExpItem) {
-      router.editWorkExp(((ResumeWorkExpItem) commonFlexAdapter.getItem(i)).getWorkExp());
+    if (commonFlexAdapter.getItem(i) instanceof ResumeWorkExpSimpleItem) {
+      router.workExpPreview(((ResumeWorkExpSimpleItem) commonFlexAdapter.getItem(i)).getWorkExp());
     }
     return false;
   }

@@ -21,8 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.views.RecruitActivity;
@@ -33,7 +34,8 @@ import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.NetWorkUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.GuideWindow;
 import cn.qingchengfit.widgets.TabView;
 import com.afollestad.materialdialogs.DialogAction;
@@ -43,7 +45,6 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
@@ -85,9 +86,7 @@ import rx.schedulers.Schedulers;
 import static com.qingchengfit.fitcoach.App.diskLruCache;
 import static com.qingchengfit.fitcoach.http.QcCloudClient.getApi;
 
-
-
-public class Main2Activity extends BaseAcitivity implements WebActivityInterface {
+public class Main2Activity extends BaseActivity implements WebActivityInterface {
 
     /**
      * 进入主页用途
@@ -487,7 +486,9 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
             }
         }
-        if (intent.getIntExtra(ACTION, -1) == LOGOUT) {//Deprecated
+      if (intent.getIntExtra(ACTION, -1) == LOGOUT) {
+        //Deprecated
+
         } else if (intent.getIntExtra(ACTION, -1) == FINISH) {
             Main2Activity.this.finish();
         } else if (intent.getIntExtra(ACTION, -1) == NOTIFICATION) {

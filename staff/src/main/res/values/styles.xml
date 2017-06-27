@@ -9,8 +9,8 @@
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowActionBar">false</item>
     <item name="colorControlNormal">@color/divider_white</item>
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorPrimary">@color/toolbar</item>
+    <item name="colorPrimaryDark">@color/toolbar</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
     <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>
@@ -34,8 +34,8 @@
 
     <item name="colorControlNormal">@color/divider_white</item>
 
-    <item name="colorAccent">@color/colorAccent</item>
-    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorAccent">@color/toolbar</item>
+    <item name="colorPrimary">@color/toolbar</item>
     <item name="colorPrimaryDark">@color/toolbar</item>
     <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
     <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>

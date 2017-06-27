@@ -18,16 +18,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.common.Contact;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.GymUtils;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.utils.PhoneFuncUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
-import com.qingchengfit.fitcoach.bean.Contact;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -48,7 +48,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class ChooseStudentActivity extends BaseAcitivity {
+public class ChooseStudentActivity extends BaseActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.choosestudent_rv) RecyclerView choosestudentRv;
@@ -204,7 +204,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
         List<AddStudentBean> choosenstudentBeans = new ArrayList<>();
         for (StudentBean s : studentBeans) {
             if (s.isChosen) {
-                choosenstudentBeans.add(new AddStudentBean(s.username, s.phone, s.gender ? 1 : 0, null));
+              choosenstudentBeans.add(new AddStudentBean(s.username, s.phone, s.gender, null));
             }
         }
         if (choosenstudentBeans.size() == 0) {

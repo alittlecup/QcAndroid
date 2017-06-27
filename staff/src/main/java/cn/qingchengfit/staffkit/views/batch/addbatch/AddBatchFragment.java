@@ -28,8 +28,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import cn.qingchengfit.inject.model.GymWrapper;
-import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.ArrangeBatchBody;
 import cn.qingchengfit.model.common.Rule;
@@ -40,11 +41,9 @@ import cn.qingchengfit.model.responese.Time_repeat;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.rxbus.event.RxbusBatchLooperConfictEvent;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.adapter.CmAdapter;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -60,10 +59,11 @@ import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
@@ -481,7 +481,9 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
      * 选择开始时间
      */
     @OnClick(R.id.starttime) public void onStartTime() {
-        if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+      if (pwTime == null) {
+        pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+      }
         pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
             Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
@@ -498,7 +500,9 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
      * 选择结束时间
      */
     @OnClick(R.id.endtime) public void onEndTime() {
-        if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+      if (pwTime == null) {
+        pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+      }
         pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
             Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {

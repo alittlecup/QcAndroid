@@ -24,7 +24,7 @@ import cn.qingchengfit.constant.ConstantNotification;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.SystemMsgItem;
 import cn.qingchengfit.model.common.NotificationDeleted;
@@ -241,8 +241,7 @@ public class MainMsgFragment extends BaseFragment
     }
 
     @Override public void onLoginFailed(TLSErrInfo tlsErrInfo) {
-
-        ToastUtils.show("聊天系统登录失败：请重新打开应用  " + tlsErrInfo.ErrCode + "  " + tlsErrInfo.Msg);
+      //LogUtil.e("聊天系统登录失败：请重新打开应用  " + tlsErrInfo.ErrCode + "  " + tlsErrInfo.Msg);
     }
 
     @OnClick(R.id.fab_add_conversation) public void addCoversation() {

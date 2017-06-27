@@ -18,6 +18,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -33,7 +34,6 @@ import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import cn.qingchengfit.staffkit.rxbus.event.DoneAccountEvent;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.rxbus.event.FreshGymListEvent;
@@ -43,7 +43,6 @@ import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.adapter.CmAdapter;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -60,8 +59,9 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import com.bigkoo.pickerview.lib.TimeDialogWindow;
-import com.bigkoo.pickerview.lib.Type;
+import cn.qingchengfit.widgets.CommonInputView;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import java.util.ArrayList;
@@ -543,7 +543,9 @@ public class ManageCourseBatchFragment extends BaseFragment implements ManageCou
      * 选择开始时间
      */
     @OnClick(R.id.starttime) public void onStartTime() {
-        if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+      if (pwTime == null) {
+        pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+      }
         pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
             Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
@@ -560,7 +562,9 @@ public class ManageCourseBatchFragment extends BaseFragment implements ManageCou
      * 选择结束时间
      */
     @OnClick(R.id.endtime) public void onEndTime() {
-        if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), Type.YEAR_MONTH_DAY);
+      if (pwTime == null) {
+        pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+      }
         pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
             Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
@@ -605,7 +609,7 @@ public class ManageCourseBatchFragment extends BaseFragment implements ManageCou
     public void chooseTime(final int pos) {
         if (mType == Configs.TYPE_GROUP) {
             if (timeWindow == null) {
-                timeWindow = new TimeDialogWindow(getContext(), Type.HOURS_MINS, 5);
+              timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
             }
             if (datas.get(pos).dateStart != null) {
                 timeWindow.setTime(datas.get(pos).dateStart);
@@ -622,7 +626,8 @@ public class ManageCourseBatchFragment extends BaseFragment implements ManageCou
             timeWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0, new Date());
         } else {
             if (timeDialogWindow == null) {
-                timeDialogWindow = new TimePeriodChooser(getContext(), Type.HOURS_MINS, 5);
+              timeDialogWindow =
+                  new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
             }
             timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
                 @Override public void onTimeSelect(Date start, Date end) {

@@ -34,7 +34,7 @@
   <color name="warm_grey">#999999</color>
 
   <color name="less_grey">#dddddd</color>
-  <color name="orange">#e08f00</color>
+  <color name="orange">#fbaa72</color>
   <color name="red">#ff5151</color>
   <color name="green">#1faf50</color>
   <color name="blue">#2ab6f6</color>
@@ -99,4 +99,11 @@
 
   <color name="wheel_timebtn_nor">#54a3fa</color>
   <color name="wheel_timebtn_pre">#CCCCCC</color>
+
+
+  <color name="private_color">#7986cb</color>
+  <color name="colorPrimarytrans">#110db14b</color>
+  <color name="text_link">#6EB8F1</color>
+
+
 </resources>

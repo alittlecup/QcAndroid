@@ -98,7 +98,6 @@ import rx.schedulers.Schedulers;
         mAdapter.setMode(SelectableAdapter.MODE_SINGLE);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-        //recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
         /**
          * 点击健身房

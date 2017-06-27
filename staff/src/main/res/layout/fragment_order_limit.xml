@@ -24,7 +24,7 @@
         style="@style/TextTitleHint"
         />
 
-    <cn.qingchengfit.staffkit.views.custom.ExpandedLayout
+    <cn.qingchengfit.widgets.ExpandedLayout
         android:id="@+id/sw_order_course"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,14 +33,14 @@
         app:el_label="课程预约限制"
         >
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/civ_order_course_time"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           app:civ_inputnum="true"
           app:civ_lable="课程开始前（分钟）"
           />
-    </cn.qingchengfit.staffkit.views.custom.ExpandedLayout>
+    </cn.qingchengfit.widgets.ExpandedLayout>
 
     <include layout="@layout/divider_grey"/>
 
@@ -51,7 +51,7 @@
         style="@style/TextTitleHint"
         />
 
-    <cn.qingchengfit.staffkit.views.custom.ExpandedLayout
+    <cn.qingchengfit.widgets.ExpandedLayout
         android:id="@+id/sw_cancle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,14 +61,14 @@
         app:el_label="团课取消预约限制"
         >
 
-      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/civ_cancel_time"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
           app:civ_inputnum="true"
           app:civ_lable="课程开始前（分钟）"
           />
-    </cn.qingchengfit.staffkit.views.custom.ExpandedLayout>
+    </cn.qingchengfit.widgets.ExpandedLayout>
 
     <include layout="@layout/divider_grey"/>
 
@@ -80,7 +80,7 @@
         style="@style/TextTitleHint"
         />
 
-    <cn.qingchengfit.staffkit.views.custom.ExpandedLayout
+    <cn.qingchengfit.widgets.ExpandedLayout
         android:id="@+id/sw_substitute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           />
-    </cn.qingchengfit.staffkit.views.custom.ExpandedLayout>
+    </cn.qingchengfit.widgets.ExpandedLayout>
 
 
   </LinearLayout>

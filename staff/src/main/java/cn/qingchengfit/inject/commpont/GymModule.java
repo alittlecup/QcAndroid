@@ -1,7 +1,7 @@
 package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
-import cn.qingchengfit.staffkit.views.BaseActivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ActivityKey;

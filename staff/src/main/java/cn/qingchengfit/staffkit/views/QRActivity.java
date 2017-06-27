@@ -21,6 +21,7 @@ import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.tbruyelle.rxpermissions.RxPermissions;

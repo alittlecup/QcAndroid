@@ -17,10 +17,10 @@ import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.staffkit.views.wardrobe.choose.ChooseRegionFragment;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 import javax.inject.Inject;
 import rx.functions.Action1;
 

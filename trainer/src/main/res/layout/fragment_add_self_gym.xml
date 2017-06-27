@@ -15,7 +15,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/addselfgym_name"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       app:civ_lable="健身房名称"
       >
   </cn.qingchengfit.widgets.CommonInputView>
@@ -23,7 +23,7 @@
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/addselfgym_time"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
       android:visibility="gone"
       app:civ_clickable="true"
       app:civ_lable="营业时间"

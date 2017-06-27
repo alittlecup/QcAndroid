@@ -12,6 +12,8 @@ import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
 import cn.qingchengfit.inject.moudle.StaffWrapperMoudle;
 import cn.qingchengfit.inject.moudle.StudentWrapperModule;
+import cn.qingchengfit.recruit.di.BindRecruitModule;
+import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -49,10 +51,7 @@ import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;
 import cn.qingchengfit.staffkit.views.MainFirstFragment;
 import cn.qingchengfit.staffkit.views.PopFromBottomActivity;
 import cn.qingchengfit.staffkit.views.QRActivity;
-import cn.qingchengfit.staffkit.views.WebActivity;
 import cn.qingchengfit.staffkit.views.WebActivityForGuide;
-import cn.qingchengfit.staffkit.views.WebFragment;
-import cn.qingchengfit.staffkit.views.WebFragmentNoFresh;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.staffkit.views.allotsales.MultiModifyFragment;
 import cn.qingchengfit.staffkit.views.allotsales.SalesListFragment;
@@ -123,7 +122,6 @@ import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.gym.AddBrandInMainFragment;
 import cn.qingchengfit.staffkit.views.gym.AddNewCoachFragment;
-import cn.qingchengfit.staffkit.views.gym.ChooseAddressFragment;
 import cn.qingchengfit.staffkit.views.gym.ChooseGroupCourseFragment;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.staffkit.views.gym.GymDetailFragment;
@@ -299,6 +297,10 @@ import cn.qingchengfit.staffkit.views.wardrobe.hire.WardrobeLongHireFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.hire.WardrobeShortHireFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeListFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeMainFragment;
+import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.ChooseAddressFragment;
+import cn.qingchengfit.views.fragments.WebFragment;
+import cn.qingchengfit.views.fragments.WebFragmentNoFresh;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -326,6 +328,7 @@ import dagger.multibindings.IntoMap;
 //压制了 未使用 拼写检查 和public
 @SuppressWarnings({ "unused", "SpellCheckingInspection", "UnnecessaryInterfaceModifier" }) @Component(modules = {
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
+    BindRecruitModule.class, BindSeacherOrgModule.class,
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,
     AppComponent.UnloginAdModule.class, AppComponent.HomeModule.class, AppComponent.QcVipModule.class,
     AppComponent.BaseStatementChartModule.class, AppComponent.YourFragmentModule.class, AppComponent.ChooseModule.class,
@@ -496,14 +499,6 @@ public interface AppComponent {
 
     void inject(ChooseActivity activity);
 
-    //void inject(WebActivityForGuide activity);
-    //
-    //void inject(PopFromBottomActivity activity);
-    //
-    //void inject(StatmentFilterActivity activity);
-    //
-    //void inject(SplashActivity activity);
-    //
     void inject(App activity);
 
     App app();

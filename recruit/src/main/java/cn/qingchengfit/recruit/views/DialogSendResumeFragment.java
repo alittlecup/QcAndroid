@@ -1,6 +1,7 @@
 package cn.qingchengfit.recruit.views;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +19,10 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -46,6 +51,7 @@ public class DialogSendResumeFragment extends DialogFragment {
     @BindView(R2.id.ck_never_noti) CheckBox ckNeverNoti;
     @BindView(R2.id.btn_cancel) TextView btnCancel;
     @BindView(R2.id.btn_sent) TextView btnSent;
+  @Inject RecruitRouter router;
     Unbinder unbinder;
     private int completedPersent = 0;
     private OnSendResumeListener onSendResumeListener;
@@ -57,6 +63,10 @@ public class DialogSendResumeFragment extends DialogFragment {
         return d;
     }
 
+  public static boolean needShow(Context context) {
+    return !PreferenceUtils.getPrefBoolean(context, "send_resume_hint", false);
+  }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -64,7 +74,8 @@ public class DialogSendResumeFragment extends DialogFragment {
         if (dialog != null) {
             DisplayMetrics dm = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-            dialog.getWindow().setLayout((int) (dm.widthPixels * 0.75), ViewGroup.LayoutParams.WRAP_CONTENT);
+          dialog.getWindow()
+              .setLayout((int) (dm.widthPixels * 0.85), ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }
 
@@ -85,6 +96,11 @@ public class DialogSendResumeFragment extends DialogFragment {
             tvContent.setText(getString(R.string.please_to_complete_your_resume, completedPersent));
             btnGoResume.setText("完善我的简历");
         }
+      ckNeverNoti.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+          PreferenceUtils.setPrefBoolean(getContext(), "send_resume_hint", true);
+        }
+      });
         return view;
     }
 
@@ -116,7 +132,7 @@ public class DialogSendResumeFragment extends DialogFragment {
      * 查看简历
      */
     @OnClick(R2.id.btn_go_resume) public void onBtnGoResumeClicked() {
-        LogUtil.d(this.getClass(), "查看简历");
+      router.toMyResume();
     }
 
     /**

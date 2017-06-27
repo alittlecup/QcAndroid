@@ -13,8 +13,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.network.body.ResumeBody;
 import cn.qingchengfit.recruit.presenter.ResumePostPresenter;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -108,7 +110,7 @@ import javax.inject.Inject;
       }
 
       @Override public void onUploadComplete(String sp, String url) {
-        richTxtFragment.insertImg(url, sp);
+        richTxtFragment.insertImg(url);
       }
     });
     choosePictureFragmentDialog.show(getChildFragmentManager(), "");
@@ -124,6 +126,7 @@ import javax.inject.Inject;
 
   @Override public void onPostOk() {
     hideLoading();
+    RxBus.getBus().post(new EventResumeFresh());
     getActivity().onBackPressed();
   }
 }

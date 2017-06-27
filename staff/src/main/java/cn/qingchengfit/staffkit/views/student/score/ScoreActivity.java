@@ -15,8 +15,8 @@ import cn.qingchengfit.inject.model.StaffWrapper;
 import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.views.BaseActivity;
 import cn.qingchengfit.staffkit.views.FragCallBack;
+import cn.qingchengfit.views.activity.BaseActivity;
 import rx.functions.Action1;
 
 /**

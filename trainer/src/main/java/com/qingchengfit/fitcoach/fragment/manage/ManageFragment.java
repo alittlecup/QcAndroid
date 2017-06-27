@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.response.QcResponse;
@@ -39,6 +40,7 @@ import com.qingchengfit.fitcoach.bean.FunctionBean;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
+import com.qingchengfit.fitcoach.event.EventChooseGym;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
@@ -178,11 +180,12 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         recyclerview2.setNestedScrollingEnabled(false);
         recyclerview2.setAdapter(adapter2);
 
-        RxBusAdd(CoachService.class).subscribe(new Action1<CoachService>() {
-            @Override public void call(CoachService coachService) {
+      RxBusAdd(EventChooseGym.class).subscribe(new Action1<EventChooseGym>() {
+        @Override public void call(EventChooseGym coachService) {
                 if (coachService != null) {
-                    PreferenceUtils.setPrefString(getContext(), "coachservice_id", gymWrapper.getCoachService().getId());
-                    setGymInfo(coachService);
+                  PreferenceUtils.setPrefString(getContext(), "coachservice_id_str",
+                      gymWrapper.getCoachService().getId());
+                  setGymInfo(coachService.getCoachService());
                 }
             }
         }, throwable -> {
@@ -234,7 +237,19 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     }
 
     public void getServer() {
-        final String curCoachId = PreferenceUtils.getPrefString(getContext(), "coachservice_id", "");
+      //兼容低版本
+      Long ccid = 0l;
+      try {
+        ccid = PreferenceUtils.getPrefLong(getContext(), "coachservice_id", 0L);
+      } catch (Exception e) {
+
+      }
+      String newCcid = PreferenceUtils.getPrefString(getContext(), "coachservice_id_str", "");
+      if (ccid != 0 && TextUtils.isEmpty(newCcid)) {
+        newCcid = ccid + "";
+      }
+
+      final String curCoachId = newCcid;
         repoCoachService.readAllServices().observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
             if (coachServices.size() > 0) {
                 gymWrapper.setCoachService(coachServices.get(0));
@@ -244,6 +259,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                         break;
                     }
                 }
+              setGymInfo(gymWrapper.getCoachService());
             } else {//无场馆状态
                 RxBus.getBus().post(new EventLoginChange());
                 }
@@ -257,7 +273,6 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override public boolean onItemClick(int position) {
@@ -291,7 +306,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     }
                     break;
                 case R.drawable.ic_users_student:
-                    if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.MANAGE_MEMBERS)
+                  if (CurentPermissions.newInstance()
+                      .queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS)
                         || CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS)) {
                         Intent toStudent = new Intent(getActivity(), FragActivity.class);
                         toStudent.putExtra("type", 9);

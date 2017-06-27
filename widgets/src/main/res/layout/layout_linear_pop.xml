@@ -11,8 +11,8 @@
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="40dp"
-      android:orientation="horizontal"
       android:gravity="center_vertical"
+      android:orientation="horizontal"
       >
 
     <TextView
@@ -43,7 +43,7 @@
         android:layout_marginRight="16dp"
         android:visibility="gone"
         app:srcCompat="@drawable/vector_hook_green"
-        tools:visibility="visible"
+        tools:visibility="gone"
         />
   </LinearLayout>
   <include layout="@layout/divider_grey_left_right"/>

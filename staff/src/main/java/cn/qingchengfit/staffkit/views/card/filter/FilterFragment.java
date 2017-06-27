@@ -21,8 +21,8 @@ import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.views.cardtype.ChooseCardTypeActivity;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 
 /**
  * power by

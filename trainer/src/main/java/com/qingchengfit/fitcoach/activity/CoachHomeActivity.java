@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.qingchengfit.fitcoach.R;
 
-public class CoachHomeActivity extends BaseAcitivity {
+public class CoachHomeActivity extends BaseActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
 

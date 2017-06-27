@@ -1,8 +1,5 @@
 package cn.qingchengfit.staff;
 
-import dagger.Component;
-import javax.inject.Singleton;
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -23,6 +20,6 @@ import javax.inject.Singleton;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/19.
  */
-@Singleton @Component(modules = TestAppModel.class) public interface AppTestComponent {
-    void inject(CourseDetailPresenterTest test);
-}
+//@Singleton @Component(modules = TestAppModel.class) public interface AppTestComponent {
+//    void inject(CourseDetailPresenterTest test);
+//}

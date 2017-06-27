@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.views.student.followup;
 
-import cn.qingchengfit.staffkit.rxbus.RxBus;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.views.student.filter.SourceFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import javax.inject.Inject;

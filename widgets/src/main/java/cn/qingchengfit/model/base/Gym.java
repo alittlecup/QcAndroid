@@ -94,6 +94,14 @@ public class Gym implements Parcelable {
         }
     }
 
+  public String getCityDistrict() {
+    String ret = "";
+    if (gd_district != null && gd_district.city != null) {
+      ret = ret + gd_district.city.getName() + gd_district.getName();
+    }
+    return ret;
+  }
+
     public String getCityName() {
         if (gd_city != null) {
           if (TextUtils.isEmpty(gd_city.name)) {
@@ -134,7 +142,9 @@ public class Gym implements Parcelable {
     }
 
     public String getBrand_name() {
-        return brand_name;
+      if (!TextUtils.isEmpty(brand_name)) return brand_name;
+      if (brand != null) return brand.getName();
+      return "";
     }
 
     public void setBrand_name(String brand_name) {
