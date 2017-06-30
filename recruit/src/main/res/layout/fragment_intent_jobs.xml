@@ -23,6 +23,7 @@
   <include layout="@layout/divider_grey"/>
 
   <TextView
+      android:id="@+id/tv_hint"
       android:layout_width="match_parent"
       android:layout_height="30dp"
       android:text="热门职位"

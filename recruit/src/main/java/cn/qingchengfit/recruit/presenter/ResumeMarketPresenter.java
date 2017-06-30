@@ -1,0 +1,83 @@
+package cn.qingchengfit.recruit.presenter;
+
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.recruit.model.JobFair;
+import cn.qingchengfit.recruit.model.Resume;
+import cn.qingchengfit.recruit.network.GetApi;
+import cn.qingchengfit.recruit.network.response.JobFariListWrap;
+import cn.qingchengfit.recruit.network.response.ResumeListWrap;
+import java.util.List;
+import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
+public class ResumeMarketPresenter extends BasePresenter {
+  @Inject GymWrapper gymWrapper;
+  @Inject QcRestRepository qcRestRepository;
+  int page = 1, pageTotal = 1;
+  private MVPView view;
+
+  @Inject public ResumeMarketPresenter() {
+  }
+
+  public void queryResumeMarkets(boolean refresh) {
+    if (refresh) page = pageTotal = 1;
+    if (page <= pageTotal) {
+      RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+          .queryResumeMarkets()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {
+            @Override public void call(QcDataResponse<ResumeListWrap> qcResponse) {
+              if (qcResponse.status == 200) {
+                view.onResumeList(qcResponse.data.resumes, qcResponse.data.total_count, page);
+                page++;
+                pageTotal = qcResponse.data.pages;
+              } else {
+                view.onShowError(qcResponse.getMsg());
+              }
+            }
+          }, new NetWorkThrowable()));
+    } else {
+      view.onResumeList(null, 1, 1);
+    }
+  }
+
+  public void queryMyJobFairList() {
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .queryMyJobFairs()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<JobFariListWrap>>() {
+          @Override public void call(QcDataResponse<JobFariListWrap> qcResponse) {
+            if (qcResponse.status == 200) {
+              view.onJobFaris(qcResponse.data.fairs, qcResponse.data.job_count);
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
+
+  @Override public void attachView(PView v) {
+    view = (MVPView) v;
+  }
+
+  @Override public void unattachView() {
+    super.unattachView();
+    view = null;
+  }
+
+  public interface MVPView extends CView {
+    void onResumeList(List<Resume> resumes, int total, int page);
+
+    void onJobFaris(List<JobFair> jobfairs, int job_count);
+  }
+}

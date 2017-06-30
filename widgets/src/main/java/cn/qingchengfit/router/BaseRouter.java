@@ -8,8 +8,6 @@ import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.WebActivity;
 import java.util.HashMap;
 
-import static android.R.attr.action;
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -70,7 +68,7 @@ public class BaseRouter {
   public void routerTo(String module, Context context) {
     if (routers.containsKey(module)) {
       Intent it = new Intent(context, routers.get(module));
-      it.putExtra("action", action);
+      it.putExtra("action", "recruit");
       context.startActivity(it);
     } else {
       //没有指定模块 todo

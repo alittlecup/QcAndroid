@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <RelativeLayout
+      android:id="@+id/layout_pm_manage"
+      android:layout_width="match_parent"
+      android:layout_height="84dp"
+      android:background="@drawable/bg_click"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:id="@+id/tv_pm_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="职位管理(1人)"
+        style="@style/QcTextStyleStandardDark"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_pm_manage"
+        android:layout_marginTop="4dp"
+        android:text="发布职位、编辑职位、关闭职位"
+        style="@style/QcTextStyleSmallGrey"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <RelativeLayout
+      android:id="@+id/layout_handle_resume"
+      android:layout_width="match_parent"
+      android:layout_height="84dp"
+      android:background="@drawable/bg_click"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:id="@+id/tv_handle_resume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="处理简历(1人)"
+        style="@style/QcTextStyleStandardDark"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_handle_resume"
+        android:layout_marginTop="4dp"
+        android:text="查看简历、处理简历状态、发出邀约"
+        style="@style/QcTextStyleSmallGrey"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <RelativeLayout
+      android:id="@+id/layout_job_fair"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:background="@drawable/bg_click"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:id="@+id/tv_job_fair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="报名参加招聘会(1人)"
+        style="@style/QcTextStyleStandardDark"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <RelativeLayout
+      android:id="@+id/layout_pm_setting"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:background="@drawable/bg_click"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:id="@+id/tv_pm_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="权限设置(1人)"
+        style="@style/QcTextStyleStandardDark"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey"/>
+</LinearLayout>

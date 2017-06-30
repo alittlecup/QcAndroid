@@ -9,17 +9,23 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.model.Organization;
 import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.model.WorkExp;
+import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.network.body.ResumeBody;
 import cn.qingchengfit.recruit.views.MyPositionsInfoFragment;
 import cn.qingchengfit.recruit.views.RecruitActivity;
+import cn.qingchengfit.recruit.views.RecruitGymDetailEmployerFragment;
 import cn.qingchengfit.recruit.views.RecruitGymDetailFragment;
+import cn.qingchengfit.recruit.views.RecruitManageFragment;
 import cn.qingchengfit.recruit.views.RecruitMyJobFairFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
+import cn.qingchengfit.recruit.views.RecruitRequireOfJobFragmentBuilder;
 import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.RecordEditFragmentBuilder;
+import cn.qingchengfit.recruit.views.resume.RecruitGymEquipFragmentBuilder;
+import cn.qingchengfit.recruit.views.resume.RecruitPermsionFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeCertificateListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragmentBuilder;
@@ -205,5 +211,64 @@ public class RecruitRouter extends InnerRouter {
 
   public void brief(String content) {
     add(new ResumeEditDescFragmentBuilder(content).build());
+  }
+
+  /**
+   * 招聘管理页
+   */
+  public void toManageRecruit() {
+    add(new RecruitManageFragment());
+  }
+
+  /**
+   * 专场招聘会专场
+   */
+  public void toJobFairs(String id) {
+
+  }
+
+  /**
+   * 场馆详情 工作人员版
+   */
+  public void toGymdetailEmployer() {
+    add(new RecruitGymDetailEmployerFragment());
+  }
+
+  /**
+   * 场馆介绍
+   */
+  public void toWriteGymIntro(Gym gym) {
+    add(RecruitGymDetailEmployerFragment.newInstance(gym));
+  }
+
+  /**
+   * 场馆设备
+   */
+  public void toGymEquip(ArrayList<String> facilities) {
+    add(RecruitGymEquipFragmentBuilder.newRecruitGymEquipFragment(facilities));
+  }
+
+  /**
+   * 场馆详情介绍
+   */
+  public void toWriteGymDetailDesc() {
+  }
+
+  /**
+   * 收藏的人才
+   */
+  public void toMyStarredResume() {
+
+  }
+
+  /**
+   * 权限设置
+   */
+  public void toPermssion() {
+    add(new RecruitPermsionFragment());
+  }
+
+  public void toRequireOfJob(JobBody jobBody) {
+    add(new RecruitRequireOfJobFragmentBuilder(jobBody).build());
   }
 }

@@ -1,6 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
     >
 
+  <style name="AtestStyle" parent="@style/Theme.AppCompat.Light.NoActionBar">
+
+    <item name="colorPrimary">@color/green</item>
+    <item name="colorPrimaryDark">@color/green</item>
+    <item name="colorAccent">@color/red</item>
+  </style>
+
   <style name="AppThemeLightBottom" parent="Theme.AppCompat.NoActionBar">
     <!-- Customize your theme here. -->
     <item name="windowActionBar">false</item>

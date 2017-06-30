@@ -3,13 +3,17 @@ package cn.qingchengfit.recruit.network;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.network.response.CertificateListWrap;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
+import cn.qingchengfit.recruit.network.response.GymListWrap;
 import cn.qingchengfit.recruit.network.response.GymWrap;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
+import cn.qingchengfit.recruit.network.response.JobFariListWrap;
 import cn.qingchengfit.recruit.network.response.JobIndexWrap;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
+import cn.qingchengfit.recruit.network.response.PermisionnListWrap;
 import cn.qingchengfit.recruit.network.response.ResumeHomeWrap;
 import cn.qingchengfit.recruit.network.response.ResumeIntentsWrap;
+import cn.qingchengfit.recruit.network.response.ResumeListWrap;
 import cn.qingchengfit.recruit.network.response.WorkExpListWrap;
 import cn.qingchengfit.recruit.network.response.WorkExpWrap;
 import cn.qingchengfit.recruit.views.organization.QcSearchOrganResponse;
@@ -74,6 +78,38 @@ public interface GetApi {
    */
   @GET("/api/user/gyms/{gym_id}/jobs/") rx.Observable<QcDataResponse<JobListWrap>> queryGymJobs(@Path("gym_id") String gym_id,
       @Query("page") int page);
+
+  /**
+   * 获取权限列表 可以根据 gym_id 和 key 删选
+   */
+  @GET("/api/staff/job/permissions/") rx.Observable<PermisionnListWrap> queryRecruitPermission(
+      @QueryMap HashMap<String, Object> hashMap);
+
+  /**
+   * 收到的简历
+   */
+  @GET("/api/staff/job/delivery/resumes/")
+  rx.Observable<QcDataResponse<ResumeListWrap>> queryRecieveResume(@Query("job_id") String jobId);
+
+  /**
+   * 收到的简历
+   */
+  @GET("/api/staff/user/resumes/")
+  rx.Observable<QcDataResponse<ResumeListWrap>> queryResumeMarkets();
+
+  /**
+   * 我参加的专场招聘会
+   */
+  @GET("/api/staff/user/resumes/index/")
+  rx.Observable<QcDataResponse<JobFariListWrap>> queryMyJobFairs();
+
+  /**
+   * 管理场馆列表
+   */
+  @GET("/api/staff/job/gyms/") rx.Observable<QcDataResponse<GymListWrap>> queryManageGyms();
+
+
+
 
 
 

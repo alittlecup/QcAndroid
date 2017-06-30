@@ -38,5 +38,10 @@ import dagger.android.support.AndroidSupportInjectionModule;
       Recruit.WorkexpeEditFragmentModule.class, Recruit.ResumeShowImgsFragmentModule.class, Recruit.RecordEditFragmentModule.class,
       Recruit.ResumeBaseInfoFragmentModule.class, Recruit.ResumeEditDescFragmentModule.class,
       Recruit.ResumeWorkExpPreviewFragmentModule.class,
+      Recruit.ResumeMarketHomeFragmentModule.class, Recruit.RecruitManageFragmentModule.class,
+      Recruit.RecruitGymDetailEditFragmentModule.class,
+      Recruit.RecruitGymDetailEmployerFragmentModule.class,
+      Recruit.RecruitPermsionFragmentModule.class,
+
   }) abstract RecruitActivity contributeRecruitActivityInjector();
 }

@@ -19,6 +19,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.presenter.RecruitGymDetailPresenter;
 import cn.qingchengfit.utils.PhotoUtils;
@@ -63,6 +64,8 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
   RecruitPositionsInGymFragment specialFragment;
 
   @Inject RecruitGymDetailPresenter presenter;
+  @Inject RecruitRouter recruitRouter;
+
   Gym gym;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
@@ -135,17 +138,20 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
    * 场馆介绍
    */
   @OnClick(R2.id.layout_gym_intro) public void onLayoutGymIntroClicked() {
+    recruitRouter.toWriteGymIntro(gym);
   }
 
   /**
    * 权限设置
    */
   @OnClick(R2.id.layout_permission) public void onLayoutPermissionClicked() {
+    recruitRouter.toPermssion();
   }
 
   /**
    * 发布新职位
    */
   @OnClick(R2.id.btn_publish_new_position) public void onViewClicked() {
+
   }
 }

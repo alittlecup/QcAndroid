@@ -164,4 +164,10 @@
     <item>会籍</item>
     <item>前台</item>
   </string-array>
+  <string-array name="recruit_common_facilities">
+    <item>TRX</item>
+    <item>跑步机</item>
+    <item>泳池</item>
+    <item>力量器械</item>
+  </string-array>
 </resources>

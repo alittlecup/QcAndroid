@@ -12,14 +12,28 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.item.RecruitGymItem;
+import cn.qingchengfit.recruit.model.GymHasResume;
+import cn.qingchengfit.recruit.network.GetApi;
+import cn.qingchengfit.recruit.network.response.GymListWrap;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -41,15 +55,21 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/6/7.
  */
-public class RecruitManageFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
+public class RecruitManageFragment extends BaseFragment
+    implements FlexibleAdapter.OnItemClickListener {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
   @BindView(R2.id.rv_gyms) RecyclerView rvGyms;
+
+  @Inject QcRestRepository qcRestRepository;
+  @Inject RecruitRouter router;
+
   List<AbstractFlexibleItem> items = new ArrayList<>();
   CommonFlexAdapter commonFlexAdapter;
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_manage, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
@@ -62,6 +82,32 @@ public class RecruitManageFragment extends BaseFragment implements FlexibleAdapt
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitile.setText("招聘管理");
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    refreshData();
+  }
+
+  protected void refreshData() {
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .queryManageGyms()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<GymListWrap>>() {
+          @Override public void call(QcDataResponse<GymListWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              commonFlexAdapter.clear();
+              if (qcResponse.data.gyms != null) {
+                for (GymHasResume gym : qcResponse.data.gyms) {
+                  commonFlexAdapter.addItem(new RecruitGymItem(gym));
+                }
+              }
+            } else {
+              onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
   }
 
   @Override public String getFragmentName() {
@@ -79,6 +125,10 @@ public class RecruitManageFragment extends BaseFragment implements FlexibleAdapt
   }
 
   @Override public boolean onItemClick(int i) {
+    IFlexible item = commonFlexAdapter.getItem(i);
+    if (item instanceof RecruitGymItem) {
+      router.toWriteGymIntro(((RecruitGymItem) item).getGym());
+    }
     return false;
   }
 }

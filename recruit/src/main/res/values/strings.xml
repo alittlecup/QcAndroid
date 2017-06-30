@@ -42,5 +42,6 @@
   <string formatted="false" name="exp_group">团课%d节 服务%d人次</string>
   <string formatted="false" name="exp_private">私教%d节 服务%d人次</string>
   <string formatted="false" name="exp_sale">销售额达%s元</string>
+  <string name="recruit_has_publish_jobs_num">已发布%d个职位</string>
 
 </resources>

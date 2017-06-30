@@ -9,12 +9,28 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.model.Resume;
+import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
 public class ResumeItem extends AbstractFlexibleItem<ResumeItem.ResumeVH> {
+
+  private Resume resume;
+
+  public ResumeItem(Resume resume) {
+    this.resume = resume;
+  }
+
+  public Resume getResume() {
+    return resume;
+  }
+
+  public void setResume(Resume resume) {
+    this.resume = resume;
+  }
 
   @Override public int getLayoutRes() {
     return R.layout.item_resume;
@@ -25,6 +41,11 @@ public class ResumeItem extends AbstractFlexibleItem<ResumeItem.ResumeVH> {
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeVH holder, int position, List payloads) {
+    PhotoUtils.smallCircle(holder.imgAvatar, resume.avatar);
+    holder.tvName.setText(resume.username);
+    holder.imgGender.setImageResource(
+        resume.gender == 0 ? R.drawable.vd_gender_male : R.drawable.vd_gender_female);
+    holder.tvRequirement.setText("");
   }
 
   @Override public boolean equals(Object o) {

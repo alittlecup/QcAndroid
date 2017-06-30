@@ -139,7 +139,7 @@ public class Configs {
     public static final String SCHEDULE_PRIVATE = "fitness/redirect/staff/private/";
   public static final String HOST_ORDERS = "mobile/trades/home/";
     public static final String IMAGE_ALL = "http://qcresource.b0.upaiyun.com/ic_all_normal.png";
-    public static String Server = BuildConfig.DEBUG ? URL_DEBUG : URL_RELEASE;
+    public static String Server = !BuildConfig.FLAVOR.equals("product") ? URL_DEBUG : URL_RELEASE;
     public static String URL_QC_FIND = Server + "mobile/staff/discover/";
     public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
 }

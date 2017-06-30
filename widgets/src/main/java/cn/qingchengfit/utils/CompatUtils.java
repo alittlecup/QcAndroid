@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorRes;
+import android.support.annotation.StyleRes;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
@@ -15,6 +16,14 @@ import android.widget.TextView;
 public class CompatUtils {
     public static boolean less21(){
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
+    }
+
+  public static void setTextStyle(TextView tv, @StyleRes int sty) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      tv.setTextAppearance(sty);
+    } else {
+      tv.setTextAppearance(tv.getContext(), sty);
+    }
     }
 
     public static int getColor(Context context, @ColorRes int res) {

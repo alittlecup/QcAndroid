@@ -27,9 +27,8 @@ import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.model.WorkExp;
-import cn.qingchengfit.recruit.network.response.JobListIndex;
+import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
-import cn.qingchengfit.recruit.presenter.SeekPositionPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -71,7 +70,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/5/26.
  */
 public class RecruitPositionDetailFragment extends BaseFragment
-    implements SeekPositionPresenter.MVPView, DialogSendResumeFragment.OnSendResumeListener,
+    implements JobPresenter.MVPView, DialogSendResumeFragment.OnSendResumeListener,
     ResumePresenter.MVPView {
 
   @BindView(R2.id.rv_demands) RecyclerView rvDemands;
@@ -89,7 +88,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
   @BindView(R2.id.tv_starred) TextView tvStarred;
   @BindView(R2.id.tv_position_crated_at) TextView tvPositionCratedAt;
   @Inject RecruitRouter router;
-  @Inject SeekPositionPresenter presenter;
+  @Inject JobPresenter presenter;
   @Inject ResumePresenter resumePresenter;
   @Inject QcRestRepository restRepository;
   @BindView(R2.id.tv_position_desc) TouchyWebView tvPositionDesc;
@@ -121,9 +120,9 @@ public class RecruitPositionDetailFragment extends BaseFragment
     delegatePresenter(presenter, this);
     delegatePresenter(resumePresenter, this);
     initToolbar(toolbar);
-    onJob(job);
+    onJobDetail(job);
     onGym(job.gym);
-    presenter.queryDetail(job.id);
+    presenter.queryJob(job.id);
     return view;
   }
 
@@ -150,7 +149,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
     });
   }
 
-  @Override public void onJob(Job job) {
+  @Override public void onJobDetail(Job job) {
     if (job == null) return;
     if (job.name == null) return;
     this.job = job;
@@ -223,9 +222,6 @@ public class RecruitPositionDetailFragment extends BaseFragment
     }
   }
 
-  @Override public void onList(List<Job> jobs, int page, int totalCount) {
-
-  }
 
   @Override public void starOK() {
     isStarred = true;
@@ -248,9 +244,6 @@ public class RecruitPositionDetailFragment extends BaseFragment
     ToastUtils.show(R.drawable.vector_hook_white, "投递成功");
   }
 
-  @Override public void onJobsIndex(JobListIndex index) {
-
-  }
 
   public void onGym(Gym gym) {
     if (gym == null) return;

@@ -9,12 +9,27 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.model.JobFair;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
 public class JobFairItem extends AbstractFlexibleItem<JobFairItem.JobFairVH> {
+
+  JobFair jobFair;
+
+  public JobFairItem(JobFair jobFair) {
+    this.jobFair = jobFair;
+  }
+
+  public JobFair getJobFair() {
+    return jobFair;
+  }
+
+  public void setJobFair(JobFair jobFair) {
+    this.jobFair = jobFair;
+  }
 
   @Override public int getLayoutRes() {
     return R.layout.item_jobfairs;

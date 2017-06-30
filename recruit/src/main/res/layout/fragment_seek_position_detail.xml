@@ -35,6 +35,107 @@
           >
 
         <LinearLayout
+            android:id="@+id/layout_job_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_grey"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:visibility="gone"
+            tools:visibility="visible"
+            >
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="94dp"
+              android:background="@color/white"
+              android:divider="@drawable/divider_linearlayout_horizon"
+              android:orientation="horizontal"
+              android:showDividers="middle"
+              >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+              <TextView
+                  android:id="@+id/tv_dilive_positive"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="主动投递"
+                  style="@style/QcTextStyleSmallWarm"
+                  />
+
+              <TextView
+                  android:id="@+id/tv_count_positive"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/text_dark"
+                  android:textSize="30sp"
+                  tools:text="30"
+                  />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="我邀约的"
+                  style="@style/QcTextStyleSmallWarm"
+                  />
+
+              <TextView
+                  android:id="@+id/tv_count_invited"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/text_dark"
+                  android:textSize="30sp"
+                  tools:text="30"
+                  />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="0人查看"
+                  style="@style/QcTextStyleSmallWarm"
+                  />
+
+              <android.support.v4.widget.Space
+                  android:layout_width="match_parent"
+                  android:layout_height="4dp"
+                  />
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="0人查看"
+                  style="@style/QcTextStyleSmallWarm"
+                  />
+            </LinearLayout>
+          </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:gravity="center_vertical"
@@ -48,7 +149,6 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="1"
-              android:textSize="20sp"
               android:textStyle="bold"
               tools:text="瑜伽教练"
               style="@style/QcTextStyleLargeDark"
@@ -59,7 +159,6 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textColor="@color/red"
-              android:textSize="20sp"
               tools:text="11K-15K"
               style="@style/QcTextStyleLargeDark"
               />
@@ -91,6 +190,7 @@
             />
 
         <include layout="@layout/divider_grey_left_right"/>
+
         <include layout="@layout/layout_recruit_gym_info"/>
 
         <include layout="@layout/divider_grey"/>
@@ -252,6 +352,7 @@
             />
 
         <include layout="@layout/divider_grey"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="104dp"
@@ -313,7 +414,9 @@
     </android.support.v4.widget.NestedScrollView>
 
     <include layout="@layout/divider_grey"/>
+
     <LinearLayout
+        android:id="@+id/layout_employee_ctl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
@@ -361,6 +464,36 @@
           android:layout_weight="2"
           android:background="@drawable/btn_green"
           android:text="投递简历"
+          android:textColor="@color/white"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_emloyer_ctl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+
+      <Button
+          android:id="@+id/btn_close_pos"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="2"
+          android:background="@drawable/bg_click"
+          android:text="关闭该职位"
+          style="@style/QcTextStyleStandardDark"
+          />
+
+      <Button
+          android:id="@+id/btn_edit_postion"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="2"
+          android:background="@drawable/btn_green"
+          android:text="编辑职位"
           android:textColor="@color/white"
           />
 

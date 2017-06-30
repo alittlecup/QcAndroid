@@ -20,6 +20,7 @@ import cn.qingchengfit.staffkit.usecase.bean.ModifyPwBody;
 import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -68,7 +69,7 @@ public class RestRepository implements Repository {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
 
             @Override public void log(String message) {
-                Timber.d(message);
+              LogUtil.d(message);
             }
         });
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

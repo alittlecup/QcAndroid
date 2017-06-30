@@ -5,16 +5,21 @@ import cn.qingchengfit.recruit.views.DialogSendResumeFragment;
 import cn.qingchengfit.recruit.views.MyPositionsInfoFragment;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.recruit.views.RecruitGymDescFragment;
+import cn.qingchengfit.recruit.views.RecruitGymDetailEmployerFragment;
 import cn.qingchengfit.recruit.views.RecruitGymDetailFragment;
+import cn.qingchengfit.recruit.views.RecruitManageFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsInGymFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsInvitedFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsSentFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsStarredFragment;
+import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
 import cn.qingchengfit.recruit.views.resume.RecordEditFragment;
+import cn.qingchengfit.recruit.views.resume.RecruitGymDetailEditFragment;
+import cn.qingchengfit.recruit.views.resume.RecruitPermsionFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeCertificateListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragment;
@@ -184,6 +189,41 @@ import dagger.multibindings.IntoMap;
     }
   }
 
+  @Subcomponent() public interface ResumeMarketHomeFragmentSubcomponent
+      extends AndroidInjector<ResumeMarketHomeFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<ResumeMarketHomeFragment> {
+    }
+  }
+
+  @Subcomponent() public interface RecruitManageFragmentSubcomponent
+      extends AndroidInjector<RecruitManageFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<RecruitManageFragment> {
+    }
+  }
+
+  @Subcomponent() public interface RecruitGymDetailEditFragmentSubcomponent
+      extends AndroidInjector<RecruitGymDetailEditFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<RecruitGymDetailEditFragment> {
+    }
+  }
+
+  @Subcomponent() public interface RecruitGymDetailEmployerFragmentSubcomponent
+      extends AndroidInjector<RecruitGymDetailEmployerFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<RecruitGymDetailEmployerFragment> {
+    }
+  }
+
+  @Subcomponent() public interface RecruitPermsionFragmentSubcomponent
+      extends AndroidInjector<RecruitPermsionFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<RecruitPermsionFragment> {
+    }
+  }
+
   @Module(subcomponents = SeekPositionHomeFragmentSubcomponent.class) abstract class SeekPositionHomeFragmentModule {
     @Binds @IntoMap @FragmentKey(SeekPositionHomeFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
@@ -305,6 +345,41 @@ import dagger.multibindings.IntoMap;
     @Binds @IntoMap @FragmentKey(ResumeWorkExpPreviewFragment.class)
     abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ResumeWorkExpPreviewFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = ResumeMarketHomeFragmentSubcomponent.class)
+  abstract class ResumeMarketHomeFragmentModule {
+    @Binds @IntoMap @FragmentKey(ResumeMarketHomeFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        ResumeMarketHomeFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = RecruitManageFragmentSubcomponent.class)
+  abstract class RecruitManageFragmentModule {
+    @Binds @IntoMap @FragmentKey(RecruitManageFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        RecruitManageFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = RecruitGymDetailEditFragmentSubcomponent.class)
+  abstract class RecruitGymDetailEditFragmentModule {
+    @Binds @IntoMap @FragmentKey(RecruitGymDetailEditFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        RecruitGymDetailEditFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = RecruitGymDetailEmployerFragmentSubcomponent.class)
+  abstract class RecruitGymDetailEmployerFragmentModule {
+    @Binds @IntoMap @FragmentKey(RecruitGymDetailEmployerFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        RecruitGymDetailEmployerFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = RecruitPermsionFragmentSubcomponent.class)
+  abstract class RecruitPermsionFragmentModule {
+    @Binds @IntoMap @FragmentKey(RecruitPermsionFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        RecruitPermsionFragmentSubcomponent.Builder builder);
   }
 
 }

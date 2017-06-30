@@ -37,7 +37,6 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.presenter.SeekPositionPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
-import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.support.animator.FlipAnimation;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -230,7 +229,7 @@ public class SeekPositionHomeFragment extends BaseFragment
     toolbar.inflateMenu(R.menu.menu_i_publish_job);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        BaseRouter.routerToWeb("https://jinshuju.net/f/r5cCWk", getContext());
+        router.resumeMarketHome();
         return false;
       }
     });

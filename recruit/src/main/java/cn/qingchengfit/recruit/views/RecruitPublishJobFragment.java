@@ -11,7 +11,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.network.body.JobBody;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CommonInputView;
+import com.bigkoo.pickerview.TwoScrollPicker;
+import java.util.ArrayList;
+import javax.inject.Inject;
+
+import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SALARY;
 
 /**
  * power by
@@ -37,8 +46,22 @@ public class RecruitPublishJobFragment extends BaseFragment {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  @BindView(R2.id.civ_position_name) CommonInputView civPositionName;
+  @BindView(R2.id.civ_salary_rank) CommonInputView civSalaryRank;
+  @BindView(R2.id.civ_position_desc) CommonInputView civPositionDesc;
+  @BindView(R2.id.civ_position_demands) CommonInputView civPositionDemands;
+  @BindView(R2.id.civ_position_require) CommonInputView civPositionRequire;
+  @BindView(R2.id.civ_position_welfare) CommonInputView civPositionWelfare;
+  @BindView(R2.id.civ_gym_desc) CommonInputView civGymDesc;
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Inject RecruitRouter router;
+
+  private JobBody body;
+
+  private TwoScrollPicker twoScrollPicker;
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_publish_job, container, false);
     unbinder = ButterKnife.bind(this, view);
     return view;
@@ -63,12 +86,43 @@ public class RecruitPublishJobFragment extends BaseFragment {
    * 薪资范围
    */
   @OnClick(R2.id.civ_salary_rank) public void onCivSalaryRankClicked() {
+    twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
+      @Override public void onSelectItem(int left, int right) {
+        if (left == 0) {
+          civSalaryRank.setContent("面议");
+          body.min_salary = -1000;
+          body.max_salary = -1000;
+        } else if (left == 100) {
+          civSalaryRank.setContent("100K以上");
+          body.min_salary = 100001;
+          body.max_salary = 100001;
+        } else {
+          if (left > right) {
+            ToastUtils.show("请选择正确的薪水区间");
+            return;
+          }
+          civSalaryRank.setContent((left - MIN_SALARY) + "-" + (right - MIN_SALARY + 2) + "K");
+          body.min_salary = (left - MIN_SALARY) * 1000;
+          body.max_salary = (right - MIN_SALARY + 2) * 1000;
+        }
+      }
+    });
+    final ArrayList<String> l = new ArrayList<>();
+    final ArrayList<String> r = new ArrayList<>();
+    l.add("面议");
+    for (int i = 0; i < 100; i++) {
+      l.add(i + "K");
+      r.add((i + 1) + "K");
+    }
+    l.add("100K以上");
+    twoScrollPicker.show(l, r, 0, 0);
   }
 
   /**
    * 职位描述
    */
   @OnClick(R2.id.civ_position_desc) public void onCivPositionDescClicked() {
+
   }
 
   /**
@@ -81,6 +135,7 @@ public class RecruitPublishJobFragment extends BaseFragment {
    * 职位要求
    */
   @OnClick(R2.id.civ_position_require) public void onCivPositionRequireClicked() {
+    router.toRequireOfJob();
   }
 
   /**
@@ -96,7 +151,7 @@ public class RecruitPublishJobFragment extends BaseFragment {
   }
 
   /**
-   * 场馆介绍
+   * 发布职位按钮
    */
   @OnClick(R2.id.btn_publish) public void onBtnPublishClicked() {
   }

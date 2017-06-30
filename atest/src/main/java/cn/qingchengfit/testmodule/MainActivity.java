@@ -27,8 +27,8 @@ public class MainActivity extends BaseActivity implements LoginProcessor.OnLogin
         Constant.setHuaweiBussId(612);
         LoginProcessor loginProcessor = null;
         try {
-            loginProcessor = new LoginProcessor(getApplicationContext(),
-                "qctext_7060", "cloudtest.qingchengfit.cn", this);
+            loginProcessor = new LoginProcessor(getApplicationContext(), "qctest_7060",
+                "cloudtest.qingchengfit.cn", this);
             loginProcessor.sientInstall();
         } catch (Exception e) {
             e.printStackTrace();

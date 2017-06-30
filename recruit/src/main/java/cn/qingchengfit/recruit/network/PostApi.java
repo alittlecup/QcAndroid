@@ -4,6 +4,8 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.WorkExp;
+import cn.qingchengfit.recruit.network.body.JobBody;
+import cn.qingchengfit.recruit.network.body.MarkResumeBody;
 import cn.qingchengfit.recruit.network.body.ResumeBody;
 import cn.qingchengfit.recruit.views.organization.OrganizationBean;
 import cn.qingchengfit.recruit.views.organization.QcAddOrganizationResponse;
@@ -54,6 +56,32 @@ public interface PostApi {
   @POST("/api/user/job/invitations/") rx.Observable<QcResponse> inviteSome(@Body HashMap<String, Object> hashMap);
 
   /**
+   * 编辑职位 关闭{"published": false}, 打开{"published": true}
+   * body:{"name": xx, "description": xx,
+   * "requirement": xx, "min_work_year": xx,
+   * "max_work_year":xx, "min_age": xx, "max_age": xx,
+   * "min_salary": xx, "max_salary": xx, "gender": xx,
+   * "min_height": xx, "max_height": xx, "min_weight": xx,
+   * "max_weight": xx, "education": xx,
+   * "welfare": ["xx", "xx"]
+   }
+   */
+  @PUT("/api/staff/jobs/{job_id}/") rx.Observable<QcResponse> editPosition(
+      @Path("job_id") String jobid, @Body JobBody jobBody);
+
+  /**
+   * 标记投递简历
+   */
+  @PUT("/api/staff/job/delivery/resumes/") rx.Observable<QcResponse> markResume(
+      @Body MarkResumeBody body);
+
+  @PUT("") rx.Observable<QcResponse> editGymIntro();
+
+  /*
+   *-===========================简历相关 ===================
+   */
+
+  /**
    * 编辑我的简历
    */
   @PUT("/api/user/resume/") rx.Observable<QcResponse> updateResume(@Body ResumeBody body);
@@ -77,7 +105,8 @@ public interface PostApi {
   @DELETE("/api/user/job/experiences/{id}/") rx.Observable<QcResponse> delWorkExp(
       @Path("id") String experience_id);
 
-  @POST("/api/user/job/certificates/") rx.Observable<QcResponse> addCertificate(@Body Certificate certificate);
+  @POST("/api/user/job/certificates/") rx.Observable<QcResponse> addCertificate(
+      @Body Certificate certificate);
 
   ;
 

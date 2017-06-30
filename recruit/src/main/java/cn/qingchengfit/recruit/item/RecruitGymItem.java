@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.model.GymHasResume;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -20,8 +21,16 @@ import java.util.List;
 
 public class RecruitGymItem extends AbstractFlexibleItem<RecruitGymItem.RecruitGymVH> {
 
-  Gym gym;
+  GymHasResume gym;
   private boolean hasUndo = false;
+
+  public RecruitGymItem(GymHasResume gym) {
+    this.gym = gym;
+  }
+
+  public Gym getGym() {
+    return (Gym) gym;
+  }
 
   @Override public int getLayoutRes() {
     return R.layout.item_recruit_gym;
