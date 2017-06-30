@@ -6,8 +6,8 @@ ext {
                    compileVersion      : 24,
                    minSdk              : 15,
                    targetSdk           : 24,
-                   version_code        : 80, //缝10必更
-                   version_name        : "0.80",
+                   version_code        : 81, //缝10必更
+                   version_name        : "0.81",
                    trainer_version_code: 154,
                    trainer_version_name: "1.5.4"
 

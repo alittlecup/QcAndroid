@@ -16,6 +16,7 @@ import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -67,11 +68,16 @@ public class StudentListPresenter extends BasePresenter {
     }
 
     public void queryStudent(String staffid, String shopid, final String keyword) {
+      HashMap<String, Object> params = gymWrapper.getShopParams();
+      if (keyword != null) {
+        params.put("q", keyword);
+      }
         RxRegiste(restRepository.getGet_api()
-            .qcGetAllStudents(staffid, gymWrapper.getShopParams())
+            .qcGetAllStudents(staffid, params)
             .subscribeOn(Schedulers.io())
-            .map(new Func1<QcResponseData<Students>, Boolean>() {
-                @Override public Boolean call(QcResponseData<Students> qcResponseAllStudent) {
+            .map(new Func1<QcResponseData<Students>, List<QcStudentBean>>() {
+              @Override
+              public List<QcStudentBean> call(QcResponseData<Students> qcResponseAllStudent) {
 
                     if (ResponseConstant.checkSuccess(qcResponseAllStudent)) {
                         for (QcStudentBean bean : qcResponseAllStudent.data.users) {
@@ -93,19 +99,21 @@ public class StudentListPresenter extends BasePresenter {
                             }
                         }
                         StudentAction.newInstance().saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
+                      return qcResponseAllStudent.data.users;
+                    } else {
+                      return null;
                     }
 
-                    return true;
+
                 }
             })
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<Boolean>() {
-                @Override public void call(Boolean b) {
-                    if (b) {
-                        filter(keyword, false);
-                    } else {
-                        view.onFaied();
-                    }
+            .subscribe(new Action1<List<QcStudentBean>>() {
+              @Override public void call(List<QcStudentBean> b) {
+                if (b == null) view.onFaied();
+                else {
+                  handleData(b);
+                }
                 }
             }, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -143,22 +151,24 @@ public class StudentListPresenter extends BasePresenter {
      * @param queryNet 没检索到时是否去网络获取列表
      */
     public void filter(final String keyword, final boolean queryNet) {
+      queryStudent(App.staffId, gymWrapper.shop_id(), keyword);
+      //妈的 这逻辑无敌了
         // 先找本地,没检索到的话,网络请求学员列表
-        if (spFilter != null) spFilter.unsubscribe();
-        spFilter = StudentAction.newInstance()
-            .getStudentByKeyWord(gymWrapper.brand_id(), gymWrapper.shop_id(), keyword)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<List<QcStudentBean>>() {
-                @Override public void call(List<QcStudentBean> qcStudentBeen) {
-                    if (qcStudentBeen.size() > 0) {
-                        handleData(qcStudentBeen);
-                    } else if (queryNet) {
-                        queryStudent(App.staffId, gymWrapper.shop_id(), keyword);
-                    } else {
-                        handleData(new ArrayList<QcStudentBean>());
-                    }
-                }
-            });
+      //if (spFilter != null) spFilter.unsubscribe();
+      //spFilter = StudentAction.newInstance()
+      //    .getStudentByKeyWord(gymWrapper.brand_id(), gymWrapper.shop_id(), keyword)
+      //    .observeOn(AndroidSchedulers.mainThread())
+      //    .subscribe(new Action1<List<QcStudentBean>>() {
+      //        @Override public void call(List<QcStudentBean> qcStudentBeen) {
+      //            if (qcStudentBeen.size() > 0) {
+      //                handleData(qcStudentBeen);
+      //            } else if (queryNet) {
+      //
+      //            } else {
+      //                handleData(new ArrayList<QcStudentBean>());
+      //            }
+      //        }
+      //    });
     }
 
     /**

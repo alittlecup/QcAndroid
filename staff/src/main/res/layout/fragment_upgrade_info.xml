@@ -94,7 +94,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/bg_prime_click"
-        android:text="免费试用15天"
+        android:text="免费试用3天"
         android:textSize="@dimen/common_font"
         android:visibility="gone"
         />

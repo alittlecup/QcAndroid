@@ -193,10 +193,10 @@ public class WebFragment extends BaseFragment
             mWebviewWebView.addJavascriptInterface(new JsInterface(), "NativeMethod");
             mToobarActionTextView.setOnClickListener(new View.OnClickListener() {
               @Override public void onClick(View v) {
-                  if (mWebviewWebView != null) {
-                      mWebviewWebView.loadUrl(
-                          "javascript:window.nativeLinkWeb.runCallback('setAction');");
-                  }
+                if (mWebviewWebView != null) {
+                  mWebviewWebView.loadUrl(
+                      "javascript:window.nativeLinkWeb.runCallback('setAction');");
+                }
               }
             });
 
@@ -233,9 +233,9 @@ public class WebFragment extends BaseFragment
                 new ChoosePictureFragmentDialog.ChoosePicResult() {
                   @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
                     if (isSuccess) {
-                        if (mValueCallback != null) {
-                            mValueCallback.onReceiveValue(Uri.fromFile(new File(filePath)));
-                        }
+                      if (mValueCallback != null) {
+                        mValueCallback.onReceiveValue(Uri.fromFile(new File(filePath)));
+                      }
                       if (mValueCallbackNew != null) {
                         Uri[] uris = new Uri[1];
                         uris[0] = Uri.fromFile(new File(filePath));
@@ -272,9 +272,9 @@ public class WebFragment extends BaseFragment
 
           @Override public void onNext(PayEvent payEvent) {
             if (payEvent.result == 0) {
-                if (mWebviewWebView != null) {
-                    mWebviewWebView.loadUrl("javascript:window.paySuccessCallback();");
-                }
+              if (mWebviewWebView != null) {
+                mWebviewWebView.loadUrl("javascript:window.paySuccessCallback();");
+              }
             } else {
               if (mWebviewWebView != null) {
                 mWebviewWebView.loadUrl(
@@ -333,8 +333,8 @@ public class WebFragment extends BaseFragment
     webSetting.setUserAgentString(s
         + " FitnessTrainerAssistant/"
         + AppUtils.getAppVer(getActivity())
-        + " Android  "
-        + "QingchengApp/Trainer  "
+        + " Android  " + "QingchengApp/" + (AppUtils.getCurApp(getContext()) == 0 ? "Trainer   "
+        : "Staff   ")
         + "OEM:"
         + oemTag);
     // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
@@ -617,9 +617,9 @@ public class WebFragment extends BaseFragment
       if (requestCode == RESULT_LOGIN) {
         RxBus.getBus().post(new EventFreshUnloginAd());
         initCookie(mCurUrl);
-          if (mWebviewWebView != null) {
-              mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('login');");
-          }
+        if (mWebviewWebView != null) {
+          mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('login');");
+        }
       } else if (requestCode == 99) {
         if (mWebviewWebView != null) {
           mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('"
@@ -699,6 +699,36 @@ public class WebFragment extends BaseFragment
       }
     }
 
+    //@JavascriptInterface public void wechatPay(String info) {
+    //
+    //  // 将该app注册到微信
+    //  try {
+    //    JSONObject object = new JSONObject(info);
+    //
+    //    PayReq request = new PayReq();
+    //    request.appId = wxApiStr;
+    //    request.partnerId = object.getString("partnerid");
+    //    //                request.partnerId = "1316532101";
+    //    //                request.prepayId = "wx201602261807466f5480e7010494724957";
+    //    //                request.packageValue = "Sign=WXPay";
+    //    //                request.nonceStr = "4VNwF2PFwgXCbmr";
+    //    //                request.timeStamp = "1456481266";//MD5.genTimeStamp() + "";
+    //    //                request.sign = "053EB9B1AD8487A3008DFE2035D774A9";//MD5.getSign(request.timeStamp, request.nonceStr);
+    //    //                request.partnerId = object.getString("partnerId");
+    //
+    //    request.prepayId = object.getString("prepayid");
+    //    request.packageValue = "Sign=WXPay";
+    //    request.nonceStr = object.getString("noncestr");
+    //    request.timeStamp = object.getString("timestamp");
+    //    request.sign = object.getString("sign");
+    //    //                LogUtil.e("xxx:"+request.checkArgs() );
+    //    msgApi.sendReq(request);
+    //  } catch (JSONException e) {
+    //    e.printStackTrace();
+    //    LogUtil.e("wechat pay error");
+    //  }
+    //}
+
     @JavascriptInterface public void wechatPay(String info) {
 
       // 将该app注册到微信
@@ -708,14 +738,6 @@ public class WebFragment extends BaseFragment
         PayReq request = new PayReq();
         request.appId = wxApiStr;
         request.partnerId = object.getString("partnerid");
-        //                request.partnerId = "1316532101";
-        //                request.prepayId = "wx201602261807466f5480e7010494724957";
-        //                request.packageValue = "Sign=WXPay";
-        //                request.nonceStr = "4VNwF2PFwgXCbmr";
-        //                request.timeStamp = "1456481266";//MD5.genTimeStamp() + "";
-        //                request.sign = "053EB9B1AD8487A3008DFE2035D774A9";//MD5.getSign(request.timeStamp, request.nonceStr);
-        //                request.partnerId = object.getString("partnerId");
-
         request.prepayId = object.getString("prepayid");
         request.packageValue = "Sign=WXPay";
         request.nonceStr = object.getString("noncestr");
