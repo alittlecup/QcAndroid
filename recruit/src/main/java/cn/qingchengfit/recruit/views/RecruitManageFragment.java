@@ -122,6 +122,7 @@ public class RecruitManageFragment extends BaseFragment
   }
 
   @OnClick(R2.id.btn_publish_new_position) public void onBtnPublishNewPositionClicked() {
+    router.toPublishPosition();
   }
 
   @Override public boolean onItemClick(int i) {

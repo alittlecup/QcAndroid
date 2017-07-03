@@ -6,6 +6,7 @@ import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.network.body.MarkResumeBody;
+import cn.qingchengfit.recruit.network.body.PublishPositionBody;
 import cn.qingchengfit.recruit.network.body.ResumeBody;
 import cn.qingchengfit.recruit.views.organization.OrganizationBean;
 import cn.qingchengfit.recruit.views.organization.QcAddOrganizationResponse;
@@ -117,4 +118,10 @@ public interface PostApi {
 
   //新增组织
   @POST("/api/organizations/") rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
+
+  /**
+   * 发布职位
+   */
+  @POST("api/staff/jobs/") rx.Observable<QcResponse> qcPublishPosition(@Body
+      PublishPositionBody publishPositionBody);
 }

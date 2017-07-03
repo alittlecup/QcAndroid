@@ -3,6 +3,7 @@ package cn.qingchengfit.recruit.presenter;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -12,6 +13,7 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.PostApi;
 import cn.qingchengfit.recruit.network.body.JobBody;
+import cn.qingchengfit.recruit.network.body.PublishPositionBody;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import com.tencent.qcloud.timchat.chatmodel.RecruitModel;
 import java.util.HashMap;
@@ -22,6 +24,7 @@ import rx.schedulers.Schedulers;
 
 public class JobPresenter extends BasePresenter {
   @Inject QcRestRepository qcRestRepository;
+  @Inject GymWrapper gymWrapper;
   private MVPView view;
 
   @Inject public JobPresenter() {
@@ -36,9 +39,10 @@ public class JobPresenter extends BasePresenter {
     view = null;
   }
 
-  public void publishJob(String jobid, JobBody body) {
-    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
-        .editPosition(jobid, body)
+  public void publishJob(PublishPositionBody body) {
+    body.params.put("gym_id", gymWrapper.id());
+    RxRegiste(qcRestRepository.createPostApi(PostApi.class)
+        .qcPublishPosition(body)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {

@@ -18,9 +18,13 @@ import cn.qingchengfit.recruit.views.RecruitGymDetailFragment;
 import cn.qingchengfit.recruit.views.RecruitManageFragment;
 import cn.qingchengfit.recruit.views.RecruitMyJobFairFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
+import cn.qingchengfit.recruit.views.RecruitPublishJobFragment;
 import cn.qingchengfit.recruit.views.RecruitRequireOfJobFragmentBuilder;
+import cn.qingchengfit.recruit.views.RecruitRichTextEditFragmentBuilder;
+import cn.qingchengfit.recruit.views.RecruitWelFareFragmentBuilder;
 import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
+import cn.qingchengfit.recruit.views.SetNameCommenFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.RecordEditFragmentBuilder;
@@ -271,4 +275,30 @@ public class RecruitRouter extends InnerRouter {
   public void toRequireOfJob(JobBody jobBody) {
     add(new RecruitRequireOfJobFragmentBuilder(jobBody).build());
   }
+
+  public void toPublishPosition(){
+    add(new RecruitPublishJobFragment());
+  }
+
+  /**
+   * 职位名称填写
+   */
+  public void toSetRequireName(String name, String hint){
+    add(SetNameCommenFragment.newInstance(name, hint));
+  }
+
+  /**
+   * 职位描述填写
+   */
+  public void toEditRecruitDesc(String content, String title){
+    add(new RecruitRichTextEditFragmentBuilder(content, title).build());
+  }
+
+  /**
+   * 职位福利填写
+   */
+  public void toPositionWalfare(ArrayList<String> tags, String title){
+    add(new RecruitWelFareFragmentBuilder(tags, title).build());
+  }
+
 }

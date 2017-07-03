@@ -52,6 +52,7 @@
       app:civ_lable="任职要求"
       app:civ_showdivier="false"
       app:civ_showright="true"
+      app:civ_nonnull="false"
       app:civ_text_color="@color/qc_text_black"
       />
 

@@ -264,10 +264,6 @@ public class SeekPositionHomeFragment extends BaseFragment
     return SeekPositionHomeFragment.class.getName();
   }
 
-  @Override public void onJob(Job job) {
-
-  }
-
   /**
    * 数据结果
    *
@@ -282,18 +278,6 @@ public class SeekPositionHomeFragment extends BaseFragment
     } else if (page > 1) {
       listFragment.addData(jobs);
     }
-  }
-
-  @Override public void starOK() {
-
-  }
-
-  @Override public void unStarOk() {
-
-  }
-
-  @Override public void onPostResumeOk() {
-
   }
 
   /**
