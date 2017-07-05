@@ -39,9 +39,9 @@ public class JobPresenter extends BasePresenter {
     view = null;
   }
 
+
   public void publishJob(String gymId, PublishPositionBody body) {
     body.params.put("gym_id", gymId);
-    body.params.put("published", false);
     body.params.remove("type");
     RxRegiste(qcRestRepository.createPostApi(PostApi.class)
         .qcPublishPosition(body.params)

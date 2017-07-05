@@ -146,6 +146,8 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
       civPositionName.setContentColor(getResources().getColor(R.color.qc_text_grey));
       return map;
     }
+
+    //用type区分职位描述／任职要求
     if (map.containsKey("description")) {
       if (map.get("type").equals("职位描述")) {
         civPositionDesc.setContent("详情");
@@ -305,6 +307,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
   }
 
   @Override public void onEditOk() {
+    ToastUtils.show("发布成功");
     hideLoadingTrans();
     getActivity().onBackPressed();
   }
