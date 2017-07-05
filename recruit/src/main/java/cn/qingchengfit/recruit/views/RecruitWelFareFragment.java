@@ -85,7 +85,7 @@ public class RecruitWelFareFragment extends BaseFragment {
       }
     });
 
-    onRecomentTags(Arrays.asList(getResources().getStringArray(R.array.recruit_recomend_jobs)));
+    onRecomentTags(Arrays.asList(getResources().getStringArray(R.array.recruit_position_welfare)));
   }
 
   public void onRecomentTags(List<String> tags) {

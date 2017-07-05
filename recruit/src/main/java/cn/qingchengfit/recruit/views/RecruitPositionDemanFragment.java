@@ -16,22 +16,24 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventPulishPosition;
-import cn.qingchengfit.recruit.model.PublishPosition;
-import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.recruit.network.body.JobBody;
+import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TwoScrollPicker;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by fb on 2017/7/3.
  */
 
+@FragmentWithArgs
 public class RecruitPositionDemanFragment extends BaseFragment {
 
   @BindView(R2.id.civ_work_exp) CommonInputView civWorkExp;
@@ -43,6 +45,9 @@ public class RecruitPositionDemanFragment extends BaseFragment {
   private TwoScrollPicker twoScrollPicker;
   private SimpleScrollPicker simpleScrollPicker;
 
+  @Arg
+  JobBody jobBody;
+
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -50,6 +55,7 @@ public class RecruitPositionDemanFragment extends BaseFragment {
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    RecruitPositionDemanFragmentBuilder.injectArguments(this);
     simpleScrollPicker = new SimpleScrollPicker(getContext());
     twoScrollPicker = new TwoScrollPicker(getContext());
   }
@@ -59,6 +65,7 @@ public class RecruitPositionDemanFragment extends BaseFragment {
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_position_work_ex, container, false);
     unbinder = ButterKnife.bind(this, view);
+    initView();
     initToolbar();
     return view;
   }
@@ -70,9 +77,29 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         RxBus.getBus().post(EventPulishPosition.build(map));
+        getActivity().onBackPressed();
         return false;
       }
     });
+  }
+
+  private void initView(){
+      civWorkExp.setContent(RecruitBusinessUtils.getWorkYear(jobBody.min_work_year, jobBody.max_work_year));
+      civWorkGender.setContent(RecruitBusinessUtils.getGender(jobBody.gender));
+      civWorkAge.setContent(RecruitBusinessUtils.getAge(jobBody.min_age, jobBody.max_age));
+      civWorkEducation.setContent(RecruitBusinessUtils.getDegree(getContext(), jobBody.education));
+      civWorkHeight.setContent(RecruitBusinessUtils.getHeight(jobBody.min_height, jobBody.max_height));
+      civWorkWeight.setContent(RecruitBusinessUtils.getWeight(jobBody.min_weight, jobBody.max_weight));
+      map.put("min_work_year", jobBody.min_work_year);
+      map.put("max_work_year", jobBody.max_work_year);
+      map.put("gender", jobBody.gender);
+      map.put("min_age", jobBody.min_age);
+      map.put("max_age", jobBody.max_age);
+      map.put("education", jobBody.education);
+      map.put("min_height", jobBody.min_height);
+      map.put("max_height", jobBody.max_height);
+      map.put("min_weight", jobBody.min_weight);
+      map.put("max_weight", jobBody.max_weight);
   }
 
   @Override public void onDestroyView() {
@@ -85,7 +112,7 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     final ArrayList<String> d = new ArrayList<>(Arrays.asList(workexpStr));
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right > left){
+        if (right <= left || (left == 0 && right > 0)){
           ToastUtils.show("请选择正确的条件区间");
           return;
         }else{
@@ -120,7 +147,7 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right > left){
+        if (right <= left || (left == 0 && right > 0)){
           ToastUtils.show("请选择正确的条件区间");
           return;
         }else{
@@ -155,13 +182,13 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right > left){
+        if (right <= left || (left == 0 && right > 0)){
           ToastUtils.show("请选择正确的条件区间");
           return;
         }else{
           civWorkHeight.setContent(d.get(left) + "-" + d.get(right));
-          map.put("min_height", left - 1);
-          map.put("max_height", right - 1);
+          map.put("min_height", left - 1f);
+          map.put("max_height", right - 1f);
         }
       }
     });
@@ -177,13 +204,13 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right > left){
+        if (right <= left || (left == 0 && right > 0)){
           ToastUtils.show("请选择正确的条件区间");
           return;
         }else{
           civWorkWeight.setContent(d.get(left) + "-" + d.get(right));
-          map.put("min_weight", left - 1);
-          map.put("max_weight", right - 1);
+          map.put("min_weight", left - 1f);
+          map.put("max_weight", right - 1f);
         }
       }
     });

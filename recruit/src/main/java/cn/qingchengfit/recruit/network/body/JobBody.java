@@ -38,20 +38,23 @@ public class JobBody implements Parcelable {
   public String name;
   public String description;
   public String requirement;
-  public Integer min_work_year;
-  public Integer max_work_year;
-  public Integer min_age;
-  public Integer max_age;
-  public Integer gender;
-  public Integer education;
-  public Integer min_salary;
-  public Integer max_salary;
-  public Float max_height;
-  public Float min_height;
-  public Float max_weight;
-  public Float min_weight;
+  public Integer min_work_year = -1;
+  public Integer max_work_year = -1;
+  public Integer min_age = -1;
+  public Integer max_age = -1;
+  public Integer gender = -1;
+  public Integer education = -1;
+  public Integer min_salary = -1;
+  public Integer max_salary = -1;
+  public Float max_height = -1f;
+  public Float min_height = -1f;
+  public Float max_weight = -1f;
+  public Float min_weight = -1f;
   public List<String> welfare;
   public Boolean published;
+
+  public JobBody() {
+  }
 
   private JobBody(Builder builder) {
     name = builder.name;

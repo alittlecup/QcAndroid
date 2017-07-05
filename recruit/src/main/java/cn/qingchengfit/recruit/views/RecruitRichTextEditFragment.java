@@ -107,7 +107,9 @@ public class RecruitRichTextEditFragment extends BaseFragment {
       String x = richTxtFragment.getContent();
       HashMap<String, Object> map = new HashMap<>();
       map.put("description", x);
+      map.put("type", toolbarTitle);
       RxBus.getBus().post(EventPulishPosition.build(map));
+      getActivity().onBackPressed();
     }
   }
 

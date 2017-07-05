@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
@@ -72,10 +73,17 @@ public class SetNameCommenFragment extends BaseFragment {
           HashMap<String, Object> map = new HashMap<String, Object>();
           map.put("name", editGroupName.getText().toString());
           RxBus.getBus().post(EventPulishPosition.build(map));
+          getActivity().onBackPressed();
         }
         return false;
       }
     });
+  }
+
+  @OnClick(R2.id.image_clear_name)
+  public void onClearContent(){
+    editGroupName.setText("");
+    initEdit();
   }
 
   private void initEdit(){

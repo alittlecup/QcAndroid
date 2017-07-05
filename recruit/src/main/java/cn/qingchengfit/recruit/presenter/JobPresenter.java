@@ -39,10 +39,12 @@ public class JobPresenter extends BasePresenter {
     view = null;
   }
 
-  public void publishJob(PublishPositionBody body) {
-    body.params.put("gym_id", gymWrapper.id());
+  public void publishJob(String gymId, PublishPositionBody body) {
+    body.params.put("gym_id", gymId);
+    body.params.put("published", false);
+    body.params.remove("type");
     RxRegiste(qcRestRepository.createPostApi(PostApi.class)
-        .qcPublishPosition(body)
+        .qcPublishPosition(body.params)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {

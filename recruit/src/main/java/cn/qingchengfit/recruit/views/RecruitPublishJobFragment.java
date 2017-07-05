@@ -1,10 +1,13 @@
 package cn.qingchengfit.recruit.views;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,12 +20,17 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.network.body.PublishPositionBody;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
+import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.TwoScrollPicker;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
@@ -48,7 +56,11 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/6/7.
  */
-public class RecruitPublishJobFragment extends BaseFragment implements JobPresenter.MVPView {
+@FragmentWithArgs public class RecruitPublishJobFragment extends BaseFragment
+    implements JobPresenter.MVPView {
+
+  public final static int PUBLISH_POSITION = 0x11;      //发布职位
+  public final static int MODIFY_POSITION = 0x12;       //编辑职位
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
@@ -59,31 +71,121 @@ public class RecruitPublishJobFragment extends BaseFragment implements JobPresen
   @BindView(R2.id.civ_position_require) CommonInputView civPositionRequire;
   @BindView(R2.id.civ_position_welfare) CommonInputView civPositionWelfare;
   @BindView(R2.id.civ_gym_desc) CommonInputView civGymDesc;
+  @BindView(R2.id.btn_publish) Button btnPublish;
 
   @Inject RecruitRouter router;
   @Inject JobPresenter presenter;
+  @Arg String gymId;
+  @Arg int type;
+  @Arg Job job;
 
-  private JobBody body;
+  private JobBody body = new JobBody();
 
   private TwoScrollPicker twoScrollPicker;
   private HashMap<String, Object> params = new HashMap<>();
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    RecruitPublishJobFragmentBuilder.injectArguments(this);
+    twoScrollPicker = new TwoScrollPicker(getContext());
+  }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_publish_job, container, false);
     unbinder = ButterKnife.bind(this, view);
+    civGymDesc.setContent("详情");
+    civGymDesc.setContentColor(getResources().getColor(R.color.qc_text_grey));
+    delegatePresenter(presenter, this);
+    initContent();
     initRxBus();
+    initToolbar(toolbar);
+    toolbarTitile.setText("发布职位");
     return view;
   }
 
-  private void initRxBus(){
+  private void initContent() {
+    if (type == MODIFY_POSITION) {
+      if (job != null) {
+        civPositionName.setContent(job.name);
+        civSalaryRank.setContent(RecruitBusinessUtils.getSalary(job.min_salary, job.max_salary));
+        civPositionDemands.setContent(job.requirement);
+        civPositionDesc.setContent(job.description);
+        civPositionRequire.setContent(
+            RecruitBusinessUtils.getWorkYear(job.min_work_year, job.max_work_year)
+                + "/"
+                + RecruitBusinessUtils.getGender(job.gender)
+                + "/"
+                + RecruitBusinessUtils.getDegree(getContext(), job.education));
+        civPositionWelfare.setContent(RecruitBusinessUtils.getPositionDamen(job.welfare));
+      }
+      toolbar.inflateMenu(R.menu.menu_save);
+      toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        @Override public boolean onMenuItemClick(MenuItem item) {
+          return false;
+        }
+      });
+      btnPublish.setVisibility(View.GONE);
+    }
+  }
+
+  private void initRxBus() {
     RxBusAdd(EventPulishPosition.class).subscribe(new Action1<EventPulishPosition>() {
       @Override public void call(EventPulishPosition eventPulishPosition) {
         if (eventPulishPosition != null) {
-            params.putAll(eventPulishPosition.damenMap);
+          refreshCivContent(eventPulishPosition.damenMap);
+          params.putAll(eventPulishPosition.damenMap);
         }
       }
     });
+  }
+
+  private HashMap<String, Object> refreshCivContent(HashMap<String, Object> map) {
+    if (map.containsKey("name")) {
+      civPositionName.setContent(map.get("name").toString());
+      civPositionName.setContentColor(getResources().getColor(R.color.qc_text_grey));
+      return map;
+    }
+    if (map.containsKey("description")) {
+      if (map.get("type").equals("职位描述")) {
+        civPositionDesc.setContent("详情");
+        civPositionDesc.setContentColor(getResources().getColor(R.color.qc_text_grey));
+        return map;
+      }
+      if (map.get("type").equals("任职要求")) {
+        String tempStr = (String) map.get("description");
+        map.remove("description");
+        map.put("requirement", tempStr);
+        civPositionDemands.setContent("详情");
+        civPositionDemands.setContentColor(getResources().getColor(R.color.qc_text_grey));
+        return map;
+      }
+    }
+    if (map.containsKey("welfare")) {
+      civPositionWelfare.setContent(
+          RecruitBusinessUtils.getPositionDamen((List<String>) (map.get("welfare"))));
+      civPositionWelfare.setContentColor(getResources().getColor(R.color.qc_text_grey));
+      return map;
+    }
+    if (map.containsKey("education")) {
+      civPositionRequire.setContent(RecruitBusinessUtils.getWorkYear((int) map.get("min_work_year"),
+          (int) map.get("max_work_year")) + "/" + RecruitBusinessUtils.getGender(
+          (int) map.get("gender")) + "/" + RecruitBusinessUtils.getDegree(getContext(),
+          (int) map.get("education")));
+      civPositionRequire.setContentColor(getResources().getColor(R.color.qc_text_grey));
+      body.min_work_year = (Integer) map.get("min_work_year");
+      body.max_work_year = (Integer) map.get("max_work_year");
+      body.min_age = (Integer) map.get("min_age");
+      body.max_age = (Integer) map.get("max_age");
+      body.gender = (Integer) map.get("gender");
+      body.education = (Integer) map.get("education");
+      body.min_height = (Float) map.get("min_height");
+      body.max_height = (Float) map.get("max_height");
+      body.min_weight = (Float) map.get("min_weight");
+      body.max_weight = (Float) map.get("max_weight");
+      return map;
+    }
+    return map;
   }
 
   @Override public String getFragmentName() {
@@ -109,23 +211,30 @@ public class RecruitPublishJobFragment extends BaseFragment implements JobPresen
       @Override public void onSelectItem(int left, int right) {
         if (left == 0) {
           civSalaryRank.setContent("面议");
-          body.min_salary = -1000;
-          body.max_salary = -1000;
+          //body.min_salary = -1000;
+          //body.max_salary = -1000;
+          params.put("min_salary", -1000);
+          params.put("max_salary", -1000);
         } else if (left == 100) {
           civSalaryRank.setContent("100K以上");
-          body.min_salary = 100001;
-          body.max_salary = 100001;
+          //body.min_salary = 100001;
+          //body.max_salary = 100001;
+          params.put("min_salary", 100001);
+          params.put("max_salary", 100001);
         } else {
           if (left > right) {
             ToastUtils.show("请选择正确的薪水区间");
             return;
           }
           civSalaryRank.setContent((left - MIN_SALARY) + "-" + (right - MIN_SALARY + 2) + "K");
-          body.min_salary = (left - MIN_SALARY) * 1000;
-          body.max_salary = (right - MIN_SALARY + 2) * 1000;
+          //body.min_salary = (left - MIN_SALARY) * 1000;
+          //body.max_salary = (right - MIN_SALARY + 2) * 1000;
+          params.put("min_salary", (left - MIN_SALARY) * 1000);
+          params.put("max_salary", (right - MIN_SALARY + 2) * 1000);
         }
       }
     });
+    civSalaryRank.setContentColor(getResources().getColor(R.color.qc_text_grey));
     final ArrayList<String> l = new ArrayList<>();
     final ArrayList<String> r = new ArrayList<>();
     l.add("面议");
@@ -141,14 +250,16 @@ public class RecruitPublishJobFragment extends BaseFragment implements JobPresen
    * 职位描述
    */
   @OnClick(R2.id.civ_position_desc) public void onCivPositionDescClicked() {
-    router.toEditRecruitDesc("", "职位描述");
+    router.toEditRecruitDesc(
+        params.containsKey("description") ? (String) params.get("description") : "", "职位描述");
   }
 
   /**
    * 任职要求
    */
   @OnClick(R2.id.civ_position_demands) public void onCivPositionDemandsClicked() {
-    router.toEditRecruitDesc("", "任职要求");
+    router.toEditRecruitDesc(
+        params.containsKey("requirement") ? (String) params.get("requirement") : "", "任职要求");
   }
 
   /**
@@ -162,24 +273,35 @@ public class RecruitPublishJobFragment extends BaseFragment implements JobPresen
    * 职位福利
    */
   @OnClick(R2.id.civ_position_welfare) public void onCivPositionWelfareClicked() {
-    router.toPositionWalfare(null, "职位福利");
+    ArrayList<String> list = new ArrayList<>();
+    if (params.containsKey("welfare") && ((ArrayList<String>) params.get("welfare")).size() > 0) {
+      list = ((ArrayList<String>) params.get("welfare"));
+    } else {
+      list.add("提供住宿");
+      list.add("提供保险");
+    }
+    router.toPositionWalfare(list, "职位福利");
   }
 
   /**
    * 场馆介绍
    */
   @OnClick(R2.id.civ_gym_desc) public void onCivGymDescClicked() {
-    router.toEditRecruitDesc("", "场馆介绍");
-
+    router.toWriteGymDetailDesc();
   }
 
   /**
    * 发布职位按钮
    */
   @OnClick(R2.id.btn_publish) public void onBtnPublishClicked() {
+    if (!params.containsKey("name") || !params.containsKey("description") || !params.containsKey(
+        "requirement") || !params.containsKey("min_salary") || !params.containsKey("max_salary")) {
+      DialogUtils.showAlert(getContext(), "请完善职位信息");
+      return;
+    }
     showLoadingTrans();
-    PublishPositionBody body = new PublishPositionBody(params);
-    presenter.publishJob(body);
+    PublishPositionBody publishPositionBody = new PublishPositionBody(params);
+    presenter.publishJob(gymId, publishPositionBody);
   }
 
   @Override public void onEditOk() {
