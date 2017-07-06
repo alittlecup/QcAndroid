@@ -1,6 +1,7 @@
 package cn.qingchengfit.recruit.network;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.network.response.CertificateListWrap;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
 import cn.qingchengfit.recruit.network.response.GymListWrap;
@@ -143,6 +144,13 @@ public interface GetApi {
       @Path("id") String id);
 
   @GET("/api/user/job/certificates/") rx.Observable<QcDataResponse<CertificateListWrap>> queryCertifications();
+
+  /**
+   * 查看他人简历
+   * @param resumeId
+   * @return
+   */
+  @GET("api/staff/user/resumes/{resume_id}/") rx.Observable<QcDataResponse<ResumeHomeWrap>> qcGetOtherResumeDetail(@Path("resume_id") String resumeId);
 
   //搜索健身房
   @GET("/api/gym/search/") rx.Observable<QcSerachGymRepsonse> qcSearchGym(@QueryMap Map<String, String> params);        //搜索健身房

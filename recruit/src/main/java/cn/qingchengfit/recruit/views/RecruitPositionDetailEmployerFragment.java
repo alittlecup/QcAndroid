@@ -1,5 +1,7 @@
 package cn.qingchengfit.recruit.views;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +24,7 @@ import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
@@ -41,6 +44,7 @@ import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import cn.qingchengfit.views.fragments.TouchyWebView;
 import cn.qingchengfit.widgets.QcTagGroup;
 import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.BuildConfig;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -297,12 +301,23 @@ public class RecruitPositionDetailEmployerFragment extends BaseFragment
    * 传给聊天页面参数中加入userAction，1001表示职位，1002表示简历
    */
   @OnClick(R2.id.btn_contact_him) public void onBtnContactHimClicked() {
-    AddConversationProcessor addConversationProcessor =
-        new AddConversationProcessor(getContext().getApplicationContext());
+    Uri data = Uri.parse("imchat://chatactivity");
+    Intent intent = new Intent(Intent.ACTION_VIEW, data);
+    //AddConversationProcessor addConversationProcessor =
+    //    new AddConversationProcessor(getContext().getApplicationContext());
     Gson gson = new Gson();
-    String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
+    String jobStr = "{userAction:1003, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
+    //intent.putExtra("id", (BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id);
+    //intent.putExtra("datas", jobStr);
+    intent.putExtra(RecruitConstants.IDENTIFY, (BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id);
+    intent.putExtra(RecruitConstants.CONVERSATION_TYPE, RecruitConstants.C2C);
+    intent.putExtra(RecruitConstants.CHAT_JOB_RESUME, "");
+    intent.putExtra(RecruitConstants.CHAT_RECRUIT, jobStr);
+    intent.putExtra(RecruitConstants.CHAT_RECRUIT_STATE, job.deliveried);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
     // TODO: 2017/6/20 正式环境要改  qctest -> qc
-    addConversationProcessor.addRecruitConversation("qc_" + job.created_by.id, "", jobStr);
+    //addConversationProcessor.addRecruitConversation("qc_" + job.created_by.id, "", jobStr);
   }
 
   /**

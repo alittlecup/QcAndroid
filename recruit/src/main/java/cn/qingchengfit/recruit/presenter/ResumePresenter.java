@@ -52,6 +52,26 @@ public class ResumePresenter extends BasePresenter {
         }));
   }
 
+  /**
+   * 查看他人简历
+   * @param resumeId   简历id
+   */
+  public void getResumeDetail(String resumeId){
+    RxRegiste(restRepository.createGetApi(GetApi.class)
+        .qcGetOtherResumeDetail(resumeId)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
+        .subscribe(new Action1<QcDataResponse<ResumeHomeWrap>>() {
+          @Override public void call(QcDataResponse<ResumeHomeWrap> resumeHomeQcDataResponse) {
+            if (resumeHomeQcDataResponse.getStatus() == 200){
+              view.onBaseInfo(resumeHomeQcDataResponse.data.resume);
+            }else{
+              view.onShowError(resumeHomeQcDataResponse.getMsg());
+            }
+          }
+        }));
+  }
+
   public void queryEducations() {
     RxRegiste(restRepository.createGetApi(GetApi.class)
         .queryEducations()
@@ -71,17 +91,25 @@ public class ResumePresenter extends BasePresenter {
           }
         }));
   }
-    public ResumeModel dealResumeMessage(ResumeHome resumeHome){
-        ResumeModel resumeModel = new ResumeModel();
-        resumeModel.id = resumeHome.id;
-        resumeModel.username = resumeHome.username;
-        resumeModel.avatar = resumeHome.avatar;
-        resumeModel.birthday = resumeHome.birthday;
-        resumeModel.work_year = resumeHome.work_year;
-        resumeModel.gender = resumeHome.gender;
-        resumeModel.max_education = resumeHome.max_education;
-        return resumeModel;
+
+  public ResumeModel dealResumeMessage(ResumeHome resumeHome) {
+    ResumeModel resumeModel = new ResumeModel();
+    resumeModel.id = resumeHome.id;
+    resumeModel.username = resumeHome.username;
+    resumeModel.avatar = resumeHome.avatar;
+    resumeModel.birthday = resumeHome.birthday;
+    resumeModel.work_year = resumeHome.work_year;
+    resumeModel.gender = resumeHome.gender;
+    resumeModel.max_education = resumeHome.max_education;
+    resumeModel.height = (int) resumeHome.height;
+    resumeModel.min_salary = resumeHome.min_salary;
+    resumeModel.max_salary = resumeHome.max_salary;
+    if (resumeHome.exp_cities.size() > 0) {
+      resumeModel.city = resumeHome.exp_cities.get(0);
     }
+    resumeModel.weight = (int) resumeHome.weight;
+    return resumeModel;
+  }
 
   public void queryWorkExps() {
     RxRegiste(restRepository.createGetApi(GetApi.class)
@@ -89,7 +117,8 @@ public class ResumePresenter extends BasePresenter {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<WorkExpListWrap>>() {
-          @Override public void call(QcDataResponse<WorkExpListWrap> workExpListWrapQcDataResponse) {
+          @Override
+          public void call(QcDataResponse<WorkExpListWrap> workExpListWrapQcDataResponse) {
             if (workExpListWrapQcDataResponse.getStatus() == 200) {
               view.onWorkExpList(workExpListWrapQcDataResponse.data.experiences);
             } else {

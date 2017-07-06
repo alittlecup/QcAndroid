@@ -23,6 +23,7 @@ import cn.qingchengfit.recruit.views.resume.RecruitGymDetailEditFragment;
 import cn.qingchengfit.recruit.views.resume.RecruitPermsionFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeCertificateListFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeDetailFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeEduExpListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeHomeFragment;
@@ -279,6 +280,13 @@ import dagger.multibindings.IntoMap;
     }
   }
 
+  @Subcomponent() public interface ResumeDetailFragmentSubcomponent
+      extends AndroidInjector<ResumeDetailFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<ResumeDetailFragment> {
+    }
+  }
+
   @Module(subcomponents = SeekPositionHomeFragmentSubcomponent.class)
   abstract class SeekPositionHomeFragmentModule {
     @Binds @IntoMap @FragmentKey(SeekPositionHomeFragment.class)
@@ -487,5 +495,12 @@ import dagger.multibindings.IntoMap;
     @Binds @IntoMap @FragmentKey(RecruitPublishJobFragment.class)
     abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         RecruitPublishJobFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = ResumeDetailFragmentSubcomponent.class)
+  abstract class ResumeDetailFragmentModule {
+    @Binds @IntoMap @FragmentKey(ResumeDetailFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        ResumeDetailFragmentSubcomponent.Builder builder);
   }
 }

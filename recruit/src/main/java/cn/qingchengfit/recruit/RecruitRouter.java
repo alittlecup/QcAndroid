@@ -35,6 +35,7 @@ import cn.qingchengfit.recruit.views.resume.RecruitGymEquipFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.RecruitPermsionFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeCertificateListFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeDetailFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeEduExpListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeHomeFragment;
@@ -302,6 +303,13 @@ public class RecruitRouter extends InnerRouter {
    */
   public void toPositionWalfare(ArrayList<String> tags, String title){
     add(new RecruitWelFareFragmentBuilder(tags, title).build());
+  }
+
+  /**
+   * 简历详情
+   */
+  public void toResumeDetail(){
+    add(new ResumeDetailFragment());
   }
 
 }

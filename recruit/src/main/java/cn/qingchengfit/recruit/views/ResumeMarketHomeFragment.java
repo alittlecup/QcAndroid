@@ -218,6 +218,11 @@ public class ResumeMarketHomeFragment extends BaseFragment
     IFlexible item = commonFlexAdapter.getItem(i);
     if (item instanceof RecruitManageItem) {
       router.toManageRecruit();
+      return false;
+    }
+    if (item instanceof ResumeItem){
+      router.toResumeDetail();
+      return false;
     }
 
     return false;

@@ -1,5 +1,7 @@
 package cn.qingchengfit.recruit.views;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,7 +23,9 @@ import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.di.Recruit;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.Job;
@@ -40,6 +44,7 @@ import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import cn.qingchengfit.views.fragments.TouchyWebView;
 import cn.qingchengfit.widgets.QcTagGroup;
 import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.BuildConfig;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -99,6 +104,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
 
   private Job job;
   private boolean isStarred;
+  private ResumeHome resumeHome;
 
   public static RecruitPositionDetailFragment newInstance(Job job) {
     Bundle args = new Bundle();
@@ -123,6 +129,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
     onJobDetail(job);
     onGym(job.gym);
     presenter.queryJob(job.id);
+    resumePresenter.queryResumeHome();
     return view;
   }
 
@@ -241,7 +248,15 @@ public class RecruitPositionDetailFragment extends BaseFragment
   }
 
   @Override public void onPostResumeOk() {
-    hideLoading();
+    AddConversationProcessor addConversationProcessor =
+        new AddConversationProcessor(getContext().getApplicationContext());
+    Gson gson = new Gson();
+    String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
+    String resumeStr = "{userAction:1002, data:"
+        + gson.toJson(resumePresenter.dealResumeMessage(resumeHome))
+        + "}";
+    addConversationProcessor.sendResumeOrRecruit((BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id, resumeStr, jobStr);
+    hideLoadingTrans();
     job.deliveried = true;
     btnSendResume.setText(job.deliveried ? "已投递" : "投递简历");
     btnSendResume.setEnabled(false);
@@ -285,15 +300,36 @@ public class RecruitPositionDetailFragment extends BaseFragment
   /**
    * 与他联系
    *
-   * 传给聊天页面参数中加入userAction，1001表示职位，1002表示简历
+   * 传给聊天页面参数中加入userAction，1001表示求职端职位，1002表示求职端简历，1003表示招聘端职位，1004表示招聘端简历
    */
   @OnClick(R2.id.btn_contact_him) public void onBtnContactHimClicked() {
-    AddConversationProcessor addConversationProcessor =
-        new AddConversationProcessor(getContext().getApplicationContext());
+    //AddConversationProcessor addConversationProcessor =
+    //    new AddConversationProcessor(getContext().getApplicationContext());
+    //Gson gson = new Gson();
+    //String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
+    //// TODO: 2017/6/20 正式环境要改  qctest -> qc
+    //addConversationProcessor.addRecruitConversation("qc_" + job.created_by.id, "", jobStr);
+    Uri data = Uri.parse("imchat://chatactivity");
+    //Intent intent = new Intent(Intent.ACTION_VIEW, data);
+    Intent intent = new Intent(getActivity(), JobSearchChatActivity.class);
+    //AddConversationProcessor addConversationProcessor =
+    //    new AddConversationProcessor(getContext().getApplicationContext());
     Gson gson = new Gson();
     String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
-    // TODO: 2017/6/20 正式环境要改  qctest -> qc
-    addConversationProcessor.addRecruitConversation("qc_" + job.created_by.id, "", jobStr);
+    String resumeStr = "{userAction:1002, data:"
+        + gson.toJson(resumePresenter.dealResumeMessage(resumeHome))
+        + "}";
+    //intent.putExtra("id", (BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id);
+    //intent.putExtra("datas", jobStr);
+    intent.putExtra(RecruitConstants.IDENTIFY, (BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id);
+    intent.putExtra(RecruitConstants.TEMP_CONVERSATION_TYPE, RecruitConstants.C2C);
+    intent.putExtra(RecruitConstants.CHAT_JOB_RESUME, resumeStr);
+    intent.putExtra(RecruitConstants.CHAT_JOB_ID, job.id);
+    intent.putExtra(RecruitConstants.CHAT_RECRUIT, jobStr);
+    intent.putExtra(RecruitConstants.CHAT_JOB_SEARCH_OR_RECRUIT, RecruitConstants.JOB_SEARCH);
+    intent.putExtra(RecruitConstants.CHAT_RECRUIT_STATE, job.deliveried);
+    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
   }
 
   /**
@@ -309,21 +345,14 @@ public class RecruitPositionDetailFragment extends BaseFragment
   }
 
   @Override public void onSend() {
-    showLoading();
-    resumePresenter.queryResumeHome();
+    showLoadingTrans();
+    presenter.sendResume(job.id);
   }
 
   @Override public void onBaseInfo(ResumeHome resumeHome) {
-    presenter.sendResume(job.id);
-    AddConversationProcessor addConversationProcessor =
-        new AddConversationProcessor(getContext().getApplicationContext());
-    Gson gson = new Gson();
-    String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
-    String resumeStr = "{userAction:1002, data:"
-        + gson.toJson(resumePresenter.dealResumeMessage(resumeHome))
-        + "}";
+    this.resumeHome = resumeHome;
     // TODO: 2017/6/23 正式环境
-    addConversationProcessor.sendResumeOrRecruit("qc_" + job.created_by.id, resumeStr, jobStr);
+
   }
 
   @Override public void onWorkExpList(List<WorkExp> workExps) {

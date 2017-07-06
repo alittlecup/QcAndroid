@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.di;
 
+import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -42,6 +43,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
       Recruit.RecruitGymDetailEditFragmentModule.class,
       Recruit.RecruitGymDetailEmployerFragmentModule.class,
       Recruit.RecruitPermsionFragmentModule.class, Recruit.RecruitPublishJobFragmentModule.class,
-
-  }) abstract RecruitActivity contributeRecruitActivityInjector();
+      Recruit.ResumeDetailFragmentModule.class,
+  })
+  abstract RecruitActivity contributeRecruitActivityInjector();
+  abstract JobSearchChatActivity contributeJobSearchActivityInjector();
 }

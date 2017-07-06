@@ -173,7 +173,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
       civPositionRequire.setContent(RecruitBusinessUtils.getWorkYear((int) map.get("min_work_year"),
           (int) map.get("max_work_year")) + "/" + RecruitBusinessUtils.getGender(
           (int) map.get("gender")) + "/" + RecruitBusinessUtils.getDegree(getContext(),
-          (int) map.get("education")));
+          (int) map.get("education") + 1));
       civPositionRequire.setContentColor(getResources().getColor(R.color.qc_text_grey));
       body.min_work_year = (Integer) map.get("min_work_year");
       body.max_work_year = (Integer) map.get("max_work_year");

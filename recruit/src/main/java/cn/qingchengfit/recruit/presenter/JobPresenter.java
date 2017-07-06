@@ -42,6 +42,7 @@ public class JobPresenter extends BasePresenter {
 
   public void publishJob(String gymId, PublishPositionBody body) {
     body.params.put("gym_id", gymId);
+    body.params.put("published", true);
     body.params.remove("type");
     RxRegiste(qcRestRepository.createPostApi(PostApi.class)
         .qcPublishPosition(body.params)
@@ -100,6 +101,7 @@ public class JobPresenter extends BasePresenter {
   public void sendResume(String jobid) {
     HashMap<String, Object> params = new HashMap<String, Object>();
     params.put("job_id", jobid);
+    params.put("published", true);
     RxRegiste(qcRestRepository.createPostApi(PostApi.class)
         .sendResume(params)
         .subscribeOn(Schedulers.io())

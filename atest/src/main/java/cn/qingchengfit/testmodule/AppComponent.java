@@ -3,6 +3,7 @@ package cn.qingchengfit.testmodule;
 import android.app.Activity;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
+import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -35,7 +36,7 @@ import dagger.multibindings.IntoMap;
  */
 @Component(modules = {
     AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
-    AppComponent.MainModule.class,
+    AppComponent.MainModule.class, AppComponent.JobSearchChatModule.class,
 
     //AppComponent.RecruitModule.class,
 }) public interface AppComponent extends AndroidInjector<TestApp> {
@@ -62,4 +63,14 @@ import dagger.multibindings.IntoMap;
     //    @Binds @IntoMap @ActivityKey(RecruitActivity.class)
     //    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(RecruitSubcomponent.Builder builder);
     //}
+
+    @Subcomponent() public interface JobSearchChatSubcomponent extends AndroidInjector<JobSearchChatActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<JobSearchChatActivity> {
+        }
+    }
+    @Module(subcomponents = JobSearchChatSubcomponent.class) abstract class JobSearchChatModule {
+        @Binds @IntoMap @ActivityKey(JobSearchChatActivity.class)
+        abstract Factory<? extends Activity> bindYourFragmentInjectorFactory(JobSearchChatSubcomponent.Builder builder);
+    }
+
 }
