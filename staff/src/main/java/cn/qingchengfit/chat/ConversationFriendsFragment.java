@@ -15,13 +15,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.chat.model.ChatGym;
+import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.constant.DirtySender;
 import cn.qingchengfit.staffkit.rxbus.event.EventChoosePerson;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.bottom.BottomStudentsFragment;
@@ -54,10 +54,10 @@ import rx.functions.Action1;
  */
 public class ConversationFriendsFragment extends BaseFragment implements ChatFriendPresenter.MVPView {
 
-    @BindView(R.id.tv_left) TextView tvLeft;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.tv_allotsale_select_count) TextView tvAllotsaleSelectCount;
+  @BindView(R.id.tv_left) protected TextView tvLeft;
+  @BindView(R.id.toolbar) protected Toolbar toolbar;
+  @BindView(R.id.toolbar_title) protected TextView toolbarTitle;
+  @BindView(R.id.tv_allotsale_select_count) protected TextView tvAllotsaleSelectCount;
     //@BindView(R.id.et_search) EditText etSearch;
     //@BindView(R.id.search_clear) ImageView searchClear;
     @Inject LoginStatus loginStatus;

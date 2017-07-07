@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.rxbus.event;
+package cn.qingchengfit.recruit.views;
 
 /**
  * power by
@@ -18,53 +18,11 @@ package cn.qingchengfit.staffkit.rxbus.event;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/4/6.
+ * Created by Paper on 2017/7/5.
  */
 
-public class EventClickViewPosition {
-    int id;
-    int position;
-
-    private EventClickViewPosition(Builder builder) {
-        id = builder.id;
-        position = builder.position;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
-    public static final class Builder {
-        private int id;
-        private int position;
-
-        public Builder() {
-        }
-
-        public Builder id(int val) {
-            id = val;
-            return this;
-        }
-
-        public Builder position(int val) {
-            position = val;
-            return this;
-        }
-
-        public EventClickViewPosition build() {
-            return new EventClickViewPosition(this);
-        }
-    }
+public class RecruitStaffMyJobFairFragment extends JobFairListFragment {
+  @Override public void onRefresh() {
+    presenter.queryStaffMyJobFairs();
+  }
 }

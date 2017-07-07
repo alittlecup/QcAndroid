@@ -12,6 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.events.EventChooseGym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -23,6 +24,7 @@ import cn.qingchengfit.recruit.item.RecruitGymItem;
 import cn.qingchengfit.recruit.model.GymHasResume;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.response.GymListWrap;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -76,6 +78,15 @@ public class RecruitManageFragment extends BaseFragment
     commonFlexAdapter = new CommonFlexAdapter(items, this);
     rvGyms.setLayoutManager(new LinearLayoutManager(getContext()));
     rvGyms.setAdapter(commonFlexAdapter);
+    RxBusAdd(EventChooseGym.class).subscribe(new Action1<EventChooseGym>() {
+      @Override public void call(EventChooseGym eventChooseGym) {
+        if (eventChooseGym.gym != null) {
+          //去发布职位 // TODO: 2017/7/4
+        } else {
+          ToastUtils.show("没有选择场馆");
+        }
+      }
+    });
     return view;
   }
 
@@ -119,15 +130,17 @@ public class RecruitManageFragment extends BaseFragment
   }
 
   @OnClick(R2.id.layout_starred_resume) public void onLayoutStarredResumeClicked() {
+    router.toStarredResumes();
   }
 
   @OnClick(R2.id.btn_publish_new_position) public void onBtnPublishNewPositionClicked() {
+    router.chooseGym();
   }
 
   @Override public boolean onItemClick(int i) {
     IFlexible item = commonFlexAdapter.getItem(i);
     if (item instanceof RecruitGymItem) {
-      router.toWriteGymIntro(((RecruitGymItem) item).getGym());
+      router.toGymdetailEmployer(((RecruitGymItem) item).getGym());
     }
     return false;
   }

@@ -1,4 +1,4 @@
-include ':widgets',
+include ':widgets', ':saasbase',
     ':trainer',
     ':atest',
     ':recruit',

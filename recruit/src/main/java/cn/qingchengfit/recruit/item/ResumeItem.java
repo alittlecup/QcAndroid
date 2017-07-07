@@ -45,7 +45,8 @@ public class ResumeItem extends AbstractFlexibleItem<ResumeItem.ResumeVH> {
     holder.tvName.setText(resume.username);
     holder.imgGender.setImageResource(
         resume.gender == 0 ? R.drawable.vd_gender_male : R.drawable.vd_gender_female);
-    holder.tvRequirement.setText("");
+    holder.tvRequirement.setText(resume.getBaseInfoStr(holder.tvRequirement.getContext()));
+    holder.tvExcept.setText(resume.getExpStr());
   }
 
   @Override public boolean equals(Object o) {

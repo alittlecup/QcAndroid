@@ -264,9 +264,6 @@ public class SeekPositionHomeFragment extends BaseFragment
     return SeekPositionHomeFragment.class.getName();
   }
 
-  @Override public void onJob(Job job) {
-
-  }
 
   /**
    * 数据结果
@@ -284,17 +281,7 @@ public class SeekPositionHomeFragment extends BaseFragment
     }
   }
 
-  @Override public void starOK() {
 
-  }
-
-  @Override public void unStarOk() {
-
-  }
-
-  @Override public void onPostResumeOk() {
-
-  }
 
   /**
    * 简历 和 招聘会信息
@@ -365,7 +352,7 @@ public class SeekPositionHomeFragment extends BaseFragment
    * 我的专场招聘
    */
   @OnClick(R2.id.layout_my_jobfair) public void onLayoutMyJobfairClicked() {
-    router.myJobFair();
+    router.myUserJobFair();
   }
 
   /**

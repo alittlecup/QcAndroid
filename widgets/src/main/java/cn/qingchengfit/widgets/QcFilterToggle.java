@@ -6,13 +6,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.StyleRes;
 import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Checkable;
 import android.widget.CompoundButton;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * power by
@@ -35,7 +37,8 @@ import android.widget.CompoundButton;
  * Created by Paper on 2017/3/15.
  */
 
-public class QcFilterToggle extends View implements Checkable{
+public class QcFilterToggle extends CompoundButton implements QcCheckable {
+  List<CompoundButton.OnCheckedChangeListener> listeners = new ArrayList<>();
     private int baseline;
     private boolean mChecked;
     private Drawable buttonDrawableOn;
@@ -84,6 +87,31 @@ public class QcFilterToggle extends View implements Checkable{
 
     }
 
+  public void setStyle(@StyleRes int resId) {
+    final TypedArray a = getContext().obtainStyledAttributes(resId, R.styleable.QcFilterToggle);
+    int dr = a.getResourceId(R.styleable.QcFilterToggle_ft_vc_drawable_on, -1);
+    if (dr > 0) {
+      buttonDrawableOn = ContextCompat.getDrawable(getContext(), dr);
+    }
+    int dr2 = a.getResourceId(R.styleable.QcFilterToggle_ft_vc_drawable_off, -1);
+    if (dr2 > 0) {
+      buttonDrawableOff = ContextCompat.getDrawable(getContext(), dr2);
+    }
+    textOn = a.getString(R.styleable.QcFilterToggle_ft_text_on);
+    textOff = a.getString(R.styleable.QcFilterToggle_ft_text_off);
+    colorOn = a.getColor(R.styleable.QcFilterToggle_ft_color_on, Color.BLACK);
+    colorOff = a.getColor(R.styleable.QcFilterToggle_ft_color_off, Color.GRAY);
+    mChecked = a.getBoolean(R.styleable.QcFilterToggle_ft_checked, false);
+    textSize = a.getDimension(R.styleable.QcFilterToggle_ft_text_size,
+        getResources().getDimension(R.dimen.common_font));
+    a.recycle();
+    mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+    mTextPaint.setTextSize(textSize);
+    if (TextUtils.isEmpty(textOn)) textOn = textOff;
+    if (TextUtils.isEmpty(textOff)) textOff = textOn;
+    setClickable(true);
+  }
+
     @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.save();
@@ -124,23 +152,28 @@ public class QcFilterToggle extends View implements Checkable{
         return super.performClick();
     }
 
-    @Override public void setChecked(boolean checked) {
-        mChecked = checked;
-        mTextPaint.setColor(mChecked?colorOn:colorOff);
-        if (onCheckedChangeListener != null)
-            onCheckedChangeListener.onCheckedChanged(null,mChecked);
-        invalidate();
-    }
-
     @Override public boolean isChecked() {
         return mChecked;
     }
 
+  @Override public void setChecked(boolean checked) {
+    mChecked = checked;
+    if (mTextPaint != null) {
+      mTextPaint.setColor(mChecked ? colorOn : colorOff);
+      if (onCheckedChangeListener != null) onCheckedChangeListener.onCheckedChanged(null, mChecked);
+      invalidate();
+    }
+  }
+
     @Override public void toggle() {
         mChecked = !mChecked;
         mTextPaint.setColor(mChecked?colorOn:colorOff);
-        if (onCheckedChangeListener != null)
-            onCheckedChangeListener.onCheckedChanged(null,mChecked);
+      if (onCheckedChangeListener != null) {
+        onCheckedChangeListener.onCheckedChanged(this, mChecked);
+      }
+      for (CompoundButton.OnCheckedChangeListener listener : listeners) {
+        listener.onCheckedChanged(this, mChecked);
+      }
         invalidate();
     }
 
@@ -156,6 +189,7 @@ public class QcFilterToggle extends View implements Checkable{
         textOff = textOn = s;
         invalidate();
     }
+
     public void setText(String s,boolean status){
         if (status) {
             textOn = s ;
@@ -165,6 +199,11 @@ public class QcFilterToggle extends View implements Checkable{
         invalidate();
     }
 
+  @Override public void addCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener) {
+    listeners.add(listener);
+  }
 
-
+  @Override public boolean isOrContainCheck(View v) {
+    return v.getId() == this.getId();
+  }
 }

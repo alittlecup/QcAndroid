@@ -90,6 +90,14 @@ public class PhotoUtils {
         origin(v, url, R.drawable.img_loadingimage, R.drawable.img_loadingimage);
     }
 
+  public static void conner4dp(ImageView v, String url) {
+    Glide.with(v.getContext())
+        .load(url)
+        .asBitmap()
+        .placeholder(R.color.backgroud_grey)
+        .into(new Corner4dpImgWrapper(v, v.getContext()));
+  }
+
   public static void loadWidth(final Context context, final String url, final ImageView v,
       final int w) {
     Glide.with(context).load(url).into(new SimpleTarget<GlideDrawable>() {

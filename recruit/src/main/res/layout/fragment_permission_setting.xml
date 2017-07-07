@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_grey"
     android:orientation="vertical"
     >
 
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="职位管理(1人)"
+        android:text="@string/manage_job_staff"
         style="@style/QcTextStyleStandardDark"
         />
 
@@ -61,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="处理简历(1人)"
+        android:text="@string/handle_resume_staff"
         style="@style/QcTextStyleStandardDark"
         />
 
@@ -99,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="报名参加招聘会(1人)"
+        android:text="@string/atendence_jobfair_staff"
         style="@style/QcTextStyleStandardDark"
         />
 
@@ -130,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="权限设置(1人)"
+        android:text="@string/permission_setting_staff"
         style="@style/QcTextStyleStandardDark"
         />
 

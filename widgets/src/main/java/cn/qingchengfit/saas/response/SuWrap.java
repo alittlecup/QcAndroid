@@ -1,6 +1,4 @@
-package cn.qingchengfit.recruit.network.response;
-
-import cn.qingchengfit.model.base.Gym;
+package cn.qingchengfit.saas.response;
 
 /**
  * power by
@@ -20,9 +18,9 @@ import cn.qingchengfit.model.base.Gym;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/6/1.
+ * Created by Paper on 2017/7/4.
  */
 
-public class GymWrap {
-  public Gym gym;
+public class SuWrap {
+  public boolean is_superuser;
 }

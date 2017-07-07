@@ -58,11 +58,7 @@ public class SeekPositionPresenter extends BasePresenter {
               totalPage = jobListWrapQcDataResponse.data.pages;
               page++;
             }
-          }, new Action1<Throwable>() {
-            @Override public void call(Throwable throwable) {
-              view.onShowError(throwable.getMessage());
-            }
-          }));
+          }, new NetWorkThrowable()));
     } else {
       view.onList(null, 1, 1);
     }

@@ -3,6 +3,8 @@ package com.qingchengfit.fitcoach.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
+import cn.qingchengfit.chat.model.ChatGym;
+import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
 import com.qingchengfit.fitcoach.R;
@@ -17,7 +19,8 @@ public class ChooseActivity extends BaseActivity {
     public static final int TO_CHOSSE_CIRCLE = 1;
     public static final int TO_CHOSSE_GYM = 2;
     public static final int TO_CHOSSE_GYM_SCHEDULE = 3;
-    public static final int CONVERSATION_FRIEND = 61; // 用卡签到
+  public static final int CONVERSATION_FRIEND = 61;
+  public static final int CHOOSE_STAFF = 62; // 选择工作人员
     private String chosenId;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,14 @@ public class ChooseActivity extends BaseActivity {
                 break;
             case CONVERSATION_FRIEND:
                 fragment = new ConversationFriendsFragment();
+              break;
+          case CHOOSE_STAFF:
+            ChatGym gym = getIntent().getParcelableExtra("chatgym");
+            if (gym == null) {
+              this.finish();
+              return;
+            }
+            fragment = ChooseStaffFragment.newInstance(gym);
                 break;
             default:
                 fragment = new ChooseAddressFragment();

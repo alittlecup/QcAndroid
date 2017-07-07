@@ -3,6 +3,7 @@ package cn.qingchengfit.router;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -42,6 +43,19 @@ public class BaseRouter {
     }
   }
 
+  public static void toChooseStaff(Fragment fragment, Parcelable parcelable) {
+    try {
+      Intent toLogin = new Intent();
+      toLogin.setPackage(fragment.getActivity().getPackageName());
+      toLogin.setAction("cn.qingcheng.choose");
+      toLogin.putExtra("to", 62);
+      toLogin.putExtra("chatgym", parcelable);
+      fragment.startActivityForResult(toLogin, 11);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+  }
+
   public void routerTo(String module, String action, Context context, int request) {
     if (routers.containsKey(module)) {
       Intent it = new Intent(context, routers.get(module));
@@ -63,7 +77,6 @@ public class BaseRouter {
       //没有指定模块 todo
     }
   }
-
 
   public void routerTo(String module, Context context) {
     if (routers.containsKey(module)) {
@@ -101,6 +114,5 @@ public class BaseRouter {
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
     }
-
   }
 }

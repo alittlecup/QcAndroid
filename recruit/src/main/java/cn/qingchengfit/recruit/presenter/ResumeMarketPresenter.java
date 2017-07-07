@@ -12,6 +12,7 @@ import cn.qingchengfit.recruit.model.Resume;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.response.JobFariListWrap;
 import cn.qingchengfit.recruit.network.response.ResumeListWrap;
+import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -27,11 +28,101 @@ public class ResumeMarketPresenter extends BasePresenter {
   @Inject public ResumeMarketPresenter() {
   }
 
-  public void queryResumeMarkets(boolean refresh) {
+  public void queryResumeMarkets(boolean refresh, HashMap<String, Object> p) {
     if (refresh) page = pageTotal = 1;
     if (page <= pageTotal) {
+      p.put("page", page);
       RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-          .queryResumeMarkets()
+          .queryResumeMarkets(p)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {
+            @Override public void call(QcDataResponse<ResumeListWrap> qcResponse) {
+              if (qcResponse.status == 200) {
+                view.onResumeList(qcResponse.data.resumes, qcResponse.data.total_count, page);
+                page++;
+                pageTotal = qcResponse.data.pages;
+              } else {
+                view.onShowError(qcResponse.getMsg());
+              }
+            }
+          }, new NetWorkThrowable()));
+    } else {
+      view.onResumeList(null, 1, 1);
+    }
+  }
+
+  public void queryStarredResume(boolean refresh, HashMap<String, Object> p) {
+    if (refresh) page = pageTotal = 1;
+    if (page <= pageTotal) {
+      p.put("page", page);
+      RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+          .queryStarredResume(p)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {
+            @Override public void call(QcDataResponse<ResumeListWrap> qcResponse) {
+              if (qcResponse.status == 200) {
+                view.onResumeList(qcResponse.data.resumes, qcResponse.data.total_count, page);
+                page++;
+                pageTotal = qcResponse.data.pages;
+              } else {
+                view.onShowError(qcResponse.getMsg());
+              }
+            }
+          }, new NetWorkThrowable()));
+    } else {
+      view.onResumeList(null, 1, 1);
+    }
+  }
+
+  /**
+   * 1     # 不合适
+   * 2     # 录用
+   * 3     # 待沟通
+   * 4     # 未处理
+   */
+  public void queryRecieveResume(boolean refresh, String jobid, int status) {
+    if (refresh) page = pageTotal = 1;
+    if (page <= pageTotal) {
+      HashMap<String, Object> p = new HashMap<>();
+      p.put("page", page);
+      p.put("job_id", jobid);
+      p.put("status", status);
+      RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+          .queryRecieveResume(p)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {
+            @Override public void call(QcDataResponse<ResumeListWrap> qcResponse) {
+              if (qcResponse.status == 200) {
+                view.onResumeList(qcResponse.data.resumes, qcResponse.data.total_count, page);
+                page++;
+                pageTotal = qcResponse.data.pages;
+              } else {
+                view.onShowError(qcResponse.getMsg());
+              }
+            }
+          }, new NetWorkThrowable()));
+    } else {
+      view.onResumeList(null, 1, 1);
+    }
+  }
+
+  /**
+   * 1     # 不合适
+   * 2     # 录用
+   * 3     # 待沟通
+   * 4     # 未处理
+   */
+  public void queryInvitedResume(boolean refresh, String jobid, int status) {
+    if (refresh) page = pageTotal = 1;
+    if (page <= pageTotal) {
+      HashMap<String, Object> p = new HashMap<>();
+      p.put("page", page);
+      p.put("job_id", jobid);
+      p.put("status", status);
+      RxRegiste(qcRestRepository.createGetApi(GetApi.class).queryInvitedResume(p)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {

@@ -1,7 +1,7 @@
-package cn.qingchengfit.staffkit.constant;
+package cn.qingchengfit.saas.response;
 
-import cn.qingchengfit.model.base.QcStudentBean;
-import java.util.ArrayList;
+import cn.qingchengfit.model.base.Gym;
+import cn.qingchengfit.network.response.QcListData;
 import java.util.List;
 
 /**
@@ -22,9 +22,9 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/3/20.
+ * Created by Paper on 2017/6/1.
  */
 
-public class DirtySender {
-    public static List<QcStudentBean> studentList = new ArrayList<>();
+public class GymListWrap extends QcListData {
+  public List<Gym> gym;
 }

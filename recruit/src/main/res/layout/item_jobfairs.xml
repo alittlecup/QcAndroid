@@ -24,4 +24,12 @@
       tools:text="赛普专场招聘会"
       style="@style/QcTextStyleLargeDark"
       />
+
+  <TextView
+      android:id="@+id/tv_content"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      />
+
 </FrameLayout>

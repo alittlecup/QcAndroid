@@ -36,6 +36,9 @@ public class JobPresenter extends BasePresenter {
     view = null;
   }
 
+  /**
+   * 修改职位信息
+   */
   public void publishJob(String jobid, JobBody body) {
     RxRegiste(qcRestRepository.createGetApi(PostApi.class)
         .editPosition(jobid, body)

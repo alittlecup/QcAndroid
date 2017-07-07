@@ -3,7 +3,9 @@ package cn.qingchengfit.recruit.model;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.List;
 
@@ -76,7 +78,11 @@ public class Resume implements Parcelable {
   }
 
   public String getExpStr() {
-    return "期望";
+    String seperate = " · ";
+    String city = exp_cities.size() > 0 ? exp_cities.get(0) + seperate : "";
+    String salay = RecruitBusinessUtils.getSalary(min_salary, max_salary, "面议") + seperate;
+    String job = CmStringUtils.List2Str(exp_jobs);
+    return TextUtils.concat(city, salay, job).toString();
   }
 
   public String getBaseInfoStr(Context context) {

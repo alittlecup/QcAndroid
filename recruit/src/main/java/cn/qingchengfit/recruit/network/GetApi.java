@@ -2,15 +2,16 @@ package cn.qingchengfit.recruit.network;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.network.response.CertificateListWrap;
+import cn.qingchengfit.recruit.network.response.ChatGymWrap;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
 import cn.qingchengfit.recruit.network.response.GymListWrap;
-import cn.qingchengfit.recruit.network.response.GymWrap;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import cn.qingchengfit.recruit.network.response.JobFariListWrap;
 import cn.qingchengfit.recruit.network.response.JobIndexWrap;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
 import cn.qingchengfit.recruit.network.response.PermisionnListWrap;
+import cn.qingchengfit.recruit.network.response.PermissionUserWrap;
 import cn.qingchengfit.recruit.network.response.ResumeHomeWrap;
 import cn.qingchengfit.recruit.network.response.ResumeIntentsWrap;
 import cn.qingchengfit.recruit.network.response.ResumeListWrap;
@@ -18,6 +19,7 @@ import cn.qingchengfit.recruit.network.response.WorkExpListWrap;
 import cn.qingchengfit.recruit.network.response.WorkExpWrap;
 import cn.qingchengfit.recruit.views.organization.QcSearchOrganResponse;
 import cn.qingchengfit.recruit.views.organization.QcSerachGymRepsonse;
+import cn.qingchengfit.saas.response.GymWrap;
 import java.util.HashMap;
 import java.util.Map;
 import retrofit2.http.GET;
@@ -78,40 +80,85 @@ public interface GetApi {
    */
   @GET("/api/user/gyms/{gym_id}/jobs/") rx.Observable<QcDataResponse<JobListWrap>> queryGymJobs(@Path("gym_id") String gym_id,
       @Query("page") int page);
-
   /**
-   * 获取权限列表 可以根据 gym_id 和 key 删选
+   * 某公司所有招聘职位 是否发布（关闭）
    */
-  @GET("/api/staff/job/permissions/") rx.Observable<PermisionnListWrap> queryRecruitPermission(
-      @QueryMap HashMap<String, Object> hashMap);
+  @GET("/api/user/gyms/{gym_id}/jobs/?show_all=1")
+  rx.Observable<QcDataResponse<JobListWrap>> queryGymJobsAll(@Path("gym_id") String gym_id,
+      @Query("page") int page);
+
 
   /**
-   * 收到的简历
+   * 收到的简历(主动投递的)
    */
   @GET("/api/staff/job/delivery/resumes/")
-  rx.Observable<QcDataResponse<ResumeListWrap>> queryRecieveResume(@Query("job_id") String jobId);
+  rx.Observable<QcDataResponse<ResumeListWrap>> queryRecieveResume(
+      @QueryMap HashMap<String, Object> params);
 
   /**
-   * 收到的简历
+   * (我邀约的)
    */
-  @GET("/api/staff/user/resumes/")
-  rx.Observable<QcDataResponse<ResumeListWrap>> queryResumeMarkets();
+  @GET("/api/staff/job/invite/resumes/")
+  rx.Observable<QcDataResponse<ResumeListWrap>> queryInvitedResume(
+      @QueryMap HashMap<String, Object> params);
 
   /**
-   * 我参加的专场招聘会
+   * 收藏的简历
    */
-  @GET("/api/staff/user/resumes/index/")
+  @GET("/api/staff/job/resumes/favorites/")
+  rx.Observable<QcDataResponse<ResumeListWrap>> queryStarredResume(
+      @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 简历市场
+   */
+  @GET("/api/staff/user/resumes/") rx.Observable<QcDataResponse<ResumeListWrap>> queryResumeMarkets(
+      @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 我参加的专场招聘会（招聘版）
+   */
+  @GET("/api/staff/user/resumes/index/?show_all=1")
   rx.Observable<QcDataResponse<JobFariListWrap>> queryMyJobFairs();
+
+  /**
+   * 我参加的专场招聘会(求职版)
+   */
+  @GET("/api/user/job/fairs/?show_all=1")
+  rx.Observable<QcDataResponse<JobFariListWrap>> queryUserMyJobFairs();
 
   /**
    * 管理场馆列表
    */
   @GET("/api/staff/job/gyms/") rx.Observable<QcDataResponse<GymListWrap>> queryManageGyms();
 
+  /**
+   * 专场招聘会列表
+   */
+  @GET("/api/staff/job/fairs/?show_all=1")
+  rx.Observable<QcDataResponse<JobFariListWrap>> queryJobFairs(
+      @QueryMap HashMap<String, Object> params);
 
+  /*
+   *=====================================权限部分===========================================
+   */
 
+  /**
+   * 获取权限列表 可以根据 gym_id 和 key 删选
+   */
+  @GET("/api/staff/job/permissions/")
+  rx.Observable<QcDataResponse<PermisionnListWrap>> queryRecruitPermission(
+      @QueryMap HashMap<String, Object> hashMap);
 
+  /**
+   * 相应权限面对的用户
+   */
+  @GET("/api/staff/job/permission/users/")
+  rx.Observable<QcDataResponse<PermissionUserWrap>> queryPermissionUser(
+      @Query("gym_id") String gymid);
 
+  @GET("/api/common/staffs/") rx.Observable<QcDataResponse<ChatGymWrap>> queryCommonStaffs(
+      @Query("gym_id") String gymid);
 
 
     /*

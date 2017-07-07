@@ -11,7 +11,8 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.PostApi;
-import cn.qingchengfit.recruit.network.response.GymWrap;
+import cn.qingchengfit.recruit.network.body.RecruitGymBody;
+import cn.qingchengfit.saas.response.GymWrap;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -28,9 +29,8 @@ public class RecruitGymPresenter extends BasePresenter {
     view = (MVPView) v;
   }
 
-  public void saveInfo() {
-    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
-        .editGymIntro()
+  public void saveInfo(String gymid, RecruitGymBody gymBody) {
+    RxRegiste(qcRestRepository.createGetApi(PostApi.class).editGymIntro(gymid, gymBody)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {

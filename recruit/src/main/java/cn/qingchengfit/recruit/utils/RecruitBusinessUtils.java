@@ -431,4 +431,16 @@ public class RecruitBusinessUtils {
     if (ret.length() > 50) ret = ret.substring(0, 50) + "...";
     return ret;
   }
+  //
+  //public static String getResumeInfo(Resume resume,Context context){
+  //  String workYear = resume.work_year == 0 ?"应届生":resume.work_year+"年经验";
+  //  String birthDay = DateUtils.getAge(DateUtils.formatDateFromServer(resume.birthday))+"岁";
+  //  String height = CmStringUtils.getMaybeInt(resume.height)+"cm";
+  //  String weight = CmStringUtils.getMaybeInt(resume.weight)+"kg";
+  //  String degree = getDegree(context,resume.max_education);
+  //  String seperate = " / ";
+  //  return TextUtils.concat(workYear,seperate,birthDay,seperate,height,","+weight,seperate,degree).toString();
+  //}
+  //
+
 }

@@ -141,6 +141,14 @@ public class Gym implements Parcelable {
     return "";
   }
 
+  public int getcityCode() {
+    if (gd_district != null && gd_district.city != null) {
+      return gd_district.city.getId();
+    } else {
+      return 0;
+    }
+  }
+
   public String getId() {
     return id;
   }

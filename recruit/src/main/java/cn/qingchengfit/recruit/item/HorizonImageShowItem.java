@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,14 @@ public class HorizonImageShowItem
   public HorizonImageShowItem(List<AbstractFlexibleItem> imgs) {
     this.items = imgs;
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
+  }
+
+  public IFlexible getChildItem(int pos) {
+    if (commonFlexAdapter != null && commonFlexAdapter.getItemCount() > pos) {
+      return commonFlexAdapter.getItem(pos);
+    } else {
+      return null;
+    }
   }
 
   @Override public int getLayoutRes() {
@@ -73,7 +84,7 @@ public class HorizonImageShowItem
   }
 
   @Override public boolean onItemClick(int i) {
-    // TODO: 点击事件处理
+    RxBus.getBus().post(new EventRecycleClick(i, commonFlexAdapter.getItemViewType(i)));
     return true;
   }
 

@@ -170,4 +170,24 @@
     <item>泳池</item>
     <item>力量器械</item>
   </string-array>
+
+  <string-array name="resume_filter_salary">
+    <item>全部</item>
+    <item>面议</item>
+    <item>5K以下</item>
+    <item>5&#8211;10K</item>
+    <item>10&#8211;15K</item>
+    <item>15&#8211;20K</item>
+    <item>20&#8211;50K</item>
+    <item>50K以上</item>
+  </string-array>
+  <string-array name="resume_filter_work_year">
+    <item>全部</item>
+    <item>应届生</item>
+    <item>1&#8211;3年</item>
+    <item>3&#8211;5年</item>
+    <item>5&#8211;8年</item>
+    <item>8&#8211;10年</item>
+    <item>10年以上</item>
+  </string-array>
 </resources>

@@ -299,6 +299,7 @@ public class PagerSlidingTabImageStrip extends HorizontalScrollView implements V
         ImageView imageView = (ImageView) tab.findViewById(R.id.img);
         imageView.setVisibility(show ? VISIBLE : INVISIBLE);
         TextView textView = (TextView) tab.findViewById(R.id.text);
+      textView.setTextColor(mTabTextColor);
         //        Glide.with(getContext()).load(img).asBitmap().into(new CircleImgWrapper(imageView, getContext()));
         textView.setText(text);
         addTab(position, tab);

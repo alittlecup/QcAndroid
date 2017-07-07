@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.items.CommonNoDataItem;
+import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
 import cn.qingchengfit.widgets.R;
@@ -40,24 +41,27 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/5/26.
  */
-public class BaseListFragmentFragment extends BaseFragment {
+public abstract class BaseListFragment extends BaseFragment {
 
-    @BindView(R2.id.rv) RecyclerView rv;
+  public int left = 15, right = 15;
+  public CommonNoDataItem commonNoDataItem;
+  @BindView(R2.id.rv) protected RecyclerView rv;
+  protected CommonFlexAdapter commonFlexAdapter;
     @BindView(R2.id.srl) SwipeRefreshLayout srl;
     List<AbstractFlexibleItem> datas = new ArrayList<>();
-    CommonFlexAdapter commonFlexAdapter;
     private Object listeners;
-    public int left = 15, right = 15;
-    public CommonNoDataItem commonNoDataItem;
+  private ProgressItem progressItem;
 
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         commonFlexAdapter = new CommonFlexAdapter(datas);
+      progressItem = new ProgressItem(getContext());
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base_list, container, false);
+      super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, 0, left, right));
@@ -69,23 +73,26 @@ public class BaseListFragmentFragment extends BaseFragment {
         return view;
     }
 
-    public void initData(List<AbstractFlexibleItem> ds) {
-        datas.clear();
-        if (ds != null) datas.addAll(ds);
+  public void initLoadMore() {
+    if (commonFlexAdapter != null) {
+      commonFlexAdapter.setEndlessProgressItem(progressItem);
+    }
     }
 
     public void initListener(Object o) {
         this.listeners = o;
     }
 
-    public void setDatas(List<AbstractFlexibleItem> ds) {
+  public void setDatas(List<AbstractFlexibleItem> ds, int page) {
         stopRefresh();
         if (rv != null && commonFlexAdapter != null) {
-            commonFlexAdapter.clear();
+          if (page == 1) commonFlexAdapter.clear();
             for (AbstractFlexibleItem item : ds) {
                 commonFlexAdapter.addItem(item);
             }
-            if (datas.size() == 0 && commonNoDataItem != null) datas.add(commonNoDataItem);
+          if (commonFlexAdapter.getItemCount() == 0 && commonNoDataItem != null) {
+            datas.add(commonNoDataItem);
+          }
         }
     }
 
@@ -109,11 +116,22 @@ public class BaseListFragmentFragment extends BaseFragment {
         }
     }
 
+  public void stopLoadMore() {
+    if (commonFlexAdapter == null) return;
+    commonFlexAdapter.removeItem(commonFlexAdapter.getGlobalPositionOf(progressItem));
+  }
+
+
     @Override public String getFragmentName() {
-        return BaseListFragmentFragment.class.getName();
+      return BaseListFragment.class.getName();
     }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
     }
+
+  public abstract int getNoDataIconRes();
+
+  public abstract String getNoDataStr();
+
 }

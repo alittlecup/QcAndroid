@@ -1,4 +1,11 @@
-package cn.qingchengfit.staffkit.rxbus.event;
+package cn.qingchengfit.recruit.item;
+
+import cn.qingchengfit.recruit.R;
+import cn.qingchengfit.recruit.model.JobFair;
+import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.PhotoUtils;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import java.util.List;
 
 /**
  * power by
@@ -18,16 +25,22 @@ package cn.qingchengfit.staffkit.rxbus.event;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/4/13.
+ * Created by Paper on 2017/7/5.
  */
 
-public class EventRecycleClick {
+public class JobFairVertialItem extends JobFairHorizonItem {
+  public JobFairVertialItem(JobFair jobFair) {
+    super(jobFair);
+  }
 
-    public int postion;
-    public int viewId;
+  @Override public void bindViewHolder(FlexibleAdapter adapter, JobFairVH holder, int position,
+      List payloads) {
+    holder.tvTitle.setText(jobFair.name);
+    holder.tvContent.setText(DateUtils.getDuringFromServer(jobFair.start, jobFair.end));
+    PhotoUtils.conner4dp(holder.imgBg, jobFair.banner);
+  }
 
-    public EventRecycleClick(int postion, int viewId) {
-        this.postion = postion;
-        this.viewId = viewId;
-    }
+  @Override public int getLayoutRes() {
+    return R.layout.item_vertical_jobfairs;
+  }
 }

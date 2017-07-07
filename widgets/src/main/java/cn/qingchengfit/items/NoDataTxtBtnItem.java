@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.abstractflexibleitem;
+package cn.qingchengfit.items;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +8,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rxbus.event.EventClickViewPosition;
+import cn.qingchengfit.events.EventClickViewPosition;
+import cn.qingchengfit.widgets.R;
+import cn.qingchengfit.widgets.R2;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -46,9 +47,9 @@ public class NoDataTxtBtnItem extends AbstractFlexibleItem<NoDataTxtBtnItem.NoDa
     }
 
     public class NoDataTxtBtnVH extends FlexibleViewHolder {
-        @BindView(R.id.tv_title) TextView tvTitle;
-        @BindView(R.id.hint) TextView hint;
-        @BindView(R.id.btn_fun) Button btnFun;
+      @BindView(R2.id.tv_title) TextView tvTitle;
+      @BindView(R2.id.hint) TextView hint;
+      @BindView(R2.id.btn_fun) Button btnFun;
 
         public NoDataTxtBtnVH(View view, final FlexibleAdapter adapter) {
             super(view, adapter);

@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.event.EventGymFacilities;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TagInputFragment;
 import cn.qingchengfit.widgets.QcTagGroup;
@@ -84,7 +86,7 @@ import java.util.List;
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (tagInputFragment != null) {
-
+          RxBus.getBus().post(new EventGymFacilities(tagInputFragment.getTags()));
         }
         getActivity().onBackPressed();
         return true;

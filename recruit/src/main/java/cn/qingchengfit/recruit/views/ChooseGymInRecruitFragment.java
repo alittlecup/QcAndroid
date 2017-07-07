@@ -1,4 +1,8 @@
-package com.qingchengfit.fitcoach.event;
+package cn.qingchengfit.recruit.views;
+
+import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
+import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 
 /**
  * power by
@@ -18,16 +22,13 @@ package com.qingchengfit.fitcoach.event;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/4/13.
+ * Created by Paper on 2017/7/4.
  */
 
-public class EventRecycleClick {
+public class ChooseGymInRecruitFragment extends ChooseGymFragment {
 
-    public int postion;
-    public int viewId;
-
-    public EventRecycleClick(int postion, int viewId) {
-        this.postion = postion;
-        this.viewId = viewId;
-    }
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("选择场馆");
+  }
 }

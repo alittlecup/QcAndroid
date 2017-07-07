@@ -9,8 +9,8 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.GetApi;
-import cn.qingchengfit.recruit.network.response.GymWrap;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
+import cn.qingchengfit.saas.response.GymWrap;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,10 +30,9 @@ public class RecruitGymDetailPresenter extends BasePresenter {
   }
 
   public void queryPositionOfGym(String gymid, final int init) {
-    if (init == 1) page = total = 1;
-    if (page <= total) {
-      RxRegiste(restRepository.createGetApi(GetApi.class)
-          .queryGymJobs(gymid, page)
+    //if (init == 1) page = total = 1;
+    //if (page <= total) {
+      RxRegiste(restRepository.createGetApi(GetApi.class).queryGymJobsAll(gymid, page)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
@@ -44,9 +43,9 @@ public class RecruitGymDetailPresenter extends BasePresenter {
               page++;
             }
           }, new NetWorkThrowable()));
-    } else {
-      view.onJobList(null, 0, 0);
-    }
+    //} else {
+    //  view.onJobList(null, 0, 0);
+    //}
   }
 
   public void queryGymDetail(String gymid) {
@@ -72,7 +71,6 @@ public class RecruitGymDetailPresenter extends BasePresenter {
 
   public interface MVPView extends CView {
     void onGym(Gym gym);
-
     void onJobList(List<Job> jobs, int page, int totalCount);
   }
 }

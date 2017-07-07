@@ -75,6 +75,13 @@ public class Job implements Parcelable {
   public Boolean contacted;
   public Boolean deliveried;
 
+  public int invitation_count;
+  public int delivery_count;
+  public int favorite_count;
+  public int view;
+  public boolean has_new_delivery;
+  public boolean has_new_invite;
+
   public Job() {
   }
 

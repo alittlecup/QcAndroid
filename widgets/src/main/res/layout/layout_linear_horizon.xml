@@ -4,6 +4,7 @@
     android:id="@+id/layout_horizon"
     android:layout_width="match_parent"
     android:layout_height="48dp"
+    android:background="@drawable/bg_click"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     >

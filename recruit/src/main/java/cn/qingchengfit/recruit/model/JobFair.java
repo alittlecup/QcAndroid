@@ -25,4 +25,6 @@ public class JobFair {
   public String banner;
   public String id;
   public String name;
+  public String start;
+  public String end;
 }

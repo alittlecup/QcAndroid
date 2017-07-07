@@ -135,7 +135,7 @@ public class RecruitPublishJobFragment extends BaseFragment {
    * 职位要求
    */
   @OnClick(R2.id.civ_position_require) public void onCivPositionRequireClicked() {
-    router.toRequireOfJob();
+    //router.toRequireOfJob();
   }
 
   /**

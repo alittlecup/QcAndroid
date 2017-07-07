@@ -149,6 +149,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
     });
   }
 
+  @Override public void onEditOk() {
+
+  }
+
   @Override public void onJobDetail(Job job) {
     if (job == null) return;
     if (job.name == null) return;

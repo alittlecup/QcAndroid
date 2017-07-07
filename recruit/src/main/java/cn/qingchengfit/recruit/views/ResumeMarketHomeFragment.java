@@ -2,6 +2,7 @@ package cn.qingchengfit.recruit.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.SearchCenterItem;
 import cn.qingchengfit.recruit.R;
@@ -21,14 +23,14 @@ import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.HorizonImageShowItem;
 import cn.qingchengfit.recruit.item.JobFairFooterItem;
-import cn.qingchengfit.recruit.item.JobFairItem;
+import cn.qingchengfit.recruit.item.JobFairHorizonItem;
 import cn.qingchengfit.recruit.item.RecruitManageItem;
 import cn.qingchengfit.recruit.item.ResumeItem;
+import cn.qingchengfit.recruit.item.ResumeListItem;
 import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.model.Resume;
 import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
 import cn.qingchengfit.support.animator.FlipAnimation;
-import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
@@ -37,8 +39,10 @@ import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -70,13 +74,17 @@ public class ResumeMarketHomeFragment extends BaseFragment
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
   @BindView(R2.id.rv) RecyclerView rv;
   @BindView(R2.id.srl) SwipeRefreshLayout srl;
+  @BindView(R2.id.layout_filter) View layoutFilter;
   @Inject RecruitRouter router;
   @Inject ResumeMarketPresenter presenter;
   private CommonFlexAdapter commonFlexAdapter;
   private HorizonImageShowItem horizonImageShowItem;
   private RecruitManageItem recruitmanage;
+  private FilterHeadItem filterHeadItem;
+  private SmoothScrollLinearLayoutManager layoutManage;
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_market_home, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
@@ -87,7 +95,25 @@ public class ResumeMarketHomeFragment extends BaseFragment
         srl.setRefreshing(false);
       }
     });
+    initBus();
     return view;
+  }
+
+  private void initBus() {
+    RxBusAdd(EventRecycleClick.class).subscribe(new Action1<EventRecycleClick>() {
+      @Override public void call(EventRecycleClick eventRecycleClick) {
+        if (eventRecycleClick.viewId == R.layout.item_more_job_fair) {
+          router.toAllJobFair();
+        } else if (eventRecycleClick.viewId == R.layout.item_jobfairs) {
+          if (horizonImageShowItem.getChildItem(eventRecycleClick.postion) != null
+              && horizonImageShowItem.getChildItem(
+              eventRecycleClick.postion) instanceof JobFairHorizonItem) {
+            router.toJobFairDetail(((JobFairHorizonItem) horizonImageShowItem.getChildItem(
+                eventRecycleClick.postion)).getJobFair());
+          }
+        }
+      }
+    });
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -102,6 +128,9 @@ public class ResumeMarketHomeFragment extends BaseFragment
     });
   }
 
+  /**
+   * 自定义切换动画
+   */
   @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
     if (nextAnim == R.anim.card_flip_left_in
         || nextAnim == R.anim.card_flip_right_in
@@ -139,23 +168,10 @@ public class ResumeMarketHomeFragment extends BaseFragment
 
   public void inflatJobFairs() {
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
-    //List<String> tabs = new ArrayList<>();
-    //tabs.add("期望城市");
-    //tabs.add("期望薪资");
-    //tabs.add("工作经验");
-    //tabs.add("要求");
-    //List<View> views = new ArrayList<>();
-    //views.add(new TextView(getContext()));
-    //views.add(new TextView(getContext()));
-    //views.add(new TextView(getContext()));
-    //views.add(new TextView(getContext()));
-    //DropDownMenu dropDownMenu = (DropDownMenu) LayoutInflater.from(getContext()).inflate(R.layout.layout_filter_drop_menu,null);
-    //dropDownMenu.setDropDownMenu(tabs,views,new View(getContext()));
-
     commonFlexAdapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true);
-    rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
+    layoutManage = new SmoothScrollLinearLayoutManager(getContext());
+    rv.setLayoutManager(layoutManage);
     rv.setAdapter(commonFlexAdapter);
-
     rv.addItemDecoration(
         new QcLeftRightDivider(getContext(), 15, R.layout.item_recruit_manage, 0, 0));
   }
@@ -167,8 +183,13 @@ public class ResumeMarketHomeFragment extends BaseFragment
     commonFlexAdapter.addItem(horizonImageShowItem);
     recruitmanage = new RecruitManageItem(1, false);
     commonFlexAdapter.addItem(recruitmanage);
-    FilterHeadItem filterHeadItem =
-        new FilterHeadItem(new String[] { "期望城市", "期望薪资", "工作经验", "要求" });
+    filterHeadItem = new FilterHeadItem(new String[] { "期望城市", "期望薪资", "工作经验", "要求" });
+    filterHeadItem.setListener(new FilterHeadItem.FilterHeadListener() {
+      @Override public void onPositionClick(int pos) {
+        layoutManage.scrollToPosition(3);
+        showFilter(pos);
+      }
+    });
     commonFlexAdapter.addItem(filterHeadItem);
     presenter.queryMyJobFairList();
   }
@@ -186,9 +207,13 @@ public class ResumeMarketHomeFragment extends BaseFragment
     commonFlexAdapter.setEndlessTargetCount(total + PULS_ITEM_COUNTS);
     if (page == 1) {
       commonFlexAdapter.removeItemsOfType(R.layout.item_resume);
+      commonFlexAdapter.removeItemsOfType(R.layout.item_common_no_data);
     }
     for (Resume resume : resumes) {
       commonFlexAdapter.addItem(new ResumeItem(resume));
+    }
+    if (commonFlexAdapter.getItemCountOfTypes(R.layout.item_resume) == 0) {
+      //空页面
     }
   }
 
@@ -197,7 +222,7 @@ public class ResumeMarketHomeFragment extends BaseFragment
       List<AbstractFlexibleItem> items = new ArrayList<>();
       if (jobfairs != null) {
         for (JobFair jobfair : jobfairs) {
-          items.add(new JobFairItem(jobfair));
+          items.add(new JobFairHorizonItem(jobfair));
         }
         items.add(new JobFairFooterItem(jobfairs.size()));
       }
@@ -207,11 +232,31 @@ public class ResumeMarketHomeFragment extends BaseFragment
       recruitmanage.setJobCounts(job_count);
       commonFlexAdapter.notifyItemChanged(commonFlexAdapter.getGlobalPositionOf(recruitmanage));
     }
-    presenter.queryResumeMarkets(true);
+    commonFlexAdapter.addItem(new ResumeListItem(this));
+    //presenter.queryResumeMarkets(true,new HashMap<String, Object>());
   }
 
   @Override public void onStickyHeaderChange(int i) {
-    ToastUtils.show("stickheader:" + i);
+    if (i == 3) {
+    }
+  }
+
+  public void showFilter(int pos) {
+    layoutFilter.setVisibility(pos >= 0 ? View.VISIBLE : View.GONE);
+    Fragment f = getChildFragmentManager().findFragmentByTag("filter");
+    if (f == null) {
+      f = ResumeFilterFragment.newResumeFilter();
+      getChildFragmentManager().beginTransaction().add(R.id.frag_filter, f).commit();
+    }
+    if (f instanceof ResumeFilterFragment) {
+      ((ResumeFilterFragment) f).showPos = pos;
+      ((ResumeFilterFragment) f).setListener(new ResumeFilterFragment.ResumeFilterListener() {
+        @Override public void onFilterDone(HashMap<String, Object> params) {
+          presenter.queryResumeMarkets(true, params);
+        }
+      });
+    }
+    getChildFragmentManager().beginTransaction().show(f).commit();
   }
 
   @Override public boolean onItemClick(int i) {
@@ -219,7 +264,6 @@ public class ResumeMarketHomeFragment extends BaseFragment
     if (item instanceof RecruitManageItem) {
       router.toManageRecruit();
     }
-
     return false;
   }
 }

@@ -88,13 +88,16 @@
 
   <include layout="@layout/divider_grey"/>
 
-  <android.support.design.widget.TabLayout
+  <cn.qingchengfit.widgets.PagerSlidingTabImageStrip
       android:id="@+id/recruit_gym_tab"
       android:layout_width="match_parent"
       android:layout_height="50dp"
       android:background="@color/white"
+      app:pst_text_color="@color/text_dark"
+      app:pst_text_highlight_color="?colorPrimary"
       />
 
+  <include layout="@layout/divider_grey"/>
   <android.support.v4.view.ViewPager
       android:id="@+id/vp"
       android:layout_width="match_parent"

@@ -10,16 +10,17 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.model.JobFair;
+import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class JobFairItem extends AbstractFlexibleItem<JobFairItem.JobFairVH> {
+public class JobFairHorizonItem extends AbstractFlexibleItem<JobFairHorizonItem.JobFairVH> {
 
   JobFair jobFair;
 
-  public JobFairItem(JobFair jobFair) {
+  public JobFairHorizonItem(JobFair jobFair) {
     this.jobFair = jobFair;
   }
 
@@ -40,8 +41,9 @@ public class JobFairItem extends AbstractFlexibleItem<JobFairItem.JobFairVH> {
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, JobFairVH holder, int position, List payloads) {
-    holder.tvTitle.setText("赛普稀里哗啦呼呼呼呼呼呼");
-    holder.imgBg.setBackgroundResource(R.color.toolbar);
+    holder.tvTitle.setText(jobFair.name);
+    holder.tvContent.setVisibility(View.GONE);
+    PhotoUtils.smallCircle(holder.imgBg, jobFair.banner);
   }
 
   @Override public boolean equals(Object o) {
@@ -51,6 +53,7 @@ public class JobFairItem extends AbstractFlexibleItem<JobFairItem.JobFairVH> {
   public class JobFairVH extends FlexibleViewHolder {
     @BindView(R2.id.img_bg) ImageView imgBg;
     @BindView(R2.id.tv_title) TextView tvTitle;
+    @BindView(R2.id.tv_content) TextView tvContent;
 
     public JobFairVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

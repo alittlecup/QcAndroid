@@ -1,4 +1,9 @@
-package cn.qingchengfit.recruit.network.body;
+package cn.qingchengfit.saas.network;
+
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saas.response.GymListWrap;
+import cn.qingchengfit.saas.response.SuWrap;
+import retrofit2.http.GET;
 
 /**
  * power by
@@ -18,9 +23,11 @@ package cn.qingchengfit.recruit.network.body;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/6/28.
+ * Created by Paper on 2017/7/4.
  */
 
-public class GymBody {
+public interface GetApi {
+  @GET("/api/common/user/gyms/") rx.Observable<QcDataResponse<GymListWrap>> queryPermissionGyms();
 
+  @GET("api/common/user/check/superuser/") rx.Observable<QcDataResponse<SuWrap>> querySu();
 }
