@@ -28,6 +28,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventInitApp;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.PushBody;
 import cn.qingchengfit.model.responese.GymList;
@@ -56,6 +57,7 @@ import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -108,6 +110,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     private Observable<EventFreshCoachService> mFreshCoachService;
     private Subscription sp;
     private Observable<EventBrandChange> brandChangeOb;
+  private Observable<EventInitApp> mBackMainOb;
     /**
      * 更新下载进度
      */
@@ -129,7 +132,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         }
     };
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -158,6 +161,24 @@ public class MainActivity extends BaseActivity implements FragCallBack {
                 finish();
             }
         });
+        /*
+         * App异常时重新回到主页
+         */
+    mBackMainOb = RxBus.getBus().register(EventInitApp.class);
+    mBackMainOb.subscribe(new Action1<EventInitApp>() {
+      @Override public void call(EventInitApp eventInitApp) {
+        try {
+          Intent toMain = new Intent();
+          toMain.setPackage(getPackageName());
+          toMain.setAction("cn.qingcheng.main");
+          startActivity(toMain);
+        } catch (Exception e) {
+          LogUtil.e("麻蛋 新的error : " + e.getMessage());
+        }
+      }
+    });
+
+
         /*
          * 全局监听刷新 场馆
          */
@@ -346,90 +367,109 @@ public class MainActivity extends BaseActivity implements FragCallBack {
      */
     private void update(final boolean show) {
         if (!isDownloading) {
+          try {
             FIR.checkForUpdateInFIR(getString(BuildConfig.DEBUG ? R.string.fir_token_beta : R.string.fir_token_release),
                 new VersionCheckCallback() {
-                    @Override public void onFail(Exception e) {
-                        super.onFail(e);
-                        Timber.d(e.getMessage());
-                    }
+                  @Override public void onFail(Exception e) {
+                    super.onFail(e);
+                    Timber.d(e.getMessage());
+                  }
 
-                    @Override public void onSuccess(String s) {
-                        super.onSuccess(s);
-                        try {
-                            final UpdateVersion updateVersion = new Gson().fromJson(s, UpdateVersion.class);
-                            if (BuildConfig.DEBUG) {
-                                if (BuildConfig.FLAVOR.equalsIgnoreCase("internaltest")) {
-                                    long oldupdate = PreferenceUtils.getPrefLong(MainActivity.this, "update", 0);
-                                    if (oldupdate == 0) {
-                                        oldupdate = updateVersion.updated_at;
-                                        PreferenceUtils.setPrefLong(MainActivity.this, "update", updateVersion.updated_at);
-                                    }
-                                    if (updateVersion.updated_at > oldupdate) {
-                                        PreferenceUtils.setPrefLong(MainActivity.this, "update", updateVersion.updated_at);
-                                        isDownloading = true;
-                                        Toast.makeText(MainActivity.this,
-                                            DateUtils.Date2YYYYMMDDHHmm(new Date(updateVersion.updated_at * 1000)) + "已在后台下载...",
-                                            Toast.LENGTH_LONG).show();
-                                        downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                                        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(updateVersion.installUrl));
-                                        request.setDestinationInExternalFilesDir(MainActivity.this,
-                                            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                                                .getAbsolutePath(), getString(R.string.app_name) + "_" + updateVersion.version + ".apk");
-                                        myDownloadReference = downloadManager.enqueue(request);
-                                    }
-                                }
-                            } else {
-
-                                if (updateVersion.version > AppUtils.getAppVerCode(App.context)) {
-                                    if (updateDialog == null) {
-                                        MaterialDialog.Builder builder =
-                                            new MaterialDialog.Builder(MainActivity.this).title(R.string.new_version)
-                                                .positiveText(R.string.update)
-                                                .content(updateVersion.changelog)
-                                                .positiveColorRes(R.color.colorPrimary)
-                                                .negativeColorRes(R.color.text_grey)
-                                                //                                        .cancelable(false)
-                                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                                    @Override
-                                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                        dialog.dismiss();
-                                                        isDownloading = true;
-                                                        ToastUtils.showDefaultStyle("已在后台下载...");
-                                                        downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                                                        DownloadManager.Request request =
-                                                            new DownloadManager.Request(Uri.parse(updateVersion.installUrl));
-                                                        request.setDestinationInExternalFilesDir(MainActivity.this,
-                                                            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                                                                .getAbsolutePath(),
-                                                            getString(R.string.app_name) + "_" + updateVersion.version + ".apk");
-                                                        myDownloadReference = downloadManager.enqueue(request);
-                                                    }
-                                                });
-
-                                        if (updateVersion.version % 10 == 0) {
-                                            builder.canceledOnTouchOutside(false);
-                                            builder.autoDismiss(true);
-                                            builder.cancelListener(new DialogInterface.OnCancelListener() {
-                                                @Override public void onCancel(DialogInterface dialog) {
-                                                    MainActivity.this.finish();
-                                                }
-                                            });
-                                        } else {
-                                            builder.autoDismiss(true);
-                                            builder.negativeText(R.string.next_time);
-                                        }
-                                        updateDialog = builder.build();
-                                    }
-                                    if (!updateDialog.isShowing()) updateDialog.show();
-                                } else {
-                                    if (show) ToastUtils.showS(getString(R.string.is_latest_version));
-                                }
-                            }
-                        } catch (Exception e) {
-                            CrashUtils.sendCrash(e);
+                  @Override public void onSuccess(String s) {
+                    super.onSuccess(s);
+                    try {
+                      final UpdateVersion updateVersion =
+                          new Gson().fromJson(s, UpdateVersion.class);
+                      if (BuildConfig.DEBUG) {
+                        if (BuildConfig.FLAVOR.equalsIgnoreCase("internaltest")) {
+                          long oldupdate =
+                              PreferenceUtils.getPrefLong(MainActivity.this, "update", 0);
+                          if (oldupdate == 0) {
+                            oldupdate = updateVersion.updated_at;
+                            PreferenceUtils.setPrefLong(MainActivity.this, "update",
+                                updateVersion.updated_at);
+                          }
+                          if (updateVersion.updated_at > oldupdate) {
+                            PreferenceUtils.setPrefLong(MainActivity.this, "update",
+                                updateVersion.updated_at);
+                            isDownloading = true;
+                            Toast.makeText(MainActivity.this, DateUtils.Date2YYYYMMDDHHmm(
+                                new Date(updateVersion.updated_at * 1000)) + "已在后台下载...",
+                                Toast.LENGTH_LONG).show();
+                            downloadManager =
+                                (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                            DownloadManager.Request request =
+                                new DownloadManager.Request(Uri.parse(updateVersion.installUrl));
+                            request.setDestinationInExternalFilesDir(MainActivity.this,
+                                Environment.getExternalStoragePublicDirectory(
+                                    Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(),
+                                getString(R.string.app_name)
+                                    + "_"
+                                    + updateVersion.version
+                                    + ".apk");
+                            myDownloadReference = downloadManager.enqueue(request);
+                          }
                         }
+                      } else {
+
+                        if (updateVersion.version > AppUtils.getAppVerCode(App.context)) {
+                          if (updateDialog == null) {
+                            MaterialDialog.Builder builder =
+                                new MaterialDialog.Builder(MainActivity.this).title(
+                                    R.string.new_version)
+                                    .positiveText(R.string.update)
+                                    .content(updateVersion.changelog)
+                                    .positiveColorRes(R.color.colorPrimary)
+                                    .negativeColorRes(R.color.text_grey)
+                                    //                                        .cancelable(false)
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                      @Override public void onClick(@NonNull MaterialDialog dialog,
+                                          @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                        isDownloading = true;
+                                        ToastUtils.showDefaultStyle("已在后台下载...");
+                                        downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                                        DownloadManager.Request request =
+                                            new DownloadManager.Request(
+                                                Uri.parse(updateVersion.installUrl));
+                                        request.setDestinationInExternalFilesDir(MainActivity.this,
+                                            Environment.getExternalStoragePublicDirectory(
+                                                Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(),
+                                            getString(R.string.app_name)
+                                                + "_"
+                                                + updateVersion.version
+                                                + ".apk");
+                                        myDownloadReference = downloadManager.enqueue(request);
+                                      }
+                                    });
+
+                            if (updateVersion.version % 10 == 0) {
+                              builder.canceledOnTouchOutside(false);
+                              builder.autoDismiss(true);
+                              builder.cancelListener(new DialogInterface.OnCancelListener() {
+                                @Override public void onCancel(DialogInterface dialog) {
+                                  MainActivity.this.finish();
+                                }
+                              });
+                            } else {
+                              builder.autoDismiss(true);
+                              builder.negativeText(R.string.next_time);
+                            }
+                            updateDialog = builder.build();
+                          }
+                          if (!updateDialog.isShowing()) updateDialog.show();
+                        } else {
+                          if (show) ToastUtils.showS(getString(R.string.is_latest_version));
+                        }
+                      }
+                    } catch (Exception e) {
+                      CrashUtils.sendCrash(e);
                     }
+                  }
                 });
+          } catch (Exception e) {
+            CrashUtils.sendCrash(e);
+          }
         }
     }
 
@@ -438,6 +478,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         RxBus.getBus().unregister(RxCloseAppEvent.class.getName(), mCloseOb);
         RxBus.getBus().unregister(EventFreshCoachService.class.getName(), mFreshCoachService);
         RxBus.getBus().unregister(EventBrandChange.class.getName(), brandChangeOb);
+      RxBus.getBus().unregister(EventInitApp.class.getName(), mBackMainOb);
 
         if (updateSp != null) updateSp.unsubscribe();
         if (sp != null) sp.unsubscribe();

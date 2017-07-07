@@ -268,27 +268,25 @@ public class MainMsgFragment extends BaseFragment
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ChooseActivity.CONVERSATION_FRIEND) {
                 AddConversationProcessor addConversationProcessor = new AddConversationProcessor(getContext());
-                //addConversationProcessor.setOnCreateConversation(new AddConversationProcessor.OnCreateConversation() {
-                //    @Override public void onCreateSuccess(String s) {
-                //
-                //    }
-                //
-                //    @Override public void onCreateFailed(int i, String s) {
-                //        ToastUtils.show(i + ":" + s);
-                //    }
-                //});
+                addConversationProcessor.setOnCreateConversation(
+                    new AddConversationProcessor.OnCreateConversation() {
+                        @Override public void onCreateSuccess(String s) {
+
+                        }
+
+                        @Override public void onCreateFailed(int i, String s) {
+                            LogUtils.e(i + ":" + s);
+                        }
+                    });
                 List<String> ret = data.getStringArrayListExtra("ids");
-                //if (ret == null || ret.size() == 0) {
-                //    ToastUtils.show("您没有选择除自己以外的任何人");
-                //    return;
-                //}
-                //addConversationProcessor.creaetGroupWithName(ret);
-                //
-                //DirtySender.studentList.clear();
-                String job = "{name:\"trytrytry\", iconUrl:\"http://zoneke-img.b0.upaiyun.com/45accede5e36007f542a60327cb5cde2.png!120x120\""
-                    + ",max_salary:\"15k\",min_salary:\"10k\",min_height:\"100cm\",max_height:\"150cm\",min_work_year:\"3\",max_work_year:\"8\""
-                    + ",gender:1,min_age:20,max_age:32}";
-                addConversationProcessor.addRecruitConversation(ret.get(0), "", job);
+                if (ret == null || ret.size() == 0) {
+                    ToastUtils.show("您没有选择除自己以外的任何人");
+                    return;
+                }
+                addConversationProcessor.creaetGroupWithName(ret);
+
+                DirtySender.studentList.clear();
+
             }
         } else {
             if (requestCode == ChooseActivity.CONVERSATION_FRIEND) {

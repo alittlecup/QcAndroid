@@ -96,7 +96,6 @@ public class ChooseCoachFragment extends BaseDialogFragment {
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycleview, container, false);
         unbinder = ButterKnife.bind(this, view);
-        initDI();
         initView();
         initData();
         view.setOnTouchListener(new View.OnTouchListener() {

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +23,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.FollowRecord;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
@@ -41,8 +41,8 @@ import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
+import com.commonsware.cwac.cam2.CameraActivity;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -128,22 +128,13 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
         chatInput.setSendCallback(new ChatInputView.OnSendCallback() {
             @Override public void onSendMsg(String s) {
                 presenter.addFollow(s, null);
-                //                FollowRecords.Follow follow = new FollowRecords.Follow();
-                //                follow.type = "record";
-                //                follow.content = s;
-                //                follow.created_at = DateUtils.DateToServer(new Date());
-                //                QcStudentBean studentBean = new QcStudentBean();
-                //                studentBean.setUsername("自己");
-                //                studentBean.setAvatar("");
-                //                follow.created_by = studentBean;
-                //                datas.add(follow);
-                //                adapter.notifyDataSetChanged();
             }
 
             @Override public void onPicture() {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/jpeg");
+                intent.setType("image/*");
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     startActivityForResult(intent, ChoosePictureFragmentDialog.CHOOSE_GALLERY);
                 } else {
@@ -163,13 +154,11 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
 
                     @Override public void onNext(Boolean aBoolean) {
                         if (aBoolean) {
-                            Intent intent = new Intent();
-                            // 指定开启系统相机的Action
-                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                            intent.addCategory(Intent.CATEGORY_DEFAULT);
                             Uri uri = Uri.fromFile(FileUtils.getTmpImageFile(getContext()));
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                            startActivityForResult(intent, ChoosePictureFragmentDialog.CHOOSE_CAMERA);
+                            startActivityForResult(
+                                new CameraActivity.IntentBuilder(getContext()).confirmationQuality(
+                                    0.7f).to(uri).build(),
+                                ChoosePictureFragmentDialog.CHOOSE_CAMERA);
                         } else {
                             ToastUtils.show("请先开启拍照权限");
                         }
@@ -210,28 +199,22 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
             } else if (requestCode == ChoosePictureFragmentDialog.CHOOSE_CAMERA) {
                 filepath = FileUtils.getTmpImageFile(getContext()).getAbsolutePath();
             }
-            //            UpyunService.uploadPic(getActivity(),filepath);
-            RxBus.getBus().post(new LoadingEvent(true));
-            final String finalFilepath = filepath;
-            Observable.create(new Observable.OnSubscribe<String>() {
-                @Override public void call(Subscriber<? super String> subscriber) {
-                    String upImg = UpYunClient.upLoadImg("header/", new File(finalFilepath));
-                    subscriber.onNext(upImg);
-                    subscriber.onCompleted();
-                }
-            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<String>() {
-                @Override public void call(String s) {
-                    if (TextUtils.isEmpty(s)) {
-                        RxBus.getBus().post(new LoadingEvent(false));
-                    } else {
+            showLoading();
+            UpYunClient.rxUpLoad("/android/", filepath)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override public void call(String s) {
                         presenter.addFollow(null, s);
                     }
-                }
-            });
+                }, new NetWorkThrowable());
+
+
         }
     }
 
     @Override public void onData(List<FollowRecord> records, int page) {
+        hideLoading();
         if (page == 1) datas.clear();
         for (int i = 0; i < records.size(); i++) {
             datas.add(0, records.get(i));
@@ -250,6 +233,7 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
     }
 
     @Override public void onAdd() {
+        hideLoading();
         presenter.initPage();
         presenter.queryData();
     }

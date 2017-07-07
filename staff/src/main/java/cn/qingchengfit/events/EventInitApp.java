@@ -1,8 +1,4 @@
-//package cn.qingchengfit.staff;
-//
-//import cn.qingchengfit.staffkit.rest.RestRepository;
-//import org.junit.Before;
-//import org.junit.Test;
+//package cn.qingchengfit.events;
 //
 ///**
 // * power by
@@ -22,16 +18,8 @@
 // * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 // * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 // * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-// * Created by Paper on 16/7/1 2016.
+// * Created by Paper on 2017/7/7.
 // */
-//public class MockLoginApi {
-//    RestRepository restRepository = new RestRepository();
 //
-//    @Before public void setUp() {
-//
-//    }
-//
-//    @Test public void login() {
-//
-//    }
+//public class EventInitApp {
 //}

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventInitApp;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -328,6 +330,10 @@ public class GymFunctionFactory {
     }
 
     public static void getJumpIntent(String module, CoachService coachService, Brand brand, GymStatus gymStatus, BaseFragment fragment) {
+      if (coachService == null) {
+        RxBus.getBus().post(new EventInitApp());
+        return;
+      }
         switch (module) {
             /****健身服务
              * 团课  私教 自由训练 商店

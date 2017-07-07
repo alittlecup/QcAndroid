@@ -5,7 +5,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.ArrayMap;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,9 +29,7 @@ import cn.qingchengfit.views.activity.BaseActivity;
 import com.afollestad.materialdialogs.MaterialDialog;
 import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import rx.Observable;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -55,7 +53,7 @@ public abstract class BaseFragment extends Fragment implements BaseActivity.Frag
     public Unbinder unbinder;
     protected boolean isLoading = false;
     List<Subscription> sps = new ArrayList<>();
-    private ArrayMap<String, Observable> observables = new ArrayMap<>();
+    private List<Pair<String, Observable>> observables = new ArrayList<>();
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
     private MaterialDialog mAlert;
@@ -220,11 +218,8 @@ public abstract class BaseFragment extends Fragment implements BaseActivity.Frag
         for (int i = 0; i < sps.size(); i++) {
             sps.get(i).unsubscribe();
         }
-        Iterator entries = observables.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry) entries.next();
-            String key = (String) entry.getKey();
-            RxBus.getBus().unregister(key, observables.get(key));
+        for (int i = 0; i < observables.size(); i++) {
+            RxBus.getBus().unregister(observables.get(i).first, observables.get(i).second);
         }
     }
 
@@ -235,7 +230,7 @@ public abstract class BaseFragment extends Fragment implements BaseActivity.Frag
 
     public <T> Observable<T> RxBusAdd(@NonNull Class<T> clazz) {
         Observable ob = RxBus.getBus().register(clazz);
-        observables.put(clazz.getName(), ob);
+        observables.add(new Pair<String, Observable>(clazz.getName(), ob));
         return ob;
     }
 

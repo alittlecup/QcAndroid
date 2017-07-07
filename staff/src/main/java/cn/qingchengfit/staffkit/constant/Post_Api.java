@@ -293,8 +293,9 @@ public interface Post_Api {
     /**
      * 学员操作
      */
-    @POST("/api/staffs/{id}/users/") rx.Observable<QcResponseData> qcCreateStudent(@Path("id") String id, @Query("id") String gymid,
-        @Query("model") String model, @Query("brand_id") String brandid, @Body User_Student student);
+    @POST("/api/staffs/{id}/users/") rx.Observable<QcResponseData> qcCreateStudent(
+        @Path("id") String id, @QueryMap HashMap<String, Object> params,
+        @Body User_Student student);
 
     //<<<<<<< HEAD
     //    @PUT("/api/v2/staffs/{staff_id}/users/{id}/") rx.Observable<QcResponseData> qcUpdateStudent(

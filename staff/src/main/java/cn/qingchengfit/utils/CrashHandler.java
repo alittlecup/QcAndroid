@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.util.Log;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
-import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import com.umeng.analytics.MobclickAgent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -78,7 +77,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             try {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override public void run() {
-                        mContext.startActivity(new Intent(mContext, ContainerActivity.class));
+                      Intent toMain = new Intent();
+                      toMain.setPackage(mContext.getPackageName());
+                      toMain.setAction("cn.qingcheng.main");
+                      mContext.startActivity(toMain);
                     }
                 });
                 LogUtils.e("错误已处理");

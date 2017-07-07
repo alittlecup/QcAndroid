@@ -223,7 +223,8 @@ public class SaleDetailFragment extends FilterCommonFragment implements SaleDeta
     }
 
     private void freshData() {
-        presenter.queryStudent(App.staffId, filter, saler.getStaff().id);
+      presenter.queryStudent(App.staffId, filter,
+          saler.getStaff() != null ? saler.getStaff().id : null);
     }
 
     @Override public void onDestroyView() {
