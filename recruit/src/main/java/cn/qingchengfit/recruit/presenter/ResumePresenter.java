@@ -4,17 +4,21 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.network.GetApi;
+import cn.qingchengfit.recruit.network.PostApi;
 import cn.qingchengfit.recruit.network.response.CertificateListWrap;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
 import cn.qingchengfit.recruit.network.response.ResumeHomeWrap;
 import cn.qingchengfit.recruit.network.response.WorkExpListWrap;
 import com.tencent.qcloud.timchat.chatmodel.ResumeModel;
+import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -101,13 +105,13 @@ public class ResumePresenter extends BasePresenter {
     resumeModel.work_year = resumeHome.work_year;
     resumeModel.gender = resumeHome.gender;
     resumeModel.max_education = resumeHome.max_education;
-    resumeModel.height = (int) resumeHome.height;
+    resumeModel.height =  String.valueOf(resumeHome.height);
     resumeModel.min_salary = resumeHome.min_salary;
     resumeModel.max_salary = resumeHome.max_salary;
     if (resumeHome.exp_cities.size() > 0) {
       resumeModel.city = resumeHome.exp_cities.get(0);
     }
-    resumeModel.weight = (int) resumeHome.weight;
+    resumeModel.weight = String.valueOf(resumeHome.weight);
     return resumeModel;
   }
 
@@ -152,6 +156,38 @@ public class ResumePresenter extends BasePresenter {
         }));
   }
 
+  public void starResume(String resumeId){
+    HashMap<String, Object> params = new HashMap<String, Object>();
+    params.put("resume_id", resumeId);
+    RxRegiste(restRepository.createPostApi(PostApi.class)
+        .starJob(params)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcResponse>() {
+          @Override public void call(QcResponse qcResponse) {
+            if (qcResponse.getStatus() == 200) {
+              view.starOk();
+            }else{
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
+
+  public void unStarResume(String resumeId){
+    RxRegiste(restRepository.createPostApi(PostApi.class)
+        .cancelStarJob(resumeId)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcResponse>() {
+          @Override public void call(QcResponse qcResponse) {
+            if (qcResponse.getStatus() == 200) {
+              view.unStartOk();
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
+
   @Override public void unattachView() {
     super.unattachView();
     view = null;
@@ -165,5 +201,9 @@ public class ResumePresenter extends BasePresenter {
     void onEduExpList(List<Education> eduExps);
 
     void onCertiList(List<Certificate> certificates);
+
+    void starOk();
+
+    void unStartOk();
   }
 }

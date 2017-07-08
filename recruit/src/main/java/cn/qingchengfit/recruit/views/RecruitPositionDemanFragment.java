@@ -87,7 +87,7 @@ public class RecruitPositionDemanFragment extends BaseFragment {
       civWorkExp.setContent(RecruitBusinessUtils.getWorkYear(jobBody.min_work_year, jobBody.max_work_year));
       civWorkGender.setContent(RecruitBusinessUtils.getGender(jobBody.gender));
       civWorkAge.setContent(RecruitBusinessUtils.getAge(jobBody.min_age, jobBody.max_age));
-      civWorkEducation.setContent(RecruitBusinessUtils.getDegree(getContext(), jobBody.education + 1));
+      civWorkEducation.setContent(RecruitBusinessUtils.getDegree(getContext(), jobBody.education));
       civWorkHeight.setContent(RecruitBusinessUtils.getHeight(jobBody.min_height, jobBody.max_height));
       civWorkWeight.setContent(RecruitBusinessUtils.getWeight(jobBody.min_weight, jobBody.max_weight));
       map.put("min_work_year", jobBody.min_work_year);

@@ -76,6 +76,7 @@ public class ResumeHome extends Resume implements Parcelable {
   public List<String> photos;
 
   public Float completion;
+  public boolean favorited;
 
   private ResumeHome(Builder builder) {
     id = builder.id;

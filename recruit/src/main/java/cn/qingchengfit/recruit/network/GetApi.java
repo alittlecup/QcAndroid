@@ -163,4 +163,11 @@ public interface GetApi {
 
   //热门机构
   @GET("/api/organizations/") rx.Observable<QcSearchOrganResponse> qcHotOrganization(@QueryMap Map<String, String> params);
+
+  /**
+   * 获取可邀约的职位列表
+   * @param params
+   * @return
+   */
+  @GET("/api/staff/job/permission/invite/") rx.Observable<QcDataResponse<JobListWrap>> qcGetInviteJobs(@QueryMap HashMap<String, Object> params);
 }

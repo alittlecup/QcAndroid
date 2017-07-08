@@ -262,6 +262,10 @@ public class RecruitPositionDetailEmployerFragment extends BaseFragment
     ToastUtils.show(R.drawable.vector_hook_white, "投递成功");
   }
 
+  @Override public void onInviteOk() {
+
+  }
+
   public void onGym(Gym gym) {
     if (gym == null) return;
     tvGymName.setText(gym.name);
@@ -359,6 +363,14 @@ public class RecruitPositionDetailEmployerFragment extends BaseFragment
   }
 
   @Override public void onCertiList(List<Certificate> certificates) {
+
+  }
+
+  @Override public void starOk() {
+
+  }
+
+  @Override public void unStartOk() {
 
   }
 

@@ -17,12 +17,10 @@ import cn.qingchengfit.recruit.views.RecruitGymDetailEmployerFragment;
 import cn.qingchengfit.recruit.views.RecruitGymDetailFragment;
 import cn.qingchengfit.recruit.views.RecruitManageFragment;
 import cn.qingchengfit.recruit.views.RecruitMyJobFairFragment;
-import cn.qingchengfit.recruit.views.RecruitPositionDemanFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDemanFragmentBuilder;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
 import cn.qingchengfit.recruit.views.RecruitPublishJobFragment;
 import cn.qingchengfit.recruit.views.RecruitPublishJobFragmentBuilder;
-import cn.qingchengfit.recruit.views.RecruitRequireOfJobFragmentBuilder;
 import cn.qingchengfit.recruit.views.RecruitRichTextEditFragmentBuilder;
 import cn.qingchengfit.recruit.views.RecruitWelFareFragmentBuilder;
 import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
@@ -35,7 +33,7 @@ import cn.qingchengfit.recruit.views.resume.RecruitGymEquipFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.RecruitPermsionFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeCertificateListFragment;
-import cn.qingchengfit.recruit.views.resume.ResumeDetailFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeDetailFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeEduExpListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeHomeFragment;
@@ -308,8 +306,8 @@ public class RecruitRouter extends InnerRouter {
   /**
    * 简历详情
    */
-  public void toResumeDetail(){
-    add(new ResumeDetailFragment());
+  public void toResumeDetail(String resumeId, String url){
+    add(new ResumeDetailFragmentBuilder(resumeId, url).build());
   }
 
 }

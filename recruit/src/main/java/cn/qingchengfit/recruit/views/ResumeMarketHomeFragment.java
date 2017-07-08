@@ -16,8 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.SearchCenterItem;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.HorizonImageShowItem;
 import cn.qingchengfit.recruit.item.JobFairFooterItem;
@@ -72,6 +74,7 @@ public class ResumeMarketHomeFragment extends BaseFragment
   @BindView(R2.id.srl) SwipeRefreshLayout srl;
   @Inject RecruitRouter router;
   @Inject ResumeMarketPresenter presenter;
+  @Inject QcRestRepository restRepository;
   private CommonFlexAdapter commonFlexAdapter;
   private HorizonImageShowItem horizonImageShowItem;
   private RecruitManageItem recruitmanage;
@@ -221,7 +224,7 @@ public class ResumeMarketHomeFragment extends BaseFragment
       return false;
     }
     if (item instanceof ResumeItem){
-      router.toResumeDetail();
+      router.toResumeDetail(((ResumeItem)item).getResume().id, restRepository.getHost() + RecruitConstants.RESUME_WEB_PATH);
       return false;
     }
 

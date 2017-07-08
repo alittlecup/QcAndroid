@@ -325,6 +325,14 @@ public class ResumeHomeFragment extends BaseFragment
 
   }
 
+  @Override public void starOk() {
+
+  }
+
+  @Override public void unStartOk() {
+
+  }
+
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == 10010) {

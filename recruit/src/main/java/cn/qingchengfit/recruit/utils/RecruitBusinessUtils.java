@@ -270,7 +270,7 @@ public class RecruitBusinessUtils {
 
   public static String getDegree(Context context, int x) {
     if (x < 0) return "不限";
-    String[] degrees = context.getResources().getStringArray(R.array.education_degree);
+    String[] degrees = context.getResources().getStringArray(R.array.add_resume_education_degree);
     if (x == 0) return "";
     x--;
     if (x >= 0 && x < degrees.length) {

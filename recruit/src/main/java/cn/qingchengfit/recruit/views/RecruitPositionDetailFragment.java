@@ -25,7 +25,6 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.RecruitRouter;
-import cn.qingchengfit.recruit.di.Recruit;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.Job;
@@ -44,7 +43,6 @@ import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import cn.qingchengfit.views.fragments.TouchyWebView;
 import cn.qingchengfit.widgets.QcTagGroup;
 import com.google.android.flexbox.AlignItems;
-import com.google.android.flexbox.BuildConfig;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -251,11 +249,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
     AddConversationProcessor addConversationProcessor =
         new AddConversationProcessor(getContext().getApplicationContext());
     Gson gson = new Gson();
-    String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
-    String resumeStr = "{userAction:1002, data:"
+    String resumeStr = "{\"userAction\":1002, \"data\":"
         + gson.toJson(resumePresenter.dealResumeMessage(resumeHome))
         + "}";
-    addConversationProcessor.sendResumeOrRecruit((BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id, resumeStr, jobStr);
+    addConversationProcessor.sendResumeOrRecruit(("qctest_") + job.created_by.id, resumeStr, "");
     hideLoadingTrans();
     job.deliveried = true;
     btnSendResume.setText(job.deliveried ? "已投递" : "投递简历");
@@ -263,6 +260,9 @@ public class RecruitPositionDetailFragment extends BaseFragment
     ToastUtils.show(R.drawable.vector_hook_white, "投递成功");
   }
 
+  @Override public void onInviteOk() {
+
+  }
 
   public void onGym(Gym gym) {
     if (gym == null) return;
@@ -315,13 +315,14 @@ public class RecruitPositionDetailFragment extends BaseFragment
     //AddConversationProcessor addConversationProcessor =
     //    new AddConversationProcessor(getContext().getApplicationContext());
     Gson gson = new Gson();
-    String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
-    String resumeStr = "{userAction:1002, data:"
+    String jobStr = "{\"userAction\":1001, \"data\":" + gson.toJson(presenter.getRecruitModel(job)) + "}";
+    String resumeStr = "{\"userAction\":1002, \"data\":"
         + gson.toJson(resumePresenter.dealResumeMessage(resumeHome))
         + "}";
     //intent.putExtra("id", (BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id);
     //intent.putExtra("datas", jobStr);
-    intent.putExtra(RecruitConstants.IDENTIFY, (BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id);
+    //TODO 正式版更换 id   by fb
+    intent.putExtra(RecruitConstants.IDENTIFY, ("qctest_") + job.created_by.id);
     intent.putExtra(RecruitConstants.TEMP_CONVERSATION_TYPE, RecruitConstants.C2C);
     intent.putExtra(RecruitConstants.CHAT_JOB_RESUME, resumeStr);
     intent.putExtra(RecruitConstants.CHAT_JOB_ID, job.id);
@@ -364,6 +365,14 @@ public class RecruitPositionDetailFragment extends BaseFragment
   }
 
   @Override public void onCertiList(List<Certificate> certificates) {
+
+  }
+
+  @Override public void starOk() {
+
+  }
+
+  @Override public void unStartOk() {
 
   }
 }

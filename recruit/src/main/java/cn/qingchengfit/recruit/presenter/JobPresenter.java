@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.presenter;
 
+import android.text.TextUtils;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -12,11 +13,13 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.PostApi;
-import cn.qingchengfit.recruit.network.body.JobBody;
+import cn.qingchengfit.recruit.network.body.InviteBody;
 import cn.qingchengfit.recruit.network.body.PublishPositionBody;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
+import cn.qingchengfit.recruit.network.response.JobListWrap;
 import com.tencent.qcloud.timchat.chatmodel.RecruitModel;
 import java.util.HashMap;
+import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -26,6 +29,7 @@ public class JobPresenter extends BasePresenter {
   @Inject QcRestRepository qcRestRepository;
   @Inject GymWrapper gymWrapper;
   private MVPView view;
+  private OnJobsList onJobsList;
 
   @Inject public JobPresenter() {
   }
@@ -39,7 +43,15 @@ public class JobPresenter extends BasePresenter {
     view = null;
   }
 
+  public void setOnJobsList(OnJobsList onJobsList) {
+    this.onJobsList = onJobsList;
+  }
 
+  /**
+   * 发布职位
+   * @param gymId
+   * @param body
+   */
   public void publishJob(String gymId, PublishPositionBody body) {
     body.params.put("gym_id", gymId);
     body.params.put("published", true);
@@ -70,6 +82,32 @@ public class JobPresenter extends BasePresenter {
               view.onJobDetail(qcResponse.data.job);
             } else {
               view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable())
+
+    );
+  }
+
+  /**
+   * 获取可邀约的职位列表
+   * @param fairId
+   */
+  public void getInviteJobs(String fairId){
+    HashMap<String, Object> params = new HashMap<>();
+    if (!TextUtils.isEmpty(fairId)){
+      params.put("fair_id", fairId);
+    }
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .qcGetInviteJobs(params)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
+          @Override public void call(QcDataResponse<JobListWrap> jobList) {
+            if (ResponseConstant.checkSuccess(jobList)) {
+              if (onJobsList != null)
+                onJobsList.onJobList(jobList.data.jobs);
+            } else {
             }
           }
         }, new NetWorkThrowable())
@@ -159,6 +197,24 @@ public class JobPresenter extends BasePresenter {
         }, new NetWorkThrowable()));
   }
 
+  public void invitePosition(List<String> jobs, String resumeId){
+    InviteBody body = InviteBody.build(jobs, resumeId);
+    RxRegiste(qcRestRepository.createPostApi(PostApi.class)
+        .qcInvitePosition(body)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcResponse>() {
+          @Override public void call(QcResponse qcResponse) {
+            if (qcResponse.getStatus() == 200) {
+              view.onInviteOk();
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+
+  }
+
   public interface MVPView extends CView {
     void onEditOk();
 
@@ -169,5 +225,12 @@ public class JobPresenter extends BasePresenter {
     void unStarOk();
 
     void onPostResumeOk();
+
+    void onInviteOk();
   }
+
+  public interface OnJobsList extends CView{
+    void onJobList(List<Job> jobList);
+  }
+
 }

@@ -14,6 +14,7 @@ import cn.qingchengfit.inject.moudle.StaffWrapperMoudle;
 import cn.qingchengfit.inject.moudle.StudentWrapperModule;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
+import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -493,6 +494,11 @@ import dagger.multibindings.IntoMap;
     AppComponent.AddStudentFragmentModule.class, AppComponent.AllocateCoachModule.class, AppComponent.AllocateCoachListFragmentModule.class,
     AppComponent.CoachStudentDetailFragmentModule.class, AppComponent.OperationStudentFragmentModule.class,
     AppComponent.MutiChooseCoachModule.class, AppComponent.CardTypeChooseDialogFragmentModule.class,
+
+    /**
+     * 聊天
+     */
+    AppComponent.JobSearchChatModule.class,
 })
 
 public interface AppComponent {
@@ -3862,6 +3868,15 @@ public interface AppComponent {
         @Binds @IntoMap @FragmentKey(BottomBuyLimitFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             BottomBuyLimitFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface JobSearchChatSubcomponent extends AndroidInjector<JobSearchChatActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<JobSearchChatActivity> {
+        }
+    }
+    @Module(subcomponents = JobSearchChatSubcomponent.class) abstract class JobSearchChatModule {
+        @Binds @IntoMap @ActivityKey(JobSearchChatActivity.class)
+        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(JobSearchChatSubcomponent.Builder builder);
     }
 
     /**
