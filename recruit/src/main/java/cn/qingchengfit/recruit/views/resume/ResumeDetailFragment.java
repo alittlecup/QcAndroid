@@ -184,7 +184,7 @@ import javax.inject.Inject;
   //取消收藏简历成功回调
   @Override public void unStartOk() {
     isStarred = false;
-    tvStarred.setText("收藏职位");
+    tvStarred.setText("取消收藏");
     imgStared.setImageResource(R.drawable.vd_recruit_job_star);
   }
 

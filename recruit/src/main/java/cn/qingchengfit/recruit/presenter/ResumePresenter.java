@@ -160,7 +160,7 @@ public class ResumePresenter extends BasePresenter {
     HashMap<String, Object> params = new HashMap<String, Object>();
     params.put("resume_id", resumeId);
     RxRegiste(restRepository.createPostApi(PostApi.class)
-        .starJob(params)
+        .favoriteResume(params)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
@@ -176,7 +176,7 @@ public class ResumePresenter extends BasePresenter {
 
   public void unStarResume(String resumeId){
     RxRegiste(restRepository.createPostApi(PostApi.class)
-        .cancelStarJob(resumeId)
+        .cancelStarResume(resumeId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {

@@ -9,8 +9,6 @@ import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -39,8 +37,8 @@ public class CustomStatmentPresenterTest {
 
     @Before public void setUp() throws Exception {
         RxUnitTestTools.openRxTools();
-        usecase = mock(StatementUsecase.class);
-        view = mock(StatementDetailView.class);
+        //usecase = mock(StatementUsecase.class);
+        //view = mock(StatementDetailView.class);
         //presenter = new StatementDetailPresenter(usecase,new Brand("1"),null);
 
     }
