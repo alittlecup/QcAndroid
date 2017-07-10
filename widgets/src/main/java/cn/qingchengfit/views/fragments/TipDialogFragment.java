@@ -1,9 +1,11 @@
 package cn.qingchengfit.views.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +51,17 @@ public class TipDialogFragment extends DialogFragment {
     return view;
   }
 
+  @Override public void onStart() {
+    super.onStart();
+    Dialog dialog = getDialog();
+    if (dialog != null) {
+      DisplayMetrics dm = new DisplayMetrics();
+      getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+      dialog.getWindow()
+          .setLayout((int) (dm.widthPixels * 0.85), ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+  }
+
   public void setOnClickListener(OnClickButtonListener onClickListener) {
     this.onClickListener = onClickListener;
   }
@@ -69,7 +82,12 @@ public class TipDialogFragment extends DialogFragment {
   public void onDoClick(View v){
     if (onClickListener != null){
       onClickListener.onDoClick(v);
+      dismiss();
     }
+  }
+
+  @OnClick(R2.id.img_close_tips) public void onCloseDialog(View v) {
+    dismiss();
   }
 
   public interface OnClickButtonListener{
