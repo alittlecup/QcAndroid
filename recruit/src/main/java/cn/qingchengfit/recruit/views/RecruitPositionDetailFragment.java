@@ -40,6 +40,7 @@ import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
+import cn.qingchengfit.views.fragments.TipDialogFragment;
 import cn.qingchengfit.views.fragments.TouchyWebView;
 import cn.qingchengfit.widgets.QcTagGroup;
 import com.google.android.flexbox.AlignItems;

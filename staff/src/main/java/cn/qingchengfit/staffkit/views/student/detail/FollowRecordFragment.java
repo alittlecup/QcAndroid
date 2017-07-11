@@ -129,7 +129,7 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
             @Override public void onSendMsg(String s) {
                 presenter.addFollow(s, null);
                 //                FollowRecords.Follow follow = new FollowRecords.Follow();
-                //                follow.type = "record";
+                //                follow.type = "Record";
                 //                follow.content = s;
                 //                follow.created_at = DateUtils.DateToServer(new Date());
                 //                QcStudentBean studentBean = new QcStudentBean();
