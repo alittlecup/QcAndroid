@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.event;
 
+import cn.qingchengfit.recruit.network.body.JobBody;
 import java.util.HashMap;
 
 /**
@@ -7,13 +8,11 @@ import java.util.HashMap;
  */
 
 public class EventPulishPosition {
-  public HashMap<String, Object> damenMap;
 
-  public EventPulishPosition(HashMap<String, Object> damenMap) {
-    this.damenMap = damenMap;
+  public JobBody body;
+
+  public EventPulishPosition(JobBody body) {
+    this.body = body;
   }
 
-  public static EventPulishPosition build(HashMap<String, Object> map) {
-    return new EventPulishPosition(map);
-  }
 }

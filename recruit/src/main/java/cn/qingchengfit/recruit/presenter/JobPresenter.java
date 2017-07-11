@@ -14,7 +14,7 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.PostApi;
 import cn.qingchengfit.recruit.network.body.InviteBody;
-import cn.qingchengfit.recruit.network.body.PublishPositionBody;
+import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
 import com.tencent.qcloud.timchat.chatmodel.RecruitModel;
@@ -54,11 +54,8 @@ public class JobPresenter extends BasePresenter {
   /**
    * 发布职位
    */
-  public void publishJob(String gymId, PublishPositionBody body) {
-    body.params.put("gym_id", gymId);
-    body.params.put("published", true);
-    body.params.remove("type");
-    RxRegiste(qcRestRepository.createPostApi(PostApi.class).qcPublishPosition(body.params)
+  public void publishJob(JobBody body) {
+    RxRegiste(qcRestRepository.createPostApi(PostApi.class).qcPublishPosition(body)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {

@@ -154,7 +154,7 @@ public interface PostApi {
    * 发布职位
    */
   @POST("/api/staff/jobs/") rx.Observable<QcResponse> qcPublishPosition(
-      @Body HashMap<String, Object> publishPositionBody);
+      @Body JobBody jobBody);
 
   /**
    * 发送邀约

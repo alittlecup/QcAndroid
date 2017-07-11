@@ -16,14 +16,14 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
-import cn.qingchengfit.recruit.event.EventPulishPosition;
+import cn.qingchengfit.recruit.event.EventRichTextBack;
+import cn.qingchengfit.recruit.event.EventSetName;
 import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.views.fragments.RichTxtFragment;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
-import java.util.HashMap;
 
 /**
  * Created by fb on 2017/7/3.
@@ -38,6 +38,7 @@ import java.util.HashMap;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
 
   @Arg String content;
+  @Arg(required = false) int type;            //type用来区分多个富文本编辑器返回结果(发布职位)
   @Arg String toolbarTitle;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,10 +105,7 @@ import java.util.HashMap;
   @OnClick(R2.id.btn_comfirm) public void onBtnComfirmClicked() {
     if (richTxtFragment != null) {
       String x = richTxtFragment.getContent();
-      HashMap<String, Object> map = new HashMap<>();
-      map.put("description", x);
-      map.put("type", toolbarTitle);
-      RxBus.getBus().post(EventPulishPosition.build(map));
+      RxBus.getBus().post(new EventRichTextBack(x, type));
       getActivity().onBackPressed();
     }
   }

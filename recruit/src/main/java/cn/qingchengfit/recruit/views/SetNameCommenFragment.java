@@ -20,10 +20,9 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
-import cn.qingchengfit.recruit.event.EventPulishPosition;
+import cn.qingchengfit.recruit.event.EventSetName;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import java.util.HashMap;
 
 /**
  * Created by fb on 2017/7/3.
@@ -66,9 +65,7 @@ public class SetNameCommenFragment extends BaseFragment {
           DialogUtils.showAlert(getContext(), "请填写群名称");
           return false;
         } else {
-          HashMap<String, Object> map = new HashMap<String, Object>();
-          map.put("name", editGroupName.getText().toString());
-          RxBus.getBus().post(EventPulishPosition.build(map));
+          RxBus.getBus().post(new EventSetName(editGroupName.getText().toString()));
           getActivity().onBackPressed();
         }
         return false;

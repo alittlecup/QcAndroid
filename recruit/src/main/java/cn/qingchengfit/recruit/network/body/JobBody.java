@@ -35,6 +35,7 @@ public class JobBody implements Parcelable {
       return new JobBody[size];
     }
   };
+  public String gym_id;
   public String name;
   public String description;
   public String requirement;

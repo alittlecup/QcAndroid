@@ -17,6 +17,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventPulishPosition;
+import cn.qingchengfit.recruit.event.EventWelFare;
 import cn.qingchengfit.recruit.views.resume.ResumeIntentJobsFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TagInputFragment;
@@ -73,9 +74,7 @@ import java.util.List;
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (tagInputFragment != null) {
-          HashMap<String, Object> map = new HashMap<String, Object>();
-          map.put("welfare", tagInputFragment.getTags());
-          RxBus.getBus().post(EventPulishPosition.build(map));
+          RxBus.getBus().post(new EventWelFare(tagInputFragment.getTags()));
         }
         getActivity().onBackPressed();
         return true;

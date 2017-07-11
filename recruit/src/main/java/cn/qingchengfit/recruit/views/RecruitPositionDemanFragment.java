@@ -47,7 +47,7 @@ import java.util.HashMap;
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
   private TwoScrollPicker twoScrollPicker;
   private SimpleScrollPicker simpleScrollPicker;
-  private HashMap<String, Object> map = new HashMap<>();
+  //private HashMap<String, Object> map = new HashMap<>();
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -72,7 +72,7 @@ import java.util.HashMap;
     toolbar.inflateMenu(R.menu.menu_save);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        RxBus.getBus().post(EventPulishPosition.build(map));
+        RxBus.getBus().post(new EventPulishPosition(jobBody));
         getActivity().onBackPressed();
         return false;
       }
@@ -89,16 +89,6 @@ import java.util.HashMap;
         RecruitBusinessUtils.getHeight(jobBody.min_height, jobBody.max_height));
     civWorkWeight.setContent(
         RecruitBusinessUtils.getWeight(jobBody.min_weight, jobBody.max_weight));
-    map.put("min_work_year", jobBody.min_work_year);
-    map.put("max_work_year", jobBody.max_work_year);
-    map.put("gender", jobBody.gender);
-    map.put("min_age", jobBody.min_age);
-    map.put("max_age", jobBody.max_age);
-    map.put("education", jobBody.education);
-    map.put("min_height", jobBody.min_height);
-    map.put("max_height", jobBody.max_height);
-    map.put("min_weight", jobBody.min_weight);
-    map.put("max_weight", jobBody.max_weight);
   }
 
   @Override public void onDestroyView() {
@@ -116,8 +106,8 @@ import java.util.HashMap;
           return;
         } else {
           civWorkExp.setContent(d.get(left) + "-" + d.get(right));
-          map.put("min_work_year", left - 1);
-          map.put("max_work_year", right - 1);
+          jobBody.min_work_year = left - 1  ;
+          jobBody.max_work_year = right - 1;
         }
       }
     });
@@ -131,7 +121,7 @@ import java.util.HashMap;
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
         civWorkGender.setContent(d.get(pos));
-        map.put("gender", pos - 1);
+        jobBody.gender = pos - 1;
       }
     });
     simpleScrollPicker.show(d, 0);
@@ -151,8 +141,8 @@ import java.util.HashMap;
           return;
         } else {
           civWorkAge.setContent(d.get(left) + "-" + d.get(right));
-          map.put("min_age", left - 1);
-          map.put("max_age", right - 1);
+          jobBody.min_age = left - 1;
+          jobBody.max_age = right - 1;
         }
       }
     });
@@ -167,9 +157,9 @@ import java.util.HashMap;
       @Override public void onSelectItem(int pos) {
         civWorkEducation.setContent(d.get(pos));
         if (pos == 0) {
-          map.put("education", pos - 1);
+          jobBody.education = pos - 1;
         } else {
-          map.put("education", pos);
+          jobBody.education = pos;
         }
       }
     });
@@ -190,8 +180,8 @@ import java.util.HashMap;
           return;
         } else {
           civWorkHeight.setContent(d.get(left) + "-" + d.get(right));
-          map.put("min_height", left - 1f);
-          map.put("max_height", right - 1f);
+          jobBody.max_height = left - 1f ;
+          jobBody.min_height = right - 1f;
         }
       }
     });
@@ -212,8 +202,8 @@ import java.util.HashMap;
           return;
         } else {
           civWorkWeight.setContent(d.get(left) + "-" + d.get(right));
-          map.put("min_weight", left - 1f);
-          map.put("max_weight", right - 1f);
+          jobBody.min_height = left - 1f;
+          jobBody.max_height = right - 1f;
         }
       }
     });
