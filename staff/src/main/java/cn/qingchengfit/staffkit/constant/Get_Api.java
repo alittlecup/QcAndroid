@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.constant;
 
 import android.support.annotation.IntRange;
 import android.support.v4.util.ArrayMap;
+import cn.qingchengfit.chat.model.RecordWrap;
 import cn.qingchengfit.model.common.Absentces;
 import cn.qingchengfit.model.common.Attendances;
 import cn.qingchengfit.model.responese.AllLockers;
@@ -912,4 +913,9 @@ public interface Get_Api {
 
     @GET("/api/staffs/{staff_id}/coaches/") rx.Observable<cn.qingchengfit.network.response.QcResponseData<Staffs>> qcGetAllAllocateCoaches(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+    //获取消息首页求职招聘信息列表
+    @GET("/api/user/job/records/")
+    rx.Observable<cn.qingchengfit.network.response.QcResponseData<RecordWrap>> qcGetRecruitMessageList();
+
 }

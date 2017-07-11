@@ -788,6 +788,7 @@
   <string name="notification_checkin">签到处理</string>
   <string name="notification_comment">收到回复</string>
   <string name="notification_competition">赛事训练营</string>
+  <string name="notification_job">求职招聘</string>
   <string name="notification_gym">场馆消息</string>
   <string name="all_comments_count">全部评论(%d)</string>
   <string name="sign_up_create_group">新建分组</string>

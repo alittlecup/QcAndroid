@@ -1,5 +1,7 @@
 package cn.qingchengfit.staffkit.presenters;
 
+import cn.qingchengfit.chat.model.Record;
+import cn.qingchengfit.chat.model.RecordWrap;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ClearNotiBody;
@@ -59,6 +61,24 @@ public class SystemMsgPresenter extends BasePresenter {
             }, new NetWorkThrowable()));
     }
 
+    public void queryRecruitMsgList(){
+        RxRegiste(restRepository.getGet_api()
+            .qcGetRecruitMessageList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<RecordWrap>>() {
+                @Override public void call(
+                    cn.qingchengfit.network.response.QcResponseData<RecordWrap> recordWrapQcResponseData) {
+                    if (ResponseConstant.checkSuccess(recordWrapQcResponseData)){
+                        view.onMessageList(recordWrapQcResponseData.data.records);
+                    }else{
+                        view.onShowError(recordWrapQcResponseData.getMsg());
+                    }
+                }
+            }, new NetWorkThrowable()));
+    }
+
+
     @Override public void attachView(PView v) {
         view = (MVPView) v;
     }
@@ -72,5 +92,7 @@ public class SystemMsgPresenter extends BasePresenter {
         void onNotificationList(List<NotificationGlance> list);
 
         void onClearNotiOk();
+
+        void onMessageList(List<Record> recordList);
     }
 }
