@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp"
+    android:orientation="vertical"
+    style="@style/AppTheme"
+    >
+
+  <ImageView
+      android:id="@+id/img_close_tips"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/cwac_cam2_ic_close"
+      android:layout_gravity="right"
+      />
+
+  <ImageView
+      android:id="@+id/img_tips_top"
+      android:layout_width="60dp"
+      android:layout_height="60dp"
+      tools:src="@drawable/ic_gender_signal_female"
+      />
+
+  <TextView
+      android:id="@+id/text_tips"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="您的场馆没有参加本期招聘会，无法发出邀约/与TA沟通"
+      android:layout_marginTop="20dp"
+      style="@style/QcTextStyleLargeWarm"
+      android:gravity="center"
+      android:layout_marginBottom="20dp"
+      />
+
+
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:id="@+id/text_button_click"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:text="申请参加招聘会"
+      android:textColor="@color/qc_allotsale_green"
+      android:textSize="17sp"
+      android:paddingTop="13dp"
+      android:paddingBottom="13dp"
+      android:gravity="center"
+      />
+
+</LinearLayout>

@@ -14,7 +14,9 @@ import cn.qingchengfit.widgets.R;
 import com.bigkoo.pickerview.lib.ArrayWheelAdapter;
 import com.bigkoo.pickerview.lib.NumericWheelAdapter;
 import com.bigkoo.pickerview.lib.WheelView;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * power by

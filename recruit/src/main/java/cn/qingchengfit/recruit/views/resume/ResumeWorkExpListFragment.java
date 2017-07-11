@@ -149,6 +149,14 @@ public class ResumeWorkExpListFragment extends BaseFragment implements ResumePre
 
   }
 
+  @Override public void starOk() {
+
+  }
+
+  @Override public void unStartOk() {
+
+  }
+
   @Override public boolean onItemClick(int i) {
     if (commonFlexAdapter.getItem(i) instanceof ResumeWorkExpSimpleItem) {
       router.workExpPreview(((ResumeWorkExpSimpleItem) commonFlexAdapter.getItem(i)).getWorkExp());

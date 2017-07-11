@@ -20,7 +20,6 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.model.Job;
-import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
 import cn.qingchengfit.utils.ToastUtils;
@@ -149,11 +148,12 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
    */
   @OnClick(R2.id.btn_close_pos) public void onBtnClosePosClicked() {
     showLoading();
-    if (job.published) {
-      presenter.publishJob(job.id, new JobBody.Builder().published(false).build());
-    } else {
-      presenter.publishJob(job.id, new JobBody.Builder().published(true).build());
-    }
+    // TODO: 2017/7/11 @FB
+    //if (job.published) {
+    //  presenter.publishJob(job.id, new JobBody.Builder().published(false).build());
+    //} else {
+    //  presenter.publishJob(job.id, new JobBody.Builder().published(true).build());
+    //}
   }
 
   @Override public void onEditOk() {

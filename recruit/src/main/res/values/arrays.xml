@@ -11,9 +11,9 @@
   </string-array>
 
   <string-array name="filter_gender">
+    <item>不限</item>
     <item>男</item>
     <item>女</item>
-    <item>不限</item>
   </string-array>
   <string-array name="filter_degree">
     <item>初中</item>
@@ -164,6 +164,7 @@
     <item>会籍</item>
     <item>前台</item>
   </string-array>
+
   <string-array name="recruit_common_facilities">
     <item>TRX</item>
     <item>跑步机</item>
@@ -204,4 +205,10 @@
     <item>要求</item>
   </string-array>
 
+  <string-array name="recruit_position_welfare">
+    <item>旅游基金</item>
+    <item>提供住宿</item>
+    <item>提供保险</item>
+    <item>提供午餐</item>
+  </string-array>
 </resources>

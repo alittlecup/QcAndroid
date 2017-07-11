@@ -5,6 +5,7 @@ import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.network.body.EditPermissionBody;
+import cn.qingchengfit.recruit.network.body.InviteBody;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.network.body.MarkResumeBody;
 import cn.qingchengfit.recruit.network.body.RecruitGymBody;
@@ -17,6 +18,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+
 
 /**
  * power by
@@ -147,4 +149,30 @@ public interface PostApi {
   //新增组织
   @POST("/api/organizations/") rx.Observable<QcAddOrganizationResponse> qcAddOrganization(
       @Body OrganizationBean organizationBean);
+
+  /**
+   * 发布职位
+   */
+  @POST("/api/staff/jobs/") rx.Observable<QcResponse> qcPublishPosition(
+      @Body HashMap<String, Object> publishPositionBody);
+
+  /**
+   * 发送邀约
+   */
+  @POST("api/staff/job/permission/invite/") rx.Observable<QcResponse> qcInvitePosition(
+      @Body InviteBody inviteBody);
+
+  /**
+   * 收藏简历
+   */
+  @POST("api/staff/job/resumes/favorites/") rx.Observable<QcResponse> favoriteResume(
+      @Body HashMap<String, Object> params);
+
+  /**
+   * 取消收藏
+   * @param resumeId
+   * @return
+   */
+  @DELETE("api/staff/job/resumes/favorites/{resume_id}/")
+  rx.Observable<QcResponse> cancelStarResume(@Path("resume_id") String resumeId);
 }

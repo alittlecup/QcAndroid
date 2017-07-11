@@ -48,6 +48,7 @@ public class CommonInputView extends RelativeLayout {
     private String str_label;
     private ImageView rightview;
     private int textColor = 0x9b9b9b;
+    private int contentColor;
     private String str_hint;
     private View disableView;
     private boolean isNum;
@@ -269,6 +270,10 @@ public class CommonInputView extends RelativeLayout {
     public void setContent(String c) {
         edit.setText(c);
         if (c != null) edit.setSelection(c.length() > 20 ? 20 : c.length());
+    }
+
+    public void setContentColor(int color){
+        edit.setTextColor(color);
     }
 
     public boolean isEmpty() {

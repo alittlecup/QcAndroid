@@ -19,6 +19,7 @@
       app:civ_showdivier="true"
       app:civ_showright="true"
       app:civ_text_color="@color/qc_text_black"
+      app:civ_clickable="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
@@ -30,6 +31,7 @@
       app:civ_showdivier="true"
       app:civ_showright="true"
       app:civ_text_color="@color/qc_text_black"
+      app:civ_clickable="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
@@ -52,7 +54,9 @@
       app:civ_lable="任职要求"
       app:civ_showdivier="false"
       app:civ_showright="true"
+      app:civ_nonnull="false"
       app:civ_text_color="@color/qc_text_black"
+      app:civ_clickable="true"
       />
 
   <include layout="@layout/divider_grey"/>
@@ -73,6 +77,7 @@
       app:civ_showdivier="true"
       app:civ_showright="true"
       app:civ_text_color="@color/qc_text_black"
+      app:civ_clickable="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
@@ -84,6 +89,7 @@
       app:civ_showdivier="false"
       app:civ_showright="true"
       app:civ_text_color="@color/qc_text_black"
+      app:civ_clickable="true"
       />
 
   <include layout="@layout/divider_grey"/>
@@ -104,6 +110,7 @@
       app:civ_showdivier="false"
       app:civ_showright="true"
       app:civ_text_color="@color/qc_text_black"
+      app:civ_clickable="true"
       />
 
   <Button

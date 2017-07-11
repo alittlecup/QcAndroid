@@ -6,6 +6,7 @@
   <application android:allowBackup="true"
       >
 
+    <activity android:name=".views.JobSearchChatActivity"/>
   </application>
 
 </manifest>

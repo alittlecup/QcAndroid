@@ -68,6 +68,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment.MIN_WE
     super.onCreate(savedInstanceState);
     RecruitRequireOfJobFragmentBuilder.injectArguments(this);
     twoScrollPicker = new TwoScrollPicker(getContext());
+    simpleScrollPicker = new SimpleScrollPicker(getContext());
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
