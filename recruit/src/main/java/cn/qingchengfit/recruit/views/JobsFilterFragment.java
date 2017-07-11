@@ -1,10 +1,7 @@
-package cn.qingchengfit.saas.network;
+package cn.qingchengfit.recruit.views;
 
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saas.response.GymListWrap;
-import cn.qingchengfit.saas.response.SuWrap;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 /**
  * power by
@@ -24,12 +21,29 @@ import retrofit2.http.Query;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/7/4.
+ * Created by Paper on 2017/7/11.
  */
 
-public interface GetApi {
-  @GET("/api/common/user/gyms/") rx.Observable<QcDataResponse<GymListWrap>> queryPermissionGyms();
+public class JobsFilterFragment extends ResumeFilterFragment {
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    filterDamenFragment = FilterDamenFragment.newInstanceJobsFilter();
+  }
 
-  @GET("api/common/user/check/superuser/") rx.Observable<QcDataResponse<SuWrap>> querySu(
-      @Query("gym_id") String gymid);
+  @Override protected void showStrategy() {
+    switch (showPos) {
+      case 0:
+        show("city");
+        return;
+      case 1:
+        show("salary");
+        return;
+      case 2:
+        show("workyear");
+        return;
+      default:
+        show("other");
+        break;
+    }
+  }
 }

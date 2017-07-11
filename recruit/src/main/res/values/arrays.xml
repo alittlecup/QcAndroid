@@ -190,4 +190,18 @@
     <item>8&#8211;10年</item>
     <item>10年以上</item>
   </string-array>
+
+  <string-array name="filter_resume">
+    <item>期望城市</item>
+    <item>期望薪资</item>
+    <item>工作经验</item>
+    <item>要求</item>
+  </string-array>
+
+  <string-array name="filter_jobs">
+    <item>城市</item>
+    <item>薪资</item>
+    <item>要求</item>
+  </string-array>
+
 </resources>

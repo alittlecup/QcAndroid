@@ -24,6 +24,7 @@ import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.recruit.ChooseStaffFragment;
+import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -67,6 +68,7 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
     public static final int SIGN_IN_CARDS = 51; // 用卡签到
   public static final int CONVERSATION_FRIEND = 61; // 选择好友
   public static final int CHOOSE_STAFF = 62; // 选择工作人员
+  public static final int CHOOSE_COMMON_GYM = 80; // 选择工作人员
 
     /**
      * 选择来源
@@ -157,6 +159,10 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
                 toolbarLayout.setVisibility(View.GONE);
                 fragment = new ConversationFriendsFragment();
               break;
+          case CHOOSE_COMMON_GYM:
+            toolbarLayout.setVisibility(View.GONE);
+            fragment = new ChooseGymFragment();
+            break;
           case CHOOSE_STAFF:
             ChatGym gym = getIntent().getParcelableExtra("chatgym");
             if (gym == null) {

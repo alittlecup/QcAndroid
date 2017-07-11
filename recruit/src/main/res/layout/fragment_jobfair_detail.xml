@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:fitsSystemWindows="true"
+
+    >
+
+  <android.support.design.widget.AppBarLayout
+      android:id="@+id/smooth_app_bar_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:fitsSystemWindows="true"
+      app:elevation="0dp"
+      >
+
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/collapsing_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:fitsSystemWindows="true"
+        app:contentScrim="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        app:statusBarScrim="@android:color/transparent"
+        app:titleEnabled="false"
+        >
+
+      <android.support.v7.widget.Toolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          app:layout_collapseMode="pin"
+          />
+
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="280dp"
+          android:scaleType="centerCrop"
+          app:layout_collapseMode="parallax"
+          app:layout_scrollFlags="scroll|exitUntilCollapsed"
+          app:srcCompat="@drawable/vector_hook_trans"
+          />
+
+      <TextView
+          android:id="@+id/toolbar_title"
+          android:layout_width="wrap_content"
+          android:layout_height="?actionBarSize"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+          tools:text="xxx"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/tv_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="160dp"
+          android:gravity="center"
+          android:maxWidth="255dp"
+          android:textColor="@color/white"
+          android:textSize="@dimen/font_20"
+          app:layout_scrollFlags="scroll|exitUntilCollapsed"
+          tools:text="@string/test_short"
+
+          />
+
+      <TextView
+          android:id="@+id/tv_during"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:layout_gravity="center_horizontal|bottom"
+          android:layout_marginBottom="35dp"
+          android:gravity="center"
+          android:maxWidth="255dp"
+          android:textColor="@color/white"
+          android:textSize="@dimen/font_20"
+          app:layout_scrollFlags="scroll|exitUntilCollapsed"
+          tools:text="@string/test_short"
+
+          />
+    </android.support.design.widget.CollapsingToolbarLayout>
+  </android.support.design.widget.AppBarLayout>
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      />
+</android.support.design.widget.CoordinatorLayout>

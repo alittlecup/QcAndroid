@@ -6,6 +6,7 @@ import cn.qingchengfit.recruit.network.response.ChatGymWrap;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
 import cn.qingchengfit.recruit.network.response.GymListWrap;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
+import cn.qingchengfit.recruit.network.response.JobFairWrap;
 import cn.qingchengfit.recruit.network.response.JobFariListWrap;
 import cn.qingchengfit.recruit.network.response.JobIndexWrap;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
@@ -53,40 +54,46 @@ public interface GetApi {
   @GET("/api/user/jobs/") rx.Observable<QcDataResponse<JobListWrap>> queryJobList(
       @Query("page") int page, @QueryMap HashMap<String, Object> hashMap);
 
-  @GET("/api/user/job/index/") rx.Observable<QcDataResponse<JobIndexWrap>> queryJobIndex(@QueryMap HashMap<String, Object> hashMap);
+  @GET("/api/user/job/index/") rx.Observable<QcDataResponse<JobIndexWrap>> queryJobIndex(
+      @QueryMap HashMap<String, Object> hashMap);
 
   //求职招聘主页
   @GET("/api/user/job/list/index/") rx.Observable<QcDataResponse<JobListIndex>> queryJobsIndex();
 
   //职位详情
-  @GET("/api/user/jobs/{job_id}/") rx.Observable<QcDataResponse<JobDetailWrap>> queryJobDetail(@Path("job_id") String jobid);
+  @GET("/api/user/jobs/{job_id}/") rx.Observable<QcDataResponse<JobDetailWrap>> queryJobDetail(
+      @Path("job_id") String jobid);
 
   //我的收藏
-  @GET("/api/user/job/favorites/") rx.Observable<QcDataResponse<JobListWrap>> queryMyStared(@Query("page") int page);
+  @GET("/api/user/job/favorites/") rx.Observable<QcDataResponse<JobListWrap>> queryMyStared(
+      @Query("page") int page);
 
   //我的投递
-  @GET("/api/user/job/deliveries/") rx.Observable<QcDataResponse<JobListWrap>> queryMySent(@Query("page") int page);
+  @GET("/api/user/job/deliveries/") rx.Observable<QcDataResponse<JobListWrap>> queryMySent(
+      @Query("page") int page);
 
   //我被邀请的
-  @GET("/api/user/job/invitations/") rx.Observable<QcDataResponse<JobListWrap>> queryMyInvited(@Query("page") int page);
+  @GET("/api/user/job/invitations/") rx.Observable<QcDataResponse<JobListWrap>> queryMyInvited(
+      @Query("page") int page);
 
   /**
    * 公司详情
    */
-  @GET("/api/job/gyms/{gym_id}/") rx.Observable<QcDataResponse<GymWrap>> queryGymInfo(@Path("gym_id") String gym_id);
+  @GET("/api/job/gyms/{gym_id}/") rx.Observable<QcDataResponse<GymWrap>> queryGymInfo(
+      @Path("gym_id") String gym_id);
 
   /**
    * 某公司所有招聘职位
    */
-  @GET("/api/user/gyms/{gym_id}/jobs/") rx.Observable<QcDataResponse<JobListWrap>> queryGymJobs(@Path("gym_id") String gym_id,
-      @Query("page") int page);
+  @GET("/api/user/gyms/{gym_id}/jobs/") rx.Observable<QcDataResponse<JobListWrap>> queryGymJobs(
+      @Path("gym_id") String gym_id, @Query("page") int page);
+
   /**
    * 某公司所有招聘职位 是否发布（关闭）
    */
   @GET("/api/user/gyms/{gym_id}/jobs/?show_all=1")
   rx.Observable<QcDataResponse<JobListWrap>> queryGymJobsAll(@Path("gym_id") String gym_id,
       @Query("page") int page);
-
 
   /**
    * 收到的简历(主动投递的)
@@ -162,7 +169,32 @@ public interface GetApi {
 
 
     /*
-     *   ===============================简历部分============================================
+     *   =============================== 招聘会  ============================================
+     */
+
+  /**
+   * 学员将staff 改成user 返回结果暂时一致
+   */
+  @GET("/api/staff/job/fairs/{fair_id}/")
+  rx.Observable<QcDataResponse<JobFairWrap>> queryStaffJobFairDetail(
+      @Path("fair_id") String fair_id);
+
+  /**
+   * 专场招聘会中的职位列表
+   */
+  @GET("/api/user/job/fairs/{fair_id}/jobs/")
+  rx.Observable<QcDataResponse<JobListWrap>> queryJobFairJobs(@Path("fair_id") String fair_id);
+
+  /*
+   * 专场招聘会的简历列表
+   */
+  @GET("/api/user/job/fairs/{fair_id}/resumes/")
+  rx.Observable<QcDataResponse<ResumeListWrap>> queryJobFairResumes(
+      @Path("fair_id") String fair_id);
+
+
+    /*
+     *   =============================== 简历部分============================================
      */
 
   /**
@@ -173,7 +205,8 @@ public interface GetApi {
   /**
    * 获取我的期望值
    */
-  @GET("/api/user/resume/exp/") rx.Observable<QcDataResponse<ResumeIntentsWrap>> queryMyResumeIntents();
+  @GET("/api/user/resume/exp/")
+  rx.Observable<QcDataResponse<ResumeIntentsWrap>> queryMyResumeIntents();
 
   /**
    * 教育经历列表
@@ -189,17 +222,22 @@ public interface GetApi {
   @GET("/api/user/job/experiences/{id}/") rx.Observable<QcDataResponse<WorkExpWrap>> queryWorkExp(
       @Path("id") String id);
 
-  @GET("/api/user/job/certificates/") rx.Observable<QcDataResponse<CertificateListWrap>> queryCertifications();
+  @GET("/api/user/job/certificates/")
+  rx.Observable<QcDataResponse<CertificateListWrap>> queryCertifications();
 
   //搜索健身房
-  @GET("/api/gym/search/") rx.Observable<QcSerachGymRepsonse> qcSearchGym(@QueryMap Map<String, String> params);        //搜索健身房
+  @GET("/api/gym/search/") rx.Observable<QcSerachGymRepsonse> qcSearchGym(
+      @QueryMap Map<String, String> params);        //搜索健身房
 
   //搜索热门健身房
-  @GET("/api/gym/") rx.Observable<QcSerachGymRepsonse> qcHotGym(@QueryMap Map<String, String> params);
+  @GET("/api/gym/") rx.Observable<QcSerachGymRepsonse> qcHotGym(
+      @QueryMap Map<String, String> params);
 
   //搜索机构
-  @GET("/api/organizations/search/") rx.Observable<QcSearchOrganResponse> qcSearchOrganization(@QueryMap Map<String, String> params);
+  @GET("/api/organizations/search/") rx.Observable<QcSearchOrganResponse> qcSearchOrganization(
+      @QueryMap Map<String, String> params);
 
   //热门机构
-  @GET("/api/organizations/") rx.Observable<QcSearchOrganResponse> qcHotOrganization(@QueryMap Map<String, String> params);
+  @GET("/api/organizations/") rx.Observable<QcSearchOrganResponse> qcHotOrganization(
+      @QueryMap Map<String, String> params);
 }

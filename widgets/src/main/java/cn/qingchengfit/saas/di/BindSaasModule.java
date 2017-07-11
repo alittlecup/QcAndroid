@@ -23,4 +23,5 @@ import dagger.Module;
  * Created by Paper on 2017/7/4.
  */
 @Module public interface BindSaasModule {
+
 }

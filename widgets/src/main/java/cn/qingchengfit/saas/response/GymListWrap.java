@@ -26,5 +26,5 @@ import java.util.List;
  */
 
 public class GymListWrap extends QcListData {
-  public List<Gym> gym;
+  public List<Gym> gyms;
 }

@@ -87,6 +87,22 @@ public interface PostApi {
   @POST("/api/staff/job/permissions/") rx.Observable<QcResponse> editpermsiion(
       @Body EditPermissionBody body);
 
+
+
+
+
+  /*
+   *-===========================简历相关 ===================
+   */
+
+  /**
+   * "gym_id": "xxx",
+   * "fair_id": "xxx"
+   */
+  @POST("/api/staff/job/fair/orders/") rx.Observable<QcResponse> joinFair(
+      @Body HashMap<String, Object> body);
+
+
   /*
    *-===========================简历相关 ===================
    */

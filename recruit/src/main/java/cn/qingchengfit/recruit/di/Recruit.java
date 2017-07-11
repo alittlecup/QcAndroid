@@ -3,6 +3,7 @@ package cn.qingchengfit.recruit.di;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.recruit.views.DialogSendResumeFragment;
 import cn.qingchengfit.recruit.views.JobFairListFragment;
+import cn.qingchengfit.recruit.views.JobsListFragment;
 import cn.qingchengfit.recruit.views.MyPositionsInfoFragment;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.recruit.views.RecruitGymDescFragment;
@@ -24,6 +25,8 @@ import cn.qingchengfit.recruit.views.ResumeListFragment;
 import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.ResumeStarredFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
+import cn.qingchengfit.recruit.views.jobfair.JobfairDetailFragment;
+import cn.qingchengfit.recruit.views.jobfair.JobfairSignUpFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
 import cn.qingchengfit.recruit.views.resume.RecordEditFragment;
 import cn.qingchengfit.recruit.views.resume.RecruitPermissionFragment;
@@ -284,6 +287,27 @@ import dagger.multibindings.IntoMap;
     }
   }
 
+  @Subcomponent() public interface JobfairDetailFragmentSubcomponent
+      extends AndroidInjector<JobfairDetailFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<JobfairDetailFragment> {
+    }
+  }
+
+  @Subcomponent() public interface JobfairSignUpFragmentSubcomponent
+      extends AndroidInjector<JobfairSignUpFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<JobfairSignUpFragment> {
+    }
+  }
+
+  @Subcomponent() public interface JobsListFragmentSubcomponent
+      extends AndroidInjector<JobsListFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<JobsListFragment> {
+    }
+  }
+
   @Module(subcomponents = SeekPositionHomeFragmentSubcomponent.class) abstract class SeekPositionHomeFragmentModule {
     @Binds @IntoMap @FragmentKey(SeekPositionHomeFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
@@ -489,5 +513,26 @@ import dagger.multibindings.IntoMap;
     @Binds @IntoMap @FragmentKey(ResumeStarredFragment.class)
     abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ResumeStarredFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = JobfairDetailFragmentSubcomponent.class)
+  abstract class JobfairDetailFragmentModule {
+    @Binds @IntoMap @FragmentKey(JobfairDetailFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        JobfairDetailFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = JobfairSignUpFragmentSubcomponent.class)
+  abstract class JobfairSignUpFragmentModule {
+    @Binds @IntoMap @FragmentKey(JobfairSignUpFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        JobfairSignUpFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = JobsListFragmentSubcomponent.class)
+  abstract class JobsListFragmentModule {
+    @Binds @IntoMap @FragmentKey(JobsListFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        JobsListFragmentSubcomponent.Builder builder);
   }
 }

@@ -30,6 +30,8 @@ import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.ResumeRecievedFragmentBuilder;
 import cn.qingchengfit.recruit.views.ResumeStarredFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
+import cn.qingchengfit.recruit.views.jobfair.JobfairDetailFragment;
+import cn.qingchengfit.recruit.views.jobfair.JobfairSignUpFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.RecordEditFragmentBuilder;
@@ -125,21 +127,18 @@ public class RecruitRouter extends InnerRouter {
     add(RecruitGymDetailFragment.newInstance(service));
   }
 
-  public void myResume() {
-
-  }
-
 
   /**
    * 人才市场 人才浏览 或者叫 招聘版主页
    */
   public void resumeMarketHome() {
-    getFragmentManager().beginTransaction()
-        .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
-            R.anim.card_flip_left_in, R.anim.card_flip_left_out)
-        .replace(getFragId(), new ResumeMarketHomeFragment())
-        .addToBackStack(null)
-        .commit();
+    init(new ResumeMarketHomeFragment());
+    //getFragmentManager().beginTransaction()
+    //    .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
+    //        R.anim.card_flip_left_in, R.anim.card_flip_left_out)
+    //    .replace(getFragId(), new ResumeMarketHomeFragment())
+    //    .addToBackStack(null)
+    //    .commit();
   }
 
   public void resumeHome() {
@@ -342,9 +341,22 @@ public class RecruitRouter extends InnerRouter {
     add(new JobFairsAllFragment());
   }
 
-  public void toJobFairDetail(JobFair jobFair) {
-
+  public void toStaffJobFairDetail(JobFair jobFair) {
+    add(JobfairDetailFragment.newStaffJobFair(jobFair));
   }
 
+  public void toUserJobFairDetail(JobFair jobFair) {
+    add(JobfairDetailFragment.newUserJobFair(jobFair));
+  }
 
+  /**
+   * 报名参加专场招聘会
+   */
+  public void toSignUpFair(JobFair jobFair) {
+    addNoStack(JobfairSignUpFragment.newInstance(jobFair));
+  }
+
+  public void toJoinFairSuc() {
+
+  }
 }

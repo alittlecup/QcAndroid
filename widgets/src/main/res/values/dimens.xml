@@ -55,5 +55,7 @@
   <dimen name="qc_civ_label_max_width_txt">109dp</dimen>
   <dimen name="img_120dp">110dp</dimen>
 
+  <dimen name="font_20">18sp</dimen>
+
 
 </resources>

@@ -1,10 +1,6 @@
-package cn.qingchengfit.saas.network;
+package cn.qingchengfit.recruit.network.response;
 
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saas.response.GymListWrap;
-import cn.qingchengfit.saas.response.SuWrap;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import cn.qingchengfit.recruit.model.JobFair;
 
 /**
  * power by
@@ -24,12 +20,9 @@ import retrofit2.http.Query;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/7/4.
+ * Created by Paper on 2017/7/7.
  */
 
-public interface GetApi {
-  @GET("/api/common/user/gyms/") rx.Observable<QcDataResponse<GymListWrap>> queryPermissionGyms();
-
-  @GET("api/common/user/check/superuser/") rx.Observable<QcDataResponse<SuWrap>> querySu(
-      @Query("gym_id") String gymid);
+public class JobFairWrap {
+  public JobFair fair;
 }

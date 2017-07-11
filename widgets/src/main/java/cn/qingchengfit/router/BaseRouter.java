@@ -56,6 +56,18 @@ public class BaseRouter {
     }
   }
 
+  public static void toChooseGym(Fragment fragment) {
+    try {
+      Intent toLogin = new Intent();
+      toLogin.setPackage(fragment.getActivity().getPackageName());
+      toLogin.setAction("cn.qingcheng.choose");
+      toLogin.putExtra("to", 80);
+      fragment.startActivityForResult(toLogin, 11);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+  }
+
   public void routerTo(String module, String action, Context context, int request) {
     if (routers.containsKey(module)) {
       Intent it = new Intent(context, routers.get(module));

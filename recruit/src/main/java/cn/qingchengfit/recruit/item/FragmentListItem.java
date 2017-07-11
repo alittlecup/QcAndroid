@@ -4,21 +4,27 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.views.ResumeListFragment;
+import cn.qingchengfit.recruit.R2;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class ResumeListItem extends AbstractFlexibleItem<ResumeListItem.ResumeListVH> {
+public class FragmentListItem extends AbstractFlexibleItem<FragmentListItem.ResumeListVH> {
   Fragment fragment;
-  ResumeListFragment resumeListFragment;
+  Fragment childFragment;
 
-  public ResumeListItem(Fragment fragment) {
+  public FragmentListItem(Fragment fragment, Fragment child) {
     this.fragment = fragment;
-    resumeListFragment = ResumeListFragment.newResumeListInstance();
+    this.childFragment = child;
+  }
+
+  public Fragment getChildFragment() {
+    return childFragment;
   }
 
   @Override public int getLayoutRes() {
@@ -35,7 +41,7 @@ public class ResumeListItem extends AbstractFlexibleItem<ResumeListItem.ResumeLi
     fragment.getChildFragmentManager()
         .beginTransaction()
         .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
-        .replace(R.id.frag_item_resume, resumeListFragment)
+        .replace(R.id.frag_item_resume, childFragment)
         .commit();
   }
 
@@ -44,7 +50,7 @@ public class ResumeListItem extends AbstractFlexibleItem<ResumeListItem.ResumeLi
   }
 
   public class ResumeListVH extends FlexibleViewHolder {
-
+    @BindView(R2.id.frag_item_resume) FrameLayout frameLayout;
     public ResumeListVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);

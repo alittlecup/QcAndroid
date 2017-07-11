@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 public class FilterDamenFragment extends BaseFragment {
 
   @BindView(R2.id.layout_work_demand) AutoLineGroup layoutWorkDemand;
+  @BindView(R2.id.tv_work_year_header) TextView workYearheader;
   @BindView(R2.id.alg_gender) AutoLineGroup algGender;
   @BindView(R2.id.alg_edu) AutoLineGroup algEdu;
   @BindView(R2.id.alg_age) AutoLineGroup algAge;
@@ -33,12 +35,33 @@ public class FilterDamenFragment extends BaseFragment {
   @BindView(R2.id.alg_weight) AutoLineGroup algWeight;
   private OnDemandsListener listener;
 
+  public static FilterDamenFragment newInstanceResumeFilter() {
+    Bundle args = new Bundle();
+    args.putInt("t", 0);
+    FilterDamenFragment fragment = new FilterDamenFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  public static FilterDamenFragment newInstanceJobsFilter() {
+    Bundle args = new Bundle();
+    args.putInt("t", 1);
+    FilterDamenFragment fragment = new FilterDamenFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.layout_damen_filter, container, false);
     unbinder = ButterKnife.bind(this, view);
-    layoutWorkDemand.addChildren(getResources().getStringArray(R.array.filter_work_year));
+    if (getArguments() != null && getArguments().getInt("t") == 0) {
+      layoutWorkDemand.addChildren(getResources().getStringArray(R.array.filter_work_year));
+    } else {
+      layoutWorkDemand.setVisibility(View.GONE);
+      workYearheader.setVisibility(View.GONE);
+    }
     algGender.addChildren(getResources().getStringArray(R.array.filter_gender));
     algEdu.addChildren(getResources().getStringArray(R.array.filter_degree));
     algAge.addChildren(getResources().getStringArray(R.array.filter_age));

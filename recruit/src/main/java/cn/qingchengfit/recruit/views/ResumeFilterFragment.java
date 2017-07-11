@@ -48,10 +48,10 @@ public class ResumeFilterFragment extends BaseFragment
     implements FilterLeftRightFragment.OnLeftRightSelectListener {
 
   public int showPos = 0;
+  protected FilterDamenFragment filterDamenFragment;
   private FilterLeftRightFragment filterLeftRightFragment;
   private FilterFragment filterSalaryFragment;
   private FilterFragment filterWorkYearFragment;
-  private FilterDamenFragment filterDamenFragment;
   private List<ProvinceBean> provinceBeanList = new ArrayList<>();
   private List<CityBean> cityBeanList = new ArrayList<>();
   private CitiesData citiesData;
@@ -75,7 +75,7 @@ public class ResumeFilterFragment extends BaseFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    filterDamenFragment = new FilterDamenFragment();
+    filterDamenFragment = FilterDamenFragment.newInstanceResumeFilter();
     filterSalaryFragment = new FilterFragment();
     filterWorkYearFragment = new FilterFragment();
     filterLeftRightFragment = new FilterLeftRightFragment();
@@ -85,8 +85,24 @@ public class ResumeFilterFragment extends BaseFragment
       Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_resume_filter, container, false);
-    show("city");
+    showStrategy();
     return view;
+  }
+
+  protected void showStrategy() {
+    switch (showPos) {
+      case 0:
+        show("city");
+        return;
+      case 1:
+        show("salary");
+        return;
+      case 2:
+        show("other");
+        return;
+      default:
+        break;
+    }
   }
 
   @Override public String getFragmentName() {
@@ -99,7 +115,6 @@ public class ResumeFilterFragment extends BaseFragment
 
   @Override protected void onVisible() {
     super.onVisible();
-    show("city");
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,

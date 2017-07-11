@@ -21,12 +21,11 @@ import cn.qingchengfit.items.SearchCenterItem;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.item.FragmentListItem;
 import cn.qingchengfit.recruit.item.HorizonImageShowItem;
 import cn.qingchengfit.recruit.item.JobFairFooterItem;
 import cn.qingchengfit.recruit.item.JobFairHorizonItem;
 import cn.qingchengfit.recruit.item.RecruitManageItem;
-import cn.qingchengfit.recruit.item.ResumeItem;
-import cn.qingchengfit.recruit.item.ResumeListItem;
 import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.model.Resume;
 import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
@@ -108,7 +107,7 @@ public class ResumeMarketHomeFragment extends BaseFragment
           if (horizonImageShowItem.getChildItem(eventRecycleClick.postion) != null
               && horizonImageShowItem.getChildItem(
               eventRecycleClick.postion) instanceof JobFairHorizonItem) {
-            router.toJobFairDetail(((JobFairHorizonItem) horizonImageShowItem.getChildItem(
+            router.toStaffJobFairDetail(((JobFairHorizonItem) horizonImageShowItem.getChildItem(
                 eventRecycleClick.postion)).getJobFair());
           }
         }
@@ -183,7 +182,7 @@ public class ResumeMarketHomeFragment extends BaseFragment
     commonFlexAdapter.addItem(horizonImageShowItem);
     recruitmanage = new RecruitManageItem(1, false);
     commonFlexAdapter.addItem(recruitmanage);
-    filterHeadItem = new FilterHeadItem(new String[] { "期望城市", "期望薪资", "工作经验", "要求" });
+    filterHeadItem = new FilterHeadItem(getResources().getStringArray(R.array.filter_resume));
     filterHeadItem.setListener(new FilterHeadItem.FilterHeadListener() {
       @Override public void onPositionClick(int pos) {
         layoutManage.scrollToPosition(3);
@@ -203,18 +202,18 @@ public class ResumeMarketHomeFragment extends BaseFragment
   }
 
   @Override public void onResumeList(List<Resume> resumes, int page, int total) {
-    if (commonFlexAdapter == null || rv == null) return;
-    commonFlexAdapter.setEndlessTargetCount(total + PULS_ITEM_COUNTS);
-    if (page == 1) {
-      commonFlexAdapter.removeItemsOfType(R.layout.item_resume);
-      commonFlexAdapter.removeItemsOfType(R.layout.item_common_no_data);
-    }
-    for (Resume resume : resumes) {
-      commonFlexAdapter.addItem(new ResumeItem(resume));
-    }
-    if (commonFlexAdapter.getItemCountOfTypes(R.layout.item_resume) == 0) {
-      //空页面
-    }
+    //if (commonFlexAdapter == null || rv == null) return;
+    //commonFlexAdapter.setEndlessTargetCount(total + PULS_ITEM_COUNTS);
+    //if (page == 1) {
+    //  commonFlexAdapter.removeItemsOfType(R.layout.item_resume);
+    //  commonFlexAdapter.removeItemsOfType(R.layout.item_common_no_data);
+    //}
+    //for (Resume resume : resumes) {
+    //  commonFlexAdapter.addItem(new ResumeItem(resume));
+    //}
+    //if (commonFlexAdapter.getItemCountOfTypes(R.layout.item_resume) == 0) {
+    //  //空页面
+    //}
   }
 
   @Override public void onJobFaris(List<JobFair> jobfairs, int job_count) {
@@ -232,7 +231,8 @@ public class ResumeMarketHomeFragment extends BaseFragment
       recruitmanage.setJobCounts(job_count);
       commonFlexAdapter.notifyItemChanged(commonFlexAdapter.getGlobalPositionOf(recruitmanage));
     }
-    commonFlexAdapter.addItem(new ResumeListItem(this));
+    commonFlexAdapter.addItem(
+        new FragmentListItem(this, ResumeListFragment.newResumeListInstance()));
     //presenter.queryResumeMarkets(true,new HashMap<String, Object>());
   }
 

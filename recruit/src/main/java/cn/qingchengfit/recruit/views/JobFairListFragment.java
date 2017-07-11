@@ -101,7 +101,8 @@ public class JobFairListFragment extends BaseListFragment
 
   @Override public boolean onItemClick(int i) {
     if (getItem(i) instanceof JobFairHorizonItem) {
-      router.toJobFairDetail(((JobFairHorizonItem) getItem(i)).getJobFair());
+      //// TODO: 2017/7/7 需要判断当前身份
+      router.toStaffJobFairDetail(((JobFairHorizonItem) getItem(i)).getJobFair());
     }
     return false;
   }

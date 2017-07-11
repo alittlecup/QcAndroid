@@ -9,6 +9,7 @@ import cn.qingchengfit.chat.ChatFriendAllChooseFragment;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
+import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.views.container.ContainerActivity;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
@@ -92,6 +93,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.RegisterFragmentModule.class,
     AppComponent.UnLoginScheduleAdFragmentModule.class, AppComponent.ChooseGymFragmentModule.class,
     AppComponent.MainScheduleFragmentModule.class, AppComponent.GuideSetGymFragmentModule.class,
+    BindSaas.ChooseGymFragmentModule.class
 }) public interface AppComponent {
     void inject(App app);
 

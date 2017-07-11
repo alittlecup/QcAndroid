@@ -678,6 +678,13 @@
             />
 
       </intent-filter>
+      <intent-filter>
+        <action android:name="${APP_PACKAGE}"/>
+        <action android:name="cn.qingcheng.choose"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+      </intent-filter>
     </activity>
     <activity
         android:name=".activity.MeetActivity"
@@ -757,6 +764,8 @@
               tools:replace="android:theme"
         />
     <activity android:name="cn.qingchengfit.recruit.views.RecruitActivity"
+              android:windowSoftInputMode="stateHidden|adjustResize"
+
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>

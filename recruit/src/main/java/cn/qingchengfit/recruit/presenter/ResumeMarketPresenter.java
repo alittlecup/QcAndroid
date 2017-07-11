@@ -141,6 +141,27 @@ public class ResumeMarketPresenter extends BasePresenter {
     }
   }
 
+  /**
+   * 某场招聘会下的简历列表
+   */
+  public void queryJobFairResumes(String fairid) {
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .queryJobFairResumes(fairid)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {
+          @Override public void call(QcDataResponse<ResumeListWrap> qcResponse) {
+            if (qcResponse.status == 200) {
+              view.onResumeList(qcResponse.data.resumes, qcResponse.data.total_count, page);
+              page++;
+              pageTotal = qcResponse.data.pages;
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
+
   public void queryMyJobFairList() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
         .queryMyJobFairs()

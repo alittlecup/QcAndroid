@@ -3,6 +3,7 @@ package cn.qingchengfit.saas.views.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -74,6 +75,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_choose_gym_for_other, container, false);
     unbinder = ButterKnife.bind(this, view);
+    initToolbar(toolbar);
     recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     recyclerview.addItemDecoration(
         new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -94,6 +96,11 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
     return view;
   }
 
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("选择场馆");
+  }
+
   @Override public void onResume() {
     super.onResume();
   }
@@ -106,9 +113,9 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
         .subscribe(new Action1<QcDataResponse<GymListWrap>>() {
           @Override public void call(QcDataResponse<GymListWrap> qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              if (qcResponse.data.gym != null) {
+              if (qcResponse.data.gyms != null) {
                 adapter.clear();
-                for (Gym gym : qcResponse.data.gym) {
+                for (Gym gym : qcResponse.data.gyms) {
                   adapter.addItem(new ChooseGymItem(gym));
                 }
                 if (adapter.getItemCount() == 0) {
@@ -171,8 +178,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
   }
 
   protected void queryPermiss(final Gym gym) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .querySu()
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class).querySu(gym.id)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<SuWrap>>() {
@@ -192,6 +198,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
 
   public void hasPermission(Gym gym) {
     RxBus.getBus().post(new EventChooseGym(gym));
+    getActivity().onBackPressed();
   }
 
   public void hasNoPermission() {
