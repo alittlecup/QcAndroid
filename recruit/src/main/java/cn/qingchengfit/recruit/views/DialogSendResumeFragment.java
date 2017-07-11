@@ -51,7 +51,7 @@ public class DialogSendResumeFragment extends DialogFragment {
     @BindView(R2.id.ck_never_noti) CheckBox ckNeverNoti;
     @BindView(R2.id.btn_cancel) TextView btnCancel;
     @BindView(R2.id.btn_sent) TextView btnSent;
-  @Inject RecruitRouter router;
+    @Inject RecruitRouter router;
     Unbinder unbinder;
     private int completedPersent = 0;
     private OnSendResumeListener onSendResumeListener;

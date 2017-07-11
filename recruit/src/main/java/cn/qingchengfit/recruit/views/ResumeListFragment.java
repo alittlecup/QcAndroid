@@ -5,7 +5,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
+import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.ResumeItem;
 import cn.qingchengfit.recruit.model.JobFair;
@@ -46,6 +48,7 @@ public class ResumeListFragment extends BaseListFragment
   protected HashMap<String, Object> params = new HashMap<>();
   @Inject ResumeMarketPresenter presenter;
   @Inject RecruitRouter router;
+  @Inject QcRestRepository restRepository;
   private boolean hasItem = false;
 
   public static ResumeListFragment newResumeListInstance() {
@@ -126,7 +129,8 @@ public class ResumeListFragment extends BaseListFragment
 
   @Override public boolean onItemClick(int i) {
     if (getItem(i) instanceof ResumeItem) {
-      router.toResumeDetail(((ResumeItem) getItem(i)).getResume());
+      router.toResumeDetail(((ResumeItem) getItem(i)).getResume().id,
+          restRepository.getHost() + RecruitConstants.RESUME_WEB_PATH);
     }
     return true;
   }

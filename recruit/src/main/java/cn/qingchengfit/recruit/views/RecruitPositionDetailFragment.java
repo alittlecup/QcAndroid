@@ -264,6 +264,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
 
   }
 
+  @Override public void onJobList(List<Job> jobList) {
+
+  }
+
   public void onGym(Gym gym) {
     if (gym == null) return;
     tvGymName.setText(gym.name);

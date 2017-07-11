@@ -49,7 +49,7 @@ import javax.inject.Inject;
  */
 
 @FragmentWithArgs public class ResumeDetailFragment extends BaseFragment
-    implements ResumePresenter.MVPView, JobPresenter.OnJobsList, JobPresenter.MVPView,
+    implements ResumePresenter.MVPView, JobPresenter.MVPView,
     BottomListFragment.ComfirmChooseListener {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -91,7 +91,6 @@ import javax.inject.Inject;
     setToolbar();
     initView();
     resumePresenter.getResumeDetail(resumeId);
-    jobPresenter.setOnJobsList(this);
     return view;
   }
 

@@ -270,8 +270,6 @@ public class ResumeMarketHomeFragment extends BaseFragment
       return false;
     }
     if (item instanceof ResumeItem) {
-      router.toResumeDetail(((ResumeItem) item).getResume().id,
-          restRepository.getHost() + RecruitConstants.RESUME_WEB_PATH);
       return false;
     }
     return false;

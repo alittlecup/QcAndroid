@@ -29,7 +29,6 @@ public class JobPresenter extends BasePresenter {
   @Inject QcRestRepository qcRestRepository;
   @Inject GymWrapper gymWrapper;
   private MVPView view;
-  private OnJobsList onJobsList;
 
   @Inject public JobPresenter() {
   }
@@ -41,14 +40,6 @@ public class JobPresenter extends BasePresenter {
   @Override public void unattachView() {
     super.unattachView();
     view = null;
-  }
-
-  /**
-   * 修改职位信息
-   */
-
-  public void setOnJobsList(OnJobsList onJobsList) {
-    this.onJobsList = onJobsList;
   }
 
   /**
@@ -102,7 +93,7 @@ public class JobPresenter extends BasePresenter {
         .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
           @Override public void call(QcDataResponse<JobListWrap> jobList) {
             if (ResponseConstant.checkSuccess(jobList)) {
-              if (onJobsList != null) onJobsList.onJobList(jobList.data.jobs);
+              view.onJobList(jobList.data.jobs);
             } else {
             }
           }
@@ -222,9 +213,8 @@ public class JobPresenter extends BasePresenter {
     void onPostResumeOk();
 
     void onInviteOk();
-  }
 
-  public interface OnJobsList extends CView {
     void onJobList(List<Job> jobList);
   }
+
 }

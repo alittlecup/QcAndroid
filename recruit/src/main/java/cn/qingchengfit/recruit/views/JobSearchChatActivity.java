@@ -29,7 +29,7 @@ import static android.view.View.GONE;
  */
 
 public class JobSearchChatActivity extends ChatActivity
-    implements JobPresenter.MVPView, HasActivityInjector, JobPresenter.OnJobsList,
+    implements JobPresenter.MVPView, HasActivityInjector,
     BottomListFragment.ComfirmChooseListener {
 
   public static final String INVITE_RESUME_ID = "resume_id";
@@ -47,7 +47,6 @@ public class JobSearchChatActivity extends ChatActivity
     if (!TextUtils.isEmpty(getIntent().getStringExtra(INVITE_RESUME_ID))) {
       resumeId = getIntent().getStringExtra(INVITE_RESUME_ID);
     }
-    presenter.setOnJobsList(this);
     initView();
   }
 
