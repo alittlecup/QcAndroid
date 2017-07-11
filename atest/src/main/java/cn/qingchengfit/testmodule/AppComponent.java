@@ -50,10 +50,12 @@ import dagger.multibindings.IntoMap;
         }
     }
 
-    @Module(subcomponents = MainSubcomponent.class) abstract class MainModule {
-        @Binds @IntoMap @ActivityKey(MainActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(MainSubcomponent.Builder builder);
+  @Subcomponent() public interface JobSearchChatSubcomponent
+      extends AndroidInjector<JobSearchChatActivity> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<JobSearchChatActivity> {
     }
+  }
 
     //@Subcomponent() public interface RecruitSubcomponent extends AndroidInjector<RecruitActivity> {
     //    @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RecruitActivity> {
@@ -64,13 +66,16 @@ import dagger.multibindings.IntoMap;
     //    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(RecruitSubcomponent.Builder builder);
     //}
 
-    @Subcomponent() public interface JobSearchChatSubcomponent extends AndroidInjector<JobSearchChatActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<JobSearchChatActivity> {
-        }
-    }
-    @Module(subcomponents = JobSearchChatSubcomponent.class) abstract class JobSearchChatModule {
-        @Binds @IntoMap @ActivityKey(JobSearchChatActivity.class)
-        abstract Factory<? extends Activity> bindYourFragmentInjectorFactory(JobSearchChatSubcomponent.Builder builder);
-    }
+  @Module(subcomponents = MainSubcomponent.class) abstract class MainModule {
+    @Binds @IntoMap @ActivityKey(MainActivity.class)
+    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
+        MainSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = JobSearchChatSubcomponent.class) abstract class JobSearchChatModule {
+    @Binds @IntoMap @ActivityKey(JobSearchChatActivity.class)
+    abstract Factory<? extends Activity> bindYourFragmentInjectorFactory(
+        JobSearchChatSubcomponent.Builder builder);
+  }
 
 }

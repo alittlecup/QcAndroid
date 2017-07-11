@@ -53,15 +53,12 @@ public class JobPresenter extends BasePresenter {
 
   /**
    * 发布职位
-   * @param gymId
-   * @param body
    */
   public void publishJob(String gymId, PublishPositionBody body) {
     body.params.put("gym_id", gymId);
     body.params.put("published", true);
     body.params.remove("type");
-    RxRegiste(qcRestRepository.createPostApi(PostApi.class)
-        .qcPublishPosition(body.params)
+    RxRegiste(qcRestRepository.createPostApi(PostApi.class).qcPublishPosition(body.params)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
@@ -95,11 +92,10 @@ public class JobPresenter extends BasePresenter {
 
   /**
    * 获取可邀约的职位列表
-   * @param fairId
    */
-  public void getInviteJobs(String fairId){
+  public void getInviteJobs(String fairId) {
     HashMap<String, Object> params = new HashMap<>();
-    if (!TextUtils.isEmpty(fairId)){
+    if (!TextUtils.isEmpty(fairId)) {
       params.put("fair_id", fairId);
     }
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
@@ -109,8 +105,7 @@ public class JobPresenter extends BasePresenter {
         .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
           @Override public void call(QcDataResponse<JobListWrap> jobList) {
             if (ResponseConstant.checkSuccess(jobList)) {
-              if (onJobsList != null)
-                onJobsList.onJobList(jobList.data.jobs);
+              if (onJobsList != null) onJobsList.onJobList(jobList.data.jobs);
             } else {
             }
           }
@@ -201,7 +196,7 @@ public class JobPresenter extends BasePresenter {
         }, new NetWorkThrowable()));
   }
 
-  public void invitePosition(List<String> jobs, String resumeId){
+  public void invitePosition(List<String> jobs, String resumeId) {
     InviteBody body = InviteBody.build(jobs, resumeId);
     RxRegiste(qcRestRepository.createPostApi(PostApi.class)
         .qcInvitePosition(body)
@@ -216,7 +211,6 @@ public class JobPresenter extends BasePresenter {
             }
           }
         }, new NetWorkThrowable()));
-
   }
 
   public interface MVPView extends CView {
@@ -233,8 +227,7 @@ public class JobPresenter extends BasePresenter {
     void onInviteOk();
   }
 
-  public interface OnJobsList extends CView{
+  public interface OnJobsList extends CView {
     void onJobList(List<Job> jobList);
   }
-
 }

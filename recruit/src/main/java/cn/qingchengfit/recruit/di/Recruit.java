@@ -17,12 +17,12 @@ import cn.qingchengfit.recruit.views.RecruitPositionsInGymFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsInvitedFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsSentFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsStarredFragment;
+import cn.qingchengfit.recruit.views.RecruitPublishJobFragment;
 import cn.qingchengfit.recruit.views.RecruitStaffMyJobFairFragment;
 import cn.qingchengfit.recruit.views.RecruitUserMyJobFairFragment;
 import cn.qingchengfit.recruit.views.RecruitWriteGymIntroFragment;
 import cn.qingchengfit.recruit.views.ResumeHandleFragment;
 import cn.qingchengfit.recruit.views.ResumeListFragment;
-import cn.qingchengfit.recruit.views.RecruitPublishJobFragment;
 import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.ResumeStarredFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
@@ -643,6 +643,7 @@ import dagger.multibindings.IntoMap;
     abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         JobsListFragmentSubcomponent.Builder builder);
   }
+
   @Module(subcomponents = RecruitPublishJobFragmentSubcomponent.class)
   abstract class RecruitPublishJobFragmentModule {
     @Binds @IntoMap @FragmentKey(RecruitPublishJobFragment.class)

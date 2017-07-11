@@ -14,24 +14,24 @@
       android:id="@+id/civ_position_name"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
       app:civ_hint="@string/please_input"
       app:civ_lable="职位名称"
       app:civ_showdivier="true"
       app:civ_showright="true"
       app:civ_text_color="@color/qc_text_black"
-      app:civ_clickable="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/civ_salary_rank"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
       app:civ_hint="@string/please_input"
       app:civ_lable="薪资范围"
       app:civ_showdivier="true"
       app:civ_showright="true"
       app:civ_text_color="@color/qc_text_black"
-      app:civ_clickable="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
@@ -50,13 +50,13 @@
       android:id="@+id/civ_position_demands"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
       app:civ_hint="@string/please_input"
       app:civ_lable="任职要求"
+      app:civ_nonnull="false"
       app:civ_showdivier="false"
       app:civ_showright="true"
-      app:civ_nonnull="false"
       app:civ_text_color="@color/qc_text_black"
-      app:civ_clickable="true"
       />
 
   <include layout="@layout/divider_grey"/>
@@ -72,24 +72,24 @@
       android:id="@+id/civ_position_require"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
       app:civ_hint="@string/please_input"
       app:civ_lable="职位要求"
       app:civ_showdivier="true"
       app:civ_showright="true"
       app:civ_text_color="@color/qc_text_black"
-      app:civ_clickable="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/civ_position_welfare"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
       app:civ_hint="@string/please_input"
       app:civ_lable="职位福利"
       app:civ_showdivier="false"
       app:civ_showright="true"
       app:civ_text_color="@color/qc_text_black"
-      app:civ_clickable="true"
       />
 
   <include layout="@layout/divider_grey"/>
@@ -105,12 +105,12 @@
       android:id="@+id/civ_gym_desc"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
       app:civ_hint="@string/please_input"
       app:civ_lable="场馆介绍"
       app:civ_showdivier="false"
       app:civ_showright="true"
       app:civ_text_color="@color/qc_text_black"
-      app:civ_clickable="true"
       />
 
   <Button

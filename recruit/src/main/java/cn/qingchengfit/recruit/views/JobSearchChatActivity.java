@@ -28,14 +28,14 @@ import static android.view.View.GONE;
  * Created by fb on 2017/7/6.
  */
 
-public class JobSearchChatActivity extends ChatActivity implements JobPresenter.MVPView,
-    HasActivityInjector, JobPresenter.OnJobsList, BottomListFragment.ComfirmChooseListener {
+public class JobSearchChatActivity extends ChatActivity
+    implements JobPresenter.MVPView, HasActivityInjector, JobPresenter.OnJobsList,
+    BottomListFragment.ComfirmChooseListener {
 
   public static final String INVITE_RESUME_ID = "resume_id";
   @Inject DispatchingAndroidInjector<Activity> dispatchFragmentInjector;
 
-  @Inject
-  JobPresenter presenter;
+  @Inject JobPresenter presenter;
   private int type;
   private String resumeId;
 
@@ -43,7 +43,7 @@ public class JobSearchChatActivity extends ChatActivity implements JobPresenter.
     super.onCreate(savedInstanceState);
     AndroidInjection.inject(this);
     presenter.attachView(this);
-    type = getIntent().getIntExtra(RecruitConstants.CHAT_JOB_SEARCH_OR_RECRUIT,0);
+    type = getIntent().getIntExtra(RecruitConstants.CHAT_JOB_SEARCH_OR_RECRUIT, 0);
     if (!TextUtils.isEmpty(getIntent().getStringExtra(INVITE_RESUME_ID))) {
       resumeId = getIntent().getStringExtra(INVITE_RESUME_ID);
     }
@@ -54,10 +54,10 @@ public class JobSearchChatActivity extends ChatActivity implements JobPresenter.
   private void initView() {
     chatSendResume.setVisibility(GONE);
     tvSendResume.setVisibility(GONE);
-    if (getIntent().getBooleanExtra(RecruitConstants.CHAT_RECRUIT_STATE, false)){
+    if (getIntent().getBooleanExtra(RecruitConstants.CHAT_RECRUIT_STATE, false)) {
       chatSendResume.setVisibility(View.VISIBLE);
       tvSendResume.setVisibility(View.VISIBLE);
-      switch (type){
+      switch (type) {
         case RecruitConstants.JOB_SEARCH:
           tvSendResume.setText("投递简历");
           break;
@@ -67,13 +67,12 @@ public class JobSearchChatActivity extends ChatActivity implements JobPresenter.
         default:
           break;
       }
-    }else{
+    } else {
       chatSendResume.setVisibility(GONE);
     }
   }
 
-  @Override
-  public void sendResume() {
+  @Override public void sendResume() {
     //发送简历
     if (type == RecruitConstants.JOB_SEARCH) {
       super.sendResume();
@@ -83,7 +82,7 @@ public class JobSearchChatActivity extends ChatActivity implements JobPresenter.
       }
     }
     //发起邀约
-    if (type == RecruitConstants.RECRUIT){
+    if (type == RecruitConstants.RECRUIT) {
       presenter.getInviteJobs("");
     }
   }
@@ -130,7 +129,7 @@ public class JobSearchChatActivity extends ChatActivity implements JobPresenter.
     BottomListFragment bottomListFragment = BottomListFragment.newInstance("选择邀约职位", 2);
     bottomListFragment.setListener(this);
     List<AbstractFlexibleItem> itemList = new ArrayList<>();
-    for (Job job : jobList){
+    for (Job job : jobList) {
       itemList.add(new RecruitPositionChooseItem(job));
     }
     bottomListFragment.loadData(itemList);
@@ -139,13 +138,14 @@ public class JobSearchChatActivity extends ChatActivity implements JobPresenter.
 
   @Override public void onComfirmClick(List<IFlexible> dats) {
     List<String> jobList = new ArrayList<>();
-    for (IFlexible item : dats){
-      if (item instanceof RecruitPositionChooseItem){
-        Job job = ((RecruitPositionChooseItem)item).getJob();
+    for (IFlexible item : dats) {
+      if (item instanceof RecruitPositionChooseItem) {
+        Job job = ((RecruitPositionChooseItem) item).getJob();
         if (job != null) {
           jobList.add(job.id);
           Gson gson = new Gson();
-          String recruit = "{userAction:1003, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
+          String recruit =
+              "{userAction:1003, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
           sendRercuitMessage(recruit);
         }
       }

@@ -51,7 +51,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 
       Recruit.RecruitPermsionFragmentModule.class, Recruit.RecruitPublishJobFragmentModule.class,
       Recruit.ResumeDetailFragmentModule.class,
-  })
-  abstract RecruitActivity contributeRecruitActivityInjector();
+  }) abstract RecruitActivity contributeRecruitActivityInjector();
+
   abstract JobSearchChatActivity contributeJobSearchActivityInjector();
 }

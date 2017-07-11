@@ -102,8 +102,9 @@ import javax.inject.Inject;
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (resumeModel != null) {
-          ShareDialogFragment.newInstance(resumeModel.username + "的简历", "期望职位: " + resumeModel.exp_job, resumeModel.avatar,
-              toUrl).show(getChildFragmentManager(), null);
+          ShareDialogFragment.newInstance(resumeModel.username + "的简历",
+              "期望职位: " + resumeModel.exp_job, resumeModel.avatar, toUrl)
+              .show(getChildFragmentManager(), null);
         }
         return false;
       }

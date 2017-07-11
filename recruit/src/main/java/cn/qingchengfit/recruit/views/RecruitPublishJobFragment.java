@@ -3,8 +3,10 @@ package cn.qingchengfit.recruit.views;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -12,13 +14,24 @@ import butterknife.OnClick;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.event.EventPulishPosition;
+import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.body.JobBody;
+import cn.qingchengfit.recruit.network.body.PublishPositionBody;
+import cn.qingchengfit.recruit.presenter.JobPresenter;
+import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.TwoScrollPicker;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SALARY;
 
@@ -68,6 +81,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
   private JobBody body;
 
   private TwoScrollPicker twoScrollPicker;
+  private HashMap<String, Object> params = new HashMap<>();
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -247,7 +261,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
    * 职位要求
    */
   @OnClick(R2.id.civ_position_require) public void onCivPositionRequireClicked() {
-    router.toRequireOfJob();
+    //router.toRequireOfJob();
   }
 
   /**
@@ -268,7 +282,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
    * 场馆介绍
    */
   @OnClick(R2.id.civ_gym_desc) public void onCivGymDescClicked() {
-    router.toWriteGymDetailDesc();
+    //router.toWriteGymDetailDesc();
   }
 
   /**

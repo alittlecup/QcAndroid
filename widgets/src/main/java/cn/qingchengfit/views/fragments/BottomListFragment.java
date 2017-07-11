@@ -51,10 +51,9 @@ public class BottomListFragment extends BottomSheetDialogFragment implements Fle
 
     protected FlexibleAdapter mFlexibleAdapter;
     protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
-
+  protected int mChooseMode = MODE_SINGLE;
     private String title;
     private ComfirmChooseListener listener;
-    protected int mChooseMode = MODE_SINGLE;
 
     public static BottomListFragment newInstance(String title) {
         Bundle args = new Bundle();
@@ -64,14 +63,14 @@ public class BottomListFragment extends BottomSheetDialogFragment implements Fle
         return fragment;
     }
 
-    public static BottomListFragment newInstance(String title, int mChooseMode) {
-        Bundle args = new Bundle();
-        args.putString("title", title);
-        args.putInt("chooseMode", mChooseMode);
-        BottomListFragment fragment = new BottomListFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+  public static BottomListFragment newInstance(String title, int mChooseMode) {
+    Bundle args = new Bundle();
+    args.putString("title", title);
+    args.putInt("chooseMode", mChooseMode);
+    BottomListFragment fragment = new BottomListFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,11 +86,12 @@ public class BottomListFragment extends BottomSheetDialogFragment implements Fle
         recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
         recycleview.setHasFixedSize(true);
         recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-        recycleview.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.divider_linear_grey_left));
-        if (getArguments().containsKey("chooseMode")){
-            mChooseMode = getArguments().getInt("chooseMode", MODE_SINGLE);
-        }
-        mFlexibleAdapter = new FlexibleAdapter(mDatas, this);
+      recycleview.addItemDecoration(
+          new DividerItemDecoration(getContext(), R.drawable.divider_linear_grey_left));
+      if (getArguments().containsKey("chooseMode")) {
+        mChooseMode = getArguments().getInt("chooseMode", MODE_SINGLE);
+      }
+      mFlexibleAdapter = new FlexibleAdapter(mDatas, this);
         mFlexibleAdapter.setMode(mChooseMode);
         recycleview.setAdapter(mFlexibleAdapter);
         tvtitle.setText(TextUtils.isEmpty(title) ? getTitle() : title);
@@ -136,7 +136,7 @@ public class BottomListFragment extends BottomSheetDialogFragment implements Fle
 
     @Override public boolean onItemClick(int i) {
         mFlexibleAdapter.toggleSelection(i);
-        mFlexibleAdapter.notifyItemChanged(i);
+      mFlexibleAdapter.notifyItemChanged(i);
         if (mChooseMode == MODE_SINGLE && listener != null) {
             List<IFlexible> ret = new ArrayList<>();
             ret.add(mFlexibleAdapter.getItem(i));

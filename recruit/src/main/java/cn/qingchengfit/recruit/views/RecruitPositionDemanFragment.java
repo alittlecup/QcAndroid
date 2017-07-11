@@ -33,8 +33,7 @@ import java.util.HashMap;
  * Created by fb on 2017/7/3.
  */
 
-@FragmentWithArgs
-public class RecruitPositionDemanFragment extends BaseFragment {
+@FragmentWithArgs public class RecruitPositionDemanFragment extends BaseFragment {
 
   @BindView(R2.id.civ_work_exp) CommonInputView civWorkExp;
   @BindView(R2.id.civ_work_gender) CommonInputView civWorkGender;
@@ -42,15 +41,12 @@ public class RecruitPositionDemanFragment extends BaseFragment {
   @BindView(R2.id.civ_work_education) CommonInputView civWorkEducation;
   @BindView(R2.id.civ_work_height) CommonInputView civWorkHeight;
   @BindView(R2.id.civ_work_weight) CommonInputView civWorkWeight;
-  private TwoScrollPicker twoScrollPicker;
-  private SimpleScrollPicker simpleScrollPicker;
-
-  @Arg
-  JobBody jobBody;
-
+  @Arg JobBody jobBody;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
+  private TwoScrollPicker twoScrollPicker;
+  private SimpleScrollPicker simpleScrollPicker;
   private HashMap<String, Object> map = new HashMap<>();
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,23 +79,26 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     });
   }
 
-  private void initView(){
-      civWorkExp.setContent(RecruitBusinessUtils.getWorkYear(jobBody.min_work_year, jobBody.max_work_year));
-      civWorkGender.setContent(RecruitBusinessUtils.getGender(jobBody.gender));
-      civWorkAge.setContent(RecruitBusinessUtils.getAge(jobBody.min_age, jobBody.max_age));
-      civWorkEducation.setContent(RecruitBusinessUtils.getDegree(getContext(), jobBody.education));
-      civWorkHeight.setContent(RecruitBusinessUtils.getHeight(jobBody.min_height, jobBody.max_height));
-      civWorkWeight.setContent(RecruitBusinessUtils.getWeight(jobBody.min_weight, jobBody.max_weight));
-      map.put("min_work_year", jobBody.min_work_year);
-      map.put("max_work_year", jobBody.max_work_year);
-      map.put("gender", jobBody.gender);
-      map.put("min_age", jobBody.min_age);
-      map.put("max_age", jobBody.max_age);
-      map.put("education", jobBody.education);
-      map.put("min_height", jobBody.min_height);
-      map.put("max_height", jobBody.max_height);
-      map.put("min_weight", jobBody.min_weight);
-      map.put("max_weight", jobBody.max_weight);
+  private void initView() {
+    civWorkExp.setContent(
+        RecruitBusinessUtils.getWorkYear(jobBody.min_work_year, jobBody.max_work_year));
+    civWorkGender.setContent(RecruitBusinessUtils.getGender(jobBody.gender));
+    civWorkAge.setContent(RecruitBusinessUtils.getAge(jobBody.min_age, jobBody.max_age));
+    civWorkEducation.setContent(RecruitBusinessUtils.getDegree(getContext(), jobBody.education));
+    civWorkHeight.setContent(
+        RecruitBusinessUtils.getHeight(jobBody.min_height, jobBody.max_height));
+    civWorkWeight.setContent(
+        RecruitBusinessUtils.getWeight(jobBody.min_weight, jobBody.max_weight));
+    map.put("min_work_year", jobBody.min_work_year);
+    map.put("max_work_year", jobBody.max_work_year);
+    map.put("gender", jobBody.gender);
+    map.put("min_age", jobBody.min_age);
+    map.put("max_age", jobBody.max_age);
+    map.put("education", jobBody.education);
+    map.put("min_height", jobBody.min_height);
+    map.put("max_height", jobBody.max_height);
+    map.put("min_weight", jobBody.min_weight);
+    map.put("max_weight", jobBody.max_weight);
   }
 
   @Override public void onDestroyView() {
@@ -112,10 +111,10 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     final ArrayList<String> d = new ArrayList<>(Arrays.asList(workexpStr));
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right <= left || (left == 0 && right > 0)){
+        if (right <= left || (left == 0 && right > 0)) {
           ToastUtils.show("请选择正确的条件区间");
           return;
-        }else{
+        } else {
           civWorkExp.setContent(d.get(left) + "-" + d.get(right));
           map.put("min_work_year", left - 1);
           map.put("max_work_year", right - 1);
@@ -147,10 +146,10 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right <= left || (left == 0 && right > 0)){
+        if (right <= left || (left == 0 && right > 0)) {
           ToastUtils.show("请选择正确的条件区间");
           return;
-        }else{
+        } else {
           civWorkAge.setContent(d.get(left) + "-" + d.get(right));
           map.put("min_age", left - 1);
           map.put("max_age", right - 1);
@@ -167,9 +166,9 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
         civWorkEducation.setContent(d.get(pos));
-        if(pos == 0) {
+        if (pos == 0) {
           map.put("education", pos - 1);
-        }else{
+        } else {
           map.put("education", pos);
         }
       }
@@ -186,10 +185,10 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right <= left || (left == 0 && right > 0)){
+        if (right <= left || (left == 0 && right > 0)) {
           ToastUtils.show("请选择正确的条件区间");
           return;
-        }else{
+        } else {
           civWorkHeight.setContent(d.get(left) + "-" + d.get(right));
           map.put("min_height", left - 1f);
           map.put("max_height", right - 1f);
@@ -208,10 +207,10 @@ public class RecruitPositionDemanFragment extends BaseFragment {
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right <= left || (left == 0 && right > 0)){
+        if (right <= left || (left == 0 && right > 0)) {
           ToastUtils.show("请选择正确的条件区间");
           return;
-        }else{
+        } else {
           civWorkWeight.setContent(d.get(left) + "-" + d.get(right));
           map.put("min_weight", left - 1f);
           map.put("max_weight", right - 1f);

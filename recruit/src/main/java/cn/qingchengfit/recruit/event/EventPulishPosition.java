@@ -1,7 +1,5 @@
 package cn.qingchengfit.recruit.event;
 
-import cn.qingchengfit.recruit.model.PublishPosition;
-import cn.qingchengfit.utils.Hash;
 import java.util.HashMap;
 
 /**
@@ -15,8 +13,7 @@ public class EventPulishPosition {
     this.damenMap = damenMap;
   }
 
-  public static EventPulishPosition build(HashMap<String, Object> map){
+  public static EventPulishPosition build(HashMap<String, Object> map) {
     return new EventPulishPosition(map);
   }
-
 }

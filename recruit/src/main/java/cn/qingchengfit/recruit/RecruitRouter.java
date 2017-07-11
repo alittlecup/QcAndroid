@@ -61,12 +61,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-<<<<<<<HEAD
-    =======
-    >>>>>>>origin/f_publish_position
-    <<<<<<<HEAD
-    =======
-    >>>>>>>origin/f_publish_position
 
 /**
  * power by
@@ -372,35 +366,37 @@ public class RecruitRouter extends InnerRouter {
   public void toJoinFairSuc() {
 
   }
-  public void toPublishPosition(String gymId){
-    add(new RecruitPublishJobFragmentBuilder(gymId, null, RecruitPublishJobFragment.PUBLISH_POSITION).build());
+
+  public void toPublishPosition(String gymId) {
+    add(new RecruitPublishJobFragmentBuilder(gymId, null,
+        RecruitPublishJobFragment.PUBLISH_POSITION).build());
   }
 
   /**
    * 职位名称填写
    */
-  public void toSetRequireName(String name, String hint){
+  public void toSetRequireName(String name, String hint) {
     add(SetNameCommenFragment.newInstance(name, hint));
   }
 
   /**
    * 职位描述填写
    */
-  public void toEditRecruitDesc(String content, String title){
+  public void toEditRecruitDesc(String content, String title) {
     add(new RecruitRichTextEditFragmentBuilder(content, title).build());
   }
 
   /**
    * 职位福利填写
    */
-  public void toPositionWalfare(ArrayList<String> tags, String title){
+  public void toPositionWalfare(ArrayList<String> tags, String title) {
     add(new RecruitWelFareFragmentBuilder(tags, title).build());
   }
 
   /**
    * 简历详情
    */
-  public void toResumeDetail(String resumeId, String url){
+  public void toResumeDetail(String resumeId, String url) {
     add(new ResumeDetailFragmentBuilder(resumeId, url).build());
   }
 

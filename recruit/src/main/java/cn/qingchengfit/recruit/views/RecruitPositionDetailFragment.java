@@ -249,9 +249,8 @@ public class RecruitPositionDetailFragment extends BaseFragment
     AddConversationProcessor addConversationProcessor =
         new AddConversationProcessor(getContext().getApplicationContext());
     Gson gson = new Gson();
-    String resumeStr = "{\"userAction\":1002, \"data\":"
-        + gson.toJson(resumePresenter.dealResumeMessage(resumeHome))
-        + "}";
+    String resumeStr = "{\"userAction\":1002, \"data\":" + gson.toJson(
+        resumePresenter.dealResumeMessage(resumeHome)) + "}";
     addConversationProcessor.sendResumeOrRecruit(("qctest_") + job.created_by.id, resumeStr, "");
     hideLoadingTrans();
     job.deliveried = true;
@@ -315,10 +314,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
     //AddConversationProcessor addConversationProcessor =
     //    new AddConversationProcessor(getContext().getApplicationContext());
     Gson gson = new Gson();
-    String jobStr = "{\"userAction\":1001, \"data\":" + gson.toJson(presenter.getRecruitModel(job)) + "}";
-    String resumeStr = "{\"userAction\":1002, \"data\":"
-        + gson.toJson(resumePresenter.dealResumeMessage(resumeHome))
-        + "}";
+    String jobStr =
+        "{\"userAction\":1001, \"data\":" + gson.toJson(presenter.getRecruitModel(job)) + "}";
+    String resumeStr = "{\"userAction\":1002, \"data\":" + gson.toJson(
+        resumePresenter.dealResumeMessage(resumeHome)) + "}";
     //intent.putExtra("id", (BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id);
     //intent.putExtra("datas", jobStr);
     //TODO 正式版更换 id   by fb

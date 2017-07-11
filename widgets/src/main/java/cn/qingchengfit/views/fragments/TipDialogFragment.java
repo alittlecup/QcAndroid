@@ -66,21 +66,22 @@ public class TipDialogFragment extends DialogFragment {
     this.onClickListener = onClickListener;
   }
 
-  private void initView(){
-    if (getArguments().containsKey("tips") && !TextUtils.isEmpty(getArguments().getString("tips"))){
+  private void initView() {
+    if (getArguments().containsKey("tips") && !TextUtils.isEmpty(
+        getArguments().getString("tips"))) {
       textTips.setText(getArguments().getString("tips"));
     }
-    if (getArguments().containsKey("img") && getArguments().getInt("tips",0) != 0){
-      imgTipsTop.setImageResource(getArguments().getInt("tips",0));
+    if (getArguments().containsKey("img") && getArguments().getInt("tips", 0) != 0) {
+      imgTipsTop.setImageResource(getArguments().getInt("tips", 0));
     }
-    if (getArguments().containsKey("button") && !TextUtils.isEmpty(getArguments().getString("button"))){
+    if (getArguments().containsKey("button") && !TextUtils.isEmpty(
+        getArguments().getString("button"))) {
       textButtonClick.setText(getArguments().getString("button"));
     }
   }
 
-  @OnClick(R2.id.text_button_click)
-  public void onDoClick(View v){
-    if (onClickListener != null){
+  @OnClick(R2.id.text_button_click) public void onDoClick(View v) {
+    if (onClickListener != null) {
       onClickListener.onDoClick(v);
       dismiss();
     }
@@ -90,12 +91,12 @@ public class TipDialogFragment extends DialogFragment {
     dismiss();
   }
 
-  public interface OnClickButtonListener{
-    void onDoClick(View v);
-  }
-
   @Override public void onDestroyView() {
     super.onDestroyView();
     unbinder.unbind();
+  }
+
+  public interface OnClickButtonListener {
+    void onDoClick(View v);
   }
 }

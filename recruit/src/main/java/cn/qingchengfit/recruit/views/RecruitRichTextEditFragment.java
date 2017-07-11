@@ -17,24 +17,19 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventPulishPosition;
-import cn.qingchengfit.recruit.model.PublishPosition;
 import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.views.fragments.RichTxtFragment;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by fb on 2017/7/3.
  */
 
-@FragmentWithArgs
-public class RecruitRichTextEditFragment extends BaseFragment {
+@FragmentWithArgs public class RecruitRichTextEditFragment extends BaseFragment {
 
   RichTxtFragment richTxtFragment;
   ChoosePictureFragmentNewDialog choosePictureFragmentDialog;
@@ -51,7 +46,8 @@ public class RecruitRichTextEditFragment extends BaseFragment {
     richTxtFragment = new RichTxtFragment();
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_edit_self_desc, container, false);
     super.onCreateView(inflater, container, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
@@ -69,7 +65,8 @@ public class RecruitRichTextEditFragment extends BaseFragment {
     stuff(richTxtFragment);
   }
 
-  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+      Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof RichTxtFragment) {
       richTxtFragment.initContent(content);
@@ -89,7 +86,9 @@ public class RecruitRichTextEditFragment extends BaseFragment {
   }
 
   @OnClick(R2.id.btn_insert_img) public void onBtnInsertImgClicked() {
-    if (choosePictureFragmentDialog == null) choosePictureFragmentDialog = ChoosePictureFragmentNewDialog.newInstance();
+    if (choosePictureFragmentDialog == null) {
+      choosePictureFragmentDialog = ChoosePictureFragmentNewDialog.newInstance();
+    }
     choosePictureFragmentDialog.setResult(new ChoosePictureFragmentNewDialog.ChoosePicResult() {
       @Override public void onChoosefile(String filePath) {
 
@@ -112,5 +111,4 @@ public class RecruitRichTextEditFragment extends BaseFragment {
       getActivity().onBackPressed();
     }
   }
-
 }

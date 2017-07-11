@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="cn.qingchengfit.testmodule"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="cn.qingchengfit.testmodule"
     >
 
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -34,12 +34,14 @@
     <service
         android:name="com.tencent.qalsdk.service.QalService"
         android:exported="true"
-        android:process=":QALSERVICE">
+        android:process=":QALSERVICE"
+        >
     </service>
     <service
         android:name="com.tencent.qalsdk.service.QalAssistService"
         android:exported="false"
-        android:process=":QALSERVICE">
+        android:process=":QALSERVICE"
+        >
     </service>
 
     <!-- 【必须】 离线消息广播接收器 -->
@@ -52,7 +54,8 @@
     </receiver>
     <receiver
         android:name="com.tencent.qalsdk.core.NetConnInfoCenter"
-        android:process=":QALSERVICE">
+        android:process=":QALSERVICE"
+        >
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED"/>
       </intent-filter>
@@ -94,13 +97,13 @@
         android:windowSoftInputMode="adjustResize"
         >
       <intent-filter>
-      <action android:name="android.intent.action.VIEW"/>
-      <category android:name="android.intent.category.DEFAULT"/>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
 
-      <data
-          android:host="chatactivity"
-          android:scheme="imchat"
-          />
+        <data
+            android:host="chatactivity"
+            android:scheme="imchat"
+            />
       </intent-filter>
     </activity>
     <activity

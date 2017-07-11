@@ -17,7 +17,6 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventPulishPosition;
-import cn.qingchengfit.recruit.model.PublishPosition;
 import cn.qingchengfit.recruit.views.resume.ResumeIntentJobsFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TagInputFragment;
@@ -28,15 +27,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by fb on 2017/7/3.
  */
 
-
-@FragmentWithArgs
-public class RecruitWelFareFragment extends BaseFragment {
+@FragmentWithArgs public class RecruitWelFareFragment extends BaseFragment {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
@@ -52,7 +48,8 @@ public class RecruitWelFareFragment extends BaseFragment {
     tagInputFragment = new TagInputFragment();
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_position_welfare, container, false);
     super.onCreateView(inflater, container, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
@@ -98,7 +95,8 @@ public class RecruitWelFareFragment extends BaseFragment {
     stuff(tagInputFragment);
   }
 
-  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+      Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof TagInputFragment) {
       tagInputFragment.setOnDelLister(new QcTagGroup.OnTagChangeListener() {
@@ -126,5 +124,4 @@ public class RecruitWelFareFragment extends BaseFragment {
   @Override public void onDestroyView() {
     super.onDestroyView();
   }
-
 }

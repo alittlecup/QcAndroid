@@ -15,7 +15,6 @@ import cn.qingchengfit.inject.moudle.StudentWrapperModule;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
 import cn.qingchengfit.saas.di.BindSaas;
-import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;

@@ -1,7 +1,6 @@
 package cn.qingchengfit.recruit.network;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.network.response.CertificateListWrap;
 import cn.qingchengfit.recruit.network.response.ChatGymWrap;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
@@ -228,10 +227,10 @@ public interface GetApi {
 
   /**
    * 查看他人简历
-   * @param resumeId
-   * @return
    */
-  @GET("api/staff/user/resumes/{resume_id}/") rx.Observable<QcDataResponse<ResumeHomeWrap>> qcGetOtherResumeDetail(@Path("resume_id") String resumeId);
+  @GET("api/staff/user/resumes/{resume_id}/")
+  rx.Observable<QcDataResponse<ResumeHomeWrap>> qcGetOtherResumeDetail(
+      @Path("resume_id") String resumeId);
 
   //搜索健身房
   @GET("/api/gym/search/") rx.Observable<QcSerachGymRepsonse> qcSearchGym(
@@ -251,8 +250,8 @@ public interface GetApi {
 
   /**
    * 获取可邀约的职位列表
-   * @param params
-   * @return
    */
-  @GET("/api/staff/job/permission/invite/") rx.Observable<QcDataResponse<JobListWrap>> qcGetInviteJobs(@QueryMap HashMap<String, Object> params);
+  @GET("/api/staff/job/permission/invite/")
+  rx.Observable<QcDataResponse<JobListWrap>> qcGetInviteJobs(
+      @QueryMap HashMap<String, Object> params);
 }

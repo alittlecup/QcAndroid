@@ -232,6 +232,10 @@ public class MainMsgFragment extends BaseFragment
                     }
                 }).show();
             }
+
+            @Override public void onUpdateRecruitListener(String s) {
+
+            }
         });
         getChildFragmentManager().beginTransaction().replace(R.id.frame_chat, conversationFragment, "chat").commitAllowingStateLoss();
         if (getActivity() instanceof Main2Activity) {
@@ -255,16 +259,17 @@ public class MainMsgFragment extends BaseFragment
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ChooseActivity.CONVERSATION_FRIEND) {
                 AddConversationProcessor addConversationProcessor = new AddConversationProcessor(getContext());
-                addConversationProcessor.setOnCreateConversation(new AddConversationProcessor.OnCreateConversation() {
-                    @Override public void onCreateSuccess(String s) {
+                addConversationProcessor.setOnCreateConversation(
+                    new AddConversationProcessor.OnCreateConversation() {
+                        @Override public void onCreateSuccess(String s) {
 
-                    }
+                        }
 
-                    @Override public void onCreateFailed(int i, String s) {
-                        LogUtil.e("code:" + i + "  " + s);
-                        //ToastUtils.show("code:" + i + "  " + s);
-                    }
-                });
+                        @Override public void onCreateFailed(int i, String s) {
+                            LogUtil.e("code:" + i + "  " + s);
+                            //ToastUtils.show("code:" + i + "  " + s);
+                        }
+                    });
                 List<String> ret = data.getStringArrayListExtra("ids");
                 if (ret == null || ret.size() == 0) {
                     ToastUtils.show("您没有选择除自己以外的任何人");

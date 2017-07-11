@@ -58,18 +58,19 @@ public class ResumePresenter extends BasePresenter {
 
   /**
    * 查看他人简历
-   * @param resumeId   简历id
+   *
+   * @param resumeId 简历id
    */
-  public void getResumeDetail(String resumeId){
+  public void getResumeDetail(String resumeId) {
     RxRegiste(restRepository.createGetApi(GetApi.class)
         .qcGetOtherResumeDetail(resumeId)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcDataResponse<ResumeHomeWrap>>() {
           @Override public void call(QcDataResponse<ResumeHomeWrap> resumeHomeQcDataResponse) {
-            if (resumeHomeQcDataResponse.getStatus() == 200){
+            if (resumeHomeQcDataResponse.getStatus() == 200) {
               view.onBaseInfo(resumeHomeQcDataResponse.data.resume);
-            }else{
+            } else {
               view.onShowError(resumeHomeQcDataResponse.getMsg());
             }
           }
@@ -105,7 +106,7 @@ public class ResumePresenter extends BasePresenter {
     resumeModel.work_year = resumeHome.work_year;
     resumeModel.gender = resumeHome.gender;
     resumeModel.max_education = resumeHome.max_education;
-    resumeModel.height =  String.valueOf(resumeHome.height);
+    resumeModel.height = String.valueOf(resumeHome.height);
     resumeModel.min_salary = resumeHome.min_salary;
     resumeModel.max_salary = resumeHome.max_salary;
     if (resumeHome.exp_cities.size() > 0) {
@@ -121,8 +122,7 @@ public class ResumePresenter extends BasePresenter {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<WorkExpListWrap>>() {
-          @Override
-          public void call(QcDataResponse<WorkExpListWrap> workExpListWrapQcDataResponse) {
+          @Override public void call(QcDataResponse<WorkExpListWrap> workExpListWrapQcDataResponse) {
             if (workExpListWrapQcDataResponse.getStatus() == 200) {
               view.onWorkExpList(workExpListWrapQcDataResponse.data.experiences);
             } else {
@@ -156,7 +156,7 @@ public class ResumePresenter extends BasePresenter {
         }));
   }
 
-  public void starResume(String resumeId){
+  public void starResume(String resumeId) {
     HashMap<String, Object> params = new HashMap<String, Object>();
     params.put("resume_id", resumeId);
     RxRegiste(restRepository.createPostApi(PostApi.class)
@@ -167,14 +167,14 @@ public class ResumePresenter extends BasePresenter {
           @Override public void call(QcResponse qcResponse) {
             if (qcResponse.getStatus() == 200) {
               view.starOk();
-            }else{
+            } else {
               view.onShowError(qcResponse.getMsg());
             }
           }
         }, new NetWorkThrowable()));
   }
 
-  public void unStarResume(String resumeId){
+  public void unStarResume(String resumeId) {
     RxRegiste(restRepository.createPostApi(PostApi.class)
         .cancelStarResume(resumeId)
         .subscribeOn(Schedulers.io())

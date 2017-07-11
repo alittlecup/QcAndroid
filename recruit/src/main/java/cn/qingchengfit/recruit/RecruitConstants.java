@@ -30,7 +30,8 @@ public class RecruitConstants {
 
   public static final String IDENTIFY = "identify";
   public static final String CONVERSATION_TYPE = "conversation_type";                 //会话类型
-  public static final String TEMP_CONVERSATION_TYPE = "temp_conversation_type";      //临时会话类型（不可以直接传会话类型时使用）
+  public static final String TEMP_CONVERSATION_TYPE = "temp_conversation_type";
+  //临时会话类型（不可以直接传会话类型时使用）
   public static final String CHAT_AVATAR = "conversation_avatar";
   public static final String CHAT_NICKNAME = "conversation_nick_name";
   public static final String CHAT_JOB_RESUME = "conversation_job_resume";         //简历信息
@@ -45,7 +46,8 @@ public class RecruitConstants {
   public static final String PREFRENCE_IDENTIFY = "prefrence_identify";
   public static final String VALUE_IDENTIFY = "identify";
   public static final String SEND_RESUME = "send_resume";               //打开聊天页面是否需要同时发送简历
-  public static final String CHAT_JOB_SEARCH_OR_RECRUIT = "job_search_or_recruit";          //聊天是求职端还是招聘端
+  public static final String CHAT_JOB_SEARCH_OR_RECRUIT = "job_search_or_recruit";
+  //聊天是求职端还是招聘端
 
   public static final int C2C = 1080;
   public static final int GROUP = 1081;

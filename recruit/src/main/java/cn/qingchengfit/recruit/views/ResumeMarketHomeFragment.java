@@ -28,6 +28,7 @@ import cn.qingchengfit.recruit.item.HorizonImageShowItem;
 import cn.qingchengfit.recruit.item.JobFairFooterItem;
 import cn.qingchengfit.recruit.item.JobFairHorizonItem;
 import cn.qingchengfit.recruit.item.RecruitManageItem;
+import cn.qingchengfit.recruit.item.ResumeItem;
 import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.model.Resume;
 import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
@@ -268,8 +269,9 @@ public class ResumeMarketHomeFragment extends BaseFragment
       router.toManageRecruit();
       return false;
     }
-    if (item instanceof ResumeItem){
-      router.toResumeDetail(((ResumeItem)item).getResume().id, restRepository.getHost() + RecruitConstants.RESUME_WEB_PATH);
+    if (item instanceof ResumeItem) {
+      router.toResumeDetail(((ResumeItem) item).getResume().id,
+          restRepository.getHost() + RecruitConstants.RESUME_WEB_PATH);
       return false;
     }
     return false;

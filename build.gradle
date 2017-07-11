@@ -60,15 +60,15 @@ allprojects {
       url "https://s3.amazonaws.com/repo.commonsware.com"
     }
     mavenCentral()
-//    maven() {
-//      url uri('../repo')
-//    }
+    //    maven() {
+    //      url uri('../repo')
+    //    }
     maven() {
       url uri('../../repo')
     }
-//    maven() {
-//      url uri('./repo')
-//    }
+    //    maven() {
+    //      url uri('./repo')
+    //    }
     maven { url "https://jitpack.io" }
   }
 }

@@ -274,7 +274,7 @@ public class RecruitBusinessUtils {
     if (x == 0) return "";
     x--;
     if (x >= 0 && x < degrees.length) {
-        return degrees[x];
+      return degrees[x];
     } else {
       return "";
     }
@@ -443,16 +443,16 @@ public class RecruitBusinessUtils {
   //}
   //
 
-  public static String getPositionDamen(List<String> damens){
+  public static String getPositionDamen(List<String> damens) {
     StringBuilder sb = new StringBuilder();
     if (damens.size() == 1) {
       sb.append(damens.get(0));
-    }else{
+    } else {
       int index = 0;
-      for (String str : damens){
-        if (index == 0){
+      for (String str : damens) {
+        if (index == 0) {
           sb.append(str);
-        }else{
+        } else {
           sb.append("/" + str);
         }
         index++;

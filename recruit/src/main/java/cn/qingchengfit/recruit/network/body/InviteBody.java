@@ -1,6 +1,5 @@
 package cn.qingchengfit.recruit.network.body;
 
-import cn.qingchengfit.recruit.model.Job;
 import java.util.List;
 
 /**
@@ -24,11 +23,11 @@ public class InviteBody {
     this.fair_id = fair_id;
   }
 
-  public static InviteBody build(List<String> job_ids, String resume_id){
+  public static InviteBody build(List<String> job_ids, String resume_id) {
     return new InviteBody(job_ids, resume_id);
   }
 
-  public static InviteBody build(List<String> job_ids, String resume_id, String fair_id){
+  public static InviteBody build(List<String> job_ids, String resume_id, String fair_id) {
     return new InviteBody(job_ids, resume_id, fair_id);
   }
 }

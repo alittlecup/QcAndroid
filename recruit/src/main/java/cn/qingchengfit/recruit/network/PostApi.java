@@ -170,8 +170,6 @@ public interface PostApi {
 
   /**
    * 取消收藏
-   * @param resumeId
-   * @return
    */
   @DELETE("api/staff/job/resumes/favorites/{resume_id}/")
   rx.Observable<QcResponse> cancelStarResume(@Path("resume_id") String resumeId);

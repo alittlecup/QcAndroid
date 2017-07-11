@@ -21,13 +21,9 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventPulishPosition;
-import cn.qingchengfit.recruit.model.PublishPosition;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by fb on 2017/7/3.
@@ -80,13 +76,12 @@ public class SetNameCommenFragment extends BaseFragment {
     });
   }
 
-  @OnClick(R2.id.image_clear_name)
-  public void onClearContent(){
+  @OnClick(R2.id.image_clear_name) public void onClearContent() {
     editGroupName.setText("");
     initEdit();
   }
 
-  private void initEdit(){
+  private void initEdit() {
     editGroupName.setHint(getArguments() != null ? getArguments().getString("hint") : "");
     editGroupName.setHintTextColor(getResources().getColor(R.color.qc_text_grey));
 
@@ -108,5 +103,4 @@ public class SetNameCommenFragment extends BaseFragment {
       }
     });
   }
-
 }
