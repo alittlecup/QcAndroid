@@ -28,3 +28,9 @@ proguard/
 *.log
 app/app.iml
 paperbaselibrary/paperbaselibrary.iml
+atest/atest.iml
+recruit/recruit.iml
+saasbase/saasbase.iml
+staff/staff.iml
+trainer/trainer.iml
+widgets/widgets.iml
