@@ -171,6 +171,10 @@ public class RecruitGymDetailFragment extends BaseFragment
     }
   }
 
+  @Override public void onPermission(boolean has) {
+
+  }
+
   @Override public String getFragmentName() {
     return RecruitGymDetailFragment.class.getName();
   }

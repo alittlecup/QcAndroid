@@ -25,7 +25,6 @@ import cn.qingchengfit.recruit.views.RecruitPositionDetailEmployerFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
 import cn.qingchengfit.recruit.views.RecruitPublishJobFragment;
 import cn.qingchengfit.recruit.views.RecruitPublishJobFragmentBuilder;
-import cn.qingchengfit.recruit.views.RecruitRichTextEditFragment;
 import cn.qingchengfit.recruit.views.RecruitRichTextEditFragmentBuilder;
 import cn.qingchengfit.recruit.views.RecruitStaffMyJobFairFragment;
 import cn.qingchengfit.recruit.views.RecruitUserMyJobFairFragment;
@@ -58,7 +57,7 @@ import cn.qingchengfit.recruit.views.resume.ResumeWorkExpPreviewFragment;
 import cn.qingchengfit.recruit.views.resume.WorkExpSyncDetailFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.WorkExpeEditFragmentBuilder;
 import cn.qingchengfit.router.InnerRouter;
-import java.lang.reflect.Array;
+import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -266,7 +265,6 @@ public class RecruitRouter extends InnerRouter {
    */
   public void toWriteGymDetailDesc(String s) {
     // TODO: 2017/7/4 使用EditRecruitDesc
-    add(new RecruitRichTextEditFragment());
   }
 
   /**
@@ -279,8 +277,8 @@ public class RecruitRouter extends InnerRouter {
   /**
    * 权限设置
    */
-  public void toPermssion() {
-    add(new RecruitPermissionFragment());
+  public void toPermssion(String gymid) {
+    add(RecruitPermissionFragment.newInstance(gymid));
   }
 
   /**
@@ -401,6 +399,13 @@ public class RecruitRouter extends InnerRouter {
    */
   public void toResumeDetail(String resumeId, String url) {
     add(new ResumeDetailFragmentBuilder(resumeId, url).build());
+  }
+
+  /**
+   * 修改场馆基本信息
+   */
+  public void editGymInfo(String gymid) {
+    add(EditGymInfoFragment.newInstance(gymid));
   }
 
 }

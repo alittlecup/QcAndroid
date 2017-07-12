@@ -48,14 +48,15 @@ public class Gym implements Parcelable {
   public String system_end;
   public CityBean gd_city;
   public DistrictEntity gd_district;
-  public Long gd_lng;
-  public Long gd_lat;
+  public Double gd_lng;
+  public Double gd_lat;
   public List<String> facilities;
   public int staff_count;
   public int member_count;
   public int coach_count;
   public String area;
   public String detail_description;
+  public Integer gd_district_id;//just for upload
 
   public Gym() {
   }
@@ -72,8 +73,8 @@ public class Gym implements Parcelable {
     setSystem_end(builder.system_end);
     gd_city = builder.gd_city;
     setGd_district(builder.gd_district);
-    setGd_lng(builder.gd_lng);
-    setGd_lat(builder.gd_lat);
+    gd_lng = builder.gd_lng;
+    gd_lat = builder.gd_lat;
     setFacilities(builder.facilities);
     setStaff_count(builder.staff_count);
     setMember_count(builder.member_count);
@@ -94,14 +95,38 @@ public class Gym implements Parcelable {
     this.system_end = in.readString();
     this.gd_city = in.readParcelable(CityBean.class.getClassLoader());
     this.gd_district = in.readParcelable(DistrictEntity.class.getClassLoader());
-    this.gd_lng = (Long) in.readValue(Long.class.getClassLoader());
-    this.gd_lat = (Long) in.readValue(Long.class.getClassLoader());
+    this.gd_lng = (Double) in.readValue(Double.class.getClassLoader());
+    this.gd_lat = (Double) in.readValue(Double.class.getClassLoader());
     this.facilities = in.createStringArrayList();
     this.staff_count = in.readInt();
     this.member_count = in.readInt();
     this.coach_count = in.readInt();
     this.area = in.readString();
     this.detail_description = in.readString();
+  }
+
+  public CityBean getGd_city() {
+    return gd_city;
+  }
+
+  public void setGd_city(CityBean gd_city) {
+    this.gd_city = gd_city;
+  }
+
+  public Double getGd_lng() {
+    return gd_lng;
+  }
+
+  public void setGd_lng(Double gd_lng) {
+    this.gd_lng = gd_lng;
+  }
+
+  public Double getGd_lat() {
+    return gd_lat;
+  }
+
+  public void setGd_lat(Double gd_lat) {
+    this.gd_lat = gd_lat;
   }
 
   public String getAddressStr() {
@@ -223,22 +248,6 @@ public class Gym implements Parcelable {
     this.gd_district = gd_district;
   }
 
-  public Long getGd_lng() {
-    return gd_lng;
-  }
-
-  public void setGd_lng(Long gd_lng) {
-    this.gd_lng = gd_lng;
-  }
-
-  public Long getGd_lat() {
-    return gd_lat;
-  }
-
-  public void setGd_lat(Long gd_lat) {
-    this.gd_lat = gd_lat;
-  }
-
   public List<String> getFacilities() {
     return facilities;
   }
@@ -317,8 +326,8 @@ public class Gym implements Parcelable {
     private String system_end;
     private CityBean gd_city;
     private DistrictEntity gd_district;
-    private Long gd_lng;
-    private Long gd_lat;
+    private Double gd_lng;
+    private Double gd_lat;
     private List<String> facilities;
     private int staff_count;
     private int member_count;
@@ -384,12 +393,12 @@ public class Gym implements Parcelable {
       return this;
     }
 
-    public Builder gd_lng(Long val) {
+    public Builder gd_lng(Double val) {
       gd_lng = val;
       return this;
     }
 
-    public Builder gd_lat(Long val) {
+    public Builder gd_lat(Double val) {
       gd_lat = val;
       return this;
     }

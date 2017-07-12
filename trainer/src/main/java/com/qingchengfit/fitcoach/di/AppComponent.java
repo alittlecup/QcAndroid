@@ -7,11 +7,12 @@ import cn.qingchengfit.article.ArticleReplyFragment;
 import cn.qingchengfit.chat.ChatChooseInGymFragment;
 import cn.qingchengfit.chat.ChatFriendAllChooseFragment;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
+import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
-import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.views.container.ContainerActivity;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.SplashActivity;
 import com.qingchengfit.fitcoach.fragment.CustomSaleFragment;
@@ -73,7 +74,6 @@ import dagger.multibindings.IntoMap;
     AppComponent.ArticleReplyFragmentModule.class,
     AppComponent.ChatFriendAllChooseFragmentModule.class,
     AppComponent.ChatChooseInGymFragmentModule.class,
-    AppComponent.ConversationFriendsFragmentModule.class,
     AppComponent.SplashModule.class, AppComponent.StatementDetailFragmentModule.class,
     AppComponent.CourseChooseDialogFragmentModule.class, AppComponent.CourseReverseFragmentModule.class,
     AppComponent.SaleDetailFragmentModule.class, AppComponent.SalerChooseDialogFragmentModule.class,
@@ -90,27 +90,34 @@ import dagger.multibindings.IntoMap;
     AppComponent.ManageFragmentModule.class,
     AppComponent.SettingFragmentModule.class,
     AppComponent.LoginFragmentModule.class,
-    AppComponent.RegisterFragmentModule.class,
+    AppComponent.RegisterFragmentModule.class, AppComponent.ChooseModule.class,
+    AppComponent.ConversationFriendsFragmentModule.class,
+    AppComponent.ChooseStaffFragmentModule.class,
     AppComponent.UnLoginScheduleAdFragmentModule.class, AppComponent.ChooseGymFragmentModule.class,
     AppComponent.MainScheduleFragmentModule.class, AppComponent.GuideSetGymFragmentModule.class,
-    BindSaas.ChooseGymFragmentModule.class
 }) public interface AppComponent {
     void inject(App app);
 
-    @Subcomponent() public interface ConversationFriendsFragmentSubcomponent extends AndroidInjector<ConversationFriendsFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ConversationFriendsFragment> {
+    @Subcomponent() public interface ChooseStaffFragmentSubcomponent
+        extends AndroidInjector<ChooseStaffFragment> {
+        @Subcomponent.Builder public abstract class Builder
+            extends AndroidInjector.Builder<ChooseStaffFragment> {
         }
     }
-
+    @Subcomponent() public interface ConversationFriendsFragmentSubcomponent extends AndroidInjector<ConversationFriendsFragment> {
+        @Subcomponent.Builder public abstract class Builder
+            extends AndroidInjector.Builder<ConversationFriendsFragment> {
+        }
+    }
     @Subcomponent() public interface SplashSubcomponent extends AndroidInjector<SplashActivity> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SplashActivity> {
         }
     }
-
     @Subcomponent() public interface ChatChooseInGymFragmentSubcomponent extends AndroidInjector<ChatChooseInGymFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChatChooseInGymFragment> {
         }
     }
+
 
     @Subcomponent() public interface ChatFriendAllChooseFragmentSubcomponent extends AndroidInjector<ChatFriendAllChooseFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChatFriendAllChooseFragment> {
@@ -250,6 +257,19 @@ import dagger.multibindings.IntoMap;
     @Subcomponent() public interface GuideSetGymFragmentSubcomponent extends AndroidInjector<GuideSetGymFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<GuideSetGymFragment> {
         }
+    }
+
+    @Subcomponent() public interface ChooseSubcomponent extends AndroidInjector<ChooseActivity> {
+        @Subcomponent.Builder public abstract class Builder
+            extends AndroidInjector.Builder<ChooseActivity> {
+        }
+    }
+
+    @Module(subcomponents = ChooseStaffFragmentSubcomponent.class)
+    abstract class ChooseStaffFragmentModule {
+        @Binds @IntoMap @FragmentKey(ChooseStaffFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+            ChooseStaffFragmentSubcomponent.Builder builder);
     }
 
     @Module(subcomponents = ConversationFriendsFragmentSubcomponent.class) abstract class ConversationFriendsFragmentModule {
@@ -424,5 +444,11 @@ import dagger.multibindings.IntoMap;
         @Binds @IntoMap @FragmentKey(GuideSetGymFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             GuideSetGymFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = ChooseSubcomponent.class) abstract class ChooseModule {
+        @Binds @IntoMap @ActivityKey(ChooseActivity.class)
+        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
+            ChooseSubcomponent.Builder builder);
     }
 }

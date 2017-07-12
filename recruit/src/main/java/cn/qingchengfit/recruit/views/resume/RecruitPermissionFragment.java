@@ -90,7 +90,7 @@ public class RecruitPermissionFragment extends BaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbar.setTitle(R.string.t_permission_setting);
+    toolbarTitle.setText(R.string.t_permission_setting);
   }
 
   @Override public String getFragmentName() {
@@ -114,18 +114,27 @@ public class RecruitPermissionFragment extends BaseFragment
    * 处理简历
    */
   @OnClick(R2.id.layout_handle_resume) public void onLayoutHandleResumeClicked() {
+    if (permissionPresenter.getPermissonUsers(1) != null) {
+      permissionPresenter.chooseStaff(1);
+    }
   }
 
   /**
    * 报名参加招聘会
    */
   @OnClick(R2.id.layout_job_fair) public void onLayoutJobFairClicked() {
+    if (permissionPresenter.getPermissonUsers(2) != null) {
+      permissionPresenter.chooseStaff(2);
+    }
   }
 
   /**
    * 权限设置
    */
   @OnClick(R2.id.layout_pm_setting) public void onLayoutPmSettingClicked() {
+    if (permissionPresenter.getPermissonUsers(3) != null) {
+      permissionPresenter.chooseStaff(3);
+    }
   }
 
   @Override public void onPermssionList(List<RecruitPermission> permissions) {

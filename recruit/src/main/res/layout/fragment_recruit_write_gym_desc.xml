@@ -79,7 +79,7 @@
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/civ_gym_intro"
-      app:civ_clickable="false"
+      app:civ_clickable="true"
       app:civ_hint="@string/please_input"
       app:civ_lable="详细介绍"
       app:civ_showright="true"

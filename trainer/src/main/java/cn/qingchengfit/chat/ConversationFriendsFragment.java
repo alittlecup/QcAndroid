@@ -54,18 +54,19 @@ import rx.functions.Action1;
  */
 public class ConversationFriendsFragment extends BaseFragment implements ChatFriendPresenter.MVPView {
 
+  //@BindView(R.id.et_search) EditText etSearch;
+  //@BindView(R.id.search_clear) ImageView searchClear;
+  @Inject public LoginStatus loginStatus;
   @BindView(R.id.tv_left) protected TextView tvLeft;
   @BindView(R.id.toolbar) protected Toolbar toolbar;
   @BindView(R.id.toolbar_title) protected TextView toolbarTitle;
   @BindView(R.id.tv_allotsale_select_count) protected TextView tvAllotsaleSelectCount;
-    //@BindView(R.id.et_search) EditText etSearch;
-    //@BindView(R.id.search_clear) ImageView searchClear;
-    @Inject LoginStatus loginStatus;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_conversation_friend, container, false);
         unbinder = ButterKnife.bind(this, view);
         initToolbar(toolbar);
+      initView();
       return view;
     }
 

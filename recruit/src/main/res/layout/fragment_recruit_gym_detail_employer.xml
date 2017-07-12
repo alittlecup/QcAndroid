@@ -34,7 +34,7 @@
       <ImageView
           android:layout_width="16dp"
           android:layout_height="16dp"
-          app:srcCompat="@drawable/ic_arrow_down_black_16dp"
+          app:srcCompat="@drawable/vd_gymintro_info"
           />
 
       <android.support.v4.widget.Space
@@ -62,7 +62,7 @@
       <ImageView
           android:layout_width="16dp"
           android:layout_height="16dp"
-          app:srcCompat="@drawable/ic_arrow_down_black_16dp"
+          app:srcCompat="@drawable/vd_gymintro_access"
           />
 
       <android.support.v4.widget.Space

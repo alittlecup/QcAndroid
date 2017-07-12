@@ -146,7 +146,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
   }
 
   public void onGym(Gym service) {
-    imgRight.setVisibility(View.GONE);
+    imgRight.setVisibility(View.VISIBLE);
     if (service == null) return;
     PhotoUtils.small(imgGym, service.photo);
     tvGymName.setText(service.name);
@@ -171,6 +171,10 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
     }
   }
 
+  @Override public void onPermission(boolean has) {
+    recruitRouter.toPermssion(gym.id);
+  }
+
   @Override public String getFragmentName() {
     return RecruitGymDetailEmployerFragment.class.getName();
   }
@@ -190,14 +194,14 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
    * 场馆信息修改
    */
   @OnClick(R2.id.layout_gym_info) public void onLayoutGymInfoClicked() {
-    // TODO: 2017/7/4 场馆信息修改
+    recruitRouter.editGymInfo(gym.id);
   }
 
   /**
    * 权限设置
    */
   @OnClick(R2.id.layout_permission) public void onLayoutPermissionClicked() {
-    recruitRouter.toPermssion();
+    presenter.queryPermission(gym.id);
   }
 
   /**

@@ -120,7 +120,7 @@ import java.util.List;
           tgRecomend.checkTag(tgRecomend.indexTag(tag), false);
         }
       });
-      tagInputFragment.setTags(facilities);
+      if (facilities != null) tagInputFragment.setTags(facilities);
     }
   }
 

@@ -11,6 +11,7 @@ import cn.qingchengfit.recruit.network.response.JobFariListWrap;
 import cn.qingchengfit.recruit.network.response.JobIndexWrap;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
+import cn.qingchengfit.recruit.network.response.OnePermissionWrap;
 import cn.qingchengfit.recruit.network.response.PermisionnListWrap;
 import cn.qingchengfit.recruit.network.response.PermissionUserWrap;
 import cn.qingchengfit.recruit.network.response.ResumeHomeWrap;
@@ -167,6 +168,9 @@ public interface GetApi {
   @GET("/api/common/staffs/") rx.Observable<QcDataResponse<ChatGymWrap>> queryCommonStaffs(
       @Query("gym_id") String gymid);
 
+  @GET("/api/staff/job/check/permission/")
+  rx.Observable<QcDataResponse<OnePermissionWrap>> queryOnepermission(@Query("gym_id") String gymid,
+      @Query("key") String key);
 
     /*
      *   =============================== 招聘会  ============================================

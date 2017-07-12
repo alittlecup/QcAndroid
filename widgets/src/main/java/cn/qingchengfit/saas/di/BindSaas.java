@@ -2,6 +2,7 @@ package cn.qingchengfit.saas.di;
 
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
+import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Subcomponent;
@@ -39,10 +40,24 @@ public class BindSaas {
     }
   }
 
+  @Subcomponent() public interface EditGymInfoFragmentSubcomponent
+      extends AndroidInjector<EditGymInfoFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<EditGymInfoFragment> {
+    }
+  }
+
   @Module(subcomponents = ChooseGymFragmentSubcomponent.class)
   public abstract class ChooseGymFragmentModule {
     @Binds @IntoMap @FragmentKey(ChooseGymFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ChooseGymFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = EditGymInfoFragmentSubcomponent.class)
+  abstract class EditGymInfoFragmentModule {
+    @Binds @IntoMap @FragmentKey(EditGymInfoFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        EditGymInfoFragmentSubcomponent.Builder builder);
   }
 }

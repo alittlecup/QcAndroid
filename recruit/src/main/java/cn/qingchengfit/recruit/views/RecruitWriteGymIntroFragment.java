@@ -17,6 +17,7 @@ import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.event.EventGymFacilities;
 import cn.qingchengfit.recruit.network.body.RecruitGymBody;
 import cn.qingchengfit.recruit.presenter.RecruitGymPresenter;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -25,8 +26,8 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
-import java.util.ArrayList;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -76,7 +77,18 @@ import javax.inject.Inject;
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     delegatePresenter(gymPresenter, this);
+    onDetail(gym);
+    initBus();
     return view;
+  }
+
+  private void initBus() {
+    RxBusAdd(EventGymFacilities.class).subscribe(new Action1<EventGymFacilities>() {
+      @Override public void call(EventGymFacilities eventGymFacilities) {
+        gym.facilities = eventGymFacilities.facilities;
+        civGymEquip.setContent(CmStringUtils.List2Str(gym.facilities));
+      }
+    });
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -108,6 +120,11 @@ import javax.inject.Inject;
     });
   }
 
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    gymPresenter.queryGymInfo(gym.id);
+  }
+
   @Override public String getFragmentName() {
     return RecruitWriteGymIntroFragment.class.getName();
   }
@@ -120,7 +137,7 @@ import javax.inject.Inject;
    * 健身房设备
    */
   @OnClick(R2.id.civ_gym_equip) public void onCivGymEquipClicked() {
-    router.toGymEquip((ArrayList<String>) gym.facilities);
+    router.toGymEquip(ListUtils.list2array(gym.facilities));
   }
 
   /**

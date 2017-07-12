@@ -23,6 +23,7 @@ import cn.qingchengfit.recruit.network.response.PermisionnListWrap;
 import cn.qingchengfit.recruit.network.response.PermissionUserWrap;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.ListUtils;
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +39,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
   private PermissionUserWrap permissionUsers;
   private ChatGym chatGym;
   private int curEditPermission = 0;
+  private Gson gson = new Gson();
 
   @Inject public RecruitPermissionPresenter() {
   }
@@ -162,7 +164,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
         break;
     }
     if (chatGym != null && view instanceof Fragment) {
-      BaseRouter.toChooseStaff(((Fragment) view), chatGym);
+      BaseRouter.toChooseStaff(((Fragment) view), gson.toJson(chatGym));
     }
   }
 

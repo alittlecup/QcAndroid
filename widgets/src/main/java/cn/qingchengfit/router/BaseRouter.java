@@ -3,7 +3,6 @@ package cn.qingchengfit.router;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -43,13 +42,13 @@ public class BaseRouter {
     }
   }
 
-  public static void toChooseStaff(Fragment fragment, Parcelable parcelable) {
+  public static void toChooseStaff(Fragment fragment, String json) {
     try {
       Intent toLogin = new Intent();
       toLogin.setPackage(fragment.getActivity().getPackageName());
       toLogin.setAction("cn.qingcheng.choose");
       toLogin.putExtra("to", 62);
-      toLogin.putExtra("chatgym", parcelable);
+      toLogin.putExtra("chatgym", json);
       fragment.startActivityForResult(toLogin, 11);
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
@@ -63,6 +62,18 @@ public class BaseRouter {
       toLogin.setAction("cn.qingcheng.choose");
       toLogin.putExtra("to", 80);
       fragment.startActivityForResult(toLogin, 11);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+  }
+
+  public static void toChoose(Context context, int type) {
+    try {
+      Intent toLogin = new Intent();
+      toLogin.setPackage(context.getPackageName());
+      toLogin.setAction("cn.qingcheng.choose");
+      toLogin.putExtra("to", 71);
+      context.startActivity(toLogin);
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
     }

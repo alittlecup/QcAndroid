@@ -186,6 +186,18 @@ public class BusinessUtils {
         return ret;
     }
 
+    public static List<String> qcstudentIds(List<QcStudentBean> students, String id) {
+        List<String> ret = new ArrayList<>();
+        for (int i = 0; i < students.size(); i++) {
+            if (!TextUtils.equals(students.get(i).getId(), id)) {
+                ret.add(students.get(i).getId());
+            }
+        }
+
+        return ret;
+    }
+
+
     public static String students2str(List<StudentBean> students) {
         String ret = "";
         for (int i = 0; i < students.size(); i++) {

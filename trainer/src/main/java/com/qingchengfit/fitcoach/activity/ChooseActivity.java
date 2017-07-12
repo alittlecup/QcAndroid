@@ -8,6 +8,7 @@ import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
+import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.CmBean;
 import com.qingchengfit.fitcoach.fragment.guide.AddCycleFragment;
@@ -16,7 +17,7 @@ import com.qingchengfit.fitcoach.fragment.schedule.ChooseScheduleGymFragmentBuil
 
 public class ChooseActivity extends BaseActivity {
 
-  public static final int TO_CHOSSE_ADDRESS = 0;
+  public static final int TO_CHOSSE_ADDRESS = 71;
   public static final int TO_CHOSSE_CIRCLE = 1;
   public static final int TO_CHOSSE_GYM = 2;
   public static final int TO_CHOSSE_GYM_SCHEDULE = 3;
@@ -57,7 +58,8 @@ public class ChooseActivity extends BaseActivity {
         fragment = new ChooseGymFragment();
         break;
       case CHOOSE_STAFF:
-        ChatGym gym = getIntent().getParcelableExtra("chatgym");
+        String json = getIntent().getStringExtra("chatgym");
+        ChatGym gym = new Gson().fromJson(json, ChatGym.class);
         if (gym == null) {
           this.finish();
           return;

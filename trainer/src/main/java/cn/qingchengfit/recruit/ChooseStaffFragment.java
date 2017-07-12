@@ -1,13 +1,17 @@
 package cn.qingchengfit.recruit;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import cn.qingchengfit.chat.ChatChooseInGymFragmentBuilder;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
 import cn.qingchengfit.chat.model.ChatGym;
 import cn.qingchengfit.constant.DirtySender;
+import cn.qingchengfit.utils.BusinessUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.event.EventChoosePerson;
+import java.util.ArrayList;
 import rx.functions.Action1;
 
 /**
@@ -59,5 +63,15 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
             DirtySender.studentList.size() > 99 ? "..." : DirtySender.studentList.size() + "");
       }
     });
+  }
+
+  @Override public void onDone() {
+    Intent ret = new Intent();
+    ret.putExtra("ids",
+        (ArrayList<String>) BusinessUtils.qcstudentIds(new ArrayList<>(DirtySender.studentList),
+            loginStatus.getUserId()));
+    getActivity().setResult(Activity.RESULT_OK, ret);
+    DirtySender.studentList.clear();
+    getActivity().finish();
   }
 }
