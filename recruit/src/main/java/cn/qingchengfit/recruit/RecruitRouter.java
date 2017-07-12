@@ -370,9 +370,9 @@ public class RecruitRouter extends InnerRouter {
 
   }
 
-  public void toPublishPosition(String gymId) {
-    add(new RecruitPublishJobFragmentBuilder(gymId, null,
-        RecruitPublishJobFragment.PUBLISH_POSITION).build());
+  public void toPublishPosition(String gymId, Job job, int type) {
+    add(new RecruitPublishJobFragmentBuilder(job,
+        type).gymId(gymId).build());
   }
 
   /**

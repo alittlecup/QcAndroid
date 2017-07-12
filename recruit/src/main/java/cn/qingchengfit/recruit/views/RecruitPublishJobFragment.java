@@ -80,7 +80,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
 
   @Inject RecruitRouter router;
   @Inject JobPresenter presenter;
-  @Arg String gymId;
+  @Arg(required = false) String gymId;
   @Arg int type;
   @Arg Job job;
 
@@ -103,10 +103,14 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
     civGymDesc.setContent("详情");
     civGymDesc.setContentColor(getResources().getColor(R.color.qc_text_grey));
     delegatePresenter(presenter, this);
+    initToolbar(toolbar);
     initContent();
     initRxBus();
-    initToolbar(toolbar);
-    toolbarTitile.setText("发布职位");
+    if (type == PUBLISH_POSITION) {
+      toolbarTitile.setText("发布职位");
+    }else{
+      toolbarTitile.setText("编辑职位");
+    }
     return view;
   }
 
@@ -123,11 +127,14 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
                 + RecruitBusinessUtils.getGender(job.gender)
                 + "/"
                 + RecruitBusinessUtils.getDegree(getContext(), job.education));
-        civPositionWelfare.setContent(RecruitBusinessUtils.getPositionDamen(job.welfare));
+        if (job.welfare != null) {
+          civPositionWelfare.setContent(RecruitBusinessUtils.getPositionDamen(job.welfare));
+        }
       }
       toolbar.inflateMenu(R.menu.menu_save);
       toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
+          presenter.modifyJob(job.id, body);
           return false;
         }
       });
@@ -306,7 +313,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
   }
 
   @Override public void onEditOk() {
-    ToastUtils.show("发布成功");
+    ToastUtils.show("成功");
     hideLoadingTrans();
     getActivity().onBackPressed();
   }

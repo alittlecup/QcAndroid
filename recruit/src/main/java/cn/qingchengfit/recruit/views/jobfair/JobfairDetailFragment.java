@@ -2,6 +2,7 @@ package cn.qingchengfit.recruit.views.jobfair;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,6 +63,7 @@ public class JobfairDetailFragment extends BaseFragment implements JobFairDetail
   @Inject JobFairDetailPresenter presenter;
   @Inject RecruitRouter router;
   CommonFlexAdapter commonFlexAdapter;
+  @BindView(R2.id.smooth_app_bar_layout) AppBarLayout smoothAppBarLayout;
   private int type = 0;//0是招聘端的  1：是求职端
   private JobFair jobFair;
   private FragmentListItem resumeListItem;
@@ -100,8 +102,26 @@ public class JobfairDetailFragment extends BaseFragment implements JobFairDetail
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     rv.setLayoutManager(new LinearLayoutManager(getContext()));
     rv.setAdapter(commonFlexAdapter);
+    initToolbar(toolbar);
+    initAppbar();
     initBus();
     return view;
+  }
+
+  private void initAppbar(){
+    smoothAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+      @Override public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset == 0) {
+          tvDuring.setVisibility(View.VISIBLE);
+          tvName.setVisibility(View.VISIBLE);
+        } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+          tvDuring.setVisibility(View.GONE);
+          tvName.setVisibility(View.GONE);
+
+        } else {
+        }
+      }
+    });
   }
 
   private void initBus() {

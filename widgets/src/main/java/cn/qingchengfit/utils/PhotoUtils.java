@@ -95,6 +95,7 @@ public class PhotoUtils {
         .load(url)
         .asBitmap()
         .placeholder(R.color.backgroud_grey)
+        //.transform(new Corner4dpImgTrans(v.getContext(), 10))
         .into(new Corner4dpImgWrapper(v, v.getContext()));
   }
 

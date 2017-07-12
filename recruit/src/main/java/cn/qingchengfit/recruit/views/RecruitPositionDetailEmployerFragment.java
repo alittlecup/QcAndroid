@@ -20,6 +20,7 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.model.Job;
+import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
 import cn.qingchengfit.utils.ToastUtils;
@@ -118,7 +119,7 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
 
   @Override public void onJobDetail(Job job) {
     super.onJobDetail(job);
-
+    this.job = job;
     /**
      * 招聘端 相关数据
      */
@@ -149,24 +150,24 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   @OnClick(R2.id.btn_close_pos) public void onBtnClosePosClicked() {
     showLoading();
     // TODO: 2017/7/11 @FB
-    //if (job.published) {
-    //  presenter.publishJob(job.id, new JobBody.Builder().published(false).build());
-    //} else {
-    //  presenter.publishJob(job.id, new JobBody.Builder().published(true).build());
-    //}
+    if (job.published) {
+      presenter.modifyJob(job.id, new JobBody.Builder().published(false).build());
+    } else {
+      presenter.modifyJob(job.id, new JobBody.Builder().published(true).build());
+    }
   }
 
   @Override public void onEditOk() {
     hideLoading();
     presenter.queryJob(job.id);
-    ToastUtils.show(R.drawable.vector_hook_white, job.published ? "已开启" : "已关闭");
+    ToastUtils.show(R.drawable.vector_hook_white, job.published ? "已关闭" : "已开启");
   }
 
   /**
    * 编辑职位
    */
   @OnClick(R2.id.btn_edit_postion) public void onBtnEditPostionClicked() {
-    router.goJobDetail(job);
+    router.toPublishPosition("", job, RecruitPublishJobFragment.MODIFY_POSITION);
   }
 
   @OnClick(R2.id.layout_diliverd) public void onLayoutDiliverdClicked() {

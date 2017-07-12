@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="160dp"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
     >
 
   <ImageView
       android:id="@+id/img_bg"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:scaleType="centerCrop"
+      android:scaleType="fitXY"
       tools:src="@color/toolbar"
       />
 
