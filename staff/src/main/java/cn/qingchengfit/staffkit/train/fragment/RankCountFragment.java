@@ -91,8 +91,8 @@ public class RankCountFragment extends BaseFragment {
         textGroupClass.setVisibility(View.VISIBLE);
         textGroupPrivate.setVisibility(View.VISIBLE);
         textGroupAttendance.setText(getString(R.string.rank_type_group_attendance, attendanceBean.days.together_count));
-        textGroupClass.setText(getString(R.string.rank_type_group_class, attendanceBean.group_course.together_count));
-        textGroupPrivate.setText(getString(R.string.rank_type_group_private, attendanceBean.private_course.together_count));
+        textGroupClass.setText(getString(R.string.rank_type_group_attendance, attendanceBean.group_course.together_count));
+        textGroupPrivate.setText(getString(R.string.rank_type_group_attendance, attendanceBean.private_course.together_count));
       }else{
         textGroupAttendance.setVisibility(View.GONE);
         textGroupClass.setVisibility(View.GONE);
