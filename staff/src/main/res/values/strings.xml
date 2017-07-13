@@ -803,6 +803,10 @@
   <string formatted="false" name="sign_up_member_count">小组成员（%d）</string>
   <string formatted="false" name="sign_up_group_all">所有分组（%d）</string>
 
+  <string formatted="false" name="rank_type_group_attendance">团队出勤 %d人</string>
+  <string formatted="false" name="rank_type_group_class">团队团课 %d人</string>
+  <string formatted="false" name="rank_type_group_private">团队私教 %d人</string>
+
   <string name="detail_address">具体地址</string>
   <string name="please_input_detail_address">请填写具体地址</string>
   <string name="please_drag_map">请拖动地图到健身房的正确位置</string>

@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.train.presenter;
 
+import android.text.TextUtils;
 import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;

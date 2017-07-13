@@ -11,32 +11,15 @@ import java.util.List;
 
 public class GroupBean implements Parcelable {
 
-    public static final Creator<GroupBean> CREATOR = new Creator<GroupBean>() {
-        @Override public GroupBean createFromParcel(Parcel source) {
-            return new GroupBean(source);
-        }
-
-        @Override public GroupBean[] newArray(int size) {
-            return new GroupBean[size];
-        }
-    };
     public int id;
     public String name;
     public String created_at;
     public List<MemberAttendanceBean> users_attendance;
     public List<QcStudentBean> users;
     public AttendanceBean team_attendance;
+    public StatRule stat_rule;
 
     public GroupBean() {
-    }
-
-    protected GroupBean(Parcel in) {
-        this.id = in.readInt();
-        this.name = in.readString();
-        this.created_at = in.readString();
-        this.users_attendance = in.createTypedArrayList(MemberAttendanceBean.CREATOR);
-        this.users = in.createTypedArrayList(QcStudentBean.CREATOR);
-        this.team_attendance = in.readParcelable(AttendanceBean.class.getClassLoader());
     }
 
     @Override public int describeContents() {
@@ -50,5 +33,26 @@ public class GroupBean implements Parcelable {
         dest.writeTypedList(this.users_attendance);
         dest.writeTypedList(this.users);
         dest.writeParcelable(this.team_attendance, flags);
+        dest.writeParcelable(this.stat_rule, flags);
     }
+
+    protected GroupBean(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.created_at = in.readString();
+        this.users_attendance = in.createTypedArrayList(MemberAttendanceBean.CREATOR);
+        this.users = in.createTypedArrayList(QcStudentBean.CREATOR);
+        this.team_attendance = in.readParcelable(AttendanceBean.class.getClassLoader());
+        this.stat_rule = in.readParcelable(StatRule.class.getClassLoader());
+    }
+
+    public static final Creator<GroupBean> CREATOR = new Creator<GroupBean>() {
+        @Override public GroupBean createFromParcel(Parcel source) {
+            return new GroupBean(source);
+        }
+
+        @Override public GroupBean[] newArray(int size) {
+            return new GroupBean[size];
+        }
+    };
 }

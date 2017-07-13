@@ -494,12 +494,12 @@ import dagger.multibindings.IntoMap;
     AppComponent.AddStudentFragmentModule.class, AppComponent.AllocateCoachModule.class, AppComponent.AllocateCoachListFragmentModule.class,
     AppComponent.CoachStudentDetailFragmentModule.class, AppComponent.OperationStudentFragmentModule.class,
     AppComponent.MutiChooseCoachModule.class, AppComponent.CardTypeChooseDialogFragmentModule.class,
-    BindSaas.ChooseGymFragmentModule.class
+    BindSaas.ChooseGymFragmentModule.class,
 
     /**
      * 聊天
      */
-    AppComponent.JobSearchChatModule.class,
+    //AppComponent.JobSearchChatModule.class,
 })
 
 public interface AppComponent {

@@ -8,26 +8,13 @@ import android.os.Parcelable;
  */
 
 public class RankTypeBean implements Parcelable {
-    public static final Creator<RankTypeBean> CREATOR = new Creator<RankTypeBean>() {
-        @Override public RankTypeBean createFromParcel(Parcel source) {
-            return new RankTypeBean(source);
-        }
 
-        @Override public RankTypeBean[] newArray(int size) {
-            return new RankTypeBean[size];
-        }
-    };
     public int count;
     public String rank_country;
     public String rank_gym;
+    public int together_count;
 
     public RankTypeBean() {
-    }
-
-    protected RankTypeBean(Parcel in) {
-        this.count = in.readInt();
-        this.rank_country = in.readString();
-        this.rank_gym = in.readString();
     }
 
     @Override public int describeContents() {
@@ -38,5 +25,23 @@ public class RankTypeBean implements Parcelable {
         dest.writeInt(this.count);
         dest.writeString(this.rank_country);
         dest.writeString(this.rank_gym);
+        dest.writeInt(this.together_count);
     }
+
+    protected RankTypeBean(Parcel in) {
+        this.count = in.readInt();
+        this.rank_country = in.readString();
+        this.rank_gym = in.readString();
+        this.together_count = in.readInt();
+    }
+
+    public static final Creator<RankTypeBean> CREATOR = new Creator<RankTypeBean>() {
+        @Override public RankTypeBean createFromParcel(Parcel source) {
+            return new RankTypeBean(source);
+        }
+
+        @Override public RankTypeBean[] newArray(int size) {
+            return new RankTypeBean[size];
+        }
+    };
 }

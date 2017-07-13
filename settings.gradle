@@ -1,5 +1,5 @@
 include ':widgets', ':saasbase',
 //    ':trainer',
-    ':atest',
-    ':recruit'
-//    ':staff'
+//    ':atest',
+    ':recruit',
+    ':staff'
