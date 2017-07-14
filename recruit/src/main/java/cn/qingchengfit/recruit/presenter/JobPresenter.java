@@ -10,6 +10,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.PostApi;
@@ -17,6 +18,7 @@ import cn.qingchengfit.recruit.network.body.InviteBody;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
+import cn.qingchengfit.recruit.network.response.OnePermissionWrap;
 import com.tencent.qcloud.timchat.chatmodel.RecruitModel;
 import java.util.HashMap;
 import java.util.List;
@@ -79,7 +81,7 @@ public class JobPresenter extends BasePresenter {
         }, new NetWorkThrowable()));
   }
 
-  public void modifyJob(String jobId, JobBody body){
+  public void modifyJob(String jobId, JobBody body) {
     RxRegiste(qcRestRepository.createPostApi(PostApi.class).editPosition(jobId, body)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -112,6 +114,25 @@ public class JobPresenter extends BasePresenter {
     );
   }
 
+  public void queryStaffJob(String jobid) {
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .querystaffJobDetail(jobid)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<JobDetailWrap>>() {
+          @Override public void call(QcDataResponse<JobDetailWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              view.onJobDetail(qcResponse.data.job);
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable())
+
+    );
+  }
+
+
   /**
    * 获取可邀约的职位列表
    */
@@ -134,6 +155,26 @@ public class JobPresenter extends BasePresenter {
         }, new NetWorkThrowable())
 
     );
+  }
+
+  public void queryEditPermiss(final Job job, String key) {
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .queryOnepermission(job.gym.id, key)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<OnePermissionWrap>>() {
+          @Override public void call(QcDataResponse<OnePermissionWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              if (qcResponse.data.has_permission) {
+                view.toEditJob();
+              } else {
+                view.showAlert(R.string.alert_permission_forbid);
+              }
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
   }
 
   public RecruitModel getRecruitModel(Job job) {
@@ -248,7 +289,7 @@ public class JobPresenter extends BasePresenter {
 
     void onInviteOk();
 
+    void toEditJob();
     void onJobList(List<Job> jobList);
   }
-
 }

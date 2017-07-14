@@ -108,7 +108,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
     initRxBus();
     if (type == PUBLISH_POSITION) {
       toolbarTitile.setText("发布职位");
-    }else{
+    } else {
       toolbarTitile.setText("编辑职位");
     }
     return view;

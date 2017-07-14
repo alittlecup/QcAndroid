@@ -23,8 +23,8 @@ import cn.qingchengfit.recruit.views.RecruitManageFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDemanFragmentBuilder;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailEmployerFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
-import cn.qingchengfit.recruit.views.RecruitPublishJobFragment;
 import cn.qingchengfit.recruit.views.RecruitPublishJobFragmentBuilder;
+import cn.qingchengfit.recruit.views.RecruitRichTextEditFragment;
 import cn.qingchengfit.recruit.views.RecruitRichTextEditFragmentBuilder;
 import cn.qingchengfit.recruit.views.RecruitStaffMyJobFairFragment;
 import cn.qingchengfit.recruit.views.RecruitUserMyJobFairFragment;
@@ -283,8 +283,8 @@ public class RecruitRouter extends InnerRouter {
   /**
    * 权限设置
    */
-  public void toPermssion() {
-    add(new RecruitPermissionFragment());
+  public void toPermssion(String gymid) {
+    add(RecruitPermissionFragment.newInstance(gymid));
   }
 
   /**
@@ -375,8 +375,7 @@ public class RecruitRouter extends InnerRouter {
   }
 
   public void toPublishPosition(String gymId, Job job, int type) {
-    add(new RecruitPublishJobFragmentBuilder(job,
-        type).gymId(gymId).build());
+    add(new RecruitPublishJobFragmentBuilder(job, type).gymId(gymId).build());
   }
 
   /**

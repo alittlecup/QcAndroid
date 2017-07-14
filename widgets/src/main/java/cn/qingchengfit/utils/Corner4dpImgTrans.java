@@ -22,7 +22,7 @@ public class Corner4dpImgTrans extends BitmapTransformation {
     this(context, 4);
   }
 
-  public Corner4dpImgTrans(Context context, int width){
+  public Corner4dpImgTrans(Context context, int width) {
     super(context);
     this.radius = Resources.getSystem().getDisplayMetrics().density * width;
   }
@@ -42,13 +42,13 @@ public class Corner4dpImgTrans extends BitmapTransformation {
 
     Canvas canvas = new Canvas(result);
     Paint paint = new Paint();
-    paint.setShader(new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+    paint.setShader(
+        new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
     paint.setAntiAlias(true);
     RectF rectF = new RectF(0f, 0f, source.getWidth(), source.getHeight());
     canvas.drawRoundRect(rectF, radius, radius, paint);
     return result;
   }
-
 
   @Override public String getId() {
     return getClass().getName() + Math.round(radius);

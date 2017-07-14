@@ -108,7 +108,7 @@ public class JobfairDetailFragment extends BaseFragment implements JobFairDetail
     return view;
   }
 
-  private void initAppbar(){
+  private void initAppbar() {
     smoothAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
       @Override public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         if (verticalOffset == 0) {
@@ -117,7 +117,6 @@ public class JobfairDetailFragment extends BaseFragment implements JobFairDetail
         } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
           tvDuring.setVisibility(View.GONE);
           tvName.setVisibility(View.GONE);
-
         } else {
         }
       }

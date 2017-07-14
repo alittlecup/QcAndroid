@@ -4,14 +4,15 @@ package cn.qingchengfit.recruit.utils;
  * website: https://github.com/Carbs0126/
  *
  * Thanks to :
- *  1.ReadMoreTextView
- *      https://github.com/borjabravo10/ReadMoreTextView
- *  2.TouchableSpan
- *      http://stackoverflow.com/questions
- *          /20856105/change-the-text-color-of-a-single-clickablespan-when-pressed-without-affecting-o
- *  3.FlatUI
- *      http://www.bootcss.com/p/flat-ui/
+ * 1.ReadMoreTextView
+ * https://github.com/borjabravo10/ReadMoreTextView
+ * 2.TouchableSpan
+ * http://stackoverflow.com/questions
+ * /20856105/change-the-text-color-of-a-single-clickablespan-when-pressed-without-affecting-o
+ * 3.FlatUI
+ * http://www.bootcss.com/p/flat-ui/
  */
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -30,13 +31,11 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-
 import android.widget.TextView;
 import cn.qingchengfit.recruit.R;
 import java.lang.reflect.Field;
 
-@SuppressLint("AppCompatCustomView")
-public class ExpendableTextView extends TextView {
+@SuppressLint("AppCompatCustomView") public class ExpendableTextView extends TextView {
 
   public static final int STATE_SHRINK = 0;
   public static final int STATE_EXPAND = 1;
@@ -94,13 +93,13 @@ public class ExpendableTextView extends TextView {
 
   public ExpendableTextView(Context context, AttributeSet attrs) {
     super(context, attrs);
-    initAttr(context,attrs);
+    initAttr(context, attrs);
     init();
   }
 
   public ExpendableTextView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    initAttr(context,attrs);
+    initAttr(context, attrs);
     init();
   }
 
@@ -117,31 +116,31 @@ public class ExpendableTextView extends TextView {
       int attr = a.getIndex(i);
       if (attr == R.styleable.ExpendableTextView_etv_MaxLinesOnShrink) {
         mMaxLinesOnShrink = a.getInteger(attr, MAX_LINES_ON_SHRINK);
-      }else if (attr == R.styleable.ExpendableTextView_etv_EllipsisHint){
+      } else if (attr == R.styleable.ExpendableTextView_etv_EllipsisHint) {
         mEllipsisHint = a.getString(attr);
-      }else if (attr == R.styleable.ExpendableTextView_etv_ToExpandHint) {
+      } else if (attr == R.styleable.ExpendableTextView_etv_ToExpandHint) {
         mToExpandHint = a.getString(attr);
-      }else if (attr == R.styleable.ExpendableTextView_etv_ToShrinkHint) {
+      } else if (attr == R.styleable.ExpendableTextView_etv_ToShrinkHint) {
         mToShrinkHint = a.getString(attr);
-      }else if (attr == R.styleable.ExpendableTextView_etv_EnableToggle) {
+      } else if (attr == R.styleable.ExpendableTextView_etv_EnableToggle) {
         mToggleEnable = a.getBoolean(attr, TOGGLE_ENABLE);
-      }else if (attr == R.styleable.ExpendableTextView_etv_ToExpandHintShow){
+      } else if (attr == R.styleable.ExpendableTextView_etv_ToExpandHintShow) {
         mShowToExpandHint = a.getBoolean(attr, SHOW_TO_EXPAND_HINT);
-      }else if (attr == R.styleable.ExpendableTextView_etv_ToShrinkHintShow){
+      } else if (attr == R.styleable.ExpendableTextView_etv_ToShrinkHintShow) {
         mShowToShrinkHint = a.getBoolean(attr, SHOW_TO_SHRINK_HINT);
-      }else if (attr == R.styleable.ExpendableTextView_etv_ToExpandHintColor){
+      } else if (attr == R.styleable.ExpendableTextView_etv_ToExpandHintColor) {
         mToExpandHintColor = a.getInteger(attr, TO_EXPAND_HINT_COLOR);
-      }else if (attr == R.styleable.ExpendableTextView_etv_ToShrinkHintColor){
+      } else if (attr == R.styleable.ExpendableTextView_etv_ToShrinkHintColor) {
         mToShrinkHintColor = a.getInteger(attr, TO_SHRINK_HINT_COLOR);
-      }else if (attr == R.styleable.ExpendableTextView_etv_ToExpandHintColorBgPressed){
+      } else if (attr == R.styleable.ExpendableTextView_etv_ToExpandHintColorBgPressed) {
         mToExpandHintColorBgPressed = a.getInteger(attr, TO_EXPAND_HINT_COLOR_BG_PRESSED);
-      }else if (attr == R.styleable.ExpendableTextView_etv_ToShrinkHintColorBgPressed){
+      } else if (attr == R.styleable.ExpendableTextView_etv_ToShrinkHintColorBgPressed) {
         mToShrinkHintColorBgPressed = a.getInteger(attr, TO_SHRINK_HINT_COLOR_BG_PRESSED);
-      }else if (attr == R.styleable.ExpendableTextView_etv_InitState){
+      } else if (attr == R.styleable.ExpendableTextView_etv_InitState) {
         mCurrState = a.getInteger(attr, STATE_SHRINK);
-      }else if (attr == R.styleable.ExpendableTextView_etv_GapToExpandHint){
+      } else if (attr == R.styleable.ExpendableTextView_etv_GapToExpandHint) {
         mGapToExpandHint = a.getString(attr);
-      }else if (attr == R.styleable.ExpendableTextView_etv_GapToShrinkHint){
+      } else if (attr == R.styleable.ExpendableTextView_etv_GapToShrinkHint) {
         mGapToShrinkHint = a.getString(attr);
       }
     }
@@ -151,24 +150,23 @@ public class ExpendableTextView extends TextView {
   private void init() {
     mTouchableSpan = new TouchableSpan();
     setMovementMethod(new LinkTouchMovementMethod());
-    if(TextUtils.isEmpty(mEllipsisHint)) {
+    if (TextUtils.isEmpty(mEllipsisHint)) {
       mEllipsisHint = ELLIPSIS_HINT;
     }
-    if(TextUtils.isEmpty(mToExpandHint)){
+    if (TextUtils.isEmpty(mToExpandHint)) {
       //mToExpandHint = getResources().getString(R.string.to_expand_hint);
       mToExpandHint = "[展开]";
     }
-    if(TextUtils.isEmpty(mToShrinkHint)){
+    if (TextUtils.isEmpty(mToShrinkHint)) {
       //mToShrinkHint = getResources().getString(R.string.to_shrink_hint);
       mToShrinkHint = "[收起]";
     }
-    if(mToggleEnable){
+    if (mToggleEnable) {
       mExpandableClickListener = new ExpandableClickListener();
       setOnClickListener(mExpandableClickListener);
     }
     getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-      @Override
-      public void onGlobalLayout() {
+      @Override public void onGlobalLayout() {
         ViewTreeObserver obs = getViewTreeObserver();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
           obs.removeOnGlobalLayoutListener(this);
@@ -190,18 +188,18 @@ public class ExpendableTextView extends TextView {
    * @param expandState
    *          expand or shrink
    */
-  public void updateForRecyclerView(CharSequence text, int futureTextViewWidth, int expandState){
+  public void updateForRecyclerView(CharSequence text, int futureTextViewWidth, int expandState) {
     mFutureTextViewWidth = futureTextViewWidth;
     mCurrState = expandState;
     setText(text);
   }
 
-  public void updateForRecyclerView(CharSequence text, BufferType type, int futureTextViewWidth){
+  public void updateForRecyclerView(CharSequence text, BufferType type, int futureTextViewWidth) {
     mFutureTextViewWidth = futureTextViewWidth;
     setText(text, type);
   }
 
-  public void updateForRecyclerView(CharSequence text, int futureTextViewWidth){
+  public void updateForRecyclerView(CharSequence text, int futureTextViewWidth) {
     mFutureTextViewWidth = futureTextViewWidth;
     setText(text);
   }
@@ -212,7 +210,7 @@ public class ExpendableTextView extends TextView {
    *      STATE_SHRINK if in shrink state
    *      STATE_EXPAND if in expand state
    */
-  public int getExpandState(){
+  public int getExpandState() {
     return mCurrState;
   }
 
@@ -221,24 +219,24 @@ public class ExpendableTextView extends TextView {
    * @return
    *      get a will-be-displayed text
    */
-  private CharSequence getNewTextByConfig(){
-    if(TextUtils.isEmpty(mOrigText)){
+  private CharSequence getNewTextByConfig() {
+    if (TextUtils.isEmpty(mOrigText)) {
       return mOrigText;
     }
 
     mLayout = getLayout();
-    if(mLayout != null){
+    if (mLayout != null) {
       mLayoutWidth = mLayout.getWidth();
     }
 
-    if(mLayoutWidth <= 0){
-      if(getWidth() == 0) {
+    if (mLayoutWidth <= 0) {
+      if (getWidth() == 0) {
         if (mFutureTextViewWidth == 0) {
           return mOrigText;
         } else {
           mLayoutWidth = mFutureTextViewWidth - getPaddingLeft() - getPaddingRight();
         }
-      }else{
+      } else {
         mLayoutWidth = getWidth() - getPaddingLeft() - getPaddingRight();
       }
     }
@@ -246,9 +244,11 @@ public class ExpendableTextView extends TextView {
     mTextPaint = getPaint();
 
     mTextLineCount = -1;
-    switch (mCurrState){
+    switch (mCurrState) {
       case STATE_SHRINK: {
-        mLayout = new DynamicLayout(mOrigText, mTextPaint, mLayoutWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        mLayout =
+            new DynamicLayout(mOrigText, mTextPaint, mLayoutWidth, Layout.Alignment.ALIGN_NORMAL,
+                1.0f, 0.0f, false);
         mTextLineCount = mLayout.getLineCount();
 
         if (mTextLineCount <= mMaxLinesOnShrink) {
@@ -256,18 +256,19 @@ public class ExpendableTextView extends TextView {
         }
         int indexEnd = getValidLayout().getLineEnd(mMaxLinesOnShrink - 1);
         int indexStart = getValidLayout().getLineStart(mMaxLinesOnShrink - 1);
-        int indexEndTrimmed = indexEnd
-            - getLengthOfString(mEllipsisHint)
-            - (mShowToExpandHint ? getLengthOfString(mToExpandHint) + getLengthOfString(mGapToExpandHint) : 0);
+        int indexEndTrimmed =
+            indexEnd - getLengthOfString(mEllipsisHint) - (mShowToExpandHint ? getLengthOfString(
+                mToExpandHint) + getLengthOfString(mGapToExpandHint) : 0);
 
         if (indexEndTrimmed <= indexStart) {
           indexEndTrimmed = indexEnd;
         }
 
-        int remainWidth = getValidLayout().getWidth() -
-            (int) (mTextPaint.measureText(mOrigText.subSequence(indexStart, indexEndTrimmed).toString()) + 0.5);
-        float widthTailReplaced = mTextPaint.measureText(getContentOfString(mEllipsisHint)
-            + (mShowToExpandHint ? (getContentOfString(mToExpandHint) + getContentOfString(mGapToExpandHint)) : ""));
+        int remainWidth = getValidLayout().getWidth() - (int) (mTextPaint.measureText(
+            mOrigText.subSequence(indexStart, indexEndTrimmed).toString()) + 0.5);
+        float widthTailReplaced = mTextPaint.measureText(
+            getContentOfString(mEllipsisHint) + (mShowToExpandHint ? (getContentOfString(
+                mToExpandHint) + getContentOfString(mGapToExpandHint)) : ""));
 
         int indexEndTrimmedRevised = indexEndTrimmed;
         if (remainWidth > widthTailReplaced) {
@@ -277,7 +278,8 @@ public class ExpendableTextView extends TextView {
             extraOffset++;
             if (indexEndTrimmed + extraOffset <= mOrigText.length()) {
               extraWidth = (int) (mTextPaint.measureText(
-                  mOrigText.subSequence(indexEndTrimmed, indexEndTrimmed + extraOffset).toString()) + 0.5);
+                  mOrigText.subSequence(indexEndTrimmed, indexEndTrimmed + extraOffset).toString())
+                  + 0.5);
             } else {
               break;
             }
@@ -289,7 +291,9 @@ public class ExpendableTextView extends TextView {
           while (remainWidth + extraWidth < widthTailReplaced) {
             extraOffset--;
             if (indexEndTrimmed + extraOffset > indexStart) {
-              extraWidth = (int) (mTextPaint.measureText(mOrigText.subSequence(indexEndTrimmed + extraOffset, indexEndTrimmed).toString()) + 0.5);
+              extraWidth = (int) (mTextPaint.measureText(
+                  mOrigText.subSequence(indexEndTrimmed + extraOffset, indexEndTrimmed).toString())
+                  + 0.5);
             } else {
               break;
             }
@@ -298,11 +302,13 @@ public class ExpendableTextView extends TextView {
         }
 
         String fixText = removeEndLineBreak(mOrigText.subSequence(0, indexEndTrimmedRevised));
-        SpannableStringBuilder ssbShrink = new SpannableStringBuilder(fixText)
-            .append(mEllipsisHint);
+        SpannableStringBuilder ssbShrink =
+            new SpannableStringBuilder(fixText).append(mEllipsisHint);
         if (mShowToExpandHint) {
-          ssbShrink.append(getContentOfString(mGapToExpandHint) + getContentOfString(mToExpandHint));
-          ssbShrink.setSpan(mTouchableSpan, ssbShrink.length() - getLengthOfString(mToExpandHint), ssbShrink.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+          ssbShrink.append(
+              getContentOfString(mGapToExpandHint) + getContentOfString(mToExpandHint));
+          ssbShrink.setSpan(mTouchableSpan, ssbShrink.length() - getLengthOfString(mToExpandHint),
+              ssbShrink.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return ssbShrink;
       }
@@ -310,16 +316,19 @@ public class ExpendableTextView extends TextView {
         if (!mShowToShrinkHint) {
           return mOrigText;
         }
-        mLayout = new DynamicLayout(mOrigText, mTextPaint, mLayoutWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        mLayout =
+            new DynamicLayout(mOrigText, mTextPaint, mLayoutWidth, Layout.Alignment.ALIGN_NORMAL,
+                1.0f, 0.0f, false);
         mTextLineCount = mLayout.getLineCount();
 
         if (mTextLineCount <= mMaxLinesOnShrink) {
           return mOrigText;
         }
 
-        SpannableStringBuilder ssbExpand = new SpannableStringBuilder(mOrigText)
-            .append(mGapToShrinkHint).append(mToShrinkHint);
-        ssbExpand.setSpan(mTouchableSpan, ssbExpand.length() - getLengthOfString(mToShrinkHint), ssbExpand.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        SpannableStringBuilder ssbExpand =
+            new SpannableStringBuilder(mOrigText).append(mGapToShrinkHint).append(mToShrinkHint);
+        ssbExpand.setSpan(mTouchableSpan, ssbExpand.length() - getLengthOfString(mToShrinkHint),
+            ssbExpand.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ssbExpand;
       }
     }
@@ -334,25 +343,25 @@ public class ExpendableTextView extends TextView {
     return str;
   }
 
-  public void setExpandListener(OnExpandListener listener){
+  public void setExpandListener(OnExpandListener listener) {
     mOnExpandListener = listener;
   }
 
-  private Layout getValidLayout(){
+  private Layout getValidLayout() {
     return mLayout != null ? mLayout : getLayout();
   }
 
-  private void toggle(){
-    switch (mCurrState){
+  private void toggle() {
+    switch (mCurrState) {
       case STATE_SHRINK:
         mCurrState = STATE_EXPAND;
-        if(mOnExpandListener != null){
+        if (mOnExpandListener != null) {
           mOnExpandListener.onExpand(this);
         }
         break;
       case STATE_EXPAND:
         mCurrState = STATE_SHRINK;
-        if(mOnExpandListener != null){
+        if (mOnExpandListener != null) {
           mOnExpandListener.onShrink(this);
         }
         break;
@@ -360,43 +369,28 @@ public class ExpendableTextView extends TextView {
     setTextInternal(getNewTextByConfig(), mBufferType);
   }
 
-  @Override
-  public void setText(CharSequence text, BufferType type) {
+  @Override public void setText(CharSequence text, BufferType type) {
     mOrigText = text;
     mBufferType = type;
     setTextInternal(getNewTextByConfig(), type);
   }
 
-  private void setTextInternal(CharSequence text, BufferType type){
+  private void setTextInternal(CharSequence text, BufferType type) {
     super.setText(text, type);
   }
 
-  private int getLengthOfString(String string){
-    if(string == null)
-      return 0;
+  private int getLengthOfString(String string) {
+    if (string == null) return 0;
     return string.length();
   }
 
-  private String getContentOfString(String string){
-    if(string == null)
-      return "";
+  private String getContentOfString(String string) {
+    if (string == null) return "";
     return string;
   }
 
-  public interface OnExpandListener{
-    void onExpand(ExpendableTextView view);
-    void onShrink(ExpendableTextView view);
-  }
-
-  private class ExpandableClickListener implements View.OnClickListener{
-    @Override
-    public void onClick(View view) {
-      toggle();
-    }
-  }
-
   public View.OnClickListener getOnClickListener(View view) {
-    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
       return getOnClickListenerV14(view);
     } else {
       return getOnClickListenerV(view);
@@ -427,7 +421,8 @@ public class ExpendableTextView extends TextView {
         listenerInfo = listenerField.get(view);
       }
 
-      Field clickListenerField = Class.forName(CLASS_NAME_LISTENER_INFO).getDeclaredField("mOnClickListener");
+      Field clickListenerField =
+          Class.forName(CLASS_NAME_LISTENER_INFO).getDeclaredField("mOnClickListener");
 
       if (clickListenerField != null && listenerInfo != null) {
         clickListenerField.setAccessible(true);
@@ -440,6 +435,17 @@ public class ExpendableTextView extends TextView {
     return retrievedListener;
   }
 
+  public interface OnExpandListener {
+    void onExpand(ExpendableTextView view);
+
+    void onShrink(ExpendableTextView view);
+  }
+
+  private class ExpandableClickListener implements View.OnClickListener {
+    @Override public void onClick(View view) {
+      toggle();
+    }
+  }
 
   /**
    * Copy from:
@@ -450,23 +456,22 @@ public class ExpendableTextView extends TextView {
    */
   private class TouchableSpan extends ClickableSpan {
     private boolean mIsPressed;
+
     public void setPressed(boolean isSelected) {
       mIsPressed = isSelected;
     }
 
-    @Override
-    public void onClick(View widget) {
-      if(hasOnClickListeners()
-          && (getOnClickListener(ExpendableTextView.this) instanceof ExpandableClickListener)) {
-      }else{
+    @Override public void onClick(View widget) {
+      if (hasOnClickListeners() && (getOnClickListener(
+          ExpendableTextView.this) instanceof ExpandableClickListener)) {
+      } else {
         toggle();
       }
     }
 
-    @Override
-    public void updateDrawState(TextPaint ds) {
+    @Override public void updateDrawState(TextPaint ds) {
       super.updateDrawState(ds);
-      switch (mCurrState){
+      switch (mCurrState) {
         case STATE_SHRINK:
           ds.setColor(mToExpandHintColor);
           ds.bgColor = mIsPressed ? mToExpandHintColorBgPressed : 0;
@@ -517,7 +522,8 @@ public class ExpendableTextView extends TextView {
       return true;
     }
 
-    private TouchableSpan getPressedSpan(TextView textView, Spannable spannable, MotionEvent event) {
+    private TouchableSpan getPressedSpan(TextView textView, Spannable spannable,
+        MotionEvent event) {
 
       int x = (int) event.getX();
       int y = (int) event.getY();

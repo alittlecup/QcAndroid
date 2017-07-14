@@ -85,8 +85,7 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   @Inject ResumePresenter resumePresenter;
   @Inject QcRestRepository restRepository;
 
-  private Job job;
-  private boolean isStarred;
+
 
   public static RecruitPositionDetailEmployerFragment newInstance(Job job) {
     Bundle args = new Bundle();
@@ -113,13 +112,12 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
     layoutJobInfo.setVisibility(View.VISIBLE);
     onJobDetail(job);
     onGym(job.gym);
-    presenter.queryJob(job.id);
+    presenter.queryStaffJob(job.id);
     return view;
   }
 
   @Override public void onJobDetail(Job job) {
     super.onJobDetail(job);
-    this.job = job;
     /**
      * 招聘端 相关数据
      */

@@ -76,6 +76,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
     implements JobPresenter.MVPView, DialogSendResumeFragment.OnSendResumeListener,
     ResumePresenter.MVPView {
 
+  protected Job job;
   @BindView(R2.id.rv_demands) RecyclerView rvDemands;
   @BindView(R2.id.rv_welfare) QcTagGroup rvWelfare;
   @BindView(R2.id.img_gym) ImageView imgGym;
@@ -99,8 +100,6 @@ public class RecruitPositionDetailFragment extends BaseFragment
   @BindView(R2.id.img_stared) ImageView imgStared;
   @BindView(R2.id.btn_contact_him) Button btnContactHim;
   @BindView(R2.id.btn_send_resume) Button btnSendResume;
-
-  private Job job;
   private boolean isStarred;
   private ResumeHome resumeHome;
 
@@ -274,7 +273,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
   }
 
   @Override public void toEditJob() {
-    router.toPublishPosition(job.gym.id, job);
+    router.toPublishPosition(job.gym.id, job, RecruitPublishJobFragment.MODIFY_POSITION);
   }
 
   @Override public void onJobList(List<Job> jobList) {
