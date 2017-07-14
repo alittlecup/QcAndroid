@@ -37,7 +37,7 @@ public class FilterDamenFragment extends BaseFragment {
 
   public static FilterDamenFragment newInstanceResumeFilter() {
     Bundle args = new Bundle();
-    args.putInt("t", 0);
+    args.putInt("t", 1);
     FilterDamenFragment fragment = new FilterDamenFragment();
     fragment.setArguments(args);
     return fragment;
@@ -45,7 +45,7 @@ public class FilterDamenFragment extends BaseFragment {
 
   public static FilterDamenFragment newInstanceJobsFilter() {
     Bundle args = new Bundle();
-    args.putInt("t", 1);
+    args.putInt("t", 0);
     FilterDamenFragment fragment = new FilterDamenFragment();
     fragment.setArguments(args);
     return fragment;

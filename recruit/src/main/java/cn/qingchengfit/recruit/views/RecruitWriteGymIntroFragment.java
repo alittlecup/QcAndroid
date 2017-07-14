@@ -22,6 +22,7 @@ import cn.qingchengfit.recruit.network.body.RecruitGymBody;
 import cn.qingchengfit.recruit.presenter.RecruitGymPresenter;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.ListUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -148,7 +149,8 @@ import rx.functions.Action1;
   }
 
   @Override public void onSaveOk() {
-
+    hideLoading();
+    ToastUtils.show("保存成功");
   }
 
   @Override public void onDetail(Gym gym) {

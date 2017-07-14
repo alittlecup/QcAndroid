@@ -25,4 +25,8 @@ import android.support.annotation.StringRes;
 public interface CView extends PView {
     void onShowError(String e);
     void onShowError(@StringRes int e);
+
+  void showAlert(String s);
+
+  void showAlert(@StringRes int s);
 }

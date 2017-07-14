@@ -222,6 +222,10 @@ import javax.inject.Inject;
     ToastUtils.show(R.drawable.vector_hook_white, "已发邀约");
   }
 
+  @Override public void toEditJob() {
+
+  }
+
   @Override public void onComfirmClick(List<IFlexible> dats) {
     List<String> jobList = new ArrayList<>();
     for (IFlexible item : dats) {

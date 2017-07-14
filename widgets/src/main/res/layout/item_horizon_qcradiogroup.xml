@@ -5,5 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:background="@color/white"
+    android:divider="@drawable/divier_linear"
     android:orientation="horizontal"
+    android:showDividers="middle"
     />

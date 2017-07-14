@@ -24,6 +24,7 @@ import cn.qingchengfit.recruit.item.RecruitGymItem;
 import cn.qingchengfit.recruit.model.GymHasResume;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.response.GymListWrap;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -77,6 +78,7 @@ public class RecruitManageFragment extends BaseFragment
     initToolbar(toolbar);
     commonFlexAdapter = new CommonFlexAdapter(items, this);
     rvGyms.setLayoutManager(new LinearLayoutManager(getContext()));
+    rvGyms.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     rvGyms.setAdapter(commonFlexAdapter);
     RxBusAdd(EventChooseGym.class).subscribe(new Action1<EventChooseGym>() {
       @Override public void call(EventChooseGym eventChooseGym) {

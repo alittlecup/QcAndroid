@@ -51,9 +51,9 @@ public class Gym implements Parcelable {
   public Double gd_lng;
   public Double gd_lat;
   public List<String> facilities;
-  public int staff_count;
-  public int member_count;
-  public int coach_count;
+  public Integer staff_count;
+  public Integer member_count;
+  public Integer coach_count;
   public String area;
   public String detail_description;
   public Integer gd_district_id;//just for upload

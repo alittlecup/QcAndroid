@@ -15,6 +15,7 @@ import cn.qingchengfit.utils.ListUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -25,6 +26,10 @@ public class SeekPositionPresenter extends BasePresenter {
   protected MVPView view;
   @Inject QcRestRepository restRepository;
   int page, totalPage = 1;
+  /**
+   * 查询职位列表（分页）
+   */
+  boolean isSync = false;
 
   @Inject public SeekPositionPresenter() {
   }
@@ -38,17 +43,16 @@ public class SeekPositionPresenter extends BasePresenter {
     view = null;
   }
 
-  /**
-   * 查询职位列表（分页）
-   */
   public void queryList(boolean init, HashMap<String, Object> params) {
     params = ListUtils.mapRemoveNull(params);
     if (init) {
       page = totalPage = 1;
     }
+    if (isSync) return;
     if (page <= totalPage) {
+      isSync = true;
       RxRegiste(restRepository.createGetApi(GetApi.class)
-          .queryJobList(page, params)
+          .queryJobList(page, params).throttleFirst(500, TimeUnit.MILLISECONDS)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
@@ -57,10 +61,11 @@ public class SeekPositionPresenter extends BasePresenter {
                   jobListWrapQcDataResponse.data.total_count);
               totalPage = jobListWrapQcDataResponse.data.pages;
               page++;
+              isSync = false;
             }
           }, new NetWorkThrowable()));
     } else {
-      view.onList(null, 1, 1);
+      view.onList(null, 0, 1);
     }
   }
 
@@ -76,17 +81,12 @@ public class SeekPositionPresenter extends BasePresenter {
         }, new NetWorkThrowable()));
   }
 
-
   /**
    * 联系HR
    */
   public void contactHR() {
 
   }
-
-
-
-
 
   public List<String> filterSalary() {
     List<String> salaryList = new ArrayList<>();
@@ -101,15 +101,11 @@ public class SeekPositionPresenter extends BasePresenter {
     return salaryList;
   }
 
-
   public interface MVPView extends CView {
 
     void onList(List<Job> jobs, int page, int totalCount);
 
     void onGym(Gym service);
-
-
-
 
     void onJobsIndex(JobListIndex index);
   }

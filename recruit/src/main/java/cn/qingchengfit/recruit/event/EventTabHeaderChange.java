@@ -1,10 +1,4 @@
-package cn.qingchengfit.saas.network;
-
-import cn.qingchengfit.model.base.Gym;
-import cn.qingchengfit.network.response.QcResponse;
-import retrofit2.http.Body;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
+package cn.qingchengfit.recruit.event;
 
 /**
  * power by
@@ -24,10 +18,8 @@ import retrofit2.http.Path;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/7/11.
+ * Created by Paper on 2017/7/12.
  */
 
-public interface PostApi {
-  @PUT("/api/common/user/gyms/{gym_id}/") rx.Observable<QcResponse> editGymIntro(
-      @Path("gym_id") String gymId, @Body Gym body);
+public class EventTabHeaderChange {
 }

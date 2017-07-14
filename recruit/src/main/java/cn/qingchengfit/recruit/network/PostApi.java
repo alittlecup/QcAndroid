@@ -19,7 +19,6 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -83,7 +82,7 @@ public interface PostApi {
   @PUT("/api/staff/job/delivery/resumes/") rx.Observable<QcResponse> markResume(
       @Body MarkResumeBody body);
 
-  @PUT("/api/job/gyms/{gym_id}/") rx.Observable<QcResponse> editGymIntro(
+  @PUT("/api/staff/job/gyms/{gym_id}/") rx.Observable<QcResponse> editGymIntro(
       @Path("gym_id") String gymId, @Body RecruitGymBody body);
 
   @POST("/api/staff/job/permissions/") rx.Observable<QcResponse> editpermsiion(
@@ -153,7 +152,10 @@ public interface PostApi {
   /**
    * 发布职位
    */
-  @POST("/api/staff/jobs/") rx.Observable<QcResponse> qcPublishPosition(
+  @POST("/api/staff/jobs/") rx.Observable<QcResponse> qcPublishPosition(@Body JobBody jobBody);
+
+  @PUT("/api/staff/jobs/{job_id}/") rx.Observable<QcResponse> qcEditPosition(
+      @Path("job_id") String id,
       @Body JobBody jobBody);
 
   /**

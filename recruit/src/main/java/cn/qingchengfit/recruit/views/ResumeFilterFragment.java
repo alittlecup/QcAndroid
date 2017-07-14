@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.items.FilterCommonLinearItem;
@@ -49,6 +51,7 @@ public class ResumeFilterFragment extends BaseFragment
 
   public int showPos = 0;
   protected FilterDamenFragment filterDamenFragment;
+  protected String[] filterType = new String[] { "city", "salary", "workyear", "other" };
   private FilterLeftRightFragment filterLeftRightFragment;
   private FilterFragment filterSalaryFragment;
   private FilterFragment filterWorkYearFragment;
@@ -57,6 +60,7 @@ public class ResumeFilterFragment extends BaseFragment
   private CitiesData citiesData;
   private HashMap<String, Object> params = new HashMap<>();
   private ResumeFilterListener listener;
+  private String selectedCityName;
 
   public static ResumeFilterFragment newResumeFilter() {
     Bundle args = new Bundle();
@@ -65,6 +69,9 @@ public class ResumeFilterFragment extends BaseFragment
     return fragment;
   }
 
+  public void putParams(HashMap<String, Object> p) {
+    params.putAll(p);
+  }
   public ResumeFilterListener getListener() {
     return listener;
   }
@@ -85,24 +92,22 @@ public class ResumeFilterFragment extends BaseFragment
       Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_resume_filter, container, false);
+    view.setOnTouchListener(new View.OnTouchListener() {
+      @Override public boolean onTouch(View v, MotionEvent event) {
+        return true;
+      }
+    });
+    view.findViewById(R.id.layout_bg).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        dismiss();
+      }
+    });
     showStrategy();
     return view;
   }
 
   protected void showStrategy() {
-    switch (showPos) {
-      case 0:
-        show("city");
-        return;
-      case 1:
-        show("salary");
-        return;
-      case 2:
-        show("other");
-        return;
-      default:
-        break;
-    }
+    show(filterType[showPos]);
   }
 
   @Override public String getFragmentName() {
@@ -121,6 +126,11 @@ public class ResumeFilterFragment extends BaseFragment
       Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof FilterLeftRightFragment) dealCityFilter();
+  }
+
+  public void show(int p) {
+    showPos = p;
+    showStrategy();
   }
 
   public void show(String module) {
@@ -170,10 +180,10 @@ public class ResumeFilterFragment extends BaseFragment
             }
 
             @Override public void onDemandsReset() {
-
               params = RecruitBusinessUtils.getGenderParams(-1, params);
               params = RecruitBusinessUtils.getDegreeParams(-1, params);
               params = RecruitBusinessUtils.getAgeParams(-1, params);
+              params = RecruitBusinessUtils.getWorkYearParams(-1, params);
               params = RecruitBusinessUtils.getHeightParams(-1, params);
               params = RecruitBusinessUtils.getWeightParams(-1, params);
               onChooseitem();
@@ -183,10 +193,22 @@ public class ResumeFilterFragment extends BaseFragment
       }
       getChildFragmentManager().beginTransaction().add(R.id.frag_resume_filter, f, module).commit();
     }
-    getChildFragmentManager().beginTransaction()
-        .setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out)
-        .show(f)
-        .commit();
+    hideAllandShow(module);
+  }
+
+  public void hideAllandShow(String m) {
+    FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+    for (String s : filterType) {
+      Fragment f1 = getChildFragmentManager().findFragmentByTag(s);
+      if (f1 != null) {
+        if (s.equals(m)) {
+          ft.show(f1);
+        } else {
+          ft.hide(f1);
+        }
+      }
+    }
+    ft.commit();
   }
 
   @Override public boolean isBlockTouch() {
@@ -200,8 +222,10 @@ public class ResumeFilterFragment extends BaseFragment
 
   @Override public void onRightSelected(int position) {
     CityBean cityBean = cityBeanList.get(position);
+    selectedCityName = cityBean.name;
     if (cityBean.getId() == -1) {
       params.put("city_id", null);
+      selectedCityName = null;
     } else {
       params.put("city_id", cityBean.getId());
     }
@@ -212,7 +236,14 @@ public class ResumeFilterFragment extends BaseFragment
    * 当选择完一个选项之后，关闭筛选页面
    */
   private void onChooseitem() {
-    if (listener != null) listener.onFilterDone(this.params);
+    if (listener != null) listener.onFilterDone(this.params, selectedCityName);
+    dismiss();
+
+  }
+
+  public void dismiss() {
+    if (listener != null) listener.onDismiss();
+    getFragmentManager().beginTransaction().hide(this).commit();
   }
 
   public void dealCityFilter() {
@@ -221,7 +252,9 @@ public class ResumeFilterFragment extends BaseFragment
   }
 
   public interface ResumeFilterListener {
-    void onFilterDone(HashMap<String, Object> params);
+    void onFilterDone(HashMap<String, Object> params, String cityName);
+
+    void onDismiss();
   }
 
   class DealCityFilterAsyc extends AsyncTask<String, Integer, List<String>> {

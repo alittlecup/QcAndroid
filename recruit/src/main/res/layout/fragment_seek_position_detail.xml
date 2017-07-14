@@ -49,7 +49,7 @@
               android:layout_width="match_parent"
               android:layout_height="94dp"
               android:background="@color/white"
-              android:divider="@drawable/divider_linearlayout_horizon"
+              android:divider="@drawable/divier_linear"
               android:orientation="horizontal"
               android:showDividers="middle"
               >
@@ -67,6 +67,7 @@
                   android:id="@+id/tv_dilive_positive"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:drawablePadding="4dp"
                   android:text="主动投递"
                   style="@style/QcTextStyleSmallWarm"
                   />
@@ -94,6 +95,7 @@
                   android:id="@+id/tv_invited_position"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:drawablePadding="4dp"
                   android:text="我邀约的"
                   style="@style/QcTextStyleSmallWarm"
                   />

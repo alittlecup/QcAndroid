@@ -1,13 +1,10 @@
 package cn.qingchengfit.recruit.views;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,25 +12,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.events.EventClickViewPosition;
-import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.SearchCenterItem;
-import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.model.base.Gym;
-import cn.qingchengfit.model.base.ProvinceBean;
-import cn.qingchengfit.model.common.CitiesData;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
-import cn.qingchengfit.recruit.item.FragmentListItem;
 import cn.qingchengfit.recruit.item.MyJobsItem;
+import cn.qingchengfit.recruit.item.RecruitPositionItem;
 import cn.qingchengfit.recruit.item.ResumeAndJobItem;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
@@ -41,21 +34,19 @@ import cn.qingchengfit.recruit.presenter.SeekPositionPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.support.animator.FlipAnimation;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.FileUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.views.fragments.FilterFragment;
-import cn.qingchengfit.views.fragments.FilterLeftRightFragment;
-import cn.qingchengfit.widgets.CommonFlexAdapter;
-import com.google.gson.Gson;
+import cn.qingchengfit.widgets.QcLeftRightDivider;
+import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
-import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -79,79 +70,97 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/5/23.
  */
-public class SeekPositionHomeFragment extends BaseFragment
-    implements SeekPositionPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
-    FlexibleAdapter.EndlessScrollListener, FilterLeftRightFragment.OnLeftRightSelectListener,
-    FilterFragment.OnSelectListener, FilterDamenFragment.OnDemandsListener {
+public class SeekPositionHomeFragment extends JobsListFragment
+    implements SeekPositionPresenter.MVPView {
 
   @Inject SeekPositionPresenter positionPresenter;
-  @Inject RecruitPositionsFragment listFragment;
   @Inject RecruitRouter router;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.layout_filter) ViewGroup layoutFilter;
-  //@BindView(R2.id.smooth_app_bar_layout) AppBarLayout smoothAppBarLayout;
-  //@BindView(R2.id.qft_city) QcFilterToggle qftCity;
-  //@BindView(R2.id.qft_salary) QcFilterToggle qftSalary;
-  //@BindView(R2.id.qft_demand) QcFilterToggle qftDemand;
-  //@BindView(R2.id.frag_recruit_filter) FrameLayout fragRecruitFilter;
-  //@BindView(R2.id.img_my_resume) ImageView imgMyResume;
-  //@BindView(R2.id.tv_resume_completed) TextView tvResumeCompleted;
-  //@BindView(R2.id.img_my_job_fair) ImageView imgMyJobFair;
-  //@BindView(R2.id.tv_job_fair) TextView tvJobFair;
-  //@BindView(R2.id.filter_shadow) View filterShadow;
-  //@BindView(R2.id.searchview) View searchview;
-  @BindView(R2.id.tb_searchview_et) EditText tbSearchView;
-  @BindView(R2.id.tb_searchview_clear) ImageView tbScClear;
-  //@BindView(R2.id.v_has_invited) View vShowRed;
-  @BindView(R2.id.rv) RecyclerView rv;
+  Toolbar toolbar;
+  TextView toolbarTitile;
+  SwipeRefreshLayout layoutFilter;
+  LinearLayout layoutSearch;
+  EditText searchEt;
+  ImageView imgClear;
+  Button btnCancel;
 
-  private FilterFragment filterFragment;
-  private List<FilterCommonLinearItem> itemList = new ArrayList<>();
-  private FilterDamenFragment filterDamenFragment = new FilterDamenFragment();
-  private CitiesData citiesData;
-  private FilterLeftRightFragment filterLeftRightFragment = new FilterLeftRightFragment();
-  private List<ProvinceBean> provinceBeanList = new ArrayList<>();
-  private List<CityBean> cityBeanList = new ArrayList<>();
-  private int lastClickId = -1;
-  private int selectId = -1;
-  private boolean isFilterSalary;
   private HashMap<String, Object> params = new HashMap<>();
   private long lastInvintedTime;
   private long nowInvintedTime;
-  private LinearLayoutManager layoutManage;
-  private CommonFlexAdapter adapter;
+
   private MyJobsItem itemMyJobs;
   private FilterHeadItem itemfilterHeader;
-  private JobsListFragment fragmentJobsList;
   private ResumeAndJobItem itemRj;//我的简历和我的专场招聘会
-  private FragmentListItem fragmentListItem;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     lastInvintedTime = PreferenceUtils.getPrefLong(getContext(), "recruit_last_invented_time", 0);
+    isChild = true;
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    super.onCreateView(inflater, container, savedInstanceState);
-    View view = inflater.inflate(R.layout.fragment_seek_position_home, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    View v = super.onCreateView(inflater, container, savedInstanceState);
+    LinearLayout view = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container, null);
+    layoutFilter = (SwipeRefreshLayout) inflater.inflate(R.layout.layout_filter_container, null);
+    layoutFilter.setOnRefreshListener(this);
+    ((FrameLayout) layoutFilter.getChildAt(1)).addView(v, 0);
+    toolbar = ButterKnife.findById(view, R.id.toolbar);
+    toolbarTitile = ButterKnife.findById(view, R.id.toolbar_title);
+    searchEt = ButterKnife.findById(view, R.id.tb_searchview_et);
+    layoutSearch = ButterKnife.findById(view, R.id.searchview);
+    imgClear = ButterKnife.findById(view, R.id.tb_searchview_clear);
+    btnCancel = ButterKnife.findById(view, R.id.tb_searchview_cancle);
+    view.addView(layoutFilter, 1);
     delegatePresenter(positionPresenter, this);
     initToolbar(toolbar);
-    initView();
     initBus();
-    RxTextView.textChangeEvents(tbSearchView)
+    RxTextView.textChangeEvents(searchEt)
         .observeOn(AndroidSchedulers.mainThread())
         .debounce(500, TimeUnit.MILLISECONDS)
         .subscribe(new Action1<TextViewTextChangeEvent>() {
           @Override public void call(TextViewTextChangeEvent textViewTextChangeEvent) {
-            localFilter(textViewTextChangeEvent.text().toString());
+            netFilter(textViewTextChangeEvent.text().toString());
           }
         });
+    RxView.clicks(btnCancel).subscribe(new Action1<Void>() {
+      @Override public void call(Void aVoid) {
+        onCancelSearch();
+      }
+    });
+    RxView.clicks(imgClear).subscribe(new Action1<Void>() {
+      @Override public void call(Void aVoid) {
+        searchEt.setText("");
+      }
+    });
     return view;
   }
+
+  private void netFilter(String s) {
+    if (TextUtils.isEmpty(s)) s = null;
+    params.put("q", s);
+    onRefresh();
+  }
+
+  public void onClickFakeSearch() {
+    layoutSearch.setVisibility(View.VISIBLE);
+    linearLayoutManager.smoothScrollToPosition(rv, null, 3);
+  }
+
+  public void onCancelSearch() {
+    layoutSearch.setVisibility(View.GONE);
+    params.remove("q");
+    onRefresh();
+  }
+
+  @Override public boolean onItemClick(int i) {
+    if (getItem(i) instanceof SearchCenterItem) {
+      onClickFakeSearch();
+      return true;
+    }
+    return super.onItemClick(i);
+  }
+
 
   private void initBus() {
     RxBusAdd(EventClickViewPosition.class).observeOn(AndroidSchedulers.mainThread())
@@ -172,85 +181,186 @@ public class SeekPositionHomeFragment extends BaseFragment
         });
   }
 
-  private void initView() {
-    layoutManage = new LinearLayoutManager(getContext());
-    rv.setLayoutManager(layoutManage);
-    rv.setHasFixedSize(false);
-    rv.setNestedScrollingEnabled(true);
-    rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-      @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-        super.onScrollStateChanged(recyclerView, newState);
-      }
-
-      @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-        super.onScrolled(recyclerView, dx, dy);
-        if (layoutManage.findFirstCompletelyVisibleItemPosition() == adapter.getGlobalPositionOf(
-            fragmentListItem)) {
-          rv.requestDisallowInterceptTouchEvent(true);
-        } else {
-          rv.requestDisallowInterceptTouchEvent(false);
-        }
-      }
-    });
-
-    adapter = new CommonFlexAdapter(new ArrayList(), this);
-    adapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true);
-    adapter.addItem(new SearchCenterItem(false, "搜索职位公司"));
+  @Override protected void initView() {
+    commonFlexAdapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true);
+    super.initView();
+    rv.setClipToPadding(false);
+    rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, R.layout.item_my_jobs, 0, 0));
+    rv.addItemDecoration(
+        new QcLeftRightDivider(getContext(), 10, R.layout.item_resume_and_jobfair, 0, 0));
+    rv.addItemDecoration(
+        new QcLeftRightDivider(getContext(), 1, R.layout.item_horizon_qcradiogroup, 0, 0));
+    commonFlexAdapter.addItem(new SearchCenterItem(false, "搜索职位公司"));
     itemMyJobs = new MyJobsItem(false);
-    adapter.addItem(itemMyJobs);
+    commonFlexAdapter.addItem(itemMyJobs);
     itemRj = new ResumeAndJobItem();
-    adapter.addItem(itemRj);
+    commonFlexAdapter.addItem(itemRj);
     itemfilterHeader = new FilterHeadItem(getResources().getStringArray(R.array.filter_jobs));
     itemfilterHeader.setListener(new FilterHeadItem.FilterHeadListener() {
       @Override public void onPositionClick(int pos) {
-        layoutManage.smoothScrollToPosition(rv, null, 3);
-        //layoutManage.scrollToPosition(3);
-        showFilter(pos);
+        if (pos == -1) {
+          getChildFragmentManager().popBackStack();
+          clearFilterToggle();
+          return;
+        }
+        if (linearLayoutManager.findFirstCompletelyVisibleItemPosition() < 3) {
+          linearLayoutManager.smoothScrollToPosition(rv, null, 3);
+        }
+        RxRegiste(Observable.just(pos)
+            .delay(linearLayoutManager.findFirstCompletelyVisibleItemPosition() < 3 ? 500 : 1,
+                TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<Integer>() {
+              @Override public void call(Integer integer) {
+                showFilter(integer);
+              }
+            }));
       }
     });
-    adapter.addItem(itemfilterHeader);
-    rv.setAdapter(adapter);
+    commonFlexAdapter.addItem(itemfilterHeader);
+
   }
 
-  public void dealCityFilter() {
-    DealCityFilterAsyc dealCityFilterAsyc = new DealCityFilterAsyc();
-    dealCityFilterAsyc.execute("cities.json");
-  }
-
-  private void initFilter() {
-    //dealCityFilter();
-    //filterShadow.setVisibility(View.GONE);
-    //filterFragment = new FilterFragment();
-    //for (String strItem : positionPresenter.filterSalary()) {
-    //  itemList.add(new FilterCommonLinearItem(strItem));
-    //}
-    //filterFragment.setItemList(itemList);
-    //filterFragment.setOnSelectListener(this);
-    //filterLeftRightFragment.setListener(this);
-    //filterDamenFragment.setListener(this);
-    //if (!filterFragment.isAdded()) {
-    //  getChildFragmentManager().beginTransaction()
-    //      .add(R.id.frag_recruit_filter, filterFragment)
-    //      .commit();
-    //}
-    //if (!filterDamenFragment.isAdded()) {
-    //  getChildFragmentManager().beginTransaction()
-    //      .add(R.id.frag_recruit_filter, filterDamenFragment)
-    //      .commit();
-    //}
-    //if (!filterLeftRightFragment.isAdded()) {
-    //  getChildFragmentManager().beginTransaction()
-    //      .add(R.id.frag_recruit_filter, filterLeftRightFragment)
-    //      .commit();
-    //}
-    //getChildFragmentManager().beginTransaction().hide(filterFragment).commit();
-    //getChildFragmentManager().beginTransaction().hide(filterDamenFragment).commit();
-    //getChildFragmentManager().beginTransaction().hide(filterLeftRightFragment).commit();
-    //fragRecruitFilter.getLayoutParams().height = 0;
+  @Override protected void addDivider() {
+    rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, R.layout.item_resume, 0, 0));
   }
 
   @Override public boolean isBlockTouch() {
     return false;
+  }
+
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbar.inflateMenu(R.menu.menu_i_publish_job);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        router.resumeMarketHome();
+        return false;
+      }
+    });
+    toolbarTitile.setText("求职招聘");
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    positionPresenter.queryIndex();
+  }
+
+  @Override public void onRefresh() {
+    initLoadMore();
+    positionPresenter.queryList(true, params);
+  }
+
+  public void showFilter(int pos) {
+    layoutFilter.setVisibility(View.VISIBLE);
+    Fragment f = getChildFragmentManager().findFragmentByTag("filter");
+    if (f == null) {
+      f = new JobsFilterFragment();
+      ((JobsFilterFragment) f).showPos = pos;
+      ((JobsFilterFragment) f).putParams(params);
+
+      ((JobsFilterFragment) f).setListener(new ResumeFilterFragment.ResumeFilterListener() {
+        @Override public void onFilterDone(HashMap<String, Object> params, String cityname) {
+          SeekPositionHomeFragment.this.params.putAll(params);
+          Object min = params.get("min_salary");
+          Object max = params.get("max_salary");
+          int ms = min == null ? -1 : (int) min;
+          int ma = max == null ? -1 : (int) max;
+          itemfilterHeader.setStrings(cityname == null ? "城市" : cityname,
+              RecruitBusinessUtils.getSalary(ms, ma, "薪资"), "要求");
+          commonFlexAdapter.notifyItemChanged(3);
+          onRefresh();
+        }
+
+        @Override public void onDismiss() {
+          clearFilterToggle();
+        }
+      });
+      getChildFragmentManager().beginTransaction()
+          .setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out)
+          .add(R.id.frag_filter, f, "filter")
+          .addToBackStack(null)
+          .commit();
+    }
+
+    if (f.isVisible()) {
+      if (f instanceof JobsFilterFragment) {
+        ((JobsFilterFragment) f).show(pos);
+      }
+    } else {
+      getChildFragmentManager().beginTransaction().show(f).commit();
+    }
+
+  }
+
+  public void clearFilterToggle() {
+    itemfilterHeader.clearAll();
+    commonFlexAdapter.notifyItemChanged(commonFlexAdapter.getGlobalPositionOf(itemfilterHeader));
+  }
+
+  @Override public String getFragmentName() {
+    return SeekPositionHomeFragment.class.getName();
+  }
+
+  /**
+   * 数据结果
+   *
+   * @param jobs 工作列表
+   * @param page 当前页面
+   * @param totalCount 总共数量
+   */
+  @Override public void onList(List<Job> jobs, int page, int totalCount) {
+    layoutFilter.setRefreshing(false);
+    if (page == 1) {
+      commonFlexAdapter.removeRange(4, commonFlexAdapter.getItemCount() - 4);
+    }
+    if (jobs != null && jobs.size() != 0) {
+      commonFlexAdapter.setEndlessTargetCount(totalCount);
+      rv.setPadding(0, 0, 0, MeasureUtils.autoPaddingBottom(108f, totalCount, getContext(),
+          MeasureUtils.dpToPx(48f, getResources())));
+      List<IFlexible> tm = new ArrayList<>();
+      for (Job resume : jobs) {
+        if (page == 1) {
+          commonFlexAdapter.addItem(new RecruitPositionItem(resume));
+        } else {
+          tm.add(new RecruitPositionItem(resume));
+        }
+      }
+      if (page != 1) commonFlexAdapter.onLoadMoreComplete(tm);
+    } else {
+      //stopLoadMore();
+      commonFlexAdapter.onLoadMoreComplete(null);
+    }
+    if (page == 1 && commonFlexAdapter.getItemCountOfTypes(R.layout.item_recruit_position) == 0) {
+      addEmptyPage();
+    }
+  }
+
+  @Override public void onLoadMore(int i, int i1) {
+    positionPresenter.queryList(false, params);
+  }
+
+
+  /**
+   * 简历 和 招聘会信息
+   */
+  @Override public void onJobsIndex(JobListIndex jobListIndex) {
+    itemRj.setJobListIndex(jobListIndex);
+    commonFlexAdapter.notifyItemChanged(2);
+    nowInvintedTime = DateUtils.formatDateFromServer(jobListIndex.invited_at).getTime();
+    boolean showRed =
+        (!TextUtils.isEmpty(jobListIndex.invited_at)) && (lastInvintedTime < nowInvintedTime);
+    itemMyJobs.setHasNewInvited(showRed);
+    commonFlexAdapter.notifyItemChanged(1);
+  }
+
+  @Override public void onGym(Gym service) {
+
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
   }
 
   @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
@@ -286,305 +396,6 @@ public class SeekPositionHomeFragment extends BaseFragment
       return animation;
     } else {
       return super.onCreateAnimation(transit, enter, nextAnim);
-    }
-  }
-
-  @Override public void initToolbar(@NonNull Toolbar toolbar) {
-    super.initToolbar(toolbar);
-    toolbar.inflateMenu(R.menu.menu_i_publish_job);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        router.resumeMarketHome();
-        return false;
-      }
-    });
-    toolbarTitile.setText("求职招聘");
-  }
-
-  @Override protected void onFinishAnimation() {
-    super.onFinishAnimation();
-    fragmentJobsList = JobsListFragment.newAllJobsList();
-    fragmentJobsList.isChild = true;
-    fragmentListItem = new FragmentListItem(this, fragmentJobsList);
-    adapter.addItem(fragmentListItem);
-    positionPresenter.queryIndex();
-  }
-
-  //子fragment加载完成
-  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-      Bundle savedInstanceState) {
-    super.onChildViewCreated(fm, f, v, savedInstanceState);
-    if (f instanceof RecruitPositionsFragment) {
-      refresh();
-    }
-  }
-
-  public void refresh() {
-    listFragment.initEndless();
-    positionPresenter.queryList(true, params);
-  }
-
-  public void showFilter(int pos) {
-    layoutFilter.setVisibility(pos >= 0 ? View.VISIBLE : View.GONE);
-    Fragment f = getChildFragmentManager().findFragmentByTag("filter");
-    if (f == null) {
-      f = ResumeFilterFragment.newResumeFilter();
-      getChildFragmentManager().beginTransaction().add(R.id.frag_filter, f).commit();
-    }
-    if (f instanceof JobsFilterFragment) {
-      ((JobsFilterFragment) f).showPos = pos;
-      ((JobsFilterFragment) f).setListener(new ResumeFilterFragment.ResumeFilterListener() {
-        @Override public void onFilterDone(HashMap<String, Object> params) {
-          positionPresenter.queryList(true, params);
-        }
-      });
-    }
-    getChildFragmentManager().beginTransaction().show(f).commit();
-  }
-
-
-  @Override public String getFragmentName() {
-    return SeekPositionHomeFragment.class.getName();
-  }
-
-  /**
-   * 数据结果
-   *
-   * @param jobs 工作列表
-   * @param page 当前页面
-   * @param totalCount 总共数量
-   */
-  @Override public void onList(List<Job> jobs, int page, int totalCount) {
-    //listFragment.setTotalCount(totalCount);
-    //if (page == 1) {
-    //  listFragment.setData(jobs);
-    //} else if (page > 1) {
-    //  listFragment.addData(jobs);
-    //}
-  }
-
-  /**
-   * 简历 和 招聘会信息
-   */
-  @Override public void onJobsIndex(JobListIndex jobListIndex) {
-    itemRj.setJobListIndex(jobListIndex);
-    adapter.notifyItemChanged(2);
-
-
-    nowInvintedTime = DateUtils.formatDateFromServer(jobListIndex.invited_at).getTime();
-    boolean showRed =
-        (!TextUtils.isEmpty(jobListIndex.invited_at)) && (lastInvintedTime < nowInvintedTime);
-    itemMyJobs.setHasNewInvited(showRed);
-    adapter.notifyItemChanged(1);
-  }
-
-  @Override public void onGym(Gym service) {
-
-  }
-
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-  }
-
-  private void localFilter(String s) {
-    if (TextUtils.isEmpty(s)) s = null;
-    params.put("q", s);
-    refresh();
-  }
-
-  @OnClick(R2.id.layout_earchView) public void onClickFakeSearch() {
-    //searchview.setVisibility(View.VISIBLE);
-    //smoothAppBarLayout.setExpanded(false, true);
-  }
-
-  @OnClick(R2.id.tb_searchview_cancle) public void onCancelSearch() {
-    //searchview.setVisibility(View.GONE);
-    //params.remove("q");
-    //refresh();
-  }
-
-  ///**
-  // * 筛选条件
-  // */
-  //@OnClick({ R2.id.qft_city, R2.id.qft_demand, R2.id.qft_salary }) public void onFilter(View v) {
-  //smoothAppBarLayout.setExpanded(false, true);
-  //int i = v.getId();
-  //selectId = i;
-  //if (i == R.id.qft_city) {
-  //  isFilterSalary = false;
-  //  getChildFragmentManager().beginTransaction()
-  //      .show(filterLeftRightFragment)
-  //      .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_out)
-  //      .commit();
-  //  getChildFragmentManager().beginTransaction().hide(filterFragment).commit();
-  //  getChildFragmentManager().beginTransaction().hide(filterDamenFragment).commit();
-  //  qftCity.toggle();
-  //  qftDemand.setChecked(false);
-  //  qftSalary.setChecked(false);
-  //} else if (i == R.id.qft_demand) {
-  //  isFilterSalary = false;
-  //  getChildFragmentManager().beginTransaction()
-  //      .show(filterDamenFragment)
-  //      .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_right_out)
-  //      .commit();
-  //  getChildFragmentManager().beginTransaction().hide(filterFragment).commit();
-  //  getChildFragmentManager().beginTransaction().hide(filterLeftRightFragment).commit();
-  //  qftDemand.toggle();
-  //  qftCity.setChecked(false);
-  //  qftSalary.setChecked(false);
-  //} else if (i == R.id.qft_salary) {
-  //  isFilterSalary = true;
-  //  getChildFragmentManager().beginTransaction().show(filterFragment).commit();
-  //  getChildFragmentManager().beginTransaction().hide(filterDamenFragment).commit();
-  //  getChildFragmentManager().beginTransaction().hide(filterLeftRightFragment).commit();
-  //  qftSalary.toggle();
-  //  qftCity.setChecked(false);
-  //  qftDemand.setChecked(false);
-  //}
-  //showFilter();
-  //}
-
-  @Override public void onDemands(HashMap<String, Object> params) {
-    getChildFragmentManager().beginTransaction().hide(filterDamenFragment).commit();
-    this.params.putAll(params);
-    refresh();
-    showFilter();
-  }
-
-  @Override public void onDemandsReset() {
-    params = RecruitBusinessUtils.getWrokExpParams(-1, params);
-    params = RecruitBusinessUtils.getGenderParams(-1, params);
-    params = RecruitBusinessUtils.getDegreeParams(-1, params);
-    params = RecruitBusinessUtils.getAgeParams(-1, params);
-    params = RecruitBusinessUtils.getHeightParams(-1, params);
-    params = RecruitBusinessUtils.getWeightParams(-1, params);
-    refresh();
-    showFilter();
-  }
-
-  @OnClick(R2.id.filter_shadow) public void onShadowClick() {
-    showFilter();
-  }
-
-  public void showFilter() {
-    //if (fragRecruitFilter.getMeasuredHeight() > 0 && lastClickId > 0 && lastClickId == selectId) {
-    //  setFilterAnimation(false);
-    //  filterShadow.setVisibility(View.GONE);
-    //  lastClickId = -1;
-    //} else if (lastClickId < 0 || lastClickId != selectId) {
-    //  setFilterAnimation(true);
-    //  filterShadow.setVisibility(View.VISIBLE);
-    //  lastClickId = selectId;
-    //}
-  }
-
-  public void setFilterAnimation(boolean isShow) {
-    //final ViewGroup.LayoutParams params = fragRecruitFilter.getLayoutParams();
-    //final int startHeight;
-    //final int endHeight;
-    //if (isShow) {
-    //  startHeight = 0;
-    //  if (isFilterSalary) {
-    //    endHeight = (int) filterFragment.getViewHeight();
-    //  } else {
-    //    endHeight = MeasureUtils.dpToPx(432f, getResources());
-    //  }
-    //} else {
-    //  if (!filterFragment.isHidden()) {
-    //    startHeight = MeasureUtils.dpToPx(432f, getResources());
-    //  } else {
-    //    startHeight = (int) filterFragment.getViewHeight();
-    //  }
-    //  endHeight = 0;
-    //}
-    //ValueAnimator valueAnimator = ObjectAnimator.ofFloat(startHeight, endHeight);
-    //valueAnimator.setDuration(400);
-    //valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-    //  @Override public void onAnimationUpdate(ValueAnimator animation) {
-    //    float fraction = animation.getAnimatedFraction();
-    //    if (startHeight < endHeight) {
-    //      params.height = (int) (endHeight * fraction);
-    //    } else {
-    //      params.height = startHeight - (int) (startHeight * fraction);
-    //    }
-    //    fragRecruitFilter.setLayoutParams(params);
-    //  }
-    //});
-    //valueAnimator.start();
-  }
-
-  @Override public boolean onItemClick(int i) {
-    //IFlexible item = listFragment.getItem(i);
-    //if (item != null && item instanceof RecruitPositionItem) {
-    //  Job job = ((RecruitPositionItem) item).getJob();
-    //  router.goJobDetail(job);
-    //}
-    return true;
-  }
-
-  @Override public int getLayoutRes() {
-    return R.id.frag_recruit_home;
-  }
-
-  @Override public void noMoreLoad(int i) {
-    if (listFragment != null) listFragment.stopLoadMore();
-  }
-
-  @Override public void onLoadMore(int i, int i1) {
-    positionPresenter.queryList(false, params);
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-  }
-
-  @Override public void onLeftSelected(int position) {
-    cityBeanList = provinceBeanList.get(position).cities;
-    filterLeftRightFragment.onChangedCity(cityBeanList);
-  }
-
-  @Override public void onRightSelected(int position) {
-    CityBean cityBean = cityBeanList.get(position);
-    if (cityBean.getId() == -1) {
-      params.put("city_id", null);
-    } else {
-      params.put("city_id", cityBean.getId());
-    }
-    refresh();
-    showFilter();
-  }
-
-  @Override public void onSelectItem(int position) {
-    //qftSalary.setText(positionPresenter.filterSalary().get(position));
-    //params = RecruitBusinessUtils.getSalaryFilter(position, params);
-    //refresh();
-    //showFilter();
-  }
-
-  class DealCityFilterAsyc extends AsyncTask<String, Integer, List<String>> {
-
-    @Override protected List<String> doInBackground(String... params) {
-      Gson gson = new Gson();
-      citiesData =
-          gson.fromJson(FileUtils.getJsonFromAssert(params[0], getContext()), CitiesData.class);
-      provinceBeanList = citiesData.provinces;
-      //在provinceBeanList添加全部
-      ProvinceBean provinceBeanAll = new ProvinceBean();
-      provinceBeanAll.name = "全部";
-      provinceBeanAll.id = "-1";
-      CityBean cb = new CityBean("-1", "全部");
-      provinceBeanAll.cities = new ArrayList<>();
-      provinceBeanAll.cities.add(cb);
-      provinceBeanList.add(0, provinceBeanAll);
-      List<String> cityFilterLeftList = new ArrayList<String>();
-      for (ProvinceBean provinceBean : citiesData.provinces) {
-        cityFilterLeftList.add(provinceBean.name);
-      }
-      return cityFilterLeftList;
-    }
-
-    @Override protected void onPostExecute(List<String> strings) {
-      filterLeftRightFragment.setLeftItemList(strings);
     }
   }
 }

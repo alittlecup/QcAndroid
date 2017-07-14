@@ -36,7 +36,7 @@ import dagger.multibindings.IntoMap;
  */
 @Component(modules = {
     AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
-    AppComponent.MainModule.class, AppComponent.JobSearchChatModule.class,
+    AppComponent.MainModule.class
 
     //AppComponent.RecruitModule.class,
 }) public interface AppComponent extends AndroidInjector<TestApp> {

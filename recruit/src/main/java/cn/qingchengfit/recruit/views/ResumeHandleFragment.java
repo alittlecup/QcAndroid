@@ -5,8 +5,16 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.recruit.event.EventTabHeaderChange;
+import cn.qingchengfit.recruit.item.ResumeItem;
 import cn.qingchengfit.recruit.model.Resume;
+import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
+import eu.davidea.flexibleadapter.SelectableAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -30,6 +38,7 @@ import java.util.List;
  */
 
 public class ResumeHandleFragment extends ResumeListFragment {
+  @Inject ResumeMarketPresenter presenter;
   private int type;// 0 是主动投递的  1是我邀约的
   private int status;
   private String jobId;
@@ -64,6 +73,7 @@ public class ResumeHandleFragment extends ResumeListFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
+    delegatePresenter(presenter, this);
     onRefresh();
     return v;
   }
@@ -86,7 +96,38 @@ public class ResumeHandleFragment extends ResumeListFragment {
   }
 
   @Override public void onResumeList(List<Resume> resumes, int total, int page) {
-    super.onResumeList(resumes, total, page);
+    if (resumes != null) {
+      if (page == 1) {
+        commonFlexAdapter.clear();
+        if (resumes.size() == 0) {
+          hasItem = false;
+          setDatas(new ArrayList<AbstractFlexibleItem>(), 1);
+        } else {
+          hasItem = true;
+        }
+      }
+      commonFlexAdapter.setEndlessTargetCount(total);
+      for (Resume resume : resumes) {
+        commonFlexAdapter.addItem(new ResumeItem(resume));
+      }
+    }
+    RxBus.getBus().post(new EventTabHeaderChange());
     stopLoadMore();
   }
+
+  public void setChooseMode(boolean canChoose) {
+    commonFlexAdapter.setStatus(canChoose ? -1 : 0);
+    commonFlexAdapter.clearSelection();
+    commonFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+    commonFlexAdapter.notifyDataSetChanged();
+  }
+
+  public List<String> getChooseIds() {
+    List<String> ret = new ArrayList<>();
+    for (Integer integer : commonFlexAdapter.getSelectedPositions()) {
+      ret.add(((ResumeItem) commonFlexAdapter.getItem(integer)).getResume().id);
+    }
+    return ret;
+  }
+
 }

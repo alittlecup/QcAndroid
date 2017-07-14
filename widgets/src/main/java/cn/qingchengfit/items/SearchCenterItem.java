@@ -14,7 +14,9 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class SearchCenterItem extends AbstractFlexibleItem<SearchCenterItem.SearchCenterVH> {
+public class SearchCenterItem extends AbstractFlexibleItem<SearchCenterItem.SearchCenterVH>
+    //implements IHeader<SearchCenterItem.SearchCenterVH>
+{
 
   public boolean edEnable;
   public String hint;

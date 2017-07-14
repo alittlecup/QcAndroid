@@ -48,15 +48,17 @@ public abstract class BaseListFragment extends BaseFragment {
   public CommonNoDataItem commonNoDataItem;
   @BindView(R2.id.rv) protected RecyclerView rv;
   protected CommonFlexAdapter commonFlexAdapter;
+  protected ProgressItem progressItem;
+  protected SmoothScrollLinearLayoutManager linearLayoutManager;
   @Nullable @BindView(R2.id.srl) SwipeRefreshLayout srl;
   List<AbstractFlexibleItem> datas = new ArrayList<>();
   private Object listeners;
-  private ProgressItem progressItem;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     commonFlexAdapter = new CommonFlexAdapter(datas);
     progressItem = new ProgressItem(getContext());
+    commonNoDataItem = new CommonNoDataItem(getNoDataIconRes(), getNoDataStr());
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,15 +71,24 @@ public abstract class BaseListFragment extends BaseFragment {
     }
     super.onCreateView(inflater, container, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
-    rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-    rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, 0, left, right));
-    if (datas.size() == 0 && commonNoDataItem != null) datas.add(commonNoDataItem);
+    initView();
+    return view;
+  }
+
+  protected void initView() {
+    linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());
+    rv.setLayoutManager(linearLayoutManager);
+    addDivider();
     rv.setAdapter(commonFlexAdapter);
     if (listeners != null) commonFlexAdapter.addListener(listeners);
     if (srl != null && listeners instanceof SwipeRefreshLayout.OnRefreshListener) {
       srl.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) listeners);
     }
-    return view;
+
+  }
+
+  protected void addDivider() {
+    rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, 0, left, right));
   }
 
   public void initLoadMore() {
@@ -94,17 +105,24 @@ public abstract class BaseListFragment extends BaseFragment {
     }
   }
 
+  protected void clearItems() {
+    commonFlexAdapter.clear();
+  }
   public void setDatas(List<AbstractFlexibleItem> ds, int page) {
     stopRefresh();
     if (rv != null && commonFlexAdapter != null) {
-      if (page == 1) commonFlexAdapter.clear();
+      if (page == 1) clearItems();
       for (AbstractFlexibleItem item : ds) {
         commonFlexAdapter.addItem(item);
       }
       if (commonFlexAdapter.getItemCount() == 0 && commonNoDataItem != null) {
-        datas.add(commonNoDataItem);
+        addEmptyPage();
       }
     }
+  }
+
+  public void addEmptyPage() {
+    commonFlexAdapter.addItem(commonNoDataItem);
   }
 
   public void localFilter(String s) {

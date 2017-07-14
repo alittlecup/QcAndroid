@@ -94,6 +94,14 @@ public class JobSearchChatActivity extends ChatActivity
 
   }
 
+  @Override public void showAlert(String s) {
+
+  }
+
+  @Override public void showAlert(@StringRes int s) {
+
+  }
+
   @Override public void onEditOk() {
 
   }
@@ -118,6 +126,10 @@ public class JobSearchChatActivity extends ChatActivity
   }
 
   @Override public void onInviteOk() {
+  }
+
+  @Override public void toEditJob() {
+
   }
 
   @Override public AndroidInjector<Activity> activityInjector() {

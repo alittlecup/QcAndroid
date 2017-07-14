@@ -50,8 +50,12 @@ import dagger.android.support.AndroidSupportInjectionModule;
       Recruit.JobfairSignUpFragmentModule.class, Recruit.JobsListFragmentModule.class,
 
       Recruit.RecruitPermsionFragmentModule.class, Recruit.RecruitPublishJobFragmentModule.class,
-      Recruit.ResumeDetailFragmentModule.class,
+      Recruit.ResumeDetailFragmentModule.class, Recruit.ResumeRecievedFragmentModule.class,
+      Recruit.ChooseGymFragmentModule.class, Recruit.EditGymInfoFragmentModule.class,
   }) abstract RecruitActivity contributeRecruitActivityInjector();
 
+  @ContributesAndroidInjector(modules = {
+      AndroidSupportInjectionModule.class
+  })
   abstract JobSearchChatActivity contributeJobSearchActivityInjector();
 }

@@ -208,7 +208,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
    * 发布新职位
    */
   @OnClick(R2.id.btn_publish_new_position) public void onViewClicked() {
-    recruitRouter.toPublishPosition(gym.getId());
+    recruitRouter.toPublishPosition(gym.getId(), null);
   }
 
   class PositionTypesAdapter extends FragmentStatePagerAdapter

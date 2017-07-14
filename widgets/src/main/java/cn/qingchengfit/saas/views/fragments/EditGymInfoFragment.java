@@ -90,6 +90,10 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
     });
   }
 
+  @Override protected void onFinishAnimation() {
+    presenter.queryGymInfo();
+  }
+
   @Override public String getFragmentName() {
     return EditGymInfoFragment.class.getName();
   }

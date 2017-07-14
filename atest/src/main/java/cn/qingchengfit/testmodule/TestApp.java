@@ -45,16 +45,16 @@ public class TestApp extends Application implements HasActivityInjector, HasSupp
     @Override public void onCreate() {
         super.onCreate();
         ToastUtils.init(this);
-      Staff staff = new Staff("冯博", "15629051755", "", 1);
-      staff.setId("7409");
-      PreferenceUtils.setPrefString(this, "session_id", "tpjo66ambckwr0klgp3o60ki3h1ld9tx");
+      Staff staff = new Staff("纸团", "15123358198", "", 1);
+      staff.setId("7060");
+      PreferenceUtils.setPrefString(this, "session_id", "zl7p9g3klrysp75aztoodw4kskgw7fpz");
+
         LogUtil.e("session:" + PreferenceUtils.getPrefString(this, "session_id", ""));
         AppComponent component = DaggerAppComponent.builder()
             .testModule(new TestModule.Builder().app(this)
                 .gymWrapper(new GymWrapper.Builder().brand(new Brand("1")).build())
                 .loginStatus(new LoginStatus.Builder().userId("7409")
-                    .loginUser(staff)
-                    .session("tpjo66ambckwr0klgp3o60ki3h1ld9tx")
+                    .loginUser(staff).session("zl7p9g3klrysp75aztoodw4kskgw7fpz")
                     .build())
                 .router(new BaseRouter())
                 .restRepository(new QcRestRepository(this, "http://cloudtest.qingchengfit.cn/", "staff-test"))

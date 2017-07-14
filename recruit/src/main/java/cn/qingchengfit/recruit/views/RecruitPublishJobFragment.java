@@ -331,6 +331,10 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
 
   }
 
+  @Override public void toEditJob() {
+
+  }
+
   @Override public void onJobList(List<Job> jobList) {
 
   }

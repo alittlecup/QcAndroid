@@ -40,7 +40,6 @@ import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
-import cn.qingchengfit.views.fragments.TipDialogFragment;
 import cn.qingchengfit.views.fragments.TouchyWebView;
 import cn.qingchengfit.widgets.QcTagGroup;
 import com.google.android.flexbox.AlignItems;
@@ -125,11 +124,19 @@ public class RecruitPositionDetailFragment extends BaseFragment
     delegatePresenter(presenter, this);
     delegatePresenter(resumePresenter, this);
     initToolbar(toolbar);
+
+    return view;
+  }
+
+  @Override protected void onFinishAnimation() {
     onJobDetail(job);
     onGym(job.gym);
+    initData();
+  }
+
+  private void initData() {
     presenter.queryJob(job.id);
     resumePresenter.queryResumeHome();
-    return view;
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -209,12 +216,14 @@ public class RecruitPositionDetailFragment extends BaseFragment
       tvPositionRequire.loadData(CmStringUtils.getMobileHtml(job.requirement),
           "text/html; charset=UTF-8", null);
     }
-    //场馆人员信息
-    getChildFragmentManager().beginTransaction()
-        .replace(R.id.frag_gym_menber_info,
-            RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(
-                job.gym.member_count, job.gym.staff_count, job.gym.area, job.gym.coach_count))
-        .commit();
+    if (job.gym.member_count != null) {
+      //场馆人员信息
+      getChildFragmentManager().beginTransaction()
+          .replace(R.id.frag_gym_menber_info,
+              RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(
+                  job.gym.member_count, job.gym.staff_count, job.gym.area, job.gym.coach_count))
+          .commit();
+    }
     //场馆设施
     if (!ListUtils.isEmpty(job.gym.facilities)) {
       getChildFragmentManager().beginTransaction()
@@ -262,6 +271,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
 
   @Override public void onInviteOk() {
 
+  }
+
+  @Override public void toEditJob() {
+    router.toPublishPosition(job.gym.id, job);
   }
 
   @Override public void onJobList(List<Job> jobList) {

@@ -51,18 +51,12 @@ public class FilterCommonLinearItem extends AbstractFlexibleItem<FilterCommonLin
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, FilterCommonLinearVH holder, int position, List payloads) {
         holder.textPopFilterCommon.setText(data);
-
         if (!adapter.isSelected(position)) {
             holder.imageViewFilterCommon.setVisibility(View.INVISIBLE);
             holder.textPopFilterCommon.setTextColor(holder.itemView.getResources().getColor(R.color.qc_text_black));
         } else {
             holder.imageViewFilterCommon.setVisibility(View.VISIBLE);
             holder.textPopFilterCommon.setTextColor(holder.itemView.getResources().getColor(R.color.qc_allotsale_green));
-        }
-        if (!adapter.isSelected(position)) {
-            holder.imageViewFilterCommon.setVisibility(View.INVISIBLE);
-        } else {
-            holder.imageViewFilterCommon.setVisibility(View.VISIBLE);
         }
     }
 

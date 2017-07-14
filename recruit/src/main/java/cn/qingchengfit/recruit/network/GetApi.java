@@ -63,6 +63,10 @@ public interface GetApi {
 
   //职位详情
   @GET("/api/user/jobs/{job_id}/") rx.Observable<QcDataResponse<JobDetailWrap>> queryJobDetail(
+      @Path("job_id") String jobid);  //职位详情
+
+  @GET("/api/staff/jobs/{job_id}/")
+  rx.Observable<QcDataResponse<JobDetailWrap>> querystaffJobDetail(
       @Path("job_id") String jobid);
 
   //我的收藏

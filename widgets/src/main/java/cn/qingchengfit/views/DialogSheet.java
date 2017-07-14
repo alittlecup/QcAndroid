@@ -2,6 +2,8 @@ package cn.qingchengfit.views;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +54,23 @@ public class DialogSheet extends Dialog {
     public DialogSheet addButton(String text, View.OnClickListener listener) {
         TextView textView = new TextView(context, null, R.style.Qc_TextCommonBlack);
         textView.setTextColor(getContext().getResources().getColor(R.color.text_black));
+      textView.setPadding(30, textView.getPaddingTop(), textView.getPaddingRight(),
+          textView.getPaddingBottom());
+      textView.setText(text);
+      textView.setGravity(Gravity.CENTER_VERTICAL);
+      textView.setBackgroundResource(R.drawable.qc_backgroud_selector);
+      LinearLayout.LayoutParams params =
+          new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+              (int) context.getResources().getDimension(R.dimen.qc_item_height));
+      view.addView(textView, params);
+      textView.setOnClickListener(listener);
+      return this;
+    }
+
+  public DialogSheet addButton(String text, @ColorRes int textColor,
+      View.OnClickListener listener) {
+    TextView textView = new TextView(context, null, R.style.Qc_TextCommonBlack);
+    textView.setTextColor(ContextCompat.getColor(getContext(), R.color.text_black));
         textView.setPadding(30, textView.getPaddingTop(), textView.getPaddingRight(), textView.getPaddingBottom());
         textView.setText(text);
         textView.setGravity(Gravity.CENTER_VERTICAL);

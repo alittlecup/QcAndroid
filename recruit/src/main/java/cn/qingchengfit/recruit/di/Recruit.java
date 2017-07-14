@@ -24,6 +24,7 @@ import cn.qingchengfit.recruit.views.RecruitWriteGymIntroFragment;
 import cn.qingchengfit.recruit.views.ResumeHandleFragment;
 import cn.qingchengfit.recruit.views.ResumeListFragment;
 import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
+import cn.qingchengfit.recruit.views.ResumeRecievedFragment;
 import cn.qingchengfit.recruit.views.ResumeStarredFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobfairDetailFragment;
@@ -43,6 +44,8 @@ import cn.qingchengfit.recruit.views.resume.ResumeWorkExpListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeWorkExpPreviewFragment;
 import cn.qingchengfit.recruit.views.resume.WorkExpSyncDetailFragment;
 import cn.qingchengfit.recruit.views.resume.WorkExpeEditFragment;
+import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
+import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Subcomponent;
@@ -371,6 +374,27 @@ import dagger.multibindings.IntoMap;
     }
   }
 
+  @Subcomponent() public interface EditGymInfoFragmentSubcomponent
+      extends AndroidInjector<EditGymInfoFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<EditGymInfoFragment> {
+    }
+  }
+
+  @Subcomponent() public interface ResumeRecievedFragmentSubcomponent
+      extends AndroidInjector<ResumeRecievedFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<ResumeRecievedFragment> {
+    }
+  }
+
+  @Subcomponent() public interface ChooseGymFragmentSubcomponent
+      extends AndroidInjector<ChooseGymFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<ChooseGymFragment> {
+    }
+  }
+
   @Module(subcomponents = SeekPositionHomeFragmentSubcomponent.class)
   abstract class SeekPositionHomeFragmentModule {
     @Binds @IntoMap @FragmentKey(SeekPositionHomeFragment.class)
@@ -656,5 +680,26 @@ import dagger.multibindings.IntoMap;
     @Binds @IntoMap @FragmentKey(ResumeDetailFragment.class)
     abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ResumeDetailFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = EditGymInfoFragmentSubcomponent.class)
+  abstract class EditGymInfoFragmentModule {
+    @Binds @IntoMap @FragmentKey(EditGymInfoFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        EditGymInfoFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = ResumeRecievedFragmentSubcomponent.class)
+  abstract class ResumeRecievedFragmentModule {
+    @Binds @IntoMap @FragmentKey(ResumeRecievedFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        ResumeRecievedFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = ChooseGymFragmentSubcomponent.class)
+  abstract class ChooseGymFragmentModule {
+    @Binds @IntoMap @FragmentKey(ChooseGymFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        ChooseGymFragmentSubcomponent.Builder builder);
   }
 }

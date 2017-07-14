@@ -23,6 +23,7 @@ public class FilterHeadItem extends AbstractFlexibleItem<FilterHeadItem.FilterHe
 
   public List<String> strings;
   private FilterHeadListener listener;
+  private boolean clearToggle = false;
 
   public FilterHeadItem(List<String> strings) {
     this.strings = strings;
@@ -36,12 +37,12 @@ public class FilterHeadItem extends AbstractFlexibleItem<FilterHeadItem.FilterHe
     return strings;
   }
 
-  public void setStrings(String... strings) {
-    this.strings = Arrays.asList(strings);
-  }
-
   public void setStrings(List<String> strings) {
     this.strings = strings;
+  }
+
+  public void setStrings(String... strings) {
+    this.strings = Arrays.asList(strings);
   }
 
   @Override public int getLayoutRes() {
@@ -56,6 +57,7 @@ public class FilterHeadItem extends AbstractFlexibleItem<FilterHeadItem.FilterHe
   @Override public void bindViewHolder(FlexibleAdapter adapter, FilterHeadVH holder, int position,
       List payloads) {
     if (strings != null) {
+      holder.qrg.removeAllViews();
       LinearLayout.LayoutParams lp =
           new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
       for (String s : strings) {
@@ -73,6 +75,10 @@ public class FilterHeadItem extends AbstractFlexibleItem<FilterHeadItem.FilterHe
         holder.qrg.addView(qcFilterToggle, lp);
       }
     }
+    if (clearToggle) {
+      holder.qrg.clearCheck();
+      clearToggle = false;
+    }
   }
 
   @Override public boolean equals(Object o) {
@@ -85,6 +91,10 @@ public class FilterHeadItem extends AbstractFlexibleItem<FilterHeadItem.FilterHe
 
   public void setListener(FilterHeadListener listener) {
     this.listener = listener;
+  }
+
+  public void clearAll() {
+    clearToggle = true;
   }
 
   public interface FilterHeadListener {

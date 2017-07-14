@@ -119,13 +119,13 @@ public class RecruitBusinessUtils {
   public static HashMap<String, Object> getGenderParams(int pos, HashMap<String, Object> params) {
     switch (pos) {
       case 0:
-        params.put("gender", 0);
+        params.put("gender", -1);
         break;
       case 1:
-        params.put("gender", 1);
+        params.put("gender", 0);
         break;
       case 2:
-        params.put("gender", -1);
+        params.put("gender", 1);
         break;
       default:
         params.put("gender", null);
@@ -213,6 +213,40 @@ public class RecruitBusinessUtils {
     return params;
   }
 
+  public static HashMap<String, Object> getWorkYearParams(int i, HashMap<String, Object> params) {
+    switch (i) {
+      case 0:
+        params.put("min_work_year", 0);
+        params.put("max_work_year", 0);
+        break;
+      case 1:
+        params.put("min_work_year", 1);
+        params.put("max_work_year", 3);
+        break;
+      case 2:
+        params.put("min_work_year", 3);
+        params.put("max_work_year", 5);
+        break;
+      case 3:
+        params.put("min_work_year", 5);
+        params.put("max_work_year", 8);
+        break;
+      case 4:
+        params.put("min_work_year", 8);
+        params.put("max_work_year", 10);
+        break;
+      case 5:
+        params.put("min_work_year", 10);
+        params.put("max_work_year", -1);
+        break;
+      default:
+        params.put("min_work_year", null);
+        params.put("max_work_year", null);
+        break;
+    }
+    return params;
+  }
+
   public static HashMap<String, Object> getWeightParams(int pos, HashMap<String, Object> params) {
     switch (pos) {
       case 0:
@@ -258,7 +292,7 @@ public class RecruitBusinessUtils {
     if (min < 0 && max <= 0) {
       return replace;
     } else if (min == 0 && max == 0) {
-      return "";
+      return replace;
     } else if (min < 0) {
       return "<" + getMoney(max);
     } else if (max < 0) {
@@ -460,5 +494,4 @@ public class RecruitBusinessUtils {
     }
     return sb.toString();
   }
-
 }

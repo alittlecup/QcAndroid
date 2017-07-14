@@ -25,6 +25,7 @@ import android.support.annotation.Nullable;
  */
 
 public class JobsFilterFragment extends ResumeFilterFragment {
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     filterDamenFragment = FilterDamenFragment.newInstanceJobsFilter();
@@ -37,9 +38,6 @@ public class JobsFilterFragment extends ResumeFilterFragment {
         return;
       case 1:
         show("salary");
-        return;
-      case 2:
-        show("workyear");
         return;
       default:
         show("other");

@@ -62,7 +62,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -135,18 +134,23 @@ public class RecruitRouter extends InnerRouter {
     add(RecruitGymDetailFragment.newInstance(service));
   }
 
-
   /**
    * 人才市场 人才浏览 或者叫 招聘版主页
    */
   public void resumeMarketHome() {
-    init(new ResumeMarketHomeFragment());
-    //getFragmentManager().beginTransaction()
-    //    .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
-    //        R.anim.card_flip_left_in, R.anim.card_flip_left_out)
-    //    .replace(getFragId(), new ResumeMarketHomeFragment())
-    //    .addToBackStack(null)
-    //    .commit();
+    getFragmentManager().beginTransaction()
+        .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
+            R.anim.card_flip_left_in, R.anim.card_flip_left_out)
+        .replace(getFragId(), new ResumeMarketHomeFragment())
+        .commit();
+  }
+
+  public void jobsHome() {
+    getFragmentManager().beginTransaction()
+        .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
+            R.anim.card_flip_left_in, R.anim.card_flip_left_out)
+        .replace(getFragId(), new SeekPositionHomeFragment())
+        .commit();
   }
 
   public void resumeHome() {
@@ -368,8 +372,8 @@ public class RecruitRouter extends InnerRouter {
 
   }
 
-  public void toPublishPosition(String gymId) {
-    add(new RecruitPublishJobFragmentBuilder(gymId, null,
+  public void toPublishPosition(String gymId, Job job) {
+    add(new RecruitPublishJobFragmentBuilder(gymId, job,
         RecruitPublishJobFragment.PUBLISH_POSITION).build());
   }
 
@@ -407,5 +411,4 @@ public class RecruitRouter extends InnerRouter {
   public void editGymInfo(String gymid) {
     add(EditGymInfoFragment.newInstance(gymid));
   }
-
 }

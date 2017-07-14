@@ -56,8 +56,10 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
   public void setDesc(Gym gym) {
     getChildFragmentManager().beginTransaction()
         .replace(R.id.frag_gym_menber_info,
-            RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(gym.member_count,
-                gym.staff_count, gym.area, gym.coach_count))
+            RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(
+                gym.member_count == null ? 0 : gym.member_count,
+                gym.staff_count == null ? 0 : gym.staff_count, gym.area,
+                gym.coach_count == null ? 0 : gym.coach_count))
         .commit();
     if (!ListUtils.isEmpty(gym.facilities)) {
       getChildFragmentManager().beginTransaction()

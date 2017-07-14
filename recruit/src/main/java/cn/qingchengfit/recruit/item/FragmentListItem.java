@@ -1,10 +1,10 @@
 package cn.qingchengfit.recruit.item;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
@@ -43,6 +43,7 @@ public class FragmentListItem extends AbstractFlexibleItem<FragmentListItem.Resu
         .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
         .replace(R.id.frag_item_resume, childFragment)
         .commit();
+
   }
 
   @Override public boolean equals(Object o) {
@@ -50,10 +51,38 @@ public class FragmentListItem extends AbstractFlexibleItem<FragmentListItem.Resu
   }
 
   public class ResumeListVH extends FlexibleViewHolder {
-    @BindView(R2.id.frag_item_resume) FrameLayout frameLayout;
+    @BindView(R2.id.frag_item_resume) NestedScrollView frameLayout;
     public ResumeListVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
+      //frameLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+      //  @Override public void onGlobalLayout() {
+      //    frameLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+      //    if (frameLayout.getParent() instanceof RecyclerView){
+      //      RecyclerView rv =  (RecyclerView) frameLayout.getParent();
+      //      final LinearLayoutManager lm = (LinearLayoutManager) rv.getLayoutManager();
+      //      rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+      //        @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+      //          super.onScrollStateChanged(recyclerView, newState);
+      //        }
+      //
+      //        @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+      //          super.onScrolled(recyclerView, dx, dy);
+      //          // TODO: 2017/7/13 硬编码
+      //          if (lm.findFirstCompletelyVisibleItemPosition() >= 2){
+      //            //if (frameLayout.canScroll(-1)){
+      //              frameLayout.requestDisallowInterceptTouchEvent(true);
+      //            //}else frameLayout.requestDisallowInterceptTouchEvent(false);
+      //          }else {
+      //            frameLayout.requestDisallowInterceptTouchEvent(false);
+      //          }
+      //        }
+      //      });
+      //    }
+      //  }
+      //});
+
+
     }
   }
 }

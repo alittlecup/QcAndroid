@@ -13,6 +13,7 @@ import cn.qingchengfit.recruit.item.ResumeItem;
 import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.model.Resume;
 import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
+import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -46,10 +47,10 @@ public class ResumeListFragment extends BaseListFragment
     FlexibleAdapter.EndlessScrollListener, SwipeRefreshLayout.OnRefreshListener {
 
   protected HashMap<String, Object> params = new HashMap<>();
+  protected boolean hasItem = false;
   @Inject ResumeMarketPresenter presenter;
   @Inject RecruitRouter router;
   @Inject QcRestRepository restRepository;
-  private boolean hasItem = false;
 
   public static ResumeListFragment newResumeListInstance() {
     ResumeListFragment fragment = new ResumeListFragment();
@@ -60,8 +61,6 @@ public class ResumeListFragment extends BaseListFragment
       Bundle savedInstanceState) {
     delegatePresenter(presenter, this);
     View view = super.onCreateView(inflater, container, savedInstanceState);
-
-    rv.setNestedScrollingEnabled(false);
     initListener(this);
     return view;
   }
@@ -129,14 +128,20 @@ public class ResumeListFragment extends BaseListFragment
 
   @Override public boolean onItemClick(int i) {
     if (getItem(i) instanceof ResumeItem) {
-      router.toResumeDetail(((ResumeItem) getItem(i)).getResume().id,
-          restRepository.getHost() + RecruitConstants.RESUME_WEB_PATH);
+      if (commonFlexAdapter.getStatus() == 0) {
+        router.toResumeDetail(((ResumeItem) getItem(i)).getResume().id,
+            restRepository.getHost() + RecruitConstants.RESUME_WEB_PATH);
+      } else {
+        commonFlexAdapter.toggleSelection(i);
+        commonFlexAdapter.notifyItemChanged(i);
+      }
     }
     return true;
   }
 
   @Override public void onRefresh() {
     initLoadMore();
+    params = ListUtils.mapRemoveNull(params);
     presenter.queryResumeMarkets(true, params);
   }
 }

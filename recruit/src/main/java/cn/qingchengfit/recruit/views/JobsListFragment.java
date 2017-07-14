@@ -2,9 +2,7 @@ package cn.qingchengfit.recruit.views;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.recruit.R;
@@ -47,9 +45,9 @@ public class JobsListFragment extends BaseListFragment
     SwipeRefreshLayout.OnRefreshListener, JobListPresenter.MVPView {
 
   protected HashMap<String, Object> params = new HashMap<>();
+  protected boolean hasItem;
   @Inject JobListPresenter presenter;
   @Inject RecruitRouter router;
-  private boolean hasItem;
 
   public static JobsListFragment newAllJobsList() {
     Bundle args = new Bundle();
@@ -62,25 +60,6 @@ public class JobsListFragment extends BaseListFragment
       Bundle savedInstanceState) {
     delegatePresenter(presenter, this);
     View view = super.onCreateView(inflater, container, savedInstanceState);
-    rv.setNestedScrollingEnabled(true);
-    rv.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-      @Override public boolean onInterceptTouchEvent(RecyclerView v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_MOVE) {
-          v.getParent().requestDisallowInterceptTouchEvent(true);
-        } else {
-          v.getParent().requestDisallowInterceptTouchEvent(false);
-        }
-        return false;
-      }
-
-      @Override public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-      }
-
-      @Override public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-      }
-    });
     initListener(this);
     return view;
   }
@@ -89,6 +68,10 @@ public class JobsListFragment extends BaseListFragment
     this.params.putAll(p);
     this.params.put("q", keyword);
     onRefresh();
+  }
+
+  @Override protected void clearItems() {
+    commonFlexAdapter.removeItemsOfType(R.layout.item_recruit_position);
   }
 
   @Override protected void onFinishAnimation() {
@@ -116,6 +99,10 @@ public class JobsListFragment extends BaseListFragment
   @Override public void onRefresh() {
     initLoadMore();
     presenter.queryList(true, params);
+  }
+
+  @Override public void initLoadMore() {
+    if (commonFlexAdapter != null) commonFlexAdapter.setEndlessScrollListener(this, progressItem);
   }
 
   @Override public int getNoDataIconRes() {

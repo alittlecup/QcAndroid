@@ -20,6 +20,7 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.model.Job;
+import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
 import cn.qingchengfit.utils.ToastUtils;
@@ -110,10 +111,13 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
     layoutEmloyerCtl.setVisibility(View.VISIBLE);
     layoutEmployeeCtl.setVisibility(View.GONE);
     layoutJobInfo.setVisibility(View.VISIBLE);
+    return view;
+  }
+
+  @Override protected void onFinishAnimation() {
     onJobDetail(job);
     onGym(job.gym);
-    presenter.queryJob(job.id);
-    return view;
+    presenter.queryStaffJob(job.id);
   }
 
   @Override public void onJobDetail(Job job) {
@@ -148,12 +152,11 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
    */
   @OnClick(R2.id.btn_close_pos) public void onBtnClosePosClicked() {
     showLoading();
-    // TODO: 2017/7/11 @FB
-    //if (job.published) {
-    //  presenter.publishJob(job.id, new JobBody.Builder().published(false).build());
-    //} else {
-    //  presenter.publishJob(job.id, new JobBody.Builder().published(true).build());
-    //}
+    if (job.published) {
+      presenter.editJob(job.id, new JobBody.Builder().published(false).build());
+    } else {
+      presenter.editJob(job.id, new JobBody.Builder().published(true).build());
+    }
   }
 
   @Override public void onEditOk() {
@@ -166,7 +169,7 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
    * 编辑职位
    */
   @OnClick(R2.id.btn_edit_postion) public void onBtnEditPostionClicked() {
-    router.goJobDetail(job);
+    presenter.queryEditPermiss(job, "job");
   }
 
   @OnClick(R2.id.layout_diliverd) public void onLayoutDiliverdClicked() {

@@ -127,22 +127,13 @@
           android:layout_height="match_parent"
           android:descendantFocusability="blocksDescendants"
           />
-      <LinearLayout
-          android:id="@+id/layout_filter"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginTop="@dimen/qc_item_height"
-          android:background="@color/halftrans_background"
-          android:orientation="horizontal"
-          android:visibility="gone"
-          >
 
         <FrameLayout
             android:id="@+id/frag_filter"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="48dp"
             />
-      </LinearLayout>
     </FrameLayout>
 
   </android.support.v4.widget.SwipeRefreshLayout>

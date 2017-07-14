@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_grey"
@@ -10,15 +11,53 @@
 
   <include layout="@layout/common_simple_toolbar"/>
 
-  <cn.qingchengfit.widgets.PagerSlidingTabImageStrip
-      android:id="@+id/tab_strip"
+  <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="50dp"
-      android:background="@color/white"
-      app:pst_text_color="@color/text_black"
-      app:pst_text_highlight_color="@color/green"
-      app:pst_text_size="15sp"
-      />
+      >
+
+    <cn.qingchengfit.widgets.PagerSlidingTabImageStrip
+        android:id="@+id/tab_strip"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        app:pst_text_color="@color/text_black"
+        app:pst_text_highlight_color="@color/green"
+        app:pst_text_size="15sp"
+        />
+
+    <LinearLayout
+        android:id="@+id/layout_mark_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:visibility="gone"
+        >
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center_vertical"
+          android:text="标记人才"
+          style="@style/QcTextStyleStandardGrey"
+          />
+
+      <TextView
+          android:id="@+id/btn_cancel"
+          android:layout_width="100dp"
+          android:layout_height="match_parent"
+          android:gravity="end|center_vertical"
+          android:text="@string/complete"
+          android:textColor="?colorPrimary"
+          style="@style/QcTextStyleStandardGrey"
+          />
+    </LinearLayout>
+  </FrameLayout>
+
 
   <include layout="@layout/divider_grey"/>
 
@@ -32,6 +71,40 @@
   <android.support.v4.view.ViewPager
       android:id="@+id/vp"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
       />
+
+  <include layout="@layout/divider_grey"/>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="52dp"
+      android:background="@color/white"
+      >
+
+    <Button
+        android:id="@+id/btn_mark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:text="批量标注"
+        style="@style/QcBtnPrimery"
+        />
+
+    <TextView
+        android:id="@+id/btn_show_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_click"
+        android:gravity="center"
+        android:text="标记为..."
+        android:textColor="?colorPrimary"
+        android:textSize="17sp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+  </FrameLayout>
 </LinearLayout>

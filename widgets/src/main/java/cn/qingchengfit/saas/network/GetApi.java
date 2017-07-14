@@ -35,6 +35,6 @@ public interface GetApi {
   @GET("/api/common/user/check/superuser/") rx.Observable<QcDataResponse<SuWrap>> querySu(
       @Query("gym_id") String gymid);
 
-  @GET("/api/common/user/gyms/{gym_id}") rx.Observable<QcDataResponse<GymWrap>> queryGymInfo(
+  @GET("/api/common/user/gyms/{gym_id}/") rx.Observable<QcDataResponse<GymWrap>> queryGymInfo(
       @Path("gym_id") String gymid);
 }

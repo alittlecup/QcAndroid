@@ -7,7 +7,7 @@ import android.os.Build;
 import android.support.annotation.DimenRes;
 import android.util.TypedValue;
 import android.view.ViewConfiguration;
-
+import cn.qingchengfit.widgets.R;
 import java.lang.reflect.Method;
 
 /**
@@ -36,6 +36,19 @@ public class MeasureUtils {
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, resources.getDimension(res), resources.getDisplayMetrics());
         return (int) px;
     }
+
+  public static int autoPaddingBottom(float itemHeihgt, int itemCount, Context context,
+      int offset) {
+    Resources resources = context.getResources();
+    int padding =
+        getTrueheight(context) - getActionbarBarHeight(context) - offset - ((int) dpToPx(itemHeihgt,
+            resources) * itemCount);
+    if (padding > 0) {
+      return padding;
+    } else {
+      return dpToPx(R.dimen.activity_vertical_margin, resources);
+    }
+  }
 
     /**
      * 将px值转换为sp值，保证文字大小不变
@@ -122,6 +135,21 @@ public class MeasureUtils {
             result = context.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+  public static int getActionbarBarHeight(Context context) {
+    int actionBarHeight = 0;
+    TypedValue tv = new TypedValue();
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+      if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+        actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,
+            context.getResources().getDisplayMetrics());
+      }
+    } else {
+      actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,
+          context.getResources().getDisplayMetrics());
+    }
+    return actionBarHeight;
     }
 
 }
