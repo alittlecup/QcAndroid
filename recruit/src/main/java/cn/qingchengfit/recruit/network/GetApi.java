@@ -66,8 +66,7 @@ public interface GetApi {
       @Path("job_id") String jobid);  //职位详情
 
   @GET("/api/staff/jobs/{job_id}/")
-  rx.Observable<QcDataResponse<JobDetailWrap>> querystaffJobDetail(
-      @Path("job_id") String jobid);
+  rx.Observable<QcDataResponse<JobDetailWrap>> querystaffJobDetail(@Path("job_id") String jobid);
 
   //我的收藏
   @GET("/api/user/job/favorites/") rx.Observable<QcDataResponse<JobListWrap>> queryMyStared(
@@ -143,6 +142,12 @@ public interface GetApi {
    * 管理场馆列表
    */
   @GET("/api/staff/job/gyms/") rx.Observable<QcDataResponse<GymListWrap>> queryManageGyms();
+
+  /**
+   * 查看场馆信息
+   */
+  @GET("/api/staff/job/gyms/{gym_id}") rx.Observable<QcDataResponse<GymWrap>> queryGymsDetail(
+      @Path("gym_id") String gymId);
 
   /**
    * 专场招聘会列表

@@ -24,7 +24,6 @@ import cn.qingchengfit.recruit.views.RecruitPositionDemanFragmentBuilder;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailEmployerFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
 import cn.qingchengfit.recruit.views.RecruitPublishJobFragmentBuilder;
-import cn.qingchengfit.recruit.views.RecruitRichTextEditFragment;
 import cn.qingchengfit.recruit.views.RecruitRichTextEditFragmentBuilder;
 import cn.qingchengfit.recruit.views.RecruitStaffMyJobFairFragment;
 import cn.qingchengfit.recruit.views.RecruitUserMyJobFairFragment;
@@ -35,6 +34,7 @@ import cn.qingchengfit.recruit.views.ResumeRecievedFragmentBuilder;
 import cn.qingchengfit.recruit.views.ResumeStarredFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
 import cn.qingchengfit.recruit.views.SetNameCommenFragment;
+import cn.qingchengfit.recruit.views.jobfair.JobFairSuccessFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobfairDetailFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobfairSignUpFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
@@ -268,9 +268,9 @@ public class RecruitRouter extends InnerRouter {
   /**
    * 场馆详情介绍
    */
-  public void toWriteGymDetailDesc(String s) {
+  public void toWriteGymDetailDesc(String s, String toolbarTitle) {
     // TODO: 2017/7/4 使用EditRecruitDesc
-    add(new RecruitRichTextEditFragment());
+    add(new RecruitRichTextEditFragmentBuilder(s, toolbarTitle).build());
   }
 
   /**
@@ -311,15 +311,15 @@ public class RecruitRouter extends InnerRouter {
   /**
    * 主动投递人才
    */
-  public void toRecieveResumes(String jobid) {
-    add(ResumeRecievedFragmentBuilder.newResumeRecievedFragment(jobid, 0));
+  public void toRecieveResumes(Job job) {
+    add(ResumeRecievedFragmentBuilder.newResumeRecievedFragment(job, 0));
   }
 
   /**
    * 我邀约的人才
    */
-  public void toInvitedResumes(String jobid) {
-    add(ResumeRecievedFragmentBuilder.newResumeRecievedFragment(jobid, 1));
+  public void toInvitedResumes(Job job) {
+    add(ResumeRecievedFragmentBuilder.newResumeRecievedFragment(job, 1));
   }
 
   /**
@@ -367,15 +367,15 @@ public class RecruitRouter extends InnerRouter {
    * 报名参加专场招聘会
    */
   public void toSignUpFair(JobFair jobFair) {
-    addNoStack(JobfairSignUpFragment.newInstance(jobFair));
+    add(JobfairSignUpFragment.newInstance(jobFair));
   }
 
-  public void toJoinFairSuc() {
-
+  public void toJoinFairSuc(Gym gym) {
+    addNoStack(JobFairSuccessFragment.newInstance(gym));
   }
 
   public void toPublishPosition(String gymId, Job job, int type) {
-    add(new RecruitPublishJobFragmentBuilder(job, type).gymId(gymId).build());
+    add(new RecruitPublishJobFragmentBuilder(gymId, job, type).build());
   }
 
   /**

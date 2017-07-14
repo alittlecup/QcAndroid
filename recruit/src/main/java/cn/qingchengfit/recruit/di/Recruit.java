@@ -27,6 +27,7 @@ import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.ResumeRecievedFragment;
 import cn.qingchengfit.recruit.views.ResumeStarredFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
+import cn.qingchengfit.recruit.views.jobfair.JobFairSuccessFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobfairDetailFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobfairSignUpFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
@@ -702,4 +703,13 @@ import dagger.multibindings.IntoMap;
     abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ChooseGymFragmentSubcomponent.Builder builder);
   }
+
+  @Subcomponent() public interface JobFairSuccessFragmentSubcomponent extends AndroidInjector<JobFairSuccessFragment> {
+      @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<JobFairSuccessFragment> {}
+  }
+  @Module(subcomponents = JobFairSuccessFragmentSubcomponent.class) abstract class JobFairSuccessFragmentModule {
+      @Binds @IntoMap @FragmentKey(JobFairSuccessFragment.class)
+      abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(JobFairSuccessFragmentSubcomponent.Builder builder);
+  }
+
 }

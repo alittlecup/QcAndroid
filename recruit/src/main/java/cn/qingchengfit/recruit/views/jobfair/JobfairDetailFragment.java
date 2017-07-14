@@ -1,6 +1,10 @@
 package cn.qingchengfit.recruit.views.jobfair;
 
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -10,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +32,7 @@ import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.presenter.JobFairDetailPresenter;
 import cn.qingchengfit.recruit.views.ResumeListFragment;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import java.util.ArrayList;
@@ -64,6 +70,7 @@ public class JobfairDetailFragment extends BaseFragment implements JobFairDetail
   @Inject RecruitRouter router;
   CommonFlexAdapter commonFlexAdapter;
   @BindView(R2.id.smooth_app_bar_layout) AppBarLayout smoothAppBarLayout;
+  @BindView(R2.id.image_recruit) ImageView imageRecruit;
   private int type = 0;//0是招聘端的  1：是求职端
   private JobFair jobFair;
   private FragmentListItem resumeListItem;
@@ -92,6 +99,10 @@ public class JobfairDetailFragment extends BaseFragment implements JobFairDetail
       type = getArguments().getInt("type");
       jobFair = getArguments().getParcelable("jobfair");
     }
+    //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    //  getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+    //  getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    //}
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,6 +158,7 @@ public class JobfairDetailFragment extends BaseFragment implements JobFairDetail
   }
 
   @Override public void onJobfairDetail(JobFair jobfair) {
+    PhotoUtils.middle(imageRecruit, jobfair.banner);
     tvName.setText(jobfair.name);
     tvDuring.setText(DateUtils.getDuringFromServer(jobfair.start, jobfair.end));
     commonFlexAdapter.addItem(new ExpendedTextviewItem(jobfair.description));
@@ -163,14 +175,10 @@ public class JobfairDetailFragment extends BaseFragment implements JobFairDetail
       commonFlexAdapter.addItem(new TitleHintItem("招聘会人才"));
       commonFlexAdapter.addItem(
           new FilterHeadItem(getResources().getStringArray(R.array.filter_resume)));
-      resumeListItem = new FragmentListItem(this, ResumeListFragment.newResumeListInstance());
-      commonFlexAdapter.addItem(resumeListItem);
     } else {
       commonFlexAdapter.addItem(new TitleHintItem("本期热招职位"));
       commonFlexAdapter.addItem(
           new FilterHeadItem(getResources().getStringArray(R.array.filter_jobs)));
-      resumeListItem = new FragmentListItem(this, ResumeListFragment.newResumeListInstance());//职位列表
-      commonFlexAdapter.addItem(resumeListItem);
     }
   }
 }

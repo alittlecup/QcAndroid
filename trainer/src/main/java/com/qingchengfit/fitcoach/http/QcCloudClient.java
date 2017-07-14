@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.http;
 
 import android.support.annotation.Nullable;
+import cn.qingchengfit.chat.model.RecordWrap;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.body.PostCommentBody;
@@ -643,6 +644,10 @@ public class QcCloudClient {
         @GET("/api/v2/staffs/{id}/cardtpls/all/?show_all=1&order_by=-id") rx.Observable<QcResponseData<CardTpls>> qcGetCardTpls(
             @Path("id") String id, @QueryMap HashMap<String, Object> params, @Query("type") String type,
             @Query("is_enable") String isEnable);
+
+        //获取消息首页求职招聘信息列表
+        @GET("/api/user/job/records/")
+        rx.Observable<QcResponseData<RecordWrap>> qcGetRecruitMessageList();
 
     }
 

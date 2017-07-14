@@ -85,7 +85,7 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   @Inject ResumePresenter resumePresenter;
   @Inject QcRestRepository restRepository;
 
-
+  private boolean isClosePosition;
 
   public static RecruitPositionDetailEmployerFragment newInstance(Job job) {
     Bundle args = new Bundle();
@@ -147,17 +147,27 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
    */
   @OnClick(R2.id.btn_close_pos) public void onBtnClosePosClicked() {
     showLoading();
-    if (job.published) {
-      presenter.editJob(job.id, new JobBody.Builder().published(false).build());
-    } else {
-      presenter.editJob(job.id, new JobBody.Builder().published(true).build());
-    }
+    isClosePosition = true;
+    presenter.queryEditPermiss(job, "job");
   }
 
   @Override public void onEditOk() {
     hideLoading();
     presenter.queryJob(job.id);
     ToastUtils.show(R.drawable.vector_hook_white, job.published ? "已关闭" : "已开启");
+  }
+
+  @Override public void toEditJob() {
+    if (!isClosePosition) {
+      super.toEditJob();
+    }else{
+      isClosePosition = false;
+      if (job.published) {
+        presenter.editJob(job.id, new JobBody.Builder().published(false).build());
+      } else {
+        presenter.editJob(job.id, new JobBody.Builder().published(true).build());
+      }
+    }
   }
 
   /**
@@ -168,10 +178,10 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   }
 
   @OnClick(R2.id.layout_diliverd) public void onLayoutDiliverdClicked() {
-    router.toRecieveResumes(job.id);
+    router.toRecieveResumes(job);
   }
 
   @OnClick(R2.id.layout_invited) public void onLayoutInvitedClicked() {
-    router.toInvitedResumes(job.id);
+    router.toInvitedResumes(job);
   }
 }

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.chat.model.Record;
 import cn.qingchengfit.constant.ConstantNotification;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -313,7 +314,12 @@ public class MainMsgFragment extends BaseFragment
                     items.add(new SystemMsgItem(ConstantNotification.getNotiDrawable(list.get(i).key), list.get(i)));
                 }
             }
-
+            NotificationGlance recruitNoty = new NotificationGlance();
+            NotificationMsg recruitMsg = new NotificationMsg();
+            recruitMsg.setDescription("点击查看简历投递和职位邀约详细消息");
+            recruitMsg.setId(0x11L);
+            recruitNoty.notification = recruitMsg;
+            items.add(new SystemMsgItem(R.drawable.ic_vd_notification_job, recruitNoty));
             adapter.notifyDataSetChanged();
 
             try {
@@ -334,15 +340,23 @@ public class MainMsgFragment extends BaseFragment
         refresh();
     }
 
+    @Override public void onMessageList(List<Record> recordList) {
+
+    }
+
     @Override public boolean onItemClick(int i) {
         if (items.get(i) instanceof SystemMsgItem) {
             int type = ((SystemMsgItem) items.get(i)).getType();
-            if (type != R.drawable.vd_notification_comment) {
+            if (type != R.drawable.vd_notification_comment && type != R.drawable.ic_vd_notification_job) {
                 Intent toNoti = new Intent(getActivity(), NotificationActivity.class);
                 toNoti.putExtra("type", type);
                 startActivity(toNoti);
+            } else if (type == R.drawable.ic_vd_notification_job) {
+                ContainerActivity.router("/recruit/message_list", getContext(),
+                    getString(R.string.chat_user_id_header, loginStatus.getUserId()));
             } else {
-                presenter.clearNoti(ConstantNotification.getCategloreStr(R.drawable.vd_notification_comment));
+                presenter.clearNoti(
+                    ConstantNotification.getCategloreStr(R.drawable.vd_notification_comment));
                 ContainerActivity.router("/replies", getContext());
             }
         }

@@ -123,14 +123,13 @@ public class RecruitPositionDetailFragment extends BaseFragment
     delegatePresenter(presenter, this);
     delegatePresenter(resumePresenter, this);
     initToolbar(toolbar);
-
+    initData();
     return view;
   }
 
   @Override protected void onFinishAnimation() {
     onJobDetail(job);
     onGym(job.gym);
-    initData();
   }
 
   private void initData() {
@@ -276,7 +275,15 @@ public class RecruitPositionDetailFragment extends BaseFragment
     router.toPublishPosition(job.gym.id, job, RecruitPublishJobFragment.MODIFY_POSITION);
   }
 
+  public void onCheckSuccessed(){
+
+  }
+
   @Override public void onJobList(List<Job> jobList) {
+
+  }
+
+  @Override public void onGymDetail(Gym gym) {
 
   }
 

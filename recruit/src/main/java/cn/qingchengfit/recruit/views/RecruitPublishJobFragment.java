@@ -13,6 +13,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
@@ -80,7 +81,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
 
   @Inject RecruitRouter router;
   @Inject JobPresenter presenter;
-  @Arg(required = false) String gymId;
+  @Arg String gymId;
   @Arg int type;
   @Arg Job job;
 
@@ -88,6 +89,8 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
 
   private TwoScrollPicker twoScrollPicker;
   private HashMap<String, Object> params = new HashMap<>();
+
+  private String gymContent;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -110,6 +113,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
       toolbarTitile.setText("发布职位");
     } else {
       toolbarTitile.setText("编辑职位");
+      presenter.queryGymDetail(gymId);
     }
     return view;
   }
@@ -217,7 +221,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
    * 职位名称
    */
   @OnClick(R2.id.civ_position_name) public void onCivPositionNameClicked() {
-    router.toSetRequireName(body.name, "职位名称");
+    router.toSetRequireName("职位名称", body.name);
   }
 
   /**
@@ -294,7 +298,11 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
    * 场馆介绍
    */
   @OnClick(R2.id.civ_gym_desc) public void onCivGymDescClicked() {
-    router.toWriteGymDetailDesc(job.gym.description);
+    if (job != null) {
+      router.toWriteGymDetailDesc(job.gym.description, "场馆介绍");
+    }else{
+      router.toWriteGymDetailDesc(gymContent, "场馆介绍");
+    }
   }
 
   /**
@@ -306,10 +314,8 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
       DialogUtils.showAlert(getContext(), "请完善职位信息");
       return;
     }
-    showLoadingTrans();
-    body.gym_id = gymId;
-    body.published = true;
-    presenter.publishJob(body);
+    presenter.queryEditPermiss(job, "job");
+
   }
 
   @Override public void onEditOk() {
@@ -339,10 +345,17 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
   }
 
   @Override public void toEditJob() {
-
+    showLoadingTrans();
+    body.gym_id = gymId;
+    body.published = true;
+    presenter.publishJob(body);
   }
 
   @Override public void onJobList(List<Job> jobList) {
 
+  }
+
+  @Override public void onGymDetail(Gym gym) {
+    gymContent = gym.description;
   }
 }

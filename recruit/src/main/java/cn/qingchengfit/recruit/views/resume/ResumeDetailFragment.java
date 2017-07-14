@@ -16,6 +16,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitConstants;
@@ -26,6 +28,7 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
+import cn.qingchengfit.recruit.presenter.ResumePermissionPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
 import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.utils.ToastUtils;
@@ -50,7 +53,7 @@ import javax.inject.Inject;
 
 @FragmentWithArgs public class ResumeDetailFragment extends BaseFragment
     implements ResumePresenter.MVPView, JobPresenter.MVPView,
-    BottomListFragment.ComfirmChooseListener {
+    BottomListFragment.ComfirmChooseListener, ResumePermissionPresenter.MVPView {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
@@ -65,8 +68,9 @@ import javax.inject.Inject;
 
   @Inject ResumePresenter resumePresenter;
   @Inject JobPresenter jobPresenter;
+  @Inject ResumePermissionPresenter permissionPresenter;
+  @Inject GymWrapper gymWrapper;
 
-  //TODO 测试id   by  fb
   @Arg String resumeId;
   @Arg String toUrl;
 
@@ -152,7 +156,7 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.btn_send_invite) public void onSendInvite() {
-    jobPresenter.getInviteJobs("");
+    permissionPresenter.queryChangeStatePermission(gymWrapper.id(), "resume");
   }
 
   @Override public void onBaseInfo(ResumeHome resumeHome) {
@@ -197,6 +201,10 @@ import javax.inject.Inject;
     }
     bottomListFragment.loadData(itemList);
     bottomListFragment.show(getChildFragmentManager(), null);
+  }
+
+  @Override public void onGymDetail(Gym gym) {
+
   }
 
   @Override public void onEditOk() {
@@ -244,5 +252,9 @@ import javax.inject.Inject;
       }
     }
     jobPresenter.invitePosition(jobList, resumeId);
+  }
+
+  @Override public void onCheckSuccess() {
+    jobPresenter.getInviteJobs("");
   }
 }

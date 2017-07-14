@@ -101,7 +101,7 @@ import java.util.HashMap;
     final ArrayList<String> d = new ArrayList<>(Arrays.asList(workexpStr));
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right <= left || (left == 0 && right > 0)) {
+        if ((right <= left && right > 0) || (left == 0 && right > 0)) {
           ToastUtils.show("请选择正确的条件区间");
           return;
         } else {
@@ -136,7 +136,7 @@ import java.util.HashMap;
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right <= left || (left == 0 && right > 0)) {
+        if ((right <= left && right > 0) || (left == 0 && right > 0)) {
           ToastUtils.show("请选择正确的条件区间");
           return;
         } else {
@@ -175,7 +175,7 @@ import java.util.HashMap;
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right <= left || (left == 0 && right > 0)) {
+        if ((right <= left && right > 0) || (left == 0 && right > 0)) {
           ToastUtils.show("请选择正确的条件区间");
           return;
         } else {
@@ -197,7 +197,7 @@ import java.util.HashMap;
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if (right <= left || (left == 0 && right > 0)) {
+        if ((right <= left && right > 0) || (left == 0 && right > 0)) {
           ToastUtils.show("请选择正确的条件区间");
           return;
         } else {

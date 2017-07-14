@@ -145,7 +145,7 @@ import rx.functions.Action1;
    * 详细介绍  富文本
    */
   @OnClick(R2.id.civ_gym_intro) public void onCivGymIntroClicked() {
-    router.toWriteGymDetailDesc(gym.detail_description);
+    router.toWriteGymDetailDesc(gym.detail_description, "详细介绍");
   }
 
   @Override public void onSaveOk() {

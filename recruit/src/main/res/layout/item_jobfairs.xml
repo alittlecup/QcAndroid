@@ -11,7 +11,7 @@
       android:id="@+id/img_bg"
       android:layout_width="190dp"
       android:layout_height="106dp"
-      android:scaleType="centerCrop"
+      android:scaleType="fitXY"
       tools:src="@color/toolbar"
       />
 

@@ -71,7 +71,7 @@ public class PhotoUtils {
             .asBitmap()
             .placeholder(placeholder)
             .error(error)
-            .into(new CircleImgWrapper(v, v.getContext()));
+            .into(new Corner4dpImgWrapper(v, v.getContext()));
     }
 
     public static void small(ImageView v, String url) {

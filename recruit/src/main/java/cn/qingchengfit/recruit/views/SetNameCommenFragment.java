@@ -62,7 +62,7 @@ public class SetNameCommenFragment extends BaseFragment {
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (editGroupName.getText().toString().equals("")) {
-          DialogUtils.showAlert(getContext(), "请填写群名称");
+          DialogUtils.showAlert(getContext(), "请填写职位名称");
           return false;
         } else {
           RxBus.getBus().post(new EventSetName(editGroupName.getText().toString()));

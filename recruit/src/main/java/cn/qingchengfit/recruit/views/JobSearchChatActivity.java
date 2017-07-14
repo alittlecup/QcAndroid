@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.View;
+import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.item.RecruitPositionChooseItem;
 import cn.qingchengfit.recruit.model.Job;
@@ -145,6 +146,10 @@ public class JobSearchChatActivity extends ChatActivity
     }
     bottomListFragment.loadData(itemList);
     bottomListFragment.show(getSupportFragmentManager(), null);
+  }
+
+  @Override public void onGymDetail(Gym gym) {
+
   }
 
   @Override public void onComfirmClick(List<IFlexible> dats) {

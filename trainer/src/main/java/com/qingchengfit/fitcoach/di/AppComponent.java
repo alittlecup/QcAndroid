@@ -7,6 +7,7 @@ import cn.qingchengfit.article.ArticleReplyFragment;
 import cn.qingchengfit.chat.ChatChooseInGymFragment;
 import cn.qingchengfit.chat.ChatFriendAllChooseFragment;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
+import cn.qingchengfit.chat.RecruitMessageListFragment;
 import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
@@ -95,6 +96,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.ChooseStaffFragmentModule.class,
     AppComponent.UnLoginScheduleAdFragmentModule.class, AppComponent.ChooseGymFragmentModule.class,
     AppComponent.MainScheduleFragmentModule.class, AppComponent.GuideSetGymFragmentModule.class,
+    AppComponent.RecruitMessageListFragmentModule.class,
 }) public interface AppComponent {
     void inject(App app);
 
@@ -451,4 +453,13 @@ import dagger.multibindings.IntoMap;
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
             ChooseSubcomponent.Builder builder);
     }
+
+    @Subcomponent() public interface RecruitMessageListFragmentSubcomponent extends AndroidInjector<RecruitMessageListFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RecruitMessageListFragment> {}
+    }
+    @Module(subcomponents = RecruitMessageListFragmentSubcomponent.class) abstract class RecruitMessageListFragmentModule {
+        @Binds @IntoMap @FragmentKey(RecruitMessageListFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(RecruitMessageListFragmentSubcomponent.Builder builder);
+    }
+
 }

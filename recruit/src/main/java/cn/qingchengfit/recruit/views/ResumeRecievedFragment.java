@@ -20,8 +20,10 @@ import butterknife.OnClick;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventTabHeaderChange;
+import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.body.MarkResumeBody;
 import cn.qingchengfit.recruit.presenter.MarkResumesPresenter;
+import cn.qingchengfit.recruit.presenter.ResumePermissionPresenter;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.BottomListFragment;
@@ -54,9 +56,9 @@ import rx.functions.Action1;
  * Created by Paper on 2017/7/4.
  */
 @FragmentWithArgs public class ResumeRecievedFragment extends BaseFragment
-    implements MarkResumesPresenter.MVPView {
+    implements MarkResumesPresenter.MVPView, ResumePermissionPresenter.MVPView {
 
-  @Arg String jobid;
+  @Arg Job job;
   @Arg int type;
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -67,6 +69,7 @@ import rx.functions.Action1;
   @BindView(R2.id.layout_mark_cancel) LinearLayout layoutMarkCancel;
   @BindView(R2.id.vp) ViewPager vp;
   @Inject MarkResumesPresenter presenter;
+  @Inject ResumePermissionPresenter permissionPresenter;
   BottomListFragment bottomListFragment;
   private List<ResumeHandleFragment> fragments = new ArrayList<>();
 
@@ -95,9 +98,9 @@ import rx.functions.Action1;
     fragments.clear();
     for (int i = 0; i < 4; i++) {
       if (type == 0) {
-        fragments.add(ResumeHandleFragment.newRecieved(4 - i, jobid));
+        fragments.add(ResumeHandleFragment.newRecieved(4 - i, job.id));
       } else {
-        fragments.add(ResumeHandleFragment.newInvited(4 - i, jobid));
+        fragments.add(ResumeHandleFragment.newInvited(4 - i, job.id));
       }
     }
     vp.setAdapter(new ResumeHandleAdapter(getChildFragmentManager()));
@@ -141,6 +144,39 @@ import rx.functions.Action1;
   }
 
   @OnClick(R2.id.btn_show_bottom) public void clickShowBottom() {
+    permissionPresenter.queryChangeStatePermission(job.gym.id, "resume");
+  }
+
+  public void markResumes(int r) {
+    showLoading();
+    presenter.markResume(new MarkResumeBody.Builder().resume_ids(getChoosenResumeId())
+        .job_id(job.id)
+        .status(r)
+        .build());
+  }
+
+  private List<String> getChoosenResumeId() {
+    ResumeHandleFragment f = fragments.get(vp.getCurrentItem());
+    if (f != null) {
+      return f.getChooseIds();
+    } else {
+      return new ArrayList<>();
+    }
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
+
+  @Override public void markOk() {
+    hideLoading();
+    cancelSelect();
+    for (int i = 0; i < fragments.size(); i++) {
+      fragments.get(i).onRefresh();
+    }
+  }
+
+  @Override public void onCheckSuccess() {
     final DialogSheet dsb = DialogSheet.builder(getContext());
     if (vp.getCurrentItem() != 3) {
       dsb.addButton("不合适", R.color.red, new View.OnClickListener() {
@@ -175,35 +211,6 @@ import rx.functions.Action1;
       }
     }
     dsb.show();
-  }
-
-  public void markResumes(int r) {
-    showLoading();
-    presenter.markResume(new MarkResumeBody.Builder().resume_ids(getChoosenResumeId())
-        .job_id(jobid)
-        .status(r)
-        .build());
-  }
-
-  private List<String> getChoosenResumeId() {
-    ResumeHandleFragment f = fragments.get(vp.getCurrentItem());
-    if (f != null) {
-      return f.getChooseIds();
-    } else {
-      return new ArrayList<>();
-    }
-  }
-
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-  }
-
-  @Override public void markOk() {
-    hideLoading();
-    cancelSelect();
-    for (int i = 0; i < fragments.size(); i++) {
-      fragments.get(i).onRefresh();
-    }
   }
 
   private class ResumeHandleAdapter extends FragmentStatePagerAdapter
