@@ -10,7 +10,7 @@
 
   <include layout="@layout/common_toolbar"/>
 
-  <android.support.design.widget.TabLayout
+  <android.support.design.widget.TabkLayout
       android:id="@+id/sign_up_tab"
       android:layout_width="match_parent"
       android:layout_height="50dp"

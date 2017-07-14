@@ -111,18 +111,15 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
     layoutEmloyerCtl.setVisibility(View.VISIBLE);
     layoutEmployeeCtl.setVisibility(View.GONE);
     layoutJobInfo.setVisibility(View.VISIBLE);
-    return view;
-  }
-
-  @Override protected void onFinishAnimation() {
     onJobDetail(job);
     onGym(job.gym);
-    presenter.queryStaffJob(job.id);
+    presenter.queryJob(job.id);
+    return view;
   }
 
   @Override public void onJobDetail(Job job) {
     super.onJobDetail(job);
-
+    this.job = job;
     /**
      * 招聘端 相关数据
      */
@@ -162,7 +159,7 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   @Override public void onEditOk() {
     hideLoading();
     presenter.queryJob(job.id);
-    ToastUtils.show(R.drawable.vector_hook_white, job.published ? "已开启" : "已关闭");
+    ToastUtils.show(R.drawable.vector_hook_white, job.published ? "已关闭" : "已开启");
   }
 
   /**

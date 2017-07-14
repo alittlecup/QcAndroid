@@ -479,6 +479,7 @@ public class RecruitBusinessUtils {
 
   public static String getPositionDamen(List<String> damens) {
     StringBuilder sb = new StringBuilder();
+
     if (damens.size() == 1) {
       sb.append(damens.get(0));
     } else {

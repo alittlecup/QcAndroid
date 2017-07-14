@@ -62,6 +62,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -269,6 +270,7 @@ public class RecruitRouter extends InnerRouter {
    */
   public void toWriteGymDetailDesc(String s) {
     // TODO: 2017/7/4 使用EditRecruitDesc
+    add(new RecruitRichTextEditFragment());
   }
 
   /**
@@ -281,8 +283,8 @@ public class RecruitRouter extends InnerRouter {
   /**
    * 权限设置
    */
-  public void toPermssion(String gymid) {
-    add(RecruitPermissionFragment.newInstance(gymid));
+  public void toPermssion() {
+    add(new RecruitPermissionFragment());
   }
 
   /**
@@ -372,9 +374,9 @@ public class RecruitRouter extends InnerRouter {
 
   }
 
-  public void toPublishPosition(String gymId, Job job) {
-    add(new RecruitPublishJobFragmentBuilder(gymId, job,
-        RecruitPublishJobFragment.PUBLISH_POSITION).build());
+  public void toPublishPosition(String gymId, Job job, int type) {
+    add(new RecruitPublishJobFragmentBuilder(job,
+        type).gymId(gymId).build());
   }
 
   /**
