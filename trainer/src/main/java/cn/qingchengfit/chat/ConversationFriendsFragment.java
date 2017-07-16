@@ -141,7 +141,8 @@ public class ConversationFriendsFragment extends BaseFragment implements ChatFri
                 RxBus.getBus().post(new EventFresh());
             }
         });
-        selectSutdentFragment.setDatas(new ArrayList<QcStudentBean>(DirtySender.studentList));
+      selectSutdentFragment.setDatas(
+          ListUtils.transerList(new ArrayList<Personage>(), DirtySender.studentList));
         selectSutdentFragment.show(getFragmentManager(), "");
     }
 }

@@ -1,8 +1,8 @@
-package cn.qingchengfit.recruit.network.response;
+package cn.qingchengfit.recruit;
 
-import cn.qingchengfit.network.response.QcListData;
-import cn.qingchengfit.recruit.model.JobFair;
-import java.util.List;
+import cn.qingchengfit.items.DelStudentItem;
+import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.BottomStudentsFragment;
 
 /**
  * power by
@@ -22,13 +22,33 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/6/1.
+ * Created by Paper on 2017/7/14.
  */
 
-public class JobFariListWrap extends QcListData {
-  public List<JobFair> fairs;
-  public int job_count;
-  public int fair_count;
-  public int gym_count;
+public class BottomStaffsBanRvSuFragment extends BottomStudentsFragment {
+  @Override public boolean onItemClick(int position) {
+    if (adapter.getItem(position) instanceof DelStudentItem) {
+      if (((DelStudentItem) adapter.getItem(position)).getUser().is_superuser) {
+        ToastUtils.show("超级管理员无法被移除");
+        return true;
+      }
+    }
+    super.onItemClick(position);
+    return true;
+  }
 
+  @Override public void onClick() {
+    for (int i = 0; i < adapter.getItemCount(); i++) {
+      if (adapter.getItem(i) instanceof DelStudentItem) {
+        if (!((DelStudentItem) adapter.getItem(i)).getUser().is_superuser) {
+          adapter.removeItem(i);
+        }
+      }
+    }
+    dismiss();
+  }
+
+  @Override protected void showTitle() {
+    tvStudCount.setText("已选择" + adapter.getItemCount() + "名工作人员");
+  }
 }

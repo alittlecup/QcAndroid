@@ -106,6 +106,11 @@ public class ResumeListFragment extends BaseListFragment
     }
   }
 
+  @Override
+  public void onJobFaris(List<JobFair> jobfairs, int fair_count, int job_count, int gym_count) {
+
+  }
+
   public boolean isHasItem() {
     return hasItem;
   }
@@ -114,9 +119,6 @@ public class ResumeListFragment extends BaseListFragment
     this.hasItem = hasItem;
   }
 
-  @Override public void onJobFaris(List<JobFair> jobfairs, int job_count) {
-
-  }
 
   @Override public void noMoreLoad(int i) {
     stopLoadMore();

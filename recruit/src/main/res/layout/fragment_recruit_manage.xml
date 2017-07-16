@@ -80,6 +80,8 @@
         android:id="@+id/btn_publish_new_position"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         android:text="发布新职位"
         android:textColor="@color/white"
         style="@style/QcBtnNomal"

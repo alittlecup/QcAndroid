@@ -144,4 +144,16 @@ public class Staff extends Personage implements Parcelable {
         dest.writeString(this.position_str);
         dest.writeString(this.user_id);
     }
+
+  public QcStudentBean toQcStudent() {
+    return new QcStudentBean.Builder().id(id)
+        .username(username)
+        .is_superuser(is_superuser)
+        .area_code(area_code)
+        .avatar(avatar)
+        .district_id(gd_district_id)
+        .gender(gender)
+        .phone(phone)
+        .build();
+  }
 }

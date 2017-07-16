@@ -237,8 +237,8 @@ public class RecruitRouter extends InnerRouter {
   /**
    * 招聘管理页
    */
-  public void toManageRecruit() {
-    add(new RecruitManageFragment());
+  public void toManageRecruit(int jobCount) {
+    add(RecruitManageFragment.newInstance(jobCount));
   }
 
   /**

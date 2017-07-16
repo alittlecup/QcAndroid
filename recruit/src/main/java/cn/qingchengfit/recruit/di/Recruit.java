@@ -1,6 +1,7 @@
 package cn.qingchengfit.recruit.di;
 
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.recruit.views.ChooseGymInRecruitFragment;
 import cn.qingchengfit.recruit.views.DialogSendResumeFragment;
 import cn.qingchengfit.recruit.views.JobFairListFragment;
 import cn.qingchengfit.recruit.views.JobFairsAllFragment;
@@ -266,6 +267,7 @@ import dagger.multibindings.IntoMap;
         extends AndroidInjector.Builder<RecruitManageFragment> {
     }
   }
+
 
   @Subcomponent() public interface RecruitGymDetailEmployerFragmentSubcomponent
       extends AndroidInjector<RecruitGymDetailEmployerFragment> {
@@ -731,4 +733,12 @@ import dagger.multibindings.IntoMap;
     abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         JobFairsAllFragmentSubcomponent.Builder builder);
   }
+
+  @Module(subcomponents = ChooseGymInRecruitFragmentSubcomponent.class)
+  abstract class ChooseGymInRecruitFragmentModule {
+    @Binds @IntoMap @FragmentKey(ChooseGymInRecruitFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        ChooseGymInRecruitFragmentSubcomponent.Builder builder);
+  }
+
 }

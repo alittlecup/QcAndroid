@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
+import cn.qingchengfit.recruit.item.JobFairHorizonItem;
 
 /**
  * power by
@@ -49,6 +50,13 @@ public class RecruitUserMyJobFairFragment extends JobFairListFragment {
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("我参加的专场招聘会");
+  }
+
+  @Override public boolean onItemClick(int i) {
+    if (getItem(i) instanceof JobFairHorizonItem) {
+      router.toUserJobFairDetail(((JobFairHorizonItem) getItem(i)).getJobFair());
+    }
+    return true;
   }
 
   @Override public void onRefresh() {

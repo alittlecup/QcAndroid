@@ -98,11 +98,12 @@ public class Gym implements Parcelable {
     this.gd_lng = (Double) in.readValue(Double.class.getClassLoader());
     this.gd_lat = (Double) in.readValue(Double.class.getClassLoader());
     this.facilities = in.createStringArrayList();
-    this.staff_count = in.readInt();
-    this.member_count = in.readInt();
-    this.coach_count = in.readInt();
+    this.staff_count = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.member_count = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.coach_count = (Integer) in.readValue(Integer.class.getClassLoader());
     this.area = in.readString();
     this.detail_description = in.readString();
+    this.gd_district_id = (Integer) in.readValue(Integer.class.getClassLoader());
   }
 
   public CityBean getGd_city() {
@@ -307,11 +308,12 @@ public class Gym implements Parcelable {
     dest.writeValue(this.gd_lng);
     dest.writeValue(this.gd_lat);
     dest.writeStringList(this.facilities);
-    dest.writeInt(this.staff_count);
-    dest.writeInt(this.member_count);
-    dest.writeInt(this.coach_count);
+    dest.writeValue(this.staff_count);
+    dest.writeValue(this.member_count);
+    dest.writeValue(this.coach_count);
     dest.writeString(this.area);
     dest.writeString(this.detail_description);
+    dest.writeValue(this.gd_district_id);
   }
 
   public static final class Builder {

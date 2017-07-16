@@ -172,9 +172,37 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
   @Override public boolean onItemClick(int i) {
     if (adapter.getItem(i) instanceof ChooseGymItem) {
       ChooseGymItem gymItem = (ChooseGymItem) adapter.getItem(i);
-      queryPermiss(gymItem.getGym());
+      if (gymItem.isCompeleted()) {
+        queryPermiss(gymItem.getGym());
+      } else {
+        querySu(gymItem.getGym());
+      }
     }
     return false;
+  }
+
+  protected void goEditGym(Gym gym) {
+
+  }
+
+  protected void querySu(final Gym gym) {
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .querySu(gym.id)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<SuWrap>>() {
+          @Override public void call(QcDataResponse<SuWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              if (qcResponse.data.is_superuser) {
+                goEditGym(gym);
+              } else {
+                hasNoPermission();
+              }
+            } else {
+              onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
   }
 
   protected void queryPermiss(final Gym gym) {

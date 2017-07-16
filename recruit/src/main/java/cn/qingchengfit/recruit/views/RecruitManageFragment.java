@@ -2,6 +2,7 @@ package cn.qingchengfit.recruit.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -71,6 +72,23 @@ public class RecruitManageFragment extends BaseFragment
   List<AbstractFlexibleItem> items = new ArrayList<>();
   CommonFlexAdapter commonFlexAdapter;
 
+  int jobCount = 1;
+
+  public static RecruitManageFragment newInstance(int jobcount) {
+    Bundle args = new Bundle();
+    args.putInt("count", jobcount);
+    RecruitManageFragment fragment = new RecruitManageFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (getArguments() != null) {
+      jobCount = getArguments().getInt("count");
+    }
+  }
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_manage, container, false);
@@ -83,7 +101,9 @@ public class RecruitManageFragment extends BaseFragment
     RxBusAdd(EventChooseGym.class).subscribe(new Action1<EventChooseGym>() {
       @Override public void call(EventChooseGym eventChooseGym) {
         if (eventChooseGym.gym != null) {
-          //去发布职位 // TODO: 2017/7/4
+          //去发布职位
+          router.toPublishPosition(eventChooseGym.gym.getId(), null,
+              RecruitPublishJobFragment.PUBLISH_POSITION);
         } else {
           ToastUtils.show("没有选择场馆");
         }
@@ -100,6 +120,9 @@ public class RecruitManageFragment extends BaseFragment
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     refreshData();
+    if (jobCount == 0) {
+      onBtnPublishNewPositionClicked();
+    }
   }
 
   protected void refreshData() {

@@ -48,13 +48,12 @@ import java.util.List;
 @FragmentWithArgs public class BottomStudentsFragment extends BottomSheetDialogFragment implements FlexibleAdapter.OnItemClickListener {
     public static final int CHOOSE_STUDENT = 0;
     public static final int CHAT_FRIENDS = 1;
+  @BindView(R.id.tv_stud_count) protected TextView tvStudCount;
+  protected CommonFlexAdapter adapter;
     @Arg(required = false) int type;
-
-    @BindView(R.id.tv_stud_count) TextView tvStudCount;
     @BindView(R.id.tv_clear_all) TextView tvClearAll;
     @BindView(R.id.recycleview) RecyclerView recycleview;
     List<AbstractFlexibleItem> datas = new ArrayList<>();
-    CommonFlexAdapter adapter;
     Unbinder unbinder;
     private BottomStudentsListener listener;
 
@@ -82,19 +81,27 @@ import java.util.List;
         if (qcStudentBeen != null) {
             datas.clear();
             for (int i = 0; i < qcStudentBeen.size(); i++) {
-                datas.add(new DelStudentItem(qcStudentBeen.get(i)));
+              if (qcStudentBeen.get(i) instanceof Personage) {
+                datas.add(new DelStudentItem((Personage) qcStudentBeen.get(i)));
+              }
             }
             if (adapter != null && tvStudCount != null) {
                 adapter.notifyDataSetChanged();
-                tvStudCount.setText(
-                    getString(type == CHOOSE_STUDENT ? R.string.qc_allotsale_select : R.string.qc_chat_friend_select, datas.size()));
+              showTitle();
             }
         }
     }
 
+  protected void showTitle() {
+    tvStudCount.setText(getString(
+        type == CHOOSE_STUDENT ? R.string.qc_allotsale_select : R.string.qc_chat_friend_select,
+        datas.size()));
+  }
+
     @Override public boolean onItemClick(int position) {
         adapter.removeItem(position);
-        if (adapter.getItemCount() == 0) {
+      showTitle();
+      if (adapter.getItemCount() == 0) {
             dismiss();
         }
         return true;

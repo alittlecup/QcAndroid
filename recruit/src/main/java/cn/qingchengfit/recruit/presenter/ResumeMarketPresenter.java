@@ -170,7 +170,8 @@ public class ResumeMarketPresenter extends BasePresenter {
         .subscribe(new Action1<QcDataResponse<JobFariListWrap>>() {
           @Override public void call(QcDataResponse<JobFariListWrap> qcResponse) {
             if (qcResponse.status == 200) {
-              view.onJobFaris(qcResponse.data.fairs, qcResponse.data.job_count);
+              view.onJobFaris(qcResponse.data.fairs, qcResponse.data.fair_count,
+                  qcResponse.data.job_count, qcResponse.data.gym_count);
             } else {
               view.onShowError(qcResponse.getMsg());
             }
@@ -190,6 +191,6 @@ public class ResumeMarketPresenter extends BasePresenter {
   public interface MVPView extends CView {
     void onResumeList(List<Resume> resumes, int total, int page);
 
-    void onJobFaris(List<JobFair> jobfairs, int job_count);
+    void onJobFaris(List<JobFair> jobfairs, int fair_count, int job_count, int gym_count);
   }
 }

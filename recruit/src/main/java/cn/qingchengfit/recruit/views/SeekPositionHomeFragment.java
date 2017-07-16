@@ -371,13 +371,13 @@ public class SeekPositionHomeFragment extends JobsListFragment
 
       Animation animation;
       if (nextAnim == R.anim.card_flip_left_in) {
-        animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 300);
+        animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 500);
       } else if (nextAnim == R.anim.card_flip_right_in) {
-        animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 300);
+        animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 500);
       } else if (nextAnim == R.anim.card_flip_left_out) {
-        animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 300);
+        animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 500);
       } else {
-        animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 300);
+        animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 500);
       }
 
       animation.setAnimationListener(new Animation.AnimationListener() {

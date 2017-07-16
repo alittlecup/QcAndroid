@@ -154,6 +154,7 @@ public class RecruitPermissionFragment extends BaseFragment
 
   @Override public void onEditOk() {
     hideLoading();
+    permissionPresenter.queryPermissionUsers(gymid);
     ToastUtils.show("修改成功");
   }
 

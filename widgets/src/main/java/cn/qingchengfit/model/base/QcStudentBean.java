@@ -26,7 +26,8 @@ import java.util.List;
  * <p/>
  * Created by Paper on 15/10/14 2015.
  */
-public class QcStudentBean extends Personage implements Parcelable, com.qingcheng.model.base.QcStudentBeanModel {//extends RealmObject
+public class QcStudentBean extends Personage
+    implements Parcelable, QcStudentBeanModel {//extends RealmObject
 
     public static final Factory<QcStudentBean> FACTORY = new Factory<>(new QcStudentBeanModel.Creator<QcStudentBean>() {
         @Override
@@ -126,10 +127,11 @@ public class QcStudentBean extends Personage implements Parcelable, com.qingchen
         setGender(builder.gender);
         setHead(builder.head);
         setBrand_id(builder.brand_id);
+      is_superuser = builder.is_superuser;
         setStatus(builder.status);
         setSellers(builder.sellers);
-        setJoin_at(builder.join_at);
         joined_at = builder.joined_at;
+      setJoin_at(builder.join_at);
         setSupport_gym(builder.support_gym);
         setSupoort_gym_ids(builder.supoort_gym_ids);
         setDistrict_id(builder.district_id);
@@ -441,6 +443,7 @@ public class QcStudentBean extends Personage implements Parcelable, com.qingchen
         private int gender;
         private String head;
         private String brand_id;
+      private boolean is_superuser;
         private String join_at;
         private String joined_at;
         private String support_gym;
@@ -507,6 +510,11 @@ public class QcStudentBean extends Personage implements Parcelable, com.qingchen
 
         public Builder brand_id(String brand_id) {
             this.brand_id = brand_id;
+          return this;
+        }
+
+      public Builder is_superuser(boolean val) {
+        is_superuser = val;
             return this;
         }
 

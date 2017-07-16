@@ -205,7 +205,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     commonFlexAdapter.addItem(new SearchCenterItem(false, "搜索关键字"));
     horizonImageShowItem = new HorizonImageShowItem(new ArrayList<AbstractFlexibleItem>());
     commonFlexAdapter.addItem(horizonImageShowItem);
-    recruitmanage = new RecruitManageItem(1, false);
+    recruitmanage = new RecruitManageItem(0, 0, false);
     commonFlexAdapter.addItem(recruitmanage);
     filterHeadItem = new FilterHeadItem(getResources().getStringArray(R.array.filter_resume));
     filterHeadItem.setListener(new FilterHeadItem.FilterHeadListener() {
@@ -282,19 +282,19 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     presenter.queryResumeMarkets(true, params);
   }
 
-  @Override public void onJobFaris(List<JobFair> jobfairs, int job_count) {
+  public void onJobFaris(List<JobFair> jobfairs, int fair_count, int job_count, int gym_count) {
     if (horizonImageShowItem != null) {
       List<AbstractFlexibleItem> items = new ArrayList<>();
       if (jobfairs != null) {
         for (JobFair jobfair : jobfairs) {
           items.add(new JobFairHorizonItem(jobfair));
         }
-        items.add(new JobFairFooterItem(jobfairs.size()));
+        if (items.size() >= 5) items.add(new JobFairFooterItem(fair_count));
       }
       horizonImageShowItem.refresh(items);
     }
     if (recruitmanage != null) {
-      recruitmanage.setJobCounts(job_count);
+      recruitmanage.setJobCounts(job_count, gym_count);
       commonFlexAdapter.notifyItemChanged(commonFlexAdapter.getGlobalPositionOf(recruitmanage));
     }
   }
@@ -352,7 +352,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   @Override public boolean onItemClick(int i) {
     IFlexible item = commonFlexAdapter.getItem(i);
     if (item instanceof RecruitManageItem) {
-      router.toManageRecruit();
+      router.toManageRecruit(((RecruitManageItem) item).getJobsCount());
       return true;
     } else if (item instanceof SearchCenterItem) {
       onClickFakeSearch();
@@ -370,13 +370,13 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
         || nextAnim == R.anim.card_flip_right_out) {
       Animation animation;
       if (nextAnim == R.anim.card_flip_left_in) {
-        animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 300);
+        animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 500);
       } else if (nextAnim == R.anim.card_flip_right_in) {
-        animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 300);
+        animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 500);
       } else if (nextAnim == R.anim.card_flip_left_out) {
-        animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 300);
+        animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 500);
       } else {
-        animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 300);
+        animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 500);
       }
 
       animation.setAnimationListener(new Animation.AnimationListener() {

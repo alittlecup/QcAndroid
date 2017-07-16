@@ -43,7 +43,7 @@ public class JobFairHorizonItem extends AbstractFlexibleItem<JobFairHorizonItem.
   @Override public void bindViewHolder(FlexibleAdapter adapter, JobFairVH holder, int position, List payloads) {
     holder.tvTitle.setText(jobFair.name);
     holder.tvContent.setVisibility(View.GONE);
-    PhotoUtils.smallCornner4dp(holder.imgBg, jobFair.banner);
+    PhotoUtils.origin(holder.imgBg, jobFair.banner);
   }
 
   @Override public boolean equals(Object o) {

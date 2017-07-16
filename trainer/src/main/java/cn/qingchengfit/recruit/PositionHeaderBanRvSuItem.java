@@ -1,8 +1,7 @@
-package cn.qingchengfit.recruit.network.response;
+package cn.qingchengfit.recruit;
 
-import cn.qingchengfit.network.response.QcListData;
-import cn.qingchengfit.recruit.model.JobFair;
-import java.util.List;
+import cn.qingchengfit.items.PositionHeaderItem;
+import cn.qingchengfit.model.base.Personage;
 
 /**
  * power by
@@ -22,13 +21,19 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/6/1.
+ * Created by Paper on 2017/7/14.
  */
 
-public class JobFariListWrap extends QcListData {
-  public List<JobFair> fairs;
-  public int job_count;
-  public int fair_count;
-  public int gym_count;
+public class PositionHeaderBanRvSuItem extends PositionHeaderItem {
+  public PositionHeaderBanRvSuItem(String postionStr) {
+    super(postionStr);
+  }
 
+  @Override protected boolean canRemoveSu(Personage personage) {
+    if (personage.is_superuser) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
+import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.event.EventChoosePerson;
@@ -112,6 +113,10 @@ public class PositionHeaderItem extends AbstractHeaderItem<PositionHeaderItem.Po
         return childrens;
     }
 
+    protected boolean canRemoveSu(Personage personage) {
+        return true;
+    }
+
     public class PositionHeaderVH extends ExpandableViewHolder {
         @BindView(R.id.checkbox) CheckBox checkbox;
         @BindView(R.id.tv_positon) TextView tvPositon;
@@ -131,7 +136,9 @@ public class PositionHeaderItem extends AbstractHeaderItem<PositionHeaderItem.Po
                                 QcStudentBean qs = new QcStudentBean(childrens.get(i).getStaff());
                                 if (!DirtySender.studentList.contains(qs)) DirtySender.studentList.add(qs);
                             } else {
-                                DirtySender.studentList.remove(childrens.get(i).getStaff());
+                                if (canRemoveSu(childrens.get(i).getStaff())) {
+                                    DirtySender.studentList.remove(childrens.get(i).getStaff());
+                                }
                             }
                             try {
                                 adapter.notifyDataSetChanged();

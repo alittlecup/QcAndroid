@@ -55,7 +55,7 @@ public class ResumePresenter extends BasePresenter {
               view.onShowError(resumeHomeQcDataResponse.getMsg());
             }
           }
-        }));
+        }, new NetWorkThrowable()));
   }
 
   /**

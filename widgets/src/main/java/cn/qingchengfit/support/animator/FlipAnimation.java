@@ -105,6 +105,7 @@ public class FlipAnimation extends ViewPropertyAnimation {
         @Override public void initialize(int width, int height, int parentWidth, int parentHeight) {
             super.initialize(width, height, parentWidth, parentHeight);
             mPivotX = (mEnter == (mDirection == LEFT)) ? 0.0f : width;
+            //mPivotX = width*0.5f;
             mPivotY = height * 0.5f;
             mCameraZ = -width * 0.015f;
         }

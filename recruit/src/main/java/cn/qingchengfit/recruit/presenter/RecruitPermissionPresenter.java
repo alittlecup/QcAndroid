@@ -148,7 +148,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
     switch (i) {
       case 1:
         DirtySender.studentList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(),
-            permissionUsers.permissions.job.users));
+            permissionUsers.permissions.resume.users));
         break;
       case 2:
         DirtySender.studentList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(),
@@ -160,7 +160,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
         break;
       default:
         DirtySender.studentList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(),
-            permissionUsers.permissions.resume.users));
+            permissionUsers.permissions.job.users));
         break;
     }
     if (chatGym != null && view instanceof Fragment) {
@@ -171,13 +171,13 @@ public class RecruitPermissionPresenter extends BasePresenter {
   public String getCurKey() {
     switch (curEditPermission) {
       case 1:
-        return "job";
+        return "resume";
       case 2:
         return "fair";
       case 3:
         return "setting";
       default:
-        return "resume";
+        return "job";
     }
   }
 

@@ -40,14 +40,14 @@ import eu.davidea.flexibleadapter.items.ISectionable;
 
 public class QcLeftRightDivider extends RecyclerView.ItemDecoration {
 
+  private static final int[] ATTRS = new int[] {
+      android.R.attr.listDivider
+  };
     private final int resId = R.drawable.divider_qc_base_line;
     private Drawable mDivider;
     private int mSectionOffset;
     private boolean mDrawOver = false;
     private int viewType = 0;
-    private static final int[] ATTRS = new int[]{
-        android.R.attr.listDivider
-    };
     private boolean withOffset;
     private  int left,right;
 
@@ -72,7 +72,11 @@ public class QcLeftRightDivider extends RecyclerView.ItemDecoration {
    public QcLeftRightDivider(@NonNull Context context,int sectionOffset,
         int viewType,int offsetleft,int offsetright) {
         if (resId > 0) mDivider = ContextCompat.getDrawable(context, resId);
-        mSectionOffset = (int) (context.getResources().getDisplayMetrics().density * sectionOffset);
+     if (sectionOffset != 1 && sectionOffset != 0) {
+       mSectionOffset = (int) (context.getResources().getDisplayMetrics().density * sectionOffset);
+     } else {
+       mSectionOffset = 0;
+     }
         left = (int) (context.getResources().getDisplayMetrics().density * offsetleft);
         right = (int) (context.getResources().getDisplayMetrics().density * offsetright);
        this.viewType = viewType;
