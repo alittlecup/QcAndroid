@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.presenter;
 
+import android.text.TextUtils;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -20,6 +21,7 @@ import cn.qingchengfit.recruit.network.response.WorkExpListWrap;
 import com.tencent.qcloud.timchat.chatmodel.ResumeModel;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -61,9 +63,13 @@ public class ResumePresenter extends BasePresenter {
    *
    * @param resumeId 简历id
    */
-  public void getResumeDetail(String resumeId) {
+  public void getResumeDetail(String resumeId, String fair_id) {
+    Map<String, Object> params = new HashMap<>();
+    if (!TextUtils.isEmpty(fair_id)){
+      params.put("fair_id", fair_id);
+    }
     RxRegiste(restRepository.createGetApi(GetApi.class)
-        .qcGetOtherResumeDetail(resumeId)
+        .qcGetOtherResumeDetail(resumeId, params)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcDataResponse<ResumeHomeWrap>>() {

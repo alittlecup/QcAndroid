@@ -48,4 +48,7 @@
   <string name="atendence_jobfair_staff">报名参加招聘会(%d人)</string>
   <string name="permission_setting_staff">权限设置(%d人)</string>
 
+  <string formatted="false" name="tips_fair_end">%s参加的【%s】已圆满结束，请及时处理简历录用状态，否则将无法参加下一次招聘会</string>
+  <string name="tips_not_join_fair">您的场馆没有参加本期招聘会，无法发出邀约/与TA沟通</string>
+
 </resources>

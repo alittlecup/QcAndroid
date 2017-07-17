@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.SearchCenterItem;
+import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.HorizonImageShowItem;
@@ -28,13 +29,18 @@ import cn.qingchengfit.recruit.item.JobFairFooterItem;
 import cn.qingchengfit.recruit.item.JobFairHorizonItem;
 import cn.qingchengfit.recruit.item.RecruitManageItem;
 import cn.qingchengfit.recruit.item.ResumeItem;
+import cn.qingchengfit.recruit.model.EndFairTips;
+import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.model.Resume;
+import cn.qingchengfit.recruit.presenter.EndFairPresenter;
+import cn.qingchengfit.recruit.presenter.RecruitGymDetailPresenter;
 import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.support.animator.FlipAnimation;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.views.fragments.TipDialogFragment;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -72,7 +78,9 @@ import rx.functions.Action1;
  * Created by Paper on 2017/6/6.
  */
 public class ResumeMarketHomeFragment extends ResumeListFragment
-    implements ResumeMarketPresenter.MVPView, FlexibleAdapter.OnStickyHeaderChangeListener {
+    implements ResumeMarketPresenter.MVPView, FlexibleAdapter.OnStickyHeaderChangeListener,
+    EndFairPresenter.MVPView, TipDialogFragment.OnDialogListener,
+    RecruitGymDetailPresenter.MVPView {
 
   private static final int PULS_ITEM_COUNTS = 4;//非主要item的数量
 
@@ -83,12 +91,16 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   EditText searchEt;
   ImageView imgClear;
   Button btnCancel;
-
-
+  @Inject EndFairPresenter endFairPresenter;
+  @Inject RecruitGymDetailPresenter gymDetailPresenter;
   @Inject RecruitRouter router;
   private HorizonImageShowItem horizonImageShowItem;
   private RecruitManageItem recruitmanage;
   private FilterHeadItem filterHeadItem;
+  private String gymId;
+  private List<EndFairTips> endTipsList = new ArrayList<>();
+  private int index;
+  private boolean isClosed;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -98,6 +110,9 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     LinearLayout view = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container, null);
     layoutFilter = (SwipeRefreshLayout) inflater.inflate(R.layout.layout_filter_container, null);
     layoutFilter.setOnRefreshListener(this);
+    delegatePresenter(endFairPresenter, this);
+    delegatePresenter(gymDetailPresenter, this);
+    endFairPresenter.queryEndFairList();
     ((FrameLayout) layoutFilter.getChildAt(1)).addView(v, 0);
     toolbar = ButterKnife.findById(view, R.id.toolbar);
     toolbarTitile = ButterKnife.findById(view, R.id.toolbar_title);
@@ -282,7 +297,6 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
       recruitmanage.setJobCounts(job_count);
       commonFlexAdapter.notifyItemChanged(commonFlexAdapter.getGlobalPositionOf(recruitmanage));
     }
-
   }
 
   @Override public void onStickyHeaderChange(int i) {
@@ -382,5 +396,51 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     } else {
       return super.onCreateAnimation(transit, enter, nextAnim);
     }
+  }
+
+  @Override public void onEndFairList(List<EndFairTips> endFairList) {
+    if (endFairList == null || endFairList.size() <= 0){
+      return;
+    }
+    EndFairTips endFairTips = endFairList.get(0);
+    endTipsList.clear();
+    this.endTipsList.addAll(endFairList);
+    this.gymId = endFairTips.id;
+    TipDialogFragment dialogFragment = TipDialogFragment.newInstance(
+        getString(R.string.tips_fair_end, endFairTips.name, endFairTips.fair.name), "立即处理",
+        R.drawable.ic_dialog_hire_warning);
+    dialogFragment.setOnDialogListener(this);
+    dialogFragment.show(getChildFragmentManager(), null);
+  }
+
+  @Override public void onDoClick(View v) {
+    isClosed = true;
+    gymDetailPresenter.queryGymDetail(gymId);
+  }
+
+  @Override public void onDismissListener() {
+    index++;
+    if (index < endTipsList.size() && !isClosed) {
+      TipDialogFragment dialogFragment = TipDialogFragment.newInstance(
+          getString(R.string.tips_fair_end, endTipsList.get(index).name, endTipsList.get(index).fair.name), "立即处理", R.drawable.ic_dialog_hire_warning);
+      dialogFragment.setOnDialogListener(this);
+      dialogFragment.show(getChildFragmentManager(), null);
+    }else{
+      isClosed = false;
+    }
+  }
+
+  @Override public void onGym(Gym gym) {
+    if (gym != null) {
+      router.toReplaceGymDetail(gym);
+    }
+  }
+
+  @Override public void onJobList(List<Job> jobs, int page, int totalCount) {
+
+  }
+
+  @Override public void onPermission(boolean has) {
+
   }
 }

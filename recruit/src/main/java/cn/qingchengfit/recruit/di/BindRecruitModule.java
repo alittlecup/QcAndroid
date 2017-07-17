@@ -52,7 +52,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
       Recruit.RecruitPermsionFragmentModule.class, Recruit.RecruitPublishJobFragmentModule.class,
       Recruit.ResumeDetailFragmentModule.class, Recruit.ResumeRecievedFragmentModule.class,
       Recruit.ChooseGymFragmentModule.class, Recruit.EditGymInfoFragmentModule.class,
-      Recruit.JobFairSuccessFragmentModule.class,
+      Recruit.JobFairSuccessFragmentModule.class, Recruit.JobFairsAllFragmentModule.class,
   }) abstract RecruitActivity contributeRecruitActivityInjector();
 
   @ContributesAndroidInjector(modules = {

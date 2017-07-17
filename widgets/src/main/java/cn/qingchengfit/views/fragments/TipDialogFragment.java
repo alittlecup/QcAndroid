@@ -1,6 +1,7 @@
 package cn.qingchengfit.views.fragments;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -30,7 +31,7 @@ public class TipDialogFragment extends DialogFragment {
   @BindView(R2.id.text_tips) TextView textTips;
   @BindView(R2.id.text_button_click) TextView textButtonClick;
   Unbinder unbinder;
-  private OnClickButtonListener onClickListener;
+  private OnDialogListener onDialogListener;
 
   public static TipDialogFragment newInstance(String textTips, String buttonText, int drawableId) {
     Bundle args = new Bundle();
@@ -62,8 +63,8 @@ public class TipDialogFragment extends DialogFragment {
     }
   }
 
-  public void setOnClickListener(OnClickButtonListener onClickListener) {
-    this.onClickListener = onClickListener;
+  public void setOnDialogListener(OnDialogListener onClickListener) {
+    this.onDialogListener = onClickListener;
   }
 
   private void initView() {
@@ -71,8 +72,8 @@ public class TipDialogFragment extends DialogFragment {
         getArguments().getString("tips"))) {
       textTips.setText(getArguments().getString("tips"));
     }
-    if (getArguments().containsKey("img") && getArguments().getInt("tips", 0) != 0) {
-      imgTipsTop.setImageResource(getArguments().getInt("tips", 0));
+    if (getArguments().containsKey("img") && getArguments().getInt("img", 0) != 0) {
+      imgTipsTop.setImageResource(getArguments().getInt("img", 0));
     }
     if (getArguments().containsKey("button") && !TextUtils.isEmpty(
         getArguments().getString("button"))) {
@@ -81,9 +82,16 @@ public class TipDialogFragment extends DialogFragment {
   }
 
   @OnClick(R2.id.text_button_click) public void onDoClick(View v) {
-    if (onClickListener != null) {
-      onClickListener.onDoClick(v);
+    if (onDialogListener != null) {
+      onDialogListener.onDoClick(v);
       dismiss();
+    }
+  }
+
+  @Override public void onDismiss(DialogInterface dialog) {
+    super.onDismiss(dialog);
+    if (onDialogListener != null){
+      onDialogListener.onDismissListener();
     }
   }
 
@@ -96,7 +104,9 @@ public class TipDialogFragment extends DialogFragment {
     unbinder.unbind();
   }
 
-  public interface OnClickButtonListener {
+  public interface OnDialogListener {
     void onDoClick(View v);
+
+    void onDismissListener();
   }
 }

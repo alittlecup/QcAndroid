@@ -1,10 +1,6 @@
 package cn.qingchengfit.recruit.views.jobfair;
 
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -23,14 +19,15 @@ import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.PrimaryBtnItem;
 import cn.qingchengfit.items.TextItem;
 import cn.qingchengfit.items.TitleHintItem;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.ExpendedTextviewItem;
 import cn.qingchengfit.recruit.item.FragmentListItem;
 import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.presenter.JobFairDetailPresenter;
-import cn.qingchengfit.recruit.views.ResumeListFragment;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -68,6 +65,8 @@ public class JobfairDetailFragment extends BaseFragment implements JobFairDetail
   @BindView(R2.id.tv_during) TextView tvDuring;
   @Inject JobFairDetailPresenter presenter;
   @Inject RecruitRouter router;
+  @Inject QcRestRepository qcRestRepository;
+
   CommonFlexAdapter commonFlexAdapter;
   @BindView(R2.id.smooth_app_bar_layout) AppBarLayout smoothAppBarLayout;
   @BindView(R2.id.image_recruit) ImageView imageRecruit;

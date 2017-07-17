@@ -135,6 +135,10 @@ public class RecruitRouter extends InnerRouter {
     add(RecruitGymDetailFragment.newInstance(service));
   }
 
+  public void toReplaceGymDetail(Gym service){
+    doAction(RecruitGymDetailFragment.newInstance(service));
+  }
+
   /**
    * 人才市场 人才浏览 或者叫 招聘版主页
    */
@@ -404,6 +408,13 @@ public class RecruitRouter extends InnerRouter {
    */
   public void toResumeDetail(String resumeId, String url) {
     add(new ResumeDetailFragmentBuilder(resumeId, url).build());
+  }
+
+  /**
+   * 简历详情
+   */
+  public void toResumeDetail(String resumeId, String url, JobFair jobFair) {
+    add(new ResumeDetailFragmentBuilder(resumeId, url).jobFair(jobFair).build());
   }
 
   /**

@@ -1,6 +1,7 @@
 package cn.qingchengfit.recruit.network;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.recruit.model.EndFairTopsWrap;
 import cn.qingchengfit.recruit.network.response.CertificateListWrap;
 import cn.qingchengfit.recruit.network.response.ChatGymWrap;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
@@ -243,7 +244,7 @@ public interface GetApi {
    */
   @GET("api/staff/user/resumes/{resume_id}/")
   rx.Observable<QcDataResponse<ResumeHomeWrap>> qcGetOtherResumeDetail(
-      @Path("resume_id") String resumeId);
+      @Path("resume_id") String resumeId, @QueryMap Map<String, Object> params);
 
   //搜索健身房
   @GET("/api/gym/search/") rx.Observable<QcSerachGymRepsonse> qcSearchGym(
@@ -265,6 +266,12 @@ public interface GetApi {
    * 获取可邀约的职位列表
    */
   @GET("/api/staff/job/permission/invite/")
-  rx.Observable<QcDataResponse<JobListWrap>> qcGetInviteJobs(
-      @QueryMap HashMap<String, Object> params);
+  rx.Observable<QcDataResponse<JobListWrap>> qcGetInviteJobs();
+
+  /**
+   * 获取已结束未处理的招聘会
+   */
+  @GET("api/staff/job/check/fair/")
+  rx.Observable<QcDataResponse<EndFairTopsWrap>> qcGetEndFair();
+
 }

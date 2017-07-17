@@ -15,8 +15,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -38,12 +40,13 @@ import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/7/5.
  */
-public class JobFairsAllFragment extends BaseFragment {
+public class JobFairsAllFragment extends BaseFragment{
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.strip) PagerSlidingTabImageStrip strip;
   @BindView(R2.id.vp) ViewPager vp;
+  @Inject RecruitRouter router;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {

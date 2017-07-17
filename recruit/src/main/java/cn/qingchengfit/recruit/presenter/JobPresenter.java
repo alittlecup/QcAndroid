@@ -138,13 +138,9 @@ public class JobPresenter extends BasePresenter {
   /**
    * 获取可邀约的职位列表
    */
-  public void getInviteJobs(String fairId) {
-    HashMap<String, Object> params = new HashMap<>();
-    if (!TextUtils.isEmpty(fairId)) {
-      params.put("fair_id", fairId);
-    }
+  public void getInviteJobs() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .qcGetInviteJobs(params)
+        .qcGetInviteJobs()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobListWrap>>() {

@@ -3,6 +3,7 @@ package cn.qingchengfit.recruit.di;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.recruit.views.DialogSendResumeFragment;
 import cn.qingchengfit.recruit.views.JobFairListFragment;
+import cn.qingchengfit.recruit.views.JobFairsAllFragment;
 import cn.qingchengfit.recruit.views.JobsListFragment;
 import cn.qingchengfit.recruit.views.MyPositionsInfoFragment;
 import cn.qingchengfit.recruit.views.RecruitActivity;
@@ -265,7 +266,6 @@ import dagger.multibindings.IntoMap;
         extends AndroidInjector.Builder<RecruitManageFragment> {
     }
   }
-
 
   @Subcomponent() public interface RecruitGymDetailEmployerFragmentSubcomponent
       extends AndroidInjector<RecruitGymDetailEmployerFragment> {
@@ -704,12 +704,31 @@ import dagger.multibindings.IntoMap;
         ChooseGymFragmentSubcomponent.Builder builder);
   }
 
-  @Subcomponent() public interface JobFairSuccessFragmentSubcomponent extends AndroidInjector<JobFairSuccessFragment> {
-      @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<JobFairSuccessFragment> {}
-  }
-  @Module(subcomponents = JobFairSuccessFragmentSubcomponent.class) abstract class JobFairSuccessFragmentModule {
-      @Binds @IntoMap @FragmentKey(JobFairSuccessFragment.class)
-      abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(JobFairSuccessFragmentSubcomponent.Builder builder);
+  @Subcomponent() public interface JobFairSuccessFragmentSubcomponent
+      extends AndroidInjector<JobFairSuccessFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<JobFairSuccessFragment> {
+    }
   }
 
+  @Module(subcomponents = JobFairSuccessFragmentSubcomponent.class)
+  abstract class JobFairSuccessFragmentModule {
+    @Binds @IntoMap @FragmentKey(JobFairSuccessFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        JobFairSuccessFragmentSubcomponent.Builder builder);
+  }
+
+  @Subcomponent() public interface JobFairsAllFragmentSubcomponent
+      extends AndroidInjector<JobFairsAllFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<JobFairsAllFragment> {
+    }
+  }
+
+  @Module(subcomponents = JobFairsAllFragmentSubcomponent.class)
+  abstract class JobFairsAllFragmentModule {
+    @Binds @IntoMap @FragmentKey(JobFairsAllFragment.class)
+    abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        JobFairsAllFragmentSubcomponent.Builder builder);
+  }
 }

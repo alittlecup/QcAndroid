@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,10 +22,12 @@ import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitConstants;
+import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.RecruitPositionChooseItem;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.Job;
+import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
@@ -35,6 +38,7 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.BottomListFragment;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
+import cn.qingchengfit.views.fragments.TipDialogFragment;
 import cn.qingchengfit.views.fragments.WebFragment;
 import com.google.gson.Gson;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -53,7 +57,7 @@ import javax.inject.Inject;
 
 @FragmentWithArgs public class ResumeDetailFragment extends BaseFragment
     implements ResumePresenter.MVPView, JobPresenter.MVPView,
-    BottomListFragment.ComfirmChooseListener, ResumePermissionPresenter.MVPView {
+    BottomListFragment.ComfirmChooseListener, TipDialogFragment.OnDialogListener {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
@@ -68,15 +72,16 @@ import javax.inject.Inject;
 
   @Inject ResumePresenter resumePresenter;
   @Inject JobPresenter jobPresenter;
-  @Inject ResumePermissionPresenter permissionPresenter;
-  @Inject GymWrapper gymWrapper;
+  @Inject RecruitRouter router;
 
   @Arg String resumeId;
   @Arg String toUrl;
+  @Arg(required = false) JobFair jobFair;
 
   private ResumeModel resumeModel;
   private String userId;
   private boolean isStarred;
+  private ResumeHome resumeHome;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -94,7 +99,11 @@ import javax.inject.Inject;
     toUrl = toUrl + resumeId;
     setToolbar();
     initView();
-    resumePresenter.getResumeDetail(resumeId);
+    if (jobFair != null) {
+      resumePresenter.getResumeDetail(resumeId, jobFair.id);
+    }else {
+      resumePresenter.getResumeDetail(resumeId, "");
+    }
     return view;
   }
 
@@ -126,6 +135,10 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.btn_starred) public void onStared() {
+    if(resumeHome != null && !resumeHome.sign_up){
+      showTips();
+      return;
+    }
     if (isStarred) {
       resumePresenter.unStarResume(resumeId);
     } else {
@@ -134,6 +147,10 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.btn_contact_him) public void onContact() {
+    if(resumeHome != null && !resumeHome.sign_up){
+      showTips();
+      return;
+    }
     Intent intent = new Intent(getActivity(), JobSearchChatActivity.class);
     Gson gson = new Gson();
     if (resumeModel == null) {
@@ -156,13 +173,27 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.btn_send_invite) public void onSendInvite() {
-    permissionPresenter.queryChangeStatePermission(gymWrapper.id(), "resume");
+    if (resumeHome != null && !resumeHome.sign_up){
+      showTips();
+      return;
+    }
+    jobPresenter.getInviteJobs();
   }
 
   @Override public void onBaseInfo(ResumeHome resumeHome) {
+    this.resumeHome = resumeHome;
     userId = resumeHome.user_id;
     isStarred = resumeHome.favorited;
     resumeModel = resumePresenter.dealResumeMessage(resumeHome);
+  }
+
+  private void showTips(){
+    TipDialogFragment dialogFragment =
+        TipDialogFragment.newInstance(getString(R.string.tips_not_join_fair), "申请参加招聘会",
+            R.drawable.ic_dialog_hire_warning);
+    dialogFragment.setCancelable(false);
+    dialogFragment.setOnDialogListener(this);
+    dialogFragment.show(getChildFragmentManager(), null);
   }
 
   @Override public void onWorkExpList(List<WorkExp> workExps) {
@@ -254,7 +285,11 @@ import javax.inject.Inject;
     jobPresenter.invitePosition(jobList, resumeId);
   }
 
-  @Override public void onCheckSuccess() {
-    jobPresenter.getInviteJobs("");
+  @Override public void onDoClick(View v) {
+    router.toSignUpFair(jobFair);
+  }
+
+  @Override public void onDismissListener() {
+
   }
 }

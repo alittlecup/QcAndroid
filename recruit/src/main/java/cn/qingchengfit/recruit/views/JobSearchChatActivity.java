@@ -83,7 +83,7 @@ public class JobSearchChatActivity extends ChatActivity
     }
     //发起邀约
     if (type == RecruitConstants.RECRUIT) {
-      presenter.getInviteJobs("");
+      presenter.getInviteJobs();
     }
   }
 
