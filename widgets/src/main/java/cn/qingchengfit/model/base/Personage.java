@@ -38,7 +38,7 @@ public class Personage implements Parcelable {
     public int gender;// 0:man；1：woman
     public String head;
     public String brand_id;
-    public boolean is_superuser;
+  public boolean is_superuser;
     public Personage() {
     }
 
@@ -57,19 +57,19 @@ public class Personage implements Parcelable {
         this.gender = gender;
     }
 
-    protected Personage(Parcel in) {
-        this.tag = in.readString();
-        this.id = in.readString();
-        this.username = in.readString();
-        this.area_code = in.readString();
-        this.phone = in.readString();
-        this.avatar = in.readString();
-        this.checkin_avatar = in.readString();
-        this.gender = in.readInt();
-        this.head = in.readString();
-        this.brand_id = in.readString();
-        this.is_superuser = in.readByte() != 0;
-    }
+  protected Personage(Parcel in) {
+    this.tag = in.readString();
+    this.id = in.readString();
+    this.username = in.readString();
+    this.area_code = in.readString();
+    this.phone = in.readString();
+    this.avatar = in.readString();
+    this.checkin_avatar = in.readString();
+    this.gender = in.readInt();
+    this.head = in.readString();
+    this.brand_id = in.readString();
+    this.is_superuser = in.readByte() != 0;
+  }
 
     public String getArea_code() {
         return area_code;
@@ -176,6 +176,6 @@ public class Personage implements Parcelable {
         dest.writeInt(this.gender);
         dest.writeString(this.head);
         dest.writeString(this.brand_id);
-        dest.writeByte(this.is_superuser ? (byte) 1 : (byte) 0);
+      dest.writeByte(this.is_superuser ? (byte) 1 : (byte) 0);
     }
 }

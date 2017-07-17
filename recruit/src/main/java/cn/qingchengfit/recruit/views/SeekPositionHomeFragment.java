@@ -36,10 +36,10 @@ import cn.qingchengfit.support.animator.FlipAnimation;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.widgets.QcLeftRightDivider;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,11 +71,12 @@ import rx.functions.Action1;
  * Created by Paper on 2017/5/23.
  */
 public class SeekPositionHomeFragment extends JobsListFragment
-    implements SeekPositionPresenter.MVPView {
+    implements SeekPositionPresenter.MVPView, ResumeFilterFragment.ResumeFilterListener {
 
+  protected HashMap<String, Object> params = new HashMap<>();
+  protected FilterHeadItem itemfilterHeader;
   @Inject SeekPositionPresenter positionPresenter;
   @Inject RecruitRouter router;
-
   Toolbar toolbar;
   TextView toolbarTitile;
   SwipeRefreshLayout layoutFilter;
@@ -83,13 +84,9 @@ public class SeekPositionHomeFragment extends JobsListFragment
   EditText searchEt;
   ImageView imgClear;
   Button btnCancel;
-
-  private HashMap<String, Object> params = new HashMap<>();
   private long lastInvintedTime;
   private long nowInvintedTime;
-
   private MyJobsItem itemMyJobs;
-  private FilterHeadItem itemfilterHeader;
   private ResumeAndJobItem itemRj;//我的简历和我的专场招聘会
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -161,7 +158,6 @@ public class SeekPositionHomeFragment extends JobsListFragment
     return super.onItemClick(i);
   }
 
-
   private void initBus() {
     RxBusAdd(EventClickViewPosition.class).observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<EventClickViewPosition>() {
@@ -182,14 +178,20 @@ public class SeekPositionHomeFragment extends JobsListFragment
   }
 
   @Override protected void initView() {
-    commonFlexAdapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true);
+    commonFlexAdapter.setStickyHeaders(true)
+        .setDisplayHeadersAtStartUp(true)
+        .setStickyHeaderElevation(1);
     super.initView();
+    //rv.setBackgroundResource(R.color.white);
     rv.setClipToPadding(false);
-    rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, R.layout.item_my_jobs, 0, 0));
     rv.addItemDecoration(
-        new QcLeftRightDivider(getContext(), 10, R.layout.item_resume_and_jobfair, 0, 0));
-    rv.addItemDecoration(
-        new QcLeftRightDivider(getContext(), 1, R.layout.item_horizon_qcradiogroup, 0, 0));
+        new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_recruit_position, 1)
+            .addItemViewType(R.layout.item_resume_and_jobfair, 1)
+            .addItemViewType(R.layout.item_my_jobs, 1)
+            .addItemViewType(R.layout.item_horizon_qcradiogroup, 1)
+            .removeItemViewType(R.layout.layout_search_hint_center)
+            .withDivider(R.drawable.divider_qc_base_line)
+            .withBottomEdge(true));
     commonFlexAdapter.addItem(new SearchCenterItem(false, "搜索职位公司"));
     itemMyJobs = new MyJobsItem(false);
     commonFlexAdapter.addItem(itemMyJobs);
@@ -218,17 +220,15 @@ public class SeekPositionHomeFragment extends JobsListFragment
       }
     });
     commonFlexAdapter.addItem(itemfilterHeader);
-
   }
 
   @Override protected void addDivider() {
-    rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, R.layout.item_resume, 0, 0));
+    //rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, R.layout.item_resume, 0, 0));
   }
 
   @Override public boolean isBlockTouch() {
     return false;
   }
-
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -257,32 +257,15 @@ public class SeekPositionHomeFragment extends JobsListFragment
     Fragment f = getChildFragmentManager().findFragmentByTag("filter");
     if (f == null) {
       f = new JobsFilterFragment();
-      ((JobsFilterFragment) f).showPos = pos;
       ((JobsFilterFragment) f).putParams(params);
-
-      ((JobsFilterFragment) f).setListener(new ResumeFilterFragment.ResumeFilterListener() {
-        @Override public void onFilterDone(HashMap<String, Object> params, String cityname) {
-          SeekPositionHomeFragment.this.params.putAll(params);
-          Object min = params.get("min_salary");
-          Object max = params.get("max_salary");
-          int ms = min == null ? -1 : (int) min;
-          int ma = max == null ? -1 : (int) max;
-          itemfilterHeader.setStrings(cityname == null ? "城市" : cityname,
-              RecruitBusinessUtils.getSalary(ms, ma, "薪资"), "要求");
-          commonFlexAdapter.notifyItemChanged(3);
-          onRefresh();
-        }
-
-        @Override public void onDismiss() {
-          clearFilterToggle();
-        }
-      });
+      ((JobsFilterFragment) f).setListener(this);
       getChildFragmentManager().beginTransaction()
           .setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out)
           .add(R.id.frag_filter, f, "filter")
           .addToBackStack(null)
           .commit();
     }
+    ((JobsFilterFragment) f).showPos = pos;
 
     if (f.isVisible()) {
       if (f instanceof JobsFilterFragment) {
@@ -291,7 +274,6 @@ public class SeekPositionHomeFragment extends JobsListFragment
     } else {
       getChildFragmentManager().beginTransaction().show(f).commit();
     }
-
   }
 
   public void clearFilterToggle() {
@@ -329,7 +311,6 @@ public class SeekPositionHomeFragment extends JobsListFragment
       }
       if (page != 1) commonFlexAdapter.onLoadMoreComplete(tm);
     } else {
-      //stopLoadMore();
       commonFlexAdapter.onLoadMoreComplete(null);
     }
     if (page == 1 && commonFlexAdapter.getItemCountOfTypes(R.layout.item_recruit_position) == 0) {
@@ -340,7 +321,6 @@ public class SeekPositionHomeFragment extends JobsListFragment
   @Override public void onLoadMore(int i, int i1) {
     positionPresenter.queryList(false, params);
   }
-
 
   /**
    * 简历 和 招聘会信息
@@ -397,5 +377,21 @@ public class SeekPositionHomeFragment extends JobsListFragment
     } else {
       return super.onCreateAnimation(transit, enter, nextAnim);
     }
+  }
+
+  @Override public void onFilterDone(HashMap<String, Object> params, String cityName) {
+    this.params.putAll(params);
+    Object min = params.get("min_salary");
+    Object max = params.get("max_salary");
+    int ms = min == null ? -1 : (int) min;
+    int ma = max == null ? -1 : (int) max;
+    itemfilterHeader.setStrings(cityName == null ? "城市" : cityName,
+        RecruitBusinessUtils.getSalary(ms, ma, "薪资"), "要求");
+    commonFlexAdapter.notifyItemChanged(3);
+    onRefresh();
+  }
+
+  @Override public void onDismiss() {
+    clearFilterToggle();
   }
 }

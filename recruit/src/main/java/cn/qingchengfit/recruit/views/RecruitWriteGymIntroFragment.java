@@ -155,6 +155,7 @@ import rx.functions.Action1;
 
   @Override public void onDetail(Gym gym) {
     if (gym == null) return;
+    this.gym = gym;
     civGymArea.setContent(gym.area + "");
     civGymMemberCount.setContent(gym.member_count + "");
     civGymStaffCount.setContent(gym.staff_count + "");

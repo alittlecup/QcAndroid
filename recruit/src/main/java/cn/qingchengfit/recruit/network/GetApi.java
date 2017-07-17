@@ -7,6 +7,7 @@ import cn.qingchengfit.recruit.network.response.ChatGymWrap;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
 import cn.qingchengfit.recruit.network.response.GymListWrap;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
+import cn.qingchengfit.recruit.network.response.JobFairOrderlistWrap;
 import cn.qingchengfit.recruit.network.response.JobFairWrap;
 import cn.qingchengfit.recruit.network.response.JobFariListWrap;
 import cn.qingchengfit.recruit.network.response.JobIndexWrap;
@@ -133,6 +134,10 @@ public interface GetApi {
   @GET("/api/staff/user/resumes/index/?show_all=1")
   rx.Observable<QcDataResponse<JobFariListWrap>> queryMyJobFairs();
 
+  @GET("/api/staff/job/fair/orders/?show_all=1")
+  rx.Observable<QcDataResponse<JobFairOrderlistWrap>> queryStaffJobFairs(
+      @Query("gym_id") String gymid);
+
   /**
    * 我参加的专场招聘会(求职版)
    */
@@ -197,14 +202,15 @@ public interface GetApi {
    * 专场招聘会中的职位列表
    */
   @GET("/api/user/job/fairs/{fair_id}/jobs/")
-  rx.Observable<QcDataResponse<JobListWrap>> queryJobFairJobs(@Path("fair_id") String fair_id);
+  rx.Observable<QcDataResponse<JobListWrap>> queryJobFairJobs(@Path("fair_id") String fair_id,
+      @QueryMap HashMap<String, Object> params);
 
   /*
    * 专场招聘会的简历列表
    */
-  @GET("/api/user/job/fairs/{fair_id}/resumes/")
-  rx.Observable<QcDataResponse<ResumeListWrap>> queryJobFairResumes(
-      @Path("fair_id") String fair_id);
+  @GET("/api/staff/job/fairs/{fair_id}/resumes/")
+  rx.Observable<QcDataResponse<ResumeListWrap>> queryJobFairResumes(@Path("fair_id") String fair_id,
+      @QueryMap HashMap<String, Object> params);
 
 
     /*

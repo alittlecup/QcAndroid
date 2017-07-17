@@ -56,6 +56,8 @@ allprojects {
     maven() {
       url "http://maven.aliyun.com/nexus/content/groups/public/"
     }
+    maven { url "https://maven.google.com" }
+
     maven {
       url "https://s3.amazonaws.com/repo.commonsware.com"
     }

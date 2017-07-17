@@ -199,8 +199,8 @@ public class BusinessUtils {
     for (int i = 0; i < students.size(); i++) {
       if (!students.get(i).is_superuser) {
         ret.add(students.get(i).getId());
-            }
-        }
+      }
+    }
         return ret;
     }
 

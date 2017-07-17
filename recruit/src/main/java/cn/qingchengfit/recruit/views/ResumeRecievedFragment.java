@@ -63,6 +63,7 @@ import rx.functions.Action1;
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R2.id.tv_hint) TextView tvHint;
   @BindView(R2.id.tab_strip) PagerSlidingTabImageStrip tabStrip;
   @BindView(R2.id.btn_show_bottom) TextView btnShowBottom;
   @BindView(R2.id.btn_mark) Button btnMark;
@@ -85,6 +86,7 @@ import rx.functions.Action1;
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
+    delegatePresenter(permissionPresenter, this);
 
     RxBusAdd(EventTabHeaderChange.class).subscribe(new Action1<EventTabHeaderChange>() {
       @Override public void call(EventTabHeaderChange eventTabHeaderChange) {
@@ -111,7 +113,15 @@ import rx.functions.Action1;
       }
 
       @Override public void onPageSelected(int position) {
-
+        switch (position) {
+          case 0:
+          case 1:
+            tvHint.setText("请及时处理简历为\"已录用\"或\"不合适\"，否则无法参加下一次招聘会");
+            break;
+          default:
+            tvHint.setText("");
+            break;
+        }
       }
 
       @Override public void onPageScrollStateChanged(int state) {

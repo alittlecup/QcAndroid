@@ -33,7 +33,6 @@
           android:scaleType="centerCrop"
           app:layout_collapseMode="parallax"
           app:layout_scrollFlags="scroll|exitUntilCollapsed"
-          app:srcCompat="@drawable/bg_loading_dialog"
           />
 
       <android.support.v7.widget.Toolbar
@@ -48,10 +47,11 @@
           android:layout_width="wrap_content"
           android:layout_height="?actionBarSize"
           android:layout_gravity="center_horizontal"
+          android:background="@color/transparent"
           android:gravity="center"
           android:textColor="@color/white"
           android:textSize="18sp"
-          app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+          app:layout_collapseMode="pin"
           tools:text="xxx"
           style="@style/Qc.TextCommonBlack"
           />
@@ -87,13 +87,31 @@
           tools:text="@string/test_short"
 
           />
+
     </android.support.design.widget.CollapsingToolbarLayout>
   </android.support.design.widget.AppBarLayout>
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/rv"
+  <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+      >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/qc_item_height"
+        />
+
+  </FrameLayout>
+
+  <FrameLayout
+      android:id="@+id/frag_filter"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="92dp"
       />
 </android.support.design.widget.CoordinatorLayout>

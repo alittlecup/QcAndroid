@@ -66,8 +66,8 @@
 
   <ImageView
       android:id="@+id/img_right"
-      android:layout_width="14dp"
-      android:layout_height="24dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       app:srcCompat="@drawable/vd_chevron_right_text_hint_7x12dp"
       />
 </LinearLayout>

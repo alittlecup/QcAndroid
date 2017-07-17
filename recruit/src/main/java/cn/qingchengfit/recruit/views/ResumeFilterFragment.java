@@ -118,8 +118,10 @@ public class ResumeFilterFragment extends BaseFragment
     super.onFinishAnimation();
   }
 
-  @Override protected void onVisible() {
-    super.onVisible();
+  @Override public void onHiddenChanged(boolean hidden) {
+    super.onHiddenChanged(hidden);
+    if (!hidden) show(showPos);
+
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,

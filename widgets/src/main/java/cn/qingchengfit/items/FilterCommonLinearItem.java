@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -56,7 +57,8 @@ public class FilterCommonLinearItem extends AbstractFlexibleItem<FilterCommonLin
             holder.textPopFilterCommon.setTextColor(holder.itemView.getResources().getColor(R.color.qc_text_black));
         } else {
             holder.imageViewFilterCommon.setVisibility(View.VISIBLE);
-            holder.textPopFilterCommon.setTextColor(holder.itemView.getResources().getColor(R.color.qc_allotsale_green));
+          holder.textPopFilterCommon.setTextColor(
+              AppUtils.getPrimaryColor(holder.textPopFilterCommon.getContext()));
         }
     }
 

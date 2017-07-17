@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:maxWidth="255dp"
+        android:textColor="@color/text_dark"
         android:textSize="20sp"
         android:textStyle="bold"
         tools:text="赛普学院春季毕业生联合专场招聘会"

@@ -50,7 +50,7 @@ public abstract class BaseListFragment extends BaseFragment {
   protected CommonFlexAdapter commonFlexAdapter;
   protected ProgressItem progressItem;
   protected SmoothScrollLinearLayoutManager linearLayoutManager;
-  @Nullable @BindView(R2.id.srl) SwipeRefreshLayout srl;
+  @Nullable @BindView(R2.id.srl) protected SwipeRefreshLayout srl;
   List<AbstractFlexibleItem> datas = new ArrayList<>();
   private Object listeners;
 

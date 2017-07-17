@@ -43,9 +43,9 @@ public class RecruitGymItem extends AbstractFlexibleItem<RecruitGymItem.RecruitG
   @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitGymVH holder, int position, List payloads) {
     PhotoUtils.small(holder.imgGym, gym.photo);
     holder.tvGymName.setText(gym.name);
-    holder.tvAddress.setText(gym.brand_name);
+    holder.tvAddress.setText(gym.brand.getName());
     if (holder.tv_has_todo != null) {
-      if (hasUndo) {
+      if (gym.has_new_resume) {
         holder.tv_has_todo.setVisibility(View.VISIBLE);
         holder.tv_has_todo.setCompoundDrawablesWithIntrinsicBounds(
             ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.dot_red), null, null, null);

@@ -123,13 +123,14 @@ public class RecruitPositionDetailFragment extends BaseFragment
     delegatePresenter(presenter, this);
     delegatePresenter(resumePresenter, this);
     initToolbar(toolbar);
-    initData();
+
     return view;
   }
 
   @Override protected void onFinishAnimation() {
     onJobDetail(job);
     onGym(job.gym);
+    initData();
   }
 
   private void initData() {

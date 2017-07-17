@@ -89,6 +89,7 @@ public class ResumeListFragment extends BaseListFragment
   }
 
   @Override public void onResumeList(List<Resume> resumes, int total, int page) {
+    if (srl != null) srl.setRefreshing(false);
     if (resumes != null) {
       if (page == 1) {
         commonFlexAdapter.clear();
@@ -103,6 +104,7 @@ public class ResumeListFragment extends BaseListFragment
       for (Resume resume : resumes) {
         commonFlexAdapter.addItem(new ResumeItem(resume));
       }
+      stopLoadMore();
     }
   }
 

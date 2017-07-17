@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http;
 
 import android.support.annotation.Nullable;
-import cn.qingchengfit.chat.model.RecordWrap;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.body.PostCommentBody;

@@ -60,7 +60,7 @@
 
   <style name="QcRadioBtn">
     <item name="cb_background_normal">@drawable/shape_bg_rect_grey_corner4</item>
-    <item name="cb_background_select">@drawable/bg_rect_allot_green</item>
+    <item name="cb_background_select">@drawable/bg_rect_corner_primary</item>
     <item name="cb_hook_icon_location">left</item>
     <item name="cb_hook_icon_select">@drawable/selector_student_checkbtn_bg</item>
     <item name="cb_select">false</item>
@@ -68,4 +68,16 @@
     <item name="cb_text_select_color">?colorPrimary</item>
   </style>
 
+  <style name="QcTabLayout">
+    <item name="android:background">@color/white</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">50dp</item>
+    <item name="tabGravity">center</item>
+    <item name="tabIndicatorColor">?colorPrimary</item>
+    <item name="tabMode">fixed</item>
+    <item name="tabMaxWidth">100dp</item>
+    <item name="tabSelectedTextColor">?colorPrimary</item>
+    <item name="tabBackground">@drawable/bg_click</item>
+    <item name="tabTextAppearance">@style/QcTextStyleStandardGrey</item>
+  </style>
 </resources>

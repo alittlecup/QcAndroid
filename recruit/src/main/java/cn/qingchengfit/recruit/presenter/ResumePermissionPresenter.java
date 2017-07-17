@@ -31,7 +31,6 @@ public class ResumePermissionPresenter extends BasePresenter {
     view = (MVPView) v;
   }
 
-
   @Override public void unattachView() {
     super.unattachView();
     view = null;

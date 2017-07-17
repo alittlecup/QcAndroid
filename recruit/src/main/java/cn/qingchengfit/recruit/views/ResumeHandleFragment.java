@@ -96,6 +96,7 @@ public class ResumeHandleFragment extends ResumeListFragment {
   }
 
   @Override public void onResumeList(List<Resume> resumes, int total, int page) {
+    if (srl != null) srl.setRefreshing(false);
     if (resumes != null) {
       if (page == 1) {
         commonFlexAdapter.clear();

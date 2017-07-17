@@ -3,6 +3,7 @@ package cn.qingchengfit.recruit.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -29,7 +29,6 @@ import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
-import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class RecruitGymDetailFragment extends BaseFragment
   @BindView(R2.id.tv_gym_name) TextView tvGymName;
   @BindView(R2.id.tv_address) TextView tvAddress;
   @BindView(R2.id.img_right) ImageView imgRight;
-  @BindView(R2.id.recruit_gym_tab) PagerSlidingTabImageStrip tab;
+  @BindView(R2.id.recruit_gym_tab) TabLayout tab;
   @BindView(R2.id.vp) ViewPager vp;
   ArrayList<Fragment> fragments = new ArrayList<>();
   RecruitPositionsInGymFragment positionsFragment;
@@ -104,17 +103,17 @@ public class RecruitGymDetailFragment extends BaseFragment
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
-    tab.setShouldExpand(true);
-    tab.setViewPager(vp);
-    tab.getViewTreeObserver()
-        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-          @Override public void onGlobalLayout() {
-            if (tab != null) {
-              tab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-              tab.notifyDataSetChanged();
-            }
-          }
-        });
+
+    tab.setupWithViewPager(vp);
+    //tab.getViewTreeObserver()
+    //    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+    //      @Override public void onGlobalLayout() {
+    //        if (tab != null) {
+    //          tab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+    //          tab.notifyDataSetChanged();
+    //        }
+    //      }
+    //    });
     onGym(gym);
     presenter.queryGymDetail(gym.id);
     return view;

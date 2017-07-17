@@ -3,6 +3,7 @@ package cn.qingchengfit.recruit.views;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
@@ -22,6 +23,7 @@ import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
+import dagger.android.support.AndroidSupportInjection;
 import javax.inject.Inject;
 
 /**
@@ -79,7 +81,17 @@ public class DialogSendResumeFragment extends DialogFragment {
         }
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    try {
+      AndroidSupportInjection.inject(this);
+    } catch (Exception e) {
+      LogUtil.e("not find fragment:" + this.getClass().getName());
+    }
+    super.onCreate(savedInstanceState);
+  }
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         View view = inflater.inflate(R.layout.dialog_send_resume, container, false);

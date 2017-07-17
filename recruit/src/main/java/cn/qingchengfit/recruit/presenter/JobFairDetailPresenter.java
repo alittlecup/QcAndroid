@@ -7,9 +7,20 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.recruit.item.RecruitPositionItem;
+import cn.qingchengfit.recruit.item.ResumeItem;
+import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.model.JobFair;
+import cn.qingchengfit.recruit.model.Resume;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.response.JobFairWrap;
+import cn.qingchengfit.recruit.network.response.JobListWrap;
+import cn.qingchengfit.recruit.network.response.ResumeListWrap;
+import cn.qingchengfit.utils.ListUtils;
+import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -47,28 +58,52 @@ public class JobFairDetailPresenter extends BasePresenter {
         }, new NetWorkThrowable()));
   }
 
-  //public void queryJobFairJobs(String fairid) {
-  //  RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-  //      .queryJobFairJobs(fairid)
-  //      .subscribeOn(Schedulers.io())
-  //      .observeOn(AndroidSchedulers.mainThread())
-  //      .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
-  //        @Override public void call(QcDataResponse<JobListWrap> qcResponse) {
-  //          if (ResponseConstant.checkSuccess(qcResponse)) {
-  //            if (qcResponse.data.jobs == null) return;
-  //            List<IFlexible> item = new ArrayList<IFlexible>();
-  //            for (Job resume : qcResponse.data.jobs) {
-  //              item.add(new RecruitPositionItem(resume));
-  //            }
-  //            view.onList(item);
-  //          } else {
-  //            view.onShowError(qcResponse.getMsg());
-  //          }
-  //        }
-  //      }, new NetWorkThrowable()));
-  //}
+  public void queryJobFairJobs(String fairid, HashMap<String, Object> params) {
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .queryJobFairJobs(fairid, ListUtils.mapRemoveNull(params))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
+          @Override public void call(QcDataResponse<JobListWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              if (qcResponse.data.jobs == null) return;
+              List<IFlexible> item = new ArrayList<IFlexible>();
+              for (Job resume : qcResponse.data.jobs) {
+                item.add(new RecruitPositionItem(resume));
+              }
+              view.onList(item);
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
+
+  public void queryJobFairResumes(String fairid, HashMap<String, Object> params) {
+
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .queryJobFairResumes(fairid, ListUtils.mapRemoveNull(params))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {
+          @Override public void call(QcDataResponse<ResumeListWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              if (qcResponse.data.resumes == null) return;
+              List<IFlexible> item = new ArrayList<IFlexible>();
+              for (Resume resume : qcResponse.data.resumes) {
+                item.add(new ResumeItem(resume));
+              }
+              view.onList(item);
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
 
   public interface MVPView extends CView {
     void onJobfairDetail(JobFair jobfair);
+
+    void onList(List list);
   }
 }

@@ -29,7 +29,6 @@ import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.network.PostApi;
-import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import java.util.HashMap;
@@ -106,10 +105,11 @@ public class JobfairSignUpFragment extends BaseFragment {
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_signup_job_fair, container, false);
     unbinder = ButterKnife.bind(this, view);
-    civPhone.addTextWatcher(tw);
+    civName.addTextWatcher(tw);
     civPhone.addTextWatcher(tw);
     initToolbar(toolbar);
     initBus();
+    tvFairName.setText(jobfair.name);
     return view;
   }
 
@@ -138,6 +138,7 @@ public class JobfairSignUpFragment extends BaseFragment {
   }
 
   @OnClick(R2.id.btn_join) public void onViewClicked() {
+    router.toJoinFairSuc(gym);
     HashMap<String, Object> p = new HashMap<>();
     p.put("fair_id", jobfair.id);
     p.put("gym_id", gym.getId());
@@ -168,7 +169,7 @@ public class JobfairSignUpFragment extends BaseFragment {
   }
 
   @OnClick(R2.id.civ_gym) public void onViewClickedGym() {
-    BaseRouter.toChooseGym(this);
+    router.chooseGymForJobfair();
   }
 
 }

@@ -31,6 +31,6 @@ public class Constants {
   public static final String EXTRA_GYM_STATUS = "qingcheng.gym.status";
   public static final String EXTRA_BRAND = "qingcheng.brand";
 
-
-  public static final String Server = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
+  public static final String Server =
+      BuildConfig.DEBUG ? "http://cloudtest01.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
 }

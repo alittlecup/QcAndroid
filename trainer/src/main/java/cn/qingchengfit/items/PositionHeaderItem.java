@@ -113,9 +113,9 @@ public class PositionHeaderItem extends AbstractHeaderItem<PositionHeaderItem.Po
         return childrens;
     }
 
-    protected boolean canRemoveSu(Personage personage) {
-        return true;
-    }
+  protected boolean canRemoveSu(Personage personage) {
+    return true;
+  }
 
     public class PositionHeaderVH extends ExpandableViewHolder {
         @BindView(R.id.checkbox) CheckBox checkbox;
@@ -136,9 +136,9 @@ public class PositionHeaderItem extends AbstractHeaderItem<PositionHeaderItem.Po
                                 QcStudentBean qs = new QcStudentBean(childrens.get(i).getStaff());
                                 if (!DirtySender.studentList.contains(qs)) DirtySender.studentList.add(qs);
                             } else {
-                                if (canRemoveSu(childrens.get(i).getStaff())) {
-                                    DirtySender.studentList.remove(childrens.get(i).getStaff());
-                                }
+                              if (canRemoveSu(childrens.get(i).getStaff())) {
+                                DirtySender.studentList.remove(childrens.get(i).getStaff());
+                              }
                             }
                             try {
                                 adapter.notifyDataSetChanged();

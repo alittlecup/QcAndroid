@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CompatUtils;
 import com.bumptech.glide.Glide;
@@ -115,6 +116,8 @@ public class PagerSlidingTabImageStrip extends HorizontalScrollView implements V
         super(context, attrs, defStyle);
         setFillViewport(true);
         setWillNotDraw(false);
+      mIndicatorColor = AppUtils.getPrimaryColor(context);
+
         mTabsContainer = new LinearLayout(context);
         mTabsContainer.setOrientation(LinearLayout.HORIZONTAL);
         mTabsContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));

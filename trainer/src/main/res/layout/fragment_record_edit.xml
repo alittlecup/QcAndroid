@@ -49,7 +49,7 @@
             android:layout_alignRight="@id/host_img"
             android:background="@drawable/circle_white"
             android:padding="1dp"
-            android:src="@drawable/ic_qc_identify"
+            app:srcCompat="@drawable/vd_qc_logo"
             />
 
         <LinearLayout

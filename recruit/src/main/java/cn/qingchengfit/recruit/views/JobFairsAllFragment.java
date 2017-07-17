@@ -2,6 +2,7 @@ package cn.qingchengfit.recruit.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -44,7 +45,7 @@ public class JobFairsAllFragment extends BaseFragment{
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.strip) PagerSlidingTabImageStrip strip;
+  @BindView(R2.id.strip) TabLayout strip;
   @BindView(R2.id.vp) ViewPager vp;
   @Inject RecruitRouter router;
 
@@ -54,7 +55,7 @@ public class JobFairsAllFragment extends BaseFragment{
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     vp.setAdapter(new JobFairsAllAdapter(getChildFragmentManager()));
-    strip.setViewPager(vp);
+    strip.setupWithViewPager(vp);
     return view;
   }
 

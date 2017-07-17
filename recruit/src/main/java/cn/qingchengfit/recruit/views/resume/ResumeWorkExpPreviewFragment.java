@@ -208,7 +208,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
                 workexpDetailHiden.setBackgroundResource(R.color.orange);
                 workexpDetailHiden.setText(getString(R.string.workexp_detail_hiden));
               } else {
-                workexpDetailHiden.setBackgroundResource(R.color.green);
+                workexpDetailHiden.setBackgroundResource(R.color.colorPrimary);
                 workexpDetailHiden.setText(getString(R.string.workexp_detail_unhiden));
               }
             } else { //自己添加的条目

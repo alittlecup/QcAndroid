@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_earchView"
     android:layout_width="match_parent"
-    android:layout_height="36dp"
-    android:layout_margin="12dp"
-    android:background="@drawable/bg_search_hint_center"
-    android:gravity="center"
-    android:orientation="horizontal"
-    app:layout_scrollFlags="scroll"
+    android:layout_height="50dp"
+    android:background="@color/white"
     >
 
-  <ImageView
-      android:layout_width="16dp"
-      android:layout_height="16dp"
-      app:srcCompat="@drawable/vd_search_grey_14dp"
-      />
-
-  <android.support.v4.widget.Space
-      android:layout_width="4dp"
-      android:layout_height="4dp"
-      />
-
-  <TextView
-      android:id="@+id/et_search"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:background="@color/transparent"
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/layout_earchView"
+      android:layout_width="match_parent"
+      android:layout_height="36dp"
+      android:layout_gravity="center"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:background="@drawable/bg_search_hint_center"
       android:gravity="center"
-      android:hint="搜索职位/公司"
-      android:minWidth="90dp"
-      android:textColorHint="#bbbbbb"
-      android:textSize="13sp"
-      />
-</LinearLayout>
+      android:orientation="horizontal"
+      app:layout_scrollFlags="scroll"
+      >
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:srcCompat="@drawable/vd_search_grey_14dp"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        />
+
+    <TextView
+        android:id="@+id/et_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:hint="搜索职位/公司"
+        android:minWidth="90dp"
+        android:textColorHint="#bbbbbb"
+        android:textSize="13sp"
+        />
+  </LinearLayout>
+</FrameLayout>

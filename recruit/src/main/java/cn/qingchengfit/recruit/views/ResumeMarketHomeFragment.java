@@ -297,6 +297,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
       recruitmanage.setJobCounts(job_count, gym_count);
       commonFlexAdapter.notifyItemChanged(commonFlexAdapter.getGlobalPositionOf(recruitmanage));
     }
+
   }
 
   @Override public void onStickyHeaderChange(int i) {

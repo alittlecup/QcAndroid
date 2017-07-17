@@ -46,9 +46,9 @@ public class JobFairSuccessFragment extends BaseFragment {
   private Gym gym;
 
   public static JobFairSuccessFragment newInstance(Gym gym) {
-     Bundle args = new Bundle();
+    Bundle args = new Bundle();
     args.putParcelable("gym", gym);
-     JobFairSuccessFragment fragment = new JobFairSuccessFragment();
+    JobFairSuccessFragment fragment = new JobFairSuccessFragment();
     fragment.setArguments(args);
     return fragment;
   }

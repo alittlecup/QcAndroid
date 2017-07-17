@@ -178,10 +178,10 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   }
 
   @OnClick(R2.id.layout_diliverd) public void onLayoutDiliverdClicked() {
-    router.toRecieveResumes(job);
+    router.toRecieveResumes(job.id);
   }
 
   @OnClick(R2.id.layout_invited) public void onLayoutInvitedClicked() {
-    router.toInvitedResumes(job);
+    router.toInvitedResumes(job.id);
   }
 }

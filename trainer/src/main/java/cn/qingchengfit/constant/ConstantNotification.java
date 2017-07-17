@@ -142,8 +142,8 @@ public class ConstantNotification {
             //case R.drawable.vd_notification_checkin:return R.string.notification_checkin;
             case R.drawable.vd_notification_comment:
                 return R.string.notification_comment;
-            case R.drawable.ic_vd_notification_job:
-                return R.string.notification_job;
+          case R.drawable.ic_vd_notification_job:
+            return R.string.notification_job;
             default:
                 return R.string.notification_gym;
         }

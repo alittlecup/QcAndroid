@@ -32,7 +32,7 @@
       app:showFirstDayOfWeekFirst="true"
       app:showNowLine="true"
       app:textSize="14sp"
-      app:todayBackgroundColor="#ecf9f1"
+      app:todayBackgroundColor="@color/colorPrimarytrans"
       app:todayHeaderTextColor="@color/primary"
       />
 </RelativeLayout>

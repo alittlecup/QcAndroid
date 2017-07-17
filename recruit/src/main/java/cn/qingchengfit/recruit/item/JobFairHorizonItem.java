@@ -54,6 +54,7 @@ public class JobFairHorizonItem extends AbstractFlexibleItem<JobFairHorizonItem.
     @BindView(R2.id.img_bg) ImageView imgBg;
     @BindView(R2.id.tv_title) TextView tvTitle;
     @BindView(R2.id.tv_content) TextView tvContent;
+    @BindView(R2.id.tv_status) TextView tvStatus;
 
     public JobFairVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

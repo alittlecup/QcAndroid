@@ -81,7 +81,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
 
   @Inject RecruitRouter router;
   @Inject JobPresenter presenter;
-  @Arg String gymId;
+  @Arg(required = false) String gymId;
   @Arg int type;
   @Arg Job job;
 
@@ -89,8 +89,6 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
 
   private TwoScrollPicker twoScrollPicker;
   private HashMap<String, Object> params = new HashMap<>();
-
-  private String gymContent;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -113,7 +111,6 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
       toolbarTitile.setText("发布职位");
     } else {
       toolbarTitile.setText("编辑职位");
-      presenter.queryGymDetail(gymId);
     }
     return view;
   }
@@ -221,7 +218,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
    * 职位名称
    */
   @OnClick(R2.id.civ_position_name) public void onCivPositionNameClicked() {
-    router.toSetRequireName("职位名称", body.name);
+    router.toSetRequireName(body.name, "职位名称");
   }
 
   /**

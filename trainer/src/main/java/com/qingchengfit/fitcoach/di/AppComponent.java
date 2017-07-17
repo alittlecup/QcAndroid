@@ -96,7 +96,6 @@ import dagger.multibindings.IntoMap;
     AppComponent.ChooseStaffFragmentModule.class,
     AppComponent.UnLoginScheduleAdFragmentModule.class, AppComponent.ChooseGymFragmentModule.class,
     AppComponent.MainScheduleFragmentModule.class, AppComponent.GuideSetGymFragmentModule.class,
-    AppComponent.RecruitMessageListFragmentModule.class,
 }) public interface AppComponent {
     void inject(App app);
 
@@ -452,6 +451,13 @@ import dagger.multibindings.IntoMap;
         @Binds @IntoMap @ActivityKey(ChooseActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
             ChooseSubcomponent.Builder builder);
+    }
+
+  @Module(subcomponents = RecruitMessageListFragmentSubcomponent.class)
+  abstract class RecruitMessageListFragmentModule {
+    @Binds @IntoMap @FragmentKey(RecruitMessageListFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        RecruitMessageListFragmentSubcomponent.Builder builder);
     }
 
     @Subcomponent() public interface RecruitMessageListFragmentSubcomponent extends AndroidInjector<RecruitMessageListFragment> {

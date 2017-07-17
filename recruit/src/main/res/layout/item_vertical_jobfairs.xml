@@ -51,4 +51,17 @@
         />
   </LinearLayout>
 
+  <TextView
+      android:id="@+id/tv_status"
+      android:layout_width="wrap_content"
+      android:layout_height="20dp"
+      android:layout_gravity="right"
+      android:layout_marginTop="10dp"
+      android:gravity="center"
+      android:paddingLeft="@dimen/little"
+      android:paddingRight="@dimen/little"
+      android:textColor="@color/white"
+      tools:text="审核中"
+      style="@style/QcTextStyleSmallWarm"
+      />
 </FrameLayout>

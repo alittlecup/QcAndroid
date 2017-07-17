@@ -15,6 +15,7 @@ import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -62,10 +63,11 @@ public class HorizonImageShowItem
       holder.itemRv.setLayoutManager(
           new LinearLayoutManager(holder.itemRv.getContext(), LinearLayoutManager.HORIZONTAL,
               false));
-      holder.itemRv.addItemDecoration(
-          new cn.qingchengfit.utils.DividerItemDecoration(holder.itemRv.getContext(),
-              LinearLayoutManager.HORIZONTAL, 6));
+
       holder.itemRv.setAdapter(commonFlexAdapter);
+      holder.itemRv.addItemDecoration(
+          new FlexibleItemDecoration(holder.itemView.getContext()).addItemViewType(
+              R.layout.item_jobfairs, 6).withRightEdge(true));
       for (AbstractFlexibleItem s : items) {
         commonFlexAdapter.addItem(s);
       }
