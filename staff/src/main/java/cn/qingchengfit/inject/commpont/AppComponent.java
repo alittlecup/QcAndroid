@@ -16,7 +16,6 @@ import cn.qingchengfit.inject.moudle.StudentWrapperModule;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
 import cn.qingchengfit.recruit.views.JobSearchChatActivity;
-import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.staffkit.App;
@@ -3919,9 +3918,5 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(RecruitMessageListFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = JobSearchChatSubcomponent.class) abstract class JobSearchChatModule {
-        @Binds @IntoMap @ActivityKey(JobSearchChatActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
-            JobSearchChatSubcomponent.Builder builder);
-    }
+
 }

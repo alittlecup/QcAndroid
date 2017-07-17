@@ -31,7 +31,6 @@ import cn.qingchengfit.recruit.views.ResumeStarredFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
 import cn.qingchengfit.recruit.views.jobfair.ChooseGymInJobfairFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobFairSuccessFragment;
-import cn.qingchengfit.recruit.views.jobfair.JobFairSuccessFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobfairDetailFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobfairSignUpFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
@@ -407,19 +406,8 @@ import dagger.multibindings.IntoMap;
     }
   }
 
-  @Subcomponent() public interface JobFairSuccessFragmentSubcomponent
-      extends AndroidInjector<JobFairSuccessFragment> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<JobFairSuccessFragment> {
-    }
-  }
 
-  @Subcomponent() public interface ChooseGymInJobfairFragmentSubcomponent
-      extends AndroidInjector<ChooseGymInJobfairFragment> {
-    @Subcomponent.Builder public abstract class Builder
-        extends AndroidInjector.Builder<ChooseGymInJobfairFragment> {
-    }
-  }
+
 
   @Module(subcomponents = SeekPositionHomeFragmentSubcomponent.class)
   abstract class SeekPositionHomeFragmentModule {
@@ -734,6 +722,30 @@ import dagger.multibindings.IntoMap;
     @Binds @IntoMap @FragmentKey(ChooseGymInRecruitFragment.class)
     abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ChooseGymInRecruitFragmentSubcomponent.Builder builder);
+  }
+
+  @Subcomponent() public interface JobFairSuccessFragmentSubcomponent extends AndroidInjector<JobFairSuccessFragment> {
+      @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<JobFairSuccessFragment> {}
+  }
+  @Module(subcomponents = JobFairSuccessFragmentSubcomponent.class) abstract class JobFairSuccessFragmentModule {
+      @Binds @IntoMap @FragmentKey(JobFairSuccessFragment.class)
+      abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(JobFairSuccessFragmentSubcomponent.Builder builder);
+  }
+
+  @Subcomponent() public interface ChooseGymInJobfairFragmentSubcomponent extends AndroidInjector<ChooseGymInJobfairFragment> {
+      @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseGymInJobfairFragment> {}
+  }
+  @Module(subcomponents = ChooseGymInJobfairFragmentSubcomponent.class) abstract class ChooseGymInJobfairFragmentModule {
+      @Binds @IntoMap @FragmentKey(ChooseGymInJobfairFragment.class)
+      abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(ChooseGymInJobfairFragmentSubcomponent.Builder builder);
+  }
+
+  @Subcomponent() public interface JobFairsAllFragmentSubcomponent extends AndroidInjector<JobFairsAllFragment> {
+      @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<JobFairsAllFragment> {}
+  }
+  @Module(subcomponents = JobFairsAllFragmentSubcomponent.class) abstract class JobFairsAllFragmentModule {
+      @Binds @IntoMap @FragmentKey(JobFairsAllFragment.class)
+      abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(JobFairsAllFragmentSubcomponent.Builder builder);
   }
 
 }

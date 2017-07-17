@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import cn.qingchengfit.article.ArticleCommentsListFragmentBuilder;
 import cn.qingchengfit.article.ArticleReplyFragment;
+import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
 import cn.qingchengfit.utils.IntentUtils;
 import com.qingchengfit.fitcoach.R;
 

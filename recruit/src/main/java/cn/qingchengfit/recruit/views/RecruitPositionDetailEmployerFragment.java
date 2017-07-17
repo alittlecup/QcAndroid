@@ -110,10 +110,13 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
     layoutEmloyerCtl.setVisibility(View.VISIBLE);
     layoutEmployeeCtl.setVisibility(View.GONE);
     layoutJobInfo.setVisibility(View.VISIBLE);
+    return view;
+  }
+
+  @Override protected void onFinishAnimation() {
     onJobDetail(job);
     onGym(job.gym);
     presenter.queryStaffJob(job.id);
-    return view;
   }
 
   @Override public void onJobDetail(Job job) {
@@ -178,10 +181,10 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   }
 
   @OnClick(R2.id.layout_diliverd) public void onLayoutDiliverdClicked() {
-    router.toRecieveResumes(job.id);
+    router.toRecieveResumes(job);
   }
 
   @OnClick(R2.id.layout_invited) public void onLayoutInvitedClicked() {
-    router.toInvitedResumes(job.id);
+    router.toInvitedResumes(job);
   }
 }

@@ -425,4 +425,8 @@ public class RecruitRouter extends InnerRouter {
   public void editGymInfo(String gymid) {
     add(EditGymInfoFragment.newInstance(gymid));
   }
+
+  public void chooseGymForJobfair() {
+    add(new ChooseGymInJobfairFragment());
+  }
 }

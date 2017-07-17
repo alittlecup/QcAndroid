@@ -84,13 +84,13 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    gym = getArguments().getParcelable("gym");
     hotFragment = new RecruitPositionsInGymFragment();
     closeFragment = new RecruitPositionsInGymFragment();
-    specialFragment = new RecruitStaffMyJobFairFragment();//专场招聘会
+    specialFragment = RecruitStaffMyJobFairFragment.newInstance(gym.id);//专场招聘会
     fragments.add(hotFragment);
     fragments.add(closeFragment);
     fragments.add(specialFragment);
-    gym = getArguments().getParcelable("gym");
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

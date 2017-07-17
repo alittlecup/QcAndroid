@@ -1,10 +1,10 @@
 package cn.qingchengfit.recruit.presenter;
 
-import android.text.TextUtils;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -19,6 +19,7 @@ import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
 import cn.qingchengfit.recruit.network.response.OnePermissionWrap;
+import cn.qingchengfit.saas.response.GymWrap;
 import com.tencent.qcloud.timchat.chatmodel.RecruitModel;
 import java.util.HashMap;
 import java.util.List;
@@ -136,13 +137,9 @@ public class JobPresenter extends BasePresenter {
   /**
    * 获取可邀约的职位列表
    */
-  public void getInviteJobs(String fairId) {
-    HashMap<String, Object> params = new HashMap<>();
-    if (!TextUtils.isEmpty(fairId)) {
-      params.put("fair_id", fairId);
-    }
+  public void getInviteJobs() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .qcGetInviteJobs(params)
+        .qcGetInviteJobs()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
@@ -276,6 +273,22 @@ public class JobPresenter extends BasePresenter {
         }, new NetWorkThrowable()));
   }
 
+  public void queryGymDetail(String gymId){
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .queryGymsDetail(gymId)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<GymWrap>>() {
+          @Override public void call(QcDataResponse<GymWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              view.onGymDetail(qcResponse.data.gym);
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
+
   public interface MVPView extends CView {
     void onEditOk();
 
@@ -291,5 +304,6 @@ public class JobPresenter extends BasePresenter {
 
     void toEditJob();
     void onJobList(List<Job> jobList);
+    void onGymDetail(Gym gym);
   }
 }

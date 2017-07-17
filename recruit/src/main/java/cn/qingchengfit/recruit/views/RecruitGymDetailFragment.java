@@ -102,21 +102,16 @@ public class RecruitGymDetailFragment extends BaseFragment
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
-    vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
 
+    return view;
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
     tab.setupWithViewPager(vp);
-    //tab.getViewTreeObserver()
-    //    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-    //      @Override public void onGlobalLayout() {
-    //        if (tab != null) {
-    //          tab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-    //          tab.notifyDataSetChanged();
-    //        }
-    //      }
-    //    });
     onGym(gym);
     presenter.queryGymDetail(gym.id);
-    return view;
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {

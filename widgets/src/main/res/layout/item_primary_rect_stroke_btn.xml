@@ -15,7 +15,6 @@
       android:background="@drawable/btn_qc_rect_round_coner_primary"
       android:textColor="?colorPrimary"
       android:textSize="17sp"
-      android:textColor="@color/qc_text_black"
       />
 
 </LinearLayout>
