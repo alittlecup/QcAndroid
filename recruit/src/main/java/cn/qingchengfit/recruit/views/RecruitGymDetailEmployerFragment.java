@@ -3,6 +3,7 @@ package cn.qingchengfit.recruit.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -59,7 +60,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
   @BindView(R2.id.tv_gym_name) TextView tvGymName;
   @BindView(R2.id.tv_address) TextView tvAddress;
   @BindView(R2.id.img_right) ImageView imgRight;
-  @BindView(R2.id.recruit_gym_tab) PagerSlidingTabImageStrip tab;
+  @BindView(R2.id.recruit_gym_tab) TabLayout tab;
   @BindView(R2.id.vp) ViewPager vp;
   ArrayList<Fragment> fragments = new ArrayList<>();
   RecruitPositionsInGymFragment hotFragment;
@@ -99,7 +100,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     vp.setAdapter(new PositionTypesAdapter(getChildFragmentManager()));
-    tab.setViewPager(vp);
+    tab.setupWithViewPager(vp);
     /*
      * 职位列表的点击事件
      */
