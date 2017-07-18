@@ -122,18 +122,34 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
     if (type == MODIFY_POSITION) {
       if (job != null) {
         civPositionName.setContent(job.name);
+        body.name = job.name;
         civSalaryRank.setContent(RecruitBusinessUtils.getSalary(job.min_salary, job.max_salary));
-        civPositionDemands.setContent(job.requirement);
-        civPositionDesc.setContent(job.description);
+        body.min_salary = job.min_salary;
+        body.max_salary = job.max_salary;
+        civPositionDemands.setContent(TextUtils.isEmpty(job.requirement) ? "请填写" : "详情");
+        body.requirement = job.requirement;
+        civPositionDesc.setContent(TextUtils.isEmpty(job.description) ? "请填写" : "详情");
+        body.description = job.description;
         civPositionRequire.setContent(
             RecruitBusinessUtils.getWorkYear(job.min_work_year, job.max_work_year)
                 + "/"
                 + RecruitBusinessUtils.getGender(job.gender)
                 + "/"
                 + RecruitBusinessUtils.getDegree(getContext(), job.education));
+        body.min_work_year = job.min_work_year;
+        body.max_work_year = job.max_work_year;
+        body.gender = job.gender;
+        body.education = job.education;
         if (job.welfare != null) {
           civPositionWelfare.setContent(RecruitBusinessUtils.getPositionDamen(job.welfare));
         }
+        body.welfare = job.welfare;
+        body.min_age = job.min_age;
+        body.max_age = job.max_age;
+        body.min_height = job.min_height;
+        body.max_height = job.max_height;
+        body.min_weight = job.min_weight;
+        body.min_weight = job.min_weight;
       }
       toolbar.inflateMenu(R.menu.menu_save);
       toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

@@ -145,6 +145,7 @@ public class DialogSendResumeFragment extends DialogFragment {
      */
     @OnClick(R2.id.btn_go_resume) public void onBtnGoResumeClicked() {
       router.toMyResume();
+      dismiss();
     }
 
     /**
