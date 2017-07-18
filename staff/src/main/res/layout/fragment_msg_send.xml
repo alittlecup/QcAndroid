@@ -68,7 +68,7 @@
             android:layout_height="40dp"
             android:layout_gravity="bottom|end"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_add"
+            app:srcCompat="@drawable/vd_add"
             />
 
       </LinearLayout>

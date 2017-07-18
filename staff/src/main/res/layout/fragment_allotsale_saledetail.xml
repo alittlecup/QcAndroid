@@ -44,14 +44,14 @@
             app:layout_scrollFlags="scroll"
             >
 
-          <TextView
+          <cn.qingchengfit.support.widgets.CompatTextView
               android:layout_width="wrap_content"
               android:layout_height="match_parent"
-              android:drawableLeft="@drawable/ic_add"
               android:drawablePadding="8dp"
               android:gravity="center"
               android:text="@string/qc_allotsale_sale_detail_add_stud"
               android:textColor="@color/green"
+              app:drawableStart="@drawable/vd_add"
               style="@style/Qc.TextCommonGrey"
               />
         </LinearLayout>

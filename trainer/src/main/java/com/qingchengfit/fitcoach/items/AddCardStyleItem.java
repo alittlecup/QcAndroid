@@ -30,7 +30,8 @@ public class AddCardStyleItem extends AbstractFlexibleItem<AddCardStyleItem.AddC
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, AddCardStyleVH holder, int position, List payloads) {
         holder.tv.setText(txt);
-        holder.tv.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(holder.tv.getContext(), R.drawable.ic_add), null, null,
+      holder.tv.setCompoundDrawablesWithIntrinsicBounds(
+          ContextCompat.getDrawable(holder.tv.getContext(), R.drawable.vd_add), null, null,
             null);
     }
 

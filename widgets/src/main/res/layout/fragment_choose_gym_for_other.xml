@@ -41,7 +41,7 @@
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/ic_add"
+        app:srcCompat="@drawable/vd_add"
         />
 
     <Space
