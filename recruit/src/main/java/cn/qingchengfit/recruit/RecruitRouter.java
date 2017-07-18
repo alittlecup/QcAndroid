@@ -138,7 +138,7 @@ public class RecruitRouter extends InnerRouter {
   }
 
   public void toReplaceGymDetail(Gym service){
-    doAction(RecruitGymDetailFragment.newInstance(service));
+    doAction(RecruitGymDetailEmployerFragment.newInstance(service));
   }
 
   /**
