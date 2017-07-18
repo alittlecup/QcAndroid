@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -53,16 +54,16 @@
       tools:text="小组成员（0）"
       />
 
-  <TextView
+  <cn.qingchengfit.support.widgets.CompatTextView
       android:id="@+id/tv_add_member"
       android:layout_width="match_parent"
       android:layout_height="50dp"
       android:background="@color/white"
-      android:drawableLeft="@drawable/ic_add"
       android:drawablePadding="8dp"
       android:paddingLeft="15dp"
       android:text="添加成员"
       android:textColor="@color/qc_allotsale_green"
+      app:drawableStart="@drawable/vd_add"
       />
 
   <android.support.v7.widget.RecyclerView

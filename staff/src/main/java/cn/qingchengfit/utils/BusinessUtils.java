@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentBean;
@@ -336,6 +337,16 @@ public class BusinessUtils {
         String ret = "";
         for (int i = 0; i < coachServices.size(); i++) {
             ret = ret.concat(coachServices.get(i).getName()).concat(",");
+        }
+        return ret;
+    }
+
+    public static <T extends Personage> List<String> PersonIdsExSu(List<T> students) {
+        List<String> ret = new ArrayList<>();
+        for (int i = 0; i < students.size(); i++) {
+            if (!students.get(i).is_superuser) {
+                ret.add(students.get(i).getId());
+            }
         }
         return ret;
     }

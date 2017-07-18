@@ -1,8 +1,5 @@
 package cn.qingchengfit.recruit.views.jobfair;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +9,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -36,8 +32,6 @@ import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * power by
@@ -149,6 +143,10 @@ public class JobfairSignUpFragment extends BaseFragment {
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
+              //getFragmentManager().beginTransaction().remove(JobfairSignUpFragment.this)
+              //    .add(R.id.frag_recruit,JobFairSuccessFragment.newInstance(gym))
+              //    .addToBackStack(null)
+
               router.toJoinFairSuc(gym);
             } else {
               onShowError(qcResponse.getMsg());

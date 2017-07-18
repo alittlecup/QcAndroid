@@ -36,7 +36,6 @@ import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
 import cn.qingchengfit.recruit.views.SetNameCommenFragment;
 import cn.qingchengfit.recruit.views.jobfair.ChooseGymInJobfairFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobFairSuccessFragment;
-import cn.qingchengfit.recruit.views.jobfair.JobFairSuccessFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobfairDetailFragment;
 import cn.qingchengfit.recruit.views.jobfair.JobfairSignUpFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;

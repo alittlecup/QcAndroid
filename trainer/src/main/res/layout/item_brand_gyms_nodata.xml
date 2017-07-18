@@ -23,7 +23,7 @@
         android:id="@+id/gym_img"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        app:srcCompat="@drawable/ic_add"
+        app:srcCompat="@drawable/vd_add"
         />
 
     <LinearLayout

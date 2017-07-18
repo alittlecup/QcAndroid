@@ -10,6 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
+import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventChoosePerson;
@@ -46,6 +47,10 @@ public class PositionHeaderItem extends AbstractHeaderItem<PositionHeaderItem.Po
 
     @Override public PositionHeaderVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
         return new PositionHeaderVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    }
+
+    protected boolean canRemoveSu(Personage personage) {
+        return true;
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, PositionHeaderVH holder, int position, List payloads) {
@@ -120,7 +125,9 @@ public class PositionHeaderItem extends AbstractHeaderItem<PositionHeaderItem.Po
                                 QcStudentBean qs = new QcStudentBean(childrens.get(i).getStaff());
                                 if (!DirtySender.studentList.contains(qs)) DirtySender.studentList.add(qs);
                             } else {
-                                DirtySender.studentList.remove(childrens.get(i).getStaff());
+                                if (canRemoveSu(childrens.get(i).getStaff())) {
+                                    DirtySender.studentList.remove(childrens.get(i).getStaff());
+                                }
                             }
                             try {
                                 adapter.notifyDataSetChanged();

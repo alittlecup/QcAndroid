@@ -44,12 +44,21 @@ public abstract class InnerRouter {
     }
 
   public void addNoStack(Fragment s) {
+    getFragmentManager().popBackStackImmediate();
     getFragmentManager().beginTransaction()
         .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
             R.anim.slide_right_out)
         .add(getFragId(), s)
         .commit();
   }
+
+  public void remove(Fragment fragment) {
+    getFragmentManager().beginTransaction()
+        //.hide(fragment)
+        .remove(fragment).commit();
+  }
+
+
 
 
 

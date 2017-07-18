@@ -63,17 +63,15 @@ import rx.functions.Action1;
  */
 @FragmentWithArgs public class ChatChooseInGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.checkbox) CheckBox checkbox;
+  @BindView(R.id.checkbox) protected CheckBox checkbox;
+  protected CommonFlexAdapter adapter;
     @BindView(R.id.img_avatar) ImageView imgAvatar;
     @BindView(R.id.tv_gym_name) TextView tvGymName;
     @BindView(R.id.tv_staff_count) TextView tvStaffCount;
     @BindView(R.id.ic_entry_triangel) ImageView icEntryTriangel;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
-
     @Arg ChatGym chatGym;
-
     private List<AbstractFlexibleItem> datas = new ArrayList<>();
-    private CommonFlexAdapter adapter;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +124,7 @@ import rx.functions.Action1;
         datas.clear();
 
         if (chatGym.coaches != null && chatGym.coaches.size() > 0) {
-            PositionHeaderItem item = new PositionHeaderItem("教练");
+          PositionHeaderItem item = newPositionHeader("教练");
             for (int i = 0; i < chatGym.coaches.size(); i++) {
                 item.addChild(new ChooseStaffItem(chatGym.coaches.get(i), ChooseStaffItem.UNDER_GYM));
             }
@@ -135,12 +133,12 @@ import rx.functions.Action1;
 
         if (chatGym.staffs != null && chatGym.staffs.size() > 0) {
             String postionStr = chatGym.staffs.get(0).position_str;
-            PositionHeaderItem item = new PositionHeaderItem(postionStr);
+          PositionHeaderItem item = newPositionHeader(postionStr);
             for (int i = 0; i < chatGym.staffs.size(); i++) {
                 if (!chatGym.staffs.get(i).getPosition_str().equalsIgnoreCase(postionStr)) {
                     datas.add(item);
                     postionStr = chatGym.staffs.get(i).position_str;
-                    item = new PositionHeaderItem(postionStr);
+                  item = newPositionHeader(postionStr);
                 }
                 item.addChild(new ChooseStaffItem(chatGym.staffs.get(i), ChooseStaffItem.UNDER_GYM));
             }
@@ -181,6 +179,10 @@ import rx.functions.Action1;
             return true;
         }
         return false;
+    }
+
+  protected PositionHeaderItem newPositionHeader(String s) {
+    return new PositionHeaderItem(s);
     }
 
     @OnClick(R.id.layout_gym) public void onClickLayoutGym() {
