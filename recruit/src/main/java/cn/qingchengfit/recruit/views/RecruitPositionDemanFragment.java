@@ -110,7 +110,7 @@ import java.util.Arrays;
         }
       }
     });
-    twoScrollPicker.show(d, d, 0, 0);//// TODO: 2017/6/8 选择时当前的位置
+    twoScrollPicker.show(d, d, jobBody.min_work_year + 1, jobBody.max_work_year + 1);//// TODO: 2017/6/8 选择时当前的位置
   }
 
   //选择性别
@@ -123,7 +123,7 @@ import java.util.Arrays;
         jobBody.gender = pos - 1;
       }
     });
-    simpleScrollPicker.show(d, 0);
+    simpleScrollPicker.show(d, jobBody.gender + 1);
   }
 
   //选择年龄
@@ -145,7 +145,7 @@ import java.util.Arrays;
         }
       }
     });
-    twoScrollPicker.show(d, d, 0, 0);
+    twoScrollPicker.show(d, d, jobBody.min_age + 1, jobBody.max_age + 1);
   }
 
   //选择学历
@@ -162,7 +162,7 @@ import java.util.Arrays;
         }
       }
     });
-    simpleScrollPicker.show(d, 0);
+    simpleScrollPicker.show(d, jobBody.education);
   }
 
   //选择身高
@@ -184,7 +184,8 @@ import java.util.Arrays;
         }
       }
     });
-    twoScrollPicker.show(d, d, 0, 0);
+    twoScrollPicker.show(d, d, jobBody.min_height.intValue() + 1,
+        jobBody.max_height.intValue() + 1);
   }
 
   //选择体重
@@ -201,11 +202,12 @@ import java.util.Arrays;
           return;
         } else {
           civWorkWeight.setContent(d.get(left) + "-" + d.get(right));
-          jobBody.min_height = left - 1f;
-          jobBody.max_height = right - 1f;
+          jobBody.min_weight = left - 1f;
+          jobBody.max_weight = right - 1f;
         }
       }
     });
-    twoScrollPicker.show(d, d, 0, 0);
+    twoScrollPicker.show(d, d, jobBody.min_weight.intValue() + 1,
+        jobBody.max_weight.intValue() + 1);
   }
 }
