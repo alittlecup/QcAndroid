@@ -126,6 +126,7 @@ import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.gym.AddBrandInMainFragment;
 import cn.qingchengfit.staffkit.views.gym.AddNewCoachFragment;
+import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
 import cn.qingchengfit.staffkit.views.gym.ChooseGroupCourseFragment;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.staffkit.views.gym.GymDetailFragment;
@@ -404,6 +405,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.UpgradeInfoDialogFragmentModule.class, AppComponent.RenewalHistoryFragmentModule.class, AppComponent.GuideModule.class,
     AppComponent.CardListFragmentModule.class, AppComponent.MutiChooseGymFragmentModule.class, AppComponent.SetGymFragmentModule.class,
     AppComponent.CourseTypeFormFragmentModule.class, AppComponent.SignUpChooseModule.class, AppComponent.SignUpDetailModule.class,
+    AppComponent.ChooseCoachFragmentModule.class,
     //文章评论
     AppComponent.ArticleCommentsListFragmentModule.class, AppComponent.ArticleReplyFragmentModule.class,
     AppComponent.ChooseOriginModule.class,
@@ -2325,6 +2327,13 @@ public interface AppComponent {
     }
   }
 
+    @Subcomponent() public interface ChooseCoachFragmentSubcomponent
+        extends AndroidInjector<ChooseCoachFragment> {
+        @Subcomponent.Builder public abstract class Builder
+            extends AndroidInjector.Builder<ChooseCoachFragment> {
+        }
+    }
+
     /**
      * {@link GymInfoNoEditFragment}
      */
@@ -2423,11 +2432,6 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(GymSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = LoginSubcomponent.class) abstract class LoginModule {
-        @Binds @IntoMap @ActivityKey(LoginActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(LoginSubcomponent.Builder builder);
-    }
-
     //void inject(RealCardListFragment activity);
     //
     //void inject(BalanceCardListFragment activity);
@@ -2449,14 +2453,20 @@ public interface AppComponent {
 
     //cn.qingchengfit.inject.commpont.CommonComponent plus(GymMoudle gymMoudle);
 
+    @Module(subcomponents = LoginSubcomponent.class) abstract class LoginModule {
+        @Binds @IntoMap @ActivityKey(LoginActivity.class)
+        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
+            LoginSubcomponent.Builder builder);
+    }
+
+    ;
+
     @Module(subcomponents = RealValueCardChargeSubcomponent.class)
     abstract class RealValueCardChargeModule {
         @Binds @IntoMap @FragmentKey(RealValueCardChargeFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             RealValueCardChargeSubcomponent.Builder builder);
     }
-
-    ;
 
     @Module(subcomponents = CardRefundSubcomponent.class) abstract class CardRefundModule {
         @Binds @IntoMap @FragmentKey(CardRefundFragment.class)
@@ -3918,5 +3928,11 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(RecruitMessageListFragmentSubcomponent.Builder builder);
     }
 
+    @Module(subcomponents = ChooseCoachFragmentSubcomponent.class)
+    abstract class ChooseCoachFragmentModule {
+        @Binds @IntoMap @FragmentKey(ChooseCoachFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+            ChooseCoachFragmentSubcomponent.Builder builder);
+    }
 
 }

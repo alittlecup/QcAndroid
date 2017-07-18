@@ -29,7 +29,6 @@ import cn.qingchengfit.recruit.item.JobFairFooterItem;
 import cn.qingchengfit.recruit.item.JobFairHorizonItem;
 import cn.qingchengfit.recruit.item.JobFairHorizonMatchParentItem;
 import cn.qingchengfit.recruit.item.RecruitManageItem;
-import cn.qingchengfit.recruit.item.ResumeItem;
 import cn.qingchengfit.recruit.model.EndFairTips;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.model.JobFair;
@@ -40,7 +39,6 @@ import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.support.animator.FlipAnimation;
 import cn.qingchengfit.utils.ListUtils;
-import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.fragments.TipDialogFragment;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -249,28 +247,13 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     super.onDestroyView();
   }
 
+  @Override protected void removeMainItem() {
+    commonFlexAdapter.removeRange(4, commonFlexAdapter.getItemCount() - 4);
+  }
+
   @Override public void onResumeList(List<Resume> resumes, int total, int page) {
     layoutFilter.setRefreshing(false);
-    if (page == 1) {
-      commonFlexAdapter.removeRange(4, commonFlexAdapter.getItemCount() - 4);
-    }
-    if (resumes != null && resumes.size() != 0) {
-      commonFlexAdapter.setEndlessTargetCount(total);
-      rv.setPadding(0, 0, 0, MeasureUtils.autoPaddingBottom(108f, total, getContext(),
-          MeasureUtils.dpToPx(48f, getResources())));
-      List<IFlexible> tm = new ArrayList<>();
-      for (Resume resume : resumes) {
-        if (page == 1) {
-          commonFlexAdapter.addItem(new ResumeItem(resume));
-        } else {
-          tm.add(new ResumeItem(resume));
-        }
-      }
-      if (page != 1) commonFlexAdapter.onLoadMoreComplete(tm);
-    } else {
-      //stopLoadMore();
-      commonFlexAdapter.onLoadMoreComplete(null);
-    }
+    super.onResumeList(resumes, total, page);
     if (page == 1 && commonFlexAdapter.getItemCountOfTypes(R.layout.item_resume) == 0) {
       addEmptyPage();
     }

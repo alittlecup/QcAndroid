@@ -28,6 +28,7 @@ import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.train.moudle.TrainIds;
 import cn.qingchengfit.staffkit.train.moudle.TrainMoudle;
 import cn.qingchengfit.staffkit.views.custom.CitiesData;
+import cn.qingchengfit.utils.CrashHandler;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -132,8 +133,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
         }
 
         initInjcet();
-        //if (!BuildConfig.DEBUG)
-        //    CrashHandler.getInstance().init(this);
+        if (!BuildConfig.DEBUG) CrashHandler.getInstance().init(this);
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
             @Override public void handleError(Throwable e) {
                 if (e != null) {

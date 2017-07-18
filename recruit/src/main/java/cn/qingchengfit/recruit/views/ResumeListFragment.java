@@ -16,7 +16,7 @@ import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,23 +88,28 @@ public class ResumeListFragment extends BaseListFragment
     return "没有匹配的简历";
   }
 
+  protected void removeMainItem() {
+    commonFlexAdapter.clear();
+  }
   @Override public void onResumeList(List<Resume> resumes, int total, int page) {
     if (srl != null) srl.setRefreshing(false);
     if (resumes != null) {
       if (page == 1) {
-        commonFlexAdapter.clear();
+        removeMainItem();
+        commonFlexAdapter.setEndlessTargetCount(total);
         if (resumes.size() == 0) {
           hasItem = false;
-          setDatas(new ArrayList<AbstractFlexibleItem>(), 1);
         } else {
           hasItem = true;
         }
       }
-      commonFlexAdapter.setEndlessTargetCount(total);
+      List<IFlexible> items = new ArrayList<>();
       for (Resume resume : resumes) {
-        commonFlexAdapter.addItem(new ResumeItem(resume));
+        items.add(new ResumeItem(resume));
       }
-      stopLoadMore();
+      commonFlexAdapter.onLoadMoreComplete(items, 500);
+    } else {
+      commonFlexAdapter.onLoadMoreComplete(null);
     }
   }
 

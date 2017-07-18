@@ -1,6 +1,8 @@
 package cn.qingchengfit.utils;
 
 import android.support.v4.util.ArrayMap;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventInitApp;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import java.util.HashMap;
@@ -30,6 +32,10 @@ public class GymUtils {
 
   public static String getBrandId(CoachService coachService, Brand brand) {
     if (isInBrand(coachService)) {
+      if (brand == null) {
+        RxBus.getBus().post(new EventInitApp());
+        return "";
+      }
       return brand.getId();
     } else {
       return coachService.brand_name;
@@ -39,6 +45,10 @@ public class GymUtils {
   public static HashMap<String, Object> getParams(CoachService gymBase, Brand brand) {
     HashMap<String, Object> params = new HashMap<>();
     if (isInBrand(gymBase)) {
+      if (brand == null) {
+        RxBus.getBus().post(new EventInitApp());
+        return params;
+      }
       params.put("brand_id", brand.getId());
     } else {
       params.put("id", gymBase.getId() + "");
@@ -50,7 +60,11 @@ public class GymUtils {
   public static ArrayMap<String, String> getParamsV2(CoachService gymBase, Brand brand) {
     ArrayMap<String, String> params = new ArrayMap<>();
     if (isInBrand(gymBase)) {
-      params.put("brand_id", brand == null ? null : brand.getId());
+      if (brand == null) {
+        RxBus.getBus().post(new EventInitApp());
+        return params;
+      }
+      params.put("brand_id", brand.getId());
     } else {
       params.put("id", gymBase.getId());
       params.put("model", gymBase.getModel());
@@ -70,6 +84,10 @@ public class GymUtils {
       String shopid) {
     HashMap<String, Object> params = new HashMap<>();
     if (isInBrand(gymBase)) {
+      if (brand == null) {
+        RxBus.getBus().post(new EventInitApp());
+        return params;
+      }
       params.put("brand_id", brand.getId());
       if (shopid != null) params.put("shop_id", shopid);
     } else {

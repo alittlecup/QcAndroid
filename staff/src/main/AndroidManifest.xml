@@ -342,7 +342,14 @@
         android:launchMode="singleTask"
         android:screenOrientation="portrait"
         android:theme="@style/mainStyle"
-        />
+        >
+      <intent-filter>
+        <action android:name="cn.qingcheng.main"/>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
     <activity
         android:name=".views.login.LoginActivity"
         android:launchMode="singleTask"

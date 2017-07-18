@@ -1,10 +1,4 @@
-package cn.qingchengfit.network.errors;
-
-import cn.qingchengfit.RxBus;
-import cn.qingchengfit.events.EventNetWorkError;
-import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.ToastUtils;
-import rx.functions.Action1;
+package cn.qingchengfit.events;
 
 /**
  * power by
@@ -24,13 +18,8 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/3/24.
+ * Created by Paper on 2017/7/7.
  */
 
-public class NetWorkThrowable implements Action1<Throwable> {
-    @Override public void call(Throwable throwable) {
-      LogUtil.e("NetWorkThrowable", throwable.getMessage());
-      ToastUtils.show(throwable.getMessage());
-      RxBus.getBus().post(new EventNetWorkError());
-    }
+public class EventInitApp {
 }

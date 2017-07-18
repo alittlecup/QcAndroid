@@ -268,7 +268,7 @@ public class MainMsgFragment extends BaseFragment
 
                         @Override public void onCreateFailed(int i, String s) {
                             LogUtil.e("code:" + i + "  " + s);
-                            //ToastUtils.show("code:" + i + "  " + s);
+
                         }
                     });
                 List<String> ret = data.getStringArrayListExtra("ids");
@@ -278,6 +278,7 @@ public class MainMsgFragment extends BaseFragment
                 }
                 DirtySender.studentList.clear();
                 addConversationProcessor.creaetGroupWithName(ret);
+
             }
         } else {
             if (requestCode == ChooseActivity.CONVERSATION_FRIEND) {

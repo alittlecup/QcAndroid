@@ -100,7 +100,8 @@ public class EditStudentInfoPresenter implements Presenter {
     }
 
     public void saveStudent(final User_Student user_student) {
-        addSp = usecase.addStudent(user_student, gymWrapper.id(), gymWrapper.model(), gymWrapper.brand_id(), new Action1<QcResponseData>() {
+      addSp =
+          usecase.addStudent(user_student, gymWrapper.getParams(), new Action1<QcResponseData>() {
             @Override public void call(QcResponseData qcResponse) {
                 if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                     RxBus.getBus().post(new EventFreshStudent());
