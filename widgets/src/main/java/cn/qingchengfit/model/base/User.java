@@ -25,8 +25,9 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 16/11/15.
  */
 
-public class User implements Parcelable {
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+public class User extends Personage implements Parcelable {
+
+  public static final Creator<User> CREATOR = new Creator<User>() {
         @Override public User createFromParcel(Parcel source) {
             return new User(source);
         }
@@ -35,57 +36,25 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
-    @SerializedName("username") public String username;
-    @SerializedName("phone") public String phone;
-    @SerializedName("id") public String id;
     @SerializedName("city") public String city;
     @SerializedName("description") public String desc;
-    @SerializedName("avatar") public String avatar;
     @SerializedName("address") public String address;
     @SerializedName("joined_at") public String joined_at;
     @SerializedName("hidden_phone") public String hidden_phone;
     @SerializedName("date_of_birth") public String date_of_birth;
-    @SerializedName("gender") public int gender;
+
 
     public User() {
     }
 
     protected User(Parcel in) {
-        this.username = in.readString();
-        this.phone = in.readString();
-        this.id = in.readString();
+      super(in);
         this.city = in.readString();
         this.desc = in.readString();
-        this.avatar = in.readString();
         this.address = in.readString();
         this.joined_at = in.readString();
         this.hidden_phone = in.readString();
         this.date_of_birth = in.readString();
-        this.gender = in.readInt();
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getCity() {
@@ -102,14 +71,6 @@ public class User implements Parcelable {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public String getAddress() {
@@ -144,29 +105,17 @@ public class User implements Parcelable {
         this.date_of_birth = date_of_birth;
     }
 
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
     @Override public int describeContents() {
         return 0;
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.username);
-        dest.writeString(this.phone);
-        dest.writeString(this.id);
+      super.writeToParcel(dest, flags);
         dest.writeString(this.city);
         dest.writeString(this.desc);
-        dest.writeString(this.avatar);
         dest.writeString(this.address);
         dest.writeString(this.joined_at);
         dest.writeString(this.hidden_phone);
         dest.writeString(this.date_of_birth);
-        dest.writeInt(this.gender);
     }
 }

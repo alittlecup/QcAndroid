@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="28dp"
+        app:srcCompat="@drawable/vd_title_line"
+        />
+
+    <TextView
+        android:id="@+id/tv_fair_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxWidth="255dp"
+        android:textColor="@color/text_dark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="赛普学院春季毕业生联合专场招聘会"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="10dp"
+        android:text="申请成功后，您可以对招聘会的人才进行联系/邀约"
+        />
+
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_gym"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_hint="选择参加场馆"
+      app:civ_lable="参加场馆"
+      style="@style/QcCivClickStyle"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_name"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="联系人"
+      style="@style/QcCivInputStyle"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_phone"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_inputnum="true"
+      app:civ_lable="联系人手机"
+      style="@style/QcCivInputStyle"
+      />
+
+  <Button
+      android:id="@+id/btn_join"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:enabled="false"
+      android:text="提交申请"
+      style="@style/QcBtnPrimery"
+      />
+</LinearLayout>

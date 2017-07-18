@@ -77,7 +77,7 @@ public class ChatAdatper extends RecyclerView.Adapter<ChatAdatper.ChatViewHolder
             .asBitmap()
             .placeholder(R.drawable.ic_default_head_nogender)
             .into(new CircleImgWrapper(holder.avatar, holder.itemView.getContext()));
-        if (followRecord.type.equalsIgnoreCase("record")) {
+        if (followRecord.type.equalsIgnoreCase("Record")) {
             holder.chatImg.setVisibility(View.GONE);
             holder.chatText.setVisibility(View.VISIBLE);
             holder.chatText.setText(followRecord.content);

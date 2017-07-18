@@ -21,10 +21,10 @@
   </item>
   <item android:state_enabled="false">
     <shape android:shape="rectangle">
-      <corners android:radius="2dp"></corners>
-      <solid android:color="@color/grey"></solid>
-      <stroke android:color="@color/grey"></stroke>
-      <size android:height="50dp" android:width="130dp"></size>
+      <corners android:radius="2dp"/>
+      <solid android:color="@color/grey"/>
+      <stroke android:color="@color/grey"/>
+      <size android:height="50dp" android:width="130dp"/>
     </shape>
   </item>
 </selector>

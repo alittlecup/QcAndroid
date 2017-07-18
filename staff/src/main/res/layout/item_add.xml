@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="45dp"
@@ -15,14 +16,14 @@
       android:orientation="horizontal"
       >
 
-    <TextView
+    <cn.qingchengfit.support.widgets.CompatTextView
         android:id="@+id/item_gym_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_add"
         android:drawablePadding="8dp"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
+        app:drawableStart="@drawable/vd_add"
         tools:text=" 新增健身房"
         style="@style/Qc.TextCommonGrey"
         />

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="ExpendableTextView">
+    <attr format="reference|integer" name="etv_MaxLinesOnShrink"/>
+    <attr format="reference|string" name="etv_EllipsisHint"/><!--default is ..-->
+    <attr format="reference|string" name="etv_ToExpandHint"/><!--"to expand" hint string, default is "Expand"-->
+    <attr format="reference|string" name="etv_ToShrinkHint"/><!--"to shrink" hint string, default is "Shrink"-->
+    <attr format="reference|string" name="etv_GapToExpandHint"/><!--gap between "toExpandHint" and "trimmed text"-->
+    <attr format="reference|string" name="etv_GapToShrinkHint"/><!--gap between "toShrinkHint" and "trimmed text"-->
+    <attr format="reference|boolean" name="etv_EnableToggle"/><!--if toggle the state when click ExpandTextView-->
+    <attr format="reference|boolean" name="etv_ToExpandHintShow"/><!--if show "toExpandHint"-->
+    <attr format="reference|boolean" name="etv_ToShrinkHintShow"/><!--if show "toShrinkHint"-->
+    <attr format="reference|color" name="etv_ToExpandHintColor"/><!--text color of "toExpandHint"-->
+    <attr format="reference|color" name="etv_ToShrinkHintColor"/><!--text color of "toShrinkHint"-->
+    <attr format="reference|color" name="etv_ToExpandHintColorBgPressed"/><!--background color if "toExpandHint" pressed-->
+    <attr format="reference|color" name="etv_ToShrinkHintColorBgPressed"/><!--background color if "toShrinkHint" pressed-->
+    <attr format="enum" name="etv_InitState"><!--init state, default is shrink-->
+      <enum name="shrink" value="0"/>
+      <enum name="expand" value="1"/>
+    </attr>
+  </declare-styleable>
+
+</resources>

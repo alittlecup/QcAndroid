@@ -6,9 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,11 +21,14 @@ import butterknife.OnClick;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.item.RecruitPositionInGymItem;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.presenter.RecruitGymDetailPresenter;
 import cn.qingchengfit.utils.PhotoUtils;
-import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -60,9 +65,11 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
   ArrayList<Fragment> fragments = new ArrayList<>();
   RecruitPositionsInGymFragment hotFragment;
   RecruitPositionsInGymFragment closeFragment;
-  RecruitPositionsInGymFragment specialFragment;
+  JobFairListFragment specialFragment;
 
   @Inject RecruitGymDetailPresenter presenter;
+  @Inject RecruitRouter recruitRouter;
+
   Gym gym;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
@@ -77,13 +84,13 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    gym = getArguments().getParcelable("gym");
     hotFragment = new RecruitPositionsInGymFragment();
     closeFragment = new RecruitPositionsInGymFragment();
-    specialFragment = new RecruitPositionsInGymFragment();
+    specialFragment = RecruitStaffMyJobFairFragment.newInstance(gym.id);//专场招聘会
     fragments.add(hotFragment);
     fragments.add(closeFragment);
     fragments.add(specialFragment);
-    gym = getArguments().getParcelable("gym");
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,8 +99,29 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
-    vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
+    vp.setAdapter(new PositionTypesAdapter(getChildFragmentManager()));
     tab.setupWithViewPager(vp);
+    /*
+     * 职位列表的点击事件
+     */
+    hotFragment.setListener(new FlexibleAdapter.OnItemClickListener() {
+      @Override public boolean onItemClick(int i) {
+        if (hotFragment.getItem(i) instanceof RecruitPositionInGymItem) {
+          recruitRouter.tojobDetailEmployer(
+              ((RecruitPositionInGymItem) hotFragment.getItem(i)).getJob());
+        }
+        return false;
+      }
+    });
+    closeFragment.setListener(new FlexibleAdapter.OnItemClickListener() {
+      @Override public boolean onItemClick(int i) {
+        if (closeFragment.getItem(i) instanceof RecruitPositionInGymItem) {
+          recruitRouter.tojobDetailEmployer(
+              ((RecruitPositionInGymItem) closeFragment.getItem(i)).getJob());
+        }
+        return false;
+      }
+    });
     onGym(gym);
     presenter.queryGymDetail(gym.id);
     return view;
@@ -102,6 +130,13 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitile.setText("公司详情");
+    toolbar.inflateMenu(R.menu.menu_preview);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        recruitRouter.toGymDetial(gym);
+        return false;
+      }
+    });
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
@@ -112,7 +147,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
   }
 
   public void onGym(Gym service) {
-    imgRight.setVisibility(View.GONE);
+    imgRight.setVisibility(View.VISIBLE);
     if (service == null) return;
     PhotoUtils.small(imgGym, service.photo);
     tvGymName.setText(service.name);
@@ -120,7 +155,25 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
   }
 
   @Override public void onJobList(List<Job> jobs, int page, int totalCount) {
+    if (hotFragment != null) {
+      if (jobs != null) {
+        List<Job> hotJobs = new ArrayList<>();
+        List<Job> closeJobs = new ArrayList<>();
+        for (Job job : jobs) {
+          if (job.published) {
+            hotJobs.add(job);
+          } else {
+            closeJobs.add(job);
+          }
+        }
+        hotFragment.setData(hotJobs);
+        closeFragment.setData(closeJobs);
+      }
+    }
+  }
 
+  @Override public void onPermission(boolean has) {
+    recruitRouter.toPermssion(gym.id);
   }
 
   @Override public String getFragmentName() {
@@ -135,17 +188,67 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
    * 场馆介绍
    */
   @OnClick(R2.id.layout_gym_intro) public void onLayoutGymIntroClicked() {
+    recruitRouter.toWriteGymIntro(gym);
+  }
+
+  /**
+   * 场馆信息修改
+   */
+  @OnClick(R2.id.layout_gym_info) public void onLayoutGymInfoClicked() {
+    recruitRouter.editGymInfo(gym.id);
   }
 
   /**
    * 权限设置
    */
   @OnClick(R2.id.layout_permission) public void onLayoutPermissionClicked() {
+    presenter.queryPermission(gym.id);
   }
 
   /**
    * 发布新职位
    */
   @OnClick(R2.id.btn_publish_new_position) public void onViewClicked() {
+    recruitRouter.toPublishPosition(gym.getId(), null, RecruitPublishJobFragment.PUBLISH_POSITION);
   }
+
+  class PositionTypesAdapter extends FragmentStatePagerAdapter
+      implements PagerSlidingTabImageStrip.ImageTabProvider {
+
+    public PositionTypesAdapter(FragmentManager fm) {
+      super(fm);
+    }
+
+    @Override public Fragment getItem(int position) {
+      return fragments.get(position);
+    }
+
+    @Override public int getCount() {
+      return fragments.size();
+    }
+
+    @Override public CharSequence getPageTitle(int position) {
+      return getTextStr(position);
+    }
+
+    @Override public int getItemPosition(Object object) {
+      return POSITION_NONE;
+    }
+
+    @Override public String getTextStr(int position) {
+      switch (position) {
+        case 0:
+          return "热招职位";
+        case 1:
+          return "已关闭职位";
+        default:
+          return "专场招聘会";
+      }
+    }
+
+    @Override public boolean getShowRed(int position) {
+      return false;
+    }
+  }
+
 }

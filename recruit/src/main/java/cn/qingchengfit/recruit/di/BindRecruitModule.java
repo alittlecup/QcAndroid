@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.di;
 
+import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -38,5 +39,26 @@ import dagger.android.support.AndroidSupportInjectionModule;
       Recruit.WorkexpeEditFragmentModule.class, Recruit.ResumeShowImgsFragmentModule.class, Recruit.RecordEditFragmentModule.class,
       Recruit.ResumeBaseInfoFragmentModule.class, Recruit.ResumeEditDescFragmentModule.class,
       Recruit.ResumeWorkExpPreviewFragmentModule.class,
+      Recruit.ResumeMarketHomeFragmentModule.class, Recruit.RecruitManageFragmentModule.class,
+      Recruit.RecruitGymDetailEmployerFragmentModule.class,
+      Recruit.RecruitPermsionFragmentModule.class, Recruit.ResumeListFragmentModule.class,
+      Recruit.RecruitPositionDetailEmployerFragmentModule.class,
+      Recruit.ResumeHandleFragmentModule.class, Recruit.RecruitWriteGymIntroFragmentModule.class,
+      Recruit.RecruitPositionsStarredFragmentModule.class, Recruit.JobFairListFragmentModule.class,
+      Recruit.ResumeStarredFragmentModule.class, Recruit.RecruitStaffMyJobFairFragmentModule.class,
+      Recruit.RecruitUserMyJobFairFragmentModule.class, Recruit.JobfairDetailFragmentModule.class,
+      Recruit.JobfairSignUpFragmentModule.class, Recruit.JobsListFragmentModule.class,
+
+      Recruit.RecruitPermsionFragmentModule.class, Recruit.RecruitPublishJobFragmentModule.class,
+      Recruit.ResumeDetailFragmentModule.class, Recruit.ResumeRecievedFragmentModule.class,
+      Recruit.EditGymInfoFragmentModule.class, Recruit.JobFairSuccessFragmentModule.class,
+      Recruit.ChooseGymInRecruitFragmentModule.class,
+      Recruit.ChooseGymInJobfairFragmentModule.class,
+      Recruit.JobFairSuccessFragmentModule.class, Recruit.JobFairsAllFragmentModule.class,
   }) abstract RecruitActivity contributeRecruitActivityInjector();
+
+  @ContributesAndroidInjector(modules = {
+      AndroidSupportInjectionModule.class
+  })
+  abstract JobSearchChatActivity contributeJobSearchActivityInjector();
 }

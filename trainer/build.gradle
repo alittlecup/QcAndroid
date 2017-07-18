@@ -155,11 +155,12 @@ dependencies {
   //  }
   compile('cn.qingchegfit.chat:chat:latest.integration') {
     exclude group: 'com.upyun', module: 'java-sdk'
+    exclude group: 'com.tencent.*'
   }
   compile('cn.qingchegfit.chat:sdk:latest.integration') {
     exclude group: 'com.upyun', module: 'java-sdk'
+    exclude group: 'com.tencent.*'
   }
-  compile 'cn.qingchegfit.chat:tsl:latest.integration'
   compile 'cn.qingchegfit.widgets:weekview:1.0@aar'
 
   compile fileTree(include: ['*.jar'], dir: 'libs')

@@ -59,4 +59,13 @@ public class ListUtils {
     }
     return p;
     }
+
+  public static <T> ArrayList<T> list2array(List<T> s) {
+    ArrayList<T> ret = new ArrayList<>();
+    if (s == null) return null;
+    for (T t : s) {
+      ret.add(t);
+    }
+    return ret;
+  }
 }

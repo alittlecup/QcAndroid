@@ -1,13 +1,15 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="7dp"
         android:height="12dp"
+        android:viewportHeight="12.0"
         android:viewportWidth="7.0"
-        android:viewportHeight="12.0">
+        android:width="7dp">
     <group
         android:pivotX="0"
         android:pivotY="0"
-        android:scaleY="0.5"
-        android:scaleX="0.4"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:translateX="-5"
+        android:translateY="-1"
         >
         <path
             android:fillColor="#cccccc"

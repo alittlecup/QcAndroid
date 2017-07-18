@@ -186,6 +186,25 @@ public class BusinessUtils {
         return ret;
     }
 
+  public static List<String> qcstudentIds(List<QcStudentBean> students) {
+        List<String> ret = new ArrayList<>();
+        for (int i = 0; i < students.size(); i++) {
+                ret.add(students.get(i).getId());
+        }
+    return ret;
+  }
+
+  public static <T extends Personage> List<String> PersonIdsExSu(List<T> students) {
+    List<String> ret = new ArrayList<>();
+    for (int i = 0; i < students.size(); i++) {
+      if (!students.get(i).is_superuser) {
+        ret.add(students.get(i).getId());
+      }
+    }
+        return ret;
+    }
+
+
     public static String students2str(List<StudentBean> students) {
         String ret = "";
         for (int i = 0; i < students.size(); i++) {

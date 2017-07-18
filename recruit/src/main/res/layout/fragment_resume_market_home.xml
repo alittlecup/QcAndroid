@@ -9,137 +9,39 @@
 
   <include layout="@layout/common_simple_toolbar"/>
 
-  <android.support.design.widget.CoordinatorLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/srl"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       >
 
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/smooth_app_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp"
-        >
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          app:layout_scrollFlags="scroll|snap"
-          >
-
-        <include layout="@layout/layout_search_hint_center"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_jobfairs"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:background="@color/white"
-            android:clipToPadding="false"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/bg_click"
-            >
-
-        </LinearLayout>
-
-        <include layout="@layout/divider_grey"/>
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            />
-
-        <include layout="@layout/divider_grey"/>
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="48dp"
-          android:background="@color/white"
-          android:divider="@drawable/divier_linear"
-          android:orientation="horizontal"
-          android:showDividers="middle"
-          >
-
-        <cn.qingchengfit.widgets.QcFilterToggle
-            android:id="@+id/qft_city"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_click"
-            app:ft_text_off="城市"
-            app:ft_text_on="城市"
-            style="@style/QcFilterStyle"
-            />
-
-        <cn.qingchengfit.widgets.QcFilterToggle
-            android:id="@+id/qft_salary"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_click"
-            app:ft_text_off="薪资"
-            app:ft_text_on="薪资"
-            style="@style/QcFilterStyle"
-            />
-
-        <cn.qingchengfit.widgets.QcFilterToggle
-            android:id="@+id/qft_exp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_click"
-            app:ft_text_off="要求"
-            app:ft_text_on="要求"
-            style="@style/QcFilterStyle"
-            />
-
-        <cn.qingchengfit.widgets.QcFilterToggle
-            android:id="@+id/qft_demand"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_click"
-            app:ft_text_off="要求"
-            app:ft_text_on="要求"
-            style="@style/QcFilterStyle"
-            />
-      </LinearLayout>
-
-      <include layout="@layout/divider_grey"/>
-
-    </android.support.design.widget.AppBarLayout>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-      <FrameLayout
-          android:id="@+id/frag_market_home"
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           />
-
-      <FrameLayout
-          android:id="@+id/frag_market_filter"
+      <LinearLayout
+          android:id="@+id/layout_filter"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          />
+          android:layout_marginTop="@dimen/qc_item_height"
+          android:background="@color/halftrans_background"
+          android:orientation="horizontal"
+          android:visibility="gone"
+          >
 
+        <FrameLayout
+            android:id="@+id/frag_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+      </LinearLayout>
 
     </FrameLayout>
-
-  </android.support.design.widget.CoordinatorLayout>
-
+  </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

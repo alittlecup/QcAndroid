@@ -20,6 +20,12 @@
     <item name="android:textColor">@color/white</item>
   </style>
 
+  <style name="QcBtnGreyRectCorner"
+      >
+    <item name="android:background">@drawable/btn_qc_rect_round_coner_grey</item>
+    <item name="android:textColor">@color/white</item>
+  </style>
+
   <style name="QcCivClickStyle">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">@dimen/qc_item_height</item>
@@ -28,6 +34,14 @@
     <item name="civ_showdivier">true</item>
     <item name="civ_showright">true</item>
     <item name="civ_clickable">true</item>
+  </style>
+
+  <style name="QcCivInputStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">@dimen/qc_item_height</item>
+    <item name="civ_text_color">@color/qc_text_black</item>
+    <item name="civ_hint">@string/please_input</item>
+    <item name="civ_showdivier">true</item>
   </style>
 
   <style name="QcFilterStyle">
@@ -46,7 +60,7 @@
 
   <style name="QcRadioBtn">
     <item name="cb_background_normal">@drawable/shape_bg_rect_grey_corner4</item>
-    <item name="cb_background_select">@drawable/bg_rect_allot_green</item>
+    <item name="cb_background_select">@drawable/bg_rect_corner_primary</item>
     <item name="cb_hook_icon_location">left</item>
     <item name="cb_hook_icon_select">@drawable/selector_student_checkbtn_bg</item>
     <item name="cb_select">false</item>
@@ -54,4 +68,16 @@
     <item name="cb_text_select_color">?colorPrimary</item>
   </style>
 
+  <style name="QcTabLayout">
+    <item name="android:background">@color/white</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">50dp</item>
+    <item name="tabGravity">center</item>
+    <item name="tabIndicatorColor">?colorPrimary</item>
+    <item name="tabMode">fixed</item>
+    <item name="tabMaxWidth">100dp</item>
+    <item name="tabSelectedTextColor">?colorPrimary</item>
+    <item name="tabBackground">@drawable/bg_click</item>
+    <item name="tabTextAppearance">@style/QcTextStyleStandardGrey</item>
+  </style>
 </resources>

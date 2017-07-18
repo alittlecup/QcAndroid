@@ -11,9 +11,9 @@
   </string-array>
 
   <string-array name="filter_gender">
+    <item>不限</item>
     <item>男</item>
     <item>女</item>
-    <item>不限</item>
   </string-array>
   <string-array name="filter_degree">
     <item>初中</item>
@@ -163,5 +163,52 @@
     <item>团操教练</item>
     <item>会籍</item>
     <item>前台</item>
+  </string-array>
+
+  <string-array name="recruit_common_facilities">
+    <item>TRX</item>
+    <item>跑步机</item>
+    <item>泳池</item>
+    <item>力量器械</item>
+  </string-array>
+
+  <string-array name="resume_filter_salary">
+    <item>全部</item>
+    <item>面议</item>
+    <item>5K以下</item>
+    <item>5&#8211;10K</item>
+    <item>10&#8211;15K</item>
+    <item>15&#8211;20K</item>
+    <item>20&#8211;50K</item>
+    <item>50K以上</item>
+  </string-array>
+  <string-array name="resume_filter_work_year">
+    <item>全部</item>
+    <item>应届生</item>
+    <item>1&#8211;3年</item>
+    <item>3&#8211;5年</item>
+    <item>5&#8211;8年</item>
+    <item>8&#8211;10年</item>
+    <item>10年以上</item>
+  </string-array>
+
+  <string-array name="filter_resume">
+    <item>期望城市</item>
+    <item>期望薪资</item>
+    <item>工作经验</item>
+    <item>要求</item>
+  </string-array>
+
+  <string-array name="filter_jobs">
+    <item>城市</item>
+    <item>薪资</item>
+    <item>要求</item>
+  </string-array>
+
+  <string-array name="recruit_position_welfare">
+    <item>旅游基金</item>
+    <item>提供住宿</item>
+    <item>提供保险</item>
+    <item>提供午餐</item>
   </string-array>
 </resources>

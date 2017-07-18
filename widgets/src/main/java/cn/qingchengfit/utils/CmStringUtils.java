@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -139,6 +141,17 @@ public class CmStringUtils {
             eventType = parser.next();
         }
         return persons;
+    }
+
+  public static Integer getIntFromString(String s) {
+    String regEx = "[^0-9]";
+    Pattern p = Pattern.compile(regEx);
+    Matcher m = p.matcher(s);
+    try {
+      return Integer.parseInt(m.replaceAll("").trim());
+    } catch (Exception e) {
+      return -1;
+    }
     }
 
     /**

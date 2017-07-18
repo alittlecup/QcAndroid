@@ -54,7 +54,7 @@ import java.util.List;
  * }
  */
 
-public class ResumeHome implements Parcelable {
+public class ResumeHome extends Resume implements Parcelable {
 
   public static final Creator<ResumeHome> CREATOR = new Creator<ResumeHome>() {
     @Override public ResumeHome createFromParcel(Parcel source) {
@@ -65,31 +65,19 @@ public class ResumeHome implements Parcelable {
       return new ResumeHome[size];
     }
   };
-  public String id;
-  public String user_id;
-  public String username;
-  public String birthday;
-  public String avatar;
   public String self_description;  //富文本
   public String created_at;
   public String brief_description;  //一句话描述
   public DistrictEntity gd_district;
   public boolean is_share;
-  public int status;
-  public int gender;
-  public float weight;
-  public float height;
-  public List<String> exp_jobs;
-  public List<String> exp_cities;
   public List<Certificate> certificates;
   public List<WorkExp> experiences;
   public List<Education> educations;
   public List<String> photos;
-  public Integer max_salary; //薪水
-  public Integer min_salary;
+
   public Float completion;
-  public Integer max_education;
-  public Integer work_year;
+  public boolean favorited;
+  public boolean sign_up;
 
   private ResumeHome(Builder builder) {
     id = builder.id;

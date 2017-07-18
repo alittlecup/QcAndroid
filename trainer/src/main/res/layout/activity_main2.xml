@@ -53,7 +53,7 @@
         android:layout_height="52dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        app:text_select_color="@color/primary"
+        app:text_select_color="?colorPrimary"
         app:text_size="12sp"
         />
 

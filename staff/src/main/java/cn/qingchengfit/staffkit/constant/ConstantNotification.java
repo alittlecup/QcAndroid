@@ -154,6 +154,8 @@ public class ConstantNotification {
                 return R.string.notification_comment;
             case R.drawable.vd_notification_competition:
                 return R.string.notification_competition;
+            case R.drawable.ic_vd_notification_job:
+                return R.string.notification_job;
             default:
                 return R.string.notification_gym;
         }

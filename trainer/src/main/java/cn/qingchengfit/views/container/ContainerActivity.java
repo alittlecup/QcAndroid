@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import cn.qingchengfit.article.ArticleCommentsListFragmentBuilder;
 import cn.qingchengfit.article.ArticleReplyFragment;
+import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
 import cn.qingchengfit.utils.IntentUtils;
 import com.qingchengfit.fitcoach.R;
 
@@ -18,6 +19,13 @@ public class ContainerActivity extends AppCompatActivity {
         toStatement.putExtra("router", module);
         context.startActivity(toStatement);
     }
+
+  public static void router(String module, Context context, Object... params) {
+    Intent toStatement = new Intent(context, ContainerActivity.class);
+    toStatement.putExtra("router", module);
+    toStatement.putExtra("params", params);
+    context.startActivity(toStatement);
+  }
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +47,12 @@ public class ContainerActivity extends AppCompatActivity {
                 String replyId = IntentUtils.getIntentFromUri(getIntent(), "replyId");
                 String replayname = IntentUtils.getIntentFromUri(getIntent(), "replyName");
                 fragment = new ArticleCommentsListFragmentBuilder(articleid).replyId(replyId).replyName(replayname).build();
+              break;
+          case "/recruit/message_list":
+            if (getIntent().getExtras().containsKey("params")) {
+              fragment = new RecruitMessageListFragmentBuilder(
+                  (String) ((Object[]) (getIntent().getExtras().get("params")))[0]).build();
+            }
                 break;
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.frag, fragment).commit();

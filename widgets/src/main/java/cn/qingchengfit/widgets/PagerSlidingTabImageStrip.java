@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -27,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CompatUtils;
 import com.bumptech.glide.Glide;
@@ -115,6 +117,8 @@ public class PagerSlidingTabImageStrip extends HorizontalScrollView implements V
         super(context, attrs, defStyle);
         setFillViewport(true);
         setWillNotDraw(false);
+      mIndicatorColor = AppUtils.getPrimaryColor(context);
+
         mTabsContainer = new LinearLayout(context);
         mTabsContainer.setOrientation(LinearLayout.HORIZONTAL);
         mTabsContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -299,6 +303,7 @@ public class PagerSlidingTabImageStrip extends HorizontalScrollView implements V
         ImageView imageView = (ImageView) tab.findViewById(R.id.img);
         imageView.setVisibility(show ? VISIBLE : INVISIBLE);
         TextView textView = (TextView) tab.findViewById(R.id.text);
+      textView.setTextColor(mTabTextColor);
         //        Glide.with(getContext()).load(img).asBitmap().into(new CircleImgWrapper(imageView, getContext()));
         textView.setText(text);
         addTab(position, tab);
@@ -373,13 +378,15 @@ public class PagerSlidingTabImageStrip extends HorizontalScrollView implements V
                 //                }
                 //                ImageView view =(ImageView) v.findViewById(img);
                 TextView name = (TextView) v.findViewById(R.id.text);
-                name.setTextColor(CompatUtils.getColor(getContext(), i == position ? R.color.green : R.color.text_black));
+              name.setTextColor(i == position ? mIndicatorColor
+                  : ContextCompat.getColor(getContext(), R.color.text_grey));
                 //                view.getDrawable().mutate().setAlpha(i == position ?255:70);
                 //                view.invalidate();
             } else if (v instanceof RelativeLayout) {
                 //                ImageView view =(ImageView) v.findViewById(img);
                 TextView name = (TextView) v.findViewById(R.id.text);
-                name.setTextColor(CompatUtils.getColor(getContext(), i == position ? R.color.green : R.color.text_black));
+              name.setTextColor(i == position ? mIndicatorColor
+                  : ContextCompat.getColor(getContext(), R.color.text_grey));
                 //                view.getDrawable().mutate().setAlpha(i == position ?255:70);
                 //                view.invalidate();
             }

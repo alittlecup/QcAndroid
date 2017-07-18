@@ -11,7 +11,7 @@ ext {
                    trainer_version_code: 154,
                    trainer_version_name: "1.5.4"
 
-    ]
+  ]
 
   libraries = [supportVersion  : "25.3.1",
                dagger          : "2.11",
@@ -23,54 +23,54 @@ ext {
                butterknife     : "8.6.0",
                javax_annotation: "10.0-b28",
                glide           : "3.7.0",
-               fragmentArg     : "3.0.2",
-    ]
-    bakPath = "tinkeroutput/"
+               fragmentArg     : "3.0.2",]
+  bakPath = "tinkeroutput/"
 }
 
 buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-        maven(){
-            url uri('./repo')
-        }
+  repositories {
+    jcenter()
+    mavenCentral()
+    maven() {
+      url uri('./repo')
     }
+  }
 
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'me.tatarka:gradle-retrolambda:3.3.1'
-        classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
-        classpath 'com.jakewharton:butterknife-gradle-plugin:8.6.0'
-      classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath("com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:${TINKERPATCH_VERSION}") {
-            changing = true
-        }
-      classpath 'com.antfortune.freeline:gradle:0.8.7'
+  dependencies {
+    classpath 'com.android.tools.build:gradle:2.3.3'
+    classpath 'me.tatarka:gradle-retrolambda:3.3.1'
+    classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
+    classpath 'com.jakewharton:butterknife-gradle-plugin:8.6.0'
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    classpath("com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:${TINKERPATCH_VERSION}") {
+      changing = true
     }
+    classpath 'com.antfortune.freeline:gradle:0.8.7'
+  }
 }
 
 
 allprojects {
-    repositories {
-        jcenter()
-      maven() {
-        url "http://maven.aliyun.com/nexus/content/groups/public/"
-      }
-      maven {
-        url "https://s3.amazonaws.com/repo.commonsware.com"
-      }
-        mavenCentral()
-      maven() {
-            url uri('../repo')
-      }
-      maven() {
-        url uri('../../repo')
-        }
-        maven(){
-            url uri('./repo')
-        }
-        maven { url "https://jitpack.io" }
-
+  repositories {
+    jcenter()
+    maven() {
+      url "http://maven.aliyun.com/nexus/content/groups/public/"
     }
+    maven { url "https://maven.google.com" }
+
+    maven {
+      url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+    mavenCentral()
+    //    maven() {
+    //      url uri('../repo')
+    //    }
+    maven() {
+      url uri('../../repo')
+    }
+    //    maven() {
+    //      url uri('./repo')
+    //    }
+    maven { url "https://jitpack.io" }
+  }
 }

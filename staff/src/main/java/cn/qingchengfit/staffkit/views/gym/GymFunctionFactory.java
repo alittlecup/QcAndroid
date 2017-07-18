@@ -119,6 +119,9 @@ public class GymFunctionFactory {
     public static final String PLANS_SETTING_GROUP = "/private/course/plans/setting";
     public static final String PLANS_SETTING_PRIVATE = "/checkin/screen/";
 
+    //求职招聘消息列表
+    public static final String RECRUIT_MESSAGE_LIST = "/recruit/message_list";
+
     public static GymFuntion instanceGymFuntion(String module) {
         GymFuntion gym = new GymFuntion.Builder().moduleName(module).text(getModuleTxt(module)).img(getDrawableRes(module)).build();
         return gym;

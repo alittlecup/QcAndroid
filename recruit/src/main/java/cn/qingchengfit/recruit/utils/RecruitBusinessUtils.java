@@ -119,13 +119,13 @@ public class RecruitBusinessUtils {
   public static HashMap<String, Object> getGenderParams(int pos, HashMap<String, Object> params) {
     switch (pos) {
       case 0:
-        params.put("gender", 0);
+        params.put("gender", -1);
         break;
       case 1:
-        params.put("gender", 1);
+        params.put("gender", 0);
         break;
       case 2:
-        params.put("gender", -1);
+        params.put("gender", 1);
         break;
       default:
         params.put("gender", null);
@@ -213,6 +213,40 @@ public class RecruitBusinessUtils {
     return params;
   }
 
+  public static HashMap<String, Object> getWorkYearParams(int i, HashMap<String, Object> params) {
+    switch (i) {
+      case 0:
+        params.put("min_work_year", 0);
+        params.put("max_work_year", 0);
+        break;
+      case 1:
+        params.put("min_work_year", 1);
+        params.put("max_work_year", 3);
+        break;
+      case 2:
+        params.put("min_work_year", 3);
+        params.put("max_work_year", 5);
+        break;
+      case 3:
+        params.put("min_work_year", 5);
+        params.put("max_work_year", 8);
+        break;
+      case 4:
+        params.put("min_work_year", 8);
+        params.put("max_work_year", 10);
+        break;
+      case 5:
+        params.put("min_work_year", 10);
+        params.put("max_work_year", -1);
+        break;
+      default:
+        params.put("min_work_year", null);
+        params.put("max_work_year", null);
+        break;
+    }
+    return params;
+  }
+
   public static HashMap<String, Object> getWeightParams(int pos, HashMap<String, Object> params) {
     switch (pos) {
       case 0:
@@ -258,7 +292,7 @@ public class RecruitBusinessUtils {
     if (min < 0 && max <= 0) {
       return replace;
     } else if (min == 0 && max == 0) {
-      return "";
+      return replace;
     } else if (min < 0) {
       return "<" + getMoney(max);
     } else if (max < 0) {
@@ -430,5 +464,35 @@ public class RecruitBusinessUtils {
     if (ret.endsWith(Constants.SEPARATE)) ret = ret.substring(0, ret.length() - 1);
     if (ret.length() > 50) ret = ret.substring(0, 50) + "...";
     return ret;
+  }
+  //
+  //public static String getResumeInfo(Resume resume,Context context){
+  //  String workYear = resume.work_year == 0 ?"应届生":resume.work_year+"年经验";
+  //  String birthDay = DateUtils.getAge(DateUtils.formatDateFromServer(resume.birthday))+"岁";
+  //  String height = CmStringUtils.getMaybeInt(resume.height)+"cm";
+  //  String weight = CmStringUtils.getMaybeInt(resume.weight)+"kg";
+  //  String degree = getDegree(context,resume.max_education);
+  //  String seperate = " / ";
+  //  return TextUtils.concat(workYear,seperate,birthDay,seperate,height,","+weight,seperate,degree).toString();
+  //}
+  //
+
+  public static String getPositionDamen(List<String> damens) {
+    StringBuilder sb = new StringBuilder();
+
+    if (damens.size() == 1) {
+      sb.append(damens.get(0));
+    } else {
+      int index = 0;
+      for (String str : damens) {
+        if (index == 0) {
+          sb.append(str);
+        } else {
+          sb.append("/" + str);
+        }
+        index++;
+      }
+    }
+    return sb.toString();
   }
 }

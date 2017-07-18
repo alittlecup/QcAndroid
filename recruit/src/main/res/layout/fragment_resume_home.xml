@@ -95,7 +95,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:background="@drawable/btn_green"
+        android:background="@drawable/btn_prime"
         android:text="预览我的简历"
         android:textColor="@color/white"
         />

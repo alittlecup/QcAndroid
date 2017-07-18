@@ -110,336 +110,144 @@
 
   </RelativeLayout>
 
-  <FrameLayout
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/srl"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       >
-  <android.support.design.widget.CoordinatorLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/smooth_app_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:elevation="0dp"
-        >
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          app:layout_scrollFlags="scroll|snap"
-          >
-
-        <include layout="@layout/layout_search_hint_center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="88dp"
-            android:layout_marginBottom="12dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            >
-
-          <RelativeLayout
-              android:id="@+id/layout_i_sent"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:background="@drawable/bg_click"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              >
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/vd_recruit_applicant_sent"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="62dp"
-                android:text="我投递的"
-                style="@style/QcTextStyleSmallDark"
-                />
-          </RelativeLayout>
-
-          <RelativeLayout
-              android:id="@+id/layout_i_invited"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:background="@drawable/bg_click"
-              android:orientation="vertical"
-              >
-
-            <ImageView
-                android:id="@+id/img_invited"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/vd_recruit_applicant_invite"
-                />
-
-            <View
-                android:id="@+id/v_has_invited"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_alignEnd="@id/img_invited"
-                android:layout_alignRight="@id/img_invited"
-                android:layout_alignTop="@id/img_invited"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/qcw_shape_circle_red"
-                android:visibility="gone"
-
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="62dp"
-                android:text="收到的邀约"
-                style="@style/QcTextStyleSmallDark"
-                />
-          </RelativeLayout>
-
-          <RelativeLayout
-              android:id="@+id/layout_i_stared"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:background="@drawable/bg_click"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              >
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/vd_recruit_applicant_starred"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="62dp"
-                android:text="我的收藏"
-                style="@style/QcTextStyleSmallDark"
-                />
-          </RelativeLayout>
-
-
-        </LinearLayout>
-
-        <include layout="@layout/divider_grey"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/white"
-            android:divider="@drawable/divier_linear"
-            android:orientation="horizontal"
-            android:showDividers="middle"
-            app:layout_scrollFlags="scroll"
-            >
-
-          <RelativeLayout
-              android:id="@+id/layout_my_resume"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:background="@drawable/bg_click"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-
-              >
-
-            <ImageView
-
-                android:id="@+id/img_my_resume"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:scaleType="fitXY"
-                />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/img_my_resume"
-                android:layout_toEndOf="@id/img_my_resume"
-                android:layout_toRightOf="@id/img_my_resume"
-                android:text="我的简历"
-                style="@style/QcTextStyleStandardDark"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/img_my_resume"
-                android:layout_toEndOf="@id/img_my_resume"
-                android:layout_toRightOf="@id/img_my_resume"
-                android:orientation="horizontal"
-                >
-
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="简历完善度"
-                  style="@style/QcTextStyleXsGrey"
-                  />
-
-              <TextView
-                  android:id="@+id/tv_resume_completed"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="50%"
-                  style="@style/QcTextStyleXsGrey"
-                  />
-            </LinearLayout>
-
-          </RelativeLayout>
-
-          <RelativeLayout
-              android:id="@+id/layout_my_jobfair"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:background="@drawable/bg_click"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-
-              >
-
-            <ImageView
-
-                android:id="@+id/img_my_job_fair"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:scaleType="fitXY"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/img_my_job_fair"
-                android:layout_toEndOf="@id/img_my_job_fair"
-                android:layout_toRightOf="@id/img_my_job_fair"
-                android:text="我的专场招聘会"
-                style="@style/QcTextStyleStandardDark"
-                />
-
-            <TextView
-                android:id="@+id/tv_job_fair"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/img_my_job_fair"
-                android:layout_toEndOf="@id/img_my_job_fair"
-                android:layout_toRightOf="@id/img_my_job_fair"
-                tools:text="3场进行中"
-                style="@style/QcTextStyleXsGrey"
-                />
-          </RelativeLayout>
-
-        </LinearLayout>
-
-        <include layout="@layout/divider_grey"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/activity_vertical_margin"
-            android:background="@color/bg_grey"
-            />
-
-        <include layout="@layout/divider_grey"/>
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="48dp"
-          android:background="@color/white"
-          android:divider="@drawable/divier_linear"
-          android:orientation="horizontal"
-          android:showDividers="middle"
-          >
-
-        <cn.qingchengfit.widgets.QcFilterToggle
-            android:id="@+id/qft_city"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_click"
-            app:ft_text_off="城市"
-            app:ft_text_on="城市"
-            style="@style/QcFilterStyle"
-            />
-
-        <cn.qingchengfit.widgets.QcFilterToggle
-            android:id="@+id/qft_salary"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_click"
-            app:ft_text_off="薪资"
-            app:ft_text_on="薪资"
-            style="@style/QcFilterStyle"
-            />
-
-        <cn.qingchengfit.widgets.QcFilterToggle
-            android:id="@+id/qft_demand"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_click"
-            app:ft_text_off="要求"
-            app:ft_text_on="要求"
-            style="@style/QcFilterStyle"
-            />
-      </LinearLayout>
-
-      <include layout="@layout/divider_grey"/>
-
-    </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:descendantFocusability="blocksDescendants"
+          />
+
+        <FrameLayout
+            android:id="@+id/frag_filter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="48dp"
+            />
+    </FrameLayout>
+
+  </android.support.v4.widget.SwipeRefreshLayout>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
 
 
+      <android.support.design.widget.AppBarLayout
+          android:id="@+id/smooth_app_bar_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          app:elevation="0dp"
+          >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll|snap"
+            >
+
+          <include layout="@layout/layout_search_hint_center"/>
+
+
+          <include layout="@layout/divider_grey"/>
+
+
+          <include layout="@layout/divider_grey"/>
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/activity_vertical_margin"
+              android:background="@color/bg_grey"
+              />
+
+          <include layout="@layout/divider_grey"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:divider="@drawable/divier_linear"
+            android:orientation="horizontal"
+            android:showDividers="middle"
+            >
+
+          <cn.qingchengfit.widgets.QcFilterToggle
+              android:id="@+id/qft_city"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:background="@drawable/bg_click"
+              app:ft_text_off="城市"
+              app:ft_text_on="城市"
+              style="@style/QcFilterStyle"
+              />
+
+          <cn.qingchengfit.widgets.QcFilterToggle
+              android:id="@+id/qft_salary"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:background="@drawable/bg_click"
+              app:ft_text_off="薪资"
+              app:ft_text_on="薪资"
+              style="@style/QcFilterStyle"
+              />
+
+          <cn.qingchengfit.widgets.QcFilterToggle
+              android:id="@+id/qft_demand"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:background="@drawable/bg_click"
+              app:ft_text_off="要求"
+              app:ft_text_on="要求"
+              style="@style/QcFilterStyle"
+              />
+        </LinearLayout>
+
+        <include layout="@layout/divider_grey"/>
+
+      </android.support.design.widget.AppBarLayout>
+
       <FrameLayout
-          android:id="@+id/frag_recruit_home"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          />
+          android:background="@color/white"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          >
 
 
-    </FrameLayout>
-  </android.support.design.widget.CoordinatorLayout>
+        <FrameLayout
+            android:id="@+id/frag_recruit_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+
+      </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <View
         android:id="@+id/filter_shadow"

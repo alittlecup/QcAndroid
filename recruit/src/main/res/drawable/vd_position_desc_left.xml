@@ -6,9 +6,9 @@
         android:width="50dp"
     >
   <path
-      android:fillColor="@color/green"
+      android:fillColor="?colorPrimary"
       android:pathData="M0,3 L45,3 a2,2 0 1,1 4 0 a2,2 0 1,1 -4 0 Z"
-      android:strokeColor="@color/green"
+      android:strokeColor="?colorPrimary"
       android:strokeWidth="1"
       />
 

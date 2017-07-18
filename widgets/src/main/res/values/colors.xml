@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <color name="colorPrimary">#00c8d1</color>
 
   <color name="colorSetBg">#838B86</color>
-  <color name="divider_white">#eeeeee</color>
+  <color name="divider_white">#e5e5e5</color>
   <color name="divider_grey">#dddddd</color>
   <color name="text_black">#333333</color>
   <color name="text_light">#ccc</color>
-
   <color name="bg_grey">#f4f4f4</color>
   <color name="backgroud_grey">@color/bg_grey</color>
   <color name="toolbar">#4e4e4e</color>
@@ -38,6 +38,7 @@
   <color name="red">#ff5151</color>
   <color name="green">#1faf50</color>
   <color name="blue">#2ab6f6</color>
+  <color name="blue_for_recuirt">#0079ff</color>
   <color name="purple">#ba68c8</color>
   <color name="text_color_gray">#6a6a6a</color>
   <color name="signin_new_color">#e5955d</color>
@@ -47,8 +48,9 @@
   <color name="qc_text_grey">#9d9d9d</color>
   <color name="qc_text_grey_trans">#559d9d9d</color>
   <color name="qc_snackbar_bg">#F9944E</color>
+  <color name="warning_orange">#F9944E</color>
 
-  <color name="qc_allotsale_green">#0DB14B</color>
+  <color name="qc_allotsale_green">?colorPrimary</color>
   <color name="qc_allotsale_search_bg">#fafafa</color>
 
   <color name="qc_student_status_0">#6eb8f1</color>
@@ -94,7 +96,7 @@
   <color name="currentDayOfMonthSelectorColor">#33b5e5</color>
   <color name="half_red">#1aea6161</color>
 
-  <color name="qc_theme_green">#0db14b</color>
+  <color name="qc_theme_green">@color/colorPrimary</color>
 
 
   <color name="wheel_timebtn_nor">#54a3fa</color>

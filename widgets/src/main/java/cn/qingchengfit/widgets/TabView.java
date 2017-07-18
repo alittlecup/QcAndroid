@@ -9,7 +9,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
+import cn.qingchengfit.utils.AppUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +51,7 @@ public class TabView extends LinearLayout implements View.OnClickListener {
 
     public TabView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+      mTextColorSelect = AppUtils.getPrimaryColor(context);
         TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.TabView);
         int N = typedArray.getIndexCount();
         for (int i = 0; i < N; i++) {

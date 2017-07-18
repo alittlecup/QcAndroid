@@ -2,7 +2,6 @@ package cn.qingchengfit.support.animator;
 
 import android.graphics.Camera;
 import android.graphics.Matrix;
-import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -84,9 +83,7 @@ public class ViewPropertyAnimation extends Animation {
         if ((rX != 0) || (rY != 0) || (rZ != 0)) {
             final Camera camera = mCamera;
             camera.save();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-                camera.setLocation(mCameraX, mCameraY, mCameraZ);
-            }
+          camera.setLocation(mCameraX, mCameraY, mCameraZ);
             if (mTranslationZ != 0) {
                 camera.translate(0, 0, mTranslationZ);
             }
@@ -109,7 +106,6 @@ public class ViewPropertyAnimation extends Animation {
         }
 
         m.postTranslate(mTranslationX, mTranslationY);
-
         t.setAlpha(mAlpha);
     }
 }

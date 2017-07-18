@@ -54,28 +54,32 @@ import rx.functions.Action1;
  */
 public class ConversationFriendsFragment extends BaseFragment implements ChatFriendPresenter.MVPView {
 
-    @BindView(R.id.tv_left) TextView tvLeft;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.tv_allotsale_select_count) TextView tvAllotsaleSelectCount;
-    //@BindView(R.id.et_search) EditText etSearch;
-    //@BindView(R.id.search_clear) ImageView searchClear;
-    @Inject LoginStatus loginStatus;
+  //@BindView(R.id.et_search) EditText etSearch;
+  //@BindView(R.id.search_clear) ImageView searchClear;
+  @Inject public LoginStatus loginStatus;
+  @BindView(R.id.tv_left) protected TextView tvLeft;
+  @BindView(R.id.toolbar) protected Toolbar toolbar;
+  @BindView(R.id.toolbar_title) protected TextView toolbarTitle;
+  @BindView(R.id.tv_allotsale_select_count) protected TextView tvAllotsaleSelectCount;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_conversation_friend, container, false);
         unbinder = ButterKnife.bind(this, view);
         initToolbar(toolbar);
+      initView();
+      return view;
+    }
+
+  protected void initView() {
         getFragmentManager().beginTransaction().replace(R.id.chat_friend_frag, new ChatFriendAllChooseFragment()).commit();
         RxBusAdd(EventChoosePerson.class).subscribe(new Action1<EventChoosePerson>() {
             @Override public void call(EventChoosePerson eventChoosePerson) {
                 tvAllotsaleSelectCount.setText(DirtySender.studentList.size() > 99 ? "..." : DirtySender.studentList.size() + "");
             }
         });
-        return view;
     }
 
-    @Override public void initToolbar(@NonNull Toolbar toolbar) {
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
         tvLeft.setText(R.string.cancel);
         tvLeft.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
@@ -137,7 +141,8 @@ public class ConversationFriendsFragment extends BaseFragment implements ChatFri
                 RxBus.getBus().post(new EventFresh());
             }
         });
-        selectSutdentFragment.setDatas(new ArrayList<QcStudentBean>(DirtySender.studentList));
+      selectSutdentFragment.setDatas(
+          ListUtils.transerList(new ArrayList<Personage>(), DirtySender.studentList));
         selectSutdentFragment.show(getFragmentManager(), "");
     }
 }

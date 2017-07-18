@@ -101,11 +101,15 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
     }
 
     @Override public boolean onItemClick(int position) {
+        int tmpPos =
+            commonFlexAdapter.getSelectedItemCount() > 0 ? commonFlexAdapter.getSelectedPositions()
+                .get(0) : 0;
+        commonFlexAdapter.toggleSelection(position);
+        commonFlexAdapter.notifyItemChanged(tmpPos);
+        commonFlexAdapter.notifyItemChanged(position);
         if (onSelectListener != null) {
             onSelectListener.onSelectItem(position);
         }
-        commonFlexAdapter.toggleSelection(position);
-      commonFlexAdapter.notifyItemChanged(position);
         return true;
     }
 

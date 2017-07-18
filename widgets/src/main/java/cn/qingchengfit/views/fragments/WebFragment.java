@@ -484,7 +484,7 @@ public class WebFragment extends BaseFragment
 
       @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        if (TextUtils.equals(Uri.parse(url).getQueryParameter("hide_title"), "1")) {
+        if (TextUtils.equals(Uri.parse(url).getQueryParameter("hide_title"), "1") || hideToolbar) {
           commonToolbar.setVisibility(View.GONE);
         } else {
           commonToolbar.setVisibility(View.VISIBLE);

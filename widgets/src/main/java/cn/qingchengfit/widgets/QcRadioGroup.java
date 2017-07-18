@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
@@ -31,6 +32,8 @@ import android.widget.LinearLayout;
  * 用于单选 但是可以全不选的状态，点击选中，再点取消
  */
 public class QcRadioGroup extends LinearLayout implements CompoundButton.OnCheckedChangeListener{
+  private CheckedChange checkedChange;
+
     public QcRadioGroup(Context context) {
         super(context);
     }
@@ -58,6 +61,13 @@ public class QcRadioGroup extends LinearLayout implements CompoundButton.OnCheck
             }
         }
     }
+
+  @Override public void addView(View child, ViewGroup.LayoutParams params) {
+    super.addView(child, params);
+    if (child instanceof QcCheckable) {
+      ((QcCheckable) child).addCheckedChangeListener(this);
+    }
+  }
 
     @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (getChildCount() > 0){
@@ -120,8 +130,6 @@ public class QcRadioGroup extends LinearLayout implements CompoundButton.OnCheck
     public void setCheckedChange(CheckedChange checkedChange) {
         this.checkedChange = checkedChange;
     }
-
-    private CheckedChange checkedChange;
     public interface CheckedChange{
         void onCheckedChange();
     }

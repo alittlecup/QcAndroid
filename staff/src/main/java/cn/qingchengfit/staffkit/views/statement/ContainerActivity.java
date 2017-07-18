@@ -17,6 +17,8 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.article.ArticleCommentsListFragmentBuilder;
 import cn.qingchengfit.article.ArticleReplyFragment;
+import cn.qingchengfit.chat.RecruitMessageListFragment;
+import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
 import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -65,6 +67,13 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
     public static void router(String module, Context context) {
         Intent toStatement = new Intent(context, ContainerActivity.class);
         toStatement.putExtra("router", module);
+        context.startActivity(toStatement);
+    }
+
+    public static void router(String module, Context context, Object...params){
+        Intent toStatement = new Intent(context, ContainerActivity.class);
+        toStatement.putExtra("router", module);
+        toStatement.putExtra("params", params);
         context.startActivity(toStatement);
     }
 
@@ -118,6 +127,12 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 fragment = new ScoreHomeFragment();
                 break;
             case GymFunctionFactory.MODULE_WORKSPACE_ORDER_SIGNIN:
+                break;
+            case GymFunctionFactory.RECRUIT_MESSAGE_LIST:
+                if (getIntent().getExtras().containsKey("params")) {
+                    fragment = new RecruitMessageListFragmentBuilder(
+                        (String)((Object[])(getIntent().getExtras().get("params")))[0]).build();
+                }
                 break;
             case "/replies/":
             case "/replies":

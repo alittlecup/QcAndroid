@@ -17,6 +17,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
@@ -40,6 +41,7 @@ import cn.qingchengfit.recruit.model.Organization;
 import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.network.body.ResumeBody;
+import cn.qingchengfit.recruit.presenter.ResumePermissionPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePostPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
@@ -83,7 +85,7 @@ import rx.functions.Action1;
  * Created by Paper on 2017/6/9.
  */
 public class ResumeHomeFragment extends BaseFragment
-    implements FlexibleAdapter.OnItemClickListener, ResumePresenter.MVPView, ResumePostPresenter.MVPView {
+    implements FlexibleAdapter.OnItemClickListener, ResumePresenter.MVPView, ResumePostPresenter.MVPView, ResumePermissionPresenter.MVPView {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
@@ -100,6 +102,8 @@ public class ResumeHomeFragment extends BaseFragment
   @Inject RecruitRouter router;
   @Inject LoginStatus loginStatus;
   @Inject QcRestRepository qcRestRepository;
+  @Inject ResumePermissionPresenter permissionPresenter;
+  @Inject GymWrapper gymWrapper;
   ResumeHome resumeHome;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -186,14 +190,7 @@ public class ResumeHomeFragment extends BaseFragment
    * 公开简历
    */
   @OnClick(R2.id.btn_open_resume) public void openResume() {
-    DialogUtils.instanceDelDialog(getContext(), resumeHome.is_share ? "确定要隐藏简历？" : "确定要公开简历？",
-        resumeHome.is_share ? "隐藏简历后，您的简历将不会显示在人才市场上，招聘方将不能主动联系您" : "公开简历后，您的简历将显示在人才市场上，招聘方可以主动联系您",
-        new MaterialDialog.SingleButtonCallback() {
-          @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            showLoading();
-            postPresenter.editResume(new ResumeBody.Builder().is_share(!resumeHome.is_share).build());
-          }
-        }).show();
+    permissionPresenter.queryChangeStatePermission(gymWrapper.id(), "resume");
   }
 
   /**
@@ -325,6 +322,14 @@ public class ResumeHomeFragment extends BaseFragment
 
   }
 
+  @Override public void starOk() {
+
+  }
+
+  @Override public void unStartOk() {
+
+  }
+
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == 10010) {
@@ -353,5 +358,16 @@ public class ResumeHomeFragment extends BaseFragment
   @Override public void onPostOk() {
     hideLoading();
     presenter.queryResumeHome();
+  }
+
+  @Override public void onCheckSuccess() {
+    DialogUtils.instanceDelDialog(getContext(), resumeHome.is_share ? "确定要隐藏简历？" : "确定要公开简历？",
+        resumeHome.is_share ? "隐藏简历后，您的简历将不会显示在人才市场上，招聘方将不能主动联系您" : "公开简历后，您的简历将显示在人才市场上，招聘方可以主动联系您",
+        new MaterialDialog.SingleButtonCallback() {
+          @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            showLoading();
+            postPresenter.editResume(new ResumeBody.Builder().is_share(!resumeHome.is_share).build());
+          }
+        }).show();
   }
 }

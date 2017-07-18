@@ -8,8 +8,6 @@ import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.WebActivity;
 import java.util.HashMap;
 
-import static android.R.attr.action;
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -44,6 +42,43 @@ public class BaseRouter {
     }
   }
 
+  public static void toChooseStaff(Fragment fragment, String json) {
+    try {
+      Intent toLogin = new Intent();
+      toLogin.setPackage(fragment.getActivity().getPackageName());
+      toLogin.setAction("cn.qingcheng.choose");
+      toLogin.putExtra("to", 62);
+      toLogin.putExtra("chatgym", json);
+      fragment.startActivityForResult(toLogin, 11);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+  }
+
+  public static void toChooseGym(Fragment fragment) {
+    try {
+      Intent toLogin = new Intent();
+      toLogin.setPackage(fragment.getActivity().getPackageName());
+      toLogin.setAction("cn.qingcheng.choose");
+      toLogin.putExtra("to", 80);
+      fragment.startActivityForResult(toLogin, 11);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+  }
+
+  public static void toChoose(Context context, int type) {
+    try {
+      Intent toLogin = new Intent();
+      toLogin.setPackage(context.getPackageName());
+      toLogin.setAction("cn.qingcheng.choose");
+      toLogin.putExtra("to", 71);
+      context.startActivity(toLogin);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+  }
+
   public void routerTo(String module, String action, Context context, int request) {
     if (routers.containsKey(module)) {
       Intent it = new Intent(context, routers.get(module));
@@ -66,11 +101,10 @@ public class BaseRouter {
     }
   }
 
-
   public void routerTo(String module, Context context) {
     if (routers.containsKey(module)) {
       Intent it = new Intent(context, routers.get(module));
-      it.putExtra("action", action);
+      it.putExtra("action", "recruit");
       context.startActivity(it);
     } else {
       //没有指定模块 todo
@@ -103,6 +137,5 @@ public class BaseRouter {
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
     }
-
   }
 }

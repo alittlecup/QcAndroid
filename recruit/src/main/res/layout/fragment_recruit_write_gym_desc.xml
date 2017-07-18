@@ -18,7 +18,9 @@
       />
 
   <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_gym_area"
       app:civ_clickable="false"
+      app:civ_hint="@string/please_input"
       app:civ_inputnum="true"
       app:civ_lable="场馆面积"
       app:civ_showright="false"
@@ -26,7 +28,9 @@
       />
 
   <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_gym_staff_count"
       app:civ_clickable="false"
+      app:civ_hint="@string/please_input"
       app:civ_inputnum="true"
       app:civ_lable="员工数量"
       app:civ_showright="false"
@@ -34,7 +38,9 @@
       />
 
   <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_gym_trainer_count"
       app:civ_clickable="false"
+      app:civ_hint="@string/please_input"
       app:civ_inputnum="true"
       app:civ_lable="教练数量"
       app:civ_showright="false"
@@ -42,17 +48,23 @@
       />
 
   <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_gym_member_count"
       app:civ_clickable="false"
+      app:civ_hint="@string/please_input"
       app:civ_inputnum="true"
       app:civ_lable="会员数量"
       app:civ_showright="false"
+
       style="@style/QcCivClickStyle"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_gym_equip"
+      app:civ_hint="@string/please_input"
       app:civ_lable="场馆设施"
       app:civ_showdivier="false"
       app:civ_showright="true"
+
       style="@style/QcCivClickStyle"
       />
 
@@ -66,9 +78,11 @@
   <include layout="@layout/divider_grey"/>
 
   <cn.qingchengfit.widgets.CommonInputView
-      app:civ_clickable="false"
+      android:id="@+id/civ_gym_intro"
+      app:civ_clickable="true"
+      app:civ_hint="@string/please_input"
       app:civ_lable="详细介绍"
-      app:civ_showright="false"
+      app:civ_showright="true"
       style="@style/QcCivClickStyle"
       />
 

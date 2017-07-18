@@ -86,10 +86,10 @@
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/bg_rect_allot_green"
+        android:background="@drawable/bg_rect_primary"
         android:gravity="center"
         android:text="@string/complete"
-        android:textColor="@color/qc_allotsale_green"
+        android:textColor="?colorPrimary"
         android:textSize="@dimen/min_font"
         />
 

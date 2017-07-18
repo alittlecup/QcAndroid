@@ -1,5 +1,7 @@
 package cn.qingchengfit.recruit.views;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,15 +23,15 @@ import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.model.WorkExp;
-import cn.qingchengfit.recruit.network.response.JobListIndex;
+import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
-import cn.qingchengfit.recruit.presenter.SeekPositionPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -71,9 +73,10 @@ import javax.inject.Inject;
  * Created by Paper on 2017/5/26.
  */
 public class RecruitPositionDetailFragment extends BaseFragment
-    implements SeekPositionPresenter.MVPView, DialogSendResumeFragment.OnSendResumeListener,
+    implements JobPresenter.MVPView, DialogSendResumeFragment.OnSendResumeListener,
     ResumePresenter.MVPView {
 
+  protected Job job;
   @BindView(R2.id.rv_demands) RecyclerView rvDemands;
   @BindView(R2.id.rv_welfare) QcTagGroup rvWelfare;
   @BindView(R2.id.img_gym) ImageView imgGym;
@@ -89,7 +92,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
   @BindView(R2.id.tv_starred) TextView tvStarred;
   @BindView(R2.id.tv_position_crated_at) TextView tvPositionCratedAt;
   @Inject RecruitRouter router;
-  @Inject SeekPositionPresenter presenter;
+  @Inject JobPresenter presenter;
   @Inject ResumePresenter resumePresenter;
   @Inject QcRestRepository restRepository;
   @BindView(R2.id.tv_position_desc) TouchyWebView tvPositionDesc;
@@ -97,9 +100,8 @@ public class RecruitPositionDetailFragment extends BaseFragment
   @BindView(R2.id.img_stared) ImageView imgStared;
   @BindView(R2.id.btn_contact_him) Button btnContactHim;
   @BindView(R2.id.btn_send_resume) Button btnSendResume;
-
-  private Job job;
   private boolean isStarred;
+  private ResumeHome resumeHome;
 
   public static RecruitPositionDetailFragment newInstance(Job job) {
     Bundle args = new Bundle();
@@ -121,10 +123,19 @@ public class RecruitPositionDetailFragment extends BaseFragment
     delegatePresenter(presenter, this);
     delegatePresenter(resumePresenter, this);
     initToolbar(toolbar);
-    onJob(job);
-    onGym(job.gym);
-    presenter.queryDetail(job.id);
+
     return view;
+  }
+
+  @Override protected void onFinishAnimation() {
+    onJobDetail(job);
+    onGym(job.gym);
+    initData();
+  }
+
+  private void initData() {
+    presenter.queryJob(job.id);
+    resumePresenter.queryResumeHome();
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -150,7 +161,11 @@ public class RecruitPositionDetailFragment extends BaseFragment
     });
   }
 
-  @Override public void onJob(Job job) {
+  @Override public void onEditOk() {
+
+  }
+
+  @Override public void onJobDetail(Job job) {
     if (job == null) return;
     if (job.name == null) return;
     this.job = job;
@@ -200,12 +215,14 @@ public class RecruitPositionDetailFragment extends BaseFragment
       tvPositionRequire.loadData(CmStringUtils.getMobileHtml(job.requirement),
           "text/html; charset=UTF-8", null);
     }
-    //场馆人员信息
-    getChildFragmentManager().beginTransaction()
-        .replace(R.id.frag_gym_menber_info,
-            RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(
-                job.gym.member_count, job.gym.staff_count, job.gym.area, job.gym.coach_count))
-        .commit();
+    if (job.gym.member_count != null) {
+      //场馆人员信息
+      getChildFragmentManager().beginTransaction()
+          .replace(R.id.frag_gym_menber_info,
+              RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(
+                  job.gym.member_count, job.gym.staff_count, job.gym.area, job.gym.coach_count))
+          .commit();
+    }
     //场馆设施
     if (!ListUtils.isEmpty(job.gym.facilities)) {
       getChildFragmentManager().beginTransaction()
@@ -223,9 +240,6 @@ public class RecruitPositionDetailFragment extends BaseFragment
     }
   }
 
-  @Override public void onList(List<Job> jobs, int page, int totalCount) {
-
-  }
 
   @Override public void starOK() {
     isStarred = true;
@@ -241,14 +255,36 @@ public class RecruitPositionDetailFragment extends BaseFragment
   }
 
   @Override public void onPostResumeOk() {
-    hideLoading();
+    AddConversationProcessor addConversationProcessor =
+        new AddConversationProcessor(getContext().getApplicationContext());
+    Gson gson = new Gson();
+    String resumeStr = "{\"userAction\":1002, \"data\":" + gson.toJson(
+        resumePresenter.dealResumeMessage(resumeHome)) + "}";
+    addConversationProcessor.sendResumeOrRecruit(("qctest_") + job.created_by.id, resumeStr, "");
+    hideLoadingTrans();
     job.deliveried = true;
     btnSendResume.setText(job.deliveried ? "已投递" : "投递简历");
     btnSendResume.setEnabled(false);
     ToastUtils.show(R.drawable.vector_hook_white, "投递成功");
   }
 
-  @Override public void onJobsIndex(JobListIndex index) {
+  @Override public void onInviteOk() {
+
+  }
+
+  @Override public void toEditJob() {
+    router.toPublishPosition(job.gym.id, job, RecruitPublishJobFragment.MODIFY_POSITION);
+  }
+
+  public void onCheckSuccessed(){
+
+  }
+
+  @Override public void onJobList(List<Job> jobList) {
+
+  }
+
+  @Override public void onGymDetail(Gym gym) {
 
   }
 
@@ -288,15 +324,37 @@ public class RecruitPositionDetailFragment extends BaseFragment
   /**
    * 与他联系
    *
-   * 传给聊天页面参数中加入userAction，1001表示职位，1002表示简历
+   * 传给聊天页面参数中加入userAction，1001表示求职端职位，1002表示求职端简历，1003表示招聘端职位，1004表示招聘端简历
    */
   @OnClick(R2.id.btn_contact_him) public void onBtnContactHimClicked() {
-    AddConversationProcessor addConversationProcessor =
-        new AddConversationProcessor(getContext().getApplicationContext());
+    //AddConversationProcessor addConversationProcessor =
+    //    new AddConversationProcessor(getContext().getApplicationContext());
+    //Gson gson = new Gson();
+    //String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
+    //// TODO: 2017/6/20 正式环境要改  qctest -> qc
+    //addConversationProcessor.addRecruitConversation("qc_" + job.created_by.id, "", jobStr);
+    Uri data = Uri.parse("imchat://chatactivity");
+    //Intent intent = new Intent(Intent.ACTION_VIEW, data);
+    Intent intent = new Intent(getActivity(), JobSearchChatActivity.class);
+    //AddConversationProcessor addConversationProcessor =
+    //    new AddConversationProcessor(getContext().getApplicationContext());
     Gson gson = new Gson();
-    String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
-    // TODO: 2017/6/20 正式环境要改  qctest -> qc
-    addConversationProcessor.addRecruitConversation("qc_" + job.created_by.id, "", jobStr);
+    String jobStr =
+        "{\"userAction\":1001, \"data\":" + gson.toJson(presenter.getRecruitModel(job)) + "}";
+    String resumeStr = "{\"userAction\":1002, \"data\":" + gson.toJson(
+        resumePresenter.dealResumeMessage(resumeHome)) + "}";
+    //intent.putExtra("id", (BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id);
+    //intent.putExtra("datas", jobStr);
+    //TODO 正式版更换 id   by fb
+    intent.putExtra(RecruitConstants.IDENTIFY, ("qctest_") + job.created_by.id);
+    intent.putExtra(RecruitConstants.TEMP_CONVERSATION_TYPE, RecruitConstants.C2C);
+    intent.putExtra(RecruitConstants.CHAT_JOB_RESUME, resumeStr);
+    intent.putExtra(RecruitConstants.CHAT_JOB_ID, job.id);
+    intent.putExtra(RecruitConstants.CHAT_RECRUIT, jobStr);
+    intent.putExtra(RecruitConstants.CHAT_JOB_SEARCH_OR_RECRUIT, RecruitConstants.JOB_SEARCH);
+    intent.putExtra(RecruitConstants.CHAT_RECRUIT_STATE, job.deliveried);
+    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(intent);
   }
 
   /**
@@ -312,21 +370,14 @@ public class RecruitPositionDetailFragment extends BaseFragment
   }
 
   @Override public void onSend() {
-    showLoading();
-    resumePresenter.queryResumeHome();
+    showLoadingTrans();
+    presenter.sendResume(job.id);
   }
 
   @Override public void onBaseInfo(ResumeHome resumeHome) {
-    presenter.sendResume(job.id);
-    AddConversationProcessor addConversationProcessor =
-        new AddConversationProcessor(getContext().getApplicationContext());
-    Gson gson = new Gson();
-    String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
-    String resumeStr = "{userAction:1002, data:"
-        + gson.toJson(resumePresenter.dealResumeMessage(resumeHome))
-        + "}";
+    this.resumeHome = resumeHome;
     // TODO: 2017/6/23 正式环境
-    addConversationProcessor.sendResumeOrRecruit("qc_" + job.created_by.id, resumeStr, jobStr);
+
   }
 
   @Override public void onWorkExpList(List<WorkExp> workExps) {
@@ -338,6 +389,14 @@ public class RecruitPositionDetailFragment extends BaseFragment
   }
 
   @Override public void onCertiList(List<Certificate> certificates) {
+
+  }
+
+  @Override public void starOk() {
+
+  }
+
+  @Override public void unStartOk() {
 
   }
 }

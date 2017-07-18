@@ -152,7 +152,8 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
         if (adapter.getItem(i) instanceof ChatGymItem) {
             getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_fade_out, R.anim.slide_fade_in, R.anim.slide_right_out)
-                .add(R.id.chat_friend_frag, new ChatChooseInGymFragmentBuilder(((ChatGymItem) adapter.getItem(i)).getChatGym()).build())
+                .add(R.id.chat_friend_frag, ChatChooseInGymFragment.newInstance(
+                    ((ChatGymItem) adapter.getItem(i)).getChatGym()))
                 .addToBackStack(null)
                 .commit();
         } else if (adapter.getItem(i) instanceof ChooseStaffItem) {

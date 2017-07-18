@@ -47,7 +47,7 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="8dp"
           android:visibility="gone"
-          tools:src="@drawable/ic_qc_identify"
+          tools:src="@drawable/vd_qc_logo"
           tools:visibility="visible"
           />
     </LinearLayout>
