@@ -14,8 +14,7 @@
 
   </style>
 
-  <style name="QcBtnPrimery"
-      >
+  <style name="QcBtnPrimery">
     <item name="android:background">@drawable/btn_prime</item>
     <item name="android:textColor">@color/white</item>
   </style>

@@ -111,7 +111,6 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     layoutFilter.setOnRefreshListener(this);
     delegatePresenter(endFairPresenter, this);
     delegatePresenter(gymDetailPresenter, this);
-    endFairPresenter.queryEndFairList();
     ((FrameLayout) layoutFilter.getChildAt(1)).addView(v, 0);
     toolbar = ButterKnife.findById(view, R.id.toolbar);
     toolbarTitile = ButterKnife.findById(view, R.id.toolbar_title);
@@ -237,6 +236,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     //presenter.queryMyJobFairList();
+    endFairPresenter.queryEndFairList();
   }
 
   @Override public String getFragmentName() {
