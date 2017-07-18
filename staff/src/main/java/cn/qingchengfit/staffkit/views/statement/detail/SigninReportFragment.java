@@ -39,6 +39,7 @@ import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.statement.SigninFilterActivity;
 import cn.qingchengfit.staffkit.views.statement.excel.OutExcelFragment;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -205,17 +206,10 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
             toolbarTitile.setText(R.string.all_gyms);
             toolbar.inflateMenu(R.menu.menu_out_excel);
             toolbar.setOnMenuItemClickListener(MenuClick);
-            //mCallbackActivity.setToolbar(getString(R.string.all_gyms), true, new View.OnClickListener() {
-            //    @Override public void onClick(View v) {
-            //        ChooseGymActivity.start(SigninReportFragment.this, 1, PermissionServerUtils.SALES_REPORT,
-            //            getString(R.string.choose_gym), mChooseShopId);
-            //    }
-            //}, R.menu.menu_out_excel, MenuClick);
         } else {
             toolbarTitile.setText(R.string.statement_signin);
             toolbar.inflateMenu(R.menu.menu_out_excel);
             toolbar.setOnMenuItemClickListener(MenuClick);
-            //mCallbackActivity.setToolbar(getString(R.string.statement_signin), false, null, R.menu.menu_out_excel, MenuClick);
         }
     }
 
@@ -422,11 +416,18 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
         caculator.put("times_card_count", 0f);
         caculator.put("value_card_count", 0f);
 
+
         caculator.put("value_real_price", 0f);
         caculator.put("times_real_price", 0f);
 
+        caculator.put("value_cost", 0f);
+        caculator.put("times_cost", 0f);
+
+
+
         caculator.put("user_count", 0f);
         caculator.put("total_real_price", 0f);
+        caculator.put("total_cost", 0f);
 
         for (int i = 0; i < mAllstatementBeans.size(); i++) {
             SigninReportDetail.CheckinsBean history = mAllstatementBeans.get(i);
@@ -458,16 +459,24 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
                         case Configs.CATEGORY_VALUE://储值卡
                             caculator.put("value_card_count", caculator.get("value_card_count") + 1);//签到人次
                             caculator.put("value_real_price", caculator.get("value_real_price") + history.getReal_price());//实际收入
+                            caculator.put("value_cost",
+                                caculator.get("value_cost") + history.getCost());
 
                             caculator.put("user_count", caculator.get("user_count") + 1);//总签到人次
                             caculator.put("total_real_price", caculator.get("total_real_price") + history.getReal_price());//总实际收入
+                            caculator.put("total_cost",
+                                caculator.get("total_cost") + history.getCost());
                             break;
                         case Configs.CATEGORY_TIMES://次卡
                             caculator.put("times_card_count", caculator.get("times_card_count") + 1);//签到人次
                             caculator.put("times_real_price", caculator.get("times_real_price") + history.getReal_price());//实际收入
+                            caculator.put("times_cost",
+                                caculator.get("times_cost") + history.getCost());//实际收入
 
                             caculator.put("user_count", caculator.get("user_count") + 1);//总签到人次
                             caculator.put("total_real_price", caculator.get("total_real_price") + history.getReal_price());//总实际收入
+                            caculator.put("total_cost",
+                                caculator.get("total_cost") + history.getCost());
                             break;
                         case Configs.CATEGORY_DATE://期限卡
                             caculator.put("time_card_count", caculator.get("time_card_count") + 1);//签到人次
@@ -481,13 +490,18 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
 
         List<SigninReportForm> signinReportForms = new ArrayList<>();
 
-        SigninReportForm signinReportForm1 =
-            new SigninReportForm(Configs.CATEGORY_VALUE, caculator.get("value_card_count").intValue(), caculator.get("value_real_price"));
-        SigninReportForm signinReportForm2 =
-            new SigninReportForm(Configs.CATEGORY_TIMES, caculator.get("times_card_count").intValue(), caculator.get("times_real_price"));
-        SigninReportForm signinReportForm3 = new SigninReportForm(Configs.CATEGORY_DATE, caculator.get("time_card_count").intValue(), 0);
+        SigninReportForm signinReportForm1 = new SigninReportForm(Configs.CATEGORY_VALUE,
+            caculator.get("value_card_count").intValue(), caculator.get("value_real_price"),
+            caculator.get("value_cost"));
+        SigninReportForm signinReportForm2 = new SigninReportForm(Configs.CATEGORY_TIMES,
+            caculator.get("times_card_count").intValue(), caculator.get("times_real_price"),
+            caculator.get("times_cost"));
+        SigninReportForm signinReportForm3 =
+            new SigninReportForm(Configs.CATEGORY_DATE, caculator.get("time_card_count").intValue(),
+                0, 0);
         SigninReportForm signinReportForm4 =
-            new SigninReportForm(0, caculator.get("user_count").intValue(), caculator.get("total_real_price"));
+            new SigninReportForm(0, caculator.get("user_count").intValue(),
+                caculator.get("total_real_price"), caculator.get("total_cost"));
         signinReportForms.add(signinReportForm1);
         signinReportForms.add(signinReportForm2);
         signinReportForms.add(signinReportForm3);
@@ -584,11 +598,18 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
 
             String cardCost = "";
             if (bean.getCard().getCard_tpl_type() == Configs.CATEGORY_VALUE) {
-                cardCost = TextUtils.concat(bean.getCard().getName(), "  ", String.valueOf(bean.getCost()), "元").toString();
+                cardCost =
+                    TextUtils.concat(bean.getCard().getName(), "  ", String.valueOf(bean.getCost()),
+                        "元", "  实收：", CmStringUtils.getMoneyStr(bean.getReal_price()), "元")
+                        .toString();
             } else if (bean.getCard().getCard_tpl_type() == Configs.CATEGORY_TIMES) {
-                cardCost = TextUtils.concat(bean.getCard().getName(), "  ", String.valueOf(bean.getCost()), "次").toString();
+                cardCost =
+                    TextUtils.concat(bean.getCard().getName(), "  ", String.valueOf(bean.getCost()),
+                        "次", "  实收：", CmStringUtils.getMoneyStr(bean.getReal_price()), "元")
+                        .toString();
             } else {
-                cardCost = TextUtils.concat(bean.getCard().getName()).toString();
+                cardCost = TextUtils.concat(bean.getCard().getName(), "  实收：",
+                    CmStringUtils.getMoneyStr(bean.getReal_price()), "元").toString();
             }
             holder.itemCardCost.setText(cardCost);
 

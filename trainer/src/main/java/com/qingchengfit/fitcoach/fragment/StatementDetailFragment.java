@@ -599,8 +599,8 @@ public class StatementDetailFragment extends BaseFragment
     fs.add(courseCardFormFragment);
     fs.add(courseTypeFormFragment);
 
-    indicator.setViewPager(viewpager);
     fragmentAdapter.notifyDataSetChanged();
+    indicator.setViewPager(viewpager);
     viewpager.setOnTouchListener(new View.OnTouchListener() {
 
       int dragthreshold = 30;

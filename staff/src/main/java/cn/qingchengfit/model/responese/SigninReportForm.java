@@ -16,11 +16,13 @@ public class SigninReportForm implements Parcelable {
     public int card_type;
     public int signin_count;
     public float real_income;
+    public float cost;
 
-    public SigninReportForm(int trade_type, int trade_count, float real_income) {
-        this.card_type = trade_type;
-        this.signin_count = trade_count;
+    public SigninReportForm(int card_type, int signin_count, float real_income, float cost) {
+        this.card_type = card_type;
+        this.signin_count = signin_count;
         this.real_income = real_income;
+        this.cost = cost;
     }
 
     public SigninReportForm() {
