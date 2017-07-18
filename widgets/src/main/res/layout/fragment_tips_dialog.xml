@@ -48,7 +48,7 @@
       android:gravity="center"
       android:paddingBottom="13dp"
       android:paddingTop="13dp"
-      android:textColor="@color/qc_allotsale_green"
+      android:textColor="?colorPrimary"
       android:textSize="17sp"
       tools:text="申请参加招聘会"
       />

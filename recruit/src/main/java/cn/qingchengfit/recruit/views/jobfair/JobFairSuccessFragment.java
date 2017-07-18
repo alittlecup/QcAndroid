@@ -80,6 +80,6 @@ public class JobFairSuccessFragment extends BaseFragment {
   }
 
   @OnClick(R2.id.btn_jobfair_detail) public void onBtnJobfairDetailClicked() {
-    getFragmentManager().popBackStackImmediate();
+    router.remove(this);
   }
 }
