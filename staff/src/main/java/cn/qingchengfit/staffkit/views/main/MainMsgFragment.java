@@ -268,38 +268,6 @@ public class MainMsgFragment extends BaseFragment
     if (getActivity() instanceof MainActivity) {
       ((MainActivity) getActivity()).freshNotiCount(getUnredCount());
     }
-<<<<<<< HEAD
-
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == ChooseActivity.CONVERSATION_FRIEND) {
-                AddConversationProcessor addConversationProcessor = new AddConversationProcessor(getContext());
-                addConversationProcessor.setOnCreateConversation(
-                    new AddConversationProcessor.OnCreateConversation() {
-                        @Override public void onCreateSuccess(String s) {
-
-                        }
-
-                        @Override public void onCreateFailed(int i, String s) {
-                            LogUtils.e(i + ":" + s);
-                        }
-                    });
-                List<String> ret = data.getStringArrayListExtra("ids");
-                if (ret == null || ret.size() == 0) {
-                    ToastUtils.show("您没有选择除自己以外的任何人");
-                    return;
-                }
-                addConversationProcessor.creaetGroupWithName(ret);
-
-                DirtySender.studentList.clear();
-
-            }
-        } else {
-            if (requestCode == ChooseActivity.CONVERSATION_FRIEND) {
-                DirtySender.studentList.clear();
-            }
-=======
     presenter.querySimpleList(ConstantNotification.getNotiQueryJson());
   }
 
@@ -332,7 +300,6 @@ public class MainMsgFragment extends BaseFragment
         if (ret == null || ret.size() == 0) {
           ToastUtils.show("您没有选择除自己以外的任何人");
           return;
->>>>>>> f_recruit
         }
         addConversationProcessor.creaetGroupWithName(ret);
         DirtySender.studentList.clear();

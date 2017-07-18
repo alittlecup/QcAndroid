@@ -29,7 +29,7 @@ import rx.functions.Action1;
 
 public class NetWorkThrowable implements Action1<Throwable> {
     @Override public void call(Throwable throwable) {
-        LogUtil.e(throwable.getMessage());
+      LogUtil.e("NetWorkThrowable", throwable.getMessage());
       ToastUtils.show(throwable.getMessage());
       RxBus.getBus().post(new EventNetWorkError());
     }

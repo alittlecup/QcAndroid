@@ -13,6 +13,7 @@ import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.SingleBatch;
 import cn.qingchengfit.model.responese.SingleBatchData;
 import cn.qingchengfit.model.responese.Space;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponseData;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -59,11 +60,7 @@ public class SingleBatchPresenter extends BasePresenter {
                         view.onShowError(qcResponse.getMsg());
                     }
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onShowError(throwable.getMessage());
-                }
-            }));
+            }, new NetWorkThrowable()));
     }
 
     public void saveSingleBatch(String staffid, String scheduleId, boolean isPrivate, SingleBatchBody body) {
@@ -81,11 +78,7 @@ public class SingleBatchPresenter extends BasePresenter {
                         view.onShowError(qcResponse.getMsg());
                     }
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onShowError(throwable.getMessage());
-                }
-            }));
+            }, new NetWorkThrowable()));
     }
 
     public void delSingleBatchId(String staffid, boolean isPrivate, String singlebatchid) {
@@ -105,11 +98,7 @@ public class SingleBatchPresenter extends BasePresenter {
                         view.onShowError(qcResponse.getMsg());
                     }
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onShowError(throwable.getMessage());
-                }
-            }));
+            }, new NetWorkThrowable()));
     }
 
     @Override public void attachView(PView v) {
