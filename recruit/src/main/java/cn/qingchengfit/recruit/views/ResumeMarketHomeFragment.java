@@ -27,6 +27,7 @@ import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.HorizonImageShowItem;
 import cn.qingchengfit.recruit.item.JobFairFooterItem;
 import cn.qingchengfit.recruit.item.JobFairHorizonItem;
+import cn.qingchengfit.recruit.item.JobFairHorizonMatchParentItem;
 import cn.qingchengfit.recruit.item.RecruitManageItem;
 import cn.qingchengfit.recruit.item.ResumeItem;
 import cn.qingchengfit.recruit.model.EndFairTips;
@@ -41,11 +42,11 @@ import cn.qingchengfit.support.animator.FlipAnimation;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.fragments.TipDialogFragment;
-import cn.qingchengfit.widgets.QcLeftRightDivider;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -194,14 +195,17 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   }
 
   @Override protected void initView() {
-    commonFlexAdapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true);
+    commonFlexAdapter.setStickyHeaders(true)
+        .setDisplayHeadersAtStartUp(true)
+        .setStickyHeaderElevation(1);
     super.initView();
     rv.setClipToPadding(false);
-    rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, R.layout.item_my_jobs, 0, 0));
     rv.addItemDecoration(
-        new QcLeftRightDivider(getContext(), 10, R.layout.item_resume_and_jobfair, 0, 0));
-    rv.addItemDecoration(
-        new QcLeftRightDivider(getContext(), 1, R.layout.item_horizon_qcradiogroup, 0, 0));
+        new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_resume, 1)
+            .addItemViewType(R.layout.item_recruit_manage, 1)
+            .addItemViewType(R.layout.item_horizon_qcradiogroup, 1)
+            .withDivider(R.drawable.divider_qc_base_line)
+            .withBottomEdge(true));
     commonFlexAdapter.addItem(new SearchCenterItem(false, "搜索关键字"));
     horizonImageShowItem = new HorizonImageShowItem(new ArrayList<AbstractFlexibleItem>());
     commonFlexAdapter.addItem(horizonImageShowItem);
@@ -234,7 +238,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    presenter.queryMyJobFairList();
+    //presenter.queryMyJobFairList();
   }
 
   @Override public String getFragmentName() {
@@ -277,19 +281,27 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   }
 
   @Override public void onRefresh() {
+    presenter.queryMyJobFairList();
     initLoadMore();
     params = ListUtils.mapRemoveNull(params);
     presenter.queryResumeMarkets(true, params);
   }
 
+  /**
+   * 招聘会相关数据
+   */
   public void onJobFaris(List<JobFair> jobfairs, int fair_count, int job_count, int gym_count) {
     if (horizonImageShowItem != null) {
       List<AbstractFlexibleItem> items = new ArrayList<>();
       if (jobfairs != null) {
-        for (JobFair jobfair : jobfairs) {
-          items.add(new JobFairHorizonItem(jobfair));
+        if (jobfairs.size() == 1) {
+          items.add(new JobFairHorizonMatchParentItem(jobfairs.get(0)));
+        } else {
+          for (JobFair jobfair : jobfairs) {
+            items.add(new JobFairHorizonItem(jobfair));
+          }
+          if (items.size() >= 5) items.add(new JobFairFooterItem(fair_count));
         }
-        if (items.size() >= 5) items.add(new JobFairFooterItem(fair_count));
       }
       horizonImageShowItem.refresh(items);
     }
@@ -301,10 +313,12 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   }
 
   @Override public void onStickyHeaderChange(int i) {
-    if (i == 3) {
-    }
   }
 
+  /**
+   * 展示筛选项
+   * @param
+   */
   public void showFilter(int pos) {
     layoutFilter.setVisibility(pos >= 0 ? View.VISIBLE : View.GONE);
     Fragment f = getChildFragmentManager().findFragmentByTag("filter");

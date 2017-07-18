@@ -49,25 +49,26 @@ public class HorizonImageShowItem
   @Override
   public ResumeIntentImgShowVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
       ViewGroup parent) {
-    return new ResumeIntentImgShowVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    ResumeIntentImgShowVH holder =
+        new ResumeIntentImgShowVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    if (holder.itemRv.getOnFlingListener() == null) {
+      GravitySnapHelper helper = new GravitySnapHelper(Gravity.START);
+      helper.attachToRecyclerView(holder.itemRv);
+    }
+    holder.itemRv.setLayoutManager(
+        new LinearLayoutManager(holder.itemRv.getContext(), LinearLayoutManager.HORIZONTAL, false));
+    holder.itemRv.setAdapter(commonFlexAdapter);
+    holder.itemRv.addItemDecoration(
+        new FlexibleItemDecoration(holder.itemView.getContext()).addItemViewType(
+            R.layout.item_jobfairs, 6).withRightEdge(true));
+    return holder;
   }
 
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, ResumeIntentImgShowVH holder, int position,
       List payloads) {
     if (items != null) {
-      if (holder.itemRv.getOnFlingListener() == null) {
-        GravitySnapHelper helper = new GravitySnapHelper(Gravity.START);
-        helper.attachToRecyclerView(holder.itemRv);
-      }
-      holder.itemRv.setLayoutManager(
-          new LinearLayoutManager(holder.itemRv.getContext(), LinearLayoutManager.HORIZONTAL,
-              false));
-
-      holder.itemRv.setAdapter(commonFlexAdapter);
-      holder.itemRv.addItemDecoration(
-          new FlexibleItemDecoration(holder.itemView.getContext()).addItemViewType(
-              R.layout.item_jobfairs, 6).withRightEdge(true));
+      commonFlexAdapter.clear();
       for (AbstractFlexibleItem s : items) {
         commonFlexAdapter.addItem(s);
       }
@@ -75,6 +76,7 @@ public class HorizonImageShowItem
   }
 
   public void refresh(List<AbstractFlexibleItem> strings) {
+    this.items = strings;
     commonFlexAdapter.clear();
     for (AbstractFlexibleItem string : strings) {
       commonFlexAdapter.addItem(string);
