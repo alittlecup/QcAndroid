@@ -19,8 +19,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -57,8 +55,6 @@ import rx.functions.Action1;
 public class ChooseCoachFragment extends BaseDialogFragment {
 
     @Inject ChooseCoachPresenter chooseCoachPresenter;
-    @Inject CoachService coachService;
-    @Inject Brand brand;
 
     @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
     @BindView(R.id.btn) Button btn;
@@ -87,7 +83,8 @@ public class ChooseCoachFragment extends BaseDialogFragment {
     }
 
     @Override public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+      super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
         selectPhone = getArguments().getString("phone");
         mType = getArguments().getInt("type", 0);

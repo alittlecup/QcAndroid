@@ -1,8 +1,7 @@
 package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
-import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.ResponseConstant;
@@ -15,7 +14,6 @@ import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.CoachUseCase;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
-import cn.qingchengfit.utils.GymUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,16 +39,13 @@ import rx.schedulers.Schedulers;
  */
 public class ChooseCoachPresenter extends BasePresenter {
 
+    @Inject GymWrapper gymWrapper;
     private CoachUseCase coachUseCase;
-    private CoachService coachService;
-    private Brand brand;
     private RestRepository restRepository;
 
-    @Inject public ChooseCoachPresenter(CoachUseCase coachUseCase, CoachService studentBase, Brand brand, RestRepository restRepository) {
+    @Inject public ChooseCoachPresenter(CoachUseCase coachUseCase, RestRepository restRepository) {
         this.coachUseCase = coachUseCase;
-        this.coachService = studentBase;
         this.restRepository = restRepository;
-        this.brand = brand;
     }
 
     @Override public void onStart() {
@@ -82,7 +77,7 @@ public class ChooseCoachPresenter extends BasePresenter {
     }
 
     public void getCoachesPermission(final Action1<List<ImageTwoTextBean>> action) {
-        HashMap<String, Object> params = GymUtils.getParams(coachService, brand);
+        HashMap<String, Object> params = gymWrapper.getParams();
         params.put("key", PermissionServerUtils.COACHSETTING);
         params.put("method", "get");
 
@@ -127,23 +122,6 @@ public class ChooseCoachPresenter extends BasePresenter {
             }
         } else if (type == 1 || type == 2) {
             getCoachesPermission(action);
-            //            coachUseCase.getAllCoach(coachService.getId(), coachService.getModel(), null, new Action1<Staffs>() {
-            //                @Override
-            //                public void call(Staffs qcResponseGymCoach) {
-            //                    if (qcResponseGymCoach.getStatus() == ResponseConstant.SUCCESS) {
-            //                        List<ImageTwoTextBean> d = new ArrayList<ImageTwoTextBean>();
-            //                        for (Coach coach : qcResponseGymCoach.data.teachers) {
-            //                            ImageTwoTextBean imageTwoTextBean = new ImageTwoTextBean(coach.header, coach.name, coach.phone);
-            //                            imageTwoTextBean.tags.put("id", coach.id);
-            //                            d.add(imageTwoTextBean);
-            //                        }
-            //                        action.call(d);
-            //                    } else {
-            //
-            //                    }
-            //                }
-            //            });
-
         }
     }
 }
