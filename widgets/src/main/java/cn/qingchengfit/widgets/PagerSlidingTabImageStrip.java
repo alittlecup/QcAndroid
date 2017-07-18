@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -377,13 +378,15 @@ public class PagerSlidingTabImageStrip extends HorizontalScrollView implements V
                 //                }
                 //                ImageView view =(ImageView) v.findViewById(img);
                 TextView name = (TextView) v.findViewById(R.id.text);
-                name.setTextColor(CompatUtils.getColor(getContext(), i == position ? R.color.green : R.color.text_black));
+              name.setTextColor(i == position ? mIndicatorColor
+                  : ContextCompat.getColor(getContext(), R.color.text_grey));
                 //                view.getDrawable().mutate().setAlpha(i == position ?255:70);
                 //                view.invalidate();
             } else if (v instanceof RelativeLayout) {
                 //                ImageView view =(ImageView) v.findViewById(img);
                 TextView name = (TextView) v.findViewById(R.id.text);
-                name.setTextColor(CompatUtils.getColor(getContext(), i == position ? R.color.green : R.color.text_black));
+              name.setTextColor(i == position ? mIndicatorColor
+                  : ContextCompat.getColor(getContext(), R.color.text_grey));
                 //                view.getDrawable().mutate().setAlpha(i == position ?255:70);
                 //                view.invalidate();
             }
