@@ -1,17 +1,26 @@
 package cn.qingchengfit.recruit;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import cn.qingchengfit.chat.ChatChooseInGymFragmentBuilder;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
 import cn.qingchengfit.chat.model.ChatGym;
 import cn.qingchengfit.constant.DirtySender;
+import cn.qingchengfit.model.base.Personage;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventChoosePerson;
+import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
+import cn.qingchengfit.staffkit.views.bottom.BottomStudentsFragment;
+import cn.qingchengfit.utils.BusinessUtils;
+import cn.qingchengfit.utils.ListUtils;
+import java.util.ArrayList;
+import java.util.List;
 import rx.functions.Action1;
 
 /**
@@ -53,13 +62,22 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
     }
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_conversation_friend, container, false);
-    unbinder = ButterKnife.bind(this, view);
-    initToolbar(toolbar);
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("选择工作人员");
+    toolbar.getMenu().clear();
+    toolbar.inflateMenu(R.menu.menu_add_txt);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+
+        return false;
+      }
+    });
+  }
+
+  @Override protected void initView() {
     getChildFragmentManager().beginTransaction()
-        .replace(R.id.chat_friend_frag, new ChatChooseInGymFragmentBuilder(chatGym).build())
+        .replace(R.id.chat_friend_frag, ChooseStaffInGymFragment.newInstance(chatGym))
         .commit();
     RxBusAdd(EventChoosePerson.class).subscribe(new Action1<EventChoosePerson>() {
       @Override public void call(EventChoosePerson eventChoosePerson) {
@@ -67,6 +85,28 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
             DirtySender.studentList.size() > 99 ? "..." : DirtySender.studentList.size() + "");
       }
     });
-    return view;
+    tvAllotsaleSelectCount.setText(
+        DirtySender.studentList.size() > 99 ? "..." : DirtySender.studentList.size() + "");
+  }
+
+  @Override public void onViewClicked() {
+    BottomStaffsBanRvSuFragment selectSutdentFragment = new BottomStaffsBanRvSuFragment();
+    selectSutdentFragment.setListener(new BottomStudentsFragment.BottomStudentsListener() {
+      @Override public void onBottomStudents(List<Personage> list) {
+        DirtySender.studentList.clear();
+        DirtySender.studentList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(), list));
+        RxBus.getBus().post(new EventFresh());
+      }
+    });
+    selectSutdentFragment.setDatas(DirtySender.studentList);
+    selectSutdentFragment.show(getFragmentManager(), "");
+  }
+
+  @Override public void onDone() {
+    Intent ret = new Intent();
+    ret.putExtra("ids", (ArrayList<String>) BusinessUtils.PersonIdsExSu(DirtySender.studentList));
+    getActivity().setResult(Activity.RESULT_OK, ret);
+    DirtySender.studentList.clear();
+    getActivity().finish();
   }
 }

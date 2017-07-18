@@ -66,14 +66,21 @@ public class ConversationFriendsFragment extends BaseFragment implements ChatFri
         View view = inflater.inflate(R.layout.fragment_conversation_friend, container, false);
         unbinder = ButterKnife.bind(this, view);
         initToolbar(toolbar);
-        getChildFragmentManager().beginTransaction().replace(R.id.chat_friend_frag, new ChatFriendAllChooseFragment()).commit();
-        RxBusAdd(EventChoosePerson.class).subscribe(new Action1<EventChoosePerson>() {
-            @Override public void call(EventChoosePerson eventChoosePerson) {
-                tvAllotsaleSelectCount.setText(DirtySender.studentList.size() > 99 ? "..." : DirtySender.studentList.size() + "");
-            }
-        });
+      initView();
         return view;
     }
+
+  protected void initView() {
+    getFragmentManager().beginTransaction()
+        .replace(R.id.chat_friend_frag, new ChatFriendAllChooseFragment())
+        .commit();
+    RxBusAdd(EventChoosePerson.class).subscribe(new Action1<EventChoosePerson>() {
+      @Override public void call(EventChoosePerson eventChoosePerson) {
+        tvAllotsaleSelectCount.setText(
+            DirtySender.studentList.size() > 99 ? "..." : DirtySender.studentList.size() + "");
+      }
+    });
+  }
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         tvLeft.setText(R.string.cancel);

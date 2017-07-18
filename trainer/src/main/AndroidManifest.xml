@@ -765,7 +765,6 @@
         />
     <activity android:name="cn.qingchengfit.recruit.views.RecruitActivity"
               android:windowSoftInputMode="stateHidden|adjustResize"
-
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
