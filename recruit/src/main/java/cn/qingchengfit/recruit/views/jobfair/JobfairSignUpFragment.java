@@ -132,7 +132,6 @@ public class JobfairSignUpFragment extends BaseFragment {
   }
 
   @OnClick(R2.id.btn_join) public void onViewClicked() {
-    router.toJoinFairSuc(gym);
     HashMap<String, Object> p = new HashMap<>();
     p.put("fair_id", jobfair.id);
     p.put("gym_id", gym.getId());
