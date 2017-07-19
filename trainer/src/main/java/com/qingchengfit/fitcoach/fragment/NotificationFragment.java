@@ -32,6 +32,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
@@ -49,8 +50,6 @@ import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-
-import static com.tencent.qalsdk.service.QalService.context;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -119,15 +118,16 @@ public class NotificationFragment extends BaseSettingFragment {
                     try {
                         Uri uri = Uri.parse(adapter.datas.get(pos).getUrl());
                         Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
+                        tosb.setPackage(getContext().getPackageName());
                         if (uri.getQueryParameterNames() != null) {
                             for (String key : uri.getQueryParameterNames()) {
                                 tosb.putExtra(key, uri.getQueryParameter(key));
                             }
                         }
                         tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(tosb);
+                        startActivity(tosb);
                     } catch (Exception e) {
-
+                        LogUtil.e(e.getMessage());
                     }
                 }
             }

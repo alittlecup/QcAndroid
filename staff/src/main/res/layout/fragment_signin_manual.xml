@@ -209,7 +209,7 @@
           android:drawablePadding="3dp"
           android:gravity="center"
           android:text="@string/sign_in_untreated_confirm"
-          android:textColor="#0DB14B"
+          android:textColor="?colorPrimary"
           android:textSize="@dimen/common_font"
           />
     </LinearLayout>

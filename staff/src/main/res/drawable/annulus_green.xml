@@ -9,7 +9,7 @@
     <path
         android:name="main"
         android:pathData="M 0.5,10 A 10,10,0,1,1,0.5,11 Z"
-        android:strokeColor="#0DB14B"
+        android:strokeColor="?colorPrimary"
         android:strokeWidth="1"
         />
 

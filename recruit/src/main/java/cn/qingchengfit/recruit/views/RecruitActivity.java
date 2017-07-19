@@ -70,7 +70,7 @@ public class RecruitActivity extends BaseActivity implements HasSupportFragmentI
       } else if ("resume".equals(to)) {
         id = intent.getData().getQueryParameter("id");
       } else if ("recruit".equals(to)) {
-        id = intent.getData().getQueryParameter("id");
+        id = intent.getData().getQueryParameter("gym_id");
         page = intent.getData().getPath().toLowerCase();
       }
     } else if (!TextUtils.isEmpty(intent.getStringExtra("action"))) {

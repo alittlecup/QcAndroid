@@ -1,6 +1,5 @@
 package cn.qingchengfit.recruit;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.model.base.Gym;
@@ -65,7 +64,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -114,7 +112,7 @@ public class RecruitRouter extends InnerRouter {
     if (PreferenceUtils.getPrefInt(activity, "recruit_home", 0) == 0) {
       init(new SeekPositionHomeFragment());
     } else {
-      resumeMarketHome();
+      init(new ResumeMarketHomeFragment());
     }
   }
 
@@ -142,7 +140,7 @@ public class RecruitRouter extends InnerRouter {
     add(RecruitGymDetailFragment.newInstance(service));
   }
 
-  public void toReplaceGymDetail(Gym service){
+  public void toReplaceGymDetail(Gym service) {
     doAction(RecruitGymDetailEmployerFragment.newInstance(service));
   }
 
@@ -158,20 +156,10 @@ public class RecruitRouter extends InnerRouter {
   }
 
   public void notificaitonGymDetail(String gymid) {
-    Fragment f1 = new ResumeMarketHomeFragment();
-    Fragment f2 =
-        RecruitGymDetailEmployerFragment.newInstanceInitTabpage(new Gym.Builder().id(gymid).build(),
-            2);
-    getFragmentManager().beginTransaction()
-        .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
-            R.anim.card_flip_left_in, R.anim.card_flip_left_out)
-        .add(getFragId(), f1)
-        .add(getFragId(), f2)
-        .commit();
+    init(new ResumeMarketHomeFragment());
+    add(RecruitGymDetailEmployerFragment.newInstanceInitTabpage(new Gym.Builder().id(gymid).build(),
+        2));
   }
-
-
-
 
   public void jobsHome() {
     getFragmentManager().beginTransaction()
@@ -184,7 +172,6 @@ public class RecruitRouter extends InnerRouter {
   public void resumeHome() {
     init(new ResumeHomeFragment());
   }
-
 
   public void toMyResume() {
     add(new ResumeHomeFragment());

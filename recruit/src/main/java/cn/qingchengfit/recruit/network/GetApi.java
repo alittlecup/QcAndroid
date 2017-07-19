@@ -88,6 +88,9 @@ public interface GetApi {
   @GET("/api/job/gyms/{gym_id}/") rx.Observable<QcDataResponse<GymWrap>> queryGymInfo(
       @Path("gym_id") String gym_id);
 
+  @GET("/api/staff/job/gyms/{gym_id}/") rx.Observable<QcDataResponse<GymWrap>> queryStaffGymInfo(
+      @Path("gym_id") String gym_id);
+
   /**
    * 某公司所有招聘职位
    */
@@ -100,6 +103,9 @@ public interface GetApi {
   @GET("/api/user/gyms/{gym_id}/jobs/?show_all=1")
   rx.Observable<QcDataResponse<JobListWrap>> queryGymJobsAll(@Path("gym_id") String gym_id,
       @Query("page") int page);
+
+  @GET("/api/staff/user/gyms/{gym_id}/jobs/?show_all=1")
+  rx.Observable<QcDataResponse<JobListWrap>> queryStaffGymJobsAll(@Path("gym_id") String gym_id);
 
   /**
    * 收到的简历(主动投递的)

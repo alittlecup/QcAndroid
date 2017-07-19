@@ -175,7 +175,7 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
                 holder.itemScheduleNum.setVisibility(View.VISIBLE);
                 holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.text_grey));
                 holder.itemScheduleTime.setTextColor(getContext().getResources().getColor(R.color.text_grey));
-                holder.itemScheduleStatus.setImageResource(R.drawable.ic_calendar_done);
+              holder.itemScheduleStatus.setImageResource(R.drawable.vd_checkbox_checked);
                 holder.itemScheduleGymname.setTextColor(getResources().getColor(R.color.text_grey));
                 holder.itemScheduleNum.setTextColor(getResources().getColor(R.color.text_grey));
                 holder.itemTeacher.setTextColor(getResources().getColor(R.color.text_grey));

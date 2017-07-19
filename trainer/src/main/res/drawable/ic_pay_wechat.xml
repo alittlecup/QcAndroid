@@ -10,7 +10,7 @@
       <group>
         <group>
           <path
-              android:fillColor="#0DB14B"
+              android:fillColor="?colorPrimary"
               android:fillType="evenOdd"
               android:pathData="M8,0 C12.4183,0,16,3.58172,16,8 C16,12.4183,12.4183,16,8,16
 C3.58172,16,0,12.4183,0,8 C0,3.58172,3.58172,0,8,0 Z"

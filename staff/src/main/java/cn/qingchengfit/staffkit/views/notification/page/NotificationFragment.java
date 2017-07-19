@@ -239,6 +239,7 @@ public class NotificationFragment extends BaseFragment
 
                             Uri uri = Uri.parse(s);
                             Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
+                            tosb.setPackage(getContext().getPackageName());
                             if (uri.getQueryParameterNames() != null) {
                                 for (String key : uri.getQueryParameterNames()) {
                                     tosb.putExtra(key, uri.getQueryParameter(key));

@@ -10,7 +10,7 @@
       android:pivotY="3.5"
       android:rotation="-90">
     <path
-        android:fillColor="#0db14b"
+        android:fillColor="?colorPrimary"
         android:fillType="evenOdd"
         android:pathData="M 5.5 6.183333 L 3.013514 3.5 L 5.5 0.8166667 L 4.743243 0 L 1.5 3.5 L 4.743243 7 Z"
         android:strokeWidth="1"/>

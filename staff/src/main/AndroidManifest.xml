@@ -767,6 +767,21 @@
         android:label="拍照预览"
         android:theme="@style/QcAppThemeForCamera"
         />
+    <activity
+        android:name="cn.qingchengfit.views.activity.ScanActivity"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="scan"
+            android:scheme="qcstaff"
+            />
+      </intent-filter>
+    </activity>
     <activity android:name="cn.qingchengfit.recruit.views.RecruitActivity"
         >
       <intent-filter>

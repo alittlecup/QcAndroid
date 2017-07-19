@@ -11,7 +11,7 @@
         >
       <path
           android:name="bg"
-          android:fillColor="#0DB14B"
+          android:fillColor="?colorPrimary"
           android:pathData="M20,10.1235 C20,4.47704,15.523,0,9.87654,0 C4.47704,0,0,4.47704,0,10.1235
 C0,15.523,4.47704,20,9.87654,20 C15.523,20,20,15.523,20,10.1235 Z"
           android:strokeWidth="1"/>

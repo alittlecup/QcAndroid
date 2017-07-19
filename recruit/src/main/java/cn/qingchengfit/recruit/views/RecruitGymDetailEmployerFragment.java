@@ -25,6 +25,7 @@ import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.RecruitPositionInGymItem;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.presenter.RecruitGymDetailPresenter;
+import cn.qingchengfit.recruit.presenter.RecruitStaffGymDetailPresenter;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
@@ -67,7 +68,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
   RecruitPositionsInGymFragment closeFragment;
   JobFairListFragment specialFragment;
 
-  @Inject RecruitGymDetailPresenter presenter;
+  @Inject RecruitStaffGymDetailPresenter presenter;
   @Inject RecruitRouter recruitRouter;
 
   Gym gym;
@@ -170,7 +171,6 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
     imgRight.setVisibility(View.VISIBLE);
     if (service == null) return;
     if (service.name == null) return;
-    ;
     PhotoUtils.small(imgGym, service.photo);
     tvGymName.setText(service.name);
     tvAddress.setText(service.getAddressStr());

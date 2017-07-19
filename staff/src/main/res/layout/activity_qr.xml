@@ -21,11 +21,6 @@
       tools:context="cn.qingchengfit.staffkit.views.QRActivity"
       >
 
-    <!--<com.dlazaro66.qrcodereaderview.QRCodeReaderView-->
-    <!--android:id="@+id/qrdecoderview"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

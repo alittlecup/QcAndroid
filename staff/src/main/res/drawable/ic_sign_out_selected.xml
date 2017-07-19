@@ -10,7 +10,7 @@
       android:rotation="90"
       android:translateY="-8">
     <path
-        android:fillColor="#0DB14B"
+        android:fillColor="?colorPrimary"
         android:fillType="evenOdd"
         android:pathData="M1.5,10.5 L10.4680851,10.5 L10.4680851,1.5 L1.5,1.5 L1.5,2.24297333
 C1.5,2.66106761 1.16710138,3 0.75,3 C0.335786438,3 2.22044605e-16,2.65586185

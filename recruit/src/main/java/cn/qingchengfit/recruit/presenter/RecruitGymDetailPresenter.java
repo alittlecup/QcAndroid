@@ -20,9 +20,9 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class RecruitGymDetailPresenter extends BasePresenter {
+  protected MVPView view;
+  protected int page = 1, total = 1;
   @Inject QcRestRepository restRepository;
-  private MVPView view;
-  private int page = 1, total = 1;
 
   @Inject public RecruitGymDetailPresenter() {
   }
