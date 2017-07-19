@@ -183,7 +183,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitile.setText("求职招聘");
+    toolbarTitile.setText("招聘端");
     toolbar.inflateMenu(R.menu.menu_i_seek_job);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
