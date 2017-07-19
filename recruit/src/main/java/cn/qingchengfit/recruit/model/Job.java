@@ -81,6 +81,7 @@ public class Job implements Parcelable {
   public int view;
   public boolean has_new_delivery;
   public boolean has_new_invite;
+  public boolean has_new_resume;
 
   public Job() {
   }

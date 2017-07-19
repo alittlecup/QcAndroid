@@ -29,16 +29,11 @@ import java.util.List;
  */
 
 public class RecruitPositionInGymItem extends RecruitPositionItem {
-  private boolean hasUndo = false;
 
   public RecruitPositionInGymItem(Job job) {
     super(job);
   }
 
-  public RecruitPositionInGymItem(Job job, boolean hasUndo) {
-    super(job);
-    this.hasUndo = hasUndo;
-  }
 
   @Override public int getLayoutRes() {
     return R.layout.item_recruit_position_in_gym;
@@ -47,7 +42,7 @@ public class RecruitPositionInGymItem extends RecruitPositionItem {
   @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitPositionVH holder, int position, List payloads) {
     super.bindViewHolder(adapter, holder, position, payloads);
     if (holder.tv_has_todo != null) {
-      if (hasUndo) {
+      if (job.has_new_resume) {
         holder.tv_has_todo.setVisibility(View.VISIBLE);
         holder.tv_has_todo.setCompoundDrawablesWithIntrinsicBounds(
             ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.dot_red), null, null, null);

@@ -104,8 +104,8 @@ public interface GetApi {
   rx.Observable<QcDataResponse<JobListWrap>> queryGymJobsAll(@Path("gym_id") String gym_id,
       @Query("page") int page);
 
-  @GET("/api/staff/user/gyms/{gym_id}/jobs/?show_all=1")
-  rx.Observable<QcDataResponse<JobListWrap>> queryStaffGymJobsAll(@Path("gym_id") String gym_id);
+  @GET("/api/staff/jobs/?show_all=1")
+  rx.Observable<QcDataResponse<JobListWrap>> queryStaffGymJobsAll(@Query("gym_id") String gym_id);
 
   /**
    * 收到的简历(主动投递的)

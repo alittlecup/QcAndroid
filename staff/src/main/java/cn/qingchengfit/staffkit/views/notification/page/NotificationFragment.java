@@ -186,7 +186,8 @@ public class NotificationFragment extends BaseFragment
                     } else {
 
                     }
-                    if (!StringUtils.isEmpty(msg.getBrand_id()) && !StringUtils.isEmpty(msg.getShop_id())) {
+                    if (!StringUtils.isEmpty(msg.getBrand_id()) && !StringUtils.isEmpty(
+                        msg.getShop_id()) && msg.type < 16) {
                         final CoachService coachService1 = GymBaseInfoAction.getGymByShopIdNow(msg.getBrand_id(), msg.getShop_id());
                         if (coachService1 != null) {
                             HashMap<String, Object> p = new HashMap<>();

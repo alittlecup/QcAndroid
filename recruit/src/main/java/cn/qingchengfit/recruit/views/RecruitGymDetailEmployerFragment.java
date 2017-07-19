@@ -140,9 +140,17 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
         return false;
       }
     });
+
     onGym(gym);
     presenter.queryGymDetail(gym.id);
     return view;
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    if (initPage > 0 && initPage < fragments.size()) {
+      vp.setCurrentItem(initPage);
+    }
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -161,9 +169,6 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof RecruitPositionsInGymFragment) {
       presenter.queryPositionOfGym(gym.id, 1);
-      if (initPage > 0 && initPage < fragments.size()) {
-        vp.setCurrentItem(initPage, false);
-      }
     }
   }
 

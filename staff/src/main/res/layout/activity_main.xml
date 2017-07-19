@@ -31,7 +31,15 @@
       app:text_select_color="@color/text_black"
       app:text_size="12sp"
       />
-
+  <!--<android.support.design.widget.BottomNavigationView-->
+  <!--android:id="@+id/tabview"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="60dp"-->
+  <!--android:layout_alignParentBottom="true"-->
+  <!--app:itemBackground="@color/toolbar"-->
+  <!--app:itemIconTint="@drawable/navigation_colors"-->
+  <!--app:itemTextColor="@drawable/navigation_colors"-->
+  <!--app:menu="@menu/navigation_menu" />-->
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
