@@ -2,7 +2,8 @@ package cn.qingchengfit.views;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * <p>
  * Created by Paper on 15/11/19 2015.
  */
-public class FragmentAdapter extends FragmentPagerAdapter {
+public class FragmentAdapter extends FragmentStatePagerAdapter {
 
     List<Fragment> fragments;
     FragmentManager fm;
@@ -46,6 +47,16 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override public int getItemPosition(Object object) {
         return POSITION_NONE;
+    }
+
+    @Override public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
+        if (position >= getCount()) {
+            FragmentManager manager = ((Fragment) object).getFragmentManager();
+            FragmentTransaction trans = manager.beginTransaction();
+            trans.remove((Fragment) object);
+            trans.commit();
+        }
     }
 
     @Override public CharSequence getPageTitle(int position) {

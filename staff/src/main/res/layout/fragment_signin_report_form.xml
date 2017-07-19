@@ -39,6 +39,14 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
+        android:text="签到收入"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
         android:text="@string/real_income_long"
         />
 
@@ -69,8 +77,19 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="?colorPrimary"
         tools:text="@string/server_count"
+        />
+
+    <TextView
+        android:id="@+id/tv_signin_report_date_cost"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="--"
+        android:textColor="@color/colorPrimary"
+
         />
 
 
@@ -113,6 +132,16 @@
 
 
     <TextView
+        android:id="@+id/tv_siginin_report_times_cost"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="?colorPrimary"
+        tools:text="--"
+        />
+
+    <TextView
         android:id="@+id/tv_siginin_report_times_incomes"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -152,6 +181,16 @@
 
 
     <TextView
+        android:id="@+id/tv_siginin_report_value_cost"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="?colorPrimary"
+        tools:text=""
+        />
+
+    <TextView
         android:id="@+id/tv_siginin_report_value_income"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -188,6 +227,16 @@
         android:textColor="@color/colorPrimary"
         tools:text="@string/server_count"
 
+        />
+
+    <TextView
+        android:id="@+id/tv_siginin_report_total_cost"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="?colorPrimary"
+        tools:text=""
         />
 
     <TextView
