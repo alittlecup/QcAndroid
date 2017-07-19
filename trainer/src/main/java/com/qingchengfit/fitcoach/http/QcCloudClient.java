@@ -800,7 +800,8 @@ public class QcCloudClient {
             @Body FixBatchBean batchBean);
 
         @PUT("/api/v1/coaches/{id}/{type}/{single_id}/") rx.Observable<QcResponse> qcUpdateSinglebatch(@Path("id") String staff_id,
-            @Path("type") String type, @Path("scheduleid") String scheduleid, @Body SingleBatchBody body);
+            @Path("type") String type, @Path("single_id") String scheduleid,
+            @Body SingleBatchBody body);
 
         @POST("/api/measures/") rx.Observable<QcResponse> qcAddBodyTest(@Body AddBodyTestBean addBodyTestBean);
 
