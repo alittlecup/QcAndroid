@@ -6,6 +6,7 @@
   <color name="primary_light">#00f1fc</color>
   <color name="colorPrimarytrans">#1100c8d1</color>
   <color name="colorPrimary">@color/primary</color>
+  <color name="colorPrimaryLight">@color/primary</color>
   <color name="colorPrimaryDark">#006f74</color>
   <color name="toolbar">#232428</color>
 

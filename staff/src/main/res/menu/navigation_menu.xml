@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+      android:id="@+id/tab_gyms"
+      android:icon="@drawable/ic_gyms"
+      android:title="我的健身房"/>
+  <item
+      android:id="@+id/tab_find"
+      android:icon="@drawable/vector_tabbar_discover_nomal"
+      android:title="发现"/>
+  <item
+      android:id="@+id/tab_msgs"
+      android:icon="@drawable/vd_tab_noti_nomal"
+      android:title="发现"/>
+  <item
+      android:id="@+id/tab_setting"
+      android:icon="@drawable/ic_tabbar_account_normal"
+      android:title="设置"/>
+</menu>
