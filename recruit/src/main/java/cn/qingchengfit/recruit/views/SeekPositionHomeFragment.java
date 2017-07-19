@@ -239,7 +239,7 @@ public class SeekPositionHomeFragment extends JobsListFragment
         return false;
       }
     });
-    toolbarTitile.setText("求职招聘");
+    toolbarTitile.setText("求职端");
   }
 
   @Override protected void onFinishAnimation() {
