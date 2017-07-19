@@ -74,6 +74,8 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
 
+  private int initPage = -1;
+
   public static RecruitGymDetailEmployerFragment newInstance(Gym co) {
     Bundle args = new Bundle();
     args.putParcelable("gym", co);
@@ -82,9 +84,24 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
     return fragment;
   }
 
+  /**
+   * 将tab页初始化化到某位置
+   */
+  public static RecruitGymDetailEmployerFragment newInstanceInitTabpage(Gym co, int initpage) {
+    Bundle args = new Bundle();
+    args.putParcelable("gym", co);
+    args.putInt("page", initpage);
+    RecruitGymDetailEmployerFragment fragment = new RecruitGymDetailEmployerFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    gym = getArguments().getParcelable("gym");
+    if (getArguments() != null) {
+      gym = getArguments().getParcelable("gym");
+      initPage = getArguments().getInt("page");
+    }
     hotFragment = new RecruitPositionsInGymFragment();
     closeFragment = new RecruitPositionsInGymFragment();
     specialFragment = RecruitStaffMyJobFairFragment.newInstance(gym.id);//专场招聘会
@@ -143,12 +160,17 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof RecruitPositionsInGymFragment) {
       presenter.queryPositionOfGym(gym.id, 1);
+      if (initPage > 0 && initPage < fragments.size()) {
+        vp.setCurrentItem(initPage, false);
+      }
     }
   }
 
   public void onGym(Gym service) {
     imgRight.setVisibility(View.VISIBLE);
     if (service == null) return;
+    if (service.name == null) return;
+    ;
     PhotoUtils.small(imgGym, service.photo);
     tvGymName.setText(service.name);
     tvAddress.setText(service.getAddressStr());

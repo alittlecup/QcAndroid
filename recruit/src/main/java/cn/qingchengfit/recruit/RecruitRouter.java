@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.model.base.Gym;
@@ -151,6 +152,22 @@ public class RecruitRouter extends InnerRouter {
         .commit();
   }
 
+  public void notificaitonGymDetail(String gymid) {
+    Fragment f1 = new ResumeMarketHomeFragment();
+    Fragment f2 =
+        RecruitGymDetailEmployerFragment.newInstanceInitTabpage(new Gym.Builder().id(gymid).build(),
+            2);
+    getFragmentManager().beginTransaction()
+        .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
+            R.anim.card_flip_left_in, R.anim.card_flip_left_out)
+        .add(getFragId(), f1)
+        .add(getFragId(), f2)
+        .commit();
+  }
+
+
+
+
   public void jobsHome() {
     getFragmentManager().beginTransaction()
         .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
@@ -162,6 +179,7 @@ public class RecruitRouter extends InnerRouter {
   public void resumeHome() {
     init(new ResumeHomeFragment());
   }
+
 
   public void toMyResume() {
     add(new ResumeHomeFragment());
@@ -254,6 +272,13 @@ public class RecruitRouter extends InnerRouter {
    */
   public void toGymdetailEmployer(Gym gym) {
     add(RecruitGymDetailEmployerFragment.newInstance(gym));
+  }
+
+  /**
+   * 默认跳到专场招聘会页面
+   */
+  public void toGymdetailEmployerInitPage(Gym gym, int page) {
+    add(RecruitGymDetailEmployerFragment.newInstanceInitTabpage(gym, page));
   }
 
   /**

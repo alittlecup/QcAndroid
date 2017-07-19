@@ -60,12 +60,18 @@ public class RecruitActivity extends BaseActivity implements HasSupportFragmentI
     super.onNewIntent(intent);
     String to = "";
     String id = null;
+    String page = "";
+
     if (intent.getData() != null && !TextUtils.isEmpty(intent.getData().getHost())) {
       to = intent.getData().getHost();
       if ("job".equals(to)) {
         id = intent.getData().getPath().replace("/", "");
       } else if ("resume".equals(to)) {
         id = intent.getData().getQueryParameter("id");
+      } else if ("recruit".equals(to)) {
+        id = intent.getData().getQueryParameter("id");
+        page = intent.getData().getPath().toLowerCase();
+
       }
     } else if (!TextUtils.isEmpty(intent.getStringExtra("action"))) {
       to = intent.getStringExtra("action");
@@ -89,7 +95,10 @@ public class RecruitActivity extends BaseActivity implements HasSupportFragmentI
           router.initJobDetail(new Job.Builder().id(id).build());
         }
         break;
-      case "company":
+      case "recruit":
+        if (page.contains("employer/gym")) {
+          router.notificaitonGymDetail(id);
+        }
         break;
       case "fair":
         break;

@@ -8,7 +8,7 @@
   <color name="divider_grey">#dddddd</color>
   <color name="text_grey">@color/warm_grey</color>
   <color name="bg_grey">#f4f4f4</color>
-  <color name="toolbar">#4e4e4e</color>
+  <color name="toolbar">#232428</color>
   <color name="most_black">#222222</color>
 
 </resources>

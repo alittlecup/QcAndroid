@@ -164,6 +164,7 @@ public class WebFragment extends BaseFragment
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_web, container, false);
     unbinder = ButterKnife.bind(this, view);
+    mRefresh.setEnabled(false);
     mRefresh.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         mNoNetwork.setVisibility(View.GONE);

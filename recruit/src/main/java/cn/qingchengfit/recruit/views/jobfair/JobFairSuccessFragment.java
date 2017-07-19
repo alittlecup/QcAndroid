@@ -76,7 +76,7 @@ public class JobFairSuccessFragment extends BaseFragment {
   }
 
   @OnClick(R2.id.btn_my_jobfair) public void onBtnMyJobfairClicked() {
-    router.toGymdetailEmployer(gym);
+    router.toGymdetailEmployerInitPage(gym, 2);
   }
 
   @OnClick(R2.id.btn_jobfair_detail) public void onBtnJobfairDetailClicked() {

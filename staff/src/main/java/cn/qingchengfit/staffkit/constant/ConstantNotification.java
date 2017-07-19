@@ -58,6 +58,8 @@ public class ConstantNotification {
     public static final int TYPE_CLOUD_MESSAGE_STAFF = 20002;               //系统-发送通知-工作人员
     public static final int TYPE_CLOUD_COMMENT = 20003;               //评论-收到评论
     public static final int TYPE_CLOUD_COMMPETITION_STAFF = 20004;               //赛事——工作人员
+    public static final int TYPE_CLOUD_JOB_FAIR_CHECK = 20005;               //招聘--招聘会审核
+    public static final int TYPE_CLOUD_JOB_FAIR_ADD_GYM = 20006;               //招聘——招聘会新增场馆
 
     /*
      *场馆消息
@@ -70,7 +72,8 @@ public class ConstantNotification {
        系统通知
      */
     public static final String SYSTEM_NOTIFICATION_STR = "system";
-    public static final int[] SYSTEM_NOTIFICATION = { TYPE_CLOUD_MESSAGE_STAFF };
+    public static final int[] SYSTEM_NOTIFICATION =
+        { TYPE_CLOUD_MESSAGE_STAFF, TYPE_CLOUD_JOB_FAIR_CHECK, TYPE_CLOUD_JOB_FAIR_ADD_GYM };
     /*
      *学习培训
      */

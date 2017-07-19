@@ -1,5 +1,6 @@
 package cn.qingchengfit.saas.views.fragments;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +23,10 @@ import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -122,7 +126,19 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
   }
 
   @OnClick(R2.id.address) public void onAddressClicked() {
-    BaseRouter.toChoose(getContext(), 71);
+    new RxPermissions(getActivity()).request(Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<Boolean>() {
+          @Override public void call(Boolean aBoolean) {
+            if (aBoolean) {
+              BaseRouter.toChoose(getContext(), 71);
+            } else {
+              ToastUtils.show("您拒绝了定位权限");
+            }
+          }
+        });
+
   }
 
   @Override public void onGym(Gym gym) {

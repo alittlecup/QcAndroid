@@ -87,6 +87,10 @@ public class PushUtils {
                             realCard.id = bean.card_id + "";
                             intent.putExtra(Configs.EXTRA_REAL_CARD, realCard);
                             break;
+                        //case ConstantNotification.TYPE_CLOUD_JOB_FAIR_ADD_GYM:
+                        //case ConstantNotification.TYPE_CLOUD_JOB_FAIR_CHECK:
+                        //
+                        //    break;
                     }
                     context.startActivity(intent);
                 } else {
