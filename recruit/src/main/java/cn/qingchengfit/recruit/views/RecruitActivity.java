@@ -46,6 +46,7 @@ public class RecruitActivity extends BaseActivity implements HasSupportFragmentI
   @Inject LoginStatus loginStatus;
   @Inject BaseRouter baseRouter;
   @Inject QcRestRepository restRepository;
+
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_recruit);
@@ -71,7 +72,6 @@ public class RecruitActivity extends BaseActivity implements HasSupportFragmentI
       } else if ("recruit".equals(to)) {
         id = intent.getData().getQueryParameter("id");
         page = intent.getData().getPath().toLowerCase();
-
       }
     } else if (!TextUtils.isEmpty(intent.getStringExtra("action"))) {
       to = intent.getStringExtra("action");
@@ -95,15 +95,14 @@ public class RecruitActivity extends BaseActivity implements HasSupportFragmentI
           router.initJobDetail(new Job.Builder().id(id).build());
         }
         break;
-      case "recruit":
-        if (page.contains("employer/gym")) {
-          router.notificaitonGymDetail(id);
-        }
-        break;
       case "fair":
         break;
       default:
-        router.home();
+        if (page.contains("employer/gym")) {
+          router.notificaitonGymDetail(id);
+        } else {
+          router.home();
+        }
         break;
     }
   }

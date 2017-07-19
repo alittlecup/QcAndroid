@@ -60,6 +60,7 @@ import cn.qingchengfit.recruit.views.resume.WorkExpSyncDetailFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.WorkExpeEditFragmentBuilder;
 import cn.qingchengfit.router.InnerRouter;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
+import cn.qingchengfit.utils.PreferenceUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -110,7 +111,11 @@ public class RecruitRouter extends InnerRouter {
    * 求职版主页
    */
   public void home() {
-    init(new SeekPositionHomeFragment());
+    if (PreferenceUtils.getPrefInt(activity, "recruit_home", 0) == 0) {
+      init(new SeekPositionHomeFragment());
+    } else {
+      resumeMarketHome();
+    }
   }
 
   public void goJobDetail(Job job) {

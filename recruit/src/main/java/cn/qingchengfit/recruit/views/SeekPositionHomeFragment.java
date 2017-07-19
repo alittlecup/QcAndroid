@@ -130,6 +130,7 @@ public class SeekPositionHomeFragment extends JobsListFragment
         searchEt.setText("");
       }
     });
+    PreferenceUtils.setPrefInt(getContext(), "recruit_home", 0);
     return view;
   }
 

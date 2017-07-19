@@ -39,6 +39,7 @@ import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.support.animator.FlipAnimation;
 import cn.qingchengfit.utils.ListUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.TipDialogFragment;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -142,6 +143,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
         searchEt.setText("");
       }
     });
+    PreferenceUtils.setPrefInt(getContext(), "recruit_home", 1);
     return view;
   }
 
