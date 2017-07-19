@@ -166,6 +166,11 @@ public class SeekPositionHomeFragment extends JobsListFragment
             if (eventClickViewPosition.getId() == R.id.layout_i_sent) {
               router.mySent();
             } else if (eventClickViewPosition.getId() == R.id.layout_i_invited) {
+              if (itemMyJobs != null) {
+                itemMyJobs.setHasNewInvited(false);
+                commonFlexAdapter.notifyItemChanged(
+                    commonFlexAdapter.getGlobalPositionOf(itemMyJobs));
+              }
               router.myInvited();
             } else if (eventClickViewPosition.getId() == R.id.layout_i_stared) {
               router.myStarred();

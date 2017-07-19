@@ -56,7 +56,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/5/27.
  */
 public class RecruitGymDetailFragment extends BaseFragment
-    implements RecruitGymDetailPresenter.MVPView, FlexibleAdapter.EndlessScrollListener,
+    implements RecruitGymDetailPresenter.MVPView,
     FlexibleAdapter.OnItemClickListener {
 
   @BindView(R2.id.img_gym) ImageView imgGym;
@@ -152,13 +152,9 @@ public class RecruitGymDetailFragment extends BaseFragment
   @Override public void onJobList(List<Job> jobs, int page, int totalCount) {
     if (positionsFragment != null) {
       if (jobs != null) {
-        if (page == 1) {
           tempJob.clear();
           tempJob.addAll(jobs);
           positionsFragment.setData(jobs);
-        } else {
-          positionsFragment.addData(jobs);
-        }
       } else {
         positionsFragment.stopLoadMore();
       }
@@ -177,13 +173,7 @@ public class RecruitGymDetailFragment extends BaseFragment
     super.onDestroyView();
   }
 
-  @Override public void noMoreLoad(int i) {
-    if (positionsFragment != null) positionsFragment.stopLoadMore();
-  }
 
-  @Override public void onLoadMore(int i, int i1) {
-    presenter.queryPositionOfGym(gym.id, 0);
-  }
 
   @Override public boolean onItemClick(int i) {
     IFlexible item = positionsFragment.getItem(i);

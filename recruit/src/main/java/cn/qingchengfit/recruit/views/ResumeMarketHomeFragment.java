@@ -236,8 +236,6 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   }
 
   @Override protected void onFinishAnimation() {
-    super.onFinishAnimation();
-    //presenter.queryMyJobFairList();
     endFairPresenter.queryEndFairList();
   }
 
@@ -250,7 +248,8 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   }
 
   @Override protected void removeMainItem() {
-    commonFlexAdapter.removeRange(4, commonFlexAdapter.getItemCount() - 4);
+    //commonFlexAdapter.removeRange(4, commonFlexAdapter.getItemCount() - 4);
+    commonFlexAdapter.removeItemsOfType(R.layout.item_resume);
   }
 
   @Override public void onResumeList(List<Resume> resumes, int total, int page) {

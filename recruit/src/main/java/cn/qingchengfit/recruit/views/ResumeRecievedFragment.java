@@ -252,7 +252,7 @@ import rx.functions.Action1;
         case 2:
           return "已录用";
         case 3:
-          return "不合格";
+          return "不合适";
         default:
           return "未处理";
       }

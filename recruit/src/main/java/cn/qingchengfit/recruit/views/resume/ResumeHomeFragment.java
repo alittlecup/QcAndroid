@@ -111,6 +111,7 @@ public class ResumeHomeFragment extends BaseFragment
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     delegatePresenter(postPresenter, this);
+    delegatePresenter(permissionPresenter, this);
     initToolbar(toolbar);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     srl.setColorSchemeColors(AppUtils.getPrimaryColor(getContext()));

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class MyJobsItem extends AbstractFlexibleItem<MyJobsItem.MyJobsVH> {
 
-  boolean hasNewInvited = false;
+  boolean hasNewInvited = true;
 
   public MyJobsItem(boolean hasNewInvited) {
     this.hasNewInvited = hasNewInvited;
@@ -46,7 +46,7 @@ public class MyJobsItem extends AbstractFlexibleItem<MyJobsItem.MyJobsVH> {
   }
 
   @Override public boolean equals(Object o) {
-    return false;
+    return o instanceof MyJobsItem;
   }
 
   public class MyJobsVH extends FlexibleViewHolder {

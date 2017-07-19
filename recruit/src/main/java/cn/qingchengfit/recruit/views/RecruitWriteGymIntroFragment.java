@@ -18,6 +18,7 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.event.EventGymFacilities;
+import cn.qingchengfit.recruit.event.EventRichTextBack;
 import cn.qingchengfit.recruit.network.body.RecruitGymBody;
 import cn.qingchengfit.recruit.presenter.RecruitGymPresenter;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -88,6 +89,12 @@ import rx.functions.Action1;
       @Override public void call(EventGymFacilities eventGymFacilities) {
         gym.facilities = eventGymFacilities.facilities;
         civGymEquip.setContent(CmStringUtils.List2Str(gym.facilities));
+      }
+    });
+    RxBusAdd(EventRichTextBack.class).subscribe(new Action1<EventRichTextBack>() {
+      @Override public void call(EventRichTextBack eventRichTextBack) {
+        gym.detail_description = eventRichTextBack.content;
+        civGymIntro.setContent(getString(R.string.detail_text));
       }
     });
   }

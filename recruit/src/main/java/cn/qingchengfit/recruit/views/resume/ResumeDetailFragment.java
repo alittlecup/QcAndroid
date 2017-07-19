@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
@@ -31,7 +29,6 @@ import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
-import cn.qingchengfit.recruit.presenter.ResumePermissionPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
 import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.utils.ToastUtils;
@@ -184,6 +181,9 @@ import javax.inject.Inject;
     this.resumeHome = resumeHome;
     userId = resumeHome.user_id;
     isStarred = resumeHome.favorited;
+    tvStarred.setText(isStarred ? "已收藏" : "收藏简历");
+    imgStared.setImageResource(
+        isStarred ? R.drawable.vd_recruit_job_starred : R.drawable.vd_recruit_job_star);
     resumeModel = resumePresenter.dealResumeMessage(resumeHome);
   }
 
@@ -219,7 +219,7 @@ import javax.inject.Inject;
   //取消收藏简历成功回调
   @Override public void unStartOk() {
     isStarred = false;
-    tvStarred.setText("取消收藏");
+    tvStarred.setText("收藏简历");
     imgStared.setImageResource(R.drawable.vd_recruit_job_star);
   }
 

@@ -39,6 +39,7 @@ import cn.qingchengfit.staffkit.views.student.filter.ReferrerFragmentBuilder;
 import cn.qingchengfit.staffkit.views.student.followup.TopFilterSourceFragment;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
+import com.google.gson.Gson;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -164,7 +165,8 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
             fragment = new ChooseGymFragment();
             break;
           case CHOOSE_STAFF:
-            ChatGym gym = getIntent().getParcelableExtra("chatgym");
+            String json = getIntent().getStringExtra("chatgym");
+            ChatGym gym = new Gson().fromJson(json, ChatGym.class);
             if (gym == null) {
               this.finish();
               return;
