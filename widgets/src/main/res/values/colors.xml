@@ -9,7 +9,7 @@
   <color name="text_light">#ccc</color>
   <color name="bg_grey">#f4f4f4</color>
   <color name="backgroud_grey">@color/bg_grey</color>
-  <color name="toolbar">#4e4e4e</color>
+  <color name="toolbar">#232428</color>
   <color name="most_black">#222222</color>
   <color name="bg_white">#ffffff</color>
 

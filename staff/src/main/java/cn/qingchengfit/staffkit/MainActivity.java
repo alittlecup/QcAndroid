@@ -13,8 +13,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.MenuRes;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -51,9 +52,11 @@ import cn.qingchengfit.staffkit.rxbus.event.EventLoginChange;
 import cn.qingchengfit.staffkit.rxbus.event.RxCloseAppEvent;
 import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
 import cn.qingchengfit.staffkit.views.FragCallBack;
-import cn.qingchengfit.staffkit.views.adapter.MainPagerAdapter;
-import cn.qingchengfit.staffkit.views.custom.TabView;
+import cn.qingchengfit.staffkit.views.MainFirstFragment;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
+import cn.qingchengfit.staffkit.views.main.MainMsgFragment;
+import cn.qingchengfit.staffkit.views.main.QcVipFragment;
+import cn.qingchengfit.staffkit.views.main.SettingFragment;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -63,6 +66,7 @@ import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.widgets.TabViewNoVp;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
@@ -87,8 +91,16 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     public static final String OPEN_URL = "open_url";
     public static final String MAIN_ACTION = "main.action";
     public static final int REOPEN_APP = -1;
-    @BindView(R.id.viewpager) ViewPager viewpager;
-    @BindView(R.id.tabview) TabView tabview;
+  private int[] mIconSelect = {
+      R.drawable.vd_tabbar_manage_active, R.drawable.vd_tabbar_discover_active, R.drawable.vd_tabbar_message_active,
+      R.drawable.vd_tabbar_mine_active
+  };
+  private int[] mIconNormal = {
+      R.drawable.vd_tabbar_manage_normal, R.drawable.vd_tabbar_discover_normal, R.drawable.vd_tabbar_message_normal,
+      R.drawable.vd_tabbar_mine_normal
+  };
+
+    @BindView(R.id.tabview) TabViewNoVp tabview;
     @BindView(R.id.frag_choose_brand) FrameLayout fragChooseBrand;
     @BindView(R.id.layout_brands) FrameLayout layoutBrands;
     @BindView(R.id.tv_noti_count) TextView tvNotiCount;
@@ -141,12 +153,10 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         registeGlobleEvent();
         askPermission();
         update(false);
-        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), this);
-        viewpager.setOffscreenPageLimit(3);
-        viewpager.setAdapter(mainPagerAdapter);
-        tabview.setViewPager(viewpager);
         onNewIntent(getIntent());
-        tabview.setPoint(1);
+      tabview.setupTabView(mIconSelect,mIconNormal);
+    tabview.setPoint(1);
+    showPage(0);
         //聊天的初始化
         MyApplication myApplication = new MyApplication(getApplication());
         if (loginStatus.isLogined()) initBDPush();
@@ -205,31 +215,52 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         brandChangeOb = RxBus.getBus().register(EventBrandChange.class);
         brandChangeOb.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<EventBrandChange>() {
             @Override public void call(EventBrandChange eventBrandChange) {
-                if (viewpager.getCurrentItem() == 0) {
-
-                }
                 PreferenceUtils.setPrefString(MainActivity.this, Configs.CUR_BRAND_ID, gymWrapper.brand_id());
                 onBgClick();
             }
         });
-        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                onBgClick();
-            }
-
-            @Override public void onPageSelected(int position) {
-                if (position == 1) {
-                    tabview.clearPoint(1);
-                }
-            }
-
-            @Override public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+      tabview.setListener(new TabViewNoVp.TabSelectListener() {
+        @Override public void onTabClick(int pos) {
+          if (pos == 1) {
+            tabview.clearPoint(1);
+          }
+          showPage(pos);
+        }
+      });
     }
+  String[] tags = new String[]{"gyms","find","msg","setting"};
+  private void showPage(int pos) {
+      FragmentTransaction ts = getSupportFragmentManager().beginTransaction();
+      for (int i = 0; i < tags.length; i++) {
+        Fragment f = getSupportFragmentManager().findFragmentByTag(tags[i]);
 
-    public void freshNotiCount(int count) {
+        if (i == pos) {
+          if (f == null) {
+            f = generateFragment(pos);
+            ts.add(R.id.frag_main, f, tags[i]);
+          } else ts.show(f);
+        } else {
+          if (f != null) ts.hide(f);
+        }
+      }
+      ts.commit();
+  }
+  public Fragment generateFragment(int pos){
+    switch (pos){
+      case 1:
+        return QcVipFragment.newInstance(Configs.URL_QC_FIND);
+      case 2:
+        return new MainMsgFragment();
+      case 3:
+        return new SettingFragment();
+      default:
+        return new MainFirstFragment();
+    }
+  }
+
+
+
+  public void freshNotiCount(int count) {
         tvNotiCount.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
         tvNotiCount.setText(count > 99 ? "..." : Integer.toString(count));
     }
@@ -279,7 +310,6 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     }
 
     protected void initInject() {
-        //((App) getApplication()).getAppCompoent().inject(this);
         String staffid = PreferenceUtils.getPrefString(this, Configs.PREFER_WORK_ID, "");
         String staffname = PreferenceUtils.getPrefString(this, Configs.PREFER_WORK_NAME, "");
         String session = PreferenceUtils.getPrefString(this, Configs.PREFER_SESSION, "");

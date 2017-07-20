@@ -1,6 +1,7 @@
-package cn.qingchengfit;
+package cn.qingchengfit.widgets;
 
-import cn.qingchengfit.widgets.BuildConfig;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 /**
  * power by
@@ -20,17 +21,10 @@ import cn.qingchengfit.widgets.BuildConfig;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/2/21.
+ * Created by Paper on 2017/7/20.
  */
+@RunWith(JUnit4.class)
+public class TestUitls {
 
-public class Constants {
-  public static final String SEPARATE = "、";
-  public static final String SEPARATOR = "、";
-  public static final String EXTRA_GYM_SERVICE = "qingcheng.gym.service";
-  public static final String EXTRA_GYM_SINGLE = "qingcheng.gym.single";
-  public static final String EXTRA_GYM_STATUS = "qingcheng.gym.status";
-  public static final String EXTRA_BRAND = "qingcheng.brand";
 
-  public static final String Server =
-      BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
 }

@@ -1,5 +1,6 @@
 package cn.qingchengfit.utils;
 
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -56,5 +57,8 @@ public class Utils {
             if (t == null) {
                 return new ArrayList();
             } else return t;
+        }
+        public static String getUriHostPath(Uri uri){
+         return  uri.getHost()+uri.getPath();
         }
 }

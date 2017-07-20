@@ -4,10 +4,11 @@
   <dimen name="qc_civ_label_max_width_txt">169dp</dimen>
 
 
-  <dimen name="txt_stanrdant">14sp</dimen>
+  <dimen name="txt_stanrdant">16sp</dimen>
   <dimen name="img_120dp">120dp</dimen>
 
 
-  <dimen name="font_20">20sp</dimen>
+  <dimen name="font_20">22sp</dimen>
+  <dimen name="quarter_width">140dp</dimen>
 
 </resources>

@@ -12,8 +12,7 @@
 
 
     <path
-        android:fillColor="?colorPrimary"
-        android:fillType="evenOdd"
+        android:fillColor="@color/colorPrimary"
         android:pathData="M1.5,10.5 L10.4680851,10.5 L10.4680851,1.5 L1.5,1.5 L1.5,2.24297333
 C1.5,2.66106761 1.16710138,3 0.75,3 C0.335786438,3 2.22044605e-16,2.65586185
 2.22044605e-16,2.24297333 L0,0.757026672 C0,0.755854355

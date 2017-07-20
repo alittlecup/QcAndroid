@@ -438,7 +438,6 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
 
         String u = PreferenceUtils.getPrefString(this, "user_info", "");
         if (!TextUtils.isEmpty(u)) {
-            //// TODO: 2017/5/18 神策数据追踪需要修改
             User user = gson.fromJson(u, User.class);
             App.setgUser(user);
             try {

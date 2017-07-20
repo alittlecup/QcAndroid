@@ -56,6 +56,7 @@
   <dimen name="img_120dp">110dp</dimen>
 
   <dimen name="font_20">18sp</dimen>
+  <dimen name="quarter_width">100dp</dimen>
 
 
 </resources>

@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -358,13 +359,13 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
             switch (position) {
                 case 0:
                     tv_sign_tab_title.setText(getContext().getString(R.string.sign_type_in));
-                    Drawable drawableIn = getResources().getDrawable(R.drawable.ic_sign_in_tab);
+                    Drawable drawableIn = ContextCompat.getDrawable(getContext(),R.drawable.ic_sign_in_tab);
                     drawableIn.setBounds(0, 0, drawableIn.getMinimumWidth(), drawableIn.getMinimumHeight());
                     tv_sign_tab_title.setCompoundDrawables(drawableIn, null, null, null);
                     break;
                 case 1:
                     tv_sign_tab_title.setText(getContext().getString(R.string.sign_type_out));
-                    Drawable drawableOut = getResources().getDrawable(R.drawable.ic_sign_out_tab);
+                    Drawable drawableOut = ContextCompat.getDrawable(getContext(),R.drawable.ic_sign_out_tab);
                     drawableOut.setBounds(0, 0, drawableOut.getMinimumWidth(), drawableOut.getMinimumHeight());
                     tv_sign_tab_title.setCompoundDrawables(drawableOut, null, null, null);
                     break;

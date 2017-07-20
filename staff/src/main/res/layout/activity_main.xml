@@ -13,23 +13,41 @@
     tools:context="cn.qingchengfit.staffkit.MainActivity"
     >
 
-  <android.support.v4.view.ViewPager
-      android:id="@+id/viewpager"
+  <!--<android.support.v4.view.ViewPager-->
+      <!--android:id="@+id/viewpager"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="match_parent"-->
+      <!--android:layout_marginBottom="@dimen/qc_item_height"-->
+      <!--android:background="@color/bg_grey"-->
+      <!--/>-->
+
+  <!--<cn.qingchengfit.staffkit.views.custom.TabView-->
+      <!--android:id="@+id/tabview"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="@dimen/qc_item_height"-->
+      <!--android:layout_alignParentBottom="true"-->
+      <!--app:item_padding="7dp"-->
+      <!--app:text_normal_color="@color/text_grey"-->
+      <!--app:text_select_color="@color/text_black"-->
+      <!--app:text_size="12sp"-->
+      <!--/>-->
+  <FrameLayout
+      android:id="@+id/frag_main"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginBottom="@dimen/qc_item_height"
-      android:background="@color/bg_grey"
+  android:layout_marginBottom="@dimen/qc_item_height"
+  android:background="@color/bg_grey"
       />
-
-  <cn.qingchengfit.staffkit.views.custom.TabView
+  <cn.qingchengfit.widgets.TabViewNoVp
       android:id="@+id/tabview"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      android:background="@color/toolbar"
+      android:gravity="center_vertical"
       android:layout_alignParentBottom="true"
-      app:item_padding="7dp"
-      app:text_normal_color="@color/text_grey"
-      app:text_select_color="@color/text_black"
+      app:text_select_color="@color/colorPrimary"
       app:text_size="12sp"
+      app:tvn_txt="@array/home_tab"
       />
   <!--<android.support.design.widget.BottomNavigationView-->
   <!--android:id="@+id/tabview"-->

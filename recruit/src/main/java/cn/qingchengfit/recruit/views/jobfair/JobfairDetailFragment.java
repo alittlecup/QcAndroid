@@ -22,11 +22,16 @@ import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.PrimaryBtnItem;
 import cn.qingchengfit.items.TextItem;
 import cn.qingchengfit.items.TitleHintItem;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.ExpendedTextviewItem;
 import cn.qingchengfit.recruit.item.FragmentListItem;
+import cn.qingchengfit.recruit.item.RecruitPositionItem;
+import cn.qingchengfit.recruit.item.ResumeItem;
+import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.model.JobFair;
 import cn.qingchengfit.recruit.presenter.JobFairDetailPresenter;
 import cn.qingchengfit.recruit.presenter.RecruitPermissionPresenter;
@@ -39,6 +44,7 @@ import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -72,7 +78,8 @@ import rx.functions.Action1;
  * Created by Paper on 2017/7/7.
  */
 public class JobfairDetailFragment extends BaseFragment
-    implements JobFairDetailPresenter.MVPView, ResumeFilterFragment.ResumeFilterListener {
+    implements JobFairDetailPresenter.MVPView, ResumeFilterFragment.ResumeFilterListener
+    ,FlexibleAdapter.OnItemClickListener{
 
   protected FilterHeadItem itemfilterHeader;
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -85,6 +92,7 @@ public class JobfairDetailFragment extends BaseFragment
   @Inject JobFairDetailPresenter presenter;
   @Inject RecruitPermissionPresenter PermissonPresenter;
   @Inject RecruitRouter router;
+  @Inject QcRestRepository qcRestRepository;
   @BindView(R2.id.smooth_app_bar_layout) AppBarLayout smoothAppBarLayout;
   @BindView(R2.id.image_recruit) ImageView imageRecruit;
   CommonFlexAdapter commonFlexAdapter;
@@ -310,6 +318,19 @@ public class JobfairDetailFragment extends BaseFragment
   public void clearFilterToggle() {
     itemfilterHeader.clearAll();
     commonFlexAdapter.notifyItemChanged(commonFlexAdapter.getGlobalPositionOf(itemfilterHeader));
+  }
+  @Override public boolean onItemClick(int i) {
+    IFlexible item = commonFlexAdapter.getItem(i);
+    if (item == null) return false;
+    if (item instanceof RecruitPositionItem) {
+      Job job = ((RecruitPositionItem) item).getJob();
+      router.goJobDetail(job);
+    }else if (item instanceof ResumeItem) {
+      router.toResumeDetail(((ResumeItem) commonFlexAdapter.getItem(i)).getResume().id,
+          qcRestRepository.getHost() + RecruitConstants.RESUME_WEB_PATH,jobFair);
+      return true;
+    }
+    return false;
   }
 
 }

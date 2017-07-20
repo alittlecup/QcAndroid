@@ -20,7 +20,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/toolbar"
         android:gravity="center_vertical"
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/ToolbarStyle.Overflow"

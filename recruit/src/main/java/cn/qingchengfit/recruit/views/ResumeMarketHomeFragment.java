@@ -169,7 +169,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
       @Override public void call(EventRecycleClick eventRecycleClick) {
         if (eventRecycleClick.viewId == R.layout.item_more_job_fair) {
           router.toAllJobFair();
-        } else if (eventRecycleClick.viewId == R.layout.item_jobfairs) {
+        } else if (eventRecycleClick.viewId == R.layout.item_jobfairs || eventRecycleClick.viewId == R.layout.item_jobfairs_match_parent) {
           if (horizonImageShowItem.getChildItem(eventRecycleClick.postion) != null
               && horizonImageShowItem.getChildItem(
               eventRecycleClick.postion) instanceof JobFairHorizonItem) {

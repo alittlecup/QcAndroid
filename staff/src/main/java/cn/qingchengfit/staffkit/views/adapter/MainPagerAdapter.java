@@ -35,12 +35,12 @@ import cn.qingchengfit.staffkit.views.main.SettingFragment;
 public class MainPagerAdapter extends FragmentPagerAdapter implements TabView.OnItemIconTextSelectListener {
     private int[] mIconSelect = {
         //                R.drawable.ic_home_selected
-        R.drawable.ic_gyms_selected, R.drawable.vector_tabbar_discover_active, R.drawable.vd_tab_noti_activte,
+        R.drawable.ic_gyms_selected, R.drawable.vector_tabbar_discover_active, R.drawable.vd_tabbar_message_active,
         R.drawable.ic_tabbar_account_active
     };
     private int[] mIconNormal = {
         //            R.drawable.ic_home
-        R.drawable.ic_gyms, R.drawable.vector_tabbar_discover_nomal, R.drawable.vd_tab_noti_nomal, R.drawable.ic_tabbar_account_normal
+        R.drawable.ic_gyms, R.drawable.vector_tabbar_discover_nomal, R.drawable.vd_tabbar_message_normal, R.drawable.ic_tabbar_account_normal
     };
     private Context context;
     private int status = 0; // 0 正常状态 1 单场馆状态 2 未登录状态

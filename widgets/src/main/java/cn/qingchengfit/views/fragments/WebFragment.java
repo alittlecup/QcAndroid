@@ -623,8 +623,11 @@ public class WebFragment extends BaseFragment
         }
       } else if (requestCode == 99) {
         if (mWebviewWebView != null) {
+          String retAction = data.getStringExtra("web_action");
+          if (retAction.endsWith("/"))
+            retAction.substring(0,retAction.length()-1);
           mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('"
-              + data.getStringExtra("web_action")
+              + retAction
               + "','"
               + data.getStringExtra("json")
               + "');");
@@ -883,7 +886,10 @@ public class WebFragment extends BaseFragment
                   tosb.putExtra(s1, uri.getQueryParameter(s1));
                 }
               }
-              tosb.putExtra("web_action", uri.getHost() + "/" + uri.getPath());
+              String ret = uri.getHost();
+              if (uri.getPath() != null)
+                ret = TextUtils.concat(ret,uri.getPath()).toString();
+              tosb.putExtra("web_action", ret);
               startActivityForResult(tosb, 99);
             } catch (Exception e) {
               mWebviewWebView.loadUrl(
