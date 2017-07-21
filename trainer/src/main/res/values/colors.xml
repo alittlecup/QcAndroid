@@ -8,6 +8,7 @@
   <color name="colorPrimarytrans">#1100c8d1</color>
   <color name="colorPrimary">@color/primary</color>
   <color name="colorPrimaryDark">#006f74</color>
+  <color name="toolbar">@color/colorPrimary</color>
 
 
   <color name="backgroud_grey">#f4f4f4</color>
