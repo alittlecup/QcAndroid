@@ -44,7 +44,7 @@ public class JobFair implements Parcelable {
   public Organization organization;
   public String created_by;
   public String description;
-  public int status;
+  public int status = -1;
 
   public JobFair() {
   }

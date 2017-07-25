@@ -123,4 +123,8 @@ public class RecruitActivity extends BaseActivity implements HasSupportFragmentI
   @Override public AndroidInjector<Fragment> supportFragmentInjector() {
     return dispatchingFragmentInjector;
   }
+
+  @Override public int getFragId() {
+    return R.id.frag_recruit;
+  }
 }

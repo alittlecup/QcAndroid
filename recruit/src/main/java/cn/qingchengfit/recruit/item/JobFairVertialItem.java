@@ -30,32 +30,33 @@ import java.util.List;
  */
 
 public class JobFairVertialItem extends JobFairHorizonItem {
-  public int status = -1;
+
 
   public JobFairVertialItem(JobFair jobFair) {
     super(jobFair);
   }
 
-  public JobFairVertialItem(JobFair jobFair, int status) {
-    super(jobFair);
-    this.status = status;
-  }
+
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, JobFairVH holder, int position,
       List payloads) {
     holder.tvTitle.setText(jobFair.name);
     holder.tvContent.setText(DateUtils.getDuringFromServer(jobFair.start, jobFair.end));
-    PhotoUtils.conner4dp(holder.imgBg, jobFair.banner);
-    if (status > 0) {
-      holder.tvStatus.setVisibility(View.VISIBLE);
-      switch (status) {
+    PhotoUtils.origin(holder.imgBg, jobFair.banner);
+    if (jobFair.status >= 0) {
+      switch (jobFair.status) {
         case 1:
+          holder.tvStatus.setVisibility(View.INVISIBLE);
           break;
         case 2:
+          holder.tvStatus.setVisibility(View.VISIBLE);
           holder.tvStatus.setText("审核中");
           holder.tvStatus.setBackgroundResource(R.color.warning_orange);
           break;
         default:
+          holder.tvStatus.setVisibility(View.VISIBLE);
+          holder.tvStatus.setText("审核不通过");
+          holder.tvStatus.setBackgroundResource(R.color.recurit_red);
           break;
       }
     } else {

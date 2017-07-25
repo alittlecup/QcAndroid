@@ -18,6 +18,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventChooseGym;
 import cn.qingchengfit.events.EventClickViewPosition;
+import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.items.ChooseGymItem;
 import cn.qingchengfit.items.NoDataTxtBtnItem;
 import cn.qingchengfit.model.base.Brand;
@@ -92,6 +93,11 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
 
       }
     });
+    RxBusAdd(EventFreshGyms.class).subscribe(new Action1<EventFreshGyms>() {
+      @Override public void call(EventFreshGyms eventFreshGyms) {
+        freshData();
+      }
+    });
     freshData();
     return view;
   }
@@ -105,7 +111,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
     super.onResume();
   }
 
-  private void freshData() {
+  protected void freshData() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
         .queryPermissionGyms()
         .subscribeOn(Schedulers.io())
@@ -230,6 +236,6 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
   }
 
   public void hasNoPermission() {
-    showAlert(R.string.alert_permission_forbid);
+    showAlert("抱歉，您无该功能权限，请联系超级管理员");
   }
 }

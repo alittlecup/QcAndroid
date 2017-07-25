@@ -27,6 +27,7 @@ public class FilterDamenFragment extends BaseFragment {
 
   @BindView(R2.id.layout_work_demand) AutoLineGroup layoutWorkDemand;
   @BindView(R2.id.tv_work_year_header) TextView workYearheader;
+  @BindView(R2.id.divider_work_exp) View dividerWorkExp;
   @BindView(R2.id.alg_gender) AutoLineGroup algGender;
   @BindView(R2.id.alg_edu) AutoLineGroup algEdu;
   @BindView(R2.id.alg_age) AutoLineGroup algAge;
@@ -61,6 +62,7 @@ public class FilterDamenFragment extends BaseFragment {
     } else {
       layoutWorkDemand.setVisibility(View.GONE);
       workYearheader.setVisibility(View.GONE);
+      dividerWorkExp.setVisibility(View.GONE);
     }
     algGender.addChildren(getResources().getStringArray(R.array.filter_gender));
     algEdu.addChildren(getResources().getStringArray(R.array.filter_degree));

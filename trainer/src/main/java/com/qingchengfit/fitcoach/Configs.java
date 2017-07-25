@@ -77,9 +77,7 @@ public class Configs {
     //    public static boolean isDebug = true;
     public static boolean isDebug = false;
   public static String Server =
-      BuildConfig.DEBUG ? "http://cloudtest01.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
-    //public static final String ORDER_PRIVATE_URL = Server + "mobile/coach/privatelesson/list/";
-    //public static final String ORDER_GROUP_URL = Server + "mobile/coach/grouplesson/list/";
+      BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
     public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
     public static String HOST_NAMESPACE_1 = "http://.qingchengfit.com";
     public static String PRIVATE_PRIVEIW = Configs.Server + "fitness/redirect/user/private/";

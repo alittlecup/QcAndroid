@@ -98,17 +98,18 @@ public class RecruitManageFragment extends BaseFragment
     rvGyms.setLayoutManager(new LinearLayoutManager(getContext()));
     rvGyms.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
     rvGyms.setAdapter(commonFlexAdapter);
-    RxBusAdd(EventChooseGym.class).subscribe(new Action1<EventChooseGym>() {
-      @Override public void call(EventChooseGym eventChooseGym) {
-        if (eventChooseGym.gym != null) {
-          //去发布职位
-          router.toPublishPosition(eventChooseGym.gym.getId(), null,
-              RecruitPublishJobFragment.PUBLISH_POSITION);
-        } else {
-          ToastUtils.show("没有选择场馆");
-        }
-      }
-    });
+    RxBusAdd(EventChooseGym.class).observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<EventChooseGym>() {
+          @Override public void call(EventChooseGym eventChooseGym) {
+            if (eventChooseGym.gym != null) {
+              //去发布职位
+              router.toPublishPosition(eventChooseGym.gym.getId(), null,
+                  RecruitPublishJobFragment.PUBLISH_POSITION);
+            } else {
+              ToastUtils.show("没有选择场馆");
+            }
+          }
+        });
     return view;
   }
 

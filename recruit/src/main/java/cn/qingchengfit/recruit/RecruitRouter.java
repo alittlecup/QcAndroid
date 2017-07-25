@@ -140,9 +140,7 @@ public class RecruitRouter extends InnerRouter {
     add(RecruitGymDetailFragment.newInstance(service));
   }
 
-  public void toReplaceGymDetail(Gym service) {
-    doAction(RecruitGymDetailEmployerFragment.newInstance(service));
-  }
+
 
   /**
    * 人才市场 人才浏览 或者叫 招聘版主页
@@ -290,9 +288,8 @@ public class RecruitRouter extends InnerRouter {
   /**
    * 场馆详情介绍
    */
-  public void toWriteGymDetailDesc(String s, String toolbarTitle) {
-    // TODO: 2017/7/4 使用EditRecruitDesc
-    add(new RecruitRichTextEditFragmentBuilder(s, toolbarTitle).build());
+  public void toWriteGymDetailDesc(String s, String toolbarTitle, String hint) {
+    add(new RecruitRichTextEditFragmentBuilder(s, toolbarTitle).hint(hint).build());
   }
 
   /**
@@ -344,12 +341,7 @@ public class RecruitRouter extends InnerRouter {
     add(ResumeRecievedFragmentBuilder.newResumeRecievedFragment(job, 1));
   }
 
-  /**
-   * 选择场馆
-   */
-  public void chooseGym() {
-    add(new ChooseGymInRecruitFragment());
-  }
+
 
   /**
    * 招聘版本职位
@@ -410,8 +402,8 @@ public class RecruitRouter extends InnerRouter {
   /**
    * 职位描述填写
    */
-  public void toEditRecruitDesc(String content, String title, int type) {
-    add(new RecruitRichTextEditFragmentBuilder(content, title).type(type).build());
+  public void toEditRecruitDesc(String content, String title, String hint, int type) {
+    add(new RecruitRichTextEditFragmentBuilder(content, title).type(type).hint(hint).build());
   }
 
   /**
@@ -444,5 +436,12 @@ public class RecruitRouter extends InnerRouter {
 
   public void chooseGymForJobfair() {
     add(new ChooseGymInJobfairFragment());
+  }
+
+  /**
+   * 选择场馆
+   */
+  public void chooseGym() {
+    add(new ChooseGymInRecruitFragment());
   }
 }

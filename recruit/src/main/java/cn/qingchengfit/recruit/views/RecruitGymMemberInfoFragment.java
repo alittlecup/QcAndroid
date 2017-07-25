@@ -58,13 +58,13 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_gym_member_info, container, false);
     unbinder = ButterKnife.bind(this, view);
-    float area = 0;
+    int area = 0;
     try {
-      area = Float.parseFloat(strArea);
+      area = (int) Float.parseFloat(strArea);
     } catch (Exception e) {
 
     }
-    tvGymArea.setText(area == 0 ? "--" : (strArea + "㎡"));
+    tvGymArea.setText(area == 0 ? "--" : (area + "㎡"));
     tvStaffNum.setText(staffNum == 0 ? "--" : (staffNum + "人"));
     tvMenberNum.setText(memberNum == 0 ? "--" : (memberNum + "人"));
     tvTrainerNum.setText(trainerNum == 0 ? "--" : (trainerNum + "人"));

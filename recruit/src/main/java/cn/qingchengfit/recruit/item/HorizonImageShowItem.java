@@ -60,7 +60,7 @@ public class HorizonImageShowItem
     holder.itemRv.setAdapter(commonFlexAdapter);
     holder.itemRv.addItemDecoration(
         new FlexibleItemDecoration(holder.itemView.getContext()).addItemViewType(
-            R.layout.item_jobfairs, 6).withRightEdge(true));
+            R.layout.item_jobfairs, 10).withRightEdge(true));
     return holder;
   }
 

@@ -30,13 +30,14 @@ public class TabViewNoVp extends LinearLayout implements View.OnClickListener {
     private int mChildSize;
     private List<TabItem> mTabItems;
 
-    private int mTextSize = 12;
+  private int mTextSize = 10;
     private int mTextColorSelect = 0x0db14b;
     private int mTextColorNormal = 0xbbbbbb;
     private int mPadding = 10;
     private int[] resDrawableOn;
     private int[] resDrawableOff;
     private String[] resTxt;
+  private TabSelectListener listener;
 
     public TabViewNoVp(Context context) {
         this(context, null);
@@ -159,7 +160,6 @@ public class TabViewNoVp extends LinearLayout implements View.OnClickListener {
         if (position > 0 && position < mTabItems.size())
             mTabItems.get(position).setPoint(0);
     }
-    private TabSelectListener listener;
 
     public TabSelectListener getListener() {
         return listener;

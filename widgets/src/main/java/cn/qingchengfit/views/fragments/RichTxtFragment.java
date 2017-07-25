@@ -43,13 +43,14 @@ public class RichTxtFragment extends BaseFragment implements FlexibleAdapter.OnI
   //EditText et;
   CommonFlexAdapter commonFlexAdapter;
   RecyclerView rv;
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.cm_recylerview, container, false);
     rv = (RecyclerView) v.findViewById(R.id.rv);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     rv.setAdapter(commonFlexAdapter);
-
     //et = new EditText(getContext());
     //et.setGravity(Gravity.TOP);
     //et.setBackgroundResource(R.color.white);
@@ -73,9 +74,16 @@ public class RichTxtFragment extends BaseFragment implements FlexibleAdapter.OnI
   @Override public void onDestroyView() {
     super.onDestroyView();
   }
-  public void initContent(String s) {
+
+  public void initContent(String s, String hint) {
     if (TextUtils.isEmpty(s)) {
-      commonFlexAdapter.addItem(new RichTxtTxtItem("", true));
+      commonFlexAdapter.addItem(new RichTxtTxtItem("", true, hint));
+      if (commonFlexAdapter.getItemCount() > 0) {
+        IFlexible item = commonFlexAdapter.getItem(commonFlexAdapter.getItemCount() - 1);
+        if (item instanceof RichTxtTxtItem) {
+          ((RichTxtTxtItem) item).requestFocus();
+        }
+      }
       return;
     }
     try {
@@ -88,11 +96,13 @@ public class RichTxtFragment extends BaseFragment implements FlexibleAdapter.OnI
           commonFlexAdapter.addItem(new RichTxtImgItem(briefInfo.getImg()));
         }
         i++;
-        }
+      }
+
     } catch (Exception e) {
       e.printStackTrace();
-      }
+    }
   }
+
   public void insertImg(String url) {
     if (commonFlexAdapter.getItemCount() > 0) {
       IFlexible item = commonFlexAdapter.getItem(commonFlexAdapter.getItemCount() - 1);
@@ -105,6 +115,7 @@ public class RichTxtFragment extends BaseFragment implements FlexibleAdapter.OnI
     commonFlexAdapter.addItem(new RichTxtImgItem(url));
     commonFlexAdapter.addItem(new RichTxtTxtItem("", true));
   }
+
   public String getContent() {
     StringBuffer ret = new StringBuffer();
     for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
@@ -200,7 +211,9 @@ public class RichTxtFragment extends BaseFragment implements FlexibleAdapter.OnI
   }
 
   @Override public boolean onItemClick(int i) {
-    return false;
+    if (commonFlexAdapter.getItem(i) instanceof RichTxtTxtItem) {
+      ((RichTxtTxtItem) commonFlexAdapter.getItem(i)).requestFocus();
+    }
+    return true;
   }
-
 }

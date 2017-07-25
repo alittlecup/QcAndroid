@@ -13,13 +13,18 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventFreshGyms;
+import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saas.presenters.BaseGymInfoPresenter;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
+import cn.qingchengfit.views.fragments.CommonInputTextFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
@@ -55,6 +60,8 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
   @BindView(R2.id.header) ImageView header;
   @BindView(R2.id.gym_name) CommonInputView gymName;
   @BindView(R2.id.address) CommonInputView civAddress;
+  @BindView(R2.id.phone) CommonInputView phone;
+  @BindView(R2.id.descripe) CommonInputView descripe;
   @Inject BaseGymInfoPresenter presenter;
   private ChoosePictureFragmentNewDialog choosePicFragment;
 
@@ -73,6 +80,12 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
     delegatePresenter(presenter, this);
     presenter.setGymid(getArguments().getString("gymid", ""));
     initToolbar(toolbar);
+    RxBusAdd(EventTxT.class).subscribe(new Action1<EventTxT>() {
+      @Override public void call(EventTxT eventTxT) {
+        descripe.setContent("详情");
+        presenter.setGymDesc(eventTxT.txt);
+      }
+    });
     return view;
   }
 
@@ -88,6 +101,7 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
         }
         showLoading();
         presenter.setGymName(gymName.getContent());
+        presenter.setGymPhone(phone.getContent());
         presenter.editGymInfo();
         return false;
       }
@@ -138,13 +152,25 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
             }
           }
         });
-
   }
+
+  @OnClick(R2.id.descripe) public void clickDesc() {
+    if (getActivity() != null && getActivity() instanceof BaseActivity) {
+      getFragmentManager().beginTransaction()
+          .add(((BaseActivity) getActivity()).getFragId(),
+              CommonInputTextFragment.newInstance("描述您的健身房", "请填写健身房描述"))
+          .addToBackStack(null)
+          .commit();
+    }
+  }
+
 
   @Override public void onGym(Gym gym) {
     PhotoUtils.smallCircle(header, gym.getPhoto());
     gymName.setContent(gym.name);
     civAddress.setContent(gym.getAddressStr());
+    phone.setContent(gym.phone);
+    descripe.setContent(gym.description);
   }
 
   @Override public void onAddress(String s) {
@@ -153,6 +179,7 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
 
   @Override public void onEditOk() {
     hideLoading();
+    RxBus.getBus().post(new EventFreshGyms());
     getActivity().onBackPressed();
   }
 }

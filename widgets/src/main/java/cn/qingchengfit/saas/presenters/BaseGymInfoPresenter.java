@@ -93,6 +93,14 @@ public class BaseGymInfoPresenter extends BasePresenter {
     editBody.setName(name);
   }
 
+  public void setGymPhone(String p) {
+    editBody.phone = p;
+  }
+
+  public void setGymDesc(String s) {
+    editBody.description = s;
+  }
+
   public interface MVPView extends CView {
     void onGym(Gym gym);
 

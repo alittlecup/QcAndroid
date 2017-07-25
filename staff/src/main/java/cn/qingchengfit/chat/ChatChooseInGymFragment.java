@@ -30,9 +30,6 @@ import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
 import com.bumptech.glide.Glide;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -61,7 +58,8 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/3/31.
  */
-@FragmentWithArgs public class ChatChooseInGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
+public class ChatChooseInGymFragment extends BaseFragment
+    implements FlexibleAdapter.OnItemClickListener {
 
   @BindView(R.id.checkbox) protected CheckBox checkbox;
   protected CommonFlexAdapter adapter;
@@ -70,15 +68,23 @@ import rx.functions.Action1;
     @BindView(R.id.tv_staff_count) TextView tvStaffCount;
     @BindView(R.id.ic_entry_triangel) ImageView icEntryTriangel;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @Arg ChatGym chatGym;
+  ChatGym chatGym;
     private List<AbstractFlexibleItem> datas = new ArrayList<>();
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+  public static ChatChooseInGymFragment newInstance(ChatGym chatGym) {
+    Bundle args = new Bundle();
+    args.putParcelable("chatgym", chatGym);
+    ChatChooseInGymFragment fragment = new ChatChooseInGymFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragmentArgs.inject(this);
+    if (getArguments() != null) chatGym = getArguments().getParcelable("chatgym");
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat_choose_in_gym, container, false);
         unbinder = ButterKnife.bind(this, view);
         icEntryTriangel.setVisibility(View.GONE);

@@ -83,7 +83,11 @@ public class RecruitPositionsFragment extends VpFragment {
     recycleview.addItemDecoration(new cn.qingchengfit.utils.DividerItemDecoration(getContext(),
         LinearLayoutManager.VERTICAL));
     recycleview.setAdapter(commonFlexAdapter);
+    initBus();
     return view;
+  }
+
+  private void initBus() {
   }
 
   public void initEndless() {

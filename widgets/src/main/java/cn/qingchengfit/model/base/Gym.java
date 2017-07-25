@@ -39,6 +39,7 @@ public class Gym implements Parcelable {
   };
   public String id;
   public String photo;
+  public String phone;
   public String name;
   public String brand_name;
   public Brand brand;
@@ -64,6 +65,7 @@ public class Gym implements Parcelable {
   private Gym(Builder builder) {
     setId(builder.id);
     setPhoto(builder.photo);
+    phone = builder.phone;
     setName(builder.name);
     setBrand_name(builder.brand_name);
     brand = builder.brand;
@@ -71,21 +73,23 @@ public class Gym implements Parcelable {
     setWeixin(builder.weixin);
     setAddress(builder.address);
     setSystem_end(builder.system_end);
-    gd_city = builder.gd_city;
+    setGd_city(builder.gd_city);
     setGd_district(builder.gd_district);
-    gd_lng = builder.gd_lng;
-    gd_lat = builder.gd_lat;
+    setGd_lng(builder.gd_lng);
+    setGd_lat(builder.gd_lat);
     setFacilities(builder.facilities);
-    setStaff_count(builder.staff_count);
-    setMember_count(builder.member_count);
-    setCoach_count(builder.coach_count);
+    staff_count = builder.staff_count;
+    member_count = builder.member_count;
+    coach_count = builder.coach_count;
     setArea(builder.area);
     detail_description = builder.detail_description;
+    gd_district_id = builder.gd_district_id;
   }
 
   protected Gym(Parcel in) {
     this.id = in.readString();
     this.photo = in.readString();
+    this.phone = in.readString();
     this.name = in.readString();
     this.brand_name = in.readString();
     this.brand = in.readParcelable(Brand.class.getClassLoader());
@@ -296,6 +300,7 @@ public class Gym implements Parcelable {
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(this.id);
     dest.writeString(this.photo);
+    dest.writeString(this.phone);
     dest.writeString(this.name);
     dest.writeString(this.brand_name);
     dest.writeParcelable(this.brand, flags);
@@ -319,6 +324,7 @@ public class Gym implements Parcelable {
   public static final class Builder {
     private String id;
     private String photo;
+    private String phone;
     private String name;
     private String brand_name;
     private Brand brand;
@@ -331,11 +337,12 @@ public class Gym implements Parcelable {
     private Double gd_lng;
     private Double gd_lat;
     private List<String> facilities;
-    private int staff_count;
-    private int member_count;
-    private int coach_count;
+    private Integer staff_count;
+    private Integer member_count;
+    private Integer coach_count;
     private String area;
     private String detail_description;
+    private Integer gd_district_id;
 
     public Builder() {
     }
@@ -347,6 +354,11 @@ public class Gym implements Parcelable {
 
     public Builder photo(String val) {
       photo = val;
+      return this;
+    }
+
+    public Builder phone(String val) {
+      phone = val;
       return this;
     }
 
@@ -410,6 +422,21 @@ public class Gym implements Parcelable {
       return this;
     }
 
+    public Builder staff_count(Integer val) {
+      staff_count = val;
+      return this;
+    }
+
+    public Builder member_count(Integer val) {
+      member_count = val;
+      return this;
+    }
+
+    public Builder coach_count(Integer val) {
+      coach_count = val;
+      return this;
+    }
+
     public Builder staff_count(int val) {
       staff_count = val;
       return this;
@@ -432,6 +459,11 @@ public class Gym implements Parcelable {
 
     public Builder detail_description(String val) {
       detail_description = val;
+      return this;
+    }
+
+    public Builder gd_district_id(Integer val) {
+      gd_district_id = val;
       return this;
     }
 

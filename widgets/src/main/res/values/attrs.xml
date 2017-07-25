@@ -116,7 +116,9 @@
     <attr format="boolean" name="civ_showright"/>
     <attr format="integer" name="civ_max_length"/>
     <attr format="integer" name="civ_text_color"/>
+    <attr format="integer" name="civ_content_color"/>
     <attr format="string" name="civ_hint"/>
+    <attr format="string" name="civ_unit"/>
 
   </declare-styleable>
 

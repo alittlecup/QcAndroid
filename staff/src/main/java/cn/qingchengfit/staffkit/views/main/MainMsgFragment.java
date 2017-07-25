@@ -188,11 +188,16 @@ public class MainMsgFragment extends BaseFragment
         Constant.setBussId(BuildConfig.DEBUG ? 609 : 604);
         Constant.setXiaomiPushAppkey("5651756859688");
         Constant.setHuaweiBussId(606);
-
-        loginProcessor = new LoginProcessor(getActivity().getApplicationContext(),
-            getString(R.string.chat_user_id_header, loginStatus.getUserId()),
-            Uri.parse(Configs.Server).getHost(), this);
-        loginProcessor.sientInstall();
+        if (loginProcessor == null) {
+          loginProcessor = new LoginProcessor(getActivity().getApplicationContext(),
+              getString(R.string.chat_user_id_header, loginStatus.getUserId()),
+              Uri.parse(Configs.Server).getHost(), this);
+        }
+        if (!loginProcessor.isLogin()) {
+          loginProcessor.sientInstall();
+        } else {
+          onLoginSuccess();
+        }
       } catch (Exception e) {
         LogUtils.e(e.getMessage());
         //ToastUtils.show(e.getMessage());
@@ -201,7 +206,6 @@ public class MainMsgFragment extends BaseFragment
       addConversation.setVisibility(View.GONE);
     }
   }
-
   public void refresh() {
     if (loginStatus.isLogined()) {
       presenter.querySimpleList(ConstantNotification.getNotiQueryJson());
@@ -236,34 +240,38 @@ public class MainMsgFragment extends BaseFragment
       loginProcessor.setUserInfo(loginStatus.getLoginUser().username,
           loginStatus.getLoginUser().avatar);
     }
-    conversationFragment = new ConversationFragment();
-    conversationFragment.setOnUnReadMessageListener(
-        new ConversationFragment.OnUnReadMessageListener() {
-          @Override public void onUnReadMessage(long l) {
-            if (getActivity() instanceof MainActivity) {
+    if (conversationFragment == null) {
+      conversationFragment = new ConversationFragment();
+      conversationFragment.setOnUnReadMessageListener(
+          new ConversationFragment.OnUnReadMessageListener() {
+            @Override public void onUnReadMessage(long l) {
+              if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).freshNotiCount(getUnredCount());
+              }
+            }
+
+            @Override public void onLongClickListener(final int i) {
+              DialogUtils.instanceDelDialog(getContext(), "删除该消息",
+                  new MaterialDialog.SingleButtonCallback() {
+                    @Override public void onClick(@NonNull MaterialDialog dialog,
+                        @NonNull DialogAction which) {
+                      conversationFragment.deleteConversationItem(i);
+                      checkNoInfo();
               ((MainActivity) getActivity()).freshNotiCount(getUnredCount());
             }
-          }
+                  }).show();
+            }
 
-          @Override public void onLongClickListener(final int i) {
-            DialogUtils.instanceDelDialog(getContext(), "删除该消息",
-                new MaterialDialog.SingleButtonCallback() {
-                  @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    conversationFragment.deleteConversationItem(i);
-                    checkNoInfo();
-                    ((MainActivity) getActivity()).freshNotiCount(getUnredCount());
-                  }
-                }).show();
-          }
+            @Override public void onUpdateRecruitListener(String s) {
 
-          @Override public void onUpdateRecruitListener(String s) {
-
-          }
-        });
-    getChildFragmentManager().beginTransaction()
-        .replace(R.id.frame_chat, conversationFragment, "chat")
-        .commitAllowingStateLoss();
+            }
+          });
+    }
+    if (getChildFragmentManager().findFragmentByTag("chat") == null) {
+      getChildFragmentManager().beginTransaction()
+          .replace(R.id.frame_chat, conversationFragment, "chat")
+          .commitAllowingStateLoss();
+    }
 
     if (getActivity() instanceof MainActivity) {
       ((MainActivity) getActivity()).freshNotiCount(getUnredCount());

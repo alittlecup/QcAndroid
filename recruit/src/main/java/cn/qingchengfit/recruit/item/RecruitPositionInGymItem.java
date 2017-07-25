@@ -41,14 +41,28 @@ public class RecruitPositionInGymItem extends RecruitPositionItem {
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitPositionVH holder, int position, List payloads) {
     super.bindViewHolder(adapter, holder, position, payloads);
-    if (holder.tv_has_todo != null) {
-      if (job.has_new_resume) {
-        holder.tv_has_todo.setVisibility(View.VISIBLE);
-        holder.tv_has_todo.setCompoundDrawablesWithIntrinsicBounds(
-            ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.dot_red), null, null, null);
-      } else {
-        holder.tv_has_todo.setVisibility(View.GONE);
+    if (job.published) {
+      holder.tvPositionName.setTextColor(
+          ContextCompat.getColor(holder.tvPositionName.getContext(), R.color.text_dark));
+      holder.tvSalary.setTextColor(
+          ContextCompat.getColor(holder.tvPositionName.getContext(), R.color.red));
+      if (holder.tv_has_todo != null) {
+        if (job.has_new_resume) {
+          holder.tv_has_todo.setVisibility(View.VISIBLE);
+          holder.tv_has_todo.setCompoundDrawablesWithIntrinsicBounds(
+              ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.dot_red), null,
+              null, null);
+        } else {
+          holder.tv_has_todo.setVisibility(View.GONE);
+        }
       }
+    } else {
+      holder.tvPositionName.setTextColor(
+          ContextCompat.getColor(holder.tvPositionName.getContext(), R.color.qc_text_grey));
+      holder.tvSalary.setTextColor(
+          ContextCompat.getColor(holder.tvPositionName.getContext(), R.color.qc_text_grey));
+      if (holder.tv_has_todo != null) holder.tv_has_todo.setVisibility(View.GONE);
+
     }
   }
 }

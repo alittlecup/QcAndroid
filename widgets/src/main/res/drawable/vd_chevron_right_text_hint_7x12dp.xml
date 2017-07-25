@@ -9,7 +9,7 @@
         android:scaleX="0.7"
         android:scaleY="0.7"
         android:translateX="-5"
-        android:translateY="-1"
+        android:translateY="-2.5"
         >
         <path
             android:fillColor="#cccccc"

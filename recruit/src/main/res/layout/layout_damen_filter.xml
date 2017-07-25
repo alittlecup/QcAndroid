@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
             android:text="工作经验"
-            style="@style/QcTextStyleLargeDark"
+            style="@style/QcTextStyleMediumDark"
             />
 
         <cn.qingchengfit.widgets.AutoLineGroup
@@ -49,14 +49,18 @@
             android:orientation="horizontal"
             />
 
-        <include layout="@layout/divider_grey_margin"/>
+        <include
+            layout="@layout/divider_grey_margin"
+            android:id="@+id/divider_work_exp"
+            />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:gravity="center_vertical"
             android:text="性别"
-            style="@style/QcTextStyleLargeDark"
+            style="@style/QcTextStyleMediumDark"
             />
 
         <cn.qingchengfit.widgets.AutoLineGroup
@@ -72,9 +76,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:gravity="center_vertical"
             android:text="学历"
-            style="@style/QcTextStyleLargeDark"
+            style="@style/QcTextStyleMediumDark"
             />
 
         <cn.qingchengfit.widgets.AutoLineGroup
@@ -90,9 +95,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:gravity="center_vertical"
             android:text="年龄"
-            style="@style/QcTextStyleLargeDark"
+            style="@style/QcTextStyleMediumDark"
             />
 
         <cn.qingchengfit.widgets.AutoLineGroup
@@ -112,7 +118,7 @@
           android:layout_height="30dp"
           android:paddingBottom="8dp"
           android:text="身高"
-          style="@style/QcTextStyleLargeDark"
+          style="@style/QcTextStyleMediumDark"
           />
 
       <cn.qingchengfit.widgets.AutoLineGroup
@@ -128,9 +134,10 @@
       <TextView
           android:layout_width="match_parent"
           android:layout_height="30dp"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
           android:paddingBottom="8dp"
           android:text="体重"
-          style="@style/QcTextStyleLargeDark"
+          style="@style/QcTextStyleMediumDark"
           />
 
       <cn.qingchengfit.widgets.AutoLineGroup

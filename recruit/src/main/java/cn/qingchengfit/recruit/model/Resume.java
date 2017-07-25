@@ -81,7 +81,7 @@ public class Resume implements Parcelable {
     String seperate = " · ";
     String city = exp_cities.size() > 0 ? exp_cities.get(0) + seperate : "";
     String salay = RecruitBusinessUtils.getSalary(min_salary, max_salary, "面议") + seperate;
-    String job = CmStringUtils.List2Str(exp_jobs);
+    String job = CmStringUtils.List2StrChinese(exp_jobs);
     return TextUtils.concat(city, salay, job).toString();
   }
 
@@ -92,9 +92,20 @@ public class Resume implements Parcelable {
     } else {
       sb.append(work_year + "年经验 / ");
     }
-    sb.append(DateUtils.getAge(DateUtils.formatDateFromServer(birthday)) + "岁 / ");
-    sb.append(height + "cm，" + weight + "kg / ");
-    sb.append(RecruitBusinessUtils.getDegree(context, max_education));
+    int age = DateUtils.getAge(DateUtils.formatDateFromServer(birthday));
+    if (age > 0) sb.append(age + "岁 / ");
+    if (height != 0 || weight != 0) {
+      if (height != 0) sb.append(CmStringUtils.getMaybeInt(height) + "cm");
+      if (height != 0 && weight != 0) sb.append("，");
+      if (weight != 0) {
+        sb.append(CmStringUtils.getMaybeInt(weight) + "kg / ");
+      } else {
+        sb.append(" / ");
+      }
+    }
+    if (max_education != null) {
+      sb.append(RecruitBusinessUtils.getDegree(context, max_education, ""));
+    }
     return sb.toString();
   }
 

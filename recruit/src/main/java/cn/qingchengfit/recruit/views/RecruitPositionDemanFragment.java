@@ -62,12 +62,13 @@ import java.util.Arrays;
     unbinder = ButterKnife.bind(this, view);
     initView();
     initToolbar();
+    setBackPress();
     return view;
   }
 
   private void initToolbar() {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("工作要求");
+    toolbarTitle.setText("职位要求");
     toolbar.inflateMenu(R.menu.menu_save);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
@@ -96,21 +97,85 @@ import java.util.Arrays;
 
   //选择工作经验
   @OnClick(R2.id.civ_work_exp) public void onSelectWorkExp() {
-    String[] workexpStr = getContext().getResources().getStringArray(R.array.work_exp);
-    final ArrayList<String> d = new ArrayList<>(Arrays.asList(workexpStr));
-    twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
-      @Override public void onSelectItem(int left, int right) {
-        if ((right <= left && right > 0) || (left == 0 && right > 0)) {
-          ToastUtils.show("请选择正确的条件区间");
-          return;
-        } else {
-          civWorkExp.setContent(d.get(left) + "-" + d.get(right));
-          jobBody.min_work_year = left - 1  ;
-          jobBody.max_work_year = right - 1;
+    //String[] workexpStr = getContext().getResources().getStringArray(R.array.work_exp);
+    //final ArrayList<String> d = new ArrayList<>(Arrays.asList(workexpStr));
+    //twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
+    //  @Override public void onSelectItem(int left, int right) {
+    //    if ((right <= left && right > 0) || (left == 0 && right > 0)) {
+    //      ToastUtils.show("请选择正确的条件区间");
+    //      return;
+    //    } else {
+    //      civWorkExp.setContent(d.get(left) + "-" + d.get(right));
+    //      jobBody.min_work_year = left - 1  ;
+    //      jobBody.max_work_year = right - 1;
+    //    }
+    //  }
+    //});
+    //twoScrollPicker.show(d, d, jobBody.min_work_year + 1, jobBody.max_work_year + 1);//// TODO: 2017/6/8 选择时当前的位置
+    final ArrayList<String> d = new ArrayList<>(
+        Arrays.asList(getContext().getResources().getStringArray(R.array.filter_work_year_write)));
+    simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
+      @Override public void onSelectItem(int pos) {
+        civWorkExp.setContent(d.get(pos));
+        switch (pos) {
+          case 1:
+            jobBody.min_work_year = 0;
+            jobBody.max_work_year = 0;
+            break;
+          case 2:
+            jobBody.min_work_year = 1;
+            jobBody.max_work_year = 3;
+            break;
+          case 3:
+            jobBody.min_work_year = 3;
+            jobBody.max_work_year = 5;
+            break;
+          case 4:
+            jobBody.min_work_year = 5;
+            jobBody.max_work_year = 8;
+            break;
+          case 5:
+            jobBody.min_work_year = 8;
+            jobBody.max_work_year = 10;
+            break;
+          case 6:
+            jobBody.min_work_year = 10;
+            jobBody.max_work_year = -1;
+            break;
+          default:
+            jobBody.min_work_year = -1;
+            jobBody.max_work_year = -1;
+            break;
         }
       }
     });
-    twoScrollPicker.show(d, d, jobBody.min_work_year + 1, jobBody.max_work_year + 1);//// TODO: 2017/6/8 选择时当前的位置
+    int po = 0;
+    if (jobBody != null && jobBody.min_work_year != null) {
+      switch (jobBody.min_work_year) {
+        case 0:
+          po = 1;
+          break;
+        case 1:
+          po = 2;
+          break;
+        case 3:
+          po = 3;
+          break;
+        case 5:
+          po = 4;
+          break;
+        case 8:
+          po = 5;
+          break;
+        case 10:
+          po = 6;
+          break;
+        default:
+          po = 0;
+          break;
+      }
+    }
+    simpleScrollPicker.show(d, po);
   }
 
   //选择性别
@@ -135,14 +200,13 @@ import java.util.Arrays;
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if ((right <= left && right > 0) || (left == 0 && right > 0)) {
+        if (left != 0 && right != 0 && left >= right) {
           ToastUtils.show("请选择正确的条件区间");
           return;
-        } else {
-          civWorkAge.setContent(d.get(left) + "-" + d.get(right));
-          jobBody.min_age = left - 1;
-          jobBody.max_age = right - 1;
         }
+        jobBody.min_age = left - 1;
+        jobBody.max_age = right - 1;
+        civWorkAge.setContent(RecruitBusinessUtils.getAge(jobBody.min_age, jobBody.max_age));
       }
     });
     twoScrollPicker.show(d, d, jobBody.min_age + 1, jobBody.max_age + 1);
@@ -174,13 +238,13 @@ import java.util.Arrays;
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if ((right <= left && right > 0) || (left == 0 && right > 0)) {
+        if (left != 0 && right != 0 && left >= right) {
           ToastUtils.show("请选择正确的条件区间");
-          return;
         } else {
-          civWorkHeight.setContent(d.get(left) + "-" + d.get(right));
-          jobBody.max_height = left - 1f ;
-          jobBody.min_height = right - 1f;
+          jobBody.min_height = left - 1f;
+          jobBody.max_height = right - 1f;
+          civWorkHeight.setContent(
+              RecruitBusinessUtils.getHeight(jobBody.min_height, jobBody.max_height));
         }
       }
     });
@@ -197,13 +261,13 @@ import java.util.Arrays;
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        if ((right <= left && right > 0) || (left == 0 && right > 0)) {
+        if (left != 0 && right != 0 && left >= right) {
           ToastUtils.show("请选择正确的条件区间");
-          return;
         } else {
-          civWorkWeight.setContent(d.get(left) + "-" + d.get(right));
           jobBody.min_weight = left - 1f;
           jobBody.max_weight = right - 1f;
+          civWorkWeight.setContent(
+              RecruitBusinessUtils.getWeight(jobBody.min_weight, jobBody.max_weight));
         }
       }
     });

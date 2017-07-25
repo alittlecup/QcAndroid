@@ -63,7 +63,7 @@
 
   <android.support.v4.widget.Space
       android:layout_width="wrap_content"
-      android:layout_height="@dimen/qc_item_height"
+      android:layout_height="@dimen/activity_vertical_margin"
       />
 
   <include layout="@layout/divider_grey"/>
@@ -96,9 +96,8 @@
 
   <android.support.v4.widget.Space
       android:layout_width="wrap_content"
-      android:layout_height="@dimen/qc_item_height"
+      android:layout_height="@dimen/activity_vertical_margin"
       />
-
   <include layout="@layout/divider_grey"/>
 
   <cn.qingchengfit.widgets.CommonInputView

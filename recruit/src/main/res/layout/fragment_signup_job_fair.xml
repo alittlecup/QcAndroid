@@ -91,6 +91,7 @@
       android:layout_margin="@dimen/activity_horizontal_margin"
       android:enabled="false"
       android:text="提交申请"
+      android:textSize="17sp"
       style="@style/QcBtnPrimery"
       />
   </LinearLayout>

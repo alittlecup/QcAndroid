@@ -14,6 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseGym;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
@@ -64,6 +65,7 @@ public class JobfairSignUpFragment extends BaseFragment {
   @BindView(R2.id.btn_join) Button btnJoin;
   @Inject QcRestRepository qcRestRepository;
   @Inject RecruitRouter router;
+  @Inject LoginStatus loginStatus;
   private Gym gym;
   private JobFair jobfair;
   private TextWatcher tw = new TextWatcher() {
@@ -104,6 +106,10 @@ public class JobfairSignUpFragment extends BaseFragment {
     initToolbar(toolbar);
     initBus();
     tvFairName.setText(jobfair.name);
+    if (loginStatus != null && loginStatus.isLogined()) {
+      civName.setContent(loginStatus.getLoginUser().getUsername());
+      civPhone.setContent(loginStatus.getLoginUser().getPhone());
+    }
     return view;
   }
 

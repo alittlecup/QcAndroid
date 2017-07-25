@@ -149,10 +149,10 @@ import rx.functions.Action1;
   }
 
   /**
-   * 详细介绍  富文本
+   * 详细介绍
    */
   @OnClick(R2.id.civ_gym_intro) public void onCivGymIntroClicked() {
-    router.toWriteGymDetailDesc(gym.detail_description, "详细介绍");
+    router.toWriteGymDetailDesc(gym.detail_description, "详细介绍", "请填写场馆介绍");
   }
 
   @Override public void onSaveOk() {
@@ -162,8 +162,15 @@ import rx.functions.Action1;
 
   @Override public void onDetail(Gym gym) {
     if (gym == null) return;
+    if (gym.name == null) return;
     this.gym = gym;
-    civGymArea.setContent(gym.area + "");
+    int areInt = 0;
+    try {
+      areInt = (int) Float.parseFloat(gym.area);
+    } catch (Exception e) {
+
+    }
+    civGymArea.setContent(areInt + "");
     civGymMemberCount.setContent(gym.member_count + "");
     civGymStaffCount.setContent(gym.staff_count + "");
     civGymTrainerCount.setContent(gym.coach_count + "");

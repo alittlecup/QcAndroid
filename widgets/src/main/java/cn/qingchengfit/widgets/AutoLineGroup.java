@@ -132,6 +132,19 @@ public class AutoLineGroup extends ViewGroup implements CompoundButton.OnChecked
     }
   }
 
+  public void addChildren(int textsize, String... list) {
+    for (String s : list) {
+      CheckBoxButton btn = (CheckBoxButton) LayoutInflater.from(getContext())
+          .inflate(R.layout.layout_radiogroup_checkbox, null);
+      btn.setTextSize(textsize);
+      btn.setContent(s);
+      LayoutParams params = new LayoutParams(MeasureUtils.dpToPx(75f, getResources()),
+          MeasureUtils.dpToPx(30f, getResources()));
+      btn.addCheckedChangeListener(this);
+      addView(btn, params);
+    }
+  }
+
   public int getCheckPos() {
     if (getChildCount() > 0) {
       for (int i = 0; i < getChildCount(); i++) {

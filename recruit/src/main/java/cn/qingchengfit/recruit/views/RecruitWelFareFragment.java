@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
-import cn.qingchengfit.recruit.event.EventPulishPosition;
 import cn.qingchengfit.recruit.event.EventWelFare;
 import cn.qingchengfit.recruit.views.resume.ResumeIntentJobsFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -26,7 +25,6 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -62,7 +60,7 @@ import java.util.List;
         }
       }
     });
-
+    setBackPress();
     return view;
   }
 

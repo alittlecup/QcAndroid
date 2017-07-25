@@ -155,7 +155,6 @@ import javax.inject.Inject;
       return;
     }
     String resumeStr = "{\"userAction\":1004, \"data\":" + gson.toJson(resumeModel) + "}";
-    //TODO 需要获取userid 的接口
     intent.putExtra(RecruitConstants.IDENTIFY, ("qctest_") + userId);
     intent.putExtra(RecruitConstants.TEMP_CONVERSATION_TYPE, RecruitConstants.C2C);
     intent.putExtra(RecruitConstants.CHAT_JOB_RESUME, resumeStr);
@@ -174,7 +173,7 @@ import javax.inject.Inject;
       showTips();
       return;
     }
-    jobPresenter.getInviteJobs();
+    jobPresenter.getInviteJobs(jobFair == null ? null : jobFair.id);
   }
 
   @Override public void onBaseInfo(ResumeHome resumeHome) {

@@ -10,6 +10,9 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
       //Gym gym = new Gym();
       //gym.id =
-      //getSupportFragmentManager().beginTransaction().replace(R.id.frag, new WorkExpeEditFragmentBuilder()).commit();
+      getSupportFragmentManager().beginTransaction()
+          .setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out)
+          .replace(R.id.frag, new TextFragment())
+          .commit();
     }
 }

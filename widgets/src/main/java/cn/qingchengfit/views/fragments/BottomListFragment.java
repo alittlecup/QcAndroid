@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.qingchengfit.widgets.QcLeftRightDivider;
 import cn.qingchengfit.widgets.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -86,8 +86,7 @@ public class BottomListFragment extends BottomSheetDialogFragment implements Fle
         recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
         recycleview.setHasFixedSize(true);
         recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-      recycleview.addItemDecoration(
-          new DividerItemDecoration(getContext(), R.drawable.divider_linear_grey_left));
+      recycleview.addItemDecoration(new QcLeftRightDivider(getContext(), 1, 0, 50, 0));
       if (getArguments().containsKey("chooseMode")) {
         mChooseMode = getArguments().getInt("chooseMode", MODE_SINGLE);
       }

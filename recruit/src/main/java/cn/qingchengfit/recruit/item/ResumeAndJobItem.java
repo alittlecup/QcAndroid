@@ -46,8 +46,8 @@ public class ResumeAndJobItem extends AbstractFlexibleItem<ResumeAndJobItem.Resu
       List payloads) {
     if (jobListIndex != null) {
       PhotoUtils.smallCircle(holder.imgMyResume, jobListIndex.avatar);
-      PhotoUtils.small(holder.imgMyJobFair, jobListIndex.fair_banner,
-          R.drawable.vd_default_jobfair);
+      PhotoUtils.smallCircle(holder.imgMyJobFair, jobListIndex.fair_banner,
+          R.drawable.vd_default_jobfair, R.drawable.vd_default_jobfair);
       holder.tvResumeCompleted.setText(jobListIndex.completion + "%");
       holder.tvResumeCompleted.setTextColor(
           CompatUtils.getColor(holder.tvResumeCompleted.getContext(),

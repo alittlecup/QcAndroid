@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.network;
 
+import android.support.annotation.Nullable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.model.EndFairTopsWrap;
 import cn.qingchengfit.recruit.network.response.CertificateListWrap;
@@ -278,7 +279,7 @@ public interface GetApi {
    * 获取可邀约的职位列表
    */
   @GET("/api/staff/job/permission/invite/")
-  rx.Observable<QcDataResponse<JobListWrap>> qcGetInviteJobs();
+  rx.Observable<QcDataResponse<JobListWrap>> qcGetInviteJobs(@Nullable @Query("fair_id") String id);
 
   /**
    * 获取已结束未处理的招聘会

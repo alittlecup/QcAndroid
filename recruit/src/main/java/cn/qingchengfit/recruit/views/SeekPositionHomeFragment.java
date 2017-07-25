@@ -254,7 +254,7 @@ public class SeekPositionHomeFragment extends JobsListFragment
   }
 
   @Override public void onRefresh() {
-    initLoadMore();
+    commonFlexAdapter.setEndlessScrollListener(null, null);
     positionPresenter.queryList(true, params);
   }
 
@@ -301,7 +301,11 @@ public class SeekPositionHomeFragment extends JobsListFragment
   @Override public void onList(List<Job> jobs, int page, int totalCount) {
     layoutFilter.setRefreshing(false);
     if (page == 1) {
-      commonFlexAdapter.removeRange(4, commonFlexAdapter.getItemCount() - 4);
+      if (totalCount > jobs.size()) {
+        initLoadMore();
+      }
+      commonFlexAdapter.removeItemsOfType(R.layout.item_recruit_position,
+          R.layout.item_common_no_data);
     }
     if (jobs != null && jobs.size() != 0) {
       commonFlexAdapter.setEndlessTargetCount(totalCount);
@@ -309,19 +313,16 @@ public class SeekPositionHomeFragment extends JobsListFragment
           MeasureUtils.dpToPx(48f, getResources())));
       List<IFlexible> tm = new ArrayList<>();
       for (Job resume : jobs) {
-        if (page == 1) {
-          commonFlexAdapter.addItem(new RecruitPositionItem(resume));
-        } else {
           tm.add(new RecruitPositionItem(resume));
-        }
       }
-      if (page != 1) commonFlexAdapter.onLoadMoreComplete(tm);
+      commonFlexAdapter.onLoadMoreComplete(tm, 500);
     } else {
-      commonFlexAdapter.onLoadMoreComplete(null);
+      commonFlexAdapter.onLoadMoreComplete(null, 500);
     }
     if (page == 1 && commonFlexAdapter.getItemCountOfTypes(R.layout.item_recruit_position) == 0) {
       addEmptyPage();
     }
+    stopLoadMore();
   }
 
   @Override public void onLoadMore(int i, int i1) {
@@ -393,6 +394,8 @@ public class SeekPositionHomeFragment extends JobsListFragment
     int ma = max == null ? -1 : (int) max;
     itemfilterHeader.setStrings(cityName == null ? "城市" : cityName,
         RecruitBusinessUtils.getSalary(ms, ma, "薪资"), "要求");
+    itemfilterHeader.setHighLight(cityName != null, (min != null || max != null),
+        RecruitBusinessUtils.hashMapNotNull(params, true));
     commonFlexAdapter.notifyItemChanged(3);
     onRefresh();
   }

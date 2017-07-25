@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -146,7 +147,12 @@ public class CheckBoxButton extends LinearLayout implements QcCheckable{
         setTextColorAndbackGround();
     }
 
-    /**
+  public void setTextSize(int mTextSize) {
+    this.mTextSize = mTextSize;
+    this.content.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) mTextSize);
+  }
+
+  /**
      * 设置文字颜色和背景
      */
     public void setTextColorAndbackGround() {

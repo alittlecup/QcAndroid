@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <declare-styleable name="CommonInputView">
-    <attr format="string" name="civ_lable"/>
-    <attr format="string" name="civ_content"/>
-    <attr format="boolean" name="civ_clickable"/>
-    <attr format="boolean" name="civ_inputnum"/>
-    <attr format="boolean" name="civ_nonnull"/>
-    <attr format="reference" name="civ_right_icon"/>
-    <attr format="boolean" name="civ_showdivier"/>
-    <attr format="boolean" name="civ_showright"/>
-    <attr format="integer" name="civ_max_length"/>
-    <attr format="integer" name="civ_text_color"/>
-    <attr format="dimension" name="civ_text_size"/>
-    <attr format="string" name="civ_hint"/>
-  </declare-styleable>
+
   <declare-styleable name="ExpandedLayout">
     <attr format="boolean" name="el_expanded"/>
     <attr format="string" name="el_label"/>

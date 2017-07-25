@@ -1,9 +1,4 @@
-package cn.qingchengfit.recruit.item;
-
-import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.model.Job;
-import eu.davidea.flexibleadapter.FlexibleAdapter;
-import java.util.List;
+package cn.qingchengfit.recruit.event;
 
 /**
  * power by
@@ -23,24 +18,8 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/5/31.
+ * Created by Paper on 2017/7/24.
  */
 
-public class RecruitPositionChooseItem extends RecruitPositionItem {
-
-  public RecruitPositionChooseItem(Job job) {
-    super(job);
-  }
-
-  @Override public int getLayoutRes() {
-    return R.layout.item_recruit_postion_choose;
-  }
-
-  @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitPositionVH holder, int position, List payloads) {
-    super.bindViewHolder(adapter, holder, position, payloads);
-    if (holder.checkBox != null) {
-      holder.checkBox.setEnabled(true);
-      holder.checkBox.setChecked(adapter.isSelected(position));
-    }
-  }
+public class EventFreshJobsList {
 }

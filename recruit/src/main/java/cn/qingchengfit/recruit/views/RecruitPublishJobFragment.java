@@ -1,7 +1,11 @@
 package cn.qingchengfit.recruit.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,10 +17,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.event.EventFreshJobsList;
 import cn.qingchengfit.recruit.event.EventPulishPosition;
 import cn.qingchengfit.recruit.event.EventRichTextBack;
 import cn.qingchengfit.recruit.event.EventSetName;
@@ -29,6 +35,8 @@ import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TwoScrollPicker;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -37,8 +45,6 @@ import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
-
-import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SALARY;
 
 /**
  * power by
@@ -91,6 +97,13 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
   private HashMap<String, Object> params = new HashMap<>();
 
   private String gymContent;
+  private FragmentManager.FragmentLifecycleCallbacks fmCb =
+      new FragmentManager.FragmentLifecycleCallbacks() {
+        @Override public void onFragmentDetached(FragmentManager fm, Fragment f) {
+          super.onFragmentDetached(fm, f);
+          if (!(f instanceof RecruitPublishJobFragment)) setBackPress();
+        }
+      };
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -104,7 +117,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
     twoScrollPicker = new TwoScrollPicker(getContext());
     body = new JobBody();
     civGymDesc.setContent("详情");
-    civGymDesc.setContentColor(getResources().getColor(R.color.qc_text_grey));
+    civGymDesc.setContentColor(ContextCompat.getColor(getContext(), R.color.qc_text_grey));
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     initContent();
@@ -115,6 +128,7 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
       toolbarTitile.setText("编辑职位");
       presenter.queryGymDetail(gymId);
     }
+    getFragmentManager().registerFragmentLifecycleCallbacks(fmCb, false);
     return view;
   }
 
@@ -162,9 +176,26 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
     }
   }
 
+  @Override public boolean onFragmentBackPress() {
+    if (job != null) {
+      DialogUtils.instanceDelDialog(getContext(), "确定放弃所做修改？",
+          new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+              dialog.dismiss();
+              getActivity().getSupportFragmentManager().popBackStackImmediate();
+            }
+          }).show();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   private void initRxBus() {
     RxBusAdd(EventPulishPosition.class).subscribe(new Action1<EventPulishPosition>() {
       @Override public void call(EventPulishPosition eventPulishPosition) {
+        //setBackPress();
         if (eventPulishPosition != null) {
           body = eventPulishPosition.body;
           refreshCivContent(eventPulishPosition.body);
@@ -172,8 +203,11 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
       }
     });
 
-    RxBusAdd(EventSetName.class).subscribe(new Action1<EventSetName>() {
+    RxBusAdd(EventSetName.class)
+        //.delay(500, TimeUnit.MILLISECONDS)
+        .subscribe(new Action1<EventSetName>() {
       @Override public void call(EventSetName eventSetName) {
+        //setBackPress();
         if (eventSetName != null) {
           body.name = eventSetName.name;
           civPositionName.setContent(eventSetName.name);
@@ -182,8 +216,11 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
       }
     });
 
-    RxBusAdd(EventRichTextBack.class).subscribe(new Action1<EventRichTextBack>() {
+    RxBusAdd(EventRichTextBack.class)
+        //.delay(500, TimeUnit.MILLISECONDS)
+        .subscribe(new Action1<EventRichTextBack>() {
       @Override public void call(EventRichTextBack eventRichTextBack) {
+        //setBackPress();
         if (eventRichTextBack != null) {
           switch (eventRichTextBack.type) {
             case POSITION_DESCRIPTION:
@@ -194,20 +231,25 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
             case POSITION_REQUIREMENT:
               body.requirement = eventRichTextBack.content;
               civPositionDemands.setContent("详情");
-              civPositionDemands.setContentColor(getResources().getColor(R.color.qc_text_grey));
+              civPositionDemands.setContentColor(
+                  ContextCompat.getColor(getContext(), R.color.qc_text_grey));
               break;
           }
         }
       }
     });
 
-    RxBusAdd(EventWelFare.class).subscribe(new Action1<EventWelFare>() {
+    RxBusAdd(EventWelFare.class)
+        //.delay(500, TimeUnit.MILLISECONDS)
+        .subscribe(new Action1<EventWelFare>() {
       @Override public void call(EventWelFare eventWelFare) {
+        //setBackPress();
         if (eventWelFare != null) {
+          body.welfare = eventWelFare.welfareList;
           if (body.welfare.size() > 0) {
-            civPositionWelfare.setContent(
-                RecruitBusinessUtils.getPositionDamen((body.welfare)));
-            civPositionWelfare.setContentColor(getResources().getColor(R.color.qc_text_grey));
+            civPositionWelfare.setContent(RecruitBusinessUtils.getPositionDamen((body.welfare)));
+            civPositionWelfare.setContentColor(
+                ContextCompat.getColor(getContext(), R.color.qc_text_grey));
           }
         }
       }
@@ -230,6 +272,8 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
   }
 
   @Override public void onDestroyView() {
+    getFragmentManager().unregisterFragmentLifecycleCallbacks(fmCb);
+    setBackPressNull();
     super.onDestroyView();
   }
 
@@ -248,20 +292,21 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
       @Override public void onSelectItem(int left, int right) {
         if (left == 0) {
           civSalaryRank.setContent("面议");
-          body.min_salary = -1000;
-          body.max_salary = -1000;
+          body.min_salary = -1;
+          body.max_salary = -1;
         } else if (left == 100) {
           civSalaryRank.setContent("100K以上");
           body.min_salary = 100001;
           body.max_salary = 100001;
         } else {
-          if (left > right) {
+          if (right != 0 && left > right) {
             ToastUtils.show("请选择正确的薪水区间");
             return;
           }
-          civSalaryRank.setContent((left - MIN_SALARY) + "-" + (right - MIN_SALARY + 2) + "K");
-          body.min_salary = (left - MIN_SALARY) * 1000;
-          body.max_salary = (right - MIN_SALARY + 2) * 1000;
+          body.min_salary = (left - 1) * 1000;
+          body.max_salary = right * 1000;
+          civSalaryRank.setContent(
+              RecruitBusinessUtils.getSalary(body.min_salary, body.max_salary));
         }
       }
     });
@@ -271,24 +316,24 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
     l.add("面议");
     for (int i = 0; i < 100; i++) {
       l.add(i + "K");
-      r.add((i + 1) + "K");
+      r.add(i + "K");
     }
     l.add("100K以上");
-    twoScrollPicker.show(l, r, 0, 0);
+    twoScrollPicker.show(l, r, body.min_salary + 1, body.max_salary);
   }
 
   /**
    * 职位描述
    */
   @OnClick(R2.id.civ_position_desc) public void onCivPositionDescClicked() {
-    router.toEditRecruitDesc(body.description, "职位描述", POSITION_DESCRIPTION);
+    router.toEditRecruitDesc(body.description, "职位描述", "请填写职位描述", POSITION_DESCRIPTION);
   }
 
   /**
    * 任职要求
    */
   @OnClick(R2.id.civ_position_demands) public void onCivPositionDemandsClicked() {
-    router.toEditRecruitDesc(body.requirement, "任职要求", POSITION_REQUIREMENT);
+    router.toEditRecruitDesc(body.requirement, "任职要求", "请填写任职要求", POSITION_REQUIREMENT);
   }
 
   /**
@@ -302,12 +347,10 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
    * 职位福利
    */
   @OnClick(R2.id.civ_position_welfare) public void onCivPositionWelfareClicked() {
-    if (body.welfare == null || body.welfare.size() == 0){
+    if (body.welfare == null) {
       body.welfare = new ArrayList<>();
-      body.welfare.add("提供住宿");
-      body.welfare.add("提供保险");
     }
-    router.toPositionWalfare((ArrayList<String>) body.welfare, "职位福利");
+    router.toPositionWalfare(new ArrayList<String>(body.welfare), "职位福利");
   }
 
   /**
@@ -315,9 +358,9 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
    */
   @OnClick(R2.id.civ_gym_desc) public void onCivGymDescClicked() {
     if (job != null) {
-      router.toWriteGymDetailDesc(job.gym.description, "场馆介绍");
-    }else{
-      router.toWriteGymDetailDesc(gymContent, "场馆介绍");
+      router.toWriteGymIntro(job.gym);
+    } else if (gymId != null) {
+      router.toWriteGymIntro(new Gym.Builder().id(gymId).build());
     }
   }
 
@@ -330,14 +373,14 @@ import static cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment.MIN_SAL
       DialogUtils.showAlert(getContext(), "请完善职位信息");
       return;
     }
-    presenter.queryEditPermiss(job, "job");
-
+    presenter.queryEditPermiss(gymId, "job");
   }
 
   @Override public void onEditOk() {
     ToastUtils.show("成功");
     hideLoadingTrans();
-    getActivity().onBackPressed();
+    RxBus.getBus().post(new EventFreshJobsList());
+    getFragmentManager().popBackStackImmediate();
   }
 
   @Override public void onJobDetail(Job job) {

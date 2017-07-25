@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -22,10 +23,17 @@ public class RichTxtTxtItem extends AbstractFlexibleItem<RichTxtTxtItem.RichTxtT
 
   String content;
   boolean showKb;
-
+  String strHint;
+  private RichTxtTxtVH vh;
   public RichTxtTxtItem(String content, boolean showKb) {
     this.content = content;
     this.showKb = showKb;
+  }
+
+  public RichTxtTxtItem(String content, boolean showKb, String strHint) {
+    this.content = content;
+    this.showKb = showKb;
+    this.strHint = strHint;
   }
 
   @Override public int getLayoutRes() {
@@ -39,14 +47,25 @@ public class RichTxtTxtItem extends AbstractFlexibleItem<RichTxtTxtItem.RichTxtT
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, RichTxtTxtVH holder, int position,
       List payloads) {
+    this.vh = holder;
     if (position == 0 && TextUtils.isEmpty(content)) {
-      holder.tv.setHint(R.string.hint_rich_txt);
+      if (TextUtils.isEmpty(strHint)) {
+        holder.tv.setHint(R.string.hint_rich_txt);
+      } else {
+        holder.tv.setHint(strHint);
+      }
     } else {
       holder.tv.setText(content);
     }
     if (showKb) {
       holder.tv.requestFocus();
       showKb = false;
+    }
+  }
+
+  public void requestFocus() {
+    if (vh != null) {
+      AppUtils.showKeyboard(vh.itemView.getContext(), vh.tv);
     }
   }
 

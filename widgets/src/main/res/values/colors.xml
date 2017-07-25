@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="colorPrimary">#00c8d1</color>
+  <color name="colorPrimaryDark">#016368</color>
+  <color name="colorPrimaryDisable">@color/colorPrimaryDark</color>
 
   <color name="colorSetBg">#838B86</color>
   <color name="divider_white">#e5e5e5</color>

@@ -38,12 +38,16 @@ public class ResumeItem extends AbstractFlexibleItem<ResumeItem.ResumeVH> {
     return R.layout.item_resume;
   }
 
-  @Override public ResumeVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+  @Override public ResumeVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
+      ViewGroup parent) {
     return new ResumeVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
   }
 
-  @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeVH holder, int position, List payloads) {
-    PhotoUtils.smallCircle(holder.imgAvatar, resume.avatar);
+  @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeVH holder, int position,
+      List payloads) {
+    int defautAvatar =
+        resume.gender == 0 ? R.drawable.default_student_male : R.drawable.default_student_female;
+    PhotoUtils.smallCircle(holder.imgAvatar, resume.avatar, defautAvatar, defautAvatar);
     holder.tvName.setText(resume.username);
     holder.imgGender.setImageResource(
         resume.gender == 0 ? R.drawable.vd_gender_male : R.drawable.vd_gender_female);

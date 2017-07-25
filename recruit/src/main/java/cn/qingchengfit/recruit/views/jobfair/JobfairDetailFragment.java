@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -43,6 +44,7 @@ import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -78,8 +80,8 @@ import rx.functions.Action1;
  * Created by Paper on 2017/7/7.
  */
 public class JobfairDetailFragment extends BaseFragment
-    implements JobFairDetailPresenter.MVPView, ResumeFilterFragment.ResumeFilterListener
-    ,FlexibleAdapter.OnItemClickListener{
+    implements JobFairDetailPresenter.MVPView, ResumeFilterFragment.ResumeFilterListener,
+    FlexibleAdapter.OnItemClickListener {
 
   protected FilterHeadItem itemfilterHeader;
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -126,10 +128,6 @@ public class JobfairDetailFragment extends BaseFragment
       type = getArguments().getInt("type");
       jobFair = getArguments().getParcelable("jobfair");
     }
-    //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-    //  getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
-    //  getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    //}
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -159,6 +157,17 @@ public class JobfairDetailFragment extends BaseFragment
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("招聘会详情");
+    if (type == 0) {
+      toolbar.inflateMenu(R.menu.menu_share);
+      toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        @Override public boolean onMenuItemClick(MenuItem item) {
+          ShareDialogFragment.newInstance(jobFair.name, jobFair.description, jobFair.banner,
+              "http://cloud.qingchengfit.cn/mobile/fair/" + jobFair.id + "/")
+              .show(getChildFragmentManager(), "");
+          return false;
+        }
+      });
+    }
   }
 
   private void initAppbar() {
@@ -202,7 +211,7 @@ public class JobfairDetailFragment extends BaseFragment
   }
 
   @Override public void onJobfairDetail(JobFair jobfair) {
-    PhotoUtils.middle(imageRecruit, jobfair.banner);
+    PhotoUtils.originCenterCrop(imageRecruit, jobfair.banner);
     tvName.setText(jobfair.name);
     tvDuring.setText(DateUtils.getDuringFromServer(jobfair.start, jobfair.end));
     commonFlexAdapter.addItem(new ExpendedTextviewItem(jobfair.description));
@@ -259,12 +268,10 @@ public class JobfairDetailFragment extends BaseFragment
       itemfilterHeader = new FilterHeadItem(getResources().getStringArray(R.array.filter_resume));
 
       commonFlexAdapter.addItem(itemfilterHeader);
-
     } else {
       commonFlexAdapter.addItem(new TitleHintItem("本期热招职位"));
-      itemfilterHeader = new FilterHeadItem(getResources().getStringArray(R.array.filter_resume));
+      itemfilterHeader = new FilterHeadItem(getResources().getStringArray(R.array.filter_jobs));
       commonFlexAdapter.addItem(itemfilterHeader);
-
     }
     itemfilterHeader.setListener(new FilterHeadItem.FilterHeadListener() {
       @Override public void onPositionClick(int pos) {
@@ -293,12 +300,32 @@ public class JobfairDetailFragment extends BaseFragment
 
   @Override public void onFilterDone(HashMap<String, Object> params, String cityName) {
     this.params.putAll(params);
-    Object min = params.get("min_salary");
-    Object max = params.get("max_salary");
-    int ms = min == null ? -1 : (int) min;
-    int ma = max == null ? -1 : (int) max;
-    itemfilterHeader.setStrings(cityName == null ? "城市" : cityName,
-        RecruitBusinessUtils.getSalary(ms, ma, "薪资"), "要求");
+    if (type == 1) {
+      Object min = params.get("min_salary");
+      Object max = params.get("max_salary");
+      int ms = min == null ? -1 : (int) min;
+      int ma = max == null ? -1 : (int) max;
+      itemfilterHeader.setStrings(cityName == null ? "城市" : cityName,
+          RecruitBusinessUtils.getSalary(ms, ma, "薪资"), "要求");
+      itemfilterHeader.setHighLight(cityName != null, (min != null || max != null),
+          RecruitBusinessUtils.hashMapNotNull(params, true));
+    } else {
+      Object min = params.get("min_salary");
+      Object max = params.get("max_salary");
+      int ms = min == null ? -1 : (int) min;
+      int ma = max == null ? -1 : (int) max;
+
+      Object minWE = params.get("min_work_year");
+      Object maxWE = params.get("max_work_year");
+      String swe = "工作经验";
+      if (minWE != null && maxWE != null) {
+        swe = RecruitBusinessUtils.getWorkYear((int) minWE, (int) maxWE);
+      }
+      itemfilterHeader.setStrings(cityName == null ? "期望城市" : cityName,
+          RecruitBusinessUtils.getSalary(ms, ma, "期望薪资"), swe, "要求");
+      itemfilterHeader.setHighLight(cityName != null, min != null, minWE != null,
+          RecruitBusinessUtils.hashMapNotNull(params, false));
+    }
     commonFlexAdapter.notifyItemChanged(3);
     onRefresh();
   }
@@ -319,18 +346,18 @@ public class JobfairDetailFragment extends BaseFragment
     itemfilterHeader.clearAll();
     commonFlexAdapter.notifyItemChanged(commonFlexAdapter.getGlobalPositionOf(itemfilterHeader));
   }
+
   @Override public boolean onItemClick(int i) {
     IFlexible item = commonFlexAdapter.getItem(i);
     if (item == null) return false;
     if (item instanceof RecruitPositionItem) {
       Job job = ((RecruitPositionItem) item).getJob();
       router.goJobDetail(job);
-    }else if (item instanceof ResumeItem) {
+    } else if (item instanceof ResumeItem) {
       router.toResumeDetail(((ResumeItem) commonFlexAdapter.getItem(i)).getResume().id,
-          qcRestRepository.getHost() + RecruitConstants.RESUME_WEB_PATH,jobFair);
+          qcRestRepository.getHost() + RecruitConstants.RESUME_WEB_PATH, jobFair);
       return true;
     }
     return false;
   }
-
 }

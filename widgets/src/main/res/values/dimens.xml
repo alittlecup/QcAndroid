@@ -15,8 +15,20 @@
   <dimen name="btn_font">16sp</dimen>
   <dimen name="large_font">18sp</dimen>
   <dimen name="max_font">24sp</dimen>
+  <dimen name="txt_stanrdant">@dimen/txt_14sp</dimen>
+  <dimen name="txt_10sp">10sp</dimen>
+  <dimen name="txt_11sp">11sp</dimen>
+  <dimen name="txt_12sp">11sp</dimen>
+  <dimen name="txt_13sp">12sp</dimen>
+  <dimen name="txt_14sp">13sp</dimen>
+  <dimen name="txt_15sp">14sp</dimen>
+  <dimen name="txt_16sp">15sp</dimen>
+  <dimen name="txt_17sp">16sp</dimen>
+  <dimen name="txt_18sp">17sp</dimen>
+  <dimen name="txt_19sp">18sp</dimen>
+  <dimen name="txt_20sp">19sp</dimen>
 
-  <dimen name="txt_stanrdant">12sp</dimen>
+
 
   <dimen name="qc_actionbar_height">44dp</dimen>
 
@@ -56,6 +68,7 @@
   <dimen name="img_120dp">110dp</dimen>
 
   <dimen name="font_20">18sp</dimen>
+  <dimen name="font_13">13sp</dimen>
   <dimen name="quarter_width">100dp</dimen>
 
 

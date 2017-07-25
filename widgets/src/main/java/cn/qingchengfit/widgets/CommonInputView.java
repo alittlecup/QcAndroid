@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
@@ -48,7 +49,7 @@ public class CommonInputView extends RelativeLayout {
     private String str_label;
     private ImageView rightview;
     private int textColor = 0x9b9b9b;
-  private int contentColor;
+
     private String str_hint;
     private View disableView;
     private boolean isNum;
@@ -57,6 +58,8 @@ public class CommonInputView extends RelativeLayout {
     private boolean showDivier;
     private boolean showRight;
     private boolean enable;
+    private String strUnit;
+    private int contentColor;
     private CharSequence str_content;
     @DrawableRes private int rightDrawable;
     public CommonInputView(Context context) {
@@ -121,7 +124,9 @@ public class CommonInputView extends RelativeLayout {
         rightDrawable = ta.getResourceId(R.styleable.CommonInputView_civ_right_icon, R.drawable.ic_arrow_right);
         maxLength = ta.getResourceId(R.styleable.CommonInputView_civ_max_length, 100);
         textColor = ta.getColor(R.styleable.CommonInputView_civ_text_color, CompatUtils.getColor(getContext(), R.color.text_grey));
-
+        contentColor = ta.getColor(R.styleable.CommonInputView_civ_content_color,
+            CompatUtils.getColor(getContext(), R.color.text_black));
+        strUnit = ta.getString(R.styleable.CommonInputView_civ_unit);
         ta.recycle();
     }
 
@@ -154,6 +159,9 @@ public class CommonInputView extends RelativeLayout {
         View divider = findViewById(R.id.commoninput_divider);
         rightview = (ImageView) findViewById(R.id.commoninput_righticon);
         disableView = findViewById(R.id.disable);
+        if (!TextUtils.isEmpty(strUnit)) {
+            str_label = TextUtils.concat(str_label, "（", strUnit, "）").toString().trim();
+        }
         if (!canBeNull) {
             label.setText(str_label);
         } else {
@@ -203,6 +211,7 @@ public class CommonInputView extends RelativeLayout {
             edit.setInputType(InputType.TYPE_CLASS_TEXT);
             label.setMaxWidth((int) getResources().getDimension(R.dimen.qc_civ_label_max_width_txt));
         }
+        edit.setTextColor(contentColor);
         edit.setText(str_content);
         edit.setHint(str_hint);
     }
@@ -273,6 +282,7 @@ public class CommonInputView extends RelativeLayout {
     }
 
   public void setContentColor(int color) {
+      contentColor = color;
     edit.setTextColor(color);
     }
 
@@ -283,6 +293,13 @@ public class CommonInputView extends RelativeLayout {
     @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (canClick) return true;
         return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override protected Parcelable onSaveInstanceState() {
+        super.onSaveInstanceState();
+        Bundle bundle = new Bundle();
+        bundle.putString("lable", label.getText().toString());
+        return bundle;
     }
 
     @Override protected void onDraw(Canvas canvas) {
@@ -300,6 +317,7 @@ public class CommonInputView extends RelativeLayout {
             }
         };
         String content;
+        String label;
 
         public SavedState(Parcelable superState) {
             super(superState);
@@ -308,11 +326,13 @@ public class CommonInputView extends RelativeLayout {
         private SavedState(Parcel in) {
             super(in);
             content = in.readString();
+            label = in.readString();
         }
 
         @Override public void writeToParcel(@NonNull Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeString(content);
+            dest.writeString(label);
         }
     }
 }

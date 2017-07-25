@@ -42,9 +42,10 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="@drawable/btn_prime_no_corner"
         android:gravity="center"
         android:text="@string/complete"
-        android:textSize="@dimen/txt_stanrdant"
+        android:textSize="17sp"
         style="@style/QcBtnPrimery"
         />
   </LinearLayout>

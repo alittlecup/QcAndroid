@@ -1,6 +1,7 @@
 package cn.qingchengfit.views.activity;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -147,6 +148,10 @@ public class BaseActivity extends AppCompatActivity {
     } else {
       return "";
     }
+  }
+
+  public @IdRes int getFragId() {
+    return 0;
   }
 
   public interface FragmentBackPress {

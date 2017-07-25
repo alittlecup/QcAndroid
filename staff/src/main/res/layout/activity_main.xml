@@ -42,11 +42,11 @@
       android:id="@+id/tabview"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      android:layout_alignParentBottom="true"
       android:background="@color/toolbar"
       android:gravity="center_vertical"
-      android:layout_alignParentBottom="true"
       app:text_select_color="@color/colorPrimary"
-      app:text_size="12sp"
+      app:text_size="10sp"
       app:tvn_txt="@array/home_tab"
       />
   <!--<android.support.design.widget.BottomNavigationView-->

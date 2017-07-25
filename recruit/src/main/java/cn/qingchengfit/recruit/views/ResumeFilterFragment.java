@@ -102,6 +102,11 @@ public class ResumeFilterFragment extends BaseFragment
         dismiss();
       }
     });
+    view.findViewById(R.id.frag_resume_filter).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        dismiss();
+      }
+    });
     showStrategy();
     return view;
   }
@@ -177,6 +182,8 @@ public class ResumeFilterFragment extends BaseFragment
           f = filterDamenFragment;
           filterDamenFragment.setListener(new FilterDamenFragment.OnDemandsListener() {
             @Override public void onDemands(HashMap<String, Object> p) {
+              p.remove("min_work_year");
+              p.remove("max_work_year");
               params.putAll(p);
               onChooseitem();
             }

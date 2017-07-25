@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorRes;
 import android.support.annotation.StyleRes;
 import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
@@ -197,6 +198,11 @@ public class QcFilterToggle extends CompoundButton implements QcCheckable {
             textOff = s;
         }
         invalidate();
+    }
+
+  public void setTextColorRes(@ColorRes int color) {
+    colorOff = ContextCompat.getColor(getContext(), color);
+    invalidate();
     }
 
   @Override public void addCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener) {

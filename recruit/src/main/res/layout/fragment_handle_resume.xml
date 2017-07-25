@@ -58,7 +58,6 @@
     </LinearLayout>
   </FrameLayout>
 
-
   <include layout="@layout/divider_grey"/>
 
   <TextView
@@ -72,7 +71,6 @@
       style="@style/TextTitleHint"
       />
 
-  <include layout="@layout/divider_grey"/>
 
   <android.support.v4.view.ViewPager
       android:id="@+id/vp"
@@ -98,7 +96,7 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="4dp"
-        android:text="批量标注"
+        android:text="批量标记"
         style="@style/QcBtnPrimery"
         />
 

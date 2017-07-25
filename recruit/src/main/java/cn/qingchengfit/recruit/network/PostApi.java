@@ -79,7 +79,7 @@ public interface PostApi {
   /**
    * 标记投递简历
    */
-  @PUT("/api/staff/job/delivery/resumes/") rx.Observable<QcResponse> markResume(
+  @PUT("/api/staff/job/{tp}/resumes/") rx.Observable<QcResponse> markResume(@Path("tp") String tp,
       @Body MarkResumeBody body);
 
   @PUT("/api/staff/job/gyms/{gym_id}/") rx.Observable<QcResponse> editGymIntro(

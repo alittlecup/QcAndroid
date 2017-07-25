@@ -57,6 +57,10 @@ public class PhotoUtils {
     Glide.with(v.getContext()).load(url).placeholder(placeholder).error(error).into(v);
   }
 
+  public static void originCenterCrop(ImageView v, String url, int placeholder, int error) {
+    Glide.with(v.getContext()).load(url).centerCrop().placeholder(placeholder).error(error).into(v);
+  }
+
   public static void originCircle(ImageView v, String url, int placeholder, int error) {
     Glide.with(v.getContext())
         .load(url)
@@ -93,6 +97,10 @@ public class PhotoUtils {
 
   public static void origin(ImageView v, String url) {
     origin(v, url, R.drawable.img_loadingimage, R.drawable.img_loadingimage);
+  }
+
+  public static void originCenterCrop(ImageView v, String url) {
+    originCenterCrop(v, url, R.drawable.img_loadingimage, R.drawable.img_loadingimage);
   }
 
   public static void smallCornner4dp(ImageView v, String url){

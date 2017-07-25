@@ -52,6 +52,12 @@ buildscript {
 
 allprojects {
   repositories {
+    maven() {
+      url uri('../../repo')
+    }
+    maven() {
+      url uri('../repo')
+    }
     jcenter()
     maven() {
       url "http://maven.aliyun.com/nexus/content/groups/public/"
@@ -62,12 +68,8 @@ allprojects {
       url "https://s3.amazonaws.com/repo.commonsware.com"
     }
     mavenCentral()
-    //    maven() {
-    //      url uri('../repo')
-    //    }
-    maven() {
-      url uri('../../repo')
-    }
+
+
     //    maven() {
     //      url uri('./repo')
     //    }

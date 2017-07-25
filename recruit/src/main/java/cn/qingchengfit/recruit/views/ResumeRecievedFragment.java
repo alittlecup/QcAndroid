@@ -161,8 +161,7 @@ import rx.functions.Action1;
     showLoading();
     presenter.markResume(new MarkResumeBody.Builder().resume_ids(getChoosenResumeId())
         .job_id(job.id)
-        .status(r)
-        .build());
+        .status(r).build(), type);
   }
 
   private List<String> getChoosenResumeId() {
@@ -195,6 +194,8 @@ import rx.functions.Action1;
           markResumes(1);
         }
       });
+    }
+
       if (vp.getCurrentItem() != 2) {
         dsb.addButton("已录用", R.color.blue_for_recuirt, new View.OnClickListener() {
           @Override public void onClick(View v) {
@@ -211,15 +212,15 @@ import rx.functions.Action1;
           }
         });
       }
-      if (vp.getCurrentItem() != 0) {
-        dsb.addButton("未处理", R.color.blue_for_recuirt, new View.OnClickListener() {
-          @Override public void onClick(View v) {
-            dsb.dismiss();
-            markResumes(4);
-          }
-        });
-      }
-    }
+    //if (vp.getCurrentItem() != 0) {
+    //  dsb.addButton("未处理", R.color.blue_for_recuirt, new View.OnClickListener() {
+    //    @Override public void onClick(View v) {
+    //      dsb.dismiss();
+    //      markResumes(4);
+    //    }
+    //  });
+    //}
+
     dsb.show();
   }
 

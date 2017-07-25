@@ -38,6 +38,7 @@
   <string name="common_comfirm">确定</string>
   <string name="common_i_konw">知道了</string>
   <string name="alert_permission_forbid">抱歉，您无该功能权限</string>
+  <string name="alert_permission_forbid_contact_su">抱歉，您无该功能权限,请联系超级管理员</string>
   <string name="hint_rich_txt">用人单位更关注求职者的专业能力、沟通能力和形象气质，建议从这方面来描述</string>
   <string name="webview_student_guide_1">复制会员端页面链接</string>
   <string name="complete_gym_info">完善场馆信息</string>

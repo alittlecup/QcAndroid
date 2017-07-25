@@ -46,7 +46,8 @@ import rx.Subscription;
  * <p>
  * Created by Paper on 15/9/22 2015.
  */
-public abstract class BaseFragment extends Fragment implements CView {
+public abstract class BaseFragment extends Fragment
+    implements BaseActivity.FragmentBackPress, CView {
 
     public Unbinder unbinder;
     // 标志位，标志已经初始化完成
@@ -82,6 +83,7 @@ public abstract class BaseFragment extends Fragment implements CView {
                 return isBlockTouch();
             }
         });
+      setBackPress();
     }
 
     public boolean isBlockTouch() {
@@ -101,7 +103,23 @@ public abstract class BaseFragment extends Fragment implements CView {
         PresenterDelegate delegate = new PresenterDelegate(presenter);
         delegate.attachView(pView);
         delegates.add(delegate);
+
+      if (getActivity() instanceof BaseActivity) {
+        ((BaseActivity) getActivity()).setBackPress(this);
+      }
     }
+
+  public void setBackPress() {
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).setBackPress(this);
+    }
+  }
+
+  public void setBackPressNull() {
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).setBackPress(null);
+    }
+  }
 
     public void initToolbar(@NonNull Toolbar toolbar) {
         toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
@@ -122,6 +140,10 @@ public abstract class BaseFragment extends Fragment implements CView {
       if (getActivity() instanceof BaseActivity) {
         ((BaseActivity) getActivity()).hideLoading();
         }
+    }
+
+  @Override public boolean onFragmentBackPress() {
+    return false;
     }
 
     @Override public void setUserVisibleHint(boolean isVisibleToUser) {

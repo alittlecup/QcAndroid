@@ -137,9 +137,8 @@ public class JobPresenter extends BasePresenter {
   /**
    * 获取可邀约的职位列表
    */
-  public void getInviteJobs() {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .qcGetInviteJobs()
+  public void getInviteJobs(String fairid) {
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class).qcGetInviteJobs(fairid)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
@@ -154,9 +153,8 @@ public class JobPresenter extends BasePresenter {
     );
   }
 
-  public void queryEditPermiss(final Job job, String key) {
-    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .queryOnepermission(job.gym.id, key)
+  public void queryEditPermiss(String gymid, String key) {
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class).queryOnepermission(gymid, key)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<OnePermissionWrap>>() {
@@ -165,7 +163,7 @@ public class JobPresenter extends BasePresenter {
               if (qcResponse.data.has_permission) {
                 view.toEditJob();
               } else {
-                view.showAlert(R.string.alert_permission_forbid);
+                view.showAlert(R.string.alert_permission_forbid_contact_su);
               }
             } else {
               view.onShowError(qcResponse.getMsg());

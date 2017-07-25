@@ -86,7 +86,7 @@ import javax.inject.Inject;
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof RichTxtFragment) {
-      richTxtFragment.initContent(content);
+      richTxtFragment.initContent(content, "");
     }
   }
 

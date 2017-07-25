@@ -162,9 +162,14 @@ public class MainMsgFragment extends BaseFragment
                 Constant.setBussId(BuildConfig.DEBUG ? 611 : 605);
                 Constant.setXiaomiPushAppkey("5361741818101");
                 Constant.setHuaweiBussId(612);
-                loginProcessor = new LoginProcessor(getActivity().getApplicationContext(),
+                if (loginProcessor == null)
+                    loginProcessor = new LoginProcessor(getActivity().getApplicationContext(),
                     getString(R.string.chat_user_id_header, loginStatus.getUserId()), Uri.parse(Configs.Server).getHost(), this);
-                loginProcessor.sientInstall();
+                if (!loginProcessor.isLogin()) {
+                    loginProcessor.sientInstall();
+                } else {
+                    onLoginSuccess();
+                }
             } catch (Exception e) {
                 LogUtil.e(e.getMessage());
                 ToastUtils.show(e.getMessage());
@@ -213,32 +218,45 @@ public class MainMsgFragment extends BaseFragment
     }
 
     @Override public void onLoginSuccess() {
-        loginProcessor.setUserInfo(loginStatus.getLoginUser().username, loginStatus.getLoginUser().avatar);
-        conversationFragment = new ConversationFragment();
-        conversationFragment.setOnUnReadMessageListener(new ConversationFragment.OnUnReadMessageListener() {
-            @Override public void onUnReadMessage(long l) {
-                if (getActivity() instanceof Main2Activity) {
-                    ((Main2Activity) getActivity()).freshNotiCount(getUnredCount());
-                }
-            }
-
-            @Override public void onLongClickListener(final int i) {
-                DialogUtils.instanceDelDialog(getContext(), "删除该消息", new MaterialDialog.SingleButtonCallback() {
-                    @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        conversationFragment.deleteConversationItem(i);
-                        checkNoInfo();
+        if (loginStatus != null && loginStatus.getLoginUser() != null) {
+            loginProcessor.setUserInfo(loginStatus.getLoginUser().username,
+                loginStatus.getLoginUser().avatar);
+        }
+        if (conversationFragment == null) {
+            conversationFragment = new ConversationFragment();
+            conversationFragment.setOnUnReadMessageListener(
+                new ConversationFragment.OnUnReadMessageListener() {
+                    @Override public void onUnReadMessage(long l) {
                         if (getActivity() instanceof Main2Activity) {
                             ((Main2Activity) getActivity()).freshNotiCount(getUnredCount());
                         }
+                }
+
+                    @Override public void onLongClickListener(final int i) {
+                        DialogUtils.instanceDelDialog(getContext(), "删除该消息",
+                            new MaterialDialog.SingleButtonCallback() {
+                                @Override public void onClick(@NonNull MaterialDialog dialog,
+                                    @NonNull DialogAction which) {
+                                    conversationFragment.deleteConversationItem(i);
+                                    checkNoInfo();
+                                    if (getActivity() instanceof Main2Activity) {
+                                        ((Main2Activity) getActivity()).freshNotiCount(
+                                            getUnredCount());
+                                    }
+                        }
+                            }).show();
                     }
-                }).show();
-            }
 
-            @Override public void onUpdateRecruitListener(String s) {
+                    @Override public void onUpdateRecruitListener(String s) {
 
-            }
-        });
-        getChildFragmentManager().beginTransaction().replace(R.id.frame_chat, conversationFragment, "chat").commitAllowingStateLoss();
+                    }
+                });
+        }
+        if (getChildFragmentManager().findFragmentByTag("chat") == null) {
+            getChildFragmentManager().beginTransaction()
+                .replace(R.id.frame_chat, conversationFragment, "chat")
+                .commitAllowingStateLoss();
+        }
         if (getActivity() instanceof Main2Activity) {
             ((Main2Activity) getActivity()).freshNotiCount(getUnredCount());
         }

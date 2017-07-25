@@ -19,13 +19,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.base.Gym;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.event.EventFreshJobsList;
 import cn.qingchengfit.recruit.item.RecruitPositionInGymItem;
 import cn.qingchengfit.recruit.model.Job;
+import cn.qingchengfit.recruit.network.response.OnePermissionWrap;
 import cn.qingchengfit.recruit.presenter.RecruitGymDetailPresenter;
 import cn.qingchengfit.recruit.presenter.RecruitStaffGymDetailPresenter;
+import cn.qingchengfit.saas.network.GetApi;
+import cn.qingchengfit.saas.response.SuWrap;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
@@ -33,6 +41,9 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -55,7 +66,8 @@ import javax.inject.Inject;
  * Created by Paper on 2017/5/27.
  * 雇主版本的场馆主页
  */
-public class RecruitGymDetailEmployerFragment extends BaseFragment implements RecruitGymDetailPresenter.MVPView {
+public class RecruitGymDetailEmployerFragment extends BaseFragment
+    implements RecruitGymDetailPresenter.MVPView {
 
   @BindView(R2.id.img_gym) ImageView imgGym;
   @BindView(R2.id.tv_gym_name) TextView tvGymName;
@@ -70,6 +82,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
 
   @Inject RecruitStaffGymDetailPresenter presenter;
   @Inject RecruitRouter recruitRouter;
+  @Inject QcRestRepository qcRestRepository;
 
   Gym gym;
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -111,12 +124,29 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
     fragments.add(specialFragment);
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_gym_detail_employer, container, false);
     super.onCreateView(inflater, container, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
+
+    initBus();
+    return view;
+  }
+
+  private void initBus() {
+    RxBusAdd(EventFreshJobsList.class).observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<EventFreshJobsList>() {
+          @Override public void call(EventFreshJobsList eventFreshJobsList) {
+            presenter.queryPositionOfGym(gym.id, 1);
+          }
+        });
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
     vp.setAdapter(new PositionTypesAdapter(getChildFragmentManager()));
     tab.setupWithViewPager(vp);
     /*
@@ -143,11 +173,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
 
     onGym(gym);
     presenter.queryGymDetail(gym.id);
-    return view;
-  }
 
-  @Override protected void onFinishAnimation() {
-    super.onFinishAnimation();
     if (initPage > 0 && initPage < fragments.size()) {
       vp.setCurrentItem(initPage);
     }
@@ -155,7 +181,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitile.setText("公司详情");
+    toolbarTitile.setText("场馆招聘详情");
     toolbar.inflateMenu(R.menu.menu_preview);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
@@ -165,7 +191,8 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
     });
   }
 
-  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+      Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof RecruitPositionsInGymFragment) {
       presenter.queryPositionOfGym(gym.id, 1);
@@ -215,14 +242,47 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
    * 场馆介绍
    */
   @OnClick(R2.id.layout_gym_intro) public void onLayoutGymIntroClicked() {
-    recruitRouter.toWriteGymIntro(gym);
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .querySu(gym.id)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<SuWrap>>() {
+          @Override public void call(QcDataResponse<SuWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              if (qcResponse.data.is_superuser) {
+                recruitRouter.toWriteGymIntro(gym);
+              } else {
+                showAlert("抱歉，您没有该功能呢权限，请联系超级管理员");
+              }
+            } else {
+              onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
   }
 
   /**
    * 场馆信息修改
    */
   @OnClick(R2.id.layout_gym_info) public void onLayoutGymInfoClicked() {
-    recruitRouter.editGymInfo(gym.id);
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .querySu(gym.id)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<SuWrap>>() {
+          @Override public void call(QcDataResponse<SuWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              if (qcResponse.data.is_superuser) {
+                recruitRouter.editGymInfo(gym.id);
+              } else {
+                showAlert("抱歉，您没有该功能呢权限，请联系超级管理员");
+              }
+            } else {
+              onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+
   }
 
   /**
@@ -236,7 +296,24 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
    * 发布新职位
    */
   @OnClick(R2.id.btn_publish_new_position) public void onViewClicked() {
-    recruitRouter.toPublishPosition(gym.getId(), null, RecruitPublishJobFragment.PUBLISH_POSITION);
+    RxRegiste(qcRestRepository.createGetApi(cn.qingchengfit.recruit.network.GetApi.class)
+        .queryOnepermission(gym.id, "job")
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<OnePermissionWrap>>() {
+          @Override public void call(QcDataResponse<OnePermissionWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              if (qcResponse.data.has_permission) {
+                recruitRouter.toPublishPosition(gym.getId(), null,
+                    RecruitPublishJobFragment.PUBLISH_POSITION);
+              } else {
+                showAlert("抱歉，您无该功能权限，请联系超级管理员。");
+              }
+            } else {
+              onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
   }
 
   class PositionTypesAdapter extends FragmentStatePagerAdapter
@@ -277,5 +354,4 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment implements Re
       return false;
     }
   }
-
 }

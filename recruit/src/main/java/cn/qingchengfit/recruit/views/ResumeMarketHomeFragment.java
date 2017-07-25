@@ -39,6 +39,7 @@ import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.support.animator.FlipAnimation;
 import cn.qingchengfit.utils.ListUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.TipDialogFragment;
 import com.jakewharton.rxbinding.view.RxView;
@@ -201,7 +202,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     rv.setClipToPadding(false);
     rv.addItemDecoration(
         new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_resume, 1)
-            .addItemViewType(R.layout.item_recruit_manage, 1)
+            .addItemViewType(R.layout.item_recruit_manage, 10)
             .addItemViewType(R.layout.item_horizon_qcradiogroup, 1)
             .withDivider(R.drawable.divider_qc_base_line)
             .withBottomEdge(true));
@@ -248,12 +249,19 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   }
 
   @Override protected void removeMainItem() {
-    //commonFlexAdapter.removeRange(4, commonFlexAdapter.getItemCount() - 4);
     commonFlexAdapter.removeItemsOfType(R.layout.item_resume);
+    commonFlexAdapter.removeItemsOfType(R.layout.item_common_no_data);
   }
 
   @Override public void onResumeList(List<Resume> resumes, int total, int page) {
     layoutFilter.setRefreshing(false);
+    if (page == 1) {
+      if (total > resumes.size()) {
+        initLoadMore();
+      }
+      rv.setPadding(0, 0, 0, MeasureUtils.autoPaddingBottom(108f, total, getContext(),
+          MeasureUtils.dpToPx(48f, getResources())));
+    }
     super.onResumeList(resumes, total, page);
     if (page == 1 && commonFlexAdapter.getItemCountOfTypes(R.layout.item_resume) == 0) {
       addEmptyPage();
@@ -266,7 +274,8 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
 
   @Override public void onRefresh() {
     presenter.queryMyJobFairList();
-    initLoadMore();
+    //initLoadMore();
+    commonFlexAdapter.setEndlessScrollListener(null, null);
     params = ListUtils.mapRemoveNull(params);
     presenter.queryResumeMarkets(true, params);
   }
@@ -316,8 +325,19 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
           Object max = params.get("max_salary");
           int ms = min == null ? -1 : (int) min;
           int ma = max == null ? -1 : (int) max;
-          filterHeadItem.setStrings(cityname == null ? "城市" : cityname,
-              RecruitBusinessUtils.getSalary(ms, ma, "薪资"), "工作经验", "要求");
+
+          Object minWE = params.get("min_work_year");
+          Object maxWE = params.get("max_work_year");
+          String swe = "工作经验";
+          if (minWE != null && maxWE != null) {
+            swe = RecruitBusinessUtils.getWorkYear((int) minWE, (int) maxWE);
+          }
+
+          filterHeadItem.setStrings(cityname == null ? "期望城市" : cityname,
+              RecruitBusinessUtils.getSalary(ms, ma, "期望薪资"), swe, "要求");
+          filterHeadItem.setHighLight(cityname != null, min != null,
+              (minWE != null || maxWE != null), RecruitBusinessUtils.hashMapNotNull(params, false));
+
           commonFlexAdapter.notifyItemChanged(3);
           onRefresh();
         }
@@ -431,7 +451,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
 
   @Override public void onGym(Gym gym) {
     if (gym != null) {
-      router.toReplaceGymDetail(gym);
+      router.toGymDetial(gym);
     }
   }
 

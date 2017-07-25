@@ -1,6 +1,7 @@
 package cn.qingchengfit.recruit.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -23,9 +24,12 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.TouchyWebView;
 import cn.qingchengfit.widgets.QcTagGroup;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import javax.inject.Inject;
 
 /**
@@ -149,9 +153,16 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
    * 关闭职位
    */
   @OnClick(R2.id.btn_close_pos) public void onBtnClosePosClicked() {
-    showLoading();
-    isClosePosition = true;
-    presenter.queryEditPermiss(job, "job");
+    DialogUtils.instanceDelDialog(getContext(), job.published ? "确定关闭该职位？" : "确定开启该职位",
+        job.published ? "关闭后，该职位将不再收到简历" : "开启后，该职位将会收到投递简历",
+        new MaterialDialog.SingleButtonCallback() {
+          @Override
+          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            showLoading();
+            isClosePosition = true;
+            presenter.queryEditPermiss(job.gym.id, "job");
+          }
+        }).show();
   }
 
   @Override public void onEditOk() {
@@ -177,14 +188,30 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
    * 编辑职位
    */
   @OnClick(R2.id.btn_edit_postion) public void onBtnEditPostionClicked() {
-    presenter.queryEditPermiss(job, "job");
+    presenter.queryEditPermiss(job.gym.id, "job");
   }
 
+  /**
+   * 主动投递
+   */
   @OnClick(R2.id.layout_diliverd) public void onLayoutDiliverdClicked() {
     router.toRecieveResumes(job);
   }
 
+  /**
+   * 邀约列表
+   */
   @OnClick(R2.id.layout_invited) public void onLayoutInvitedClicked() {
     router.toInvitedResumes(job);
+  }
+
+  @Override public void showAlert(int res) {
+    super.showAlert(res);
+    hideLoading();
+  }
+
+  @Override public void showAlert(String res) {
+    super.showAlert(res);
+    hideLoading();
   }
 }

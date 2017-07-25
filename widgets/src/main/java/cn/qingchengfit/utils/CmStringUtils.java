@@ -84,6 +84,19 @@ public class CmStringUtils {
         return ret;
     }
 
+  public static String List2StrChinese(List<String> stringList) {
+    String ret = "";
+    if (stringList == null) return null;
+    for (int i = 0; i < stringList.size(); i++) {
+      if (i < stringList.size() - 1) {
+        ret = TextUtils.concat(ret, stringList.get(i), "，").toString();
+      } else {
+        ret = TextUtils.concat(ret, stringList.get(i)).toString();
+      }
+    }
+    return ret;
+  }
+
     public static String getStringHtml(String text, String color) {
         return TextUtils.concat("<font color=\"" + color + "\">" + text + "</font>").toString();
     }

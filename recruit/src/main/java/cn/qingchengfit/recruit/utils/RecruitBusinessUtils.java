@@ -35,6 +35,20 @@ import java.util.Locale;
 
 public class RecruitBusinessUtils {
 
+  public static boolean hashMapNotNull(HashMap<String, Object> params, boolean isSeekjob) {
+    if (isSeekjob) {
+      if (params.get("min_work_year") != null) return true;
+    }
+    return params.get("gender") != null
+        || params.get("education") != null
+        || params.get("min_age") != null
+        || params.get("max_age") != null
+        || params.get("min_height") != null
+        || params.get("max_height") != null
+        || params.get("max_weight") != null
+        || params.get("min_weight") != null;
+  }
+
   public static HashMap<String, Object> getWrokExpParams(int pos, HashMap<String, Object> params) {
     switch (pos) {
       case 0:
@@ -293,25 +307,29 @@ public class RecruitBusinessUtils {
       return replace;
     } else if (min == 0 && max == 0) {
       return replace;
-    } else if (min < 0) {
+    } else if (min <= 0) {
       return "<" + getMoney(max);
-    } else if (max < 0) {
+    } else if (max <= 0) {
       return ">" + getMoney(min);
     } else {
       return getMoney(min).replace("K", "") + "-" + getMoney(max);
     }
   }
 
-  public static String getDegree(Context context, int x) {
-    if (x < 0) return "不限";
+  public static String getDegree(Context context, int x, String replace) {
+    if (x < 0) return replace;
     String[] degrees = context.getResources().getStringArray(R.array.add_resume_education_degree);
-    if (x == 0) return "";
+    if (x == 0) return replace;
     x--;
     if (x >= 0 && x < degrees.length) {
       return degrees[x];
     } else {
       return "";
     }
+  }
+
+  public static String getDegree(Context context, int x) {
+    return getDegree(context, x, "不限");
   }
 
   public static String getMoney(float m) {
@@ -413,11 +431,11 @@ public class RecruitBusinessUtils {
     if (min == -1 && max == -1) {
       return plus + "不限";
     } else if (min == -1) {
-      return "<" + max + "kg";
+      return "<" + (int) max + "kg";
     } else if (max == -1) {
-      return ">" + min + "kg";
+      return ">" + (int) min + "kg";
     } else {
-      return min + "-" + max + "kg";
+      return (int) min + "-" + (int) max + "kg";
     }
   }
 

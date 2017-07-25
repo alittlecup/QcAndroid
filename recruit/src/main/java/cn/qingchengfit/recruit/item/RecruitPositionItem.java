@@ -80,6 +80,7 @@ public class RecruitPositionItem extends AbstractFlexibleItem<RecruitPositionIte
     @BindView(R2.id.tv_height) TextView tvHeight;
     @Nullable @BindView(R2.id.cb_position) CheckBox checkBox;
     @Nullable @BindView(R2.id.tv_has_undo) TextView tv_has_todo;
+    @Nullable @BindView(R2.id.img_right) ImageView imgRight;
 
     public RecruitPositionVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

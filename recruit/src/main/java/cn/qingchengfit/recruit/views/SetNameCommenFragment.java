@@ -21,6 +21,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventSetName;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
@@ -50,6 +51,7 @@ public class SetNameCommenFragment extends BaseFragment {
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_set_name_common, container, false);
     unbinder = ButterKnife.bind(this, view);
+    setBackPress();
     setToolbar();
     initEdit();
     return view;
@@ -78,10 +80,14 @@ public class SetNameCommenFragment extends BaseFragment {
     initEdit();
   }
 
+  @Override protected void onFinishAnimation() {
+    editGroupName.requestFocus();
+    AppUtils.showKeyboard(getContext(), editGroupName);
+  }
+
   private void initEdit() {
     editGroupName.setHint(getArguments() != null ? getArguments().getString("hint") : "");
     editGroupName.setHintTextColor(getResources().getColor(R.color.qc_text_grey));
-
     imageClearName.setVisibility(View.GONE);
     editGroupName.addTextChangedListener(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
