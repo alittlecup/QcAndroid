@@ -5,6 +5,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.UpdateModule;
 import cn.qingchengfit.model.responese.QcResponse;
 import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
@@ -43,11 +44,7 @@ public class GymMorePresenter extends BasePresenter {
                         view.onShowError(qcResponse.getMsg());
                     }
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onShowError(throwable.getMessage());
-                }
-            }));
+            }, new NetWorkThrowable()));
     }
 
     @Override public void attachView(PView v) {

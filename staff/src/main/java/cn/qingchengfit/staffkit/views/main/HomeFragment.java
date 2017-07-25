@@ -229,7 +229,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
                 initToolbar(toolbar);
                 onBgClick();
                 homePresenter.updatePermission();
-                gymsFragment.refresh();
+              if (gymsFragment != null) gymsFragment.refresh();
             }
         });
         refresh.setColorSchemeColors(CompatUtils.getColor(getContext(), R.color.colorPrimary));

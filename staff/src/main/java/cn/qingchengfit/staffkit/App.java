@@ -23,6 +23,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.debug.LogView;
+import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.train.moudle.TrainIds;
@@ -194,7 +195,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
         lb.loginUser(staff);
         lb.session(session);
         lb.userId(user_id);
-
+        QCDbManager qcDbManager = new QCDbManager(this);
         appCompoent = DaggerAppComponent.builder()
             .appModel(new AppModel(this, new SerPermissionImpl(this), lb.build(),
                 new GymWrapper.Builder().build(), new RestRepository(), new BaseRouter(),

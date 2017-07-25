@@ -97,6 +97,7 @@ public class ContactTaDialog extends BaseBottomSheetDialogFragment {
             case R.id.tv_contact_phone:
                 Uri uri = Uri.parse(new StringBuilder().append("tel:").append(phone).toString());
                 Intent dialntent = new Intent(Intent.ACTION_DIAL, uri);
+              dialntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(dialntent);
                 break;
             case R.id.tv_contact_sms:

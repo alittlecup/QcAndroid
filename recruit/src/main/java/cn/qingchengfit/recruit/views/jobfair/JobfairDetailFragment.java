@@ -234,9 +234,9 @@ public class JobfairDetailFragment extends BaseFragment
     Fragment f = getChildFragmentManager().findFragmentByTag("filter");
     if (f == null) {
       if (type == 0) {
-        f = new JobsFilterFragment();
-      } else {
         f = ResumeFilterFragment.newResumeFilter();
+      } else {
+        f = new JobsFilterFragment();
       }
       ((ResumeFilterFragment) f).showPos = pos;
       ((ResumeFilterFragment) f).putParams(params);

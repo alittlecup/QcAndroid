@@ -95,6 +95,7 @@ public class QcVipFragment extends WebFragment {
                         Intent to = new Intent();
                         to.setAction(Intent.ACTION_VIEW);
                         to.setData(Uri.parse(url));
+                      to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(to);
                     }
                 } catch (Exception e) {

@@ -665,6 +665,7 @@ public class WebFragment extends BaseFragment
       Intent i = new Intent(Intent.ACTION_VIEW);
       i.setData(Uri.parse(s));
       i.setPackage(getContext().getPackageName());
+      i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       startActivity(i);
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
@@ -890,6 +891,7 @@ public class WebFragment extends BaseFragment
               if (uri.getPath() != null)
                 ret = TextUtils.concat(ret,uri.getPath()).toString();
               tosb.putExtra("web_action", ret);
+              tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
               startActivityForResult(tosb, 99);
             } catch (Exception e) {
               mWebviewWebView.loadUrl(

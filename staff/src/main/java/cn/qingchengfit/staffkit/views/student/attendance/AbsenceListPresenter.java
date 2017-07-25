@@ -60,7 +60,7 @@ public class AbsenceListPresenter extends BasePresenter {
         params.put("show_all", 1);
         if (curpage <= pages) {
             RxRegiste(restRepository.getGet_api()
-                .qcGetUsersAbsences(App.staffId, params)
+                .qcGetUsersAbsences(App.staffId, params).onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseData<Absentces>>() {

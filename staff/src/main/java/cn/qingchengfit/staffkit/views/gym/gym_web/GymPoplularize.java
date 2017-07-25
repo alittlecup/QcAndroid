@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventPoplularize;
@@ -62,8 +61,18 @@ public class GymPoplularize extends ShareDialogFragment {
         return view;
     }
 
-    @OnClick({ R.id.btn_to_wechat_public, R.id.btn_home_qr, R.id.btn_more_popularize }) public void onClickOthers(View view) {
-        RxBus.getBus().post(new EventPoplularize(view.getId()));
+    @Override public void clickCircle() {
+        RxBus.getBus().post(new EventPoplularize(R.id.wechat_circle));
+        dismiss();
+    }
+
+    @Override public void clickCopy() {
+        RxBus.getBus().post(new EventPoplularize(R.id.copy_link));
+        dismiss();
+    }
+
+    @Override public void clickFriend() {
+        RxBus.getBus().post(new EventPoplularize(R.id.wechat_friend));
         dismiss();
     }
 }

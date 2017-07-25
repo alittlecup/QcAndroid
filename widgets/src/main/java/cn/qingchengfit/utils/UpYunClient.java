@@ -12,9 +12,10 @@ import java.util.Map;
 import java.util.UUID;
 import org.json.JSONException;
 import org.json.JSONObject;
+import rx.Emitter;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -48,41 +49,46 @@ public class UpYunClient {
     }
 
     public static Observable<String> rxUpLoad(final String cloudpath, final String filePath) {
-        return Observable.create(new Observable.OnSubscribe<String>() {
-            @Override public void call(final Subscriber<? super String> subscriber) {
-                File upFile = new File(filePath);
-                //TypedFile upFile = new TypedFile("image/jpeg", new File(filePath));
-                String name = UUID.randomUUID().toString() + ".png";
-                final Map<String, Object> paramsMap = new HashMap<>();
-                //上传空间
-                paramsMap.put(Params.BUCKET, SPACE);
-                //保存路径，任选其中一个
-                paramsMap.put(Params.SAVE_KEY, (cloudpath.startsWith("/") ? "" : "/") + cloudpath + name);
-                paramsMap.put(Params.CONTENT_MD5, UpYunUtils.md5Hex(upFile));
+      return Observable.create(new Action1<Emitter<String>>() {
 
-                //paramsMap.put(Params.RETURN_URL, UPYUNPATH);
-                UpCompleteListener completeListener = new UpCompleteListener() {
-                    @Override public void onComplete(boolean isSuccess, String result) {
-                        if (isSuccess) {
-                            try {
-                                JSONObject jsonObject = new JSONObject(result);
-                                subscriber.onNext(UPYUNPATH + jsonObject.getString("url"));
-                                subscriber.onCompleted();
-                            } catch (JSONException e) {
-                                subscriber.onError(new Throwable(e));
+        @Override public void call(final Emitter<String> subscriber) {
+          File upFile = new File(filePath);
+          //TypedFile upFile = new TypedFile("image/jpeg", new File(filePath));
+          String name = UUID.randomUUID().toString() + ".png";
+          final Map<String, Object> paramsMap = new HashMap<>();
+          //上传空间
+          paramsMap.put(Params.BUCKET, SPACE);
+          //保存路径，任选其中一个
+          paramsMap.put(Params.SAVE_KEY, (cloudpath.startsWith("/") ? "" : "/") + cloudpath + name);
+          paramsMap.put(Params.CONTENT_MD5, UpYunUtils.md5Hex(upFile));
+
+          //paramsMap.put(Params.RETURN_URL, UPYUNPATH);
+          UpCompleteListener completeListener = new UpCompleteListener() {
+            @Override public void onComplete(boolean isSuccess, String result) {
+              if (isSuccess) {
+                try {
+                  JSONObject jsonObject = new JSONObject(result);
+                  subscriber.onNext(UPYUNPATH + jsonObject.getString("url"));
+                  subscriber.onCompleted();
+                } catch (JSONException e) {
+                  subscriber.onError(new Throwable(e));
+                }
+              } else {
+                //subscriber.onError(new Throwable("上传图片失败"));
+                CrashUtils.sendCrash(new Throwable("上传图片失败"));
+                Log.e("upyun", isSuccess + ":" + result);
                             }
-                        } else {
-                            subscriber.onError(new Throwable("上传图片失败"));
-                            Log.e("upyun", isSuccess + ":" + result);
                         }
-                    }
-                };
+          };
+          UploadEngine.getInstance()
+              .formUpload(upFile, paramsMap, OPERATER, UpYunUtils.md5(PASSWORD), completeListener,
+                  null);
+          //String upImg = UpYunClient.upLoadImg(cloudpath, new File(filePath));
 
-                UploadEngine.getInstance().formUpload(upFile, paramsMap, OPERATER, UpYunUtils.md5(PASSWORD), completeListener, null);
-                //String upImg = UpYunClient.upLoadImg(cloudpath, new File(filePath));
-
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        }
+      }, Emitter.BackpressureMode.BUFFER)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**

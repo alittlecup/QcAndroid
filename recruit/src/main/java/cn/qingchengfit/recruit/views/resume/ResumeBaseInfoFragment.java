@@ -209,7 +209,8 @@ import javax.inject.Inject;
   @OnClick(R2.id.civ_birthday) public void onMofifyinfoBirthdayClicked() {
     if (timeDialogWindow == null) {
       timeDialogWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH);
-      timeDialogWindow.setRange(1950, 2050);
+      int curYear = DateUtils.getYear(new Date());
+      timeDialogWindow.setRange(curYear - 80, curYear - 15);
     }
     timeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
@@ -217,6 +218,7 @@ import javax.inject.Inject;
         civBirthday.setContent(resumeBody.birthday);
       }
     });
+
     timeDialogWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0,
         DateUtils.YYMM2date(civBirthday.getContent()));
   }

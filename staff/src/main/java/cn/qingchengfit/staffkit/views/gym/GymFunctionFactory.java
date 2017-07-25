@@ -366,6 +366,7 @@ public class GymFunctionFactory {
                 Intent toSignInConfigs = new Intent(fragment.getActivity(), SignInActivity.class);
                 toSignInConfigs.setAction(fragment.getString(R.string.qc_action));
                 toSignInConfigs.setData(Uri.parse("checkin/config"));
+              toSignInConfigs.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 fragment.startActivity(toSignInConfigs);
                 return;
             case MODULE_SERVICE_SHOP:

@@ -106,6 +106,7 @@ import rx.functions.Action1;
                                     if (aBoolean) {
                                         Uri uri = Uri.parse(new StringBuilder().append("tel:").append(bean.getPhone()).toString());
                                         Intent dialntent = new Intent(Intent.ACTION_DIAL, uri);
+                                      dialntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(dialntent);
                                     } else {
                                         ToastUtils.show("请在应用设置中开启拨打电话权限");

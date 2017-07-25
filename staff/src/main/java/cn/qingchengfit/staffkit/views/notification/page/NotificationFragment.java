@@ -246,6 +246,7 @@ public class NotificationFragment extends BaseFragment
                                     tosb.putExtra(key, uri.getQueryParameter(key));
                                 }
                             }
+                          tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(tosb);
                         }
                     }

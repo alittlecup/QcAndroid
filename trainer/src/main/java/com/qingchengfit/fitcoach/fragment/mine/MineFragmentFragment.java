@@ -215,6 +215,7 @@ public class MineFragmentFragment extends BaseFragment {
                 Intent intent = new Intent();
                 intent.setPackage(getContext().getPackageName());
                 intent.setData(Uri.parse("qccoach://resume/"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
               } catch (Exception e) {
 

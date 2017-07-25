@@ -395,8 +395,8 @@ public class RecruitRouter extends InnerRouter {
   /**
    * 职位名称填写
    */
-  public void toSetRequireName(String name, String hint) {
-    add(SetNameCommenFragment.newInstance(name, hint));
+  public void toSetRequireName(String name, String txt, String hint) {
+    add(SetNameCommenFragment.newInstance(name, txt, hint));
   }
 
   /**

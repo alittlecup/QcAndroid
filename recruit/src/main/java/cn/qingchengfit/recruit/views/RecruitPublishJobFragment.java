@@ -281,7 +281,7 @@ import rx.functions.Action1;
    * 职位名称
    */
   @OnClick(R2.id.civ_position_name) public void onCivPositionNameClicked() {
-    router.toSetRequireName("职位名称", body.name);
+    router.toSetRequireName("职位名称", body.name, "");
   }
 
   /**

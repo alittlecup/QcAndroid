@@ -12,7 +12,6 @@ import cn.qingchengfit.model.responese.BalanceDetail;
 import cn.qingchengfit.model.responese.Cards;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.ResponseConstant;
-import cn.qingchengfit.network.ActivityLifeCycleEvent;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
@@ -25,7 +24,6 @@ import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import rx.subjects.PublishSubject;
 
 /**
  * power by
@@ -49,36 +47,10 @@ public class RealCardListPresenter extends BasePresenter {
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    PublishSubject<ActivityLifeCycleEvent> lifecycleSubject = PublishSubject.create();
     private RealCardListView view;
-    //    private RealCardActionImpl realCardAction;
     private int page = 1, totalpage = 2;
     private int balance_page = 1, balance_totalpage = 2;
     private OnSettingBalanceListener onSettingBalanceListener;
-
-    //    private Action1<List<Card>> actionList = new Action1<List<Card>>() {
-    //        @Override
-    //        public void call(List<Card> cards) {
-    //            data.clear();
-    //            for (Card card : cards) {
-    //                String userName = "";
-    //                if (card.getUsers() != null) {
-    //                    for (Student user_student : card.getUsers()) {
-    //                        userName = TextUtils.concat(userName, user_student.getUsername()).toString();
-    //                    }
-    //                }
-    //                RealCard realCard = new RealCard(card.getName(), card.getBundleUsers(), card.getBalance() + "", card.getColor());
-    //                realCard.id = card.getId();
-    //                realCard.card_tpl_id = card.getCard_tpl_id();
-    //                realCard.type = card.getType();
-    //                realCard.shopids = card.getShopIds();
-    //                data.add(realCard);
-    //            }
-    //
-    ////            if (data.size() > 0)
-    ////                view.onSuccees(data.size(), data);
-    //        }
-    //    };
 
     @Inject public RealCardListPresenter(RealCardUsecase usecase) {
         this.usecase = usecase;

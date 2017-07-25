@@ -2,6 +2,7 @@ package cn.qingchengfit.recruit.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -37,10 +38,11 @@ public class SetNameCommenFragment extends BaseFragment {
   @BindView(R2.id.edit_group_name) EditText editGroupName;
   @BindView(R2.id.image_clear_name) ImageView imageClearName;
 
-  public static SetNameCommenFragment newInstance(String title, String hint) {
+  public static SetNameCommenFragment newInstance(String title, String txt, String hint) {
     Bundle args = new Bundle();
     args.putString("toolbarTitle", title);
     args.putString("hint", hint);
+    args.putString("txt", txt);
     SetNameCommenFragment fragment = new SetNameCommenFragment();
     fragment.setArguments(args);
     return fragment;
@@ -87,7 +89,8 @@ public class SetNameCommenFragment extends BaseFragment {
 
   private void initEdit() {
     editGroupName.setHint(getArguments() != null ? getArguments().getString("hint") : "");
-    editGroupName.setHintTextColor(getResources().getColor(R.color.qc_text_grey));
+    editGroupName.setText(getArguments() != null ? getArguments().getString("txt") : "");
+    editGroupName.setHintTextColor(ContextCompat.getColor(getContext(), R.color.qc_text_grey));
     imageClearName.setVisibility(View.GONE);
     editGroupName.addTextChangedListener(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

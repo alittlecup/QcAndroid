@@ -75,6 +75,7 @@ public class Utils {
         } catch (Exception e) {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse("http://fir.im/qcfit"));
+          i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         }
     }
