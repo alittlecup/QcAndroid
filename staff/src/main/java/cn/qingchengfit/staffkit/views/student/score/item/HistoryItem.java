@@ -62,7 +62,7 @@ public class HistoryItem extends AbstractFlexibleItem<HistoryItem.HistoryVH> {
             data.type)) {
             holder.score.setTextColor(Color.parseColor("#EA6161"));// 红色
         } else {
-            holder.score.setTextColor(Color.parseColor("#0DB14B"));// 绿色
+            holder.score.setTextColor(ContextCompat.getColor(holder.score.getContext(),R.color.primary));
         }
 
         holder.curScore.setText(new StringBuilder().append("当前积分 ").append(data.curScore).toString());

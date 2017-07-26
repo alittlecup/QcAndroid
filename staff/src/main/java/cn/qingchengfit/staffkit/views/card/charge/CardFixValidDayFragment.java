@@ -110,7 +110,11 @@ public class CardFixValidDayFragment extends BaseFragment implements CardFixVali
                         return true;
                     }
                     try {
-                        Float.parseFloat(civMoney.getContent());
+                        float f = Float.parseFloat(civMoney.getContent());
+                        if (f < 0){
+                            showAlert("收费金额请填写正数");
+                            return true;
+                        }
                     } catch (Exception e) {
                         ToastUtils.show("请填写正确金额");
                         return true;

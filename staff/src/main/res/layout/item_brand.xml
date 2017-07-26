@@ -52,9 +52,9 @@
 
     <ImageView
         android:id="@+id/chosen"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        app:srcCompat="@drawable/ic_green_right"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:srcCompat="@drawable/vector_hook_green"
         />
   </LinearLayout>
 

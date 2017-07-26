@@ -488,7 +488,7 @@
   <string name="no_suit_student_card">无适用会员卡</string>
   <string name="buy_now">立即购买</string>
   <string name="all_read">全部已读</string>
-  <string name="no_checkin_img"><Data><![CDATA[暂无会员照片, <font color="#1faf50"><b>立即添加</b></font>]]></Data></string>
+  <string name="no_checkin_img"><Data><![CDATA[暂无会员照片, <font color="#00CED8"><b>立即添加</b></font>]]></Data></string>
   <string name="pay_online">在线支付</string>
   <string name="card_pay">会员卡支付</string>
   <string name="alert_del_coach">是否确认删除该教练</string>

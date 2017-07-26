@@ -183,7 +183,7 @@
           <ImageView
               android:layout_width="18dp"
               android:layout_height="18dp"
-              app:srcCompat="@drawable/vd_add"
+              app:srcCompat="@drawable/vd_card_add"
               />
 
           <TextView
@@ -207,8 +207,8 @@
               android:layout_width="18dp"
               android:layout_height="18dp"
 
-              android:src="@drawable/ic_delete"
-              tools:src="@drawable/ic_delete"
+              android:src="@drawable/vd_card_minus"
+              tools:src="@drawable/vd_card_minus"
               />
 
           <TextView
@@ -231,8 +231,8 @@
           <ImageView
               android:layout_width="18dp"
               android:layout_height="18dp"
-              android:src="@drawable/ic_pause"
-              tools:src="@drawable/ic_pause"
+              android:src="@drawable/vd_card_pause"
+              tools:src="@drawable/vd_card_pause"
               />
 
           <TextView

@@ -5,8 +5,8 @@
       >
     <shape android:shape="rectangle">
       <corners android:radius="25dp"/>
-      <solid android:color="@color/dard_green"/>
-      <stroke android:color="@color/green" android:width="1dp"/>
+      <solid android:color="@color/colorPrimaryDark"/>
+      <stroke android:color="@color/colorPrimaryDark" android:width="1dp"/>
       <size android:height="50dp" android:width="130dp"/>
     </shape>
   </item>
@@ -16,8 +16,8 @@
     <shape android:shape="rectangle"
         >
       <corners android:radius="25dp"/>
-      <solid android:color="@color/green"/>
-      <stroke android:color="@color/green" android:width="1dp"/>
+      <solid android:color="@color/colorPrimary"/>
+      <stroke android:color="@color/colorPrimary" android:width="1dp"/>
       <size android:height="50dp" android:width="130dp"/>
     </shape>
   </item>
@@ -25,8 +25,8 @@
     <shape android:shape="rectangle"
         >
       <corners android:radius="25dp"/>
-      <solid android:color="@color/green"/>
-      <stroke android:color="@color/green" android:width="1dp"/>
+      <solid android:color="@color/colorPrimaryDisable"/>
+      <stroke android:color="@color/colorPrimaryDisable" android:width="1dp"/>
       <size android:height="50dp" android:width="130dp"/>
     </shape>
   </item>
