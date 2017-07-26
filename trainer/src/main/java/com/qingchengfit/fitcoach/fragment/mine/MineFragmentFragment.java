@@ -156,6 +156,7 @@ public class MineFragmentFragment extends BaseFragment {
     public void queryData() {
         if (sp1 != null && !sp1.isUnsubscribed()) sp1.unsubscribe();
         sp1 = QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<QcCoachRespone>() {

@@ -73,7 +73,10 @@ import rx.schedulers.Schedulers;
                 return;
             }
         }
-        sp = s.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<QcCoachServiceResponse>() {
+      sp = s.observeOn(AndroidSchedulers.mainThread())
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .subscribe(new Subscriber<QcCoachServiceResponse>() {
             @Override public void onCompleted() {
 
             }

@@ -55,6 +55,7 @@ import rx.schedulers.Schedulers;
         prams.put("id", id);
         prams.put("model", model);
         QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid, prams)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcAllStudentResponse>() {

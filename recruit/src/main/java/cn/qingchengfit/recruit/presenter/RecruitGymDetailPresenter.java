@@ -35,8 +35,7 @@ public class RecruitGymDetailPresenter extends BasePresenter {
     //if (init == 1) page = total = 1;
     //if (page <= total) {
     RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryGymJobsAll(gymid, page)
-        .subscribeOn(Schedulers.io())
+        .queryGymJobsAll(gymid, page).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
           @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
@@ -53,8 +52,7 @@ public class RecruitGymDetailPresenter extends BasePresenter {
 
   public void queryPermission(String gymid) {
     RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryOnepermission(gymid, "setting")
-        .subscribeOn(Schedulers.io())
+        .queryOnepermission(gymid, "setting").onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<OnePermissionWrap>>() {
           @Override public void call(QcDataResponse<OnePermissionWrap> qcResponse) {
@@ -69,8 +67,7 @@ public class RecruitGymDetailPresenter extends BasePresenter {
 
   public void queryGymDetail(String gymid) {
     RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryGymInfo(gymid)
-        .subscribeOn(Schedulers.io())
+        .queryGymInfo(gymid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<GymWrap>>() {
           @Override public void call(QcDataResponse<GymWrap> objectQcDataResponse) {

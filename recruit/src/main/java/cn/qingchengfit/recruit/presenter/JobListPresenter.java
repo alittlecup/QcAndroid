@@ -44,8 +44,7 @@ public class JobListPresenter extends BasePresenter {
     }
     if (page <= totalPage) {
       RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-          .queryJobList(page, params)
-          .subscribeOn(Schedulers.io())
+          .queryJobList(page, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
             @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {

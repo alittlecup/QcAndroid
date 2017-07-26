@@ -59,8 +59,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
     if (gymid != null) params.put("gym_id", gymid);
 
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .queryRecruitPermission(params)
-        .subscribeOn(Schedulers.io())
+        .queryRecruitPermission(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<PermisionnListWrap>>() {
           @Override public void call(QcDataResponse<PermisionnListWrap> qcResponse) {
@@ -75,8 +74,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
 
   public void editPermssionUsers(EditPermissionBody body) {
     RxRegiste(qcRestRepository.createGetApi(PostApi.class)
-        .editpermsiion(body)
-        .subscribeOn(Schedulers.io())
+        .editpermsiion(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
@@ -91,8 +89,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
 
   public void queryPermissionUsers(String gymid) {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .queryPermissionUser(gymid)
-        .subscribeOn(Schedulers.io())
+        .queryPermissionUser(gymid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<PermissionUserWrap>>() {
           @Override public void call(QcDataResponse<PermissionUserWrap> qcResponse) {
@@ -111,8 +108,7 @@ public class RecruitPermissionPresenter extends BasePresenter {
    */
   public void queryCommonstaff(String gymid) {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .queryCommonStaffs(gymid)
-        .subscribeOn(Schedulers.io())
+        .queryCommonStaffs(gymid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<ChatGymWrap>>() {
           @Override public void call(QcDataResponse<ChatGymWrap> qcResponse) {

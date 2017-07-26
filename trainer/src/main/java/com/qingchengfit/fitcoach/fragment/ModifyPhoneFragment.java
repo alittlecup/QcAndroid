@@ -75,6 +75,7 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
         if (phoneNum.checkPhoneNum()) {
             QcCloudClient.getApi().postApi.qcGetCode(
                 new GetCodeBean.Builder().area_code(phoneNum.getDistrictInt()).phone(phoneNum.getPhoneNum()).build())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<QcResponse>() {
@@ -108,8 +109,11 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
             QcCloudClient.getApi().postApi.qcModifyPhoneNum(App.coachid, new ModifyPhoneNum.Builder().phone(phoneNum.getPhoneNum())
                 .area_code(phoneNum.getDistrictInt())
                 .code(checkcode.getCode())
-                .password(password.getCode())
-                .build()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<QcResponse>() {
+                .password(password.getCode()).build())
+                .onBackpressureBuffer()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcResponse>() {
                 @Override public void onCompleted() {
 
                 }

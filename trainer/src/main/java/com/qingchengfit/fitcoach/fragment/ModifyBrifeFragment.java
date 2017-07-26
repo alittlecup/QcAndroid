@@ -124,6 +124,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
         });
         recyclerview.setAdapter(adapter);
         RxRegiste(QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(qcCoachRespone -> {
@@ -141,6 +142,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
 
     public void onSave() {
         QcCloudClient.getApi().postApi.qcModifyDes(App.coachid, new ModifyDes(HTMLUtils.toHTML(mListData)))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(qcResponse -> {

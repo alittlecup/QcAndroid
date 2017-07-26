@@ -106,6 +106,7 @@ public class StudentJudgeFragment extends BaseFragment {
         } else {
             if (!isPrepared || !isVisible) return;
             QcCloudClient.getApi().getApi.qcGetEvaluate(App.coachid)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcEvaluateResponse -> {

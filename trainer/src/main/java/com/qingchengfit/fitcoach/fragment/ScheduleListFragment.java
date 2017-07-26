@@ -213,6 +213,7 @@ public class ScheduleListFragment extends BaseFragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("date", DateUtils.Date2YYYYMMDD(date));
         QcCloudClient.getApi().getApi.qcGetCoachScheduleV1(App.coachid, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(mHttpCallBack);

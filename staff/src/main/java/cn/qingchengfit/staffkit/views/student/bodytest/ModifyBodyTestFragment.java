@@ -230,6 +230,7 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
                                     showLoading();
                                     RxRegiste(UpYunClient.rxUpLoad("/course/", filePath)
                                         .observeOn(AndroidSchedulers.mainThread())
+                                        .onBackpressureBuffer()
                                         .subscribeOn(Schedulers.io())
                                         .subscribe(new Subscriber<String>() {
                                             @Override public void onCompleted() {

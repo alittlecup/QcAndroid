@@ -72,6 +72,7 @@ public class EditCardTypePresenter extends BasePresenter {
         body1.shops = null;
         RxRegiste(restRepository.getPost_api()
             .qcUpdateCardtpl(staffid, body.id, body1, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -93,6 +94,7 @@ public class EditCardTypePresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcFixGyms(staffid, cardtplid, new ShopsBody.Builder().shops(shops).build(), gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -109,6 +111,7 @@ public class EditCardTypePresenter extends BasePresenter {
 
         RxRegiste(restRepository.getPost_api()
             .qcCreateCardtpl(staffid, body, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

@@ -86,8 +86,7 @@ public class UpYunClient {
           //String upImg = UpYunClient.upLoadImg(cloudpath, new File(filePath));
 
         }
-      }, Emitter.BackpressureMode.BUFFER)
-          .subscribeOn(Schedulers.io())
+      }, Emitter.BackpressureMode.BUFFER).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread());
     }
 

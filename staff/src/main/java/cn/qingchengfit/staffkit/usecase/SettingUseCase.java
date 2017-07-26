@@ -38,8 +38,7 @@ public class SettingUseCase {
     }
 
     public Subscription fixPw(ModifyPwBody body, Action1<QcResponse> action1) {
-        return restRepository.qcFixPW(body)
-            .subscribeOn(Schedulers.io())
+        return restRepository.qcFixPW(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -49,21 +48,32 @@ public class SettingUseCase {
     }
 
     public Subscription fixPhone(FixPhoneBody body, Action1<QcResponse> action1) {
-        return restRepository.qcFixPhone(body).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(action1);
+      return restRepository.qcFixPhone(body)
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(action1);
     }
 
     public Subscription report(FeedBackBody body, Action1<QcResponse> action1) {
-        return restRepository.qcReport(body).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(action1);
+      return restRepository.qcReport(body)
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(action1);
     }
 
     public Subscription getCode(GetCodeBody phone, Action1<QcResponse> action1) {
-        return restRepository.qcQueryCode(phone).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(action1);
+      return restRepository.qcQueryCode(phone)
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(action1);
     }
 
     public Subscription getSelfInfo(Action1<QcResponseData<StaffResponse>> action1) {
         return restRepository.getGet_api()
-            .qcGetSelfInfo(App.staffId)
-            .subscribeOn(Schedulers.io())
+            .qcGetSelfInfo(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -75,6 +85,7 @@ public class SettingUseCase {
     public Subscription fixSelfInfo(Staff staffbean, Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcModifyStaffs(App.staffId, staffbean)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(action1, new Action1<Throwable>() {

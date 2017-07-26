@@ -41,6 +41,7 @@ public class FixNotifyPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetBalanceNotify(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<BalanceNotifyConfigs>>() {
                 @Override public void call(QcResponseData<BalanceNotifyConfigs> responseData) {
@@ -67,8 +68,7 @@ public class FixNotifyPresenter extends BasePresenter {
         body.setConfigs(configs);
 
         RxRegiste(restRepository.getPost_api()
-            .qcPostBalanceNotify(staffid, body)
-            .subscribeOn(Schedulers.io())
+            .qcPostBalanceNotify(staffid, body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {

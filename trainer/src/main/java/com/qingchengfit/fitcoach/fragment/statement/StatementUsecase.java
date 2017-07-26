@@ -42,6 +42,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetReportGlance(App.coachid, brand_id, null, id, model)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -54,6 +55,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetReportGlance(App.coachid, brand_id, shopid, null, null)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -66,7 +68,7 @@ public class StatementUsecase {
     //    return restRepository.getGet_api()
     //        .qcGetSaleGlance(App.coachid, brand_id, null, id, model)
     //        .observeOn(AndroidSchedulers.mainThread())
-    //        .subscribeOn(Schedulers.io())
+  //        .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //        .subscribe(action1, new Action1<Throwable>() {
     //            @Override public void call(Throwable throwable) {
     //
@@ -78,6 +80,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetStatementDatail(App.coachid, start, end, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io());
     }
 
@@ -85,7 +88,7 @@ public class StatementUsecase {
     //    return restRepository.getGet_api()
     //        .qcGetServiceDetail(model, id)
     //        .observeOn(AndroidSchedulers.mainThread())
-    //        .subscribeOn(Schedulers.io())
+  //        .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //
     //        .subscribe(action1, new Action1<Throwable>() {
     //            @Override public void call(Throwable throwable) {
@@ -98,7 +101,7 @@ public class StatementUsecase {
     //    return restRepository.getGet_api()
     //        .qcGetSaleCard(App.staffId)
     //        .observeOn(AndroidSchedulers.mainThread())
-    //        .subscribeOn(Schedulers.io())
+  //        .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //        .subscribe(action1, new Action1<Throwable>() {
     //            @Override public void call(Throwable throwable) {
     //
@@ -112,6 +115,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetCardTpls("7409", params, "staff_model", "true")
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -125,6 +129,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetGymCardtpl(String.valueOf(App.coachid), params, t)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -137,7 +142,7 @@ public class StatementUsecase {
     //    return restRepository.getGet_api()
     //        .qcGetGymGymDetailCardtpl(App.coachid, gymid, model, t)
     //        .observeOn(AndroidSchedulers.mainThread())
-    //        .subscribeOn(Schedulers.io())
+  //        .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //        .subscribe(action1, new Action1<Throwable>() {
     //            @Override public void call(Throwable throwable) {
     //            }
@@ -148,7 +153,7 @@ public class StatementUsecase {
     //    return restRepository.getGet_api()
     //        .qcGetAllCourses(App.coachid, brand_id, gymid, gymmodel)
     //        .observeOn(AndroidSchedulers.mainThread())
-    //        .subscribeOn(Schedulers.io())
+  //        .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //        .subscribe(action1, new Action1<Throwable>() {
     //            @Override public void call(Throwable throwable) {
     //
@@ -160,7 +165,7 @@ public class StatementUsecase {
     //    return restRepository.getGet_api()
     //        .qcGetAllCoaches(App.staffId, brand_id, gymid, gymmodel)
     //        .observeOn(AndroidSchedulers.mainThread())
-    //        .subscribeOn(Schedulers.io())
+  //        .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //        .subscribe(action1, new NetError());
     //}
 
@@ -168,6 +173,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetSalersAndCoach(App.coachid, brandid, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new NetWorkThrowable());
     }

@@ -39,6 +39,7 @@ public class WardrobeReturnDialogPresenter extends BasePresenter {
     public void returnShortTerm(String staffid, ReturnWardrobeBody body) {
         RxRegiste(restRepository.getPost_api()
             .qcReturnLockers(staffid, gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

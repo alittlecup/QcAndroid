@@ -22,10 +22,13 @@ import cn.qingchengfit.recruit.event.EventRichTextBack;
 import cn.qingchengfit.recruit.network.body.RecruitGymBody;
 import cn.qingchengfit.recruit.presenter.RecruitGymPresenter;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import javax.inject.Inject;
@@ -67,6 +70,7 @@ import rx.functions.Action1;
   @Inject RecruitRouter router;
 
   @Arg Gym gym;
+
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -158,11 +162,15 @@ import rx.functions.Action1;
   @Override public void onSaveOk() {
     hideLoading();
     ToastUtils.show("保存成功");
+    getActivity().getSupportFragmentManager().popBackStackImmediate();
   }
 
   @Override public void onDetail(Gym gym) {
     if (gym == null) return;
-    if (gym.name == null) return;
+    //特别蛋疼的为了 返回时添加一个是否 放弃编辑，但是新增的是不会有
+    if (gym.name == null) {
+      return;
+    }
     this.gym = gym;
     int areInt = 0;
     try {
@@ -177,4 +185,18 @@ import rx.functions.Action1;
     civGymEquip.setContent(CmStringUtils.List2Str(gym.facilities));
     civGymIntro.setContent(TextUtils.isEmpty(gym.detail_description) ? "" : "详情");
   }
+
+  @Override public boolean onFragmentBackPress() {
+    DialogUtils.instanceDelDialog(getContext(), "确定放弃所做修改？",
+        new MaterialDialog.SingleButtonCallback() {
+          @Override
+          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            dialog.dismiss();
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+          }
+        }).show();
+    return true;
+  }
+
+
 }

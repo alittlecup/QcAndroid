@@ -103,12 +103,14 @@ public class AddSelfGymFragment extends Fragment {
                         super.onPositive(dialog);
                         ShowLoading("正在删除,请稍后...");
                         QcCloudClient.getApi().postApi.qcDelPrivateGym(App.coachid)
+                            .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .flatMap(new Func1<QcResponse, Observable<QcCoachSystemResponse>>() {
                                 @Override public Observable<QcCoachSystemResponse> call(QcResponse qcResponse) {
                                     if (qcResponse.status == ResponseResult.SUCCESS || getActivity() != null) {
                                         return QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
+                                            .onBackpressureBuffer()
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread());
                                     } else {
@@ -220,7 +222,10 @@ public class AddSelfGymFragment extends Fragment {
         }
 
         QcCloudClient.getApi().getApi.qcGetPrivateGym(App.coachid)
-            .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).map(qcPrivateGymReponse -> {
+            .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .map(qcPrivateGymReponse -> {
             reponse = qcPrivateGymReponse;
             postPrivateGym.open_time = new Gson().toJson(qcPrivateGymReponse.data.system.openTimes);
             postPrivateGym.name = qcPrivateGymReponse.data.system.name;
@@ -263,6 +268,7 @@ public class AddSelfGymFragment extends Fragment {
         postPrivateGym.name = addselfgymName.getContent();
         if (id > 0) {
             QcCloudClient.getApi().postApi.qcPostPrivateGym(App.coachid, postPrivateGym)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Func1<QcResponse, Observable<QcCoachServiceResponse>>() {
@@ -270,6 +276,7 @@ public class AddSelfGymFragment extends Fragment {
                         if (qcResponse.status == ResponseResult.SUCCESS) {
 
                             return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                                .onBackpressureBuffer()
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread());
                         } else {
@@ -316,6 +323,7 @@ public class AddSelfGymFragment extends Fragment {
                 });
         } else {
             QcCloudClient.getApi().postApi.qcCreatePrivateGym(App.coachid, postPrivateGym)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Func1<QcResponse, Observable<QcCoachServiceResponse>>() {
@@ -323,6 +331,7 @@ public class AddSelfGymFragment extends Fragment {
                         if (qcResponse.status == ResponseResult.SUCCESS) {
 
                             return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                                .onBackpressureBuffer()
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread());
                         } else {

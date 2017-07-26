@@ -147,7 +147,7 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
     }
 
     private void initRxBus() {
-        RxBusAdd(SignInEvent.class).subscribeOn(Schedulers.io())
+      RxBusAdd(SignInEvent.class).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<SignInEvent>() {
                 @Override public void call(SignInEvent signInEvent) {
@@ -191,6 +191,7 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
                 if (eventChooseImage.request != 1) return;
                 showLoading();
                 RxRegiste(UpYunClient.rxUpLoad("/signin/", eventChooseImage.filePath)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {
@@ -209,6 +210,7 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
         if (subscribe_auto == null) {
             subscribe_auto = Observable.interval(3, 3, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(new Action1<Long>() {
                     @Override public void call(Long aLong) {

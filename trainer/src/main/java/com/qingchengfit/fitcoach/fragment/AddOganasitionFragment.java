@@ -91,6 +91,7 @@ public class AddOganasitionFragment extends Fragment {
 
         QcCloudClient.getApi().postApi.qcAddOrganization(
             new OrganizationBean(addgymName.getContent(), addgymContact.getContent(), workexpeditDescripe.getText().toString()))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(qcResponse -> {

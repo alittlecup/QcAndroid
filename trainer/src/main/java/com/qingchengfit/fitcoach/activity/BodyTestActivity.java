@@ -145,7 +145,7 @@ public class BodyTestActivity extends AppCompatActivity {
     //        if (!TextUtils.isEmpty(measureId)) {//修改
     //            QcCloudClient.getApi().postApi.qcUpdateBodyTest(measureId, addBodyTestBean)
     //                    .observeOn(AndroidSchedulers.mainThread())
-    //                    .subscribeOn(Schedulers.io())
+    //                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                    .subscribe(new Subscriber<QcResponse>() {
     //                        @Override
     //                        public void onCompleted() {
@@ -170,7 +170,7 @@ public class BodyTestActivity extends AppCompatActivity {
     //        } else { //添加
     //            QcCloudClient.getApi().postApi.qcAddBodyTest(addBodyTestBean)
     //                    .observeOn(AndroidSchedulers.mainThread())
-    //                    .subscribeOn(Schedulers.io())
+    //                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                    .subscribe(new Subscriber<QcResponse>() {
     //                        @Override
     //                        public void onCompleted() {

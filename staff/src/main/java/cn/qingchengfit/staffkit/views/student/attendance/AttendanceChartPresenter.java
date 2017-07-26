@@ -66,6 +66,7 @@ public class AttendanceChartPresenter extends BasePresenter {
         if (curpage <= pages) {
             RxRegiste(restRepository.getGet_api()
                 .qcGetAttendanceChart(App.staffId, params)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseData<AttendanceCharDataBean>>() {

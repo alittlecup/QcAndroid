@@ -134,6 +134,7 @@ public class ChooseGymFromNetFragment extends BaseDialogFragment {
                             getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
                                 IntentUtils.instancePacecle(mShops.get(pos)));
                             RxRegiste(rx.Observable.just("")
+                                .onBackpressureBuffer()
                                 .subscribeOn(Schedulers.newThread())
                                 .observeOn(Schedulers.newThread())
                                 .delay(500, TimeUnit.MILLISECONDS)
@@ -152,6 +153,7 @@ public class ChooseGymFromNetFragment extends BaseDialogFragment {
         });
         RxRegiste(restRepository.getGet_api()
             .qcGetBrandShops(App.staffId, PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<Shops>>() {

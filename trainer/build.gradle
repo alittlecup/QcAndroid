@@ -147,12 +147,7 @@ android {
 dependencies {
 
   compile 'org.glassfish:javax.annotation:10.0-b28'
-  compile project(path: ':recruit')
-  compile project(path: ':widgets')
-
-  //  compile ('cn.qingchegfit.widgets:widgets:latest.integration') {
-  //    exclude group: 'com.upyun', module: 'java-sdk'
-  //  }
+  compile 'cn.qingchegfit.recruit:recruit:latest.integration'
   compile('cn.qingchegfit.chat:chat:latest.integration') {
     exclude group: 'com.upyun', module: 'java-sdk'
     exclude group: 'com.tencent.*'

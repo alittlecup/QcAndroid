@@ -64,8 +64,7 @@ public class AllocateCoachListPresenter extends BasePresenter {
     public void getCoachPreviewList() {
         HashMap<String, Object> params = gymWrapper.getParams();
         RxRegiste(restRepository.getGet_api()
-            .qcGetCoachList(App.staffId, params)
-            .subscribeOn(Schedulers.io())
+            .qcGetCoachList(App.staffId, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CoachResponseList>>() {
                 @Override public void call(QcResponseData<CoachResponseList> allotSalePreViewsQcResponseData) {

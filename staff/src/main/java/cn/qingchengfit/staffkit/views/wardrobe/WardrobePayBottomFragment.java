@@ -123,6 +123,7 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment imp
         mDatas.add(new SimpleTextItemItem("会员卡支付"));
         sp = restRepository.getGet_api()
             .qcGetStudentCardsWithShopId(App.staffId, getArguments().getString("s"), gymWrapper.getShopParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseStudentCards>() {

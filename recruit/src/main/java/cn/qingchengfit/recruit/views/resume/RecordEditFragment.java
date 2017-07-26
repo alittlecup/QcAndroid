@@ -327,6 +327,7 @@ import rx.schedulers.Schedulers;
     if (mTitle) {
       RxRegiste(restRepository.createGetApi(PostApi.class)
           .updateCertificate(certificatesEntity.getId(), addCertificate)
+          .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcResponse>() {
@@ -336,8 +337,7 @@ import rx.schedulers.Schedulers;
           }, new NetWorkThrowable()));
     } else {
       RxRegiste(restRepository.createGetApi(PostApi.class)
-          .addCertificate(addCertificate)
-          .subscribeOn(Schedulers.io())
+          .addCertificate(addCertificate).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcResponse>() {
             @Override public void call(QcResponse qcResponse) {

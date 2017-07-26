@@ -39,8 +39,7 @@ public class EndFairPresenter extends BasePresenter {
 
   public void queryEndFairList() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .qcGetEndFair()
-        .subscribeOn(Schedulers.io())
+        .qcGetEndFair().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<EndFairTopsWrap>>() {
           @Override public void call(QcDataResponse<EndFairTopsWrap> qcResponse) {

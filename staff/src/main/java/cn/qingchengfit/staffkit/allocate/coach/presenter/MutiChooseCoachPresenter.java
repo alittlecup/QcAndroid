@@ -39,6 +39,7 @@ public class MutiChooseCoachPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         RxRegiste(restRepository.getGet_api()
             .qcGetAllAllocateCoaches(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<Staffs>>() {
@@ -62,8 +63,7 @@ public class MutiChooseCoachPresenter extends BasePresenter {
         body.put("user_ids", StringUtils.List2Str(students));
         body.put("coach_ids", StringUtils.List2Str(coaches));
         RxRegiste(restRepository.getPost_api()
-            .qcAllocateCoach(staffid, body)
-            .subscribeOn(Schedulers.io())
+            .qcAllocateCoach(staffid, body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {

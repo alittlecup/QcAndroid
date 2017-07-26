@@ -134,7 +134,9 @@ public class SaleGlanceFragment extends Fragment {
                 HashMap<String, Object> params = new HashMap<>();
                 params.put("id", coachService.getId());
                 params.put("model", coachService.getModel());
-                QcCloudClient.getApi().getApi.qcGetCoachSaleGlance(App.coachid, params).subscribeOn(Schedulers.newThread())
+              QcCloudClient.getApi().getApi.qcGetCoachSaleGlance(App.coachid, params)
+                  .onBackpressureBuffer()
+                  .subscribeOn(Schedulers.newThread())
                     .subscribe(qcSaleGlanceResponse -> {
                         response = qcSaleGlanceResponse;
                         handleReponse(qcSaleGlanceResponse);

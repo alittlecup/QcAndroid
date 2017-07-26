@@ -269,6 +269,7 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
             ((GuideFragment) getParentFragment()).initBean.batches = initBatches1;
             showLoading();
             QcCloudClient.getApi().postApi.qcInit(((GuideFragment) getParentFragment()).getInitBean())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseSystenInit>() {

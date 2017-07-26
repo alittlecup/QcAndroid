@@ -84,6 +84,7 @@ public class TopFilterSalePresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         RxRegiste(restRepository.getGet_api()
             .qcGetTrackStudentsFilterSalers(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<TrackSellers>>() {

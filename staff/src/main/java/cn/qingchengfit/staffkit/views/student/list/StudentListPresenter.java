@@ -98,6 +98,7 @@ public class StudentListPresenter extends BasePresenter {
         params.put("method", "post");
         RxRegiste(restRepository.getGet_api()
             .qcGetCardBundldStudents(staffid, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(new Func1<QcResponseData<Students>, Boolean>() {
@@ -163,8 +164,7 @@ public class StudentListPresenter extends BasePresenter {
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
 
         RxRegiste(restRepository.getGet_api()
-            .qcGetAllStudents(staffid, params)
-            .subscribeOn(Schedulers.io())
+            .qcGetAllStudents(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
             .flatMap(new Func1<QcResponseData<Students>, Observable<Boolean>>() {
                 @Override public Observable<Boolean> call(QcResponseData<Students> qcResponseAllStudent) {
@@ -190,7 +190,10 @@ public class StudentListPresenter extends BasePresenter {
                         StudentAction.newInstance().saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
                     }
 
-                    return Observable.just(true).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+                  return Observable.just(true)
+                      .observeOn(AndroidSchedulers.mainThread())
+                      .onBackpressureBuffer()
+                      .subscribeOn(Schedulers.io());
                 }
             })
             .subscribe(new Action1<Boolean>() {
@@ -215,6 +218,7 @@ public class StudentListPresenter extends BasePresenter {
             RxRegiste(StudentAction.newInstance()
                 .getStudentByBrand(gymWrapper.brand_id())
                 .throttleLast(500, TimeUnit.MILLISECONDS)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<QcStudentBean>>() {
@@ -226,6 +230,7 @@ public class StudentListPresenter extends BasePresenter {
             RxRegiste(StudentAction.newInstance()
                 .getStudentByGym(gymWrapper.id(), gymWrapper.model())
                 .throttleLast(500, TimeUnit.MILLISECONDS)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<QcStudentBean>>() {

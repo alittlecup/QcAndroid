@@ -38,6 +38,7 @@ public class BuyCardUsecase {
         return restRepository.getGet_api()
             .qcGetSalersAndCoach(App.staffId, brandid, shop, gymid, gymmodle)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -51,6 +52,7 @@ public class BuyCardUsecase {
         return restRepository.getPost_api()
             .qcCardCharge(App.staffId, card_id, brand_id, shop_id, modelid, model, body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -69,6 +71,7 @@ public class BuyCardUsecase {
             .qcCardChargeWechat(App.staffId//, card_id
                 , brand_id, shop_id, modelid, model, body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -82,6 +85,7 @@ public class BuyCardUsecase {
         return restRepository.getPost_api()
             .qcCreateRealcard(App.staffId, body, brand_id, shop_id, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {

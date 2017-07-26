@@ -178,6 +178,7 @@ public class UpgrateGymFragment extends BaseFragment {
         tvBrandName.setText(gymWrapper.brand_name() + gymWrapper.name());
         RxRegiste(new RestRepository().getGet_api()
             .qcGetGymPay(App.staffId, GymUtils.getParams(gymWrapper.getCoachService(), null))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<RenewalList>>() {
@@ -242,8 +243,7 @@ public class UpgrateGymFragment extends BaseFragment {
                 .times(chooseMonthTime)
                 .id(gymWrapper.id())
                 .model(gymWrapper.model())
-                .build())
-            .subscribeOn(Schedulers.io())
+                .build()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseRenew>() {
                 @Override public void call(QcResponseRenew qcResponse) {

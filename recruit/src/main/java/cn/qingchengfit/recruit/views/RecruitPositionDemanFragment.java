@@ -1,6 +1,7 @@
 package cn.qingchengfit.recruit.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -18,9 +19,12 @@ import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventPulishPosition;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TwoScrollPicker;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -73,7 +77,7 @@ import java.util.Arrays;
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         RxBus.getBus().post(new EventPulishPosition(jobBody));
-        getActivity().onBackPressed();
+        getFragmentManager().popBackStackImmediate();
         return false;
       }
     });
@@ -274,4 +278,21 @@ import java.util.Arrays;
     twoScrollPicker.show(d, d, jobBody.min_weight.intValue() + 1,
         jobBody.max_weight.intValue() + 1);
   }
+
+  @Override public boolean onFragmentBackPress() {
+    if (jobBody != null && !jobBody.isPositionDemanEmpty()) {
+      DialogUtils.instanceDelDialog(getContext(), "确定放弃所做修改？",
+          new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+              dialog.dismiss();
+              getActivity().getSupportFragmentManager().popBackStackImmediate();
+            }
+          }).show();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

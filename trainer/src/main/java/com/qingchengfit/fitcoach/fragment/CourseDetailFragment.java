@@ -135,7 +135,7 @@ public class CourseDetailFragment extends Fragment {
         });
         loadGroupData();
         mObservableRefresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
-        mObservableRefresh.subscribeOn(AndroidSchedulers.mainThread())
+      mObservableRefresh.onBackpressureBuffer().subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<String>() {
                 @Override public void onCompleted() {
@@ -153,6 +153,7 @@ public class CourseDetailFragment extends Fragment {
                     params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
                     QcCloudClient.getApi().getApi.qcGetOneCourse(App.coachid, mBean.tags.get(ImageThreeTextBean.TAG_COURSE), params)
                         .observeOn(AndroidSchedulers.mainThread())
+                        .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Subscriber<QcOneCourseResponse>() {
                             @Override public void onCompleted() {
@@ -221,7 +222,7 @@ public class CourseDetailFragment extends Fragment {
 
                         //                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
                         //                                    .observeOn(AndroidSchedulers.mainThread())
-                        //                                    .subscribeOn(Schedulers.io())
+                      //                                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
                         //                                    .subscribe(new Subscriber<QcResponse>() {
                         //                                        @Override
                         //                                        public void onCompleted() {
@@ -283,6 +284,7 @@ public class CourseDetailFragment extends Fragment {
                             params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
                             QcCloudClient.getApi().postApi.qcDelBatch(App.coachid + "", datas.get(pos).id, params)
                                 .observeOn(AndroidSchedulers.mainThread())
+                                .onBackpressureBuffer()
                                 .subscribeOn(Schedulers.io())
                                 .subscribe(new Subscriber<QcResponse>() {
                                     @Override public void onCompleted() {
@@ -329,6 +331,7 @@ public class CourseDetailFragment extends Fragment {
         params.put("model", mBean.tags.get("model"));
         params.put("id", mBean.tags.get("gymid"));
         QcCloudClient.getApi().getApi.qcGetGroupManage(App.coachid, mBean.tags.get("courseid"), params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<GetBatchesResponse>() {

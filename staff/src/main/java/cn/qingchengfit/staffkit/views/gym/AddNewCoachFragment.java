@@ -212,6 +212,7 @@ public class AddNewCoachFragment extends BaseDialogFragment {
         showLoading();
         restRepository.getPost_api()
             .qcAddCoach(App.staffId, gymWrapper.id(), gymWrapper.model(), coach)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CoachResponse>>() {
@@ -244,7 +245,11 @@ public class AddNewCoachFragment extends BaseDialogFragment {
                             String upImg = UpYunClient.upLoadImg("header/", new File(filePath));
                             subscriber.onNext(upImg);
                         }
-                    }).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
+                    })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .onBackpressureBuffer()
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new Subscriber<String>() {
                         @Override public void onCompleted() {
 
                         }

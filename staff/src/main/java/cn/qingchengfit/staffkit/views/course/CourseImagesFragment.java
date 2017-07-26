@@ -112,6 +112,7 @@ public class CourseImagesFragment extends BaseFragment
 
         RxRegiste(restRepository.getGet_api()
             .qcGetSchedulePhotos(App.staffId, getArguments().getString("courseid"), page, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseSchedulePhotos>() {
@@ -204,8 +205,7 @@ public class CourseImagesFragment extends BaseFragment
         }
         RxRegiste(restRepository.getGet_api()
             .qcGetSchedulePhotos(App.staffId, getArguments().getString("courseid"), page, gymWrapper.getParams())
-            .delay(1, TimeUnit.SECONDS)
-            .subscribeOn(Schedulers.io())
+            .delay(1, TimeUnit.SECONDS).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
             .subscribe(new Action1<QcResponseSchedulePhotos>() {

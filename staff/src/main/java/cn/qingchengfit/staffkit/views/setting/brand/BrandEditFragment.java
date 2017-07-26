@@ -109,6 +109,7 @@ public class BrandEditFragment extends BaseFragment {
                         RxRegiste(restRepository.getPost_api()
                             .qcEditBrand(brand.getId(), postBrand)
                             .observeOn(AndroidSchedulers.mainThread())
+                            .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .subscribe(new Action1<QcResponse>() {
                                 @Override public void call(QcResponse qcResponse) {
@@ -144,6 +145,7 @@ public class BrandEditFragment extends BaseFragment {
 
             RxRegiste(restRepository.getGet_api()
                 .qcGetBrand(App.staffId, brand.getId())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseData<BrandResponse>>() {
@@ -210,6 +212,7 @@ public class BrandEditFragment extends BaseFragment {
                             RxRegiste(restRepository.getPost_api()
                                 .qcDelbrand(brand.getId())
                                 .observeOn(AndroidSchedulers.mainThread())
+                                .onBackpressureBuffer()
                                 .subscribeOn(Schedulers.io())
                                 .subscribe(new Action1<QcResponse>() {
                                     @Override public void call(QcResponse qcResponse) {

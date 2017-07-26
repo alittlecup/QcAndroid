@@ -113,6 +113,7 @@ public class RealValueCardBuyPresenter extends BasePresenter {
     public void queryPositions(String staffid, String permission) {
         RxRegiste(mRestRepository.getGet_api()
             .qcGetPermissionPostions(staffid, gymWrapper.getParams(), permission)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponsePostions>() {

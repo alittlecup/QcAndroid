@@ -183,7 +183,7 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
                                 IntentUtils.instancePacecle(mShops.get(Integer.parseInt(mDatas.get(pos).tags.get("pos")))));
                             dismiss();
                             //                            RxRegiste(rx.Observable.just("")
-                            //                                .subscribeOn(Schedulers.newThread())
+                          //                                .onBackpressureBuffer().subscribeOn(Schedulers.newThread())
                             //                                    .observeOn(Schedulers.newThread())
                             //                                    .delay(500, TimeUnit.MILLISECONDS)
                             //                                    .subscribe(new Action1<String>() {
@@ -205,6 +205,7 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
         });
         RxRegiste(restRepository.getGet_api()
             .qcGetBrandShops(App.staffId, PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<Shops>>() {

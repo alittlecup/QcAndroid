@@ -35,7 +35,7 @@ public class CardTypeUsecase {
     //    public Subscription queryCardTypeList(String brand_id, int type, Action1<QcResponseData<CardTpls>> action1) {
     //        String t = type == 0 ? null : Integer.toString(type);
     //        return restRepository.getGet_api().qcGetCardTpls(App.staffId, brand_id, t).observeOn(AndroidSchedulers.mainThread())
-    //                .subscribeOn(Schedulers.io())
+  //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                .subscribe(action1, new Action1<Throwable>() {
     //                    @Override
     //                    public void call(Throwable throwable) {
@@ -48,6 +48,7 @@ public class CardTypeUsecase {
         return restRepository.getGet_api()
             .qcGetOptions(App.staffId, cardtpl_id, gymid, model, brand_id)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -61,6 +62,7 @@ public class CardTypeUsecase {
         return restRepository.getGet_api()
             .qcGetGymCardtpl(App.staffId, gymid, model, t)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -71,7 +73,7 @@ public class CardTypeUsecase {
     //    public Subscription createCardTpl(CardtplBody body, String brandid, String gymid, String gymmodel, Action1<QcResponse> action1) {
     //        return restRepository.getPost_api().qcCreateCardtpl(App.staffId, body, brandid, gymid, gymmodel)
     //                .observeOn(AndroidSchedulers.mainThread())
-    //                .subscribeOn(Schedulers.io())
+  //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                .subscribe(action1, new Action1<Throwable>() {
     //                    @Override
     //                    public void call(Throwable throwable) {
@@ -91,7 +93,7 @@ public class CardTypeUsecase {
     //        b.id = null;
     //        return restRepository.getPost_api().qcUpdateCardtpl(App.staffId, body.id, b,gymid,gymmodel,brandid)
     //                .observeOn(AndroidSchedulers.mainThread())
-    //                .subscribeOn(Schedulers.io())
+  //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                .subscribe(action1, new Action1<Throwable>() {
     //                    @Override
     //                    public void call(Throwable throwable) {
@@ -106,6 +108,7 @@ public class CardTypeUsecase {
         return restRepository.getPost_api()
             .qcDelCardtpl(App.staffId, id, gymid, gymmodel, brand_id)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -116,7 +119,7 @@ public class CardTypeUsecase {
     //public Subscription addCardTplStandard(String gymid,String model,Action1<QcResponse> action1){
     //        return  restRepository.getGet_api().qc(App.staffId, gymid, model)
     //                .observeOn(AndroidSchedulers.mainThread())
-    //                .subscribeOn(Schedulers.io())
+  //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                .subscribe(action1, new Action1<Throwable>() {
     //                    @Override
     //                    public void call(Throwable throwable) {

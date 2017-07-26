@@ -83,7 +83,6 @@ public abstract class BaseFragment extends Fragment
                 return isBlockTouch();
             }
         });
-      setBackPress();
     }
 
     public boolean isBlockTouch() {

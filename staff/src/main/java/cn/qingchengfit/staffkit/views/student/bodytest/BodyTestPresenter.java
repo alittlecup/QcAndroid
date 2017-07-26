@@ -74,6 +74,7 @@ public class BodyTestPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetBodyTest(App.staffId, measure_id, gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<BodyTestMeasureData>>() {
                 @Override public void call(QcResponseData<BodyTestMeasureData> responseData) {

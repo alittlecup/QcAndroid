@@ -145,6 +145,7 @@ import rx.schedulers.Schedulers;
             @Override public void call(EventChooseImage eventChooseImage) {
                 showLoading();
                 UpYunClient.rxUpLoad("gym/", eventChooseImage.filePath)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {
@@ -236,6 +237,7 @@ import rx.schedulers.Schedulers;
             RxBus.getBus().post(new CoachInitBean());
             showLoading();
             RxRegiste(QcCloudClient.getApi().postApi.qcInit(((GuideFragment) getParentFragment()).getInitBean())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseSystenInit>() {

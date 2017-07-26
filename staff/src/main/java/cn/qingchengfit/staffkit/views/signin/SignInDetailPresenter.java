@@ -66,6 +66,7 @@ public class SignInDetailPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetCheckInDetail(loginStatus.staff_id(), params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<SignInDetail>() {
                 @Override public void call(SignInDetail signInDetail) {
@@ -84,6 +85,7 @@ public class SignInDetailPresenter extends BasePresenter {
         body.put("photo", img);
         RxRegiste(restRepository.getPost_api()
             .qcUploadStuImg(loginStatus.staff_id(), gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -110,6 +112,7 @@ public class SignInDetailPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcDeleteCheckin(loginStatus.staff_id(), params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {

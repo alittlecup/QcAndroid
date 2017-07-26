@@ -59,6 +59,7 @@ public class RichTxtTxtItem extends AbstractFlexibleItem<RichTxtTxtItem.RichTxtT
     }
     if (showKb) {
       holder.tv.requestFocus();
+      AppUtils.showKeyboard(holder.tv.getContext(), holder.tv);
       showKb = false;
     }
   }

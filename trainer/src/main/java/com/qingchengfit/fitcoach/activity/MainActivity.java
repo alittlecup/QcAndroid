@@ -251,6 +251,7 @@ public class MainActivity extends BaseActivity implements OpenDrawerInterface {
             params.put("to_date", DateUtils.Date2YYYYMMDD(calendar.getTime()));
             LogUtil.e("sync calendar:");
             QcCloudClient.getApi().getApi.qcGetCoachSchedule(App.coachid, params)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QcSchedulesResponse>() {
@@ -280,7 +281,9 @@ public class MainActivity extends BaseActivity implements OpenDrawerInterface {
             pushBody.push_id = userid;
             pushBody.device_type = "android";
             pushBody.distribute = getString(R.string.oem_tag);
-            QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody).subscribeOn(Schedulers.io())
+          QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody)
+              .onBackpressureBuffer()
+              .subscribeOn(Schedulers.io())
 
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<QcResponse>() {
                 @Override public void onCompleted() {
@@ -437,7 +440,10 @@ public class MainActivity extends BaseActivity implements OpenDrawerInterface {
 
         //获取用户拥有的系统
         QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
-            .subscribeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<QcCoachSystemResponse>() {
             @Override public void onCompleted() {
 
@@ -587,6 +593,7 @@ public class MainActivity extends BaseActivity implements OpenDrawerInterface {
             params.put("oem", getString(R.string.oem_tag));
             QcCloudClient.getApi().getApi.qcGetMeetingList(params)
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Action1<QcMeetingResponse>() {
                     @Override public void call(QcMeetingResponse qcMeetingResponse) {
@@ -638,6 +645,7 @@ public class MainActivity extends BaseActivity implements OpenDrawerInterface {
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("oem", getString(R.string.oem_tag));
                 QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid, params)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<QcDrawerResponse>() {

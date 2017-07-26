@@ -97,6 +97,25 @@ public class JobBody implements Parcelable {
     this.published = (Boolean) in.readValue(Boolean.class.getClassLoader());
   }
 
+  public boolean isPositionDemanEmpty() {
+    return (gym_id == null)
+        && (name == null)
+        && description == null
+        && requirement == null
+        && min_work_year == -1
+        && max_work_year == -1
+        && min_age == -1
+        && max_age == -1
+        && gender == -1
+        && education == -1
+        && min_salary == -1
+        && max_salary == -1
+        && max_height == -1
+        && min_height == -1
+        && max_weight == -1
+        && min_weight == -1;
+  }
+
   @Override public int describeContents() {
     return 0;
   }

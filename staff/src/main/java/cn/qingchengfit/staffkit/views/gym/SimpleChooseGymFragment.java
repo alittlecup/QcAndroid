@@ -143,6 +143,7 @@ public class SimpleChooseGymFragment extends BaseDialogFragment {
         });
         RxRegiste(restRepository.getGet_api()
             .qcGetBrandShops(App.staffId, PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<Shops>>() {

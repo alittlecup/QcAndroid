@@ -49,8 +49,7 @@ public class ChooseGymInRecruitFragment extends ChooseGymFragment {
 
   @Override protected void queryPermiss(final Gym gym) {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .queryOnepermission(gym.id, "job")
-        .subscribeOn(Schedulers.io())
+        .queryOnepermission(gym.id, "job").onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<OnePermissionWrap>>() {
           @Override public void call(QcDataResponse<OnePermissionWrap> qcResponse) {

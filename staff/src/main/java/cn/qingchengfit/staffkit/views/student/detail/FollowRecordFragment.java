@@ -201,6 +201,7 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
             }
             showLoading();
             UpYunClient.rxUpLoad("/android/", filepath)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {

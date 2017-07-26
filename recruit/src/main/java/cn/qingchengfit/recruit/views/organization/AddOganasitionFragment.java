@@ -96,6 +96,7 @@ public class AddOganasitionFragment extends BaseFragment {
     RxRegiste(restRepository.createGetApi(PostApi.class)
         .qcAddOrganization(
             new OrganizationBean(addgymName.getContent(), addgymContact.getContent(), workexpeditDescripe.getText().toString()))
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcAddOrganizationResponse>() {

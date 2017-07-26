@@ -152,6 +152,7 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
         params.put("method", "post");
         RxRegiste(restRepository.getGet_api()
             .qcGetCardBundldStudents(loginStatus.staff_id(), params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<Students>>() {

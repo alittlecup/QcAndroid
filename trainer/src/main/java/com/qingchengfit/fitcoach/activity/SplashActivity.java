@@ -114,6 +114,7 @@ public class SplashActivity extends BaseActivity {
       loginStatus.setUserId(gUser.getId());
       Observable.just("")
           .delay(1500, TimeUnit.MILLISECONDS)
+          .onBackpressureBuffer()
           .subscribeOn(Schedulers.newThread())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(s1 -> {
@@ -122,6 +123,7 @@ public class SplashActivity extends BaseActivity {
 
                 //获取用户拥有的系统
                 QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<QcCoachServiceResponse>() {

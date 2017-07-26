@@ -231,6 +231,7 @@ public class ManageFragment extends BaseFragment
     HashMap<String, Object> params = gymWrapper.getParams();
     showLoading();
     RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponsePermission>() {
@@ -402,6 +403,7 @@ public class ManageFragment extends BaseFragment
     if (gymWrapper.getCoachService() != null) {
       RxRegiste(QcCloudClient.getApi().getApi.qcStaffPmission(App.coachid + "",
           GymUtils.getParams(gymWrapper.getCoachService()))
+          .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcResponsePermission>() {
@@ -461,8 +463,10 @@ public class ManageFragment extends BaseFragment
             showLoading();
             RxRegiste(QcCloudClient.getApi().postApi.qcQuitGym(App.coachid + "",
                 GymUtils.getParams(gymWrapper.getCoachService()))
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponse>() {

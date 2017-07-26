@@ -86,6 +86,7 @@ public class ChooseCoursePlanFragment extends BaseFragment implements FlexibleAd
         recyclerview.setAdapter(mAdapter);
         RxRegiste(restRepository.getGet_api()
             .qcGetCoursePlan(loginStatus.staff_id(), gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CoursePlans>>() {

@@ -217,8 +217,7 @@ public class StudentHomeFragment extends BaseFragment {
         });
 
         RxRegiste(StudentAction.newInstance()
-            .getStudentById(studentBean.id())
-            .subscribeOn(Schedulers.io())
+            .getStudentById(studentBean.id()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcStudentBean>() {
                 @Override public void call(QcStudentBean qcStudentBean) {

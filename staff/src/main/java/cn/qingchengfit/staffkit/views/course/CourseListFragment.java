@@ -167,6 +167,7 @@ public class CourseListFragment extends BaseFragment implements FlexibleAdapter.
     public void freshData() {
         RxRegiste(restRepository.getGet_api()
             .qcGetCourses(App.staffId, gymWrapper.getParams(), mIsPrivate ? 1 : 0)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .filter(new Func1<QcResponseData<CourseTypes>, Boolean>() {
@@ -242,6 +243,7 @@ public class CourseListFragment extends BaseFragment implements FlexibleAdapter.
                     showLoading();
                     RxRegiste(restRepository.getPost_api()
                         .qcDelCourse(App.staffId, courseDetail.getId(), gymWrapper.getParams())
+                        .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<QcResponse>() {

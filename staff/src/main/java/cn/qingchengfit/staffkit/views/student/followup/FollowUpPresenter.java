@@ -91,6 +91,7 @@ public class FollowUpPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         RxRegiste(restRepository.getGet_api()
             .qcGetTrackStudentPreview(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<StudentTrackPreview>>() {
@@ -111,6 +112,7 @@ public class FollowUpPresenter extends BasePresenter {
         params.put("end", DateUtils.getStringToday());
         RxRegiste(restRepository.getGet_api()
             .qcGetTrackStudentsStatistics(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<FollowUpDataStatistic>>() {

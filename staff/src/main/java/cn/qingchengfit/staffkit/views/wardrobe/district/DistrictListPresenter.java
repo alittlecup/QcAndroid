@@ -52,6 +52,7 @@ public class DistrictListPresenter extends BasePresenter {
     public void queryList(String staffid) {
         RxRegiste(restRepository.getGet_api()
             .qcGetAllRegion(staffid, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<LockerRegions>>() {

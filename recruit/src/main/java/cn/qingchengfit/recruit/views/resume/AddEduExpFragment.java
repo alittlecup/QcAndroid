@@ -132,8 +132,7 @@ import rx.schedulers.Schedulers;
                   .major(civSpeciality.getContent())
                   .start(civInTime.getContent() + "-01")
                   .end(civOutTime.getContent() + "-01")
-                  .build())
-              .subscribeOn(Schedulers.io())
+                  .build()).onBackpressureBuffer().subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
               .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -155,8 +154,7 @@ import rx.schedulers.Schedulers;
                   .major(civSpeciality.getContent())
                   .start(civInTime.getContent() + "-01")
                   .end(civOutTime.getContent() + "-01")
-                  .build())
-              .subscribeOn(Schedulers.io())
+                  .build()).onBackpressureBuffer().subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
               .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {

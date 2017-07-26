@@ -90,14 +90,22 @@
 
       </LinearLayout>
 
-      <ImageView
+      <LinearLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentBottom="true"
           android:layout_centerHorizontal="true"
           android:layout_marginBottom="30dp"
-          android:src="@drawable/loading_company"
-          />
+          android:orientation="vertical"
+          >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/slogn_grey"
+            />
+      </LinearLayout>
+
     </RelativeLayout>
 
   </RelativeLayout>

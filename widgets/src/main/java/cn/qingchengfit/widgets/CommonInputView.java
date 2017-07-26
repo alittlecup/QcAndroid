@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
@@ -216,10 +215,6 @@ public class CommonInputView extends RelativeLayout {
         edit.setHint(str_hint);
     }
 
-    @Override protected void onRestoreInstanceState(Parcelable state) {
-        super.onRestoreInstanceState(state);
-    }
-
     public void setCanClick(boolean canClick) {
         this.canClick = canClick;
         if (canClick) {
@@ -293,13 +288,6 @@ public class CommonInputView extends RelativeLayout {
     @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (canClick) return true;
         return super.onInterceptTouchEvent(ev);
-    }
-
-    @Override protected Parcelable onSaveInstanceState() {
-        super.onSaveInstanceState();
-        Bundle bundle = new Bundle();
-        bundle.putString("lable", label.getText().toString());
-        return bundle;
     }
 
     @Override protected void onDraw(Canvas canvas) {

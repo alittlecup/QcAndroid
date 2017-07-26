@@ -100,6 +100,7 @@ public class SourcePresenter extends BasePresenter {
         body.put("name", name);
         RxRegiste(restRepository.getPost_api()
             .qcAddOrigin(loginStatus.staff_id(), params, body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -120,6 +121,7 @@ public class SourcePresenter extends BasePresenter {
         if (type == 3) {
             RxRegiste(restRepository.getGet_api()
                 .qcGetUsersStudentsOrigins(App.staffId, params)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<QcResponseData<TrackFilterOrigins>, List<StudentSourceBean>>() {
@@ -153,6 +155,7 @@ public class SourcePresenter extends BasePresenter {
             }
             RxRegiste(restRepository.getGet_api()
                 .qcGetTrackStudentsOrigins(App.staffId, params)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<QcResponseData<TrackFilterOrigins>, List<StudentSourceBean>>() {

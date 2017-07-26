@@ -40,6 +40,7 @@ public class WardrobeLongHirePresenter extends BasePresenter {
 
             RxRegiste(restRepository.getPost_api()
                 .qcHireLocker(staffid, gymWrapper.getParams(), body)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponse>() {
@@ -61,6 +62,7 @@ public class WardrobeLongHirePresenter extends BasePresenter {
     public void queryStuCard(String stuId) {
         RxRegiste(restRepository.getGet_api()
             .qcGetStudentCards(loginStatus.staff_id(), stuId, gymWrapper.id(), gymWrapper.model(), gymWrapper.brand_id())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseStudentCards>() {

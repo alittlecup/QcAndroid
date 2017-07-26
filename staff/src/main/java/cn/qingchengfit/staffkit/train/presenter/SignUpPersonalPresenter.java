@@ -50,8 +50,7 @@ public class SignUpPersonalPresenter extends BasePresenter {
         params.put("gym_id", gym_id);
         params.put("competition_id", competition_id);
         RxRegiste(restRepository.getGet_api()
-            .qcGetSignPersonal(params, keyword)
-            .subscribeOn(Schedulers.io())
+            .qcGetSignPersonal(params, keyword).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<SignRecord>>() {
                 @Override public void call(cn.qingchengfit.network.response.QcResponseData<SignRecord> signRecord) {

@@ -78,6 +78,7 @@ public class ScheduleListPresenter extends BasePresenter {
     public void queryOneSchedule(String id, String date) {
         RxRegiste(restRepository.getGet_api()
             .qcGetSchedules(id, date, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcSchedulesResponse>() {

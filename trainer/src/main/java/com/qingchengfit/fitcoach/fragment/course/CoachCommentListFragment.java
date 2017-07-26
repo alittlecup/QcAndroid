@@ -118,6 +118,7 @@ public class CoachCommentListFragment extends BaseFragment {
         }
         RxRegiste(restRepository.getGet_api()
             .qcGetCourseTeacher(App.coachid + "", getArguments().getString("c"), params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseCourseTeacher>() {

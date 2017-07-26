@@ -96,6 +96,7 @@ import rx.schedulers.Schedulers;
                         Shop shop =
                             new Shop.Builder().gd_district_id(city_code + "").gd_lat(lat).gd_lng(lng).name(gymName.getContent()).build();
                         RxRegiste(QcCloudClient.getApi().postApi.qcUpdateGym(App.coachid + "", params, shop)
+                            .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Action1<QcResponse>() {
@@ -130,6 +131,7 @@ import rx.schedulers.Schedulers;
         params.put("id", id);
         params.put("model", model);
         RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachServer(App.coachid + "", params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseServiceDetail>() {

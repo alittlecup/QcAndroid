@@ -211,8 +211,11 @@ public class RichTxtFragment extends BaseFragment implements FlexibleAdapter.OnI
   }
 
   @Override public boolean onItemClick(int i) {
-    if (commonFlexAdapter.getItem(i) instanceof RichTxtTxtItem) {
-      ((RichTxtTxtItem) commonFlexAdapter.getItem(i)).requestFocus();
+    if (commonFlexAdapter.getItemCount() > 0) {
+      IFlexible item = commonFlexAdapter.getItem(commonFlexAdapter.getItemCount() - 1);
+      if (item instanceof RichTxtTxtItem) {
+        ((RichTxtTxtItem) item).requestFocus();
+      }
     }
     return true;
   }

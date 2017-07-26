@@ -71,6 +71,7 @@ public class AdviceFragment extends BaseSettingFragment {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(content)) {
             fragmentCallBack.ShowLoading("请稍后");
             QcCloudClient.getApi().postApi.qcFeedBack(feedBackBean)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<QcEvaluateResponse>() {
@@ -140,6 +141,7 @@ public class AdviceFragment extends BaseSettingFragment {
             fragmentCallBack.ShowLoading("正在上传");
 
             spUpImg = UpYunClient.rxUpLoad("advice/", filepath)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
@@ -155,7 +157,7 @@ public class AdviceFragment extends BaseSettingFragment {
                     }
                 });
             //Observable.just(filepath)
-            //        .subscribeOn(Schedulers.io())
+          //        .onBackpressureBuffer().subscribeOn(Schedulers.io())
             //        .subscribe(s -> {
             //            String filename = UUID.randomUUID().toString();
             //            BitmapUtils.compressPic(s, Configs.ExternalCache + filename);

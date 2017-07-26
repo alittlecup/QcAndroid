@@ -222,6 +222,7 @@ public class MyStudentFragment extends BaseFragment {
             prams.put("id", coachService.getId() + "");
             prams.put("model", coachService.getModel());
             QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid, prams)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<QcAllStudentResponse>() {
                     @Override public void onCompleted() {

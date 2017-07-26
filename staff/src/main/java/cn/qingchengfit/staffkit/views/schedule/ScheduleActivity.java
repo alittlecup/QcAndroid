@@ -202,6 +202,7 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
         final String finalAction = action;
         restRepository.getGet_api()
             .qcGetScheduleAciton(App.staffId, action, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<ScheduleActions>>() {

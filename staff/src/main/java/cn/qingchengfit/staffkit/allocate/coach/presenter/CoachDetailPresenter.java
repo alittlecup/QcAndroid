@@ -72,6 +72,7 @@ public class CoachDetailPresenter extends BasePresenter {
         params.put("seller_id", salerId);
         RxRegiste(restRepository.getPost_api()
             .qcDeleteStudent(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -114,6 +115,7 @@ public class CoachDetailPresenter extends BasePresenter {
         if (filter.sale != null) params.put("seller_id", filter.sale.getId());
         RxRegiste(restRepository.getGet_api()
             .qcGetCoachStudentDetail(staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<AllocateStudentBean>>() {

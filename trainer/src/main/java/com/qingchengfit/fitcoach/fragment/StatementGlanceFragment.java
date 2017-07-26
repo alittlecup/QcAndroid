@@ -93,6 +93,7 @@ public class StatementGlanceFragment extends Fragment {
         prams.put("id", curSystemId + "");
         prams.put("model", curModel);
         QcCloudClient.getApi().getApi.qcGetCoachReportGlance(App.coachid, prams)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.newThread())
             .subscribe(qcReportGlanceResponse -> {
                 response = qcReportGlanceResponse;

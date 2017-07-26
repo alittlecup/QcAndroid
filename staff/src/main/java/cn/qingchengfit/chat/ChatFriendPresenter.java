@@ -28,8 +28,7 @@ public class ChatFriendPresenter extends BasePresenter {
 
     public void queryChatFriend() {
         RxRegiste(restRepository.getGet_api()
-            .qcQueryChatFriends()
-            .subscribeOn(Schedulers.computation())
+            .qcQueryChatFriends().onBackpressureBuffer().subscribeOn(Schedulers.computation())
             .flatMap(new Func1<QcResponseData<ChatFriendsData>, Observable<Pair<List<ChatGym>, List<Staff>>>>() {
                 @Override
                 public Observable<Pair<List<ChatGym>, List<Staff>>> call(QcResponseData<ChatFriendsData> chatFriendsDataQcResponseData) {

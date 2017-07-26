@@ -91,24 +91,23 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     public static final String OPEN_URL = "open_url";
     public static final String MAIN_ACTION = "main.action";
     public static final int REOPEN_APP = -1;
-  private int[] mIconSelect = {
-      R.drawable.vd_tabbar_manage_active, R.drawable.vd_tabbar_discover_active, R.drawable.vd_tabbar_message_active,
-      R.drawable.vd_tabbar_mine_active
-  };
-  private int[] mIconNormal = {
-      R.drawable.vd_tabbar_manage_normal, R.drawable.vd_tabbar_discover_normal, R.drawable.vd_tabbar_message_normal,
-      R.drawable.vd_tabbar_mine_normal
-  };
-
     @BindView(R.id.tabview) TabViewNoVp tabview;
     @BindView(R.id.frag_choose_brand) FrameLayout fragChooseBrand;
     @BindView(R.id.layout_brands) FrameLayout layoutBrands;
     @BindView(R.id.tv_noti_count) TextView tvNotiCount;
-
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
   @Inject BaseRouter baseRouter;
+  String[] tags = new String[] { "gyms", "find", "msg", "setting" };
+  private int[] mIconSelect = {
+      R.drawable.vd_tabbar_manage_active, R.drawable.vd_tabbar_discover_active,
+      R.drawable.vd_tabbar_message_active, R.drawable.vd_tabbar_mine_active
+  };
+  private int[] mIconNormal = {
+      R.drawable.vd_tabbar_manage_normal, R.drawable.vd_tabbar_discover_normal,
+      R.drawable.vd_tabbar_message_normal, R.drawable.vd_tabbar_mine_normal
+  };
     private boolean isDownloading = false;
     private DownloadManager downloadManager;
     private Subscription updateSp;
@@ -118,7 +117,6 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     private MaterialDialog exitDialog;
     private Observable<EventGoNotification> mNotiOb;
     private long myDownloadReference;
-
     private Observable<EventFreshCoachService> mFreshCoachService;
     private Subscription sp;
     private Observable<EventBrandChange> brandChangeOb;
@@ -197,8 +195,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
             @Override public void call(EventFreshCoachService eventFreshCoachService) {
                 sp = restRepository.getGet_api()
                     .qcGetCoachService(loginStatus.staff_id(), null)
-                    .delay(2, TimeUnit.SECONDS)
-                    .subscribeOn(Schedulers.io())
+                    .delay(2, TimeUnit.SECONDS).onBackpressureBuffer().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<QcResponseData<GymList>>() {
                         @Override public void call(QcResponseData<GymList> qcResponseGymList) {
@@ -228,7 +225,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         }
       });
     }
-  String[] tags = new String[]{"gyms","find","msg","setting"};
+
   private void showPage(int pos) {
       FragmentTransaction ts = getSupportFragmentManager().beginTransaction();
       for (int i = 0; i < tags.length; i++) {
@@ -288,6 +285,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
             pushBody.distribute = getString(R.string.oem);
             restRepository.getPost_api()
                 .qcPostPushId(loginStatus.staff_id(), pushBody)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcResponse>() {
                     @Override public void onCompleted() {

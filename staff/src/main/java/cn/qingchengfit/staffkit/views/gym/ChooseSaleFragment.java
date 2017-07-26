@@ -182,7 +182,7 @@
 //
 //        sp = restRepository.getGet_api().qcGetSalers(App.staffId, PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""), shopid, null, null)
 //                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
+//                .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //                .subscribe(new Action1<Sellers>() {
 //                    @Override
 //                    public void call(Sellers qcResponseSalers) {

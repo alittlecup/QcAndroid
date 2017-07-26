@@ -106,6 +106,7 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
     public void refresh() {
         sp = QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<QcCoachServiceResponse>() {
                 @Override public void onCompleted() {

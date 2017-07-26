@@ -185,8 +185,7 @@ public class QCDbManager {
                 @Override public QcStudentBean call(Cursor cursor) {
                     return QcStudentBean.MAPPER.map(cursor);
                 }
-            })
-            .subscribeOn(Schedulers.io())
+            }).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<QcStudentBean>() {
                 @Override public void onCompleted() {

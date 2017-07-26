@@ -118,7 +118,7 @@
 //                        sendToWx(true);
 //                        subscriber.onCompleted();
 //                    }
-//                }).subscribeOn(Schedulers.io()).subscribe();
+//                }).onBackpressureBuffer().subscribeOn(Schedulers.io()).subscribe();
 //                break;
 //            case R.id.wechat_circle:
 //                Observable.create(new Observable.OnSubscribe<Boolean>() {
@@ -126,7 +126,7 @@
 //                        sendToWx(false);
 //                        subscriber.onCompleted();
 //                    }
-//                }).subscribeOn(Schedulers.io()).subscribe();
+//                }).onBackpressureBuffer().subscribeOn(Schedulers.io()).subscribe();
 //                break;
 //            case R.id.copy_link:
 //                ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);

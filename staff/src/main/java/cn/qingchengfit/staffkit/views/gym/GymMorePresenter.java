@@ -34,6 +34,7 @@ public class GymMorePresenter extends BasePresenter {
         }
         RxRegiste(restRepository.getApi(Post_Api.class)
             .qcUpdateModule(loginStatus.staff_id(), new UpdateModule.Builder().module_custom(modules).build(), gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -51,6 +52,7 @@ public class GymMorePresenter extends BasePresenter {
         view = (MVPView) v;
         RxRegiste(QCDbManager.queryAllFunctions()
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<List<String>>() {
                 @Override public void call(List<String> strings) {

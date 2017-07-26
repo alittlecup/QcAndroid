@@ -60,12 +60,14 @@ public class GymUseCase {
         //本地缓存
         return restRepository.getGet_api()
             .qcGetService(App.staffId, id, model)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription getGymList(String brand_id, final Action1<List<CoachService>> action1) {
         return restRepository.qcGetGymList(App.staffId, brand_id)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<GymList>>() {
@@ -84,7 +86,9 @@ public class GymUseCase {
         return restRepository.getGet_api()
             .qcGetGymSites(App.staffId, gymid, gymModel)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
 
@@ -95,7 +99,9 @@ public class GymUseCase {
         return restRepository.getPost_api()
             .qcCreateCourse(App.staffId, body, hashMap)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription updateCourses(String course_id, CourseBody body, String gymid, String gymmodel, Action1<QcResponse> action1) {
@@ -105,7 +111,9 @@ public class GymUseCase {
         return restRepository.getPost_api()
             .qcUpdateCourse(App.staffId, course_id, hashMap, body)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
 
@@ -113,21 +121,27 @@ public class GymUseCase {
         return restRepository.getGet_api()
             .qcGetGroupCourse(App.staffId, gymid, model, brandid)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription getAllCourse(String brandid, String gymid, String model, Action1<QcResponseData<GroupCourseResponse>> action1) {
         return restRepository.getGet_api()
             .qcGetGroupCourse(App.staffId, gymid, model, brandid)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription getPrivateCourse(String brandid, String gymid, String model, Action1<QcResponsePrivateCourse> action1) {
         return restRepository.getGet_api()
             .qcGetPrivateCrourse(App.staffId, gymid, model, brandid)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription getPrivateBatches(String coach_id, String gymid, String gymmodle, String brandid,
@@ -135,7 +149,9 @@ public class GymUseCase {
         return restRepository.getGet_api()
             .qcGetPrivateCoaches(App.staffId, coach_id, gymid, gymmodle, brandid)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription getGroupBatches(String coach_id, String gymid, String gymmodle, String brandid,
@@ -143,7 +159,9 @@ public class GymUseCase {
         return restRepository.getGet_api()
             .qcGetGroupCourses(App.staffId, coach_id, gymid, gymmodle, brandid)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription getBatchDetail(String batch_id, String gymid, String gymmodel, String brandid,
@@ -151,28 +169,36 @@ public class GymUseCase {
         return restRepository.getGet_api()
             .qcGetBatchDetail(App.staffId, batch_id, gymid, gymmodel, brandid)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription arrangeBatch(String gymid, String gymmoel, ArrangeBatchBody body, Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcArrangeBatch(App.staffId, gymid, gymmoel, body)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription updateBatch(String gymid, String gymmoel, String batchid, ArrangeBatchBody body, Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcUpdateBatch(App.staffId, batchid, gymid, gymmoel, body)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription checkBatch(String gymid, String gymmoel, int gymtype, ArrangeBatchBody body, Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcCheckBatch(App.staffId, gymtype == Configs.TYPE_PRIVATE ? "private" : "group", gymid, gymmoel, body)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription getBatchTemplete(int gymtype, String gymid, String gymmodel, String teacher_id, String course_id,
@@ -180,14 +206,18 @@ public class GymUseCase {
         return restRepository.getGet_api()
             .qcGetBatchTemplate(App.staffId, gymtype == Configs.TYPE_PRIVATE ? "private" : "group", gymid, gymmodel, teacher_id, course_id)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription getCourses(String gymid, String gymmode, boolean isPrivate, Action1<QcResponseData<CourseTypeSamples>> action1) {
         return restRepository.getGet_api()
             .qcGetCourses(App.staffId, gymid, gymmode, isPrivate ? 1 : 0)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription queryGymCardTpl(String gymid, String model, int type, Action1<QcResponseData<GymCardtpl>> action1) {
@@ -195,7 +225,9 @@ public class GymUseCase {
         return restRepository.getGet_api()
             .qcGetGymCardtpl(App.staffId, gymid, model, t)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription queryBatchSchedule(String batchid, int courseType, String brandid, String gymid, String gymmodel,
@@ -204,41 +236,53 @@ public class GymUseCase {
             .qcGetbatchSchedules(App.staffId, batchid, courseType == Configs.TYPE_PRIVATE ? "timetables" : "schedules", brandid, gymid,
                 gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription delBatchSchedule(DelBatchScheduleBody body, int courseType, Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcDelBatchSchedule(App.staffId, courseType == Configs.TYPE_PRIVATE ? "timetables" : "schedules", body)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription updateBatchSchedule(SingleBatchBody body, String scheduleid, int courseType, Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcUpdateBatchSchedule(App.staffId, courseType == Configs.TYPE_PRIVATE ? "timetables" : "schedules", scheduleid, body)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription delSite(String siteid, String gymid, String gymmodel, Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcDelSpace(App.staffId, siteid, gymid, gymmodel, null)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription updateSite(String siteid, String gymid, String gymmodel, String brandid, Space space, Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcUpdateSpace(App.staffId, siteid, gymid, gymmodel, brandid, space)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 
     public Subscription getGymWelcom(String id, String model, Action1<QcResponseData<GymDetail>> action1) {
         return restRepository.getGet_api()
             .qcGetGymDetail(App.staffId, id, model)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(action1, new NetWorkThrowable());
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new NetWorkThrowable());
     }
 }

@@ -112,6 +112,7 @@ public class StudentSignInImageFragment extends BaseFragment implements StudentS
                 showLoading();
                 Glide.with(getContext()).load(new File(eventChooseImage.filePath)).placeholder(R.drawable.img_loadingimage).into(curImg);
                 RxRegiste(UpYunClient.rxUpLoad("/signin/", eventChooseImage.filePath)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .delay(500, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())

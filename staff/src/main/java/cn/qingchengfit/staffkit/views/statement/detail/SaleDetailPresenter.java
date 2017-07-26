@@ -82,6 +82,7 @@ public class SaleDetailPresenter extends BasePresenter {
         RxRegiste(mRestRepository.getGet_api()
             .qcGetSaleDatail(App.staffId, start, end, shopid, card_id, cards_extra, seller_id, type == 0 ? null : Integer.toString(type),
                 chargetype == 0 ? null : Integer.toString(chargetype), gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseSaleDetail>() {

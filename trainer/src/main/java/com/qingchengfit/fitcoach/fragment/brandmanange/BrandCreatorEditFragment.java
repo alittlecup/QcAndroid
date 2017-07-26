@@ -105,6 +105,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
                                     .area_code(phoneNum.getDistrictInt())
                                     .build())
                                 .observeOn(AndroidSchedulers.mainThread())
+                                .onBackpressureBuffer()
                                 .subscribeOn(Schedulers.io())
                                 .subscribe(new Action1<QcResponse>() {
                                     @Override public void call(QcResponse qcResponse) {
@@ -130,6 +131,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
                 if (phoneNum.checkPhoneNum()) {
                     RxRegiste(QcCloudClient.getApi().postApi.qcGetCode(
                         new GetCodeBean.Builder().area_code(phoneNum.getDistrictInt()).phone(phoneNum.getPhoneNum()).build())
+                        .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<QcResponse>() {
@@ -139,6 +141,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
                                     checkcode.blockRightClick(true);
                                     RxRegiste(Observable.interval(0, 1, TimeUnit.SECONDS)
                                         .take(60)
+                                        .onBackpressureBuffer()
                                         .subscribeOn(Schedulers.computation())
                                         .observeOn(AndroidSchedulers.mainThread())
 

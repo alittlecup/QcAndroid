@@ -102,6 +102,7 @@ public class NotificationFragment extends BaseSettingFragment {
         adapter = new NotifiAdapter(list);
         adapter.setListener((v, pos) -> {
             QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid, adapter.datas.get(pos).getId() + "")
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe();
             adapter.datas.get(pos).setIs_read(true);
@@ -195,6 +196,7 @@ public class NotificationFragment extends BaseSettingFragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 RxRegiste(QcCloudClient.getApi().postApi.qcClearTypeNoti(new ClearNotiBody(ConstantNotification.getCategloreStr(type)))
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<QcResponse>() {
@@ -235,6 +237,7 @@ public class NotificationFragment extends BaseSettingFragment {
         params.put("page", curpage + "");
         params.put("type__in", ConstantNotification.getCategloreStr(type));
         QcCloudClient.getApi().getApi.qcGetNotification(params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<Notification>>() {

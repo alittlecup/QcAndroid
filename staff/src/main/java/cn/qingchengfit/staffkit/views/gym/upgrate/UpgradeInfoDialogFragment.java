@@ -104,6 +104,7 @@ public class UpgradeInfoDialogFragment extends BaseDialogFragment {
     public void onRightClick() {
         RxRegiste(new RestRepository().getPost_api()
             .qcGymTrial(loginStatus.staff_id(), GymUtils.getParams(gymWrapper.getCoachService(), gymWrapper.getBrand()))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

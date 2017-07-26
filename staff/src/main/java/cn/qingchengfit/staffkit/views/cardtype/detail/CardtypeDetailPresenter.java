@@ -83,6 +83,7 @@ public class CardtypeDetailPresenter extends BasePresenter {
     public void queryCardType(String id) {
         RxRegiste(mRestRepository.getGet_api()
             .qcGetCardTplsDetail(App.staffId, id, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CardTplResponse>>() {
@@ -151,6 +152,7 @@ public class CardtypeDetailPresenter extends BasePresenter {
     public void resumeCardtype(String staffid, String id) {
         RxRegiste(mRestRepository.getPost_api()
             .qcResumeCardtpl(staffid, id, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

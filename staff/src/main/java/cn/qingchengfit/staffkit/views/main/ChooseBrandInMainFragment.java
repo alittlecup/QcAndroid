@@ -71,8 +71,7 @@ import rx.schedulers.Schedulers;
 
     public void queryData() {
         RxRegiste(mRestRepository.getGet_api()
-            .qcGetBrands(App.staffId)
-            .subscribeOn(Schedulers.io())
+            .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
                 @Override public void call(QcResponseData<BrandsResponse> qcResponse) {

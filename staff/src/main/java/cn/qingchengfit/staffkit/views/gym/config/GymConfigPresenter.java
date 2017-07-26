@@ -30,6 +30,7 @@ public class GymConfigPresenter extends BasePresenter {
     void queryShopConfig(String staffid, String key) {
         RxRegiste(restRepository.getGet_api()
             .qcGetShopConfig(staffid, key, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<SignInConfig.Data>>() {
@@ -50,6 +51,7 @@ public class GymConfigPresenter extends BasePresenter {
     void editShopConfig(String staffid, ShopConfigBody body) {
         RxRegiste(restRepository.getPost_api()
             .qcShopConfigs(staffid, gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

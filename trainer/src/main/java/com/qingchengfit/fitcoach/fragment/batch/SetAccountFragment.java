@@ -121,6 +121,7 @@ public class SetAccountFragment extends BaseFragment {
             CoachService coachService = ((FragActivity) getActivity()).getCoachService();
 
             RxRegiste(QcCloudClient.getApi().getApi.qcGetCardTpls(App.coachid + "", coachService.getId() + "", coachService.getModel())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseCardTpls>() {

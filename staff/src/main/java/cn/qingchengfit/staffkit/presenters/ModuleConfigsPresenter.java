@@ -36,6 +36,7 @@ public class ModuleConfigsPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetStudentScoreStatus(App.staffId, GymUtils.getParamsV2(gymWrapper.getCoachService(), null))
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<ScoreStatus>>() {
                 @Override public void call(QcResponseData<ScoreStatus> scoreStatusQcResponseData) {
@@ -49,6 +50,7 @@ public class ModuleConfigsPresenter extends BasePresenter {
         body.put("checkin", open);
         RxRegiste(restRepository.getPost_api()
             .qcPutScoreStatus(App.staffId, GymUtils.getParamsV2(gymWrapper.getCoachService(), null), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData>() {

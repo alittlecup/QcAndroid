@@ -93,6 +93,7 @@ public class FixRealcardStudentPresenter extends BasePresenter {
         if (gymWrapper.inBrand()) {//连锁运营
             RxRegiste(StudentAction.newInstance()
                 .getStudentByBrand(gymWrapper.brand_id())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<QcStudentBean>>() {
@@ -103,6 +104,7 @@ public class FixRealcardStudentPresenter extends BasePresenter {
         } else {//场馆
             RxRegiste(StudentAction.newInstance()
                 .getStudentByGym(gymWrapper.id(), gymWrapper.model())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<QcStudentBean>>() {
@@ -119,6 +121,7 @@ public class FixRealcardStudentPresenter extends BasePresenter {
         params.put("method", "put");
         RxRegiste(restRepository.getGet_api()
             .qcGetCardBundldStudents(staffid, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .map(new Func1<QcResponseData<Students>, Boolean>() {
                 @Override public Boolean call(QcResponseData<Students> qcResponseAllStudent) {
@@ -276,6 +279,7 @@ public class FixRealcardStudentPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcUndateCard(App.staffId, realCard.id(), null, id, model, card)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {

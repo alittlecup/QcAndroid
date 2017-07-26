@@ -123,6 +123,7 @@ public class MyHomeActivity extends AppCompatActivity {
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("oem", getString(R.string.oem_tag));
                 QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid, params)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .subscribe(qcDrawerResponse -> {
                         runOnUiThread(() -> {

@@ -140,6 +140,7 @@ import rx.schedulers.Schedulers;
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
         .queryMyResumeIntents()
         .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcDataResponse<ResumeIntentsWrap>>() {
           @Override public void call(QcDataResponse<ResumeIntentsWrap> resumeIntentsQcDataResponse) {
@@ -170,7 +171,9 @@ import rx.schedulers.Schedulers;
         showLoading();
         RxRegiste(qcRestRepository.createGetApi(PostApi.class).updateResume(body)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io()).subscribe(new Action1<QcResponse>() {
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Action1<QcResponse>() {
               @Override public void call(QcResponse qcResponse) {
                 hideLoading();
                 if (qcResponse.status == 200) {

@@ -31,6 +31,7 @@ public class WardrobeEditPresenter extends BasePresenter {
     public void completeWardrobe(String staffid, Long lockerid, EditWardrobeBody body) {
         RxRegiste(restRepository.getPost_api()
             .qcEditLocker(staffid, lockerid + "", gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -51,6 +52,7 @@ public class WardrobeEditPresenter extends BasePresenter {
     public void delWardrobe(String staffid, Long lockerid) {
         RxRegiste(restRepository.getPost_api()
             .qcDelLocker(staffid, lockerid + "", gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

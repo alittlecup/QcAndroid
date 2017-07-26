@@ -83,6 +83,7 @@ public class BatchDetailPresenter extends BasePresenter {
     public void delbatch(String staffid, String batch_id) {
         RxRegiste(restRepository.getPost_api()
             .qcDelBatch(staffid, batch_id, GymUtils.getParams(coachService, brand))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -103,6 +104,7 @@ public class BatchDetailPresenter extends BasePresenter {
     public void queryData(String coachid, String batch_id) {
         RxRegiste(restRepository.getGet_api()
             .qcGetBatchDetail(coachid, batch_id, coachService.getId() + "", coachService.getModel())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponsePrivateBatchDetail>() {
@@ -137,8 +139,7 @@ public class BatchDetailPresenter extends BasePresenter {
     public void checkBatch(String coachid, int coursetype, ArrangeBatchBody body) {
         spCheck = restRepository.getPost_api()
             .qcCheckBatch(coachid, coursetype == Configs.TYPE_PRIVATE ? "private" : "group", coachService.getId() + "",
-                coachService.getModel(), body)
-            .subscribeOn(Schedulers.io())
+                coachService.getModel(), body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -168,6 +169,7 @@ public class BatchDetailPresenter extends BasePresenter {
 
         spUpdate = restRepository.getPost_api()
             .qcUpdateBatch(App.coachid + "", id, coachService.getId() + "", coachService.getModel(), upBody)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

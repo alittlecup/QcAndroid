@@ -99,7 +99,11 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
                 HashMap<String, Object> p = new HashMap<String, Object>();
                 p.put("photo", s);
                 return QcCloudClient.getApi().postApi.qcUploadWallImage(p);
-            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponeSingleImageWall -> {
+            })
+                .onBackpressureBuffer()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcResponeSingleImageWall -> {
                 hideLoading();
                 if (ResponseConstant.checkSuccess(qcResponeSingleImageWall)) {
                     if (datas.size() == 1 && datas.get(0) instanceof CommonNoDataItem) {
@@ -123,6 +127,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
     private void freshData() {
         fragmentCallBack.ShowLoading("请稍后");
         RxRegiste(QcCloudClient.getApi().getApi.qcGetImageWalls()
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(qcResponeSingleImageWall -> {
@@ -179,6 +184,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
         if (!TextUtils.isEmpty(ids)) {
             RxRegiste(QcCloudClient.getApi().postApi.qcDeleteWallImage(ids)
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Action1<QcResponse>() {
                     @Override public void call(QcResponse qcResponse) {

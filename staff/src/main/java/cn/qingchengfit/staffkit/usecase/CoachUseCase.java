@@ -39,6 +39,7 @@ public class CoachUseCase {
         return restRepository.getGet_api()
             .qcGetGymCoaches(App.staffId, gymid, gymModel, keyword)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -51,6 +52,7 @@ public class CoachUseCase {
         return restRepository.getGet_api()
             .qcGetStaffs(App.staffId, gymid, gymModel, null, keyword)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -63,6 +65,7 @@ public class CoachUseCase {
         return restRepository.getPost_api()
             .qcFixCoach(App.staffId, coachid, gymid, gymModel, coach)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -75,6 +78,7 @@ public class CoachUseCase {
         return restRepository.getPost_api()
             .qcDelCoach(App.staffId, coachid, gymid, gymModel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -87,6 +91,7 @@ public class CoachUseCase {
         return restRepository.getPost_api()
             .qcCreateManager(App.staffId, gymid, gymModel, body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -107,6 +112,7 @@ public class CoachUseCase {
         return restRepository.getPost_api()
             .qcUpdateManager(App.staffId, id, gymid, gymmodel, b)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -119,6 +125,7 @@ public class CoachUseCase {
         return restRepository.getPost_api()
             .qcDelManager(App.staffId, id, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -131,6 +138,7 @@ public class CoachUseCase {
         return restRepository.getGet_api()
             .qcGetPostions(App.staffId, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {

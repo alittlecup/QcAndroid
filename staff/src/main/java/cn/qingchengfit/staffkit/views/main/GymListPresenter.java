@@ -75,7 +75,11 @@ public class GymListPresenter extends BasePresenter {
                 }
                 return Observable.just(ret);
             }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<CoachService>>() {
+        })
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<List<CoachService>>() {
             @Override public void call(List<CoachService> list) {
                 mView.onServiceList(list);
             }
@@ -98,6 +102,7 @@ public class GymListPresenter extends BasePresenter {
     void loadData() {
         RxRegiste(mRestRepository.getGet_api()
             .qcGetCoachService(loginStatus.staff_id(), null)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<GymList>>() {

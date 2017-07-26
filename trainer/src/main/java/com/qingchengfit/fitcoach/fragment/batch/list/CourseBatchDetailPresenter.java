@@ -86,6 +86,7 @@ public class CourseBatchDetailPresenter extends BasePresenter {
 
     public void queryGroup(String staffid, boolean isPrivate) {
         RxRegiste(restRepository.getGet_api().qcGetGroupCourses(staffid, coachService.id + "", coachService.getModel(), isPrivate ? 1 : 0)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseGroupDetail>() {
@@ -116,7 +117,7 @@ public class CourseBatchDetailPresenter extends BasePresenter {
     public void queryPrivate(String staffid, String coachid) {
         //priSp = restRepository.getGet_api()
         //    .qcGetPrivateBatches(staffid, coachid, coachService.id + "", coachService.model, null)
-        //    .subscribeOn(Schedulers.io())
+      //    .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //    .observeOn(AndroidSchedulers.mainThread())
         //    .subscribe(new Action1<QcResponsePrivateDetail>() {
         //        @Override public void call(QcResponsePrivateDetail qcResponse) {

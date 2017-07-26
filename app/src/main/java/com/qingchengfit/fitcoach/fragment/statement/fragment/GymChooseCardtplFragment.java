@@ -56,7 +56,7 @@ import rx.schedulers.Schedulers;
         prams.put("id", id);
         prams.put("model", model);
         QcCloudClient.getApi().getApi.qcGetCardTpls(App.coachid + "", id, model)
-            .subscribeOn(Schedulers.io())
+            .onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseCardTpls>() {
                 @Override public void call(QcResponseCardTpls qcResponse) {

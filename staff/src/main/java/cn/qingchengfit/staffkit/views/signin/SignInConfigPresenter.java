@@ -108,7 +108,7 @@ public class SignInConfigPresenter extends BasePresenter {
             }
         }, ActivityLifeCycleEvent.PAUSE, lifecycleSubject));
         //        RxRegiste(restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, coachService.getId(), coachService.getModel(), body)
-        //                .subscribeOn(Schedulers.io())
+      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .observeOn(AndroidSchedulers.mainThread())
         //                .subscribe(new Action1<QcResponse>() {
         //                    @Override
@@ -148,7 +148,7 @@ public class SignInConfigPresenter extends BasePresenter {
         }, ActivityLifeCycleEvent.PAUSE, lifecycleSubject));
 
         //                RxRegiste(restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, coachService.getId(), coachService.getModel(), body)
-        //                .subscribeOn(Schedulers.io())
+      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .observeOn(AndroidSchedulers.mainThread())
         //                .subscribe(new Action1<QcResponse>() {
         //                    @Override
@@ -186,7 +186,7 @@ public class SignInConfigPresenter extends BasePresenter {
         }));
 
         //        RxRegiste(((Get_Api)restRepository.getApi(Get_Api.class)).qcGetShopConfig(App.staffId, params)
-        //                .subscribeOn(Schedulers.io())
+      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .observeOn(AndroidSchedulers.mainThread())
         //                .subscribe(new Action1<SignInConfig>() {
         //                    @Override
@@ -221,7 +221,7 @@ public class SignInConfigPresenter extends BasePresenter {
         }));
 
         //        RxRegiste(((Get_Api)restRepository.getApi(Get_Api.class)).qcGetShopConfig(App.staffId, params)
-        //                .subscribeOn(Schedulers.io())
+      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .observeOn(AndroidSchedulers.mainThread())
         //                .subscribe(new Action1<SignInConfig>() {
         //                    @Override
@@ -253,7 +253,7 @@ public class SignInConfigPresenter extends BasePresenter {
         }));
 
         //        RxRegiste(((Get_Api)restRepository.getApi(Get_Api.class)).qcGetSignInCostConfig(App.staffId, params)
-        //                .subscribeOn(Schedulers.io())
+      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .observeOn(AndroidSchedulers.mainThread())
         //                .subscribe(new Action1<SignInCardCostBean>() {
         //                    @Override

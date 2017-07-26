@@ -58,6 +58,7 @@ public class CoachChoosePresenter extends BasePresenter {
         params.put("method", "get");
         RxRegiste(restRepository.getGet_api()
             .qcGetGymCoachesPermission(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<QcResponseData<Staffs>>() {

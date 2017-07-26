@@ -107,6 +107,7 @@ public class CoursePlanHomeFragment extends BaseFragment {
         super.onResume();
         showLoading();
         RxRegiste(QcCloudClient.getApi().getApi.qcGetCoursePlanAll(App.coachid + "")
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseCoursePlan>() {

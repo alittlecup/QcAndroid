@@ -82,6 +82,7 @@ public class BatchDetailPresenter extends BasePresenter {
     public void delbatch(String staffid, String batch_id) {
         RxRegiste(restRepository.getPost_api()
             .delBatch(staffid, batch_id, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

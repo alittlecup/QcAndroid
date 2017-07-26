@@ -107,6 +107,7 @@ public class SetGymPresenter extends BasePresenter {
     void initShop(SystemInitBody body) {
         RxRegiste(mRestRepository.qcSystemInit(body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseSystenInit>() {
                 @Override public void call(QcResponseSystenInit qcResponseSystenInit) {
@@ -124,6 +125,7 @@ public class SetGymPresenter extends BasePresenter {
         RxRegiste(mRestRepository.getPost_api()
             .qcPutService(App.staffId, shopid, shop)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<ResponseService>() {
                 @Override public void call(ResponseService responseService) {

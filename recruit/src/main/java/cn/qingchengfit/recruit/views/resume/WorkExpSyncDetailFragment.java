@@ -156,8 +156,7 @@ import rx.schedulers.Schedulers;
             .start(workexpeditStartTime.getContent())
             .end(workexpeditStartEnd.getContent().equals("至今") ? "3000-01-01" : workexpeditStartEnd.getContent())
             .position(workexpeditPosition.getContent())
-            .build())
-        .subscribeOn(Schedulers.io())
+            .build()).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {

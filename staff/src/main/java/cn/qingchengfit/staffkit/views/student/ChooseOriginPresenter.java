@@ -82,6 +82,7 @@ public class ChooseOriginPresenter extends BasePresenter {
         body.put("name", name);
         RxRegiste(restRepository.getPost_api()
             .qcAddOrigin(loginStatus.staff_id(), params, body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

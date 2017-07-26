@@ -36,6 +36,7 @@ public class WardrobeShortHirePresenter extends BasePresenter {
 
         RxRegiste(restRepository.getPost_api()
             .qcHireLocker(staffid, gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

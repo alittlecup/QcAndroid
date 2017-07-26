@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.GestureDetector;
@@ -105,7 +104,7 @@ public class WebFragment extends BaseFragment
   @BindView(R2.id.toolbar_title) public TextView mTitle;
   @BindView(R2.id.webview) public WebView mWebviewWebView;
   public String mCurUrl;
-  @BindView(R2.id.refresh) protected CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
+  //@BindView(R2.id.refresh) protected CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
   @BindView(R2.id.layout_toolbar) protected RelativeLayout commonToolbar;
   @BindView(R2.id.refresh_network) Button mRefresh;
   @BindView(R2.id.no_newwork) LinearLayout mNoNetwork;
@@ -172,20 +171,18 @@ public class WebFragment extends BaseFragment
       }
     });
 
-    mRefreshSwipeRefreshLayout.setCanChildScrollUpCallback(this);
     initWebSetting();
 
     initToolbar(mToolbar);
     if (hideToolbar) commonToolbar.setVisibility(View.GONE);
-    mRefreshSwipeRefreshLayout.getViewTreeObserver()
+    webviewRoot.getViewTreeObserver()
         .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
           @Override public void onGlobalLayout() {
-            if (mRefreshSwipeRefreshLayout == null) return;
-            CompatUtils.removeGlobalLayout(mRefreshSwipeRefreshLayout.getViewTreeObserver(), this);
-            mRefreshSwipeRefreshLayout.setRefreshing(true);
-            //                mRefreshSwipeRefreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            /**
+            if (webviewRoot == null) return;
+            CompatUtils.removeGlobalLayout(webviewRoot.getViewTreeObserver(), this);
+            //mRefreshSwipeRefreshLayout.setRefreshing(true);
+            /*
              * init web
              */
 
@@ -216,16 +213,6 @@ public class WebFragment extends BaseFragment
 
               }
             }
-
-            mRefreshSwipeRefreshLayout.setColorSchemeColors(AppUtils.getPrimaryColor(getContext()));
-            mRefreshSwipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                  @Override public void onRefresh() {
-                    mWebviewWebView.reload();
-                  }
-                });
-            //
-
             msgApi = WXAPIFactory.createWXAPI(getContext(), wxApiStr);
             msgApi.registerApp(wxApiStr);
 
@@ -261,6 +248,7 @@ public class WebFragment extends BaseFragment
     RxRegiste(RxBus.getBus()
         .register(PayEvent.class)
         .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .subscribe(new Subscriber<PayEvent>() {
           @Override public void onCompleted() {
@@ -496,9 +484,9 @@ public class WebFragment extends BaseFragment
       @Override public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         mCurUrl = url;
-        if (mRefreshSwipeRefreshLayout != null) {
-          mRefreshSwipeRefreshLayout.setRefreshing(false);
-        }
+        //if (mRefreshSwipeRefreshLayout != null) {
+        //  mRefreshSwipeRefreshLayout.setRefreshing(false);
+        //}
         onWebFinish();
       }
 
@@ -764,9 +752,9 @@ public class WebFragment extends BaseFragment
       if (getActivity() != null) {
         getActivity().runOnUiThread(new Runnable() {
           @Override public void run() {
-            if (mRefreshSwipeRefreshLayout != null) {
-              mRefreshSwipeRefreshLayout.setRefreshing(false);
-            }
+            //if (mRefreshSwipeRefreshLayout != null) {
+            //  mRefreshSwipeRefreshLayout.setRefreshing(false);
+            //}
           }
         });
       }

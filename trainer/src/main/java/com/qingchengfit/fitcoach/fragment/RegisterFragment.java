@@ -122,7 +122,10 @@ public class RegisterFragment extends BaseFragment {
                         .gender(compleGender.getCheckedRadioButtonId() == R.id.comple_gender_female ? 1 : 0)
                         .build())
 
-                        .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponLogin -> {
+                        .onBackpressureBuffer()
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(qcResponLogin -> {
                         if (qcResponLogin.status == ResponseResult.SUCCESS) {
                             //TODO 注册成功
                             getActivity().runOnUiThread(() -> {
@@ -164,7 +167,7 @@ public class RegisterFragment extends BaseFragment {
                 //                    QcCloudClient.getApi()
                 //                            .postApi
                 //                            .qcRegister(bean)
-                //                            .subscribeOn(Schedulers.newThread())
+          //                            .onBackpressureBuffer().subscribeOn(Schedulers.newThread())
                 //                            .subscribe(qcResponLogin ->
                 //                                    {
                 //                                        if (qcResponLogin.status == ResponseResult.SUCCESS) {
@@ -191,6 +194,7 @@ public class RegisterFragment extends BaseFragment {
             if (phoneNum.checkPhoneNum()) {
                 QcCloudClient.getApi().postApi.qcGetCode(
                     new GetCodeBean.Builder().phone(phoneNum.getPhoneNum()).area_code(phoneNum.getDistrictInt()).build())
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(qcResponse -> {

@@ -102,7 +102,7 @@ public class FixCheckinFragment extends BaseDialogFragment implements FixCheckin
     public void initRxBus() {
 
         Observable<SignInNoticeConfigEvent> observable = RxBus.getBus().register(SignInNoticeConfigEvent.class);
-        RxRegiste(observable.subscribeOn(Schedulers.io())
+      RxRegiste(observable.onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<SignInNoticeConfigEvent>() {
                 @Override public void call(SignInNoticeConfigEvent signInNoticeConfigEvent) {

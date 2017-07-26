@@ -193,6 +193,7 @@ public class MainScheduleFragment extends BaseFragment {
 
     public void queryNotify() {
         RxRegiste(QcCloudClient.getApi().getApi.qcGetMessages(App.coachid)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<QcNotificationResponse>() {

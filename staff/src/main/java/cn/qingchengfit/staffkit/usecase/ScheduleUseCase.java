@@ -24,7 +24,7 @@ package cn.qingchengfit.staffkit.usecase;
 //
 //    public Observable<QcSchedulesResponse> getOneDaySchedule(String id, String date, String brand_id,String gymid,String gymmodel) {
 //        return restRepository.getGet_api().qcGetSchedules(id, date, brand_id,gymid,gymmodel)
-//                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread()).onBackpressureBuffer().subscribeOn(Schedulers.io())
 //                .retry(new Func2<Integer, Throwable, Boolean>() {
 //                    @Override
 //                    public Boolean call(Integer integer, Throwable throwable) {

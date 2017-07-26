@@ -40,7 +40,7 @@
 //                subscriber.onNext(upImg);
 //                subscriber.onCompleted();
 //            }
-//        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+//        }).onBackpressureBuffer().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 //    }
 //
 //    /**
@@ -144,7 +144,7 @@
 //
 //
 //    }
-//    }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+//    }).onBackpressureBuffer().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 //
 //     }
 //

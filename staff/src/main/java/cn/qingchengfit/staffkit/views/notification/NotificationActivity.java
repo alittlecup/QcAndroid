@@ -57,7 +57,7 @@ public class NotificationActivity extends BaseActivity implements FragCallBack {
         //                            HashMap<String,Object> params = new HashMap<String, Object>();
         //                            params.put("tab","STAFF_0");
         //                            mSpClearNoti = mRestRepository.getPost_api().qcClearAllNoti(App.staffId,params)
-        //                                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+      //                                    .onBackpressureBuffer().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
         //                                    .subscribe(new Action1<QcResponse>() {
         //                                        @Override
         //                                        public void call(QcResponse qcResponse) {

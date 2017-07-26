@@ -21,8 +21,7 @@ public class GuideChooseBrandAcitivity extends ChooseBrandActivity {
         if (sp != null) sp.unsubscribe();
 
         sp = restRepository.getGet_api()
-            .qcGetBrands(App.staffId)
-            .subscribeOn(Schedulers.io())
+            .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
                 @Override public void call(final QcResponseData<BrandsResponse> qcResponseBrands) {

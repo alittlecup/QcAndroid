@@ -90,7 +90,7 @@ public class MyGymsFragment extends BaseFragment {
         });
         //        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
         //                .observeOn(AndroidSchedulers.mainThread())
-        //                .subscribeOn(Schedulers.io())
+      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .map(qcCoachSystemDetailResponse -> {
         //                    adapterData.clear();
         //                    adapterData.addAll(qcCoachSystemDetailResponse.date.systems);
@@ -145,6 +145,7 @@ public class MyGymsFragment extends BaseFragment {
 
         QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .map(qcCoachSystemDetailResponse -> {
                 adapterData.clear();

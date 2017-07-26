@@ -39,14 +39,14 @@ public class InitUseCase {
 
     public Subscription createBrand(CreatBrandBody body, Action1<QcResponseData<CreatBrand>> action1, Action1<Throwable> error) {
         return restRepository.qcCreateBrand(body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(action1, error);
     }
 
     public Subscription systemInit(SystemInitBody body, Action1<QcResponseSystenInit> action1) {
-        return restRepository.qcSystemInit(body)
-            .subscribeOn(Schedulers.io())
+        return restRepository.qcSystemInit(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -57,8 +57,7 @@ public class InitUseCase {
 
     public Subscription getBrandList(Action1<QcResponseData<BrandsResponse>> action1) {
         return restRepository.getGet_api()
-            .qcGetBrands(App.staffId)
-            .subscribeOn(Schedulers.io())
+            .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -70,6 +69,7 @@ public class InitUseCase {
     public Subscription createGym(GymBody body, Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcCreateGym(App.staffId, body.brand_id, body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(action1, new Action1<Throwable>() {

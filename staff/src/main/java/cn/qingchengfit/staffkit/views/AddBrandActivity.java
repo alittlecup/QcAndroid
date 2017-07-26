@@ -121,8 +121,7 @@ public class AddBrandActivity extends BaseActivity implements AddBrandView {
     @Override public void onSucceed(final CreatBrand creatBrand) {
 
         restRepository.getGet_api()
-            .qcGetBrands(App.staffId)
-            .subscribeOn(Schedulers.io())
+            .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
                 @Override public void call(QcResponseData<BrandsResponse> qcResponseBrands) {

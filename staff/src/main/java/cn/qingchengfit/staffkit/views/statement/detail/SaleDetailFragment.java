@@ -358,7 +358,11 @@ public class SaleDetailFragment extends BaseFragment implements SaleCardTypeView
      * 增加或者减少 +1 -1
      */
     private void changeCalendar(int symbol) {
-        Observable.just(symbol).subscribeOn(Schedulers.io()).throttleFirst(500, TimeUnit.MILLISECONDS).map(new Func1<Integer, Integer>() {
+      Observable.just(symbol)
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .throttleFirst(500, TimeUnit.MILLISECONDS)
+          .map(new Func1<Integer, Integer>() {
             @Override public Integer call(Integer symbol) {
                 switch (mDividerType) {
                     case 0:

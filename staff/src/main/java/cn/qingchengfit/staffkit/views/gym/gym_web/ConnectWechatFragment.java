@@ -99,6 +99,7 @@ import rx.schedulers.Schedulers;
                 showLoading();
                 RxRegiste(new RestRepository().getPost_api()
                     .qcEditShop(App.staffId, body)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<QcResponse>() {

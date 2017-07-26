@@ -96,9 +96,6 @@ public class WebForResumeFragment extends WebFragment {
             @Override public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mCurUrl = url;
-                if (mRefreshSwipeRefreshLayout != null) {
-                    mRefreshSwipeRefreshLayout.setRefreshing(false);
-                }
                 onWebFinish();
             }
 

@@ -73,8 +73,7 @@ public class StudentListPresenter extends BasePresenter {
         params.put("q", keyword);
       }
         RxRegiste(restRepository.getGet_api()
-            .qcGetAllStudents(staffid, params)
-            .subscribeOn(Schedulers.io())
+            .qcGetAllStudents(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .map(new Func1<QcResponseData<Students>, List<QcStudentBean>>() {
               @Override
               public List<QcStudentBean> call(QcResponseData<Students> qcResponseAllStudent) {

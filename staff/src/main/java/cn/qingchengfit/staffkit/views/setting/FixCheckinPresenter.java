@@ -66,6 +66,7 @@ public class FixCheckinPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetCheckinNotiConfigs(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<SigninNoticeConfigs>>() {
                 @Override public void call(QcResponseData<SigninNoticeConfigs> responseData) {
@@ -95,6 +96,7 @@ public class FixCheckinPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcPutCheckinNoticeCOnfig(App.staffId, body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {

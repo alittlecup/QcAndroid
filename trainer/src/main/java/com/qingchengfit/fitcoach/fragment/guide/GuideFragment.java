@@ -96,6 +96,7 @@ public class GuideFragment extends BaseFragment {
         if (TextUtils.isEmpty(initBean.brand_id)) {
             if (App.gUser != null && App.gUser.id != null) {
                 RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id + "")
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<QcResponseBrands>() {
@@ -121,6 +122,7 @@ public class GuideFragment extends BaseFragment {
         } else {
             if (App.gUser != null && App.gUser.id != null) {
                 RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id + "")
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<QcResponseBrands>() {

@@ -60,6 +60,7 @@ public class CourseReversePresenter extends BasePresenter {
     public void qcGetCourseReverse(String scheduleId) {
         RxRegiste(restRepository.getGet_api()
             .qcGetCourseReportDetail(App.staffId, scheduleId, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<CourseReportDetail>>() {

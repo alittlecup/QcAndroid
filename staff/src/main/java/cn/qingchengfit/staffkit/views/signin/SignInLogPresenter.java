@@ -66,6 +66,7 @@ public class SignInLogPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetSignInLog(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<SignInTasks>() {
                 @Override public void call(SignInTasks signInTasks) {

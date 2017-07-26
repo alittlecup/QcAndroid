@@ -150,6 +150,7 @@ public class PushReciever extends PushMessageReceiver {
                                 p.put("model", coachService1.getModel());
                                 restRepository.getGet_api()
                                     .qcPermission(staffid, p)
+                                    .onBackpressureBuffer()
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new Action1<QcResponsePermission>() {

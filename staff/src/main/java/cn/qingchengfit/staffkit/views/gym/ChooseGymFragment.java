@@ -113,8 +113,8 @@ public class ChooseGymFragment extends BaseDialogFragment {
                 dismiss();
                 //                rx.Observable.just("")
                 //                        .delay(500, TimeUnit.MILLISECONDS)
-                //                        .subscribeOn(Schedulers.newThread())
-                //                        .subscribeOn(AndroidSchedulers.mainThread())
+              //                        .onBackpressureBuffer().subscribeOn(Schedulers.newThread())
+              //                        .onBackpressureBuffer().subscribeOn(AndroidSchedulers.mainThread())
                 //                        .subscribe(new Action1<String>() {
                 //                            @Override
                 //                            public void call(String s) {

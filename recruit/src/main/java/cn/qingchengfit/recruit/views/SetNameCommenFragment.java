@@ -1,6 +1,7 @@
 package cn.qingchengfit.recruit.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,8 @@ import cn.qingchengfit.recruit.event.EventSetName;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 /**
  * Created by fb on 2017/7/3.
@@ -70,11 +73,27 @@ public class SetNameCommenFragment extends BaseFragment {
           return false;
         } else {
           RxBus.getBus().post(new EventSetName(editGroupName.getText().toString()));
-          getActivity().onBackPressed();
+          getActivity().getSupportFragmentManager().popBackStackImmediate();
         }
         return false;
       }
     });
+  }
+
+  @Override public boolean onFragmentBackPress() {
+    if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString("txt"))) {
+      DialogUtils.instanceDelDialog(getContext(), "确定放弃所做修改？",
+          new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+              dialog.dismiss();
+              getActivity().getSupportFragmentManager().popBackStackImmediate();
+            }
+          }).show();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @OnClick(R2.id.image_clear_name) public void onClearContent() {

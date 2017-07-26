@@ -24,6 +24,7 @@ public class MarkResumesPresenter extends BasePresenter {
   public void markResume(MarkResumeBody body, int tp) {
     RxRegiste(qcRestRepository.createPostApi(PostApi.class)
         .markResume(tp == 0 ? "delivery" : "invite", body)
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {

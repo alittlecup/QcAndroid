@@ -44,8 +44,7 @@ public class MinePositionPresenter extends BasePresenter {
     }
     if (page <= totalpage) {
       RxRegiste(restRepository.createGetApi(GetApi.class)
-          .queryMyStared(page)
-          .subscribeOn(Schedulers.io())
+          .queryMyStared(page).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
             @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
@@ -73,8 +72,7 @@ public class MinePositionPresenter extends BasePresenter {
     }
     if (page <= totalpage) {
       RxRegiste(restRepository.createGetApi(GetApi.class)
-          .queryMySent(page)
-          .subscribeOn(Schedulers.io())
+          .queryMySent(page).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
             @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {
@@ -99,8 +97,7 @@ public class MinePositionPresenter extends BasePresenter {
     }
     if (page <= totalpage) {
       RxRegiste(restRepository.createGetApi(GetApi.class)
-          .queryMyInvited(page)
-          .subscribeOn(Schedulers.io())
+          .queryMyInvited(page).onBackpressureBuffer().subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
             @Override public void call(QcDataResponse<JobListWrap> jobListWrapQcDataResponse) {

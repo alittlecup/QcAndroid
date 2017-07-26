@@ -78,6 +78,7 @@ public class SignInManualPresenter extends BasePresenter {
         params.put("user_id", studentBase.id());
         RxRegiste(restRepository.getGet_api()
             .qcGetStudentCards(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<SigninValidCard>() {
@@ -101,6 +102,7 @@ public class SignInManualPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         RxRegiste(restRepository.getGet_api()
             .qcGetSignInCostConfig(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<SignInCardCostBean.Data>>() {
@@ -119,6 +121,7 @@ public class SignInManualPresenter extends BasePresenter {
         params.put("user_id", studentBase.id());
         RxRegiste(restRepository.getGet_api()
             .qcGetStudentCourse(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<SignInSchdule>() {
@@ -143,6 +146,7 @@ public class SignInManualPresenter extends BasePresenter {
         body.setCard_id(cardId);
         RxRegiste(restRepository.getPost_api()
             .qcPostCheckInMaual(App.staffId, gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -166,6 +170,7 @@ public class SignInManualPresenter extends BasePresenter {
         body.put("photo", img);
         RxRegiste(restRepository.getPost_api()
             .qcUploadStuImg(staffid, gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

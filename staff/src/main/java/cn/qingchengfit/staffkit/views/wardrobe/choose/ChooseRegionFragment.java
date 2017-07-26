@@ -85,6 +85,7 @@ public class ChooseRegionFragment extends BaseFragment implements FlexibleAdapte
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         RxRegiste(restRepository.getGet_api()
             .qcGetAllRegion(App.staffId, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<LockerRegions>>() {

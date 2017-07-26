@@ -70,6 +70,7 @@ public class SuPresenter extends BasePresenter {
     public void onFixStaff(ManagerBody body, String staffid, String userid) {
         RxRegiste(mRestRepository.getPost_api()
             .qcUpdateManager(staffid, userid, gymWrapper.id(), gymWrapper.model(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

@@ -65,6 +65,7 @@ public class WorkExperienceFragment extends VpFragment {
         recyclerview.setHasFixedSize(true);
         recyclerview.setNestedScrollingEnabled(true);
         QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(qcExperienceResponse -> {
                 //                                getActivity().runOnUiThread(() -> {

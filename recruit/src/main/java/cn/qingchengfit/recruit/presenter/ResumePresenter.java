@@ -46,6 +46,7 @@ public class ResumePresenter extends BasePresenter {
     RxRegiste(restRepository.createGetApi(GetApi.class)
         .queryMyResumeHome()
         .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcDataResponse<ResumeHomeWrap>>() {
           @Override public void call(QcDataResponse<ResumeHomeWrap> resumeHomeQcDataResponse) {
@@ -71,6 +72,7 @@ public class ResumePresenter extends BasePresenter {
     RxRegiste(restRepository.createGetApi(GetApi.class)
         .qcGetOtherResumeDetail(resumeId, params)
         .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcDataResponse<ResumeHomeWrap>>() {
           @Override public void call(QcDataResponse<ResumeHomeWrap> resumeHomeQcDataResponse) {
@@ -85,8 +87,7 @@ public class ResumePresenter extends BasePresenter {
 
   public void queryEducations() {
     RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryEducations()
-        .subscribeOn(Schedulers.io())
+        .queryEducations().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<EduExpListWrap>>() {
           @Override public void call(QcDataResponse<EduExpListWrap> eduExpListWrapQcDataResponse) {
@@ -124,8 +125,7 @@ public class ResumePresenter extends BasePresenter {
 
   public void queryWorkExps() {
     RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryWorkExps()
-        .subscribeOn(Schedulers.io())
+        .queryWorkExps().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<WorkExpListWrap>>() {
           @Override public void call(QcDataResponse<WorkExpListWrap> workExpListWrapQcDataResponse) {
@@ -144,8 +144,7 @@ public class ResumePresenter extends BasePresenter {
 
   public void queryExps() {
     RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryCertifications()
-        .subscribeOn(Schedulers.io())
+        .queryCertifications().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<CertificateListWrap>>() {
           @Override public void call(QcDataResponse<CertificateListWrap> qcResonese) {
@@ -166,8 +165,7 @@ public class ResumePresenter extends BasePresenter {
     HashMap<String, Object> params = new HashMap<String, Object>();
     params.put("resume_id", resumeId);
     RxRegiste(restRepository.createPostApi(PostApi.class)
-        .favoriteResume(params)
-        .subscribeOn(Schedulers.io())
+        .favoriteResume(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
@@ -182,8 +180,7 @@ public class ResumePresenter extends BasePresenter {
 
   public void unStarResume(String resumeId) {
     RxRegiste(restRepository.createPostApi(PostApi.class)
-        .cancelStarResume(resumeId)
-        .subscribeOn(Schedulers.io())
+        .cancelStarResume(resumeId).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {

@@ -173,6 +173,7 @@ public class ModifyBodyTestFragment extends Fragment {
                                     spUpImg = UpYunClient.rxUpLoad("/course/", filePath)
 
                                         .observeOn(AndroidSchedulers.mainThread())
+                                        .onBackpressureBuffer()
                                         .subscribeOn(Schedulers.io())
                                         .subscribe(new Subscriber<String>() {
                                             @Override public void onCompleted() {
@@ -214,6 +215,7 @@ public class ModifyBodyTestFragment extends Fragment {
     public void getInfo() {
         QcCloudClient.getApi().getApi.qcGetBodyTest(measureId, getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<QcGetBodyTestResponse>() {
                 @Override public void onCompleted() {
@@ -314,6 +316,7 @@ public class ModifyBodyTestFragment extends Fragment {
     public void addTest() {
         QcCloudClient.getApi().getApi.qcGetBodyTestModel(getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<QcBodyTestTemplateRespone>() {
                 @Override public void onCompleted() {
@@ -489,6 +492,7 @@ public class ModifyBodyTestFragment extends Fragment {
         if (!TextUtils.isEmpty(measureId)) {//修改
             QcCloudClient.getApi().postApi.qcUpdateBodyTest(measureId, addBodyTestBean)
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcResponse>() {
                     @Override public void onCompleted() {
@@ -510,6 +514,7 @@ public class ModifyBodyTestFragment extends Fragment {
         } else { //添加
             QcCloudClient.getApi().postApi.qcAddBodyTest(addBodyTestBean)
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcResponse>() {
                     @Override public void onCompleted() {
@@ -540,6 +545,7 @@ public class ModifyBodyTestFragment extends Fragment {
                 @Override public void onPositive(MaterialDialog dialog) {
                     super.onPositive(dialog);
                     QcCloudClient.getApi().postApi.qcDelBodyTest(measureId, getParams())
+                        .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<QcResponse>() {

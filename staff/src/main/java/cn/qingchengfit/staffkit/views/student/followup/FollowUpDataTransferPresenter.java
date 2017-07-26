@@ -96,6 +96,7 @@ public class FollowUpDataTransferPresenter extends BasePresenter {
         }
         RxRegiste(restRepository.getGet_api()
             .qcGetTrackStudentsConver(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<FollowUpConver>>() {

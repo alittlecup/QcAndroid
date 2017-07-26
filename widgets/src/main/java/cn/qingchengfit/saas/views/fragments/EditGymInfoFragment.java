@@ -19,6 +19,7 @@ import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saas.presenters.BaseGymInfoPresenter;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -28,6 +29,8 @@ import cn.qingchengfit.views.fragments.CommonInputTextFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -158,12 +161,11 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
     if (getActivity() != null && getActivity() instanceof BaseActivity) {
       getFragmentManager().beginTransaction()
           .add(((BaseActivity) getActivity()).getFragId(),
-              CommonInputTextFragment.newInstance("描述您的健身房", "请填写健身房描述"))
+              CommonInputTextFragment.newInstance("描述您的健身房", presenter.getGymDesc(), "请填写健身房描述"))
           .addToBackStack(null)
           .commit();
     }
   }
-
 
   @Override public void onGym(Gym gym) {
     PhotoUtils.smallCircle(header, gym.getPhoto());
@@ -180,6 +182,18 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
   @Override public void onEditOk() {
     hideLoading();
     RxBus.getBus().post(new EventFreshGyms());
-    getActivity().onBackPressed();
+    getActivity().getSupportFragmentManager().popBackStackImmediate();
+  }
+
+  @Override public boolean onFragmentBackPress() {
+    DialogUtils.instanceDelDialog(getContext(), "确定放弃所做修改？",
+        new MaterialDialog.SingleButtonCallback() {
+          @Override
+          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            dialog.dismiss();
+            getActivity().getSupportFragmentManager().popBackStackImmediate();
+          }
+        }).show();
+    return true;
   }
 }

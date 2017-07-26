@@ -143,6 +143,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
             Space space = new Space(name.getContent(), count.getContent(), isSupportPrivate, isSupportTeam);
             restRepository.getPost_api()
                 .qcCreateSpace(App.staffId, gymWrapper.id(), gymWrapper.model(), "", space)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponse>() {
@@ -163,6 +164,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
             Space space = new Space(name.getContent(), count.getContent(), isSupportPrivate, isSupportTeam);
             restRepository.getPost_api()
                 .qcCreateSpace(App.staffId, gymWrapper.id(), gymWrapper.model(), null, space)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponse>() {

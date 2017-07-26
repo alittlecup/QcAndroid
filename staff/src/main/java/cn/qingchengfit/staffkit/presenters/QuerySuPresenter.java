@@ -26,6 +26,7 @@ public class QuerySuPresenter extends BasePresenter {
     public void querySu(final CoachService coachService) {
         RxRegiste(restRepository.getGet_api()
             .qcCheckSu(App.staffId, GymUtils.getParams(coachService, null))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<ResponseSu>>() {

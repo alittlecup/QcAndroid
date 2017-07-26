@@ -176,7 +176,7 @@
 //
 ////                Observable.just(sleepThread(5000))
 ////                        .observeOn(Schedulers.newThread())
-////                        .subscribeOn(AndroidSchedulers.mainThread())
+////                        .onBackpressureBuffer().subscribeOn(AndroidSchedulers.mainThread())
 ////                        .subscribe(s -> {
 ////                            if (getActivity() != null) {
 ////                                getActivity().runOnUiThread(() -> {

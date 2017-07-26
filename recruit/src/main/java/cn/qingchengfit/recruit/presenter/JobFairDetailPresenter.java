@@ -44,8 +44,7 @@ public class JobFairDetailPresenter extends BasePresenter {
 
   public void queryJobFairDetail(String id) {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .queryStaffJobFairDetail(id)
-        .subscribeOn(Schedulers.io())
+        .queryStaffJobFairDetail(id).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobFairWrap>>() {
           @Override public void call(QcDataResponse<JobFairWrap> qcResponse) {
@@ -61,6 +60,7 @@ public class JobFairDetailPresenter extends BasePresenter {
   public void queryJobFairJobs(String fairid, HashMap<String, Object> params) {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
         .queryJobFairJobs(fairid, ListUtils.mapRemoveNull(params))
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
@@ -83,6 +83,7 @@ public class JobFairDetailPresenter extends BasePresenter {
 
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
         .queryJobFairResumes(fairid, ListUtils.mapRemoveNull(params))
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<ResumeListWrap>>() {

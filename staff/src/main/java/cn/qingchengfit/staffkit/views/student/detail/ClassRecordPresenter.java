@@ -85,6 +85,7 @@ public class ClassRecordPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
 
             .qcGetStudentClassRecords(App.staffId, studentBase.id(), params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<ClassRecords>>() {

@@ -41,7 +41,7 @@ import rx.schedulers.Schedulers;
     //    public Subscription queryStudentList(String brandid ,String id,String model, Action1<QcResponseAllStudent> action1) {
     //
     //        return restRepository.getGet_api().qcGetAllStudents(App.staffId,(!StringUtils.isEmpty(id) && !StringUtils.isEmpty(model))?null: brandid, id, model)
-    //                .subscribeOn(Schedulers.io())
+  //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                .observeOn(Schedulers.io())
     //                .subscribe(action1, new Action1<Throwable>() {
     //                    @Override
@@ -54,7 +54,7 @@ import rx.schedulers.Schedulers;
     //    public Subscription queryStudentList(String id,String model,Action1<QcResponseAllStudent> action1) {
     //
     //        return restRepository.getGet_api().qcGetAllStudents(App.staffId, null, id, model)
-    //                .subscribeOn(Schedulers.io())
+  //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                .observeOn(AndroidSchedulers.mainThread())
     //                .subscribe(action1, new NetError());
     //    }
@@ -62,7 +62,7 @@ import rx.schedulers.Schedulers;
 
     //public Subscription queryClassRecords(String studentid, String gymid, String gymmoedl, String brand_id, Action1<QcResponseData<ClassRecords>> action1) {
     //return restRepository.getGet_api().qcGetStudentClassRecords(App.staffId, studentid, gymid, gymmoedl, brand_id)
-    //        .subscribeOn(Schedulers.io())
+  //        .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //        .observeOn(AndroidSchedulers.mainThread())
     //        .subscribe(action1, new Action1<Throwable>() {
     //            @Override
@@ -76,6 +76,7 @@ import rx.schedulers.Schedulers;
         Action1<QcResponseStudentCards> action1) {
         return restRepository.getGet_api()
             .qcGetStudentCards(App.staffId, studentid, gymid, gymmoedl, brand_id)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(action1, new NetWorkThrowable());
     }
@@ -84,6 +85,7 @@ import rx.schedulers.Schedulers;
         Action1<QcResponseData<FollowRecords>> action1) {
         return restRepository.getGet_api()
             .qcGetStudentFollow(App.staffId, studentid, gymid, gymmoedl, brand_id, page)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(action1, new NetWorkThrowable());
     }
@@ -92,6 +94,7 @@ import rx.schedulers.Schedulers;
         Action1<QcResponseStudentInfo> action1) {
         return restRepository.getGet_api()
             .qcGetStudentInfo(App.staffId, studentid, gymid, gymmoedl, brand_id)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(action1, new NetWorkThrowable());
     }
@@ -104,6 +107,7 @@ import rx.schedulers.Schedulers;
         user_student.setJoined_at(null);
         return restRepository.getPost_api()
             .qcUpdateStudent(App.staffId, id, gymid, gymmodel, brandid, user_student)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(action1, new NetWorkThrowable());
     }
@@ -115,6 +119,7 @@ import rx.schedulers.Schedulers;
         Action1<QcResponseData> action1) {
         user_student.setJoined_at(null);
         return restRepository.getPost_api().qcCreateStudent(App.staffId, params, user_student)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(action1, new NetWorkThrowable());
     }
@@ -125,6 +130,7 @@ import rx.schedulers.Schedulers;
     public Subscription delStudent(String id, String gymid, String gymmodel, String brandid, String shop_ids, Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcDelStudent(App.staffId, id, gymid, gymmodel, brandid, shop_ids)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(action1, new NetWorkThrowable());
     }
@@ -133,6 +139,7 @@ import rx.schedulers.Schedulers;
         Action1<QcResponse> action1) {
         return restRepository.getPost_api()
             .qcAddFollowRecord(App.staffId, user_id, body, brandid, gymid, gymmodel)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(action1, new NetWorkThrowable());
     }

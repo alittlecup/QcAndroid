@@ -18,9 +18,12 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventWelFare;
 import cn.qingchengfit.recruit.views.resume.ResumeIntentJobsFragment;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TagInputFragment;
 import cn.qingchengfit.widgets.QcTagGroup;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.ArrayList;
@@ -74,7 +77,7 @@ import java.util.List;
         if (tagInputFragment != null) {
           RxBus.getBus().post(new EventWelFare(tagInputFragment.getTags()));
         }
-        getActivity().onBackPressed();
+        getActivity().getSupportFragmentManager().popBackStackImmediate();
         return true;
       }
     });
@@ -121,4 +124,21 @@ import java.util.List;
   @Override public void onDestroyView() {
     super.onDestroyView();
   }
+
+  @Override public boolean onFragmentBackPress() {
+    if (jobs != null && jobs.size() > 0) {
+      DialogUtils.instanceDelDialog(getContext(), "确定放弃所做修改？",
+          new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+              dialog.dismiss();
+              getActivity().getSupportFragmentManager().popBackStackImmediate();
+            }
+          }).show();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

@@ -128,8 +128,7 @@ public class RecruitManageFragment extends BaseFragment
 
   protected void refreshData() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .queryManageGyms()
-        .subscribeOn(Schedulers.io())
+        .queryManageGyms().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<GymListWrap>>() {
           @Override public void call(QcDataResponse<GymListWrap> qcResponse) {

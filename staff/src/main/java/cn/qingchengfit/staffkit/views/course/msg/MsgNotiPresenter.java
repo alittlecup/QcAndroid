@@ -29,6 +29,7 @@ public class MsgNotiPresenter extends BasePresenter {
     void editShopConfig(ShopConfigBody body) {
         RxRegiste(restRepository.getPost_api()
             .qcShopConfigs(loginStatus.staff_id(), gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -49,6 +50,7 @@ public class MsgNotiPresenter extends BasePresenter {
     void queryShopConfig(String key) {
         RxRegiste(restRepository.getGet_api()
             .qcGetShopConfig(loginStatus.staff_id(), key, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<SignInConfig.Data>>() {

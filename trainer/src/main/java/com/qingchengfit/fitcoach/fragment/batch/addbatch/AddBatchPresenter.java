@@ -79,6 +79,7 @@ public class AddBatchPresenter extends BasePresenter {
     public void arrangeBatch(ArrangeBatchBody body) {
         sp = mRestRepository.getPost_api()
             .qcArrangeBatch(App.coachid + "", coachService.getId() + "", coachService.getModel(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -99,8 +100,7 @@ public class AddBatchPresenter extends BasePresenter {
     public void checkBatch(int coursetype, ArrangeBatchBody body) {
         spCheck = mRestRepository.getPost_api()
             .qcCheckBatch(App.coachid + "", coursetype == Configs.TYPE_PRIVATE ? "private" : "group", coachService.getId() + "",
-                coachService.getModel(), body)
-            .subscribeOn(Schedulers.io())
+                coachService.getModel(), body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -119,6 +119,7 @@ public class AddBatchPresenter extends BasePresenter {
         mRestRepository.getGet_api()
             .qcGetBatchTemplate(App.coachid + "", coursetype == Configs.TYPE_PRIVATE ? "private" : "group", coachService.getId() + "",
                 coachService.getModel(), teacher_id, course_id)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseBtachTemplete>() {

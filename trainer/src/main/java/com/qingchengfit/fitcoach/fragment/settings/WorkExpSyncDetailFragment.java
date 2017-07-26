@@ -148,8 +148,11 @@ public class WorkExpSyncDetailFragment extends BaseSettingFragment {
             new SyncExpBody.Builder().description(workexpeditDescripe.getText().toString().trim())
                 .group_is_hidden(!swGroup.isExpanded())
                 .private_is_hidden(!swPrivate.isExpanded())
-                .sale_is_hidden(!swSale.isExpanded())
-                .build()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<QcResponse>() {
+                .sale_is_hidden(!swSale.isExpanded()).build())
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcResponse>() {
             @Override public void call(QcResponse qcResponse) {
                 fragmentCallBack.hideLoading();
                 if (ResponseConstant.checkSuccess(qcResponse)) {

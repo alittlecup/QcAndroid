@@ -90,6 +90,7 @@ public class MeetingFragment extends BaseFragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("oem", getString(R.string.oem_tag));
         QcCloudClient.getApi().getApi.qcGetMeetingList(params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<QcMeetingResponse>() {

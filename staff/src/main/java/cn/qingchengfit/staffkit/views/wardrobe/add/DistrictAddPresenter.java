@@ -39,6 +39,7 @@ public class DistrictAddPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcEditLockerRegion(staffid, gymWrapper.getParams(), body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -62,6 +63,7 @@ public class DistrictAddPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcDelLockerRegion(staffid, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -88,6 +90,7 @@ public class DistrictAddPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcAddLockerRegion(staffid, gymWrapper.getParams(), body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {

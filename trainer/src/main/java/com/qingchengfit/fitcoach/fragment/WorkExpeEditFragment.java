@@ -118,7 +118,7 @@
 //                        super.onPositive(dialog);
 //                        fragmentCallBack.ShowLoading("请稍后");
 //                        QcCloudClient.getApi().postApi.qcDelExperience(experiencesEntity.getId())
-//                            .subscribeOn(Schedulers.io())
+//                            .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //                            .observeOn(AndroidSchedulers.mainThread())
 //                            .map(qcResponse -> qcResponse.status == ResponseResult.SUCCESS)
 //                            .subscribe(aBoolean -> {
@@ -266,12 +266,12 @@
 //        fragmentCallBack.ShowLoading("请稍后");
 //        if (mIsAdd) {
 //            QcCloudClient.getApi().postApi.qcAddExperience(addWorkExperience)
-//                .subscribeOn(Schedulers.io())
+//                .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(qcResponseAction);
 //        } else {
 //            QcCloudClient.getApi().postApi.qcEditExperience(experiencesEntity.getId(), addWorkExperience)
-//                .subscribeOn(Schedulers.io())
+//                .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(qcResponseAction);
 //        }

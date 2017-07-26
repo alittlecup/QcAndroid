@@ -74,6 +74,7 @@ public class SignOutManualPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetCheckInList(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<SignInTasks>() {
                 @Override public void call(SignInTasks signInTasks) {
@@ -94,6 +95,7 @@ public class SignOutManualPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcPutCheckOutMaual(App.staffId, params, body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -117,6 +119,7 @@ public class SignOutManualPresenter extends BasePresenter {
         body.put("photo", img);
         RxRegiste(restRepository.getPost_api()
             .qcUploadStuImg(loginStatus.staff_id(), gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

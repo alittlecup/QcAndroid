@@ -120,7 +120,7 @@ public class FollowUpStatusPresenter extends BasePresenter {
                     break;
             }
 
-            RxRegiste(observable.subscribeOn(Schedulers.io())
+          RxRegiste(observable.onBackpressureBuffer().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseData<TrackStudents>>() {
                     @Override public void call(QcResponseData<TrackStudents> trackStudentsQcResponseData) {

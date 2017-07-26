@@ -146,6 +146,7 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
             @Override public void call(EventChooseImage eventChooseImage) {
                 showLoading();
                 RxRegiste(UpYunClient.rxUpLoad("/signin/", eventChooseImage.filePath)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {

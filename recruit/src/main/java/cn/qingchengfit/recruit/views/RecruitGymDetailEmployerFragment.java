@@ -243,8 +243,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
    */
   @OnClick(R2.id.layout_gym_intro) public void onLayoutGymIntroClicked() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .querySu(gym.id)
-        .subscribeOn(Schedulers.io())
+        .querySu(gym.id).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<SuWrap>>() {
           @Override public void call(QcDataResponse<SuWrap> qcResponse) {
@@ -266,8 +265,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
    */
   @OnClick(R2.id.layout_gym_info) public void onLayoutGymInfoClicked() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .querySu(gym.id)
-        .subscribeOn(Schedulers.io())
+        .querySu(gym.id).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<SuWrap>>() {
           @Override public void call(QcDataResponse<SuWrap> qcResponse) {
@@ -297,8 +295,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
    */
   @OnClick(R2.id.btn_publish_new_position) public void onViewClicked() {
     RxRegiste(qcRestRepository.createGetApi(cn.qingchengfit.recruit.network.GetApi.class)
-        .queryOnepermission(gym.id, "job")
-        .subscribeOn(Schedulers.io())
+        .queryOnepermission(gym.id, "job").onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<OnePermissionWrap>>() {
           @Override public void call(QcDataResponse<OnePermissionWrap> qcResponse) {

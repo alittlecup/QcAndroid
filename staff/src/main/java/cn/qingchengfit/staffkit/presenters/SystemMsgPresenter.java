@@ -33,6 +33,7 @@ public class SystemMsgPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetNotificationIndex(json)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<List<NotificationGlance>>>() {
                 @Override public void call(QcResponseData<List<NotificationGlance>> notificationGlanceQcResponseData) {
@@ -48,6 +49,7 @@ public class SystemMsgPresenter extends BasePresenter {
     public void clearNoti(String type) {
         RxRegiste(restRepository.getPost_api()
             .qcClearTypeNoti(new ClearNotiBody(type))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -65,6 +67,7 @@ public class SystemMsgPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetRecruitMessageList()
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<RecordWrap>>() {
                 @Override public void call(

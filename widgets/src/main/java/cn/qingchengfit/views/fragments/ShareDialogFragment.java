@@ -139,7 +139,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
         sendToWx(true);
         subscriber.onCompleted();
       }
-    }).subscribeOn(Schedulers.io()).subscribe();
+    }).onBackpressureBuffer().subscribeOn(Schedulers.io()).subscribe();
     dismiss();
   }
 
@@ -149,7 +149,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
         sendToWx(false);
         subscriber.onCompleted();
       }
-    }).subscribeOn(Schedulers.io()).subscribe();
+    }).onBackpressureBuffer().subscribeOn(Schedulers.io()).subscribe();
     dismiss();
   }
 

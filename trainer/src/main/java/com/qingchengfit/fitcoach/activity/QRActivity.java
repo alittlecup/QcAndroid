@@ -106,7 +106,11 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
                 //                .module(getIntent().getStringExtra(LINK_MODULE))
                 //                .brand_id(getIntent().getStringExtra("brand_id"))
                 //                .shop_id(getIntent().getStringExtra("shop_id"))
-                .build()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<QcResponse>() {
+                .build())
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<QcResponse>() {
             @Override public void onCompleted() {
 
             }

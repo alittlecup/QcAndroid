@@ -89,6 +89,7 @@ public class CardTypeListPresenter extends BasePresenter {
         params.put("method", "get");
         RxRegiste(restRepository.getGet_api()
             .qcGetCardTplsPermission(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<QcResponseData<CardTpls>>() {
@@ -155,6 +156,7 @@ public class CardTypeListPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetCardTplsPermission(staffid, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<CardTpls>>() {
                 @Override public void call(QcResponseData<CardTpls> qcResponseCardTpls) {
@@ -214,6 +216,7 @@ public class CardTypeListPresenter extends BasePresenter {
 
         RxRegiste(restRepository.getGet_api()
             .qcGetCardTpls(staffid, gymWrapper.getParams(), type == 0 ? null : Integer.toString(type), isEnable ? "1" : "0")
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CardTpls>>() {

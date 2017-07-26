@@ -42,8 +42,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
 
     public void queryGroupDetail(final String teamId) {
         RxRegiste(restRepository.getGet_api()
-            .qcGetGroupDetail(teamId)
-            .subscribeOn(Schedulers.io())
+            .qcGetGroupDetail(teamId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<TeamDetailResponse>>() {
                 @Override public void call(cn.qingchengfit.network.response.QcResponseData<TeamDetailResponse> teamDetail) {
@@ -62,8 +61,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
     public void deleteGroup(String teamId) {
 
         RxRegiste(restRepository.getPost_api()
-            .qcDeleteGroup(teamId)
-            .subscribeOn(Schedulers.io())
+            .qcDeleteGroup(teamId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -86,8 +84,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
         createGroupBody.setUser_ids(handleData(userIds));
 
         RxRegiste(restRepository.getPost_api()
-            .qcPostCreateGroup(createGroupBody)
-            .subscribeOn(Schedulers.io())
+            .qcPostCreateGroup(createGroupBody).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -124,6 +121,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
 
         RxRegiste(restRepository.getPost_api()
             .qcPostMemberOperation(teamId, operationMemberBody)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

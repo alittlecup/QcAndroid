@@ -37,6 +37,7 @@ public class NotificationPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetNotification(params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<Notification>>() {
                 @Override public void call(QcResponseData<Notification> qcResponseNotification) {
@@ -73,6 +74,7 @@ public class NotificationPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetNotification(params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<Notification>>() {
                 @Override public void call(QcResponseData<Notification> qcResponseNotification) {
@@ -88,8 +90,7 @@ public class NotificationPresenter extends BasePresenter {
         params.put("id", notiId);
         //        params.put("type",notiType);
         RxRegiste(restRepository.getPost_api()
-            .qcClearAllNoti(staffid, params)
-            .subscribeOn(Schedulers.io())
+            .qcClearAllNoti(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -110,6 +111,7 @@ public class NotificationPresenter extends BasePresenter {
     public void clearNoti(String type) {
         RxRegiste(restRepository.getPost_api()
             .qcClearTypeNoti(new ClearNotiBody(type))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

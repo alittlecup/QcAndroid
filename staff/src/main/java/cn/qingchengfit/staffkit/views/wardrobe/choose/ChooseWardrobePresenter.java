@@ -34,6 +34,7 @@ public class ChooseWardrobePresenter extends BasePresenter {
     public void queryAllLocker(String staffid) {
         RxRegiste(restRepository.getGet_api()
             .qcGetAllLockers(staffid, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<AllLockers>>() {
@@ -56,8 +57,7 @@ public class ChooseWardrobePresenter extends BasePresenter {
         params.put("q", key);
 
         RxRegiste(restRepository.getGet_api()
-            .qcGetAllLockers(staffid, params)
-            .subscribeOn(Schedulers.io())
+            .qcGetAllLockers(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<AllLockers>>() {
                 @Override public void call(QcResponseData<AllLockers> qcResponse) {

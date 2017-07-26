@@ -79,9 +79,12 @@ public class AddGymFragment extends GuideSetGymFragment {
         bean.shop = new Shop.Builder().gd_lat(lat).gd_lng(lng).name(gymName.getContent()).gd_district_id(city_code+"").photo(imgUrl).build();
 
         RxRegiste(QcCloudClient.getApi().postApi.qcInit(bean)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
 
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseSystenInit>() {
                     @Override
                     public void call(QcResponseSystenInit qcResponse) {
@@ -217,7 +220,7 @@ public class AddGymFragment extends GuideSetGymFragment {
 //
 //
 //        AddGymPostBean bean = new AddGymPostBean(addgymName.getContent(), Districtid, addgymContact.getContent(), workexpeditDescripe.getText().toString(),addgymBrand.getContent());
-//        QcCloudClient.getApi().postApi.qcAddGym(bean).subscribeOn(Schedulers.newThread())
+//        QcCloudClient.getApi().postApi.qcAddGym(bean).onBackpressureBuffer().subscribeOn(Schedulers.newThread())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(qcAddGymResponse -> {
 //                            if (qcAddGymResponse.status == ResponseResult.SUCCESS) {

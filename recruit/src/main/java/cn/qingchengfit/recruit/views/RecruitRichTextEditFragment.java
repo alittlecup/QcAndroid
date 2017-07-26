@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,12 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventRichTextBack;
 import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragment;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.views.fragments.RichTxtFragment;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
@@ -106,8 +110,25 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
   @OnClick(R2.id.btn_comfirm) public void onBtnComfirmClicked() {
     if (richTxtFragment != null) {
       String x = richTxtFragment.getContent();
-      getActivity().onBackPressed();
+      getActivity().getSupportFragmentManager().popBackStackImmediate();
       RxBus.getBus().post(new EventRichTextBack(x, type));
     }
   }
+
+  @Override public boolean onFragmentBackPress() {
+    if (!TextUtils.isEmpty(content)) {
+      DialogUtils.instanceDelDialog(getContext(), "确定放弃所做修改？",
+          new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+              dialog.dismiss();
+              getActivity().getSupportFragmentManager().popBackStackImmediate();
+            }
+          }).show();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

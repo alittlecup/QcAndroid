@@ -169,6 +169,7 @@ public class CourseListFragment extends VpFragment implements FlexibleAdapter.On
     public void freshData() {
         RxRegiste(restRepository.getGet_api()
             .qcGetCourses(App.coachid + "", GymUtils.getParams(coachService, brand), mIsPrivate ? 1 : 0)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .filter(new Func1<QcResponseCourseList, Boolean>() {
@@ -234,6 +235,7 @@ public class CourseListFragment extends VpFragment implements FlexibleAdapter.On
                     showLoading();
                     RxRegiste(restRepository.getPost_api()
                         .qcDelCourse(App.coachid + "", courseDetail.getId(), GymUtils.getParams(coachService, brand))
+                        .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<QcResponse>() {

@@ -76,6 +76,7 @@ public class BodyTestListPresenter extends BasePresenter {
     public void queryBodyTestList() {
         RxRegiste(restRepository.getGet_api()
             .qcGetStuedntBodyTest(loginStatus.staff_id(), studentBase.id(), gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<BodyTestPreviews>>() {

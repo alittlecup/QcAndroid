@@ -219,7 +219,7 @@
 //            RxRegiste(RxBus.getBus()
 //                .register(PayEvent.class)
 //                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
+//                .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //                .subscribe(new Subscriber<PayEvent>() {
 //                    @Override public void onCompleted() {
 //                        onLoadedView();

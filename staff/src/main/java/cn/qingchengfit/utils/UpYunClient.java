@@ -85,7 +85,7 @@
 //                //String upImg = UpYunClient.upLoadImg(cloudpath, new File(filePath));
 //
 //            }
-//        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+//        }).onBackpressureBuffer().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 //    }
 //
 //    /**

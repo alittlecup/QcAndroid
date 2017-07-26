@@ -53,6 +53,7 @@ public class SeekPositionPresenter extends BasePresenter {
       isSync = true;
       RxRegiste(restRepository.createGetApi(GetApi.class)
           .queryJobList(page, params).throttleFirst(500, TimeUnit.MILLISECONDS)
+          .onBackpressureBuffer()
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(new Action1<QcDataResponse<JobListWrap>>() {
@@ -71,8 +72,7 @@ public class SeekPositionPresenter extends BasePresenter {
 
   public void queryIndex() {
     RxRegiste(restRepository.createPostApi(GetApi.class)
-        .queryJobsIndex()
-        .subscribeOn(Schedulers.io())
+        .queryJobsIndex().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<JobListIndex>>() {
           @Override public void call(QcDataResponse<JobListIndex> jobListIndexQcDataResponse) {

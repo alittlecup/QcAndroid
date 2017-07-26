@@ -71,6 +71,7 @@ public class SignInConfigScreenFragment extends BaseFragment {
         initToolbar(toolbar);
         RxRegiste(mRestRepository.getGet_api()
             .qcGetGymExtra(App.staffId, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<GymExtra>>() {

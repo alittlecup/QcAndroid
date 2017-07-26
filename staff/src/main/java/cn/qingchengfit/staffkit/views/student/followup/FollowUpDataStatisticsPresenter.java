@@ -91,6 +91,7 @@ public class FollowUpDataStatisticsPresenter extends BasePresenter {
         }
         RxRegiste(restRepository.getGet_api()
             .qcGetTrackStudentsStatistics(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<FollowUpDataStatistic>>() {

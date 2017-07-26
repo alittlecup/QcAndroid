@@ -30,10 +30,7 @@ public class RxHelper {
                             return Observable.error(new RuntimeException(TextUtils.isEmpty(result.msg) ? "请求失败" : result.msg));
                         }
                     }
-                })
-                    .subscribeOn(Schedulers.io())
-                    .unsubscribeOn(Schedulers.io())
-                    .subscribeOn(AndroidSchedulers.mainThread())
+                }).onBackpressureBuffer().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
             }
         };
@@ -62,7 +59,11 @@ public class RxHelper {
                             return Observable.error(new RuntimeException("请求失败"));
                         }
                     }
-                }).takeUntil(compareLifecycleObservable).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+                })
+                    .takeUntil(compareLifecycleObservable)
+                    .onBackpressureBuffer()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
             }
         };
     }

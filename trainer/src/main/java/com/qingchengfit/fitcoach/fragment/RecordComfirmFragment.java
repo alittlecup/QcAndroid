@@ -64,6 +64,7 @@ public class RecordComfirmFragment extends VpFragment {
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
         QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(qcCertificatesReponse -> {
 

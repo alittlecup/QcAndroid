@@ -45,6 +45,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetReportGlance(App.staffId, brand_id, null, id, model)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -57,6 +58,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetReportGlance(App.staffId, brand_id, shopid, null, null)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -69,6 +71,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetSaleGlance(App.staffId, brand_id, null, id, model)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -81,6 +84,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetSaleGlance(App.staffId, brand_id, shopid, null, null)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -92,7 +96,7 @@ public class StatementUsecase {
     //    public Observable<QcResponseSaleDetail> querySaleDetail(String start, String end, String shop_id, String card_tpl_id, String cards_extra, String seller_id, String type, String chargetype, String brand_id, String gymid, String gymmodel) {
     //        return restRepository.getGet_api().qcGetSaleDatail(App.staffId, start, end, shop_id, card_tpl_id, cards_extra, seller_id, type, chargetype, brand_id, gymid, gymmodel)
     //                .observeOn(AndroidSchedulers.mainThread())
-    //                .subscribeOn(Schedulers.io());
+  //                .onBackpressureBuffer().subscribeOn(Schedulers.io());
     //    }
 
     public Observable<QcResponseStatementDetail> queryStatementDetail(String start, String end, String teacherid, String course_id,
@@ -100,6 +104,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetStatementDatail(App.staffId, start, end, teacherid, course_id, course_extra, shop_id, brand_id, gymid, gymmod)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io());
     }
 
@@ -107,6 +112,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetServiceDetail(model, id)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
 
             .subscribe(action1, new Action1<Throwable>() {
@@ -120,6 +126,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetSaleCard(App.staffId)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -135,6 +142,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetCardTpls(App.staffId, params, t, "1")
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -148,6 +156,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetGymCardtpl(App.staffId, gymid, model, t)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -159,6 +168,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetAllCourses(App.staffId, brand_id, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -171,6 +181,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetAllCoaches(App.staffId, brand_id, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new NetError());
     }
@@ -180,6 +191,7 @@ public class StatementUsecase {
         return restRepository.getGet_api()
             .qcGetSalersAndCoach(App.staffId, brandid, shopid, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new NetError());
     }

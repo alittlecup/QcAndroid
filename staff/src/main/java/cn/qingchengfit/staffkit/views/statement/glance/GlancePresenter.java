@@ -162,6 +162,7 @@ public class GlancePresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetSigninGlance(loginStatus.staff_id(), params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<StatementGlanceResp>>() {
                 @Override public void call(QcResponseData<StatementGlanceResp> qcResponseReportGlance) {

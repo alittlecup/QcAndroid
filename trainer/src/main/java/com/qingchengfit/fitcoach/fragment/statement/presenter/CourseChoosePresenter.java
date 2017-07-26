@@ -142,6 +142,7 @@ public class CourseChoosePresenter extends BasePresenter {
         params.put("method", "get");
         RxRegiste(restRepository.getGet_api()
             .qcGetAllCourses(App.coachid+"", gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CourseTypeSamples>>() {

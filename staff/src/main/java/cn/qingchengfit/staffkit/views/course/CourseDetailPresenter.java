@@ -67,6 +67,7 @@ public class CourseDetailPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetCourseDetail(loginStatus.staff_id(), courseid, gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<CourseTypeResponse>>() {
                 @Override public void call(QcResponseData<CourseTypeResponse> qcResponseCourseDetail) {
@@ -125,6 +126,7 @@ public class CourseDetailPresenter extends BasePresenter {
     public void delCourse(String staffid, String courseid) {
         RxRegiste(restRepository.getPost_api()
             .qcDelCourse(staffid, courseid, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

@@ -57,7 +57,11 @@ public class PushUtils {
             RestRepository restRepository = new RestRepository();
             HashMap<String, Object> params = new HashMap<>();
             params.put("id", bean.notification_id + "");
-            restRepository.getPost_api().qcClearAllNoti(App.staffId, params).subscribeOn(Schedulers.io()).subscribe();
+          restRepository.getPost_api()
+              .qcClearAllNoti(App.staffId, params)
+              .onBackpressureBuffer()
+              .subscribeOn(Schedulers.io())
+              .subscribe();
 
             if (TextUtils.isEmpty(bean.url)) {//除了会员卡 分配销售等情况 其他都走schema
                 if (bean.type != 0 && bean.type >= 11) {
@@ -114,6 +118,7 @@ public class PushUtils {
                                     p.put("model", coachService1.getModel());
                                     restRepository.getGet_api()
                                         .qcPermission(staffid, p)
+                                        .onBackpressureBuffer()
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(new Action1<QcResponsePermission>() {

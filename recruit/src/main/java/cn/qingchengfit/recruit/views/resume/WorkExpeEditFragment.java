@@ -110,7 +110,7 @@ import static android.text.TextUtils.isEmpty;
               super.onPositive(dialog);
               //fragmentCallBack.ShowLoading("请稍后");
               //QcCloudClient.getApi().postApi.qcDelExperience(workExp.getId())
-              //    .subscribeOn(Schedulers.io())
+              //    .onBackpressureBuffer().subscribeOn(Schedulers.io())
               //    .observeOn(AndroidSchedulers.mainThread())
               //    .map(qcResponse -> qcResponse.status == ResponseResult.SUCCESS)
               //    .subscribe(aBoolean -> {
@@ -268,6 +268,7 @@ import static android.text.TextUtils.isEmpty;
     }
     showLoading();
     RxRegiste(ob.observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {

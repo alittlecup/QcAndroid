@@ -108,7 +108,7 @@ public class MainMsgFragment extends BaseFragment
   private NotificationDeleted notificationDeleted = new NotificationDeleted();
   private ConversationFragment conversationFragment;
   private int unReadNoti = 0;
-
+  private boolean init = false;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     String ds =
@@ -149,6 +149,12 @@ public class MainMsgFragment extends BaseFragment
     });
     changeLogIn();
     return view;
+  }
+
+  @Override public void onHiddenChanged(boolean hidden) {
+    if (!hidden && init) {
+      refresh();
+    }
   }
 
   private void changeLogIn() {
@@ -193,8 +199,9 @@ public class MainMsgFragment extends BaseFragment
               getString(R.string.chat_user_id_header, loginStatus.getUserId()),
               Uri.parse(Configs.Server).getHost(), this);
         }
-        if (!loginProcessor.isLogin()) {
+        if (!loginProcessor.isLogin() || !init) {
           loginProcessor.sientInstall();
+          init = true;
         } else {
           onLoginSuccess();
         }
@@ -271,6 +278,8 @@ public class MainMsgFragment extends BaseFragment
       getChildFragmentManager().beginTransaction()
           .replace(R.id.frame_chat, conversationFragment, "chat")
           .commitAllowingStateLoss();
+    } else {
+      getChildFragmentManager().beginTransaction().show(conversationFragment).commit();
     }
 
     if (getActivity() instanceof MainActivity) {

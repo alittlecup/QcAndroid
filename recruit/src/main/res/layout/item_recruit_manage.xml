@@ -8,6 +8,8 @@
     android:background="@drawable/bg_click"
     android:gravity="center_vertical"
     android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     >
 
   <ImageView
@@ -60,8 +62,5 @@
       app:srcCompat="@drawable/ic_arrow_right"
       />
 
-  <android.support.v4.widget.Space
-      android:layout_width="@dimen/activity_horizontal_margin"
-      android:layout_height="wrap_content"
-      />
+
 </LinearLayout>

@@ -76,6 +76,7 @@ public class AbsenteeStatisticPresenter extends BasePresenter {
             params.put("page", curPage);
             RxRegiste(restRepository.getGet_api()
                 .qcGetUsersAbsences(App.staffId, params)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<QcResponseData<Absentces>, Boolean>() {

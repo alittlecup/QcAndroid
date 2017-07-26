@@ -140,6 +140,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
             if (qcMyhomeResponse != null) handleResponse(qcMyhomeResponse);
         }
         qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread());
         qcMyhomeResponseObservable.subscribe(qcMyhomeResponseObserver);
@@ -161,7 +162,10 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         super.onResume();
         //        if (isFresh) {
         QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcMyhomeResponseObserver);
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(qcMyhomeResponseObserver);
         //            isFresh = false;
         //        }
     }

@@ -83,7 +83,10 @@ public class SignOutFragment extends BaseFragment {
 
     private void initRxBus() {
         Observable<SignInManualEvent> observable = RxBusAdd(SignInManualEvent.class);
-        observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Action1<SignInManualEvent>() {
+      observable.observeOn(AndroidSchedulers.mainThread())
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .subscribe(new Action1<SignInManualEvent>() {
             @Override public void call(SignInManualEvent signInManualEvent) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 

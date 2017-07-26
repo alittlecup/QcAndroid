@@ -200,6 +200,7 @@ import static android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
         // 全选事件
         observableSelectAll = RxBus.getBus().register(AllotSaleSelectAllEvent.class);
         observableSelectAll.observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<AllotSaleSelectAllEvent>() {
                 @Override public void call(AllotSaleSelectAllEvent selectAllEvent) {

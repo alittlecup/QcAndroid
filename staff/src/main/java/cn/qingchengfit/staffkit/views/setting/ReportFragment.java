@@ -119,7 +119,11 @@ public class ReportFragment extends BaseDialogFragment implements CommonPView {
                             String upImg = UpYunClient.upLoadImg("report/", new File(filePath));
                             subscriber.onNext(upImg);
                         }
-                    }).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
+                    })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .onBackpressureBuffer()
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new Subscriber<String>() {
                         @Override public void onCompleted() {
 
                         }

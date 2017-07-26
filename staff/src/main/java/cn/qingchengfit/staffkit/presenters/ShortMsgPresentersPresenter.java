@@ -36,6 +36,7 @@ public class ShortMsgPresentersPresenter extends BasePresenter {
         if (!StringUtils.isEmpty(key)) params.put("q", key);
         RxRegiste(restRepository.getGet_api()
             .qcQueryShortMsgList(App.staffId, status, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<ShortMsgList>>() {
@@ -56,6 +57,7 @@ public class ShortMsgPresentersPresenter extends BasePresenter {
     public void queryShortMsgDetail(String id) {
         RxRegiste(restRepository.getGet_api()
             .qcQueryShortMsgDetail(App.staffId, id, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<ShortMsgDetail>>() {
@@ -76,6 +78,7 @@ public class ShortMsgPresentersPresenter extends BasePresenter {
     public void sendMsg(final ShortMsgBody body) {
         RxRegiste(restRepository.getPost_api()
             .qcPostShortMsg(App.staffId, body, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -100,6 +103,7 @@ public class ShortMsgPresentersPresenter extends BasePresenter {
     public void updateShortMsg(ShortMsgBody body) {
         RxRegiste(restRepository.getPost_api()
             .qcPutShortMsg(App.staffId, body, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -120,6 +124,7 @@ public class ShortMsgPresentersPresenter extends BasePresenter {
     public void delShortMsg(String messageid) {
         RxRegiste(restRepository.getPost_api()
             .qcDelShortMsg(App.staffId, messageid, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

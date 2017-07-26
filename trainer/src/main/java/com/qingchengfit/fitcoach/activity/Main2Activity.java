@@ -295,6 +295,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
             if (spOrders != null && !spOrders.isUnsubscribed()) spOrders.unsubscribe();
             spOrders = QcCloudClient.getApi().getApi.qcGetOrderList()
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(qcResponsePage -> {
                     tabview.setPointStatu(4, (!PreferenceUtils.getPrefBoolean(this, App.coachid + "_has_show_orders", false)
@@ -334,7 +335,10 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
             pushBody.push_id = userid;
             pushBody.device_type = "android";
             pushBody.distribute = getString(R.string.oem_tag);
-            getApi().postApi.qcPostPushId(App.coachid, pushBody).subscribeOn(Schedulers.io()).subscribe(new Subscriber<QcResponse>() {
+          getApi().postApi.qcPostPushId(App.coachid, pushBody)
+              .onBackpressureBuffer()
+              .subscribeOn(Schedulers.io())
+              .subscribe(new Subscriber<QcResponse>() {
                 @Override public void onCompleted() {
 
                 }

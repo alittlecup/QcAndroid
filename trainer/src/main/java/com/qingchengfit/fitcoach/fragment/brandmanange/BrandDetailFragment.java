@@ -178,6 +178,7 @@ public class BrandDetailFragment extends BaseFragment {
     public void freshData() {
         if (mBrandId == null || TextUtils.isEmpty(mBrandId)) return;
         RxRegiste(QcCloudClient.getApi().getApi.qcGetBrandShops(App.coachid + "", brand.getId())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcReponseBrandDetailShops>() {

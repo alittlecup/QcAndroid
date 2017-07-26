@@ -120,6 +120,7 @@ public class ChooseGymActivity extends AppCompatActivity {
     public void refresh() {
         mHttpsub = QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<QcCoachServiceResponse>() {
                 @Override public void onCompleted() {

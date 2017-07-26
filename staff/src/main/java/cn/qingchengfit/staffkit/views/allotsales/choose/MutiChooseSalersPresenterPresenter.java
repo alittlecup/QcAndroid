@@ -33,6 +33,7 @@ public class MutiChooseSalersPresenterPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetSalers(staffid, null, null, gymWrapper.id(), gymWrapper.model())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<Sellers>>() {
                 @Override public void call(QcResponseData<Sellers> qcResponseSalers) {
@@ -56,6 +57,7 @@ public class MutiChooseSalersPresenterPresenter extends BasePresenter {
         body.put("seller_id", curentid);
         RxRegiste(restRepository.getPost_api()
             .qcModifySellers(staffid, gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

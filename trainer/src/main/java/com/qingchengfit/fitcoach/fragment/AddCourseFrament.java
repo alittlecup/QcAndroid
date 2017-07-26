@@ -152,6 +152,7 @@ public class AddCourseFrament extends Fragment {
             params.put("id", mId + "");
             QcCloudClient.getApi().getApi.qcGetOneCourse(App.coachid, mCourseId, params)
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcOneCourseResponse>() {
                     @Override public void onCompleted() {
@@ -229,6 +230,7 @@ public class AddCourseFrament extends Fragment {
             addSp = QcCloudClient.getApi().postApi.qcAddCourse(App.coachid,
                 new AddCourse(mId, mModel, upName, upImg, upTime, upIsPrivate, upIsPrivate ? null : mUpCapacity))
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<AddCoourseResponse>() {
                     @Override public void onCompleted() {
@@ -262,6 +264,7 @@ public class AddCourseFrament extends Fragment {
             addCourse.course_id = mCourseId;
             addSp = QcCloudClient.getApi().postApi.qcEditCourse(App.coachid, addCourse)
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcResponse>() {
                     @Override public void onCompleted() {
@@ -306,7 +309,10 @@ public class AddCourseFrament extends Fragment {
                         //        subscriber.onNext(upImg);
                         //    }
                         //})
-                        .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .onBackpressureBuffer()
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new Subscriber<String>() {
                             @Override public void onCompleted() {
 
                             }
@@ -370,7 +376,7 @@ public class AddCourseFrament extends Fragment {
 
                         //                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
                         //                                    .observeOn(AndroidSchedulers.mainThread())
-                        //                                    .subscribeOn(Schedulers.io())
+                      //                                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
                         //                                    .subscribe(new Subscriber<QcResponse>() {
                         //                                        @Override
                         //                                        public void onCompleted() {

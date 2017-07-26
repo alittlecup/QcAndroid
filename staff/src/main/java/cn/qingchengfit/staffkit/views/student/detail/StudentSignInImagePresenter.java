@@ -55,6 +55,7 @@ public class StudentSignInImagePresenter extends BasePresenter {
     public void querySignInList(String staffid) {
         RxRegiste(restRepository.getGet_api()
             .qcGetSignInImages(staffid, studentWrapper.id(), gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseSignInImg>() {
@@ -80,6 +81,7 @@ public class StudentSignInImagePresenter extends BasePresenter {
         body.put("photo", img);
         RxRegiste(restRepository.getPost_api()
             .qcUploadStuImg(staffid, gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

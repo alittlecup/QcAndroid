@@ -228,6 +228,7 @@ public class SetAccountTypeAddFragment extends BaseFragment {
         params.put("method", "get");
         sp = restRepository.getGet_api()
             .qcGetCardTplsPermission(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<QcResponseData<CardTpls>>() {

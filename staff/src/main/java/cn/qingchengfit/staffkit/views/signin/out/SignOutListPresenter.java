@@ -81,6 +81,7 @@ public class SignOutListPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetSignInTasks(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<SignInTasks>() {
                 @Override public void call(SignInTasks signInTasks) {
@@ -104,6 +105,7 @@ public class SignOutListPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetSignInTasks(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<SignInTasks>() {
                 @Override public void call(SignInTasks signInTasks) {
@@ -123,6 +125,7 @@ public class SignOutListPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcPostIgnore(App.staffId, params, body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -146,6 +149,7 @@ public class SignOutListPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcPutDoubleCheckout(App.staffId, params, body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -171,6 +175,7 @@ public class SignOutListPresenter extends BasePresenter {
         body.put("photo", img);
         RxRegiste(restRepository.getPost_api()
             .qcUploadStuImg(staffid, gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

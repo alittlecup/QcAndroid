@@ -87,6 +87,7 @@ public class ReferrerPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         RxRegiste(restRepository.getGet_api()
             .qcGetTrackStudentsRecommends(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(new Func1<QcResponseData<Referrers>, List<StudentReferrerBean>>() {
@@ -118,6 +119,7 @@ public class ReferrerPresenter extends BasePresenter {
         params.put("show_all", "1");
         RxRegiste(restRepository.getGet_api()
             .qcGetTrackStudentsRecommendsSelect(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(new Func1<QcResponseData<Referrers>, List<StudentReferrerBean>>() {

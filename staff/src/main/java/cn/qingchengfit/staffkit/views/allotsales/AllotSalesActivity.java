@@ -79,7 +79,10 @@ public class AllotSalesActivity extends BaseActivity implements FragCallBack, Dr
         setFilterFragment();
 
         observable = RxBus.getBus().register(AllotSaleEvent.class);
-        observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Action1<AllotSaleEvent>() {
+      observable.observeOn(AndroidSchedulers.mainThread())
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .subscribe(new Action1<AllotSaleEvent>() {
             @Override public void call(AllotSaleEvent allotSaleEvent) {
                 if (allotSaleEvent.isSearching) {
                     selectAll.setClickable(false);

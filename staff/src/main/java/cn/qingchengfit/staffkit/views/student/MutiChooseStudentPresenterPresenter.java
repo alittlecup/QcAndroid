@@ -88,6 +88,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
         params.put("method", method);
         RxRegiste(restRepository.getGet_api()
             .qcGetCardBundldStudents(staffid, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .map(new Func1<QcResponseData<Students>, List<QcStudentBean>>() {
                 @Override public List<QcStudentBean> call(QcResponseData<Students> qcResponseAllStudent) {
@@ -141,6 +142,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
         if (gymWrapper.inBrand()) {//连锁运营
             RxRegiste(StudentAction.newInstance()
                 .getStudentByBrand(gymWrapper.brand_id())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<QcStudentBean>>() {
@@ -151,6 +153,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
         } else {//场馆
             RxRegiste(StudentAction.newInstance()
                 .getStudentByGym(gymWrapper.id(), gymWrapper.model())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<QcStudentBean>>() {

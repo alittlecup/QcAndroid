@@ -125,8 +125,7 @@ public class WardrobeActivity extends BaseActivity implements FragCallBack {
         params.put("q", key);
 
         sp = restRepository.getGet_api()
-            .qcGetAllLockers(staffid, params)
-            .subscribeOn(Schedulers.io())
+            .qcGetAllLockers(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<AllLockers>>() {
                 @Override public void call(QcResponseData<AllLockers> qcResponse) {

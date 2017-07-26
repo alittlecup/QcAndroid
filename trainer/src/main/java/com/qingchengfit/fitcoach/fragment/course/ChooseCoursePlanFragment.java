@@ -107,8 +107,7 @@ public class ChooseCoursePlanFragment extends BaseFragment implements FlexibleAd
         params.put("id", coachService.getId());
         params.put("model", coachService.getModel());
         RxRegiste(restRepository.getGet_api()
-            .qcGetAllPlans(App.coachid, params)
-            .subscribeOn(Schedulers.io())
+            .qcGetAllPlans(App.coachid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcAllCoursePlanResponse>() {
                 @Override public void call(QcAllCoursePlanResponse qcResponseCoursePlan) {

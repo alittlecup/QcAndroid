@@ -139,7 +139,10 @@ public class ChooseStudentActivity extends BaseActivity {
                         }
                     });
 
-                    observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Observer<String>() {
+                  observable.observeOn(AndroidSchedulers.mainThread())
+                      .onBackpressureBuffer()
+                      .subscribeOn(Schedulers.io())
+                      .subscribe(new Observer<String>() {
                         @Override public void onCompleted() {
                             loadingDialog.dismiss();
                         }
@@ -219,6 +222,7 @@ public class ChooseStudentActivity extends BaseActivity {
             return;
         }
         QcCloudClient.getApi().postApi.qcAddStudents(App.coachid, new PostStudents(choosenstudentBeans), GymUtils.getParams(mCoachService))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<QcResponse>() {

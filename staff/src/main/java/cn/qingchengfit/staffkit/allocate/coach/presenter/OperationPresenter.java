@@ -96,8 +96,7 @@ public class OperationPresenter extends BasePresenter {
 
         body.put("user_ids", ret);
         RxRegiste(restRepository.getPost_api()
-            .qcAllocateCoach(App.staffId, body)
-            .subscribeOn(Schedulers.io())
+            .qcAllocateCoach(App.staffId, body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -138,6 +137,7 @@ public class OperationPresenter extends BasePresenter {
         params.put("user_ids", ret);
         RxRegiste(restRepository.getPost_api()
             .qcRemoveStudent(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -185,6 +185,7 @@ public class OperationPresenter extends BasePresenter {
         if (type == OPERATION_TYPE) {
             RxRegiste(restRepository.getGet_api()
                 .qcGetCoachStudentDetail(loginStatus.staff_id(), params)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseData<AllocateStudentBean>>() {
@@ -195,6 +196,7 @@ public class OperationPresenter extends BasePresenter {
         } else if (type == ADD_TYPE) {
             RxRegiste(restRepository.getGet_api()
                 .qcGetAllocateCoachStudents(loginStatus.staff_id(), params)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<cn.qingchengfit.model.responese.QcResponseData<AllocateStudentBean>>() {

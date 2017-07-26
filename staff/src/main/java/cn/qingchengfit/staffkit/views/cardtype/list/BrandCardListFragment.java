@@ -128,6 +128,7 @@ public class BrandCardListFragment extends BaseFragment {
             .qcGetCardTpls(App.staffId, gymWrapper.getParams(), mCardtype == 0 ? null : Integer.toString(mCardtype),
                 mCardDisable == 0 ? "1" : "0")
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<QcResponseData<CardTpls>>() {
                 @Override public void onCompleted() {

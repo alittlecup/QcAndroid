@@ -76,6 +76,7 @@ public class SaleDetailPresenter extends BasePresenter {
         if (!TextUtils.isEmpty(salerId)) params.put("seller_id", salerId);
         RxRegiste(restRepository.getGet_api()
             .qcGetAllotSaleOwenUsers(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<AllotSaleStudents>>() {
@@ -100,6 +101,7 @@ public class SaleDetailPresenter extends BasePresenter {
         params.put("seller_id", salerId);
         RxRegiste(restRepository.getPost_api()
             .qcDeleteStudent(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -140,6 +142,7 @@ public class SaleDetailPresenter extends BasePresenter {
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
         RxRegiste(restRepository.getGet_api()
             .qcGetAllotSaleOwenUsers(staffid, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<AllotSaleStudents>>() {

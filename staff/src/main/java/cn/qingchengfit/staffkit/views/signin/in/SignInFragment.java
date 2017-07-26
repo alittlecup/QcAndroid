@@ -77,6 +77,7 @@ public class SignInFragment extends BaseFragment {
 
     private void initRxBus() {
         RxBusAdd(SignInManualEvent.class).observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<SignInManualEvent>() {
                 @Override public void call(SignInManualEvent signInManualEvent) {

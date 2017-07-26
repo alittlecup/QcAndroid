@@ -59,9 +59,9 @@ public class MainWebFragment extends WebFragment {
     }
 
     @Override protected void onVisible() {
-        if (isLoaded && mRefreshSwipeRefreshLayout != null) {
-            mRefreshSwipeRefreshLayout.setRefreshing(false);
-        }
+      //if (isLoaded && mRefreshSwipeRefreshLayout != null) {
+      //    mRefreshSwipeRefreshLayout.setRefreshing(false);
+      //}
         SensorsUtils.track("AND_discover_tab_click", null, getContext());
     }
 
@@ -75,9 +75,9 @@ public class MainWebFragment extends WebFragment {
 
             @Override public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (mRefreshSwipeRefreshLayout != null) {
-                    mRefreshSwipeRefreshLayout.setRefreshing(false);
-                }
+              //if (mRefreshSwipeRefreshLayout != null) {
+              //    mRefreshSwipeRefreshLayout.setRefreshing(false);
+              //}
             }
 
             @Override public void onLoadResource(WebView view, String url) {

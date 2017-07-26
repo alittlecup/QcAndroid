@@ -56,7 +56,7 @@ import rx.schedulers.Schedulers;
         prams.put("id", id);
         prams.put("model", model);
         QcCloudClient.getApi().getApi.qcGetCoursesAll(App.coachid + "", prams)
-            .subscribeOn(Schedulers.io())
+            .onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseCourseList>() {
                 @Override public void call(QcResponseCourseList qcResponse) {

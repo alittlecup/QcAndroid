@@ -20,6 +20,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.event.EventFreshJobsList;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
@@ -31,6 +32,8 @@ import cn.qingchengfit.widgets.QcTagGroup;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -114,6 +117,13 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
     layoutEmloyerCtl.setVisibility(View.VISIBLE);
     layoutEmployeeCtl.setVisibility(View.GONE);
     layoutJobInfo.setVisibility(View.VISIBLE);
+    RxBusAdd(EventFreshJobsList.class).onBackpressureDrop()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<EventFreshJobsList>() {
+          @Override public void call(EventFreshJobsList eventFreshJobsList) {
+            presenter.queryStaffJob(job.id);
+          }
+        });
     return view;
   }
 

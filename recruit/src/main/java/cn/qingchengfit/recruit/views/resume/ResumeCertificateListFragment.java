@@ -86,8 +86,7 @@ public class ResumeCertificateListFragment extends BaseFragment implements Flexi
     rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 1));
     rv.setAdapter(commonFlexAdapter);
     RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryCertifications()
-        .subscribeOn(Schedulers.io())
+        .queryCertifications().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<CertificateListWrap>>() {
           @Override public void call(QcDataResponse<CertificateListWrap> certificateListWrapQcDataResponse) {

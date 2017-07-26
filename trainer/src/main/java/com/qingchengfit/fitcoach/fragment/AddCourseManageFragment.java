@@ -228,6 +228,7 @@ public class AddCourseManageFragment extends Fragment {
             addBatchCourse.time_repeats = weekTimes;
             QcCloudClient.getApi().postApi.qcAddCourseManage(App.coachid, addBatchCourse)
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcResponse>() {
                     @Override public void onCompleted() {

@@ -167,6 +167,7 @@ public class BodyTestFragment extends Fragment {
 
                                     spUpImg = UpYunClient.rxUpLoad("course/", filePath)
                                         .observeOn(AndroidSchedulers.mainThread())
+                                        .onBackpressureBuffer()
                                         .subscribeOn(Schedulers.io())
                                         .subscribe(new Subscriber<String>() {
                                             @Override public void onCompleted() {
@@ -206,6 +207,7 @@ public class BodyTestFragment extends Fragment {
     public void initInfo() {
         QcCloudClient.getApi().getApi.qcGetBodyTest(mMeasureId, ((BodyTestActivity) getActivity()).getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<QcGetBodyTestResponse>() {
                 @Override public void onCompleted() {

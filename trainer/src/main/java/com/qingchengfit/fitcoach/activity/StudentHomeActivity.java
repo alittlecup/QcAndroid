@@ -173,6 +173,7 @@ public class StudentHomeActivity extends BaseActivity {
                     super.onPositive(dialog);
                     QcCloudClient.getApi().postApi.qcDelStudent(App.coachid + "", mStudentShipId, getParams())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Subscriber<QcResponse>() {
                             @Override public void onCompleted() {
@@ -202,6 +203,7 @@ public class StudentHomeActivity extends BaseActivity {
     public void initBaseInfo() {
         QcCloudClient.getApi().getApi.qcGetStudentInfo(App.coachid + "", mStudentShipId, getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<StudentInfoResponse>() {
                 @Override public void onCompleted() {
@@ -253,6 +255,7 @@ public class StudentHomeActivity extends BaseActivity {
     public void getCourseRecords() {
         QcCloudClient.getApi().getApi.qcGetStuedntCourse(mStudentId, getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<StudentCourseResponse>() {
                 @Override public void onCompleted() {
@@ -288,6 +291,7 @@ public class StudentHomeActivity extends BaseActivity {
     public void getStudentCards() {
         QcCloudClient.getApi().getApi.qcGetStuedntCard(mStudentId, getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<StudentCarsResponse>() {
                 @Override public void onCompleted() {
@@ -334,6 +338,7 @@ public class StudentHomeActivity extends BaseActivity {
     public void getStudentBodyTest() {
         QcCloudClient.getApi().getApi.qcGetStuedntBodyTest(mStudentId, getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<BodyTestReponse>() {
                 @Override public void onCompleted() {

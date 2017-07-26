@@ -160,6 +160,7 @@ public class ChooseGroupCourseFragment extends BaseDialogFragment {
         params.put("method", "get");
         sp = restRepository.getGet_api()
             .qcGetCoursesPermission(App.staffId, params, mType == Configs.TYPE_PRIVATE ? 1 : 0)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CourseTypeSamples>>() {

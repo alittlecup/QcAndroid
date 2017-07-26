@@ -55,6 +55,7 @@ public class WardrobeAddPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcAddLocker(staffid, gymWrapper.getParams(), addLockerBody)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {

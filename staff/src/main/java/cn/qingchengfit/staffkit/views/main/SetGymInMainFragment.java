@@ -168,6 +168,7 @@ import rx.schedulers.Schedulers;
                 showLoading();
                 RxRegiste(new RestRepository().qcSystemInit(body)
                     .observeOn(AndroidSchedulers.mainThread())
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .subscribe(new Action1<QcResponseSystenInit>() {
                         @Override public void call(QcResponseSystenInit qcResponseSystenInit) {

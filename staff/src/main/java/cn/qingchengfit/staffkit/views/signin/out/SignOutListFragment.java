@@ -145,7 +145,7 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
     }
 
     private void initRxBus() {
-        RxBusAdd(SignInEvent.class).subscribeOn(Schedulers.io())
+      RxBusAdd(SignInEvent.class).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<SignInEvent>() {
                 @Override public void call(SignInEvent signInEvent) {
@@ -182,6 +182,7 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
             @Override public void call(EventChooseImage eventChooseImage) {
                 if (eventChooseImage.request != 2) return;
                 RxRegiste(UpYunClient.rxUpLoad("/signin/", eventChooseImage.filePath)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {
@@ -199,6 +200,7 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
         //延时3000 ，每间隔3  000，时间单位
         if (subscribe_auto == null) {
             subscribe_auto = Observable.interval(3, 3, TimeUnit.SECONDS)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Long>() {

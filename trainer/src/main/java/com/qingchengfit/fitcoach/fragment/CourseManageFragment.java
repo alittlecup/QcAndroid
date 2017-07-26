@@ -164,6 +164,7 @@ public class CourseManageFragment extends Fragment {
         QcCloudClient.getApi().getApi.qcGetGroupManageDetail(App.coachid, mBatchId,
             mCourseType == Configs.TYPE_PRIVATE ? "timetables" : "schedules", params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<QcBatchResponse>() {
                 @Override public void onCompleted() {
@@ -233,6 +234,7 @@ public class CourseManageFragment extends Fragment {
                     //                    batchBean.end = DateUtils.formatToServer();
                     QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "schedules", batchBean)
                         .observeOn(AndroidSchedulers.mainThread())
+                        .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Subscriber<QcResponse>() {
                             @Override public void onCompleted() {
@@ -278,6 +280,7 @@ public class CourseManageFragment extends Fragment {
                     batchBean.end = datas.get(pos).day + "T" + DateUtils.getTimeHHMM(end) + ":00";
                     QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "timetables", batchBean)
                         .observeOn(AndroidSchedulers.mainThread())
+                        .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Subscriber<QcResponse>() {
                             @Override public void onCompleted() {
@@ -324,6 +327,7 @@ public class CourseManageFragment extends Fragment {
                         QcCloudClient.getApi().postApi.qcDelCourseManage(App.coachid,
                             mCourseType == Configs.TYPE_PRIVATE ? "timetables" : "schedules", delCourseManage)
                             .observeOn(AndroidSchedulers.mainThread())
+                            .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .subscribe(new Subscriber<QcResponse>() {
                                 @Override public void onCompleted() {

@@ -165,6 +165,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         if (type == TYPE_GYM) {
             searchHottable.setText("热门健身房");
             QcCloudClient.getApi().getApi.qcHotGym(params)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(qcSerachGymRepsonse -> {
                 if (searchHottable != null) {
@@ -202,6 +203,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         } else if (type == TYPE_ORGANASITON) {
             searchHottable.setText("热门机构");
             QcCloudClient.getApi().getApi.qcHotOrganization(params)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcSearchOrganResponse -> {
@@ -278,7 +280,9 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         params.put("q", keyword);
         if (type == TYPE_GYM) {
 
-            QcCloudClient.getApi().getApi.qcSearchGym(params).subscribeOn(Schedulers.io())
+          QcCloudClient.getApi().getApi.qcSearchGym(params)
+              .onBackpressureBuffer()
+              .subscribeOn(Schedulers.io())
 
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(qcSerachGymRepsonse -> {
                 if (searchHottable != null) {
@@ -325,7 +329,9 @@ public class SearchFragment extends android.support.v4.app.Fragment {
             }, () -> {
             });
         } else if (type == TYPE_ORGANASITON) {
-            QcCloudClient.getApi().getApi.qcSearchOrganization(params).subscribeOn(Schedulers.io())
+          QcCloudClient.getApi().getApi.qcSearchOrganization(params)
+              .onBackpressureBuffer()
+              .subscribeOn(Schedulers.io())
 
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(qcSearchOrganResponse -> {
                 if (searchHottable != null) {

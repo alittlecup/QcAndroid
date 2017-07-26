@@ -38,6 +38,7 @@ public class CardFixValidDayPresenter extends BasePresenter {
     public void updateValidDay(UpdateCardValidBody body) {
         RxRegiste(restRepository.getPost_api()
             .qcUndateCardValid(loginStatus.staff_id(), wrapper.id(), gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

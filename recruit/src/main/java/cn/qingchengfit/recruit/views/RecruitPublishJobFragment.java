@@ -19,6 +19,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Gym;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
@@ -31,6 +35,8 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
+import cn.qingchengfit.saas.network.GetApi;
+import cn.qingchengfit.saas.response.SuWrap;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -44,7 +50,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -87,6 +95,7 @@ import rx.functions.Action1;
 
   @Inject RecruitRouter router;
   @Inject JobPresenter presenter;
+  @Inject QcRestRepository qcRestRepository;
   @Arg String gymId;
   @Arg int type;
   @Arg Job job;
@@ -357,11 +366,29 @@ import rx.functions.Action1;
    * 场馆介绍
    */
   @OnClick(R2.id.civ_gym_desc) public void onCivGymDescClicked() {
-    if (job != null) {
-      router.toWriteGymIntro(job.gym);
-    } else if (gymId != null) {
-      router.toWriteGymIntro(new Gym.Builder().id(gymId).build());
-    }
+    RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+        .querySu(gymId)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<SuWrap>>() {
+          @Override public void call(QcDataResponse<SuWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              if (qcResponse.data.is_superuser) {
+                if (job != null) {
+                  router.toWriteGymIntro(job.gym);
+                } else if (gymId != null) {
+                  router.toWriteGymIntro(new Gym.Builder().id(gymId).build());
+                }
+              } else {
+                showAlert("抱歉，您没有该功能呢权限，请联系超级管理员");
+              }
+            } else {
+              onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+
   }
 
   /**

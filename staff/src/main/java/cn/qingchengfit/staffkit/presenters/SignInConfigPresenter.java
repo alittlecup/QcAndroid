@@ -27,6 +27,7 @@ public class SignInConfigPresenter extends BasePresenter {
     public void getSignInConfigs() {
         RxRegiste(restRepository.getGet_api()
             .qcGetSignInCostConfig(App.staffId, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<SignInCardCostBean.Data>>() {

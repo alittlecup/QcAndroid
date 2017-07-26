@@ -113,8 +113,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
 
   protected void freshData() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .queryPermissionGyms()
-        .subscribeOn(Schedulers.io())
+        .queryPermissionGyms().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<GymListWrap>>() {
           @Override public void call(QcDataResponse<GymListWrap> qcResponse) {
@@ -193,8 +192,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
 
   protected void querySu(final Gym gym) {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .querySu(gym.id)
-        .subscribeOn(Schedulers.io())
+        .querySu(gym.id).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<SuWrap>>() {
           @Override public void call(QcDataResponse<SuWrap> qcResponse) {
@@ -213,6 +211,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
 
   protected void queryPermiss(final Gym gym) {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class).querySu(gym.id)
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<SuWrap>>() {

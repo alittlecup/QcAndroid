@@ -38,6 +38,7 @@ public class WardrobeContinueHirePresenter extends BasePresenter {
     public void comfirContinue(String staffid, HashMap<String, Object> body) {
         RxRegiste(restRepository.getPost_api()
             .qcContinueLocker(staffid, gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

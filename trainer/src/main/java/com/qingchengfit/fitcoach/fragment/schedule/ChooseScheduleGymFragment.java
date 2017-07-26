@@ -107,6 +107,7 @@ import rx.schedulers.Schedulers;
     public void refresh() {
         RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<QcCoachServiceResponse>() {
                 @Override public void onCompleted() {

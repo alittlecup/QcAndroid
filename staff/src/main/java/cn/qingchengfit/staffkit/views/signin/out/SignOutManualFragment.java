@@ -79,7 +79,7 @@ public class SignOutManualFragment extends BaseFragment implements SignOutManual
         });
         presenter.querySignOutList();
 
-        RxBusAdd(SignOutManualEvent.class).subscribeOn(Schedulers.io())
+      RxBusAdd(SignOutManualEvent.class).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<SignOutManualEvent>() {
                 @Override public void call(SignOutManualEvent signOutManualEvent) {
@@ -106,6 +106,7 @@ public class SignOutManualFragment extends BaseFragment implements SignOutManual
         RxBusAdd(EventChooseImage.class).subscribe(new Action1<EventChooseImage>() {
             @Override public void call(EventChooseImage eventChooseImage) {
                 RxRegiste(UpYunClient.rxUpLoad("/signin/", eventChooseImage.filePath)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {

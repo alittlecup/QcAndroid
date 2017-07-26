@@ -83,9 +83,14 @@ public class SyncGymFragment extends BaseFragment {
             }
         });
 
-        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.io())
+      RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
 
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcCoachServiceResponse -> {
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(qcCoachServiceResponse -> {
                 if (qcCoachServiceResponse.status == 200) {
                     syncGymHint.setText(getString(R.string.hint_sync_gyms, qcCoachServiceResponse.data.services.size()));
                     repoCoachService.createServices(qcCoachServiceResponse.data.services);
@@ -99,6 +104,7 @@ public class SyncGymFragment extends BaseFragment {
                     recyclerview.scrollToPosition(mData.size());
                     RxRegiste(rx.Observable.just("")
                         .delay(2, TimeUnit.SECONDS)
+                        .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<String>() {

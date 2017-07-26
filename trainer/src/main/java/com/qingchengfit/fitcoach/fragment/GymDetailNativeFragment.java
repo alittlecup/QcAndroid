@@ -169,7 +169,10 @@ public class GymDetailNativeFragment extends Fragment {
             }
         });
         mObservableFresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
-        mObservableFresh.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
+      mObservableFresh.observeOn(AndroidSchedulers.mainThread())
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .subscribe(new Subscriber<String>() {
             @Override public void onCompleted() {
 
             }
@@ -186,7 +189,7 @@ public class GymDetailNativeFragment extends Fragment {
         });
         //        mObservableDefault = RxBus.getBus().register(RxBus.BUS_DEFAUT);
         //        mObservableDefault.observeOn(AndroidSchedulers.mainThread())
-        //                .subscribeOn(Schedulers.io())
+      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .subscribe(new Subscriber<String>() {
         //                    @Override
         //                    public void onCompleted() {
@@ -233,6 +236,7 @@ public class GymDetailNativeFragment extends Fragment {
 
         mHttpSc = QcCloudClient.getApi().getApi.qcGetGymDetail(App.coachid, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<QcGymDetailResponse>() {
                 @Override public void onCompleted() {

@@ -200,6 +200,7 @@ public class RealCardListPresenter extends BasePresenter {
         cardBalanceNotifyBody.setConfigs(configs);
         RxRegiste(restRepository.getPost_api()
             .qcPostBalanceCondition(staffid, gymWrapper.getParams(), cardBalanceNotifyBody)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -222,6 +223,7 @@ public class RealCardListPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         RxRegiste(restRepository.getGet_api()
             .qcGetBalanceCondition(staffId, params, QUERY_BANALCE_KEYS)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<BalanceConfigs>>() {
@@ -244,6 +246,7 @@ public class RealCardListPresenter extends BasePresenter {
 
         RxRegiste(restRepository.getGet_api()
             .qcGetCardCount(loginStatus.staff_id(), gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<BalanceCount>>() {

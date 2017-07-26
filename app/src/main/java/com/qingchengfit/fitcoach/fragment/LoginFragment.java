@@ -89,7 +89,7 @@ public class LoginFragment extends BaseFragment {
                 if (channelid != null) bean.setPush_channel_id(channelid);
                 bean.setDevice_type("android");
                 materialDialog.show();
-                QcCloudClient.getApi().postApi.qcLogin(bean).subscribeOn(Schedulers.newThread()).flatMap(qcResponLogin -> {
+                QcCloudClient.getApi().postApi.qcLogin(bean).onBackpressureBuffer().subscribeOn(Schedulers.newThread()).flatMap(qcResponLogin -> {
                     if (qcResponLogin.status == ResponseResult.SUCCESS) {
 
                         if (qcResponLogin.data.coach != null && qcResponLogin.data.coach.id != null) {
@@ -135,7 +135,7 @@ public class LoginFragment extends BaseFragment {
                         PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.Server);
                     }
                 }
-                QcCloudClient.getApi().postApi.qcGetCode(account).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
+                QcCloudClient.getApi().postApi.qcGetCode(account).onBackpressureBuffer().subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
                     if (qcResponse.status == ResponseResult.SUCCESS) {
                         LogUtil.d("send msg success!");
                     } else {

@@ -75,6 +75,7 @@ public class StudentActivity extends BaseActivity implements FragCallBack, HasSu
                 gymWrapper.setCoachService(c);
                 restRepository.getGet_api()
                     .qcPermission(loginStatus.staff_id(), gymWrapper.getParams())
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<QcResponsePermission>() {

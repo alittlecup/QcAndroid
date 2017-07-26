@@ -113,6 +113,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                         //隐藏
                         QcCloudClient.getApi().postApi.qcHidenCertificates(id, new HidenBean(false))
                             .observeOn(AndroidSchedulers.mainThread())
+                            .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .subscribe(new Action1<QcResponse>() {
                                 @Override public void call(QcResponse qcResponse) {
@@ -125,6 +126,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                             });
                     } else {
                         QcCloudClient.getApi().postApi.qcHidenCertificates(id, new HidenBean(true))
+                            .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Action1<QcResponse>() {
@@ -212,6 +214,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
 
     private void freshData() {
         QcCloudClient.getApi().getApi.qcGetCertificateDetail(id)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(qcCertificateDetailResponse -> {
 
@@ -239,6 +242,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                                     //隐藏
                                     QcCloudClient.getApi().postApi.qcHidenCertificates(id, new HidenBean(false))
                                         .observeOn(AndroidSchedulers.mainThread())
+                                        .onBackpressureBuffer()
                                         .subscribeOn(Schedulers.io())
                                         .subscribe(new Action1<QcResponse>() {
                                             @Override public void call(QcResponse qcResponse) {
@@ -249,6 +253,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                                         });
                                 } else {
                                     QcCloudClient.getApi().postApi.qcHidenCertificates(id, new HidenBean(true))
+                                        .onBackpressureBuffer()
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(new Action1<QcResponse>() {
@@ -365,7 +370,10 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                         fragmentCallBack.ShowLoading("请稍后");
                         QcCloudClient.getApi().postApi.qcDelCertificate(id)
 
-                            .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .onBackpressureBuffer()
+                            .subscribeOn(Schedulers.newThread())
+                            .subscribe(qcResponse -> {
                             if (qcResponse.status == ResponseResult.SUCCESS) {
                                 ToastUtils.show("删除成功");
                                 getActivity().onBackPressed();

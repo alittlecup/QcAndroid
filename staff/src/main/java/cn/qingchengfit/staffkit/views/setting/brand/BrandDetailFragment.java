@@ -159,12 +159,14 @@ public class BrandDetailFragment extends BaseFragment {
                                             RxRegiste(restRepository.getPost_api()
                                                 .qcDelGym(datas.get(pos - 1).id)
                                                 .observeOn(Schedulers.io())
+                                                .onBackpressureBuffer()
                                                 .subscribeOn(Schedulers.io())
                                                 .flatMap(new Func1<QcResponse, Observable<Integer>>() {
                                                     @Override public Observable<Integer> call(QcResponse qcResponse) {
                                                         if (ResponseConstant.checkSuccess(qcResponse)) {
                                                             return QCDbManager.getAllCoachService()
                                                                 .observeOn(Schedulers.io())
+                                                                .onBackpressureBuffer()
                                                                 .subscribeOn(Schedulers.io())
                                                                 .flatMap(new Func1<List<CoachService>, Observable<Integer>>() {
                                                                     @Override
@@ -174,7 +176,9 @@ public class BrandDetailFragment extends BaseFragment {
                                                                         }
                                                                         return Observable.just(coachServices.size() == 1 ? 2 : 1)
                                                                             .observeOn(AndroidSchedulers.mainThread())
-                                                                            .subscribeOn(Schedulers.io());
+                                                                            .onBackpressureBuffer()
+                                                                            .subscribeOn(
+                                                                                Schedulers.io());
                                                                     }
                                                                 });
                                                         } else {
@@ -224,6 +228,7 @@ public class BrandDetailFragment extends BaseFragment {
         if (mBrandId == null || TextUtils.isEmpty(mBrandId)) return;
         sp = restRepository.getGet_api()
             .qcGetBrandAllShops(App.staffId, mBrandId)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<Shops>>() {

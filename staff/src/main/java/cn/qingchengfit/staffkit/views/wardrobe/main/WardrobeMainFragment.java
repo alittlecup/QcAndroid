@@ -132,6 +132,7 @@ public class WardrobeMainFragment extends BaseFragment implements FlexibleAdapte
         initToolbar(toolbar);
         RxRegiste(restRepository.getGet_api()
             .qcGetAllRegion(App.staffId, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<LockerRegions>>() {
@@ -142,6 +143,7 @@ public class WardrobeMainFragment extends BaseFragment implements FlexibleAdapte
                         RxRegiste(restRepository.getGet_api()
                             .qcGetAllLockers(App.staffId, gymWrapper.getParams())
                             .observeOn(AndroidSchedulers.mainThread())
+                            .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .subscribe(new Action1<QcResponseData<AllLockers>>() {
                                 @Override public void call(QcResponseData<AllLockers> qcResponseAllLockers) {
@@ -183,6 +185,7 @@ public class WardrobeMainFragment extends BaseFragment implements FlexibleAdapte
                 RxRegiste(restRepository.getGet_api()
                     .qcGetAllLockers(App.staffId, gymWrapper.getParams())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .subscribe(new Action1<QcResponseData<AllLockers>>() {
                         @Override public void call(QcResponseData<AllLockers> qcResponseAllLockers) {

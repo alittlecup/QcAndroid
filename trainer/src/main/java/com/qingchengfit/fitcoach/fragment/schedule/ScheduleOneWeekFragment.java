@@ -202,6 +202,7 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         params.put("to_date", dates.second);
 
         RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachScheduleV1(App.coachid, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcSchedulesResponse>() {

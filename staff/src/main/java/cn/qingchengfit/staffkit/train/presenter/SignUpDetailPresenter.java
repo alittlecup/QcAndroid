@@ -35,8 +35,7 @@ public class SignUpDetailPresenter extends BasePresenter {
 
     public void querySignDetail(String orderId) {
         RxRegiste(restRepository.getGet_api()
-            .qcGetSignDetail(orderId)
-            .subscribeOn(Schedulers.io())
+            .qcGetSignDetail(orderId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<SignUpDetailResponse>>() {
                 @Override public void call(cn.qingchengfit.network.response.QcResponseData<SignUpDetailResponse> signDetail) {

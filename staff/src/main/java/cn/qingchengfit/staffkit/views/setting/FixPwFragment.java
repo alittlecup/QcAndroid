@@ -92,8 +92,7 @@ public class FixPwFragment extends BaseDialogFragment implements FixPwView {
                         new GetCodeBody.Builder().phone(phoneNum.getPhoneNum()).area_code(phoneNum.getDistrictInt()).build());
                     checkcode.blockRightClick(true);
                     mSendMsgSp = Observable.interval(0, 1, TimeUnit.SECONDS)
-                        .take(60)
-                        .subscribeOn(Schedulers.computation())
+                        .take(60).onBackpressureBuffer().subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<Long>() {
                             @Override public void call(Long aLong) {

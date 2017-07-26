@@ -153,7 +153,7 @@ import javax.inject.Inject;
 
     //private void initRxABus() {
     //    RxBusAdd(StudentFilterEvent.class).observeOn(AndroidSchedulers.mainThread())
-    //        .subscribeOn(AndroidSchedulers.mainThread())
+  //        .onBackpressureBuffer().subscribeOn(AndroidSchedulers.mainThread())
     //        .subscribe(new Action1<StudentFilterEvent>() {
     //            @Override public void call(StudentFilterEvent event) {
     //                if (event.eventType == StudentFilterEvent.EVENT_SOURCE_SHOWALL_CLICK) {

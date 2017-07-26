@@ -116,6 +116,7 @@ public class SpaceListFragment extends BaseFragment implements FlexibleAdapter.O
             RxRegiste(
                 QcCloudClient.getApi().getApi.qcGetSpace(App.coachid + "", ((FragActivity) getActivity()).getCoachService().getId() + "",
                     ((FragActivity) getActivity()).getCoachService().getModel())
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<QcResponseSpaces>() {

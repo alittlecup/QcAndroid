@@ -168,6 +168,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
         .queryWorkExp(mExpId)
         .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcDataResponse<WorkExpWrap>>() {
           @Override public void call(QcDataResponse<WorkExpWrap> qcResponse) {
@@ -253,8 +254,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
               showLoading();
 
               RxRegiste(qcRestRepository.createGetApi(PostApi.class)
-                  .delWorkExp(mExpId)
-                  .subscribeOn(Schedulers.io())
+                  .delWorkExp(mExpId).onBackpressureBuffer().subscribeOn(Schedulers.io())
                   .observeOn(AndroidSchedulers.mainThread())
                   .subscribe(new Action1<QcResponse>() {
                     @Override public void call(QcResponse qcResponse) {
@@ -285,6 +285,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
     RxRegiste(qcRestRepository.createGetApi(PostApi.class)
         .updateWorkExp(mExpId, new WorkExp.Builder().is_hidden(false).build())
         .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
@@ -304,6 +305,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
     RxRegiste(qcRestRepository.createGetApi(PostApi.class)
         .updateWorkExp(mExpId, new WorkExp.Builder().is_hidden(true).build())
         .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {

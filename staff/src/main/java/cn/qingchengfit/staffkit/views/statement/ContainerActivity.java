@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.article.ArticleCommentsListFragmentBuilder;
 import cn.qingchengfit.article.ArticleReplyFragment;
-import cn.qingchengfit.chat.RecruitMessageListFragment;
 import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
 import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
@@ -158,7 +157,10 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
 
     private void initBus() {
         toolbarOb = RxBus.getBus().register(EventToolbar.class);
-        toolbarOb.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<EventToolbar>() {
+      toolbarOb.onBackpressureBuffer()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<EventToolbar>() {
             @Override public void call(EventToolbar eventToolbar) {
                 toolbarTitile.setText(eventToolbar.getTitle());
                 down.setVisibility(eventToolbar.isShowRight() ? View.VISIBLE : View.GONE);

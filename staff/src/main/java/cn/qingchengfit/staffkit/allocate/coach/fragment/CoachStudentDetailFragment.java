@@ -236,7 +236,10 @@ import rx.schedulers.Schedulers;
 
         // 侧边栏筛选事件监听
         obFilter = RxBus.getBus().register(StudentFilterEvent.class);
-        obFilter.observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<StudentFilterEvent>() {
+      obFilter.observeOn(Schedulers.io())
+          .onBackpressureBuffer()
+          .subscribeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<StudentFilterEvent>() {
             @Override public void call(StudentFilterEvent event) {
                 if (event.eventType == StudentFilterEvent.EVENT_CONFIRM_CLICK) {
                     resetData(event.filter);

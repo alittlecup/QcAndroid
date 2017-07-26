@@ -86,7 +86,7 @@ public class AddStudentManulkFragment extends Fragment {
         });
 
         //获取用户拥有系统信息
-        //QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.newThread())
+      //QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).onBackpressureBuffer().subscribeOn(Schedulers.newThread())
         //        .observeOn(AndroidSchedulers.mainThread())
         //        .subscribe(qcCoachSystemResponse -> {
         //            systems = qcCoachSystemResponse.data.services;
@@ -136,6 +136,7 @@ public class AddStudentManulkFragment extends Fragment {
             QcCloudClient.getApi().postApi.qcAddStudents(App.coachid, students,
                 GymUtils.getParams(((FragActivity) getActivity()).getCoachService()))
                 .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcResponse>() {
                     @Override public void onCompleted() {

@@ -52,6 +52,7 @@ public class ChangeAutoNotifyPresenter extends BasePresenter {
 
         RxRegiste(restRepository.getGet_api()
             .qcGetNotifySetting(loginStatus.staff_id(), params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<NotityIsOpenConfigs>>() {
@@ -70,6 +71,7 @@ public class ChangeAutoNotifyPresenter extends BasePresenter {
         cardBalanceNotifyBody.setConfigs(configs);
         RxRegiste(restRepository.getPost_api()
             .qcChangeAutoNotify(loginStatus.staff_id(), gymWrapper.getParams(), cardBalanceNotifyBody)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

@@ -46,6 +46,7 @@ public class ExpChooseBrandActivity extends ChooseBrandActivity {
             User u = new Gson().fromJson(curUser, User.class);
 
             sp = QcCloudClient.getApi().getApi.qcGetBrands(u.id)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseBrands>() {

@@ -39,8 +39,7 @@ public class ResumePermissionPresenter extends BasePresenter {
   public void queryChangeStatePermission(String gymId, String key){
 
     RxRegiste(restRepository.createGetApi(GetApi.class)
-        .queryOnepermission(gymId, key)
-        .subscribeOn(Schedulers.io())
+        .queryOnepermission(gymId, key).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<OnePermissionWrap>>() {
           @Override public void call(QcDataResponse<OnePermissionWrap> qcResponse) {

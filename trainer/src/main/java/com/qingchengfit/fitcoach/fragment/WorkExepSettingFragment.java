@@ -117,7 +117,7 @@
 //    public void freshData() {
 //
 //        QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid)
-//            .subscribeOn(Schedulers.io())
+//            .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())
 //            .subscribe(qcExperienceResponse -> {
 //                if (recyclerview != null) {

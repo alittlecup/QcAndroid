@@ -24,8 +24,7 @@ public class SuIdendifyPresenter extends BasePresenter {
 
     public void sendMsg(GetCodeBody body) {
         RxRegiste(restRepository.getPost_api()
-            .qcGetCode(body)
-            .subscribeOn(Schedulers.io())
+            .qcGetCode(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -44,8 +43,7 @@ public class SuIdendifyPresenter extends BasePresenter {
 
     public void checkIdendify(CheckCodeBody body) {
         RxRegiste(restRepository.getPost_api()
-            .qcCheckCode(body)
-            .subscribeOn(Schedulers.io())
+            .qcCheckCode(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {

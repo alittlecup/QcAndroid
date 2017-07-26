@@ -136,7 +136,10 @@ public class ChooseReferrerActivity extends BaseActivity implements FragCallBack
 
     private void initBus() {
         observable = RxBus.getBus().register(FollowUpFilterEvent.class);
-        observable.observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<FollowUpFilterEvent>() {
+      observable.observeOn(Schedulers.io())
+          .onBackpressureBuffer()
+          .subscribeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<FollowUpFilterEvent>() {
             @Override public void call(FollowUpFilterEvent followUpFilterEvent) {
                 switch (followUpFilterEvent.eventType) {
                     case FollowUpFilterEvent.EVENT_REFERRER_ITEM_CLICK:

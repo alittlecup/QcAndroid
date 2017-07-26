@@ -125,6 +125,7 @@ public class LoginPresenter implements Presenter {
     public void getService(final QcResponseData<Login> qcResponLogin) {
         spGetSer = mRestRepository.getGet_api()
             .qcGetCoachService(App.staffId, null)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<GymList>>() {

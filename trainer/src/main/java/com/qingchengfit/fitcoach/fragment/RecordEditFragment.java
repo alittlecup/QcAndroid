@@ -149,6 +149,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                         super.onPositive(dialog);
                         fragmentCallBack.ShowLoading("请稍后");
                         QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId())
+                            .onBackpressureBuffer()
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(qcResponse -> onResult(qcResponse), throwable -> {
@@ -314,6 +315,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         RxBusAdd(EventChooseImage.class).subscribe(eventChooseImage -> {
             showLoading();
             RxRegiste(UpYunClient.rxUpLoad("record/", eventChooseImage.filePath)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
@@ -411,6 +413,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         fragmentCallBack.ShowLoading("请稍后");
         if (mTitle) {
             QcCloudClient.getApi().postApi.qcEditCertificate(certificatesEntity.getId(), addCertificate)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onResult, throwable -> {
@@ -418,6 +421,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                 });
         } else {
             QcCloudClient.getApi().postApi.qcAddCertificate(addCertificate)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onResult, throwable -> {

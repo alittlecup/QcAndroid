@@ -56,7 +56,12 @@ public class NotiDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_noti_detail, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        if (id != 0) QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid, id + "").subscribeOn(Schedulers.io()).subscribe();
+      if (id != 0) {
+        QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid, id + "")
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe();
+      }
         QcCloudClient.getApi().getApi.qcGetMsgDetails(id).subscribe(qcNotiDetailResponse -> {
             if (getActivity() != null) {
                 getActivity().runOnUiThread(() -> {

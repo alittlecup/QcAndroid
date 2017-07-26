@@ -59,6 +59,7 @@ public class JacketManagerPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcEditJacket(App.staffId, courseid, gymWrapper.getParams(),
                 new EditJacketBody.Builder().photos(jackets).random_show_photos(!openCustom).build())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -79,6 +80,7 @@ public class JacketManagerPresenter extends BasePresenter {
     public void queryJacket(String staffid, String courseid) {
         RxRegiste(restRepository.getGet_api()
             .qcGetJacket(staffid, courseid, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<QcResponseJacket>>() {

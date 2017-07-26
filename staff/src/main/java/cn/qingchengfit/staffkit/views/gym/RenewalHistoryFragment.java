@@ -115,6 +115,7 @@ public class RenewalHistoryFragment extends BaseFragment
         p.put("page", page + "");
         RxRegiste(mRestRepository.getGet_api()
             .qcGetRenewalHistorys(App.staffId, p)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseRenewalHistory>() {

@@ -102,7 +102,10 @@ public class FilterCommonFragment extends BaseFragment implements StudentListVie
     private void initRxBus() {
         // 筛选确定
         obFilter = RxBus.getBus().register(StudentFilterEvent.class);
-        obFilter.observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<StudentFilterEvent>() {
+      obFilter.observeOn(Schedulers.io())
+          .onBackpressureBuffer()
+          .subscribeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<StudentFilterEvent>() {
             @Override public void call(StudentFilterEvent event) {
 
                 if (event.eventType == StudentFilterEvent.EVENT_CONFIRM_CLICK) {

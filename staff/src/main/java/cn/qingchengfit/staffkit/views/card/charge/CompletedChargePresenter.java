@@ -148,6 +148,7 @@ public class CompletedChargePresenter extends BasePresenter {
         RxRegiste(mRestRepository.getGet_api()
             .qcGetScoreCalu(App.staffId, Configs.CACLU_SCORE_CHARGE, price,
                 GymUtils.getParamsV2(gymWrapper.getCoachService(), gymWrapper.getBrand()))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<CacluScore>>() {

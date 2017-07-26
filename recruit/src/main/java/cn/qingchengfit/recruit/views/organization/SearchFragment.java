@@ -167,8 +167,7 @@ public class SearchFragment extends BaseFragment {
         if (type == TYPE_GYM) {
             searchHottable.setText("热门健身房");
             RxRegiste(restRepository.createGetApi(GetApi.class)
-                .qcHotGym(params)
-                .subscribeOn(Schedulers.io())
+                .qcHotGym(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcSerachGymRepsonse>() {
                     @Override public void call(final QcSerachGymRepsonse qcSerachGymRepsonse) {
@@ -212,8 +211,7 @@ public class SearchFragment extends BaseFragment {
         } else if (type == TYPE_ORGANASITON) {
             searchHottable.setText("热门机构");
             RxRegiste(restRepository.createGetApi(GetApi.class)
-                .qcHotOrganization(params)
-                .subscribeOn(Schedulers.io())
+                .qcHotOrganization(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcSearchOrganResponse>() {
                     @Override public void call(final QcSearchOrganResponse qcSearchOrganResponse) {
@@ -304,8 +302,7 @@ public class SearchFragment extends BaseFragment {
         if (type == TYPE_GYM) {
 
             RxRegiste(restRepository.createGetApi(GetApi.class)
-                .qcSearchGym(params)
-                .subscribeOn(Schedulers.io())
+                .qcSearchGym(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcSerachGymRepsonse>() {
                     @Override public void call(final QcSerachGymRepsonse qcSerachGymRepsonse) {
@@ -356,8 +353,7 @@ public class SearchFragment extends BaseFragment {
                 }));
         } else if (type == TYPE_ORGANASITON) {
             RxRegiste(restRepository.createGetApi(GetApi.class)
-                .qcSearchOrganization(params)
-                .subscribeOn(Schedulers.io())
+                .qcSearchOrganization(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcSearchOrganResponse>() {
                                @Override public void call(final QcSearchOrganResponse qcSearchOrganResponse) {

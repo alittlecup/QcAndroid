@@ -113,6 +113,7 @@ public class RealCardDetailPresenter extends BasePresenter {
     public void queryGetCardDetail() {
         RxRegiste(mRestRepository.getGet_api()
             .qcGetCardDetail(App.staffId, realCard.id(), gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CardResponse>>() {

@@ -76,7 +76,10 @@ public class CompleteActivity extends AppCompatActivity {
 
         QcCloudClient.getApi().postApi.qcRegister(bean)
 
-            .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponse -> {
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(qcResponse -> {
             if (qcResponse.status == ResponseResult.SUCCESS) {
                 //TODO 注册成功
                 this.finish();

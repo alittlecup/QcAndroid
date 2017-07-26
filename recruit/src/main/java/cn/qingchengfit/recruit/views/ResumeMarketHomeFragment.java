@@ -118,6 +118,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     toolbarTitile = ButterKnife.findById(view, R.id.toolbar_title);
     searchEt = ButterKnife.findById(view, R.id.tb_searchview_et);
     layoutSearch = ButterKnife.findById(view, R.id.searchview);
+    searchEt.setHint("搜索意向职位");
     imgClear = ButterKnife.findById(view, R.id.tb_searchview_clear);
     btnCancel = ButterKnife.findById(view, R.id.tb_searchview_cancle);
     view.addView(layoutFilter, 1);
@@ -150,7 +151,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
 
   private void netFilter(String s) {
     if (TextUtils.isEmpty(s)) s = null;
-    params.put("q", s);
+    params.put("job", s);
     onRefresh();
   }
 
@@ -161,7 +162,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
 
   public void onCancelSearch() {
     layoutSearch.setVisibility(View.GONE);
-    params.remove("q");
+    params.remove("job");
     onRefresh();
   }
 
@@ -206,7 +207,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
             .addItemViewType(R.layout.item_horizon_qcradiogroup, 1)
             .withDivider(R.drawable.divider_qc_base_line)
             .withBottomEdge(true));
-    commonFlexAdapter.addItem(new SearchCenterItem(false, "搜索关键字"));
+    commonFlexAdapter.addItem(new SearchCenterItem(false, "搜索意向职位"));
     horizonImageShowItem = new HorizonImageShowItem(new ArrayList<AbstractFlexibleItem>());
     commonFlexAdapter.addItem(horizonImageShowItem);
     recruitmanage = new RecruitManageItem(0, 0, false);
@@ -268,6 +269,10 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     }
   }
 
+  @Override public void initLoadMore() {
+    commonFlexAdapter.setEndlessScrollListener(this, progressItem);
+  }
+
   @Override public void onLoadMore(int i, int i1) {
     presenter.queryResumeMarkets(false, params);
   }
@@ -302,6 +307,10 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
       recruitmanage.setJobCounts(job_count, gym_count);
       commonFlexAdapter.notifyItemChanged(commonFlexAdapter.getGlobalPositionOf(recruitmanage));
     }
+
+  }
+
+  @Override public void noMoreLoad(int i) {
 
   }
 
@@ -453,6 +462,14 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     if (gym != null) {
       router.toGymDetial(gym);
     }
+  }
+
+  @Override public int getNoDataIconRes() {
+    return super.getNoDataIconRes();
+  }
+
+  @Override public String getNoDataStr() {
+    return "没有符合条件的简历";
   }
 
   @Override public void onJobList(List<Job> jobs, int page, int totalCount) {

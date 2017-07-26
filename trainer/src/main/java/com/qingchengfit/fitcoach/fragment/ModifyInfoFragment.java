@@ -102,7 +102,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         citiesChooser = new CitiesChooser(getContext());
         mModifyCoachInfo = new ModifyCoachInfo();
         uppicObserver = RxBus.getBus().register(UpyunService.UpYunResult.class.getName());
-        uppicObserver.subscribeOn(Schedulers.io())
+      uppicObserver.onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<UpyunService.UpYunResult>() {
                 @Override public void onCompleted() {
@@ -145,6 +145,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     public void queryData() {
 
         QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<QcCoachRespone>() {
@@ -252,6 +253,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         fragmentCallBack.ShowLoading("请稍后");
 
         QcCloudClient.getApi().postApi.qcModifyCoach(Integer.parseInt(coach.id), mModifyCoachInfo)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<QcResponse>() {
@@ -299,7 +301,10 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
                 //        subscriber.onNext(upImg);
                 //    }
                 //})
-                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
+                .observeOn(AndroidSchedulers.mainThread())
+                .onBackpressureBuffer()
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<String>() {
                     @Override public void onCompleted() {
 
                     }

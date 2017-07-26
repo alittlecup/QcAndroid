@@ -93,7 +93,7 @@
 //    private void freshData() {
 //        httpsub = QcCloudClient.getApi().getApi.qcGetExperience(mExpId)
 //            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeOn(Schedulers.io())
+//            .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //            .subscribe(new Subscriber<OneExperienceResponse>() {
 //                @Override public void onCompleted() {
 //
@@ -231,7 +231,7 @@
 //                        super.onPositive(dialog);
 //                        fragmentCallBack.ShowLoading("请稍后");
 //                        QcCloudClient.getApi().postApi.qcDelExperience(experiencesEntity.getId())
-//                            .subscribeOn(Schedulers.io())
+//                            .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //                            .observeOn(AndroidSchedulers.mainThread())
 //                            .map(qcResponse -> qcResponse.status == ResponseResult.SUCCESS)
 //                            .subscribe(aBoolean -> {
@@ -263,7 +263,7 @@
 //        //取消隐藏
 //        QcCloudClient.getApi().postApi.qcHidenExperience(mExpId, new HidenBean(false))
 //            .observeOn(Schedulers.io())
-//            .subscribeOn(Schedulers.io())
+//            .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //            .subscribe(new Subscriber<QcResponse>() {
 //                @Override public void onCompleted() {
 //
@@ -283,7 +283,7 @@
 //        //隐藏
 //        QcCloudClient.getApi().postApi.qcHidenExperience(mExpId, new HidenBean(true))
 //            .observeOn(Schedulers.io())
-//            .subscribeOn(Schedulers.io())
+//            .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //            .subscribe(new Subscriber<QcResponse>() {
 //                @Override public void onCompleted() {
 //

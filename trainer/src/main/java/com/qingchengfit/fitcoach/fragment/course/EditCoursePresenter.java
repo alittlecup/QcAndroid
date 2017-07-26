@@ -111,6 +111,7 @@ public class EditCoursePresenter extends BasePresenter {
     public void editCourse(String courseid, CourseBody body) {
         RxRegiste(restRepository.getPost_api()
             .qcUpdateCourse(App.coachid + "", courseid, GymUtils.getParams(coachService, brand), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -133,6 +134,7 @@ public class EditCoursePresenter extends BasePresenter {
         params.put("shop_ids", shopids);
         RxRegiste(restRepository.getPost_api()
             .qcEditCourseShops(staffid, courseid, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

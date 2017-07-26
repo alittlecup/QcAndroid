@@ -35,6 +35,7 @@ public class CardStandardUsecase {
         return restRepository.getPost_api()
             .qcCreateStandard(App.staffId, cardtplid, gymid, gymmodel, brand_id, body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1);
     }
@@ -44,6 +45,7 @@ public class CardStandardUsecase {
         return restRepository.getPost_api()
             .qcUpdateCardStandard(App.staffId, cardtpl_id, gymid, gymmodel, brand_id, body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1);
     }
@@ -52,6 +54,7 @@ public class CardStandardUsecase {
         return restRepository.getPost_api()
             .qcDelCardStandard(App.staffId, option_id, gymid, gymmodel, brand_id)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1);
     }

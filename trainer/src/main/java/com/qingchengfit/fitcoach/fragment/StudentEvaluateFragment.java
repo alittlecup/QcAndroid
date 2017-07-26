@@ -44,6 +44,7 @@ public class StudentEvaluateFragment extends VpFragment {
             }
         });
         QcCloudClient.getApi().getApi.qcGetEvaluate(App.coachid)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(qcEvaluateResponse -> {

@@ -122,17 +122,22 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
         super.onResume();
         RxRegiste(new RestRepository().getGet_api()
             .qcGetCoachService(App.staffId, null)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.computation())
             .flatMap(new Func1<QcResponseData<GymList>, Observable<List<CoachService>>>() {
                 @Override public Observable<List<CoachService>> call(QcResponseData<GymList> gymListQcResponseData) {
                     if (ResponseConstant.checkSuccess(gymListQcResponseData)) {
                         return Observable.just(gymListQcResponseData.getData().services)
+                            .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread());
                     } else {
                         List<CoachService> em = new ArrayList<CoachService>();
-                        return Observable.just(em).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+                      return Observable.just(em)
+                          .observeOn(AndroidSchedulers.mainThread())
+                          .onBackpressureBuffer()
+                          .subscribeOn(Schedulers.io());
                     }
                 }
             })

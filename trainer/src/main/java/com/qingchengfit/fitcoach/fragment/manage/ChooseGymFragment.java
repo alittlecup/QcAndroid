@@ -127,6 +127,7 @@ import rx.schedulers.Schedulers;
                     brands.clear();
                     brands.addAll(qcResponseBrands.data.brands);
                     return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                        .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
                 }
@@ -145,8 +146,7 @@ import rx.schedulers.Schedulers;
                     ls.add(coachServices);
                 }
                 return ls;
-            })
-            .subscribeOn(Schedulers.io())
+            }).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<List<List<CoachService>>>() {
                 @Override public void call(List<List<CoachService>> lists) {

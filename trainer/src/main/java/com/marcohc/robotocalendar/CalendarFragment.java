@@ -84,6 +84,7 @@ public class CalendarFragment extends BaseFragment {
         params.put("from_date", DateUtils.getStartDayOfMonth(mCurCalendar.getTime()));
         params.put("to_date", DateUtils.getEndDayOfMonth(mCurCalendar.getTime()));
         QcCloudClient.getApi().getApi.qcGetScheduleGlance(App.coachid, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(qcScheduleGlanceResponse -> {
                 getActivity().runOnUiThread(() -> {

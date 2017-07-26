@@ -44,6 +44,7 @@ public class FixRealCardBindPresenter extends BasePresenter {
         params.put("card_id", realCard.id());
         RxRegiste(restRepository.getGet_api()
             .qcGetBindStudent(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CardBindStudents>>() {

@@ -342,8 +342,7 @@ public class StatementDetailFragment extends BaseFragment
    * 增加或者减少 +1 -1
    */
   private void changeCalendar(int symbol) {
-    Observable.just(symbol)
-        .subscribeOn(Schedulers.io())
+    Observable.just(symbol).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .throttleFirst(500, TimeUnit.MILLISECONDS)
         .map(new Func1<Integer, Integer>() {
           @Override public Integer call(Integer symbol) {

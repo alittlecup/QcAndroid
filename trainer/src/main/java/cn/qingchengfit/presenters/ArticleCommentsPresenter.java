@@ -39,6 +39,7 @@ public class ArticleCommentsPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcAddComment(newsid, new PostCommentBody.Builder().text(text).reply_id(TextUtils.isEmpty(reply_id) ? null : reply_id).build())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -56,6 +57,7 @@ public class ArticleCommentsPresenter extends BasePresenter {
         params.put("page", page);
         RxRegiste(restRepository.getGet_api().qcQueryComments(newsid, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<ArticleCommentListData>>() {
                 @Override public void call(QcResponseData<ArticleCommentListData> qcResponse) {

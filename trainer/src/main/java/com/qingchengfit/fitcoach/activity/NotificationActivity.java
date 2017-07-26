@@ -53,7 +53,7 @@ public class NotificationActivity extends BaseActivity
         //                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
         //                        QcCloudClient.getApi().postApi.qcClearAllNotification(App.coachid)
         //                                .observeOn(AndroidSchedulers.mainThread())
-        //                                .subscribeOn(Schedulers.io())
+      //                                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                                .subscribe(new Observer<QcResponse>() {
         //                                    @Override
         //                                    public void onCompleted() {

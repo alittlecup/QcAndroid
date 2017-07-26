@@ -155,6 +155,7 @@ public class OutExcelFragment extends BaseFragment {
         restRepository.getGet_api()
             .qcGetBrand(loginStatus.staff_id(), gymWrapper.brand_id())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<BrandResponse>>() {
                 @Override public void call(QcResponseData<BrandResponse> qcResponseBrand) {
@@ -306,6 +307,7 @@ public class OutExcelFragment extends BaseFragment {
                 RxRegiste(restRepository.getPost_api()
                     .qcOutExcel(loginStatus.staff_id(), body)
                     .observeOn(AndroidSchedulers.mainThread())
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .subscribe(new Action1<QcResponse>() {
                         @Override public void call(QcResponse qcResponse) {

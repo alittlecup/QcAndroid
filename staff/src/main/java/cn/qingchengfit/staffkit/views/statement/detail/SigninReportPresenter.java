@@ -72,6 +72,7 @@ public class SigninReportPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetSigninReportDetail(App.staffId, params)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<SigninReportDetail>>() {
                 @Override public void call(QcResponseData<SigninReportDetail> responseData) {

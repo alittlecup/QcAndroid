@@ -54,6 +54,7 @@ public class StudentListPresenter extends BasePresenter {
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
         RxRegiste(restRepository.getGet_api()
             .qcGetAllStudents(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<Students>>() {

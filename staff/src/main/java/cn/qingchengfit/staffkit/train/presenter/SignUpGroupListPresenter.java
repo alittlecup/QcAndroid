@@ -51,8 +51,7 @@ public class SignUpGroupListPresenter extends BasePresenter {
         params.put("gym_id", gym_id);
         params.put("competition_id", competitionId);
         RxRegiste(restRepository.getGet_api()
-            .qcGetGroupList(params, keyword)
-            .subscribeOn(Schedulers.io())
+            .qcGetGroupList(params, keyword).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<GroupListResponse>>() {
                 @Override public void call(cn.qingchengfit.network.response.QcResponseData<GroupListResponse> groupListResponse) {

@@ -27,6 +27,7 @@ public class ResumePostPresenter extends BasePresenter {
     RxRegiste(qcRestRepository.createGetApi(PostApi.class)
         .updateResume(body)
         .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {

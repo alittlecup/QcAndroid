@@ -82,6 +82,7 @@ public class MultiModifyPresenter extends BasePresenter {
         params.put("show_all", "1");
         RxRegiste(restRepository.getGet_api()
             .qcGetAllotSaleUsersOfAddStudents(App.staffId, params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<AllotSaleStudents>>() {
@@ -118,6 +119,7 @@ public class MultiModifyPresenter extends BasePresenter {
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
         RxRegiste(restRepository.getGet_api()
             .qcGetAllotSaleOwenUsers(loginStatus.staff_id(), params)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<AllotSaleStudents>>() {
@@ -219,6 +221,7 @@ public class MultiModifyPresenter extends BasePresenter {
         body.put("user_ids", ret);
         RxRegiste(restRepository.getPost_api()
             .qcAddStudents(App.staffId, params, body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -261,6 +264,7 @@ public class MultiModifyPresenter extends BasePresenter {
         params.put("user_ids", ret);
         RxRegiste(restRepository.getPost_api()
             .qcDeleteStudents(App.staffId, params, body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

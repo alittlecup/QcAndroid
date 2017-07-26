@@ -78,6 +78,7 @@ public class AddBrandActivity extends BaseActivity {
 
     @OnClick(R.id.btn) public void onComfirm() {
         QcCloudClient.getApi().postApi.qcCreatBrand(new CreatBrandBody.Builder().name(content.getContent()).photo(uploadImg).build())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(qcResponsCreatBrand -> {
@@ -117,7 +118,7 @@ public class AddBrandActivity extends BaseActivity {
 
     public void onSucceed() {
         //        restRepository.getGet_api().qcGetBrands(App.staffId)
-        //                .subscribeOn(Schedulers.io())
+      //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .observeOn(AndroidSchedulers.mainThread())
         //                .subscribe(new Action1<QcResponseBrands>() {
         //                    @Override

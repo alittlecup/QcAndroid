@@ -59,13 +59,13 @@ public class BaseGymInfoPresenter extends BasePresenter {
 
   public void queryGymInfo() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .queryGymInfo(gymid)
-        .subscribeOn(Schedulers.io())
+        .queryGymInfo(gymid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<GymWrap>>() {
           @Override public void call(QcDataResponse<GymWrap> qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
               view.onGym(qcResponse.data.gym);
+              editBody.description = qcResponse.data.gym.description;
             } else {
               view.onShowError(qcResponse.getMsg());
             }
@@ -75,8 +75,7 @@ public class BaseGymInfoPresenter extends BasePresenter {
 
   public void editGymInfo() {
     RxRegiste(qcRestRepository.createPostApi(PostApi.class)
-        .editGymIntro(gymid, editBody)
-        .subscribeOn(Schedulers.io())
+        .editGymIntro(gymid, editBody).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
@@ -95,6 +94,10 @@ public class BaseGymInfoPresenter extends BasePresenter {
 
   public void setGymPhone(String p) {
     editBody.phone = p;
+  }
+
+  public String getGymDesc() {
+    return editBody.description;
   }
 
   public void setGymDesc(String s) {

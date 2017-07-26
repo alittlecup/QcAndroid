@@ -83,8 +83,7 @@ public class HomePresenter extends BasePresenter {
 
     public void queryBrands() {
         spBrand = restRepository.getGet_api()
-            .qcGetBrands(loginStatus.staff_id())
-            .subscribeOn(Schedulers.io())
+            .qcGetBrands(loginStatus.staff_id()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .lift(new QcResponseOperator<QcResponseData<BrandsResponse>>())
             .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
@@ -106,8 +105,7 @@ public class HomePresenter extends BasePresenter {
         HashMap<String, Object> params = new HashMap<>();
         params.put("brand_id", PreferenceUtils.getPrefString(App.context, Configs.CUR_BRAND_ID, ""));
         RxRegiste(restRepository.getGet_api()
-            .qcPermission(App.staffId, params)
-            .subscribeOn(Schedulers.io())
+            .qcPermission(App.staffId, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponsePermission>() {
                 @Override public void call(QcResponsePermission qcResponse) {
@@ -126,6 +124,7 @@ public class HomePresenter extends BasePresenter {
     public void queryHomeInfo() {
         sp = restRepository.getGet_api()
             .qcWelcomeHome(App.staffId, PreferenceUtils.getPrefString(App.context, Configs.CUR_BRAND_ID, ""))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<HomeInfo>>() {

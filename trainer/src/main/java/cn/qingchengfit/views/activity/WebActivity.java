@@ -155,7 +155,7 @@
 //    //
 //    //        paySp = RxBus.getBus().register(PayEvent.class)
 //    //                .observeOn(AndroidSchedulers.mainThread())
-//    //                .subscribeOn(Schedulers.io())
+//    //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //    //                .subscribe(new Subscriber<PayEvent>() {
 //    //                    @Override
 //    //                    public void onCompleted() {
@@ -483,7 +483,7 @@
 //    //            LogUtil.d(filepath);
 //    //            ShowLoading("正在上传");
 //    //            Observable.just(filepath)
-//    //                    .subscribeOn(Schedulers.io())
+//    //                    .onBackpressureBuffer().subscribeOn(Schedulers.io())
 //    //                    .subscribe(s -> {
 //    //                        String filename = UUID.randomUUID().toString();
 //    //                        BitmapUtils.compressPic(s, Configs.ExternalCache + filename);

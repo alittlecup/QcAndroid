@@ -71,6 +71,7 @@ public class GymDetailPresenter extends BasePresenter {
     @Override public void attachView(PView v) {
         gymDetailView = (GymDetailView) v;
         RxRegiste(QCDbManager.queryAllFunctions()
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<List<String>>() {
@@ -104,8 +105,7 @@ public class GymDetailPresenter extends BasePresenter {
 
     void manageBrand() {
         RxRegiste(restRepository.getGet_api()
-            .qcGetBrands(loginStatus.staff_id())
-            .subscribeOn(Schedulers.io())
+            .qcGetBrands(loginStatus.staff_id()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
                 @Override public void call(QcResponseData<BrandsResponse> brandsResponse) {
@@ -125,6 +125,7 @@ public class GymDetailPresenter extends BasePresenter {
 
         RxRegiste(restRepository.getGet_api()
             .qcPermission(loginStatus.staff_id(), gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponsePermission>() {
@@ -173,6 +174,7 @@ public class GymDetailPresenter extends BasePresenter {
     public void quitGym() {
         RxRegiste(restRepository.getPost_api()
             .qcQuitGym(loginStatus.staff_id(), gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

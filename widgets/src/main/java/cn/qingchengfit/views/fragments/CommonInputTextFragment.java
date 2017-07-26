@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventTxT;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
 
@@ -44,10 +45,12 @@ public class CommonInputTextFragment extends BaseFragment {
   @BindView(R2.id.et) EditText et;
   private String title;
   private String hint;
+  private String content;
 
-  public static CommonInputTextFragment newInstance(String title, String hint) {
+  public static CommonInputTextFragment newInstance(String title, String content, String hint) {
     Bundle args = new Bundle();
     args.putString("t", title);
+    args.putString("c", content);
     args.putString("h", hint);
     CommonInputTextFragment fragment = new CommonInputTextFragment();
     fragment.setArguments(args);
@@ -59,6 +62,7 @@ public class CommonInputTextFragment extends BaseFragment {
     if (getArguments() != null) {
       title = getArguments().getString("t", "");
       hint = getArguments().getString("h", "");
+      content = getArguments().getString(content);
     }
   }
 
@@ -77,7 +81,12 @@ public class CommonInputTextFragment extends BaseFragment {
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText(title);
+    et.setText(content);
     et.setHint(hint);
+  }
+
+  @Override protected void onFinishAnimation() {
+    AppUtils.showKeyboard(getContext(), et);
   }
 
   @Override public String getFragmentName() {
@@ -94,5 +103,6 @@ public class CommonInputTextFragment extends BaseFragment {
 
   @OnClick(R2.id.btn) public void onBtnClicked() {
     RxBus.getBus().post(new EventTxT.Builder().txt(et.getText().toString().trim()).build());
+    getFragmentManager().popBackStackImmediate();
   }
 }

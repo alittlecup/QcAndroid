@@ -231,8 +231,7 @@ public class ChainFragment extends BaseFragment {
         params.put("page", "1");
         params.put("tab", "STAFF_0");
         RxRegiste(mRestRepository.getGet_api()
-            .qcGetMessages(App.staffId, params)
-            .subscribeOn(Schedulers.io())
+            .qcGetMessages(App.staffId, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<Notification>>() {
                 @Override public void call(QcResponseData<Notification> qcResponse) {

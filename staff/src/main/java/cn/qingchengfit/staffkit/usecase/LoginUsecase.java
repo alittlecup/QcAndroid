@@ -34,14 +34,23 @@ public class LoginUsecase {
     }
 
     public Observable<QcResponseData<Login>> login(LoginBody loginBody) {
-        return restRepository.qcLogin(loginBody).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+      return restRepository.qcLogin(loginBody)
+          .observeOn(AndroidSchedulers.mainThread())
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io());
     }
 
     public Observable<QcResponse> queryCode(GetCodeBody body) {
-        return restRepository.qcQueryCode(body).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+      return restRepository.qcQueryCode(body)
+          .observeOn(AndroidSchedulers.mainThread())
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io());
     }
 
     public Observable<QcResponseData<Login>> registe(RegisteBody body) {
-        return restRepository.qcRegiste(body).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+      return restRepository.qcRegiste(body)
+          .observeOn(AndroidSchedulers.mainThread())
+          .onBackpressureBuffer()
+          .subscribeOn(Schedulers.io());
     }
 }

@@ -195,6 +195,7 @@ public class NotificationFragment extends BaseFragment
                             p.put("model", coachService1.getModel());
                             mRestRepository.getGet_api()
                                 .qcPermission(App.staffId, p)
+                                .onBackpressureBuffer()
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Action1<QcResponsePermission>() {

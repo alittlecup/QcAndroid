@@ -35,6 +35,7 @@ public class OrderLimitPresenter extends BasePresenter {
     void saveConfigs(ShopConfigBody body) {
         RxRegiste(restRepository.getPost_api()
             .qcShopConfigs(loginStatus.staff_id(), gymWrapper.getParams(), body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -55,8 +56,7 @@ public class OrderLimitPresenter extends BasePresenter {
     void queryOrderLimit(boolean isPrivate) {
         RxRegiste(restRepository.getGet_api()
             .qcGetShopConfig(loginStatus.staff_id(), isPrivate ? ShopConfigs.PRIVATE_MINUTES_CAN_ORDER : ShopConfigs.TEAM_MINUTES_CAN_ORDER,
-                gymWrapper.getParams())
-            .subscribeOn(Schedulers.io())
+                gymWrapper.getParams()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<SignInConfig.Data>>() {
                 @Override public void call(QcResponseData<SignInConfig.Data> qcResponse) {
@@ -79,6 +79,7 @@ public class OrderLimitPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetShopConfig(loginStatus.staff_id(),
                 isPrivate ? ShopConfigs.PRIVATE_MINUTES_CAN_CANCEL : ShopConfigs.TEAM_MINUTES_CAN_CANCEL, gymWrapper.getParams())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<SignInConfig.Data>>() {
@@ -101,8 +102,7 @@ public class OrderLimitPresenter extends BasePresenter {
     void querySubstituteLimit(boolean isPrivate) {
         RxRegiste(restRepository.getGet_api()
             .qcGetShopConfig(loginStatus.staff_id(), isPrivate ? ShopConfigs.PRIVATE_MINUTES_CAN_ORDER : ShopConfigs.TEAM_MINUTES_CAN_ORDER,
-                gymWrapper.getParams())
-            .subscribeOn(Schedulers.io())
+                gymWrapper.getParams()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<SignInConfig.Data>>() {
                 @Override public void call(QcResponseData<SignInConfig.Data> qcResponse) {

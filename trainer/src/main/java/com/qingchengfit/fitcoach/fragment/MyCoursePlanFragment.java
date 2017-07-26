@@ -115,7 +115,7 @@ public class MyCoursePlanFragment extends BaseFragment {
             }
         });
         recyclerview.setAdapter(mGymAdapter);
-        //        QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
+      //        QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).onBackpressureBuffer().subscribeOn(Schedulers.io())
         //                .observeOn(AndroidSchedulers.mainThread())
         //                .subscribe(qcAllCoursePlanResponse -> {
         //                    adapterData.clear();
@@ -151,6 +151,7 @@ public class MyCoursePlanFragment extends BaseFragment {
             params.put("id", coachService.getId());
             params.put("model", coachService.getModel());
             RxRegiste(QcCloudClient.getApi().getApi.qcGetGymAllPlans(App.coachid, params)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<QcAllCoursePlanResponse>() {
@@ -195,7 +196,7 @@ public class MyCoursePlanFragment extends BaseFragment {
     //        params.put("model", coachService.getModel());
     //        if (resultCode > 1000) {
     //            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params)
-    //                .subscribeOn(Schedulers.io())
+  //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                .observeOn(AndroidSchedulers.mainThread())
     //                .subscribe(qcAllCoursePlanResponse -> {
     //                    adapterData.clear();
@@ -207,7 +208,7 @@ public class MyCoursePlanFragment extends BaseFragment {
     //                });
     //        } else if (requestCode >= 0 && requestCode < 10000) {
     //            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params)
-    //                .subscribeOn(Schedulers.io())
+  //                .onBackpressureBuffer().subscribeOn(Schedulers.io())
     //                .observeOn(AndroidSchedulers.mainThread())
     //                .subscribe(qcAllCoursePlanResponse -> {
     //                    adapterData.clear();

@@ -41,6 +41,7 @@ public class RealCardUsecase {
         return restRepository.getGet_api()
             .qcGetBrandCard(App.staffId, brand_id, gymid, gymmoel, page, keyword, filter)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -54,6 +55,7 @@ public class RealCardUsecase {
         return restRepository.getGet_api()
             .qcGetBalanceCard(App.staffId, brand_id, gymid, gymmoel, page, keyword, filter)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -67,6 +69,7 @@ public class RealCardUsecase {
         return restRepository.getGet_api()
             .qcGetDayOff(App.staffId, brandid, card_id, gymid, gymModel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -79,6 +82,7 @@ public class RealCardUsecase {
         return restRepository.getPost_api()
             .qcUnregisteCard(App.staffId, cardid, brandid, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -91,6 +95,7 @@ public class RealCardUsecase {
         return restRepository.getPost_api()
             .qcAddDayOff(App.staffId, brandid, gymid, gymmodel, body)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -103,6 +108,7 @@ public class RealCardUsecase {
         return restRepository.getPost_api()
             .qcDelDayOff(App.staffId, leave_id, brandid, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -116,6 +122,7 @@ public class RealCardUsecase {
         return restRepository.getGet_api()
             .qcGetCardhistory(App.staffId, cardid, brand_id, gymid, gymmodel, start, end, page)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -127,6 +134,7 @@ public class RealCardUsecase {
         return restRepository.getPost_api()
             .qcResumeCard(App.staffId, cardid, brandid, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -139,6 +147,7 @@ public class RealCardUsecase {
         return restRepository.getPost_api()
             .qcUndateCard(App.staffId, cardid, brandid, gymid, gymmodel, card)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(action1, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {

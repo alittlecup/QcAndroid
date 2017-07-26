@@ -76,6 +76,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetBodyTest(App.staffId, measureId, gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<BodyTestMeasureData>>() {
                 @Override public void call(QcResponseData<BodyTestMeasureData> responseData) {
@@ -95,6 +96,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcUpdateBodyTest(loginStatus.staff_id(), measureId, gymWrapper.getParams(), bodyTestBean)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -115,6 +117,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcAddBodyTest(loginStatus.staff_id(), gymWrapper.getParams(), bodyTestBean)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -131,6 +134,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
         RxRegiste(restRepository.getPost_api()
             .qcDelBodyTest(loginStatus.staff_id(), measureid, gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
@@ -147,6 +151,7 @@ public class ModifyBodyTestPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetBodyTestModel(gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<BodyTestTemplateData>>() {
                 @Override public void call(QcResponseData<BodyTestTemplateData> responseData) {

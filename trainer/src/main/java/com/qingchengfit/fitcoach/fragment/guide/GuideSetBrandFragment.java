@@ -65,6 +65,7 @@ public class GuideSetBrandFragment extends BaseFragment {
             @Override public void call(EventChooseImage eventChooseImage) {
                 showLoading();
                 UpYunClient.rxUpLoad("brand/", eventChooseImage.filePath)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {
@@ -81,7 +82,7 @@ public class GuideSetBrandFragment extends BaseFragment {
         });
         //if (App.gUser != null && App.gUser.id != null) {
         //    RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id + "")
-        //        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+      //        .onBackpressureBuffer().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
         //        .subscribe(new Action1<QcResponseBrands>() {
         //            @Override public void call(QcResponseBrands qcResponse) {
         //                if (ResponseConstant.checkSuccess(qcResponse)) {
@@ -134,6 +135,7 @@ public class GuideSetBrandFragment extends BaseFragment {
                 }
                 showLoading();
                 QcCloudClient.getApi().postApi.qcCreatBrand(new CreatBrandBody.Builder().name(brandName.getContent()).photo(imgUrl).build())
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(qcResponsCreatBrand -> {

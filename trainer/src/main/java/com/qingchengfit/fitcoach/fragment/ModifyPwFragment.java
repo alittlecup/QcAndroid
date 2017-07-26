@@ -97,8 +97,11 @@ public class ModifyPwFragment extends BaseSettingFragment {
             QcCloudClient.getApi().postApi.qcMoidfyPw(App.coachid, new ModifyPwBean.Builder().phone(phoneNum.getPhoneNum())
                 .area_code(phoneNum.getDistrictInt())
                 .code(checkcode.getCode())
-                .password(password.getCode())
-                .build()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<QcResponse>() {
+                .password(password.getCode()).build())
+                .onBackpressureBuffer()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcResponse>() {
                 @Override public void onCompleted() {
 
                 }
@@ -129,6 +132,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
         if (phoneNum.checkPhoneNum()) {
             QcCloudClient.getApi().postApi.qcGetCode(
                 new GetCodeBean.Builder().phone(phoneNum.getPhoneNum()).area_code(phoneNum.getDistrictInt()).build())
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<QcResponse>() {

@@ -105,6 +105,7 @@ public class SplashActivity extends AppCompatActivity {
             App.staffId = staffid;
             sp = restRepository.getGet_api()
                 .qcGetSelfInfo(staffid).delay(2500, TimeUnit.MILLISECONDS)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Func1<QcResponseData<StaffResponse>, Observable<QcResponseData<GymList>>>() {
@@ -118,6 +119,7 @@ public class SplashActivity extends AppCompatActivity {
                         }
                         return restRepository.getGet_api()
                             .qcGetCoachService(App.staffId, null)
+                            .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread());
                     }

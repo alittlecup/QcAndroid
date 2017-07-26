@@ -215,6 +215,7 @@ public class WebActivityWithShare extends BaseActivity
         paySp = RxBus.getBus()
             .register(PayEvent.class)
             .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<PayEvent>() {
                 @Override public void onCompleted() {
@@ -525,7 +526,10 @@ public class WebActivityWithShare extends BaseActivity
             }
             LogUtil.d(filepath);
             ShowLoading("正在上传");
-            Observable.just(filepath).subscribeOn(Schedulers.io()).subscribe(s -> {
+          Observable.just(filepath)
+              .onBackpressureBuffer()
+              .subscribeOn(Schedulers.io())
+              .subscribe(s -> {
                 String filename = UUID.randomUUID().toString();
                 BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
                 File upFile = new File(Configs.ExternalCache + filename);

@@ -106,7 +106,7 @@ public class MainMsgFragment extends BaseFragment
     private LoginProcessor loginProcessor;
     private int unReadNoti = 0;
     private NotificationDeleted notificationDeleted = new NotificationDeleted();
-
+  private boolean init = false;
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String ds = PreferenceUtils.getPrefString(getContext(), loginStatus.staff_id() + "dele_noti", "");
@@ -131,6 +131,12 @@ public class MainMsgFragment extends BaseFragment
         changeLogin();
         return view;
     }
+
+  @Override public void onHiddenChanged(boolean hidden) {
+    if (!hidden && init) {
+      refresh();
+    }
+  }
 
     private void changeLogin() {
         initToolbar(toolbar);
@@ -165,8 +171,9 @@ public class MainMsgFragment extends BaseFragment
                 if (loginProcessor == null)
                     loginProcessor = new LoginProcessor(getActivity().getApplicationContext(),
                     getString(R.string.chat_user_id_header, loginStatus.getUserId()), Uri.parse(Configs.Server).getHost(), this);
-                if (!loginProcessor.isLogin()) {
+              if (!loginProcessor.isLogin() || !init) {
                     loginProcessor.sientInstall();
+                init = true;
                 } else {
                     onLoginSuccess();
                 }

@@ -149,7 +149,7 @@ public class FollowUpDataTransferFragment extends BaseFragment
 
     private void initBus() {
 
-        RxBusAdd(FollowUpFilterEvent.class).subscribeOn(Schedulers.io())
+      RxBusAdd(FollowUpFilterEvent.class).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<FollowUpFilterEvent>() {
                 @Override public void call(final FollowUpFilterEvent followUpFilterEvent) {

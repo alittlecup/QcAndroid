@@ -60,6 +60,7 @@ public class AddCoursePresenter extends BasePresenter {
     public void addCourse(String staffid, CourseBody body) {
         RxRegiste(restRepository.getPost_api()
             .qcCreateCourse(staffid, body, GymUtils.getParams(coachService, brand))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

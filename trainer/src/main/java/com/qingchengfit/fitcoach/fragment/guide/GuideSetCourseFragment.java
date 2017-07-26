@@ -84,6 +84,7 @@ import rx.schedulers.Schedulers;
             @Override public void call(EventChooseImage eventChooseImage) {
                 showLoading();
                 UpYunClient.rxUpLoad("course/", eventChooseImage.filePath)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {

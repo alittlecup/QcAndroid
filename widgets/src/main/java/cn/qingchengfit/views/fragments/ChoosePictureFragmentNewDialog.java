@@ -203,6 +203,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
 
             final String fp = filepath;
             spUpload = UpYunClient.rxUpLoad("/android/", fp)
+                .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {

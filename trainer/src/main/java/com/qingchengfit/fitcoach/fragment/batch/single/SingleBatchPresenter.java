@@ -38,6 +38,7 @@ public class SingleBatchPresenter extends BasePresenter {
     public void querySingleBatchId(String staffid, boolean isPrivate, String singlebatchid) {
         RxRegiste(restRepository.getGet_api()
             .qcGetSingleBatch(staffid, GymUtils.getCourseTypeStr(isPrivate), singlebatchid, GymUtils.getParams(coachService))
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseSingleBatch>() {
@@ -69,6 +70,7 @@ public class SingleBatchPresenter extends BasePresenter {
         body.model = coachService.getModel();
         RxRegiste(restRepository.getPost_api()
             .qcUpdateSinglebatch(staffid, GymUtils.getCourseTypeStr(isPrivate), scheduleId, body)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
@@ -93,6 +95,7 @@ public class SingleBatchPresenter extends BasePresenter {
         batchScheduleBody.ids = singlebatchid;
         RxRegiste(restRepository.getPost_api()
             .qcDelCourseManage(App.coachid, GymUtils.getCourseTypeStr(isPrivate), batchScheduleBody)
+            .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {

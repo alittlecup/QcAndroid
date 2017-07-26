@@ -162,6 +162,7 @@ public class FixSelfInfoFragment extends BaseDialogFragment implements CommonPVi
                     .placeholder(R.drawable.img_loadingimage)
                     .into(new CircleImgWrapper(headerImg, getContext()));
                 RxRegiste(UpYunClient.rxUpLoad("/avatar/", eventChooseImage.filePath)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {

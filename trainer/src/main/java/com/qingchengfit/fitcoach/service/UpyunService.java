@@ -57,6 +57,7 @@ public class UpyunService extends IntentService {
                 //String filename = UUID.randomUUID().toString();
 
                 spUpImg = UpYunClient.rxUpLoad("header/", FILE_PATH)
+                    .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {
