@@ -358,6 +358,13 @@
             android:layout_height="wrap_content"
             />
 
+        <cn.qingchengfit.views.fragments.TouchyWebView
+            android:id="@+id/tv_gym_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            />
         <include layout="@layout/divider_grey"/>
 
         <LinearLayout

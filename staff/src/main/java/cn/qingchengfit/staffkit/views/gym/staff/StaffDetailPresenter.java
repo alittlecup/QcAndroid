@@ -82,7 +82,7 @@ public class StaffDetailPresenter extends BasePresenter {
         RxRegiste(useCase.createManager(gymWrapper.id(), gymWrapper.model(), body, new Action1<QcResponse>() {
             @Override public void call(QcResponse qcResponse) {
                 if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onFixSuccess();
+                    view.onAddSuccess();
                 } else {
                     view.onFailed(qcResponse.getMsg());
                 }

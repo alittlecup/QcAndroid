@@ -13,6 +13,7 @@ import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
 import cn.qingchengfit.inject.moudle.StaffWrapperMoudle;
 import cn.qingchengfit.inject.moudle.StudentWrapperModule;
+import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
 import cn.qingchengfit.recruit.views.JobSearchChatActivity;
@@ -45,6 +46,7 @@ import cn.qingchengfit.staffkit.train.fragment.TrainChooseGymFragment;
 import cn.qingchengfit.staffkit.train.moudle.TrainMoudle;
 import cn.qingchengfit.staffkit.views.AddBrandActivity;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
+import cn.qingchengfit.staffkit.views.ChooseBrandActivity;
 import cn.qingchengfit.staffkit.views.ChooseBrandFragment;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.EditTextActivity;
@@ -357,7 +359,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.SaleCardTypeFragmentModule.class, AppComponent.SaleFilterModule.class, AppComponent.GuideChooseBrandModule.class,
     AppComponent.AddBrandModule.class, AppComponent.HomePageQrCodeFragmentModule.class, AppComponent.CoachCommentDetailFragmentModule.class,
     AppComponent.AheadOffDayFragmentModule.class, AppComponent.ClassLimitBottomFragmentModule.class,
-    AppComponent.BottomBuyLimitFragmentModule.class,
+    AppComponent.BottomBuyLimitFragmentModule.class, AppComponent.ChooseStaffFragmentModule.class,
 
     AppComponent.SigninGlanceModule.class, AppComponent.SignInDetailModule.class, AppComponent.SigninReportModule.class,
     AppComponent.CustomSigninModule.class, AppComponent.OutExcelModule.class, AppComponent.CoachChooseDialogModule.class,
@@ -443,7 +445,7 @@ import dagger.multibindings.IntoMap;
     /*
      * 以下为附加component
      */
-    AppComponent.StudentWraperInnerModule.class,
+    AppComponent.StudentWraperInnerModule.class, AppComponent.ChooseBrandActivityModule.class,
 
     AppComponent.WebFModule.class, CardTypeWrapperModule.class, RealcardModule.class,
     /**
@@ -842,7 +844,7 @@ public interface AppComponent {
         }
     }
 
-    //void inject(ChooseBrandActivity activity);
+  //void inject(ChooseBrandActivity activity);
     //
     //void inject(GuideChooseBrandAcitivity activity);
     //
@@ -2089,6 +2091,13 @@ public interface AppComponent {
         }
     }
 
+  @Subcomponent() public interface ChooseBrandAcitiviySubcomponent
+      extends AndroidInjector<ChooseBrandActivity> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<ChooseBrandActivity> {
+    }
+  }
+
     @Subcomponent() public interface AddBrandSubcomponent extends AndroidInjector<AddBrandActivity> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AddBrandActivity> {
         }
@@ -2334,6 +2343,13 @@ public interface AppComponent {
         }
     }
 
+  @Subcomponent() public interface ChooseStaffFragmentSubcomponent
+      extends AndroidInjector<ChooseStaffFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<ChooseStaffFragment> {
+    }
+  }
+
     /**
      * {@link GymInfoNoEditFragment}
      */
@@ -2427,11 +2443,6 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = GymSubcomponent.class) abstract class GymModule {
-        @Binds @IntoMap @ActivityKey(GymActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(GymSubcomponent.Builder builder);
-    }
-
     //void inject(RealCardListFragment activity);
     //
     //void inject(BalanceCardListFragment activity);
@@ -2453,13 +2464,19 @@ public interface AppComponent {
 
     //cn.qingchengfit.inject.commpont.CommonComponent plus(GymMoudle gymMoudle);
 
+  @Module(subcomponents = GymSubcomponent.class) abstract class GymModule {
+    @Binds @IntoMap @ActivityKey(GymActivity.class)
+    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
+        GymSubcomponent.Builder builder);
+  }
+
+  ;
+
     @Module(subcomponents = LoginSubcomponent.class) abstract class LoginModule {
         @Binds @IntoMap @ActivityKey(LoginActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
             LoginSubcomponent.Builder builder);
     }
-
-    ;
 
     @Module(subcomponents = RealValueCardChargeSubcomponent.class)
     abstract class RealValueCardChargeModule {
@@ -3728,6 +3745,13 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(GuideChooseBrandSubcomponent.Builder builder);
     }
 
+  @Module(subcomponents = ChooseBrandAcitiviySubcomponent.class)
+  abstract class ChooseBrandActivityModule {
+    @Binds @IntoMap @ActivityKey(ChooseBrandActivity.class)
+    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
+        ChooseBrandAcitiviySubcomponent.Builder builder);
+  }
+
     @Module(subcomponents = AddBrandSubcomponent.class) abstract class AddBrandModule {
         @Binds @IntoMap @ActivityKey(AddBrandActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(AddBrandSubcomponent.Builder builder);
@@ -3933,6 +3957,13 @@ public interface AppComponent {
         @Binds @IntoMap @FragmentKey(ChooseCoachFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             ChooseCoachFragmentSubcomponent.Builder builder);
+    }
+
+  @Module(subcomponents = ChooseStaffFragmentSubcomponent.class)
+  abstract class ChooseStaffFragmentModule {
+    @Binds @IntoMap @FragmentKey(ChooseStaffFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        ChooseStaffFragmentSubcomponent.Builder builder);
     }
 
 }

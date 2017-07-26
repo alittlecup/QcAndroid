@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -36,7 +37,6 @@ import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.DoneAccountEvent;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
-import cn.qingchengfit.staffkit.rxbus.event.FreshGymListEvent;
 import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
 import cn.qingchengfit.staffkit.rxbus.event.RxbusBatchLooperConfictEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
@@ -482,7 +482,7 @@ public class ManageCourseBatchFragment extends BaseFragment implements ManageCou
         PreferenceUtils.setPrefString(getContext(), "init", "");
         App.caches.clear();
         RxBus.getBus().post(new RxCompleteGuideEvent());//通知单店模式
-        RxBus.getBus().post(new FreshGymListEvent());//通知健身房列表刷新
+      RxBus.getBus().post(new EventFreshGyms());//通知健身房列表刷新
         if (getActivity() instanceof GuideActivity) {
             if (((GuideActivity) getActivity()).isAdd) {
                 Intent toGymDetail = new Intent(getActivity(), GymActivity.class);

@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.Banner;
@@ -38,7 +39,6 @@ import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventBrandChange;
 import cn.qingchengfit.staffkit.rxbus.event.EventChartTitle;
-import cn.qingchengfit.staffkit.rxbus.event.FreshGymListEvent;
 import cn.qingchengfit.staffkit.views.ChooseBrandFragment;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.QRActivity;
@@ -236,7 +236,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override public void onRefresh() {
                 homePresenter.updatePermission();
-                RxBus.getBus().post(new FreshGymListEvent());
+              RxBus.getBus().post(new EventFreshGyms());
             }
         });
         initViewOfChain();

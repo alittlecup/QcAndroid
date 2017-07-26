@@ -612,8 +612,6 @@ public class WebFragment extends BaseFragment
       } else if (requestCode == 99) {
         if (mWebviewWebView != null) {
           String retAction = data.getStringExtra("web_action");
-          if (retAction.endsWith("/"))
-            retAction.substring(0,retAction.length()-1);
           mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('"
               + retAction
               + "','"
@@ -879,7 +877,7 @@ public class WebFragment extends BaseFragment
               if (uri.getPath() != null)
                 ret = TextUtils.concat(ret,uri.getPath()).toString();
               tosb.putExtra("web_action", ret);
-              tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              //tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
               startActivityForResult(tosb, 99);
             } catch (Exception e) {
               mWebviewWebView.loadUrl(

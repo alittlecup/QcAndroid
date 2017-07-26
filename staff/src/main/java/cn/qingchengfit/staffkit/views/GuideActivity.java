@@ -87,12 +87,8 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
         //        ((App) getApplication()).getAppCompoent().inject(this);
         mRestRepository = new RestRepository();
         if (getIntent().getParcelableExtra(Configs.EXTRA_BRAND) == null) {
-            //gymComponent = DaggerGymComponent.builder()
-            //        .appComponent(((App) getApplication()).getAppCompoent())
-            //        .gymMoudle(new GymMoudle(new CoachService(), new Brand(), new GymStatus.Builder().isGuide(true).build()))
-            //        .build();
-            //gymComponent.inject(this);
-            spQueryBrand = mRestRepository.getGet_api()
+
+          spQueryBrand = mRestRepository.getGet_api()
                 .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
@@ -117,12 +113,8 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
                     }
                 });
         } else {
-            //gymComponent = DaggerGymComponent.builder()
-            //        .appComponent(((App) getApplication()).getAppCompoent())
-            //        .gymMoudle(new GymMoudle(new CoachService(), (Brand) getIntent().getParcelableExtra(Configs.EXTRA_BRAND), new GymStatus.Builder().isGuide(true).build()))
-            //        .build();
-            //gymComponent.inject(this);
-            getSupportFragmentManager().beginTransaction().replace(R.id.frag, new SetGymFragment()).commit();
+
+          getSupportFragmentManager().beginTransaction().replace(R.id.frag, new SetGymFragment()).commit();
         }
         isAdd = getIntent().getBooleanExtra("isAdd", false);
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);

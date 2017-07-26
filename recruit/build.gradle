@@ -42,8 +42,8 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
-  //  compile project(path: ':widgets')
+  //  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
+  compile project(path: ':widgets')
 
   compile('cn.qingchegfit.chat:chat:latest.integration') {
     exclude group: 'com.upyun', module: 'java-sdk'

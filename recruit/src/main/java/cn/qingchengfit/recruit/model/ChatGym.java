@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ChatGym implements Parcelable {
 
-  public static final Parcelable.Creator<ChatGym> CREATOR = new Creator<ChatGym>() {
+  public static final Creator<ChatGym> CREATOR = new Creator<ChatGym>() {
     @Override public ChatGym createFromParcel(Parcel source) {
       return new ChatGym(source);
     }
@@ -39,6 +39,7 @@ public class ChatGym implements Parcelable {
   };
   public String photo;
   public String name;
+  public String id;
   public String brand_name;
   public List<Staff> coaches;
   public List<Staff> staffs;
@@ -49,6 +50,8 @@ public class ChatGym implements Parcelable {
   protected ChatGym(Parcel in) {
     this.photo = in.readString();
     this.name = in.readString();
+    this.id = in.readString();
+    this.brand_name = in.readString();
     this.coaches = in.createTypedArrayList(Staff.CREATOR);
     this.staffs = in.createTypedArrayList(Staff.CREATOR);
   }
@@ -60,6 +63,8 @@ public class ChatGym implements Parcelable {
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(this.photo);
     dest.writeString(this.name);
+    dest.writeString(this.id);
+    dest.writeString(this.brand_name);
     dest.writeTypedList(this.coaches);
     dest.writeTypedList(this.staffs);
   }

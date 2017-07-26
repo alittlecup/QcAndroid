@@ -396,7 +396,12 @@
         android:name=".views.GuideActivity"
         android:configChanges="keyboard"
         android:screenOrientation="portrait"
-        />
+        >
+      <intent-filter>
+        <action android:name="${APP_PACKAGE}.chooseBrand"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
     <activity
         android:name=".views.schedule.ScheduleActivity"
         android:screenOrientation="portrait"
@@ -450,7 +455,9 @@
     <activity
         android:name=".views.ChooseBrandActivity"
         android:screenOrientation="portrait"
-        />
+        >
+
+    </activity>
     <activity
         android:name=".wxapi.WXPayEntryActivity"
         android:exported="true"
@@ -772,7 +779,6 @@
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
-
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
 
@@ -783,6 +789,7 @@
       </intent-filter>
     </activity>
     <activity android:name="cn.qingchengfit.recruit.views.RecruitActivity"
+              android:launchMode="standard"
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>

@@ -90,6 +90,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
   @BindView(R2.id.img_created_by) ImageView imgCreatedBy;
   @BindView(R2.id.tv_created_by) TextView tvCreatedBy;
   @BindView(R2.id.tv_starred) TextView tvStarred;
+
   @BindView(R2.id.tv_position_crated_at) TextView tvPositionCratedAt;
   @Inject RecruitRouter router;
   @Inject JobPresenter presenter;
@@ -97,6 +98,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
   @Inject QcRestRepository restRepository;
   @BindView(R2.id.tv_position_desc) TouchyWebView tvPositionDesc;
   @BindView(R2.id.tv_position_require) TouchyWebView tvPositionRequire;
+  @BindView(R2.id.tv_gym_des) TouchyWebView tvGymDes;
   @BindView(R2.id.img_stared) ImageView imgStared;
   @BindView(R2.id.btn_contact_him) Button btnContactHim;
   @BindView(R2.id.btn_send_resume) Button btnSendResume;
@@ -229,6 +231,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
           .replace(R.id.frag_gym_equipment,
               RecruitGymEquipmentFragmentBuilder.newRecruitGymEquipmentFragment(job.gym))
           .commit();
+    }
+    if (!TextUtils.isEmpty(job.gym.detail_description)) {
+      tvGymDes.loadData(CmStringUtils.getMobileHtml(job.gym.detail_description),
+          "text/html; charset=UTF-8", null);
     }
 
     //创建者信息

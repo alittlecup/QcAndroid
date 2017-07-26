@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.views;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import cn.qingchengfit.model.base.Gym;
@@ -45,6 +46,16 @@ public class ChooseGymInRecruitFragment extends ChooseGymFragment {
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("选择场馆");
+  }
+
+  @Override public void onViewClicked() {
+    try {
+      Intent toChooseBrand = new Intent(getContext().getPackageName() + ".chooseBrand");
+      toChooseBrand.putExtra("trainer", true);
+      startActivityForResult(toChooseBrand, 1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Override protected void queryPermiss(final Gym gym) {

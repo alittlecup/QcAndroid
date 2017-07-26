@@ -34,6 +34,9 @@ DELETE  FROM CoachService;
 getByIdModel:
 SELECT * FROM CoachService WHERE id = ? and model = ?;
 
+getByGymId:
+SELECT * FROM CoachService WHERE gym_id = ?;
+
 getByBrandIdAndShopId:
 SELECT * FROM CoachService WHERE brand_id = ? and shop_id = ?;
 

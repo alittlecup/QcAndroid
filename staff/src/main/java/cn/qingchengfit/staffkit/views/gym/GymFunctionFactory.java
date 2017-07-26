@@ -74,6 +74,7 @@ public class GymFunctionFactory {
      * 内部管理
      */
     public static final String MODULE_MANAGE_STAFF = "/manage/staff";
+    public static final String MODULE_MANAGE_STAFF_ADD = "/manage/staff/add/";
     public static final String MODULE_MANAGE_COACH = "/coachsetting";
     /**
      * 运营推广
@@ -554,6 +555,8 @@ public class GymFunctionFactory {
                 Intent toSignIn = new Intent(fragment.getActivity(), SignInActivity.class);
                 fragment.startActivity(toSignIn);
                 return;
+            case MODULE_MANAGE_STAFF_ADD:
+                break;
             default:
                 return;
         }

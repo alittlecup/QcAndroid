@@ -23,6 +23,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventAddress;
+import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -33,7 +34,6 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.rxbus.event.FreshGymListEvent;
 import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
@@ -254,7 +254,7 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
     }
 
     @Override public void onCreatGym() {
-        RxBus.getBus().post(new FreshGymListEvent());
+        RxBus.getBus().post(new EventFreshGyms());
         getActivity().finish();
     }
 
@@ -265,7 +265,7 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
             coachServices.add(coachService);
             GymBaseInfoAction.writeGyms(coachServices);
         } else {
-            RxBus.getBus().post(new FreshGymListEvent());//通知健身房列表刷新
+            RxBus.getBus().post(new EventFreshGyms());//通知健身房列表刷新
             RxBus.getBus().post(new RxCompleteGuideEvent());//通知单店模式
             if (getActivity().getIntent().getBooleanExtra("trainer", false)) {
                 getActivity().finish();

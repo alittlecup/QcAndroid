@@ -120,6 +120,7 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
   }
 
   @Override public void onDestroyView() {
+    setBackPressNull();
     super.onDestroyView();
   }
 

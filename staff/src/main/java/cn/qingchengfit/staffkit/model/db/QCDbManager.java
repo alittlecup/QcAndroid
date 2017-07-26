@@ -343,6 +343,16 @@ public class QCDbManager {
             .first();
     }
 
+  public static Observable<List<CoachService>> getGymByGymId(String gymid) {
+    return briteDatabase.createQuery(CoachService.TABLE_NAME,
+        CoachService.FACTORY.getByGymId(gymid).statement,
+        CoachService.FACTORY.getByGymId(gymid).args).mapToList(new Func1<Cursor, CoachService>() {
+      @Override public CoachService call(Cursor cursor) {
+        return CoachService.FACTORY.getByIdModelMapper().map(cursor);
+      }
+    }).first();
+  }
+
     public static Observable<List<CoachService>> getGymByShopIds(String brandid, final List<String> shopid) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("SELECT * FROM CoachService WHERE brand_id = " + brandid + " and ");

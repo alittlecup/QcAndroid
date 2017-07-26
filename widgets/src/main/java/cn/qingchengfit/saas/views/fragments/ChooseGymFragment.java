@@ -98,6 +98,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
         freshData();
       }
     });
+
     freshData();
     return view;
   }

@@ -75,6 +75,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+  @Inject SerPermisAction serPermisAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
@@ -190,7 +191,8 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     }
 
     @OnClick(R.id.fab_add_staff) public void addStaff() {
-        if (!SerPermisAction.checkAll(PermissionServerUtils.MANAGE_STAFF_CAN_WRITE)) {
+
+      if (!serPermisAction.check(PermissionServerUtils.MANAGE_STAFF_CAN_WRITE)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }

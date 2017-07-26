@@ -24,6 +24,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventAddStaffDone;
 import cn.qingchengfit.model.body.ManagerBody;
 import cn.qingchengfit.model.responese.StaffPosition;
 import cn.qingchengfit.model.responese.StaffShip;
@@ -328,6 +330,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
 
     @Override public void onAddSuccess() {
         hideLoading();
+        RxBus.getBus().post(new EventAddStaffDone());
         getActivity().onBackPressed();
     }
 

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.QcResponse;
@@ -32,7 +33,6 @@ import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.rxbus.event.FreshGymListEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.adapter.BrandGymsAdapter;
@@ -172,7 +172,9 @@ public class BrandDetailFragment extends BaseFragment {
                                                                     @Override
                                                                     public Observable<Integer> call(List<CoachService> coachServices) {
                                                                         if (coachServices.size() > 1) {
-                                                                            RxBus.getBus().post(new FreshGymListEvent());
+                                                                          RxBus.getBus()
+                                                                              .post(
+                                                                                  new EventFreshGyms());
                                                                         }
                                                                         return Observable.just(coachServices.size() == 1 ? 2 : 1)
                                                                             .observeOn(AndroidSchedulers.mainThread())

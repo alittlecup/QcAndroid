@@ -126,10 +126,10 @@ gradle.projectsEvaluated {
 }
 
 dependencies {
-  //  compile project(path: ':widgets')
-  //  compile project(path: ':recruit')
-  //    compile 'cn.qingchegfit.widgets:widgets:latest.integration'
-  compile 'cn.qingchegfit.recruit:recruit:latest.integration'
+  compile project(path: ':widgets')
+  compile project(path: ':recruit')
+  //      compile 'cn.qingchegfit.widgets:widgets:latest.integration'
+  //  compile 'cn.qingchegfit.recruit:recruit:latest.integration'
   compile('cn.qingchegfit.chat:chat:latest.integration') {
     exclude group: 'com.upyun', module: 'java-sdk'
   }

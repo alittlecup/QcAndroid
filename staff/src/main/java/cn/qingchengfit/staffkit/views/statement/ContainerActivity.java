@@ -21,12 +21,14 @@ import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
 import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
+import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventToolbar;
 import cn.qingchengfit.staffkit.views.FragCallBack;
 import cn.qingchengfit.staffkit.views.course.CourseTypeBatchFragmentBuilder;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
+import cn.qingchengfit.staffkit.views.gym.staff.StaffDetailFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SaleGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SigninGlanceFragment;
@@ -36,6 +38,7 @@ import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeMainFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import java.util.LinkedList;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -61,6 +64,7 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
     @BindView(R.id.frag) FrameLayout frag;
     @BindView(R.id.down) ImageView down;
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
+    @Inject SerPermisAction serPermisAction;
     private Observable<EventToolbar> toolbarOb;
 
     public static void router(String module, Context context) {
@@ -114,6 +118,9 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 break;
             case GymFunctionFactory.MODULE_MANAGE_STAFF:
                 fragment = new StaffListFragment();
+                break;
+            case GymFunctionFactory.MODULE_MANAGE_STAFF_ADD:
+                fragment = StaffDetailFragment.newInstance(null);
                 break;
 
             case GymFunctionFactory.MODULE_WARDROBE:

@@ -142,6 +142,7 @@ import rx.functions.Action1;
   }
 
   @Override public void onDestroyView() {
+    setBackPressNull();
     super.onDestroyView();
   }
 

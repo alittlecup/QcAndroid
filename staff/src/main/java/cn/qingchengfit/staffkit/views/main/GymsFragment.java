@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.items.CoachServiceItem;
 import cn.qingchengfit.items.ListAddItem;
 import cn.qingchengfit.model.base.CoachService;
@@ -22,7 +23,6 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.rxbus.event.FreshGymListEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -63,16 +63,16 @@ public class GymsFragment extends BaseFragment implements FlexibleAdapter.OnItem
 
     private List<AbstractFlexibleItem> adapterDatas = new ArrayList<>();
     private CommonFlexAdapter mAdapter;
-    private Observable<FreshGymListEvent> mFreshOb;
+  private Observable<EventFreshGyms> mFreshOb;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gyms, container, false);
         unbinder = ButterKnife.bind(this, view);
         initDI();
         initView();
-        mFreshOb = RxBus.getBus().register(FreshGymListEvent.class);
-        mFreshOb.subscribe(new Action1<FreshGymListEvent>() {
-            @Override public void call(FreshGymListEvent freshGymListEvent) {
+      mFreshOb = RxBus.getBus().register(EventFreshGyms.class);
+      mFreshOb.subscribe(new Action1<EventFreshGyms>() {
+        @Override public void call(EventFreshGyms eventFreshGyms) {
                 refresh();
             }
         });
@@ -107,7 +107,7 @@ public class GymsFragment extends BaseFragment implements FlexibleAdapter.OnItem
     }
 
     @Override public void onDestroyView() {
-        RxBus.getBus().unregister(FreshGymListEvent.class.getName(), mFreshOb);
+      RxBus.getBus().unregister(EventFreshGyms.class.getName(), mFreshOb);
         super.onDestroyView();
     }
 

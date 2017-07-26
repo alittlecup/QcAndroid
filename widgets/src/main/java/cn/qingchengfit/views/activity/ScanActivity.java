@@ -121,4 +121,8 @@ public class ScanActivity extends BaseActivity implements QRCodeReaderView.OnQRC
   @Override public void QRCodeNotFoundOnCamImage() {
     //showAlert("无法识别二维码");
   }
+
+  @Override public void onBackPressed() {
+    super.onBackPressed();
+  }
 }
