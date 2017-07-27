@@ -84,7 +84,8 @@ public class StudentOperationFragment extends BaseFragment
                 datas.add(
                     new StudentOperationItem(R.drawable.vector_student_management_birthday, R.string.qc_student_birthday_notice, proGym,
                         false));
-                datas.add(new StudentOperationItem(R.drawable.vector_student_management_tag, R.string.qc_student_tag, proGym, false));
+                datas.add(new StudentOperationItem(R.drawable.vector_student_management_tag,
+                    R.string.qc_student_vip, proGym, false));
                 //        datas.add(new StudentOperationItem(R.drawable.vector_student_management_message,R.string.qc_student_sms,proGym,false));
                 //        datas.add(new StudentOperationItem(R.drawable.vector_student_management_score,R.string.qc_title_student_score,proGym,false));
                 if (mCommonFlexAdapter != null) mCommonFlexAdapter.notifyDataSetChanged();
