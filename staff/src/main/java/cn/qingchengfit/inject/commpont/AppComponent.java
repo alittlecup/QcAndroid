@@ -507,6 +507,7 @@ import dagger.multibindings.IntoMap;
      * 聊天
      */
     AppComponent.JobSearchChatModule.class, AppComponent.RecruitMessageListFragmentModule.class,
+    //AppComponent.JobSearchChatModule.class,
 })
 
 public interface AppComponent {

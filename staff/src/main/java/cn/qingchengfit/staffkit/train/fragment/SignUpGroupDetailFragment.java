@@ -177,7 +177,7 @@ import rx.functions.Action1;
         int index = 0;
         getActivity().getSupportFragmentManager()
             .beginTransaction()
-            .replace(R.id.group_rank_count_frag, RankCountFragment.newInstance(data.team_attendance))
+            .replace(R.id.group_rank_count_frag, RankCountFragment.newInstance(data.team_attendance, data.stat_rule.together))
             .commit();
 
         memberList = data.users;

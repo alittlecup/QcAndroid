@@ -76,10 +76,17 @@
             />
 
         <TextView
+            android:id="@+id/text_group_attendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="团队出勤26天"
+            />
+
+        <TextView
             android:id="@+id/text_attendance_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-10dp"
+            android:layout_marginTop="2dp"
             android:textSize="13sp"
             tools:text="全部排名232，场馆内排名3"
             />
@@ -160,10 +167,17 @@
             />
 
         <TextView
+            android:id="@+id/text_group_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="团体团课26节"
+            />
+
+        <TextView
             android:id="@+id/text_group_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-10dp"
+            android:layout_marginTop="2dp"
             android:textSize="13sp"
             tools:text="全部排名232，场馆内排名3"
             />
@@ -197,10 +211,17 @@
             />
 
         <TextView
+            android:id="@+id/text_group_private"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="团体私教6节"
+            />
+
+        <TextView
             android:id="@+id/text_private_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-10dp"
+            android:layout_marginTop="2dp"
             android:textSize="13sp"
             tools:text="全部排名232，场馆内排名3"
             />
