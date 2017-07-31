@@ -290,6 +290,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
     }
 
     @Override public void checkFailed(String s) {
+      hideLoading();
         if (failDialog == null) {
             failDialog = new MaterialDialog.Builder(getContext()).positiveText(R.string.comfirm)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {

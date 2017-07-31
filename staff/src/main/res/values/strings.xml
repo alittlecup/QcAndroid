@@ -703,7 +703,7 @@
   <string name="title_signin_config">入场签到设置</string>
   <string name="copy_link_to_cpboard">复制链接到剪切板</string>
   <string name="link_has_copied">链接已复制</string>
-  <string name="qc_student_vip">VIP会员</string>
+  <string name="qc_student_tag">VIP会员</string>
   <string name="offen_funs">常用功能</string>
   <string name="label_absentee">缺勤统计</string>
   <string name="lable_attendace">出勤</string>
