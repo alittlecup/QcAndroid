@@ -23,6 +23,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarBean;
+import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.responese.ScheduleAction;
 import cn.qingchengfit.model.responese.ScheduleActions;
 import cn.qingchengfit.network.ResponseConstant;

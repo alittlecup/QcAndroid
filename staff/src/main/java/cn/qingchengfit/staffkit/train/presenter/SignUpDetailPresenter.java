@@ -1,6 +1,5 @@
 package cn.qingchengfit.staffkit.train.presenter;
 
-import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.network.ResponseConstant;

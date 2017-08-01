@@ -951,6 +951,9 @@ public interface Get_Api {
   rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ShopOrdersWrap>> qcGetGymOrders(
       @QueryMap HashMap<String, Object> params);
 
+
+
+
     //判断是否同意用户协议
     @GET(" /api/user/check/read_agreement/")
     rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CheckProtocolModel>> qcCheckProtocol(

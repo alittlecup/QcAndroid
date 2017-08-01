@@ -1,8 +1,6 @@
 package cn.qingchengfit.staffkit.views.setting;
 
 import android.content.Intent;
-import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.network.ResponseConstant;

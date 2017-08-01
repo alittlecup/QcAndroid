@@ -8,7 +8,6 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.GroupCourseScheduleDetail;
 import cn.qingchengfit.model.responese.QcResponsePrivateDetail;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import javax.inject.Inject;

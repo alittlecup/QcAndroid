@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;

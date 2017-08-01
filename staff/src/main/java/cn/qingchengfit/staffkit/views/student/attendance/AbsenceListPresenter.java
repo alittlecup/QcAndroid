@@ -10,7 +10,6 @@ import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.common.Absentce;
 import cn.qingchengfit.model.common.Absentces;
 import cn.qingchengfit.model.responese.Student;
-import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.App;
