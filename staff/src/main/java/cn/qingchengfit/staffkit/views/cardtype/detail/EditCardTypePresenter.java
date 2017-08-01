@@ -1,14 +1,14 @@
 package cn.qingchengfit.staffkit.views.cardtype.detail;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.CardtplBody;
 import cn.qingchengfit.model.body.ShopsBody;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;

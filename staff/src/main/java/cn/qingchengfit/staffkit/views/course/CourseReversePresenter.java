@@ -1,13 +1,13 @@
 package cn.qingchengfit.staffkit.views.course;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.responese.CourseReportDetail;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;

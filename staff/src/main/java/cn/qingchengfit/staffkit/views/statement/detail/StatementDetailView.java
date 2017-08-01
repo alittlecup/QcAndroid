@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.statement.detail;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.QcResponseStatementDetail;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

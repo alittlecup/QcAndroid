@@ -15,9 +15,9 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.chat.model.Record;
 import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.presenters.SystemMsgPresenter;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -52,12 +52,12 @@ public class RecruitMessageListFragment extends BaseFragment
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
   @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
   @Inject SystemMsgPresenter presenter;
+  @Arg String identify;
   private List<Record> records = new ArrayList<>();
   private HashMap<String, Object> map = new HashMap<>();
   private ConversationPresenter converPresenter;
   private List<ItemRecruitMessage> itemList = new ArrayList<>();
   private CommonFlexAdapter adapter;
-  @Arg String identify;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

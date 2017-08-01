@@ -15,11 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.views.FragCallBack;
+import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import rx.functions.Action1;
 
 /**

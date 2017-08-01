@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.views.card.spendrecord;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.PView;
 
 /**
  * power by

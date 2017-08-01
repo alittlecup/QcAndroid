@@ -301,6 +301,7 @@ public class ShopConfigs {
      *
      */
     public static final String TEAM_SMS_TEACHER_AFTER_USER_ORDER_CANCEL = "team_sms_teacher_after_user_order_cancel";
+    public static final String TEAM_SMS_USER_AFTER_USER_ORDER_CANCEL = "team_sms_user_after_user_order_cancel";
     public static final String TEAM_SMS_USER_AFTER_TEACHER_ORDER_SAVE = "team_sms_user_after_teacher_order_save";
     public static final String TEAM_SMS_TEACHER_AFTER_TEACHER_ORDER_SAVE = "team_sms_teacher_after_teacher_order_save";
     public static final String TEAM_SMS_TEACHER_AFTER_TEACHER_ORDER_CANCEL = "team_sms_teacher_after_teacher_order_cancel";
@@ -321,7 +322,8 @@ public class ShopConfigs {
     public static final String PRIVATE_SMS_USER_AFTER_TEACHER_ORDER_CANCEL = "private_sms_user_after_teacher_order_cancel";
     public static final String PRIVATE_BEFORE_REMIND_USER = "private_before_remind_user";
     public static final String PRIVATE_BEFORE_REMIND_USER_MINUTES = "private_before_remind_user_minutes";
-    public static final String PRIVATE_COURSE_REMIND_TEACHER = "private_course_remind_teacher";
+    //非法配置
+    //public static final String PRIVATE_COURSE_REMIND_TEACHER = "private_course_remind_teacher";
     //public static final String PRIVATE_COURSE_REMIND_TEACHER_MINUTES = "private_course_remind_teacher_minutes";
 
     public static final String BEFORE_MINUTES_CAN_SIGN = "before_minutes_can_sign";
@@ -339,4 +341,6 @@ public class ShopConfigs {
     public static final String CHECK_OUT_WITH_RETURN_LOCKER = "check_out_with_return_locker";
     public static final String IS_SET_USER_PHOTOS = "is_set_user_photos";
     public static final String SMS_NUM = "sms_num";
+  public static final String NOTI_TO_STAFF = "notify_to_staff_method";
+  public static final String NOTIFY_TO_MEMBER_METHOD = "notify_to_member_method";
 }

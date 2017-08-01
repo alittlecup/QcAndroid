@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
@@ -41,6 +40,7 @@ import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
@@ -176,9 +176,9 @@ public class CoachDetailFragment extends BaseFragment implements CoachDetailView
         SpannableString ss = new SpannableString(getString(R.string.down_trainer_app_hint));
         Drawable d;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            d = getResources().getDrawable(R.drawable.ic_launcher_trainer, null);
+          d = getResources().getDrawable(R.drawable.ic_laucher_trainer, null);
         } else {
-            d = getResources().getDrawable(R.drawable.ic_launcher_trainer);
+          d = getResources().getDrawable(R.drawable.ic_laucher_trainer);
         }
         if (d != null) d.setBounds(0, 0, MeasureUtils.dpToPx(15f, getResources()), MeasureUtils.dpToPx(15f, getResources()));
         ss.setSpan(new ImageSpan(d, ImageSpan.ALIGN_BASELINE), 18, 19, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);

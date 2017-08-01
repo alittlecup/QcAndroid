@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;

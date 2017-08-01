@@ -1,13 +1,13 @@
 package cn.qingchengfit.staffkit.views.card.filter;
 
 import android.support.annotation.IntDef;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.FilterCardBean;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

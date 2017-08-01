@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.setting.brand;
 
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 
 /**
  * power by

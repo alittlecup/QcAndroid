@@ -2,6 +2,8 @@ package cn.qingchengfit.staffkit.views.card;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
@@ -16,8 +18,6 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.widgets.AlphabetView;

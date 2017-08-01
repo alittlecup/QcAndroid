@@ -119,6 +119,7 @@
     <attr format="integer" name="civ_content_color"/>
     <attr format="string" name="civ_hint"/>
     <attr format="string" name="civ_unit"/>
+    <attr format="dimension" name="civ_label_width"/>
 
   </declare-styleable>
 

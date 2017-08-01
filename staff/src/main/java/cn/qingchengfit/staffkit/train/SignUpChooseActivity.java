@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.train.fragment.MemberOperationFragment;
-import cn.qingchengfit.staffkit.views.FragCallBack;
+import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import rx.functions.Action1;
 
 /**

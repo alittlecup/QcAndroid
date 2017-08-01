@@ -19,7 +19,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
@@ -28,6 +27,7 @@ import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.cardtype.detail.EditCardTypeFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
  * power by

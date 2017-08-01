@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.gym.staff;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.StaffPosition;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

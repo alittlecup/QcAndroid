@@ -1,12 +1,12 @@
 package cn.qingchengfit.staffkit.views.statement.detail;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.QcResponseStatementDetail;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.usecase.NetError;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import cn.qingchengfit.utils.StatementCompare;

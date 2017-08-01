@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.batch;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 
 /**
  * power by

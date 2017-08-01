@@ -1,6 +1,8 @@
 package cn.qingchengfit.staffkit.views.card.offday;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
@@ -10,10 +12,9 @@ import cn.qingchengfit.model.responese.DayOffs;
 import cn.qingchengfit.model.responese.Leave;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.RealCardUsecase;
 import java.util.ArrayList;

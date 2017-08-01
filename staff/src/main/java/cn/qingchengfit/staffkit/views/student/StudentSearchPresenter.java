@@ -2,11 +2,11 @@ package cn.qingchengfit.staffkit.views.student;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.widgets.AlphabetView;
 import java.util.ArrayList;
 import java.util.List;

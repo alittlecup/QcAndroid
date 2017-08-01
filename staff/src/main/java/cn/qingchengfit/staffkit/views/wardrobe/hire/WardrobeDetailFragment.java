@@ -13,11 +13,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.rxbus.event.EventBackPress;
 import cn.qingchengfit.staffkit.rxbus.event.EventLongHire;
 import cn.qingchengfit.staffkit.views.wardrobe.WardrobeActivity;
 import cn.qingchengfit.staffkit.views.wardrobe.edit.WardrobeEditFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import rx.functions.Action1;
 
 /**

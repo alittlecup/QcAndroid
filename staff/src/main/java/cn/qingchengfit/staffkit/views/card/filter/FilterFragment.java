@@ -17,11 +17,11 @@ import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.views.cardtype.ChooseCardTypeActivity;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 
 /**

@@ -11,11 +11,11 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.views.adapter.SigleModeMainPagerAdapter;
 import cn.qingchengfit.staffkit.views.custom.TabView;
 import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
  * power by

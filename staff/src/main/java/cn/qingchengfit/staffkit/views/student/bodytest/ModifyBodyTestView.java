@@ -1,10 +1,10 @@
 package cn.qingchengfit.staffkit.views.student.bodytest;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.body.BodyTestBody;
 import cn.qingchengfit.model.responese.BodyTestExtra;
 import cn.qingchengfit.model.responese.BodyTestMeasure;
 import cn.qingchengfit.model.responese.BodyTestTemplateBase;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

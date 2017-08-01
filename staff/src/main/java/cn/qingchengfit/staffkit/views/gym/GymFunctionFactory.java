@@ -11,7 +11,6 @@ import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymFuntion;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
@@ -24,6 +23,7 @@ import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
  * power by
@@ -523,8 +523,7 @@ public class GymFunctionFactory {
                 goQrScan(fragment, module, null, coachService);
                 return;
             case MODULE_MSG:
-                goQrScan(fragment, module, PermissionServerUtils.MESSAGESETTING, coachService);
-                return;
+                break;
             case MODULE_GYM_INFO:
                 Intent toGymInfo = new Intent(fragment.getActivity(), GymActivity.class);
                 toGymInfo.putExtra(GymActivity.GYM_TO, GymActivity.GYM_INFO);

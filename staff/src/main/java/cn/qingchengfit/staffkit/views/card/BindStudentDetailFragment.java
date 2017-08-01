@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.views.student.StudentAdapter;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 

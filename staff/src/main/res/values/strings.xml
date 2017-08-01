@@ -161,7 +161,7 @@
   <string name="cardtype_value">储值类型</string>
   <string name="cardtype_times">次卡类型</string>
   <string name="cardtype_date">期限类型</string>
-
+  <string  formatted="false" name="balance_card_total">(%s张)</string>
   <string name="cardtype_all_all">全部会员卡</string>
   <string name="all_cardtype_value">全部储值类型</string>
   <string name="all_cardtype_times">全部次卡类型</string>
@@ -179,7 +179,6 @@
   <string name="charge_value">充值(元)</string>
   <string name="charge_times">充值(次)</string>
   <string name="charge_day">充值(天)</string>
-  <string  formatted="false" name="balance_card_total">(%s张)</string>
 
   <string name="alert_endtime_greater_starttime">结束时间不能早于结束时间</string>
   <string name="alert_batch_greater_three_month">课程排期时间不能超过三个月</string>
@@ -854,6 +853,11 @@
   <string name="tip_dialog_success_content">请在 全部功能-场馆管理-数据导出记录 中查看</string>
   <string name="toolbar_import_export_student">会员导入导出</string>
   <string name="toolbar_import_export_card">会员卡导入导出</string>
+  <string name="str_noti_setting_rule_group">会员预约团课预约后短信提醒教练 \n会员预约团课预约后短信提醒会员
+    \n会员在团课开课前1440分钟收到提醒短信 \n团课未达到最少上课人数短信提醒教练</string>
+  <string name="str_noti_setting_rule_private">有新的私教预约时短信提醒教练 \n当会员取消私教预约时短信提醒教练</string>
+  <string name="str_left_d_sms">剩余%d条</string>
+  <string name="left_sms_count">现短信剩余条数：%d条</string>
 
   //用户协议
   <string name="text_user_protocol">我已阅读并同意</string>

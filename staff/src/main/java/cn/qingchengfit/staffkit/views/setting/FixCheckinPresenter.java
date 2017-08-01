@@ -1,14 +1,14 @@
 package cn.qingchengfit.staffkit.views.setting;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.body.SignInNoticeConfigBody;
 import cn.qingchengfit.model.responese.SigninNoticeConfig;
 import cn.qingchengfit.model.responese.SigninNoticeConfigs;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.SignInNoticeConfigEvent;
 import java.util.ArrayList;

@@ -279,7 +279,7 @@ import javax.inject.Inject;
 
   }
 
-  @Override public void onComfirmClick(List<IFlexible> dats) {
+  @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> poss) {
     List<String> jobList = new ArrayList<>();
     for (IFlexible item : dats) {
       if (item instanceof RecruitPositionChooseItem) {

@@ -1,6 +1,8 @@
 package cn.qingchengfit.staffkit.views.course;
 
 import android.support.annotation.StringRes;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CourseType;
@@ -13,8 +15,6 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.CourseDetailTeacher;
 import java.util.List;

@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.card.spendrecord;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.StatementBean;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

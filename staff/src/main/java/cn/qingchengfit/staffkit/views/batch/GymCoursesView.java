@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.batch;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.ImageThreeTextBean;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.ArrayList;
 
 /**

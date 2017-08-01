@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.main;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 
 /**
  * power by

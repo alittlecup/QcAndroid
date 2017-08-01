@@ -11,10 +11,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.views.adapter.SignInLogAdapter;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.List;
 import javax.inject.Inject;
 

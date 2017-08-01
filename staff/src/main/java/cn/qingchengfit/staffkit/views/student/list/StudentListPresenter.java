@@ -2,6 +2,8 @@ package cn.qingchengfit.staffkit.views.student.list;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -12,8 +14,6 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.utils.GymUtils;

@@ -1,6 +1,8 @@
 package cn.qingchengfit.staffkit.views.signin;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ShopConfigBody;
@@ -14,8 +16,6 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.constant.ShopConfigs;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import java.util.ArrayList;
 import java.util.HashMap;

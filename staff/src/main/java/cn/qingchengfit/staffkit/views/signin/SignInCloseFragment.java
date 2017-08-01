@@ -12,13 +12,13 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.presenters.SignInConfigPresenter;
 import cn.qingchengfit.staffkit.views.signin.config.SignInTypeFragmentBuilder;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.List;
 import javax.inject.Inject;
 

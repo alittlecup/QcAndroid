@@ -2,6 +2,8 @@ package cn.qingchengfit.staffkit.views.student.score;
 
 import android.content.Intent;
 import android.support.v4.util.ArrayMap;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.StudentScoreAwardRuleBean;
@@ -9,8 +11,6 @@ import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Post_Api;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.utils.GymUtils;
 import javax.inject.Inject;

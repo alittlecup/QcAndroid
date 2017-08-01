@@ -60,6 +60,7 @@ public class CommonInputView extends RelativeLayout {
     private String strUnit;
     private int contentColor;
     private CharSequence str_content;
+  private float labelWidth;
     @DrawableRes private int rightDrawable;
     public CommonInputView(Context context) {
         super(context);
@@ -127,6 +128,7 @@ public class CommonInputView extends RelativeLayout {
         contentColor = ta.getColor(R.styleable.CommonInputView_civ_content_color,
             CompatUtils.getColor(getContext(), R.color.text_black));
         strUnit = ta.getString(R.styleable.CommonInputView_civ_unit);
+      labelWidth = ta.getDimension(R.styleable.CommonInputView_civ_label_width, -1);
         ta.recycle();
     }
 
@@ -206,10 +208,20 @@ public class CommonInputView extends RelativeLayout {
         }
         if (isNum) {
             edit.setInputType(InputType.TYPE_CLASS_PHONE);
-            label.setMaxWidth((int) getResources().getDimension(R.dimen.qc_civ_label_max_width_phone));
+          if (labelWidth > 0) {
+            label.setMaxWidth(MeasureUtils.dpToPx(labelWidth, getResources()));
+          } else {
+            label.setMaxWidth(
+                (int) getResources().getDimension(R.dimen.qc_civ_label_max_width_phone));
+          }
         } else {
             edit.setInputType(InputType.TYPE_CLASS_TEXT);
-            label.setMaxWidth((int) getResources().getDimension(R.dimen.qc_civ_label_max_width_txt));
+          if (labelWidth > 0) {
+            label.setMaxWidth(MeasureUtils.dpToPx(labelWidth, getResources()));
+          } else {
+            label.setMaxWidth(
+                (int) getResources().getDimension(R.dimen.qc_civ_label_max_width_txt));
+          }
         }
         edit.setTextColor(contentColor);
         edit.setText(str_content);

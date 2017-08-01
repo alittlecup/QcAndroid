@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.batch;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.GroupCourse;
 import cn.qingchengfit.model.responese.QcResponsePrivateCourse;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CompoundButton;
+import cn.qingchengfit.utils.MeasureUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,14 +118,23 @@ public class QcFilterToggle extends CompoundButton implements QcCheckable {
         super.onDraw(canvas);
         canvas.save();
         canvas.restore();
+      String txt = mChecked ? textOn : textOff;
         textLenth = mTextPaint.measureText(mChecked?textOn:textOff);
+      if (textLenth > getWidth() - MeasureUtils.dpToPx(20f, getResources()) - (
+          buttonDrawableOn == null ? 0 : buttonDrawableOn.getIntrinsicWidth())) {
+        int ind = (int) ((getWidth()
+            - MeasureUtils.dpToPx(20f, getResources())
+            - buttonDrawableOn.getIntrinsicWidth()) / textLenth * txt.length());
+        txt = txt.substring(0, ind).concat("…");
+      }
+      textLenth = mTextPaint.measureText(txt);
         textHeight = mTextPaint.getFontMetrics().descent-mTextPaint.getFontMetrics().ascent;
         float topText = (getMeasuredHeight() - mTextPaint.getFontMetrics().bottom + mTextPaint.getFontMetrics().top) / 2 - mTextPaint.getFontMetrics().top;
         mTextPaint.setColor(mChecked?colorOn:colorOff);
         float leftText = canvas.getWidth()/2- getRightPadding()-textLenth/2;
         if (leftText < 0) leftText = 0 ;
         if (topText < 0 ) topText = 0;
-        canvas.drawText(mChecked?textOn:textOff,leftText,topText,mTextPaint);
+      canvas.drawText(txt, leftText, topText, mTextPaint);
         if (mChecked && buttonDrawableOn != null) {
             final int drawableHeight = buttonDrawableOn.getIntrinsicHeight();
             final int drawableWidth = buttonDrawableOn.getIntrinsicWidth();

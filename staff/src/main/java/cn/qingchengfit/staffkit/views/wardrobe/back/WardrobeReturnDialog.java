@@ -155,6 +155,14 @@ public class WardrobeReturnDialog extends BaseDialogFragment implements Wardrobe
         hideLoading();
     }
 
+  @Override public void showAlert(String s) {
+
+  }
+
+  @Override public void showAlert(@StringRes int s) {
+
+  }
+
     @OnClick(R.id.btn_close) public void onClick() {
         dismiss();
     }

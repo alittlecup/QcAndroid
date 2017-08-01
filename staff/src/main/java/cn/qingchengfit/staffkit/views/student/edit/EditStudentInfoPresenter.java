@@ -2,12 +2,12 @@ package cn.qingchengfit.staffkit.views.student.edit;
 
 import android.content.Intent;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshStudent;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;

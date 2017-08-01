@@ -7,16 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventFilterDate;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.FilterCustomFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.FilterCustomFragmentBuilder;
 import cn.qingchengfit.staffkit.views.student.followup.FollowUpFilterEvent;
 import cn.qingchengfit.staffkit.views.student.followup.LatestTimeFragment;
+import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import java.util.Date;
 
 /**
  * power by
@@ -66,6 +69,19 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
                     e.page = page;
                     e.position = i;
                     RxBus.getBus().post(e);
+                  String start = DateUtils.getStringToday();
+                  String end = DateUtils.getStringToday();
+                  switch (i + ((type == 0) ? 1 : 0)) {
+                    case 1:
+                      start = DateUtils.minusDay(new Date(), 6);
+                      break;
+                    case 2:
+                      start = DateUtils.minusDay(new Date(), 29);
+                      break;
+                    default:
+                      break;
+                  }
+                  RxBus.getBus().post(new EventFilterDate(start, end));
                 }
                 return true;
             }
@@ -79,6 +95,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
                 e.start = start;
                 e.end = end;
                 RxBus.getBus().post(e);
+              RxBus.getBus().post(new EventFilterDate(start, end));
             }
 
             @Override public void onBack() {

@@ -14,9 +14,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.rxbus.event.DrawerChangeEvent;
 import cn.qingchengfit.staffkit.views.custom.DrawerImgItem;
+import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
  * power by

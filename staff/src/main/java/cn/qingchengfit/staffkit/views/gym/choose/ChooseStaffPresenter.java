@@ -1,13 +1,13 @@
 package cn.qingchengfit.staffkit.views.gym.choose;
 
 import android.content.Intent;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.StaffShip;
 import cn.qingchengfit.model.responese.StaffShipResponse;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.CoachUseCase;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import java.util.ArrayList;

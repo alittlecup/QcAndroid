@@ -28,7 +28,7 @@
 //import cn.qingchengfit.staffkit.App;
 //import cn.qingchengfit.staffkit.BuildConfig;
 //import cn.qingchengfit.staffkit.R;
-//import cn.qingchengfit.staffkit.constant.BaseFragment;
+//import cn.qingchengfit.views.fragments.BaseFragment;
 //import cn.qingchengfit.staffkit.constant.Configs;
 //import cn.qingchengfit.RxBus;
 //import cn.qingchengfit.events.EventFreshUnloginAd;

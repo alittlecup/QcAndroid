@@ -170,9 +170,9 @@ public class AddNewCoachFragment extends BaseDialogFragment {
         SpannableString ss = new SpannableString(getString(R.string.down_trainer_app_hint));
         Drawable d;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            d = getResources().getDrawable(R.drawable.ic_launcher_trainer, null);
+          d = getResources().getDrawable(R.drawable.ic_laucher_trainer, null);
         } else {
-            d = getResources().getDrawable(R.drawable.ic_launcher_trainer);
+          d = getResources().getDrawable(R.drawable.ic_laucher_trainer);
         }
         if (d != null) d.setBounds(0, 0, MeasureUtils.dpToPx(15f, getResources()), MeasureUtils.dpToPx(15f, getResources()));
         ss.setSpan(new ImageSpan(d, ImageSpan.ALIGN_BASELINE), 18, 19, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);

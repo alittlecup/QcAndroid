@@ -19,7 +19,7 @@ import cn.qingchengfit.staffkit.allocate.coach.comparator.ItemComparator;
 import cn.qingchengfit.staffkit.allocate.coach.comparator.ItemComparatorJoinAt;
 import cn.qingchengfit.staffkit.allocate.coach.event.ChangeUIEvent;
 import cn.qingchengfit.staffkit.allocate.coach.event.SortEvent;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.QcToggleButton;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;

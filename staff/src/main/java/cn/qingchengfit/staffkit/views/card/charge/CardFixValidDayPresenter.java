@@ -1,5 +1,8 @@
 package cn.qingchengfit.staffkit.views.card.charge;
 
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
@@ -7,9 +10,6 @@ import cn.qingchengfit.model.body.UpdateCardValidBody;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.CView;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;

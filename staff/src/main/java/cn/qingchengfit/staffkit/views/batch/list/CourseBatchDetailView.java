@@ -1,9 +1,9 @@
 package cn.qingchengfit.staffkit.views.batch.list;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.model.responese.GroupCourseSchedule;
 import cn.qingchengfit.model.responese.QcResponsePrivateDetail;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

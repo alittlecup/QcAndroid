@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.card.offday;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.common.OffDay;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

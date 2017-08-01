@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.student.score;
 
 import android.content.Intent;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import javax.inject.Inject;
 
 /**

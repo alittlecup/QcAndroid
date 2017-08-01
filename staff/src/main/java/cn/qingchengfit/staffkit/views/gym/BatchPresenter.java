@@ -1,14 +1,14 @@
 package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.ArrangeBatchBody;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import cn.qingchengfit.staffkit.usecase.InitUseCase;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;

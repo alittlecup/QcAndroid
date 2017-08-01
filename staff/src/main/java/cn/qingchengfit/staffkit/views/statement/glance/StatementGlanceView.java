@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.views.statement.glance;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.PView;
 
 /**
  * power by

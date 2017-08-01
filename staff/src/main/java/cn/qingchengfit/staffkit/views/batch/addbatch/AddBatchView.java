@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.batch.addbatch;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.model.responese.Time_repeat;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.ArrayList;
 
 /**

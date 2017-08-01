@@ -27,7 +27,6 @@ import cn.qingchengfit.model.body.SingleBatchBody;
 import cn.qingchengfit.model.responese.CourseManageBean;
 import cn.qingchengfit.model.responese.CourseSchedule;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
@@ -38,6 +37,7 @@ import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.custom.TimePeriodChooser;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
@@ -73,22 +73,22 @@ public class CourseManageFragment extends BaseFragment implements CourseManageVi
     private TimeDialogWindow timeWindow;
     private TimePeriodChooser timeDialogWindow;
     private MaterialDialog delDialog;
-  private Toolbar.OnMenuItemClickListener mEditLis = new Toolbar.OnMenuItemClickListener() {
-        @Override public boolean onMenuItemClick(MenuItem item) {
-            toolbar.getMenu().clear();
-          toolbar.inflateMenu(R.menu.menu_cancel);
-          toolbar.setOnMenuItemClickListener(mCancel);
-          courseManagerAdapter.setEditing(true);
-            courseManagerAdapter.notifyDataSetChanged();
-            return true;
-        }
-    };
   private Toolbar.OnMenuItemClickListener mCancel = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
             toolbar.getMenu().clear();
           toolbar.inflateMenu(R.menu.menu_edit);
           toolbar.setOnMenuItemClickListener(mEditLis);
           courseManagerAdapter.setEditing(false);
+            courseManagerAdapter.notifyDataSetChanged();
+            return true;
+        }
+    };
+  private Toolbar.OnMenuItemClickListener mEditLis = new Toolbar.OnMenuItemClickListener() {
+        @Override public boolean onMenuItemClick(MenuItem item) {
+            toolbar.getMenu().clear();
+          toolbar.inflateMenu(R.menu.menu_cancel);
+          toolbar.setOnMenuItemClickListener(mCancel);
+          courseManagerAdapter.setEditing(true);
             courseManagerAdapter.notifyDataSetChanged();
             return true;
         }

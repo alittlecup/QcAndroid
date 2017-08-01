@@ -17,7 +17,7 @@
 //import butterknife.OnClick;
 //import butterknife.Unbinder;
 //import cn.qingchengfit.staffkit.R;
-//import cn.qingchengfit.staffkit.constant.BaseFragment;
+//import cn.qingchengfit.views.fragments.BaseFragment;
 //import cn.qingchengfit.RxBus;
 //import cn.qingchengfit.events.EventAddress;
 //import cn.qingchengfit.staffkit.views.custom.CitiesChooser;

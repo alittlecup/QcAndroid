@@ -10,9 +10,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.train.model.AttendanceBean;
 import cn.qingchengfit.staffkit.train.model.RankTypeBean;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CircleTextView;
 
 /**

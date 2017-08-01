@@ -1,13 +1,13 @@
 package cn.qingchengfit.staffkit.views.gym.site;
 
 import android.content.Intent;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import javax.inject.Inject;
 import rx.Subscription;

@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.setting;
 
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.model.body.CardBalanceNotifyBody;
 import cn.qingchengfit.model.responese.BalanceNotify;
 import cn.qingchengfit.model.responese.BalanceNotifyConfigs;
@@ -7,7 +8,6 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.ArrayList;
 import java.util.HashMap;

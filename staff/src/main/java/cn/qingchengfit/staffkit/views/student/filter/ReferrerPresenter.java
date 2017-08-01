@@ -1,6 +1,8 @@
 package cn.qingchengfit.staffkit.views.student.filter;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
@@ -8,8 +10,6 @@ import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.responese.Referrers;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.ArrayList;
 import java.util.HashMap;

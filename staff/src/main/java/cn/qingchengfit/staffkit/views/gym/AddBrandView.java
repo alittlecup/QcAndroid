@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.gym;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.CreatBrand;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 
 /**
  * power by

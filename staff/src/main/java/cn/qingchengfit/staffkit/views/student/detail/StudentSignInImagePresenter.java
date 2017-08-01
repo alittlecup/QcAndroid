@@ -1,14 +1,14 @@
 package cn.qingchengfit.staffkit.views.student.detail;
 
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.QcResponseSignInImg;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.CView;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.SignInImg;
 import java.util.HashMap;

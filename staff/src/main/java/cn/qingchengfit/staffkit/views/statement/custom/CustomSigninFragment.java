@@ -22,7 +22,6 @@ import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.SigninFilter;
 import cn.qingchengfit.model.responese.SigninReportDetail;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.CardTypeEvent;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
@@ -32,6 +31,7 @@ import cn.qingchengfit.staffkit.views.statement.filter.CardTypeChooseDialogFragm
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;

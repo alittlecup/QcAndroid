@@ -1,6 +1,8 @@
 package cn.qingchengfit.staffkit.views.student.detail;
 
 import android.content.Intent;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
@@ -10,8 +12,6 @@ import cn.qingchengfit.model.responese.FollowRecords;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
 import java.util.ArrayList;
 import javax.inject.Inject;

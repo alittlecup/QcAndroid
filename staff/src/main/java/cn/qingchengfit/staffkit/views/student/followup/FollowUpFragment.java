@@ -18,12 +18,12 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.FollowUpDataStatistic;
 import cn.qingchengfit.model.responese.StudentTrackPreview;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventRouter;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import javax.inject.Inject;
 

@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.card.detail;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.common.Card;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 
 /**
  * power by

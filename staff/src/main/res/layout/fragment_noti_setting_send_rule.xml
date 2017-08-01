@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+  >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:background="@drawable/bg_click"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="系统短信通知"
+          style="@style/QcTextStyleStandardDark"
+          />
+
+      <android.support.v4.widget.Space
+          android:layout_width="match_parent"
+          android:layout_height="10dp"
+          />
+
+      <TextView
+          android:id="@+id/tv_sms"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="发送验证码(会员注册、登录、修改手机号或密码时)"
+          style="@style/QcTextStyleStandardGrey"
+          />
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_click"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
+          android:text="团课通知"
+          style="@style/QcTextStyleStandardDark"
+          />
+
+
+      <TextView
+          android:id="@+id/tv_group"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:lineSpacingExtra="4dp"
+          android:gravity="top"
+          tools:text="@string/str_noti_setting_rule_group"
+          style="@style/QcTextStyleStandardGrey"
+          />
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_click"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
+          android:text="私教通知"
+          style="@style/QcTextStyleStandardDark"
+          />
+
+      <TextView
+          android:id="@+id/tv_private"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:lineSpacingExtra="4dp"
+          android:gravity="top"
+          tools:text="@string/str_noti_setting_rule_private"
+          style="@style/QcTextStyleStandardGrey"
+          />
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+  </LinearLayout>
+</ScrollView>

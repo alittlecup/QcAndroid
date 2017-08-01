@@ -1,10 +1,10 @@
 package cn.qingchengfit.staffkit.views.main;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.Banner;
 import cn.qingchengfit.model.responese.HomeStatement;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

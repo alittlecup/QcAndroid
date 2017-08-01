@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.views.schedule;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.staffkit.usecase.bean.ScheduleBean;
 import java.util.List;
 

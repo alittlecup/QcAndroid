@@ -42,26 +42,28 @@ import static eu.davidea.flexibleadapter.SelectableAdapter.MODE_SINGLE;
  * Created by Paper on 2016/12/9.
  */
 
-public class BottomListFragment extends BottomSheetDialogFragment implements FlexibleAdapter.OnItemClickListener{
+public class BottomListFragment extends BottomSheetDialogFragment
+    implements FlexibleAdapter.OnItemClickListener {
 
-    protected TextView tvtitle;
-    protected RecyclerView recycleview;
-    protected TextView btnComfirm;
-    protected ImageView btnClose;
+  protected TextView tvtitle;
+  protected RecyclerView recycleview;
+  protected TextView btnComfirm;
+  protected ImageView btnClose;
 
-    protected FlexibleAdapter mFlexibleAdapter;
-    protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
+  protected FlexibleAdapter mFlexibleAdapter;
+  protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
   protected int mChooseMode = MODE_SINGLE;
-    private String title;
-    private ComfirmChooseListener listener;
+  private String title;
+  private ComfirmChooseListener listener;
+  private int selectedPos = -1;
 
-    public static BottomListFragment newInstance(String title) {
-        Bundle args = new Bundle();
-        args.putString("title", title);
-        BottomListFragment fragment = new BottomListFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+  public static BottomListFragment newInstance(String title) {
+    Bundle args = new Bundle();
+    args.putString("title", title);
+    BottomListFragment fragment = new BottomListFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
 
   public static BottomListFragment newInstance(String title, int mChooseMode) {
     Bundle args = new Bundle();
@@ -72,80 +74,92 @@ public class BottomListFragment extends BottomSheetDialogFragment implements Fle
     return fragment;
   }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) title = getArguments().getString("title");
-    }
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (getArguments() != null) title = getArguments().getString("title");
+  }
 
-    @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_bottom_list, container, false);
-        tvtitle = (TextView) view.findViewById(R.id.title);
-        btnComfirm = (TextView) view.findViewById(R.id.btn_comfirm);
-        btnClose = (ImageView) view.findViewById(R.id.btn_close);
-        recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
-        recycleview.setHasFixedSize(true);
-        recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-      recycleview.addItemDecoration(new QcLeftRightDivider(getContext(), 1, 0, 50, 0));
-      if (getArguments().containsKey("chooseMode")) {
-        mChooseMode = getArguments().getInt("chooseMode", MODE_SINGLE);
+  public int getSelectedPos() {
+    return selectedPos;
+  }
+
+  public void setSelectedPos(int selectedPos) {
+    this.selectedPos = selectedPos;
+  }
+
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.layout_bottom_list, container, false);
+    tvtitle = (TextView) view.findViewById(R.id.title);
+    btnComfirm = (TextView) view.findViewById(R.id.btn_comfirm);
+    btnClose = (ImageView) view.findViewById(R.id.btn_close);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+    recycleview.setHasFixedSize(true);
+    recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
+    recycleview.addItemDecoration(new QcLeftRightDivider(getContext(), 1, 0, 50, 0));
+    if (getArguments().containsKey("chooseMode")) {
+      mChooseMode = getArguments().getInt("chooseMode", MODE_SINGLE);
+    }
+    mFlexibleAdapter = new FlexibleAdapter(mDatas, this);
+    mFlexibleAdapter.setMode(mChooseMode);
+    if (selectedPos >= 0) mFlexibleAdapter.toggleSelection(selectedPos);
+    recycleview.setAdapter(mFlexibleAdapter);
+    tvtitle.setText(TextUtils.isEmpty(title) ? getTitle() : title);
+    btnComfirm.setVisibility(mChooseMode == MODE_SINGLE ? View.GONE : View.VISIBLE);
+    btnClose.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        dismiss();
       }
-      mFlexibleAdapter = new FlexibleAdapter(mDatas, this);
-        mFlexibleAdapter.setMode(mChooseMode);
-        recycleview.setAdapter(mFlexibleAdapter);
-        tvtitle.setText(TextUtils.isEmpty(title) ? getTitle() : title);
-        btnComfirm.setVisibility(mChooseMode == MODE_SINGLE ? View.GONE : View.VISIBLE);
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                dismiss();
-            }
-        });
-        btnComfirm.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                if (listener != null) {
-                    List<IFlexible> ret = new ArrayList<>();
-                    for (int j = 0; j < mFlexibleAdapter.getSelectedPositions().size(); j++) {
-                        ret.add(mFlexibleAdapter.getItem(mFlexibleAdapter.getSelectedPositions().get(j)));
-                    }
-                    listener.onComfirmClick(ret);
-                }
-                dismiss();
-            }
-        });
-        return view;
-    }
-
-    public void loadData(List<AbstractFlexibleItem> ds) {
-        mDatas.clear();
-        mDatas.addAll(ds);
-        if (mFlexibleAdapter != null) mFlexibleAdapter.notifyDataSetChanged();
-    }
-
-    public Object getListener() {
-        return listener;
-    }
-
-    public void setListener(ComfirmChooseListener listener) {
-        this.listener = listener;
-    }
-
-    public String getTitle() {
-        return getString(R.string.please_choose);
-    }
-
-    @Override public boolean onItemClick(int i) {
-        mFlexibleAdapter.toggleSelection(i);
-      mFlexibleAdapter.notifyItemChanged(i);
-        if (mChooseMode == MODE_SINGLE && listener != null) {
-            List<IFlexible> ret = new ArrayList<>();
-            ret.add(mFlexibleAdapter.getItem(i));
-            listener.onComfirmClick(ret);
-            dismiss();
+    });
+    btnComfirm.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (listener != null) {
+          List<IFlexible> ret = new ArrayList<>();
+          for (int j = 0; j < mFlexibleAdapter.getSelectedPositions().size(); j++) {
+            ret.add(mFlexibleAdapter.getItem(mFlexibleAdapter.getSelectedPositions().get(j)));
+          }
+          listener.onComfirmClick(ret, mFlexibleAdapter.getSelectedPositions());
         }
-        return false;
-    }
+        dismiss();
+      }
+    });
+    //BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(((View) view.getParent()));
+    //bottomSheetBehavior.setPeekHeight(MeasureUtils.getScreenHeight(getResources())/3);
+    return view;
+  }
 
-    public interface ComfirmChooseListener {
-        void onComfirmClick(List<IFlexible> dats);
+  public void loadData(List<AbstractFlexibleItem> ds) {
+    mDatas.clear();
+    mDatas.addAll(ds);
+    if (mFlexibleAdapter != null) mFlexibleAdapter.notifyDataSetChanged();
+  }
+
+  public Object getListener() {
+    return listener;
+  }
+
+  public void setListener(ComfirmChooseListener listener) {
+    this.listener = listener;
+  }
+
+  public String getTitle() {
+    return getString(R.string.please_choose);
+  }
+
+  @Override public boolean onItemClick(int i) {
+    mFlexibleAdapter.toggleSelection(i);
+    mFlexibleAdapter.notifyItemChanged(i);
+    if (mChooseMode == MODE_SINGLE && listener != null) {
+      List<IFlexible> ret = new ArrayList<>();
+      ret.add(mFlexibleAdapter.getItem(i));
+      listener.onComfirmClick(ret, mFlexibleAdapter.getSelectedPositions());
+      dismiss();
     }
+    return false;
+  }
+
+  public interface ComfirmChooseListener {
+    void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos);
+  }
 }

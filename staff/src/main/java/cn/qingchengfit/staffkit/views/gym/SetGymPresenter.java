@@ -2,6 +2,8 @@ package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.body.GymBody;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.BrandsResponse;
@@ -12,8 +14,6 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.InitUseCase;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;

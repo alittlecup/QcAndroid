@@ -2,14 +2,14 @@ package cn.qingchengfit.staffkit.views.card.spendrecord;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.model.responese.QcResponseRealcardHistory;
 import cn.qingchengfit.model.responese.StatementBean;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.RealCardUsecase;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.ArrayList;

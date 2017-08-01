@@ -5,7 +5,7 @@ pipeline:
     mount:
       - .gradle
       - gradle_cache
-      - build
+#      - build
     volumes:
       - /tmp/cache:/cache/
   build:
@@ -15,18 +15,18 @@ pipeline:
     commands:
       - agree-license.sh android-sdk-license 8933bad161af4178b1185d1a37fbf41ea5269c55
       - echo 'start'
-#      - ./gradlew -g gradle_cache staff:assembleDevDebug
-      - ./gradlew -g gradle_cache widgets:androidDependencies
-      when:
-        branch: drone
-#      - fir publish staff/build/outputs/apk/staff-dev-debug.apk -T 194a7a7976904a110a45f5a34a614323
-#      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T 194a7a7976904a110a45f5a34a614323
+      - ./gradlew -g gradle_cache assembleDevDebug --no-daemon
+#      - ./gradlew -g gradle_cache widgets:androidDependencies
+#      when:
+#        branch: drone
+      - fir publish staff/build/outputs/apk/staff-dev-debug.apk -T 194a7a7976904a110a45f5a34a614323
+      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T 194a7a7976904a110a45f5a34a614323
   rebuild-cache:
     image: drillster/drone-volume-cache
     rebuild: true
     mount:
       - .gradle
       - gradle_cache
-      - build
+#      - build
     volumes:
       - /tmp/cache:/cache/

@@ -16,13 +16,13 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.StudentBean;
-import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.views.FragCallBack;
 import cn.qingchengfit.staffkit.views.signin.in.SignInManualFragment;
 import cn.qingchengfit.staffkit.views.signin.out.SignOutManualFragment;
+import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import javax.inject.Inject;
 import rx.functions.Action1;
 

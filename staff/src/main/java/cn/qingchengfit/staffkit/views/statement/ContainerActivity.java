@@ -18,12 +18,11 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.article.ArticleCommentsListFragmentBuilder;
 import cn.qingchengfit.article.ArticleReplyFragment;
 import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
-import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.model.others.ToolbarBean;
+import cn.qingchengfit.notisetting.view.NotiSettingHomeFragment;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventToolbar;
-import cn.qingchengfit.staffkit.views.FragCallBack;
 import cn.qingchengfit.staffkit.views.course.CourseTypeBatchFragmentBuilder;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
@@ -36,7 +35,9 @@ import cn.qingchengfit.staffkit.views.statement.glance.StatementGlanceFragment;
 import cn.qingchengfit.staffkit.views.student.score.ScoreHomeFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeMainFragment;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.LinkedList;
 import javax.inject.Inject;
 import rx.Observable;
@@ -140,6 +141,10 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                         (String)((Object[])(getIntent().getExtras().get("params")))[0]).build();
                 }
                 break;
+            case GymFunctionFactory.MODULE_MSG:
+                fragment = new NotiSettingHomeFragment();
+                break;
+
             case "/replies/":
             case "/replies":
             case GymFunctionFactory.MODULE_ARTICLE_COMMENT_REPLY:
@@ -155,7 +160,10 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 break;
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.frag, fragment).commit();
+        getSupportFragmentManager().beginTransaction()
+            .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
+            .replace(R.id.frag, fragment)
+            .commit();
     }
 
     public void startFragment(Fragment fragment) {

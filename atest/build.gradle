@@ -47,4 +47,5 @@ dependencies {
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
   annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
   compile "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
+  testCompile 'junit:junit:4.12'
 }

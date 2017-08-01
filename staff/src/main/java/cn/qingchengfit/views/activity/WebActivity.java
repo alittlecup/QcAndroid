@@ -11,11 +11,11 @@
 //import android.text.TextUtils;
 //import android.view.View;
 //import butterknife.ButterKnife;
-//import cn.qingchengfit.model.responese.ToolbarBean;
+//import cn.qingchengfit.model.others.ToolbarBean;
 //import cn.qingchengfit.staffkit.R;
-//import cn.qingchengfit.staffkit.constant.BaseFragment;
+//import cn.qingchengfit.views.fragments.BaseFragment;
 //import cn.qingchengfit.staffkit.views.BaseActivity;
-//import cn.qingchengfit.staffkit.views.FragCallBack;
+//import cn.qingchengfit.views.FragCallBack;
 //import cn.qingchengfit.views.fragments.WebFragmentNoFresh;
 //import cn.qingchengfit.views.fragments.WebFragment;
 //import com.tbruyelle.rxpermissions.RxPermissions;

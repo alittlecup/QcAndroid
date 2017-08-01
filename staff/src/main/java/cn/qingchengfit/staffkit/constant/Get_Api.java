@@ -106,8 +106,12 @@ import cn.qingchengfit.model.responese.Students;
 import cn.qingchengfit.model.responese.TrackFilterOrigins;
 import cn.qingchengfit.model.responese.TrackSellers;
 import cn.qingchengfit.model.responese.TrackStudents;
+import cn.qingchengfit.network.response.NotiSmsCountListWrap;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.network.response.ShopOrdersWrap;
+import cn.qingchengfit.network.response.SmsListWrap;
+import cn.qingchengfit.network.response.WxAuthorWrap;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
 import cn.qingchengfit.staffkit.train.model.GroupListResponse;
@@ -923,6 +927,28 @@ public interface Get_Api {
     //导出记录
     @GET("/api/staffs/{staff_id}/export/records/")
     rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ExportRecordWrapper>> qcGetExportRecord(@Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+    @GET("/api/v2/staffs/{staff_id}/messages/")
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<SmsListWrap>> qcGetNotiSMSs(
+        @Path("staff_id") String staffid, @QueryMap HashMap<String, Object> params);
+
+    @GET("/api/v2/staffs/{staff_id}/messages/count/")
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<NotiSmsCountListWrap>> qcGetNotiSmsCount(
+        @Path("staff_id") String staffid, @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 查看是否授权微信公众号
+   */
+  @GET("/api/v2/staffs/{staff_id}/gyms/wechat-open/")
+  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<WxAuthorWrap>> qcGetWxAuthor(
+      @Path("staff_id") String staffid, @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 场馆订单接口
+   */
+  @GET("/api/gyms/orders/")
+  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ShopOrdersWrap>> qcGetGymOrders(
+      @QueryMap HashMap<String, Object> params);
 
     //判断是否同意用户协议
     @GET(" /api/user/check/read_agreement/")

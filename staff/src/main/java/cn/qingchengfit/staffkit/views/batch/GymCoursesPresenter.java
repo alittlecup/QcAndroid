@@ -1,9 +1,9 @@
 package cn.qingchengfit.staffkit.views.batch;
 
 import android.content.Intent;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import javax.inject.Inject;
 

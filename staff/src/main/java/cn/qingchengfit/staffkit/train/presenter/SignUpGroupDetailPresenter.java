@@ -1,13 +1,14 @@
 package cn.qingchengfit.staffkit.train.presenter;
 
 import android.text.TextUtils;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.train.model.CreateGroupBody;
 import cn.qingchengfit.staffkit.train.model.OperationMemberBody;
