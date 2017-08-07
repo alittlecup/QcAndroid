@@ -160,7 +160,8 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                 ToastUtils.show("请添加课程周期");
                 return true;
             }
-          showLoading();
+
+            showLoading();
             presenter.checkBatch(mType, body);
 
             return true;

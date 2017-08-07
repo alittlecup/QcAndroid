@@ -37,7 +37,6 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.rxbus.event.DoneAccountEvent;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
@@ -124,7 +123,6 @@ import rx.functions.Action1;
     @Inject GymWrapper gymWrapper;
 
     private SingleBatchBody mBody = new SingleBatchBody();
-    private ArrayList<Rule> mCurRules;
     private boolean mHasOrder;
     private TimeDialogWindow timeWindow;
     private TimePeriodChooser timeDialogWindow;
@@ -135,19 +133,45 @@ import rx.functions.Action1;
     private List<Rule> rulesPayCards = new ArrayList<>();
     private ArrayList<CardTplBatchShip> mCardTplBatchShips;
 
+    private boolean isChangeCardPay;
     private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
             if (courseDate.isEmpty()) {
                 ToastUtils.show("课程时间不能为空");
                 return true;
             }
-            showLoading();
+            if (mBody.max_users != Integer.valueOf(orderSutdentCount.getContent()) && !isChangeCardPay&& rulesPayCards!= null && rulesPayCards.size() >0) {
+                showAlert("会员卡结算未填写完整");
+                return true;
+            }
             if (mIsPrivate) {
                 mBody.start = courseDate.getContent().split(" ")[0] + "T" + courseTime.getContent().split("-")[0] + ":00";
                 mBody.end = courseDate.getContent().split(" ")[0] + "T" + courseTime.getContent().split("-")[1] + ":00";
             } else {
                 mBody.start = courseDate.getContent().split(" ")[0] + "T" + courseTime.getContent() + ":00";
             }
+            mBody.max_users = Integer.valueOf(orderSutdentCount.getContent());
+
+            if (swNeedPay.isChecked()) {
+                mBody.is_free = false;
+                if (mBody.rule == null) {
+                    mBody.rule = new ArrayList<>();
+                } else {
+                    mBody.rule.clear();
+                }
+                if (ruleOnline != null) {
+                    ruleOnline.to_number = mBody.max_users+1;
+                    mBody.rule.add(ruleOnline);
+                }
+                mBody.rule.addAll(rulesPayCards);
+                if (mBody.rule.size() == 0) {
+                    cn.qingchengfit.utils.ToastUtils.show("请至少选择一种支付方式");
+                    return true;
+                }
+            } else {
+                mBody.is_free = true;
+            }
+            showLoading();
             mSingleBatchPresenter.saveSingleBatch(App.staffId, mSingleBatchid, mIsPrivate, mBody);
             return true;
         }
@@ -176,15 +200,13 @@ import rx.functions.Action1;
         canNotClose.setVisibility(proGym ? View.GONE : View.VISIBLE);
         btnDel.setText(mIsPrivate ? "删除该排期" : "删除该课程");
         courseTime.setLabel(mIsPrivate ? "可约时间段" : "课程时间");
-        RxBusAdd(DoneAccountEvent.class).subscribe(new Action1<DoneAccountEvent>() {
-            @Override public void call(DoneAccountEvent doneAccountEvent) {
-                mBody.max_users = doneAccountEvent.max_user;
-                mBody.max_users = doneAccountEvent.max_user;
-                mBody.rule = doneAccountEvent.rules;
-                mCurRules = mBody.rule;
-                mBody.is_free = doneAccountEvent.isFree;
-            }
-        });
+        //RxBusAdd(DoneAccountEvent.class).subscribe(new Action1<DoneAccountEvent>() {
+        //    @Override public void call(DoneAccountEvent doneAccountEvent) {
+        //        mBody.rule = doneAccountEvent.rules;
+        //        rulesPayCards = mBody.rule;
+        //        mBody.is_free = doneAccountEvent.isFree;
+        //    }
+        //});
         RxBusAdd(EventFresh.class).subscribe(new Action1<EventFresh>() {
             @Override public void call(EventFresh eventFresh) {
                 if (mIsPrivate) {
@@ -335,6 +357,7 @@ import rx.functions.Action1;
                     payOnline.setHint("未开启");
                 }
             } else if (requestCode == ChooseActivity.BATCH_PAY_CARD) {
+                isChangeCardPay = true;
                 ArrayList<Rule> rules = data.getParcelableArrayListExtra("rules");
                 int maxCount = data.getIntExtra("count", 0);
                 rulesPayCards.clear();
@@ -425,7 +448,16 @@ import rx.functions.Action1;
 
     @Override
     public void onRule(List<Rule> rules, int max_user, boolean isFree, List<CardTplBatchShip> cardTplBatchShips, boolean hasOrder) {
-        mCurRules = (ArrayList<Rule>) rules;
+        if (rules != null) {
+            rulesPayCards.clear();
+            for (int i = 0; i < rules.size(); i++) {
+                if (rules.get(i).channel.equals(Configs.CHANNEL_CARD)) {
+                    rulesPayCards.add(rules.get(i));
+                } else {
+                    ruleOnline = rules.get(i);
+                }
+            }
+        }
         mBody.max_users = max_user;
         mBody.rule = (ArrayList<Rule>) rules;
         mBody.is_free = isFree;
@@ -435,6 +467,7 @@ import rx.functions.Action1;
         swNeedPay.setChecked(!isFree);
         payCard.setHint(getString(R.string.batch_can_pay_card_count, mCardTplBatchShips.size()));
         payOnline.setHint(ruleOnline == null ? "未开启" : "已开启");
+        orderSutdentCount.setContent(max_user+"");
         mHasOrder = hasOrder;
         canNotClose.setVisibility(hasOrder || !proGym ? View.VISIBLE : View.GONE);
     }
@@ -506,6 +539,9 @@ import rx.functions.Action1;
             stucount = new DialogList(getContext()).list(mIsPrivate ? StringUtils.getNums(1, 10) : StringUtils.getNums(1, 300),
                 new AdapterView.OnItemClickListener() {
                     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if ((position + 1) != mBody.max_users) {
+                            isChangeCardPay = false;
+                        }
                         orderSutdentCount.setContent(Integer.toString(position + 1));
                         payCard.setHint("已修改可约人数，请重新设置");
                         stucount.dismiss();

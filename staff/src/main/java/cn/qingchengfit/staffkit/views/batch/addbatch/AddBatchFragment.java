@@ -163,22 +163,26 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
                 ToastUtils.show("请选择排期时间");
                 return true;
             }
-            if (body.max_users != Integer.valueOf(orderSutdentCount.getContent()) && !isChangeCardPay) {
+            if (body.max_users != Integer.valueOf(orderSutdentCount.getContent()) && !isChangeCardPay && cardRules!= null && cardRules.size() >0) {
                 showAlert("会员卡结算未填写完整");
                 return true;
             }
             body.max_users = Integer.valueOf(orderSutdentCount.getContent());
             body.is_free = !swNeedPay.isChecked();
-            if (!body.is_free) {
-                if (body.rules == null) body.rules = new ArrayList<>();
-                body.rules.clear();
-                body.rules.addAll(cardRules);
-                if (rulePayOnline != null) body.rules.add(rulePayOnline);
-            }
+
             try {
                 body.max_users = Integer.parseInt(orderSutdentCount.getContent());
             } catch (Exception e) {
                 body.max_users = 8;
+            }
+            if (!body.is_free) {
+                if (body.rules == null) body.rules = new ArrayList<>();
+                body.rules.clear();
+                body.rules.addAll(cardRules);
+                if (rulePayOnline != null) {
+                    rulePayOnline.to_number = body.max_users+1;
+                    body.rules.add(rulePayOnline);
+                };
             }
             body.from_date = starttime.getContent();
             body.to_date = endtime.getContent();

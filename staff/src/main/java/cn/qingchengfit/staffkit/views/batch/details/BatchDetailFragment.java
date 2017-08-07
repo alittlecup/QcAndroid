@@ -138,7 +138,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
             body.batch_id = mId;
-            if (body.max_users != Integer.valueOf(orderSutdentCount.getContent()) && !isChangeCardPay) {
+            if (body.max_users != Integer.valueOf(orderSutdentCount.getContent()) && !isChangeCardPay&& rulesPayCards!= null && rulesPayCards.size() >0) {
                 showAlert("会员卡结算未填写完整");
                 return true;
             }
@@ -158,7 +158,9 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
                 } else {
                     body.rules.clear();
                 }
-                if (ruleOnline != null) body.rules.add(ruleOnline);
+                if (ruleOnline != null) {
+                    ruleOnline.to_number = body.max_users+1;
+                    body.rules.add(ruleOnline);}
                 body.rules.addAll(rulesPayCards);
                 if (body.rules.size() == 0) {
                     cn.qingchengfit.utils.ToastUtils.show("请至少选择一种支付方式");
