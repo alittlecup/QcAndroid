@@ -1,6 +1,6 @@
 package cn.qingchengfit.staff;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 /**
  * power by
@@ -22,7 +22,7 @@ import android.app.Application;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/19.
  */
-public class App extends Application {
+public class App extends MultiDexApplication {
 
   //public AppTestComponent component;
 

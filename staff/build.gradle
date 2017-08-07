@@ -27,6 +27,7 @@ android {
     versionCode config.version_code
     versionName "${config.version_name}"
     multiDexEnabled true
+
     vectorDrawables.useSupportLibrary = true
   }
 

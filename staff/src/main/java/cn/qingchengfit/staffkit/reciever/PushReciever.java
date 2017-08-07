@@ -139,7 +139,8 @@ public class PushReciever extends PushMessageReceiver {
                         context.startActivity(intent);
                     } else {
 
-                        final Intent toActivity = new Intent("cn.qingchengfit.staffkit", Uri.parse(bean.url));
+                        final Intent toActivity =
+                            new Intent(context.getPackageName(), Uri.parse(bean.url));
 
                         String staffid = PreferenceUtils.getPrefString(context, Configs.PREFER_WORK_ID, "");
                         if (!StringUtils.isEmpty(bean.brand_id) && !StringUtils.isEmpty(bean.shop_id)) {

@@ -1,9 +1,9 @@
 package cn.qingchengfit.staffkit;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -68,7 +68,8 @@ import static cn.qingchengfit.staffkit.constant.Configs.Server;
  * <p/>
  * Created by Paper on 15/11/19 2015.
  */
-public class App extends Application implements HasActivityInjector, HasSupportFragmentInjector {
+public class App extends MultiDexApplication
+    implements HasActivityInjector, HasSupportFragmentInjector {
     public static HashMap<String, Object> caches = new HashMap<>();
     public static Context context;
     public static String staffId;

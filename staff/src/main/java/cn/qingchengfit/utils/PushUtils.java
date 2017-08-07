@@ -107,7 +107,8 @@ public class PushUtils {
                             context.startActivity(intent);
                         } else {
 
-                            final Intent toActivity = new Intent("cn.qingchengfit.staffkit", Uri.parse(bean.url));
+                            final Intent toActivity =
+                                new Intent(context.getPackageName(), Uri.parse(bean.url));
                             final CoachService coachService1 = GymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
                             String staffid = PreferenceUtils.getPrefString(context, Configs.PREFER_WORK_ID, "");
                             if (!StringUtils.isEmpty(bean.brand_id) && !StringUtils.isEmpty(bean.shop_id)) {

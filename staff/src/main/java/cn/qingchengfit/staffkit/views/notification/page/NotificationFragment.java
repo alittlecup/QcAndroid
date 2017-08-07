@@ -204,7 +204,10 @@ public class NotificationFragment extends BaseFragment
                                             SerPermisAction.writePermiss(qcResponse.data.permissions);
                                             Intent toActivity = null;
                                             if (!StringUtils.isEmpty(msg.getUrl())) {
-                                                toActivity = new Intent("cn.qingchengfit.staffkit", Uri.parse(msg.getUrl()));
+                                                toActivity =
+                                                    new Intent(getContext().getPackageName(),
+                                                        Uri.parse(msg.getUrl()));
+                                                toActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                             } else if (msg.type == 11 || msg.type == 12 || msg.type == 16) {
                                                 toActivity = new Intent(getActivity(), StudentActivity.class);
                                             } else if (msg.type == 13) {

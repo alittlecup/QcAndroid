@@ -2,4 +2,6 @@
 -keep class cn.qingchengfit.staffkit.inject.commpont.DaggerAppComponet
 -keep class cn.qingchengfit.staffkit.inject.{*;}
 -keep class cn.qingchengfit.staffkit.model.db.{*;}
+-keep class cn.qingchengfit.model.{*;}
+-keep class cn.qingchengfit.events.{*;}
 -keep class rx.{*;}
