@@ -3,6 +3,7 @@ package cn.qingchengfit.staffkit.views.student.bodytest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -249,6 +250,8 @@ public class BodyTestFragment extends BaseFragment implements BodyTestView {
             commonInputView.setTag(R.id.tag_1, extra.id);
             commonInputView.setTag(R.id.tag_2, extra.unit);
             commonInputView.setMaxLines(100);
+            commonInputView.setContentColor(
+                ContextCompat.getColor(getContext(), R.color.text_dark));
             otherData.addView(commonInputView);
             commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
             commonInputView.setContent(extra.value);

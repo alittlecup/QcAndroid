@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -370,6 +371,8 @@ public class ModifyBodyTestFragment extends Fragment {
                             otherData.addView(commonInputView);
                             commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
                             commonInputView.setContent(extra.value);
+                            commonInputView.setContentColor(
+                                ContextCompat.getColor(getContext(), R.color.text_dark));
                         }
                     } else {
                         datas.clear();
