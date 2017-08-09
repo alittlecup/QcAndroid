@@ -191,7 +191,7 @@ public class ResumeHomeFragment extends BaseFragment
    * 公开简历
    */
   @OnClick(R2.id.btn_open_resume) public void openResume() {
-    permissionPresenter.queryChangeStatePermission(gymWrapper.id(), "resume");
+    onCheckSuccess();
   }
 
   /**
