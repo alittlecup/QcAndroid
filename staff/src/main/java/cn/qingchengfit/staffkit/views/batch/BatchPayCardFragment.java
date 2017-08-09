@@ -145,8 +145,8 @@ import javax.inject.Inject;
                     rrr.card_tpl_name = item.getCardname();
                     rrr.card_tpl_id = item.getCardId();
                     rrr.channel = Configs.CHANNEL_CARD;
-                    rrr.from_number = maxCount + 1;
-                    rrr.to_number = maxCount + 2;
+                    rrr.from_number = 1;
+                    rrr.to_number = maxCount + 1;
                     rules.add(rrr);
                 } else {
                     //非期限卡
