@@ -78,6 +78,10 @@ public class CourseTypeFormFragment extends BaseFragment {
         return view;
     }
 
+    @Override public boolean isBlockTouch() {
+        return false;
+    }
+
     @Override public String getFragmentName() {
         return null;
     }

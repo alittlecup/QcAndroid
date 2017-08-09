@@ -588,40 +588,40 @@ public class StatementDetailFragment extends BaseFragment implements StatementDe
 
         indicator.setViewPager(viewpager);
         fragmentAdapter.notifyDataSetChanged();
-        viewpager.setOnTouchListener(new View.OnTouchListener() {
-
-            int dragthreshold = 30;
-            int downX;
-            int downY;
-
-            @Override public boolean onTouch(View v, MotionEvent event) {
-                if (viewpager != null && scrollRoot != null) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            downX = (int) event.getRawX();
-                            downY = (int) event.getRawY();
-                            break;
-                        case MotionEvent.ACTION_MOVE:
-                            int distanceX = Math.abs((int) event.getRawX() - downX);
-                            int distanceY = Math.abs((int) event.getRawY() - downY);
-
-                            if (distanceY > distanceX && distanceY > dragthreshold) {
-                                viewpager.getParent().requestDisallowInterceptTouchEvent(false);
-                                scrollRoot.getParent().requestDisallowInterceptTouchEvent(true);
-                            } else if (distanceX > distanceY && distanceX > dragthreshold) {
-                                viewpager.getParent().requestDisallowInterceptTouchEvent(true);
-                                scrollRoot.getParent().requestDisallowInterceptTouchEvent(false);
-                            }
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            scrollRoot.getParent().requestDisallowInterceptTouchEvent(false);
-                            viewpager.getParent().requestDisallowInterceptTouchEvent(false);
-                            break;
-                    }
-                }
-                return false;
-            }
-        });
+        //viewpager.setOnTouchListener(new View.OnTouchListener() {
+        //
+        //    int dragthreshold = 30;
+        //    int downX;
+        //    int downY;
+        //
+        //    @Override public boolean onTouch(View v, MotionEvent event) {
+        //        if (viewpager != null && scrollRoot != null) {
+        //            switch (event.getAction()) {
+        //                case MotionEvent.ACTION_DOWN:
+        //                    downX = (int) event.getRawX();
+        //                    downY = (int) event.getRawY();
+        //                    break;
+        //                case MotionEvent.ACTION_MOVE:
+        //                    int distanceX = Math.abs((int) event.getRawX() - downX);
+        //                    int distanceY = Math.abs((int) event.getRawY() - downY);
+        //
+        //                    if (distanceY > distanceX && distanceY > dragthreshold) {
+        //                        viewpager.getParent().requestDisallowInterceptTouchEvent(false);
+        //                        scrollRoot.getParent().requestDisallowInterceptTouchEvent(true);
+        //                    } else if (distanceX > distanceY && distanceX > dragthreshold) {
+        //                        viewpager.getParent().requestDisallowInterceptTouchEvent(true);
+        //                        scrollRoot.getParent().requestDisallowInterceptTouchEvent(false);
+        //                    }
+        //                    break;
+        //                case MotionEvent.ACTION_UP:
+        //                    scrollRoot.getParent().requestDisallowInterceptTouchEvent(false);
+        //                    viewpager.getParent().requestDisallowInterceptTouchEvent(false);
+        //                    break;
+        //            }
+        //        }
+        //        return false;
+        //    }
+        //});
         mStatementDetailAdapter.notifyDataSetChanged();
         recyclerview.setNoData(statementBeans.size() == 0);
     }
