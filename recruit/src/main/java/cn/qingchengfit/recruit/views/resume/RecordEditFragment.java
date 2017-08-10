@@ -430,7 +430,9 @@ import rx.schedulers.Schedulers;
       }
 
       @Override public void onUploadComplete(String filePaht, String url) {
+        recordeditImg.setVisibility(View.VISIBLE);
         PhotoUtils.origin(recordeditImg, url);
+        if (addCertificate != null) addCertificate.setPhoto(url);
       }
     });
     choosePictureFragmentNewDialog.show(getChildFragmentManager(), "");

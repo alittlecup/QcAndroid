@@ -242,6 +242,7 @@ public class MainMsgFragment extends BaseFragment
   }
 
   @Override public void onLoginSuccess() {
+    if (recyclerview == null) return;
     if (loginStatus.getLoginUser().username != null
         && loginStatus.getLoginUser().getAvatar() != null) {
       loginProcessor.setUserInfo(loginStatus.getLoginUser().username,
