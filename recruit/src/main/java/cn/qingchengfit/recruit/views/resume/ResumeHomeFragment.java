@@ -245,7 +245,11 @@ public class ResumeHomeFragment extends BaseFragment
   @Override public void onBaseInfo(ResumeHome resumeHome) {
     this.resumeHome = resumeHome;
     commonFlexAdapter.clear();
-    tvResumeCompleted.setText(resumeHome.completion + "%");
+    if (!loginStatus.isLogined()){
+      tvResumeCompleted.setText("登录查看");
+    }else {
+      tvResumeCompleted.setText(resumeHome.completion + "%");
+    }
     tvResumeCompleted.setTextColor(
         ContextCompat.getColor(getContext(), resumeHome.completion >= RecruitConstants.RESUME_COMPLETED ? R.color.text_dark : R.color.red));
     tvResumeOpen.setText(resumeHome.is_share ? "状态：已公开" : "状态：未公开");

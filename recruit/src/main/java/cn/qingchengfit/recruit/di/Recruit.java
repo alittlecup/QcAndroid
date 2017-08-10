@@ -50,6 +50,7 @@ import cn.qingchengfit.recruit.views.resume.WorkExpSyncDetailFragment;
 import cn.qingchengfit.recruit.views.resume.WorkExpeEditFragment;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
+import cn.qingchengfit.views.fragments.TipDialogFragment;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Subcomponent;
@@ -746,6 +747,14 @@ import dagger.multibindings.IntoMap;
   @Module(subcomponents = JobFairsAllFragmentSubcomponent.class) abstract class JobFairsAllFragmentModule {
       @Binds @IntoMap @FragmentKey(JobFairsAllFragment.class)
       abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(JobFairsAllFragmentSubcomponent.Builder builder);
+  }
+
+  @Subcomponent() public interface TipDialogFragmentSubcomponent extends AndroidInjector<TipDialogFragment> {
+      @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<TipDialogFragment> {}
+  }
+  @Module(subcomponents = TipDialogFragmentSubcomponent.class) abstract class TipDialogFragmentModule {
+      @Binds @IntoMap @FragmentKey(TipDialogFragment.class)
+      abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(TipDialogFragmentSubcomponent.Builder builder);
   }
 
 }

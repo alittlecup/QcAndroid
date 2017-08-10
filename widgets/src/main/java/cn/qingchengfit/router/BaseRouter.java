@@ -115,7 +115,7 @@ public class BaseRouter {
     routers.put(module, activitycalss);
   }
 
-  public void toLogin(Fragment fragment) {
+  public static void toLogin(Fragment fragment) {
     try {
       Intent toLogin = new Intent();
       toLogin.setPackage(fragment.getContext().getPackageName());
@@ -127,7 +127,7 @@ public class BaseRouter {
     }
   }
 
-  public void toLogin(Activity fragment) {
+  public static void toLogin(Activity fragment) {
     try {
       Intent toLogin = new Intent();
       toLogin.setPackage(fragment.getPackageName());

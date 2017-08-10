@@ -25,6 +25,7 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.TouchyWebView;
@@ -205,6 +206,10 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
    * 主动投递
    */
   @OnClick(R2.id.layout_diliverd) public void onLayoutDiliverdClicked() {
+    if (!loginStatus.isLogined()){
+      BaseRouter.toLogin(this);
+      return;
+    }
     router.toRecieveResumes(job);
   }
 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
@@ -33,6 +34,7 @@ import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ListUtils;
@@ -96,6 +98,8 @@ public class RecruitPositionDetailFragment extends BaseFragment
   @Inject JobPresenter presenter;
   @Inject ResumePresenter resumePresenter;
   @Inject QcRestRepository restRepository;
+  @Inject LoginStatus loginStatus;
+
   @BindView(R2.id.tv_position_desc) TouchyWebView tvPositionDesc;
   @BindView(R2.id.tv_position_require) TouchyWebView tvPositionRequire;
   @BindView(R2.id.tv_gym_des) TouchyWebView tvGymDes;
@@ -320,6 +324,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
    * 收藏
    */
   @OnClick(R2.id.btn_starred) public void onBtnStarredClicked() {
+    if (!loginStatus.isLogined()){
+      BaseRouter.toLogin(this);
+      return;
+    }
     if (isStarred) {
       presenter.unstarPosition(job.id);
     } else {
@@ -333,6 +341,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
    * 传给聊天页面参数中加入userAction，1001表示求职端职位，1002表示求职端简历，1003表示招聘端职位，1004表示招聘端简历
    */
   @OnClick(R2.id.btn_contact_him) public void onBtnContactHimClicked() {
+    if (!loginStatus.isLogined()){
+      BaseRouter.toLogin(this);
+      return;
+    }
     //AddConversationProcessor addConversationProcessor =
     //    new AddConversationProcessor(getContext().getApplicationContext());
     //Gson gson = new Gson();
@@ -367,6 +379,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
    * 发送简历
    */
   @OnClick(R2.id.btn_send_resume) public void onBtnSendResumeClicked() {
+    if (!loginStatus.isLogined()){
+      BaseRouter.toLogin(this);
+      return;
+    }
     if (DialogSendResumeFragment.needShow(getContext())) {
       DialogSendResumeFragment.newCompletedSend(89, this)
           .show(getChildFragmentManager(), DialogSendResumeFragment.class.getName());

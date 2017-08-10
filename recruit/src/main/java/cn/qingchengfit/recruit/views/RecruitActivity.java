@@ -50,10 +50,6 @@ public class RecruitActivity extends BaseActivity implements HasSupportFragmentI
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_recruit);
-    if (!loginStatus.isLogined()) {
-      baseRouter.toLogin(this);
-      return;
-    }
     onNewIntent(getIntent());
   }
 

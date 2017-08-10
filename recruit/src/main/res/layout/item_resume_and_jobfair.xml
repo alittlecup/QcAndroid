@@ -59,6 +59,7 @@
           >
 
         <TextView
+            android:id="@+id/tv_resume_completed_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="简历完善度"
