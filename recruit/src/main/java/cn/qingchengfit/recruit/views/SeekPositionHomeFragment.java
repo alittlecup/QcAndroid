@@ -1,5 +1,7 @@
 package cn.qingchengfit.recruit.views;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventClickViewPosition;
 import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.SearchCenterItem;
@@ -32,6 +35,7 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.presenter.SeekPositionPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.support.animator.FlipAnimation;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -77,6 +81,7 @@ public class SeekPositionHomeFragment extends JobsListFragment
   protected FilterHeadItem itemfilterHeader;
   @Inject SeekPositionPresenter positionPresenter;
   @Inject RecruitRouter router;
+  @Inject LoginStatus loginStatus;
   Toolbar toolbar;
   TextView toolbarTitile;
   SwipeRefreshLayout layoutFilter;
@@ -163,6 +168,10 @@ public class SeekPositionHomeFragment extends JobsListFragment
     RxBusAdd(EventClickViewPosition.class).observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<EventClickViewPosition>() {
           @Override public void call(EventClickViewPosition eventClickViewPosition) {
+            if (!loginStatus.isLogined()){
+              BaseRouter.toLogin(SeekPositionHomeFragment.this);
+              return;
+            }
             if (eventClickViewPosition.getId() == R.id.layout_i_sent) {
               router.mySent();
             } else if (eventClickViewPosition.getId() == R.id.layout_i_invited) {
@@ -201,7 +210,7 @@ public class SeekPositionHomeFragment extends JobsListFragment
     commonFlexAdapter.addItem(new SearchCenterItem(false, "搜索职位公司"));
     itemMyJobs = new MyJobsItem(false);
     commonFlexAdapter.addItem(itemMyJobs);
-    itemRj = new ResumeAndJobItem();
+    itemRj = new ResumeAndJobItem(loginStatus.isLogined());
     commonFlexAdapter.addItem(itemRj);
     itemfilterHeader = new FilterHeadItem(getResources().getStringArray(R.array.filter_jobs));
     itemfilterHeader.setListener(new FilterHeadItem.FilterHeadListener() {
@@ -334,6 +343,7 @@ public class SeekPositionHomeFragment extends JobsListFragment
    */
   @Override public void onJobsIndex(JobListIndex jobListIndex) {
     itemRj.setJobListIndex(jobListIndex);
+    itemRj.setLogin(loginStatus.isLogined());
     commonFlexAdapter.notifyItemChanged(2);
     nowInvintedTime = DateUtils.formatDateFromServer(jobListIndex.invited_at).getTime();
     boolean showRed =
@@ -344,6 +354,15 @@ public class SeekPositionHomeFragment extends JobsListFragment
 
   @Override public void onGym(Gym service) {
 
+  }
+
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (resultCode == Activity.RESULT_OK){
+      if (requestCode == BaseRouter.RESULT_LOGIN){
+        positionPresenter.queryIndex();
+      }
+    }
+    super.onActivityResult(requestCode, resultCode, data);
   }
 
   @Override public void onDestroyView() {

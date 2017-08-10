@@ -16,6 +16,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
@@ -31,6 +32,7 @@ import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
 import cn.qingchengfit.recruit.views.JobSearchChatActivity;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.BottomListFragment;
@@ -70,6 +72,7 @@ import javax.inject.Inject;
   @Inject ResumePresenter resumePresenter;
   @Inject JobPresenter jobPresenter;
   @Inject RecruitRouter router;
+  @Inject LoginStatus loginStatus;
 
   @Arg String resumeId;
   @Arg String toUrl;
@@ -132,6 +135,10 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.btn_starred) public void onStared() {
+    if (!loginStatus.isLogined()){
+      BaseRouter.toLogin(this);
+      return;
+    }
     if(resumeHome != null && !resumeHome.sign_up){
       showTips();
       return;
@@ -144,6 +151,10 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.btn_contact_him) public void onContact() {
+    if (!loginStatus.isLogined()){
+      BaseRouter.toLogin(this);
+      return;
+    }
     if(resumeHome != null && !resumeHome.sign_up){
       showTips();
       return;

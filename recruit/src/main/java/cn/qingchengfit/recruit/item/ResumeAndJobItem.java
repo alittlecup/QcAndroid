@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.item;
 
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,16 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
+import static android.view.View.GONE;
+
 public class ResumeAndJobItem extends AbstractFlexibleItem<ResumeAndJobItem.ResumeAndJobVH> {
 
   JobListIndex jobListIndex;
+  private boolean isLogin;
+
+  public ResumeAndJobItem(boolean isLogin) {
+    this.isLogin = isLogin;
+  }
 
   public JobListIndex getJobListIndex() {
     return jobListIndex;
@@ -31,6 +39,10 @@ public class ResumeAndJobItem extends AbstractFlexibleItem<ResumeAndJobItem.Resu
 
   public void setJobListIndex(JobListIndex jobListIndex) {
     this.jobListIndex = jobListIndex;
+  }
+
+  public void setLogin(boolean login) {
+    isLogin = login;
   }
 
   @Override public int getLayoutRes() {
@@ -48,12 +60,22 @@ public class ResumeAndJobItem extends AbstractFlexibleItem<ResumeAndJobItem.Resu
       PhotoUtils.smallCircle(holder.imgMyResume, jobListIndex.avatar);
       PhotoUtils.smallCircle(holder.imgMyJobFair, jobListIndex.fair_banner,
           R.drawable.vd_default_jobfair, R.drawable.vd_default_jobfair);
-      holder.tvResumeCompleted.setText(jobListIndex.completion + "%");
-      holder.tvResumeCompleted.setTextColor(
-          CompatUtils.getColor(holder.tvResumeCompleted.getContext(),
-              jobListIndex.completion.floatValue() >= RecruitConstants.RESUME_COMPLETED
-                  ? R.color.text_grey : R.color.red));
-      holder.tvJobFair.setText(jobListIndex.fair_count + "场进行中");
+      if (!isLogin) {
+        holder.tvResumeCompletedTip.setVisibility(GONE);
+        holder.tvResumeCompleted.setText("登陆查看");
+        holder.tvResumeCompleted.setTextColor(
+            ContextCompat.getColor(holder.itemView.getContext(), R.color.text_warm));
+      } else {
+        holder.tvResumeCompletedTip.setVisibility(View.VISIBLE);
+        holder.tvResumeCompleted.setText(jobListIndex.completion + "%");
+        holder.tvResumeCompleted.setTextColor(CompatUtils.getColor(holder.tvResumeCompleted.getContext(),
+            jobListIndex.completion.floatValue() >= RecruitConstants.RESUME_COMPLETED ? R.color.text_grey : R.color.red));
+      }
+      if (!isLogin) {
+        holder.tvJobFair.setText("登陆查看");
+      } else {
+        holder.tvJobFair.setText(jobListIndex.fair_count + "场进行中");
+      }
     }
   }
 
@@ -68,6 +90,7 @@ public class ResumeAndJobItem extends AbstractFlexibleItem<ResumeAndJobItem.Resu
     @BindView(R2.id.layout_my_jobfair) RelativeLayout layoutMyJobfair;
     @BindView(R2.id.img_my_resume) ImageView imgMyResume;
     @BindView(R2.id.img_my_job_fair) ImageView imgMyJobFair;
+    @BindView(R2.id.tv_resume_completed_tip) TextView tvResumeCompletedTip;
 
     public ResumeAndJobVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

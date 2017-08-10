@@ -55,6 +55,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
       Recruit.ChooseGymInRecruitFragmentModule.class,
       Recruit.ChooseGymInJobfairFragmentModule.class,
       Recruit.JobFairSuccessFragmentModule.class, Recruit.JobFairsAllFragmentModule.class,
+      Recruit.TipDialogFragmentModule.class,
   }) abstract RecruitActivity contributeRecruitActivityInjector();
 
   @ContributesAndroidInjector(modules = {

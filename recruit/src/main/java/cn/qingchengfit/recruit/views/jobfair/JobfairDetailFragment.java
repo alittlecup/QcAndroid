@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventClickViewPosition;
 import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.PrimaryBtnItem;
@@ -39,6 +40,7 @@ import cn.qingchengfit.recruit.presenter.RecruitPermissionPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.recruit.views.JobsFilterFragment;
 import cn.qingchengfit.recruit.views.ResumeFilterFragment;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -95,6 +97,7 @@ public class JobfairDetailFragment extends BaseFragment
   @Inject RecruitPermissionPresenter PermissonPresenter;
   @Inject RecruitRouter router;
   @Inject QcRestRepository qcRestRepository;
+  @Inject LoginStatus loginStatus;
   @BindView(R2.id.smooth_app_bar_layout) AppBarLayout smoothAppBarLayout;
   @BindView(R2.id.image_recruit) ImageView imageRecruit;
   CommonFlexAdapter commonFlexAdapter;
@@ -191,6 +194,10 @@ public class JobfairDetailFragment extends BaseFragment
     RxBusAdd(EventClickViewPosition.class).subscribe(new Action1<EventClickViewPosition>() {
       @Override public void call(EventClickViewPosition eventClickViewPosition) {
         if (eventClickViewPosition.getId() == R.layout.item_primary_rect_stroke_btn) {
+          if (!loginStatus.isLogined()){
+            BaseRouter.toLogin(JobfairDetailFragment.this);
+            return;
+          }
           router.toSignUpFair(jobFair);
         }
       }

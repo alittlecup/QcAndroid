@@ -16,8 +16,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
+import javax.inject.Inject;
 
 /**
  * Created by fb on 2017/7/10.
@@ -30,6 +33,7 @@ public class TipDialogFragment extends DialogFragment {
   @BindView(R2.id.img_tips_top) ImageView imgTipsTop;
   @BindView(R2.id.text_tips) TextView textTips;
   @BindView(R2.id.text_button_click) TextView textButtonClick;
+
   Unbinder unbinder;
   private OnDialogListener onDialogListener;
 
