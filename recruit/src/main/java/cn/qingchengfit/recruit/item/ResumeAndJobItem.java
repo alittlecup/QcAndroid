@@ -57,7 +57,8 @@ public class ResumeAndJobItem extends AbstractFlexibleItem<ResumeAndJobItem.Resu
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeAndJobVH holder, int position,
       List payloads) {
     if (jobListIndex != null) {
-      PhotoUtils.smallCircle(holder.imgMyResume, jobListIndex.avatar);
+      PhotoUtils.smallCircle(holder.imgMyResume, jobListIndex.avatar,
+          R.drawable.vd_default_myprofile, R.drawable.vd_default_myprofile);
       PhotoUtils.smallCircle(holder.imgMyJobFair, jobListIndex.fair_banner,
           R.drawable.vd_default_jobfair, R.drawable.vd_default_jobfair);
       if (!isLogin) {
