@@ -46,7 +46,7 @@ public class EndFairPresenter extends BasePresenter {
             if (ResponseConstant.checkSuccess(qcResponse)) {
               view.onEndFairList(qcResponse.data.gyms);
             } else {
-              view.onShowError(qcResponse.getMsg());
+              //view.onShowError(qcResponse.getMsg());
             }
           }
         }, new NetWorkThrowable()));
