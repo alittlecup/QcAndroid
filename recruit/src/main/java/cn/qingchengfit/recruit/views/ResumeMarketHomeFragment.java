@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.SearchCenterItem;
@@ -37,6 +38,7 @@ import cn.qingchengfit.recruit.presenter.EndFairPresenter;
 import cn.qingchengfit.recruit.presenter.RecruitGymDetailPresenter;
 import cn.qingchengfit.recruit.presenter.ResumeMarketPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.support.animator.FlipAnimation;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -95,6 +97,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   @Inject EndFairPresenter endFairPresenter;
   @Inject RecruitGymDetailPresenter gymDetailPresenter;
   @Inject RecruitRouter router;
+  @Inject LoginStatus loginStatus;
   private HorizonImageShowItem horizonImageShowItem;
   private RecruitManageItem recruitmanage;
   private FilterHeadItem filterHeadItem;
@@ -380,6 +383,10 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   @Override public boolean onItemClick(int i) {
     IFlexible item = commonFlexAdapter.getItem(i);
     if (item instanceof RecruitManageItem) {
+      if (!loginStatus.isLogined()){
+        BaseRouter.toLogin(this);
+        return false;
+      }
       router.toManageRecruit(((RecruitManageItem) item).getJobsCount());
       return true;
     } else if (item instanceof SearchCenterItem) {

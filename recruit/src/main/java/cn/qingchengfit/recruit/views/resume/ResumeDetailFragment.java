@@ -180,6 +180,10 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.btn_send_invite) public void onSendInvite() {
+    if (!loginStatus.isLogined()){
+      BaseRouter.toLogin(this);
+      return;
+    }
     if (resumeHome != null && !resumeHome.sign_up){
       showTips();
       return;

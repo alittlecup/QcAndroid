@@ -70,7 +70,6 @@ public class RecruitManageFragment extends BaseFragment
 
   @Inject QcRestRepository qcRestRepository;
   @Inject RecruitRouter router;
-  @Inject LoginStatus loginStatus;
 
   List<AbstractFlexibleItem> items = new ArrayList<>();
   CommonFlexAdapter commonFlexAdapter;
@@ -162,10 +161,6 @@ public class RecruitManageFragment extends BaseFragment
   }
 
   @OnClick(R2.id.btn_publish_new_position) public void onBtnPublishNewPositionClicked() {
-    if (!loginStatus.isLogined()){
-      BaseRouter.toLogin(this);
-      return;
-    }
     router.chooseGym();
   }
 

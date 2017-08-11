@@ -141,7 +141,9 @@ public class RecruitPositionDetailFragment extends BaseFragment
 
   private void initData() {
     presenter.queryJob(job.id);
-    resumePresenter.queryResumeHome();
+    if (loginStatus.isLogined()) {
+      resumePresenter.queryResumeHome();
+    }
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
