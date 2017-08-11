@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.constant;
 
+import cn.qingchengfit.Constants;
 import cn.qingchengfit.staffkit.BuildConfig;
 
 /**
@@ -16,11 +17,11 @@ import cn.qingchengfit.staffkit.BuildConfig;
  * Created by Paper on 15/12/1 2015.
  */
 public class Configs {
-    public static final String URL_DEBUG = "http://c1.qingchengfit.cn/";
+    //public static final String URL_DEBUG = "http://cloudmirror.qingchengfit.cn/";
     //    public static final String URL_DEBUG = "http://c1.qingchengfit.cn/";
     //    public static final String URL_DEBUG = "http://192.168.1.11:8000/";
     //    public static final String URL_DEBUG = "http://192.168.1.96:7777/";
-    public static final String URL_RELEASE = "http://cloud.qingchengfit.cn/";
+    //public static final String URL_RELEASE = "http://cloud.qingchengfit.cn/";
     public static final String URL_QC_TRAIN = "mobile/staff/training/";
     public static final String SEPARATOR = "、";
     public static final String PREFER_SESSION = "qingcheng.session";
@@ -139,7 +140,7 @@ public class Configs {
     public static final String SCHEDULE_PRIVATE = "fitness/redirect/staff/private/";
   public static final String HOST_ORDERS = "mobile/trades/home/";
     public static final String IMAGE_ALL = "http://qcresource.b0.upaiyun.com/ic_all_normal.png";
-    public static String Server = !BuildConfig.FLAVOR.equals("product") ? URL_DEBUG : URL_RELEASE;
+    public static String Server = !BuildConfig.FLAVOR.equals("product") ? Constants.Server:(BuildConfig.DEBUG?Constants.Server:Constants.ServerMirror);
     public static String URL_QC_FIND = Server + "mobile/staff/discover/";
     public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
 }

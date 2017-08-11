@@ -32,5 +32,7 @@ public class Constants {
   public static final String EXTRA_BRAND = "qingcheng.brand";
 
   public static final String Server =
-      BuildConfig.DEBUG ? "http://c1.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
+      BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
+  public static final String ServerMirror =
+      "http://cloudmirror.qingchengfit.cn/";
 }
