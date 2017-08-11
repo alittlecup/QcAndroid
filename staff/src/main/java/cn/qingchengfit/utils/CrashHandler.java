@@ -83,7 +83,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                       mContext.startActivity(toMain);
                     }
                 });
-                LogUtils.e("错误已处理");
+              LogUtil.e("错误已处理");
             } catch (Exception e) {
                 Log.e(TAG, "麻蛋 新的error : ", e);
             }

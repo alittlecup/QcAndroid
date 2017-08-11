@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
@@ -53,6 +54,8 @@ import com.tencent.qcloud.timchat.ui.qcchat.AddConversationProcessor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -129,7 +132,13 @@ public class RecruitPositionDetailFragment extends BaseFragment
     delegatePresenter(presenter, this);
     delegatePresenter(resumePresenter, this);
     initToolbar(toolbar);
-
+    RxBusAdd(EventLoginChange.class).onBackpressureLatest()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<EventLoginChange>() {
+          @Override public void call(EventLoginChange eventLoginChange) {
+            initData();
+          }
+        });
     return view;
   }
 

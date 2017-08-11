@@ -14,7 +14,7 @@ import cn.qingchengfit.staffkit.train.fragment.SignUpFormHomeFragment;
 import cn.qingchengfit.staffkit.train.fragment.TrainChooseGymFragment;
 import cn.qingchengfit.staffkit.train.moudle.TrainIds;
 import cn.qingchengfit.staffkit.views.FragCallBack;
-import cn.qingchengfit.utils.LogUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.BaseActivity;
 import javax.inject.Inject;
 import rx.functions.Action1;
@@ -36,10 +36,10 @@ public class SignUpDetailActivity extends BaseActivity implements FragCallBack {
         Intent to = getIntent();
         if (to != null && !TextUtils.isEmpty(to.getData().getHost())) {
             if (to.getData().getPath().contains("select_shop")) {
-                LogUtils.e("select_shop");
+              LogUtil.e("select_shop");
                 getSupportFragmentManager().beginTransaction().replace(getFragId(), new TrainChooseGymFragment()).commit();
             } else if (to.getData().getPath().contains("form")) {
-                LogUtils.e("form");
+              LogUtil.e("form");
                 gymid = to.getData().getQueryParameter("gym_id");
                 competitionId = to.getData().getQueryParameter("id");
                 trainIds.setGymId(gymid);

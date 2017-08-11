@@ -109,7 +109,6 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     isChild = true;
-    //View view = inflater.inflate(R.layout.fragment_resume_market_home, container, false);
     View v = super.onCreateView(inflater, container, savedInstanceState);
     LinearLayout view = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container, null);
     layoutFilter = (SwipeRefreshLayout) inflater.inflate(R.layout.layout_filter_container, null);
@@ -170,6 +169,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   }
 
   private void initBus() {
+
     RxBusAdd(EventRecycleClick.class).subscribe(new Action1<EventRecycleClick>() {
       @Override public void call(EventRecycleClick eventRecycleClick) {
         if (eventRecycleClick.viewId == R.layout.item_more_job_fair) {
@@ -282,7 +282,6 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
 
   @Override public void onRefresh() {
     presenter.queryMyJobFairList();
-    //initLoadMore();
     commonFlexAdapter.setEndlessScrollListener(null, null);
     params = ListUtils.mapRemoveNull(params);
     presenter.queryResumeMarkets(true, params);

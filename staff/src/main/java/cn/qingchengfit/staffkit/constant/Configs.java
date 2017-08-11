@@ -1,7 +1,6 @@
 package cn.qingchengfit.staffkit.constant;
 
 import cn.qingchengfit.Constants;
-import cn.qingchengfit.staffkit.BuildConfig;
 
 /**
  * power by
@@ -140,7 +139,8 @@ public class Configs {
     public static final String SCHEDULE_PRIVATE = "fitness/redirect/staff/private/";
   public static final String HOST_ORDERS = "mobile/trades/home/";
     public static final String IMAGE_ALL = "http://qcresource.b0.upaiyun.com/ic_all_normal.png";
-    public static String Server = !BuildConfig.FLAVOR.equals("product") ? Constants.Server:(BuildConfig.DEBUG?Constants.Server:Constants.ServerMirror);
+    //public static String Server = !BuildConfig.FLAVOR.equals("product") ? Constants.Server:(BuildConfig.DEBUG?Constants.ServerMirror:Constants.Server);
+    public static String Server = Constants.Server;
     public static String URL_QC_FIND = Server + "mobile/staff/discover/";
     public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
 }

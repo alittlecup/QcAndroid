@@ -25,6 +25,7 @@ import cn.qingchengfit.chat.model.Record;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.NotificationDeleted;
 import cn.qingchengfit.model.responese.NotificationGlance;
@@ -36,7 +37,6 @@ import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.ConstantNotification;
 import cn.qingchengfit.staffkit.presenters.SystemMsgPresenter;
-import cn.qingchengfit.staffkit.rxbus.event.EventLoginChange;
 import cn.qingchengfit.staffkit.rxbus.event.EventNewPush;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.SystemMsgItem;
@@ -45,7 +45,7 @@ import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.notification.NotificationActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.utils.DialogUtils;
-import cn.qingchengfit.utils.LogUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.NotificationCompartor;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -206,7 +206,7 @@ public class MainMsgFragment extends BaseFragment
           onLoginSuccess();
         }
       } catch (Exception e) {
-        LogUtils.e(e.getMessage());
+        LogUtil.e(e.getMessage());
         //ToastUtils.show(e.getMessage());
       }
     } else {
@@ -290,7 +290,7 @@ public class MainMsgFragment extends BaseFragment
   }
 
   @Override public void onLoginFailed(TLSErrInfo tlsErrInfo) {
-    LogUtils.e("IM:---" + tlsErrInfo.ErrCode + "  " + tlsErrInfo.Msg);
+    LogUtil.e("IM:---" + tlsErrInfo.ErrCode + "  " + tlsErrInfo.Msg);
   }
 
   @OnClick(R.id.fab_add_conversation) public void addCoversation() {

@@ -1,7 +1,5 @@
 package cn.qingchengfit.recruit.views;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +21,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventClickViewPosition;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.SearchCenterItem;
 import cn.qingchengfit.model.base.Gym;
@@ -136,6 +135,13 @@ public class SeekPositionHomeFragment extends JobsListFragment
       }
     });
     PreferenceUtils.setPrefInt(getContext(), "recruit_home", 0);
+    RxBusAdd(EventLoginChange.class).onBackpressureLatest()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<EventLoginChange>() {
+          @Override public void call(EventLoginChange eventLoginChange) {
+            if (loginStatus.isLogined()) positionPresenter.queryIndex();
+          }
+        });
     return view;
   }
 
@@ -356,14 +362,6 @@ public class SeekPositionHomeFragment extends JobsListFragment
 
   }
 
-  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (resultCode == Activity.RESULT_OK){
-      if (requestCode == BaseRouter.RESULT_LOGIN){
-        positionPresenter.queryIndex();
-      }
-    }
-    super.onActivityResult(requestCode, resultCode, data);
-  }
 
   @Override public void onDestroyView() {
     super.onDestroyView();

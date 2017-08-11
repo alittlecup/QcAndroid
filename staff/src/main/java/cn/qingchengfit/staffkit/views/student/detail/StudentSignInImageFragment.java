@@ -32,7 +32,7 @@ import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.utils.CompatUtils;
-import cn.qingchengfit.utils.LogUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
@@ -107,7 +107,7 @@ public class StudentSignInImageFragment extends BaseFragment implements StudentS
         RxBusAdd(EventChooseImage.class).subscribe(new Action1<EventChooseImage>() {
             @Override public void call(EventChooseImage eventChooseImage) {
                 if (TextUtils.isEmpty(eventChooseImage.filePath)) {
-                    LogUtils.e("filePaht == null");
+                  LogUtil.e("filePaht == null");
                 }
                 showLoading();
                 Glide.with(getContext()).load(new File(eventChooseImage.filePath)).placeholder(R.drawable.img_loadingimage).into(curImg);

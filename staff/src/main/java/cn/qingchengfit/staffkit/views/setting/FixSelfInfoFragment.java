@@ -30,7 +30,7 @@ import cn.qingchengfit.staffkit.views.custom.CitiesData;
 import cn.qingchengfit.staffkit.views.custom.CityBean;
 import cn.qingchengfit.staffkit.views.custom.DistrictBean;
 import cn.qingchengfit.staffkit.views.custom.ProvinceBean;
-import cn.qingchengfit.utils.LogUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
@@ -153,7 +153,7 @@ public class FixSelfInfoFragment extends BaseDialogFragment implements CommonPVi
         RxBusAdd(EventChooseImage.class).subscribe(new Action1<EventChooseImage>() {
             @Override public void call(EventChooseImage eventChooseImage) {
                 if (TextUtils.isEmpty(eventChooseImage.filePath)) {
-                    LogUtils.e("filePaht == null");
+                  LogUtil.e("filePaht == null");
                 }
                 showLoading();
                 Glide.with(getContext())

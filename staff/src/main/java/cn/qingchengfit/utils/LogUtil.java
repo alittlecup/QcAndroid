@@ -1,4 +1,6 @@
-//package cn.qingchengfit.events;
+//package cn.qingchengfit.utils;
+//
+//import timber.log.Timber;
 //
 ///**
 // * power by
@@ -18,8 +20,15 @@
 // * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 // * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 // * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-// * Created by Paper on 2017/5/17.
+// * Created by Paper on 2016/12/16.
 // */
 //
-//public class EventLoginChange {
+//public class LogUtil {
+//    public static void d(String s) {
+//
+//    }
+//
+//    public static void e(String s) {
+//        Timber.e("qc_error:" + s);
+//    }
 //}

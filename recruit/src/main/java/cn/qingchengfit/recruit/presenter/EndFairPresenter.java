@@ -3,6 +3,7 @@ package cn.qingchengfit.recruit.presenter;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -23,6 +24,7 @@ import rx.schedulers.Schedulers;
 public class EndFairPresenter extends BasePresenter {
 
   @Inject QcRestRepository qcRestRepository;
+  @Inject LoginStatus loginStatus;
   private MVPView view;
 
   @Inject public EndFairPresenter() {
@@ -38,6 +40,7 @@ public class EndFairPresenter extends BasePresenter {
   }
 
   public void queryEndFairList() {
+    if (!loginStatus.isLogined()) return;
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
         .qcGetEndFair().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -46,7 +49,7 @@ public class EndFairPresenter extends BasePresenter {
             if (ResponseConstant.checkSuccess(qcResponse)) {
               view.onEndFairList(qcResponse.data.gyms);
             } else {
-              //view.onShowError(qcResponse.getMsg());
+              view.onShowError(qcResponse.getMsg());
             }
           }
         }, new NetWorkThrowable()));

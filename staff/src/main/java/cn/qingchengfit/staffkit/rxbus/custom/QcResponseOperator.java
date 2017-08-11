@@ -1,9 +1,9 @@
 package cn.qingchengfit.staffkit.rxbus.custom;
 
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.responese.QcResponse;
 import cn.qingchengfit.model.responese.ResponseConstant;
-import cn.qingchengfit.staffkit.rxbus.event.EventLoginChange;
 import cn.qingchengfit.utils.ToastUtils;
 import rx.Observable;
 import rx.Subscriber;

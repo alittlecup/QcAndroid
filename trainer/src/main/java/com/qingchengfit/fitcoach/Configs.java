@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach;
 
 import android.os.Environment;
+import cn.qingchengfit.Constants;
 
 /**
  * power by
@@ -76,9 +77,9 @@ public class Configs {
      */
     //    public static boolean isDebug = true;
     public static boolean isDebug = false;
-  public static String Server =
-      BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
-    public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
+  public static String Server = !BuildConfig.FLAVOR.equals("product") ? Constants.Server
+      : (BuildConfig.DEBUG ? Constants.ServerMirror : Constants.Server);
+  public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
     public static String HOST_NAMESPACE_1 = "http://.qingchengfit.com";
     public static String PRIVATE_PRIVEIW = Configs.Server + "fitness/redirect/user/private/";
     public static String GROUP_PRIVEIW = Configs.Server + "fitness/redirect/user/group/";

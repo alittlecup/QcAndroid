@@ -23,7 +23,7 @@ import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.PayEvent;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.LogUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
@@ -167,7 +167,7 @@ import rx.functions.Action1;
                         DateUtils.addDay(DateUtils.formatDateFromYYYYMMDD(realcardWrapper.realCard.getValid_to()), intervalDay)));
             }
         } catch (Exception e) {
-            LogUtils.e(e.getMessage());
+          LogUtil.e(e.getMessage());
         }
     }
 

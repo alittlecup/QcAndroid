@@ -583,6 +583,15 @@
             android:scheme="http"
             />
       </intent-filter>
+      <intent-filter>
+        <action android:name="${APP_PACKAGE}"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <data
+            android:host="*.qingchengfit.cn"
+            android:pathPattern=".*check.*"
+            android:scheme="https"
+            />
+      </intent-filter>
     </activity>
     <activity
         android:name=".views.signin.SignInManualActivity"

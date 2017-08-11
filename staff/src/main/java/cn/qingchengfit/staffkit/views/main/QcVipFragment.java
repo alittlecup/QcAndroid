@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.LogUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.WebFragment;
@@ -71,6 +70,7 @@ public class QcVipFragment extends WebFragment {
 
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+              cn.qingchengfit.utils.LogUtil.e("url start:" + url);
             }
 
             @Override public void onPageFinished(WebView view, String url) {
@@ -86,7 +86,7 @@ public class QcVipFragment extends WebFragment {
             }
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-              LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
+              cn.qingchengfit.utils.LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
                 try {
                     if (url.startsWith("http")) {
                         WebActivity.startWeb(url, getContext());
@@ -105,7 +105,7 @@ public class QcVipFragment extends WebFragment {
             }
 
             @Override public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                LogUtils.e("errorCode:" + errorCode);
+              LogUtil.e("errorCode:" + errorCode);
                 mTitle.setText("");
                 showNoNet();
             }

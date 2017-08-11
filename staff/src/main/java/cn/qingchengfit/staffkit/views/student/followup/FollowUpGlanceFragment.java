@@ -14,7 +14,7 @@ import cn.qingchengfit.model.responese.FollowUpDataStatistic;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.rxbus.event.EventRouter;
-import cn.qingchengfit.utils.LogUtils;
+import cn.qingchengfit.utils.LogUtil;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -81,7 +81,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
             fragment.touchable = true;
             getChildFragmentManager().beginTransaction().replace(R.id.frag_regist, fragment).commitNowAllowingStateLoss();
         } catch (Exception e) {
-            LogUtils.e(e.getMessage());
+          LogUtil.e(e.getMessage());
         }
         return view;
     }

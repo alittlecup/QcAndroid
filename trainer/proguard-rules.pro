@@ -96,6 +96,7 @@
     *;
     }
     -keep class cn.qingchengfit.di.**{*;}
+-keep class com.commonsware.cwac.** { *; }
 
 #realm
 -keep class io.realm.annotations.RealmModule
