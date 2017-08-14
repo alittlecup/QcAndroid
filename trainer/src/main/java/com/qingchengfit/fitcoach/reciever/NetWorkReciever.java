@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 
 /**
@@ -38,7 +40,8 @@ public class NetWorkReciever extends BroadcastReceiver {
                 RxBus.getBus().post(new NetworkBean(true));
             } else {
                 RxBus.getBus().post(new NetworkBean(false));
-                LogUtil.e("没有可用网络");
+                RxBus.getBus().post(new EventNetWorkError());
+                ToastUtils.show("没有可用网络");
             }
         }
     }

@@ -13,6 +13,8 @@ import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.Login;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
@@ -162,7 +164,13 @@ public class LoginPresenter implements Presenter {
     }
 
     public void queryCode(GetCodeBody phone) {
-        loginUsecase.queryCode(phone).subscribe();
+        loginUsecase.queryCode(phone).subscribe(new Action1<cn.qingchengfit.model.responese.QcResponse>() {
+            @Override public void call(cn.qingchengfit.model.responese.QcResponse qcResponse) {
+                if (qcResponse.status != 200) {
+                    ToastUtils.show(qcResponse.getMsg());
+                }
+            }
+        }, new NetWorkThrowable());
     }
 
     public void registe(final RegisteBody body) {
