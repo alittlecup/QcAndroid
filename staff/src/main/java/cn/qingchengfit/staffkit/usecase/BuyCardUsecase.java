@@ -64,7 +64,7 @@ public class BuyCardUsecase {
     public Subscription chargeCardWX(String card_id, String brand_id, String shop_id, String modelid, String model, ChargeBody body,
         Action1<QcResponsePayWx> action1) {
         body.setCard_id(card_id);
-        //        CoachService coachService = GymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(App.context, Configs.CUR_BRAND_ID,""),shop_id);
+        //        CoachService coachService = gymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(App.context, Configs.CUR_BRAND_ID,""),shop_id);
         //        body.setId(modelid);
         //        body.setModel(model);
         return restRepository.getPost_api()

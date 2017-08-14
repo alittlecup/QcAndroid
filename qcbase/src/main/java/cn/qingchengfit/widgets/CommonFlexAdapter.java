@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
 import android.view.View;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/1.
  */
-public class CommonFlexAdapter extends FlexibleAdapter {
+public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
   private int status = 0;
 
     private int positionOld = -1;
@@ -64,6 +65,14 @@ public class CommonFlexAdapter extends FlexibleAdapter {
   @Override public boolean hasNewSearchText(String newText) {
     //return super.hasNewSearchText(newText);
     return true;
+  }
+
+  public List getMainItems(){
+    List ret = new ArrayList();
+    for (int i = 0; i < getItemCount(); i++) {
+      ret.add(getItem(i));
+    }
+    return ret;
   }
 
   public int getStatus() {

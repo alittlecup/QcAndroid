@@ -26,10 +26,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.SingleBatchBody;
 import cn.qingchengfit.model.responese.CourseManageBean;
 import cn.qingchengfit.model.responese.CourseSchedule;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.batch.single.SingleBatchFragmentBuilder;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
@@ -63,6 +63,7 @@ public class CourseManageFragment extends BaseFragment implements CourseManageVi
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject CourseManagePresenter presenter;
+    @Inject SerPermisAction serPermisAction;
 
     private String mBatchId; //排期id
     private List<CourseManageBean> datas = new ArrayList<>();
@@ -73,22 +74,22 @@ public class CourseManageFragment extends BaseFragment implements CourseManageVi
     private TimeDialogWindow timeWindow;
     private TimePeriodChooser timeDialogWindow;
     private MaterialDialog delDialog;
-  private Toolbar.OnMenuItemClickListener mCancel = new Toolbar.OnMenuItemClickListener() {
-        @Override public boolean onMenuItemClick(MenuItem item) {
-            toolbar.getMenu().clear();
-          toolbar.inflateMenu(R.menu.menu_edit);
-          toolbar.setOnMenuItemClickListener(mEditLis);
-          courseManagerAdapter.setEditing(false);
-            courseManagerAdapter.notifyDataSetChanged();
-            return true;
-        }
-    };
   private Toolbar.OnMenuItemClickListener mEditLis = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
             toolbar.getMenu().clear();
           toolbar.inflateMenu(R.menu.menu_cancel);
           toolbar.setOnMenuItemClickListener(mCancel);
           courseManagerAdapter.setEditing(true);
+            courseManagerAdapter.notifyDataSetChanged();
+            return true;
+        }
+    };
+  private Toolbar.OnMenuItemClickListener mCancel = new Toolbar.OnMenuItemClickListener() {
+        @Override public boolean onMenuItemClick(MenuItem item) {
+            toolbar.getMenu().clear();
+          toolbar.inflateMenu(R.menu.menu_edit);
+          toolbar.setOnMenuItemClickListener(mEditLis);
+          courseManagerAdapter.setEditing(false);
             courseManagerAdapter.notifyDataSetChanged();
             return true;
         }
@@ -129,9 +130,9 @@ public class CourseManageFragment extends BaseFragment implements CourseManageVi
             @Override public void onItemClick(View v, int pos) {
                 CourseManageBean bean = datas.get(pos);
                 if (v.getId() == R.id.time) {
-                    if ((mCourseType == Configs.TYPE_GROUP && !SerPermisAction.check(gymWrapper.shop_id(),
+                    if ((mCourseType == Configs.TYPE_GROUP && !serPermisAction.check(gymWrapper.shop_id(),
                         PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)) || (mCourseType == Configs.TYPE_PRIVATE
-                        && !SerPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
+                        && !serPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
                         showAlert(R.string.alert_permission_forbid);
                         return;
                     }
@@ -238,8 +239,8 @@ public class CourseManageFragment extends BaseFragment implements CourseManageVi
     }
 
     @OnClick(R.id.btn_del) public void OnDel() {
-        if ((mCourseType == Configs.TYPE_GROUP && !SerPermisAction.check(gymWrapper.shop_id(),
-            PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE)) || (mCourseType == Configs.TYPE_PRIVATE && !SerPermisAction.check(
+        if ((mCourseType == Configs.TYPE_GROUP && !serPermisAction.check(gymWrapper.shop_id(),
+            PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE)) || (mCourseType == Configs.TYPE_PRIVATE && !serPermisAction.check(
             gymWrapper.shop_id(), PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_DELETE))) {
             showAlert(R.string.alert_permission_forbid);
             return;

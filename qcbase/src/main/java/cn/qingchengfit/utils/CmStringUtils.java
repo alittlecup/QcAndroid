@@ -35,6 +35,15 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 public class CmStringUtils {
 
+  public static boolean isID(String s){
+    try {
+      long x = Long.parseLong(s);
+      return x > 0;
+    }catch (Exception e){
+      return false;
+    }
+  }
+
   public static String getMaybeInt(float s) {
     int ret = (int) s;
     if (ret == s) {
@@ -207,4 +216,17 @@ public class CmStringUtils {
             + content
             + "</div></body></html>";
     }
+
+
+  /**
+   * 数字数组,包含头尾
+   */
+  public static List<String> getNums(int from, int to) {
+    List<String> ret = new ArrayList<>();
+    for (int i = from; i < to + 1; i++) {
+      ret.add(Integer.toString(i));
+    }
+    return ret;
+  }
+
 }

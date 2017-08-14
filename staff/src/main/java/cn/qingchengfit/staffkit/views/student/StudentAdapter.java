@@ -13,8 +13,6 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.custom.LoopView;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.StringUtils;
@@ -52,6 +50,7 @@ public class StudentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static boolean isBindStudent = false;
 
     List<StudentBean> datas;
+    boolean premiss = true;// TODO: 2017/8/14 权限传进来？
     private OnRecycleItemClickListener listener;
     private CoachService coachService;
 
@@ -127,8 +126,8 @@ public class StudentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             if (isBindStudent) {
                 if (coachService != null) {
-                    boolean premiss =
-                        SerPermisAction.check(coachService.id(), coachService.model(), PermissionServerUtils.MANAGE_MEMBERS_IS_ALL);
+                    //boolean premiss =
+                    //    serPermisAction.check(coachService.id(), coachService.model(), PermissionServerUtils.MANAGE_MEMBERS_IS_ALL);
                     if (!premiss) {
                         itemViewHolder.itemView.setVisibility(View.VISIBLE);
                         itemViewHolder.tvTotalCount.setText("仅显示名下会员");

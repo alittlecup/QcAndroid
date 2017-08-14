@@ -13,7 +13,7 @@ import com.qingchengfit.fitcoach.fragment.course.SimpleTextItemItem;
 import com.qingchengfit.fitcoach.fragment.statement.item.ChooseCardtplItem;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.QcResponseCardTpls;
-import com.qingchengfit.fitcoach.http.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.HashMap;
 import java.util.List;

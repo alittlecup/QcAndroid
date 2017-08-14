@@ -23,10 +23,10 @@ import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
@@ -66,6 +66,7 @@ public class CoachListFragment extends BaseFragment implements CoachListView {
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     private boolean isLoading = false;
     private SearchView mSearchView;
 
@@ -145,7 +146,7 @@ public class CoachListFragment extends BaseFragment implements CoachListView {
     }
 
     @OnClick(R.id.fab_add_coach) public void addCoach() {
-        if (!SerPermisAction.checkAll(PermissionServerUtils.COACHSETTING_CAN_WRITE)) {
+        if (!serPermisAction.checkAll(PermissionServerUtils.COACHSETTING_CAN_WRITE)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }
@@ -161,7 +162,7 @@ public class CoachListFragment extends BaseFragment implements CoachListView {
             } else if (requestCode == RESULT_FLOW) {
                 int pos = Integer.parseInt(IntentUtils.getIntentString(data));
                 if (pos == 0) {
-                    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.POSITION_SETTING)) {
+                    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.POSITION_SETTING)) {
                         showAlert(R.string.sorry_for_no_permission);
                         return;
                     }

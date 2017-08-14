@@ -25,11 +25,11 @@ import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.model.responese.LockerRegions;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventContinueHire;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
@@ -84,6 +84,7 @@ public class WardrobeMainFragment extends BaseFragment implements FlexibleAdapte
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     HashMap<Long, List<Locker>> mLockers = new HashMap<>();
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
@@ -96,7 +97,7 @@ public class WardrobeMainFragment extends BaseFragment implements FlexibleAdapte
     private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
             if (item.getItemId() == R.id.action_add) {
-                if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_WRITE)) {
+                if (!serPermisAction.check(PermissionServerUtils.LOCKER_SETTING_CAN_WRITE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return true;
                 }

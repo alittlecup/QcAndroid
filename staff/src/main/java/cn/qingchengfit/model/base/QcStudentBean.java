@@ -237,7 +237,7 @@
 //            String ret = "";
 //            for (int i = 0; i < sellers.size(); i++) {
 //                if (i < sellers.size() - 1) {
-//                    ret = ret.concat(sellers.get(i).getUsername()).concat(Configs.SEPARATOR);
+//                    ret = ret.concat(sellers.get(i).getUsername()).concat(Configs.SEPARATOR_EN);
 //                } else {
 //                    ret = ret.concat(sellers.get(i).getUsername());
 //                }

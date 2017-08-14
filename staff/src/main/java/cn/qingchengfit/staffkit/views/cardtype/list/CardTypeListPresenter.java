@@ -216,65 +216,65 @@ public class CardTypeListPresenter extends BasePresenter {
 
     public void queryCardTypeList(String staffid, final int type, boolean isEnable) {
 
-        RxRegiste(restRepository.getGet_api()
-            .qcGetCardTpls(staffid, gymWrapper.getParams(), type == 0 ? null : Integer.toString(type), isEnable ? "1" : "0")
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcDataResponse<CardTpls>>() {
-                @Override public void call(QcDataResponse<CardTpls> qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                        if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-                            List<CardTpl> card_tpls = new ArrayList<>();
-                            for (CardTpl card_tpl : qcResponse.data.card_tpls) {
-                                if (type == 0 || card_tpl.getType() == type) {
-                                    if (card_tpl.is_limit()) {
-                                        StringBuffer ss = new StringBuffer();
-                                        if (card_tpl.getPre_times() != 0) {
-                                            ss.append("限制: 可提前预约");
-                                            ss.append(card_tpl.getPre_times());
-                                            ss.append("节课");
-                                        }
-                                        if (card_tpl.getDay_times() != 0) {
-                                            if (card_tpl.getPre_times() != 0) ss.append(",");
-                                            ss.append("每天共计可上").append(card_tpl.getDay_times()).append("节课");
-                                        } else if (card_tpl.getWeek_times() != 0) {
-                                            if (card_tpl.getPre_times() != 0) ss.append(",");
-                                            ss.append("每周共计可上").append(card_tpl.getWeek_times()).append("节课");
-                                        } else if (card_tpl.getMonth_times() != 0) {
-                                            if (card_tpl.getPre_times() != 0) ss.append(",");
-                                            ss.append("每月共计可上").append(card_tpl.getMonth_times()).append("节课");
-                                        } else if (card_tpl.getBuy_limit() != 0) {
-                                            if (!StringUtils.isEmpty(ss.toString())) ss.append(",");
-                                            ss.append("每个会员限购").append(card_tpl.getBuy_limit()).append("张");
-                                        }
-                                        if (TextUtils.isEmpty(ss.toString())) {
-                                            card_tpl.setLimit("限制: 无");
-                                        } else {
-                                            card_tpl.setLimit(ss.toString());
-                                        }
-                                    } else {
-                                        card_tpl.setLimit("限制: 无");
-                                    }
-                                    if (TextUtils.isEmpty(card_tpl.getDescription())) {
-                                        card_tpl.setDescription("简介: 无");
-                                    } else {
-                                        card_tpl.setDescription(TextUtils.concat("简介: ", card_tpl.getDescription()).toString());
-                                    }
-                                    card_tpls.add(card_tpl);
-                                }
-                            }
-
-                            view.onGetData(card_tpls);
-                        } else {
-                            view.onShowError(qcResponse.getMsg());
-                        }
-                    }
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onShowError("error!");
-                }
-            }));
+        //RxRegiste(restRepository.getGet_api()
+        //    .qcGetCardTpls(staffid, gymWrapper.getParams(), type == 0 ? null : Integer.toString(type), isEnable ? "1" : "0")
+        //    .onBackpressureBuffer()
+        //    .subscribeOn(Schedulers.io())
+        //    .observeOn(AndroidSchedulers.mainThread())
+        //    .subscribe(new Action1<QcDataResponse<CardTpls>>() {
+        //        @Override public void call(QcDataResponse<CardTpls> qcResponse) {
+        //            if (ResponseConstant.checkSuccess(qcResponse)) {
+        //                if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
+        //                    List<CardTpl> card_tpls = new ArrayList<>();
+        //                    for (CardTpl card_tpl : qcResponse.data.card_tpls) {
+        //                        if (type == 0 || card_tpl.getType() == type) {
+        //                            if (card_tpl.is_limit()) {
+        //                                StringBuffer ss = new StringBuffer();
+        //                                if (card_tpl.getPre_times() != 0) {
+        //                                    ss.append("限制: 可提前预约");
+        //                                    ss.append(card_tpl.getPre_times());
+        //                                    ss.append("节课");
+        //                                }
+        //                                if (card_tpl.getDay_times() != 0) {
+        //                                    if (card_tpl.getPre_times() != 0) ss.append(",");
+        //                                    ss.append("每天共计可上").append(card_tpl.getDay_times()).append("节课");
+        //                                } else if (card_tpl.getWeek_times() != 0) {
+        //                                    if (card_tpl.getPre_times() != 0) ss.append(",");
+        //                                    ss.append("每周共计可上").append(card_tpl.getWeek_times()).append("节课");
+        //                                } else if (card_tpl.getMonth_times() != 0) {
+        //                                    if (card_tpl.getPre_times() != 0) ss.append(",");
+        //                                    ss.append("每月共计可上").append(card_tpl.getMonth_times()).append("节课");
+        //                                } else if (card_tpl.getBuy_limit() != 0) {
+        //                                    if (!StringUtils.isEmpty(ss.toString())) ss.append(",");
+        //                                    ss.append("每个会员限购").append(card_tpl.getBuy_limit()).append("张");
+        //                                }
+        //                                if (TextUtils.isEmpty(ss.toString())) {
+        //                                    card_tpl.setLimit("限制: 无");
+        //                                } else {
+        //                                    card_tpl.setLimit(ss.toString());
+        //                                }
+        //                            } else {
+        //                                card_tpl.setLimit("限制: 无");
+        //                            }
+        //                            if (TextUtils.isEmpty(card_tpl.getDescription())) {
+        //                                card_tpl.setDescription("简介: 无");
+        //                            } else {
+        //                                card_tpl.setDescription(TextUtils.concat("简介: ", card_tpl.getDescription()).toString());
+        //                            }
+        //                            card_tpls.add(card_tpl);
+        //                        }
+        //                    }
+        //
+        //                    view.onGetData(card_tpls);
+        //                } else {
+        //                    view.onShowError(qcResponse.getMsg());
+        //                }
+        //            }
+        //        }
+        //    }, new Action1<Throwable>() {
+        //        @Override public void call(Throwable throwable) {
+        //            view.onShowError("error!");
+        //        }
+        //    }));
     }
 }

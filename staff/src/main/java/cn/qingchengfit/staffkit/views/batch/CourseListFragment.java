@@ -25,11 +25,11 @@ import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.model.responese.GroupCourse;
 import cn.qingchengfit.model.responese.ImageThreeTextBean;
 import cn.qingchengfit.model.responese.QcResponsePrivateCourse;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Router;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.TitleFragment;
 import cn.qingchengfit.staffkit.views.adapter.ImageThreeTextAdapter;
@@ -56,6 +56,7 @@ public class CourseListFragment extends BaseFragment implements TitleFragment, C
 
     @BindView(R.id.add_batch_btn) FloatingActionButton addBatchBtn;
     @Inject CoureseListPresenter presenter;
+    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.btn_how_to_use) TextView btnHowToUse;
     @BindView(R.id.btn_no_data) Button btnNoData;
     private ImageThreeTextAdapter mImageTwoTextAdapter;
@@ -94,9 +95,9 @@ public class CourseListFragment extends BaseFragment implements TitleFragment, C
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(presenter, this);
-        if ((mCourseType == Configs.TYPE_GROUP && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR)) || (
+        if ((mCourseType == Configs.TYPE_GROUP && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR)) || (
             mCourseType == Configs.TYPE_PRIVATE
-                && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR))) {
+                && !serPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR))) {
             View v = inflater.inflate(R.layout.item_common_no_data, container, false);
             ImageView img = (ImageView) v.findViewById(R.id.img);
             img.setImageResource(R.drawable.ic_no_permission);
@@ -168,8 +169,8 @@ public class CourseListFragment extends BaseFragment implements TitleFragment, C
     }
 
     @OnClick({ R.id.add_batch_btn, R.id.btn_no_data }) public void onAddbatch() {
-        if ((mCourseType == Configs.TYPE_GROUP && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE))
-            || (mCourseType == Configs.TYPE_PRIVATE && !SerPermisAction.checkAtLeastOne(
+        if ((mCourseType == Configs.TYPE_GROUP && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE))
+            || (mCourseType == Configs.TYPE_PRIVATE && !serPermisAction.checkAtLeastOne(
             PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_WRITE))) {
             showAlert(R.string.alert_permission_forbid);
             return;

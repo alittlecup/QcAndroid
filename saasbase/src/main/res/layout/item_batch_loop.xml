@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@drawable/bg_click"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    >
+
+  <ImageView
+      android:id="@+id/delete"
+      android:layout_width="@dimen/qc_item_height"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_gravity="center_vertical"
+      android:scaleType="center"
+      app:srcCompat="@drawable/vd_cm_delete_24dp"
+      />
+
+  <RelativeLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:gravity="center"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="9:00-10:00"
+        />
+    <TextView
+        android:id="@+id/tv_slice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:layout_toRightOf="@id/time"
+        android:layout_toEndOf="@id/time"
+        style="@style/QcTextStyleSmallGrey"
+        />
+    <TextView
+        android:layout_below="@id/time"
+        android:id="@+id/week"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:ellipsize="end"
+        tools:text="每个星期一,二,三,四,每个星期一,二,三,四,每个星期一,二,三,四,,二,三,四,,二,三,四,,二,三,四,,二,三,四,️"
+        />
+  </RelativeLayout>
+
+  <ImageView
+      android:layout_width="16dp"
+      android:layout_height="16dp"
+      app:srcCompat="@drawable/ic_arrow_right"
+      />
+
+  <Space
+      android:layout_width="@dimen/little"
+      android:layout_height="wrap_content"
+      />
+  <!--<RelativeLayout-->
+  <!--android:id="@+id/layout1"-->
+  <!--android:layout_width="0dp"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:layout_weight="1"-->
+  <!--android:orientation="horizontal"-->
+  <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+  <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+  <!-->-->
+
+  <!--<TextView-->
+  <!--android:id="@+id/text1"-->
+  <!--android:layout_width="wrap_content"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:gravity="center_vertical"-->
+  <!--tools:text="123123"-->
+  <!--/>-->
+
+  <!--<ImageView-->
+  <!--android:id="@+id/down1"-->
+  <!--android:layout_width="16dp"-->
+  <!--android:layout_height="16dp"-->
+  <!--android:layout_centerVertical="true"-->
+  <!--android:layout_marginLeft="10dp"-->
+  <!--android:layout_toRightOf="@id/text1"-->
+  <!--android:src="@drawable/ic_arrow_down"-->
+  <!--/>-->
+
+  <!--<View-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="1dp"-->
+  <!--android:layout_alignParentBottom="true"-->
+  <!--android:background="@color/divider_grey"-->
+  <!--/>-->
+  <!--</RelativeLayout>-->
+
+  <!--<RelativeLayout-->
+  <!--android:id="@+id/layout2"-->
+  <!--android:layout_width="0dp"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:layout_weight="1"-->
+  <!--android:orientation="horizontal"-->
+  <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+  <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+  <!-->-->
+
+  <!--<TextView-->
+  <!--android:id="@+id/text2"-->
+  <!--android:layout_width="wrap_content"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:gravity="center_vertical"-->
+  <!--tools:text="123123"-->
+  <!--/>-->
+
+  <!--<ImageView-->
+  <!--android:id="@+id/down2"-->
+
+  <!--android:layout_width="16dp"-->
+  <!--android:layout_height="16dp"-->
+  <!--android:layout_centerVertical="true"-->
+  <!--android:layout_marginLeft="10dp"-->
+  <!--android:layout_toRightOf="@id/text2"-->
+  <!--android:src="@drawable/ic_arrow_down"-->
+  <!--/>-->
+
+  <!--<View-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="1dp"-->
+  <!--android:layout_alignParentBottom="true"-->
+  <!--android:background="@color/divider_grey"-->
+  <!--/>-->
+  <!--</RelativeLayout>-->
+
+
+</LinearLayout>
+
+
+

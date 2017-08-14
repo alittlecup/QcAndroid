@@ -81,7 +81,6 @@ public class EditCardStandardFragment extends BaseFragment implements EditCardSt
             cardStandard = getArguments().getParcelable("standard");
             mCategory = getArguments().getInt("type");
         }
-        //
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

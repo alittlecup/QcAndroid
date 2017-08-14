@@ -36,12 +36,12 @@ public class PermissionServerUtils {
     public static final String PERMISSIONSETTING_CAN_WRITE = "permissionsetting_can_write";
     public static final String PERMISSIONSETTING_CAN_CHANGE = "permissionsetting_can_change";
     public static final String PERMISSIONSETTING_CAN_DELETE = "permissionsetting_can_delete";
-    public static final String MESSAGESETTING = "messagesetting";
     public static final String MESSAGESETTING_CAN_CHANGE = "messagesetting_can_change";
     public static final String MANAGE_STAFF = "manage_staff";
     public static final String MANAGE_STAFF_CAN_WRITE = "manage_staff_can_write";
     public static final String MANAGE_STAFF_CAN_CHANGE = "manage_staff_can_change";
     public static final String MANAGE_STAFF_CAN_DELETE = "manage_staff_can_delete";
+    public static final String MANAGE_MEMBERS_IS_ALL = "manage_members_is_all"; //
     public static final String COACHSETTING = "coachsetting";
     public static final String COACHSETTING_CAN_WRITE = "coachsetting_can_write";
     public static final String COACHSETTING_CAN_CHANGE = "coachsetting_can_change";
@@ -57,13 +57,15 @@ public class PermissionServerUtils {
     public static final String MANAGE_COSTS = "manage_costs"; //会员卡
     public static final String MANAGE_COSTS_CAN_WRITE = "manage_costs_can_write";
     public static final String MANAGE_COSTS_CAN_CHANGE = "manage_costs_can_change";
-    public static final String PERSONAL_CARD_LIST = "personal_card_list";
-    public static final String PERSONAL_CARD_LIST_CAN_WRITE = "personal_card_list_can_write";
-    public static final String PERSONAL_CARD_LIST_CAN_CHANGE = "personal_card_list_can_change";
+    //public static final String PERSONAL_CARD_LIST = "personal_card_list";
+    //public static final String PERSONAL_CARD_LIST_CAN_WRITE = "personal_card_list_can_write";
+    //public static final String PERSONAL_CARD_LIST_CAN_CHANGE = "personal_card_list_can_change";
     public static final String CARDSETTING = "cardsetting";
     public static final String CARDSETTING_CAN_WRITE = "cardsetting_can_write";
     public static final String CARDSETTING_CAN_CHANGE = "cardsetting_can_change";
     public static final String CARDSETTING_CAN_DELETE = "cardsetting_can_delete";
+    public static final String CARDBALANCE = "cardbalance";
+    public static final String CARDBALANCE_CAN_CHANGE = "cardbalance_can_change";
     public static final String GIFTCARD = "giftcard";
     public static final String GIFTCARD_CAN_WRITE = "giftcard_can_write";
     public static final String GIFTCARD_CAN_CHANGE = "giftcard_can_change";
@@ -105,8 +107,8 @@ public class PermissionServerUtils {
     public static final String CHECKIN_LIST = "checkin_list";
     public static final String CHECKIN_LIST_CAN_CHANGE = "checkin_list_can_change";
     public static final String CHECKIN_LIST_CAN_DEL = "checkin_list_can_delete";
-    public static final String PERSONAL_CHECKIN_LIST = "personal_checkin_list";
-    public static final String PERSONAL_CHECKIN_LIST_CAN_CHANGE = "personal_checkin_list_can_change";
+    //public static final String PERSONAL_CHECKIN_LIST = "personal_checkin_list";
+    //public static final String PERSONAL_CHECKIN_LIST_CAN_CHANGE = "personal_checkin_list_can_change";
     public static final String CHECKIN_SETTING = "checkin_setting";
     public static final String CHECKIN_SETTING_CAN_CHANGE = "checkin_setting_can_change";
     public static final String ACTIVITY_SETTING = "activity_setting";
@@ -150,6 +152,79 @@ public class PermissionServerUtils {
     public static final String KOUBEI = "koubei";
     public static final String KOUBEI_CAN_WRITE = "koubei_can_write";
     public static final String KOUBEI_CAN_CHANGE = "koubei_can_change";
+    public static final String SCORE_SETTING = "score_setting";
+    public static final String SCORE_SETTING_CAN_CHANGE = "score_setting_can_change";
+    public static final String SCORE_RANK = "score_rank";
+    /**
+     * 团课预约限制
+     */
+    public static final String TEAM_COURSE_LIMIT = "team_course_limit";
+    public static final String TEAM_COURSE_LIMIT_CAN_WRITE = "team_course_limit_can_change";
+    /**
+     * * 团课短信通知设置 team_course_msg_setting
+     */
+    public static final String TEAM_COURSE_MSG_SETTING = "team_course_msg_setting";
+    public static final String TEAM_COURSE_MSG_SETTING_CAN_CHANGE = "team_course_msg_setting_can_change";
+
+    /**
+     * * 私教预约限制 private_course_limit
+     */
+    public static final String PRIVATE_COURSE_LIMIT = "private_course_limit";
+    public static final String PRIVATE_COURSE_LIMIT_CAN_CHANGE = "private_course_limit_can_change";
+
+    /**
+     * * 私教短信通知设置 private_course_msg_setting
+     */
+    public static final String PRIVATE_COURSE_MSG_SETTING = "private_course_msg_setting";
+    public static final String PRIVATE_COURSE_MSG_SETTING_CAN_CHANGE = "private_course_msg_setting_can_change";
+
+    /**
+     * 职位与权限 工作人员权限
+     */
+    public static final String POSITION_SETTING = "position_setting";
+    public static final String POSITION_SETTING_CAN_WRITE = "position_setting_can_write";
+    public static final String POSITION_SETTING_CAN_CHANGE = "position_setting_can_change";
+    public static final String POSITION_SETTING_CAN_DELETE = "position_setting_can_delete";
+
+    /**
+     * 教练权限管理
+     */
+    public static final String COACH_PERMISSION_SETTING = "coach_permission_setting";
+    public static final String COACH_PERMISSION_SETTING_CAN_CHANGE = "coach_permission_setting_can_change";
+
+    /**
+     * 场地管理 space_setting
+     */
+    public static final String SPACE_SETTING = "space_setting";
+    public static final String SPACE_SETTING_CAN_WRITE = "space_setting_can_write";
+    public static final String SPACE_SETTING_CAN_CHANGE = "space_setting_can_change";
+    public static final String SPACE_SETTING_CAN_DELETE = "space_setting_can_delete";
+
+    /**
+     * 会员端页面配置
+     */
+    public static final String SHOP_HOME_SETTING = "shop_home_setting";
+    public static final String SHOP_HOME_SETTING_CAN_CHANGE = "shop_home_setting_can_change";
+
+    /**
+     * 签到更衣柜联动
+     */
+    public static final String CHECKIN_LOCKER_LINK = "checkin_locker_link";
+    public static final String CHECKIN_LOCKER_LINK_CAN_CHANGE = "checkin_locker_link_can_change";
+
+    /**
+     * 签到大屏幕
+     */
+    public static final String CHECKIN_SCREEN = "checkin_screen";
+    public static final String CHECKIN_SCREEN_CAN_WRITE = "checkin_screen_can_write";
+    public static final String CHECKIN_SCREEN_CAN_CHANGE = "checkin_screen_can_change";
+    /**
+     * 通知权限
+     */
+    public static final String MESSAGESETTING = "messagesetting";
+    public static final String MESSAGEDETAILS = "messagedetails";
+    public static final String MESSAGECHANNELS = "messagechannels";
+    public static final String MESSAGESETTING_CAN_WRITE = "messagesetting_can_write";
 
     public static boolean checkServerPermission(HashMap<String, Boolean> permission, String key) {
         return permission.get(key);

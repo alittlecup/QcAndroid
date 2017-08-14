@@ -132,7 +132,7 @@ gradle.projectsEvaluated {
 }
 
 dependencies {
-  compile project(path: ':qcbase')
+  compile project(path: ':saasbase')
   compile project(path: ':recruit')
   //      compile 'cn.qingchegfit.widgets:widgets:latest.integration'
   //  compile 'cn.qingchegfit.recruit:recruit:latest.integration'

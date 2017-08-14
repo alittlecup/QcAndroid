@@ -26,11 +26,11 @@ import cn.qingchengfit.model.responese.CourseTypes;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.DelCourseEvent;
 import cn.qingchengfit.staffkit.views.TitleFragment;
@@ -87,6 +87,7 @@ public class CourseListFragment extends BaseFragment implements FlexibleAdapter.
     @Inject RestRepository restRepository;
     @Inject GymWrapper gymWrapper;
     @Inject LoginStatus loginStatus;
+    @Inject SerPermisAction serPermisAction;
 
     private CommonFlexAdapter mAdatper;
     private boolean mIsPrivate;
@@ -112,8 +113,8 @@ public class CourseListFragment extends BaseFragment implements FlexibleAdapter.
         View view = inflater.inflate(R.layout.fragment_rv_no_data_toolbar, container, false);
         unbinder = ButterKnife.bind(this, view);
         initToolbar(toolbar);
-        if ((!mIsPrivate && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING)) || (mIsPrivate
-            && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING))) {
+        if ((!mIsPrivate && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING)) || (mIsPrivate
+            && !serPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING))) {
             View v = inflater.inflate(R.layout.item_common_no_data, container, false);
             ImageView img = (ImageView) v.findViewById(R.id.img);
             img.setImageResource(R.drawable.ic_no_permission);

@@ -19,9 +19,9 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
@@ -59,6 +59,8 @@ public class LoginPresenter extends BasePresenter {
     @Inject GymWrapper gymWrapper;
     @Inject LoginStatus loginStatus;
     @Inject RestRepository mRestRepository;
+    @Inject QcDbManager qcDbManager;
+    @Inject StudentAction studentAction;
     private LoginView mLoginView;
     private Context mContext;
     private LoginUsecase loginUsecase;
@@ -114,7 +116,7 @@ public class LoginPresenter extends BasePresenter {
                     App.staffId = qcResponLogin.data.staff.getId();
                     PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, qcResponLogin.data.staff.getUsername());
                     PreferenceUtils.setPrefString(App.context, Configs.PREFER_USER_ID, qcResponLogin.getData().user.getId());
-                    StudentAction.newInstance().delAllStudent();
+                    studentAction.delAllStudent();
                     mLoginView.onShowLogining();
                     getService(qcResponLogin);
                 } else {
@@ -157,7 +159,7 @@ public class LoginPresenter extends BasePresenter {
                         loginStatus.setUserId(qcResponLogin.data.user.getId());
 
                         List<CoachService> services = gymListQcResponseData.getData().services;
-                        QCDbManager.writeGyms(services);
+                        qcDbManager.writeGyms(services);
                         if (services == null || services.size() == 0) {
                             gymWrapper.setNoService(true);
                         } else if (services.size() == 1) {

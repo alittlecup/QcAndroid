@@ -26,11 +26,11 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CardStandard;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTplOption;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.StandardAdapter;
 import cn.qingchengfit.staffkit.views.cardtype.standard.AddCardStandardFragment;
 import cn.qingchengfit.staffkit.views.cardtype.standard.EditCardStandardFragment;
@@ -135,7 +135,7 @@ public class CardtypeDetailFragment extends BaseFragment implements CardtypeDeta
                     }
                     boolean hasP = false;
                     for (int i = 0; i < card_tpl.getShopIds().size(); i++) {
-                        if (SerPermisAction.check(card_tpl.getShopIds().get(i), PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
+                        if (serPermisAction.check(card_tpl.getShopIds().get(i), PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
                             hasP = true;
                             break;
                         }
@@ -171,7 +171,7 @@ public class CardtypeDetailFragment extends BaseFragment implements CardtypeDeta
 
                         boolean hasP = true;
                         for (int i = 0; i < card_tpl.getShopIds().size(); i++) {
-                            if (!SerPermisAction.check(card_tpl.getShopIds().get(i), PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
+                            if (!serPermisAction.check(card_tpl.getShopIds().get(i), PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
                                 hasP = false;
                                 break;
                             }
@@ -254,7 +254,7 @@ public class CardtypeDetailFragment extends BaseFragment implements CardtypeDeta
 
                     boolean hasP = true;
                     for (int i = 0; i < card_tpl.getShopIds().size(); i++) {
-                        if (!SerPermisAction.check(card_tpl.getShopIds().get(i), PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
+                        if (!serPermisAction.check(card_tpl.getShopIds().get(i), PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
                             hasP = false;
                             break;
                         }
@@ -281,7 +281,7 @@ public class CardtypeDetailFragment extends BaseFragment implements CardtypeDeta
                 } else {//停用或者恢复该会员卡
                     if (card_tpl.is_enable) {//停用会员卡种类
                         if (gymWrapper.inBrand()) {
-                            if (!SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_DELETE, card_tpl.getShopIds())) {
+                            if (!serPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_DELETE, card_tpl.getShopIds())) {
                                 if (card_tpl.getShops().size() > 1) {
                                     showAlert(R.string.alert_edit_cardtype_forbid);
                                 } else {
@@ -309,7 +309,7 @@ public class CardtypeDetailFragment extends BaseFragment implements CardtypeDeta
                     } else {//恢复会员卡
 
                         if (gymWrapper.inBrand()) {
-                            if (!SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_WRITE, card_tpl.getShopIds())) {
+                            if (!serPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_WRITE, card_tpl.getShopIds())) {
                                 if (card_tpl.getShops().size() > 1) {
                                     showAlert(R.string.alert_edit_cardtype_forbid);
                                 } else {

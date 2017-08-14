@@ -29,12 +29,12 @@ import cn.qingchengfit.model.common.Card;
 import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.ConstantNotification;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventClearAllNoti;
 import cn.qingchengfit.staffkit.rxbus.event.EventLatestNoti;
@@ -90,6 +90,8 @@ public class NotificationFragment extends BaseFragment
     @BindView(R.id.rv) RecycleViewWithNoImg rv;
     @Inject NotificationPresenter presenter;
     @Inject RestRepository mRestRepository;
+    @Inject SerPermisAction serPermisAction;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -188,7 +190,7 @@ public class NotificationFragment extends BaseFragment
                     }
                     if (!StringUtils.isEmpty(msg.getBrand_id()) && !StringUtils.isEmpty(
                         msg.getShop_id()) && msg.type < 16) {
-                        final CoachService coachService1 = GymBaseInfoAction.getGymByShopIdNow(msg.getBrand_id(), msg.getShop_id());
+                        final CoachService coachService1 = gymBaseInfoAction.getGymByShopIdNow(msg.getBrand_id(), msg.getShop_id());
                         if (coachService1 != null) {
                             HashMap<String, Object> p = new HashMap<>();
                             p.put("id", coachService1.getId());
@@ -201,7 +203,7 @@ public class NotificationFragment extends BaseFragment
                                 .subscribe(new Action1<QcResponsePermission>() {
                                     @Override public void call(QcResponsePermission qcResponse) {
                                         if (ResponseConstant.checkSuccess(qcResponse)) {
-                                            SerPermisAction.writePermiss(qcResponse.data.permissions);
+                                            serPermisAction.writePermiss(qcResponse.data.permissions);
                                             Intent toActivity = null;
                                             if (!StringUtils.isEmpty(msg.getUrl())) {
                                                 toActivity =

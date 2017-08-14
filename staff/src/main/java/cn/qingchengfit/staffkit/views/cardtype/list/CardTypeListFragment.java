@@ -57,7 +57,6 @@ public class CardTypeListFragment extends BaseFragment implements CardTypeListVi
     private List<CardTpl> datas = new ArrayList<>();
     private int type = 0;
     private TypeListAdatper adatper;
-    private String id, model;
     private boolean isStore = false;
 
     private boolean isEnable = true;
@@ -77,10 +76,7 @@ public class CardTypeListFragment extends BaseFragment implements CardTypeListVi
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getInt("type", 0);
-            id = getArguments().getString("id");
-            model = getArguments().getString("model");
         }
-        //
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

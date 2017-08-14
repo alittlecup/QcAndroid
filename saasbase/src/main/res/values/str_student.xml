@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="qc_student_allotsale">销售分配</string>
+  <string name="qc_student_follow_up">会员跟进</string>
+  <string name="qc_student_follow_transfer">会员转化</string>
+  <string name="qc_student_birthday_notice">生日提醒</string>
+  <string name="qc_student_attendance">出勤统计</string>
+  <string name="qc_student_tab">会员标签</string>
+  <string name="qc_student_allot_coach">教练分配</string>
+  <string name="qc_student_sms">群发短信</string>
+  <string name="qc_student_vip">VIP会员</string>
+  <string name="qc_student_send_sms">群发短信</string>
+</resources>

@@ -17,11 +17,11 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.common.Card;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.QcResponseStudentCards;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.BaseBottomSheetDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -71,6 +71,7 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment imp
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
 
     private CommonFlexAdapter mAdapter;
     private List<AbstractFlexibleItem> mDatas = new ArrayList<>();
@@ -186,7 +187,7 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment imp
             dismiss();
         } else if (mAdapter.getItem(position) instanceof NoStudentCardItemItem) {
 
-            if (!SerPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+            if (!serPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
                 ToastUtils.show("您没有该场馆购卡权限");
             }
             Intent toCardType = new Intent(getActivity(), ChooseCardTypeActivity.class);

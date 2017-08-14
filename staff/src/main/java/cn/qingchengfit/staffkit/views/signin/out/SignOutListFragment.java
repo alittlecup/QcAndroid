@@ -20,10 +20,10 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.responese.SignInTasks;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rxbus.event.SignInEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignInLogEvent;
@@ -74,6 +74,8 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
     @Inject SignOutListPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
+    @Inject StudentAction studentAction;
     private LinearLayoutManager mLinearLayoutManager;
     private SignInFlexibleAdapter flexibleAdapter;
     private Subscription subscribe_auto;
@@ -162,7 +164,7 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
                             if (items.size() > signInEvent.getPosition()) {
                                 String imgUrl = ((SignOutItem) items.get(signInEvent.getPosition())).bean.getCheckinAvatar();
                                 if (StringUtils.isEmpty(imgUrl)) {
-                                    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
+                                    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
                                         PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
                                         showAlert(R.string.alert_permission_forbid);
                                         return;
@@ -188,7 +190,7 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
                             presenter.changeImage(App.staffId, s, mStudentId);
-                            StudentAction.newInstance().updateStudentCheckin(mStudentId, s);
+                            studentAction.updateStudentCheckin(mStudentId, s);
                             hideLoading();
                         }
                     }));

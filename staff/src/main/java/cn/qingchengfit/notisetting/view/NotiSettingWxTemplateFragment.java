@@ -54,8 +54,7 @@ public class NotiSettingWxTemplateFragment extends BaseFragment
 
   @Inject GymWrapper gymWrapper;
   @Inject NotiSettingWxTemplatePresenter presenter;
-
-
+  @Inject GymFunctionFactory gymFunctionFactory;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_noti_setting_wx_template, container, false);
@@ -79,7 +78,7 @@ public class NotiSettingWxTemplateFragment extends BaseFragment
   }
 
   @OnClick(R.id.btn_authored) public void onViewClicked() {
-    GymFunctionFactory.goQrScan(this, "/message/channels", null, gymWrapper.getCoachService());
+    gymFunctionFactory.goQrScan(this, "/message/channels", null, gymWrapper.getCoachService());
   }
 
   @Override public void onAuthored(int type,boolean author ,boolean isready) {

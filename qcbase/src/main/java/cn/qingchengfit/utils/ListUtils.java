@@ -68,4 +68,18 @@ public class ListUtils {
     }
     return ret;
   }
+
+  /**
+   *  给List中所有元素 添加 Num大小
+   * @param num
+   * @return
+   */
+  public static ArrayList<Integer> listAddNum(List<Integer> s,int num){
+    ArrayList<Integer> x = new ArrayList<>();
+    for (Integer integer : s) {
+      x.add(integer + num );
+    }
+    return x;
+  }
+
 }

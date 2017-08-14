@@ -23,10 +23,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.SignInTasks;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rxbus.event.SignInEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignInLogEvent;
@@ -79,6 +79,7 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
+    @Inject StudentAction studentAction;
     private LinearLayoutManager mLinearLayoutManager;
     private Subscription subscribe_auto;
     private int mLastId = 0;//最新一条任务的id
@@ -197,7 +198,7 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
                             presenter.changeImage(App.staffId, s, mStudentId);
-                            StudentAction.newInstance().updateStudentCheckin(mStudentId, s);
+                            studentAction.updateStudentCheckin(mStudentId, s);
                             hideLoading();
                         }
                     }));

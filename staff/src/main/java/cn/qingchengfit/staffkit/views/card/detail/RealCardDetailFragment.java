@@ -23,11 +23,11 @@ import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Card;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.card.FixRealCardBindStudentFragment;
 import cn.qingchengfit.staffkit.views.card.FixRealcardNumFragment;
 import cn.qingchengfit.staffkit.views.card.FixRealcardStudentFragment;
@@ -90,6 +90,7 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
     @Inject SerPermisAction serPermisAction;
     @Inject RealCardDetailPresenter presenter;
     @Inject RealcardWrapper realCard;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_realcard_detail, container, false);
@@ -122,7 +123,7 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
                                 (ArrayList<String>) realCard.getRealCard().getShopIds(), PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE, 3);
                         } else {
                             CoachService gym =
-                                GymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""),
+                                gymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""),
                                     realCard.getRealCard().getShopIds().get(0));
                             if (gym != null && !TextUtils.isEmpty(gym.getId()) && !TextUtils.isEmpty(gym.getModel())) {
                                 mCallbackActivity.onChangeFragment(new FixRealCardBindStudentFragment());
@@ -179,7 +180,7 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
             } else if (requestCode == 3) {
                 Shop shops = (Shop) IntentUtils.getParcelable(data);
                 if (shops != null) {
-                    CoachService service = GymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shops.id);
+                    CoachService service = gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shops.id);
                     if (service != null) {
                         getFragmentManager().beginTransaction()
                             .replace(mCallbackActivity.getFragId(),
@@ -201,7 +202,7 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
      * 暂时都屏蔽了多场馆的情况  没准什么时候回加回来呢？
      */
     @OnClick({ R.id.btn_charge, R.id.btn_spend, R.id.ask_offday, R.id.resume_card, R.id.overflow_more }) public void onClick(View view) {
-        if (SerPermisAction.checkNoOne(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+        if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }
@@ -245,7 +246,7 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
                 dialogSheet.addButton(getString(R.string.unregiste_card), new View.OnClickListener() {
 
                     @Override public void onClick(View v) {
-                        if (SerPermisAction.checkNoOne(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+                        if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
                             showAlert(R.string.alert_permission_forbid);
                             return;
                         }

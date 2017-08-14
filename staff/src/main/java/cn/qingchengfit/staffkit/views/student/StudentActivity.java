@@ -17,10 +17,10 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.student.list.StudentListFragment;
 import cn.qingchengfit.views.FragCallBack;
@@ -58,6 +58,7 @@ public class StudentActivity extends BaseActivity implements FragCallBack, HasSu
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     private StaffWrapper staffWrapper;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +82,8 @@ public class StudentActivity extends BaseActivity implements FragCallBack, HasSu
                     .subscribe(new Action1<QcResponsePermission>() {
                         @Override public void call(QcResponsePermission qcResponse) {
                             if (ResponseConstant.checkSuccess(qcResponse)) {
-                                SerPermisAction.writePermiss(qcResponse.data.permissions);
-                                if (!SerPermisAction.checkAll(PermissionServerUtils.MANAGE_MEMBERS)) {
+                                serPermisAction.writePermiss(qcResponse.data.permissions);
+                                if (!serPermisAction.checkAll(PermissionServerUtils.MANAGE_MEMBERS)) {
                                     new MaterialDialog.Builder(StudentActivity.this).autoDismiss(true)
                                         .content(R.string.alert_permission_forbid)
                                         .positiveText(R.string.common_i_konw)

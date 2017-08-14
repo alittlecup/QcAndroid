@@ -372,7 +372,7 @@ public class RobotoCalendarView extends LinearLayout {
         // Set date title
         initializeTitleLayout();
 
-        // Set weeks days titles
+        // Set WEEKS days titles
         initializeWeekDaysLayout();
 
         // Initialize days of the month

@@ -15,12 +15,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -49,6 +50,7 @@ public class CourseFragment extends BaseFragment {
     ArrayList<Fragment> fragments = new ArrayList<>();
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
+    @Inject SerPermisAction serPermisAction;
     private FragmentAdapter fragmentAdater;
     private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
@@ -56,8 +58,8 @@ public class CourseFragment extends BaseFragment {
                 case R.id.action_add:
                     boolean isPrivate = viewpager.getCurrentItem() == 1;
 
-                    if ((isPrivate && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING_CAN_WRITE)) || (!isPrivate
-                        && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING_CAN_WRITE))) {
+                    if ((isPrivate && !serPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING_CAN_WRITE)) || (!isPrivate
+                        && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING_CAN_WRITE))) {
                         showAlert(R.string.alert_permission_forbid);
                     } else {
                         addCourse(isPrivate);

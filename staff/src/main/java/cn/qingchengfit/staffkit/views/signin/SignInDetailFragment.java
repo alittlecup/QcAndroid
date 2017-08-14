@@ -18,10 +18,10 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.responese.SignInTasks;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rxbus.event.SignInCancelEvent;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
@@ -67,6 +67,7 @@ public class SignInDetailFragment extends BaseFragment implements SignInDetailPr
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
+    @Inject StudentAction studentAction;
     private int checkInId = 0;
     private SignInTasks.SignInTask mSignInTask;
 
@@ -116,7 +117,7 @@ public class SignInDetailFragment extends BaseFragment implements SignInDetailPr
                                 .into(imgSignoutItemFace);
 
                             presenter.changeImage(s, mSignInTask.getUserId());
-                            StudentAction.newInstance().updateStudentCheckin(mSignInTask.getUserId(), s);
+                            studentAction.updateStudentCheckin(mSignInTask.getUserId(), s);
                             hideLoading();
                         }
                     }));
@@ -223,7 +224,7 @@ public class SignInDetailFragment extends BaseFragment implements SignInDetailPr
     }
 
     @OnClick(R.id.ll_signin_detail_cancel) public void onClick(View view) {
-        if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LIST_CAN_DEL)) {
+        if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LIST_CAN_DEL)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }

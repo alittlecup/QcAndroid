@@ -38,7 +38,10 @@ public class StickerDateItem extends AbstractFlexibleItem<StickerDateItem.Sticke
   }
 
   @Override public boolean equals(Object o) {
-    return false;
+    if (o instanceof String){
+      return ((String) o).equalsIgnoreCase(date);
+    }else return false;
+
   }
 
   public class StickerDateVH extends FlexibleViewHolder {

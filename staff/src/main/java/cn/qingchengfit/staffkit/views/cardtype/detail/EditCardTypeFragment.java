@@ -25,10 +25,10 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.CardtplBody;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventLimitBuyCount;
 import cn.qingchengfit.staffkit.views.bottom.BottomBuyLimitFragment;
 import cn.qingchengfit.staffkit.views.cardtype.standard.CardStandardFragment;
@@ -83,6 +83,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     @Inject EditCardTypePresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     private CardTpl card_tpl;
     private int mType = 0;//0 是新建 1 是修改
     private CardtplBody body = new CardtplBody();
@@ -128,7 +129,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
         presenter.attachView(this);
         if (mType != 0) {//
             mCallbackActivity.setToolbar(getString(R.string.title_cardtype_edit), false, null,
-                SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE, card_tpl.getShopIds()) ? R.menu.menu_save : 0,
+                serPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE, card_tpl.getShopIds()) ? R.menu.menu_save : 0,
                 menuListener);
             type.setVisibility(View.GONE);
         } else {
@@ -200,7 +201,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     @Override public void onCardTpl(CardTpl card_tpl) {
         if (card_tpl != null) {
 
-            if (SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE, card_tpl.getShopIds())) {
+            if (serPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE, card_tpl.getShopIds())) {
                 cardtplInfoEdit1.setVisibility(View.VISIBLE);
                 cardtplInfoEdit2.setVisibility(View.VISIBLE);
                 cardtplInfoShow.setVisibility(View.GONE);

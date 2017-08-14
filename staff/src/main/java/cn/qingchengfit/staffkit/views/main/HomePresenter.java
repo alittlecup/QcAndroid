@@ -9,10 +9,10 @@ import cn.qingchengfit.model.responese.HomeInfo;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.custom.QcResponseOperator;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -41,6 +41,7 @@ public class HomePresenter extends BasePresenter {
 
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
+    @Inject SerPermisAction serPermisAction;
 
     private HomeView homeView;
     private Subscription sp;
@@ -110,7 +111,7 @@ public class HomePresenter extends BasePresenter {
             .subscribe(new Action1<QcResponsePermission>() {
                 @Override public void call(QcResponsePermission qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse) && qcResponse.data.permissions != null) {
-                        SerPermisAction.writePermiss(qcResponse.data.permissions);
+                        serPermisAction.writePermiss(qcResponse.data.permissions);
                         queryHomeInfo();
                     }
                 }

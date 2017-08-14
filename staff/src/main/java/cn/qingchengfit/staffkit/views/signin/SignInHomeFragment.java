@@ -27,11 +27,11 @@ import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.staffkit.rxbus.event.SignInLogEvent;
@@ -67,7 +67,7 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject RestRepositoryV2 restRepository;
-
+    @Inject SerPermisAction serPermisAction;
     @Inject SignInConfigPresenter presenter;
     @Inject ModuleConfigsPresenter moduleConfigsPresenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -111,7 +111,7 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
         toolbar.inflateMenu(R.menu.menu_config);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
-                if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SETTING)) {
+                if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SETTING)) {
                     showAlert(R.string.alert_permission_forbid);
                 } else {
                     getFragmentManager().beginTransaction()
@@ -325,7 +325,7 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
         }
 
         @Override public Fragment getItem(int position) {
-            if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_HELP_CAN_WRITE)) {
+            if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_HELP_CAN_WRITE)) {
                 return SignInPermisionFragment.newInstance();
             } else {
                 if (position == 0) {

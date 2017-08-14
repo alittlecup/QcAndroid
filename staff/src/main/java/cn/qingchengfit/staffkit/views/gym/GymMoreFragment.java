@@ -65,6 +65,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     @Inject GymMorePresenter mGymMorePresenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject GymFunctionFactory gymFunctionFactory;
     private GymMoreAdapter mAdapter;
     /**
      * 我的功能呢详情页
@@ -160,7 +161,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                                     new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
                                     return true;
                                 }
-                                GymFunctionFactory.getJumpIntent(
+                                gymFunctionFactory.getJumpIntent(
                                     ((GymFuntionItem) mFunAdapter.getItem(position)).getGymFuntion().getModuleName(),
                                     gymWrapper.getCoachService(), null, null, GymMoreFragment.this);
                             }
@@ -347,7 +348,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                     new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
                     return true;
                 }
-                GymFunctionFactory.getJumpIntent(((GymFuntionItem) mAdapter.getItem(position)).getGymFuntion().getModuleName(),
+                gymFunctionFactory.getJumpIntent(((GymFuntionItem) mAdapter.getItem(position)).getGymFuntion().getModuleName(),
                     gymWrapper.getCoachService(), null, null, this);
             }
         }

@@ -297,13 +297,8 @@ public interface Post_Api {
         @Path("id") String id, @QueryMap HashMap<String, Object> params,
         @Body User_Student student);
 
-    //<<<<<<< HEAD
-    //    @PUT("/api/v2/staffs/{staff_id}/users/{id}/") rx.Observable<QcResponseData> qcUpdateStudent(
-    //            @Path("staff_id") String staff_id, @Path("id") String id
-    //=======
     @PUT("/api/v2/staffs/{staff_id}/users/{id}/") rx.Observable<QcDataResponse> qcUpdateStudent(@Path("staff_id") String staff_id,
         @Path("id") String id, @Query("id") String gymid, @Query("model") String model, @Query("brand_id") String brandid
-
         , @Body User_Student student);
 
     @DELETE("/api/staffs/{staff_id}/users/{id}/") rx.Observable<QcResponse> qcDelStudent(@Path("staff_id") String staff_id,

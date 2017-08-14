@@ -309,5 +309,9 @@
     <item name="android:background">@color/bg_grey</item>
   </style>
 
+  <style name="animate_dialog">
 
+    <item name="android:windowEnterAnimation">@anim/slide_bottom_in</item>
+    <item name="android:windowExitAnimation">@anim/slide_bottom_out</item>
+  </style>
 </resources>

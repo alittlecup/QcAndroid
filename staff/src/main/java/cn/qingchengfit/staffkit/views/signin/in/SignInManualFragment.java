@@ -31,11 +31,11 @@ import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.model.responese.SigninValidCard;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.views.adapter.SignInCourseAdapter;
 import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
@@ -89,6 +89,7 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
+    @Inject StudentAction studentAction;
 
     List<SignInTasks.Schedule> courseList = new ArrayList<>();
     List<SigninValidCard.DataBean.CardsBean> cardList = new ArrayList<>();
@@ -158,7 +159,7 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
                                 .into(ivSigninItemStudentFace);
                             studentBean.getStudentBean().checkin_avatar = s;
                             presenter.changeImage(App.staffId, s, studentBean.id());
-                            StudentAction.newInstance().updateStudentCheckin(studentBean.id(), s);
+                            studentAction.updateStudentCheckin(studentBean.id(), s);
                             hideLoading();
                         }
                     }));

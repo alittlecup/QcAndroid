@@ -41,10 +41,12 @@ public class TextFragment extends BaseFragment {
   @BindView(R.id.rv) RecyclerView rv;
   Unbinder unbinder;
   private LinearLayoutManager linearLayoutManager;
+  private NestedFragmentFragment nestedFragmentFragment;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
+    nestedFragmentFragment = new NestedFragmentFragment();
   }
 
   @Nullable @Override
@@ -71,8 +73,13 @@ public class TextFragment extends BaseFragment {
     return v;
   }
 
+  @Override public int getLayoutRes() {
+    return R.id.frag_id;
+  }
+
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
+    stuff(nestedFragmentFragment);
     for (int i = 0; i < 20; i++) {
       commonFlexAdapter.addItem(new TextItem("xx" + i, R.style.QcTextStyleLargeDark));
     }
@@ -85,6 +92,5 @@ public class TextFragment extends BaseFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
   }
 }

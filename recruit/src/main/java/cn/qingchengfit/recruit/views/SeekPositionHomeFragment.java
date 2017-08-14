@@ -198,11 +198,11 @@ public class SeekPositionHomeFragment extends JobsListFragment
         });
   }
 
-  @Override protected void initView() {
+  @Override protected void initView(Bundle savedInstanceState) {
     commonFlexAdapter.setStickyHeaders(true)
         .setDisplayHeadersAtStartUp(true)
         .setStickyHeaderElevation(1);
-    super.initView();
+    super.initView(savedInstanceState);
     //rv.setBackgroundResource(R.color.white);
     rv.setClipToPadding(false);
     rv.addItemDecoration(

@@ -27,15 +27,6 @@ import android.os.Parcelable;
 
 public class Staff extends Personage implements Parcelable {
 
-    public static final Creator<Staff> CREATOR = new Creator<Staff>() {
-        @Override public Staff createFromParcel(Parcel source) {
-            return new Staff(source);
-        }
-
-        @Override public Staff[] newArray(int size) {
-            return new Staff[size];
-        }
-    };
     public String gd_district_id;//地区id
     public District gd_district;//地区
     public StaffPosition postion;//
@@ -60,16 +51,6 @@ public class Staff extends Personage implements Parcelable {
 
     public Staff(String username, String phone, String avatar, String area_code, int gender) {
         super(username, phone, avatar, area_code, gender);
-    }
-
-    protected Staff(Parcel in) {
-        super(in);
-        this.gd_district_id = in.readString();
-        this.gd_district = in.readParcelable(District.class.getClassLoader());
-        this.postion = in.readParcelable(StaffPosition.class.getClassLoader());
-        this.count = in.readLong();
-        this.position_str = in.readString();
-        this.user_id = in.readString();
     }
 
     public Staff(Personage personage) {
@@ -131,6 +112,18 @@ public class Staff extends Personage implements Parcelable {
         this.count = count;
     }
 
+    public QcStudentBean toQcStudent() {
+    return new QcStudentBean.Builder().id(id)
+        .username(username)
+        .is_superuser(is_superuser)
+        .area_code(area_code)
+        .avatar(avatar)
+        .district_id(gd_district_id)
+        .gender(gender)
+        .phone(phone)
+        .build();
+  }
+
     @Override public int describeContents() {
         return 0;
     }
@@ -145,15 +138,23 @@ public class Staff extends Personage implements Parcelable {
         dest.writeString(this.user_id);
     }
 
-  public QcStudentBean toQcStudent() {
-    return new QcStudentBean.Builder().id(id)
-        .username(username)
-        .is_superuser(is_superuser)
-        .area_code(area_code)
-        .avatar(avatar)
-        .district_id(gd_district_id)
-        .gender(gender)
-        .phone(phone)
-        .build();
-  }
+    protected Staff(Parcel in) {
+        super(in);
+        this.gd_district_id = in.readString();
+        this.gd_district = in.readParcelable(District.class.getClassLoader());
+        this.postion = in.readParcelable(StaffPosition.class.getClassLoader());
+        this.count = in.readLong();
+        this.position_str = in.readString();
+        this.user_id = in.readString();
+    }
+
+    public static final Creator<Staff> CREATOR = new Creator<Staff>() {
+        @Override public Staff createFromParcel(Parcel source) {
+            return new Staff(source);
+        }
+
+        @Override public Staff[] newArray(int size) {
+            return new Staff[size];
+        }
+    };
 }

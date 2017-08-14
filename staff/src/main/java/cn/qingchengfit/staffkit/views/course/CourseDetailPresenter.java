@@ -11,10 +11,10 @@ import cn.qingchengfit.model.responese.TeacherImpression;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.CourseDetailTeacher;
 import java.util.List;
@@ -48,6 +48,7 @@ public class CourseDetailPresenter extends BasePresenter {
 
     @Inject GymWrapper gymWrapper;
     @Inject LoginStatus loginStatus;
+    @Inject SerPermisAction serPermisAction;
     private RestRepository restRepository;
     private CourseDetailView view;
 
@@ -98,16 +99,16 @@ public class CourseDetailPresenter extends BasePresenter {
      */
     public boolean hasAllEditPermission(CourseType mCourseDetail) {
         if (gymWrapper.inBrand()) {
-            if (mCourseDetail.is_private() && !SerPermisAction.checkMuti(PermissionServerUtils.PRISETTING_CAN_CHANGE,
-                mCourseDetail.getShopIdList()) || !mCourseDetail.is_private() && !SerPermisAction.checkMuti(
+            if (mCourseDetail.is_private() && !serPermisAction.checkMuti(PermissionServerUtils.PRISETTING_CAN_CHANGE,
+                mCourseDetail.getShopIdList()) || !mCourseDetail.is_private() && !serPermisAction.checkMuti(
                 PermissionServerUtils.TEAMSETTING_CAN_CHANGE, mCourseDetail.getShopIdList())) {
                 view.showDelFailed(R.string.alert_edit_course_all_permission);
                 return false;
             }
         } else {
             if (mCourseDetail.getShops().size() == 1) {
-                if (mCourseDetail.is_private() && !SerPermisAction.check(mCourseDetail.getShops().get(0).id,
-                    PermissionServerUtils.PRISETTING_CAN_CHANGE) || !mCourseDetail.is_private() && !SerPermisAction.check(
+                if (mCourseDetail.is_private() && !serPermisAction.check(mCourseDetail.getShops().get(0).id,
+                    PermissionServerUtils.PRISETTING_CAN_CHANGE) || !mCourseDetail.is_private() && !serPermisAction.check(
                     mCourseDetail.getShops().get(0).id, PermissionServerUtils.TEAMSETTING_CAN_CHANGE)) {
                     view.showDelFailed(R.string.alert_permission_forbid);
                     return false;
@@ -142,8 +143,8 @@ public class CourseDetailPresenter extends BasePresenter {
 
     public void judgeDel(CourseType courseDetail, int shopcount) {
         if (gymWrapper.inBrand()) {
-            if (courseDetail.is_private() && SerPermisAction.checkMuti(PermissionServerUtils.PRISETTING_CAN_DELETE,
-                courseDetail.getShopIdList()) || !courseDetail.is_private() && SerPermisAction.checkMuti(
+            if (courseDetail.is_private() && serPermisAction.checkMuti(PermissionServerUtils.PRISETTING_CAN_DELETE,
+                courseDetail.getShopIdList()) || !courseDetail.is_private() && serPermisAction.checkMuti(
                 PermissionServerUtils.TEAMSETTING_CAN_DELETE, courseDetail.getShopIdList())) {
                 view.showDelDialog(String.format(Locale.CHINA, App.context.getString(R.string.alert_del_course), shopcount));
             } else {
@@ -151,8 +152,8 @@ public class CourseDetailPresenter extends BasePresenter {
             }
         } else {
             if (shopcount == 1) {
-                if (courseDetail.is_private() && SerPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.PRISETTING_CAN_DELETE)
-                    || !courseDetail.is_private() && SerPermisAction.check(gymWrapper.shop_id(),
+                if (courseDetail.is_private() && serPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.PRISETTING_CAN_DELETE)
+                    || !courseDetail.is_private() && serPermisAction.check(gymWrapper.shop_id(),
                     PermissionServerUtils.TEAMSETTING_CAN_DELETE)) {
                     view.showDelDialog("删除后，已有的排期和课程预约都不会受到影响");
                 } else {

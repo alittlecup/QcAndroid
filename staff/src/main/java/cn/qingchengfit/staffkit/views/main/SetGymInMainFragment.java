@@ -22,9 +22,9 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventUnloginHomeLevel;
 import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
@@ -45,6 +45,7 @@ import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -82,6 +83,7 @@ import rx.schedulers.Schedulers;
     @Arg Brand mBrand;
     @BindView(R.id.guide_step_1) ImageView guideStep1;
 
+    @Inject GymBaseInfoAction gymBaseInfoAction;
     private String gymImgStr;
     private String descripeStr;
     private String cityStr;
@@ -176,7 +178,7 @@ import rx.schedulers.Schedulers;
                                 if (getActivity() instanceof MainActivity) {
                                     List<CoachService> coachServices = new ArrayList<>();
                                     coachServices.add(qcResponseSystenInit.data);
-                                    GymBaseInfoAction.writeGyms(coachServices);
+                                    gymBaseInfoAction.writeGyms(coachServices);
                                 }
                             } else {
                                 ToastUtils.showDefaultStyle(qcResponseSystenInit.getMsg());

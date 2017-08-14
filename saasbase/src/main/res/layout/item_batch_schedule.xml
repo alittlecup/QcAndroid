@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/qc_item_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_click"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    >
+
+
+    <CheckBox
+        android:id="@+id/item_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:button="@drawable/radio_selector"
+        android:clickable="false"
+        />
+
+
+      <TextView
+          android:id="@+id/date"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          tools:text="2016-01-01"
+          />
+
+      <TextView
+          android:id="@+id/weekday"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          tools:text="周一"
+          />
+
+      <TextView
+          android:id="@+id/time"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:drawablePadding="2dp"
+          tools:text="9:00"
+          />
+      <cn.qingchengfit.support.widgets.CompatTextView
+          android:id="@+id/outofdate"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:text=""
+          android:gravity="center_vertical"
+          app:drawableEnd="@drawable/ic_arrow_right"
+          />
+
+</LinearLayout>

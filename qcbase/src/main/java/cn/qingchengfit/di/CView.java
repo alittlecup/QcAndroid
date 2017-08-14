@@ -29,4 +29,8 @@ public interface CView extends PView {
   void showAlert(String s);
 
   void showAlert(@StringRes int s);
+
+  void showLoading();
+  void hideLoading();
+  void popBack();
 }

@@ -23,7 +23,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.debug.LogView;
-import cn.qingchengfit.staffkit.model.db.QCDbManager;
+import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.train.moudle.TrainIds;
@@ -197,11 +197,11 @@ public class App extends MultiDexApplication
         lb.loginUser(staff);
         lb.session(session);
         lb.userId(user_id);
-        QCDbManager qcDbManager = new QCDbManager(this);
+        QCDbManagerImpl qcDbManager = new QCDbManagerImpl(this);
         appCompoent = DaggerAppComponent.builder()
             .appModel(new AppModel(this, new SerPermissionImpl(this), lb.build(),
                 new GymWrapper.Builder().build(), new RestRepository(), new BaseRouter(),
-                new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag))))
+                new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag)),new QCDbManagerImpl(this)))
             .staffWrapperMoudle(new StaffWrapperMoudle(new StaffWrapper()))
             .studentWrapperModule(new StudentWrapperModule(new StudentWrapper()))
             .cardTypeWrapperModule(new CardTypeWrapperModule(new CardTypeWrapper(null)))

@@ -22,10 +22,10 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.AddSiteEvent;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.ChooseSiteAdapter;
@@ -63,6 +63,7 @@ public class MutiChooseSiteFragment extends BaseDialogFragment implements Choose
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
 
     private int type = 0;//课程类型
     private ChooseSiteAdapter adapter;
@@ -203,7 +204,7 @@ public class MutiChooseSiteFragment extends BaseDialogFragment implements Choose
     }
 
     @OnClick(R.id.btn) public void onClickAdd() {
-        if (gymWrapper.getCoachService() != null && !SerPermisAction.check(gymWrapper.shop_id(),
+        if (gymWrapper.getCoachService() != null && !serPermisAction.check(gymWrapper.shop_id(),
             PermissionServerUtils.STUDIO_LIST_CAN_WRITE)) {
             new MaterialDialog.Builder(getContext()).content("抱歉!您没有该权限")
                 .canceledOnTouchOutside(true)

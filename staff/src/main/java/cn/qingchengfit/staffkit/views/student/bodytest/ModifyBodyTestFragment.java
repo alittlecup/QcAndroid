@@ -32,10 +32,10 @@ import cn.qingchengfit.model.responese.BodyTestExtra;
 import cn.qingchengfit.model.responese.BodyTestMeasure;
 import cn.qingchengfit.model.responese.BodyTestTemplateBase;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.ImageGridAdapter;
 import cn.qingchengfit.staffkit.views.custom.GalleryPhotoViewDialog;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -90,6 +90,8 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
     @Inject StudentWrapper studentBean;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -130,7 +132,7 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
             if (requestCode == 1) {
                 Shop shops = (Shop) IntentUtils.getParcelable(data);
                 if (shops != null) {
-                    CoachService gym = GymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shops.id);
+                    CoachService gym = gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shops.id);
                     if (gym != null) {
                         presenter.queryBodyModel();
                         mCurId = gym.getId();
@@ -394,7 +396,7 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
     }
 
     @OnClick(R.id.delete) public void OnDel() {
-        if (SerPermisAction.checkMuti(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE, studentBean.getStudentBean().getSupportIdList())) {
+        if (serPermisAction.checkMuti(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE, studentBean.getStudentBean().getSupportIdList())) {
 
             delBatchComfirmDialog = new MaterialDialog.Builder(getActivity()).autoDismiss(true)
                 .content("是否删除此条体测信息?")

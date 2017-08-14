@@ -30,10 +30,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshStudent;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.FilterCommonFragment;
@@ -83,6 +83,7 @@ public class StudentListFragment extends FilterCommonFragment {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentWrapper studentWrapper;
+    @Inject SerPermisAction serPermisAction;
     private String keyWord;//搜索关键字
     private StudentAdapter studentAdapter;
     private List<StudentBean> datas = new ArrayList<>();
@@ -192,7 +193,7 @@ public class StudentListFragment extends FilterCommonFragment {
                             .addToBackStack(null)
                             .commit();
                     } else if (item.getItemId() == R.id.action_add) {
-                        if (SerPermisAction.checkNoOne(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+                        if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
                             showAlert(R.string.alert_permission_forbid);
                             return true;
                         }
@@ -220,7 +221,7 @@ public class StudentListFragment extends FilterCommonFragment {
                 mChooseShopId = IntentUtils.getIntentString(data, 1);
                 String title = IntentUtils.getIntentString(data, 0);
                 if (!TextUtils.isEmpty(mChooseShopId)) {
-                    if (!SerPermisAction.check(mChooseShopId, PermissionServerUtils.MANAGE_MEMBERS)) {
+                    if (!serPermisAction.check(mChooseShopId, PermissionServerUtils.MANAGE_MEMBERS)) {
                         showAlert("您没有该场馆查看会员权限");
                         return;
                     }
@@ -236,7 +237,7 @@ public class StudentListFragment extends FilterCommonFragment {
                  */
                 Shop shops = (Shop) IntentUtils.getParcelable(data);
                 if (shops != null) {
-                    if (!SerPermisAction.check(shops.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+                    if (!serPermisAction.check(shops.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
                         showAlert("抱歉!您无该场馆权限");
                         return;
                     }
@@ -416,7 +417,7 @@ public class StudentListFragment extends FilterCommonFragment {
 
     @OnClick(R.id.fab_add_student) void onClickAddStudent() {
 
-        if (SerPermisAction.checkNoOne(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+        if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
             showAlert(getString(R.string.alert_permission_forbid));
             return;
         }

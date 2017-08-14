@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- 卡模板-->
+  <string name="cardtype_all">全部类型</string>
+  <string name="cardtype_value">储值类型</string>
+  <string name="cardtype_times">次卡类型</string>
+  <string name="cardtype_date">期限类型</string>
+  <string name="title_cardtpl_types">会员卡种类</string>
+
+
+
+
+
+  <!--会员卡种类详情-->
+  <string name="alert_edit_disable_cardtpl">无法编辑已停用的会员卡种类</string>
+  <string name="alert_del_cardtype_link_manage">该会员卡种类适用于多个场馆，请到[连锁运营]中进行停用。</string>
+  <string name="alert_del_cardtype_forbid">此会员卡种类适用于多个场馆，需要具有所有适用场馆下删除会员卡种类权限的用户才能进行删除。</string>
+  <string name="alert_edit_cardtype_link_manage">该会员卡种类适用于多个场馆，请到[连锁运营]中进行编辑。</string>
+  <string name="alert_edit_cardtype_forbid">此会员卡种类适用于多个场馆，需要具有所有适用场馆下修改会员卡种类权限的用户才能进行编辑。</string>
+
+
+</resources>

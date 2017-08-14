@@ -15,7 +15,7 @@ import cn.qingchengfit.model.responese.Cards;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.RealCardUsecase;
 import java.util.HashMap;
@@ -47,6 +47,7 @@ public class RealCardListPresenter extends BasePresenter {
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
     private RealCardListView view;
     private int page = 1, totalpage = 2;
     private int balance_page = 1, balance_totalpage = 2;
@@ -130,7 +131,7 @@ public class RealCardListPresenter extends BasePresenter {
         String model = gymWrapper.model();
         String brandid = gymWrapper.brand_id();
         if (!TextUtils.isEmpty(shopid)) {
-            CoachService gym = GymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shopid);
+            CoachService gym = gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shopid);
             id = gym.getId();
             model = gym.getModel();
             brandid = null;
@@ -182,7 +183,7 @@ public class RealCardListPresenter extends BasePresenter {
         String model = gymWrapper.model();
         String brandid = gymWrapper.brand_id();
         if (!TextUtils.isEmpty(shopid)) {
-            CoachService gym = GymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shopid);
+            CoachService gym = gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shopid);
             id = gym.getId();
             model = gym.getModel();
             brandid = null;

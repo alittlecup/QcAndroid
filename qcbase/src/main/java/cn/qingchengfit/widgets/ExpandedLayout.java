@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -116,7 +117,10 @@ public class ExpandedLayout extends LinearLayout {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ExpandedLayout);
         isExpanded = ta.getBoolean(R.styleable.ExpandedLayout_el_expanded, false);
         label = ta.getString(R.styleable.ExpandedLayout_el_label);
-        leftDrawable = ta.getDrawable(R.styleable.ExpandedLayout_el_left_icon);
+        int resId = ta.getResourceId(R.styleable.ExpandedLayout_el_left_icon,-1);
+        if (resId > 0){
+            leftDrawable = ContextCompat.getDrawable(getContext(),resId);
+        }
         ta.recycle();
 
     }
@@ -198,5 +202,15 @@ public class ExpandedLayout extends LinearLayout {
 
     public void setLabel(String s){
         mTvLable.setText(s);
+    }
+
+    public void setLeftDrawable(Drawable leftDrawable) {
+        this.leftDrawable = leftDrawable;
+        if (leftDrawable != null){
+            leftImage.setImageDrawable(leftDrawable);
+        }else {
+            leftImage.setImageResource(R.color.transparent);
+        }
+        invalidate();
     }
 }

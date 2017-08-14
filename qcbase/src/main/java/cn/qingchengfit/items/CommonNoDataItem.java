@@ -74,7 +74,7 @@ public class CommonNoDataItem extends AbstractFlexibleItem<CommonNoDataItem.Comm
   }
 
     @Override public boolean equals(Object o) {
-        return false;
+        return o instanceof CommonNoDataItem && ((CommonNoDataItem) o).imgRes == imgRes;
     }
 
     @Override public int getLayoutRes() {

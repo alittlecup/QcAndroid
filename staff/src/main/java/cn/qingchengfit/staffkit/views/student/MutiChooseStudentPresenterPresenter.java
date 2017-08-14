@@ -29,6 +29,7 @@ import rx.schedulers.Schedulers;
 public class MutiChooseStudentPresenterPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject StudentAction studentAction;
     private MVPView view;
     private RestRepository restRepository;
     private Subscription spFilter;
@@ -112,7 +113,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
                                 bean.setSupport_gym(support);
                             }
                         }
-                        StudentAction.newInstance().saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
+                        studentAction.saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
                         return qcResponseAllStudent.data.users;
                     } else {
                         return null;
@@ -140,7 +141,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
 
     public void subsribeDb() {
         if (gymWrapper.inBrand()) {//连锁运营
-            RxRegiste(StudentAction.newInstance()
+            RxRegiste(studentAction
                 .getStudentByBrand(gymWrapper.brand_id())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -151,7 +152,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
                     }
                 }));
         } else {//场馆
-            RxRegiste(StudentAction.newInstance()
+            RxRegiste(studentAction
                 .getStudentByGym(gymWrapper.id(), gymWrapper.model())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -165,7 +166,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
     }
 
     public void filter(String keyword) {
-        spFilter = StudentAction.newInstance()
+        spFilter = studentAction
             .getStudentByKeyWord(keyword)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<List<QcStudentBean>>() {

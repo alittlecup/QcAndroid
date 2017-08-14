@@ -1,8 +1,8 @@
 package cn.qingchengfit.repository;
 
 import android.database.Cursor;
-import cn.qingchengfit.db.QcDbHelper;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.saasbase.db.QcDbHelper;
 import cn.qingchengfit.utils.LogUtil;
 import com.qingcheng.model.base.CoachServiceModel;
 import com.squareup.sqlbrite.BriteDatabase;

@@ -21,10 +21,10 @@ import cn.qingchengfit.model.responese.GroupCourse;
 import cn.qingchengfit.model.responese.GroupCourseSchedule;
 import cn.qingchengfit.model.responese.ImageIconBean;
 import cn.qingchengfit.model.responese.QcResponsePrivateDetail;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.GroupBatchAdapter;
 import cn.qingchengfit.staffkit.views.adapter.PrivateBatchAdapter;
 import cn.qingchengfit.staffkit.views.batch.addbatch.AddBatchFragment;
@@ -68,6 +68,7 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
 
     @Inject CourseBatchDetailPresenter presenter;
+    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private List<ImageIconBean> datas = new ArrayList<>();
@@ -174,9 +175,9 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
      * 添加课程排期
      */
     @OnClick(R.id.add_batch_btn) public void onAddCouseManage() {
-        if ((mType == Configs.TYPE_GROUP && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)) || (
+        if ((mType == Configs.TYPE_GROUP && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)) || (
             mType == Configs.TYPE_PRIVATE
-                && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_WRITE))) {
+                && !serPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_WRITE))) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }
@@ -229,8 +230,8 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
             ((GroupBatchAdapter) adapter).setListener(new OnRecycleItemClickListener() {
                 @Override public void onItemClick(View v, int pos) {
 
-                    //                    if ((mType == Configs.TYPE_GROUP  && !SerPermisAction.checkAll(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE))
-                    //                            || (mType == Configs.TYPE_PRIVATE  && !SerPermisAction.checkAll(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
+                    //                    if ((mType == Configs.TYPE_GROUP  && !serPermisAction.checkAll(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE))
+                    //                            || (mType == Configs.TYPE_PRIVATE  && !serPermisAction.checkAll(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
                     //                        showAlert(R.string.alert_permission_forbid);
                     //                        return;
                     //                    }

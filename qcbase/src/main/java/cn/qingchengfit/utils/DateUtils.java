@@ -1,5 +1,6 @@
 package cn.qingchengfit.utils;
 
+import android.support.annotation.IntRange;
 import android.text.TextUtils;
 import android.util.Pair;
 import java.text.ParseException;
@@ -334,7 +335,7 @@ public class DateUtils {
     return (int) ((end.getTime() - start.getTime()) / DAY_TIME);
   }
 
-  public static int getDayOfWeek(Date date) {
+  @IntRange(from = 0 ,to = 6) public static int getDayOfWeek(Date date) {
     Calendar c = Calendar.getInstance();
     c.setTime(date);
     int i = c.get(Calendar.DAY_OF_WEEK);

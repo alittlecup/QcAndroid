@@ -8,9 +8,9 @@ import cn.qingchengfit.model.body.CourseBody;
 import cn.qingchengfit.model.responese.CourseType;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -42,6 +42,7 @@ public class EditCoursePresenter extends BasePresenter {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     private EditCourseView view;
     private RestRepository restRepository;
 
@@ -60,8 +61,8 @@ public class EditCoursePresenter extends BasePresenter {
 
     public void judgePermission(CourseType courseDetail) {
         if (gymWrapper.inBrand()) {
-            if ((courseDetail.is_private() && SerPermisAction.checkMuti(PermissionServerUtils.PRISETTING_CAN_CHANGE,
-                courseDetail.getShopIdList())) || (!courseDetail.is_private() && SerPermisAction.checkMuti(
+            if ((courseDetail.is_private() && serPermisAction.checkMuti(PermissionServerUtils.PRISETTING_CAN_CHANGE,
+                courseDetail.getShopIdList())) || (!courseDetail.is_private() && serPermisAction.checkMuti(
                 PermissionServerUtils.TEAMSETTING_CAN_CHANGE, courseDetail.getShopIdList()))) { //连锁运营下 全权限
                 view.showBaseInfoHint(null);
                 view.editBaseInfo(courseDetail);
@@ -80,8 +81,8 @@ public class EditCoursePresenter extends BasePresenter {
                 if (courseDetail.getShopIdList().size() > 1) {
                     view.showBaseInfoHint("请在「连锁运营」中修改基本信息");
                     view.showbaseInfo(courseDetail);
-                } else if ((courseDetail.is_private() && SerPermisAction.check(courseDetail.getShopIdList().get(0),
-                    PermissionServerUtils.PRISETTING_CAN_CHANGE)) || (!courseDetail.is_private() && SerPermisAction.check(
+                } else if ((courseDetail.is_private() && serPermisAction.check(courseDetail.getShopIdList().get(0),
+                    PermissionServerUtils.PRISETTING_CAN_CHANGE)) || (!courseDetail.is_private() && serPermisAction.check(
                     courseDetail.getShopIdList().get(0), PermissionServerUtils.TEAMSETTING_CAN_CHANGE))) {
                     view.showBaseInfoHint(null);
                     view.editBaseInfo(courseDetail);

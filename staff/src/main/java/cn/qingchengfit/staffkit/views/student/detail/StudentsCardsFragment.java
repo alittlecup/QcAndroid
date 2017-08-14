@@ -17,11 +17,11 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Card;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.TitleFragment;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.CardItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -61,6 +61,8 @@ public class StudentsCardsFragment extends BaseFragment implements StudentsCards
     @Inject StudentsCardsPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
 
     List<AbstractFlexibleItem> datas = new ArrayList<>();
     private CommonFlexAdapter adatper;
@@ -78,7 +80,7 @@ public class StudentsCardsFragment extends BaseFragment implements StudentsCards
                 presenter.querData();
             }
         });
-        if (SerPermisAction.checkAtLeastOne(PermissionServerUtils.CARDSETTING)) {
+        if (serPermisAction.checkAtLeastOne(PermissionServerUtils.CARDSETTING)) {
             presenter.querData();
         } else {
             recycleview.setNoDataImgRes(R.drawable.ic_no_permission);
@@ -123,7 +125,7 @@ public class StudentsCardsFragment extends BaseFragment implements StudentsCards
                     if (mChooseCardtpl.getShopIds().size() > 1) {
                         MutiChooseGymFragment.start(StudentsCardsFragment.this, true, null, 9);
                     } else if (mChooseCardtpl.getShopIds().size() == 1) {
-                        CoachService gym = GymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), mChooseCardtpl.getShopIds().get(0));
+                        CoachService gym = gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), mChooseCardtpl.getShopIds().get(0));
                         Intent it = new Intent(context, BuyCardActivity.class);
 
                         it.putExtra(Configs.EXTRA_CARD_TYPE, mChooseCardtpl);
@@ -138,7 +140,7 @@ public class StudentsCardsFragment extends BaseFragment implements StudentsCards
         } else if (requestCode == 9) {
             Shop shop = data.getParcelableExtra(IntentUtils.RESULT);
             CoachService gym =
-                GymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""), shop.id);
+                gymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""), shop.id);
             Intent it = new Intent(context, BuyCardActivity.class);
             it.putExtra(Configs.EXTRA_GYM_SERVICE, gym);
 
@@ -150,7 +152,7 @@ public class StudentsCardsFragment extends BaseFragment implements StudentsCards
     @Override public boolean onItemClick(int i) {
         if (adatper.getItem(i) instanceof CardItem) {
             Card realCard = ((CardItem) adatper.getItem(i)).getRealCard();
-            if (SerPermisAction.checkNoOne(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+            if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
                 showAlert(R.string.alert_permission_forbid);
                 return true;
             }

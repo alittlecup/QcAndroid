@@ -10,7 +10,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,7 @@ public class GymListPresenter extends BasePresenter {
 
     @Inject GymWrapper gymWrapper;
     @Inject LoginStatus loginStatus;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
     private RestRepository mRestRepository;
     private GymListView mView;
 
@@ -63,7 +64,7 @@ public class GymListPresenter extends BasePresenter {
     }
 
     public void subscribeGymsByBrandId() {
-        RxRegiste(GymBaseInfoAction.getAllGyms().filter(new Func1<List<CoachService>, Boolean>() {
+        RxRegiste(gymBaseInfoAction.getAllGyms().filter(new Func1<List<CoachService>, Boolean>() {
             @Override public Boolean call(List<CoachService> list) {
                 return list != null;
             }
@@ -108,7 +109,7 @@ public class GymListPresenter extends BasePresenter {
             .subscribe(new Action1<QcDataResponse<GymList>>() {
                 @Override public void call(QcDataResponse<GymList> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                        GymBaseInfoAction.writeGyms(qcResponse.getData().services);
+                        gymBaseInfoAction.writeGyms(qcResponse.getData().services);
                     } else {
                         mView.onShowError(qcResponse.getMsg());
                     }

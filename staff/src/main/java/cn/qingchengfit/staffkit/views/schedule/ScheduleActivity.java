@@ -28,10 +28,10 @@ import cn.qingchengfit.model.responese.ScheduleAction;
 import cn.qingchengfit.model.responese.ScheduleActions;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
@@ -89,6 +89,7 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     private FragmentAdapter mFragmentAdapter;
     private DatePicker mDatePicker;
     private MaterialDialog mAlert;
@@ -183,14 +184,14 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
                 break;
             case 2:
                 action = "privatelesson";
-                if (!SerPermisAction.checkAtLeastOne(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
+                if (!serPermisAction.checkAtLeastOne(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return;
                 }
                 isPrivate = true;
                 break;
             case 3:
-                if (!SerPermisAction.checkAtLeastOne(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
+                if (!serPermisAction.checkAtLeastOne(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return;
                 }
@@ -222,7 +223,7 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
                                 ImageTwoTextBean bean = new ImageTwoTextBean(scheduleService.getPhoto(), scheduleService.getName(),
                                     scheduleService.getBrand_name());
                                 bean.hiden =
-                                    SerPermisAction.check(scheduleService.getShop_id(), PermissionServerUtils.ORDERS_DAY_CAN_WRITE);
+                                    serPermisAction.check(scheduleService.getShop_id(), PermissionServerUtils.ORDERS_DAY_CAN_WRITE);
                                 if (finalAction.equalsIgnoreCase("rest")) bean.hiden = false;
                                 d.add(bean);
                             }
@@ -304,7 +305,7 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
                 //String CurGymId = IntentUtils.getIntentString(data, 2);
                 //String CurGymModel = IntentUtils.getIntentString(data, 3);
                 //if (!TextUtils.isEmpty(mChooseShopId)) {
-                //GymBaseInfoAction.getGymByModel(CurGymId, CurGymModel)
+                //gymBaseInfoAction.getGymByModel(CurGymId, CurGymModel)
                 //        .subscribe(new Action1<List<CoachService>>() {
                 //            @Override
                 //            public void call(List<CoachService> coachServices) {

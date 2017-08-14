@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/halftransparent_grey"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="270dp"
+      android:layout_height="48dp"
+      android:background="@color/white"
+      >
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="高级版"
+        android:textSize="@dimen/common_font"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/activity_horizontal_margin"
+        app:srcCompat="@drawable/vd_close_grey_24dp"
+        />
+  </RelativeLayout>
+
+  <FrameLayout
+      android:layout_width="270dp"
+      android:layout_height="190dp"
+      android:background="@color/white"
+      >
+
+    <ImageView
+        android:layout_width="175dp"
+        android:layout_height="190dp"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/img_upgrade"
+        />
+
+  </FrameLayout>
+
+  <TextView
+      android:layout_width="270dp"
+      android:layout_height="60dp"
+      android:background="@color/white"
+      android:gravity="center"
+      android:lines="4"
+      android:text="升级到健身房管理高级版\n解锁全部功能"
+      style="@style/Qc.TextCommonGrey"
+
+      />
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="270dp"
+      android:layout_height="1px"
+      />
+
+  <LinearLayout
+      android:layout_width="270dp"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:showDividers="middle"
+      >
+
+    <Button
+        android:id="@+id/btn_left"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/btn_qc_rect_round_coner_black"
+        android:text="查看高级版价格"
+        android:textSize="@dimen/common_font"
+        />
+
+    <Button
+        android:id="@+id/btn_right"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/btn_qc_rect_round_coner_black"
+        android:text="免费试用3天"
+        android:textSize="@dimen/common_font"
+        android:visibility="gone"
+        />
+  </LinearLayout>
+</LinearLayout>

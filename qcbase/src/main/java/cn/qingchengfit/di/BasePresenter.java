@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
 import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * power by
@@ -25,7 +26,8 @@ import rx.Subscription;
  */
 public class BasePresenter implements Presenter {
 
-    private List<Subscription> sps = new ArrayList<>();
+
+    CompositeSubscription sps = new CompositeSubscription();
     private List<Pair<String, Observable>> observables = new ArrayList<>();
 
     @Override public void onStart() {
@@ -53,9 +55,7 @@ public class BasePresenter implements Presenter {
     }
 
     @CallSuper @Override public void unattachView() {
-        for (int i = 0; i < sps.size(); i++) {
-            sps.get(i).unsubscribe();
-        }
+        sps.unsubscribe();
         for (int i = 0; i < observables.size(); i++) {
             RxBus.getBus().unregister(observables.get(i).first, observables.get(i).second);
         }
@@ -65,6 +65,7 @@ public class BasePresenter implements Presenter {
         sps.add(subscription);
         return subscription;
     }
+    
 
     public <T> Observable<T> RxBusAdd(@NonNull Class<T> clazz) {
         Observable ob = RxBus.getBus().register(clazz);

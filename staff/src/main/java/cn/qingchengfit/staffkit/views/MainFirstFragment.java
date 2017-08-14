@@ -11,7 +11,7 @@ import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.model.db.QCDbManager;
+import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.views.gym.GymDetailFragment;
 import cn.qingchengfit.staffkit.views.main.HomeFragment;
 import cn.qingchengfit.staffkit.views.main.HomeUnLoginFragment;
@@ -47,7 +47,7 @@ public class MainFirstFragment extends BaseFragment {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject QCDbManager qcDbManager;
+    @Inject QCDbManagerImpl qcDbManager;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class MainFirstFragment extends BaseFragment {
 
     void changeView() {
         if (loginStatus.isLogined()) {
-            RxRegiste(QCDbManager.getAllCoachService()
+            RxRegiste(qcDbManager.getAllCoachService()
                 .observeOn(AndroidSchedulers.mainThread())
                 .throttleLast(500, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<List<CoachService>>() {

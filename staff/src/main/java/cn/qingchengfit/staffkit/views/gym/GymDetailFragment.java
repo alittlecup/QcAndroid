@@ -43,6 +43,7 @@ import cn.qingchengfit.model.responese.FollowUpDataStatistic;
 import cn.qingchengfit.model.responese.GymDetail;
 import cn.qingchengfit.model.responese.GymFuntion;
 import cn.qingchengfit.model.responese.HomeStatement;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
@@ -50,7 +51,6 @@ import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Prefer;
 import cn.qingchengfit.staffkit.constant.Router;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventChartTitle;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
@@ -141,7 +141,7 @@ public class GymDetailFragment extends BaseFragment
     @Inject GymWrapper gymWrapper;
     @Inject GymMoreFragment gymMoreFragment;
     @Inject SerPermisAction serPermisAction;
-
+    @Inject GymFunctionFactory gymFunctionFactory;
     private String mCopyUrl;
     private Observable<RxCompleteGuideEvent> mObGuideComplete;
     private GymMoreAdapter adapter;
@@ -176,7 +176,7 @@ public class GymDetailFragment extends BaseFragment
             @Override public void call(EventChartTitle eventChartTitle) {
                 switch (eventChartTitle.getChartType()) {
                     case 1:
-                        if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.COST_REPORT)) {
+                        if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.COST_REPORT)) {
                             return;
                         }
                         Intent toStatement = new Intent(getActivity(), ContainerActivity.class);
@@ -185,7 +185,7 @@ public class GymDetailFragment extends BaseFragment
 
                         break;
                     case 2:
-                        if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_REPORT)) {
+                        if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_REPORT)) {
                             return;
                         }
                         Intent toSignIn = new Intent(getActivity(), ContainerActivity.class);
@@ -633,7 +633,7 @@ public class GymDetailFragment extends BaseFragment
                         new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
                         return true;
                     }
-                    GymFunctionFactory.getJumpIntent(name, gymWrapper.getCoachService(), gymWrapper.getBrand(),
+                    gymFunctionFactory.getJumpIntent(name, gymWrapper.getCoachService(), gymWrapper.getBrand(),
                         new GymStatus.Builder().build(), this);
                 }
             }

@@ -14,10 +14,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.course.limit.OrderLimitFragment;
 import cn.qingchengfit.staffkit.views.course.limit.OrderLimitFragmentBuilder;
 import cn.qingchengfit.staffkit.views.course.msg.MsgNotiFragment;
@@ -59,6 +59,8 @@ import javax.inject.Inject;
      * 是否为私教
      */
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
+    @Inject GymFunctionFactory gymFunctionFactory;
     @Arg boolean mIsPrivate;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -99,7 +101,7 @@ import javax.inject.Inject;
             if (requestCode == RESULT_MENU) {
                 int pos = Integer.parseInt(IntentUtils.getIntentString(data));
                 if (pos == 0) {//跳至课程列表
-                    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
+                    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
                         mIsPrivate ? PermissionServerUtils.PRISETTING : PermissionServerUtils.TEAMSETTING)) {
                         showAlert(R.string.sorry_for_no_permission);
                         return;
@@ -113,7 +115,7 @@ import javax.inject.Inject;
                     /**
                      * 预约限制 {@link OrderLimitFragment}
                      */
-                    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
+                    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
                         mIsPrivate ? PermissionServerUtils.PRIVATE_COURSE_LIMIT : PermissionServerUtils.TEAM_COURSE_LIMIT)) {
                         showAlert(R.string.sorry_for_no_permission);
                         return;
@@ -127,7 +129,7 @@ import javax.inject.Inject;
                     /**
                      * 短信通知{@link MsgNotiFragment}
                      */
-                    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
+                    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
                         mIsPrivate ? PermissionServerUtils.PRIVATE_COURSE_MSG_SETTING : PermissionServerUtils.TEAM_COURSE_MSG_SETTING)) {
                         showAlert(R.string.sorry_for_no_permission);
                         return;
@@ -141,12 +143,12 @@ import javax.inject.Inject;
                     /**
                      * 课件
                      */
-                    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.PLANSSETTING)) {
+                    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.PLANSSETTING)) {
                         showAlert(R.string.sorry_for_no_permission);
                         return;
                     }
 
-                    GymFunctionFactory.goQrScan(this,
+                    gymFunctionFactory.goQrScan(this,
                         mIsPrivate ? GymFunctionFactory.PLANS_SETTING_PRIVATE : GymFunctionFactory.PLANS_SETTING_GROUP, null,
                         gymWrapper.getCoachService());
                 }

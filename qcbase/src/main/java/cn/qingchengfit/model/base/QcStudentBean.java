@@ -249,7 +249,7 @@ public class QcStudentBean extends Personage
             String ret = "";
             for (int i = 0; i < sellers.size(); i++) {
                 if (i < sellers.size() - 1) {
-                    ret = ret.concat(sellers.get(i).getUsername()).concat(Constants.SEPARATOR);
+                    ret = ret.concat(sellers.get(i).getUsername()).concat(Constants.SEPARATOR_EN);
                 } else {
                     ret = ret.concat(sellers.get(i).getUsername());
                 }

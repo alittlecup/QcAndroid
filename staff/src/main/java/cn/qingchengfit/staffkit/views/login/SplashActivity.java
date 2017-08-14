@@ -16,14 +16,14 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.model.db.QCDbManager;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
+import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -58,8 +58,9 @@ public class SplashActivity extends AppCompatActivity {
     @BindView(R.id.main_loading) RelativeLayout mainLoading;
   @BindView(R.id.img_gif) ImageView imgGif;
     @Inject RestRepository restRepository;
-    @Inject QCDbManager manager;
+    @Inject QCDbManagerImpl manager;
     @Inject LoginStatus loginStatus;
+  @Inject GymBaseInfoAction gymBaseInfoAction;
     String url;
     private Subscription sp;
 
@@ -139,12 +140,10 @@ public class SplashActivity extends AppCompatActivity {
                 .subscribe(new Action1<QcDataResponse<GymList>>() {
                     @Override public void call(QcDataResponse<GymList> qcResponseGymList) {
                         if (ResponseConstant.checkSuccess(qcResponseGymList) && qcResponseGymList.data.services != null) {
-                            GymBaseInfoAction.writeGyms(qcResponseGymList.data.services);
+                          gymBaseInfoAction.writeGyms(qcResponseGymList.data.services);
                             if (qcResponseGymList.data.services.size() == 0) {
                                 goSplashViewpager();
                                 overridePendingTransition(R.anim.slide_fade_in, R.anim.slide_fade_out);
-                            //}else if(qcResponseGymList.getStatus() == Integer.parseInt(ResponseConstant.E_Login)){
-                            //  logout();
                             } else {
                                 boolean isSingle = qcResponseGymList.data.services.size() == 1;
                                 goMain(isSingle, isSingle ? qcResponseGymList.data.services.get(0) : null);

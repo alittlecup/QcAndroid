@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'maven'
 def libs = rootProject.ext.libraries;
 def cfg = rootProject.ext.configuration;
 
@@ -12,7 +13,15 @@ android {
     targetSdkVersion 25
     versionCode 1
     versionName "1.0"
-
+    vectorDrawables.useSupportLibrary true
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [fragmentArgsLib               : 'true',
+                     fragmentArgsSupportAnnotations: 'true',
+                     packageName:'cn.qingchengfit.saasbase',
+        ]
+      }
+    }
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
@@ -24,10 +33,36 @@ android {
 }
 
 dependencies {
+  compile project(path: ':qcbase')
   compile fileTree(dir: 'libs', include: ['*.jar'])
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
   compile 'com.android.support:appcompat-v7:25.3.1'
   testCompile 'junit:junit:4.12'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+  compile 'com.jakewharton:butterknife:8.6.0'
+  compile "com.google.dagger:dagger:${libs.dagger}"
+  compile "com.google.dagger:dagger-android:${libs.dagger}"
+  compile "com.google.dagger:dagger-android-support:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+  compile "com.anbillon.flabellum:flabellum:0.1"
+  annotationProcessor "com.anbillon.flabellum:flabellum-processor:0.1"
+  annotationProcessor "com.anbillon.flabellum:dagger2:0.1"
+
+}
+
+
+group 'cn.qingchegfit.saas'
+version '1.0'
+
+uploadArchives {
+
+  repositories {
+    mavenDeployer {
+      repository(url: uri('../../repo'))
+      pom.artifactId = 'sass'
+    }
+  }
 }

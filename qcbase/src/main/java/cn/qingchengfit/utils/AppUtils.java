@@ -155,6 +155,14 @@ public class AppUtils {
         return "Trainer";
     }
   }
+  public static String getCurAppSchema(Context context) {
+    switch (getCurApp(context)) {
+      case 1:
+        return "qcstaff";
+      default:
+        return "qccoach";
+    }
+  }
 
   /**
    * 判断手机号码是否合法

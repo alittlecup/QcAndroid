@@ -22,8 +22,8 @@ package cn.qingchengfit;
  */
 
 public class Constants {
-  public static final String SEPARATE = "、";
-  public static final String SEPARATOR = "、";
+  public static final String SEPARATE_CN = "、";
+  public static final String SEPARATOR_EN = ",";
   public static final String EXTRA_GYM_SERVICE = "qingcheng.gym.service";
   public static final String EXTRA_GYM_SINGLE = "qingcheng.gym.single";
   public static final String EXTRA_GYM_STATUS = "qingcheng.gym.status";
@@ -34,4 +34,16 @@ public class Constants {
   public static final String ServerDebug = "http://cloudtest.qingchengfit.cn/";
   public static final String ServerMirror =
       "http://cloudmirror.qingchengfit.cn/";
+
+
+  public static final String[] WEEKS
+      = { "周一", "周二", "周三", "周四", "周五", "周六", "周日" };
+
+
+
+  /**
+   * 支付渠道
+   */
+  public static final String CHANNEL_CARD = "CARD";
+  public static final String CHANNEL_ONLINE = "ONLINE";
 }

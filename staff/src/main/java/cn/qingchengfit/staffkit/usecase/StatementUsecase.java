@@ -1,6 +1,5 @@
 package cn.qingchengfit.staffkit.usecase;
 
-import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.CourseTypeSamples;
 import cn.qingchengfit.model.responese.GymCardtpl;
 import cn.qingchengfit.model.responese.QcResponseCards;
@@ -12,7 +11,6 @@ import cn.qingchengfit.model.responese.StatementGlanceResp;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import java.util.HashMap;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscription;
@@ -135,21 +133,21 @@ public class StatementUsecase {
             });
     }
 
-    public Subscription queryCardTypeList(String brand_id, int type, Action1<QcDataResponse<CardTpls>> action1) {
-        String t = type == 0 ? null : Integer.toString(type);
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("brand_id", brand_id);
-        return restRepository.getGet_api()
-            .qcGetCardTpls(App.staffId, params, t, "1")
-            .observeOn(AndroidSchedulers.mainThread())
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .subscribe(action1, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-
-                }
-            });
-    }
+    //public Subscription queryCardTypeList(String brand_id, int type, Action1<QcDataResponse<CardTpls>> action1) {
+    //    String t = type == 0 ? null : Integer.toString(type);
+    //    HashMap<String, Object> params = new HashMap<>();
+    //    params.put("brand_id", brand_id);
+    //    return restRepository.getGet_api()
+    //        .qcGetCardTpls(App.staffId, params, t, "1")
+    //        .observeOn(AndroidSchedulers.mainThread())
+    //        .onBackpressureBuffer()
+    //        .subscribeOn(Schedulers.io())
+    //        .subscribe(action1, new Action1<Throwable>() {
+    //            @Override public void call(Throwable throwable) {
+    //
+    //            }
+    //        });
+    //}
 
     public Subscription queryGymCardTpl(String gymid, String model, int type, Action1<QcDataResponse<GymCardtpl>> action1) {
         String t = type == 0 ? null : Integer.toString(type);

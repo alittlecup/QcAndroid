@@ -198,11 +198,11 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     });
   }
 
-  @Override protected void initView() {
+  @Override protected void initView(Bundle savedInstanceState) {
     commonFlexAdapter.setStickyHeaders(true)
         .setDisplayHeadersAtStartUp(true)
         .setStickyHeaderElevation(1);
-    super.initView();
+    super.initView(savedInstanceState);
     rv.setClipToPadding(false);
     rv.addItemDecoration(
         new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_resume, 1)

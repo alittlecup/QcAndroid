@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:elevation="4dp"
+    android:layerType="software"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    android:translationZ="-3dp"
+    app:cardBackgroundColor="@color/grey"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="1dp"
+
+    >
+
+  <LinearLayout
+      android:id="@+id/card_bg"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:paddingBottom="@dimen/activity_vertical_margin"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        >
+
+      <TextView
+          android:id="@+id/cardname"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/white"
+          tools:text="引力之星"
+          />
+
+      <TextView
+          android:id="@+id/cardid"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:textColor="@color/white"
+          tools:text="ID:1"
+          />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="12dp"
+        android:background="@color/half_white"
+        />
+
+    <TextView
+        android:id="@+id/support_gyms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        tools:text="限制:可以提前预约5节课"
+        />
+
+    <TextView
+        android:id="@+id/limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        tools:text="限制:可以提前预约5节课"
+        />
+
+    <TextView
+        android:id="@+id/intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:maxLines="2"
+        android:textColor="@color/white"
+        tools:text="限制:可以提前预约5节课\n xasdfasf哈哈哈哈 \n 啥"
+        />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="12dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="期限类型"
+        android:textColor="@color/white"
+        />
+  </LinearLayout>
+
+  <cn.qingchengfit.widgets.ConnerTag
+      android:id="@+id/img_stutus"
+      android:layout_width="35dp"
+      android:layout_height="35dp"
+      android:layout_gravity="right|end"
+      android:visibility="gone"
+      app:bg_color="@color/red"
+      app:text="停用"
+      />
+</android.support.v7.widget.CardView>

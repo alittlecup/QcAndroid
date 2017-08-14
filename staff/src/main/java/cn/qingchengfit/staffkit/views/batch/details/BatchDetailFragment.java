@@ -37,11 +37,11 @@ import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.model.responese.Time_repeat;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.BatchWeekLoopItem;
@@ -127,6 +127,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject BatchDetailPresenter presenter;
+    @Inject SerPermisAction serPermisAction;
     ArrangeBatchBody body = new ArrangeBatchBody();
     /**
      * 选择准确的时间
@@ -245,9 +246,9 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
             }
         });
 
-        if ((mType == Configs.TYPE_GROUP && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)) || (
+        if ((mType == Configs.TYPE_GROUP && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)) || (
             mType == Configs.TYPE_PRIVATE
-                && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
+                && !serPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
             permissionView.setVisibility(View.VISIBLE);
         } else {
             permissionView.setVisibility(View.GONE);
@@ -538,8 +539,8 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     }
 
     @OnClick(R.id.del_batch) public void delBatch() {
-        if ((mType == Configs.TYPE_GROUP && !SerPermisAction.check(gymWrapper.shop_id(),
-            PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE)) || (mType == Configs.TYPE_PRIVATE && !SerPermisAction.check(
+        if ((mType == Configs.TYPE_GROUP && !serPermisAction.check(gymWrapper.shop_id(),
+            PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE)) || (mType == Configs.TYPE_PRIVATE && !serPermisAction.check(
             gymWrapper.shop_id(), PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_DELETE))) {
             showAlert(R.string.alert_permission_forbid);
         } else {

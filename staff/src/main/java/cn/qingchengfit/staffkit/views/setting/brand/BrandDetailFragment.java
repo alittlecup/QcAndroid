@@ -27,10 +27,10 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.GuideActivity;
@@ -89,6 +89,7 @@ public class BrandDetailFragment extends BaseFragment {
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
     BrandGymsAdapter adapter;
     @Inject RestRepository restRepository;
+    @Inject QcDbManager qcDbManager;
     @BindView(R.id.no_brand_shop) LinearLayout noBrandShop;
     private List<Shop> datas = new ArrayList<>();
     private String mBrandId;
@@ -164,7 +165,7 @@ public class BrandDetailFragment extends BaseFragment {
                                                 .flatMap(new Func1<QcResponse, Observable<Integer>>() {
                                                     @Override public Observable<Integer> call(QcResponse qcResponse) {
                                                         if (ResponseConstant.checkSuccess(qcResponse)) {
-                                                            return QCDbManager.getAllCoachService()
+                                                            return qcDbManager.getAllCoachService()
                                                                 .observeOn(Schedulers.io())
                                                                 .onBackpressureBuffer()
                                                                 .subscribeOn(Schedulers.io())

@@ -18,16 +18,17 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.cardtype.detail.EditCardTypeFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -45,6 +46,8 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 public class CardListFragment extends BaseFragment {
     @BindView(R.id.tab) TabLayout tab;
     @BindView(R.id.viewpager) ViewPager viewpager;
+    @Inject SerPermisAction serPermisAction;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
     private String mChooseShopId, mId, mModel;
     private CardViewpagerAdapter adapter;
     /**
@@ -62,14 +65,14 @@ public class CardListFragment extends BaseFragment {
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cardlist, container, false);
+        View view = inflater.inflate(R.layout.fragment_cardtype_home, container, false);
         unbinder = ButterKnife.bind(this, view);
         mCallbackActivity.setToolbar("会员卡种类", false, new View.OnClickListener() {
             @Override public void onClick(View v) {
             }
         }, R.menu.menu_add, new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
-                if (SerPermisAction.checkNoOne(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
+                if (serPermisAction.checkNoOne(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return true;
                 }
@@ -115,7 +118,7 @@ public class CardListFragment extends BaseFragment {
                         }
                     }, 0, null);
                     CoachService gym =
-                        GymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""),
+                        gymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""),
                             mChooseShopId);
                     mId = gym.getId();
                     mModel = gym.getModel();

@@ -9,7 +9,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.ClassStatmentFilterBean;
 import cn.qingchengfit.model.responese.CourseTypeSample;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import cn.qingchengfit.staffkit.views.statement.detail.StatementDetailFragment;
@@ -38,6 +38,8 @@ import rx.functions.Action1;
 public class CustomStatmentPresenter implements Presenter {
 
     @Inject StatementUsecase usecase;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
+    @Inject StudentAction studentAction;
 
     private List<CourseTypeSample> courses;
     private List<QcStudentBean> studentBeans;
@@ -70,7 +72,7 @@ public class CustomStatmentPresenter implements Presenter {
         customStatementView = (CustomStatementView) v;
         startTime = DateUtils.Date2YYYYMMDD(new Date());
         endTime = DateUtils.Date2YYYYMMDD(new Date());
-        spGym = GymBaseInfoAction.getGymBaseInfo().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<CoachService>>() {
+        spGym = gymBaseInfoAction.getGymBaseInfo().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<CoachService>>() {
             @Override public void call(List<CoachService> coachServices) {
                 mCoachServices.clear();
                 mCoachServices.addAll(coachServices);
@@ -124,7 +126,7 @@ public class CustomStatmentPresenter implements Presenter {
         //        });
         selectId = id;
         selectModel = model;
-        spStudent = StudentAction.newInstance().getStudentByGym(id, model).subscribe(new Action1<List<QcStudentBean>>() {
+        spStudent = studentAction.getStudentByGym(id, model).subscribe(new Action1<List<QcStudentBean>>() {
             @Override public void call(List<QcStudentBean> qcStudentBeen) {
                 List<String> stringList = new ArrayList<String>();
                 for (int i = 0; i < qcStudentBeen.size(); i++) {

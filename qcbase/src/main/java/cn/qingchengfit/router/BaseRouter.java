@@ -3,6 +3,7 @@ package cn.qingchengfit.router;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.utils.LogUtil;
@@ -95,7 +96,6 @@ public class BaseRouter {
       LogUtil.e(e.getMessage());
     }
   }
-
   public static void toLogin(Activity fragment) {
     try {
       Intent toLogin = new Intent();
@@ -108,6 +108,8 @@ public class BaseRouter {
     }
   }
 
+
+
   public void routerTo(String module, String action, Context context, int request) {
     if (routers.containsKey(module)) {
       Intent it = new Intent(context, routers.get(module));
@@ -115,16 +117,6 @@ public class BaseRouter {
       if (context instanceof Activity) {
         ((Activity) context).startActivityForResult(it, request);
       }
-    } else {
-      //没有指定模块 todo
-    }
-  }
-
-  public void routerTo(String module, String action, Fragment context, int request) {
-    if (routers.containsKey(module)) {
-      Intent it = new Intent(context.getContext(), routers.get(module));
-      it.putExtra("action", action);
-      context.startActivityForResult(it, request);
     } else {
       //没有指定模块 todo
     }
@@ -140,7 +132,18 @@ public class BaseRouter {
     }
   }
 
+  public void routeTo(Uri uri,Context context){
+    try {
+      Intent to = new Intent(Intent.ACTION_VIEW,uri);
+      to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      context.startActivity(to);
+    }catch (Exception e){
+      LogUtil.e(e.getMessage());
+    }
+  }
+
   public void registeRouter(String module, Class<?> activitycalss) {
     routers.put(module, activitycalss);
   }
+
 }

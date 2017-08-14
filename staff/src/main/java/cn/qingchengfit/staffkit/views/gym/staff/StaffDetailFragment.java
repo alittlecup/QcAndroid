@@ -29,10 +29,10 @@ import cn.qingchengfit.events.EventAddStaffDone;
 import cn.qingchengfit.model.body.ManagerBody;
 import cn.qingchengfit.model.responese.StaffPosition;
 import cn.qingchengfit.model.responese.StaffShip;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
@@ -81,10 +81,12 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
     @BindView(R.id.go_to_web) TextView goToWeb;
     @BindView(R.id.deny_layout) View denyLayout;
     @Inject StaffDetailPresenter presenter;
+    @Inject GymFunctionFactory gymFunctionFactory;
     ManagerBody body = new ManagerBody();
     @BindView(R.id.phone_num) PhoneEditText phoneNum;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
+    @Inject SerPermisAction serPermisAction;
     private boolean mIsAdd = true;
     private StaffShip mStaff;
     private List<String> mPositionStrList = new ArrayList<>();
@@ -113,7 +115,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
             toolbarTitile.setText("新增工作人员");
         } else {
             toolbarTitile.setText("工作人员详情");
-            boolean editP = SerPermisAction.checkAll(PermissionServerUtils.MANAGE_STAFF_CAN_CHANGE);
+            boolean editP = serPermisAction.checkAll(PermissionServerUtils.MANAGE_STAFF_CAN_CHANGE);
             toolbar.inflateMenu(R.menu.menu_save);
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
@@ -148,7 +150,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
             btnAdd.setVisibility(View.VISIBLE);
             //            goToWeb.setVisibility(View.VISIBLE);
         } else {
-            boolean editP = SerPermisAction.checkAll(PermissionServerUtils.MANAGE_STAFF_CAN_CHANGE);
+            boolean editP = serPermisAction.checkAll(PermissionServerUtils.MANAGE_STAFF_CAN_CHANGE);
             if (!editP) {
                 denyLayout.setVisibility(View.VISIBLE);
             }
@@ -247,7 +249,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
 
         switch (view.getId()) {
             case R.id.btn_del:
-                if (!SerPermisAction.checkAll(PermissionServerUtils.MANAGE_STAFF_CAN_DELETE)) {
+                if (!serPermisAction.checkAll(PermissionServerUtils.MANAGE_STAFF_CAN_DELETE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return;
                 }
@@ -366,21 +368,6 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
     }
 
     @OnClick(R.id.go_to_web) public void onClickGoWeb() {
-        GymFunctionFactory.goQrScan(this, GymFunctionFactory.PERMISSION_STAFF, null, null);
-        //        new MaterialDialog.Builder(getContext()).autoDismiss(true)
-        //                .content("网页端地址\n" +
-        //                        "http://cloud.qingchengfit.cn/backend/settings/")
-        //                .positiveText(R.string.common_comfirm)
-        //                .negativeText(R.string.copy_link)
-        //                .autoDismiss(true)
-        //                .onNegative(new MaterialDialog.SingleButtonCallback() {
-        //                    @Override
-        //                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-        //                        ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        //                        cmb.setText("http://cloud.qingchengfit.cn/backend/settings/");
-        //                        ToastUtils.showS("已复制");
-        //                    }
-        //                })
-        //                .show();
+        gymFunctionFactory.goQrScan(this, GymFunctionFactory.PERMISSION_STAFF, null, null);
     }
 }

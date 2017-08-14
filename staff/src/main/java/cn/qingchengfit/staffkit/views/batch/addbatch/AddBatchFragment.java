@@ -241,7 +241,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_add_batch, container, false);
+    View view = inflater.inflate(R.layout.fragment_saas_add_batch, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     proGym = gymWrapper.isPro();

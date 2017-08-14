@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.views.card.cardlist;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,25 +27,25 @@ import cn.qingchengfit.model.common.Card;
 import cn.qingchengfit.model.responese.BalanceDetail;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.CardItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
 import cn.qingchengfit.staffkit.views.card.CardDetailActivity;
 import cn.qingchengfit.staffkit.views.card.filter.FilterHeadCommonFragment;
-import cn.qingchengfit.staffkit.views.cardtype.CardTypeActivity;
 import cn.qingchengfit.staffkit.views.cardtype.ChooseCardTypeActivity;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.EndlessRecyclerOnScrollListener;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
-import cn.qingchengfit.staffkit.views.export.ImportExportFragment;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -88,6 +88,8 @@ public class RealCardListFragment extends FilterHeadCommonFragment
     @Inject GymWrapper gymWrapper;
     @Inject SerPermisAction serPermisAction;
     @Inject RealcardWrapper realcardWrapper;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
+    @Inject BaseRouter baseRouter;
 
     private List<AbstractFlexibleItem> datas = new ArrayList<>();
     private CommonFlexAdapter adapter;
@@ -198,7 +200,7 @@ public class RealCardListFragment extends FilterHeadCommonFragment
     }
 
     @OnClick(R.id.layout_card_export) public void onCardExport(){
-        if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CARD_EXPORT)) {
+        if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CARD_EXPORT)) {
             showAlert(R.string.sorry_for_no_permission);
             return;
         }
@@ -268,8 +270,10 @@ public class RealCardListFragment extends FilterHeadCommonFragment
                 if (pos == 0) { //会员卡种类
                     if (serPermisAction.check(PermissionServerUtils.CARDSETTING)) {
 
-                        Intent it = new Intent(getActivity(), CardTypeActivity.class);
-                        startActivity(it);
+                        //Intent it = new Intent(getActivity(), CardTypeActivity.class);
+                        //Intent it = new Intent(getActivity(), SaasContainerActivity.class);
+                        //startActivity(it);
+                        baseRouter.routeTo(Uri.parse(AppUtils.getCurAppSchema(getContext())+"://cardtpl/home/"),getActivity());
                     } else {
                         showAlert(getString(R.string.alert_permission_forbid));
                     }
@@ -338,7 +342,7 @@ public class RealCardListFragment extends FilterHeadCommonFragment
 
                 Shop shop = (Shop) IntentUtils.getParcelable(data);
                 mChooseShop =
-                    GymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""), shop.id);
+                    gymBaseInfoAction.getGymByShopIdNow(PreferenceUtils.getPrefString(getContext(), Configs.CUR_BRAND_ID, ""), shop.id);
 
                 if (mChooseShop != null) {
                     gymWrapper.setCoachService(mChooseShop);

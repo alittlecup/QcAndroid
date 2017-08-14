@@ -26,12 +26,12 @@ import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.OnlineLimit;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.DoneAccountEvent;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
@@ -94,6 +94,7 @@ public class SetAccountTypeAddFragment extends BaseFragment {
     @Inject GymUseCase useCase;
     @Inject CoachService coachService;
     @Inject RestRepository restRepository;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
     @BindView(R.id.sw_need_pay) SwitchCompat swNeedPay;
     @BindView(R.id.layout_need_pay) LinearLayout layoutNeedPay;
     @BindView(R.id.layout_pay) LinearLayout layoutPay;
@@ -332,7 +333,7 @@ public class SetAccountTypeAddFragment extends BaseFragment {
                 }
             });
         }
-        RxRegiste(GymBaseInfoAction.getGymByModel(coachService.id(), coachService.model()).filter(new Func1<List<CoachService>, Boolean>() {
+        RxRegiste(gymBaseInfoAction.getGymByModel(coachService.id(), coachService.model()).filter(new Func1<List<CoachService>, Boolean>() {
             @Override public Boolean call(List<CoachService> list) {
                 return list != null && list.size() > 0;
             }

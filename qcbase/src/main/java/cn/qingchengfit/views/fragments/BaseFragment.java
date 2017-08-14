@@ -96,6 +96,7 @@ public abstract class BaseFragment extends Fragment
         try {
             AndroidSupportInjection.inject(this);
         } catch (Exception e) {
+          e.printStackTrace();
             LogUtil.e("not find fragment:"+getFragmentName());
         }
         super.onAttach(context);
@@ -344,9 +345,11 @@ public abstract class BaseFragment extends Fragment
         ToastUtils.show(e);
     }
 
+  @Override public void popBack() {
+    getFragmentManager().popBackStackImmediate();
+  }
 
-
-    @Override public void onShowError(@StringRes int e) {
+  @Override public void onShowError(@StringRes int e) {
         onShowError(getString(e));
     }
 }

@@ -26,9 +26,9 @@ import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.body.BodyTestBody;
 import cn.qingchengfit.model.responese.BodyTestExtra;
 import cn.qingchengfit.model.responese.BodyTestMeasure;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.ImageGridAdapter;
 import cn.qingchengfit.staffkit.views.custom.InterupteLinearLayout;
 import cn.qingchengfit.utils.DateUtils;
@@ -74,6 +74,7 @@ public class BodyTestFragment extends BaseFragment implements BodyTestView {
     @Inject StudentWrapper studentBean;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -142,13 +143,9 @@ public class BodyTestFragment extends BaseFragment implements BodyTestView {
         toolbar.inflateMenu(R.menu.menu_edit);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
-                if (gymWrapper.inBrand()) {
-                    showAlert("请到场馆中修改体测数据");
-                    return true;
-                } else {
-                    //跳到编辑页面
-                    if (SerPermisAction.checkAtLeastOne(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
 
+                    //跳到编辑页面
+                    if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
                         getFragmentManager().beginTransaction()
                             .replace(mCallbackActivity.getFragId(), ModifyBodyTestFragment.newInstance(mMeasureId))
                             .addToBackStack(null)
@@ -156,7 +153,6 @@ public class BodyTestFragment extends BaseFragment implements BodyTestView {
                     } else {
                         showAlert(getString(R.string.alert_permission_forbid));
                     }
-                }
 
                 return true;
             }

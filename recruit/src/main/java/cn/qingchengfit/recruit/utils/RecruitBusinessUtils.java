@@ -452,9 +452,9 @@ public class RecruitBusinessUtils {
   public static String getStrFromCities(List<CityBean> ct) {
     String ret = "";
     for (CityBean cityBean : ct) {
-      ret = TextUtils.concat(ret, cityBean.name, Constants.SEPARATE).toString();
+      ret = TextUtils.concat(ret, cityBean.name, Constants.SEPARATE_CN).toString();
     }
-    if (ret.endsWith(Constants.SEPARATE)) ret = ret.substring(0, ret.length() - 1);
+    if (ret.endsWith(Constants.SEPARATE_CN)) ret = ret.substring(0, ret.length() - 1);
     return ret;
   }
 
@@ -477,9 +477,9 @@ public class RecruitBusinessUtils {
   public static String getHotJob(List<Job> jobs) {
     String ret = "";
     for (Job cityBean : jobs) {
-      ret = TextUtils.concat(ret, cityBean.name, Constants.SEPARATE).toString();
+      ret = TextUtils.concat(ret, cityBean.name, Constants.SEPARATE_CN).toString();
     }
-    if (ret.endsWith(Constants.SEPARATE)) ret = ret.substring(0, ret.length() - 1);
+    if (ret.endsWith(Constants.SEPARATE_CN)) ret = ret.substring(0, ret.length() - 1);
     if (ret.length() > 50) ret = ret.substring(0, 50) + "...";
     return ret;
   }

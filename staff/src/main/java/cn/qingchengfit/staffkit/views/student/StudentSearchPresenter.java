@@ -40,6 +40,7 @@ public class StudentSearchPresenter extends BasePresenter {
 
     public PresenterView view;
     private Subscription spFilter;
+    @Inject StudentAction studentAction;
 
     @Inject public StudentSearchPresenter() {
     }
@@ -77,7 +78,7 @@ public class StudentSearchPresenter extends BasePresenter {
 
     public void filter(String keyword) {
         if (spFilter != null) spFilter.unsubscribe();
-        spFilter = StudentAction.newInstance()
+        spFilter = studentAction
             .getStudentByKeyWord(keyword)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<List<QcStudentBean>>() {

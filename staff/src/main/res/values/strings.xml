@@ -693,7 +693,6 @@
   <string name="module_manage_staff_desc">管理工作人员并分配权限</string>
   <string name="module_fi_card_statement_desc">可查看全部报表，包括销售报表、评分报表、会员卡报表、签到报表等</string>
   <string name="start">开始</string>
-  <string name="title_welcome_trial">欢迎试用高级版</string>
   <string name="hint_empty_fun_edit">将常用功能添加到这里</string>
   <string name="hint_empty_fun_nomal">点击【管理】，将常用功能添加到这里</string>
   <string name="lable_signin_type">签到方式</string>

@@ -48,6 +48,8 @@ public class FixRealcardStudentPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject RestRepository restRepository;
+    @Inject StudentAction studentAction;
+
     private Subscription spQuery;
     private Subscription spQueryNet;
     private Subscription spFilter;
@@ -91,7 +93,7 @@ public class FixRealcardStudentPresenter extends BasePresenter {
 
     public void subsribeDb() {
         if (gymWrapper.inBrand()) {//连锁运营
-            RxRegiste(StudentAction.newInstance()
+            RxRegiste(studentAction
                 .getStudentByBrand(gymWrapper.brand_id())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -102,7 +104,7 @@ public class FixRealcardStudentPresenter extends BasePresenter {
                     }
                 }));
         } else {//场馆
-            RxRegiste(StudentAction.newInstance()
+            RxRegiste(studentAction
                 .getStudentByGym(gymWrapper.id(), gymWrapper.model())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -248,7 +250,7 @@ public class FixRealcardStudentPresenter extends BasePresenter {
     }
 
     public void filter(String keyword, String brandid) {
-        spFilter = StudentAction.newInstance()
+        spFilter = studentAction
             .getStudentByKeyWord(keyword, brandid)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<List<QcStudentBean>>() {
@@ -261,7 +263,7 @@ public class FixRealcardStudentPresenter extends BasePresenter {
     }
 
     public void filter(String keyword, String id, String model) {
-        spFilter = StudentAction.newInstance()
+        spFilter = studentAction
             .getStudentByKeyWord(keyword)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<List<QcStudentBean>>() {

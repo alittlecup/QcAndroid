@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
@@ -17,11 +16,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.AllocateCoachActivity;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
@@ -55,6 +54,7 @@ public class StudentOperationFragment extends BaseFragment
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
+  @Inject GymBaseInfoAction gymBaseInfoAction;
   @BindView(R.id.indicator) MyIndicator indicator;
   private List<AbstractFlexibleItem> datas = new ArrayList<>();
   private CommonFlexAdapter mCommonFlexAdapter;
@@ -89,7 +89,7 @@ public class StudentOperationFragment extends BaseFragment
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    RxRegiste(GymBaseInfoAction.getGymByModel(gymWrapper.id(), gymWrapper.model())
+    RxRegiste(gymBaseInfoAction.getGymByModel(gymWrapper.id(), gymWrapper.model())
         .filter(new Func1<List<CoachService>, Boolean>() {
           @Override public Boolean call(List<CoachService> list) {
             return list != null && list.size() > 0;
@@ -156,12 +156,12 @@ public class StudentOperationFragment extends BaseFragment
       if (requestCode == 2) {// 跳转分配销售
         Shop shops = (Shop) IntentUtils.getParcelable(data);
         if (shops != null) {
-          if (!SerPermisAction.check(shops.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+          if (!serPermisAction.check(shops.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
             showAlert("抱歉!您无该场馆权限");
             return;
           }
           CoachService coachService =
-              GymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shops.id);
+              gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shops.id);
           if (coachService == null) {
             ToastUtils.show("数据错误");
             return;

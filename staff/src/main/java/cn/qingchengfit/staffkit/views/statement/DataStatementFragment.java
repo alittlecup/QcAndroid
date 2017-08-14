@@ -11,9 +11,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.statement.glance.SaleGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SigninGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.StatementGlanceFragment;
@@ -30,7 +30,7 @@ public class DataStatementFragment extends BaseFragment {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-
+    @Inject SerPermisAction serPermisAction;
     public DataStatementFragment() {
 
     }
@@ -55,7 +55,7 @@ public class DataStatementFragment extends BaseFragment {
     }
 
     @OnClick(R.id.statement_order_btn) public void clickOrder() {
-        if (SerPermisAction.checkNoOne(PermissionServerUtils.COST_REPORT)) {
+        if (serPermisAction.checkNoOne(PermissionServerUtils.COST_REPORT)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }
@@ -67,7 +67,7 @@ public class DataStatementFragment extends BaseFragment {
     }
 
     @OnClick(R.id.statement_sales_btn) public void clickSales() {
-        if (SerPermisAction.checkNoOne(PermissionServerUtils.SALES_REPORT)) {
+        if (serPermisAction.checkNoOne(PermissionServerUtils.SALES_REPORT)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }
@@ -79,7 +79,7 @@ public class DataStatementFragment extends BaseFragment {
     }
 
     @OnClick(R.id.statement_signin_btn) public void clickSginin() {
-        if (SerPermisAction.checkNoOne(PermissionServerUtils.CHECKIN_REPORT)) {
+        if (serPermisAction.checkNoOne(PermissionServerUtils.CHECKIN_REPORT)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }

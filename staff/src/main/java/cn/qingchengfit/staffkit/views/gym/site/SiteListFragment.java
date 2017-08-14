@@ -15,10 +15,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.ChooseSiteAdapter;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
@@ -46,6 +46,7 @@ public class SiteListFragment extends BaseFragment implements ChooseSiteView {
 
     @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
     @Inject ChooseSitePresenter presenter;
+    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private ChooseSiteAdapter adapter;
@@ -99,7 +100,7 @@ public class SiteListFragment extends BaseFragment implements ChooseSiteView {
         toolbar.inflateMenu(R.menu.menu_add);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
-                if (!SerPermisAction.checkAll(PermissionServerUtils.STUDIO_LIST_CAN_WRITE)) {
+                if (!serPermisAction.checkAll(PermissionServerUtils.STUDIO_LIST_CAN_WRITE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return true;
                 }

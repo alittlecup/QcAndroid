@@ -18,10 +18,10 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.common.Course;
 import cn.qingchengfit.model.responese.ImageThreeTextBean;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.RxAddCourse;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
@@ -57,6 +57,7 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
     @BindView(R.id.viewpager) ViewPager viewpager;
     ArrayList<Fragment> fragments = new ArrayList<>();
     @Inject GymCoursesPresenter presenter;
+    @Inject SerPermisAction serPermisAction;
     private FragmentAdapter fragmentAdater;
     private Observable<RxAddCourse> mAddObserable;
     private Observable<ImageThreeTextBean> mCourseObserable;
@@ -87,8 +88,8 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
             @Override public void call(RxAddCourse o) {
                 Course c = new Course();
 
-                if ((!c.is_private && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE))
-                    || (c.is_private && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
+                if ((!c.is_private && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE))
+                    || (c.is_private && !serPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
                     showAlert(R.string.alert_permission_forbid);
                     return;
                 }

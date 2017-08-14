@@ -20,11 +20,11 @@ import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.model.responese.Shops;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
@@ -64,6 +64,7 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recycleview) RecyclerView recycleview;
     @Inject RestRepository restRepository;
+    @Inject SerPermisAction serPermisAction;
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();
     private MutiImageTwoTextAdapter mGymsAdapter;
     private List<Shop> mShops;
@@ -223,41 +224,41 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
                                            baen.hiden = !service.has_permission;
                                            if (!StringUtils.isEmpty(permission)) {
                                                if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
                                                    && feature != FEATURE_ALLOTSALE) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
                                                    && feature == FEATURE_ALLOTSALE) {
-                                                   baen.hiden = !SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
+                                                   baen.hiden = !serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
                                                } else {
-                                                   baen.hiden = !SerPermisAction.check(service.id, permission);
+                                                   baen.hiden = !serPermisAction.check(service.id, permission);
                                                }
                                            }
 
@@ -272,45 +273,45 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
                                            baen.hiden = !service.has_permission;
                                            if (!StringUtils.isEmpty(permission)) {
                                                if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
                                                    && feature != FEATURE_ALLOTSALE) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
                                                    && feature == FEATURE_ALLOTSALE) {
-                                                   if (!SerPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else {
-                                                   baen.hiden = !SerPermisAction.check(service.id, permission);
+                                                   baen.hiden = !serPermisAction.check(service.id, permission);
                                                }
                                            }
 

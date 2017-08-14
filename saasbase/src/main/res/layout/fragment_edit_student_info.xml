@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:overScrollMode="always"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <cn.qingchengfit.support.widgets.CompatTextView
+          android:id="@+id/tv_add_hint"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:drawablePadding="4dp"
+          app:drawableStart="@drawable/vector_student_basicinfo"
+          android:paddingBottom="10dp"
+          android:paddingTop="10dp"
+          android:text="添加会员照片可以帮助工作人员在签到、预约时辨别会员真实身份"
+          style="@style/TextTitleHint"
+          />
+
+      <RelativeLayout
+          android:id="@+id/header_layout"
+          android:layout_width="match_parent"
+          android:layout_height="90dp"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+
+        <TextView
+            android:id="@+id/tv_avatar"
+            style="@style/QcTextStyleStandardDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="签到头像"
+            />
+
+        <ImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_default_header"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrow_right"
+            />
+      </RelativeLayout>
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_name"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:civ_lable="@string/name"
+          />
+
+      <RelativeLayout
+          android:id="@+id/gender_layout"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/gender"
+            android:textColor="@color/text_warm"
+            />
+
+        <RadioGroup
+            android:id="@+id/course_type_rg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:dividerPadding="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+          <RadioButton
+              android:id="@+id/gender_male"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/Qc.CheckBox"
+              android:checked="true"
+              android:text="@string/gender_male"
+
+              />
+
+          <RadioButton
+              android:id="@+id/gender_female"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/Qc.CheckBox"
+              android:text="@string/gender_female"
+              />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_white"
+            />
+      </RelativeLayout>
+
+      <cn.qingchengfit.staffkit.views.custom.PhoneEditText
+          android:id="@+id/phone_num"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          app:phone_show_icon="false"
+          />
+
+      <include layout="@layout/divider_grey_left_right"/>
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_birthday"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="@string/birthday"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_address"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_lable="@string/address"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/support_shops"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_clickable="true"
+          app:civ_lable="所属场馆"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_remark"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="备注"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_salers"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="分配销售"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          />
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_coaches"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="分配教练"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          />
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_come_from"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_lable="来源"
+          style="@style/QcCivClickStyle"
+          />
+      <cn.qingchengfit.widgets.CommonInputView
+
+          android:id="@+id/civ_recomend"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_lable="来源"
+          style="@style/QcCivClickStyle"
+          />
+      <include layout="@layout/divider_grey"/>
+
+    </LinearLayout>
+
+  </ScrollView>
+</LinearLayout>
+
+
+

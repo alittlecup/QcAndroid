@@ -71,12 +71,15 @@ public abstract class BaseListFragment extends BaseFragment {
     }
     super.onCreateView(inflater, container, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
-    initView();
+    initView(savedInstanceState);
     return view;
   }
 
-  protected void initView() {
+  protected void initView(Bundle savedInstanceState) {
     linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());
+    if (savedInstanceState != null && savedInstanceState.containsKey("p")){
+      linearLayoutManager.scrollToPosition(savedInstanceState.getInt("p",0));
+    }
     rv.setLayoutManager(linearLayoutManager);
     addDivider();
     rv.setAdapter(commonFlexAdapter);
@@ -95,6 +98,11 @@ public abstract class BaseListFragment extends BaseFragment {
     if (commonFlexAdapter != null) {
       commonFlexAdapter.setEndlessProgressItem(progressItem);
     }
+  }
+
+  @Override public void onSaveInstanceState(Bundle outState) {
+    outState.putInt("p", linearLayoutManager.findFirstVisibleItemPosition());
+    super.onSaveInstanceState(outState);
   }
 
   public void initListener(Object o) {

@@ -1,11 +1,11 @@
 package cn.qingchengfit.staffkit.model.dbaction;
 
-import android.content.Context;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.model.db.QCDbManager;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import rx.Observable;
 
 /**
@@ -23,82 +23,78 @@ import rx.Observable;
  */
 public class StudentAction {
 
+
     public static StudentAction instance;
-    Context context;
+    @Inject QcDbManager qcDbManager;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
 
-    public StudentAction(Context context) {
-        this.context = context;
+    @Inject
+    public StudentAction() {
     }
 
-    public static StudentAction newInstance() {
-        if (instance == null) {
-            instance = new StudentAction(App.context);
-        }
-        return instance;
-    }
 
     public Observable<QcStudentBean> getByPhone(final String phone) {
-        return QCDbManager.getStudentByPhone(phone);
+        return qcDbManager.getStudentByPhone(phone);
     }
 
     public void saveStudent(final List<QcStudentBean> studentBeens, final String brandid) {
-        QCDbManager.delByBrandId(brandid);
-        QCDbManager.saveStudent(studentBeens, brandid);
+        qcDbManager.delByBrandId(brandid);
+        qcDbManager.saveStudent(studentBeens, brandid);
     }
 
     public void updateStudentCheckin(String id, String avatar) {
-        QCDbManager.updateStudentCheckin(avatar, id);
+        qcDbManager.updateStudentCheckin(avatar, id);
     }
 
     public void saveStudent(final QcStudentBean studentBeens) {
 
-        QCDbManager.saveStudent(studentBeens);
+        qcDbManager.saveStudent(studentBeens);
     }
 
     public Observable<QcStudentBean> getStudentById(String id) {
-        return QCDbManager.getStudentById(id);
+        return qcDbManager.getStudentById(id);
     }
 
     public Observable<List<QcStudentBean>> getAllStudent() {
-        return QCDbManager.getAllStudent();
+        return qcDbManager.getAllStudent();
     }
 
     public Observable<List<QcStudentBean>> getStudentByBrand(String brandid) {
-        return QCDbManager.getStudentByBrand(brandid);
+        return qcDbManager.getStudentByBrand(brandid);
     }
 
     public Observable<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid) {
-        return QCDbManager.getStudentByKeyWord(keyword, brandid);
+        return qcDbManager.getStudentByKeyWord(keyword, brandid);
     }
 
     public Observable<List<QcStudentBean>> getStudentByKeyWord(final String keyword) {
 
-        return QCDbManager.getStudentByKeyWord(keyword);
+        return qcDbManager.getStudentByKeyWord(keyword);
     }
 
     public Observable<List<QcStudentBean>> getStudentByKeyWord(String brandid, String shopid, String keyword) {
 
-        return QCDbManager.getStudentByKeyWordShop(brandid, shopid, keyword);
+        return qcDbManager.getStudentByKeyWordShop(brandid, shopid, keyword);
     }
 
     public Observable<List<QcStudentBean>> getStudentByGym(String gymid, String gymModel) {
-        String shopid = GymBaseInfoAction.getShopId(gymid, gymModel);
+        String shopid = gymBaseInfoAction.getShopId(gymid, gymModel);
         if (shopid == null) {
             List<QcStudentBean> emp = new ArrayList<>();
             return Observable.just(emp);
         }
-        return QCDbManager.getStudentByGym(shopid);
+        return qcDbManager.getStudentByGym(shopid);
     }
 
     public void delStudentByBrand(String brandid, final String id) {
-        QCDbManager.delStudentByBrand(brandid, id);
+        qcDbManager.delStudentByBrand(brandid, id);
     }
 
     public void delAllStudent() {
-        QCDbManager.delAllStudent();
+        qcDbManager.delAllStudent();
     }
 
     public void delStudentByGym(final String gymid, final String gymmodel, final String id) {
-        QCDbManager.delStudentByGym(gymid, gymmodel, id);
+        qcDbManager.delStudentByGym(gymid, gymmodel, id);
     }
 }

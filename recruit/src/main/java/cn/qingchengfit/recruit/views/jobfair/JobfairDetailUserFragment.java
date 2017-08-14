@@ -106,9 +106,9 @@ public class JobfairDetailUserFragment extends SeekPositionHomeFragment
     });
   }
 
-  @Override protected void initView() {
+  @Override protected void initView(Bundle sav) {
     commonFlexAdapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true);
-    super.initView();
+    super.initView(sav);
     rv.setClipToPadding(false);
   }
 

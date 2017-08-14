@@ -31,9 +31,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.Student;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.AppUtils;
@@ -78,6 +78,7 @@ public class FixRealcardStudentFragment extends BaseFragment implements FixRealc
     @Inject RealcardWrapper realCard;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
 
     @BindView(R.id.tv_select_count) TextView tvSelectCount;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -168,7 +169,7 @@ public class FixRealcardStudentFragment extends BaseFragment implements FixRealc
             @Override public void onGlobalLayout() {
                 CompatUtils.removeGlobalLayout(recyclerView.getViewTreeObserver(), this);
                 showLoading();
-                presenter.queryStudent(App.staffId, GymBaseInfoAction.getShopIdNow(mId, mModel));
+                presenter.queryStudent(App.staffId, gymBaseInfoAction.getShopIdNow(mId, mModel));
             }
         });
 
@@ -188,7 +189,7 @@ public class FixRealcardStudentFragment extends BaseFragment implements FixRealc
                     students.add(datasChoose.get(i).id);
                 }
                 if (TextUtils.isEmpty(s.toString())) {
-                    presenter.queryStudent(App.staffId, GymBaseInfoAction.getShopIdNow(mId, mModel));
+                    presenter.queryStudent(App.staffId, gymBaseInfoAction.getShopIdNow(mId, mModel));
                 } else {
                     presenter.filter(s.toString(), mId, mModel);
                 }

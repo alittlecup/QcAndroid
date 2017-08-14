@@ -29,7 +29,9 @@ import cn.qingchengfit.utils.MeasureUtils;
  * <p/>
  * <p/>
  * Created by Paper on 16/3/2 2016.
+ * 推荐使用FlexableAdapter
  */
+@Deprecated
 public class RecycleViewWithNoImg extends RelativeLayout implements CustomSwipeRefreshLayout.CanChildScrollUpCallback {
 
     private RecyclerView recyclerView;
