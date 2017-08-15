@@ -19,6 +19,8 @@ import android.view.inputmethod.InputMethodManager;
 import cn.qingchengfit.widgets.R;
 import java.io.File;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * power by
@@ -166,4 +168,20 @@ public class AppUtils {
         }
         return false;
     }
+
+  /**
+   * 判断手机号码是否合法
+   * @param telNum
+   * @return
+   */
+  public static boolean isMobiPhoneNum(String telNum){
+    if (TextUtils.isEmpty(telNum) || telNum.length() < 11){
+      return false;
+    }
+    String regex = "^((13[0-9])|(15[0-9])|17([0-9])|(18[0-9]))\\d{8}$";
+    Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+    Matcher m = p.matcher(telNum);
+    return m.matches();
+  }
+
 }

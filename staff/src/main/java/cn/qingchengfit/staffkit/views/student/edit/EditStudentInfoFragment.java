@@ -121,12 +121,25 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     private String remarks;
     private List<CoachBean> coaches = new ArrayList<>();
 
+    public static EditStudentInfoFragment newInstance(boolean isAdd, User_Student student) {
+         Bundle args = new Bundle();
+        args.putBoolean("add", isAdd);
+        args.putParcelable("student", student);
+         EditStudentInfoFragment fragment = new EditStudentInfoFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_student_info, container, false);
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(presenter, this);
         initToolbar(toolbar);
+        if (getArguments() != null){
+            isAdd = getArguments().getBoolean("add");
+            user = getArguments().getParcelable("student");
+        }
         if (!isAdd) {
             mCallbackActivity.setToolbar("修改学员", false, null, R.menu.menu_save, new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
@@ -216,6 +229,10 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
 
     @Override public String getFragmentName() {
         return EditStudentInfoFragment.class.getName();
+    }
+
+    @Override public void onDetach() {
+        super.onDetach();
     }
 
     @Override public void onDestroyView() {

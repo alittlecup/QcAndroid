@@ -16,7 +16,7 @@ import cn.qingchengfit.staffkit.BuildConfig;
  * Created by Paper on 15/12/1 2015.
  */
 public class Configs {
-    public static final String URL_DEBUG = "http://c1.qingchengfit.cn/";
+    public static final String URL_DEBUG = "http://cloudtest.qingchengfit.cn/";
     //    public static final String URL_DEBUG = "http://c1.qingchengfit.cn/";
     //    public static final String URL_DEBUG = "http://192.168.1.11:8000/";
     //    public static final String URL_DEBUG = "http://192.168.1.96:7777/";

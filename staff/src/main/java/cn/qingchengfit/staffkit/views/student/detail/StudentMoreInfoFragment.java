@@ -88,7 +88,6 @@ public class StudentMoreInfoFragment extends BaseFragment
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
 
-  EditStudentInfoFragment editStudentInfoFragment;
   @BindView(R.id.coach_layout) LinearLayout coachLayout;
   @BindView(R.id.coach_name) TextView coachName;
   @BindView(R.id.body_layout) LinearLayout bodyLayout;
@@ -100,7 +99,6 @@ public class StudentMoreInfoFragment extends BaseFragment
   private String score;
 
   @Inject public StudentMoreInfoFragment() {
-    editStudentInfoFragment = new EditStudentInfoFragment();
   }
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,10 +117,8 @@ public class StudentMoreInfoFragment extends BaseFragment
       @Override public void call(EditStudentEvent editStudentEvent) {
         if (user_student != null) {
           if (editStudentEvent.getType() == EditStudentEvent.EDIT) {
-            editStudentInfoFragment.isAdd = false;
-            editStudentInfoFragment.user = user_student;
             getParentFragment().getFragmentManager()
-                .beginTransaction().replace(mCallbackActivity.getFragId(), editStudentInfoFragment)
+                .beginTransaction().replace(mCallbackActivity.getFragId(), EditStudentInfoFragment.newInstance(false, user_student))
                 .addToBackStack(null)
                 .commit();
           } else if (editStudentEvent.getType() == EditStudentEvent.DEL) {
@@ -150,11 +146,9 @@ public class StudentMoreInfoFragment extends BaseFragment
   @OnClick(R.id.baseinfo_layout) public void oneditStudent() {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
-      editStudentInfoFragment.isAdd = false;
-      editStudentInfoFragment.user = user_student;
       getParentFragment().getFragmentManager()
           .beginTransaction()
-          .add(mCallbackActivity.getFragId(), editStudentInfoFragment)
+          .add(mCallbackActivity.getFragId(), EditStudentInfoFragment.newInstance(false, user_student))
           .addToBackStack(null)
           .commit();
     } else {
