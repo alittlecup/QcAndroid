@@ -25,6 +25,7 @@ import cn.qingchengfit.staffkit.rxbus.event.SendMsgEvent;
 import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.PasswordView;
 import cn.qingchengfit.widgets.PhoneEditText;
 import java.lang.ref.WeakReference;
@@ -83,7 +84,12 @@ public class RegisteFragment extends Fragment {
         });
         checkcode.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                getCode();
+                if (AppUtils.isMobiPhoneNum(phoneNum.getPhoneNum())) {
+                    getCode();
+                }else{
+                    DialogUtils.showAlert(getActivity(), "请输入正确的电话号码");
+                }
+
             }
         });
         return view;

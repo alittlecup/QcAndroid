@@ -322,7 +322,7 @@ public class ShopConfigs {
     public static final String PRIVATE_BEFORE_REMIND_USER = "private_before_remind_user";
     public static final String PRIVATE_BEFORE_REMIND_USER_MINUTES = "private_before_remind_user_minutes";
     public static final String PRIVATE_COURSE_REMIND_TEACHER = "private_course_remind_teacher";
-    public static final String PRIVATE_COURSE_REMIND_TEACHER_MINUTES = "private_course_remind_teacher_minutes";
+    //public static final String PRIVATE_COURSE_REMIND_TEACHER_MINUTES = "private_course_remind_teacher_minutes";
 
     public static final String BEFORE_MINUTES_CAN_SIGN = "before_minutes_can_sign";
     public static final String AFTER_MINUTES_CAN_SIGN = "after_minutes_can_sign";

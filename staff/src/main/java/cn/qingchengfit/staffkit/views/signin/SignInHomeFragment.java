@@ -114,7 +114,10 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
                 if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SETTING)) {
                     showAlert(R.string.alert_permission_forbid);
                 } else {
-                    getFragmentManager().beginTransaction().replace(R.id.student_frag, new SigninConfigListFragment()).commit();
+                    getFragmentManager().beginTransaction()
+                        .replace(R.id.student_frag, new SigninConfigListFragment())
+                        .addToBackStack(null)
+                        .commit();
                 }
                 return true;
             }
