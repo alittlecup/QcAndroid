@@ -62,7 +62,7 @@ public class CommonInputTextFragment extends BaseFragment {
     if (getArguments() != null) {
       title = getArguments().getString("t", "");
       hint = getArguments().getString("h", "");
-      content = getArguments().getString(content);
+      content = getArguments().getString("c");
     }
   }
 

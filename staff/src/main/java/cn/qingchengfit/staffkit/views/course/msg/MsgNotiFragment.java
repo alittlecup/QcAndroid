@@ -134,8 +134,8 @@ import javax.inject.Inject;
         return (mIsPrivate ? ShopConfigs.PRIVATE_BEFORE_REMIND_USER_MINUTES : ShopConfigs.TEAM_BEFORE_REMIND_USER_MINUTES).concat(",")
             .concat(mIsPrivate ? ShopConfigs.PRIVATE_BEFORE_REMIND_USER : ShopConfigs.TEAM_BEFORE_REMIND_USER)
             .concat(",")
-            .concat(mIsPrivate ? ShopConfigs.PRIVATE_COURSE_REMIND_TEACHER_MINUTES : ShopConfigs.TEAM_COURSE_REMIND_TEACHER_MINUTES)
-            .concat(",")
+            //.concat(mIsPrivate ? ShopConfigs.PRIVATE_COURSE_REMIND_TEACHER_MINUTES : ShopConfigs.TEAM_COURSE_REMIND_TEACHER_MINUTES)
+            // .concat(",")
             .concat(
                 mIsPrivate ? ShopConfigs.PRIVATE_SMS_TEACHER_AFTER_USER_ORDER_CANCEL : ShopConfigs.TEAM_SMS_TEACHER_AFTER_USER_ORDER_CANCEL)
             .concat(",")
@@ -164,7 +164,7 @@ import javax.inject.Inject;
                         break;
                     //r人数不足提醒教练
                     case ShopConfigs.TEAM_COURSE_REMIND_TEACHER_MINUTES:
-                    case ShopConfigs.PRIVATE_COURSE_REMIND_TEACHER_MINUTES:
+                    //case ShopConfigs.PRIVATE_COURSE_REMIND_TEACHER_MINUTES:
                         if (c.getValue() instanceof Double) {
                             swLessNoti.setExpanded(c.getValueInt() > 0);
                             swLessNotiMin.setContent(c.getValueInt() + "");

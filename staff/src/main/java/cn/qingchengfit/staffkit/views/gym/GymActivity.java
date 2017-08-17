@@ -21,6 +21,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
@@ -104,7 +105,7 @@ public class GymActivity extends BaseActivity implements ISetGymView, FragCallBa
                 //有权限或者超级管理员
                 if (getIntent().getBooleanExtra("su", false) || (!TextUtils.isEmpty(gymWrapper.shop_id()) && SerPermisAction.check(
                     gymWrapper.shop_id(), PermissionServerUtils.STUDIO_LIST_CAN_WRITE))) {
-                    fragment = GymInfoFragmentBuilder.newGymInfoFragment(gymWrapper.getCoachService());
+                    fragment = EditGymInfoFragment.newInstance(gymWrapper.getCoachService().gym_id());
                 } else {
                     fragment = new GymInfoNoEditFragment();
                 }
@@ -114,7 +115,10 @@ public class GymActivity extends BaseActivity implements ISetGymView, FragCallBa
                 break;
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.frag, fragment).commit();
+        getSupportFragmentManager().beginTransaction()
+            .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
+            .replace(R.id.frag, fragment)
+            .commit();
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {

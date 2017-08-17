@@ -206,8 +206,7 @@
           <ImageView
               android:layout_width="18dp"
               android:layout_height="18dp"
-
-              android:src="@drawable/vd_card_minus"
+              app:srcCompat="@drawable/vd_card_minus"
               tools:src="@drawable/vd_card_minus"
               />
 
@@ -231,7 +230,7 @@
           <ImageView
               android:layout_width="18dp"
               android:layout_height="18dp"
-              android:src="@drawable/vd_card_pause"
+              app:srcCompat="@drawable/vd_card_pause"
               tools:src="@drawable/vd_card_pause"
               />
 

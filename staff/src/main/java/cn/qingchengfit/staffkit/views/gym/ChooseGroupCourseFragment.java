@@ -24,6 +24,7 @@ import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.model.responese.CourseTypeSamples;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -174,16 +175,12 @@ public class ChooseGroupCourseFragment extends BaseDialogFragment {
                         // ToastUtils.logHttp(qcResponseChooseCourses);
                     }
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-
-                }
-            });
+            }, new NetWorkThrowable());
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         freshData();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override public void onDestroyView() {

@@ -83,7 +83,7 @@ public class RegisteFragment extends Fragment {
         });
         checkcode.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                getCode();
+                    getCode();
             }
         });
         return view;
