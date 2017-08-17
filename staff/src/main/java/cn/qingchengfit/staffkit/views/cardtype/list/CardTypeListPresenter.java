@@ -8,6 +8,7 @@ import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
@@ -15,6 +16,7 @@ import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.CardTypeUsecase;
 import cn.qingchengfit.utils.StringUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -98,6 +100,7 @@ public class CardTypeListPresenter extends BasePresenter {
                 }
 
                 @Override public void onError(Throwable e) {
+                    ToastUtils.show(e.getMessage());
                 }
 
                 @Override public void onNext(QcResponseData<CardTpls> qcResponse) {

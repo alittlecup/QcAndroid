@@ -22,6 +22,7 @@ import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
@@ -168,7 +169,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
                 if (isSuccess) {
                     Glide.with(getContext()).load(new File(filePath)).placeholder(R.drawable.ic_default_header).into(headerImg);
                     showLoading();
-                    RxRegiste(UpYunClient.rxUpLoad("/course/", filePath).subscribe(new Action1<String>() {
+                    RxRegiste(UpYunClient.rxUpLoad("/course/", filePath).timeout(5000, TimeUnit.MILLISECONDS).subscribe(new Action1<String>() {
                         @Override public void call(String s) {
                             Glide.with(getContext()).load(PhotoUtils.getSmall(s)).placeholder(R.drawable.ic_default_header).into(headerImg);
                             mCourse.setPhoto(s);

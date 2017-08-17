@@ -19,6 +19,7 @@ import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
 import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
+import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -407,7 +408,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.UpgradeInfoDialogFragmentModule.class, AppComponent.RenewalHistoryFragmentModule.class, AppComponent.GuideModule.class,
     AppComponent.CardListFragmentModule.class, AppComponent.MutiChooseGymFragmentModule.class, AppComponent.SetGymFragmentModule.class,
     AppComponent.CourseTypeFormFragmentModule.class, AppComponent.SignUpChooseModule.class, AppComponent.SignUpDetailModule.class,
-    AppComponent.ChooseCoachFragmentModule.class,
+    AppComponent.ChooseCoachFragmentModule.class, AppComponent.EditGymInfoFragmentModule.class,
     //文章评论
     AppComponent.ArticleCommentsListFragmentModule.class, AppComponent.ArticleReplyFragmentModule.class,
     AppComponent.ChooseOriginModule.class,
@@ -508,6 +509,7 @@ import dagger.multibindings.IntoMap;
      */
     AppComponent.JobSearchChatModule.class, AppComponent.RecruitMessageListFragmentModule.class,
     //AppComponent.JobSearchChatModule.class,
+
 })
 
 public interface AppComponent {
@@ -3965,6 +3967,14 @@ public interface AppComponent {
     @Binds @IntoMap @FragmentKey(ChooseStaffFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ChooseStaffFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface EditGymInfoFragmentSubcomponent extends AndroidInjector<EditGymInfoFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<EditGymInfoFragment> {}
+    }
+    @Module(subcomponents = EditGymInfoFragmentSubcomponent.class) abstract class EditGymInfoFragmentModule {
+        @Binds @IntoMap @FragmentKey(EditGymInfoFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(EditGymInfoFragmentSubcomponent.Builder builder);
     }
 
 }

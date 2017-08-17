@@ -183,7 +183,11 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
   @Override public void onEditOk() {
     hideLoading();
     RxBus.getBus().post(new EventFreshGyms());
-    getActivity().getSupportFragmentManager().popBackStackImmediate();
+    if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 1) {
+      getActivity().getSupportFragmentManager().popBackStackImmediate();
+    }else{
+      getActivity().finish();
+    }
   }
 
   @Override public boolean onFragmentBackPress() {
@@ -192,7 +196,11 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
             dialog.dismiss();
-            getActivity().getSupportFragmentManager().popBackStackImmediate();
+            if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 1) {
+              getActivity().getSupportFragmentManager().popBackStackImmediate();
+            }else{
+              getActivity().finish();
+            }
           }
         }).show();
     return true;
