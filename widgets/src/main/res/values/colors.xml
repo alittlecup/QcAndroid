@@ -52,7 +52,7 @@
   <color name="qc_snackbar_bg">#F9944E</color>
   <color name="warning_orange">#F9944E</color>
 
-  <color name="qc_allotsale_green">?colorPrimary</color>
+  <color name="qc_allotsale_green">@color/colorPrimary</color>
   <color name="qc_allotsale_search_bg">#fafafa</color>
 
   <color name="qc_student_status_0">#6eb8f1</color>
