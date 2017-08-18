@@ -21,7 +21,6 @@ import com.qingchengfit.fitcoach.fragment.RecordFragment;
 import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
 import com.qingchengfit.fitcoach.fragment.personalpage.EditHomeFragment;
 import com.qingchengfit.fitcoach.fragment.personalpage.EditResumeFragmentBuilder;
-import com.tencent.mm.opensdk.constants.Build;
 
 public class SettingActivity extends BaseActivity
     implements FragmentCallBack, WebActivityInterface {
@@ -37,7 +36,7 @@ public class SettingActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
-        if (Build.SDK_INT >=21)
+        if (android.os.Build.VERSION.SDK_INT >=21)
             getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.toolbar));
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         fragmentManager = getSupportFragmentManager();
