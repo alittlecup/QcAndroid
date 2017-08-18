@@ -113,7 +113,7 @@ public class BatchDetailPresenter extends BasePresenter {
                     view.onTimeRepeat(qcResponsePrivateBatchDetail.data.batch.from_date, qcResponsePrivateBatchDetail.data.batch.to_date,
                         qcResponsePrivateBatchDetail.data.batch.time_repeats);
                 } else {
-
+                    view.onFailed();
                 }
             }
         });
@@ -125,6 +125,7 @@ public class BatchDetailPresenter extends BasePresenter {
                 if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                     view.checkOk();
                 } else {
+                    view.onCheckFaild(qcResponse.getMsg());
                     ToastUtils.logHttp(qcResponse);
                 }
             }
