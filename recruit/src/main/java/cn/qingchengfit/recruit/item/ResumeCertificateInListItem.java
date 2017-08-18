@@ -49,7 +49,7 @@ public class ResumeCertificateInListItem extends AbstractFlexibleItem<ResumeCert
       holder.tvCertificateOrganization.setText(certificate.organization.name);
       holder.tvCertificateOrganizationAddress.setText(certificate.project_name);
       holder.tvCertificateName.setText(certificate.name);
-      holder.tvMeetingStart.setText(DateUtils.getYYMMfromServer(certificate.meeting_start));
+      holder.tvMeetingStart.setText(DateUtils.getYYMMfromServer(certificate.date_of_issue));
     }
     holder.tvCertificateName.setText(certificate.name);
 
