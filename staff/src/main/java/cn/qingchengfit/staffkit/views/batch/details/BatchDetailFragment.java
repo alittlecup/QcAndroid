@@ -389,6 +389,11 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
         ToastUtils.show("修改失败");
     }
 
+    @Override public void onCheckFaild(String s) {
+        hideLoading();
+        showAlert(s);
+    }
+
     @Override public void onDelOk() {
         hideLoading();
         getActivity().getSupportFragmentManager().popBackStackImmediate();

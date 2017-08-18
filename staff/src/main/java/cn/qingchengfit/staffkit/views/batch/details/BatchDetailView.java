@@ -38,6 +38,6 @@ public interface BatchDetailView extends PView {
     void onSuccess();
 
     void onFailed();
-
+    void onCheckFaild(String s);
     void onDelOk();
 }
