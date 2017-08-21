@@ -36,15 +36,8 @@ import javax.inject.Inject;
 
 public class SaasRouter extends ModuleRouter {
 
-
-
   @Inject SaasContainerActivity activity;
   @Inject GymWrapper gymWrapper;
-  @Inject ICourseRouter iCourseRouter;
-
-
-  //HashMap<String,Object> modules = new HashMap<>();
-
 
   @Inject public SaasRouter() {
   }

@@ -14,10 +14,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.others.ToolbarBean;
+import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
+import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
-import cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -72,7 +73,7 @@ public class StaffManageActivity extends BaseActivity implements FragCallBack {
         Fragment fragment = null;
         switch (getIntent().getIntExtra("to", 0)) {
             case STAFF:
-                fragment = new StaffListFragment();
+                fragment = StaffListFragment.newInstance(App.staffId);
                 break;
             case COACH:
                 fragment = new CoachListFragment();

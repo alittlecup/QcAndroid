@@ -2548,26 +2548,6 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardSubcomponent.Builder builder);
     }
 
-    //void inject(RealCardListFragment activity);
-    //
-    //void inject(BalanceCardListFragment activity);
-    //
-    //void inject(FilterHeadCommonFragment activity);
-    //
-    //void inject(AutoNotifySettingFragment activity);
-    //
-    ////void inject(ChangeAutoNotifyFragment fragment);
-    //
-    //
-    ////void inject(GymConfigFragment i);
-    //
-    //void inject(DataStatementFragment i);
-    //
-    //void inject(SalerChooseDialogFragment i);
-    //
-    //void inject(StudentSearchFragment i);
-
-    //cn.qingchengfit.inject.commpont.CommonComponent plus(GymMoudle gymMoudle);
 
   @Module(subcomponents = GymSubcomponent.class) abstract class GymModule {
     @Binds @IntoMap @ActivityKey(GymActivity.class)
@@ -4069,7 +4049,7 @@ public interface AppComponent {
     @Binds @IntoMap @FragmentKey(ChooseStaffFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ChooseStaffFragmentSubcomponent.Builder builder);
-    }
+  }
 
   @Module(subcomponents = NotiSettingChargeHistoryFragmentSubcomponent.class)
   abstract class NotiSettingChargeHistoryFragmentModule {

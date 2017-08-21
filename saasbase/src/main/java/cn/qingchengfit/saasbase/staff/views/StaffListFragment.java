@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.gym.staff;
+package cn.qingchengfit.saasbase.staff.views;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -24,24 +24,25 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.StaffShip;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.views.QRActivity;
-import cn.qingchengfit.staffkit.views.adapter.StaffAdapter;
-import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
-import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
-import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
-import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saasbase.staff.adapter.StaffAdapter;
+import cn.qingchengfit.saasbase.staff.common.StaffConstant;
+import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
+import cn.qingchengfit.saasbase.staff.presenter.StaffListPresenter;
+import cn.qingchengfit.saasbase.staff.presenter.StaffListView;
+import cn.qingchengfit.saasbase.utils.IntentUtils;
+import cn.qingchengfit.utils.CircleImgWrapper;
+import cn.qingchengfit.utils.DividerItemDecoration;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
-import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
-import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -63,21 +64,21 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
 
   public static final int RESULT_FLOW = 1;
 
-  @BindView(R.id.recyclerview) RecyclerView recyclerview;
+  @BindView(R2.id.recyclerview) RecyclerView recyclerview;
 
   @Inject StaffListPresenter presenter;
-  @BindView(R.id.nodata) LinearLayout nodata;
-  @BindView(R.id.loading_layout) LinearLayout loadingLayout;
-  @BindView(R.id.su_admin_title) TextView suAdminTitle;
-  @BindView(R.id.su_avatar) ImageView suAvatar;
-  @BindView(R.id.su_name) TextView suName;
-  @BindView(R.id.su_phone) TextView suPhone;
+  @BindView(R2.id.nodata) LinearLayout nodata;
+  @BindView(R2.id.loading_layout) LinearLayout loadingLayout;
+  @BindView(R2.id.su_admin_title) TextView suAdminTitle;
+  @BindView(R2.id.su_avatar) ImageView suAvatar;
+  @BindView(R2.id.su_name) TextView suName;
+  @BindView(R2.id.su_phone) TextView suPhone;
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitile;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
 
   private Staff mSelf;
 
@@ -86,6 +87,15 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
   private boolean isLoading = false;
 
   private Staff mSu;
+  private String staffId;
+
+  public static StaffListFragment newInstance(String staffId) {
+    Bundle args = new Bundle();
+    args.putString("staff", staffId);
+    StaffListFragment fragment = new StaffListFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -94,6 +104,9 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
+    if (getArguments() != null){
+      staffId = getArguments().getString("staff");
+    }
     suAdminTitle.setCompoundDrawablesWithIntrinsicBounds(
         ContextCompat.getDrawable(getContext(), R.drawable.ic_superadmin_crown), null, null, null);
     suAdminTitle.setCompoundDrawablePadding(16);
@@ -107,14 +120,14 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     adatper.setListener(new OnRecycleItemClickListener() {
       @Override public void onItemClick(View v, int pos) {
 
-        getFragmentManager().beginTransaction()
-            .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(datas.get(pos)))
-            .addToBackStack(null)
-            .commit();
+        //getFragmentManager().beginTransaction()
+        //    .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(datas.get(pos)))
+        //    .addToBackStack(null)
+        //    .commit();
       }
     });
-    presenter.querSelfInfo(App.staffId);
-    presenter.queryData(null);
+    presenter.querSelfInfo(staffId);
+    presenter.queryData(staffId, null);
 
     if (isLoading) loadingLayout.setVisibility(View.GONE);
     isLoading = true;
@@ -129,8 +142,8 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.action_search) {
         } else if (item.getItemId() == R.id.action_flow) {
-          BottomSheetListDialogFragment.start(StaffListFragment.this, RESULT_FLOW,
-              new String[] { "工作人员职位与权限设置" });
+          //BottomSheetListDialogFragment.start(StaffListFragment.this, RESULT_FLOW,
+          //    new String[] { "工作人员职位与权限设置" });
         }
         return true;
       }
@@ -146,7 +159,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
       @Override public boolean onClose() {
         toolbarTitile.setVisibility(View.VISIBLE);
-        presenter.queryData(null);
+        presenter.queryData(staffId, null);
         return false;
       }
     });
@@ -157,7 +170,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     });
     mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
       @Override public boolean onQueryTextSubmit(String query) {
-        presenter.queryData(query);
+        presenter.queryData(staffId, query);
         return false;
       }
 
@@ -187,7 +200,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
               + "&model="
               + gymWrapper.model()
               + "&module="
-              + GymFunctionFactory.PERMISSION_STAFF);
+              + StaffConstant.PERMISSION_STAFF);
           startActivity(toScan);
         } else {//
 
@@ -196,16 +209,17 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     }
   }
 
-  @OnClick(R.id.fab_add_staff) public void addStaff() {
+  @OnClick(R2.id.fab_add_staff) public void addStaff() {
 
     if (!serPermisAction.check(PermissionServerUtils.MANAGE_STAFF_CAN_WRITE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
     }
-    getFragmentManager().beginTransaction()
-        .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(null))
-        .addToBackStack(null)
-        .commit();
+    //TODO 工作人员列表跳转工作人员详情的
+    //getFragmentManager().beginTransaction()
+    //    .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(null))
+    //    .addToBackStack(null)
+    //    .commit();
   }
 
   @Override public String getFragmentName() {
@@ -249,13 +263,13 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     //        recyclerview.setFresh(false);
   }
 
-  @OnClick(R.id.layout_su) public void onClickSu() {
+  @OnClick(R2.id.layout_su) public void onClickSu() {
     if (mSu != null && mSelf != null && mSu.getPhone().equalsIgnoreCase(mSelf.getPhone())) {
-      getFragmentManager().beginTransaction()
-          .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
-          .replace(mCallbackActivity.getFragId(), new SuFragmentBuilder(mSu).build())
-          .addToBackStack(getFragmentName())
-          .commit();
+      //getFragmentManager().beginTransaction()
+      //    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
+      //    .replace(mCallbackActivity.getFragId(), new SuFragmentBuilder(mSu).build())
+      //    .addToBackStack(getFragmentName())
+      //    .commit();
     } else {
       showAlert("仅超级管理员本人有权限查看其基本信息");
     }

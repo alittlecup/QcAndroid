@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.cards.di;
 
 import cn.qingchengfit.saasbase.SaasContainerActivity;
+import cn.qingchengfit.saasbase.staff.di.StaffDI;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
@@ -28,6 +29,6 @@ import dagger.android.ContributesAndroidInjector;
   @ContributesAndroidInjector(modules = {
       CardTplDI.CardTypeListFragmentModule.class,
       CardTplDI.CardTypesHomeInGymFragmentModule.class,
-      CardTplDI.ChooseCardTplFragmentModule.class,
+      CardTplDI.ChooseCardTplFragmentModule.class, StaffDI. StaffListFragmentModule.class,
   }) abstract SaasContainerActivity contributeSassContainerActivityInjector();
 }

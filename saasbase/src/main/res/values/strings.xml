@@ -2,4 +2,24 @@
   <string name="app_name">saasbase</string>
   <string name="input_money">请输入金额</string>
 
+  <string name="oem_tag">@string/oem</string>
+  <string name="oem">staff-test</string>
+
+  <!--菜单相关-->
+  <string name="edit">编辑</string>
+
+  <!--提示-->
+  <string name="sorry_for_no_permission">抱歉，您无权限查看该模块</string>
+
+  <!--工作人员列表、教练列表-->
+  <string name="su_manager">超级管理员</string>
+  <string name="manager">工作人员</string>
+  <string name="desperately_loading">玩儿命加载中…</string>
+
+  <!--扫描二维码-->
+  <string name="open_link_in_computer">请在电脑浏览器中打开以下网址</string>
+  <string name="scan_url">sao.qingchengfit.cn</string>
+  <string name="realy_open_next">我已经打开，下一步</string>
+  <string name="err_sacn_qrcode">无法识别该二维码，请确认后再进行扫描。</string>
+
 </resources>
