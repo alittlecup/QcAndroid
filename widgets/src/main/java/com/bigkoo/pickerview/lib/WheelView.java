@@ -86,7 +86,7 @@ public class WheelView extends View {
   /**
    * Left and right padding value
    */
-  private static final int PADDING = 5;
+  private static final int PADDING = 10;
   /**
    * Default count of visible items
    */
@@ -94,11 +94,11 @@ public class WheelView extends View {
   /**
    * Label offset , dip
    */
-  private static int LABEL_OFFSET_DIP = 5;
+  private static int LABEL_OFFSET_DIP = 20;
   /**
    * Label offset
    */
-  private static int LABEL_OFFSET = 5;
+  private static int LABEL_OFFSET = 30;
   // Messages
   private final int MESSAGE_SCROLL = 0;
   private final int MESSAGE_JUSTIFY = 1;
@@ -845,7 +845,7 @@ public class WheelView extends View {
   private void drawCenterRect(Canvas canvas) {
     int center = getHeight() / 2;
     int offset = getItemHeight() / 2;
-    centerDrawable.setBounds(0, center - offset, getWidth() + 20, center + offset);
+    centerDrawable.setBounds(0, center - offset, getWidth(), center + offset);
     centerDrawable.draw(canvas);
   }
 
