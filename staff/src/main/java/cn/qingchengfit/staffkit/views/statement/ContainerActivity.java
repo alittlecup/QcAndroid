@@ -119,7 +119,7 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 fragment = new CoachListFragment();
                 break;
             case GymFunctionFactory.MODULE_MANAGE_STAFF:
-                fragment = StaffListFragment.newInstance(App.staffId);
+                fragment = new StaffListFragment();
                 break;
             case GymFunctionFactory.MODULE_MANAGE_STAFF_ADD:
                 fragment = StaffDetailFragment.newInstance(null);

@@ -73,7 +73,7 @@ public class StaffManageActivity extends BaseActivity implements FragCallBack {
         Fragment fragment = null;
         switch (getIntent().getIntExtra("to", 0)) {
             case STAFF:
-                fragment = StaffListFragment.newInstance(App.staffId);
+                fragment = new StaffListFragment();
                 break;
             case COACH:
                 fragment = new CoachListFragment();
