@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
 import cn.qingchengfit.chat.model.ChatGym;
+import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
@@ -175,7 +176,8 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
                 break;
             case CHOOSE_ADDRESS:
                 toolbarLayout.setVisibility(View.GONE);
-                fragment = new ChooseAddressFragment();
+                Gym mGym = getIntent().getParcelableExtra("gym");
+                fragment = ChooseAddressFragment.newInstance(mGym.gd_lng, mGym.gd_lat, mGym.getAddress(), mGym.gd_district.city.name, mGym.gd_district.city.id);
                 break;
             default:
                 fragment = GymCourseListFragment.newInstance(getIntent().getIntExtra("type", Configs.TYPE_GROUP));

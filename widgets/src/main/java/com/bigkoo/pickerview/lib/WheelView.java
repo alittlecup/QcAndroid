@@ -92,7 +92,7 @@ public class WheelView extends View {
    */
   private static final int DEF_VISIBLE_ITEMS = 7;
   /**
-   * Label offset ,   dip
+   * Label offset , dip
    */
   private static int LABEL_OFFSET_DIP = 20;
   /**
@@ -145,6 +145,9 @@ public class WheelView extends View {
   // Listeners
   private List<OnWheelChangedListener> changingListeners = new LinkedList<OnWheelChangedListener>();
   private List<OnWheelScrollListener> scrollingListeners = new LinkedList<OnWheelScrollListener>();
+
+  private int maxLength;
+
   // animation handler
   private Handler animationHandler = new Handler() {
     @Override public void handleMessage(Message msg) {
@@ -238,6 +241,17 @@ public class WheelView extends View {
     scroller = new Scroller(context);
   }
 
+  private int compareLength(){
+    int max = 0;
+    if (adapter != null){
+      for (int i = 0; i < adapter.getItemsCount(); i++){
+        int length = adapter.getItem(i).length();
+        max = max > length ? max : length;
+      }
+    }
+    return max;
+  }
+
   /**
    * Gets wheel adapter
    *
@@ -254,6 +268,7 @@ public class WheelView extends View {
    */
   public void setAdapter(WheelAdapter adapter) {
     this.adapter = adapter;
+    maxLength = compareLength();
     invalidateLayouts();
     invalidate();
   }
@@ -573,7 +588,7 @@ public class WheelView extends View {
       return 0;
     }
 
-    int adapterLength = adapter.getMaximumLength();
+    int adapterLength = maxLength == 0 ? adapter.getMaximumLength() : maxLength + 1;
     if (adapterLength > 0) {
       return adapterLength;
     }

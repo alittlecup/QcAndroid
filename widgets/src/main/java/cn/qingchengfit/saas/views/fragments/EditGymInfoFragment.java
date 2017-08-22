@@ -32,6 +32,7 @@ import cn.qingchengfit.widgets.R2;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import eu.davidea.flexibleadapter.items.IFilterable;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -67,6 +68,7 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
   @BindView(R2.id.descripe) CommonInputView descripe;
   @Inject BaseGymInfoPresenter presenter;
   private ChoosePictureFragmentNewDialog choosePicFragment;
+  private Gym gym = new Gym();
 
   public static EditGymInfoFragment newInstance(String gymid) {
     Bundle args = new Bundle();
@@ -150,7 +152,7 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
         .subscribe(new Action1<Boolean>() {
           @Override public void call(Boolean aBoolean) {
             if (aBoolean) {
-              BaseRouter.toChoose(getContext(), 71);
+              BaseRouter.toChoose(getContext(), 71, gym);
             } else {
               ToastUtils.show("您拒绝了定位权限");
             }
@@ -169,6 +171,9 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
   }
 
   @Override public void onGym(Gym gym) {
+    if (gym != null) {
+      this.gym = gym;
+    }
     PhotoUtils.smallCircle(header, gym.getPhoto());
     gymName.setContent(gym.name);
     civAddress.setContent(gym.getAddressStr());

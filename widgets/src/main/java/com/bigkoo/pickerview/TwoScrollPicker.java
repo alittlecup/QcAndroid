@@ -84,6 +84,20 @@ public class TwoScrollPicker extends Dialog {
         show();
     }
 
+    public void show(ArrayList<String> leftdatas, ArrayList<String> rightdatas, int leftPos, int rightPos, String label) {
+        wheelviewleft.setAdapter(new ArrayWheelAdapter<String>(leftdatas));// 设置"年"的显示数据
+        wheelviewleft.TEXT_SIZE = 50;
+        wheelviewleft.setCyclic(false);
+        wheelviewleft.setLabel(label);
+        wheelviewleft.setCurrentItem(leftPos);
+        wheelviewright.setAdapter(new ArrayWheelAdapter<>(rightdatas));
+        wheelviewright.TEXT_SIZE = 50;
+        wheelviewright.setCyclic(false);
+        wheelviewright.setLabel(label);
+        wheelviewright.setCurrentItem(rightPos);
+        show();
+    }
+
     public void show(int minL, int maxL, int minR, int maxR, int interval, int posL, int posR) {
         wheelviewleft.setAdapter(new NumericWheelAdapter(minL, maxL, interval));// 设置"年"的显示数据
         wheelviewleft.TEXT_SIZE = 50;
