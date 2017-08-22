@@ -122,10 +122,10 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     private List<CoachBean> coaches = new ArrayList<>();
 
     public static EditStudentInfoFragment newInstance(boolean isAdd, User_Student student) {
-         Bundle args = new Bundle();
+        Bundle args = new Bundle();
         args.putBoolean("add", isAdd);
         args.putParcelable("student", student);
-         EditStudentInfoFragment fragment = new EditStudentInfoFragment();
+        EditStudentInfoFragment fragment = new EditStudentInfoFragment();
         fragment.setArguments(args);
         return fragment;
     }

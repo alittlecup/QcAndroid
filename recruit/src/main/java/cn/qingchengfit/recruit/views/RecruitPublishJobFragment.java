@@ -313,7 +313,11 @@ import rx.schedulers.Schedulers;
             return;
           }
           body.min_salary = (left - 1) * 1000;
-          body.max_salary = right * 1000;
+          if (right == 0){
+            body.max_salary = -1;
+          }else {
+            body.max_salary = right * 1000;
+          }
           civSalaryRank.setContent(
               RecruitBusinessUtils.getSalary(body.min_salary, body.max_salary));
         }
@@ -323,9 +327,10 @@ import rx.schedulers.Schedulers;
     final ArrayList<String> l = new ArrayList<>();
     final ArrayList<String> r = new ArrayList<>();
     l.add("面议");
+    r.add("不限");
     for (int i = 0; i < 100; i++) {
       l.add(i + "K");
-      r.add(i + "K");
+      r.add((i + 1) + "K");
     }
     l.add("100K以上");
     twoScrollPicker.show(l, r, body.min_salary + 1, body.max_salary);

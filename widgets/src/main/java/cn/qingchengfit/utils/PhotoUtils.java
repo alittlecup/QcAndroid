@@ -84,7 +84,7 @@ public class PhotoUtils {
   }
 
   public static void small(ImageView v, String url) {
-    origin(v, getSmall(url), R.drawable.img_loadingimage, R.drawable.img_loadingimage);
+    origin(v, getSmall(url), R.drawable.img_recruit_default, R.drawable.img_recruit_default);
   }
 
   public static void small(ImageView v, String url, int loading) {

@@ -3,6 +3,7 @@ package cn.qingchengfit.views.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,10 +71,35 @@ public class ChooseAddressFragment extends BaseFragment {
     private String mCityCode;
     private Unbinder unbinder;
     private CitiesChooser mCitiesChooser;
+    private Double g_lon;
+    private Double g_lat;
+    private String defaultAddress;
+    private String city;
+
+    public static ChooseAddressFragment newInstance(Double g_lon, Double g_lat, String address,
+        String city, String cityCode) {
+
+        Bundle args = new Bundle();
+        args.putDouble("g_lon", g_lon);
+        args.putDouble("g_lat", g_lat);
+        args.putString("address", address);
+        args.putString("city", city);
+        args.putString("cityCode", cityCode);
+        ChooseAddressFragment fragment = new ChooseAddressFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_address, container, false);
         unbinder = ButterKnife.bind(this, view);
+        if (getArguments() != null){
+            g_lon = getArguments().getDouble("g_lon");
+            g_lat = getArguments().getDouble("g_lat");
+            defaultAddress = getArguments().getString("address");
+            city = getArguments().getString("city");
+            mCityCode = getArguments().getString("cityCode");
+        }
         initToolbar(toolbar);
         toolbarTitle.setText("选择地址");
         toolbar.inflateMenu(R.menu.menu_comfirm);
@@ -108,7 +134,15 @@ public class ChooseAddressFragment extends BaseFragment {
                 mLocationOption = new AMapLocationClientOption();
                 mLocationClient.setLocationOption(mLocationOption);
 
-                mLocationClient.startLocation();
+                if (TextUtils.isEmpty(defaultAddress)){
+                    mLocationClient.startLocation();
+                    showLoading();
+                }else{
+                    cityName.setText(city);
+                    address.setContent(defaultAddress);
+                    mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+                        new CameraPosition(new LatLng(g_lat, g_lon), 18, 0, 0)));
+                }
                 mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
                 mLocationClient.setLocationListener(new AMapLocationListener() {
                     @Override public void onLocationChanged(AMapLocation aMapLocation) {
@@ -127,8 +161,6 @@ public class ChooseAddressFragment extends BaseFragment {
                 });
             }
         });
-
-        showLoading();
         return view;
     }
 

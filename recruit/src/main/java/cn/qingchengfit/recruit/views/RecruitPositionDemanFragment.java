@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -237,46 +238,69 @@ import java.util.Arrays;
   @OnClick(R2.id.civ_work_height) public void onSelectWorkHeight() {
     final ArrayList<String> d = new ArrayList<>();
     d.add("不限");
-    for (int i = 0; i < 250; i++) {
-      d.add(i + "cm");
+    for (int i = 0; i <= 60; i++) {
+      d.add(i + 140 + "cm");
     }
+
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
         if (left != 0 && right != 0 && left >= right) {
           ToastUtils.show("请选择正确的条件区间");
         } else {
-          jobBody.min_height = left - 1f;
-          jobBody.max_height = right - 1f;
+          if (left == 0){
+            jobBody.min_height = -1f;
+          }else {
+            jobBody.min_height = left + 139f;
+          }
+          if (right == 0){
+            jobBody.max_height = -1f;
+          }else {
+            jobBody.max_height = right + 139f;
+          }
           civWorkHeight.setContent(
               RecruitBusinessUtils.getHeight(jobBody.min_height, jobBody.max_height));
         }
       }
     });
-    twoScrollPicker.show(d, d, jobBody.min_height.intValue() + 1,
-        jobBody.max_height.intValue() + 1);
+    if (TextUtils.isEmpty(jobBody.name)){
+      twoScrollPicker.show(d, d, jobBody.min_height.intValue() + 22 , jobBody.max_height.intValue() + 42);
+    }else {
+      twoScrollPicker.show(d, d, jobBody.min_height.intValue(), jobBody.max_height.intValue());
+    }
   }
 
   //选择体重
   @OnClick(R2.id.civ_work_weight) public void onSelectWorkWeight() {
     final ArrayList<String> d = new ArrayList<>();
     d.add("不限");
-    for (int i = 0; i < 250; i++) {
-      d.add(i + "Kg");
+    for (int i = 0; i <= 60; i++) {
+      d.add(i + 140 + "kg");
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
         if (left != 0 && right != 0 && left >= right) {
           ToastUtils.show("请选择正确的条件区间");
         } else {
-          jobBody.min_weight = left - 1f;
-          jobBody.max_weight = right - 1f;
+          if (left == 0){
+            jobBody.min_weight = -1f;
+          }else {
+            jobBody.min_weight = left + 139f;
+          }
+          if (right == 0){
+            jobBody.max_weight = -1f;
+          }else {
+            jobBody.max_weight = right + 139f;
+          }
           civWorkWeight.setContent(
               RecruitBusinessUtils.getWeight(jobBody.min_weight, jobBody.max_weight));
         }
       }
     });
-    twoScrollPicker.show(d, d, jobBody.min_weight.intValue() + 1,
-        jobBody.max_weight.intValue() + 1);
+    if (TextUtils.isEmpty(jobBody.name)){
+      twoScrollPicker.show(d, d, jobBody.min_weight.intValue() + 22 , jobBody.max_weight.intValue() + 42);
+    }else {
+      twoScrollPicker.show(d, d, jobBody.min_weight.intValue(), jobBody.max_weight.intValue());
+    }
   }
 
   @Override public boolean onFragmentBackPress() {

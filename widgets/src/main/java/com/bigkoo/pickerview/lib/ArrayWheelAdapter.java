@@ -12,7 +12,7 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
     /**
      * The default items length
      */
-    public static final int DEFAULT_LENGTH = 4;
+    public static final int DEFAULT_LENGTH = 6;
 
     // items
     private ArrayList<T> items;

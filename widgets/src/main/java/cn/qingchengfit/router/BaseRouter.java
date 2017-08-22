@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.WebActivity;
 import java.util.HashMap;
@@ -67,12 +68,13 @@ public class BaseRouter {
     }
   }
 
-  public static void toChoose(Context context, int type) {
+  public static void toChoose(Context context, int type, Gym gym) {
     try {
       Intent toLogin = new Intent();
       toLogin.setPackage(context.getPackageName());
       toLogin.setAction("cn.qingcheng.choose");
       toLogin.putExtra("to", 71);
+      toLogin.putExtra("gym", gym);
       context.startActivity(toLogin);
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
