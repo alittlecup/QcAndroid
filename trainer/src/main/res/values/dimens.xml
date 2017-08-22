@@ -1,0 +1,44 @@
+<resources>
+  <!-- Default screen margins, per the Android Design guidelines. -->
+  <dimen name="activity_horizontal_margin">16dp</dimen>
+  <dimen name="activity_vertical_margin">16dp</dimen>
+  <dimen name="qc_item_height">48dp</dimen>
+  <dimen name="qc_drawer_item_height">58dp</dimen>
+  <dimen name="qc_edit_drawable_padding">15dp</dimen>
+  <dimen name="qc_notification_size">78.5dp</dimen>
+  <dimen name="qc_dialog_height">200dp</dimen>
+
+
+  <!-- dateTitleLayout -->
+  <dimen name="dateTitleTextSize">18sp</dimen>
+  <dimen name="dateTitlePaddingBottom">5dp</dimen>
+  <!-- weekLayout -->
+  <dimen name="dayOfWeekTextSize">16sp</dimen>
+  <!-- weekRowLayout -->
+  <dimen name="week_bottom_padding">5dp</dimen>
+  <!-- Day of the month -->
+  <dimen name="underline_weight">4dp</dimen>
+  <dimen name="underline_height">4dp</dimen>
+  <dimen name="day_of_month_background_size">23dp</dimen>
+  <dimen name="dayOfMonthIndicatorSize">3dp</dimen>
+  <dimen name="dayOfMonthImageMarginTop">20dp</dimen>
+  <dimen name="padding">8dp</dimen>
+
+  <dimen name="fab_size_normal">56dp</dimen>
+  <dimen name="fab_size_mini">40dp</dimen>
+
+  <dimen name="fab_icon_size">24dp</dimen>
+
+  <dimen name="fab_plus_icon_size">14dp</dimen>
+  <dimen name="fab_plus_icon_stroke">2dp</dimen>
+
+  <dimen name="fab_shadow_offset">3dp</dimen>
+  <dimen name="fab_shadow_radius">9dp</dimen>
+
+  <dimen name="fab_stroke_width">1dp</dimen>
+
+  <dimen name="fab_actions_spacing">16dp</dimen>
+  <dimen name="fab_labels_margin">8dp</dimen>
+  <dimen name="fab_margin">16dp</dimen>
+
+</resources>

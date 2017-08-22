@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <include layout="@layout/layout_recruit_gym_info"/>
+
+  <Space
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/activity_vertical_margin"
+      />
+
+  <!--<cn.qingchengfit.widgets.PagerSlidingTabImageStrip-->
+  <!--android:id="@+id/recruit_gym_tab"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="50dp"-->
+  <!--android:background="@color/white"-->
+  <!--app:pst_text_color="@color/text_black"-->
+  <!--app:pst_text_highlight_color="@color/green"-->
+  <!--app:pst_text_size="15sp"-->
+  <!--/>-->
+  <android.support.design.widget.TabLayout
+      android:id="@+id/recruit_gym_tab"
+      style="@style/QcTabLayout"
+      />
+
+  <include layout="@layout/divider_grey"/>
+  <android.support.v4.view.ViewPager
+      android:id="@+id/vp"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+</LinearLayout>

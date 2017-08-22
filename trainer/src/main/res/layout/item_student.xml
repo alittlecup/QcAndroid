@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:id="@+id/item_student_alpha"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/backgroud_grey"
+      android:paddingBottom="4dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingTop="4dp"
+      android:textColor="@color/red"
+      android:textSize="14sp"
+      tools:text="A"
+      />
+
+  <RelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="90dp"
+      android:orientation="vertical"
+      >
+
+    <RelativeLayout
+        android:id="@+id/item_student_header_loop"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/circle_outside"
+        >
+
+      <ImageView
+          android:id="@+id/item_student_header"
+          android:layout_width="45dp"
+          android:layout_height="45dp"
+          android:layout_centerInParent="true"
+          />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/item_student_header_loop"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_toRightOf="@id/item_student_header_loop"
+        android:orientation="vertical"
+
+        >
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+
+          >
+
+        <TextView
+            android:id="@+id/item_student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="陈驰元"
+            style="@style/Qc.TextCommonBlack"
+            />
+
+        <ImageView
+            android:id="@+id/item_student_gender"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_gender_signal_female"
+            />
+      </LinearLayout>
+
+
+      <TextView
+          android:id="@+id/item_student_phonenum"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="2dp"
+          tools:text="手机:"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <TextView
+          android:id="@+id/item_student_gymname"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="青橙工作室"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/item_student_header_loop"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_arrow_right_black"
+        />
+
+    <View
+        android:id="@+id/item_student_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="80dp"
+        android:background="@color/divider_white"
+        >
+    </View>
+  </RelativeLayout>
+</LinearLayout>

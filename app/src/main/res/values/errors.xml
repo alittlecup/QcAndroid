@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="err_login_phonenum">请输入正确的手机号码</string>
-    <string name="err_password_not_match">请输入相同的密码</string>
-    <string name="err_password_length">请输入长度为6-16位的密码</string>
-    <string name="err_checkcode_length">验证码错误</string>
-</resources>

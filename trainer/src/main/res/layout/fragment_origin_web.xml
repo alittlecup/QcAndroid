@@ -1,0 +1,66 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/webview_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.fragment.OriginWebFragment"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      >
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:popupTheme="@style/ToolbarStyle.Overflow"
+        app:theme="@style/Qc.toolbarStyle"
+        app:titleTextAppearance="@style/ToolbarStyle"
+        />
+
+    <TextView
+        android:id="@+id/toobar_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|end"
+        android:padding="10dp"
+        android:visibility="gone"
+        tools:text="测试"
+        style="@style/ToolbarStyle"
+        />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="150dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:text="标题标题标题标题标题标题"
+        />
+
+
+  </RelativeLayout>
+
+  <com.tencent.smtt.sdk.WebView
+      android:id="@+id/webview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scrollbars="none"
+      >
+
+  </com.tencent.smtt.sdk.WebView>
+</LinearLayout>

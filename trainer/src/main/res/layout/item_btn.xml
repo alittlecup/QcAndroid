@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:id="@+id/item_text"
+      android:layout_width="200dp"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginTop="20dp"
+      android:clickable="false"
+      style="@style/Qc.CommonBtn"
+      />
+
+  <ImageView
+      android:id="@+id/item_img"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_centerVertical="true"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:visibility="gone"
+      />
+
+  <ImageView
+      android:id="@+id/item_qc_identify"
+
+      android:layout_width="16dp"
+      android:layout_height="16dp"
+      android:layout_alignBottom="@id/item_img"
+      android:layout_alignRight="@id/item_img"
+      android:visibility="gone"
+      />
+
+  <TextView
+      android:id="@+id/item_address"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="12sp"
+      android:visibility="gone"
+      style="@style/Qc.TextCommonGrey"
+
+      />
+</LinearLayout>

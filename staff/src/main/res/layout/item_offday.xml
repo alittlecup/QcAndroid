@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:background="@color/white"
+
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+
+      >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        tools:text="春节放假"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:text="已删除"
+        android:textColor="@color/text_grey"
+        android:textSize="12sp"
+        tools:text="取消上课"
+        />
+
+  </RelativeLayout>
+
+  <TextView
+      android:id="@+id/period"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="4dp"
+      android:singleLine="true"
+      android:textSize="12sp"
+      tools:text="时间:2016-02-12 至 "
+      style="@style/Qc.TextCommonBlack"
+      />
+
+  <TextView
+      android:id="@+id/price"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="4dp"
+      android:singleLine="true"
+      android:textSize="12sp"
+      tools:text="时间:2016-02-12 至 "
+      style="@style/Qc.TextCommonBlack"
+      />
+
+  <TextView
+      android:id="@+id/mark"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="4dp"
+      android:singleLine="true"
+      android:textSize="12sp"
+      tools:text="时间:2016-02-12 至 "
+      style="@style/Qc.TextCommonBlack"
+      />
+
+  <TextView
+      android:id="@+id/controler"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:maxLines="1"
+      android:paddingBottom="@dimen/activity_vertical_margin"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="8dp"
+      android:textSize="12sp"
+      tools:text="时间:2016-02-12 至 "
+      style="@style/Qc.TextCommonGrey"
+
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:id="@+id/layout_btn"
+      android:layout_width="match_parent"
+      android:layout_height="38dp"
+      android:orientation="horizontal"
+      >
+
+    <TextView
+        android:id="@+id/cancel_offday"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:text="删除请假"
+        android:textColor="@color/text_orange"
+        />
+
+    <TextView
+        android:id="@+id/btn_ahead_offday"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_weight="1"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:text="提前销假"
+        android:textColor="@color/colorPrimary"
+        />
+  </LinearLayout>
+
+  <View
+
+      android:id="@+id/divider"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:background="@color/divider_grey"
+      >
+
+  </View>
+</LinearLayout>

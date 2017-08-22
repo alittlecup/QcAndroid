@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:background="@color/white"
+      android:orientation="horizontal"
+      >
+
+    <EditText
+        android:id="@+id/create_group_new_name"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="7"
+        android:background="@drawable/bg_border_white"
+        android:gravity="center_vertical"
+        android:hint="填写组名"
+        android:maxLines="1"
+        android:paddingLeft="15dp"
+        />
+
+    <ImageView
+        android:id="@+id/image_create_clear_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:src="@drawable/ic_et_clear"
+        />
+
+  </LinearLayout>
+
+
+  <TextView
+      android:id="@+id/group_member_count"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="15dp"
+      android:layout_marginTop="15dp"
+      android:paddingLeft="15dp"
+      tools:text="小组成员（0）"
+      />
+
+  <cn.qingchengfit.support.widgets.CompatTextView
+      android:id="@+id/tv_add_member"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/white"
+      android:drawablePadding="8dp"
+      android:paddingLeft="15dp"
+      android:text="添加成员"
+      android:textColor="@color/qc_allotsale_green"
+      app:drawableStart="@drawable/vd_add"
+      />
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recycle_add_member"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:background="@color/white"
+      />
+
+</LinearLayout>

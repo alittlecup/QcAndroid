@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_click"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:id="@+id/item_student_modify_alpha"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/bg_grey"
+      android:paddingBottom="4dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingTop="4dp"
+      android:textColor="@color/red"
+      android:textSize="14sp"
+      tools:text="A"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="74dp"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <CheckBox
+        android:id="@+id/item_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:button="@drawable/radio_selector_allotsale"
+        android:clickable="false"
+        tools:visibility="visible"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+      <ImageView
+          android:id="@+id/item_personal_header"
+          android:layout_width="45dp"
+          android:layout_height="45dp"
+          android:layout_centerHorizontal="true"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          tools:src="@drawable/head"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:orientation="vertical"
+          >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+          <TextView
+              android:id="@+id/item_personal_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="12sp"
+              tools:text="陈驰元"
+              style="@style/Qc.TextCommonBlack"
+              />
+
+          <ImageView
+              android:id="@+id/item_personal_gender"
+              android:layout_width="15dp"
+              android:layout_height="15dp"
+              android:layout_gravity="center_vertical"
+              android:layout_marginLeft="10dp"
+              android:scaleType="fitXY"
+              android:src="@drawable/ic_gender_signal_female"
+              />
+
+          <android.support.v4.widget.Space
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              />
+
+          <TextView
+              android:id="@+id/tv_student_status"
+              android:layout_width="50dp"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="@dimen/activity_horizontal_margin"
+              android:layout_marginRight="@dimen/activity_horizontal_margin"
+              android:gravity="left|center_vertical"
+              android:text=""
+              android:textColor="@color/qc_text_grey"
+              android:textSize="@dimen/min_font"
+              />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/item_person_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="@dimen/min_font"
+            tools:text="15123358198"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <TextView
+            android:id="@+id/item_person_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:maxLines="1"
+            android:textSize="@dimen/min_font"
+            tools:text="教练：撒打算打算打算打算大的"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+      </LinearLayout>
+    </LinearLayout>
+  </LinearLayout>
+</LinearLayout>

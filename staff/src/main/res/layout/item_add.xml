@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white"
+      android:gravity="center"
+      android:orientation="horizontal"
+      >
+
+    <cn.qingchengfit.support.widgets.CompatTextView
+        android:id="@+id/item_gym_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        app:drawableStart="@drawable/vd_add"
+        tools:text=" 新增健身房"
+        style="@style/Qc.TextCommonGrey"
+        />
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/item_gym_header"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:contentDescription="@string/app_name"
+      android:scaleType="fitXY"
+      />
+
+  <TextView
+      android:id="@+id/item_is_personal"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:background="@drawable/bg_tag_red"
+      android:gravity="center"
+      android:textColor="@color/white"
+      android:textSize="12sp"
+      android:visibility="gone"
+      tools:text="V"
+      />
+
+  <ImageView
+      android:id="@+id/qc_identify"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:contentDescription="@string/app_name"
+      android:scaleType="fitXY"
+      android:src="@drawable/ic_camara"
+      android:visibility="gone"
+      />
+
+  <ImageView
+      android:id="@+id/item_right"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:contentDescription="@string/app_name"
+      android:src="@drawable/ic_arrow_right"
+      android:visibility="gone"
+      />
+
+  <TextView
+      android:id="@+id/item_gym_brand"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="2dp"
+      android:visibility="gone"
+      tools:text="品牌"
+      style="@style/Qc.TextCommonGrey"
+      />
+
+  <TextView
+      android:id="@+id/item_gym_phonenum"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginTop="2dp"
+      android:visibility="gone"
+      tools:text="联系电话:"
+      style="@style/Qc.TextCommonGrey"
+      />
+
+  <View
+      android:id="@+id/hiden"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      />
+</FrameLayout>

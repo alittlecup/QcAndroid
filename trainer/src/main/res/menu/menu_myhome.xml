@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.qingchengfit.fitcoach.activity.SettingActivity">
+
+  <item
+      android:id="@+id/action_myhome_share"
+      android:icon="@drawable/ic_action_share"
+      android:orderInCategory="90"
+      android:title="分享"
+      app:showAsAction="always"
+      />
+</menu>

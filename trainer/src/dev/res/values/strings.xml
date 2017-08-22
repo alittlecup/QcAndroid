@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">教练测试</string>
+  <string name="gd_key">7a493abd988b971600a068804b99dba8</string>
+  <string name="baidu_provider">com.qingchengfit.fitcoach.debug.bdpush</string>
+  <string name="file_provider">com.qingchengfit.fitcoach.debug.provider</string>
+
+  <string name="oem_tag">coach-test</string>
+  <string formatted="false"
+          name="chat_user_id_header">qctest_%s
+  </string>
+
+</resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="66dp"
+    android:background="@color/white"
+    >
+
+  <ImageView
+      android:id="@+id/gym_img"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_centerVertical="true"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      />
+
+  <LinearLayout
+      android:layout_width="200dp"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_marginLeft="70dp"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:id="@+id/gym_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="名字"
+          />
+
+      <TextView
+          android:id="@+id/gym_address"
+          android:layout_width="wrap_content"
+
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginLeft="5dp"
+          android:textSize="12sp"
+          tools:text="|北京"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <ImageView
+          android:id="@+id/gym_identify"
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          android:layout_alignBottom="@id/gym_img"
+          android:layout_alignRight="@id/gym_img"
+          android:layout_marginLeft="8dp"
+          android:background="@drawable/circle_white"
+          android:visibility="gone"
+          app:srcCompat="@drawable/vd_qc_logo"
+          />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/gym_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="xxx-xxx"
+        style="@style/Qc.TextCommonGrey"
+        />
+  </LinearLayout>
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="match_parent"
+      android:layout_height="0.5dp"
+      android:layout_alignParentBottom="true"
+      />
+</RelativeLayout>

@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.qingchengfit.fitcoach"
+    >
+
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  //位置
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  //网络状态
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+  //wifi状态
+  <uses-permission android:name="android.permission.CAMERA"/>
+  //摄像头
+  <uses-permission android:name="android.permission.INTERNET"/>
+  //上网
+  <!-- <uses-permission android:username="android.permission.MODIFY_AUDIO_SETTINGS"/> -->
+  //录音
+  <!-- <uses-permission android:username="android.permission.RECORD_AUDIO" /> -->
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  //唤醒
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  //sdcard读写
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="ANDROID.PERMISSION.MOUNT_UNMOUNT_FILESYSTEMS"/>
+  //挂在文件系统
+  <!-- <uses-permission android:username="android.permission.READ_SMS"/> -->
+  //读取短信
+  <uses-permission android:name="android.permission.READ_CONTACTS"/>
+  //读取联系人
+  <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+  <!-- //写日历 -->
+  <uses-permission android:name="android.permission.READ_CALENDAR"/>
+  //读日历
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+  //启动权限
+  <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+  //更改配置
+  <uses-permission android:name="android.permission.VIBRATE"/>
+  //震动
+  <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
+  //下载管理
+  <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
+  //无通知下载
+  <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+  //禁止键盘
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  //位置
+  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+  //手机状态
+  <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
+  <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+  //广播持久
+  <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
+  <uses-permission android:name="android.permission.GET_TASKS"/>
+  //地理位置
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+  <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.GET_TASKS"/>
+  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+  <uses-permission android:name="android.permission.READ_LOGS"/>
+  <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+
+  <!-- 适配Android N系统必需的ContentProvider写权限声明，写权限包含应用包名 -->
+  <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example"/>
+
+  <permission
+      android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example"
+      android:protectionLevel="normal"
+      />
+  <permission android:name="${APP_PACKAGE}.permission.MIPUSH_RECEIVE"
+              android:protectionLevel="signature"
+      />
+  <!--这里com.tencent.imsdk改成app的包名-->
+  <uses-permission android:name="${APP_PACKAGE}.permission.MIPUSH_RECEIVE"/>
+  <!--这里com.tencent.imsdk改成app的包名-->
+
+
+  <application
+      android:name=".App"
+      android:allowBackup="true"
+      android:icon="@mipmap/ic_launcher"
+      android:label="${APP_NAME}"
+      android:theme="@style/QcAppTheme"
+      tools:replace="android:label"
+      >
+    <meta-data
+        android:name="UMENG_APPKEY"
+        android:value="5657d0e167e58e8e7a006679"
+        />
+    <meta-data
+        android:name="UMENG_CHANNEL"
+        android:value="Qingcheng"
+        />
+    <meta-data
+        android:name="BUG_HD_SDK_GENERAL_KEY"
+        android:value="930b34879429924954de5a056bb5eba7"
+        />
+    <meta-data
+        android:name="QBSDKAppKey"
+        android:value="TeeyzJqRvbGpXbgInHh5BxHx"
+        />
+    <meta-data
+        android:name="YZ_APP_ID"
+        android:value="59474567e17a4d2a54"
+        />
+    <!-- AppSecret -->
+    <meta-data
+        android:name="YZ_APP_SECRET"
+        android:value="a42397223c2b842511ae3c1c9afcc31d"
+        />
+    <meta-data
+        android:name="com.amap.api.v2.apikey"
+        android:value="@string/gd_key"
+        />
+    <meta-data
+        android:name="WX_ID"
+        android:value="@string/wechat_code"
+        />
+    <meta-data
+        android:name="APP_OEM"
+        android:value="@string/oem_tag"
+        />
+
+    <activity
+        android:name=".activity.MainActivity"
+        android:hardwareAccelerated="true"
+        android:launchMode="singleTask"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustNothing|stateUnchanged"
+        />
+    <activity
+        android:name=".activity.LoginActivity"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="cn.qingcheng.login"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+
+    </activity>
+    <activity
+        android:name=".activity.RegisterActivity"
+        android:label="@string/title_activity_register"
+        />
+    <activity
+        android:name=".wxapi.WXPayEntryActivity"
+        android:exported="true"
+        />
+    <activity
+        android:name=".vmsfit.wxapi.WXPayEntryActivity"
+        android:exported="true"
+        />
+    <activity
+        android:name=".activity.SplashActivity"
+        android:launchMode="standard"
+        android:screenOrientation="portrait"
+        android:theme="@style/Qc.SplashTheme"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    //sharesdk 分享
+    <activity
+        android:name="com.mob.tools.MobUIShell"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:screenOrientation="portrait"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:windowSoftInputMode="stateHidden|adjustResize"
+        >
+      <intent-filter>
+        <data android:scheme="tencent100371282"/>
+
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+
+    <!-- 微信分享回调 -->
+    <activity
+        android:name=".wxapi.WXEntryActivity"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:exported="true"
+        android:screenOrientation="portrait"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:scheme="sdksample"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".vmsfit.wxapi.WXEntryActivity"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:exported="true"
+        android:screenOrientation="portrait"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        />
+    <activity
+        android:name=".activity.CompleteActivity"
+        android:label="@string/title_activity_complete"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.SettingActivity"
+        android:label="@string/title_activity_setting"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="settings"
+            android:scheme="qccoach"
+            />
+      </intent-filter>
+    </activity>
+
+
+    <receiver android:name=".reciever.NetWorkReciever">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+      </intent-filter>
+    </receiver>
+    <!-- push service start -->
+    <!-- 用于接收系统消息以保证PushService正常运行 -->
+    <receiver
+        android:name="com.baidu.android.pushservice.PushServiceReceiver"
+        android:process=":bdservice_v1"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+        <action android:name="com.baidu.android.pushservice.action.notification.SHOW"/>
+        <action android:name="com.baidu.android.pushservice.action.media.CLICK"/>
+        <!-- 以下四项为可选的action声明，可大大提高service存活率和消息到达速度 -->
+        <action android:name="android.intent.action.MEDIA_MOUNTED"/>
+        <action android:name="android.intent.action.USER_PRESENT"/>
+        <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+        <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+      </intent-filter>
+    </receiver>
+    <!-- Push服务接收客户端发送的各种请求 -->
+    <receiver
+        android:name="com.baidu.android.pushservice.RegistrationReceiver"
+        android:process=":bdservice_v1"
+        >
+      <intent-filter>
+        <action android:name="com.baidu.android.pushservice.action.METHOD"/>
+        <action android:name="com.baidu.android.pushservice.action.BIND_SYNC"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+
+        <data android:scheme="package"/>
+      </intent-filter>
+    </receiver>
+
+    <service
+        android:name="com.baidu.android.pushservice.PushService"
+        android:exported="true"
+        android:process=":bdservice_v1"
+        >
+      <intent-filter>
+        <action android:name="com.baidu.android.pushservice.action.PUSH_SERVICE"/>
+      </intent-filter>
+    </service>
+    <!-- 4.4版本新增的CommandService声明，提升小米和魅族手机上的实际推送到达率 -->
+    <service
+        android:name="com.baidu.android.pushservice.CommandService"
+        android:exported="true"
+        />
+    <!-- push结束 -->
+    <!-- 此处Receiver名字修改为当前包名路径 -->
+    <receiver android:name=".reciever.PushReciever">
+      <intent-filter>
+
+        <!-- 接收push消息 -->
+        <action android:name="com.baidu.android.pushservice.action.MESSAGE"/>
+        <!-- 接收bind、setTags等method的返回结果 -->
+        <action android:name="com.baidu.android.pushservice.action.RECEIVE"/>
+        <!-- 接收通知点击事件，和通知自定义内容 -->
+        <action android:name="com.baidu.android.pushservice.action.notification.CLICK"/>
+      </intent-filter>
+    </receiver>
+
+    <!-- 适配Android N系统必需的ContentProvider声明，写权限包含应用包名 -->
+    <provider
+        android:name="com.baidu.android.pushservice.PushInfoProvider"
+        android:authorities="${bdpush_authorities}"
+        android:exported="true"
+        android:protectionLevel="signature"
+        android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example"
+        />
+    <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="${file_provider}"
+        android:grantUriPermissions="true"
+        >
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/provide_path"
+          />
+    </provider>
+
+    <!-- 在百度开发者中心查询应用的API Key -->
+    <meta-data
+        android:name="api_key"
+        android:value="@string/baidu_api_release"
+        />
+
+    <!-- push结束 -->
+    <receiver android:name=".reciever.PushReciever">
+      <intent-filter>
+
+        <!-- 接收push消息 -->
+        <action android:name="com.baidu.android.pushservice.action.MESSAGE"/>
+        <!-- 接收bind、setTags等method的返回结果 -->
+        <action android:name="com.baidu.android.pushservice.action.RECEIVE"/>
+        <!-- 接收通知点击事件，和通知自定义内容 -->
+        <action android:name="com.baidu.android.pushservice.action.notification.CLICK"/>
+      </intent-filter>
+    </receiver>
+
+    <service android:name=".service.UpyunService"/>
+
+    <!--
+              &&&&&&&&&&&&&&&&&&&&
+            地图SDK 高德
+            &&&&&&&&&&&&&&&&&&&&
+        -->
+    <meta-data
+        android:name="com.amap.api.v2.apikey"
+        android:value="@string/gd_key"
+        />
+
+    <service android:name="com.amap.api.location.APSService"/>
+
+    <!-- 腾讯IM -->
+    <!--  消息收发service -->
+    <service
+        android:name="com.tencent.qalsdk.service.QalService"
+        android:exported="false"
+        android:process=":QALSERVICE"
+        >
+    </service>
+    <!--  消息收发辅助service -->
+    <service
+        android:name="com.tencent.qalsdk.service.QalAssistService"
+        android:exported="false"
+        android:process=":QALSERVICE"
+        >
+    </service>
+    <!--  离线消息广播接收器 -->
+    <receiver
+        android:name="com.tencent.qalsdk.QALBroadcastReceiver"
+        android:exported="false"
+        >
+      <intent-filter>
+        <action android:name="com.tencent.qalsdk.broadcast.qal"/>
+      </intent-filter>
+    </receiver>
+    <!--  系统消息广播接收器 -->
+    <receiver
+        android:name="com.tencent.qalsdk.core.NetConnInfoCenter"
+        android:process=":QALSERVICE"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.TIME_SET"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+      </intent-filter>
+    </receiver>
+
+    <!--小米推送相关注册-->
+    <service
+        android:name="com.xiaomi.push.service.XMPushService"
+        android:enabled="true"
+        android:process=":pushservice"
+        />
+    <service
+        android:name="com.xiaomi.push.service.XMJobService"
+        android:enabled="true"
+        android:exported="false"
+        android:permission="android.permission.BIND_JOB_SERVICE"
+        android:process=":pushservice"
+        />
+    <!--注：此service必须在小米推送SDK3.0.1版本以后（包括3.0.1版本）加入-->
+    <service
+        android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+        android:enabled="true"
+        android:exported="true"
+        />
+    <service android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+             android:enabled="true"
+        />
+    <!--注：此service必须在小米推送SDK2.2.5版本以后（包括2.2.5版本）加入-->
+    <receiver
+        android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+        android:exported="true"
+        >
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </receiver>
+    <receiver
+        android:name="com.xiaomi.push.service.receivers.PingReceiver"
+        android:exported="false"
+        android:process=":pushservice"
+        >
+      <intent-filter>
+        <action android:name="com.xiaomi.push.PING_TIMER"/>
+      </intent-filter>
+    </receiver>
+    <receiver
+        android:name="com.tencent.qcloud.timchat.chatutils.MiPushMessageReceiver"
+        android:exported="true"
+        >
+      <!--这里com.tencent.imsdk.MiPushMessageReceiver改成app中定义的完整类名-->
+      <intent-filter>
+        <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="com.xiaomi.mipush.ERROR"/>
+      </intent-filter>
+    </receiver>
+
+    <!--华为推送相关-->
+
+    <receiver
+        android:name="com.huawei.android.pushagent.PushEventReceiver"
+        android:process=":pushservice"
+        >
+      <intent-filter>
+        <action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL"/>
+        <action android:name="com.huawei.intent.action.PUSH"/>
+        <action android:name="com.huawei.intent.action.PUSH_ON"/>
+        <action android:name="com.huawei.android.push.PLUGIN"/>
+      </intent-filter>
+    </receiver>
+    <receiver
+        android:name="com.huawei.android.pushagent.PushBootReceiver"
+        android:process=":pushservice"
+        >
+      <intent-filter>
+        <action android:name="com.huawei.android.push.intent.REGISTER"/>
+      </intent-filter>
+      <meta-data
+          android:name="CS_cloud_version"
+          android:value="\u0032\u0037\u0030\u0035"
+          />
+    </receiver>
+
+
+    <!--华为推送-->
+    <receiver
+        android:name="com.huawei.android.pushagent.PushEventReceiver"
+        android:process=":pushservice"
+        >
+      <intent-filter>
+        <action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL"/>
+        <action android:name="com.huawei.intent.action.PUSH"/>
+        <action android:name="com.huawei.intent.action.PUSH_ON"/>
+        <action android:name="com.huawei.android.push.PLUGIN"/>
+      </intent-filter>
+    </receiver>
+    <receiver
+        android:name="com.huawei.android.pushagent.PushBootReceiver"
+        android:process=":pushservice"
+        >
+      <intent-filter>
+        <action android:name="com.huawei.android.push.intent.REGISTER"/>
+      </intent-filter>
+      <meta-data
+          android:name="CS_cloud_version"
+          android:value="\u0032\u0037\u0030\u0035"
+          />
+    </receiver>
+
+    <!-- PushSDK:Push服务 -->
+    <service
+        android:name="com.huawei.android.pushagent.PushService"
+        android:process=":pushservice"
+        >
+    </service>
+
+    <receiver android:name="com.tencent.qcloud.timchat.chatutils.HwPushMessageReceiver">
+      <intent-filter>
+        <!-- 必须,用于接收token-->
+        <action android:name="com.huawei.android.push.intent.REGISTRATION"/>
+        <!-- 必须，用于接收消息-->
+        <action android:name="com.huawei.android.push.intent.RECEIVE"/>
+        <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调-->
+        <action android:name="com.huawei.android.push.intent.CLICK"/>
+        <!-- 可选，查看push通道是否连接，不查看则不需要-->
+        <action android:name="com.huawei.intent.action.PUSH_STATE"/>
+        <!-- 可选，标签、地理位置上报回应，不上报则不需要 -->
+        <action android:name="com.huawei.android.push.plugin.RESPONSE"/>
+      </intent-filter>
+      <meta-data android:name="CS_cloud_ablitity"
+                 android:value="successRateAnalytics"
+          />
+    </receiver>
+
+
+    <activity
+        android:name=".activity.TextInputActivity"
+        android:label="@string/title_activity_text_input"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.MyHomeActivity"
+        android:label="@string/title_activity_my_home"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.ExpChooseBrandActivity"
+        android:label="@string/title_activity_my_home"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="${APP_PACKAGE}.chooseBrand"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".activity.NotificationActivity"
+        android:label="@string/title_activity_notification"
+        android:launchMode="singleTop"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.SearchActivity"
+        android:label="@string/title_activity_notification"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name="cn.qingchengfit.views.activity.WebActivity"
+        android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        android:label="@string/title_activity_notification"
+        android:screenOrientation="portrait"
+        android:theme="@style/QcAppThemeForWeb"
+        android:windowSoftInputMode="stateHidden|adjustResize"
+        />
+    <activity
+        android:name=".activity.WebActivityWithShare"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustPan"
+        />
+    <activity
+        android:name=".activity.FragActivity"
+        android:label="@string/title_activity_notification"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.LoadResActivity"
+        android:alwaysRetainTaskState="false"
+        android:excludeFromRecents="true"
+        android:launchMode="singleTask"
+        android:process=":mini"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.ChangeTimeActivity"
+        android:label="@string/title_activity_change_time"
+        />
+    <activity
+        android:name=".activity.StudentHomeActivity"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.BrandManageActivity"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.ChooseBrandActivity"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".fragment.course.CourseActivity"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".fragment.batch.BatchActivity"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.ChooseStudentActivity"
+        android:label="@string/title_activity_choose_student"
+        android:theme="@style/QcAppTheme"
+        />
+
+    <service
+        android:name=".server.CalendarIntentService"
+        android:exported="false"
+        />
+
+    <activity android:name=".activity.ChooseGymActivity"/>
+    <activity
+        android:name=".activity.BodyTestActivity"
+        android:theme="@style/QcAppTheme"
+        />
+    <activity android:name=".activity.CoachHomeActivity"/>
+    <activity
+        android:name=".activity.Main2Activity"
+        android:hardwareAccelerated="true"
+        android:launchMode="singleTask"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustNothing|stateUnchanged"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="openurl"
+            android:scheme="qccoach"
+            />
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".activity.AddBrandActivity"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.GuideActivity"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="${APP_PACKAGE}.guide"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".activity.ChooseActivity"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="${APP_PACKAGE}"/>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="choose"
+            android:scheme="qccoach"
+            />
+
+      </intent-filter>
+      <intent-filter>
+        <action android:name="${APP_PACKAGE}"/>
+        <action android:name="cn.qingcheng.choose"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".activity.MeetActivity"
+        android:screenOrientation="portrait"
+        />
+    <activity
+        android:name=".activity.QRActivity"
+        android:screenOrientation="portrait"
+        >
+    </activity>
+    <activity android:name=".fragment.schedule.SpecialWebActivity">
+    </activity>
+    <activity
+        android:name=".activity.PopFromBottomActivity"
+        android:theme="@style/AppThemeLightBottom"
+        />
+    <activity android:name="cn.qingchengfit.views.container.ContainerActivity"
+              android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <action android:name="cn.qingchengfit.staffkit"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="news"
+            android:scheme="qccoach"
+            />
+      </intent-filter>
+    </activity>
+
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.qcchat.ChatActivity"
+        android:launchMode="singleTask"
+        android:screenOrientation="portrait"
+        android:theme="@style/QcChatStyle"
+        android:windowSoftInputMode="adjustResize"
+        />
+    <!--<activity android:name=".ui.AddFriendActivity" />-->
+
+    <activity android:name="com.tencent.qcloud.timchat.ui.VideoActivity"/>
+    <activity android:name="com.tencent.qcloud.timchat.ui.qcchat.DeleteMemberActivity"
+              android:theme="@style/QcChatStyle"
+              tools:replace="android:theme"
+        />
+    <activity android:name="com.tencent.qcloud.timchat.ui.ImageViewActivity"
+              android:theme="@style/QcChatStyle"
+              tools:replace="android:theme"
+        />
+
+    <activity android:name="com.tencent.qcloud.timchat.ui.ImagePreviewActivity"
+              android:theme="@style/QcChatStyle"
+              tools:replace="android:theme"
+        />
+    <activity android:name="com.tencent.qcloud.timchat.ui.MessageNotifySettingActivity"
+              android:theme="@style/QcChatStyle"
+              tools:replace="android:theme"
+        />
+
+    <activity android:name="com.tencent.qcloud.timchat.ui.GroupMemberActivity"
+              android:theme="@style/QcChatStyle"
+              tools:replace="android:theme"
+        />
+    <activity android:name="com.tencent.qcloud.timchat.ui.SetGroupNameActivity"
+              android:theme="@style/QcChatStyle"
+              tools:replace="android:theme"
+        />
+    <activity android:name=".fragment.statement.StatmentFilterActivity"
+              android:theme="@style/QcChatStyle"
+              tools:replace="android:theme"
+        />
+
+    <activity android:name=".fragment.statement.SaleFilterActivity"
+              android:theme="@style/QcChatStyle"
+              tools:replace="android:theme"
+        />
+    <activity android:name="cn.qingchengfit.recruit.views.RecruitActivity"
+              android:windowSoftInputMode="stateHidden|adjustResize"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="job"
+            android:scheme="qccoach"
+            />
+        <data
+            android:host="recruit"
+            android:scheme="qccoach"
+            />
+        <data
+            android:host="resume"
+            android:scheme="qccoach"
+            />
+      </intent-filter>
+
+    </activity>
+    <activity android:name="cn.qingchengfit.recruit.views.organization.SearchActivity">
+    </activity>
+    <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+              android:theme="@style/Base.Theme.AppCompat"
+        />
+    <activity
+        android:name="com.commonsware.cwac.cam2.CameraActivity"
+        android:label="拍照预览"
+        android:theme="@style/QcAppThemeForCamera"
+        />
+
+    <activity
+        android:name="cn.qingchengfit.views.activity.ScanActivity"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="scan"
+            android:scheme="qccoach"
+            />
+      </intent-filter>
+    </activity>
+    <service
+        android:name=".service.FreshIntentService"
+        android:exported="false"
+        >
+    </service>
+
+
+  </application>
+
+</manifest>

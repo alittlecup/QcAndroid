@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:divider="@drawable/divier_linear_vectail"
+    android:orientation="vertical"
+    android:showDividers="middle|beginning|end"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/trade_type"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/trade_times"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/real_income_long"
+        />
+
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/new_buy_card"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/new_buy_trade_times"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+
+    <TextView
+        android:id="@+id/new_buy_realincome"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_orange"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/charge"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/charge_trade_times"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+
+    <TextView
+        android:id="@+id/charge_real_incomes"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_orange"
+        tools:text="@string/server_count"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/present"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/present_trade_times"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+
+    <TextView
+        android:id="@+id/present_real_income"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_orange"
+        tools:text="@string/server_count"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/refund"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/fefund_trade_times"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+
+        />
+
+    <TextView
+        android:id="@+id/refund_real_income"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_orange"
+        tools:text="@string/real_income_long"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/total_count"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/total_trade_times"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        tools:text="@string/server_count"
+        style="@style/Qc.TextCommonBlack"
+
+        />
+
+    <TextView
+        android:id="@+id/total_real_income"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        tools:text="@string/real_income_long"
+        style="@style/Qc.TextCommonBlack"
+        />
+  </LinearLayout>
+</LinearLayout>

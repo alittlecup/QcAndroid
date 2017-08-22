@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      >
+
+    <TextView
+        android:id="@+id/tv_signin_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="09:00"
+        android:textColor="@color/qc_text_grey"
+        />
+
+    <TextView
+        android:id="@+id/tv_signin_item_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_signin_item_time"
+        android:layout_alignBottom="@+id/tv_signin_item_time"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/tv_signin_item_time"
+        android:layout_toRightOf="@+id/tv_signin_item_time"
+        android:text="course_name"
+        android:textColor="@color/qc_text_grey"
+        />
+
+    <TextView
+        android:id="@+id/tv_signin_item_course_teacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_signin_item_course_name"
+        android:layout_alignStart="@+id/tv_signin_item_course_name"
+        android:layout_below="@+id/tv_signin_item_course_name"
+        android:layout_marginTop="10dp"
+        android:text="@string/sign_in_coach"
+        android:textColor="@color/qc_text_grey"
+        />
+
+    <TextView
+        android:id="@+id/tv_signin_item_course_room"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_signin_item_course_teacher"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_toEndOf="@+id/tv_signin_item_course_teacher"
+        android:layout_toRightOf="@+id/tv_signin_item_course_teacher"
+        android:text="@string/sign_in_room"
+        android:textColor="@color/qc_text_grey"
+        />
+
+  </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/white"
+    android:divider="@drawable/divier_linear"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    >
+
+  <RelativeLayout
+      android:id="@+id/layout_filter_status"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:background="?android:attr/selectableItemBackground"
+      >
+
+    <TextView
+        android:id="@+id/tv_filter_status"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:text="会员状态"
+        android:textColor="@color/qc_text_black"
+        android:textSize="@dimen/min_font"
+        />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/rl_student_follow_up_filter_register"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:background="?android:attr/selectableItemBackground"
+      android:visibility="gone"
+      tools:visibility="visible"
+      >
+
+    <include
+        layout="@layout/divider_grey_vertical"
+        android:layout_width="1px"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_student_follow_up_filter_register"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:text="今日"
+        android:textColor="@color/qc_text_black"
+        android:textSize="@dimen/min_font"
+        />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/rl_student_follow_up_filter_sale"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:background="?android:attr/selectableItemBackground"
+      >
+
+    <TextView
+        android:id="@+id/tv_student_follow_up_filter_sale"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:text="销售"
+        android:textColor="@color/qc_text_black"
+        android:textSize="@dimen/min_font"
+        />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/layout_filter_drawer"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:background="?android:attr/selectableItemBackground"
+      >
+
+    <TextView
+        android:id="@+id/tv_filter_drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:text="筛选"
+        android:textColor="@color/qc_text_black"
+        android:textSize="@dimen/min_font"
+        />
+
+  </RelativeLayout>
+
+
+  <!--<RelativeLayout-->
+  <!--android:id="@+id/rl_student_follow_up_filter_source"-->
+  <!--android:layout_width="0dp"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:layout_weight="1"-->
+  <!--android:background="?android:attr/selectableItemBackground"-->
+  <!--android:visibility="gone"-->
+  <!--tools:visibility="visible"-->
+  <!--&gt;-->
+  <!--<include-->
+  <!--layout="@layout/divider_grey_vertical"-->
+  <!--android:layout_width="1px"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:layout_alignParentLeft="true"-->
+  <!--android:layout_marginBottom="12dp"-->
+  <!--android:layout_marginTop="12dp"-->
+  <!--/>-->
+  <!--<TextView-->
+  <!--android:id="@+id/tv_student_follow_up_filter_source"-->
+  <!--android:layout_width="wrap_content"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:layout_centerInParent="true"-->
+  <!--android:drawablePadding="4dp"-->
+  <!--android:gravity="center"-->
+  <!--android:text="来源"-->
+  <!--android:textColor="@color/qc_text_black"-->
+  <!--android:textSize="@dimen/min_font"-->
+  <!--/>-->
+
+  <!--</RelativeLayout>-->
+
+  <!--<RelativeLayout-->
+  <!--android:id="@+id/rl_student_follow_up_filter_referrer"-->
+  <!--android:layout_width="0dp"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:layout_weight="1"-->
+  <!--android:background="?android:attr/selectableItemBackground"-->
+  <!--android:visibility="gone"-->
+  <!--tools:visibility="visible"-->
+  <!--&gt;-->
+  <!--<include-->
+  <!--layout="@layout/divider_grey_vertical"-->
+  <!--android:layout_width="1px"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:layout_alignParentLeft="true"-->
+  <!--android:layout_marginBottom="12dp"-->
+  <!--android:layout_marginTop="12dp"-->
+  <!--/>-->
+  <!--<TextView-->
+  <!--android:id="@+id/tv_student_follow_up_filter_referrer"-->
+  <!--android:layout_width="wrap_content"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:layout_centerInParent="true"-->
+  <!--android:drawablePadding="4dp"-->
+  <!--android:gravity="center"-->
+  <!--android:text="推荐人"-->
+  <!--android:textColor="@color/qc_text_black"-->
+  <!--android:textSize="@dimen/min_font"-->
+  <!--/>-->
+
+  <!--</RelativeLayout>-->
+
+  <!--<RelativeLayout-->
+  <!--android:id="@+id/rl_student_follow_up_filter_lastest_time"-->
+  <!--android:layout_width="0dp"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:layout_weight="1"-->
+  <!--android:background="?android:attr/selectableItemBackground"-->
+  <!--android:visibility="gone"-->
+  <!--tools:visibility="visible"-->
+  <!--&gt;-->
+  <!--<include-->
+  <!--layout="@layout/divider_grey_vertical"-->
+  <!--android:layout_width="1px"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:layout_alignParentLeft="true"-->
+  <!--android:layout_marginBottom="12dp"-->
+  <!--android:layout_marginTop="12dp"-->
+  <!--/>-->
+  <!--<TextView-->
+  <!--android:id="@+id/tv_student_follow_up_filter_lastest_time"-->
+  <!--android:layout_width="wrap_content"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:layout_centerInParent="true"-->
+  <!--android:drawablePadding="4dp"-->
+  <!--android:gravity="center"-->
+  <!--android:text="最新跟进时间"-->
+  <!--android:textColor="@color/qc_text_black"-->
+  <!--android:textSize="@dimen/min_font"-->
+  <!--/>-->
+  <!--</RelativeLayout>-->
+
+
+</LinearLayout>

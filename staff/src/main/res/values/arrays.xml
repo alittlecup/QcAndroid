@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <array name="order_student_count">
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+    <item>5</item>
+    <item>6</item>
+    <item>7</item>
+    <item>8</item>
+  </array>
+  <array name="weeks">
+    <item>周一</item>
+    <item>周二</item>
+    <item>周三</item>
+    <item>周四</item>
+    <item>周五</item>
+    <item>周六</item>
+    <item>周日</item>
+  </array>
+
+  <array name="wardrobe_status">
+    <item>全部</item>
+    <item>临时租用</item>
+    <item>长期租用</item>
+    <item>空闲</item>
+  </array>
+
+  <array name="cardtype">
+    <item>@string/cardtype_value</item>
+    <item>@string/cardtype_times</item>
+    <item>@string/cardtype_date</item>
+  </array>
+  <array name="cardtype_filter">
+    <item>@string/cardtype_all</item>
+    <item>@string/cardtype_value</item>
+    <item>@string/cardtype_times</item>
+    <item>@string/cardtype_date</item>
+  </array>
+  <array name="cardtype_disable">
+    <item>正常</item>
+    <item>已停用</item>
+  </array>
+
+  <array name="class_frequent">
+    <item>@string/everyday</item>
+    <item>@string/everyweek</item>
+    <item>@string/everymonth</item>
+  </array>
+
+
+  <array name="card_status">
+    <item>默认</item>
+    <item>正常</item>
+    <item>请假中</item>
+    <item>已停卡</item>
+
+  </array>
+  <array name="card_tpl_flow">
+    <item>编辑</item>
+    <item>停用该会员卡种类</item>
+  </array>
+  <array name="card_tpl_flow_resume">
+    <item>编辑</item>
+    <item>恢复该会员卡种类</item>
+  </array>
+
+  <array name="pay_method">
+    <item>@string/wechat_scan</item>
+    <item>@string/wechat_pay</item>
+    <item>@string/cash_pay</item>
+    <item>@string/credit_pay</item>
+    <item>@string/transit_pay</item>
+    <item>@string/other</item>
+  </array>
+
+  <array name="home_tab">
+    <item>@string/home_tab_gyms</item>
+    <item>@string/home_tab_special</item>
+    <item>消息</item>
+    <item>@string/home_tab_setting</item>
+  </array>
+
+  <array name="home_tab_sigle">
+    <item>@string/home_tab_gym</item>
+    <item>@string/home_tab_special</item>
+    <item>@string/home_tab_setting</item>
+  </array>
+
+  <string-array name="choose_course_type">
+    <item>@string/all_course</item>
+    <item>@string/course_type_group</item>
+    <item>@string/course_type_private</item>
+  </string-array>
+  <string-array name="trade_types">
+    <item>@string/new_buy_card</item>
+    <item>@string/charge</item>
+    <item>@string/present</item>
+    <item>@string/refund</item>
+  </string-array>
+  <string-array name="renewal_status">
+    <item>失败</item>
+    <item>成功</item>
+    <item>待处理</item>
+  </string-array>
+
+  <string-array name="course_private_menu">
+    <item>私教种类</item>
+    <item>课程预约限制</item>
+    <item>预约短信通知</item>
+    <item>课件</item>
+  </string-array>
+
+  <string-array name="course_group_menu">
+    <item>团课种类</item>
+    <item>课程预约限制</item>
+    <item>预约短信通知</item>
+    <item>课件</item>
+  </string-array>
+
+
+  <string-array name="country_and_districion_list">
+    <item>中国大陆  +86</item>
+    <item>中国台湾  +886</item>
+  </string-array>
+
+
+  <string-array name="module_strings">
+    <item>workspace/order_list</item>
+    <item>workspace/order_group</item>
+    <item>workspace/order_private</item>
+    <item>workspace/order_signin</item>
+
+    <item>service/group</item>
+    <item>workspace/order_group</item>
+    <item>workspace/order_private</item>
+    <item>workspace/order_signin</item>
+
+
+  </string-array>
+
+  <string-array name="home_tab_name">
+    <item>我的健身房</item>
+    <item>发现</item>
+    <item>消息</item>
+    <item>设置</item>
+  </string-array>
+
+
+</resources>

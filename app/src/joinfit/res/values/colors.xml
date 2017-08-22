@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <color name="accent">#0db14b</color>
-    <color name="primary">#0db14b</color>// 32 191 189
-    <color name="primary_dark">#0c9020</color>
-    <color name="primary_light">#1ED982</color>
-
-</resources>

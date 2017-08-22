@@ -1,0 +1,14 @@
+CREATE TABLE card_type (
+  id TEXT PRIMARY KEY,
+  type   REAL AS Integer,
+  name   TEXT,
+  description   TEXT,
+  is_limit INTEGER AS Boolean DEFAULT 0,
+  month_times REAL AS Integer,
+  day_times REAL AS Integer,
+  week_times REAL AS Integer,
+  pre_times REAL AS Integer,
+  buy_limit REAL AS Integer,
+  created_at TEXT,
+  color TEXT
+);

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+
+    android:layout_height="244dp"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:id="@+id/choose_course_comfirm"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:background="@color/divider_grey"
+      android:gravity="right|center_vertical"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:text="@string/common_comfirm"
+      android:textColor="@color/colorPrimary"
+      />
+
+  <LinearLayout
+      android:id="@+id/wheellayout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      >
+
+    <com.bigkoo.pickerview.lib.WheelView
+        android:id="@+id/course_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <com.bigkoo.pickerview.lib.WheelView
+        android:id="@+id/course_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+  </LinearLayout>
+
+</LinearLayout>

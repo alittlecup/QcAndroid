@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <include layout="@layout/common_toolbar"/>
+
+
+    <RelativeLayout
+        android:id="@+id/schedule_notification_layout"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        >
+
+      <ImageView
+          android:id="@+id/schedule_notification"
+          android:layout_width="19dp"
+          android:layout_height="19dp"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:src="@drawable/ic_actionbar_notification"
+          android:visibility="gone"
+          />
+
+      <TextView
+          android:id="@+id/schedule_notification_count"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_alignParentRight="true"
+          android:layout_marginRight="9dp"
+          android:layout_marginTop="11dp"
+          android:background="@drawable/bg_notification"
+          android:gravity="center"
+          android:textColor="@color/white"
+          android:textSize="11sp"
+          android:visibility="gone"
+          tools:text="99"
+          />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/brand_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="@string/brand_manage"
+        android:textSize="14sp"
+        style="@style/Qc.TextCommonWhite"
+        />
+  </FrameLayout>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <android.support.v4.view.ViewPager
+          android:id="@+id/viewpager"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:background="@color/bg_grey"
+          />
+
+      <include layout="@layout/divider_grey"/>
+
+      <cn.qingchengfit.staffkit.views.custom.TabView
+          android:id="@+id/tabview"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          app:item_padding="7dp"
+          app:text_normal_color="@color/text_grey"
+          app:text_select_color="@color/text_black"
+          app:text_size="12sp"
+          />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_brands"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/qc_item_height"
+        android:alpha="0"
+        android:background="@color/halftransparent_grey"
+        android:visibility="gone"
+
+        >
+
+      <FrameLayout
+          android:id="@+id/frag_choose_brand"
+          android:layout_width="match_parent"
+          android:layout_height="320dp"
+          android:scaleY="0"
+          android:transformPivotY="0dp"
+          />
+
+    </FrameLayout>
+
+
+  </FrameLayout>
+
+
+</LinearLayout>

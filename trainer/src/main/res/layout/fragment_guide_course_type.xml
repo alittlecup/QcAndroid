@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:id="@+id/guide_title"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:gravity="center"
+      android:text="@string/choose_course_type"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:id="@+id/go_group"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@drawable/bg_click"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:srcCompat="@drawable/ic_course_group_conner"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/course_group"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:id="@+id/go_private"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@drawable/bg_click"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:srcCompat="@drawable/ic_course_private_conner"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/course_private"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+</LinearLayout>

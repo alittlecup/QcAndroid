@@ -1,0 +1,83 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+  <!--<cn.qingchengfit.widgets.CommonInputView-->
+  <!---->
+  <!--android:id="@+id/custom_statment_gym"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--app:civ_clickable="true"-->
+  <!--app:civ_lable="选择健身房"-->
+  <!--&gt;-->
+  <!--</cn.qingchengfit.widgets.CommonInputView>-->
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/custom_statment_start"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="开始日期"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/custom_statment_end"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="结束日期"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/custom_statment_course"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/all_course"
+      app:civ_lable="@string/course"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/custom_statment_coach"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/all_coach"
+      app:civ_lable="@string/coach"
+      app:civ_showdivier="false"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/custom_statement_student"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:visibility="gone"
+      app:civ_clickable="true"
+      app:civ_lable="@string/student"
+      app:civ_showdivier="false"
+      />
+
+  <include layout="@layout/divider_grey">
+  </include>
+
+  <Button
+      android:id="@+id/custom_statment_generate"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="20dp"
+      android:text="生成报表"
+      />
+</LinearLayout>

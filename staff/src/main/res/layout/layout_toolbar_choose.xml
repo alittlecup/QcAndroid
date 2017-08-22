@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:orientation="vertical"
+    >
+
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="@color/toolbar"
+      android:gravity="center_vertical"
+      android:minHeight="?attr/actionBarSize"
+      android:theme="@style/Qc.toolbarStyle"
+      app:popupTheme="@style/ToolbarStyle.Overflow"
+      app:theme="@style/Qc.toolbarStyle"
+      app:titleTextAppearance="@style/ToolbarStyle"
+      />
+
+  <CheckBox
+      android:id="@+id/rb_select_all"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_marginLeft="10dp"
+      android:layout_marginStart="10dp"
+      android:button="@drawable/radio_selector_allotsale_white"
+      android:gravity="center_vertical"
+      android:padding="6dp"
+      android:text="@string/qc_select_all"
+      android:textColor="@color/white"
+      />
+
+  <TextView
+      android:id="@+id/toolbar_title"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_centerInParent="true"
+      android:textColor="@color/white"
+      android:textSize="16sp"
+      tools:text="@string/site_usage"
+      style="@style/Qc.TextCommonBlack"
+      />
+</RelativeLayout>

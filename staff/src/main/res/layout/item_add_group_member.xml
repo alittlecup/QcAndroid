@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_member_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    >
+
+  <CheckBox
+      android:id="@+id/add_member_item_checkbox"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:button="@drawable/radio_selector_allotsale"
+      android:clickable="false"
+      android:visibility="visible"
+      />
+
+  <ImageView
+      android:id="@+id/head_add_group_member"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="15dp"
+      android:layout_toEndOf="@id/add_member_item_checkbox"
+      android:layout_toRightOf="@id/add_member_item_checkbox"
+      tools:src="@drawable/ic_default_head_nogender"
+      />
+
+  <RelativeLayout
+      android:id="@+id/rl_information"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="15dp"
+      android:layout_toEndOf="@id/head_add_group_member"
+      android:layout_toRightOf="@id/head_add_group_member"
+      >
+
+    <TextView
+        android:id="@+id/text_add_member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="毛云涛"
+        />
+
+    <ImageView
+        android:id="@+id/image_add_member_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/text_add_member_name"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@id/text_add_member_name"
+        tools:src="@drawable/ic_gender_signal_male"
+        />
+
+    <TextView
+        android:id="@+id/text_add_member_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_add_member_name"
+        android:layout_marginTop="3dp"
+        tools:text="18707196666"
+        />
+
+    <cn.qingchengfit.widgets.AutoLineGroup
+        android:id="@+id/group_auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/text_add_member_phone"
+        android:layout_below="@+id/text_add_member_phone"
+        android:layout_marginTop="8dp"
+        />
+
+  </RelativeLayout>
+
+</RelativeLayout>

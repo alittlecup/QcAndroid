@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <include layout="@layout/common_simple_toolbar"/>
+
+    <include layout="@layout/divider_grey"/>
+
+    <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+        android:id="@+id/sw_score_config_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:sw_lable="团课预约积分"
+        app:sw_showdivier="true"
+        app:sw_text_color="@color/qc_text_black"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_score_config_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:visibility="gone"
+        app:civ_inputnum="true"
+        app:civ_lable="每次预约团课积分"
+        app:civ_showdivier="false"
+        app:civ_text_color="@color/qc_text_black"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/bg_grey"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+        android:id="@+id/sw_score_config_private"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:sw_lable="私教预约积分"
+        app:sw_showdivier="true"
+        app:sw_text_color="@color/qc_text_black"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_score_config_private"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:visibility="gone"
+        app:civ_inputnum="true"
+        app:civ_lable="每次预约私教积分"
+        app:civ_showdivier="false"
+        app:civ_text_color="@color/qc_text_black"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/bg_grey"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+        android:id="@+id/sw_score_config_signin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:sw_lable="签到积分"
+        app:sw_showdivier="true"
+        app:sw_text_color="@color/qc_text_black"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_score_config_signin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:visibility="gone"
+        app:civ_inputnum="true"
+        app:civ_lable="每次签到积分"
+        app:civ_showdivier="false"
+        app:civ_text_color="@color/qc_text_black"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/bg_grey"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+        android:id="@+id/sw_score_config_buy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:sw_lable="新购会员卡积分"
+        app:sw_showdivier="true"
+        app:sw_text_color="@color/qc_text_black"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_score_config_buy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/tv_student_score_rule_buy"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="+  添加规则"
+        android:textColor="@color/qc_score_award_add"
+        android:textSize="@dimen/common_font"
+        android:visibility="gone"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/bg_grey"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+        android:id="@+id/sw_score_config_charge"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:sw_lable="会员卡续费积分"
+        app:sw_showdivier="true"
+        app:sw_text_color="@color/qc_text_black"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_score_config_charge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/tv_student_score_rule_charge"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="+  添加规则"
+        android:textColor="@color/qc_score_award_add"
+        android:textSize="@dimen/common_font"
+        android:visibility="gone"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+
+  </LinearLayout>
+</ScrollView>

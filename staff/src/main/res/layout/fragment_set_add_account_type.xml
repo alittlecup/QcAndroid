@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <android.support.v4.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="58dp"
+      android:background="@color/bg_grey"
+      >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/order_sutdent_count"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_content="1"
+          app:civ_lable="@string/course_order_student_count"
+          app:civ_right_icon="@drawable/ic_arrow_right"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          />
+
+      <include layout="@layout/divider_grey"/>
+
+      <include layout="@layout/divider_grey_margin"/>
+
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          >
+
+        <LinearLayout
+            android:id="@+id/layout_need_pay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            >
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:text="@string/need_pay"
+              style="@style/Qc.TextCommonBlack"
+              />
+
+          <ImageView
+              android:id="@+id/tag_pro"
+              android:layout_width="24dp"
+              android:layout_height="14dp"
+              android:layout_gravity="center_vertical"
+              android:scaleType="fitXY"
+              android:text="PRO"
+              android:textColor="@color/white"
+              android:textSize="10sp"
+              app:srcCompat="@drawable/ic_pro_green"
+              />
+
+          <Space
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+
+              />
+
+          <android.support.v7.widget.SwitchCompat
+              android:id="@+id/sw_need_pay"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/can_not_close"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:background="#aaffffff"
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
+
+      </FrameLayout>
+
+      <LinearLayout
+          android:id="@+id/layout_pay"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+
+          >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/pay_online"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/activity_horizontal_margin"
+              android:layout_marginStart="@dimen/activity_horizontal_margin"
+              android:text="@string/online_pay_client"
+              android:textColor="@color/qc_text_black"
+              android:textSize="12sp"
+
+              />
+
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="8dp"
+              android:layout_marginStart="8dp"
+              app:srcCompat="@drawable/ic_pay_wechat"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingLeft="8dp"
+              android:paddingRight="8dp"
+              android:text="@string/wechat_pay"
+              android:textColor="@color/qc_text_black"
+              android:textSize="12sp"
+              />
+
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ic_pay_alipay_grey"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingLeft="8dp"
+              android:paddingRight="8dp"
+              android:text="@string/alipay_grey"
+              android:textColor="@color/qc_text_grey"
+              android:textSize="12sp"
+              />
+
+        </LinearLayout>
+
+        <include layout="@layout/divider_grey"/>
+
+        <cn.qingchengfit.widgets.ExpandedLayout
+            android:id="@+id/pay_online"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:el_label="@string/wechat_pay"
+            >
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              >
+
+            <cn.qingchengfit.widgets.CommonInputView
+                android:id="@+id/pay_online_money"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                app:civ_inputnum="true"
+                app:civ_lable="单价（元）"
+                app:civ_nonnull="true"
+                />
+
+            <RelativeLayout
+                android:id="@+id/layout_limit_peop"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:background="@color/transparent"
+                >
+
+              <TextView
+                  android:id="@+id/lable"
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                  android:layout_marginStart="@dimen/activity_horizontal_margin"
+                  android:text="预约限制"
+                  style="@style/Qc.TextCommonGrey"
+                  />
+
+              <android.support.v7.widget.SwitchCompat
+                  android:id="@+id/switcher_limit"
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:layout_alignParentEnd="true"
+                  android:layout_alignParentRight="true"
+                  android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                  android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+                  />
+
+              <View
+                  android:id="@+id/divider"
+                  android:layout_width="match_parent"
+                  android:layout_height="1px"
+                  android:layout_alignParentBottom="true"
+                  android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                  android:layout_marginRight="@dimen/activity_horizontal_margin"
+                  android:background="@color/divider_grey"
+                  />
+            </RelativeLayout>
+
+
+          </LinearLayout>
+
+        </cn.qingchengfit.widgets.ExpandedLayout>
+
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/limit_who"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:visibility="gone"
+            app:civ_clickable="true"
+            app:civ_lable="可预约对象"
+            app:civ_nonnull="true"
+
+            />
+
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/limit_num"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:visibility="gone"
+            app:civ_clickable="true"
+            app:civ_content="1"
+            app:civ_inputnum="true"
+            app:civ_lable="每位用户每节课可预约人次"
+            app:civ_nonnull="true"
+            />
+
+        <TextView
+            android:id="@+id/show_card_pay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:background="@color/bg_grey"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="@string/card_pay"
+            />
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/card_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:minHeight="100dp"-->
+        <!--/>-->
+        <LinearLayout
+            android:id="@+id/cardtype_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
+
+
+        <!--<include layout="@layout/divider_grey"/>-->
+        <!--<include layout="@layout/divider_grey_margin"/>-->
+
+        <TextView
+            android:id="@+id/add_card_type"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/course_add_new_card_type"
+            android:textColor="@color/colorPrimary"
+            />
+
+
+      </LinearLayout>
+
+
+    </LinearLayout>
+
+  </android.support.v4.widget.NestedScrollView>
+
+  <Button
+      android:id="@+id/comfirm"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:layout_marginBottom="8dp"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:text="@string/save"
+      />
+</FrameLayout>
+

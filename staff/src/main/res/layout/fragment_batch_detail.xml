@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <android.support.v4.widget.NestedScrollView
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?attr/actionBarSize"
+      android:background="@color/bg_grey"
+      android:clipToPadding="false"
+      android:paddingBottom="70dp"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+          <include layout="@layout/layout_course"/>
+
+          <cn.qingchengfit.widgets.CommonInputView
+              android:id="@+id/coach"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              app:civ_clickable="true"
+              app:civ_showdivier="true"
+              app:civ_showright="true"
+
+              />
+
+          <cn.qingchengfit.widgets.CommonInputView
+              android:id="@+id/space"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              app:civ_clickable="true"
+              app:civ_lable="@string/course_place"
+              app:civ_showdivier="true"
+              app:civ_showright="true"
+              />
+
+          <cn.qingchengfit.widgets.CommonInputView
+              android:id="@+id/order_sutdent_count"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              app:civ_clickable="true"
+              app:civ_content="1"
+              app:civ_lable="@string/course_order_student_count"
+              app:civ_right_icon="@drawable/ic_arrow_right"
+              app:civ_showdivier="false"
+              app:civ_showright="true"
+              />
+
+          <include layout="@layout/divider_grey"/>
+
+          <include layout="@layout/divider_grey_margin"/>
+
+          <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              >
+
+            <LinearLayout
+                android:id="@+id/layout_need_pay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                >
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:text="@string/need_pay"
+                  style="@style/Qc.TextCommonBlack"
+                  />
+
+              <ImageView
+                  android:id="@+id/tag_pro"
+                  android:layout_width="24dp"
+                  android:layout_height="14dp"
+                  android:layout_gravity="center_vertical"
+                  android:scaleType="fitXY"
+                  android:text="PRO"
+                  android:textColor="@color/white"
+                  android:textSize="10sp"
+                  app:srcCompat="@drawable/ic_pro_green"
+                  />
+
+              <Space
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1"
+
+                  />
+
+              <android.support.v7.widget.SwitchCompat
+                  android:id="@+id/sw_need_pay"
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/can_not_close"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:background="#aaffffff"
+                android:clickable="true"
+                android:visibility="gone"
+                tools:visibility="visible"
+                />
+
+          </FrameLayout>
+
+          <View
+              android:id="@+id/divider"
+              android:layout_width="match_parent"
+              android:layout_height="1px"
+              android:background="@color/divider_grey"
+              />
+
+          <cn.qingchengfit.widgets.CommonInputView
+              android:id="@+id/pay_online"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              android:visibility="gone"
+              app:civ_clickable="true"
+              app:civ_lable="@string/label_pay_online"
+              app:civ_showright="true"
+              app:civ_text_color="@color/text_black"
+              />
+
+          <cn.qingchengfit.widgets.CommonInputView
+              android:id="@+id/pay_card"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              android:visibility="gone"
+              app:civ_clickable="true"
+              app:civ_lable="@string/label_card_pay"
+              app:civ_showright="true"
+              app:civ_text_color="@color/text_black"
+              />
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/permission_view"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            />
+      </FrameLayout>
+
+      <TextView
+          android:id="@+id/tv_batch_date"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/bg_grey"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:text="排期详情"
+          />
+
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv_batch_loop"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          />
+
+      <include layout="@layout/divider_grey"/>
+
+      <include layout="@layout/divider_grey_margin"/>
+
+      <LinearLayout
+          android:id="@+id/layout_all_batch"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@drawable/bg_click"
+          android:gravity="center"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:id="@+id/label_check_all"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qc_item_height"
+            android:text="查看所有排期"
+            />
+
+        <Space
+            android:layout_width="@dimen/little"
+            android:layout_height="wrap_content"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_arrow_right"
+            />
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+
+    </LinearLayout>
+  </android.support.v4.widget.NestedScrollView>
+
+  <Button
+      android:id="@+id/del_batch"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:background="@drawable/btn_white"
+      android:text="删除"
+      android:textColor="@color/red"
+      />
+</RelativeLayout>
+

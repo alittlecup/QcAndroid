@@ -1,0 +1,120 @@
+<resources>
+
+  <!-- Base application theme. -->
+  <style name="QcAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowActionBar">false</item>
+
+    <item name="colorControlNormal">@color/divider_white</item>
+
+    <item name="colorAccent">@color/accent</item>
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/primary_dark</item>
+    <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>
+    <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
+    <item name="android:windowIsTranslucent">false</item>
+    <item name="buttonStyle">@style/Qc.CommonBtn</item>
+    <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
+    <item name="editTextStyle">@style/Qc.EditTextStyle</item>
+    <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
+    <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
+    <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
+  </style>
+
+  <style name="QcChatStyle" parent="QcAppTheme">
+
+  </style>
+
+  <style name="QcAppThemeForWeb" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowActionBar">false</item>
+
+    <item name="colorControlNormal">@color/divider_white</item>
+
+    <item name="colorAccent">@color/accent</item>
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/primary_dark</item>
+    <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>
+    <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
+    <item name="android:windowIsTranslucent">false</item>
+    <!--<item name="buttonStyle">@style/Qc.Datepicker.Btn</item>-->
+    <!--<item name="android:editTextStyle">@style/Qc.EditTextStyle</item>-->
+    <!--<item name="editTextStyle">@style/Qc.EditTextStyle</item>-->
+    <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
+    <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
+    <!--<item name="android:buttonStyle">@style/Qc.Datepicker.Btn</item>-->
+  </style>
+
+
+  <style name="QcAppThemeForCamera" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Customize your theme here. -->
+    <item name="windowActionBar">true</item>
+    <item name="windowNoTitle">false</item>
+    <item name="android:windowNoTitle">false</item>
+    <item name="android:windowActionBar">true</item>
+
+    <item name="colorControlNormal">@color/divider_white</item>
+
+    <item name="colorAccent">@color/toolbar</item>
+    <item name="colorPrimary">@color/toolbar</item>
+    <item name="colorPrimaryDark">@color/toolbar</item>
+    <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
+    <item name="android:windowIsTranslucent">false</item>
+    <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
+    <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
+  </style>
+
+  <style name="Qc.SplashTheme" parent="@style/QcAppTheme">
+    <item name="android:windowBackground">@color/transparent</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowFullscreen">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="android:windowContentOverlay">@null</item>
+  </style>
+
+  <style name="TopDialogWindowStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- 背景颜色及透明程度 -->
+    <item name="android:windowBackground">@color/transparent</item>
+    <!-- 是否有标题 -->
+    <item name="android:windowNoTitle">true</item>
+    <!-- 是否浮现在activity之上 -->
+    <item name="android:windowIsFloating">true</item>
+    <!-- 是否模糊 -->
+    <item name="android:background">@null</item>
+
+    <item name="android:backgroundDimEnabled">false</item>
+    <item name="android:windowCloseOnTouchOutside">true</item>
+    <item name="android:windowFrame">@null</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="android:windowActionBar">false</item>
+    <!-- Customize your theme here. -->
+
+    <item name="colorControlNormal">@color/divider_white</item>
+
+    <item name="colorAccent">@color/accent</item>
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/primary_dark</item>
+    <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>
+    <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
+    <item name="android:windowIsTranslucent">false</item>
+    <item name="buttonStyle">@style/Qc.CommonBtn</item>
+    <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
+    <item name="editTextStyle">@style/Qc.EditTextStyle</item>
+    <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
+    <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
+    <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
+
+
+  </style>
+</resources>

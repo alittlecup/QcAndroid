@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.qingchengfit.widgets.CommonInputView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/civ"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/qc_item_height"
+    android:orientation="vertical"
+    app:civ_inputnum="true"
+    app:civ_nonnull="true"
+    app:civ_showdivier="true"
+    />

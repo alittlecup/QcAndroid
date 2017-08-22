@@ -1,0 +1,234 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+  <LinearLayout
+      android:id="@+id/sign_up_empty_rank"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:paddingBottom="45dp"
+      android:paddingTop="45dp"
+      android:visibility="gone"
+      >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_empty_ranking"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="比赛还未开始，3天后再来吧"
+        android:textSize="13sp"
+        />
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/ll_account_sign_up"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        android:id="@+id/ll_rank_first_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="18dp"
+        >
+
+      <LinearLayout
+          android:id="@+id/ll_rank_attendance"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:paddingTop="24dp"
+          >
+
+        <cn.qingchengfit.widgets.CircleTextView
+            android:id="@+id/circle_text_attendance"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingBottom="15dp"
+            android:textColor="@color/text_orange"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:border_color="@color/text_orange"
+            app:border_width="4dp"
+            app:content="出勤(天)"
+            app:contentSize="13sp"
+            tools:text="23"
+            />
+
+        <TextView
+            android:id="@+id/text_group_attendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="团队出勤26天"
+            />
+
+        <TextView
+            android:id="@+id/text_attendance_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="13sp"
+            tools:text="全部排名232，场馆内排名3"
+            />
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_rank_signal"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:paddingTop="24dp"
+          >
+
+        <cn.qingchengfit.widgets.CircleTextView
+            android:id="@+id/circle_text_signal"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:textColor="@color/circle_signal_time"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:border_color="@color/circle_signal_time"
+            app:border_width="4dp"
+            app:content="签到(次)"
+            app:contentSize="13sp"
+            tools:text="34"
+            />
+
+        <TextView
+            android:id="@+id/text_signal_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:textSize="13sp"
+            tools:text="全部排名232，场馆内排名3"
+            />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_rank_second_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="28dp"
+        >
+
+      <LinearLayout
+          android:id="@+id/ll_rank_group"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:paddingTop="24dp"
+          >
+
+        <cn.qingchengfit.widgets.CircleTextView
+            android:id="@+id/circle_text_group"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:textColor="@color/circle_group_class"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:border_color="@color/circle_group_class"
+            app:border_width="4dp"
+            app:content="团课(节)"
+            app:contentSize="13sp"
+            tools:text="16"
+            />
+
+        <TextView
+            android:id="@+id/text_group_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="团体团课26节"
+            />
+
+        <TextView
+            android:id="@+id/text_group_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="13sp"
+            tools:text="全部排名232，场馆内排名3"
+            />
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_rank_private"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:paddingTop="24dp"
+          >
+
+        <cn.qingchengfit.widgets.CircleTextView
+            android:id="@+id/circle_text_private"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:textColor="@color/circle_private_class"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:border_color="@color/circle_private_class"
+            app:border_width="4dp"
+            app:content="私教(节)"
+            app:contentSize="13sp"
+            tools:text="5"
+            />
+
+        <TextView
+            android:id="@+id/text_group_private"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="团体私教6节"
+            />
+
+        <TextView
+            android:id="@+id/text_private_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textSize="13sp"
+            tools:text="全部排名232，场馆内排名3"
+            />
+
+      </LinearLayout>
+
+    </LinearLayout>
+  </LinearLayout>
+
+</FrameLayout>

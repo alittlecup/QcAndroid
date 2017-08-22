@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+  <ImageView
+      android:layout_width="16dp"
+      android:layout_height="16dp"
+      app:srcCompat="@drawable/ic_credit_pay_yellow"
+      />
+
+  <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_weight="1"
+      android:text="@string/no_suit_student_card"
+      />
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="5dp"
+      android:text="@string/buy_now"
+      android:textColor="@color/text_orange"
+      />
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <color name="accent">#A43E88</color>
+  <color name="primary">#A43E88</color>// 32 191 189
+  <color name="primary_dark">#A43E88</color>
+  <color name="primary_light">#A43E88</color>
+
+
+  <color name="text_grey">@color/warm_grey</color>
+  <color name="text_black">@color/cm_black</color>
+  <color name="backgroud_grey">#f4f4f4</color>
+  <!--<color username="backgroud_grey">#aaaaaa</color>-->
+  <color name="text_red">#f1693c</color>
+  <color name="most_black">#222222</color>
+  <color name="cm_black">#666666</color>
+  <color name="less_black">#aaaaaa</color>
+  <color name="divider_white">#eeeeee</color>
+  <color name="divider_grey">#dddddd</color>
+  <color name="bg_grey">#f4f4f4</color>
+  <color name="disable">#99ffffff</color>
+  <color name="halftransparent_white">#99ffffff</color>
+
+  <color name="wheel_timebtn_nor">#54a3fa</color>
+  <color name="wheel_timebtn_pre">#CCCCCC</color>
+
+
+  <!-- General -->
+  <color name="line">#CC0000</color>
+  <color name="ring">#669900</color>
+  <color name="circle">#e6e7e8</color>
+  <color name="calendar_background">#FFFFFF</color>
+
+  <!-- General -->
+  <!--<color username="green">#339DB5</color>-->
+  <!--<color username="red">#e98885</color>-->
+  <color name="blue">#55c6da</color>
+  <color name="white">#FFFFFF</color>
+  <color name="black">#000000</color>
+
+  <!-- Fonts -->
+  <color name="month_title">@color/text_black</color>
+  <color name="day_of_week_color">@color/text_black</color>
+  <color name="day_of_month">@color/most_black</color>
+  <color name="current_day_of_month">@color/white</color>
+  <color name="currentDayOfMonthSelectorColor">#33b5e5</color>
+</resources>

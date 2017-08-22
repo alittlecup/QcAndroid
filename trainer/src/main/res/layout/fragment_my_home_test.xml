@@ -1,0 +1,212 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.fragment.MyHomeFragment"
+    >
+
+  <android.support.v4.widget.SwipeRefreshLayout
+
+      android:id="@+id/sfl"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/myhome_scroller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        >
+
+      <LinearLayout
+          android:id="@+id/halfscroll_first"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/backgroud_grey"
+          android:orientation="vertical"
+          >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
+
+          <View
+              android:id="@+id/myhome_bg"
+              android:layout_width="match_parent"
+              android:layout_height="172dp"
+              android:background="@color/primary"
+              />
+
+          <ImageView
+              android:id="@+id/myhome_header"
+              android:layout_width="80dp"
+              android:layout_height="80dp"
+              android:layout_centerHorizontal="true"
+              android:layout_marginBottom="0dp"
+              android:layout_marginTop="130dp"
+              android:scaleType="fitXY"
+              />
+
+          <ImageView
+              android:id="@+id/myhome_gender"
+              android:layout_width="16dp"
+              android:layout_height="16dp"
+              android:layout_alignBottom="@id/myhome_header"
+              android:layout_alignRight="@id/myhome_header"
+              android:layout_marginBottom="5dp"
+              android:layout_marginRight="5dp"
+              android:background="@drawable/circle_white"
+              tools:src="@drawable/ic_gender_signal_female"
+              />
+
+          <TextView
+              android:id="@+id/myhome_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/myhome_header"
+              android:layout_centerHorizontal="true"
+              android:layout_marginTop="0dp"
+              android:textColor="@color/most_black"
+              android:textSize="16sp"
+              tools:text="杨拉拉"
+              />
+
+          <TextView
+
+              android:id="@+id/myhome_brief"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/myhome_name"
+              android:layout_centerHorizontal="true"
+              android:layout_marginTop="10dp"
+              android:maxWidth="250dp"
+              />
+
+          <TextView
+              android:id="@+id/myhome_location"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/myhome_brief"
+              android:layout_centerHorizontal="true"
+              android:layout_marginTop="10dp"
+              android:drawableLeft="@drawable/ic_location"
+              android:drawablePadding="10dp"
+              android:text="北京"
+              />
+
+          <ImageView
+              android:id="@+id/myhome_sawtooth"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/myhome_location"
+              android:layout_marginTop="10dp"
+              />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line_sawtooth"
+            ></View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_grey"
+            ></View>
+
+        <FrameLayout
+            android:id="@+id/myhome_student_judge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            ></FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_grey"
+            ></View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_grey"
+            ></View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            >
+
+          <RelativeLayout
+              android:id="@+id/myhome_tab_layout"
+              android:layout_width="match_parent"
+              android:layout_height="44dp"
+              android:layout_gravity="bottom"
+              android:background="@color/white"
+              >
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/myhome_tab"
+
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:tabGravity="center"
+                app:tabIndicatorColor="@color/primary"
+                app:tabIndicatorHeight="3dp"
+                app:tabSelectedTextColor="@color/primary_dark"
+                app:tabTextAppearance="@style/Qc.TextCommonGrey"
+                app:tabTextColor="@color/text_grey"
+                >
+            </android.support.design.widget.TabLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="#e0e0e0"
+                >
+            </View>
+
+
+          </RelativeLayout>
+
+
+          <com.qingchengfit.fitcoach.component.MyhomeViewPager
+              android:id="@+id/myhome_viewpager"
+              android:layout_width="match_parent"
+              android:layout_height="700dp"
+              android:background="@color/white"
+              />
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+  </android.support.v4.widget.SwipeRefreshLayout>
+
+  <include
+      layout="@layout/common_toolbar"
+      >
+  </include>
+
+
+</RelativeLayout>
+
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/city"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="北京朝阳区"
+      app:civ_lable="@string/common_city"
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.LargeInputView
+      android:id="@+id/address"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:liv_lable="@string/common_address"
+      />
+
+  <Button
+      android:id="@+id/btn"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:text="@string/common_comfirm"
+      />
+</LinearLayout>

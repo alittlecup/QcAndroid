@@ -1,0 +1,291 @@
+<resources xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <style name="AtestStyle" parent="@style/Theme.AppCompat.Light.NoActionBar">
+
+    <item name="colorPrimary">@color/green</item>
+    <item name="colorPrimaryDark">@color/green</item>
+    <item name="colorAccent">@color/red</item>
+  </style>
+
+  <style name="AppThemeLightBottom" parent="Theme.AppCompat.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowActionBar">false</item>
+    <item name="colorControlNormal">@color/divider_grey</item>
+    <item name="colorPrimary">#fafafa</item>
+    <item name="colorPrimaryDark">#fafafa</item>
+    <item name="colorAccent">#fafafa</item>
+    <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+    <item name="android:windowAnimationStyle">@style/AnimationActivityBottom</item>
+    <item name="android:actionBarStyle">@style/Qc.ActionBarStyleDard</item>
+    <item name="actionBarStyle">@style/Qc.ActionBarStyleDard</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@color/transparent</item>
+    <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
+  </style>
+
+
+  <style mce_bogus="1" name="AnimationActivityBottom" parent="android:Animation.Activity">
+    <item name="android:activityOpenEnterAnimation">@anim/slide_bottom_in</item>
+    <item name="android:activityOpenExitAnimation">@anim/slide_hold</item>
+    <item name="android:activityCloseEnterAnimation">@anim/slide_hold</item>
+    <item name="android:activityCloseExitAnimation">@anim/slide_bottom_out</item>
+    <item name="android:taskCloseEnterAnimation">@anim/slide_hold</item>
+    <item name="android:taskCloseExitAnimation">@anim/slide_bottom_out</item>
+  </style>
+
+  <style name="TextStyle.min" parent="TextAppearance.AppCompat">
+    <item name="android:textSize">@dimen/min_font</item>
+  </style>
+
+  <style name="TextStyle.common" parent="TextStyle.min">
+    <item name="android:textSize">@dimen/common_font</item>
+  </style>
+
+  <style name="TextStyle.large" parent="TextStyle.min">
+    <item name="android:textSize">@dimen/large_font</item>
+  </style>
+
+  <style name="TextStyle.max" parent="TextStyle.min">
+    <item name="android:textSize">@dimen/max_font</item>
+  </style>
+
+  <style name="ToolbarStyle" parent="TextStyle.large">
+    <item name="android:textColor">@color/white</item>
+  </style>
+
+  <style name="ToolbarStyle.Menu" parent="ToolbarStyle">
+    <item name="android:textColor">@color/white</item>
+    <item name="android:textSize">16sp</item>
+  </style>
+
+  <style name="ToolbarStyle.Overflow" parent="ThemeOverlay.AppCompat.Light">
+    <item name="android:background">@color/transparent</item>
+    <item name="android:textColor">@color/cyan</item>
+    <item name="android:color">@color/cyan</item>
+    <item name="android:textColorPrimaryInverse">@color/cyan</item>
+  </style>
+
+  <style name="Qc.toolbarStyle" parent="ThemeOverlay.AppCompat.Dark">
+    <item name="android:actionMenuTextColor">@color/white</item>
+    <item name="android:actionMenuTextAppearance">@style/ToolbarStyle.Menu</item>
+
+  </style>
+
+  <style name="Qc.ActionBarStyleDard" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <item name="android:actionMenuTextColor">@color/text_black</item>
+    <item name="android:actionMenuTextAppearance">@style/Qc.TextCommonBlack</item>
+  </style>
+
+
+  <style name="TextTitleHint" parent="@style/Qc.TextCommonGrey">
+    <item name="android:textSize">12sp</item>
+    <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+    <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+    <item name="android:gravity">center_vertical|left</item>
+    <item name="android:background">@color/bg_grey</item>
+  </style>
+
+
+  <style name="Qc.TextCommonGrey" parent="Base.TextAppearance.AppCompat">
+    <item name="android:textColor">@color/text_grey</item>
+    <item name="android:textSize">@dimen/common_font</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:ellipsize">end</item>
+
+  </style>
+
+  <style name="Qc.TextCommonBlack" parent="Base.TextAppearance.AppCompat">
+    <item name="android:textColor">@color/text_black</item>
+    <item name="android:textSize">@dimen/common_font</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:ellipsize">end</item>
+  </style>
+
+  <style name="Qc.TextCommonWhite" parent="Base.TextAppearance.AppCompat">
+    <item name="android:textColor">@color/white</item>
+    <item name="android:textSize">@dimen/large_font</item>
+    <item name="android:singleLine">true</item>
+  </style>
+
+
+  <style name="ChoosePicDialogStyle" parent="AlertDialog.AppCompat">
+    <!-- 背景颜色及透明程度 -->
+    <item name="android:windowBackground">@color/white</item>
+    <!-- 是否有标题 -->
+    <item name="android:windowNoTitle">true</item>
+    <!-- 是否浮现在activity之上 -->
+    <item name="android:windowIsFloating">true</item>
+    <!-- 是否模糊 -->
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:windowCloseOnTouchOutside">true</item>
+    <item name="android:windowFrame">@null</item>
+  </style>
+
+  <style name="ButtomDialogStyle" parent="android:Animation">
+    <item name="@android:windowEnterAnimation">@anim/slide_from_bottom</item>
+    <item name="@android:windowExitAnimation">@anim/slide_out_bottom</item>
+  </style>
+
+
+  <style name="TopDialogStyle" parent="android:Animation">
+    <item name="@android:windowEnterAnimation">@anim/slide_top_in</item>
+    //进入时的动画
+    <item name="@android:windowExitAnimation">@anim/slide_top_out</item>
+    //退出时的动画
+  </style>
+
+  <style name="Qc.RatingBar" parent="android:Widget.Holo.RatingBar.Small">
+    <item name="android:progressDrawable">@drawable/rate_drawable</item>
+    <item name="android:minHeight">8dp</item>
+    <item name="android:maxHeight">8dp</item>
+  </style>
+
+
+  <style name="Translucent_NoTitle" parent="android:style/Theme.Dialog">
+    <item name="android:background">#00000000</item>
+    <item name="android:backgroundDimEnabled">false</item>
+    <!-- 设置自定义布局的背景透明 -->
+    <item name="android:windowBackground">@drawable/bg_loading_dialog</item>
+    <!-- 设置window背景透明，也就是去边框 -->
+  </style>
+
+  <style name="Translucent_NoTitle.TransParent" parent="android:style/Theme.Dialog">
+    <item name="android:background">#00000000</item>
+    <item name="android:backgroundDimEnabled">false</item>
+    <!-- 设置自定义布局的背景透明 -->
+    <item name="android:windowBackground">@color/transparent</item>
+    <!-- 设置window背景透明，也就是去边框 -->
+  </style>
+
+
+  <style name="Qc.Datepicker" parent="android:Theme.Holo.Light.Dialog">
+    <item name="android:windowBackground">@color/transparent</item>
+    <item name="android:windowTitleSize">0dp</item>
+  </style>
+
+  <style name="Qc.Web.Datepicker" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+    <item name="android:buttonStyle">@style/Qc.Datepicker.Btn</item>
+  </style>
+
+  <style name="Qc.ActionBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <item name="android:textColorPrimary">@color/white</item>
+    <item name="android:actionBarSize">@dimen/qc_actionbar_height</item>
+    <item name="actionBarSize">@dimen/qc_actionbar_height</item>
+  </style>
+
+  <style name="Qc.ScrollviewStyle" parent="android:Widget.ScrollView">
+    <item name="android:scrollbars">none</item>
+  </style>
+
+
+  <style name="Qc.CommonBtn" parent="Base.Widget.AppCompat.Button">
+    <item name="android:background">@drawable/btn_prime</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:textSize">16sp</item>
+  </style>
+
+  <style name="Qc.Datepicker.Btn" parent="Base.Widget.AppCompat.Button">
+    <item name="android:textColor">?colorPrimary</item>
+  </style>
+
+  <style name="Qc.EditTextStyle" parent="Base.Widget.AppCompat.EditText">
+    <item name="android:drawablePadding">@dimen/qc_edit_drawable_padding</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:textColor">@color/text_black</item>
+    <item name="android:textSize">14sp</item>
+    <item name="colorControlNormal">@color/divider_grey</item>
+
+    <item name="android:textColorHint">@color/warm_grey</item>
+
+  </style>
+
+  <style name="Qc.EditHintStyle" parent="TextAppearance.AppCompat">
+    <item name="android:paddingLeft">@dimen/qc_edit_drawable_padding</item>
+  </style>
+
+  <style name="TextTranparents" parent="TextAppearance.AppCompat.Title">
+    <item name="android:textColor">@color/transparent</item>
+  </style>
+
+  <style mce_bogus="1" name="AnimationActivity" parent="android:Animation.Activity">
+    <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+    <item name="android:activityOpenExitAnimation">@anim/slide_hold</item>
+    <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+    <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
+    <item name="android:taskOpenEnterAnimation">@anim/slide_right_in</item>
+    <item name="android:taskOpenExitAnimation">@anim/slide_hold</item>
+    <item name="android:taskCloseEnterAnimation">@anim/slide_hold</item>
+    <item name="android:taskCloseExitAnimation">@anim/slide_left_out</item>
+  </style>
+
+
+  <style name="LoadingDialog.Style" parent="AlertDialog.AppCompat">
+    <!-- 背景颜色及透明程度 -->
+    <item name="android:windowBackground">@android:color/white</item>
+    <!-- 是否有标题 -->
+    <item name="android:windowNoTitle">true</item>
+    <!-- 是否浮现在activity之上 -->
+    <item name="android:windowIsFloating">true</item>
+    <!-- 是否模糊 -->
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:windowCloseOnTouchOutside">false</item>
+    <item name="android:windowFrame">@null</item>
+  </style>
+
+
+  <!-- 时间选择器popwidnow 显示消失动画 -->
+  <style name="timepopwindow_anim_style">
+    <item name="android:windowEnterAnimation">@anim/timepicker_anim_enter_bottom</item>
+    <!-- 指定显示的动画xml -->
+    <item name="android:windowExitAnimation">@anim/timepicker_anim_exit_bottom</item>
+    <!-- 指定消失的动画xml -->
+  </style>
+
+  <style name="floataction_style" parent="ThemeOverlay.AppCompat">
+    <item name="android:textColor">@color/text_black</item>
+    <item name="android:textSize">16sp</item>
+  </style>
+
+
+  <style name="MonthTitle">
+    <item name="android:textSize">16sp</item>
+    <item name="android:textColor">?android:colorPrimary</item>
+  </style>
+
+  <style name="DayOfTheWeek">
+    <item name="android:textSize">13sp</item>
+    <item name="android:textColor">@color/day_of_month</item>
+  </style>
+
+  <style name="theme_dialog_fullscreen">
+    <item name="android:background">@android:color/background_dark</item>
+    <item name="android:windowBackground">@color/black</item>
+    <item name="android:windowIsTranslucent">true</item>
+  </style>
+
+  <style name="DayOfTheMonth">
+    <item name="android:textSize">15sp</item>
+    <item name="android:textColor">@color/day_of_month</item>
+  </style>
+
+
+  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+
+  <style name="NavPage">
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:orientation">vertical</item>
+    <item name="android:gravity">center_horizontal</item>
+    <!-- <item name="android:background">@drawable/nav_page</item> -->
+    <item name="android:background">@color/bg_grey</item>
+  </style>
+
+
+</resources>

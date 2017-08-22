@@ -1,0 +1,86 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.fragment.GymTimeFragment"
+    >
+
+  <include layout="@layout/common_toolbar">
+  </include>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gymtime_mon"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="周一"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gymtime_tus"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="周二"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gymtime_wen"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="周三"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gymtime_thu"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="周四"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gymtime_fri"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="周五"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gymtime_sat"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="周六"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gymtime_sun"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="周日"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <Button
+      android:id="@+id/gymtime_comfirm"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="30dp"
+      android:text="@string/login_comfirm"
+      />
+</LinearLayout>

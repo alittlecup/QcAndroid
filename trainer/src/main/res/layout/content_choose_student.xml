@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.activity.ChooseStudentActivity"
+    >
+
+  <include layout="@layout/common_toolbar">
+  </include>
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/choosestudent_rv"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?attr/actionBarSize"
+      android:background="@color/white"
+      android:clipToPadding="false"
+      android:paddingBottom="50dp"
+      >
+  </android.support.v7.widget.RecyclerView>
+
+  <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_alignParentRight="true"
+      android:layout_marginBottom="@dimen/qc_item_height"
+      android:layout_marginTop="?attr/actionBarSize"
+      android:background="@color/white"
+      >
+
+    <com.qingchengfit.fitcoach.component.AlphabetView
+        android:id="@+id/alphabetview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        >
+    </com.qingchengfit.fitcoach.component.AlphabetView>
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_alignParentBottom="true"
+      android:background="@color/backgroud_grey"
+      >
+
+    <include
+        layout="@layout/divider_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        >
+    </include>
+
+    <CheckBox
+        android:id="@+id/choosestudent_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:button="@drawable/radio_selector"
+        android:text="全选"
+        android:textColor="@color/text_grey"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="已选择"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <TextView
+          android:id="@+id/choosestudent_choose_num"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="0"
+          android:textColor="@color/primary"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <TextView
+          android:id="@+id/choosestudent_total_num"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="/0人"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/choosestudent_comfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:padding="10dp"
+        android:text="导入"
+        android:textColor="@color/primary"
+        style="@style/Qc.TextCommonGrey"
+        />
+  </RelativeLayout>
+</RelativeLayout>

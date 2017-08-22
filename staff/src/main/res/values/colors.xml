@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="primary">#00CED8</color>// 32 191 189
+  <color name="accent">@color/primary</color>
+  <color name="primary_dark">#006f74</color>
+  <color name="primary_light">#00f1fc</color>
+  <color name="colorPrimarytrans">#1100c8d1</color>
+  <color name="colorPrimary">@color/primary</color>
+  <color name="colorAccent">@color/primary</color>
+  <color name="colorPrimaryLight">@color/primary</color>
+  <color name="colorPrimaryDark">#006f74</color>
+  <color name="toolbar">#232428</color>
+
+
+  <color name="colorSetBg">#838B86</color>
+  <color name="divider_white">#eeeeee</color>
+  <color name="divider_grey">#dddddd</color>
+  <color name="text_grey">#666666</color>
+  <color name="text_less">#999999</color>
+  <color name="bg_grey">#f4f4f4</color>
+
+  <color name="most_black">#222222</color>
+
+
+  <color name="bg_card_off_day">#F9944E</color>
+  <color name="bg_card_stop">#ea6161</color>
+  <color name="bg_card_out_of_day">#cccccc</color>
+
+  <!--  calendar Fonts -->
+  <color name="month_title">@color/text_black</color>
+  <color name="day_of_week_color">@color/text_black</color>
+  <color name="day_of_month">@color/most_black</color>
+  <color name="current_day_of_month">@color/white</color>
+  <color name="currentDayOfMonthSelectorColor">#33b5e5</color>
+  <color name="line">#CC0000</color>
+  <color name="ring">#669900</color>
+  <color name="circle">#e6e7e8</color>
+  <color name="calendar_background">#ffffff</color>
+
+  <color name="thirty_black">#22000000</color>
+  <color name="bg_red">#1aea6161</color>
+
+
+  <color name="wheel_timebtn_nor">#54a3fa</color>
+  <color name="wheel_timebtn_pre">#CCCCCC</color>
+  <color name="text_orange">#f9944e</color>
+  <color name="text_link">#6eb8f1</color>
+  <color name="bg_orange">#33f9944e</color>
+
+  <!--common color-->
+  <color name="white">#ffffff</color>
+  <color name="half_white">#55ffffff</color>
+  <color name="text_black">#333333</color>
+  <color name="dark_white">#cfcfcf</color>
+  <color name="cyan">#00BFBF</color>
+  <color name="transparent">#00ffffff</color>
+  <color name="halftransparent">#33ffffff</color>
+  <color name="halftransparent_grey">#99000000</color>
+  <color name="halftrans_background">#33000000</color>
+  <color name="grey">#555555</color>
+  <color name="warm_grey">#9b9b9b</color>
+  <color name="less_grey">#dddddd</color>
+  <color name="orange">#e08f00</color>
+  <color name="red">#ea6161</color>
+  <color name="green">@color/colorPrimary</color>
+  <color name="dard_green">@color/colorPrimaryDark</color>
+  <color name="blue">#2ab6f6</color>
+  <color name="purple">#ba68c8</color>
+  <color name="text_color_gray">#6a6a6a</color>
+  <color name="signin_new_color">#e5955d</color>
+  <color name="qc_bg_arrow">#bbbbbb</color>
+
+
+  <color name="qc_text_black">#333333</color>
+  <color name="qc_text_grey">#9d9d9d</color>
+  <color name="qc_text_grey_less">#999999</color>
+  <color name="qc_text_grey_trans">#559d9d9d</color>
+  <color name="qc_snackbar_bg">#f9944e</color>
+
+  <color name="qc_allotsale_green">@color/colorPrimary</color>
+  <color name="qc_allotsale_search_bg">#fafafa</color>
+
+  <color name="qc_student_status_0">#6eb8f1</color>
+  <color name="qc_student_status_1">#f9944e</color>
+  <color name="qc_student_status_2">@color/colorPrimary</color>
+
+  <color name="qc_theme_green">@color/colorPrimary</color>
+
+  <color name="grey_student_info">#777777</color>
+  <color name="qc_student_score_start_btn">#4cb28a</color>
+  <color name="qc_score_award_add">#4CB28A</color>
+
+  <color name="qc_bg_grey">#f8f8f8</color>
+  <color name="circle_signal_time">#8CB5BA</color>
+  <color name="circle_group_class">#1CA5E6</color>
+  <color name="circle_private_class">#7986CC</color>
+
+
+</resources>

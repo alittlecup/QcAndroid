@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+  <!--<include layout="@layout/layout_course_detail"/>-->
+  <include layout="@layout/common_toolbar"/>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:background="@color/white"
+      android:visibility="gone"
+      >
+
+    <TextView
+        android:id="@+id/preview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_rect"
+        android:drawableLeft="@drawable/ic_register_verify"
+        android:paddingLeft="4dp"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="约课页预览"
+        android:textSize="12sp"
+        style="@style/Qc.TextCommonGrey"
+        />
+  </FrameLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:clipToPadding="true"
+        />
+
+    <FrameLayout
+        android:id="@+id/layout_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="@color/bg_grey"
+        >
+
+      <include layout="@layout/divider_grey"/>
+
+      <Button
+          android:id="@+id/add_batch_btn"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_gravity="center"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:text="@string/add_batch"
+          />
+    </FrameLayout>
+
+
+  </FrameLayout>
+
+  <!--<include layout="@layout/fragment_course_list"/>-->
+</LinearLayout>

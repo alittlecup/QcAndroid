@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        app:srcCompat="@drawable/vector_data_statistics"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="趋势图"
+        style="@style/QcTextStyleSmallDark"
+        />
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/divider_grey"
+        />
+
+    <cn.qingchengfit.widgets.QcFilterToggle
+        android:id="@+id/qft_saler"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        app:ft_text_off="销售"
+        app:ft_text_on="销售"
+        style="@style/QcFilterStyle"
+        />
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/divider_grey"
+        />
+
+    <cn.qingchengfit.widgets.QcFilterToggle
+        android:id="@+id/qft_times"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        app:ft_text_off="最近7天"
+        app:ft_text_on="最近7天"
+        style="@style/QcFilterStyle"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <FrameLayout
+      android:id="@+id/frag_contianer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <FrameLayout
+        android:id="@+id/frag_status_graph_0"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        />
+
+    <FrameLayout
+        android:id="@+id/frag_follow_up_filter_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/halftransparent_grey"
+        android:visibility="gone"
+        />
+
+  </FrameLayout>
+</LinearLayout>

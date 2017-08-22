@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <android.support.v7.widget.Toolbar
+      android:layout_width="match_parent"
+      android:layout_height="?android:actionBarSize"
+      android:background="@color/primary"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:id="@+id/change_gym"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:background="?android:selectableItemBackground"
+          android:text="@string/change_gym"
+          android:textColor="@color/white"
+          />
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:gravity="center"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:text="健身房名称"
+            />
+
+        <ImageView
+            android:id="@+id/angle_show"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_play_arrow_black_24dp"
+            />
+      </LinearLayout>
+
+      <ImageView
+          android:id="@+id/action_flow"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_alignParentRight="true"
+          app:srcCompat="@drawable/ic_more_vert_white_24dp"
+          />
+    </RelativeLayout>
+
+  </android.support.v7.widget.Toolbar>
+
+  <android.support.v4.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clipToPadding="false"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:id="@+id/gym_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:gravity="center_vertical"
+          android:minHeight="78dp"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          tools:visibility="visible"
+          >
+
+        <ImageView
+            android:id="@+id/shop_img"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:scaleType="fitXY"
+            />
+
+        <LinearLayout
+            android:id="@+id/gym_info_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+
+            >
+
+          <TextView
+              android:id="@+id/address_phone"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/font_divider"
+              android:ellipsize="end"
+              android:lines="1"
+              android:maxWidth="150dp"
+              android:textSize="16sp"
+              tools:text="1231231231223234234234234234234234"
+              style="@style/Qc.TextCommonBlack"
+              />
+
+          <TextView
+              android:id="@+id/name_brand"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:ellipsize="end"
+              android:lines="1"
+              android:textSize="@dimen/common_font"
+              tools:text="中美引力"
+              style="@style/Qc.TextCommonGrey"
+              />
+
+          <TextView
+              android:id="@+id/dataoff"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/font_divider"
+              android:maxLines="2"
+              android:maxWidth="150dp"
+              android:textSize="12sp"
+              android:visibility="gone"
+              tools:text="xxxx-xxxx-xxafasdfasdfasd"
+              />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/renewal"
+            android:layout_width="64dp"
+            android:layout_height="28dp"
+            android:background="@drawable/bg_rect_primary"
+            android:gravity="center"
+            android:text="@string/edit"
+            android:textColor="@color/primary"
+            />
+
+
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerview"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/divider_grey"
+          />
+
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/bg_grey"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/little"
+            android:layout_weight="1"
+            android:background="@color/divider_grey"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/more_gym_function_hint"
+            style="@style/TextTitleHint"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/little"
+            android:layout_weight="1"
+            android:background="@color/divider_grey"
+
+            />
+      </LinearLayout>
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerview2"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@drawable/img_more_function"
+          />
+
+      <include layout="@layout/divider_grey"/>
+    </LinearLayout>
+
+  </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

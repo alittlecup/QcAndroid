@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+
+    <include layout="@layout/common_simple_toolbar"/>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="@string/site_name"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/count"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_inputnum="true"
+        app:civ_lable="@string/site_count"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/usage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_content="@string/course_type_group"
+        app:civ_lable="@string/site_usage"
+        app:civ_showdivier="false"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <!--<Button-->
+    <!--android:id="@+id/btn"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/qc_item_height"-->
+    <!--android:layout_margin="@dimen/activity_horizontal_margin"-->
+    <!--android:text="@string/common_comfirm"-->
+    <!--android:enabled="false"-->
+    <!--/>-->
+    <RelativeLayout
+        android:id="@+id/btn_del"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:text="删除该场地"
+          android:textColor="@color/red"
+          />
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/divider_grey"
+          />
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_alignParentBottom="true"
+          android:background="@color/divider_grey"
+          />
+    </RelativeLayout>
+
+  </LinearLayout>
+
+  <View
+      android:id="@+id/deny_layout"
+      android:layout_width="match_parent"
+      android:layout_height="210dp"
+      android:visibility="gone"
+      />
+
+</FrameLayout>

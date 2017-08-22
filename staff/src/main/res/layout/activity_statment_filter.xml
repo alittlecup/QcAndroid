@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cn.qingchengfit.staffkit.views.statement.StatmentFilterActivity"
+    >
+
+  <RelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      >
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/bg_grey"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Qc.toolbarStyle"
+        app:popupTheme="@style/ToolbarStyle.Overflow"
+        app:theme="@style/Qc.toolbarStyle"
+        app:titleTextAppearance="@style/ToolbarStyle"
+        >
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="筛选报表 "
+        android:textColor="@color/text_black"
+        android:textSize="16sp"
+        style="@style/Qc.TextCommonBlack"
+        />
+  </RelativeLayout>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/start_day"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/start_day"
+      app:civ_showdivier="true"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/end_day"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/end_day"
+      app:civ_showdivier="true"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/all_course"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/all_course"
+      app:civ_lable="@string/course"
+      app:civ_showdivier="true"
+      app:civ_showright="true"
+
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/all_coach"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/all_coach"
+      app:civ_lable="@string/coach"
+      app:civ_showdivier="true"
+      app:civ_showright="true"
+
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/all_student"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/all_students"
+      app:civ_lable="@string/student"
+      app:civ_showdivier="false"
+      app:civ_showright="true"
+
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <Button
+      android:id="@+id/generate"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_margin="16dp"
+      android:text="@string/generate_statment"
+      />
+</LinearLayout>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+  <LinearLayout
+      android:layout_width="100dp"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      >
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/coach_img"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+
+        />
+
+    <TextView
+        android:id="@+id/coach_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="90dp"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:text="教练评分"
+          />
+
+      <TextView
+          android:id="@+id/coach_score"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:textColor="@color/text_orange"
+          tools:text="4.5"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:text="课程评分"
+          />
+
+      <TextView
+          android:id="@+id/course_score"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:textColor="@color/text_orange"
+          tools:text="4.5"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:text="服务评分"
+          />
+
+      <TextView
+          android:id="@+id/server_score"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:textColor="@color/text_orange"
+          tools:text="4.5"
+          />
+    </LinearLayout>
+
+    <co.hkm.soltag.TagContainerLayout
+        android:id="@+id/comments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        app:container_background_color="@color/bg_grey"
+        app:container_border_color="@color/transparent"
+        app:container_border_radius="0dp"
+        app:container_border_width="0dp"
+        app:container_enable_drag="false"
+        app:container_gravity="center"
+        app:horizontal_interval="10dp"
+        app:tag_background_color="@color/orange"
+        app:tag_border_color="@color/orange"
+        app:tag_border_width="1dp"
+        app:tag_corner_radius="4dp"
+        app:tag_text_color="@color/text_black"
+        app:tag_theme="none"
+        app:vertical_interval="10dp"
+        tools:visibility="gone"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@color/white"
+        android:paddingBottom="4dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:text="暂无印象"
+        />
+  </LinearLayout>
+
+</LinearLayout>
+

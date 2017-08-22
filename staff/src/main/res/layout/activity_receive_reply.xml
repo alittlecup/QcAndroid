@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="15dp"
+    >
+
+  <android.support.v4.widget.CircleImageView
+      android:id="@+id/image_reply_head"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      tools:background="@drawable/head"
+      />
+
+  <TextView
+      android:id="@+id/tv_reply_self"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignTop="@+id/image_reply_head"
+      android:layout_marginLeft="10dp"
+      android:layout_toRightOf="@+id/image_reply_head"
+      android:textColor="@color/warm_grey_2"
+      android:textSize="13sp"
+      tools:text="娜娜"
+      />
+
+  <TextView
+      android:id="@+id/tv_reply"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="4dp"
+      android:layout_toRightOf="@+id/tv_reply_self"
+      android:text="@string/activity_text_replay"
+      android:textColor="@color/qc_text_grey"
+      android:textSize="13sp"
+      />
+
+  <TextView
+      android:id="@+id/tv_reply_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="4dp"
+      android:layout_toRightOf="@+id/tv_reply"
+      android:textColor="@color/warm_grey_2"
+      android:textSize="13sp"
+      tools:text="CloverTuan"
+      />
+
+  <TextView
+      android:id="@+id/btn_reply"
+      android:layout_width="50dp"
+      android:layout_height="26dp"
+      android:layout_alignParentRight="true"
+      android:background="@drawable/bg_border_black"
+      android:gravity="center"
+      android:text="回复"
+      android:textSize="13sp"
+      />
+
+  <TextView
+      android:id="@+id/tv_reply_time"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@+id/image_reply_head"
+      android:layout_marginLeft="10dp"
+      android:layout_marginTop="5dp"
+      android:layout_toRightOf="@+id/image_reply_head"
+      android:textColor="@color/qc_text_grey"
+      android:textSize="11sp"
+      tools:text="4小时前"
+      />
+
+  <TextView
+      android:id="@+id/tv_reply_content"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_reply_time"
+      android:layout_marginTop="14dp"
+      android:textColor="@color/qc_text_black"
+      android:textSize="14sp"
+      tools:text="说得真好"
+      />
+
+  <include
+      layout="@layout/divider_grey"
+      android:id="@+id/reply_divider"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_alignLeft="@+id/tv_comment_content"
+      android:layout_below="@+id/tv_reply_content"
+      android:layout_marginTop="16dp"
+      />
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="90dp"
+      android:layout_below="@+id/reply_divider"
+      android:background="@color/bg_grey"
+      >
+
+    <ImageView
+        android:id="@+id/image_article"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        tools:src="@drawable/ic_image"
+        />
+
+    <TextView
+        android:id="@+id/text_reply_article_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/image_article"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/image_article"
+        android:textColor="@color/qc_text_black"
+        android:textSize="16sp"
+        tools:text="玩命向你推荐这些国外黄奕健身房"
+        />
+
+    <TextView
+        android:id="@+id/text_reply_article_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_reply_article_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="7dp"
+        android:layout_toRightOf="@+id/image_article"
+        android:textColor="@color/warm_grey_2"
+        android:textSize="13sp"
+        tools:text="知名工作室老板向你娓娓道来，少走弯路少掉…"
+        />
+
+  </RelativeLayout>
+
+</RelativeLayout>

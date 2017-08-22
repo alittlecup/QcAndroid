@@ -1,0 +1,84 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/custom_statment_start"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/start_day"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/custom_statment_end"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/end_day"
+      app:civ_showright="true"
+
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/custom_statment_cardtype"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/cardtype_all"
+      app:civ_lable="@string/cardtype"
+      app:civ_showright="true"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/trade_type"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/no_limit"
+      app:civ_lable="@string/trade_type"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/sale_menber"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/all"
+      app:civ_lable="@string/sale_menber"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/pay_method"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/no_limit"
+      app:civ_lable="@string/pay_method"
+      app:civ_showdivier="false"
+      app:civ_showright="true"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <Button
+      android:id="@+id/custom_statment_generate"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_margin="30dp"
+      android:text="@string/generate_statment"
+      />
+</LinearLayout>

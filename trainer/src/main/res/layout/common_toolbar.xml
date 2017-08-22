@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    >
+
+  <android.support.v7.widget.Toolbar
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="@color/toolbar"
+      android:gravity="center"
+      android:minHeight="?attr/actionBarSize"
+      android:theme="@style/Qc.toolbarStyle"
+      app:layout_anchorGravity="center"
+      app:popupTheme="@style/ToolbarStyle.Overflow"
+      app:theme="@style/Qc.toolbarStyle"
+      app:titleTextAppearance="@style/ToolbarStyle"
+      />
+
+  <TextView
+      android:id="@+id/tv_left"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginStart="@dimen/activity_horizontal_margin"
+      android:textColor="@color/white"
+      tools:text="取消"
+      style="@style/QcTextStyleMediumDark"
+      />
+
+  <TextView
+      android:id="@+id/toolbar_title"
+      android:layout_width="150dp"
+      android:layout_height="match_parent"
+      android:layout_centerInParent="true"
+      android:ellipsize="end"
+      android:gravity="center"
+      android:textColor="@color/white"
+      android:textSize="18sp"
+      tools:text="测试数据"
+      />
+</RelativeLayout>
+
+

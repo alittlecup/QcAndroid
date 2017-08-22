@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/halftransparent_grey"
+    android:gravity="bottom|center_horizontal"
+    android:orientation="vertical"
+    >
+  <!--<ImageView-->
+  <!--android:layout_width="wrap_content"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:layout_gravity="center"-->
+  <!--android:layout_marginBottom="100dp"-->
+  <!--android:contentDescription="@string/app_name"-->
+  <!--android:src="@drawable/img_setting_completed"-->
+  <!--/>-->
+  <LinearLayout
+      android:id="@+id/bg"
+      android:layout_width="match_parent"
+      android:layout_height="111dp"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:background="@drawable/bubble"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="93dp"
+        app:srcCompat="@drawable/img_congratulation"
+        />
+
+    <Space
+        android:layout_width="15dp"
+        android:layout_height="match_parent"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="开通成功"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="点击了解如何使用健身房管理系统"
+          style="@style/Qc.TextCommonGrey"
+
+          />
+    </LinearLayout>
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/student_preview"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="12dp"
+      android:background="@color/white"
+      android:drawablePadding="@dimen/little"
+      android:paddingBottom="5dp"
+      android:paddingLeft="15dp"
+      android:paddingRight="15dp"
+      android:paddingTop="5dp"
+      android:text="@string/how_to_use"
+      android:textColor="@color/colorPrimary"
+      />
+
+</LinearLayout>

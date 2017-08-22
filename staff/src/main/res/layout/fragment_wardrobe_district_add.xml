@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <include layout="@layout/common_simple_toolbar"/>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+        app:civ_lable="@string/region_name"
+        app:civ_showdivier="false"
+        />
+
+    <LinearLayout
+        android:id="@+id/layout_del"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <include layout="@layout/divider_grey"/>
+
+      <include layout="@layout/divider_grey_margin"/>
+
+      <TextView
+          android:id="@+id/del"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:gravity="center"
+          android:text="@string/del_district"
+          android:textColor="@color/red"
+          />
+
+      <include layout="@layout/divider_grey"/>
+    </LinearLayout>
+
+
+  </LinearLayout>
+
+  <View
+      android:id="@+id/no_permission"
+      android:layout_width="match_parent"
+      android:layout_height="55dp"
+      android:background="@color/half_white"
+      android:visibility="gone"
+      tools:visibility="visible"
+
+      />
+</FrameLayout>
+

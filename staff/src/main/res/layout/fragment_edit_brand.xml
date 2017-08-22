@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:id="@+id/header_layout"
+      android:layout_width="match_parent"
+      android:layout_height="90dp"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:text="@string/brand_logo"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <ImageView
+        android:id="@+id/header_img"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_default_header"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_arrow_right"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_grey"
+        />
+  </RelativeLayout>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/brand_name"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="品牌名称"
+      app:civ_showdivier="true"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/change_creator"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="修改创建人"
+
+      app:civ_showdivier="true"
+      app:civ_showright="true"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/brand_id"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="品牌ID"
+      app:civ_showdivier="true"
+      app:civ_text_color="@color/text_black"
+
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/brand_create"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="创建时间"
+      app:civ_showdivier="false"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+
+  <TextView
+      android:id="@+id/del"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      android:gravity="center"
+      android:text="删除该品牌"
+      android:textColor="@color/red"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+</LinearLayout>

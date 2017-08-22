@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    >
+
+  <android.support.v7.widget.Toolbar
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="@color/toolbar"
+      android:gravity="center_vertical"
+      android:minHeight="?attr/actionBarSize"
+      android:theme="@style/Qc.toolbarStyle"
+      app:popupTheme="@style/ToolbarStyle.Overflow"
+      app:theme="@style/Qc.toolbarStyle"
+      app:titleTextAppearance="@style/ToolbarStyle"
+      >
+
+  </android.support.v7.widget.Toolbar>
+
+  <LinearLayout
+      android:id="@+id/toolbar_title_layout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:orientation="horizontal"
+      >
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:text="@string/site_usage"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <Space
+        android:layout_width="@dimen/qc_text_margin"
+        android:layout_height="match_parent"
+        />
+
+    <ImageView
+        android:id="@+id/title_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:rotationY="0.5"
+        android:src="@drawable/ic_title_triangle"
+        android:visibility="gone"
+        />
+
+
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/toolbar_left"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_marginStart="@dimen/activity_horizontal_margin"
+      android:textColor="@color/white"
+      android:textSize="14sp"
+      android:visibility="gone"
+      tools:text="@string/site_usage"
+      style="@style/Qc.TextCommonBlack"
+      />
+
+</RelativeLayout>

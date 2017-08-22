@@ -1,0 +1,50 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.fragment.BaseInfoFragment"
+    >
+
+  <com.qingchengfit.fitcoach.component.RecyclerViewInScroll
+      android:id="@+id/baseinfo_recyclerview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clipToPadding="false"
+      android:minHeight="@dimen/paper_item_height"
+      android:paddingBottom="50dp"
+      >
+
+  </com.qingchengfit.fitcoach.component.RecyclerViewInScroll>
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/divider_white"
+      >
+  </View>
+
+  <!--<TextView-->
+  <!--style="@style/Qc.TextCommonGrey"-->
+  <!--android:layout_width="wrap_content"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:text="@string/myhome_baseinfo_introduce"-->
+  <!--/>-->
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="快到基本信息中添加自我介绍!"
+      android:visibility="gone"
+      style="@style/Qc.TextCommonBlack"
+      />
+
+  <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      />
+
+</LinearLayout>

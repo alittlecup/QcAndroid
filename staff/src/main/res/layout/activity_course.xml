@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+  <!--<android.support.v7.widget.Toolbar-->
+  <!--android:id="@+id/toolbar"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="?attr/actionBarSize"-->
+  <!--android:background="@color/toolbar"-->
+  <!--android:theme="@style/Qc.toolbarStyle"-->
+  <!--app:popupTheme="@style/ToolbarStyle.Overflow"-->
+  <!--app:theme="@style/Qc.toolbarStyle"-->
+  <!--app:titleTextAppearance="@style/ToolbarStyle"-->
+  <!--/>-->
+  <include
+      layout="@layout/common_toolbar"
+      android:visibility="gone"
+      />
+
+  <FrameLayout
+
+      android:id="@+id/frag"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+
+      />
+</LinearLayout>

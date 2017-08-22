@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="65dp"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    >
+
+  <ImageView
+      android:id="@+id/header"
+      android:layout_width="56dp"
+      android:layout_height="56dp"
+      />
+
+  <TextView
+      android:id="@+id/name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:lines="1"
+      android:singleLine="true"
+      />
+
+  <cn.qingchengfit.widgets.RatingBarVectorFix
+      android:id="@+id/rate_star"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:isIndicator="true"
+      android:numStars="5"
+      android:stepSize="0.1"
+      tools:rating="4.7"
+      style="@style/Qc.RatingBar"
+      />
+
+</LinearLayout>

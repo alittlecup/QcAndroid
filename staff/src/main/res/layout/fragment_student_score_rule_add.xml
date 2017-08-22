@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/qc_bg_grey"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingBottom="16dp"
+      android:paddingLeft="16dp"
+      android:paddingTop="16dp"
+      android:text="实收金额区间"
+      android:textColor="@color/qc_text_grey_less"
+      android:textSize="@dimen/min_font"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="left|center_vertical"
+      android:orientation="horizontal"
+      >
+
+    <EditText
+        android:id="@+id/et_student_score_amount_start"
+        android:layout_width="0dp"
+        android:layout_height="37dp"
+        android:layout_marginLeft="16dp"
+        android:layout_weight="1"
+        android:background="@drawable/shape_bg_rect_score_rule"
+        android:gravity="center"
+        android:hint="请输入金额"
+        android:inputType="number"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/qc_text_black"
+        android:textColorHint="@color/qc_text_grey_less"
+        android:textSize="@dimen/min_font"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+        android:background="#ffffffff"
+        android:text="至"
+        android:textColor="@color/qc_text_grey_less"
+        android:textSize="@dimen/common_font"
+        />
+
+    <EditText
+        android:id="@+id/et_student_score_amount_end"
+        android:layout_width="0dp"
+        android:layout_height="37dp"
+        android:layout_marginRight="16dp"
+        android:layout_weight="1"
+        android:background="@drawable/shape_bg_rect_score_rule"
+        android:gravity="center"
+        android:hint="请输入金额"
+        android:inputType="number"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/qc_text_black"
+        android:textColorHint="@color/qc_text_grey_less"
+        android:textSize="@dimen/min_font"
+        />
+  </LinearLayout>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_score_value"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:layout_marginTop="20dp"
+      app:civ_inputnum="true"
+      app:civ_lable="每一元实收金额获得积分"
+      app:civ_showdivier="false"
+      app:civ_text_color="@color/qc_text_black"
+      />
+
+</LinearLayout>

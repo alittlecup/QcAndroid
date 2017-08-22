@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <include layout="@layout/common_simple_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/bg_grey"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/colorPrimary"
+          android:textSize="25sp"
+          android:textStyle="bold"
+          tools:text="D64"
+          />
+
+      <TextView
+          android:id="@+id/region"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/colorPrimary"
+          tools:text="Vip 男"
+          />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_baseinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/bg_grey"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+      <TextView
+
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:text="@string/continue_hire_time"
+          />
+
+      <TextView
+          android:id="@+id/day_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          tools:text="29天"
+          />
+    </RelativeLayout>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/period"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_showdivier="false"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <include layout="@layout/divider_grey_margin"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+      <TextView
+          android:layout_width="80dp"
+          android:layout_height="wrap_content"
+          android:text="@string/pay_method"
+          android:textColor="@color/text_grey"
+          />
+
+      <LinearLayout
+          android:id="@+id/layout_pay_method"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="10dp"
+          android:layout_weight="1"
+          android:gravity="right|center_vertical"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/card_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            tools:text="某某人的卡"
+            style="@style/Qc.TextCommonBlack"
+            />
+
+        <TextView
+            android:id="@+id/balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            tools:text="余额:3000"
+            />
+      </LinearLayout>
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_arrow_right"
+          />
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey_left_right"/>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/cv_cost"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_inputnum="true"
+        app:civ_lable="金额(元)"
+        app:civ_showdivier="false"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <Button
+        android:id="@+id/btn_comfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="@string/comfirm_continue_hire"
+        />
+  </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

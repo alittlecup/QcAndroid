@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:divider="@drawable/divier_linear_vectail"
+    android:orientation="vertical"
+    android:showDividers="middle|beginning|end"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/label_card_type"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="签到人次"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="签到收入"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/real_income_long"
+        />
+
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="期限卡"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/tv_signin_report_date_count"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="?colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+    <TextView
+        android:id="@+id/tv_signin_report_date_cost"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="--"
+        android:textColor="@color/colorPrimary"
+
+        />
+
+
+    <TextView
+        android:id="@+id/tv_signin_report_date_income"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="--"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="次卡"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/tv_siginin_report_times_count"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_siginin_report_times_cost"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="?colorPrimary"
+        tools:text="--"
+        />
+
+    <TextView
+        android:id="@+id/tv_siginin_report_times_incomes"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_orange"
+        tools:text="--"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="储值卡"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/tv_siginin_report_value_count"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_siginin_report_value_cost"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="?colorPrimary"
+        tools:text=""
+        />
+
+    <TextView
+        android:id="@+id/tv_siginin_report_value_income"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_orange"
+        tools:text=""
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="合计"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/tv_siginin_report_total_count"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_siginin_report_total_cost"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="?colorPrimary"
+        tools:text=""
+        />
+
+    <TextView
+        android:id="@+id/tv_siginin_report_total_income"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_orange"
+        tools:text=""
+        />
+  </LinearLayout>
+
+</LinearLayout>

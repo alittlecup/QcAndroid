@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_msg_noti_stutent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      app:el_expanded="false"
+      app:el_label=""
+      >
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_msg_noti_stutent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_inputnum="true"
+        app:civ_lable="课程开始前（分钟）"
+        />
+  </cn.qingchengfit.widgets.ExpandedLayout>
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_msg_noti_trainer"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+
+      app:el_expanded="false"
+      app:el_label=""
+      >
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_msg_noti_trainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_inputnum="true"
+        app:civ_lable="课程开始前（分钟）"
+        />
+  </cn.qingchengfit.widgets.ExpandedLayout>
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_new_noti_trainer"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+
+      app:el_expanded="false"
+      app:el_label=""
+      />
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_help_order_noti_trainer"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      app:el_expanded="false"
+      app:el_label=""
+      />
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_cancle_noti_student"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      app:el_expanded="false"
+      app:el_label=""
+      />
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_send_msg_substitute"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      app:el_expanded="false"
+      app:el_label=""
+      />
+
+</LinearLayout>

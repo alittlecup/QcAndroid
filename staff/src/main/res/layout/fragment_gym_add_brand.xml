@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <ImageView
+      android:id="@+id/guide_step_1"
+      android:layout_width="match_parent"
+      android:layout_height="88dp"
+      android:scaleType="center"
+      android:src="@drawable/guide_step_1"
+      android:visibility="gone"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <RelativeLayout
+      android:id="@+id/photo_layout"
+      android:layout_width="match_parent"
+      android:layout_height="72dp"
+      android:background="@color/white"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:text="品牌LOGO"
+
+        />
+
+    <ImageView
+        android:id="@+id/brand_photo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_default_header"
+        />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:scaleType="center"
+        android:src="@drawable/ic_arrow_right"
+        />
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey_left_right"/>
+  <!--<EditText-->
+  <!--android:id="@+id/content"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="@dimen/qc_item_height"-->
+  <!--android:background="@color/white"-->
+  <!--android:hint="@string/brand"-->
+  <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+  <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+  <!--/>-->
+  <cn.qingchengfit.widgets.CommonInputView
+      xmlns:civ="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/content"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      civ:civ_lable="@string/brand"
+      civ:civ_showdivier="false"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <Button
+
+      android:id="@+id/btn"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:enabled="false"
+      android:text="@string/common_comfirm"
+      />
+
+</LinearLayout>

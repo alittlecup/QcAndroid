@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <LinearLayout
+      android:id="@+id/linearlayout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:visibility="gone"
+        >
+
+      <ImageView
+          android:id="@+id/gym_img"
+          android:layout_width="56dp"
+          android:layout_height="56dp"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          tools:src="@drawable/ic_default_header"
+          />
+
+      <TextView
+          android:id="@+id/gym_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/activity_vertical_margin"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          android:textSize="@dimen/btn_font"
+          tools:text="Mike Brown的私人健身房"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <ImageView
+          android:id="@+id/gym_title_tag"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@id/gym_name"
+          android:layout_marginLeft="8dp"
+          android:layout_toRightOf="@id/gym_name"
+          android:paddingBottom="2dp"
+          android:paddingLeft="8dp"
+          android:paddingRight="8dp"
+          android:paddingTop="2dp"
+          android:textColor="@color/white"
+          app:srcCompat="@drawable/vd_qc_logo"
+          tools:text="个人"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/gym_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/gym_name"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginTop="10dp"
+          tools:text="3门课程，56名学员"
+          />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/divider_white"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/myhome_tab"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/primary"
+        app:tabIndicatorHeight="3dp"
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/primary"
+        app:tabTextAppearance="@style/Qc.TextCommonGrey"
+        app:tabTextColor="@color/text_grey"
+        >
+    </android.support.design.widget.TabLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </android.support.v4.view.ViewPager>
+
+  </LinearLayout>
+</LinearLayout>

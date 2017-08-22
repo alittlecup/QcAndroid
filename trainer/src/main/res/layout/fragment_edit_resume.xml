@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/btn_base_info"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/base_info"
+      app:civ_showdivier="true"
+      app:civ_showright="true"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/btn_train_grow"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/train_grow"
+      app:civ_showdivier="true"
+      app:civ_showright="true"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/btn_work_exp"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/workexper_title"
+      app:civ_showdivier="true"
+      app:civ_showright="true"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/btn_personal_intro"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/personal_intro"
+      app:civ_showright="true"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <include layout="@layout/divider_grey"/>
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <FrameLayout
+      android:id="@+id/frag_tag_input"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:minHeight="50dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:id="@+id/tv_hint"
+      android:layout_width="match_parent"
+      android:layout_height="30dp"
+      android:text="常见福利"
+      style="@style/TextTitleHint"
+      />
+
+  <cn.qingchengfit.widgets.QcTagGroup
+      android:id="@+id/tg_recomend"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:minHeight="100dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="4dp"
+      app:atg_backgroundColor="@color/white"
+      app:atg_borderColor="@color/text_dark"
+      app:atg_checkedBorderColor="?colorPrimary"
+      app:atg_checkedTextColor="?colorPrimary"
+      app:atg_isAppendMode="false"
+      app:atg_textColor="@color/text_dark"
+
+      />
+</LinearLayout>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+  <LinearLayout
+      android:id="@+id/registe_rootview"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:divider="@drawable/divier_linear_vectail"
+      android:orientation="vertical"
+      android:padding="15dp"
+      android:showDividers="middle"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+      <ImageView
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          app:srcCompat="@drawable/ic_login_username"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:paddingLeft="@dimen/little"
+          android:paddingRight="@dimen/little"
+          android:text="@string/label_username"
+          />
+
+      <EditText
+          android:id="@+id/registe_username"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/transparent"
+          android:gravity="end|center_vertical"
+          android:imeActionLabel="下一个"
+          android:imeOptions="actionNext"
+          android:lines="1"
+          android:maxLength="10"
+
+          />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/registe_gender"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+      <ImageView
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          app:srcCompat="@drawable/ic_login_gender"
+
+          />
+
+      <TextView
+          android:id="@+id/comple_gender_label"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:paddingLeft="@dimen/little"
+          android:paddingRight="@dimen/little"
+          android:text="@string/gender"
+          />
+
+      <RadioGroup
+          android:id="@+id/comple_gender"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_marginEnd="5dp"
+          android:layout_marginRight="5dp"
+          android:orientation="horizontal"
+          >
+
+        <RadioButton
+            android:id="@+id/comple_gender_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/radio_selector"
+            android:checked="true"
+            android:text="@string/gender_male"
+            />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            />
+
+        <RadioButton
+
+            android:id="@+id/comple_gender_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/radio_selector"
+            android:text="@string/gender_female"
+            />
+      </RadioGroup>
+
+    </LinearLayout>
+
+    <cn.qingchengfit.widgets.PhoneEditText
+        android:id="@+id/phone_num"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+
+        />
+
+    <cn.qingchengfit.widgets.PasswordView
+        android:id="@+id/checkcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pw_mode="false"
+        />
+
+    <cn.qingchengfit.widgets.PasswordView
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pw_mode="true"
+        />
+
+    <Button
+        android:id="@+id/registe_btn"
+        android:layout_width="133dp"
+        android:layout_height="48dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:text="@string/complete_label"
+        >
+    </Button>
+
+  </LinearLayout>
+</ScrollView>

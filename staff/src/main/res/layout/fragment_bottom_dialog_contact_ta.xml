@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_grey"
+    android:gravity="center"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="34dp"
+      android:gravity="center_vertical"
+      android:paddingLeft="16dp"
+      android:text="联系会员"
+      android:textColor="@color/qc_text_grey"
+      android:textSize="11sp"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:id="@+id/tv_contact_phone"
+      android:layout_width="match_parent"
+      android:layout_height="44dp"
+      android:gravity="center_vertical"
+      android:paddingLeft="16dp"
+      android:textColor="#666666"
+      android:textSize="@dimen/btn_font"
+      tools:text="18811773062"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:id="@+id/tv_contact_sms"
+      android:layout_width="match_parent"
+      android:layout_height="44dp"
+      android:gravity="center_vertical"
+      android:paddingLeft="16dp"
+      android:text="发短信"
+      android:textColor="#666666"
+      android:textSize="@dimen/btn_font"
+      />
+</LinearLayout>

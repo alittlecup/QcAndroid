@@ -1,0 +1,191 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+        <include layout="@layout/common_toolbar"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+        >
+
+            <ImageButton
+                android:id="@+id/statement_detail_less"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@color/transparent"
+                android:padding="25dp"
+
+                />
+
+            <ImageButton
+                android:id="@+id/statement_detail_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/transparent"
+                android:padding="20dp"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/statement_detail_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="2015-09-11"
+                    style="@style/Qc.TextCommonBlack"
+                    />
+
+                <TextView
+                    android:id="@+id/statement_detail_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:visibility="gone"
+                    tools:text="所有学员 所有课程"
+                    style="@style/Qc.TextCommonBlack"
+                    />
+
+                <TextView
+                    android:id="@+id/item_statement_time_shop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:visibility="gone"
+                    tools:text="8节课程 12人参加 服务30人次"
+                    style="@style/Qc.TextCommonBlack"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/divider_grey"
+                >
+
+            </View>
+        </RelativeLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/scroll_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/myhome_appBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_grey"
+                android:fitsSystemWindows="true"
+                app:elevation="0dp"
+                >
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    app:layout_scrollFlags="scroll|snap"
+            >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="255dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        >
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:background="@color/bg_grey"
+                            />
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/viewpager"
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp"
+                            />
+
+                        <com.qingchengfit.fitcoach.component.CircleIndicator
+                            android:id="@+id/indicator"
+                            android:layout_width="match_parent"
+                            android:layout_height="12dp"
+                            app:ci_drawable="@drawable/splash_indicator_doc"
+
+                            />
+                    </LinearLayout>
+
+                </android.support.design.widget.CollapsingToolbarLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/form_height"
+                    android:background="@color/bg_grey"
+                    android:gravity="center"
+                    android:text="@string/statment_detail"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    />
+            </android.support.design.widget.AppBarLayout>
+
+
+            <cn.qingchengfit.widgets.RecycleViewWithNoImg
+                android:id="@id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:rn_drawable="@drawable/no_statement"
+                app:rn_hint="@string/statement_no_detail"
+                />
+
+
+        </android.support.design.widget.CoordinatorLayout>
+
+
+        <Button
+            android:id="@+id/statement_detail_change"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_gravity="bottom"
+            android:text="@string/statement_change_filter"
+            android:visibility="visible"
+        />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/btn_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:button="@drawable/bg_cb_filter"
+        />
+</RelativeLayout>

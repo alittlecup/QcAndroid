@@ -1,0 +1,188 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.squareup.sqldelight'
+
+//apply plugin: 'com.neenbedankt.android-apt'
+//def buildNumber = "1"
+//apply plugin: 'packer'                     //版本管理 多渠道打包
+def libs = rootProject.ext.libraries;
+def cfg = rootProject.ext.configuration;
+
+def getDate() {
+  def date = new Date()
+  def formattedDate = date.format('yyyyMMddHHmm')
+  return formattedDate
+}
+
+def overrideMapsKey(buildVariant) {
+  def appName = getAppName(buildVariant)
+
+  // override line ... this is not necessary to this question
+
+  renameAPK(buildVariant, appName)
+}
+
+// *** RENAME APK ***
+def renameAPK(buildVariant, appName) {
+  def apk = buildVariant.packageApplication.outputFile;
+  def newName = "";
+
+  // get data for apk renaming
+  def versionName = android.defaultConfig.versionName
+  def versionNameSuffix = buildVariant.buildType.versionNameSuffix
+  if (versionNameSuffix.toString().equals("null")) versionNameSuffix = ""
+  def buildTypeOfApp = buildVariant.buildType.name
+
+  if (buildVariant.zipAlign) {
+    //        newName = "etscanner-" + appName + "-" + buildTypeOfApp.toUpperCase() + "-v" + versionName + versionNameSuffix + ".apk"
+    newName = "debug_unalign.apk"
+  } else {
+    //        newName = "etscanner-" + appName + "-" + buildTypeOfApp.toUpperCase() + "-v" + versionName + versionNameSuffix + "-ALIGNED" + ".apk"
+    newName = "debug.apk"
+  }
+  buildVariant.packageApplication.outputFile = new File(apk.parentFile, newName);
+}
+
+android {
+  compileSdkVersion 24
+  buildToolsVersion '25.0.2'
+
+  defaultConfig {
+    applicationId "com.qingchengfit.fitcoach"
+    minSdkVersion 15
+    targetSdkVersion 24
+    multiDexEnabled true
+    versionCode cfg.trainer_version_code
+    versionName cfg.trainer_version_name
+    jackOptions {
+      enabled false
+    }
+    vectorDrawables.useSupportLibrary = true
+  }
+
+  useLibrary 'org.apache.http.legacy'
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+
+
+
+  signingConfigs {
+    release {
+      storeFile file("../qingcheng.keystore")
+      storePassword "Qingcheng2014"
+      keyAlias "Qingcheng"
+      keyPassword "Qingcheng2014"
+    }
+  }
+  dexOptions {
+    javaMaxHeapSize "8g"
+  }
+  lintOptions {
+    abortOnError false
+  }
+
+  productFlavors {
+    dev {
+      minSdkVersion 21
+      applicationId "com.qingchengfit.fitcoach.dev"
+      manifestPlaceholders = [APP_NAME            : "内部测试"
+                              , bdpush_authorities: "com.qingchengfit.fitcoach.debug.bdpush"
+                              , APP_PACKAGE       : "com.qingchengfit.fitcoach.dev"
+                              , file_provider     : "com.qingchengfit.fitcoach.dev.provider"
+
+      ]
+      ndk {
+        abiFilter "armeabi-v7a"
+      }
+    }
+    product {
+      minSdkVersion 16
+      applicationId "com.qingchengfit.fitcoach"
+      manifestPlaceholders = [APP_NAME            : "青橙健身教练"
+                              , bdpush_authorities: "com.qingchengfit.fitcoach.bdpush"
+                              , APP_PACKAGE       : "com.qingchengfit.fitcoach"
+                              , file_provider     : "com.qingchengfit.fitcoach.provider"]
+      ndk {
+        abiFilter "armeabi-v7a"
+      }
+    }
+
+    //    joinfit {
+    //      minSdkVersion 16
+    //    }
+    //    suisheng {
+    //      applicationIdSuffix ".vmsfit"
+    //      minSdkVersion 16
+    //    }
+    //    s567go {
+    //      minSdkVersion 16
+    //    }
+    //    eptc {
+    //      minSdkVersion 16
+    //    }
+    //    gravity {
+    //      minSdkVersion 16
+    //    }
+  }
+
+  buildTypes {
+    release {
+      signingConfig signingConfigs.release
+      minifyEnabled true
+      debuggable false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    debug {
+      signingConfig signingConfigs.release
+      debuggable true
+    }
+  }
+}
+
+
+dependencies {
+  compile project(path: ':recruit')
+  compile 'org.glassfish:javax.annotation:10.0-b28'
+  //  compile 'cn.qingchegfit.recruit:recruit:latest.integration'
+  compile('cn.qingchegfit.chat:chat:latest.integration') {
+    exclude group: 'com.upyun', module: 'java-sdk'
+    exclude group: 'com.tencent.*'
+  }
+  compile('cn.qingchegfit.chat:sdk:latest.integration') {
+    exclude group: 'com.upyun', module: 'java-sdk'
+    exclude group: 'com.tencent.*'
+  }
+  compile 'cn.qingchegfit.widgets:weekview:1.0@aar'
+
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  compile files('libs/wup-1.0.0-SNAPSHOT.jar')
+  compile files('libs/pushservice-4.5.3.48.jar')
+  compile files('libs/pinyin4j-2.5.0.jar')
+  compile files('libs/pushservice-4.5.6.88.jar')
+  //  compile project(path: ':fir-sdk-1.3.7')
+  compile files('libs/pushservice-5.2.0.12.jar')
+  compile 'com.android.support:multidex:1.0.1'
+  //若使用annotation需要单独引用,对于tinker的其他库都无需再引用
+  provided "com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}"
+  compile "com.tinkerpatch.sdk:tinkerpatch-android-sdk:${TINKERPATCH_VERSION}"
+
+  compile 'com.getbase:floatingactionbutton:1.10.0'
+  compile 'uk.co.chrisjenx:calligraphy:2.1.0'
+  compile 'com.github.badoualy:stepper-indicator:1.0.6'
+  compile 'com.hkm.taglib:tag:1.6.0'
+  debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
+  releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+  compile 'com.jakewharton:butterknife:8.6.0'
+  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
+  compile "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
+  compile('com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+')
+}
+
+//apply from: 'tinkerpatch.gradle'

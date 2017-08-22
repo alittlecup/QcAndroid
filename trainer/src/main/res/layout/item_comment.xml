@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="70dp"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin"
+    android:paddingTop="15dp"
+    >
+
+  <ImageView
+      android:id="@+id/image_comment_head"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      tools:background="@drawable/head"
+      />
+
+  <TextView
+      android:id="@+id/tv_comment_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignTop="@+id/image_comment_head"
+      android:layout_marginLeft="10dp"
+      android:layout_toRightOf="@+id/image_comment_head"
+      android:textSize="13sp"
+      tools:text="娜娜"
+      />
+
+  <TextView
+      android:id="@+id/tv_comment_content"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/tv_comment_name"
+      android:layout_marginLeft="10dp"
+      android:layout_marginTop="5dp"
+      android:layout_toRightOf="@+id/image_comment_head"
+      android:textColor="@color/qc_text_black"
+      android:textSize="14sp"
+      tools:text="@string/test_long"
+      />
+
+  <TextView
+      android:id="@+id/tv_comment_time"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_marginEnd="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:textSize="12sp"
+      tools:text="2分钟前"
+      />
+
+  <TextView
+      android:id="@+id/tv_comment_reply"
+      android:layout_width="match_parent"
+      android:layout_height="38dp"
+      android:layout_alignLeft="@+id/tv_comment_content"
+      android:layout_alignStart="@+id/tv_comment_content"
+      android:layout_below="@id/tv_comment_content"
+      android:layout_marginTop="@dimen/little"
+      android:background="@color/bg_grey"
+      android:ellipsize="end"
+      android:lines="1"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:visibility="gone"
+      tools:visibility="visible"
+      />
+
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_alignLeft="@+id/tv_comment_content"
+      android:layout_alignStart="@+id/tv_comment_content"
+      android:layout_below="@id/tv_comment_reply"
+      android:layout_marginTop="@dimen/little"
+      android:background="@color/bg_grey"
+      />
+
+</RelativeLayout>

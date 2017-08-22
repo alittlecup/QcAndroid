@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="cn.qingchengfit.staffkit.MainActivity">
+  <item
+      android:id="@+id/action_out_excel"
+      android:orderInCategory="100"
+      android:title="@string/out_excel"
+      app:showAsAction="always"
+      />
+</menu>

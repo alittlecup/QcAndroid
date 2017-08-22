@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!-->-->
+<!--<data android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!-->-->
+<!---->
+<!--</data>-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+  <android.support.v4.view.ViewPager
+      android:id="@+id/splash_viewpager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/primary_light"
+  >
+  </android.support.v4.view.ViewPager>
+  <RelativeLayout
+
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_alignParentBottom="true"
+      android:background="@color/backgroud_grey"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+  >
+    <TextView
+        android:id="@+id/splash_login_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="登录"
+        android:textColor="@color/primary"
+        android:textSize="18sp"
+    />
+    <TextView
+        android:id="@+id/splash_registe_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:text="注册"
+        android:textColor="@color/text_red"
+        android:textSize="18sp"
+    />
+
+    <com.qingchengfit.fitcoach.component.CircleIndicator
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/splash_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ci_drawable="@drawable/splash_indicator_doc"
+    />
+  </RelativeLayout>
+
+
+  <RelativeLayout
+      android:id="@+id/main_loading"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#2b2b2b"
+  >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+    >
+
+      <ImageView
+          android:layout_width="150dp"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:layout_marginTop="100dp"
+          android:src="@drawable/loading_logo"
+      />
+
+      <!--<TextView-->
+      <!--style="@style/Qc.TextCommonBlack"-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+
+      <!--android:layout_marginTop="15dp"-->
+      <!--android:text="@string/app_name"-->
+      <!--android:textSize="24sp"-->
+      <!--android:textStyle="bold"-->
+      <!--/>-->
+
+      <ImageView
+          android:layout_width="200dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="15dp"
+          android:src="@drawable/loading_slogan"
+      />
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/loading_text"
+    />
+  </RelativeLayout>
+
+  <!--<com.paper.paperbaselibrary.component.RefreshEnhangceLayout-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:background="@color/white"-->
+  <!-->-->
+  <!--<TextView-->
+  <!--android:layout_width="50dp"-->
+  <!--android:layout_height="50dp"-->
+  <!--android:background="@color/primary"-->
+  <!--android:text="TXTX"-->
+  <!--android:textColor="@color/white"-->
+  <!--android:layout_gravity="bottom"-->
+  <!--/>-->
+  <!--</com.paper.paperbaselibrary.component.RefreshEnhangceLayout>-->
+</RelativeLayout>
+    <!--</layout>-->

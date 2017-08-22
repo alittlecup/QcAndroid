@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="270dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    >
+
+  <ImageView
+      android:id="@+id/gym_avatar"
+      android:layout_width="80.5dp"
+      android:layout_height="80.5dp"
+      android:background="@drawable/bg_rect"
+      android:padding="0.5dp"
+      android:scaleType="fitXY"
+
+      />
+
+  <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:textSize="16sp"
+      style="@style/Qc.TextCommonBlack"
+      />
+
+  <TextView
+      android:id="@+id/content"
+      android:layout_width="210dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginLeft="30dp"
+      android:layout_marginRight="30dp"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:gravity="center"
+      style="@style/Qc.TextCommonBlack"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:orientation="horizontal"
+      >
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/common_cancel"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <include layout="@layout/divider_grey_vertical"/>
+
+    <TextView
+        android:id="@+id/comfirm"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/common_comfirm"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+  </LinearLayout>
+
+</LinearLayout>

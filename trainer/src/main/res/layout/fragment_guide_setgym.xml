@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:id="@+id/hint"
+      android:layout_width="match_parent"
+      android:layout_height="30dp"
+      android:gravity="center"
+      android:text="@string/guide_set_gym_hint"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:id="@+id/layout_brand"
+      android:layout_width="match_parent"
+      android:layout_height="84dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ImageView
+        android:id="@+id/brand_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_default_header"
+        />
+
+    <TextView
+        android:id="@+id/brand_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        tools:text="中美引力"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <LinearLayout
+      android:id="@+id/layout_gym_img"
+      android:layout_width="match_parent"
+      android:layout_height="84dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/label_gym_logo"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <ImageView
+        android:id="@+id/gym_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_default_header"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gym_name"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_hint="@string/please_input_gym_name"
+      app:civ_lable="场馆名称(店名)"
+      app:civ_nonnull="true"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/gym_address"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_hint="@string/please_input"
+      app:civ_lable="@string/address"
+      app:civ_nonnull="true"
+      app:civ_showdivier="false"
+      app:civ_showright="true"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <Button
+      android:id="@+id/next_step"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:text="创建健身房"
+      />
+
+</LinearLayout>

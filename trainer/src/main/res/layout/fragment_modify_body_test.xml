@@ -1,0 +1,198 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_grey"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.fragment.ModifyBodyTestFragment"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/test_date"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="体测日期"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/height"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="身高(cm)"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/weight"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="体重(kg)"
+
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/bmi"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="BMI(kg/m^2)"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/body_fat_rate"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="体脂"
+
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/left_upper"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="上臂围(左)(cm)"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/right_upper"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="上臂围(右)(cm)"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/chest"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="胸围(cm)"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/waistline"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="腰围(cm)"
+
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/hipline"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="臀围(cm)"
+
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/left_thigh"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="大腿围(左)(cm)"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/right_thigh"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="大腿围(右)(cm)"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/left_calf"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="小腿围(左)(cm)"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/right_calf"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="小腿围(右)(cm)"
+          />
+
+
+      <LinearLayout
+          android:id="@+id/other_data"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+      </LinearLayout>
+
+      <TextView
+          android:id="@+id/photos_title"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:text="体测照片"
+          />
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerview"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          />
+
+      <TextView
+          android:id="@+id/delete"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          android:background="@color/white"
+          android:gravity="center"
+          android:text="删除体测数据"
+          android:textColor="@color/text_red"
+          />
+    </LinearLayout>
+  </ScrollView>
+
+  <!--<LinearLayout-->
+  <!--android:id="@+id/more_data"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:orientation="vertical"-->
+  <!-->-->
+  <!--</LinearLayout>-->
+</LinearLayout>

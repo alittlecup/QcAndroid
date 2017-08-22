@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+
+  <TextView
+      android:id="@+id/tv_add_new_origin"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:paddingLeft="16dp"
+      android:text="+添加新来源"
+      android:textColor="@color/qc_allotsale_green"
+      android:visibility="gone"
+      />
+
+  <include
+      layout="@layout/divider_grey"
+      android:id="@+id/divider"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_marginLeft="16dp"
+      />
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv_referrer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="visible"
+      />
+</LinearLayout>

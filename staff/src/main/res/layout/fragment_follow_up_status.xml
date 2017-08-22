@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <android.support.design.widget.CoordinatorLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/layout_collapsed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_grey"
+        app:elevation="1px"
+        >
+
+      <FrameLayout
+          android:id="@+id/frag_chart"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:background="@drawable/bg_top_bottom_line_white"
+          android:paddingBottom="1px"
+          app:layout_scrollFlags="scroll|snap"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:background="@drawable/bg_top_bottom_line_white"
+          android:divider="@drawable/divier_linear_horizon_margin_12dp"
+          android:orientation="horizontal"
+          android:padding="1px"
+          android:showDividers="middle"
+          >
+
+        <cn.qingchengfit.widgets.QcFilterToggle
+            android:id="@+id/qft_status"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_click"
+            app:ft_text_off="会员状态"
+            app:ft_text_on="会员状态"
+            style="@style/QcFilterStyle"
+            />
+
+        <cn.qingchengfit.widgets.QcFilterToggle
+            android:id="@+id/qft_times"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_click"
+            app:ft_text_off="今日"
+            app:ft_text_on="今日"
+
+            style="@style/QcFilterStyle"
+            />
+
+        <cn.qingchengfit.widgets.QcFilterToggle
+            android:id="@+id/qft_saler"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_click"
+            app:ft_text_off="销售"
+            app:ft_text_on="销售"
+            style="@style/QcFilterStyle"
+            />
+
+        <cn.qingchengfit.widgets.QcToggleButton
+            android:id="@+id/qtb_filter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_click"
+
+            app:qc_color_off="@color/text_black"
+            app:qc_color_on="@color/colorPrimary"
+            app:qc_text="筛选"
+            app:qc_vc_drawable="@drawable/ic_filter_grey"
+            />
+
+        <cn.qingchengfit.widgets.QcFilterToggle
+            android:id="@+id/qft_gender"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_click"
+            app:ft_text_off="性别"
+            app:ft_text_on="性别"
+            style="@style/QcFilterStyle"
+            />
+
+
+      </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_grey"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recycler_view_today"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/white"
+          />
+
+      <FrameLayout
+          android:id="@+id/frag_follow_up_status_filter_container"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/halftransparent_grey"
+          android:visibility="gone"
+          />
+    </FrameLayout>
+
+  </android.support.design.widget.CoordinatorLayout>
+
+
+  <include layout="@layout/divider_grey"/>
+  <!--<FrameLayout-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="match_parent"-->
+  <!--&gt;-->
+
+  <!--<LinearLayout-->
+  <!--android:id="@+id/ll_today_nodata"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="match_parent"-->
+  <!--android:background="@color/white"-->
+  <!--android:orientation="vertical"-->
+  <!--&gt;-->
+
+  <!--<TextView-->
+  <!--android:id="@+id/tv_today_nodata"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="40dp"-->
+  <!--android:gravity="center"-->
+  <!--android:text="暂无数据"-->
+  <!--android:textColor="@color/qc_text_grey"-->
+  <!--android:textSize="@dimen/min_font"-->
+  <!--android:visibility="gone"-->
+  <!--tools:visibility="visible"-->
+  <!--/>-->
+
+  <!--<TextView-->
+  <!--android:id="@+id/tv_today_count"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="20dp"-->
+  <!--android:background="@color/bg_grey"-->
+  <!--android:gravity="center_vertical"-->
+  <!--android:paddingLeft="16dp"-->
+  <!--android:text="@string/qc_follow_up_today_new_count"-->
+  <!--android:textColor="@color/qc_text_grey"-->
+  <!--android:textSize="@dimen/min_font"-->
+  <!--android:visibility="gone"-->
+  <!--tools:visibility="visible"-->
+  <!--/>-->
+
+
+</LinearLayout>
+
+
+
+
+

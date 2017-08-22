@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="283dp"
+    android:layout_height="300dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="44dp"
+      android:background="@color/white"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="请选择场馆"
+        android:textColor="@color/primary"
+        android:textSize="17sp"
+        />
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:padding="16dp"
+        app:srcCompat="@drawable/ic_cross_blace"
+        />
+
+  </RelativeLayout>
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_divider_height"
+      android:background="@color/primary"
+      />
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recyclerview"
+      android:layout_width="match_parent"
+      android:layout_height="300dp"
+      android:background="@color/white"
+      />
+</LinearLayout>

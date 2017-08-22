@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="storehouse">
+    <item>0,35,12,42,</item>
+    <item>12,42,24,35,</item>
+    <item>24,35,12,28,</item>
+    <item>0,35,12,28,</item>
+    <item>0,21,12,28,</item>
+    <item>12,28,24,21,</item>
+    <item>24,35,24,21,</item>
+    <item>24,21,12,14,</item>
+    <item>0,21,12,14,</item>
+    <item>0,21,0,7,</item>
+    <item>12,14,0,7,</item>
+    <item>12,14,24,7,</item>
+    <item>24,7,12,0,</item>
+    <item>0,7,12,0,</item>
+  </string-array>
+  <string-array name="home_tab">
+    <item>课程</item>
+    <item>健身房</item>
+    <item>发现</item>
+    <item>消息</item>
+    <item>我</item>
+  </string-array>
+  <string-array name="week_simple">
+    <item>一</item>
+    <item>二</item>
+    <item>三</item>
+    <item>四</item>
+    <item>五</item>
+    <item>六</item>
+    <item>日</item>
+  </string-array>
+  <string-array name="week_simple_sunday_first">
+    <item>日</item>
+    <item>一</item>
+    <item>二</item>
+    <item>三</item>
+    <item>四</item>
+    <item>五</item>
+    <item>六</item>
+  </string-array>
+
+  <array name="weeks">
+    <item>星期一</item>
+    <item>星期二</item>
+    <item>星期三</item>
+    <item>星期四</item>
+    <item>星期五</item>
+    <item>星期六</item>
+    <item>星期日</item>
+  </array>
+  <string-array name="choose_course_type">
+    <item>@string/all_course</item>
+    <item>@string/course_type_group</item>
+    <item>@string/course_type_private</item>
+  </string-array>
+
+  <array name="cardtype_filter">
+    <item>@string/cardtype_all</item>
+    <item>@string/cardtype_value</item>
+    <item>@string/cardtype_times</item>
+    <item>@string/cardtype_date</item>
+  </array>
+
+  <string-array name="trade_types">
+    <item>@string/new_buy_card</item>
+    <item>@string/charge</item>
+    <item>@string/present</item>
+    <item>@string/refund</item>
+  </string-array>
+
+  <array name="pay_method">
+    <item>@string/wechat_scan</item>
+    <item>@string/wechat_pay</item>
+    <item>@string/cash_pay</item>
+    <item>@string/credit_pay</item>
+    <item>@string/transit_pay</item>
+    <item>@string/other</item>
+  </array>
+
+</resources>

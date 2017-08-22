@@ -1,0 +1,116 @@
+<resources>
+  <string name="app_name">教练测试</string>
+  <string name="oem_tag">coach-test</string>
+  <string name="hello_world">Hello world!</string>
+  <string name="action_settings">Settings</string>
+  <string name="fir_token">f60e7b4d8b237b271ef3a7741372f220</string>
+  <string name="baidu_api">Rth3x24pVQTIa3aX9BcmP8OW</string>
+
+  <string name="pickerview_cancel">取消</string>
+  <string name="pickerview_submit">确定</string>
+  <string name="pickerview_year">年</string>
+  <string name="pickerview_month">月</string>
+  <string name="pickerview_day">日</string>
+  <string name="pickerview_hours">时</string>
+  <string name="pickerview_minutes">分</string>
+  <string name="pickerview_seconds">秒</string>
+
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="title_activity_login">LoginActivity</string>
+  <string name="title_activity_register">RegisterActivity</string>
+  <string name="login_btn_label">登录</string>
+  <string name="registe_indicat_label">注册</string>
+  <string name="login_btn_lable">登&#160;&#160;录</string>
+  <string name="registe_btn_lable">下一步</string>
+
+  <string name="login_forgotpw">忘记密码</string>
+
+  <string name="login_getcode">获取验证码</string>
+  <string name="login_comfirm">确&#160;&#160;定</string>
+  <string name="logint_phonenum_hint">手机号</string>
+  <string name="login_checkcode_hint">手机验证码</string>
+  <string name="login_password_hint">密码</string>
+  <string name="login_err_no_account">请输入您的手机号码</string>
+  <string name="login_err_no_checkcode">请输入验证码</string>
+  <string name="title_activity_complete">CompleteActivity</string>
+  <string name="comple_name">姓名</string>
+  <string name="gender_male">男</string>
+  <string name="gender_female">女</string>
+  <string name="login_resend_msg">后重新发送</string>
+  <string name="complete_label">完成</string>
+  <string name="title_activity_setting">SettingActivity</string>
+  <string name="setting_title">设置</string>
+  <string name="myhome_baseinfo_introduce">自我介绍</string>
+  <string name="title_activity_text_input">TextInputActivity</string>
+  <string name="title_activity_my_home">MyHomeActivity</string>
+  <string name="recordedit_competition">比赛</string>
+  <string name="recordedit_comfirm">认证</string>
+  <string name="recordedit_meeting">健身大会</string>
+  <string name="recordedit_label_type">类型</string>
+  <string name="recordedit_certificat_timestart">生效日期</string>
+  <string name="recordedit_certificat_timeend">失效日期</string>
+  <string name="recordedit_score">学分</string>
+  <string name="recordedit_certificate_date">发证日期</string>
+  <string name="recordedit_host_organization">主办机构</string>
+  <string name="recordedit_name">认证名称</string>
+  <string name="record_title">资质认证</string>
+  <string name="workexper_title">工作经历</string>
+  <string name="title_activity_notification">NotificationActivity</string>
+
+  <string name="add_gym_private_01">注: 您不能自己添加“所属健身房”，需要由“所属健身房”添加您为教练，系统即可自动同步。</string>
+  <string name="add_gym_private_02">如果您所属的健身房未出现在“我的健身房”列表，可能的原因如下：</string>
+  <string name="add_gym_private_03">该健身房未使用「青橙健身房管理系统」</string>
+  <string name="add_gym_private_04">方法1: 您可以使用“个人健身房”管理您的学员和课程预约</string>
+  <string name="add_gym_private_05">方法2: 邀请健身房的管理人员开通「青橙健身房管理系统」。</string>
+  <string name="add_gym_private_06">您在该健身房预留的手机号与当前登录的手机号不一致</string>
+  <string name="add_gym_private_07">方法1: 让该健身房的工作人员在「青橙健身房管理系统」中修改您的手机号；</string>
+  <string name="add_gym_private_08">方法2: 在“我的主页”中修改手机号，使其与在「青橙健身房管理系统」中预留的手机号一致。</string>
+  <string name="title_activity_change_time">ChangeTimeActivity</string>
+  <string name="title_activity_choose_student">ChooseStudentActivity</string>
+  <string name="common_modify_failed">修改失败</string>
+  <string name="common_modify_success">修改成功</string>
+  <string name="my_course_template">课程计划模板</string>
+  <string name="comom_time_to">至</string>
+  <string name="common_today">今</string>
+  <string name="common_i_konw">知道了</string>
+  <string name="add_self_gym">添加“个人健身房”有什么用途？</string>
+  <string name="myhome_default_desc">这个人很懒,什么也没有留下</string>
+  <string name="myhome_data_none">暂未填写</string>
+  <string name="setting_cal_sync_title">课程提醒设置</string>
+  <string name="workexp_detail_hiden">该工作经历已隐藏</string>
+  <string name="workexp_detail_unhiden">同步自［健身房管理系统］</string>
+
+
+  <!-- 课程计划模板-->
+  <string name="add_plan_name">课程计划模板名称</string>
+  <string name="add_plan_type">课程类型</string>
+  <string name="add_plan_action">课程动作</string>
+
+  <!-- 我的健身房-->
+  <string name="gym_add_course">添加课程</string>
+  <string name="gym_add_course_pic">课程图片</string>
+  <string name="gym_add_course_type">课程类型</string>
+  <string name="gym_add_course_type_private">私教课</string>
+  <string name="gym_add_course_type_group">团课</string>
+  <string name="gym_add_course_name">名称</string>
+  <string name="gym_add_course_time">时长(分钟)</string>
+  <string name="schedule_title">全部日程</string>
+  <string name="statement_course">全部课程报表</string>
+  <string name="mystudents_title">我的学员</string>
+  <string name="course_private">私教</string>
+  <string name="course_group">团课</string>
+  <string name="course_del_manage">删除所选排期</string>
+  <string name="start_time">开始时间</string>
+  <string name="end_time">结束时间</string>
+  <string name="please_add_one_batch">请至少添加一条排期</string>
+  <string name="title_add_group_course_batch">添加团课排期</string>
+  <string name="title_add_private_batch">添加私教排期</string>
+  <string name="alert_endtime_greater_starttime">结束时间不能早于结束时间</string>
+  <string name="alert_batch_greater_three_month">课程排期时间不能超过三个月</string>
+  <string name="choose_time">选择时间</string>
+  <string name="choose_week">选择星期</string>
+  <string name="wechat_code">wx81e378c8fd03319d</string>
+  <string name="err_server">服务器错误</string>
+
+</resources>

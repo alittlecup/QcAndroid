@@ -1,0 +1,32 @@
+<resources>
+
+  <!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+  <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+  <!--<item name="windowActionBar">false</item>-->
+  <!--<item name="windowNoTitle">true</item>-->
+  <!--<item name="android:windowNoTitle">true</item>-->
+  <!--<item name="android:windowActionBar">false</item>-->
+
+  <!--<item name="colorControlNormal">@color/divider_white</item>-->
+
+  <!--<item name="colorAccent">@color/accent</item>-->
+  <!--<item name="colorPrimary">@color/primary</item>-->
+  <!--<item name="colorPrimaryDark">@color/primary_dark</item>-->
+
+
+  <!--<item name="android:windowAnimationStyle">@style/AnimationActivity</item>-->
+
+
+  <!--&lt;!&ndash;<item username="textViewStyle">@style/Qc.TextCommonGrey</item>&ndash;&gt;-->
+
+  <!--<item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>-->
+  <!--<item name="actionBarStyle">@style/Qc.ActionBarStyle</item>-->
+  <!--<item name="android:windowIsTranslucent">false</item>-->
+
+  <!--<item name="buttonStyle">@style/Qc.CommonBtn</item>-->
+  <!--<item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>-->
+  <!--<item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>-->
+  <!--<item name="android:buttonStyle">@style/Qc.CommonBtn</item>-->
+  <!--<item name="android:datePickerDialogTheme">@style/Qc.Datepicker</item>-->
+  <!--</style>-->
+</resources>

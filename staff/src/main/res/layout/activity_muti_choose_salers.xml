@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_muti_choose_salers"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="20dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:text="@string/choose_saler"
+      style="@style/TextTitleHint"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="20dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:text="@string/choose_saler_tips"
+      style="@style/TextTitleHint"
+      />
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recyclerview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+</LinearLayout>

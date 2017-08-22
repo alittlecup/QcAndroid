@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:showDividers="middle"
+    >
+
+  <include layout="@layout/common_simple_toolbar"
+      />
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_open"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      app:el_label="入场签到"
+      >
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        android:background="@color/bg_grey"
+        />
+  </cn.qingchengfit.widgets.ExpandedLayout>
+
+  <Space
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/activity_vertical_margin"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:id="@+id/layout_signin_type"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@drawable/bg_white_click"
+      android:gravity="center_vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:visibility="gone"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/lable_signin_type"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/tv_signin_type_setted"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/little"
+        android:layout_marginRight="@dimen/little"
+        android:text="@string/common_un_setting"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+
+  </LinearLayout>
+
+
+  <LinearLayout
+      android:id="@+id/layout_signin_wardrobe"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@drawable/bg_white_click"
+      android:gravity="center_vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:visibility="gone"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/lable_signin_wardrobe"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+
+  </LinearLayout>
+
+
+  <LinearLayout
+      android:id="@+id/layout_signin_screen"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@drawable/bg_white_click"
+      android:gravity="center_vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:visibility="gone"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/lable_signin_screen"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+
+  </LinearLayout>
+
+
+  <Space
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      />
+
+  <TextView
+      android:id="@+id/btn_how_to_use"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|center_horizontal"
+      android:layout_marginBottom="12dp"
+      android:drawablePadding="@dimen/little"
+      android:text="如何设置入场签到？"
+      />
+</LinearLayout>

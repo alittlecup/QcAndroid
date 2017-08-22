@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <LinearLayout
+      android:id="@+id/layout_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:paddingTop="24dp"
+      >
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="1dp"
+        android:background="@color/qc_text_grey"
+        />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="新增注册"
+        android:textColor="@color/qc_text_grey"
+        android:textSize="@dimen/min_font"
+        />
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="1dp"
+        android:background="@color/qc_text_grey"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/layout_data"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="horizontal"
+      android:paddingTop="12dp"
+      >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="1dp"
+        >
+
+      <TextView
+          android:id="@+id/tv_data_today"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="0"
+          android:textColor="@color/qc_text_black"
+          android:textSize="@dimen/xxlarge_font"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="7dp"
+          android:layout_marginTop="7dp"
+          android:text="@string/common_today"
+          android:textColor="@color/qc_text_grey"
+          android:textSize="@dimen/min_font"
+          />
+      <!--<View-->
+      <!--android:layout_width="20dp"-->
+      <!--android:layout_height="2dp"-->
+      <!--android:background="@color/qc_student_status_0"-->
+      <!--/>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="1dp"
+        >
+
+      <TextView
+          android:id="@+id/tv_data_7day"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="0"
+          android:textColor="@color/qc_text_black"
+          android:textSize="@dimen/xxlarge_font"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="7dp"
+          android:layout_marginTop="7dp"
+          android:text="@string/last_7_days"
+          android:textColor="@color/qc_text_grey"
+          android:textSize="@dimen/min_font"
+          />
+      <!--<View-->
+      <!--android:layout_width="20dp"-->
+      <!--android:layout_height="2dp"-->
+      <!--android:background="@color/qc_student_status_1"-->
+      <!--/>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="1dp"
+        >
+
+      <TextView
+          android:id="@+id/tv_data_30day"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="0"
+          android:textColor="@color/qc_text_black"
+          android:textSize="@dimen/xxlarge_font"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="7dp"
+          android:layout_marginTop="7dp"
+          android:text="@string/last_30_days"
+          android:textColor="@color/qc_text_grey"
+          android:textSize="@dimen/min_font"
+          />
+    </LinearLayout>
+  </LinearLayout>
+
+  <FrameLayout
+      android:id="@+id/frag_regist"
+      android:layout_width="match_parent"
+      android:layout_height="200dp"
+      />
+
+</LinearLayout>

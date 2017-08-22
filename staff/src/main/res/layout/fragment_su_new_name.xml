@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="20dp"
+      android:background="@color/bg_grey"
+      android:orientation="horizontal"
+      >
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/vector_line"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/arrow_horrizon"
+        />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/vector_line"
+        />
+
+  </LinearLayout>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/new_su_info"
+      app:civ_text_color="@color/text_black"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/new_name_civ"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_hint="新超级管理员的姓名"
+      app:civ_lable="@string/name"
+
+      />
+
+  <cn.qingchengfit.widgets.PhoneEditText
+      android:id="@+id/phone_num"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      app:phone_hint="新超级管理员的手机号"
+      app:phone_show_icon="false"
+      />
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <cn.qingchengfit.widgets.PasswordView
+      android:id="@+id/pw_view"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      app:pw_mode="false"
+      app:pw_show_left="false"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:id="@+id/same_hint"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="@dimen/activity_vertical_margin"
+      android:text="请填写新超级管理员手机号"
+      android:textColor="@color/red"
+      android:visibility="gone"
+      />
+
+  <Button
+      android:id="@+id/comfirm"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:text="@string/comfirm_change"
+
+      />
+</LinearLayout>

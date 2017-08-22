@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:background="@color/bg_grey"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+  <TextView
+      android:id="@+id/classrecord_year"
+      android:layout_width="wrap_content"
+      android:layout_height="30dp"
+      tools:text="2015年上课记录"
+      style="@style/Qc.TextCommonGrey"
+      />
+
+  <TextView
+      android:id="@+id/month_data"
+      android:layout_width="0dp"
+      android:layout_height="30dp"
+      android:layout_alignParentRight="true"
+      android:layout_weight="1"
+      android:gravity="right|center_vertical"
+      tools:text="111111"
+      />
+</LinearLayout>

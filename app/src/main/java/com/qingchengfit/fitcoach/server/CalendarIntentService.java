@@ -8,8 +8,11 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 
 import com.google.gson.Gson;
+import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
@@ -17,10 +20,6 @@ import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.PreferenceUtils;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -122,9 +121,9 @@ public class CalendarIntentService extends IntentService {
 
             long calid = PreferenceUtils.getPrefLong(App.AppContex, "calendar_id", -1l);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+
                 return;
             }
-
             PhoneFuncUtils.delOndDayCal(this, calid, param1);
 
             QcSchedulesResponse qcSchedulesResponse = new Gson().fromJson(param2, QcSchedulesResponse.class);

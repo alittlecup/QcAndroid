@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data></data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+
+    <include layout="@layout/divider_grey"/>
+
+    <TextView
+        android:id="@+id/item_person_alpha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_grey"
+        android:paddingBottom="4dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="4dp"
+        android:text="A"
+        android:textColor="@color/red"
+        android:textSize="14sp"
+        />
+
+    <include layout="@layout/divider_grey"/>
+  </LinearLayout>
+
+</layout>

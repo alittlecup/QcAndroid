@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <LinearLayout
+      android:id="@+id/layout_signin_card"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@drawable/bg_white_click"
+      android:gravity="center_vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="会员卡结算"
+        style="@style/Qc.TextCommonGrey"
+        />
+
+    <ImageView
+        android:id="@+id/tag_pro"
+        android:layout_width="24dp"
+        android:layout_height="12dp"
+        app:srcCompat="@drawable/ic_pro_green"
+        />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/common_un_setting"
+        style="@style/Qc.TextCommonGrey"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_right"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:visibility="gone"
+      app:civ_lable="在线支付签到"
+      />
+
+</LinearLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/qc_bg_grey"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:layout_marginTop="10dp"
+      android:background="@color/white"
+      android:gravity="center"
+      android:orientation="horizontal"
+      >
+
+    <TextView
+        android:id="@+id/tv_student_score_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical|left"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13sp"
+        tools:text="增加积分"
+        />
+
+    <EditText
+        android:id="@+id/et_score"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="16dp"
+        android:layout_weight="1"
+        android:background="@color/transparent"
+        android:gravity="center_vertical|right"
+        android:inputType="numberDecimal"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13sp"
+        tools:text=""
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="34dp"
+      android:background="@color/transparent"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="会员当前积分："
+        android:textColor="@color/qc_text_grey_less"
+        android:textSize="@dimen/min_font"
+        />
+
+    <TextView
+        android:id="@+id/tv_cur_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/qc_text_grey_less"
+        android:textSize="@dimen/min_font"
+        tools:text="0"
+        />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_score_after_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/qc_text_grey_less"
+        android:textSize="@dimen/min_font"
+        tools:text="会员当前积分："
+        />
+
+    <TextView
+        android:id="@+id/tv_score_after_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/qc_text_grey_less"
+        android:textSize="@dimen/min_font"
+        tools:text="0"
+        />
+  </LinearLayout>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_remark"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      app:civ_clickable="true"
+      app:civ_lable="备注"
+      app:civ_showdivier="false"
+      app:civ_showright="true"
+      app:civ_text_color="@color/qc_text_black"
+      />
+
+</LinearLayout>

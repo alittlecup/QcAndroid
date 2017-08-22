@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:civ="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      >
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/bg_grey"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Qc.toolbarStyle"
+        app:popupTheme="@style/ToolbarStyle.Overflow"
+        app:theme="@style/Qc.toolbarStyle"
+        app:titleTextAppearance="@style/ToolbarStyle"
+        >
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/filter_student_card"
+        android:textColor="@color/text_black"
+        android:textSize="16sp"
+        tools:text="@string/site_usage"
+        style="@style/Qc.TextCommonBlack"
+        />
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/card_name"
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
+      civ:civ_clickable="true"
+      civ:civ_content="@string/common_please_choose"
+      civ:civ_lable="会员卡种类"
+      civ:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/card_status"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      civ:civ_clickable="true"
+      civ:civ_content="@string/student_card_status_all"
+      civ:civ_lable="@string/student_card_status"
+      civ:civ_showdivier="false"
+      civ:civ_showright="true"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <Button
+      android:id="@+id/comfirm"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:text="@string/common_comfirm"
+      />
+
+  <TextView
+
+      android:id="@+id/clear_option"
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:background="@drawable/bg_rect"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:text="@string/celar_filter"
+      />
+</LinearLayout>

@@ -1,0 +1,14 @@
+CREATE TABLE qc_function_module (
+  module_name  TEXT PRIMARY KEY NOT NULL
+);
+
+getAllFuntion:
+SELECT * FROM qc_function_module;
+
+deleteAll:
+DELETE  FROM qc_function_module;
+
+--insertFuntion:
+--INSERT INTO qc_function_module(module_name)
+--VALUES (module_name = ?);
+--

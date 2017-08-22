@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:height="84dp"
+        android:viewportHeight="84"
+        android:viewportWidth="84"
+        android:width="84dp">
+
+  <group
+      android:translateX="-38.000000"
+      android:translateY="-360.000000">
+    <group
+        android:translateX="1.000000"
+        android:translateY="362.000000">
+      <group
+          android:translateX="39.000000">
+        <path
+            android:fillAlpha="0.778451493"
+            android:fillColor="#FBB140"
+            android:pathData="M 40 0 C 62.0913899932 0 80 17.9086100068 80 40 C 80 62.0913899932 62.0913899932 80 40 80 C 17.9086100068 80 0 62.0913899932 0 40 C 0 17.9086100068 17.9086100068 0 40 0 Z"
+            android:strokeAlpha="0.778451493"
+            android:strokeColor="#E56100"
+            android:strokeWidth="2"/>
+        <group
+            android:translateX="23.000000"
+            android:translateY="15.000000">
+          <path
+              android:fillColor="#FBE7D0"
+              android:pathData="M6.17647059,26.0204082 L28.8235294,26.0204082 L28.8235294,49.6395189
+C28.8235294,50.9657188 27.8816165,51.5403265 26.7087931,50.9171413
+L18.1344533,46.3611256 C17.5469825,46.0489703 16.6026301,46.0642538
+16.0261547,46.3947054 L8.25124293,50.8514995 C7.1053778,51.5083411
+6.17647059,50.9722751 6.17647059,49.6395189 L6.17647059,26.0204082 Z"
+              android:strokeColor="#2C4C67"
+              android:strokeWidth="3"/>
+          <path
+              android:fillColor="#FBE8D0"
+              android:pathData="M 17.5 0 C 27.164983122 0 35 7.92181883615 35 17.6938776 C 35 27.4659363639 27.164983122 35.3877552 17.5 35.3877552 C 7.83501687796 35.3877552 0 27.4659363639 0 17.6938776 C 0 7.92181883615 7.83501687796 0 17.5 0 Z"
+              android:strokeColor="#2C4C67"
+              android:strokeWidth="3"/>
+          <path
+              android:fillColor="#F48232"
+              android:pathData="M 17.5 21.8571429 L 12.6594156 24.4301823 L 13.5838849 18.9803973 L 9.66776987 15.1208381 L 15.0797078 14.3257252 L 17.5 9.36734694 L 19.9202922 14.3257252 L 25.3322301 15.1208381 L 21.4161151 18.9803973 L 22.3405844 24.4301823 Z"
+              android:strokeWidth="1"/>
+        </group>
+      </group>
+    </group>
+  </group>
+</vector>

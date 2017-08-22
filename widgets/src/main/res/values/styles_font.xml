@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="QcTextStyleTitleBold">
+    <item name="android:textSize">@dimen/txt_18sp</item>
+    <item name="android:textColor">@color/text_dark</item>
+  </style>
+
+  <style name="QcTextStyleTitleWhite">
+    <item name="android:textSize">@dimen/txt_18sp</item>
+    <item name="android:textColor">@color/bg_white</item>
+  </style>
+
+  <style name="QcTextStyleTitleRegular">
+    <item name="android:textSize">@dimen/txt_18sp</item>
+    <item name="android:textColor">@color/text_dark</item>
+  </style>
+
+  <style name="QcTextStyleLargeDark">
+    <item name="android:textSize">@dimen/txt_17sp</item>
+    <item name="android:textColor">@color/text_dark</item>
+  </style>
+
+  <style name="QcTextStyleLargeWarm">
+    <item name="android:textSize">@dimen/txt_17sp</item>
+    <item name="android:textColor">@color/text_warm</item>
+  </style>
+
+  <style name="QcTextStyleStandardDark">
+    <item name="android:textSize">@dimen/txt_15sp</item>
+    <item name="android:textColor">@color/text_dark</item>
+  </style>
+
+  <style name="QcTextStyleStandardWarm">
+    <item name="android:textSize">@dimen/txt_15sp</item>
+    <item name="android:textColor">@color/text_warm</item>
+  </style>
+
+  <style name="QcTextStyleStandardGrey">
+    <item name="android:textSize">@dimen/txt_15sp</item>
+    <item name="android:textColor">@color/text_grey</item>
+  </style>
+
+  <style name="QcTextStyleStandardHint">
+    <item name="android:textSize">@dimen/txt_15sp</item>
+    <item name="android:textColor">@color/text_hint</item>
+  </style>
+
+  <style name="QcTextStyleMediumDark">
+    <item name="android:textSize">@dimen/txt_14sp</item>
+    <item name="android:textColor">@color/text_dark</item>
+  </style>
+
+  <style name="QcTextStyleMediumWarm">
+    <item name="android:textSize">@dimen/txt_14sp</item>
+    <item name="android:textColor">@color/text_warm</item>
+  </style>
+
+  <style name="QcTextStyleMediumGrey">
+    <item name="android:textSize">@dimen/txt_14sp</item>
+    <item name="android:textColor">@color/text_grey</item>
+  </style>
+
+  <style name="QcTextStyleSmallDark">
+    <item name="android:textSize">@dimen/txt_13sp</item>
+    <item name="android:textColor">@color/text_dark</item>
+  </style>
+
+  <style name="QcTextStyleSmallWarm">
+    <item name="android:textSize">13sp</item>
+    <item name="android:textColor">@color/text_warm</item>
+  </style>
+
+  <style name="QcTextStyleSmallGrey">
+    <item name="android:textSize">@dimen/txt_13sp</item>
+    <item name="android:textColor">@color/text_grey</item>
+  </style>
+
+  <style name="QcTextStyleXsDark">
+    <item name="android:textSize">@dimen/txt_12sp</item>
+    <item name="android:textColor">@color/text_dark</item>
+  </style>
+
+  <style name="QcTextStyleXsWarm">
+    <item name="android:textSize">@dimen/txt_12sp</item>
+    <item name="android:textColor">@color/text_warm</item>
+  </style>
+
+  <style name="QcTextStyleXsGrey">
+    <item name="android:textSize">@dimen/txt_12sp</item>
+    <item name="android:textColor">@color/text_grey</item>
+  </style>
+
+  <style name="QcTagStyle">
+    <item name="android:textSize">@dimen/txt_12sp</item>
+    <item name="android:textColor">@color/text_orange</item>
+    <item name="android:background">@drawable/bg_tag_orange</item>
+    <item name="android:paddingLeft">10dp</item>
+    <item name="android:paddingRight">10dp</item>
+    <item name="android:paddingTop">2dp</item>
+    <item name="android:paddingBottom">2dp</item>
+  </style>
+
+  <style name="QcTextStyleTinyDark">
+    <item name="android:textSize">@dimen/txt_10sp</item>
+    <item name="android:textColor">@color/text_dark</item>
+  </style>
+
+  <style name="QcTextStyleTinyGrey">
+    <item name="android:textSize">@dimen/txt_10sp</item>
+    <item name="android:textColor">@color/text_grey</item>
+  </style>
+</resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/white"
+    android:gravity="center"
+    android:onClick="toDetail"
+    android:orientation="vertical"
+    >
+
+  <com.github.mikephil.charting.charts.LineChart
+      android:id="@+id/lineChart"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:layout_marginTop="12dp"
+      android:layout_weight="1"
+      ></com.github.mikephil.charting.charts.LineChart>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="20dp"
+      android:paddingLeft="10dp"
+      android:paddingRight="10dp"
+      >
+
+    <TextView
+        android:id="@+id/start_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        tools:text="12.1"
+        />
+
+    <TextView
+        android:id="@+id/end_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        tools:text="12.1"
+        />
+  </FrameLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="14dp"
+      android:gravity="bottom|right"
+      android:orientation="horizontal"
+      android:paddingRight="16dp"
+      android:visibility="gone"
+      >
+
+    <TextView
+        android:id="@+id/tv_total_count_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:text="最近7天新增会员共计"
+        android:textColor="@color/qc_text_black"
+        android:textSize="@dimen/min_font"
+        />
+
+    <TextView
+        android:id="@+id/tv_total_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00"
+        android:textColor="@color/qc_student_status_2"
+        android:textSize="@dimen/max_font"
+        />
+  </LinearLayout>
+
+</LinearLayout>

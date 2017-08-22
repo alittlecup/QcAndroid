@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data></data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="0dp"
+      >
+
+    <ImageView
+        android:id="@+id/item_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="12dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_item_delete"
+        android:visibility="visible"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/tv_amount_range"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textColor="@color/qc_text_black"
+          android:textSize="@dimen/common_font"
+          tools:text="实收金额0至5000元"
+          />
+
+      <TextView
+          android:id="@+id/tv_per_score"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="3dp"
+          android:textColor="@color/qc_text_black"
+          android:textSize="@dimen/common_font"
+          tools:text="每一元得0.5积分"
+          />
+    </LinearLayout>
+
+  </LinearLayout>
+</layout>

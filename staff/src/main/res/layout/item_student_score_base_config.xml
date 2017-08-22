@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data></data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="3dp"
+      android:layout_marginLeft="16dp"
+      android:layout_marginTop="3dp"
+      android:orientation="horizontal"
+      >
+
+    <TextView
+        android:id="@+id/tv_student_score_base_lable"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/qc_text_grey_less"
+        android:textSize="@dimen/min_font"
+        tools:text="团课预约"
+        />
+
+    <TextView
+        android:id="@+id/tv_student_score_base_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="6dp"
+        android:layout_weight="4"
+        android:lineSpacingExtra="3dp"
+        android:textColor="@color/qc_text_grey_less"
+        android:textSize="@dimen/min_font"
+        tools:text="100 分/次"
+        />
+  </LinearLayout>
+</layout>

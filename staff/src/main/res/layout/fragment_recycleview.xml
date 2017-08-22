@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+      xmlns:rn="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/recyclerview"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:background="@color/white"
+      android:clipToPadding="true"
+      android:paddingBottom="8dp"
+      rn:rn_drawable="@drawable/no_dayoff"
+      rn:rn_hint="暂无教练"
+      />
+
+  <Button
+      android:id="@+id/btn"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="5dp"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:text="@string/course_add_new_coach"
+
+
+      />
+
+</LinearLayout>

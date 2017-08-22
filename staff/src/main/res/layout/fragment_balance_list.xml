@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <android.support.design.widget.CoordinatorLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/myhome_appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_grey"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp"
+        >
+
+      <LinearLayout
+          android:id="@+id/ll_balance_condition"
+          android:layout_width="match_parent"
+          android:layout_height="80dp"
+          android:orientation="horizontal"
+          app:layout_scrollFlags="scroll"
+          >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:id="@+id/text_filter_tips"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="15dp"
+              android:layout_marginTop="14dp"
+              android:text="@string/filter_card_tips"
+              android:textSize="11dp"
+              />
+
+          <TextView
+              android:id="@+id/text_filter_condition"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/text_filter_tips"
+              android:layout_marginLeft="15dp"
+              android:layout_marginTop="14dp"
+              android:textColor="@color/qc_text_black"
+              android:textSize="12dp"
+              tools:text="储值卡&#60;1000元，次卡&#60;500元，有效期&#60;150天"
+              />
+        </LinearLayout>
+
+
+        <include
+            layout="@layout/divider_grey_vertical"
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            />
+
+        <TextView
+            android:id="@+id/text_change_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:minLines="2"
+            android:text="修改条件"
+            android:textColor="@color/qc_allotsale_green"
+            android:textSize="12dp"
+            />
+
+      </LinearLayout>
+
+      <include
+          layout="@layout/divider_grey"
+          android:layout_width="match_parent"
+          android:layout_height="12dp"
+          app:layout_scrollFlags="scroll"
+          />
+
+      <FrameLayout
+          android:id="@+id/frame_student_operation"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_scrollFlags="scroll|enterAlways"
+          />
+
+      <include layout="@layout/layout_card_filter"/>
+
+      <include layout="@layout/divider_grey"/>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <include layout="@layout/divider_grey"/>
+
+        <TextView
+            android:id="@+id/cardcount_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="会员卡总数:"
+            android:textSize="12dp"
+            />
+
+        <TextView
+            android:id="@+id/cards_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/cardcount_lable"
+            android:layout_toRightOf="@id/cardcount_lable"
+            android:textColor="@color/qc_text_black"
+            android:textSize="12dp"
+            tools:text="123123"
+            style="@style/Qc.TextCommonBlack"
+            />
+
+      </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+      <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+          android:id="@+id/recycleview"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:rn_drawable="@drawable/no_realcard"
+          app:rn_hint="暂无会员卡"
+          />
+
+      <View
+          android:id="@+id/card_list_shadow"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:alpha="0.4"
+          android:background="@color/qc_text_black"
+          android:visibility="gone"
+          />
+    </FrameLayout>
+
+  </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
