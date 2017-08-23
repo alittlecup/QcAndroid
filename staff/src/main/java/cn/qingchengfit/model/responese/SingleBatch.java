@@ -1,6 +1,7 @@
 package cn.qingchengfit.model.responese;
 
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Course;
 import cn.qingchengfit.model.common.Rule;
 import java.util.List;
@@ -44,4 +45,6 @@ public class SingleBatch {
     public List<Time_repeat> time_repeats;
     public List<CardTplBatchShip> card_tpls;
     public boolean has_order;
+    public BatchOpenRule open_rule;
+
 }

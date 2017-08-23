@@ -1,5 +1,6 @@
 package cn.qingchengfit.model.body;
 
+import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Rule;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,4 +41,5 @@ public class SingleBatchBody {
     public ArrayList<Rule> rule;
     public boolean is_free;
     public int max_users;
+    public BatchOpenRule open_rule;
 }

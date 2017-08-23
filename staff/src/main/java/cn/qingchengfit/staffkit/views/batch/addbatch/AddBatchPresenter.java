@@ -1,9 +1,11 @@
 package cn.qingchengfit.staffkit.views.batch.addbatch;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ArrangeBatchBody;
+import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.responese.QcResponse;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.ResponseConstant;
@@ -11,6 +13,7 @@ import cn.qingchengfit.model.responese.ScheduleTemplete;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
+import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -38,8 +41,39 @@ public class AddBatchPresenter implements Presenter {
     private Subscription spCheck;
     private Subscription spTmpl;
 
+    private BatchOpenRule batchOpenRule = new BatchOpenRule();
+
     @Inject public AddBatchPresenter(GymUseCase gymUseCase) {
         this.gymUseCase = gymUseCase;
+    }
+
+    /**
+     * 判断规则合法性（type //1 立即开放 2 固定时间 3 提前X小时）
+     */
+    @Nullable
+    public BatchOpenRule getBatchOpenRule() {
+        if (batchOpenRule == null){
+            return null;
+        }
+        if (batchOpenRule.type == 2 && StringUtils.isEmpty(batchOpenRule.open_datetime)){
+            return null;
+        }
+        if (batchOpenRule.type == 3 && batchOpenRule.advance_hours == null)
+            return null;
+        return batchOpenRule;
+    }
+
+    public void setBatchOpenRule(BatchOpenRule batchOpenRule) {
+        this.batchOpenRule = batchOpenRule;
+    }
+
+    public void setOpenRuleType(int type){
+        this.batchOpenRule.type = type;
+    }
+
+    public void setOpenRuleTime(String time,Integer abeadHoure){
+        this.batchOpenRule.advance_hours = abeadHoure;
+        this.batchOpenRule.open_datetime = time;
     }
 
     @Override public void onStart() {

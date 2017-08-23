@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.SpannableString;
@@ -16,6 +15,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -110,6 +110,7 @@ public class CommonInputView extends RelativeLayout {
     }
 
     public void init(Context context, AttributeSet attrs) {
+        setSaveEnabled(true);
         LayoutInflater.from(context).inflate(R.layout.layout_commoninput, this, true);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CommonInputView);
         str_label = ta.getString(R.styleable.CommonInputView_civ_lable);
@@ -294,33 +295,114 @@ public class CommonInputView extends RelativeLayout {
         super.onDraw(canvas);
     }
 
-    public class SavedState extends BaseSavedState {
-        public final Creator<CommonInputView.SavedState> CREATOR = new Creator<CommonInputView.SavedState>() {
-            @Override public CommonInputView.SavedState createFromParcel(Parcel in) {
-                return new CommonInputView.SavedState(in);
-            }
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState ss = new SavedState(superState);
+        ss.childrenStates = new SparseArray();
+        for (int i = 0; i < getChildCount(); i++) {
+            getChildAt(i).saveHierarchyState(ss.childrenStates);
+        }
+        return ss;
+    }
 
-            @Override public CommonInputView.SavedState[] newArray(int size) {
-                return new CommonInputView.SavedState[size];
-            }
-        };
-        String content;
-        String label;
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        for (int i = 0; i < getChildCount(); i++) {
+            getChildAt(i).restoreHierarchyState(ss.childrenStates);
+        }
+    }
 
-        public SavedState(Parcelable superState) {
+    @Override
+    protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
+        dispatchFreezeSelfOnly(container);
+    }
+
+    @Override
+    protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
+        dispatchThawSelfOnly(container);
+    }
+    static class SavedState extends BaseSavedState {
+        SparseArray childrenStates;
+
+        SavedState(Parcelable superState) {
             super(superState);
         }
 
-        private SavedState(Parcel in) {
+        private SavedState(Parcel in, ClassLoader classLoader) {
             super(in);
-            content = in.readString();
-            label = in.readString();
+            childrenStates = in.readSparseArray(classLoader);
         }
 
-        @Override public void writeToParcel(@NonNull Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeString(content);
-            dest.writeString(label);
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeSparseArray(childrenStates);
         }
+
+        public static final ClassLoaderCreator<SavedState> CREATOR
+            = new ClassLoaderCreator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel source, ClassLoader loader) {
+                return new SavedState(source, loader);
+            }
+
+            @Override
+            public SavedState createFromParcel(Parcel source) {
+                return createFromParcel(null);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
+
+    //public class SavedState extends BaseSavedState {
+    //    public final Creator<CommonInputView.SavedState> CREATOR = new Creator<CommonInputView.SavedState>() {
+    //        @Override public CommonInputView.SavedState createFromParcel(Parcel in) {
+    //            return new CommonInputView.SavedState(in);
+    //        }
+    //
+    //        @Override public CommonInputView.SavedState[] newArray(int size) {
+    //            return new CommonInputView.SavedState[size];
+    //        }
+    //    };
+    //    String content;
+    //    String label;
+    //
+    //    public String getContent() {
+    //        return content;
+    //    }
+    //
+    //    public void setContent(String content) {
+    //        this.content = content;
+    //    }
+    //
+    //    public String getLabel() {
+    //        return label;
+    //    }
+    //
+    //    public void setLabel(String label) {
+    //        this.label = label;
+    //    }
+    //
+    //    public SavedState(Parcelable superState) {
+    //        super(superState);
+    //    }
+    //
+    //    private SavedState(Parcel in) {
+    //        super(in);
+    //        content = in.readString();
+    //        label = in.readString();
+    //    }
+    //
+    //    @Override public void writeToParcel(@NonNull Parcel dest, int flags) {
+    //        super.writeToParcel(dest, flags);
+    //        dest.writeString(content);
+    //        dest.writeString(label);
+    //    }
+    //}
 }

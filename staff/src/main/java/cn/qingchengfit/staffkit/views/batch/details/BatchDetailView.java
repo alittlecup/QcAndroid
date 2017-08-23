@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit.views.batch.details;
 
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.CourseTypeSample;
@@ -32,7 +33,7 @@ public interface BatchDetailView extends PView {
     void onRule(List<Rule> rules, int max_user, boolean isfree, List<CardTplBatchShip> cardTplBatchShips, boolean hasOrder);
 
     void onTimeRepeat(String timestart, String timeend, List<Time_repeat> time_repeats);
-
+    void onOpenRule(BatchOpenRule rule);
     void checkOk();
 
     void onSuccess();

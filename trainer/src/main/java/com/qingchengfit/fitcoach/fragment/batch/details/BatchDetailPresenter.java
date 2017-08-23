@@ -1,15 +1,19 @@
 package com.qingchengfit.fitcoach.fragment.batch.details;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.GymUtils;
+import cn.qingchengfit.utils.StringUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
+import com.qingchengfit.fitcoach.bean.BatchOpenRule;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateBatchDetail;
@@ -41,11 +45,42 @@ public class BatchDetailPresenter extends BasePresenter {
     private Subscription spUpdate;
     private Brand brand;
     private RestRepository restRepository;
+    private BatchOpenRule batchOpenRule = new BatchOpenRule();
 
     @Inject public BatchDetailPresenter(CoachService coachService, RestRepository restRepository, Brand brand) {
         this.coachService = coachService;
         this.restRepository = restRepository;
         this.brand = brand;
+    }
+
+
+    /**
+     * 判断规则合法性（type //1 立即开放 2 固定时间 3 提前X小时）
+     */
+    @Nullable
+    public BatchOpenRule getBatchOpenRule() {
+        if (batchOpenRule == null){
+            return null;
+        }
+        if (batchOpenRule.type == 2 && StringUtils.isEmpty(batchOpenRule.open_datetime)){
+            return null;
+        }
+        if (batchOpenRule.type == 3 && batchOpenRule.advance_hours == null)
+            return null;
+        return batchOpenRule;
+    }
+
+    public void setBatchOpenRule(BatchOpenRule batchOpenRule) {
+        this.batchOpenRule = batchOpenRule;
+    }
+
+    public void setOpenRuleType(int type){
+        this.batchOpenRule.type = type;
+    }
+
+    public void setOpenRuleTime(String time,Integer abeadHoure){
+        this.batchOpenRule.advance_hours = abeadHoure;
+        this.batchOpenRule.open_datetime = time;
     }
 
     @Override public void onStart() {
@@ -116,15 +151,13 @@ public class BatchDetailPresenter extends BasePresenter {
                         view.onSpace(qcResponsePrivateBatchDetail.data.batch.spaces);
                         view.onTimeRepeat(qcResponsePrivateBatchDetail.data.batch.from_date,
                             qcResponsePrivateBatchDetail.data.batch.to_date);
+                        batchOpenRule = qcResponsePrivateBatchDetail.data.batch.open_rule;
+                        view.onOpenRule(batchOpenRule);
                     } else {
 
                     }
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-
-                }
-            })
+            }, new NetWorkThrowable())
 
         );
 
@@ -166,7 +199,7 @@ public class BatchDetailPresenter extends BasePresenter {
         upBody.time_repeats = body.time_repeats;
         upBody.shop_id = body.shop_id;
         upBody.to_date = body.to_date;
-
+        upBody.open_rule = body.open_rule;
         spUpdate = restRepository.getPost_api()
             .qcUpdateBatch(App.coachid + "", id, coachService.getId() + "", coachService.getModel(), upBody)
             .onBackpressureBuffer()

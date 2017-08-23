@@ -707,7 +707,7 @@ public class WheelView extends View {
     if (!isScrollingPerformed && (valueLayout == null || valueLayout.getWidth() > widthItems)) {
       String text = getAdapter() != null ? getAdapter().getItem(currentItem) : null;
       //valuePaint.setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
-      valuePaint.setTextSize(TEXT_SIZE + 2);
+      valuePaint.setTextSize(TEXT_SIZE );
       valueLayout = new StaticLayout(text != null ? text : "", valuePaint, widthItems,
           widthLabel > 0 ? Layout.Alignment.ALIGN_CENTER : Layout.Alignment.ALIGN_CENTER, 1,
           ADDITIONAL_ITEM_HEIGHT, false);

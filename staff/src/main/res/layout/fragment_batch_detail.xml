@@ -47,6 +47,7 @@
               app:civ_clickable="true"
               app:civ_showdivier="true"
               app:civ_showright="true"
+              style="@style/QcCivInputStyle"
 
               />
 
@@ -70,6 +71,7 @@
               app:civ_right_icon="@drawable/ic_arrow_right"
               app:civ_showdivier="false"
               app:civ_showright="true"
+              style="@style/QcCivInputStyle"
               />
 
           <include layout="@layout/divider_grey"/>
@@ -173,7 +175,18 @@
             android:layout_height="220dp"
             />
       </FrameLayout>
-
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_to_open_time"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_hint="立即开放"
+          app:civ_lable="何时开放预约"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          style="@style/QcCivInputStyle"
+          />
+      <include layout="@layout/divider_grey"/>
       <TextView
           android:id="@+id/tv_batch_date"
           android:layout_width="match_parent"

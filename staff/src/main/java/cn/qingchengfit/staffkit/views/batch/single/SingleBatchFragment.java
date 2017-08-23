@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -29,6 +30,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.SingleBatchBody;
+import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.CourseTypeSample;
@@ -61,9 +63,11 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
@@ -118,10 +122,15 @@ import rx.functions.Action1;
     @BindView(R.id.order_sutdent_count) CommonInputView orderSutdentCount;
     @BindView(R.id.btn_del) TextView btnDel;
     @BindView(R.id.tag_pro) ImageView tagPro;
+    @BindView(R.id.civ_to_open_time) CommonInputView civOpenTime;
+    @BindArray(R.array.order_open_time) String[] arrayOpenTime;
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-
+    /**
+     * 选择准确的时间
+     */
+    TimeDialogWindow chooseOpenTimeDialog;
     private SingleBatchBody mBody = new SingleBatchBody();
     private boolean mHasOrder;
     private TimeDialogWindow timeWindow;
@@ -132,7 +141,6 @@ import rx.functions.Action1;
     private Rule ruleOnline;
     private List<Rule> rulesPayCards = new ArrayList<>();
     private ArrayList<CardTplBatchShip> mCardTplBatchShips;
-
     private boolean isChangeCardPay;
     private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
@@ -151,7 +159,11 @@ import rx.functions.Action1;
                 mBody.start = courseDate.getContent().split(" ")[0] + "T" + courseTime.getContent() + ":00";
             }
             mBody.max_users = Integer.valueOf(orderSutdentCount.getContent());
-
+            if (mSingleBatchPresenter.getBatchOpenRule() == null){
+                ToastUtils.show("请设置何时开放约课");
+                return true;
+            }
+            mBody.open_rule = mSingleBatchPresenter.getBatchOpenRule();
             if (swNeedPay.isChecked()) {
                 mBody.is_free = false;
                 if (mBody.rule == null) {
@@ -484,6 +496,17 @@ import rx.functions.Action1;
 
     }
 
+    @Override public void onOpenRule(BatchOpenRule rule) {
+        if (rule != null ){
+            if (rule.type <3 && !TextUtils.isEmpty(rule.open_datetime))
+                civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(rule.open_datetime)));
+            else if (rule.type == 3 && rule.advance_hours != null){
+                if (mStart != null)
+                    civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(DateUtils.addHour(mStart,-rule.advance_hours)));
+            }
+        }
+    }
+
     @Override public void onSuccess() {
         hideLoading();
         ToastUtils.show("修改成功");
@@ -549,6 +572,36 @@ import rx.functions.Action1;
                 }).title("选择人数");
         }
         stucount.show();
+    }
+
+    @OnClick(R.id.civ_to_open_time)
+    public void clickOpenTime(){
+        chooseOpenTime();
+    }
+
+    public void chooseOpenTime(){
+        if (chooseOpenTimeDialog == null){
+            chooseOpenTimeDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.ALL);
+            chooseOpenTimeDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+                @Override public void onTimeSelect(Date date) {
+                    civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(date));
+                    mSingleBatchPresenter.setOpenRuleType(2);
+                    mSingleBatchPresenter.setOpenRuleTime(DateUtils.formatToServer(date),null);
+                }
+            });
+        }
+        chooseOpenTimeDialog.setRange(DateUtils.getYear(new Date())-1,DateUtils.getYear(new Date())+1);
+        Date d = new Date();
+        if (!TextUtils.isEmpty(civOpenTime.getContent())){
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD HH:mm", Locale.CHINA);
+                d = formatter.parse(civOpenTime.getContent());
+            }catch (Exception e){
+
+            }
+
+        }
+        chooseOpenTimeDialog.showAtLocation(getView(),Gravity.BOTTOM, 0, 0, d);
     }
 
     @OnClick(R.id.can_not_close) public void canNotClose() {

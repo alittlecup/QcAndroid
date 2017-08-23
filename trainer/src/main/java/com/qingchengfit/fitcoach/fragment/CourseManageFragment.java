@@ -19,10 +19,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -51,7 +51,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CourseManageFragment extends Fragment {
+public class CourseManageFragment extends BaseFragment {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
@@ -71,7 +71,6 @@ public class CourseManageFragment extends Fragment {
     private TimeDialogWindow timeWindow;
     private TimePeriodChooser timeDialogWindow;
     private MaterialDialog delDialog;
-    private Unbinder unbinder;
 
     public CourseManageFragment() {
     }
@@ -161,6 +160,7 @@ public class CourseManageFragment extends Fragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("model", mModel);
         params.put("id", mId);
+        RxRegiste(
         QcCloudClient.getApi().getApi.qcGetGroupManageDetail(App.coachid, mBatchId,
             mCourseType == Configs.TYPE_PRIVATE ? "timetables" : "schedules", params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -204,12 +204,10 @@ public class CourseManageFragment extends Fragment {
                     } else {
                         noData.setVisibility(View.GONE);
                     }
-                    //                        courseManagerAdapter = new CourseManagerAdapter(datas);
-                    //                        recyclerview.setAdapter(courseManagerAdapter);
                     courseManagerAdapter.notifyDataSetChanged();
                     if (pos > 0) recyclerview.scrollToPosition(pos);
                 }
-            });
+            }));
     }
 
     public void chooseTime(int pos) {
@@ -360,6 +358,5 @@ public class CourseManageFragment extends Fragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 }

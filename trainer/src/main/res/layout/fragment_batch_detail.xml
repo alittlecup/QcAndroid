@@ -40,6 +40,7 @@
 
           <cn.qingchengfit.widgets.CommonInputView
               android:id="@+id/coach"
+              style="@style/QcCivInputStyle"
               android:layout_width="match_parent"
               android:layout_height="@dimen/qc_item_height"
               app:civ_clickable="true"
@@ -50,6 +51,7 @@
 
           <cn.qingchengfit.widgets.CommonInputView
               android:id="@+id/space"
+              style="@style/QcCivInputStyle"
               android:layout_width="match_parent"
               android:layout_height="@dimen/qc_item_height"
               app:civ_clickable="true"
@@ -60,13 +62,25 @@
 
           <cn.qingchengfit.widgets.CommonInputView
               android:id="@+id/account_type"
+              style="@style/QcCivInputStyle"
               android:layout_width="match_parent"
               android:layout_height="@dimen/qc_item_height"
               app:civ_clickable="true"
               app:civ_hint="@string/common_please_choose"
               app:civ_lable="@string/need_pay"
               app:civ_showright="true"
+              />
 
+          <cn.qingchengfit.widgets.CommonInputView
+              android:id="@+id/civ_to_open_time"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              app:civ_clickable="true"
+              app:civ_hint="立即开放"
+              app:civ_lable="何时开放预约"
+              app:civ_showdivier="false"
+              app:civ_showright="true"
+              style="@style/QcCivInputStyle"
               />
 
         </LinearLayout>
@@ -74,7 +88,7 @@
         <View
             android:id="@+id/permission_view"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="290dp"
             />
       </FrameLayout>
 

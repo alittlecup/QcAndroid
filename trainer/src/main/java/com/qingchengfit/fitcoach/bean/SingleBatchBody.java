@@ -39,4 +39,5 @@ public class SingleBatchBody {
     public ArrayList<Rule> rule;
     public boolean is_free;
     public int max_users;
+    public BatchOpenRule open_rule;
 }

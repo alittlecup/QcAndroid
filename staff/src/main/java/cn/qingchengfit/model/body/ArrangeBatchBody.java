@@ -1,5 +1,6 @@
 package cn.qingchengfit.model.body;
 
+import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.model.responese.Time_repeat;
 import java.util.ArrayList;
@@ -31,4 +32,5 @@ public class ArrangeBatchBody {
     public ArrayList<Time_repeat> time_repeats;
     public String batch_id;
     public boolean is_free = false;
+    public BatchOpenRule open_rule;
 }

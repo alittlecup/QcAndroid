@@ -31,9 +31,10 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           app:civ_clickable="true"
+          app:civ_hint="@string/please_choose"
           app:civ_showdivier="true"
           app:civ_showright="true"
-
+          style="@style/QcCivInputStyle"
           />
 
       <cn.qingchengfit.widgets.CommonInputView
@@ -44,6 +45,7 @@
           app:civ_lable="@string/course_place"
           app:civ_showdivier="true"
           app:civ_showright="true"
+          style="@style/QcCivInputStyle"
           />
 
 
@@ -57,6 +59,7 @@
           app:civ_right_icon="@drawable/ic_arrow_right"
           app:civ_showdivier="false"
           app:civ_showright="true"
+          style="@style/QcCivInputStyle"
           />
 
       <include layout="@layout/divider_grey"/>
@@ -173,6 +176,8 @@
           android:layout_height="@dimen/qc_item_height"
           app:civ_clickable="true"
           app:civ_lable="@string/start_day"
+          app:civ_showright="true"
+          style="@style/QcCivInputStyle"
           />
 
       <cn.qingchengfit.widgets.CommonInputView
@@ -182,6 +187,20 @@
           app:civ_clickable="true"
           app:civ_lable="@string/end_day"
           app:civ_showdivier="false"
+          app:civ_showright="true"
+          style="@style/QcCivInputStyle"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_to_open_time"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_hint="立即开放"
+          app:civ_lable="何时开放预约"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          style="@style/QcCivInputStyle"
           />
 
       <include layout="@layout/divider_grey"/>

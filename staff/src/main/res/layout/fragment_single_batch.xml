@@ -158,6 +158,17 @@
           app:civ_showright="true"
           app:civ_text_color="@color/text_black"
           />
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_to_open_time"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_hint=""
+          app:civ_lable="何时开放预约"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          style="@style/QcCivInputStyle"
+          />
 
       <include layout="@layout/divider_grey"/>
 

@@ -1,6 +1,4 @@
-package cn.qingchengfit;
-
-import cn.qingchengfit.widgets.BuildConfig;
+package com.qingchengfit.fitcoach.bean;
 
 /**
  * power by
@@ -20,20 +18,11 @@ import cn.qingchengfit.widgets.BuildConfig;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/2/21.
+ * Created by Paper on 2017/8/22.
  */
 
-public class Constants {
-  public static final String SEPARATE = "、";
-  public static final String SEPARATOR = "、";
-  public static final String EXTRA_GYM_SERVICE = "qingcheng.gym.service";
-  public static final String EXTRA_GYM_SINGLE = "qingcheng.gym.single";
-  public static final String EXTRA_GYM_STATUS = "qingcheng.gym.status";
-  public static final String EXTRA_BRAND = "qingcheng.brand";
-
-  public static final String Server =
-      BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
-  public static final String ServerDebug = "http://c2.qingchengfit.cn/";
-  public static final String ServerMirror =
-      "http://cloudmirror.qingchengfit.cn/";
+public class BatchOpenRule {
+  public int type = 1;//1 立即开放 2 固定时间 3 提前X小时
+  public String open_datetime;
+  public Integer advance_hours;
 }

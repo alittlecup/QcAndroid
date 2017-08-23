@@ -42,6 +42,7 @@ public class SimpleScrollPicker extends Dialog {
     private View rootView;
     private WheelView wheelview;
     private SelectItemListener listener;
+    private String label = "";
 
     public SimpleScrollPicker(@NonNull Context context) {
         this(context, true, null);
@@ -70,11 +71,19 @@ public class SimpleScrollPicker extends Dialog {
         });
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
     public void show(ArrayList<String> datas, int pos) {
         wheelview.setAdapter(new ArrayWheelAdapter<String>(datas));// 设置"年"的显示数据
         wheelview.TEXT_SIZE = 50;
         wheelview.setCyclic(false);
-        wheelview.setLabel("");// 添加文字
+        wheelview.setLabel(label);// 添加文字
         wheelview.setCurrentItem(pos);
         show();
     }
@@ -87,8 +96,9 @@ public class SimpleScrollPicker extends Dialog {
         wheelview.setAdapter(new NumericWheelAdapter(min, max, interval));// 设置"年"的显示数据
         wheelview.TEXT_SIZE = 50;
         wheelview.setCyclic(false);
-        wheelview.setLabel("");// 添加文字
         wheelview.setCurrentItem(pos);
+        wheelview.setLabel(label);// 添加文字
+
         show();
     }
 

@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.batch.details;
 
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Course;
+import com.qingchengfit.fitcoach.bean.BatchOpenRule;
 import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.Space;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
@@ -30,6 +31,8 @@ public interface BatchDetailView extends PView {
     void onRule(List<Rule> rules, int max_user);
 
     void onTimeRepeat(String timestart, String timeend);
+
+    void onOpenRule(BatchOpenRule openRule);
 
     void checkOk();
 

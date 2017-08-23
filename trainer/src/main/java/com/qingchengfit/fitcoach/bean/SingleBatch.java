@@ -43,5 +43,6 @@ public class SingleBatch {
     public List<TimeRepeat> time_repeats;
     public List<CardTplBatchShip> card_tpls;
     public boolean has_order;
+    public BatchOpenRule open_rule;
 }
 

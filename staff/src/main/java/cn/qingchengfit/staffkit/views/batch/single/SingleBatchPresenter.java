@@ -1,10 +1,12 @@
 package cn.qingchengfit.staffkit.views.batch.single;
 
+import android.support.annotation.Nullable;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.DelBatchScheduleBody;
 import cn.qingchengfit.model.body.SingleBatchBody;
+import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.CourseTypeSample;
@@ -21,6 +23,7 @@ import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.GymUtils;
+import cn.qingchengfit.utils.StringUtils;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -33,10 +36,41 @@ public class SingleBatchPresenter extends BasePresenter {
     @Inject GymWrapper gymWrapper;
     private MVPView view;
     private RestRepository restRepository;
+    private BatchOpenRule batchOpenRule = new BatchOpenRule();
+
 
     @Inject public SingleBatchPresenter(RestRepository restRepository) {
         this.restRepository = restRepository;
     }
+
+    /**
+     * 判断规则合法性（type //1 立即开放 2 固定时间 3 提前X小时）
+     */
+    @Nullable
+    public BatchOpenRule getBatchOpenRule() {
+        if (batchOpenRule == null){
+            return null;
+        }
+        if (batchOpenRule.type == 2 && StringUtils.isEmpty(batchOpenRule.open_datetime)){
+            return null;
+        }
+        if (batchOpenRule.type == 3 && batchOpenRule.advance_hours == null)
+            return null;
+        return batchOpenRule;
+    }
+
+    public void setBatchOpenRule(BatchOpenRule batchOpenRule) {
+        this.batchOpenRule = batchOpenRule;
+    }
+
+    public void setOpenRuleType(int type){
+        this.batchOpenRule.type = type;
+    }
+    public void setOpenRuleTime(String time,Integer abeadHoure){
+        this.batchOpenRule.advance_hours = abeadHoure;
+        this.batchOpenRule.open_datetime = time;
+    }
+
 
     public void querySingleBatchId(String staffid, boolean isPrivate, String singlebatchid) {
         RxRegiste(restRepository.getGet_api()
@@ -56,6 +90,8 @@ public class SingleBatchPresenter extends BasePresenter {
                             view.onRule(qcResponse.getData().schedule == null ? singleBatch.rule : singleBatch.rules, singleBatch.max_users,
                                 singleBatch.is_free, singleBatch.card_tpls, singleBatch.has_order);
                             view.onSpace(singleBatch.space, singleBatch.spaces);
+                            batchOpenRule = singleBatch.open_rule;
+                            view.onOpenRule(batchOpenRule);
                         }
                     } else {
                         view.onShowError(qcResponse.getMsg());
@@ -120,6 +156,8 @@ public class SingleBatchPresenter extends BasePresenter {
         void onDate(Date start, Date end);
 
         void checkOk();
+
+        void onOpenRule(BatchOpenRule rule);
 
         void onSuccess();
 

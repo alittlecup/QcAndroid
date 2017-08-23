@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.http;
 import cn.qingchengfit.model.base.TimeRepeat;
 import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.bean.BatchOpenRule;
 import com.qingchengfit.fitcoach.bean.Rule;
 import java.util.ArrayList;
 
@@ -29,5 +30,6 @@ public class QcResponseBtachTemplete extends QcResponse {
         @SerializedName("time_repeats") public ArrayList<TimeRepeat> time_repeats;
 
         @SerializedName("rule") public ArrayList<Rule> rule;
+        public BatchOpenRule open_rule;
     }
 }

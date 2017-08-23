@@ -30,7 +30,8 @@ public class DateUtils {
 
   public static Date formatDateFromServer(String s) {
     try {
-      s = s.replace("T", " ");
+      if (s.contains("T"))
+        s = s.replace("T", " ");
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
       Date date = null;
       date = formatter.parse(s);
@@ -183,6 +184,10 @@ public class DateUtils {
   public static String Date2YYYYMMDDHHmm(Date d) {
 
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+    return formatter.format(d);
+  }
+  public static String Date2YYYYMMDDHHmmss(Date d) {
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
     return formatter.format(d);
   }
 
@@ -365,6 +370,12 @@ public class DateUtils {
     c.setTime(d);
     c.add(Calendar.DATE, -day);
     return Date2YYYYMMDD(c.getTime());
+  }
+  public static Date addHour(Date d, int hour) {
+    Calendar c = Calendar.getInstance();
+    c.setTime(d);
+    c.add(Calendar.HOUR, -hour);
+    return c.getTime();
   }
 
   public static int getYear(Date d) {

@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.batch.single;
 
+import android.support.annotation.Nullable;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -7,7 +8,9 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.GymUtils;
+import cn.qingchengfit.utils.StringUtils;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.bean.BatchOpenRule;
 import com.qingchengfit.fitcoach.bean.Coach;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.Rule;
@@ -30,10 +33,42 @@ public class SingleBatchPresenter extends BasePresenter {
     @Inject CoachService coachService;
     private MVPView view;
     private RestRepository restRepository;
+    private BatchOpenRule batchOpenRule = new BatchOpenRule();
 
     @Inject public SingleBatchPresenter(RestRepository restRepository) {
         this.restRepository = restRepository;
     }
+
+    /**
+     * 判断规则合法性（type //1 立即开放 2 固定时间 3 提前X小时）
+     */
+    @Nullable
+    public BatchOpenRule getBatchOpenRule() {
+        if (batchOpenRule == null){
+            return null;
+        }
+        if (batchOpenRule.type == 2 && StringUtils.isEmpty(batchOpenRule.open_datetime)){
+            return null;
+        }
+        if (batchOpenRule.type == 3 && batchOpenRule.advance_hours == null)
+            return null;
+        return batchOpenRule;
+    }
+
+    public void setBatchOpenRule(BatchOpenRule batchOpenRule) {
+        this.batchOpenRule = batchOpenRule;
+    }
+
+    public void setOpenRuleType(int type){
+        this.batchOpenRule.type = type;
+    }
+
+    public void setOpenRuleTime(String time,Integer abeadHoure){
+        this.batchOpenRule.advance_hours = abeadHoure;
+        this.batchOpenRule.open_datetime = time;
+    }
+
+
 
     public void querySingleBatchId(String staffid, boolean isPrivate, String singlebatchid) {
         RxRegiste(restRepository.getGet_api()
@@ -53,6 +88,8 @@ public class SingleBatchPresenter extends BasePresenter {
                             view.onRule(qcResponse.getData().schedule == null ? singleBatch.rule : singleBatch.rules, singleBatch.max_users,
                                 singleBatch.is_free, singleBatch.card_tpls, singleBatch.has_order);
                             view.onSpace(singleBatch.space, singleBatch.spaces);
+                            batchOpenRule = singleBatch.open_rule;
+                            view.onBatchOpenRule(batchOpenRule);
                         }
                     } else {
                         view.onShowError(qcResponse.getMsg());
@@ -127,6 +164,8 @@ public class SingleBatchPresenter extends BasePresenter {
         void onRule(List<Rule> rules, int max_user, boolean isfree, List<CardTplBatchShip> cardTplBatchShips, boolean hasOrder);
 
         void onDate(Date start, Date end);
+
+        void onBatchOpenRule(BatchOpenRule batchOpenRule);
 
         void checkOk();
 

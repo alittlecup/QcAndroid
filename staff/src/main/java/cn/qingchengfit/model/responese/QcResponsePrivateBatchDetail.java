@@ -1,6 +1,7 @@
 package cn.qingchengfit.model.responese;
 
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.staffkit.usecase.bean.QcScheduleBean;
 import com.google.gson.annotations.SerializedName;
@@ -41,5 +42,6 @@ public class QcResponsePrivateBatchDetail extends QcResponse {
         @SerializedName("time_repeats") public List<Time_repeat> time_repeats;
         public List<CardTplBatchShip> card_tpls;
         public boolean has_order;
+        public BatchOpenRule open_rule;
     }
 }

@@ -4,6 +4,7 @@ import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.TimeRepeat;
 import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.bean.BatchOpenRule;
 import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.Space;
 import java.util.List;
@@ -40,5 +41,6 @@ public class QcResponsePrivateBatchDetail extends QcResponse {
         @SerializedName("rule") public List<Rule> rule;
         @SerializedName("teacher") public QcSchedulesResponse.Teacher teacher;
         @SerializedName("time_repeats") public List<TimeRepeat> time_repeats;
+        public BatchOpenRule open_rule;
     }
 }

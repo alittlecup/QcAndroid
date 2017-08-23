@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -35,6 +36,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.bean.BatchOpenRule;
 import com.qingchengfit.fitcoach.bean.Coach;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CourseTypeSample;
@@ -45,6 +47,7 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.TimePeriodChooser;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.bean.CardTplBatchShip;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -97,6 +100,8 @@ import javax.inject.Inject;
     @Inject CoachService coachService;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.civ_to_open_time) CommonInputView civOpenTime;
+    @BindArray(R.array.order_open_time) String[] arrayOpenTime;
     private SingleBatchBody mBody = new SingleBatchBody();
     private ArrayList<Rule> mCurRules;
     private boolean mHasOrder;
@@ -113,6 +118,12 @@ import javax.inject.Inject;
                 ToastUtils.show("课程时间不能为空");
                 return true;
             }
+            if (mSingleBatchPresenter.getBatchOpenRule() == null){
+                ToastUtils.show("请设置何时开放约课");
+                return true;
+            }
+            mBody.open_rule = mSingleBatchPresenter.getBatchOpenRule();
+
             showLoading();
             if (mIsPrivate) {
                 mBody.start = courseDate.getContent().split(" ")[0] + "T" + courseTime.getContent().split("-")[0] + ":00";
@@ -124,6 +135,7 @@ import javax.inject.Inject;
             return true;
         }
     };
+    private TimeDialogWindow chooseOpenTimeDialog;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -398,6 +410,49 @@ import javax.inject.Inject;
             DateUtils.Date2YYYYMMDD(start) + "  " + getResources().getStringArray(R.array.weeks)[DateUtils.getDayOfWeek(start)]);
         courseTime.setContent(DateUtils.getTimeHHMM(start) + (mIsPrivate ? ("-" + DateUtils.getTimeHHMM(end)) : ""));
     }
+
+    @Override public void onBatchOpenRule(BatchOpenRule rule) {
+        if (rule != null ){
+            if (rule.type <3 && !TextUtils.isEmpty(rule.open_datetime))
+                civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(rule.open_datetime)));
+            else if (rule.type == 3 && rule.advance_hours != null){
+                if (mStart != null)
+                    civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(DateUtils.addHour(mStart,-rule.advance_hours)));
+            }
+        }
+    }
+
+
+    @OnClick(R.id.civ_to_open_time)
+    public void clickOpenTime(){
+        chooseOpenTime();
+    }
+
+    public void chooseOpenTime(){
+        if (chooseOpenTimeDialog == null){
+            chooseOpenTimeDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.ALL);
+            chooseOpenTimeDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+                @Override public void onTimeSelect(Date date) {
+                    civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(date));
+                    mSingleBatchPresenter.setOpenRuleType(2);
+                    mSingleBatchPresenter.setOpenRuleTime(DateUtils.formatToServer(date),null);
+                }
+            });
+        }
+        chooseOpenTimeDialog.setRange(DateUtils.getYear(new Date())-1,DateUtils.getYear(new Date())+1);
+        Date d = new Date();
+        if (!TextUtils.isEmpty(civOpenTime.getContent())){
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD HH:mm", Locale.CHINA);
+                d = formatter.parse(civOpenTime.getContent());
+            }catch (Exception e){
+
+            }
+
+        }
+        chooseOpenTimeDialog.showAtLocation(getView(),Gravity.BOTTOM, 0, 0, d);
+    }
+
 
     @Override public void checkOk() {
 
