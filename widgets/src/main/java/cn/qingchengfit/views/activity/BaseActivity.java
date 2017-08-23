@@ -1,8 +1,11 @@
 package cn.qingchengfit.views.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import cn.qingchengfit.Constants;
@@ -16,6 +19,7 @@ import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.LoadingDialog;
 import cn.qingchengfit.widgets.LoadingDialogTransParent;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.manager.SupportRequestManagerFragment;
 import com.umeng.analytics.MobclickAgent;
 import dagger.android.AndroidInjection;
 import javax.inject.Inject;
@@ -78,9 +82,19 @@ public class BaseActivity extends AppCompatActivity {
         LogUtil.e(throwable.getMessage());
       }
     });
+    getSupportFragmentManager().registerFragmentLifecycleCallbacks(fcb,false);
   }
+  private FragmentManager.FragmentLifecycleCallbacks fcb = new FragmentManager.FragmentLifecycleCallbacks() {
+    @Override public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
+      super.onFragmentAttached(fm, f, context);
+      if (!(f instanceof SupportRequestManagerFragment))
+        LogUtil.d("router",f.getClass().getName());
+    }
+  };
 
   @Override protected void onDestroy() {
+    getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fcb);
+
     RxBus.getBus().unregister(EventNetWorkError.class.getName(), obNetError);
     super.onDestroy();
   }
