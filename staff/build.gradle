@@ -3,7 +3,7 @@ apply plugin: 'com.squareup.sqldelight'
 
 def libs = rootProject.ext.libraries;
 def config = rootProject.ext.configuration;
-apply plugin: 'com.antfortune.freeline'
+//apply plugin: 'com.antfortune.freeline'
 
 
 android {
@@ -12,13 +12,13 @@ android {
     enabled true
   }
 
-  freeline {
-    hack true
-    productFlavor 'internaltest'
-  }
+//  freeline {
+//    hack true
+//    productFlavor 'internaltest'
+//  }
 
-  compileSdkVersion 24
-  buildToolsVersion '25.0.2'
+  compileSdkVersion config.compileVersion
+  buildToolsVersion config.buildToolsVersion
 
   defaultConfig {
     applicationId "cn.qingchengfit.staffkit"
@@ -136,10 +136,7 @@ dependencies {
   compile project(path: ':recruit')
   //      compile 'cn.qingchegfit.widgets:widgets:latest.integration'
   //  compile 'cn.qingchegfit.recruit:recruit:latest.integration'
-  compile('cn.qingchegfit.chat:chat:latest.integration') {
-    exclude group: 'com.upyun', module: 'java-sdk'
-  }
-  compile 'cn.qingchegfit.chat:sdk:latest.integration'
+
   compile fileTree(include: ['*.jar'], dir: 'libs')
   compile('com.github.afollestad.material-dialogs:core:0.8.5.5@aar') {
     transitive = true
@@ -201,4 +198,4 @@ dependencies {
 
 
 apply from: 'tinkerpatch.gradle'
-apply plugin: 'com.antfortune.freeline'
+//apply plugin: 'com.antfortune.freeline'

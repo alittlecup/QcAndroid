@@ -3,7 +3,7 @@ apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'maven'
 
 def libs = rootProject.ext.libraries;
-
+def cfg = rootProject.ext.configuration;
 //apt {
 //  arguments {
 //    fragmentArgsLib true
@@ -11,8 +11,8 @@ def libs = rootProject.ext.libraries;
 //}
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.2"
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
 
   defaultConfig {
     minSdkVersion 16
@@ -44,11 +44,11 @@ dependencies {
   })
   //  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
   compile project(path: ':widgets')
+  compile project(path: ':qcim')
 
-  compile('cn.qingchegfit.chat:chat:latest.integration') {
-    exclude group: 'com.upyun', module: 'java-sdk'
-  }
-  compile 'cn.qingchegfit.chat:sdk:latest.integration'
+//  compile('cn.qingchegfit.chat:chat:latest.integration') {
+//    exclude group: 'com.upyun', module: 'java-sdk'
+//  }
   compile "com.google.dagger:dagger:${libs.dagger}"
   compile "com.google.dagger:dagger-android:${libs.dagger}"
   compile "com.google.dagger:dagger-android-support:${libs.dagger}"

@@ -4,10 +4,10 @@ apply plugin: "com.squareup.sqldelight"
 apply plugin: "com.jakewharton.butterknife"
 
 def libs = rootProject.ext.libraries;
-def config = rootProject.ext.configuration;
+def cfg = rootProject.ext.configuration;
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.2"
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
 
   defaultConfig {
     minSdkVersion 16
@@ -35,9 +35,8 @@ configurations.all {
   resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
 }
 
-
 dependencies {
-  compile fileTree(include: ['*.jar'], dir: 'libs')
+  compile fileTree(include: ['*.jar','*.aar'], dir: 'libs')
   compile "com.google.dagger:dagger:${libs.dagger}"
   compile "com.google.dagger:dagger-android:${libs.dagger}"
   compile "com.google.dagger:dagger-android-support:${libs.dagger}"
@@ -84,7 +83,10 @@ dependencies {
   //fab
   compile 'com.theartofdev.edmodo:android-image-cropper:2.4.5'
   //裁剪图片
-  compile 'com.commonsware.cwac:cam2:0.7.6'
+//  compile 'com.commonsware.cwac:cam2:0.7.6'
+  compile(name: 'cam2-0.7.6', ext: 'aar')
+
+  //  compile project(":zcam2-0.7.6")
   //拍照
   compile 'me.gujun.android.taggroup:library:1.4@aar'
   //taggroup

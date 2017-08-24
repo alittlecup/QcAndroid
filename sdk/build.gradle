@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+def libs = rootProject.ext.libraries;
+def cfg = rootProject.ext.configuration;
+
+android {
+    compileSdkVersion cfg.compileVersion
+    buildToolsVersion cfg.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+}
+
+group 'cn.qingchegfit.chat'
+version rootProject.ext.chat_version
+uploadArchives{
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri('../../android-fitcoach/repo'))
+//            pom.artifactId = 'chat'
+//
+//        }
+//    }
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../../../../../repo'))
+            pom.artifactId = 'sdk'
+
+        }
+    }
+}
