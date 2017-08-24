@@ -508,6 +508,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
             chooseOpenTimeDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                 @Override public void onTimeSelect(Date date) {
                     civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(date));
+                    presenter.setOpenRuleType(2);
                     presenter.setOpenRuleTime(DateUtils.Date2YYYYMMDDHHmmss(date),null);
                 }
             });

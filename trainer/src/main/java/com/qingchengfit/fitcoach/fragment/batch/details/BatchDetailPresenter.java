@@ -200,6 +200,7 @@ public class BatchDetailPresenter extends BasePresenter {
         upBody.shop_id = body.shop_id;
         upBody.to_date = body.to_date;
         upBody.open_rule = body.open_rule;
+        RxRegiste(
         spUpdate = restRepository.getPost_api()
             .qcUpdateBatch(App.coachid + "", id, coachService.getId() + "", coachService.getModel(), upBody)
             .onBackpressureBuffer()
@@ -212,10 +213,6 @@ public class BatchDetailPresenter extends BasePresenter {
                     }
                     view.onFailed(qcResponse.getMsg());
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onFailed(throwable.getMessage());
-                }
-            });
+            }, new NetWorkThrowable()));
     }
 }
