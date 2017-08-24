@@ -567,6 +567,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
               if (position == 0){
+                presenter.setOpenRuleType(1);
                 civOpenTime.setContent(arrayOpenTime[0]);
               }else if (position == 1){
                 chooseOpenTime();
@@ -585,6 +586,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
       chooseOpenTimeDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
         @Override public void onTimeSelect(Date date) {
           civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(date));
+          presenter.setOpenRuleType(2);
           presenter.setOpenRuleTime(DateUtils.Date2YYYYMMDDHHmmss(date),null);
         }
       });
@@ -610,6 +612,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
         civOpenTime.setContent("提前"+pos+"小时预约");
+        presenter.setOpenRuleType(3);
         presenter.setOpenRuleTime(null,pos);
       }
     });
