@@ -167,8 +167,8 @@ dependencies {
   compile files('libs/pushservice-5.2.0.12.jar')
   compile 'com.android.support:multidex:1.0.1'
   //若使用annotation需要单独引用,对于tinker的其他库都无需再引用
-  provided "com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}"
-  compile "com.tinkerpatch.sdk:tinkerpatch-android-sdk:${TINKERPATCH_VERSION}"
+  provided "com.tencent.tinker:tinker-android-anno:${libs.tinker}"
+  compile "com.tinkerpatch.sdk:tinkerpatch-android-sdk:${libs.tinkerpatch}"
 
   compile 'com.getbase:floatingactionbutton:1.10.0'
   compile 'uk.co.chrisjenx:calligraphy:2.1.0'
