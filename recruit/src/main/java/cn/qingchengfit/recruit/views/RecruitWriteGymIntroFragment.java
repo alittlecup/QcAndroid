@@ -179,10 +179,10 @@ import rx.functions.Action1;
     } catch (Exception e) {
 
     }
-    civGymArea.setContent(areInt + "");
-    civGymMemberCount.setContent(gym.member_count + "");
-    civGymStaffCount.setContent(gym.staff_count + "");
-    civGymTrainerCount.setContent(gym.coach_count + "");
+    civGymArea.setContent(CmStringUtils.getStringFromInt(areInt));
+    civGymMemberCount.setContent(CmStringUtils.getStringFromInt(gym.member_count));
+    civGymStaffCount.setContent(CmStringUtils.getStringFromInt(gym.staff_count));
+    civGymTrainerCount.setContent(CmStringUtils.getStringFromInt(gym.coach_count));
     civGymEquip.setContent(CmStringUtils.List2Str(gym.facilities));
     civGymIntro.setContent(TextUtils.isEmpty(gym.detail_description) ? "" : "详情");
   }

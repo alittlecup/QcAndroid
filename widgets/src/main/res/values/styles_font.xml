@@ -44,6 +44,12 @@
     <item name="android:textSize">@dimen/txt_15sp</item>
     <item name="android:textColor">@color/text_hint</item>
   </style>
+  <style name="QcTextStyleStandardHint_item">
+    <item name="android:textSize">@dimen/txt_15sp</item>
+    <item name="android:textColor">@color/text_hint</item>
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="android:background">@color/bg_grey</item>
+  </style>
 
   <style name="QcTextStyleMediumDark">
     <item name="android:textSize">@dimen/txt_14sp</item>

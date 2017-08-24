@@ -154,7 +154,7 @@ public interface GetApi {
   /**
    * 管理场馆列表
    */
-  @GET("/api/staff/job/gyms/") rx.Observable<QcDataResponse<GymListWrap>> queryManageGyms();
+  @GET("/api/v2/staff/job/gyms/") rx.Observable<QcDataResponse<GymListWrap>> queryManageGyms();
 
   /**
    * 查看场馆信息

@@ -166,7 +166,11 @@ public class CmStringUtils {
       return -1;
     }
     }
-
+  public static String getStringFromInt(Integer s){
+    if (s == null)
+      return "";
+    else return Integer.toString(s);
+  }
     /**
      * 将数据转化成html字符串
      */

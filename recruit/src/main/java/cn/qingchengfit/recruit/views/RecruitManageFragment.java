@@ -13,8 +13,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseGym;
+import cn.qingchengfit.items.TextItem;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -26,7 +26,6 @@ import cn.qingchengfit.recruit.item.RecruitGymItem;
 import cn.qingchengfit.recruit.model.GymHasResume;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.response.GymListWrap;
-import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -35,6 +34,8 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -123,22 +124,36 @@ public class RecruitManageFragment extends BaseFragment
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     refreshData();
-    if (jobCount == 0) {
-      onBtnPublishNewPositionClicked();
-    }
   }
 
   protected void refreshData() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-        .queryManageGyms().onBackpressureBuffer().subscribeOn(Schedulers.io())
+        .queryManageGyms()
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<GymListWrap>>() {
           @Override public void call(QcDataResponse<GymListWrap> qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
               commonFlexAdapter.clear();
               if (qcResponse.data.gyms != null) {
-                for (GymHasResume gym : qcResponse.data.gyms) {
-                  commonFlexAdapter.addItem(new RecruitGymItem(gym));
+                Collections.sort(qcResponse.data.gyms, new Comparator<GymHasResume>() {
+                  @Override public int compare(GymHasResume o1, GymHasResume o2) {
+                    int a1 = o1.has_jobs ? 0 : 1;
+                    int a2 = o2.has_jobs ? 0 : 1;
+                    return a1 - a2;
+                  }
+                });
+                if (qcResponse.data.gyms.size() > 0) {
+                  boolean hasJob = qcResponse.data.gyms.get(0).has_jobs;
+                  commonFlexAdapter.addItem(new TextItem(hasJob ? "正在招聘的场馆" : "未发布职位的场馆",R.style.QcTextStyleStandardHint_item));
+                  for (GymHasResume gym : qcResponse.data.gyms) {
+                    if (gym.has_jobs != hasJob){
+                      commonFlexAdapter.addItem(new TextItem("未发布职位的场馆",R.style.QcTextStyleStandardHint_item));
+                      hasJob = gym.has_jobs;
+                    }
+                    commonFlexAdapter.addItem(new RecruitGymItem(gym));
+                  }
                 }
               }
             } else {

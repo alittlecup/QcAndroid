@@ -227,7 +227,9 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
   }
 
   @Override public void onPermission(boolean has) {
-    recruitRouter.toPermssion(gym.id);
+    if (has)
+      recruitRouter.toPermssion(gym.id);
+    else showAlert(R.string.alert_permission_forbid_contact_su);
   }
 
   @Override public String getFragmentName() {
