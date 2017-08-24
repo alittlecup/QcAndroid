@@ -1,0 +1,26 @@
+pipeline:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - .gradle
+    volumes:
+      - /tmp/cache:/cache/
+  build:
+    image: androidci
+    workspace:
+      base: /workspace
+    commands:
+      - agree-license.sh android-sdk-license 8933bad161af4178b1185d1a37fbf41ea5269c55
+      - echo 'start'
+      - ./gradlew staff:assembleDevDebug
+      - ./gradlew trainer:assembleDevDebug
+      - fir publish staff/build/outputs/apk/staff-dev-debug.apk -T 194a7a7976904a110a45f5a34a614323
+      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T 194a7a7976904a110a45f5a34a614323
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - .gradle
+    volumes:
+      - /tmp/cache:/cache/
