@@ -76,6 +76,11 @@ public class ChooseAddressFragment extends BaseFragment {
     private String defaultAddress;
     private String city;
 
+    public static ChooseAddressFragment newInstance() {
+        ChooseAddressFragment fragment = new ChooseAddressFragment();
+        return fragment;
+    }
+
     public static ChooseAddressFragment newInstance(Double g_lon, Double g_lat, String address,
         String city, String cityCode) {
 

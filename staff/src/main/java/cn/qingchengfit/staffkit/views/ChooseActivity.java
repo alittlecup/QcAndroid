@@ -177,7 +177,9 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
             case CHOOSE_ADDRESS:
                 toolbarLayout.setVisibility(View.GONE);
                 Gym mGym = getIntent().getParcelableExtra("gym");
+              if (mGym != null)
                 fragment = ChooseAddressFragment.newInstance(mGym.gd_lng, mGym.gd_lat, mGym.getAddress(), mGym.gd_district.city.name, mGym.gd_district.city.id);
+              else fragment = ChooseAddressFragment.newInstance();
                 break;
             default:
                 fragment = GymCourseListFragment.newInstance(getIntent().getIntExtra("type", Configs.TYPE_GROUP));
