@@ -25,4 +25,5 @@ import cn.qingchengfit.model.base.Gym;
 
 public class GymHasResume extends Gym {
   public boolean has_new_resume;
+  public boolean has_jobs;
 }

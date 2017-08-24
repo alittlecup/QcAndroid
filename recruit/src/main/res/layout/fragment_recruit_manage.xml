@@ -50,14 +50,6 @@
 
   <include layout="@layout/divider_grey"/>
 
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      android:text="正在招聘的场馆"
-      style="@style/TextTitleHint"
-      />
-
-  <include layout="@layout/divider_grey"/>
 
   <android.support.v7.widget.RecyclerView
       android:id="@+id/rv_gyms"
