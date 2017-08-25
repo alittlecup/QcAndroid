@@ -39,6 +39,8 @@ import java.util.Arrays;
 
 @FragmentWithArgs public class RecruitPositionDemanFragment extends BaseFragment {
 
+  private final int MIN_WEIGHT = 30;
+
   @BindView(R2.id.civ_work_exp) CommonInputView civWorkExp;
   @BindView(R2.id.civ_work_gender) CommonInputView civWorkGender;
   @BindView(R2.id.civ_work_age) CommonInputView civWorkAge;
@@ -273,8 +275,9 @@ import java.util.Arrays;
   @OnClick(R2.id.civ_work_weight) public void onSelectWorkWeight() {
     final ArrayList<String> d = new ArrayList<>();
     d.add("不限");
+
     for (int i = 0; i <= 60; i++) {
-      d.add(i + 140 + "kg");
+      d.add(i + MIN_WEIGHT + "kg");
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
@@ -284,12 +287,12 @@ import java.util.Arrays;
           if (left == 0){
             jobBody.min_weight = -1f;
           }else {
-            jobBody.min_weight = left + 139f;
+            jobBody.min_weight = left + MIN_WEIGHT -1f;
           }
           if (right == 0){
             jobBody.max_weight = -1f;
           }else {
-            jobBody.max_weight = right + 139f;
+            jobBody.max_weight = right + MIN_WEIGHT -1f;
           }
           civWorkWeight.setContent(
               RecruitBusinessUtils.getWeight(jobBody.min_weight, jobBody.max_weight));
@@ -297,7 +300,7 @@ import java.util.Arrays;
       }
     });
     if (TextUtils.isEmpty(jobBody.name)){
-      twoScrollPicker.show(d, d, jobBody.min_weight.intValue() + 22 , jobBody.max_weight.intValue() + 42);
+      twoScrollPicker.show(d, d, jobBody.min_weight.intValue() + 10 , jobBody.max_weight.intValue() + 40);
     }else {
       twoScrollPicker.show(d, d, jobBody.min_weight.intValue(), jobBody.max_weight.intValue());
     }

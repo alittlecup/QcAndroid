@@ -3,6 +3,8 @@ package cn.qingchengfit.recruit.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import cn.qingchengfit.recruit.event.EventGymFacilities;
 import cn.qingchengfit.recruit.event.EventRichTextBack;
 import cn.qingchengfit.recruit.network.body.RecruitGymBody;
 import cn.qingchengfit.recruit.presenter.RecruitGymPresenter;
+import cn.qingchengfit.recruit.views.resume.RecruitGymEquipFragment;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ListUtils;
@@ -85,8 +88,18 @@ import rx.functions.Action1;
     delegatePresenter(gymPresenter, this);
     onDetail(gym);
     initBus();
+    getFragmentManager().registerFragmentLifecycleCallbacks(cb,false);
     return view;
   }
+
+  private FragmentManager.FragmentLifecycleCallbacks cb = new FragmentManager.FragmentLifecycleCallbacks() {
+    @Override public void onFragmentDetached(FragmentManager fm, Fragment f) {
+      super.onFragmentDetached(fm, f);
+      if (f instanceof RecruitGymEquipFragment || f instanceof RecruitRichTextEditFragment){
+        setBackPress();
+      }
+    }
+  };
 
   private void initBus() {
     RxBusAdd(EventGymFacilities.class).subscribe(new Action1<EventGymFacilities>() {
@@ -142,6 +155,7 @@ import rx.functions.Action1;
   }
 
   @Override public void onDestroyView() {
+    getFragmentManager().unregisterFragmentLifecycleCallbacks(cb);
     setBackPressNull();
     super.onDestroyView();
   }
