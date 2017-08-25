@@ -21,11 +21,13 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Organization;
 import cn.qingchengfit.recruit.network.PostApi;
@@ -350,9 +352,10 @@ import rx.schedulers.Schedulers;
   public void onResult(QcResponse qcResponse) {
     hideLoading();
     if (qcResponse.status == 200) {
+      RxBus.getBus().post(new EventResumeFresh());
       getActivity().onBackPressed();
     } else {
-      Toast.makeText(getContext(), "删除失败:" + qcResponse.msg, Toast.LENGTH_SHORT).show();
+      Toast.makeText(getContext(), "操作失败:" + qcResponse.msg, Toast.LENGTH_SHORT).show();
     }
   }
 

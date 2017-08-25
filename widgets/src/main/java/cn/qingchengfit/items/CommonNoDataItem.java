@@ -1,6 +1,7 @@
 package cn.qingchengfit.items;
 
 import android.support.annotation.DrawableRes;
+import android.support.v4.widget.Space;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,7 +99,14 @@ public class CommonNoDataItem extends AbstractFlexibleItem<CommonNoDataItem.Comm
     @Override public void bindViewHolder(FlexibleAdapter adapter, CommonNodataVH holder, int position, List payloads) {
         holder.itemView.setMinimumHeight(
             MeasureUtils.getScreenHeight(holder.itemView.getResources()) - MeasureUtils.dpToPx(120f, holder.itemView.getResources()));
-        holder.img.setImageResource(imgRes);
+        if (imgRes != 0){
+          holder.img.setVisibility(View.VISIBLE);
+          holder.space.setVisibility(View.GONE);
+          holder.img.setImageResource(imgRes);
+        }else {
+          holder.img.setVisibility(View.GONE);
+          holder.space.setVisibility(View.VISIBLE);
+        }
         holder.hint.setText(hintStr);
         if (TextUtils.isEmpty(titleStr)) {
             holder.tvTitle.setVisibility(View.GONE);
@@ -120,6 +128,7 @@ public class CommonNoDataItem extends AbstractFlexibleItem<CommonNoDataItem.Comm
     public static class CommonNodataVH extends FlexibleViewHolder {
         @BindView(R2.id.img) ImageView img;
         @BindView(R2.id.hint) TextView hint;
+        @BindView(R2.id.space) Space space;
       @BindView(R2.id.tv_title) TextView tvTitle;
       @BindView(R2.id.btn_empty_page) TextView btnEmptyPage;
 

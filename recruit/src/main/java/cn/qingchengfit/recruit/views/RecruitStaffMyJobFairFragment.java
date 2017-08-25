@@ -58,4 +58,12 @@ public class RecruitStaffMyJobFairFragment extends JobFairListFragment {
       setDatas(items, 1);
     }
   }
+
+  @Override public int getNoDataIconRes() {
+    return 0;
+  }
+
+  @Override public String getNoDataStr() {
+    return "暂无参加的专场招聘会";
+  }
 }
