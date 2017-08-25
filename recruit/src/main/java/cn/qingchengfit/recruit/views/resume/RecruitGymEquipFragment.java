@@ -92,7 +92,7 @@ import java.util.List;
         return true;
       }
     });
-
+    setBackPressNull();
     onRecomentTags(Arrays.asList(getResources().getStringArray(R.array.recruit_common_facilities)));
   }
 
