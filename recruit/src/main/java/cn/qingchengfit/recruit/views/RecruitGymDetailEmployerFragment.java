@@ -253,7 +253,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
               if (qcResponse.data.is_superuser) {
                 recruitRouter.toWriteGymIntro(gym);
               } else {
-                showAlert("抱歉，您没有该功能呢权限，请联系超级管理员");
+                showAlert("抱歉，您没有该功能的权限，请联系超级管理员");
               }
             } else {
               onShowError(qcResponse.getMsg());
@@ -275,7 +275,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
               if (qcResponse.data.is_superuser) {
                 recruitRouter.editGymInfo(gym.id);
               } else {
-                showAlert("抱歉，您没有该功能呢权限，请联系超级管理员");
+                showAlert("抱歉，您没有该功能的权限，请联系超级管理员");
               }
             } else {
               onShowError(qcResponse.getMsg());

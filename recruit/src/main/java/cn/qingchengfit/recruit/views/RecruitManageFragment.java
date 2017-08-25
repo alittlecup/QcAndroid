@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.events.EventChooseGym;
-import cn.qingchengfit.items.TextItem;
+import cn.qingchengfit.items.StickerHintItem;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -146,10 +146,10 @@ public class RecruitManageFragment extends BaseFragment
                 });
                 if (qcResponse.data.gyms.size() > 0) {
                   boolean hasJob = qcResponse.data.gyms.get(0).has_jobs;
-                  commonFlexAdapter.addItem(new TextItem(hasJob ? "正在招聘的场馆" : "未发布职位的场馆",R.style.QcTextStyleStandardHint_item));
+                  commonFlexAdapter.addItem(new StickerHintItem(hasJob ? "正在招聘的场馆" : "未发布职位的场馆"));
                   for (GymHasResume gym : qcResponse.data.gyms) {
                     if (gym.has_jobs != hasJob){
-                      commonFlexAdapter.addItem(new TextItem("未发布职位的场馆",R.style.QcTextStyleStandardHint_item));
+                      commonFlexAdapter.addItem(new StickerHintItem("未发布职位的场馆"));
                       hasJob = gym.has_jobs;
                     }
                     commonFlexAdapter.addItem(new RecruitGymItem(gym));

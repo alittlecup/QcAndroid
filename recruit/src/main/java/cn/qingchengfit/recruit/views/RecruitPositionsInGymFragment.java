@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.views;
 
+import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.item.RecruitPositionInGymItem;
 import cn.qingchengfit.recruit.model.Job;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -27,5 +28,13 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 public class RecruitPositionsInGymFragment extends RecruitPositionsFragment {
   @Override protected AbstractFlexibleItem generatItem(Job job) {
     return new RecruitPositionInGymItem(job);
+  }
+
+  @Override protected int getNoDataRes() {
+    return R.color.transparent;
+  }
+
+  @Override protected String getNoDataStr() {
+    return "暂无职位";
   }
 }
