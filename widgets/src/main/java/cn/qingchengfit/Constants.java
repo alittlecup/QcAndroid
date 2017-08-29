@@ -33,7 +33,7 @@ public class Constants {
 
   public static final String Server =
       BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
-  public static final String ServerDebug = "http://c2.qingchengfit.cn/";
+  public static final String ServerDebug = "http://cloudtest.qingchengfit.cn/";
   public static final String ServerMirror =
       "http://cloudmirror.qingchengfit.cn/";
 }
