@@ -2,12 +2,12 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
   <rotate
       android:duration="800"
+      android:startOffset="400"
       android:fromDegrees="0"
+      android:toDegrees="360"
+      android:repeatMode="restart"
+      android:repeatCount="infinite"
       android:pivotX="50%"
       android:pivotY="50%"
-      android:repeatCount="infinite"
-      android:repeatMode="restart"
-      android:startOffset="400"
-      android:toDegrees="360"
       />
 </set>

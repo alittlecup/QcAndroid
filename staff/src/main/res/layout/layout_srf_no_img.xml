@@ -72,20 +72,13 @@
             >
 
           <ImageView
+              android:id="@+id/img_recycler_loading"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_centerInParent="true"
-              android:paddingBottom="10dp"
-              android:src="@drawable/ic_loading_outside"
+              android:padding="10dp"
+              android:src="@drawable/ic_loading"
               />
-
-          <cn.qingchengfit.widgets.LoadingPointerView
-              android:id="@+id/pointer"
-              android:layout_width="60dp"
-              android:layout_height="60dp"
-              android:layout_centerInParent="true"
-              />
-
 
         </RelativeLayout>
 
@@ -93,7 +86,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/desperately_loading"
-
             />
 
       </LinearLayout>
