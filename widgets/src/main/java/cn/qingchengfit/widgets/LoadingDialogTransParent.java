@@ -31,20 +31,25 @@ public class LoadingDialogTransParent extends Dialog {
     ImageView imageLoading;
     Animation rotate;
 
-    public LoadingDialogTransParent(final Context context) {
+    public LoadingDialogTransParent(final Activity context) {
         super(context, R.style.Translucent_NoTitle_TransParent);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.setContentView(R.layout.dialog_input_loading);
+        this.setContentView(R.layout.dialog_loading);
+        Window window = getWindow();
+        window.setGravity(Gravity.TOP);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.y = MeasureUtils.dpToPx(60f, getContext().getResources());
+        window.setAttributes(params);
         this.setCanceledOnTouchOutside(false);
         this.setCancelable(true);
         this.setOnCancelListener(new OnCancelListener() {
             @Override public void onCancel(DialogInterface dialog) {
                 if (context instanceof Activity) {
-                    ((Activity) context).onBackPressed();
+                    (context).onBackPressed();
                 }
             }
         });
-        imageLoading = ButterKnife.findById(this, R.id.img_input_loading);
+        imageLoading = ButterKnife.findById(this, R.id.img_loading);
         rotate = AnimationUtils.loadAnimation(context, R.anim.loading_rotate);
         //        RotateAnimation
         //                .ofFloat(pointer, "rotationZ", 0f, 360f)
@@ -53,12 +58,6 @@ public class LoadingDialogTransParent extends Dialog {
     }
 
     @Override public void show() {
-        Window window = this.getWindow();
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.width = MeasureUtils.dpToPx(150f, getContext().getResources());
-        lp.height = MeasureUtils.dpToPx(130f, getContext().getResources());
-        window.setAttributes(lp);
         imageLoading.startAnimation(rotate);
         super.show();
     }

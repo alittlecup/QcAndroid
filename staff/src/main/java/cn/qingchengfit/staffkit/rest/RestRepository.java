@@ -1,5 +1,7 @@
 package cn.qingchengfit.staffkit.rest;
 
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.Login;
@@ -59,6 +61,7 @@ public class RestRepository implements Repository {
 
     private final Get_Api get_api;
     private final Post_Api post_api;
+    private Request request = null;
     private Action1<Throwable> doOnError = new Action1<Throwable>() {
         @Override public void call(Throwable throwable) {
             if (throwable != null) Timber.e("retrofit:" + throwable.getMessage());
@@ -66,6 +69,7 @@ public class RestRepository implements Repository {
     };
 
     public RestRepository() {
+
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
 
             @Override public void log(String message) {
@@ -78,8 +82,9 @@ public class RestRepository implements Repository {
         OkHttpClient client =
             new OkHttpClient.Builder().retryOnConnectionFailure(false).cache(cache).addNetworkInterceptor(new Interceptor() {
                 @Override public Response intercept(Chain chain) throws IOException {
-                    Request request = chain.request();
+                    request = chain.request();
                     if (!request.method().equalsIgnoreCase("GET")) {
+                        RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
                       String token = "";
                       try {
                         token = get_api.qcGetToken().execute().body().data.getToken();
@@ -96,6 +101,11 @@ public class RestRepository implements Repository {
                                 " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.context) + " Android  OEM:" + App.context.getString(
                                     R.string.oem_tag) + "  QingchengApp/Staff")
                             .build();
+                        Response response = chain.proceed(request);
+                        if (response.isSuccessful()){
+                            RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_HIDE_DIALOG));
+                        }
+                        return response;
                     } else {
                         request = request.newBuilder()
                             .addHeader("Connection", "close")
