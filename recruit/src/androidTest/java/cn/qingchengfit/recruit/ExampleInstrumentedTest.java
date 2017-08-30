@@ -20,4 +20,6 @@ import static org.junit.Assert.assertEquals;
 
     assertEquals("cn.qingchengfit.recruit.test", appContext.getPackageName());
   }
+
+
 }

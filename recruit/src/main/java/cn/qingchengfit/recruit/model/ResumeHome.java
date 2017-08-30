@@ -3,6 +3,7 @@ package cn.qingchengfit.recruit.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.model.base.DistrictEntity;
+import cn.qingchengfit.utils.CmStringUtils;
 import java.util.List;
 
 /**
@@ -79,6 +80,7 @@ public class ResumeHome extends Resume implements Parcelable {
   public boolean favorited;
   public boolean sign_up;
 
+
   private ResumeHome(Builder builder) {
     id = builder.id;
     user_id = builder.user_id;
@@ -133,6 +135,23 @@ public class ResumeHome extends Resume implements Parcelable {
     this.completion = (Float) in.readValue(Float.class.getClassLoader());
     this.max_education = (Integer) in.readValue(Integer.class.getClassLoader());
     this.work_year = (Integer) in.readValue(Integer.class.getClassLoader());
+  }
+
+  public boolean checkResumeCompleted(){
+    return
+        CmStringUtils.isEmpty(username)
+        && CmStringUtils.isEmpty(birthday)
+        && CmStringUtils.isEmpty(avatar)
+        && height == 0
+        && weight == 0
+        && gd_district != null
+        && work_year != -1
+        && CmStringUtils.isEmpty(brief_description)
+        && min_salary != null
+        && max_salary != null
+        && exp_jobs != null && exp_jobs.size() > 0
+        && photos != null && photos.size() > 0
+        && educations != null && educations.size() > 0;
   }
 
   @Override public int describeContents() {

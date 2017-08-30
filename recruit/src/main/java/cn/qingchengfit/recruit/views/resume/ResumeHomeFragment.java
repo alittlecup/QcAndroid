@@ -191,7 +191,26 @@ public class ResumeHomeFragment extends BaseFragment
    * 公开简历
    */
   @OnClick(R2.id.btn_open_resume) public void openResume() {
-    onCheckSuccess();
+    if (resumeHome.checkResumeCompleted())
+      onCheckSuccess();
+    else showResumeNotCompleted();
+  }
+
+  /**
+   * 提示简历不完整
+   */
+  void showResumeNotCompleted(){
+    new MaterialDialog.Builder(getContext()).title("简历未填写完整")
+        .content("你尚未填写完整基本信息、求职意向、照片展示和学习培训，请填写完整后再操作公开")
+        .autoDismiss(true)
+        .positiveColorRes(R.color.orange)
+        .negativeColorRes(R.color.text_black)
+        .negativeText(R.string.pickerview_cancel)
+        .positiveText("去完善简历")
+        .build()
+        .show();
+
+
   }
 
   /**

@@ -118,6 +118,7 @@ import rx.schedulers.Schedulers;
   }
 
   public void setInofo(ResumeIntents resumeHome) {
+    hideLoading();
     this.resumeHome = resumeHome;
     civIntentCity.setContent(RecruitBusinessUtils.getStrFromCities(resumeHome.exp_cities));
     int st = resumeHome.status % 5;
@@ -159,6 +160,7 @@ import rx.schedulers.Schedulers;
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
+    showLoading();
     freshData();
   }
 
