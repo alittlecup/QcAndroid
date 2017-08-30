@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -49,11 +51,9 @@ public class LoadingDialogTransParent extends Dialog {
                 }
             }
         });
+
         imageLoading = ButterKnife.findById(this, R.id.img_loading);
         rotate = AnimationUtils.loadAnimation(context, R.anim.loading_rotate);
-        //        RotateAnimation
-        //                .ofFloat(pointer, "rotationZ", 0f, 360f)
-        //                .setDuration(800);
 
     }
 
