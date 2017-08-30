@@ -10,7 +10,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.repository.GetApi;
 import cn.qingchengfit.saasbase.staff.model.StaffShipResponse;
-import cn.qingchengfit.saasbase.staff.model.body.StaffWrapper;
+import cn.qingchengfit.saasbase.staff.model.body.StaffResponse;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -90,8 +90,8 @@ public class StaffListPresenter extends BasePresenter {
         RxRegiste(mRestRepository.createGetApi(GetApi.class)
             .qcGetSelfInfo(id).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<StaffWrapper>>() {
-                @Override public void call(QcResponseData<StaffWrapper> qcResponse) {
+            .subscribe(new Action1<QcResponseData<StaffResponse>>() {
+                @Override public void call(QcResponseData<StaffResponse> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         view.onSelfInfo(qcResponse.getData().staff);
                     }

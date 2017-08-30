@@ -15,11 +15,39 @@
   <string name="su_manager">超级管理员</string>
   <string name="manager">工作人员</string>
   <string name="desperately_loading">玩儿命加载中…</string>
+  <string name="name">姓名</string>
+  <string name="course_add_new_coach">添加新教练</string>
+  <string name="down_trainer_app_hint">添加成功后，系统将自动短信通知教练下载［健身教练助手APP］</string>
+  <string name="add_success">添加成功</string>
+  <string name="alert_del_coach">是否确认删除该教练</string>
+  <string name="change_su_hint">修改超级管理员的基本信息并不会变换超级管理员身份，需要变更请使用「变更超级管理员」功能</string>
+  <string name="change_su">变更超级管理员</string>
+  <string name="next_step">下一步</string>
+  <string name="send_msg_to_sb_hint">向%s发送验证码</string>
+  <string name="login_resend_msg">%d秒后重新发送</string>
+  <string name="alert_remove_su">变更成功后，%s将自动从工作人员中移除，如有需要请重新添加</string>
+  <string formatted="false" name="alert_change_su">确定将超级管理员身份从%s(%s)变更为%s(%s)？</string>
+  <string name="common_cancel">取消</string>
+  <string name="new_su_info">新超级管理员信息</string>
+  <string name="comfirm_change">确认变更</string>
 
   <!--扫描二维码-->
   <string name="open_link_in_computer">请在电脑浏览器中打开以下网址</string>
   <string name="scan_url">sao.qingchengfit.cn</string>
   <string name="realy_open_next">我已经打开，下一步</string>
   <string name="err_sacn_qrcode">无法识别该二维码，请确认后再进行扫描。</string>
+
+  <!--设置信息页面-->
+  <string name="header">头像</string>
+  <string name="title_fix_self_info">编辑个人资料</string>
+  <string name="label_username">用户名</string>
+  <string name="fix_succees">修改成功</string>
+  <string name="gender">性别</string>
+  <string name="hint_login_web">请登录［网页端］管理工作人员身份权限</string>
+
+  <!--工具类-->
+  <string name="unit_yuan">元</string>
+  <string name="unit_time">次</string>
+  <string name="unit_day">天</string>
 
 </resources>

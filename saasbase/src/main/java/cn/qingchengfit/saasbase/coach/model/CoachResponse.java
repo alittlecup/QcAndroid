@@ -1,10 +1,7 @@
-package cn.qingchengfit.saasbase.cards.di;
+package cn.qingchengfit.saasbase.coach.model;
 
-import cn.qingchengfit.saasbase.SaasContainerActivity;
-import cn.qingchengfit.saasbase.staff.di.StaffDI;
-import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
-import dagger.android.support.AndroidSupportInjectionModule;
+import cn.qingchengfit.model.base.Staff;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * power by
@@ -24,13 +21,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/8/15.
+ * Created by Paper on 16/8/23.
  */
-@Module public abstract class BindCardTplModule {
-  @ContributesAndroidInjector(modules = {
-      AndroidSupportInjectionModule.class, CardTplDI.CardTypeListFragmentModule.class,
-      CardTplDI.CardTypesHomeInGymFragmentModule.class,
-      CardTplDI.ChooseCardTplFragmentModule.class, StaffDI.StaffListFragmentModule.class,
-      StaffDI.StaffDetailFragmentModule.class,
-  }) abstract SaasContainerActivity contributeSassContainerActivityInjector();
+public class CoachResponse {
+    @SerializedName("teacher") public Staff teacher;
 }

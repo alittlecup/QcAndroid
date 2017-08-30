@@ -29,6 +29,15 @@ import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
+import cn.qingchengfit.saasbase.cardtypes.di.BindCardTplModule;
+import cn.qingchengfit.saasbase.coach.views.AddNewCoachFragment;
+import cn.qingchengfit.saasbase.coach.views.CoachDetailFragment;
+import cn.qingchengfit.saasbase.coach.views.CoachListFragment;
+import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
+import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
+import cn.qingchengfit.saasbase.staff.views.SuFragment;
+import cn.qingchengfit.saasbase.staff.views.SuIdendifyFragment;
+import cn.qingchengfit.saasbase.staff.views.SuNewFragment;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -141,7 +150,6 @@ import cn.qingchengfit.staffkit.views.export.ExportRecordFragment;
 import cn.qingchengfit.staffkit.views.export.ExportSendEmailFragment;
 import cn.qingchengfit.staffkit.views.export.ImportExportFragment;
 import cn.qingchengfit.staffkit.views.gym.AddBrandInMainFragment;
-import cn.qingchengfit.staffkit.views.gym.AddNewCoachFragment;
 import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
 import cn.qingchengfit.staffkit.views.gym.ChooseGroupCourseFragment;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
@@ -156,8 +164,6 @@ import cn.qingchengfit.staffkit.views.gym.SetGymFragment;
 import cn.qingchengfit.staffkit.views.gym.WriteAddressFragment;
 import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
 import cn.qingchengfit.staffkit.views.gym.coach.ChooseTrainerFragment;
-import cn.qingchengfit.staffkit.views.gym.coach.CoachDetailFragment;
-import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
 import cn.qingchengfit.staffkit.views.gym.cycle.AddCycleFragment;
 import cn.qingchengfit.staffkit.views.gym.gym_web.HomePageQrCodeFragment;
 import cn.qingchengfit.staffkit.views.gym.site.AddNewSiteFragment;
@@ -2547,7 +2553,6 @@ public interface AppComponent {
         @Binds @IntoMap @ActivityKey(CardActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardSubcomponent.Builder builder);
     }
-
 
   @Module(subcomponents = GymSubcomponent.class) abstract class GymModule {
     @Binds @IntoMap @ActivityKey(GymActivity.class)

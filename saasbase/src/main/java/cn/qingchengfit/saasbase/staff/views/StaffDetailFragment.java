@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.gym.staff;
+package cn.qingchengfit.saasbase.staff.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,29 +25,32 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.events.EventAddStaffDone;
-import cn.qingchengfit.model.body.ManagerBody;
-import cn.qingchengfit.model.responese.StaffPosition;
-import cn.qingchengfit.model.responese.StaffShip;
+import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.StaffPosition;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.views.custom.DialogList;
-import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
-import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
+import cn.qingchengfit.saasbase.staff.common.StaffConstant;
+import cn.qingchengfit.saasbase.staff.event.EventAddStaffDone;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
+import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
+import cn.qingchengfit.saasbase.staff.presenter.StaffDetailPresenter;
+import cn.qingchengfit.saasbase.staff.presenter.StaffDetailView;
+import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.DialogList;
+import cn.qingchengfit.widgets.PhoneEditText;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
-import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -68,34 +71,36 @@ import rx.functions.Action1;
  */
 public class StaffDetailFragment extends BaseFragment implements StaffDetailView {
 
-    @BindView(R.id.header_img) ImageView headerImg;
-    @BindView(R.id.header_layout) RelativeLayout headerLayout;
-    @BindView(R.id.username) CommonInputView username;
-    @BindView(R.id.gender_male) RadioButton genderMale;
-    @BindView(R.id.gender_female) RadioButton genderFemale;
-    @BindView(R.id.course_type_rg) RadioGroup courseTypeRg;
-    @BindView(R.id.gender_layout) RelativeLayout genderLayout;
-    @BindView(R.id.position) CommonInputView position;
-    @BindView(R.id.btn_del) RelativeLayout btnDel;
-    @BindView(R.id.btn_add) Button btnAdd;
-    @BindView(R.id.go_to_web) TextView goToWeb;
-    @BindView(R.id.deny_layout) View denyLayout;
+    @BindView(R2.id.header_img) ImageView headerImg;
+    @BindView(R2.id.header_layout) RelativeLayout headerLayout;
+    @BindView(R2.id.username) CommonInputView username;
+    @BindView(R2.id.gender_male) RadioButton genderMale;
+    @BindView(R2.id.gender_female) RadioButton genderFemale;
+    @BindView(R2.id.course_type_rg) RadioGroup courseTypeRg;
+    @BindView(R2.id.gender_layout) RelativeLayout genderLayout;
+    @BindView(R2.id.position) CommonInputView position;
+    @BindView(R2.id.btn_del) RelativeLayout btnDel;
+    @BindView(R2.id.btn_add) Button btnAdd;
+    @BindView(R2.id.go_to_web) TextView goToWeb;
+    @BindView(R2.id.deny_layout) View denyLayout;
     @Inject StaffDetailPresenter presenter;
-    @Inject GymFunctionFactory gymFunctionFactory;
+    @Inject StaffConstant gymFunctionFactory;
     ManagerBody body = new ManagerBody();
-    @BindView(R.id.phone_num) PhoneEditText phoneNum;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
+    @BindView(R2.id.phone_num) PhoneEditText phoneNum;
+    @BindView(R2.id.toolbar) Toolbar toolbar;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
     @Inject SerPermisAction serPermisAction;
     private boolean mIsAdd = true;
     private StaffShip mStaff;
     private List<String> mPositionStrList = new ArrayList<>();
-    private List<StaffPosition> mPositions;
+    private List<StaffPosition> mPostions;
+    private String staffId;
 
-    public static StaffDetailFragment newInstance(StaffShip staffShip) {
+    public static StaffDetailFragment newInstance(StaffShip staffShip, String staffId) {
 
         Bundle args = new Bundle();
         args.putParcelable("Staff", staffShip);
+        args.putString("staffId", staffId );
         StaffDetailFragment fragment = new StaffDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -130,7 +135,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
                     if (phoneNum.checkPhoneNum()) {
                         body.setArea_code(phoneNum.getDistrictInt());
                         showLoading();
-                        presenter.onFixStaff(body);
+                        presenter.onFixStaff(staffId, body);
                     }
                     return true;
                 }
@@ -140,9 +145,12 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_staff_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_staff_detail_sass, container, false);
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(presenter, this);
+        if (getArguments() != null){
+            staffId = getArguments().getString("staffId");
+        }
         initToolbar(toolbar);
         if (mIsAdd) {
             mCallbackActivity.setToolbar("新增工作人员", false, null, 0, null);
@@ -175,7 +183,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
             body.setPhone(mStaff.user.getPhone());
             body.setPosition_id(mStaff.position.id);
         }
-        presenter.queryPostions();
+        presenter.queryPostions(staffId);
         phoneNum.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -223,17 +231,17 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
                 }
             }
         });
-        SpannableString ss = new SpannableString(getString(R.string.hint_longin_web));
+
+        SpannableString ss = new SpannableString(getString(R.string.hint_login_web));
         ss.setSpan(new ForegroundColorSpan(CompatUtils.getColor(getContext(), R.color.text_orange)), 4, 7,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色
-
         goToWeb.setText(ss, TextView.BufferType.SPANNABLE);
         showLoading();
 
         return view;
     }
 
-    @OnClick(R.id.deny_layout) public void onDeny() {
+    @OnClick(R2.id.deny_layout) public void onDeny() {
         showAlert(R.string.alert_permission_forbid);
     }
 
@@ -245,45 +253,40 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
         super.onDestroyView();
     }
 
-    @OnClick({ R.id.btn_del, R.id.btn_add }) public void onClick(View view) {
-
-        switch (view.getId()) {
-            case R.id.btn_del:
-                if (!serPermisAction.checkAll(PermissionServerUtils.MANAGE_STAFF_CAN_DELETE)) {
-                    showAlert(R.string.alert_permission_forbid);
-                    return;
-                }
-
-                DialogUtils.instanceDelDialog(getActivity(), "确定删除此工作人员?", new MaterialDialog.SingleButtonCallback() {
-                    @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        showLoading();
-                        presenter.onDelStaff(mStaff.id);
-                    }
-                }).show();
-
-                break;
-            case R.id.btn_add:
-                if (TextUtils.isEmpty(body.getPhone()) || body.getPhone().length() != 11) {
-                    ToastUtils.show("请填写正确的手机号码");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(body.getUsername())) {
-                    ToastUtils.show("请填写姓名");
-                    return;
-                }
-                if (TextUtils.isEmpty(body.getPosition_id())) {
-                    ToastUtils.show("请选择职位");
-                    return;
-                }
-                body.setArea_code(phoneNum.getDistrictInt());
-                showLoading();
-                presenter.onAddStaff(body);
-                break;
+    @OnClick(R2.id.btn_del) public void onDelete(){
+        if (!serPermisAction.checkAll(PermissionServerUtils.MANAGE_STAFF_CAN_DELETE)) {
+            showAlert(R.string.alert_permission_forbid);
+            return;
         }
+
+        DialogUtils.instanceDelDialog(getActivity(), "确定删除此工作人员?", new MaterialDialog.SingleButtonCallback() {
+            @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                showLoading();
+                presenter.onDelStaff(staffId, mStaff.id);
+            }
+        }).show();
     }
 
-    @OnClick(R.id.header_layout) public void onHeader() {
+    @OnClick(R2.id.btn_add) public void onClick(View view) {
+        if (TextUtils.isEmpty(body.getPhone()) || body.getPhone().length() != 11) {
+            ToastUtils.show("请填写正确的手机号码");
+            return;
+        }
+
+        if (TextUtils.isEmpty(body.getUsername())) {
+            ToastUtils.show("请填写姓名");
+            return;
+        }
+        if (TextUtils.isEmpty(body.getPosition_id())) {
+            ToastUtils.show("请选择职位");
+            return;
+        }
+        body.setArea_code(phoneNum.getDistrictInt());
+        showLoading();
+        presenter.onAddStaff(staffId, body);
+    }
+
+    @OnClick(R2.id.header_layout) public void onHeader() {
         ChoosePictureFragmentDialog dialog = new ChoosePictureFragmentDialog();
         dialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
             @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
@@ -308,19 +311,19 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
         dialog.show(getFragmentManager(), "");
     }
 
-    @OnClick(R.id.position) public void onClick() {
+    @OnClick(R2.id.position) public void onClick() {
         if (mPositionStrList.size() > 0) {
             final DialogList dialogList = new DialogList(getContext());
             dialogList.list(mPositionStrList, new AdapterView.OnItemClickListener() {
                 @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     dialogList.dismiss();
-                    body.setPosition_id(mPositions.get(position).id);
-                    StaffDetailFragment.this.position.setContent(mPositions.get(position).name);
+                    body.setPosition_id(mPostions.get(position).id);
+                    StaffDetailFragment.this.position.setContent(mPostions.get(position).name);
                 }
             });
             dialogList.show();
         } else {
-            presenter.queryPostions();
+            presenter.queryPostions(staffId);
             ToastUtils.show("获取不到职位列表,请重试");
         }
     }
@@ -347,29 +350,27 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
 
     @Override public void onPositions(List<StaffPosition> positions) {
         hideLoading();
-        mPositions = positions;
+        mPostions = positions;
         mPositionStrList.clear();
         for (int i = 0; i < positions.size(); i++) {
             mPositionStrList.add(positions.get(i).name);
         }
-        if (mPositions.size() > 0) {
+        if (mPostions.size() > 0) {
             if (mStaff != null && mStaff.position != null) {
-                for (StaffPosition p : mPositions) {
+                for (StaffPosition p : mPostions) {
                     if (p.id.equals(mStaff.position.id)) {
                         position.setContent(p.name);
                         break;
                     }
                 }
             } else {
-                position.setContent(mPositions.get(0).name);
-                body.setPosition_id(mPositions.get(0).id);
+                position.setContent(mPostions.get(0).name);
+                body.setPosition_id(mPostions.get(0).id);
             }
         }
     }
 
-    @OnClick(R.id.go_to_web) public void onClickGoWeb() {
-        gymFunctionFactory.goQrScan(this, GymFunctionFactory.PERMISSION_STAFF, null, null);
-
-
+    @OnClick(R2.id.go_to_web) public void onClickGoWeb() {
+        gymFunctionFactory.goQrScan(this, StaffConstant.PERMISSION_STAFF, null, null);
     }
 }

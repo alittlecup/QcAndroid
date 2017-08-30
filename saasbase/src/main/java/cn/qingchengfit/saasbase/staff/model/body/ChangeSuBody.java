@@ -1,10 +1,4 @@
-package cn.qingchengfit.saasbase.cards.di;
-
-import cn.qingchengfit.saasbase.SaasContainerActivity;
-import cn.qingchengfit.saasbase.staff.di.StaffDI;
-import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
-import dagger.android.support.AndroidSupportInjectionModule;
+package cn.qingchengfit.saasbase.staff.model.body;
 
 /**
  * power by
@@ -24,13 +18,53 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/8/15.
+ * Created by Paper on 2016/12/27.
  */
-@Module public abstract class BindCardTplModule {
-  @ContributesAndroidInjector(modules = {
-      AndroidSupportInjectionModule.class, CardTplDI.CardTypeListFragmentModule.class,
-      CardTplDI.CardTypesHomeInGymFragmentModule.class,
-      CardTplDI.ChooseCardTplFragmentModule.class, StaffDI.StaffListFragmentModule.class,
-      StaffDI.StaffDetailFragmentModule.class,
-  }) abstract SaasContainerActivity contributeSassContainerActivityInjector();
+
+public class ChangeSuBody {
+    public String phone;
+    public String username;
+    public String area_code;
+    public String code;
+
+    private ChangeSuBody(Builder builder) {
+        phone = builder.phone;
+        username = builder.username;
+        area_code = builder.area_code;
+        code = builder.code;
+    }
+
+    public static final class Builder {
+        private String phone;
+        private String username;
+        private String area_code;
+        private String code;
+
+        public Builder() {
+        }
+
+        public Builder phone(String val) {
+            phone = val;
+            return this;
+        }
+
+        public Builder username(String val) {
+            username = val;
+            return this;
+        }
+
+        public Builder area_code(String val) {
+            area_code = val;
+            return this;
+        }
+
+        public Builder code(String val) {
+            code = val;
+            return this;
+        }
+
+        public ChangeSuBody build() {
+            return new ChangeSuBody(this);
+        }
+    }
 }

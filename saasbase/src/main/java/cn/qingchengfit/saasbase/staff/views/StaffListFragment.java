@@ -119,11 +119,10 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     recyclerview.setAdapter(adatper);
     adatper.setListener(new OnRecycleItemClickListener() {
       @Override public void onItemClick(View v, int pos) {
-
-        //getFragmentManager().beginTransaction()
-        //    .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(datas.get(pos)))
-        //    .addToBackStack(null)
-        //    .commit();
+        getFragmentManager().beginTransaction()
+            .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(datas.get(pos), staffId))
+            .addToBackStack(null)
+            .commit();
       }
     });
     presenter.querSelfInfo(staffId);
@@ -142,6 +141,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.action_search) {
         } else if (item.getItemId() == R.id.action_flow) {
+          //TODO BottomSheetListDialogFragment 迁移
           //BottomSheetListDialogFragment.start(StaffListFragment.this, RESULT_FLOW,
           //    new String[] { "工作人员职位与权限设置" });
         }
@@ -175,7 +175,6 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
       }
 
       @Override public boolean onQueryTextChange(String newText) {
-
         return false;
       }
     });
@@ -215,11 +214,11 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
       showAlert(R.string.alert_permission_forbid);
       return;
     }
-    //TODO 工作人员列表跳转工作人员详情的
-    //getFragmentManager().beginTransaction()
-    //    .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(null))
-    //    .addToBackStack(null)
-    //    .commit();
+
+    getFragmentManager().beginTransaction()
+        .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(null, staffId))
+        .addToBackStack(null)
+        .commit();
   }
 
   @Override public String getFragmentName() {
@@ -227,7 +226,6 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
   }
 
   @Override public void onDestroyView() {
-    presenter.unattachView();
     super.onDestroyView();
   }
 
@@ -265,11 +263,11 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
 
   @OnClick(R2.id.layout_su) public void onClickSu() {
     if (mSu != null && mSelf != null && mSu.getPhone().equalsIgnoreCase(mSelf.getPhone())) {
-      //getFragmentManager().beginTransaction()
-      //    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
-      //    .replace(mCallbackActivity.getFragId(), new SuFragmentBuilder(mSu).build())
-      //    .addToBackStack(getFragmentName())
-      //    .commit();
+      getFragmentManager().beginTransaction()
+          .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
+          .replace(mCallbackActivity.getFragId(), SuFragment.newInstance(staffId, mSu))
+          .addToBackStack(getFragmentName())
+          .commit();
     } else {
       showAlert("仅超级管理员本人有权限查看其基本信息");
     }

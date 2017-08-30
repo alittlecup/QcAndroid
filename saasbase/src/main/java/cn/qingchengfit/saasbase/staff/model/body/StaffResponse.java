@@ -6,7 +6,7 @@ import cn.qingchengfit.model.base.Staff;
  * Created by fb on 2017/8/21.
  */
 
-public class StaffWrapper {
+public class StaffResponse {
 
   public Staff staff;
 

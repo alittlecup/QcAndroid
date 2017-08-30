@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.repository;
 
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.coach.model.CoachResponse;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.saasbase.network.body.FeedBackBody;
 import cn.qingchengfit.saasbase.network.body.FixPhoneBody;
@@ -15,13 +16,17 @@ import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
 import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.staff.model.Login;
+import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
+import cn.qingchengfit.saasbase.staff.model.body.CheckCodeBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
+import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -62,6 +67,7 @@ public interface PostApi {
   @DELETE("/api/staffs/{id}/coaches/{cid}/") rx.Observable<QcResponse> qcDelCoach(@Path("id") String id, @Path("cid") String cid,
       @Query("id") String gymid, @Query("model") String model);
 
+  //工作人员、教练列表
   @POST("/api/staffs/{id}/users/") rx.Observable<QcResponse> qcCreateManager(@Path("id") String id, @Query("id") String gymid,
       @Query("model") String model, @Body ManagerBody body);
 
@@ -71,9 +77,28 @@ public interface PostApi {
   @DELETE("/api/staffs/{id}/managers/{mid}/") rx.Observable<QcResponse> qcDelManager(@Path("id") String id, @Path("mid") String cid,
       @Query("id") String gymid, @Query("model") String model);
 
+  //添加教练
+  @POST("/api/staffs/{id}/coaches/") rx.Observable<QcResponseData<CoachResponse>> qcAddCoach(@Path("id") String id,
+      @Query("id") String gymid, @Query("model") String model, @Body Staff coach);
+
   /**
    * 扫描二维码
    */
   @PUT("/api/scans/{uuid}/") rx.Observable<QcResponse> qcScans(@Path("uuid") String uuid, @Body
       ScanBody body);
+
+  /**
+   * 验证验证码
+   */
+  @POST("api/check/verify/") rx.Observable<QcResponse> qcCheckCode(@Body CheckCodeBody body);
+
+  /**
+   * 修改超级管理员
+   * @param staffid
+   * @param params
+   * @param body
+   * @return
+   */
+  @PUT("/api/staffs/{staff_id}/superuser/") rx.Observable<QcResponse> qcChangeSu(@Path("staff_id") String staffid,
+      @QueryMap HashMap<String, Object> params, @Body ChangeSuBody body);
 }

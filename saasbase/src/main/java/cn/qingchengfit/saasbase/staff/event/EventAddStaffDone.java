@@ -1,10 +1,4 @@
-package cn.qingchengfit.saasbase.cards.di;
-
-import cn.qingchengfit.saasbase.SaasContainerActivity;
-import cn.qingchengfit.saasbase.staff.di.StaffDI;
-import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
-import dagger.android.support.AndroidSupportInjectionModule;
+package cn.qingchengfit.saasbase.staff.event;
 
 /**
  * power by
@@ -24,13 +18,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/8/15.
+ * Created by Paper on 2017/7/26.
  */
-@Module public abstract class BindCardTplModule {
-  @ContributesAndroidInjector(modules = {
-      AndroidSupportInjectionModule.class, CardTplDI.CardTypeListFragmentModule.class,
-      CardTplDI.CardTypesHomeInGymFragmentModule.class,
-      CardTplDI.ChooseCardTplFragmentModule.class, StaffDI.StaffListFragmentModule.class,
-      StaffDI.StaffDetailFragmentModule.class,
-  }) abstract SaasContainerActivity contributeSassContainerActivityInjector();
+
+public class EventAddStaffDone {
 }
