@@ -117,16 +117,21 @@ public class BaseActivity extends AppCompatActivity {
 
   private void initBus(){
     RxBus.getBus().register(NetWorkDialogEvent.class)
+        .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<NetWorkDialogEvent>() {
       @Override public void call(NetWorkDialogEvent netWorkDialogEvent) {
-        if (netWorkDialogEvent.type == NetWorkDialogEvent.EVENT_GET){
+        if (netWorkDialogEvent.type == NetWorkDialogEvent.EVENT_GET) {
           showLoadingTransparent();
-        }else if(netWorkDialogEvent.type == NetWorkDialogEvent.EVENT_POST){
+        } else if (netWorkDialogEvent.type == NetWorkDialogEvent.EVENT_POST) {
           showLoading();
-        }else{
+        } else {
           checkLoading();
         }
+      }
+    }, new Action1<Throwable>() {
+      @Override public void call(Throwable throwable) {
+        CrashUtils.sendCrash(throwable);
       }
     });
   }
