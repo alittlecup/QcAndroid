@@ -175,7 +175,9 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
     }
     PhotoUtils.smallCircle(header, gym.getPhoto());
     gymName.setContent(gym.name);
-    civAddress.setContent(gym.getAddressStr());
+    if (gym.hasGpsInfo())
+      civAddress.setContent(gym.getAddressStr());
+    else civAddress.setContent("");
     phone.setContent(gym.phone);
     descripe.setContent(gym.description);
   }
