@@ -43,7 +43,7 @@ dependencies {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
   //  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
-  compile project(path: ':widgets')
+  compile project(path: ':qcbase')
   compile project(path: ':qcim')
 
 //  compile('cn.qingchegfit.chat:chat:latest.integration') {
