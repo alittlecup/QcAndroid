@@ -3,45 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
-
     >
 
-  <RelativeLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      >
-
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:id="@+id/img_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:paddingBottom="10dp"
-        android:src="@drawable/ic_loading_outside"
-        />
-
-    <cn.qingchengfit.widgets.LoadingPointerView
-        android:id="@+id/pointer"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerInParent="true"
-        />
-
-
-  </RelativeLayout>
+        android:padding="10dp"
+        android:src="@drawable/ic_loading"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"/>
 
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="4dp"
-      android:text="请稍后..."
+      android:text="加载中..."
+      android:layout_gravity="center_horizontal"
       />
-  <!--<ImageView-->
-  <!--android:id="@+id/pointer"-->
-  <!--android:layout_width="wrap_content"-->
-  <!--android:layout_height="wrap_content"-->
-  <!--android:src="@drawable/ic_loading_pointer"-->
-  <!--android:layout_centerInParent="true"-->
-  <!--/>-->
 </LinearLayout>

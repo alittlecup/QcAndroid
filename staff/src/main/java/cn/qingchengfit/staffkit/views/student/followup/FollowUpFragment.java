@@ -73,7 +73,6 @@ public class FollowUpFragment extends BaseFragment implements FollowUpPresenter.
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(presenter, this);
         initToolbar(toolbar);
-        showLoading();
 
         return view;
     }
@@ -84,7 +83,7 @@ public class FollowUpFragment extends BaseFragment implements FollowUpPresenter.
     }
 
     @Override protected void onFinishAnimation() {
-        showLoading();
+        showLoadingTrans();
         presenter.getStudentsStatistics();
     }
 
@@ -134,7 +133,7 @@ public class FollowUpFragment extends BaseFragment implements FollowUpPresenter.
     }
 
     @Override public void onFollowUpStatistics(FollowUpDataStatistic statistics) {
-        hideLoading();
+        hideLoadingTrans();
         newRegistFragment = new FollowUpGlanceFragmentBuilder(statistics.new_create_users, 0).build();
         newFollowFragment = new FollowUpGlanceFragmentBuilder(statistics.new_following_users, 1).build();
         newStudentFragment = new FollowUpGlanceFragmentBuilder(statistics.new_member_users, 2).build();

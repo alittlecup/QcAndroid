@@ -154,10 +154,10 @@
   </style>
 
   <style name="Translucent_NoTitle.TransParent" parent="android:style/Theme.Dialog">
-    <item name="android:background">#00000000</item>
+    <item name="android:background">@color/white</item>
     <item name="android:backgroundDimEnabled">false</item>
     <!-- 设置自定义布局的背景透明 -->
-    <item name="android:windowBackground">@color/transparent</item>
+    <item name="android:windowBackground">@color/white</item>
     <!-- 设置window背景透明，也就是去边框 -->
   </style>
 

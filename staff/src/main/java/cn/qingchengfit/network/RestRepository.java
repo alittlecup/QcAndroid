@@ -1,5 +1,7 @@
 package cn.qingchengfit.network;
 
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.network.response.QcRequestToken;
 import cn.qingchengfit.network.response.QcResponseData;
 import com.google.gson.Gson;
@@ -40,6 +42,7 @@ public abstract class RestRepository {
       @Override public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         if (!request.method().equalsIgnoreCase("GET")) {
+          RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
           String token = "";
           try {
             token = token_api.qcGetToken().execute().body().data.getToken();
@@ -55,7 +58,13 @@ public abstract class RestRepository {
                   + oem()
                   + "  QingchengApp/Staff")
               .build();
+          Response response = chain.proceed(request);
+          if (response.isSuccessful()){
+            RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_HIDE_DIALOG));
+          }
+          return response;
         } else {
+
           request = request.newBuilder()
               .addHeader("Cookie", "sessionid=" + sessionId())
               .addHeader("User-Agent", " FitnessTrainerAssistant/"

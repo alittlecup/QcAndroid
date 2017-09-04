@@ -130,15 +130,15 @@ public abstract class BaseFragment extends Fragment
     }
 
     public void showLoading() {
-      if (getActivity() instanceof BaseActivity) {
-        ((BaseActivity) getActivity()).showLoading();
-        }
+      //if (getActivity() instanceof BaseActivity) {
+      //  ((BaseActivity) getActivity()).showLoading();
+      //  }
     }
 
     public void hideLoading() {
-      if (getActivity() instanceof BaseActivity) {
-        ((BaseActivity) getActivity()).hideLoading();
-        }
+      //if (getActivity() instanceof BaseActivity) {
+      //  ((BaseActivity) getActivity()).hideLoading();
+      //  }
     }
 
   @Override public boolean onFragmentBackPress() {
@@ -294,6 +294,8 @@ public abstract class BaseFragment extends Fragment
         hideLoadingTrans();
         ToastUtils.show(e);
     }
+
+
 
     @Override public void onShowError(@StringRes int e) {
         onShowError(getString(e));

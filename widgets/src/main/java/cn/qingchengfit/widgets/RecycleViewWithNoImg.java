@@ -41,7 +41,7 @@ public class RecycleViewWithNoImg extends RelativeLayout implements CustomSwipeR
     private int noDataImgRes;
     private int colorRes;
     private float padbottom;
-    private LoadingPointerView pointer;
+    private ImageView imgLoading;
     private Animation rotate;
     private LinearLayout loadingLayout;
     private float mNodataTop;
@@ -115,9 +115,9 @@ public class RecycleViewWithNoImg extends RelativeLayout implements CustomSwipeR
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById( R.id.swipe);
         textView.setText(hint);
         swipeRefreshLayout.setColorSchemeResources(colorRes);
-        pointer = (LoadingPointerView) findViewById( R.id.pointer);
+        imgLoading = (ImageView) findViewById( R.id.img_recycer_loading);
         rotate = AnimationUtils.loadAnimation(getContext(), R.anim.loading_rotate);
-        pointer.startAnimation(rotate);
+        imgLoading.startAnimation(rotate);
     }
 
     public void setNoDataImgRes(@DrawableRes int dataImgRes) {

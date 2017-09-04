@@ -95,7 +95,6 @@ public class ClassRecordFragment extends BaseFragment implements ClassRecordView
     }
 
     @Override public void onData(List<AttendanceRecord> attendanceRecords, ClassRecords.Stat stat, List<Shop> ss) {
-        recycleview.stopLoading();
         shops.clear();
         shops.addAll(ss);
         datas.clear();

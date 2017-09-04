@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 
 /**
@@ -26,13 +29,13 @@ import cn.qingchengfit.utils.MeasureUtils;
  */
 public class LoadingDialog extends Dialog {
 
-    private LoadingPointerView pointer;
+    private ImageView imgLoading;
     private Animation rotate;
 
     public LoadingDialog(final Context context) {
-        super(context, R.style.Translucent_NoTitle);
+        super(context, R.style.Translucent_NoTitle_TransParent);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.setContentView(R.layout.dialog_loading);
+        this.setContentView(R.layout.dialog_input_loading);
         this.setCanceledOnTouchOutside(false);
         this.setCancelable(true);
         this.setOnCancelListener(new OnCancelListener() {
@@ -42,7 +45,7 @@ public class LoadingDialog extends Dialog {
                 }
             }
         });
-        pointer = ButterKnife.findById(this, R.id.pointer);
+        imgLoading = ButterKnife.findById(this, R.id.img_input_loading);
         rotate = AnimationUtils.loadAnimation(context, R.anim.loading_rotate);
     }
 
@@ -54,7 +57,7 @@ public class LoadingDialog extends Dialog {
             lp.width = MeasureUtils.dpToPx(150f, getContext().getResources());
             lp.height = MeasureUtils.dpToPx(130f, getContext().getResources());
             window.setAttributes(lp);
-            pointer.startAnimation(rotate);
+            imgLoading.startAnimation(rotate);
             super.show();
         }
     }
