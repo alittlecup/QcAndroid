@@ -43,8 +43,8 @@ public class RecycleViewWithNoImg extends RelativeLayout implements CustomSwipeR
     private int noDataImgRes;
     private int colorRes;
     private float padbottom;
-    private LoadingPointerView pointer;
     private Animation rotate;
+    private ImageView imgLoading;
     private LinearLayout loadingLayout;
     private float mNodataTop;
     private float padTop;
@@ -117,9 +117,9 @@ public class RecycleViewWithNoImg extends RelativeLayout implements CustomSwipeR
         swipeRefreshLayout = ButterKnife.findById(this, R.id.swipe);
         textView.setText(hint);
         swipeRefreshLayout.setColorSchemeResources(colorRes);
-        pointer = ButterKnife.findById(this, R.id.pointer);
+        imgLoading = ButterKnife.findById(this, R.id.img_recycler_loading);
         rotate = AnimationUtils.loadAnimation(getContext(), R.anim.loading_rotate);
-        pointer.startAnimation(rotate);
+        imgLoading.startAnimation(rotate);
     }
 
     public void setNoDataImgRes(@DrawableRes int dataImgRes) {

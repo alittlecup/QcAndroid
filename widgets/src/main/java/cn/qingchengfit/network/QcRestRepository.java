@@ -2,6 +2,8 @@ package cn.qingchengfit.network;
 
 import android.content.Context;
 import android.text.TextUtils;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.network.response.QcResponToken;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -10,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import okhttp3.Callback;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -58,6 +61,7 @@ public class QcRestRepository {
             LogUtil.d(message);
           }
         });
+
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     final OkHttpClient tokenClient = new OkHttpClient();
     client = new OkHttpClient.Builder().addNetworkInterceptor(new Interceptor() {
@@ -65,6 +69,7 @@ public class QcRestRepository {
         String token = "";
         Request request = chain.request();
         if (!request.method().equalsIgnoreCase("GET")) {
+          RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
           try {
             token = QcRestRepository.this.createGetApi(GetCsrfToken.class)
                 .qcGetToken()
@@ -84,6 +89,11 @@ public class QcRestRepository {
                   + "  QingchengApp/"
                   + AppUtils.getCurAppName(context))
               .build();
+          Response response = chain.proceed(request);
+          if (response.isSuccessful()){
+            RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_HIDE_DIALOG));
+          }
+          return response;
         } else {
           request = request.newBuilder()
               .addHeader("Cookie", "sessionid=" + getSession(context))

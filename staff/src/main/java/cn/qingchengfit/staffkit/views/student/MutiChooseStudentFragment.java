@@ -146,7 +146,7 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
     }
 
     public void refeshData() {
-        showLoading();
+        showLoadingTrans();
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("key", PermissionServerUtils.MANAGE_COSTS);
         params.put("method", "post");
@@ -157,7 +157,7 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<Students>>() {
                 @Override public void call(QcResponseData<Students> studentsQcResponseData) {
-                    hideLoading();
+                    hideLoadingTrans();
                     if (ResponseConstant.checkSuccess(studentsQcResponseData)) {
                         if (studentsQcResponseData.getData().users != null) {
                             for (QcStudentBean student : studentsQcResponseData.getData().users) {
@@ -170,7 +170,7 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
                 }
             }, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
-                    showLoading();
+                    showLoadingTrans();
                     ToastUtils.show(throwable.getMessage());
                 }
             }));
@@ -214,11 +214,11 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
     }
 
     @Override public void onFaied() {
-        hideLoading();
+        hideLoadingTrans();
     }
 
     @Override public void onStopFresh() {
-        hideLoading();
+        hideLoadingTrans();
     }
 
     @OnClick(R.id.ll_show_select) public void onClick() {

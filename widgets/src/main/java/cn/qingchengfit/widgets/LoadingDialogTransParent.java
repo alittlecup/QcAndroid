@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.media.session.PlaybackStateCompat;
+import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.utils.MeasureUtils;
 
@@ -26,38 +30,35 @@ import cn.qingchengfit.utils.MeasureUtils;
  */
 public class LoadingDialogTransParent extends Dialog {
 
-    LoadingPointerView pointer;
+    ImageView imageLoading;
     Animation rotate;
 
-    public LoadingDialogTransParent(final Context context) {
+    public LoadingDialogTransParent(final Activity context) {
         super(context, R.style.Translucent_NoTitle_TransParent);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.dialog_loading);
+        Window window = getWindow();
+        window.setGravity(Gravity.TOP);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.y = MeasureUtils.dpToPx(60f, getContext().getResources());
+        window.setAttributes(params);
         this.setCanceledOnTouchOutside(false);
         this.setCancelable(true);
         this.setOnCancelListener(new OnCancelListener() {
             @Override public void onCancel(DialogInterface dialog) {
                 if (context instanceof Activity) {
-                    ((Activity) context).onBackPressed();
+                    (context).onBackPressed();
                 }
             }
         });
-        pointer = ButterKnife.findById(this, R.id.pointer);
+
+        imageLoading = ButterKnife.findById(this, R.id.img_loading);
         rotate = AnimationUtils.loadAnimation(context, R.anim.loading_rotate);
-        //        RotateAnimation
-        //                .ofFloat(pointer, "rotationZ", 0f, 360f)
-        //                .setDuration(800);
 
     }
 
     @Override public void show() {
-        Window window = this.getWindow();
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.width = MeasureUtils.dpToPx(150f, getContext().getResources());
-        lp.height = MeasureUtils.dpToPx(130f, getContext().getResources());
-        window.setAttributes(lp);
-        pointer.startAnimation(rotate);
+        imageLoading.startAnimation(rotate);
         super.show();
     }
 

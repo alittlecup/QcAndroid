@@ -77,7 +77,7 @@ public class FollowUpDataTransfer0Fragment extends BaseFragment implements Follo
         if (!serPermisAction.checkHasAllMember()) {
             filter.sale = loginStatus.getLoginUser();
         }
-        showLoading();
+        showLoadingTrans();
         presenter.getStudentsConver(filter);
         return view;
     }
@@ -104,10 +104,9 @@ public class FollowUpDataTransfer0Fragment extends BaseFragment implements Follo
                 } else {
                     tvLable.setText("注册日期为" + filter.registerTimeStart + "至" + filter.registerTimeEnd + "的会员转化率");
                 }
-                showLoading();
+                showLoadingTrans();
             }
         });
-
         presenter.getStudentsConver(filter);
     }
 
@@ -124,7 +123,7 @@ public class FollowUpDataTransfer0Fragment extends BaseFragment implements Follo
     }
 
     @Override public void onFollowUpConver(FollowUpConver conver) {
-        hideLoading();
+        hideLoadingTrans();
         if (conver != null && conver.create_count != null && conver.following_count != null && conver.member_count != null) {
             ArrayList<Float> counts = new ArrayList<>();
             counts.add(conver.create_count);
