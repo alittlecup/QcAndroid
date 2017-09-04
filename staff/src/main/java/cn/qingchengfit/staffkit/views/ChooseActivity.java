@@ -177,15 +177,22 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
             case CHOOSE_ADDRESS:
                 toolbarLayout.setVisibility(View.GONE);
                 Gym mGym = getIntent().getParcelableExtra("gym");
-              if (mGym != null)
-                fragment = ChooseAddressFragment.newInstance(mGym.gd_lng, mGym.gd_lat, mGym.getAddress(), mGym.gd_district.city.name, mGym.gd_district.city.id);
-              else fragment = ChooseAddressFragment.newInstance();
+              if (mGym != null) {
+                String cityName = "";
+                String cityId = "";
+                if (mGym.gd_district != null && mGym.gd_district.city != null){
+                  cityName = mGym.gd_district.city.name;
+                  cityId = mGym.gd_district.city.id;
+                }
+                fragment = ChooseAddressFragment.newInstance(mGym.gd_lng == null ? 0:mGym.gd_lng, mGym.gd_lat == null?0:mGym.gd_lat, mGym.getAddress(),
+                    cityName, cityId);
+              }else fragment = ChooseAddressFragment.newInstance();
                 break;
             default:
                 fragment = GymCourseListFragment.newInstance(getIntent().getIntExtra("type", Configs.TYPE_GROUP));
                 break;
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.frag, fragment).commit();
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold).replace(R.id.frag, fragment).commit();
     }
 
     @Override public int getFragId() {

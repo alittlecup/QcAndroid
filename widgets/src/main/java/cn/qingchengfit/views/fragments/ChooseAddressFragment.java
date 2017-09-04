@@ -3,7 +3,6 @@ package cn.qingchengfit.views.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -104,6 +103,7 @@ public class ChooseAddressFragment extends BaseFragment {
             defaultAddress = getArguments().getString("address");
             city = getArguments().getString("city");
             mCityCode = getArguments().getString("cityCode");
+            mLatLng = new LatLng(g_lat,g_lon);
         }
         initToolbar(toolbar);
         toolbarTitle.setText("选择地址");
@@ -139,7 +139,7 @@ public class ChooseAddressFragment extends BaseFragment {
                 mLocationOption = new AMapLocationClientOption();
                 mLocationClient.setLocationOption(mLocationOption);
 
-                if (TextUtils.isEmpty(defaultAddress)){
+                if (mLatLng == null || (mLatLng.latitude == 0 && mLatLng.longitude == 0)){
                     mLocationClient.startLocation();
                     showLoading();
                 }else{
@@ -167,6 +167,11 @@ public class ChooseAddressFragment extends BaseFragment {
             }
         });
         return view;
+    }
+
+    @Override protected void onFinishAnimation() {
+        super.onFinishAnimation();
+
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

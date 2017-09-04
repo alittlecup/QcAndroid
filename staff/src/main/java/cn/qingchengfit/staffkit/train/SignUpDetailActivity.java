@@ -37,14 +37,14 @@ public class SignUpDetailActivity extends BaseActivity implements FragCallBack {
         if (to != null && !TextUtils.isEmpty(to.getData().getHost())) {
             if (to.getData().getPath().contains("select_shop")) {
               LogUtil.e("select_shop");
-                getSupportFragmentManager().beginTransaction().replace(getFragId(), new TrainChooseGymFragment()).commit();
+                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold).replace(getFragId(), new TrainChooseGymFragment()).commit();
             } else if (to.getData().getPath().contains("form")) {
               LogUtil.e("form");
                 gymid = to.getData().getQueryParameter("gym_id");
                 competitionId = to.getData().getQueryParameter("id");
                 trainIds.setGymId(gymid);
                 trainIds.setCompetitionId(competitionId);
-                getSupportFragmentManager().beginTransaction().replace(getFragId(), new SignUpFormHomeFragment()).commit();
+                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold).replace(getFragId(), new SignUpFormHomeFragment()).commit();
             }
         } else {
             gymid = getIntent().getStringExtra(Configs.EXTRA_GYM_ID);

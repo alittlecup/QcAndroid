@@ -191,6 +191,9 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
 
   }
 
+  /**
+   * 修改为获取场馆编辑权限
+   */
   protected void querySu(final Gym gym) {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
         .querySu(gym.id).onBackpressureBuffer().subscribeOn(Schedulers.io())

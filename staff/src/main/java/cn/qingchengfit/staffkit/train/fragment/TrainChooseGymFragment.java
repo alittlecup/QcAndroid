@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventClickViewPosition;
+import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.items.NoDataTxtBtnItem;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymList;
@@ -40,7 +40,6 @@ import com.google.gson.Gson;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import eu.davidea.flexibleadapter.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -97,7 +96,7 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
         delegatePresenter(presenter, this);
         initToolbar(toolbar);
         adapter = new CommonFlexAdapter(datas, this);
-        Utils.highlightText(tvHint, suHint, suStr);
+        //Utils.highlightText(tvHint, suHint, suStr);
         recyclerview.setAdapter(adapter);
         adapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -114,12 +113,26 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
 
             }
         });
+        RxBusAdd(EventFreshGyms.class)
+            .subscribe(new Action1<EventFreshGyms>() {
+                @Override public void call(EventFreshGyms eventFreshGyms) {
+                    freshData();
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
+
+                }
+            });
         tmpCoachService = gymWrapper.getCoachService();
         return view;
     }
 
-    @Override public void onResume() {
-        super.onResume();
+    @Override protected void onFinishAnimation() {
+        super.onFinishAnimation();
+        freshData();
+    }
+
+    public void freshData(){
         RxRegiste(new RestRepository().getGet_api()
             .qcGetCoachService(App.staffId, null)
             .onBackpressureBuffer()
@@ -134,10 +147,10 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
                             .observeOn(AndroidSchedulers.mainThread());
                     } else {
                         List<CoachService> em = new ArrayList<CoachService>();
-                      return Observable.just(em)
-                          .observeOn(AndroidSchedulers.mainThread())
-                          .onBackpressureBuffer()
-                          .subscribeOn(Schedulers.io());
+                        return Observable.just(em)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .onBackpressureBuffer()
+                            .subscribeOn(Schedulers.io());
                     }
                 }
             })
@@ -149,13 +162,13 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
                             datas.add(new ChooseGymItem(coachServices.get(i)));
                         }
                         adapter.notifyDataSetChanged();
-                        layoutHint.setVisibility(View.VISIBLE);
+                        //layoutHint.setVisibility(View.VISIBLE);
                         btnAddGym.setVisibility(View.VISIBLE);
                     } else {//无场馆
                         adapter.clear();
                         adapter.addItem(new NoDataTxtBtnItem("暂无场馆", "请先添加一个场馆并完善信息", "新增场馆"));
                         adapter.notifyDataSetChanged();
-                        layoutHint.setVisibility(View.GONE);
+                        //layoutHint.setVisibility(View.GONE);
                         btnAddGym.setVisibility(View.GONE);
                     }
                 }
@@ -184,18 +197,12 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
     @Override public boolean onItemClick(int i) {
         if (adapter.getItem(i) instanceof ChooseGymItem) {
             ChooseGymItem gymItem = (ChooseGymItem) adapter.getItem(i);
-            presenter.querySu(gymItem.getCoachService());
+            presenter.getPermission(gymItem.getCoachService());
         }
         return false;
     }
 
-    @Override public void onShowError(String e) {
 
-    }
-
-    @Override public void onShowError(@StringRes int e) {
-
-    }
 
     @Override public void onGetSu(boolean isSu, CoachService coachService) {
         if (isSu) {

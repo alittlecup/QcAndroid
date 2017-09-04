@@ -32,7 +32,6 @@ import cn.qingchengfit.widgets.R2;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import eu.davidea.flexibleadapter.items.IFilterable;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -176,7 +175,9 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
     }
     PhotoUtils.smallCircle(header, gym.getPhoto());
     gymName.setContent(gym.name);
-    civAddress.setContent(gym.getAddressStr());
+    if (gym.hasGpsInfo())
+      civAddress.setContent(gym.getAddressStr());
+    else civAddress.setContent("");
     phone.setContent(gym.phone);
     descripe.setContent(gym.description);
   }

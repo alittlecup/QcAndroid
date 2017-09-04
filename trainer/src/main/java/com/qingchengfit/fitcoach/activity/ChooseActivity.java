@@ -71,6 +71,7 @@ public class ChooseActivity extends BaseActivity {
         break;
     }
     getSupportFragmentManager().beginTransaction()
+        .setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold)
         .replace(R.id.activity_choose_address, fragment)
         .commit();
   }

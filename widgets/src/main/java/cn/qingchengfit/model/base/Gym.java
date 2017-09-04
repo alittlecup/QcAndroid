@@ -156,6 +156,15 @@ public class Gym implements Parcelable {
     return ret;
   }
 
+  /**
+   * 是否有GPs信息
+   */
+  public boolean hasGpsInfo(){
+    if (gd_lat != null && gd_lng != null && (gd_lat != 0 || gd_lng != 0))
+      return true;
+    else return false;
+  }
+
   public String getCityName() {
     if (gd_city != null) {
       if (TextUtils.isEmpty(gd_city.name)) {
