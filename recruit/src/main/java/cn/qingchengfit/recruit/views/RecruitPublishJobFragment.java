@@ -409,14 +409,15 @@ import rx.schedulers.Schedulers;
   }
 
   @Override public void onEditOk() {
-    ToastUtils.show("成功");
-    hideLoadingTrans();
+    ToastUtils.show("修改成功");
     RxBus.getBus().post(new EventFreshJobsList());
     getFragmentManager().popBackStackImmediate();
   }
 
   @Override public void onJobDetail(Job job) {
-
+    ToastUtils.show("发布成功");
+    getActivity().onBackPressed();
+    router.tojobDetailEmployer(job, true);
   }
 
   @Override public void starOK() {
@@ -436,7 +437,6 @@ import rx.schedulers.Schedulers;
   }
 
   @Override public void toEditJob() {
-    showLoadingTrans();
     body.gym_id = gymId;
     body.published = true;
     presenter.publishJob(body);

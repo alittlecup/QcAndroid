@@ -25,6 +25,7 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.presenter.JobPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePresenter;
+import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -94,6 +95,7 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   @Inject QcRestRepository restRepository;
 
   private boolean isClosePosition;
+  private boolean isShowShare;
 
   public static RecruitPositionDetailEmployerFragment newInstance(Job job) {
     Bundle args = new Bundle();
@@ -103,9 +105,21 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
     return fragment;
   }
 
+  public static RecruitPositionDetailEmployerFragment newInstance(Job job, boolean isShowShare) {
+    Bundle args = new Bundle();
+    args.putParcelable("job", job);
+    args.putBoolean("isShowShare", isShowShare);
+    RecruitPositionDetailEmployerFragment fragment = new RecruitPositionDetailEmployerFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     job = getArguments().getParcelable("job");
+    if (getArguments().containsKey("isShowShare")){
+      isShowShare = getArguments().getBoolean("isShowShare", false);
+    }
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,6 +128,22 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     delegatePresenter(resumePresenter, this);
+    if (isShowShare) {
+      String title =
+          job.gym != null ? job.gym.getBrand_name() + job.gym.getName() + "正在招聘" + job.name + "职位"
+              : "";
+      String content = "【薪资】"
+          + RecruitBusinessUtils.getSalary(job.min_salary, job.max_salary)
+          + "\n【坐标】"
+          + job.gym.getAddressStr();
+      String pic = job.gym != null ? job.gym.photo
+          : "http://zoneke-img.b0.upaiyun.com/977ad17699c4e4212b52000ed670091a.png";
+      String url = restRepository.getHost() + "mobile/job/" + job.id + "/";
+      RecruitPublishShareDialog fragment =
+          RecruitPublishShareDialog.newInstance(title, content, pic, url);
+      fragment.setCancelable(false);
+      fragment.show(getChildFragmentManager(), null);
+    }
     initToolbar(toolbar);
     layoutEmloyerCtl.setVisibility(View.VISIBLE);
     layoutEmployeeCtl.setVisibility(View.GONE);
