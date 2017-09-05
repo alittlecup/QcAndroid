@@ -53,12 +53,12 @@ public class JobPresenter extends BasePresenter {
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcResponse>() {
-          @Override public void call(QcResponse qcResponse) {
-            if (qcResponse.status == 200) {
-              view.onEditOk();
-            } else {
-              view.onShowError(qcResponse.getMsg());
+        .subscribe(new Action1<QcDataResponse<JobDetailWrap>>() {
+          @Override public void call(QcDataResponse<JobDetailWrap> jobQcDataResponse) {
+            if (jobQcDataResponse.status == 200){
+              view.onJobDetail(jobQcDataResponse.data.job);
+            }else{
+              view.onShowError(jobQcDataResponse.getMsg());
             }
           }
         }, new NetWorkThrowable()));

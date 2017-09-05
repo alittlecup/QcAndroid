@@ -1,8 +1,10 @@
 package cn.qingchengfit.recruit.network;
 
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
+import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.recruit.network.body.EditPermissionBody;
 import cn.qingchengfit.recruit.network.body.InviteBody;
@@ -10,6 +12,7 @@ import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.network.body.MarkResumeBody;
 import cn.qingchengfit.recruit.network.body.RecruitGymBody;
 import cn.qingchengfit.recruit.network.body.ResumeBody;
+import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import cn.qingchengfit.recruit.views.organization.OrganizationBean;
 import cn.qingchengfit.recruit.views.organization.QcAddOrganizationResponse;
 import java.util.HashMap;
@@ -152,7 +155,7 @@ public interface PostApi {
   /**
    * 发布职位
    */
-  @POST("/api/staff/jobs/") rx.Observable<QcResponse> qcPublishPosition(@Body JobBody jobBody);
+  @POST("/api/staff/jobs/") rx.Observable<QcDataResponse<JobDetailWrap>> qcPublishPosition(@Body JobBody jobBody);
 
   @PUT("/api/staff/jobs/{job_id}/") rx.Observable<QcResponse> qcEditPosition(
       @Path("job_id") String id,
