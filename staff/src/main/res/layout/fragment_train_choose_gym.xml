@@ -17,6 +17,7 @@
       android:layout_height="48dp"
       android:gravity="center"
       android:orientation="horizontal"
+      android:visibility="gone"
       >
 
     <ImageView
