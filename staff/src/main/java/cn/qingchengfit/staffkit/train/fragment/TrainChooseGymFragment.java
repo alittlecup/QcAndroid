@@ -202,7 +202,10 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
         return false;
     }
 
-
+    /**
+     *
+     * @param isSu 表示是否有修改权限（修改后）// comment @ 2017/9/5
+     */
 
     @Override public void onGetSu(boolean isSu, CoachService coachService) {
         if (isSu) {
@@ -221,7 +224,7 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
                 getActivity().onBackPressed();
             }
         } else {
-            showAlert("仅超级管理员有权限报名");
+            showAlert("抱歉，您无场馆信息的修改权限，请联系超级管理员");
         }
     }
 

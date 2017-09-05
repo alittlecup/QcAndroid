@@ -68,6 +68,9 @@ public class BaseRouter {
     }
   }
 
+  /**
+   * 只用来选地址
+   */
   public static void toChoose(Context context, int type, Gym gym) {
     try {
       Intent toLogin = new Intent();
@@ -76,6 +79,30 @@ public class BaseRouter {
       toLogin.putExtra("to", 71);
       toLogin.putExtra("gym", gym);
       context.startActivity(toLogin);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+  }
+
+  public static void toLogin(Fragment fragment) {
+    try {
+      Intent toLogin = new Intent();
+      toLogin.setPackage(fragment.getContext().getPackageName());
+      toLogin.setAction("cn.qingcheng.login");
+      toLogin.putExtra("web", true);
+      fragment.startActivityForResult(toLogin, RESULT_LOGIN);
+    } catch (Exception e) {
+      LogUtil.e(e.getMessage());
+    }
+  }
+
+  public static void toLogin(Activity fragment) {
+    try {
+      Intent toLogin = new Intent();
+      toLogin.setPackage(fragment.getPackageName());
+      toLogin.setAction("cn.qingcheng.login");
+      toLogin.putExtra("web", true);
+      fragment.startActivityForResult(toLogin, RESULT_LOGIN);
     } catch (Exception e) {
       LogUtil.e(e.getMessage());
     }
@@ -115,29 +142,5 @@ public class BaseRouter {
 
   public void registeRouter(String module, Class<?> activitycalss) {
     routers.put(module, activitycalss);
-  }
-
-  public static void toLogin(Fragment fragment) {
-    try {
-      Intent toLogin = new Intent();
-      toLogin.setPackage(fragment.getContext().getPackageName());
-      toLogin.setAction("cn.qingcheng.login");
-      toLogin.putExtra("web", true);
-      fragment.startActivityForResult(toLogin, RESULT_LOGIN);
-    } catch (Exception e) {
-      LogUtil.e(e.getMessage());
-    }
-  }
-
-  public static void toLogin(Activity fragment) {
-    try {
-      Intent toLogin = new Intent();
-      toLogin.setPackage(fragment.getPackageName());
-      toLogin.setAction("cn.qingcheng.login");
-      toLogin.putExtra("web", true);
-      fragment.startActivityForResult(toLogin, RESULT_LOGIN);
-    } catch (Exception e) {
-      LogUtil.e(e.getMessage());
-    }
   }
 }
