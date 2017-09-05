@@ -104,7 +104,7 @@ public class GymActivity extends BaseActivity implements ISetGymView, FragCallBa
             case GYM_INFO:
                 //有权限或者超级管理员
                 if (getIntent().getBooleanExtra("su", false) || (!TextUtils.isEmpty(gymWrapper.shop_id()) && SerPermisAction.check(
-                    gymWrapper.shop_id(), PermissionServerUtils.STUDIO_LIST_CAN_WRITE))) {
+                    gymWrapper.shop_id(), PermissionServerUtils.STUDIO_LIST_CAN_CHANGE))) {
                     fragment = EditGymInfoFragment.newInstance(gymWrapper.getCoachService().gym_id());
                 } else {
                     fragment = new GymInfoNoEditFragment();

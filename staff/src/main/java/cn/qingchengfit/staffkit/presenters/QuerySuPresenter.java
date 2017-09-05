@@ -38,7 +38,7 @@ public class QuerySuPresenter extends BasePresenter {
                         boolean hasPermission = false;
                         if (qcResponsePermission.data.permissions != null){
                             for (Permission permission : qcResponsePermission.data.permissions) {
-                                if (permission.getKey().equalsIgnoreCase(PermissionServerUtils.STUDIO_LIST_CAN_WRITE)){
+                                if (permission.getKey().equalsIgnoreCase(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE)){
                                     hasPermission = permission.value();
                                     break;
                                 }

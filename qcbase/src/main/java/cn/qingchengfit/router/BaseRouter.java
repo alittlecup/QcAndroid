@@ -68,6 +68,9 @@ public class BaseRouter {
     }
   }
 
+  /**
+   * 只用来选地址
+   */
   public static void toChoose(Context context, int type, Gym gym) {
     try {
       Intent toLogin = new Intent();

@@ -239,7 +239,8 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
 
     }
 
-    public void setBar(ToolbarBean bar) {
+
+  public void setBar(ToolbarBean bar) {
         toolbarTitile.setText(bar.title);
         down.setVisibility(bar.showRight ? View.VISIBLE : View.GONE);
         if (bar.onClickListener != null) {

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,7 +14,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventAddress;
-import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.CitiesChooser;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -132,46 +130,45 @@ public class ChooseAddressFragment extends BaseFragment {
                 return true;
             }
         });
-        toolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(toolbar.getViewTreeObserver(), this);
-                mLocationClient = new AMapLocationClient(getContext());
-                mLocationOption = new AMapLocationClientOption();
-                mLocationClient.setLocationOption(mLocationOption);
 
-                if (mLatLng == null || (mLatLng.latitude == 0 && mLatLng.longitude == 0)){
-                    mLocationClient.startLocation();
-                    showLoading();
-                }else{
-                    cityName.setText(city);
-                    address.setContent(defaultAddress);
-                    mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(
-                        new CameraPosition(new LatLng(g_lat, g_lon), 18, 0, 0)));
-                }
-                mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-                mLocationClient.setLocationListener(new AMapLocationListener() {
-                    @Override public void onLocationChanged(AMapLocation aMapLocation) {
-                        mLocationClient.stopLocation();
-                        hideLoading();
-                        mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(
-                            new CameraPosition(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 18, 0, 0)));
-
-                        //设置城市
-                        cityName.setText(aMapLocation.getCity());
-                        mCityCode = aMapLocation.getAdCode();
-
-                        //设置地理位置
-                        address.setContent(aMapLocation.getDistrict() + aMapLocation.getStreet() + aMapLocation.getStreetNum());
-                    }
-                });
-            }
-        });
         return view;
     }
 
     @Override protected void onFinishAnimation() {
         super.onFinishAnimation();
+        initAmap();
+    }
 
+    void initAmap(){
+        mLocationClient = new AMapLocationClient(getContext());
+        mLocationOption = new AMapLocationClientOption();
+        mLocationClient.setLocationOption(mLocationOption);
+
+        if (mLatLng == null || (mLatLng.latitude == 0 && mLatLng.longitude == 0)){
+            mLocationClient.startLocation();
+            //showLoading();
+        }else{
+            cityName.setText(city);
+            address.setContent(defaultAddress);
+            mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+                new CameraPosition(new LatLng(g_lat, g_lon), 18, 0, 0)));
+        }
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationClient.setLocationListener(new AMapLocationListener() {
+            @Override public void onLocationChanged(AMapLocation aMapLocation) {
+                mLocationClient.stopLocation();
+                hideLoading();
+                mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+                    new CameraPosition(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 18, 0, 0)));
+
+                //设置城市
+                cityName.setText(aMapLocation.getCity());
+                mCityCode = aMapLocation.getAdCode();
+
+                //设置地理位置
+                address.setContent(aMapLocation.getDistrict() + aMapLocation.getStreet() + aMapLocation.getStreetNum());
+            }
+        });
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
