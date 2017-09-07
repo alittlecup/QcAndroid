@@ -17,6 +17,7 @@ import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.card.CardActivity;
+import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
 import cn.qingchengfit.staffkit.views.schedule.ScheduleActivity;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
@@ -123,6 +124,10 @@ public class GymFunctionFactory {
     //求职招聘消息列表
     public static final String RECRUIT_MESSAGE_LIST = "/recruit/message_list";
 
+    //导入导出
+    public static final String REPORT_EXPORT = "/report/export";
+
+
     public static GymFuntion instanceGymFuntion(String module) {
         GymFuntion gym = new GymFuntion.Builder().moduleName(module).text(getModuleTxt(module)).img(getDrawableRes(module)).build();
         return gym;
@@ -203,7 +208,8 @@ public class GymFunctionFactory {
                 return R.drawable.moudule_student_card;
             case MODULE_STUDENT_BODY_TEST:
                 return R.drawable.moudule_student_body_test;
-
+            case REPORT_EXPORT:
+                return R.drawable.ic_module_report_export;
             default:
                 return 0;
         }
@@ -327,6 +333,8 @@ public class GymFunctionFactory {
                 return R.string.module_student_cards;
             case MODULE_STUDENT_BODY_TEST:
                 return R.string.module_student_bodytest;
+            case REPORT_EXPORT:
+                return R.string.module_export_name;
 
             default:
                 return R.string.none;
@@ -386,6 +394,10 @@ public class GymFunctionFactory {
                 Intent toStu = new Intent(fragment.getActivity(), StudentActivity.class);
                 fragment.startActivity(toStu);
                 return;
+            case REPORT_EXPORT:
+                Intent toExo = new Intent(fragment.getActivity(), ImportExportActivity.class);
+                fragment.startActivity(toExo);
+                break;
             /**
              * 会员卡
              */
@@ -557,6 +569,7 @@ public class GymFunctionFactory {
                 return;
             case MODULE_MANAGE_STAFF_ADD:
                 break;
+
             default:
                 return;
         }

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+    <TextView
+        android:id="@+id/tv_download_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="15dp"
+        tools:text="会员及会员卡数据导出2017-03-13 14:30.xls"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <TextView
+        android:id="@+id/tv_download_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        tools:text="2017-03-13 14:30  志恒"
+        style="@style/QcTextStyleSmallWarm"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_student_send_mail"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/text_send_email"
+        style="@style/QcTextStyleSmallWarm"
+        />
+
+    <include layout="@layout/divider_grey"/>
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_marginTop="50dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="15dp"
+      android:paddingRight="15dp"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/text_email"
+        style="@style/QcTextStyleMediumDark"
+        />
+
+    <EditText
+        android:id="@+id/edit_target_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:background="@null"
+        android:gravity="right"
+        android:hint="@string/hint_email_address"
+        style="@style/QcTextStyleMediumWarm"
+        />
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/tv_send_email"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="发送"
+      android:gravity="center"
+      android:paddingTop="10dp"
+      android:paddingBottom="10dp"
+      android:background="@drawable/bg_color_primary_button"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"
+      style="@style/QcTextStyleLargeDark"
+      android:textColor="@color/white"
+      android:layout_marginTop="25dp"
+      />
+
+</LinearLayout>

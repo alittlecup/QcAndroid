@@ -32,6 +32,10 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
         this.done = done;
     }
 
+    public int getStrRes(){
+        return strRes;
+    }
+
     @Override public int getLayoutRes() {
         return R.layout.item_student_operation;
     }
