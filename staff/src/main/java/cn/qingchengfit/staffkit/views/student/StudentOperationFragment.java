@@ -26,6 +26,7 @@ import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
+import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
 import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.AttendanceActivity;
 import cn.qingchengfit.staffkit.views.student.followup.FollowUpActivity;
@@ -61,11 +62,10 @@ public class StudentOperationFragment extends BaseFragment
     @Inject public StudentOperationFragment() {
     }
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    View v = inflater.inflate(R.layout.fragment_student_operation, container, false);
-    unbinder = ButterKnife.bind(this, v);
+    @Nullable @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_student_operation, container, false);
+        unbinder = ButterKnife.bind(this, v);
 
     mCommonFlexAdapter = new CommonFlexAdapter(datas, this);
 
@@ -108,12 +108,12 @@ public class StudentOperationFragment extends BaseFragment
               proGym = GymUtils.getSystemEndDay(now) >= 0;
               datas.clear();
               datas.add(new StudentOperationItem(R.drawable.vector_student_management_sales, R.string.qc_student_allotsale, proGym, true));
-              datas.add(new StudentOperationItem(R.drawable.vector_student_management_coach, R.string.qc_student_allot_coach, proGym, true));
-              datas.add(new StudentOperationItem(R.drawable.vector_student_management_follow, R.string.qc_student_follow_up, proGym, true));
-              datas.add(new StudentOperationItem(R.drawable.vd_student_transfer, R.string.qc_student_follow_transfer, proGym, true));
               datas.add(new StudentOperationItem(R.drawable.vector_student_management_attend, R.string.qc_student_attendance, proGym, true));
+              datas.add(new StudentOperationItem(R.drawable.vector_student_management_coach, R.string.qc_student_allot_coach, proGym, true));
               datas.add(new StudentOperationItem(R.drawable.vector_student_send_sms, R.string.qc_student_send_sms, proGym, true));
+              datas.add(new StudentOperationItem(R.drawable.vector_student_management_follow, R.string.qc_student_follow_up, proGym, true));
               datas.add(new StudentOperationItem(R.drawable.ic_student_management_export, R.string.fun_name_export, proGym, true));
+              datas.add(new StudentOperationItem(R.drawable.vd_student_transfer, R.string.qc_student_follow_transfer, proGym, true));
               datas.add(new StudentOperationItem(R.drawable.vector_student_management_birthday, R.string.qc_student_birthday_notice, proGym, false));
               datas.add(new StudentOperationItem(R.drawable.vector_student_management_tag, R.string.qc_student_vip, proGym, false));
               setRecyclerPadding(datas.size());
@@ -200,30 +200,49 @@ public class StudentOperationFragment extends BaseFragment
         startActivity(toFollowUp);
     }
 
-    @Override public boolean onItemClick(int position) {
-        if (!gymWrapper.isPro()) {
-            new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
-            return true;
-        }
-        if (position == 0) {
-            allotSaleClick(null);
-        } else if (position == 2) {
-            followUpClick(null);
-        } else if (position == 3) {
-            Intent toFollowUp = new Intent(getActivity(), FollowUpActivity.class);
-            toFollowUp.putExtra("router", RouterFollowUp.TRANSFER);
-            startActivity(toFollowUp);
-        } else if (position == 4) {
-            Intent intent = new Intent(getActivity(), AttendanceActivity.class);
-            startActivity(intent);
-        } else if (position == 5) {
-            Intent toChoose = new Intent(getActivity(), SendMsgsActivity.class);
-            toChoose.putExtra("to", ChooseActivity.CHOOSE_MULTI_STUDENTS);
-            startActivity(toChoose);
-        } else if (position == 1) {
-            Intent intent = new Intent(getActivity(), AllocateCoachActivity.class);
-            startActivity(intent);
-        }
-        return true;
+  @Override public boolean onItemClick(int position) {
+    if (!gymWrapper.isPro()) {
+      new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
+      return true;
     }
+    if (mCommonFlexAdapter.getItem(position) instanceof StudentOperationItem) {
+      int strId = ((StudentOperationItem) mCommonFlexAdapter.getItem(position)).getStrRes();
+      switch (strId) {
+        case R.string.qc_student_allotsale:
+          allotSaleClick(null);
+          break;
+        case R.string.qc_student_follow_up:
+          followUpClick(null);
+          break;
+        case R.string.qc_student_follow_transfer:
+          Intent toFollowUp = new Intent(getActivity(), FollowUpActivity.class);
+          toFollowUp.putExtra("router", RouterFollowUp.TRANSFER);
+          startActivity(toFollowUp);
+          break;
+        case R.string.qc_student_attendance:
+          Intent intent = new Intent(getActivity(), AttendanceActivity.class);
+          startActivity(intent);
+          break;
+        case R.string.qc_student_send_sms:
+          Intent toChoose = new Intent(getActivity(), SendMsgsActivity.class);
+          toChoose.putExtra("to", ChooseActivity.CHOOSE_MULTI_STUDENTS);
+          startActivity(toChoose);
+          break;
+        case R.string.qc_student_allot_coach:
+          Intent i = new Intent(getActivity(), AllocateCoachActivity.class);
+          startActivity(i);
+          break;
+        case R.string.fun_name_export:
+          Intent exportIntent = new Intent(getActivity(), ImportExportActivity.class);
+          exportIntent.putExtra("type", ImportExportActivity.TYPE_EXPORT);
+          startActivity(exportIntent);
+          break;
+        case R.string.qc_student_birthday_notice:
+          break;
+        case R.string.qc_student_vip:
+          break;
+      }
+    }
+    return true;
+  }
 }

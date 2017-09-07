@@ -61,7 +61,6 @@ public class RestRepository implements Repository {
 
     private final Get_Api get_api;
     private final Post_Api post_api;
-    private Request request = null;
     private Action1<Throwable> doOnError = new Action1<Throwable>() {
         @Override public void call(Throwable throwable) {
             if (throwable != null) Timber.e("retrofit:" + throwable.getMessage());
@@ -82,7 +81,7 @@ public class RestRepository implements Repository {
         OkHttpClient client =
             new OkHttpClient.Builder().retryOnConnectionFailure(false).cache(cache).addNetworkInterceptor(new Interceptor() {
                 @Override public Response intercept(Chain chain) throws IOException {
-                    request = chain.request();
+                    Request request = chain.request();
                     if (!request.method().equalsIgnoreCase("GET")) {
                         RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
                       String token = "";

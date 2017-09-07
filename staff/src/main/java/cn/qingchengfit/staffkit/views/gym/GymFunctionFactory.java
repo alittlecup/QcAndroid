@@ -127,6 +127,10 @@ public class GymFunctionFactory {
     //导入导出
     public static final String REPORT_EXPORT = "/report/export";
 
+    public static final String STUDENT_IMPORT = "/manage/members/import";
+    public static final String STUDENT_EXPORT = "/manage/members/export";
+    public static final String CARD_IMPORT = "/cards/import";
+    public static final String CARD_EXPORT = "/cards/export";
 
     public static GymFuntion instanceGymFuntion(String module) {
         GymFuntion gym = new GymFuntion.Builder().moduleName(module).text(getModuleTxt(module)).img(getDrawableRes(module)).build();
@@ -396,8 +400,9 @@ public class GymFunctionFactory {
                 return;
             case REPORT_EXPORT:
                 Intent toExo = new Intent(fragment.getActivity(), ImportExportActivity.class);
+                toExo.putExtra("type", ImportExportActivity.TYPE_RECORD);
                 fragment.startActivity(toExo);
-                break;
+                return;
             /**
              * 会员卡
              */

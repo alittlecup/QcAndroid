@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.views.export.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.staffkit.usecase.bean.Create_By;
 
 /**
  * Created by fb on 2017/9/6.
@@ -11,7 +12,7 @@ public class ExportRecord implements Parcelable{
   public String file_name;
   public String file_size;
   public String created_at;
-  public String created_by;
+  public Create_By created_by;
   public int status;
   public String excel_url;
 
@@ -23,7 +24,7 @@ public class ExportRecord implements Parcelable{
     dest.writeString(this.file_name);
     dest.writeString(this.file_size);
     dest.writeString(this.created_at);
-    dest.writeString(this.created_by);
+    dest.writeParcelable(this.created_by, flags);
     dest.writeInt(this.status);
     dest.writeString(this.excel_url);
   }
@@ -35,7 +36,7 @@ public class ExportRecord implements Parcelable{
     this.file_name = in.readString();
     this.file_size = in.readString();
     this.created_at = in.readString();
-    this.created_by = in.readString();
+    this.created_by = in.readParcelable(Create_By.class.getClassLoader());
     this.status = in.readInt();
     this.excel_url = in.readString();
   }

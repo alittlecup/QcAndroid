@@ -920,7 +920,7 @@ public interface Get_Api {
     rx.Observable<cn.qingchengfit.network.response.QcResponseData<RecordWrap>> qcGetRecruitMessageList();
 
     //导出记录
-    @GET("/api/shops/{shop_id}/excel/export/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<ExportRecordWrapper>> qcGetExportRecord(@Path("shop_id") String shopId);
+    @GET("/api/staffs/{staff_id}/export/records/")
+    rx.Observable<cn.qingchengfit.network.response.QcResponseData<ExportRecordWrapper>> qcGetExportRecord(@Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
 }
