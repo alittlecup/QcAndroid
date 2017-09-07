@@ -67,9 +67,13 @@ public class ExportRecordFragment extends BaseFragment implements ImportExportPr
     for (ExportRecord exportRecord : record){
       itemList.add(new ExportRecordItem(exportRecord, this));
     }
+    adapter.notifyDataSetChanged();
   }
 
   @Override public void onExportSuccess() {
+  }
+
+  @Override public void onSendEmailSuccess() {
 
   }
 

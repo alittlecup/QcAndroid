@@ -127,7 +127,9 @@ import cn.qingchengfit.staffkit.views.course.limit.OrderLimitFragment;
 import cn.qingchengfit.staffkit.views.course.msg.MsgNotiFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
+import cn.qingchengfit.staffkit.views.export.CardImportExportFragment;
 import cn.qingchengfit.staffkit.views.export.ExportRecordFragment;
+import cn.qingchengfit.staffkit.views.export.ExportSendEmailFragment;
 import cn.qingchengfit.staffkit.views.export.ImportExportFragment;
 import cn.qingchengfit.staffkit.views.gym.AddBrandInMainFragment;
 import cn.qingchengfit.staffkit.views.gym.AddNewCoachFragment;
@@ -236,7 +238,6 @@ import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
 import cn.qingchengfit.staffkit.views.student.MutiChooseStudentActivity;
 import cn.qingchengfit.staffkit.views.student.MutiChooseStudentFragment;
 import cn.qingchengfit.staffkit.views.student.StudentActivity;
-import cn.qingchengfit.staffkit.views.student.StudentFuncListFragment;
 import cn.qingchengfit.staffkit.views.student.StudentOperationFragment;
 import cn.qingchengfit.staffkit.views.student.StudentSearchFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.AbsenceStuentListFragment;
@@ -515,8 +516,7 @@ import dagger.multibindings.IntoMap;
 
     //导入导出
     AppComponent.ImportExportFragmentModule.class, AppComponent.ExportRecordFragmentModule.class,
-    AppComponent.StudentFuncListFragmentModule.class,
-
+    AppComponent.ExportSendEmailFragmentModule.class, AppComponent.CardImportExportFragmentModule.class,
 })
 
 public interface AppComponent {
@@ -4000,12 +4000,19 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ImportExportFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface StudentFuncListFragmentSubcomponent extends AndroidInjector<StudentFuncListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<StudentFuncListFragment> {}
+    @Subcomponent() public interface ExportSendEmailFragmentSubcomponent extends AndroidInjector<ExportSendEmailFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ExportSendEmailFragment> {}
     }
-    @Module(subcomponents = StudentFuncListFragmentSubcomponent.class) abstract class StudentFuncListFragmentModule {
-        @Binds @IntoMap @FragmentKey(StudentFuncListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(StudentFuncListFragmentSubcomponent.Builder builder);
+    @Module(subcomponents = ExportSendEmailFragmentSubcomponent.class) abstract class ExportSendEmailFragmentModule {
+        @Binds @IntoMap @FragmentKey(ExportSendEmailFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ExportSendEmailFragmentSubcomponent.Builder builder);
     }
 
+    @Subcomponent() public interface CardImportExportFragmentSubcomponent extends AndroidInjector<CardImportExportFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardImportExportFragment> {}
+    }
+    @Module(subcomponents = CardImportExportFragmentSubcomponent.class) abstract class CardImportExportFragmentModule {
+        @Binds @IntoMap @FragmentKey(CardImportExportFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CardImportExportFragmentSubcomponent.Builder builder);
+    }
 }

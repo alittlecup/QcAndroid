@@ -666,6 +666,11 @@ public interface Post_Api {
     @POST("/api/v2/staffs/{staff_id}/coaches/users/remove/") rx.Observable<QcResponse> qcRemoveStudent(@Path("staff_id") String staff_id,
         @Body HashMap<String, Object> body);
 
-    @POST("/api/shops/{shop_id}/excel/export/") rx.Observable<QcResponse> qcDataImport(@Path("shop_id") String shop_id,
+    //导入导出
+    @POST("/api/staffs/{staff_id}/export/do/") rx.Observable<QcResponse> qcDataImport(@Path("staff_id") String staff_id,
+        @Body HashMap<String, Object> body);
+
+    //发送邮件
+    @POST("/api/staffs/{staff_id}/export/mail/") rx.Observable<QcResponse> qcSendMail(@Path("staff_id") String staff_id,
         @Body HashMap<String, Object> body);
 }
