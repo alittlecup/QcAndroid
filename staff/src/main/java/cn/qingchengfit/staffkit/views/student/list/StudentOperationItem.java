@@ -2,9 +2,11 @@ package cn.qingchengfit.staffkit.views.student.list;
 
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -21,6 +23,7 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
     @StringRes int strRes;
     boolean proGym;
     boolean done;
+    private int width;
 
     public StudentOperationItem(int iconRes, int strRes, boolean proGym, boolean done) {
         this.iconRes = iconRes;
@@ -34,10 +37,16 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
     }
 
     @Override public StudentOperationVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new StudentOperationVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+        StudentOperationVH holder = new StudentOperationVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+        this.width = parent.getWidth();
+        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(parent.getWidth() / 4, parent.getHeight() / 2));
+        return holder;
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, StudentOperationVH holder, int position, List payloads) {
+        //if (position == adapter.getItemCount() - 1){
+        //    holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        //}
         holder.imgFunction.setImageResource(iconRes);
         holder.tvTitle.setText(strRes);
         holder.imgPro.setVisibility(proGym ? View.GONE : View.VISIBLE);

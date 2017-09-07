@@ -834,5 +834,6 @@
   <string name="alert_no_manage_permission">您没有改场馆管理权限</string>
 
   <string name="course_report_detail_number">%d人次</string>
+  <string name="fun_name_export">导入导出</string>
 
 </resources>
