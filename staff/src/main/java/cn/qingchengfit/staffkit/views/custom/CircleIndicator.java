@@ -25,11 +25,11 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
     private int mIndicatorHeight = -1;
     @AnimatorRes private int mAnimatorResId = R.anim.scale_with_alpha;
     private int mAnimatorReverseResId = 0;
-    private int mIndicatorBackgroundResId = R.drawable.white_radius;
-    private int mIndicatorUnselectedBackgroundResId = R.drawable.white_radius;
-    private int mCurrentPosition = 0;
-    private Animator mAnimationOut;
-    private Animator mAnimationIn;
+    public int mIndicatorBackgroundResId = R.drawable.white_radius;
+    public int mIndicatorUnselectedBackgroundResId = R.drawable.white_radius;
+    public int mCurrentPosition = 0;
+    public Animator mAnimationOut;
+    public Animator mAnimationIn;
     private int mCountLess = 0;
 
     public CircleIndicator(Context context) {
@@ -181,7 +181,7 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
         }
     }
 
-    private void addIndicator(@DrawableRes int backgroundDrawableId, Animator animator) {
+    public void addIndicator(@DrawableRes int backgroundDrawableId, Animator animator) {
         if (animator.isRunning()) animator.end();
 
         View Indicator = new View(getContext());
