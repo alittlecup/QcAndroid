@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -14,6 +14,7 @@
   <android.support.design.widget.CoordinatorLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:layout_marginTop="?attr/actionBarSize"
       >
 
     <android.support.design.widget.AppBarLayout
@@ -34,13 +35,14 @@
           app:layout_scrollFlags="scroll|snap"
           />
 
-      <LinearLayout
+      <cn.qingchengfit.widgets.QcRadioGroup
           android:layout_width="match_parent"
-          android:layout_height="40dp"
+          android:layout_height="@dimen/qc_item_height"
           android:background="@drawable/bg_top_bottom_line_white"
-          android:divider="@drawable/divier_linear_horizon_margin_12dp"
+          android:divider="@drawable/divier_linear"
           android:orientation="horizontal"
-          android:padding="1px"
+          android:paddingLeft="8dp"
+          android:paddingRight="8dp"
           android:showDividers="middle"
           >
 
@@ -103,7 +105,7 @@
             />
 
 
-      </LinearLayout>
+      </cn.qingchengfit.widgets.QcRadioGroup>
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
@@ -120,60 +122,30 @@
           android:background="@color/white"
           />
 
-      <FrameLayout
-          android:id="@+id/frag_follow_up_status_filter_container"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@color/halftransparent_grey"
-          android:visibility="gone"
-          />
+
     </FrameLayout>
 
   </android.support.design.widget.CoordinatorLayout>
 
-
-  <include layout="@layout/divider_grey"/>
   <!--<FrameLayout-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="match_parent"-->
-  <!--&gt;-->
+      <!--android:id="@+id/frag_follow_up_status_filter_container"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="match_parent"-->
+      <!--android:background="@color/halftransparent_grey"-->
+      <!--android:visibility="gone"-->
+      <!--tools:visibility="visible"-->
+      <!--/>-->
+  <FrameLayout
+      android:id="@+id/frag_filter"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/halftransparent_grey"
+      android:visibility="gone"
 
-  <!--<LinearLayout-->
-  <!--android:id="@+id/ll_today_nodata"-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="match_parent"-->
-  <!--android:background="@color/white"-->
-  <!--android:orientation="vertical"-->
-  <!--&gt;-->
-
-  <!--<TextView-->
-  <!--android:id="@+id/tv_today_nodata"-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="40dp"-->
-  <!--android:gravity="center"-->
-  <!--android:text="暂无数据"-->
-  <!--android:textColor="@color/qc_text_grey"-->
-  <!--android:textSize="@dimen/min_font"-->
-  <!--android:visibility="gone"-->
-  <!--tools:visibility="visible"-->
-  <!--/>-->
-
-  <!--<TextView-->
-  <!--android:id="@+id/tv_today_count"-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="20dp"-->
-  <!--android:background="@color/bg_grey"-->
-  <!--android:gravity="center_vertical"-->
-  <!--android:paddingLeft="16dp"-->
-  <!--android:text="@string/qc_follow_up_today_new_count"-->
-  <!--android:textColor="@color/qc_text_grey"-->
-  <!--android:textSize="@dimen/min_font"-->
-  <!--android:visibility="gone"-->
-  <!--tools:visibility="visible"-->
-  <!--/>-->
+      />
 
 
-</LinearLayout>
+</FrameLayout>
 
 
 

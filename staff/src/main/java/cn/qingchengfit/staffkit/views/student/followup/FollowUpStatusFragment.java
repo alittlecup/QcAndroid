@@ -6,13 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -25,12 +25,13 @@ import cn.qingchengfit.common.FilterTimesFragment;
 import cn.qingchengfit.common.FilterTimesFragmentBuilder;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventFilterClick;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.Student;
 import cn.qingchengfit.model.responese.TrackStudents;
-import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.errors.BusEventThrowable;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -46,6 +47,7 @@ import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterEvent;
 import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import cn.qingchengfit.widgets.QcToggleButton;
@@ -84,12 +86,16 @@ import rx.schedulers.Schedulers;
 public class FollowUpStatusFragment extends BaseFragment
     implements FollowUpStatusPresenter.PresenterView, FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener {
 
+    public static final int FILTER_TOP_SALES    = 1;
+    public static final int FILTER_TOP_DAYS     = 2;
+    public static final int FILTER_BOTTOM_STU   = 3;
+    public static final int FILTER_BOTTOM_DAYS  = 4;
+    public static final int FILTER_BOTTOM_SALES = 5;
+    public static final int FILTER_BOTTOM_GENDER= 6;
+    public static final int FILTER_BOTTOM_FILTER= 7;
     public int studentStatus;
-
-    //@BindView(R.id.tv_today_nodata) TextView tvTodayNodata;
     @BindView(R.id.recycler_view_today) RecyclerView recyclerViewToday;
     @BindView(R.id.layout_collapsed) AppBarLayout layoutCollapsed;
-
     StudentSearchFragment studentSearchFragment;
     @BindView(R.id.qft_status) QcFilterToggle qftStatus;
     @BindView(R.id.qft_times) QcFilterToggle qftTime;
@@ -99,7 +105,7 @@ public class FollowUpStatusFragment extends BaseFragment
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.frag_chart) FrameLayout fragChart;
-    @BindView(R.id.frag_follow_up_status_filter_container) FrameLayout fragContaiter;
+    @BindView(R.id.frag_filter) FrameLayout fragContaiter;
     FollowUpFilterFragment filterFragment;
     TopFilterSaleFragment saleFragment;
     FilterTimesFragment registerFragment;
@@ -109,12 +115,18 @@ public class FollowUpStatusFragment extends BaseFragment
     @Inject GymWrapper gymWrapper;
     @Inject FollowUpStatusPresenter presenter;
     @Inject SerPermisAction serPermisAction;
+    @Inject BusEventThrowable busEventThrowable;
     ProgressItem progress;
+    /**
+     * 与type一一对应，不可修改，除非type修改
+     */
+    private String[] frag_tags = {
+        "","top_days","top_sale","btm_stu","btm_days","btm_sale","btm_gen",""
+    };
     private CommonFlexAdapter flexibleAdapterToday;
     private List<AbstractFlexibleItem> itemsToday = new ArrayList<>();
     private List<Student> dataToday = new ArrayList<>();
     private StudentFilter filter = new StudentFilter();
-    private Fragment emptyFragment = new Fragment();
     private boolean isGraphExpand = true;//图表是否展示
     private TotalCountFooterItem footItem;
 
@@ -132,11 +144,6 @@ public class FollowUpStatusFragment extends BaseFragment
         initView();
         initBus();
         presenter.getStudentsWithStatus(filter, studentStatus);
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
         return view;
     }
 
@@ -192,7 +199,7 @@ public class FollowUpStatusFragment extends BaseFragment
                 }
                 qftStatus.setChecked(false);
                 if (filterFragment != null) filterFragment.selectStatusPos(position - 1);
-                expandGraph(true);
+                hideAll(null);
                 presenter.getStudentsWithStatus(filter, studentStatus);
             }
         });
@@ -219,7 +226,7 @@ public class FollowUpStatusFragment extends BaseFragment
                         break;
                 }
                 qftGender.setChecked(false);
-                expandGraph(true);
+                hideAll(null);
                 presenter.getStudentsWithStatus(filter, studentStatus);
             }
         });
@@ -229,18 +236,6 @@ public class FollowUpStatusFragment extends BaseFragment
             .replace(R.id.frag_chart, new FollowUpDataStatisticsFragmentBuilder(studentStatus).build())
             .commit();
 
-        getChildFragmentManager().beginTransaction()
-            .setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out)
-            .add(R.id.frag_follow_up_status_filter_container, saleFragment, TopFilterSaleFragment.class.getName())
-            .add(R.id.frag_follow_up_status_filter_container, filterStatus, FilterFragment.class.getName())
-            .add(R.id.frag_follow_up_status_filter_container, registerFragment, FilterTimesFragment.class.getName())
-            .add(R.id.frag_follow_up_status_filter_container, filterGender, "gender")
-            .hide(saleFragment)
-            .hide(filterStatus)
-            .hide(registerFragment)
-            .hide(filterGender)
-            .commitAllowingStateLoss();
-
         if (studentStatus == 0) {
             //初始化边侧栏
             filterFragment = new FollowUpFilterFragment();
@@ -249,6 +244,15 @@ public class FollowUpStatusFragment extends BaseFragment
     }
 
     private void initBus() {
+        RxBusAdd(EventFilterClick.class)
+            .onBackpressureLatest()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<EventFilterClick>() {
+                @Override public void call(EventFilterClick eventFilterClick) {
+                    handlePopFilter(eventFilterClick.type);
+                }
+            },new BusEventThrowable());
+
         /*
          *  监听筛选
          */
@@ -271,8 +275,8 @@ public class FollowUpStatusFragment extends BaseFragment
                             {
                                 filterFragment.saleFragment.selectSaler(filter.sale.getId());
                             }
-                            expandGraph(true);
-                            hideAll();
+
+                            hideAll(null);
                             break;
                         case FollowUpFilterEvent.EVENT_LATEST_TIME_CLICK:
                             switch (followUpFilterEvent.position) {
@@ -295,8 +299,8 @@ public class FollowUpStatusFragment extends BaseFragment
                             //qftTime.setText(filter.registerTimeStart + "至" + filter.registerTimeEnd);
                             qftTime.setChecked(false);
                             if (filterFragment != null) filterFragment.selectTimePos(followUpFilterEvent.position);
-                            expandGraph(true);
-                            hideAll();
+
+                            hideAll(null);
                             break;
                         case FollowUpFilterEvent.EVENT_LATEST_TIME_CUSTOM_DATA:
                             filter.registerTimeStart = followUpFilterEvent.start;
@@ -307,8 +311,8 @@ public class FollowUpStatusFragment extends BaseFragment
                                 filterFragment.tvStudentFilterTimeStart.setText(followUpFilterEvent.start);
                                 filterFragment.tvStudentFilterTimeEnd.setText(followUpFilterEvent.end);
                             }
-                            expandGraph(true);
-                            hideAll();
+
+                            hideAll(null);
                             break;
                     }
                     getActivity().runOnUiThread(new Runnable() {
@@ -362,7 +366,70 @@ public class FollowUpStatusFragment extends BaseFragment
                     presenter.getStudentsWithStatus(filter, studentStatus);
                 }
             }
-        }, new NetWorkThrowable());
+        }, busEventThrowable);
+    }
+
+    /**
+     * 处理筛选弹窗
+     */
+    private void handlePopFilter(int type){
+        Fragment popF = getChildFragmentManager().findFragmentByTag(frag_tags[type]);
+        if (type <= 0 || (popF != null && popF.isVisible())){
+            hideAll(null);
+            return;
+        }
+        switch (type){
+            case FILTER_TOP_SALES:
+                if (popF == null){
+                    popF = new TopFilterSaleFragment();
+                    if (popF instanceof TopFilterSaleFragment){
+                        ((TopFilterSaleFragment) popF).page = 0 ;
+                    }
+                    getChildFragmentManager().beginTransaction().add(R.id.frag_filter,popF,frag_tags[type]).commit();
+
+                }
+                break;
+            case FILTER_TOP_DAYS:
+                if (popF == null){
+                    popF = new FilterTimesFragmentBuilder(30, 0).build();
+                    if (popF instanceof FilterTimesFragment){
+                        ((FilterTimesFragment) popF).page = 0 ;
+                    }
+                    getChildFragmentManager().beginTransaction().add(R.id.frag_filter,popF,frag_tags[type]).commit();
+                }
+                break;
+            case FILTER_BOTTOM_STU:
+                if (popF == null){
+                    popF = filterStatus;
+                    getChildFragmentManager().beginTransaction().add(R.id.frag_filter,popF,frag_tags[type]).commit();
+                }
+                break;
+            case FILTER_BOTTOM_DAYS:
+                if (popF == null){
+                    popF = registerFragment;
+                    getChildFragmentManager().beginTransaction().add(R.id.frag_filter,popF,frag_tags[type]).commit();
+                }
+                break;
+            case FILTER_BOTTOM_SALES:
+                if (popF == null){
+                    popF = saleFragment;
+                    getChildFragmentManager().beginTransaction().add(R.id.frag_filter,popF,frag_tags[type]).commit();
+                }
+                break;
+            case FILTER_BOTTOM_GENDER:
+                if (popF == null){
+                    popF = filterGender;
+                    getChildFragmentManager().beginTransaction().add(R.id.frag_filter,popF,frag_tags[type]).commit();
+                }
+                break;
+            case FILTER_BOTTOM_FILTER:
+
+                break;
+            default:
+                return;
+        }
+        expandGraph(type < 3);
+        hideAll(frag_tags[type]);
     }
 
     /**
@@ -376,7 +443,6 @@ public class FollowUpStatusFragment extends BaseFragment
         } else {
             isGraphExpand = b;
         }
-        fragContaiter.setVisibility(b ? View.GONE : View.VISIBLE);
         layoutCollapsed.setExpanded(b);
     }
 
@@ -433,7 +499,9 @@ public class FollowUpStatusFragment extends BaseFragment
     }
 
     private void initView() {
-
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) fragContaiter.getLayoutParams();
+        lp.topMargin =(int) (MeasureUtils.getActionbarBarHeight(getContext())+getResources().getDimension(R.dimen.qc_item_height));
+        fragContaiter.setLayoutParams(lp);
         recyclerViewToday.setLayoutManager(new SmoothScrollLinearLayoutManager(getActivity()));
         progress = new ProgressItem(getContext());
         footItem = new TotalCountFooterItem(1);
@@ -460,9 +528,8 @@ public class FollowUpStatusFragment extends BaseFragment
     /**
      * 背景点击
      */
-    @OnClick(R.id.frag_follow_up_status_filter_container) public void onBackClick() {
-        closeExcepte(0);
-        expandGraph(true);
+    @OnClick(R.id.frag_filter) public void onBackClick() {
+        hideAll(null);
     }
 
     /**
@@ -479,48 +546,16 @@ public class FollowUpStatusFragment extends BaseFragment
                     ToastUtils.show("您只能查看自己名下的会员");
                     return;
                 }
-                qftSaler.toggle();
-                if (qftSaler.isChecked()) {
-                    closeExcepte(view.getId());
-                    expandGraph(false);
-                    showFragment(saleFragment);
-                } else {
-                    expandGraph(true);
-                    hideFragment(saleFragment);
-                }
+                handlePopFilter(FILTER_BOTTOM_SALES);
                 break;
             case R.id.qft_times:
-                qftTime.toggle();
-                if (qftTime.isChecked()) {
-                    closeExcepte(view.getId());
-                    expandGraph(false);
-                    showFragment(registerFragment);
-                } else {
-                    hideFragment(registerFragment);
-                    expandGraph(true);
-                }
+                handlePopFilter(FILTER_BOTTOM_DAYS);
                 break;
             case R.id.qft_status:
-                qftStatus.toggle();
-                if (qftStatus.isChecked()) {
-                    closeExcepte(view.getId());
-                    expandGraph(false);
-                    showFragment(filterStatus);
-                } else {
-                    hideFragment(filterStatus);
-                    expandGraph(true);
-                }
+                handlePopFilter(FILTER_BOTTOM_STU);
                 break;
             case R.id.qft_gender:
-                qftGender.toggle();
-                if (qftGender.isChecked()) {
-                    closeExcepte(view.getId());
-                    expandGraph(false);
-                    showFragment(filterGender);
-                } else {
-                    hideFragment(filterGender);
-                    expandGraph(true);
-                }
+                handlePopFilter(FILTER_BOTTOM_GENDER);
                 break;
             case R.id.qtb_filter:
                 RxBus.getBus().post(new EventRouter(RouterFollowUp.DRAWER_OPEN));
@@ -591,22 +626,20 @@ public class FollowUpStatusFragment extends BaseFragment
         if (res != R.id.qft_gender) qftGender.setChecked(false);
     }
 
-    private void hideFragment(Fragment f) {
-        getChildFragmentManager().beginTransaction().hide(f).commitAllowingStateLoss();
-    }
-
-    private void showFragment(Fragment f) {
-        hideAll();
-        getChildFragmentManager().beginTransaction().show(f).commitAllowingStateLoss();
-    }
-
-    private void hideAll() {
-        getChildFragmentManager().beginTransaction()
-            .hide(filterGender)
-            .hide(saleFragment)
-            .hide(filterStatus)
-            .hide(registerFragment)
-            .commitAllowingStateLoss();
+    private void hideAll(String str) {
+        fragContaiter.setVisibility(TextUtils.isEmpty(str)?View.GONE:View.VISIBLE);
+        FragmentTransaction ts = getChildFragmentManager().beginTransaction();
+        for (String frag_tag : frag_tags) {
+            if (TextUtils.isEmpty(frag_tag))
+                continue;
+            if (frag_tag.equalsIgnoreCase(str) ){
+                if (getChildFragmentManager().findFragmentByTag(str) != null)
+                    ts.show(getChildFragmentManager().findFragmentByTag(str));
+            }else if (getChildFragmentManager().findFragmentByTag(frag_tag) != null){
+                ts.hide(getChildFragmentManager().findFragmentByTag(frag_tag));
+            }
+        }
+        ts.commitAllowingStateLoss();
     }
 
     @Override public void noMoreLoad(int i) {

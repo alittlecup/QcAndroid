@@ -172,6 +172,7 @@ public class App extends MultiDexApplication
             }
         }
         initX5();
+
     }
 
     @Override protected void attachBaseContext(Context base) {

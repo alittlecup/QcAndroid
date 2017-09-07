@@ -39,4 +39,5 @@
   <dimen name="form_height">36dp</dimen>
   <dimen name="little">8dp</dimen>
   <dimen name="qc_allotsale_search_hight">32dp</dimen>
+  <dimen name="actionbar_plus_item">123dp</dimen>
 </resources>
