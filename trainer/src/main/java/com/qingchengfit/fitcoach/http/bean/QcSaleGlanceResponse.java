@@ -34,6 +34,6 @@ public class QcSaleGlanceResponse extends QcResponse {
     public static class UseData {
         @SerializedName("from_date") public String from_date;
         @SerializedName("to_date") public String to_date;
-        @SerializedName("total_cost") public int total_cost;
+        @SerializedName("total_cost") public float total_cost;
     }
 }
