@@ -119,6 +119,7 @@ public class CompletedBuyPresenter extends BasePresenter {
         upBody.shop_id = body.shop_id;
         upBody.valid_from = body.valid_from;
         upBody.valid_to = body.valid_to;
+        upBody.is_auto_start = body.is_auto_start;
         //        upBody.user_name = null;
         spBuy = usecase.buyCard(upBody, null, null, gymWrapper.id(), gymWrapper.model(), new Action1<QcResponsePayWx>() {
             @Override public void call(QcResponsePayWx qcResponse) {

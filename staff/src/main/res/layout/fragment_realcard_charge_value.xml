@@ -267,6 +267,22 @@
 
 
         </LinearLayout>
+        <cn.qingchengfit.widgets.ExpandedLayout
+            android:id="@+id/el_auto_open_card"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:visibility="gone"
+            app:el_label="自动开卡"
+            />
+        <TextView
+            android:id="@+id/tv_hint_auto_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:text="开启【自动开卡】功能后，会员可以在开始日期之前使用该会员卡，一旦开始使用，开始日期自动从当天开始计算"
+            android:visibility="gone"
+            style="@style/TextTitleHint"
+            />
 
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/real_card_no"
@@ -279,28 +295,7 @@
             app:civ_showdivier="false"
             tools:visibility="visible"
             />
-        <!--<cn.qingchengfit.widgets.CommonInputView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:civ_clickable="true"-->
-        <!--app:civ_content="@string/common_please_choose"-->
-        <!--app:civ_lable="销售"-->
-        <!--app:civ_nonnull="true"-->
-        <!--app:civ_showdivier="true"-->
-        <!--app:civ_showright="true"-->
-        <!--/>-->
 
-        <!--<cn.qingchengfit.widgets.CommonInputView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:civ_clickable="true"-->
-        <!--app:civ_content="@string/option_choose"-->
-        <!--app:civ_lable="@string/mark"-->
-        <!--app:civ_showdivier="false"-->
-        <!--app:civ_showright="true"-->
-        <!--/>-->
-
-        <!--<include layout="@layout/divider_grey"/>-->
       </LinearLayout>
 
 

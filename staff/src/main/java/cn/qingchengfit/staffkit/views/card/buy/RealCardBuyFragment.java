@@ -43,6 +43,7 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.ExpandedLayout;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import java.util.ArrayList;
@@ -85,6 +86,8 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
     @BindView(R.id.balance) TextView balance;
     @BindView(R.id.real_card_no) CommonInputView realCardNo;
     @BindView(R.id.card_bg) LinearLayout cardBg;
+    @BindView(R.id.el_auto_open_card) ExpandedLayout elAutoOpenCard;
+    @BindView(R.id.tv_hint_auto_open) TextView tvHintAutoOpen;
 
     List<CardStandard> datas = new ArrayList<>();
 
@@ -275,10 +278,17 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
                 if (isChecked) {
                     starttime.setVisibility(View.VISIBLE);
                     endtime.setVisibility(View.VISIBLE);
+                    showAutoOpenCard(true);
                 } else {
                     starttime.setVisibility(View.GONE);
                     endtime.setVisibility(View.GONE);
+                    showAutoOpenCard(false);
                 }
+            }
+        });
+        elAutoOpenCard.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                createCardBody.is_auto_start = isChecked;
             }
         });
         presenter.queryStardard();
@@ -312,12 +322,13 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
                     chargeSum.setVisibility(View.VISIBLE);
                     imcomeSun.setVisibility(View.VISIBLE);
                     extraPeriod.setVisibility(View.VISIBLE);
-                    switcherLayout.setVisibility(View.GONE);
+                    switcherLayout.setVisibility(View.VISIBLE);
                 } else if (validDayCount > 0) {//规格有有效期
                     extraPeriod.setVisibility(View.VISIBLE);
                     switcherLayout.setVisibility(View.GONE);
                     starttime.setVisibility(View.VISIBLE);
                     endtime.setVisibility(View.GONE);
+                    showAutoOpenCard(true);
                 } else {//规格无有效期
                     extraPeriod.setVisibility(View.GONE);
                 }
@@ -336,13 +347,12 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
                     switcherLayout.setVisibility(View.GONE);
                     starttime.setVisibility(View.VISIBLE);
                     endtime.setVisibility(View.GONE);
+                    showAutoOpenCard(true);
                 } else {//规格无有效期
                     extraPeriod.setVisibility(View.GONE);
                 }
                 break;
             case Configs.CATEGORY_DATE:
-                //                chargeSum.setLabel("充值天数(天)");
-                //                imcomeSun.setLabel("实收金额(元)");
                 datecardStarttime.setVisibility(View.VISIBLE);
                 datecardStarttime.setContent(DateUtils.Date2YYYYMMDD(new Date()));
                 if (other) {//选其他
@@ -352,8 +362,14 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
                 } else {//规格无有效期
                     datecardStarttime.setVisibility(View.VISIBLE);
                 }
+                showAutoOpenCard(true);
                 break;
         }
+    }
+
+    public void showAutoOpenCard(boolean show){
+        tvHintAutoOpen.setVisibility(show?View.VISIBLE:View.GONE);
+        elAutoOpenCard.setVisibility(show?View.VISIBLE:View.GONE);
     }
 
     @Override public void onDestroyView() {
