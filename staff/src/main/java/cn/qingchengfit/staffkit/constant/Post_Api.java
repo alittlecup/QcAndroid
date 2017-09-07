@@ -665,4 +665,7 @@ public interface Post_Api {
     //分配教练
     @POST("/api/v2/staffs/{staff_id}/coaches/users/remove/") rx.Observable<QcResponse> qcRemoveStudent(@Path("staff_id") String staff_id,
         @Body HashMap<String, Object> body);
+
+    @POST("/api/shops/{shop_id}/excel/export/") rx.Observable<QcResponse> qcDataImport(@Path("shop_id") String shop_id,
+        @Body HashMap<String, Object> body);
 }

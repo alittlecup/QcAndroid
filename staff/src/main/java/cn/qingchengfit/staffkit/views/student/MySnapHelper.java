@@ -14,7 +14,6 @@ import android.view.View;
 
 public class MySnapHelper extends LinearSnapHelper {
   private OrientationHelper mHorizontalHelper, mVerticalHelper;
-  private OnIndicatorListener indicatorListener;
 
   @Nullable
   @Override
@@ -31,10 +30,6 @@ public class MySnapHelper extends LinearSnapHelper {
       out[1] = 0;
     }
     return out;
-  }
-
-  public void setIndicatorListener(OnIndicatorListener indicatorListener) {
-    this.indicatorListener = indicatorListener;
   }
 
   private int distanceToStart(View targetView, OrientationHelper helper) {
@@ -69,11 +64,6 @@ public class MySnapHelper extends LinearSnapHelper {
         return null;
       }
 
-      if (indicatorListener != null){
-        if (layoutManager instanceof LinearLayoutManager) {
-          indicatorListener.onChanged(((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition() / 8);
-        }
-      }
       if (firstChild % 8 == 0){
         return layoutManager.findViewByPosition(0);
       }else if (firstChild % 8 < 4){
@@ -103,10 +93,6 @@ public class MySnapHelper extends LinearSnapHelper {
     }
     return mVerticalHelper;
 
-  }
-
-  public interface OnIndicatorListener{
-    void onChanged(int position);
   }
 
 }
