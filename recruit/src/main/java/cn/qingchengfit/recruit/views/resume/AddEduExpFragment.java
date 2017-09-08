@@ -208,6 +208,7 @@ import rx.schedulers.Schedulers;
         civInTime.setContent(DateUtils.Date2YYYYMM(date));
       }
     });
+    timeDialogWindow.setRange(1980,2100);
     timeDialogWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, DateUtils.YYMM2date(civInTime.getContent()));
   }
 
@@ -215,11 +216,13 @@ import rx.schedulers.Schedulers;
    * 毕业时间
    */
   @OnClick(R2.id.civ_out_time) public void onCivOutTimeClicked() {
+
     timeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
         civOutTime.setContent(DateUtils.date2YYMM(date));
       }
     });
+    timeDialogWindow.setRange(1980,2100);
     timeDialogWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, DateUtils.YYMM2date(civOutTime.getContent()));
   }
 

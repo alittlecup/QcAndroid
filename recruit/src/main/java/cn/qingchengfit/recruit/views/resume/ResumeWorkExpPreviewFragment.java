@@ -119,7 +119,8 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
     RxBusAdd(EventResumeFresh.class).observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<EventResumeFresh>() {
           @Override public void call(EventResumeFresh eventResumeFresh) {
-            freshData();
+            if (eventResumeFresh.flag >= 0)
+              freshData();
           }
         });
     return view;
@@ -261,6 +262,8 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
                       hideLoading();
                       if (qcResponse.status == 200) {
                         ToastUtils.show("删除成功");
+                        RxBus.getBus().post(new EventResumeFresh(-1));
+                        getActivity().onBackPressed();
                       } else {
                         ToastUtils.show("删除失败");
                       }
@@ -292,7 +295,7 @@ public class ResumeWorkExpPreviewFragment extends BaseFragment {
             hideLoading();
             if (qcResponse.status == 200) {
               freshData();
-              RxBus.getBus().post(new EventResumeFresh());
+              RxBus.getBus().post(new EventResumeFresh(-1));
               ToastUtils.show("已取消隐藏");
             } else {
               ToastUtils.show("操作失败");

@@ -209,6 +209,7 @@ import static android.text.TextUtils.isEmpty;
   public void setGym(Gym gym) {
     workexpeditGymName.setText(gym.getName());
     Glide.with(getContext())
+
         .load(gym.getPhoto())
         .asBitmap()
         .into(new CircleImgWrapper(hostImg, getActivity()));
@@ -247,24 +248,46 @@ import static android.text.TextUtils.isEmpty;
     }
 
     Observable<QcResponse> ob;
-    WorkExp body = new WorkExp.Builder().start(starttime)
+    WorkExp.Builder body = new WorkExp.Builder().start(starttime)
         .end(endtime)
         .description(description)
         .position(postion)
-        .group_course(Integer.parseInt(groupCount))
-        .group_user(Integer.parseInt(groupNum))
-        .private_course(Integer.parseInt(privateClass))
-        .private_user(Integer.parseInt(privateNum))
-        .sale(Float.parseFloat(sale))
         .group_is_hidden(!swGroup.isExpanded())
         .private_is_hidden(!swPrivate.isExpanded())
-        .sale_is_hidden(!swSale.isExpanded())
-        .gym(curGym)
-        .build();
+        .sale_is_hidden(!swSale.isExpanded());
+
+    if (swGroup.isExpanded()) {
+      try {
+        body.group_course(Integer.parseInt(groupCount));
+        body.group_user(Integer.parseInt(groupNum));
+      } catch (Exception e) {
+        showAlert("请填写团课业绩");
+        return;
+      }
+    }
+    if (swPrivate.isExpanded()) {
+      try {
+        body.private_course(Integer.parseInt(groupCount));
+        body.private_user(Integer.parseInt(groupNum));
+      } catch (Exception e) {
+        showAlert("请填写私教业绩");
+        return;
+      }
+    }
+    if (swSale.isExpanded()) {
+      try {
+        body.sale(Float.parseFloat(sale));
+      } catch (Exception e) {
+        showAlert("请填写私教业绩");
+        return;
+      }
+    }
+
     if (workExp != null) {
-      ob = restRepository.createGetApi(PostApi.class).updateWorkExp(workExp.id, body);
+      ob = restRepository.createGetApi(PostApi.class).updateWorkExp(workExp.id, body.build());
     } else {
-      ob = restRepository.createGetApi(PostApi.class).addWorkExp(body);
+      body.gym_id(curGym.id);
+      ob = restRepository.createGetApi(PostApi.class).addWorkExp(body.build());
     }
     showLoading();
     RxRegiste(ob.observeOn(AndroidSchedulers.mainThread())

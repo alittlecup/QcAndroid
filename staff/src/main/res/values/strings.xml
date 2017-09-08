@@ -268,8 +268,8 @@
   <string name="next_time">下次</string>
   <string name="choose_gym">选择场馆</string>
 
-  <string name="home_tab_gyms">我的健身房</string>
-  <string name="home_tab_setting">设置</string>
+  <string name="home_tab_gyms">健身房</string>
+  <string name="home_tab_setting">我</string>
   <string name="home_tab_special">发现</string>
   <string name="home_tab_home">连锁管理</string>
   <string name="home_tab_gym">健身房</string>
