@@ -74,8 +74,8 @@ public class ExportSendEmailFragment extends BaseFragment implements ImportExpor
   }
 
   private void initView() {
-    tvDownloadContent.setText(record.file_name);
-    tvDownloadInfo.setText(DateUtils.formatDateFromServer(record.created_at) + " " + record.created_by.username);
+    tvDownloadContent.setText(DateUtils.getFileNameFormServer(record.file_name));
+    tvDownloadInfo.setText(DateUtils.replaceTFromServer(record.created_at) + " " + record.created_by.username);
   }
 
   @OnClick(R.id.tv_send_email) public void send() {
