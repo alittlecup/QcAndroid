@@ -20,6 +20,7 @@ import cn.qingchengfit.staffkit.views.export.model.ExportRecord;
 import cn.qingchengfit.staffkit.views.export.presenter.ImportExportPresenter;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.List;
@@ -78,8 +79,8 @@ public class ExportSendEmailFragment extends BaseFragment implements ImportExpor
   }
 
   @OnClick(R.id.tv_send_email) public void send() {
-    if (TextUtils.isEmpty(editTargetEmail.getText())){
-      DialogUtils.showAlert(getContext(), "请填写邮箱");
+    if (TextUtils.isEmpty(editTargetEmail.getText()) || !StringUtils.isEmail(editTargetEmail.getText().toString())){
+      DialogUtils.showAlert(getContext(), "请填写正确的邮箱格式");
       return;
     }
     presenter.qcSendEmail(record.excel_url, editTargetEmail.getText().toString());
