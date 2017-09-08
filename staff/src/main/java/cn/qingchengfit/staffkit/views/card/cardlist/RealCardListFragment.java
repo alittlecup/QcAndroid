@@ -389,7 +389,7 @@ public class RealCardListFragment extends FilterHeadCommonFragment
     }
 
     @Override public void onGetCardCount(int count) {
-        textBalanceNumbers.setText(String.format(Locale.CHINA, "%d", count) + "张");
+        textBalanceNumbers.setText(getString(R.string.balance_card_total, String.format(Locale.CHINA, "%d", count)));
     }
 
     @Override public boolean onItemClick(int position) {

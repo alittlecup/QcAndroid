@@ -77,7 +77,7 @@ public class ExportSendEmailFragment extends BaseFragment implements ImportExpor
     tvDownloadInfo.setText(DateUtils.formatDateFromServer(record.created_at) + " " + record.created_by.username);
   }
 
-  @OnClick() public void send() {
+  @OnClick(R.id.tv_send_email) public void send() {
     if (TextUtils.isEmpty(editTargetEmail.getText())){
       DialogUtils.showAlert(getContext(), "请填写邮箱");
       return;
@@ -99,5 +99,6 @@ public class ExportSendEmailFragment extends BaseFragment implements ImportExpor
 
   @Override public void onSendEmailSuccess() {
     ToastUtils.show("发送成功");
+    getActivity().onBackPressed();
   }
 }

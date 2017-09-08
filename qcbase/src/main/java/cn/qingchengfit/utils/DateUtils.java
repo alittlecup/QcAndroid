@@ -130,6 +130,10 @@ public class DateUtils {
     }
   }
 
+  public static String replaceTFromServer(String s){
+    return s.replace("T", " ");
+  }
+
   public static Date formatDateFromYYYYMMDD(String s) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
     Date date = null;
@@ -478,5 +482,9 @@ public class DateUtils {
     int curYear = c.get(Calendar.YEAR);
     c.setTime(d);
     return curYear - c.get(Calendar.YEAR);
+  }
+
+  public static String getFileNameFormServer(String str){
+    return str.replace("T", " ");
   }
 }
