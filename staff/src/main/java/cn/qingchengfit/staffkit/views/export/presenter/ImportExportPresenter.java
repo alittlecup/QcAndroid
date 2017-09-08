@@ -28,9 +28,9 @@ import rx.schedulers.Schedulers;
 
 public class ImportExportPresenter extends BasePresenter {
 
-  MVPView view;
-  @Inject GymWrapper gymWrapper;
-  @Inject QcRestRepository qcRestRepository;
+  private MVPView view;
+  @Inject private GymWrapper gymWrapper;
+  @Inject private QcRestRepository qcRestRepository;
 
   @Inject
   public ImportExportPresenter() {
@@ -49,6 +49,7 @@ public class ImportExportPresenter extends BasePresenter {
   public void qcGetExportRecord(){
     RxRegiste(qcRestRepository.createGetApi(Get_Api.class)
         .qcGetExportRecord(App.staffId, gymWrapper.getParams())
+        .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponseData<ExportRecordWrapper>>() {
