@@ -14,6 +14,8 @@ import android.view.View;
 
 public class MySnapHelper extends LinearSnapHelper {
   private OrientationHelper mHorizontalHelper, mVerticalHelper;
+  private OnSelectListener listener;
+  private int count;
 
   @Nullable
   @Override
@@ -32,6 +34,14 @@ public class MySnapHelper extends LinearSnapHelper {
     return out;
   }
 
+  public void setListener(OnSelectListener listener) {
+    this.listener = listener;
+  }
+
+  public void setCount(int count) {
+    this.count = count;
+  }
+
   private int distanceToStart(View targetView, OrientationHelper helper) {
     return helper.getDecoratedStart(targetView) - helper.getStartAfterPadding();
   }
@@ -46,11 +56,22 @@ public class MySnapHelper extends LinearSnapHelper {
         return findStartView(layoutManager, getVerticalHelper(layoutManager));
       }
     }
-
     return super.findSnapView(layoutManager);
   }
 
-
+  //对返回的position处理，如果不是页面起始position则返回起始position
+  @Override
+  public int findTargetSnapPosition(RecyclerView.LayoutManager layoutManager, int velocityX,
+      int velocityY) {
+    int targePosition = super.findTargetSnapPosition(layoutManager, velocityX, velocityY);
+    if (targePosition % count != 0){
+      targePosition = targePosition - targePosition % count;
+    }
+    if (listener != null){
+      listener.onPageSelect(targePosition / count);
+    }
+    return targePosition;
+  }
 
   private View findStartView(RecyclerView.LayoutManager layoutManager,
       OrientationHelper helper) {
@@ -64,13 +85,10 @@ public class MySnapHelper extends LinearSnapHelper {
         return null;
       }
 
-      if (firstChild % 8 == 0){
+      if (firstChild % count == 0){
         return layoutManager.findViewByPosition(0);
-      }else if (firstChild % 8 < 4){
-        layoutManager.scrollToPosition(0);
-        return null;
-      }else if (layoutManager.getItemCount() > 8){
-        return layoutManager.findViewByPosition(firstChild / 8 + 8);
+      }else if (layoutManager.getItemCount() > count){
+        return layoutManager.findViewByPosition(firstChild / count + count);
       }else{
         return null;
       }
@@ -93,6 +111,10 @@ public class MySnapHelper extends LinearSnapHelper {
     }
     return mVerticalHelper;
 
+  }
+
+  public interface OnSelectListener{
+    void onPageSelect(int position);
   }
 
 }

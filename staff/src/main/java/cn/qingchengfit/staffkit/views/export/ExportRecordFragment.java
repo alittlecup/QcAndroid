@@ -51,7 +51,8 @@ public class ExportRecordFragment extends BaseFragment implements ImportExportPr
     adapter = new CommonFlexAdapter(itemList);
     recyclerExportRecord.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerExportRecord.addItemDecoration(new FlexibleItemDecoration(getContext())
-        .withDivider(R.drawable.divider_qc_base_line)
+        .addItemViewType(R.layout.item_export_record, 1)
+        .withDivider(R.drawable.divider_card_list)
         .withBottomEdge(true));
     recyclerExportRecord.setAdapter(adapter);
     return view;
