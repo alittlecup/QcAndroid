@@ -75,6 +75,7 @@ public class WorkExp implements Cloneable, Parcelable {
   public Boolean private_is_hidden;
   public Boolean sale_is_hidden;
   public List<TeacherImpression> impression;
+  public String gym_id;
 
   private WorkExp(Builder builder) {
     setCoach(builder.coach);
@@ -98,6 +99,7 @@ public class WorkExp implements Cloneable, Parcelable {
     private_is_hidden = builder.private_is_hidden;
     sale_is_hidden = builder.sale_is_hidden;
     setImpression(builder.impression);
+    gym_id = builder.gym_id;
   }
 
   public WorkExp() {
@@ -115,16 +117,17 @@ public class WorkExp implements Cloneable, Parcelable {
     this.group_user = (Integer) in.readValue(Integer.class.getClassLoader());
     this.sale = (Float) in.readValue(Float.class.getClassLoader());
     this.start = in.readString();
-    this.coach_score = in.readFloat();
-    this.course_score = in.readFloat();
+    this.coach_score = (Float) in.readValue(Float.class.getClassLoader());
+    this.course_score = (Float) in.readValue(Float.class.getClassLoader());
     this.group_course = (Integer) in.readValue(Integer.class.getClassLoader());
     this.private_user = (Integer) in.readValue(Integer.class.getClassLoader());
     this.gym = in.readParcelable(Gym.class.getClassLoader());
-    this.is_hidden = in.readByte() != 0;
-    this.group_is_hidden = in.readByte() != 0;
-    this.private_is_hidden = in.readByte() != 0;
-    this.sale_is_hidden = in.readByte() != 0;
+    this.is_hidden = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    this.group_is_hidden = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    this.private_is_hidden = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    this.sale_is_hidden = (Boolean) in.readValue(Boolean.class.getClassLoader());
     this.impression = in.createTypedArrayList(TeacherImpression.CREATOR);
+    this.gym_id = in.readString();
   }
 
   public List<String> getImpressList() {
@@ -321,16 +324,17 @@ public class WorkExp implements Cloneable, Parcelable {
     dest.writeValue(this.group_user);
     dest.writeValue(this.sale);
     dest.writeString(this.start);
-    dest.writeFloat(this.coach_score);
-    dest.writeFloat(this.course_score);
+    dest.writeValue(this.coach_score);
+    dest.writeValue(this.course_score);
     dest.writeValue(this.group_course);
     dest.writeValue(this.private_user);
     dest.writeParcelable(this.gym, flags);
-    dest.writeByte(this.is_hidden ? (byte) 1 : (byte) 0);
-    dest.writeByte(this.group_is_hidden ? (byte) 1 : (byte) 0);
-    dest.writeByte(this.private_is_hidden ? (byte) 1 : (byte) 0);
-    dest.writeByte(this.sale_is_hidden ? (byte) 1 : (byte) 0);
+    dest.writeValue(this.is_hidden);
+    dest.writeValue(this.group_is_hidden);
+    dest.writeValue(this.private_is_hidden);
+    dest.writeValue(this.sale_is_hidden);
     dest.writeTypedList(this.impression);
+    dest.writeString(this.gym_id);
   }
 
   public static final class Builder {
@@ -355,6 +359,7 @@ public class WorkExp implements Cloneable, Parcelable {
     private Boolean private_is_hidden;
     private Boolean sale_is_hidden;
     private List<TeacherImpression> impression;
+    private String gym_id;
 
     public Builder() {
     }
@@ -461,6 +466,11 @@ public class WorkExp implements Cloneable, Parcelable {
 
     public Builder impression(List<TeacherImpression> val) {
       impression = val;
+      return this;
+    }
+
+    public Builder gym_id(String val) {
+      gym_id = val;
       return this;
     }
 

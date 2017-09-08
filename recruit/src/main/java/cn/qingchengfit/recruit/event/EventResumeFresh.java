@@ -22,4 +22,15 @@ package cn.qingchengfit.recruit.event;
  */
 
 public class EventResumeFresh {
+  /**
+   * 用以过滤 当前页的刷新
+   */
+  public int flag = 0 ;
+
+  public EventResumeFresh() {
+  }
+
+  public EventResumeFresh(int flag) {
+    this.flag = flag;
+  }
 }
