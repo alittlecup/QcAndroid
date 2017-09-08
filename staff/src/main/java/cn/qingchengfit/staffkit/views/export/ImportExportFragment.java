@@ -49,6 +49,7 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_import_export, container, false);
     unbinder = ButterKnife.bind(this, view);
+    delegatePresenter(presenter, this);
     initToolbar(toolbar);
     toolbarTitle.setText(getResources().getString(R.string.toolbar_import_export_student));
     return view;

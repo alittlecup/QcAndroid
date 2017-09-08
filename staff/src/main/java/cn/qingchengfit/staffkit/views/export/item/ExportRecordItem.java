@@ -59,8 +59,8 @@ public class ExportRecordItem extends AbstractFlexibleItem<ExportRecordItem.Expo
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ExportRecordVH holder, int position,
       List payloads) {
-    holder.tvExportTitle.setText(exportRecord.file_name);
-    holder.tvExportInfo.setText(DateUtils.formatDateToServer(exportRecord.created_at) + " " + exportRecord.created_by.username);
+    holder.tvExportTitle.setText(DateUtils.getFileNameFormServer(exportRecord.file_name));
+    holder.tvExportInfo.setText(DateUtils.replaceTFromServer(exportRecord.created_at) + " " + exportRecord.created_by.username);
     switch (exportRecord.status){
       case EXOPRT_ING:
         holder.tvExportState.setVisibility(View.VISIBLE);
@@ -74,6 +74,7 @@ public class ExportRecordItem extends AbstractFlexibleItem<ExportRecordItem.Expo
       case EXOPRT_FAILED:
         break;
     }
+    holder.tvExportDownload.setTag(position);
   }
 
   class ExportRecordVH extends FlexibleViewHolder {

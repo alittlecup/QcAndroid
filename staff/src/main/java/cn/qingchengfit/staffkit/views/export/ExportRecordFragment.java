@@ -20,6 +20,7 @@ import cn.qingchengfit.staffkit.views.export.presenter.ImportExportPresenter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,13 +50,16 @@ public class ExportRecordFragment extends BaseFragment implements ImportExportPr
     toolbarTitle.setText(getString(R.string.toolbar_export_record));
     adapter = new CommonFlexAdapter(itemList);
     recyclerExportRecord.setLayoutManager(new LinearLayoutManager(getContext()));
-    recyclerExportRecord.addItemDecoration(new QcLeftRightDivider(getContext()));
+    recyclerExportRecord.addItemDecoration(new FlexibleItemDecoration(getContext())
+        .withDivider(R.drawable.divider_qc_base_line)
+        .withBottomEdge(true));
     recyclerExportRecord.setAdapter(adapter);
     return view;
   }
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
+    showLoadingTrans();
     presenter.qcGetExportRecord();
   }
 
@@ -64,6 +68,10 @@ public class ExportRecordFragment extends BaseFragment implements ImportExportPr
   }
 
   @Override public void onExportRecord(List<ExportRecord> record) {
+    hideLoadingTrans();
+    if(record.size() > 0){
+      itemList.clear();
+    }
     for (ExportRecord exportRecord : record){
       itemList.add(new ExportRecordItem(exportRecord, this));
     }
@@ -78,6 +86,13 @@ public class ExportRecordFragment extends BaseFragment implements ImportExportPr
   }
 
   @Override public void onDownload(int position) {
-
+    if (itemList.get(position) instanceof ExportRecordItem) {
+      getFragmentManager()
+          .beginTransaction()
+          .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
+          .replace(R.id.frag_import_export, ExportSendEmailFragment.newInstance(((ExportRecordItem) itemList.get(position)).getData()))
+          .addToBackStack(null)
+          .commit();
+    }
   }
 }

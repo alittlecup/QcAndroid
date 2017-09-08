@@ -6,6 +6,7 @@
     android:orientation="horizontal"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
+    android:background="@color/white"
     >
 
   <LinearLayout
@@ -14,6 +15,7 @@
       android:layout_weight="1"
       android:orientation="vertical"
       android:paddingTop="15dp"
+      android:layout_gravity="center_vertical"
       >
 
     <TextView
