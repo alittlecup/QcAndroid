@@ -87,6 +87,7 @@
         android:background="@null"
         android:gravity="right"
         android:hint="@string/hint_email_address"
+        android:maxLines="1"
         style="@style/QcTextStyleMediumWarm"
         />
   </LinearLayout>

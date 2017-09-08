@@ -372,6 +372,17 @@ public class StringUtils {
         return idList;
     }
 
+    public static boolean isEmail(String str){
+        boolean isEmail = true;
+        String pattern = "(.*)@(.*)(\\.)(.*)";
+        Pattern p = Pattern.compile(pattern);
+        Matcher matcher = p.matcher(str);
+        if (!matcher.find()){
+            isEmail = false;
+        }
+        return isEmail;
+    }
+
     /**
      * 是否是汉字
      */
