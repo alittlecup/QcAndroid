@@ -99,7 +99,7 @@ public class ExportSendEmailFragment extends BaseFragment implements ImportExpor
   }
 
   @Override public void onSendEmailSuccess() {
-    ToastUtils.show("发送成功");
+    ToastUtils.show("邮件发送成功");
     getActivity().onBackPressed();
   }
 }
