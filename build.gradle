@@ -6,10 +6,10 @@ ext {
                    compileVersion      : 25,
                    minSdk              : 15,
                    targetSdk           : 24,
-                   version_code        : 87, //缝10必更
-                   version_name        : "0.87",
-                   trainer_version_code: 157,
-                   trainer_version_name: "1.5.7"
+                   version_code        : 88, //缝10必更
+                   version_name        : "0.88",
+                   trainer_version_code: 158,
+                   trainer_version_name: "1.5.8"
 
   ]
 

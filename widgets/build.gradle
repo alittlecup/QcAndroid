@@ -85,6 +85,8 @@ dependencies {
   //裁剪图片
 //  compile 'com.commonsware.cwac:cam2:0.7.6'
   compile(name: 'cam2-0.7.6', ext: 'aar')
+  compile 'com.github.clans:fab:1.6.4'
+  compile 'org.greenrobot:eventbus:3.0.0'
 
   //  compile project(":zcam2-0.7.6")
   //拍照
