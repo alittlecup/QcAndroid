@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +43,8 @@ import cn.qingchengfit.staffkit.views.cardtype.ChooseCardTypeActivity;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.EndlessRecyclerOnScrollListener;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
+import cn.qingchengfit.staffkit.views.export.ImportExportFragment;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -77,7 +80,7 @@ public class RealCardListFragment extends FilterHeadCommonFragment
     @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
     @BindView(R.id.cards_total) TextView cardsTotal;
     @BindView(R.id.card_list_shadow) View cardListShadow;
-    @BindView(R.id.rl_balance_short) RelativeLayout rlBalanceShort;
+    @BindView(R.id.rl_balance_short) LinearLayout rlBalanceShort;
     @BindView(R.id.text_balance_cards) TextView textBalanceNumbers;
 
     @Inject RealCardListPresenter realCardListPresenter;
@@ -192,6 +195,17 @@ public class RealCardListFragment extends FilterHeadCommonFragment
             .replace(R.id.student_frag, new BalanceCardListFragment())
             .addToBackStack(null)
             .commit();
+    }
+
+    @OnClick(R.id.layout_card_export) public void onCardExport(){
+        if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CARD_EXPORT)) {
+            showAlert(R.string.sorry_for_no_permission);
+            return;
+        }
+
+        Intent i = new Intent(getActivity(), ImportExportActivity.class);
+        i.putExtra("type", ImportExportActivity.TYPE_CARD);
+        startActivity(i);
     }
 
     @OnClick(R.id.fab_add_card) public void addCard() {
@@ -375,7 +389,7 @@ public class RealCardListFragment extends FilterHeadCommonFragment
     }
 
     @Override public void onGetCardCount(int count) {
-        textBalanceNumbers.setText(String.format(Locale.CHINA, "%d", count) + "张");
+        textBalanceNumbers.setText(getString(R.string.balance_card_total, String.format(Locale.CHINA, "%d", count)));
     }
 
     @Override public boolean onItemClick(int position) {

@@ -22,15 +22,22 @@
         app:elevation="0dp"
         >
 
-      <RelativeLayout
-          android:id="@+id/rl_balance_short"
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="48dp"
           android:gravity="center_vertical"
           android:minHeight="48dp"
           app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways"
+          android:orientation="horizontal"
           >
 
+        <LinearLayout
+            android:id="@+id/rl_balance_short"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
         <ImageView
             android:id="@+id/img_balance"
             android:layout_width="wrap_content"
@@ -50,17 +57,6 @@
             android:textColor="@color/qc_text_black"
             />
 
-
-        <ImageView
-            android:id="@+id/icon_balance_into"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="2.5dp"
-            android:src="@drawable/ic_arrow_right"
-            />
-
         <TextView
             android:id="@+id/text_balance_cards"
             android:layout_width="wrap_content"
@@ -68,11 +64,35 @@
             android:layout_marginRight="6dp"
             android:layout_toLeftOf="@+id/icon_balance_into"
             android:textColor="@color/qc_text_black"
-            tools:text="330张"
+            tools:text="(330张)"
             />
+        </LinearLayout>
+        <include
+          layout="@layout/divider_grey_vertical"/>
 
+        <LinearLayout
+            android:id="@+id/layout_card_export"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:srcCompat="@drawable/ic_card_export"
+              />
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="会员卡导入导出"
+              style="@style/QcTextStyleMediumDark"
+              android:layout_marginLeft="10dp"
+              />
 
-      </RelativeLayout>
+        </LinearLayout>
+
+      </LinearLayout>
 
       <View
           android:layout_width="match_parent"

@@ -114,6 +114,7 @@ import cn.qingchengfit.staffkit.train.model.GroupListResponse;
 import cn.qingchengfit.staffkit.train.model.SignRecord;
 import cn.qingchengfit.staffkit.train.model.SignUpDetailResponse;
 import cn.qingchengfit.staffkit.train.model.TeamDetailResponse;
+import cn.qingchengfit.staffkit.views.export.model.ExportRecordWrapper;
 import java.util.HashMap;
 import java.util.List;
 import retrofit2.Call;
@@ -917,5 +918,9 @@ public interface Get_Api {
     //获取消息首页求职招聘信息列表
     @GET("/api/user/job/records/")
     rx.Observable<cn.qingchengfit.network.response.QcResponseData<RecordWrap>> qcGetRecruitMessageList();
+
+    //导出记录
+    @GET("/api/staffs/{staff_id}/export/records/")
+    rx.Observable<cn.qingchengfit.network.response.QcResponseData<ExportRecordWrapper>> qcGetExportRecord(@Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
 }

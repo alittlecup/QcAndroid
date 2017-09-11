@@ -350,6 +350,15 @@ public class RecruitRouter extends InnerRouter {
     add(RecruitPositionDetailEmployerFragment.newInstance(job));
   }
 
+  /**
+   * 是否显示分享提示的职位详情跳转
+   * @param job
+   * @param isShow
+   */
+  public void tojobDetailEmployer(Job job, boolean isShow) {
+    add(RecruitPositionDetailEmployerFragment.newInstance(job, isShow));
+  }
+
   /*
    * =============================== 招聘会 ==================================
    */

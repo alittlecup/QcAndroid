@@ -101,7 +101,10 @@ public class StudentListFragment extends FilterCommonFragment {
         /**
          * {@link cn.qingchengfit.staffkit.views.student.StudentOperationFragment}
          */
-        getChildFragmentManager().beginTransaction().replace(R.id.frame_student_operation, new StudentOperationFragment()).commit();
+        getChildFragmentManager().beginTransaction()
+            .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
+            .replace(R.id.frame_student_operation, new StudentOperationFragment())
+            .commit();
         // 会员筛选页
         StudentFilterFragment filterFragment = new StudentFilterFragmentBuilder(1).build();
         getChildFragmentManager().beginTransaction().replace(R.id.frame_student_filter, filterFragment).commit();

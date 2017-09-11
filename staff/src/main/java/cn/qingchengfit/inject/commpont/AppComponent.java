@@ -127,6 +127,10 @@ import cn.qingchengfit.staffkit.views.course.limit.OrderLimitFragment;
 import cn.qingchengfit.staffkit.views.course.msg.MsgNotiFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
+import cn.qingchengfit.staffkit.views.export.CardImportExportFragment;
+import cn.qingchengfit.staffkit.views.export.ExportRecordFragment;
+import cn.qingchengfit.staffkit.views.export.ExportSendEmailFragment;
+import cn.qingchengfit.staffkit.views.export.ImportExportFragment;
 import cn.qingchengfit.staffkit.views.gym.AddBrandInMainFragment;
 import cn.qingchengfit.staffkit.views.gym.AddNewCoachFragment;
 import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
@@ -510,6 +514,9 @@ import dagger.multibindings.IntoMap;
     AppComponent.JobSearchChatModule.class, AppComponent.RecruitMessageListFragmentModule.class,
     //AppComponent.JobSearchChatModule.class,
 
+    //导入导出
+    AppComponent.ImportExportFragmentModule.class, AppComponent.ExportRecordFragmentModule.class,
+    AppComponent.ExportSendEmailFragmentModule.class, AppComponent.CardImportExportFragmentModule.class,
 })
 
 public interface AppComponent {
@@ -3977,4 +3984,35 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(EditGymInfoFragmentSubcomponent.Builder builder);
     }
 
+    @Subcomponent() public interface ExportRecordFragmentSubcomponent extends AndroidInjector<ExportRecordFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ExportRecordFragment> {}
+    }
+    @Module(subcomponents = ExportRecordFragmentSubcomponent.class) abstract class ExportRecordFragmentModule {
+        @Binds @IntoMap @FragmentKey(ExportRecordFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ExportRecordFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface ImportExportFragmentSubcomponent extends AndroidInjector<ImportExportFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ImportExportFragment> {}
+    }
+    @Module(subcomponents = ImportExportFragmentSubcomponent.class) abstract class ImportExportFragmentModule {
+        @Binds @IntoMap @FragmentKey(ImportExportFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ImportExportFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface ExportSendEmailFragmentSubcomponent extends AndroidInjector<ExportSendEmailFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ExportSendEmailFragment> {}
+    }
+    @Module(subcomponents = ExportSendEmailFragmentSubcomponent.class) abstract class ExportSendEmailFragmentModule {
+        @Binds @IntoMap @FragmentKey(ExportSendEmailFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ExportSendEmailFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface CardImportExportFragmentSubcomponent extends AndroidInjector<CardImportExportFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardImportExportFragment> {}
+    }
+    @Module(subcomponents = CardImportExportFragmentSubcomponent.class) abstract class CardImportExportFragmentModule {
+        @Binds @IntoMap @FragmentKey(CardImportExportFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CardImportExportFragmentSubcomponent.Builder builder);
+    }
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:background="@color/white"
+    >
+
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      android:paddingTop="15dp"
+      android:layout_gravity="center_vertical"
+      android:background="@color/white"
+      >
+
+    <TextView
+        android:id="@+id/tv_export_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="会员及会员卡数据导出2017-03-13 14:30.xls"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <TextView
+        android:id="@+id/tv_export_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        tools:text="2017-03-13 14:30  志恒"
+        />
+
+  </LinearLayout>
+
+  <FrameLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:background="@color/white"
+      >
+
+    <TextView
+        android:id="@+id/tv_export_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/bg_color_primary_button"
+        android:paddingBottom="7dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="7dp"
+        android:text="下载"
+        android:textColor="@color/white"
+        style="@style/QcTextStyleSmallDark"
+        android:visibility="visible"
+        />
+
+    <TextView
+        android:id="@+id/tv_export_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_export_status"
+        android:visibility="gone"
+        />
+
+  </FrameLayout>
+
+</LinearLayout>

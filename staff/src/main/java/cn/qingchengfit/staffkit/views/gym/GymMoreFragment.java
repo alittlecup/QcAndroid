@@ -216,7 +216,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_STUDENT_CARDS), studentsFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_STUDENT_BODY_TEST),
                     studentsFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), studentsFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.REPORT_EXPORT), studentsFuntion));
 
                 FunHeaderItem internalFuntion = new FunHeaderItem("员工管理");
 
