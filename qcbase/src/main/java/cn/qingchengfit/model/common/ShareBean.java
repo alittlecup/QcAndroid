@@ -1,5 +1,9 @@
 package cn.qingchengfit.model.common;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import java.util.List;
+
 /**
  * power by
  * <p>
@@ -13,9 +17,43 @@ package cn.qingchengfit.model.common;
  * <p>
  * Created by Paper on 15/10/31 2015.
  */
-public class ShareBean {
+public class ShareBean implements Parcelable {
   public String title;
   public String desc;
   public String link;
   public String imgUrl;
+  public List<ShareExtends> extra;
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.title);
+    dest.writeString(this.desc);
+    dest.writeString(this.link);
+    dest.writeString(this.imgUrl);
+    dest.writeTypedList(this.extra);
+  }
+
+  public ShareBean() {
+  }
+
+  protected ShareBean(Parcel in) {
+    this.title = in.readString();
+    this.desc = in.readString();
+    this.link = in.readString();
+    this.imgUrl = in.readString();
+    this.extra = in.createTypedArrayList(ShareExtends.CREATOR);
+  }
+
+  public static final Creator<ShareBean> CREATOR = new Creator<ShareBean>() {
+    @Override public ShareBean createFromParcel(Parcel source) {
+      return new ShareBean(source);
+    }
+
+    @Override public ShareBean[] newArray(int size) {
+      return new ShareBean[size];
+    }
+  };
 }

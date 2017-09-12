@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -35,6 +37,8 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
+import static android.view.View.GONE;
+
 /**
  * power by
  * <p>
@@ -49,6 +53,10 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/5/12 2016.
  */
 public class ShareDialogFragment extends BottomSheetDialogFragment {
+
+  public static final String SHARE_TYPE_ACTION = "action";
+  public static final String SHARE_TYPE_INFO = "info";
+  @BindView(R2.id.layout_extends) public LinearLayout layoutExtends;
 
   private IWXAPI api;
 
@@ -110,6 +118,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
     unbinder = ButterKnife.bind(this, view);
     api = WXAPIFactory.createWXAPI(getActivity(), wechat_code, true);
     api.registerApp(wechat_code);
+    layoutExtends.setVisibility(GONE);
     if (TextUtils.isEmpty(mUrl) && (!TextUtils.isEmpty(mImg) || mBitmap != null)) {
       isImg = true;
     } else {
