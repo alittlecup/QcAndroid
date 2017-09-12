@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventFreshUnloginAd;
+import cn.qingchengfit.events.EventShareFun;
 import cn.qingchengfit.model.common.Contact;
 import cn.qingchengfit.model.common.PayEvent;
 import cn.qingchengfit.model.common.PlatformInfo;
@@ -45,6 +46,7 @@ import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.DialogSheet;
+import cn.qingchengfit.views.ShareDialogWithExtendFragment;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.CustomSwipeRefreshLayout;
 import cn.qingchengfit.widgets.R;
@@ -71,6 +73,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -172,6 +175,7 @@ public class WebFragment extends BaseFragment
     });
 
     initWebSetting();
+    initBus();
 
     initToolbar(mToolbar);
     if (hideToolbar) commonToolbar.setVisibility(View.GONE);
@@ -274,6 +278,24 @@ public class WebFragment extends BaseFragment
         }));
 
     return view;
+  }
+
+  private void initBus() {
+    RxRegiste(RxBus.getBus()
+        .register(EventShareFun.class)
+        .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .subscribe(new Action1<EventShareFun>() {
+          @Override public void call(EventShareFun eventShareFun) {
+            if (eventShareFun.shareExtends != null) {
+              Gson gson = new Gson();
+              String json = gson.toJson(eventShareFun.shareExtends);
+              mWebviewWebView.loadUrl(
+                  "javascript:window.nativeLinkWeb.callbackLst.shareInfo(" + json + ");");
+            }
+          }
+        }));
   }
 
   public void onLoadedView() {
@@ -683,8 +705,12 @@ public class WebFragment extends BaseFragment
     @JavascriptInterface public void shareInfo(String json) {
       try {
         ShareBean bean = new Gson().fromJson(json, ShareBean.class);
-        ShareDialogFragment.newInstance(bean.title, bean.desc, bean.imgUrl, bean.link)
-            .show(getFragmentManager(), "");
+        if (bean.extra == null) {
+          ShareDialogFragment.newInstance(bean.title, bean.desc, bean.imgUrl, bean.link)
+              .show(getFragmentManager(), "");
+        } else {
+          ShareDialogWithExtendFragment.newInstance(bean).show(getFragmentManager(), "");
+        }
       } catch (Exception e) {
 
       }

@@ -31,6 +31,8 @@ public class PhoneEditText extends LinearLayout implements View.OnClickListener,
     private boolean noNull = false;
     private TextView noNullTv;
     private String hintStr;
+    private OnEditFocusListener onEditFocusListener;
+
     public PhoneEditText(Context context) {
         super(context);
         setOrientation(LinearLayout.HORIZONTAL);
@@ -55,6 +57,10 @@ public class PhoneEditText extends LinearLayout implements View.OnClickListener,
         init(attrs, defStyle);
 
         onFinishInflate();
+    }
+
+    public void setOnEditFocusListener(OnEditFocusListener onEditFocusListener) {
+        this.onEditFocusListener = onEditFocusListener;
     }
 
     private void init(AttributeSet attrs, int defStyle) {
@@ -88,6 +94,13 @@ public class PhoneEditText extends LinearLayout implements View.OnClickListener,
         findViewById(R.id.img_down).setOnClickListener(this);
         mDistrict.setOnClickListener(this);
         mLeftIcon.setVisibility(showIcon ? VISIBLE : GONE);
+        mPhoneNum.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override public void onFocusChange(View v, boolean hasFocus) {
+                if (onEditFocusListener != null) {
+                    onEditFocusListener.onFocusChange(hasFocus);
+                }
+            }
+        });
 
     }
 
@@ -163,7 +176,10 @@ public class PhoneEditText extends LinearLayout implements View.OnClickListener,
             } else mDistrictInt = 0;
         }
         mDistrict.setText(getResources().getStringArray(R.array.country_and_districion_list)[mDistrictInt]);
+    }
 
+    public interface OnEditFocusListener {
+        void onFocusChange(boolean isFocus);
     }
 
 

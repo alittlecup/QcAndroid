@@ -10,6 +10,7 @@ import cn.qingchengfit.model.responese.ChatFriendsData;
 import cn.qingchengfit.model.responese.Notification;
 import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -30,6 +31,7 @@ import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.bean.ScanBody;
 import com.qingchengfit.fitcoach.bean.SingleBatchBody;
 import com.qingchengfit.fitcoach.bean.SyncExpBody;
+import com.qingchengfit.fitcoach.fragment.protocol.CheckProtocolModel;
 import com.qingchengfit.fitcoach.fragment.statement.model.CardTpls;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseReportDetail;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
@@ -648,6 +650,11 @@ public class QcCloudClient {
         //获取消息首页求职招聘信息列表
         @GET("/api/user/job/records/")
         rx.Observable<QcResponseData<RecordWrap>> qcGetRecruitMessageList();
+
+        //判断是否同意用户协议
+        @GET(" /api/user/check/read_agreement/")
+        rx.Observable<QcDataResponse<CheckProtocolModel>> qcCheckProtocol(
+            @QueryMap HashMap<String, Object> params);
 
     }
 

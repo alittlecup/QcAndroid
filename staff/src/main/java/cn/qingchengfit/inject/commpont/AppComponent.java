@@ -166,6 +166,8 @@ import cn.qingchengfit.staffkit.views.gym.upgrate.TrialProDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.UpgrateGymFragment;
 import cn.qingchengfit.staffkit.views.login.LoginActivity;
+import cn.qingchengfit.staffkit.views.login.LoginFragment;
+import cn.qingchengfit.staffkit.views.login.RegisteFragment;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.staffkit.views.main.ChooseBrandInMainFragment;
 import cn.qingchengfit.staffkit.views.main.GymsFragment;
@@ -517,6 +519,9 @@ import dagger.multibindings.IntoMap;
     //导入导出
     AppComponent.ImportExportFragmentModule.class, AppComponent.ExportRecordFragmentModule.class,
     AppComponent.ExportSendEmailFragmentModule.class, AppComponent.CardImportExportFragmentModule.class,
+
+    AppComponent.LoginFragmentModule.class, AppComponent.RegisteFragmentModule.class,
+
 })
 
 public interface AppComponent {
@@ -4015,4 +4020,33 @@ public interface AppComponent {
         @Binds @IntoMap @FragmentKey(CardImportExportFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CardImportExportFragmentSubcomponent.Builder builder);
     }
+7
+
+    @Subcomponent() public interface LoginFragmentSubcomponent
+        extends AndroidInjector<LoginFragment> {
+        @Subcomponent.Builder public abstract class Builder
+            extends AndroidInjector.Builder<LoginFragment> {
+        }
+    }
+
+    @Module(subcomponents = LoginFragmentSubcomponent.class) abstract class LoginFragmentModule {
+        @Binds @IntoMap @FragmentKey(LoginFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+            LoginFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface RegisteFragmentSubcomponent
+        extends AndroidInjector<RegisteFragment> {
+        @Subcomponent.Builder public abstract class Builder
+            extends AndroidInjector.Builder<RegisteFragment> {
+        }
+    }
+
+    @Module(subcomponents = RegisteFragmentSubcomponent.class)
+    abstract class RegisteFragmentModule {
+        @Binds @IntoMap @FragmentKey(RegisteFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+            RegisteFragmentSubcomponent.Builder builder);
+    }
+
 }

@@ -132,6 +132,10 @@ public class GymFunctionFactory {
     public static final String CARD_IMPORT = "/cards/import";
     public static final String CARD_EXPORT = "/cards/export";
 
+    //用户协议
+    public static final String USER_PROTOCOL = "/user/protocol";
+    public static final String USER_PROTOCOL_URL = "/protocol/staff/";
+
     public static GymFuntion instanceGymFuntion(String module) {
         GymFuntion gym = new GymFuntion.Builder().moduleName(module).text(getModuleTxt(module)).img(getDrawableRes(module)).build();
         return gym;

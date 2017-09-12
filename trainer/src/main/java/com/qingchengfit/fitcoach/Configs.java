@@ -91,4 +91,7 @@ public class Configs {
     public static String CameraPic = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/camera_tmp.jpg";
     public static String CameraCrop = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/crop_tmp.jpg";
     public static String PREFER_SESSION = "session_id";
+
+  //用户协议
+  public static final String USER_PROTOCOL_URL = "protocol/staff/";
 }

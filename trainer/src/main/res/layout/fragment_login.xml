@@ -6,9 +6,6 @@
     android:background="@color/white"
     tools:context="com.qingchengfit.fitcoach.fragment.LoginFragment"
     >
-
-  <include layout="@layout/loginview">
-  </include>
-
+  <include layout="@layout/loginview"/>
 
 </FrameLayout>

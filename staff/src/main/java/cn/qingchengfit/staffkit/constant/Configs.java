@@ -145,4 +145,7 @@ public class Configs {
     public static String Server = BuildConfig.DEBUG ? Constants.ServerDebug : Constants.Server;
     public static String URL_QC_FIND = Server + "mobile/staff/discover/";
     public static String APP_ID = "wx2beb386a0021ed3f";    //微信appid
+
+    //用户协议
+    public static final String USER_PROTOCOL_URL = "";
 }

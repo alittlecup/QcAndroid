@@ -3,6 +3,7 @@ package cn.qingchengfit.staffkit.views.login;
 import android.content.Context;
 import android.content.Intent;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
@@ -11,7 +12,6 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.Login;
-import cn.qingchengfit.model.responese.QcResponse;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -19,8 +19,6 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.usecase.LoginUsecase;
@@ -50,7 +48,7 @@ import rx.schedulers.Schedulers;
  * <p/>
  * Created by Paper on 15/11/19 2015.
  */
-public class LoginPresenter implements Presenter {
+public class LoginPresenter extends BasePresenter {
 
     public static final String TAG = LoginPresenter.class.getSimpleName();
     @Inject GymWrapper gymWrapper;
@@ -77,7 +75,7 @@ public class LoginPresenter implements Presenter {
 
     }
 
-    @Override public void attachView(PView v) {
+    @Override public void attachView(cn.qingchengfit.di.PView v) {
         mLoginView = (LoginView) v;
     }
 
@@ -90,6 +88,7 @@ public class LoginPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         mLoginView = null;
         if (spGetSer != null) spGetSer.unsubscribe();
     }
