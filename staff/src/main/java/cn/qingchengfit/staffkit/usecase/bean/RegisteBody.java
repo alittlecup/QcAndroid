@@ -21,6 +21,7 @@ public class RegisteBody {
     public String phone;
     public String city;
     public String area_code;
+    public boolean has_read_agreement;
 
     private RegisteBody(Builder builder) {
         setUsername(builder.username);
@@ -88,6 +89,7 @@ public class RegisteBody {
         private String phone;
         private String city;
         private String area_code;
+        private boolean has_read_agreement;
 
         public Builder() {
         }
@@ -124,6 +126,11 @@ public class RegisteBody {
 
         public Builder area_code(String val) {
             area_code = val;
+            return this;
+        }
+
+        public Builder has_read_agreement(boolean has_read_agreement) {
+            has_read_agreement = has_read_agreement;
             return this;
         }
 

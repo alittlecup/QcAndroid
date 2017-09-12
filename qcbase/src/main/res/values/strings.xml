@@ -44,4 +44,8 @@
   <string name="complete_gym_info">完善场馆信息</string>
   <string name="title_hint_wrap">-- %s --</string>
 
+  //用户协议
+  <string name="text_user_protocol">我已阅读并同意</string>
+  <string name="text_protocol_name">《用户注册协议》</string>
+
 </resources>

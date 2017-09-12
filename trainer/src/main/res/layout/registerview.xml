@@ -37,6 +37,7 @@
           android:paddingLeft="@dimen/little"
           android:paddingRight="@dimen/little"
           android:text="@string/label_username"
+          style="@style/QcTextStyleLargeWarm"
           />
 
       <EditText
@@ -49,10 +50,8 @@
           android:imeOptions="actionNext"
           android:lines="1"
           android:maxLength="10"
-
+          style="@style/QcTextStyleLargeWarm"
           />
-
-
     </LinearLayout>
 
 
@@ -62,6 +61,7 @@
         android:layout_height="@dimen/qc_item_height"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:layout_marginTop="20dp"
         >
 
       <ImageView
@@ -79,6 +79,7 @@
           android:paddingLeft="@dimen/little"
           android:paddingRight="@dimen/little"
           android:text="@string/gender"
+          style="@style/QcTextStyleLargeWarm"
           />
 
       <RadioGroup
@@ -123,7 +124,7 @@
         android:id="@+id/phone_num"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
-
+        android:layout_marginTop="20dp"
         />
 
     <cn.qingchengfit.widgets.PasswordView
@@ -131,6 +132,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:pw_mode="false"
+        android:layout_marginTop="20dp"
         />
 
     <cn.qingchengfit.widgets.PasswordView
@@ -138,18 +140,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:pw_mode="true"
+        android:layout_marginTop="20dp"
         />
 
-    <Button
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="25dp"
+        >
+
+      <include
+          layout="@layout/layout_agree_protocol"/>
+
+      <Button
         android:id="@+id/registe_btn"
-        android:layout_width="133dp"
+          android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="end"
-        android:layout_marginTop="30dp"
+          android:layout_marginTop="25dp"
         android:orientation="horizontal"
-        android:text="@string/complete_label"
-        >
-    </Button>
+          android:text="确定"
+          />
+
+    </LinearLayout>
 
   </LinearLayout>
 </ScrollView>

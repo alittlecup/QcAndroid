@@ -29,8 +29,8 @@ import rx.schedulers.Schedulers;
 public class ImportExportPresenter extends BasePresenter {
 
   private MVPView view;
-  @Inject private GymWrapper gymWrapper;
-  @Inject private QcRestRepository qcRestRepository;
+  @Inject GymWrapper gymWrapper;
+  @Inject QcRestRepository qcRestRepository;
 
   @Inject
   public ImportExportPresenter() {

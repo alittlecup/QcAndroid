@@ -1,6 +1,5 @@
 package cn.qingchengfit.staffkit.views.login;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,12 +16,11 @@ import cn.qingchengfit.widgets.LoadingDialog;
 import dagger.android.AndroidInjection;
 import javax.inject.Inject;
 
-public class LoginActivity extends AppCompatActivity implements LoginView {
+public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.viewpager) ViewPager viewpager;
     @BindView(R.id.login_tabview) TabLayout loginTabview;
     LoadingDialog dialog;
-    @Inject LoginPresenter loginPresenter;
     @Inject LoginStatus loginStatus;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -37,29 +35,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             viewpager.setCurrentItem(1);
         }
         dialog = new LoadingDialog(this);
-        loginPresenter.attachView(this);
         if (loginStatus.isLogined()) {
             ToastUtils.show("已登录");
             finish();
         }
-    }
-
-    @Override public void onShowLogining() {
-        dialog.show();
-    }
-
-    @Override public void onError(String msg) {
-        dialog.dismiss();
-        ToastUtils.show(msg);
-    }
-
-    @Override public void cancelLogin() {
-        dialog.dismiss();
-    }
-
-    @Override public void onSuccess(int status) {
-        setResult(Activity.RESULT_OK);
-        this.finish();
     }
 
     class LoginFragAdapter extends FragmentPagerAdapter {

@@ -22,6 +22,7 @@ public class LoginBean {
     public String code;
     public String device_type;
     public String area_code;
+    public boolean has_read_agreement;
 
     public LoginBean() {
     }
@@ -86,5 +87,9 @@ public class LoginBean {
 
     public void setPush_channel_id(String push_channel_id) {
         this.push_channel_id = push_channel_id;
+    }
+
+    public void setHas_read_agreement(boolean has_read_agreement) {
+        this.has_read_agreement = has_read_agreement;
     }
 }
