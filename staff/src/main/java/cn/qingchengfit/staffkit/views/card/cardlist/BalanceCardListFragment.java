@@ -87,7 +87,7 @@ public class BalanceCardListFragment extends FilterHeadCommonFragment
         setView(view);
         super.onCreateView(inflater, container, savedInstanceState);
 
-        mCallbackActivity.setToolbar("余额不足", false, null, R.menu.menu_card_filter_notify, new Toolbar.OnMenuItemClickListener() {
+        mCallbackActivity.setToolbar("续卡提醒", false, null, R.menu.menu_card_filter_notify, new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.menu_auto_notify) {
                     getActivity().getSupportFragmentManager()

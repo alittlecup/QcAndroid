@@ -133,7 +133,7 @@ public class RealCardListFragment extends FilterHeadCommonFragment
                         });
                     } else if (item.getItemId() == R.id.action_flow) {
 
-                        BottomSheetListDialogFragment.start(RealCardListFragment.this, RESULT_FLOW, new String[] { "会员卡种类" });
+                        BottomSheetListDialogFragment.start(RealCardListFragment.this, RESULT_FLOW, new String[] { "会员卡种类管理" });
                     }
                     return true;
                 }
@@ -151,7 +151,7 @@ public class RealCardListFragment extends FilterHeadCommonFragment
                             }
                         });
                     } else if (item.getItemId() == R.id.action_flow) {
-                        BottomSheetListDialogFragment.start(RealCardListFragment.this, RESULT_FLOW, new String[] { "会员卡种类" });
+                        BottomSheetListDialogFragment.start(RealCardListFragment.this, RESULT_FLOW, new String[] { "会员卡种类管理" });
                     }
                     return true;
                 }
