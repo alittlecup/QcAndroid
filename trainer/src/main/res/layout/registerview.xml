@@ -59,9 +59,9 @@
         android:id="@+id/registe_gender"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
         >
 
       <ImageView
@@ -131,35 +131,36 @@
         android:id="@+id/checkcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:pw_mode="false"
         android:layout_marginTop="20dp"
+        app:pw_mode="false"
         />
 
     <cn.qingchengfit.widgets.PasswordView
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:pw_mode="true"
         android:layout_marginTop="20dp"
+        app:pw_mode="true"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="25dp"
+        android:orientation="vertical"
         >
 
       <include
           layout="@layout/layout_agree_protocol"/>
 
       <Button
-        android:id="@+id/registe_btn"
+          android:id="@+id/registe_btn"
           android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="end"
+          android:layout_height="48dp"
+          android:layout_gravity="end"
           android:layout_marginTop="25dp"
-        android:orientation="horizontal"
+          android:orientation="horizontal"
+          android:background="@drawable/bg_login_button"
           android:text="确定"
           />
 
