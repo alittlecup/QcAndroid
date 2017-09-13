@@ -157,7 +157,6 @@ public class LoginFragment extends BaseFragment
   }
 
   @OnClick(R.id.login_btn) public void onClick() {
-
     if (loginPhone.checkPhoneNum() && pwView.checkValid()) {
       loginPresenter.doLogin(new LoginBody.Builder().phone(loginPhone.getPhoneNum())
           .code(pwView.isPwMode() ? null : pwView.getCode())
@@ -166,7 +165,7 @@ public class LoginFragment extends BaseFragment
           .has_read_agreement(btnAgreeProtocol.isChecked())
           .build());
     } else {
-      ToastUtils.show(getString(R.string.err_phone));
+
     }
   }
 

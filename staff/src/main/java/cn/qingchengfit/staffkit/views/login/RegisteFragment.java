@@ -125,6 +125,7 @@ public class RegisteFragment extends BaseFragment {
    * 确认注册
    */
   @OnClick(R.id.registe_btn) public void onRegiste() {
+
     if (phoneNum.checkPhoneNum() && checkcode.checkValid() && password.checkValid()) {
       loginPresenter.registe(
           new RegisteBody.Builder().username(etUsername.getText().toString().trim())
