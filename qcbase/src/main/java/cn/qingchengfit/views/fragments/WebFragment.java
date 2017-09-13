@@ -884,8 +884,7 @@ public class WebFragment extends BaseFragment
               String url = Uri.decode(qrCodeUri.getQueryParameter("url"));
               String title = Uri.decode(qrCodeUri.getQueryParameter("title"));
               String content = Uri.decode(qrCodeUri.getQueryParameter("content"));
-              new WebShowQcCodeDialogBuilder(title, url).content(content)
-                  .build()
+              WebShowQcCodeDialog.newInstance(url, title,content)
                   .show(getChildFragmentManager(), "");
             } catch (Exception e) {
 
