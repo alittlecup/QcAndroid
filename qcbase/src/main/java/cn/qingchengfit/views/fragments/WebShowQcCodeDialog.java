@@ -24,9 +24,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.lang.ref.SoftReference;
 
 import static android.graphics.Color.BLACK;
@@ -52,20 +49,32 @@ import static android.graphics.Color.WHITE;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/4/28.
  */
-
-@FragmentWithArgs public class WebShowQcCodeDialog extends DialogFragment {
-  @Arg String url;
-  @Arg String title;
-  @Arg(required = false) String content;
+public class WebShowQcCodeDialog extends DialogFragment {
+  String url;
+  String title;
+  String content;
   @BindView(R2.id.tv_gym_name) TextView tvGymName;
   @BindView(R2.id.img_qr_code) ImageView imgQrCode;
   @BindView(R2.id.tv_title) TextView tvTitle;
   private Unbinder unbinder;
   private SoftReference<Bitmap> mBitmapSoftReference;
 
+  public static WebShowQcCodeDialog newInstance(String url,String title ,String content) {
+    Bundle args = new Bundle();
+    WebShowQcCodeDialog fragment = new WebShowQcCodeDialog();
+    args.putString("url",url);
+    args.putString("title",title);
+    args.putString("content",content);
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    FragmentArgs.inject(this);
+    url = getArguments().getString("url");
+    title = getArguments().getString("title");
+    content = getArguments().getString("content");
   }
 
   @Nullable @Override
