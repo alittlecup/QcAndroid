@@ -157,22 +157,16 @@ public class LoginFragment extends BaseFragment
   }
 
   @OnClick(R.id.login_btn) public void onClick() {
+    if (loginPhone.checkPhoneNum() && pwView.checkValid()) {
+      loginPresenter.doLogin(new LoginBody.Builder().phone(loginPhone.getPhoneNum())
+          .code(pwView.isPwMode() ? null : pwView.getCode())
+          .password(pwView.isPwMode() ? pwView.getCode() : null)
+          .area_code(loginPhone.getDistrictInt())
+          .has_read_agreement(btnAgreeProtocol.isChecked())
+          .build());
+    } else {
 
-    if (!loginPhone.checkPhoneNum()){
-      ToastUtils.show(getString(R.string.err_phone));
-      return;
     }
-    if (!pwView.checkValid()){
-      ToastUtils.show(getResources().getString(cn.qingchengfit.widgets.R.string.err_checkcode_length));
-      return;
-    }
-
-    loginPresenter.doLogin(new LoginBody.Builder().phone(loginPhone.getPhoneNum())
-        .code(pwView.isPwMode() ? null : pwView.getCode())
-        .password(pwView.isPwMode() ? pwView.getCode() : null)
-        .area_code(loginPhone.getDistrictInt())
-        .has_read_agreement(btnAgreeProtocol.isChecked())
-        .build());
   }
 
   @Override public void onDestroyView() {
