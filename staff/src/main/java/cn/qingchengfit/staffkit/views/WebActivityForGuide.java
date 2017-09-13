@@ -15,10 +15,10 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ShopDetail;
 import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -140,8 +140,8 @@ public class WebActivityForGuide extends BaseActivity implements FragCallBack {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<ShopDetail>>() {
-                @Override public void call(QcResponseData<ShopDetail> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<ShopDetail>>() {
+                @Override public void call(QcDataResponse<ShopDetail> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         mWXSuccess = qcResponse.getData().shop.weixin_success;
                         mWxName = qcResponse.getData().shop.weixin;

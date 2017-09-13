@@ -47,13 +47,13 @@ import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.CoachResponse;
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.model.responese.Login;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.QcResponseRenew;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
 import cn.qingchengfit.model.responese.ResponseService;
 import cn.qingchengfit.model.responese.Space;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.train.model.CreateGroupBody;
 import cn.qingchengfit.staffkit.train.model.OperationMemberBody;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
@@ -116,7 +116,7 @@ public interface Post_Api {
      * 个人操作
      */
 
-    @POST("/api/staffs/login/") Observable<QcResponseData<Login>> qcLogin(@Body LoginBody loginBody);
+    @POST("/api/staffs/login/") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
 
     @POST("/api/staffs/login/") Call<Login> qcLoginTest(@Body LoginBody loginBody);
 
@@ -138,7 +138,7 @@ public interface Post_Api {
         @Body Shop shop);
 
     //注册
-    @POST("/api/staffs/register/") rx.Observable<QcResponseData<Login>> qcRegister(@Body RegisteBody params);
+    @POST("/api/staffs/register/") rx.Observable<QcDataResponse<Login>> qcRegister(@Body RegisteBody params);
 
     //获取电话验证码
     @POST("/api/send/verify/") rx.Observable<QcResponse> qcGetCode(@Body GetCodeBody account);
@@ -176,7 +176,7 @@ public interface Post_Api {
      * 健身房操作
      */
 
-    @POST("/api/brands/") rx.Observable<QcResponseData<CreatBrand>> qcCreatBrand(@Body CreatBrandBody body);
+    @POST("/api/brands/") rx.Observable<QcDataResponse<CreatBrand>> qcCreatBrand(@Body CreatBrandBody body);
 
     @PUT("/api/staffs/{id}/") rx.Observable<QcResponse> qcFixSelfInfo(@Path("id") String id, @Body CreatBrandBody body);
 
@@ -293,7 +293,7 @@ public interface Post_Api {
     /**
      * 学员操作
      */
-    @POST("/api/staffs/{id}/users/") rx.Observable<QcResponseData> qcCreateStudent(
+    @POST("/api/staffs/{id}/users/") rx.Observable<QcDataResponse> qcCreateStudent(
         @Path("id") String id, @QueryMap HashMap<String, Object> params,
         @Body User_Student student);
 
@@ -301,7 +301,7 @@ public interface Post_Api {
     //    @PUT("/api/v2/staffs/{staff_id}/users/{id}/") rx.Observable<QcResponseData> qcUpdateStudent(
     //            @Path("staff_id") String staff_id, @Path("id") String id
     //=======
-    @PUT("/api/v2/staffs/{staff_id}/users/{id}/") rx.Observable<QcResponseData> qcUpdateStudent(@Path("staff_id") String staff_id,
+    @PUT("/api/v2/staffs/{staff_id}/users/{id}/") rx.Observable<QcDataResponse> qcUpdateStudent(@Path("staff_id") String staff_id,
         @Path("id") String id, @Query("id") String gymid, @Query("model") String model, @Query("brand_id") String brandid
 
         , @Body User_Student student);
@@ -382,7 +382,7 @@ public interface Post_Api {
     /**
      * 教练
      */
-    @POST("/api/staffs/{id}/coaches/") rx.Observable<QcResponseData<CoachResponse>> qcAddCoach(@Path("id") String id,
+    @POST("/api/staffs/{id}/coaches/") rx.Observable<QcDataResponse<CoachResponse>> qcAddCoach(@Path("id") String id,
         @Query("id") String gymid, @Query("model") String model, @Body Staff coach);
 
     @PUT("/api/staffs/{id}/coaches/{cid}/") rx.Observable<QcResponse> qcFixCoach(@Path("id") String id, @Path("cid") String cid,
@@ -422,7 +422,7 @@ public interface Post_Api {
      * http://192.168.1.7:8000/api/staffs/3281/shops/configs/?id=5370&model=staff_gym
      * {@link ShopConfigs}
      */
-    @PUT("/api/staffs/{staff_id}/shops/configs/") rx.Observable<cn.qingchengfit.network.response.QcResponseData> qcShopConfigs(
+    @PUT("/api/staffs/{staff_id}/shops/configs/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcShopConfigs(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body ShopConfigBody body);
 
     /**
@@ -430,7 +430,7 @@ public interface Post_Api {
      * http://192.168.1.7:8000/api/v2/staffs/3281/checkin/settings/?id=5370&model=staff_gym
      */
     @PUT("/api/v2/staffs/{staff_id}/checkin/settings/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData> qcPutSignInCostConfig(@Path("staff_id") String staff_id,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcPutSignInCostConfig(@Path("staff_id") String staff_id,
         @QueryMap HashMap<String, Object> params, @Body SignInCostBody body);
 
     /**
@@ -588,21 +588,21 @@ public interface Post_Api {
      * PUT /api/v2/staffs/:id/modules/
      * score  Boolean  是否开启积分功能
      */
-    @PUT("/api/v2/staffs/{staff_id}/modules/") rx.Observable<cn.qingchengfit.network.response.QcResponseData> qcPutScoreStatus(
+    @PUT("/api/v2/staffs/{staff_id}/modules/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcPutScoreStatus(
         @Path("staff_id") String staff_id, @QueryMap ArrayMap<String, String> params, @Body ArrayMap<String, Object> body);
 
     /**
      * Staff - 模块-积分规则-修改
      * /api/v2/staffs/:id/scores/rules/
      */
-    @PUT("/api/v2/staffs/{staff_id}/scores/rules/") rx.Observable<cn.qingchengfit.network.response.QcResponseData> qcPutScoreRules(
+    @PUT("/api/v2/staffs/{staff_id}/scores/rules/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcPutScoreRules(
         @Path("staff_id") String staff_id, @QueryMap ArrayMap<String, String> params, @Body ArrayMap<String, Object> body);
 
     /**
      * Staff - 模块-积分优惠奖励-新增
      * POST /api/v2/staffs/:id/scores/favors/
      */
-    @POST("/api/v2/staffs/{staff_id}/scores/favors/") rx.Observable<cn.qingchengfit.network.response.QcResponseData> qcPostScoreRulesAward(
+    @POST("/api/v2/staffs/{staff_id}/scores/favors/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcPostScoreRulesAward(
         @Path("staff_id") String staff_id, @QueryMap ArrayMap<String, String> params, @Body ArrayMap<String, Object> body);
 
     /**
@@ -610,7 +610,7 @@ public interface Post_Api {
      * PUT /api/v2/staffs/:id/scores/favors/:favor_id/
      */
     @PUT("/api/v2/staffs/{staff_id}/scores/favors/{favor_id}/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData> qcPutScoreRulesAward(@Path("staff_id") String staff_id,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcPutScoreRulesAward(@Path("staff_id") String staff_id,
         @Path("favor_id") String favor_id, @QueryMap ArrayMap<String, String> params, @Body ArrayMap<String, Object> body);
 
     /**
@@ -618,15 +618,15 @@ public interface Post_Api {
      * POST /api/v2/staffs/:id/users/:user_id/scores/histories/
      */
     @POST("/api/v2/staffs/{staff_id}/users/{user_id}/scores/histories/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData> qcPostScoreHistory(@Path("staff_id") String staff_id,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcPostScoreHistory(@Path("staff_id") String staff_id,
         @Path("user_id") String user_id, @QueryMap ArrayMap<String, String> params, @Body ArrayMap<String, Object> body);
 
     //修改余额不足提醒规则
-    @PUT("api/v2/staffs/{staff_id}/users/configs/") rx.Observable<cn.qingchengfit.network.response.QcResponseData> qcPostBalanceCondition(
+    @PUT("api/v2/staffs/{staff_id}/users/configs/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcPostBalanceCondition(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body CardBalanceNotifyBody body);
 
     //修改自动提醒短信规则
-    @PUT("api/staffs/{staff_id}/shops/configs/") rx.Observable<cn.qingchengfit.network.response.QcResponseData> qcChangeAutoNotify(
+    @PUT("api/staffs/{staff_id}/shops/configs/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcChangeAutoNotify(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body CardBalanceNotifyBody body);
 
     //修改余额不足提醒

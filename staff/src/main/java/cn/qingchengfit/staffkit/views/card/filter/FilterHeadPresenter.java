@@ -6,7 +6,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.FilterCardBean;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.lang.annotation.Retention;
@@ -84,8 +84,8 @@ public class FilterHeadPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CardTpls>>() {
-                @Override public void call(QcResponseData<CardTpls> cardTplsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<CardTpls>>() {
+                @Override public void call(QcDataResponse<CardTpls> cardTplsQcResponseData) {
                     for (CardTpl card_tpl : cardTplsQcResponseData.data.card_tpls) {
                         switch (card_tpl.type) {
                             case 1:

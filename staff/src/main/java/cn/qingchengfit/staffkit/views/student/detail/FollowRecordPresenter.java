@@ -7,9 +7,9 @@ import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.body.AddFollowRecordBody;
 import cn.qingchengfit.model.responese.FollowRecord;
 import cn.qingchengfit.model.responese.FollowRecords;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
@@ -85,8 +85,8 @@ public class FollowRecordPresenter implements Presenter {
             return;
         }
         spQuery = usecase.queryFollowRecord(studentBase.id(), gymWrapper.id(), gymWrapper.model(), gymWrapper.brand_id(), page,
-            new Action1<QcResponseData<FollowRecords>>() {
-                @Override public void call(QcResponseData<FollowRecords> qcResponseClassRecords) {
+            new Action1<QcDataResponse<FollowRecords>>() {
+                @Override public void call(QcDataResponse<FollowRecords> qcResponseClassRecords) {
                     total = qcResponseClassRecords.data.pages;
                     view.onData(qcResponseClassRecords.data.records, page);
 

@@ -3,9 +3,9 @@ package cn.qingchengfit.staffkit.views.gym.coach;
 import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Staffs;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.CoachUseCase;
@@ -72,9 +72,9 @@ public class CoachListPresenter implements Presenter {
     }
 
     public void queryData(String keyword) {
-        sp = useCase.getAllCoach(gymWrapper.id(), gymWrapper.model(), keyword, new Action1<QcResponseData<Staffs>>() {
-            @Override public void call(QcResponseData<Staffs> qcResponseGymCoach) {
-                if (qcResponseGymCoach.getStatus() == ResponseConstant.SUCCESS) {
+        sp = useCase.getAllCoach(gymWrapper.id(), gymWrapper.model(), keyword, new Action1<QcDataResponse<Staffs>>() {
+            @Override public void call(QcDataResponse<Staffs> qcResponseGymCoach) {
+                if (ResponseConstant.checkSuccess(qcResponseGymCoach)) {
                     view.onList(qcResponseGymCoach.data.teachers);
                 } else {
                     // ToastUtils.logHttp(qcResponseGymCoach);

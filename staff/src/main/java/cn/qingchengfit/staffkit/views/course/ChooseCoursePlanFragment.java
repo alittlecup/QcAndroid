@@ -19,8 +19,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CoursePlan;
 import cn.qingchengfit.model.responese.CoursePlans;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -89,8 +89,8 @@ public class ChooseCoursePlanFragment extends BaseFragment implements FlexibleAd
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CoursePlans>>() {
-                @Override public void call(QcResponseData<CoursePlans> qcResponseCoursePlan) {
+            .subscribe(new Action1<QcDataResponse<CoursePlans>>() {
+                @Override public void call(QcDataResponse<CoursePlans> qcResponseCoursePlan) {
                     if (ResponseConstant.checkSuccess(qcResponseCoursePlan)) {
                         mDatas.clear();
                         mDatas.add(new ChooseCoursePlanItem(false, new CoursePlan.Builder().id(0L).name("不使用任何课程计划模板").build()));

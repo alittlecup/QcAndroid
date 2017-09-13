@@ -14,9 +14,9 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymList;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.StaffResponse;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.MainActivity;
@@ -34,7 +34,10 @@ import com.baidu.android.pushservice.PushSettings;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.tencent.TIMManager;
+import com.tencent.qcloud.timchat.common.AppData;
 import com.umeng.analytics.MobclickAgent;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import dagger.android.AndroidInjection;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -108,12 +111,21 @@ public class SplashActivity extends AppCompatActivity {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Func1<QcResponseData<StaffResponse>, Observable<QcResponseData<GymList>>>() {
-                    @Override public Observable<QcResponseData<GymList>> call(QcResponseData<StaffResponse> staffResponseQcResponseData) {
+                .flatMap(new Func1<QcDataResponse<StaffResponse>, Observable<QcDataResponse<GymList>>>() {
+                    @Override public Observable<QcDataResponse<GymList>> call(QcDataResponse<StaffResponse> staffResponseQcResponseData) {
                         if (ResponseConstant.checkSuccess(staffResponseQcResponseData)) {
                             loginStatus.setUserId(staffResponseQcResponseData.data.staff.user_id);
                             PreferenceUtils.getPrefString(SplashActivity.this, Configs.PREFER_USER_ID,
                                 staffResponseQcResponseData.data.staff.user_id);
+                        }else if(staffResponseQcResponseData.getStatus() == Integer.parseInt(ResponseConstant.E_Login)){
+                          logout();
+                          /*
+                           * 伪造结果返回
+                           */
+                          QcDataResponse<GymList> qcResponseData = new QcDataResponse<GymList>();
+                          qcResponseData.setData(new GymList());
+                          return Observable.just(qcResponseData).subscribeOn(Schedulers.io())
+                              .observeOn(AndroidSchedulers.mainThread());
                         } else {
                             ToastUtils.show("服务器错误");
                         }
@@ -124,13 +136,15 @@ public class SplashActivity extends AppCompatActivity {
                             .observeOn(AndroidSchedulers.mainThread());
                     }
                 })
-                .subscribe(new Action1<QcResponseData<GymList>>() {
-                    @Override public void call(QcResponseData<GymList> qcResponseGymList) {
+                .subscribe(new Action1<QcDataResponse<GymList>>() {
+                    @Override public void call(QcDataResponse<GymList> qcResponseGymList) {
                         if (ResponseConstant.checkSuccess(qcResponseGymList) && qcResponseGymList.data.services != null) {
                             GymBaseInfoAction.writeGyms(qcResponseGymList.data.services);
                             if (qcResponseGymList.data.services.size() == 0) {
                                 goSplashViewpager();
                                 overridePendingTransition(R.anim.slide_fade_in, R.anim.slide_fade_out);
+                            //}else if(qcResponseGymList.getStatus() == Integer.parseInt(ResponseConstant.E_Login)){
+                            //  logout();
                             } else {
                                 boolean isSingle = qcResponseGymList.data.services.size() == 1;
                                 goMain(isSingle, isSingle ? qcResponseGymList.data.services.get(0) : null);
@@ -181,4 +195,16 @@ public class SplashActivity extends AppCompatActivity {
         this.finish();
         overridePendingTransition(0, 0);
     }
+
+  private void logout(){
+    loginStatus.logout(this);
+    App.staffId = "";
+    PushManager.stopWork(getApplicationContext());
+    AppData.clear(this);
+    TIMManager.getInstance().logout();
+    PreferenceUtils.setPrefString(this, Configs.PREFER_SESSION, "");
+    PreferenceUtils.setPrefString(this, Configs.PREFER_WORK_ID, "");
+    PreferenceUtils.setPrefString(this, Configs.CUR_BRAND_ID, "");
+    MiPushClient.unregisterPush(this.getApplicationContext());
+  }
 }

@@ -17,7 +17,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CourseTeacher;
 import cn.qingchengfit.model.responese.CourseTeacherResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -115,8 +115,8 @@ public class CoachCommentListFragment extends BaseFragment {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CourseTeacherResponse>>() {
-                @Override public void call(QcResponseData<CourseTeacherResponse> qcResponseCourseTeacher) {
+            .subscribe(new Action1<QcDataResponse<CourseTeacherResponse>>() {
+                @Override public void call(QcDataResponse<CourseTeacherResponse> qcResponseCourseTeacher) {
                     if (qcResponseCourseTeacher.data != null
                         && qcResponseCourseTeacher.data.teachers != null
                         && qcResponseCourseTeacher.data.teachers.size() > 0) {

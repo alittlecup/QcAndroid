@@ -10,13 +10,13 @@ import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.CourseTypeSample;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.SingleBatch;
 import cn.qingchengfit.model.responese.SingleBatchData;
 import cn.qingchengfit.model.responese.Space;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -78,8 +78,8 @@ public class SingleBatchPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<SingleBatchData>>() {
-                @Override public void call(QcResponseData<SingleBatchData> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<SingleBatchData>>() {
+                @Override public void call(QcDataResponse<SingleBatchData> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.getData().schedule != null || qcResponse.getData().timetable != null) {
                             SingleBatch singleBatch =

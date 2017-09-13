@@ -24,9 +24,9 @@ import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.items.NoDataTxtBtnItem;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymList;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -138,8 +138,8 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.computation())
-            .flatMap(new Func1<QcResponseData<GymList>, Observable<List<CoachService>>>() {
-                @Override public Observable<List<CoachService>> call(QcResponseData<GymList> gymListQcResponseData) {
+            .flatMap(new Func1<QcDataResponse<GymList>, Observable<List<CoachService>>>() {
+                @Override public Observable<List<CoachService>> call(QcDataResponse<GymList> gymListQcResponseData) {
                     if (ResponseConstant.checkSuccess(gymListQcResponseData)) {
                         return Observable.just(gymListQcResponseData.getData().services)
                             .onBackpressureBuffer()

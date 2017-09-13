@@ -5,8 +5,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.ClassRecords;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -88,8 +88,8 @@ public class ClassRecordPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<ClassRecords>>() {
-                @Override public void call(QcResponseData<ClassRecords> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<ClassRecords>>() {
+                @Override public void call(QcDataResponse<ClassRecords> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.data.attendances != null && qcResponse.data.stat != null && qcResponse.data.shops != null) {
                             view.onData(qcResponse.getData().attendances, qcResponse.getData().stat, qcResponse.getData().shops);

@@ -2,11 +2,11 @@ package cn.qingchengfit.staffkit.usecase;
 
 import cn.qingchengfit.model.body.AddFollowRecordBody;
 import cn.qingchengfit.model.responese.FollowRecords;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseStudentCards;
 import cn.qingchengfit.model.responese.QcResponseStudentInfo;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
@@ -82,7 +82,7 @@ import rx.schedulers.Schedulers;
     }
 
     public Subscription queryFollowRecord(String studentid, String gymid, String gymmoedl, String brand_id, int page,
-        Action1<QcResponseData<FollowRecords>> action1) {
+        Action1<QcDataResponse<FollowRecords>> action1) {
         return restRepository.getGet_api()
             .qcGetStudentFollow(App.staffId, studentid, gymid, gymmoedl, brand_id, page)
             .onBackpressureBuffer()
@@ -103,7 +103,7 @@ import rx.schedulers.Schedulers;
      * 修改学员
      */
     public Subscription updateStudent(String id, String gymid, String gymmodel, String brandid, User_Student user_student,
-        Action1<QcResponseData> action1) {
+        Action1<QcDataResponse> action1) {
         user_student.setJoined_at(null);
         return restRepository.getPost_api()
             .qcUpdateStudent(App.staffId, id, gymid, gymmodel, brandid, user_student)
@@ -116,7 +116,7 @@ import rx.schedulers.Schedulers;
      * 添加学员
      */
     public Subscription addStudent(User_Student user_student, HashMap<String, Object> params,
-        Action1<QcResponseData> action1) {
+        Action1<QcDataResponse> action1) {
         user_student.setJoined_at(null);
         return restRepository.getPost_api().qcCreateStudent(App.staffId, params, user_student)
             .onBackpressureBuffer()

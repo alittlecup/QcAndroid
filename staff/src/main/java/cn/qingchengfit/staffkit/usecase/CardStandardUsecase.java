@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.usecase;
 
 import cn.qingchengfit.model.body.OptionBody;
-import cn.qingchengfit.model.responese.QcResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import javax.inject.Inject;

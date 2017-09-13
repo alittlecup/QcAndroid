@@ -1,9 +1,9 @@
 package cn.qingchengfit.staffkit.usecase;
 
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.StaffResponse;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
@@ -71,7 +71,7 @@ public class SettingUseCase {
           .subscribe(action1);
     }
 
-    public Subscription getSelfInfo(Action1<QcResponseData<StaffResponse>> action1) {
+    public Subscription getSelfInfo(Action1<QcDataResponse<StaffResponse>> action1) {
         return restRepository.getGet_api()
             .qcGetSelfInfo(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

@@ -22,7 +22,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventFreshUnloginAd;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.events.EventSessionError;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.network.errors.BusEventThrowable;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
@@ -58,6 +60,8 @@ import java.util.Date;
 import javax.inject.Inject;
 import org.json.JSONException;
 import org.json.JSONObject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -85,6 +89,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
     @Inject RestRepository mRestRepository;
     @Inject SettingPresenter presenter;
     @Inject LoginStatus loginStatus;
+    @Inject BusEventThrowable busEventThrowable;
   @Inject BaseRouter baseRouter;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,6 +98,17 @@ public class SettingFragment extends BaseFragment implements SettingView {
         initToolbar(toolbar);
         delegatePresenter(presenter, this);
         onVisible();
+      RxBusAdd(EventSessionError.class)
+          .onBackpressureDrop()
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<EventSessionError>() {
+            @Override public void call(EventSessionError eventSessionError) {
+              onLogout();
+              ToastUtils.show("登录过期");
+              goLogin();
+            }
+          },busEventThrowable);
+
         return view;
     }
 
@@ -211,6 +227,10 @@ public class SettingFragment extends BaseFragment implements SettingView {
     }
 
   @OnClick(R.id.civ_resume) public void onMyResume() {
+    if (!loginStatus.isLogined()) {
+      baseRouter.toLogin(this);
+      return;
+    }
     baseRouter.routerTo("recruit", "resume", getContext(), 1001);
   }
 

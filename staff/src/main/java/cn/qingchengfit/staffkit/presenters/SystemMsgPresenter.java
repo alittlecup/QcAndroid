@@ -6,10 +6,10 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.responese.NotificationGlance;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -35,8 +35,8 @@ public class SystemMsgPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<List<NotificationGlance>>>() {
-                @Override public void call(QcResponseData<List<NotificationGlance>> notificationGlanceQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<List<NotificationGlance>>>() {
+                @Override public void call(QcDataResponse<List<NotificationGlance>> notificationGlanceQcResponseData) {
                     if (ResponseConstant.checkSuccess(notificationGlanceQcResponseData)) {
                         view.onNotificationList(notificationGlanceQcResponseData.getData());
                     } else {
@@ -69,9 +69,9 @@ public class SystemMsgPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<RecordWrap>>() {
+            .subscribe(new Action1<cn.qingchengfit.network.response.QcDataResponse<RecordWrap>>() {
                 @Override public void call(
-                    cn.qingchengfit.network.response.QcResponseData<RecordWrap> recordWrapQcResponseData) {
+                    cn.qingchengfit.network.response.QcDataResponse<RecordWrap> recordWrapQcResponseData) {
                     if (ResponseConstant.checkSuccess(recordWrapQcResponseData)){
                         view.onMessageList(recordWrapQcResponseData.data.records);
                     }else{

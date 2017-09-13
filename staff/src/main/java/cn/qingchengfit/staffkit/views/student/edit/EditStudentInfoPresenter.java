@@ -4,8 +4,8 @@ import android.content.Intent;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshStudent;
@@ -87,8 +87,8 @@ public class EditStudentInfoPresenter implements Presenter {
         body.setRemarks(user_student.getRemarks());
 
         edSp = usecase.updateStudent(user_student.getId(), gymWrapper.id(), gymWrapper.model(), gymWrapper.brand_id(), body,
-            new Action1<QcResponseData>() {
-                @Override public void call(QcResponseData qcResponse) {
+            new Action1<QcDataResponse>() {
+                @Override public void call(QcDataResponse qcResponse) {
                     if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                         RxBus.getBus().post(new EventFreshStudent());
                         view.onSuccess();
@@ -101,8 +101,8 @@ public class EditStudentInfoPresenter implements Presenter {
 
     public void saveStudent(final User_Student user_student) {
       addSp =
-          usecase.addStudent(user_student, gymWrapper.getParams(), new Action1<QcResponseData>() {
-            @Override public void call(QcResponseData qcResponse) {
+          usecase.addStudent(user_student, gymWrapper.getParams(), new Action1<QcDataResponse>() {
+            @Override public void call(QcDataResponse qcResponse) {
                 if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                     RxBus.getBus().post(new EventFreshStudent());
                     view.onSuccess();

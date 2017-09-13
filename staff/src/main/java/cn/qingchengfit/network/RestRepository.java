@@ -2,8 +2,8 @@ package cn.qingchengfit.network;
 
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.NetWorkDialogEvent;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcRequestToken;
-import cn.qingchengfit.network.response.QcResponseData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -113,6 +113,6 @@ public abstract class RestRepository {
 
   public interface Get_Token_Api {
     //获取token
-    @GET("/api/csrftoken/") Call<QcResponseData<QcRequestToken>> qcGetToken();
+    @GET("/api/csrftoken/") Call<QcDataResponse<QcRequestToken>> qcGetToken();
   }
 }

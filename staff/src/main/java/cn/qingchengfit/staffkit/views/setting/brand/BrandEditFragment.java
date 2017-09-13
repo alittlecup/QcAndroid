@@ -18,10 +18,10 @@ import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.body.BrandBody;
 import cn.qingchengfit.model.responese.BrandResponse;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -148,8 +148,8 @@ public class BrandEditFragment extends BaseFragment {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponseData<BrandResponse>>() {
-                    @Override public void call(QcResponseData<BrandResponse> qcResponseBrands) {
+                .subscribe(new Action1<QcDataResponse<BrandResponse>>() {
+                    @Override public void call(QcDataResponse<BrandResponse> qcResponseBrands) {
                         if (ResponseConstant.checkSuccess(qcResponseBrands)) {
                             brandName.setContent(qcResponseBrands.data.brand.getName());
                             Glide.with(getContext())

@@ -5,8 +5,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.BodyTestMeasureData;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -76,8 +76,8 @@ public class BodyTestPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<BodyTestMeasureData>>() {
-                @Override public void call(QcResponseData<BodyTestMeasureData> responseData) {
+            .subscribe(new Action1<QcDataResponse<BodyTestMeasureData>>() {
+                @Override public void call(QcDataResponse<BodyTestMeasureData> responseData) {
                     bodyTestView.onMeasure(responseData.data.measure);
                     if (responseData.data.measure.extra != null) bodyTestView.onExtras(responseData.data.measure.extra);
 

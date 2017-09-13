@@ -4,9 +4,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.ArticleComment;
 import cn.qingchengfit.model.responese.ArticleCommentListData;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -37,8 +37,8 @@ public class ArticleReplyPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcQueryReplies(params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<ArticleCommentListData>>() {
-                @Override public void call(QcResponseData<ArticleCommentListData> articleCommentListDataQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<ArticleCommentListData>>() {
+                @Override public void call(QcDataResponse<ArticleCommentListData> articleCommentListDataQcResponseData) {
                     if (ResponseConstant.checkSuccess(articleCommentListDataQcResponseData)) {
                         view.onArticleReplies(articleCommentListDataQcResponseData.getData().comments,
                             articleCommentListDataQcResponseData.data.current_page);

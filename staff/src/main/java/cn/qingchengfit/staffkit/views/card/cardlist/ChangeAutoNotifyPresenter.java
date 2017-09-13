@@ -5,9 +5,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.CardBalanceNotifyBody;
 import cn.qingchengfit.model.responese.NotifyIsOpen;
 import cn.qingchengfit.model.responese.NotityIsOpenConfigs;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.network.response.QcResponseData;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.HashMap;
@@ -55,8 +55,8 @@ public class ChangeAutoNotifyPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<NotityIsOpenConfigs>>() {
-                @Override public void call(QcResponseData<NotityIsOpenConfigs> balanceConfigsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<NotityIsOpenConfigs>>() {
+                @Override public void call(QcDataResponse<NotityIsOpenConfigs> balanceConfigsQcResponseData) {
                     if (ResponseConstant.checkSuccess(balanceConfigsQcResponseData)) {
                         onGetNotifySettingListener.onGetSuccess(balanceConfigsQcResponseData.data.notifyIsOpens);
                     } else {
@@ -76,7 +76,7 @@ public class ChangeAutoNotifyPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
-                    if (qcResponse.getStatus() == 200) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
                         onGetNotifySettingListener.onSettingSuccess();
                     } else {
                         onGetNotifySettingListener.onSettingFailed();

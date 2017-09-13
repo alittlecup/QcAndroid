@@ -6,10 +6,10 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ArrangeBatchBody;
 import cn.qingchengfit.model.common.BatchOpenRule;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ScheduleTemplete;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
@@ -137,8 +137,8 @@ public class AddBatchPresenter implements Presenter {
 
     public void getBatchTemplete(int coursetype, String teacher_id, String course_id) {
         spTmpl = gymUseCase.getBatchTemplete(coursetype, gymWrapper.id(), gymWrapper.model(), teacher_id, course_id,
-            new Action1<QcResponseData<ScheduleTemplete>>() {
-                @Override public void call(QcResponseData<ScheduleTemplete> qcResponseBtachTemplete) {
+            new Action1<QcDataResponse<ScheduleTemplete>>() {
+                @Override public void call(QcDataResponse<ScheduleTemplete> qcResponseBtachTemplete) {
                     if (qcResponseBtachTemplete.getStatus() == ResponseConstant.SUCCESS) {
                         view.onTemplete(qcResponseBtachTemplete.data.is_free, qcResponseBtachTemplete.data.rule,
                             qcResponseBtachTemplete.data.time_repeats, qcResponseBtachTemplete.data.max_users);

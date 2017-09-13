@@ -4,8 +4,8 @@ import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.AttendanceCharDataBean;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -69,8 +69,8 @@ public class AttendanceChartPresenter extends BasePresenter {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponseData<AttendanceCharDataBean>>() {
-                    @Override public void call(QcResponseData<AttendanceCharDataBean> absentcesQcResponseData) {
+                .subscribe(new Action1<QcDataResponse<AttendanceCharDataBean>>() {
+                    @Override public void call(QcDataResponse<AttendanceCharDataBean> absentcesQcResponseData) {
                         if (ResponseConstant.checkSuccess(absentcesQcResponseData)) {
                             view.onAbsence(absentcesQcResponseData.data);
                             pages = absentcesQcResponseData.pages;

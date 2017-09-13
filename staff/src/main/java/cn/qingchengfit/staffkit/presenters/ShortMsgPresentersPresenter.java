@@ -3,12 +3,12 @@ package cn.qingchengfit.staffkit.presenters;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ShortMsgBody;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ShortMsg;
 import cn.qingchengfit.model.responese.ShortMsgDetail;
 import cn.qingchengfit.model.responese.ShortMsgList;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -39,8 +39,8 @@ public class ShortMsgPresentersPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<ShortMsgList>>() {
-                @Override public void call(QcResponseData<ShortMsgList> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<ShortMsgList>>() {
+                @Override public void call(QcDataResponse<ShortMsgList> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         view.onShortMsgList(qcResponse.getData().group_messages);
                     } else {
@@ -60,8 +60,8 @@ public class ShortMsgPresentersPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<ShortMsgDetail>>() {
-                @Override public void call(QcResponseData<ShortMsgDetail> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<ShortMsgDetail>>() {
+                @Override public void call(QcDataResponse<ShortMsgDetail> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         view.onShortMsgDetail(qcResponse.getData().group_message);
                     } else {

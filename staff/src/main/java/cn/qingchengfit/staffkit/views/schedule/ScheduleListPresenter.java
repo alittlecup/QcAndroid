@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.QcSchedulesResponse;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -71,11 +72,12 @@ public class ScheduleListPresenter extends BasePresenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (sp != null) sp.unsubscribe();
     }
 
-    public void queryOneSchedule(String id, String date) {
+    public void queryOneSchedule(final String id, String date) {
         RxRegiste(restRepository.getGet_api()
             .qcGetSchedules(id, date, gymWrapper.getParams())
             .onBackpressureBuffer()
@@ -83,55 +85,59 @@ public class ScheduleListPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcSchedulesResponse>() {
                 @Override public void call(QcSchedulesResponse qcSchedulesResponse) {
-                    List<ScheduleBean> scheduleBeans = new ArrayList<ScheduleBean>();
-                    if (qcSchedulesResponse.data.rests != null) {
-                        for (int j = 0; j < qcSchedulesResponse.data.rests.size(); j++) {
-                            QcSchedulesResponse.Rest rest = qcSchedulesResponse.data.rests.get(j);
-                            ScheduleBean bean = new ScheduleBean();
-                            bean.type = 0;
-                            bean.time = DateUtils.formatDateFromServer(rest.start).getTime();
-                            bean.timeEnd = DateUtils.formatDateFromServer(rest.end).getTime();
-                            bean.teacher = rest.teacher.username;
-                            try {
-                                bean.gymname = rest.shop.name;
-                            } catch (Exception e) {
+                    if (ResponseConstant.checkSuccess(qcSchedulesResponse)) {
+                        List<ScheduleBean> scheduleBeans = new ArrayList<ScheduleBean>();
+                        if (qcSchedulesResponse.data.rests != null) {
+                            for (int j = 0; j < qcSchedulesResponse.data.rests.size(); j++) {
+                                QcSchedulesResponse.Rest rest = qcSchedulesResponse.data.rests.get(j);
+                                ScheduleBean bean = new ScheduleBean();
+                                bean.type = 0;
+                                bean.time = DateUtils.formatDateFromServer(rest.start).getTime();
+                                bean.timeEnd = DateUtils.formatDateFromServer(rest.end).getTime();
+                                bean.teacher = rest.teacher.username;
+                                try {
+                                    bean.gymname = rest.shop.name;
+                                } catch (Exception e) {
 
+                                }
+                                bean.intent_url = rest.url;
+
+                                scheduleBeans.add(bean);
                             }
-                            bean.intent_url = rest.url;
-
-                            scheduleBeans.add(bean);
                         }
-                    }
-                    if (qcSchedulesResponse.data.schedules != null) {
-                        for (int k = 0; k < qcSchedulesResponse.data.schedules.size(); k++) {
-                            QcScheduleBean schedule = qcSchedulesResponse.data.schedules.get(k);
-                            ScheduleBean bean = new ScheduleBean();
-                            bean.type = 1;
+                        if (qcSchedulesResponse.data.schedules != null) {
+                            for (int k = 0; k < qcSchedulesResponse.data.schedules.size(); k++) {
+                                QcScheduleBean schedule = qcSchedulesResponse.data.schedules.get(k);
+                                ScheduleBean bean = new ScheduleBean();
+                                bean.type = 1;
 
-                            if (schedule.orders != null && schedule.orders.size() == 1) {
-                                bean.isSingle = true;
-                                bean.users = schedule.orders.get(0).username;
-                            } else {
-                                bean.isSingle = false;
+                                if (schedule.orders != null && schedule.orders.size() == 1) {
+                                    bean.isSingle = true;
+                                    bean.users = schedule.orders.get(0).username;
+                                } else {
+                                    bean.isSingle = false;
+                                }
+                                bean.gymname = schedule.shop.name;
+                                //                        bean.color = syscolor;
+                                bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
+                                bean.timeEnd = DateUtils.formatDateFromServer(schedule.end).getTime();
+                                bean.count = schedule.count;
+                                bean.pic_url = schedule.course.photo;
+                                bean.title = schedule.course.name;
+                                bean.intent_url = schedule.url;
+                                bean.teacher = schedule.teacher.username;
+                                if (!TextUtils.isEmpty(gymWrapper.shop_id()) && !gymWrapper.shop_id().equalsIgnoreCase(schedule.shop.id)) {
+                                    continue;
+                                }
+                                scheduleBeans.add(bean);
                             }
-                            bean.gymname = schedule.shop.name;
-                            //                        bean.color = syscolor;
-                            bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
-                            bean.timeEnd = DateUtils.formatDateFromServer(schedule.end).getTime();
-                            bean.count = schedule.count;
-                            bean.pic_url = schedule.course.photo;
-                            bean.title = schedule.course.name;
-                            bean.intent_url = schedule.url;
-                            bean.teacher = schedule.teacher.username;
-                            if (!TextUtils.isEmpty(gymWrapper.shop_id()) && !gymWrapper.shop_id().equalsIgnoreCase(schedule.shop.id)) {
-                                continue;
-                            }
-                            scheduleBeans.add(bean);
                         }
+                        //                }
+                        Collections.sort(scheduleBeans, new ScheduleCompare());
+                        view.onGetData(scheduleBeans);
+                    }else {
+                        // TODO: 2017/9/13 错误处理
                     }
-                    //                }
-                    Collections.sort(scheduleBeans, new ScheduleCompare());
-                    view.onGetData(scheduleBeans);
                 }
             }, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {

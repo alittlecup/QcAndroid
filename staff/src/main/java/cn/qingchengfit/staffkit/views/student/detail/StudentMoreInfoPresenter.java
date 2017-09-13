@@ -6,14 +6,14 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseStudentInfo;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Score;
 import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.network.HttpUtil;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.ResultSubscribe;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
@@ -156,8 +156,8 @@ public class StudentMoreInfoPresenter extends BasePresenter {
         body.setRemarks(user_student.getRemarks());
 
         edSp = usecase.updateStudent(user_student.getId(), gymWrapper.id(), gymWrapper.model(), gymWrapper.brand_id(), body,
-            new Action1<QcResponseData>() {
-                @Override public void call(QcResponseData qcResponse) {
+            new Action1<QcDataResponse>() {
+                @Override public void call(QcDataResponse qcResponse) {
                     if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                         RxBus.getBus().post(new EventFreshStudent());
                         view.onEditSuccess();

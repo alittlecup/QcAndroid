@@ -2,9 +2,9 @@ package cn.qingchengfit.staffkit.views.statement.filter;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Staffs;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
@@ -61,7 +61,7 @@ public class CoachChoosePresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Subscriber<QcResponseData<Staffs>>() {
+            .subscribe(new Subscriber<QcDataResponse<Staffs>>() {
                 @Override public void onCompleted() {
 
                 }
@@ -70,7 +70,7 @@ public class CoachChoosePresenter extends BasePresenter {
 
                 }
 
-                @Override public void onNext(QcResponseData<Staffs> qcResponseGymCoach) {
+                @Override public void onNext(QcDataResponse<Staffs> qcResponseGymCoach) {
                     if (ResponseConstant.checkSuccess(qcResponseGymCoach)) {
                         view.onCoaches(qcResponseGymCoach.data.teachers);
                     }

@@ -4,7 +4,7 @@ import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.CoachService;
-import com.qingchengfit.fitcoach.http.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import javax.inject.Inject;

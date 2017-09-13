@@ -5,9 +5,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.common.Attendance;
 import cn.qingchengfit.model.common.Attendances;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Student;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -84,8 +84,8 @@ public class AttendanceRankPresenter extends BasePresenter {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponseData<Attendances>>() {
-                    @Override public void call(QcResponseData<Attendances> qcResponse) {
+                .subscribe(new Action1<QcDataResponse<Attendances>>() {
+                    @Override public void call(QcDataResponse<Attendances> qcResponse) {
                         if (ResponseConstant.checkSuccess(qcResponse)) {
 
                             attendanceList.addAll(qcResponse.getData().attendances);

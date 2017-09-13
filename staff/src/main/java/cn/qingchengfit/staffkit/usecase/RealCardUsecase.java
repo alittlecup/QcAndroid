@@ -4,9 +4,9 @@ import cn.qingchengfit.model.body.AddDayOffBody;
 import cn.qingchengfit.model.body.FixCard;
 import cn.qingchengfit.model.responese.Cards;
 import cn.qingchengfit.model.responese.DayOffs;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseRealcardHistory;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public class RealCardUsecase {
     }
 
     public Subscription getAllCards(String brand_id, String gymid, String gymmoel, int page, String keyword, HashMap<String, Object> filter,
-        Action1<QcResponseData<Cards>> action1) {
+        Action1<QcDataResponse<Cards>> action1) {
         return restRepository.getGet_api()
             .qcGetBrandCard(App.staffId, brand_id, gymid, gymmoel, page, keyword, filter)
             .observeOn(AndroidSchedulers.mainThread())
@@ -51,7 +51,7 @@ public class RealCardUsecase {
     }
 
     public Subscription getBalanceCard(String brand_id, String gymid, String gymmoel, int page, String keyword,
-        HashMap<String, Object> filter, Action1<QcResponseData<Cards>> action1) {
+        HashMap<String, Object> filter, Action1<QcDataResponse<Cards>> action1) {
         return restRepository.getGet_api()
             .qcGetBalanceCard(App.staffId, brand_id, gymid, gymmoel, page, keyword, filter)
             .observeOn(AndroidSchedulers.mainThread())
@@ -65,7 +65,7 @@ public class RealCardUsecase {
     }
 
     public Subscription getDayOffList(String card_id, String brandid, String gymid, String gymModel,
-        Action1<QcResponseData<DayOffs>> action1) {
+        Action1<QcDataResponse<DayOffs>> action1) {
         return restRepository.getGet_api()
             .qcGetDayOff(App.staffId, brandid, card_id, gymid, gymModel)
             .observeOn(AndroidSchedulers.mainThread())

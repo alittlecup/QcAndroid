@@ -17,8 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.responese.BrandsResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -85,8 +85,8 @@ public class ChooseBrandActivity extends BaseActivity {
         sp = restRepository.getGet_api()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
-                @Override public void call(final QcResponseData<BrandsResponse> qcResponseBrands) {
+            .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {
+                @Override public void call(final QcDataResponse<BrandsResponse> qcResponseBrands) {
                     if (ResponseConstant.checkSuccess(qcResponseBrands)) {
                         datas.clear();
                         datas.addAll(qcResponseBrands.data.brands);

@@ -3,7 +3,7 @@ package cn.qingchengfit.staffkit.presenters;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.responese.QcResponsePermission;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;

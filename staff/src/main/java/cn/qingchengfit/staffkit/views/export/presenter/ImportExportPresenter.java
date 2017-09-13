@@ -5,11 +5,11 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.model.responese.QcResponse;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.Post_Api;
@@ -28,9 +28,9 @@ import rx.schedulers.Schedulers;
 
 public class ImportExportPresenter extends BasePresenter {
 
-  private MVPView view;
   @Inject GymWrapper gymWrapper;
   @Inject QcRestRepository qcRestRepository;
+  private MVPView view;
 
   @Inject
   public ImportExportPresenter() {
@@ -52,8 +52,8 @@ public class ImportExportPresenter extends BasePresenter {
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcResponseData<ExportRecordWrapper>>() {
-          @Override public void call(QcResponseData<ExportRecordWrapper> recordWrapQcResponseData) {
+        .subscribe(new Action1<QcDataResponse<ExportRecordWrapper>>() {
+          @Override public void call(QcDataResponse<ExportRecordWrapper> recordWrapQcResponseData) {
             if (ResponseConstant.checkSuccess(recordWrapQcResponseData)){
               view.onExportRecord(recordWrapQcResponseData.data.export_records);
             }else{
@@ -80,7 +80,7 @@ public class ImportExportPresenter extends BasePresenter {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
-            if (qcResponse.getStatus() == 200){
+            if (ResponseConstant.checkSuccess(qcResponse)){
               view.onSendEmailSuccess();
             }else{
               view.onShowError(qcResponse.getMsg());
@@ -103,7 +103,7 @@ public class ImportExportPresenter extends BasePresenter {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcResponse>() {
           @Override public void call(QcResponse qcResponse) {
-            if (qcResponse.getStatus() == 200){
+            if (ResponseConstant.checkSuccess(qcResponse)){
               view.onExportSuccess();
             }else{
               view.onShowError(qcResponse.getMsg());

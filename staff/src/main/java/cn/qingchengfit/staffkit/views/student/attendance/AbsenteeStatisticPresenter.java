@@ -4,8 +4,8 @@ import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Absentce;
 import cn.qingchengfit.model.common.Absentces;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -79,13 +79,13 @@ public class AbsenteeStatisticPresenter extends BasePresenter {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .filter(new Func1<QcResponseData<Absentces>, Boolean>() {
-                    @Override public Boolean call(QcResponseData<Absentces> absentcesQcResponseData) {
+                .filter(new Func1<QcDataResponse<Absentces>, Boolean>() {
+                    @Override public Boolean call(QcDataResponse<Absentces> absentcesQcResponseData) {
                         return absentcesQcResponseData.getData() != null;
                     }
                 })
-                .subscribe(new Action1<QcResponseData<Absentces>>() {
-                    @Override public void call(QcResponseData<Absentces> qcResponse) {
+                .subscribe(new Action1<QcDataResponse<Absentces>>() {
+                    @Override public void call(QcDataResponse<Absentces> qcResponse) {
                         if (ResponseConstant.checkSuccess(qcResponse)) {
                             view.onAbsenteeList(qcResponse.getData().attendances);
                             curPage++;

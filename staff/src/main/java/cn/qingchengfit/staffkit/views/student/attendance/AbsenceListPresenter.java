@@ -6,9 +6,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.common.Absentce;
 import cn.qingchengfit.model.common.Absentces;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Student;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -64,8 +64,8 @@ public class AbsenceListPresenter extends BasePresenter {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponseData<Absentces>>() {
-                    @Override public void call(QcResponseData<Absentces> absentcesQcResponseData) {
+                .subscribe(new Action1<QcDataResponse<Absentces>>() {
+                    @Override public void call(QcDataResponse<Absentces> absentcesQcResponseData) {
                         if (ResponseConstant.checkSuccess(absentcesQcResponseData)) {
 
                             attendanceList = absentcesQcResponseData.data.attendances;

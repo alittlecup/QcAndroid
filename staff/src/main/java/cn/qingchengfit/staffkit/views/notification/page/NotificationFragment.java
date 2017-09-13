@@ -28,7 +28,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Card;
 import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.model.responese.QcResponsePermission;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;

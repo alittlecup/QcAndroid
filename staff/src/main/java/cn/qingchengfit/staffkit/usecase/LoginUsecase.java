@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.usecase;
 
 import cn.qingchengfit.model.responese.Login;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.bean.LoginBody;
@@ -33,7 +33,7 @@ public class LoginUsecase {
         this.restRepository = restRepository;
     }
 
-    public Observable<QcResponseData<Login>> login(LoginBody loginBody) {
+    public Observable<QcDataResponse<Login>> login(LoginBody loginBody) {
       return restRepository.qcLogin(loginBody)
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()
@@ -47,7 +47,7 @@ public class LoginUsecase {
           .subscribeOn(Schedulers.io());
     }
 
-    public Observable<QcResponseData<Login>> registe(RegisteBody body) {
+    public Observable<QcDataResponse<Login>> registe(RegisteBody body) {
       return restRepository.qcRegiste(body)
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()

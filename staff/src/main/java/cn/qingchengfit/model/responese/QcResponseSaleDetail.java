@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;

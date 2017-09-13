@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.usecase;
 
-import cn.qingchengfit.model.responese.QcResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import rx.functions.Action1;
 
 /**

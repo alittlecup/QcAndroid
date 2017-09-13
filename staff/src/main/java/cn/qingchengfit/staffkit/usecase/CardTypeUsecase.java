@@ -1,9 +1,9 @@
 package cn.qingchengfit.staffkit.usecase;
 
 import cn.qingchengfit.model.responese.GymCardtpl;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseOption;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import javax.inject.Inject;
@@ -57,7 +57,7 @@ public class CardTypeUsecase {
             });
     }
 
-    public Subscription queryGymCardTpl(String gymid, String model, int type, Action1<QcResponseData<GymCardtpl>> action1) {
+    public Subscription queryGymCardTpl(String gymid, String model, int type, Action1<QcDataResponse<GymCardtpl>> action1) {
         String t = type == 0 ? null : Integer.toString(type);
         return restRepository.getGet_api()
             .qcGetGymCardtpl(App.staffId, gymid, model, t)

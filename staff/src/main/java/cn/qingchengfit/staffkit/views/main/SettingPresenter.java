@@ -1,10 +1,10 @@
 package cn.qingchengfit.staffkit.views.main;
 
 import android.content.Intent;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.SettingUsecase;
 import cn.qingchengfit.model.responese.StaffResponse;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import javax.inject.Inject;
@@ -62,8 +62,8 @@ public class SettingPresenter extends BasePresenter {
     }
 
     public void getSelfInfo() {
-        usecase.getSelfInfo(new Action1<QcResponseData<StaffResponse>>() {
-            @Override public void call(QcResponseData<StaffResponse> qcResponseSelfInfo) {
+        usecase.getSelfInfo(new Action1<QcDataResponse<StaffResponse>>() {
+            @Override public void call(QcDataResponse<StaffResponse> qcResponseSelfInfo) {
                 if (qcResponseSelfInfo.getStatus() == ResponseConstant.SUCCESS) {
                     view.onSelfInfo(qcResponseSelfInfo.data.staff);
                 } else {

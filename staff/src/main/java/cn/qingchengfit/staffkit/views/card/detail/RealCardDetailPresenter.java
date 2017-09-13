@@ -5,9 +5,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.model.responese.CardResponse;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -116,8 +116,8 @@ public class RealCardDetailPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CardResponse>>() {
-                @Override public void call(QcResponseData<CardResponse> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<CardResponse>>() {
+                @Override public void call(QcDataResponse<CardResponse> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         view.onGetRealCardDetail(qcResponse.data.card);
                     } else {

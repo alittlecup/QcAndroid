@@ -23,8 +23,8 @@ import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.common.Course;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.model.responese.CourseTypeSamples;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -109,8 +109,8 @@ public class GymCourseListFragment extends BaseFragment {
         recycleview.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override public void onRefresh() {
                 sp = usecase.getCourses(gymWrapper.id(), gymWrapper.model(), mType == Configs.TYPE_PRIVATE,
-                    new Action1<QcResponseData<CourseTypeSamples>>() {
-                        @Override public void call(QcResponseData<CourseTypeSamples> qcResponseChooseCourses) {
+                    new Action1<QcDataResponse<CourseTypeSamples>>() {
+                        @Override public void call(QcDataResponse<CourseTypeSamples> qcResponseChooseCourses) {
                             if (qcResponseChooseCourses.getStatus() == ResponseConstant.SUCCESS) {
                                 datas.clear();
                                 datas.addAll(qcResponseChooseCourses.data.courses);
@@ -147,8 +147,8 @@ public class GymCourseListFragment extends BaseFragment {
             }
         });
         sp = usecase.getCourses(gymWrapper.id(), gymWrapper.model(), mType == Configs.TYPE_PRIVATE,
-            new Action1<QcResponseData<CourseTypeSamples>>() {
-                @Override public void call(QcResponseData<CourseTypeSamples> qcResponseChooseCourses) {
+            new Action1<QcDataResponse<CourseTypeSamples>>() {
+                @Override public void call(QcDataResponse<CourseTypeSamples> qcResponseChooseCourses) {
                     if (qcResponseChooseCourses.getStatus() == ResponseConstant.SUCCESS) {
                         datas.clear();
                         datas.addAll(qcResponseChooseCourses.data.courses);
@@ -175,8 +175,8 @@ public class GymCourseListFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (usecase != null) {
             sp = usecase.getCourses(gymWrapper.id(), gymWrapper.model(), mType == Configs.TYPE_PRIVATE,
-                new Action1<QcResponseData<CourseTypeSamples>>() {
-                    @Override public void call(QcResponseData<CourseTypeSamples> qcResponseChooseCourses) {
+                new Action1<QcDataResponse<CourseTypeSamples>>() {
+                    @Override public void call(QcDataResponse<CourseTypeSamples> qcResponseChooseCourses) {
                         if (qcResponseChooseCourses.getStatus() == ResponseConstant.SUCCESS) {
                             datas.clear();
                             datas.addAll(qcResponseChooseCourses.data.courses);

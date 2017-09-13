@@ -12,9 +12,10 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.Login;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
@@ -98,8 +99,8 @@ public class LoginPresenter extends BasePresenter {
 
         loginBody.setDevice_type("android");
         loginBody.setPush_channel_id("");
-        loginUsecase.login(loginBody).subscribe(new Action1<QcResponseData<Login>>() {
-            @Override public void call(QcResponseData<Login> qcResponLogin) {
+        loginUsecase.login(loginBody).subscribe(new Action1<QcDataResponse<Login>>() {
+            @Override public void call(QcDataResponse<Login> qcResponLogin) {
                 mLoginView.cancelLogin();
                 if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
                     PreferenceUtils.setPrefString(App.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);
@@ -124,14 +125,14 @@ public class LoginPresenter extends BasePresenter {
         });
     }
 
-    public void getService(final QcResponseData<Login> qcResponLogin) {
+    public void getService(final QcDataResponse<Login> qcResponLogin) {
         spGetSer = mRestRepository.getGet_api()
             .qcGetCoachService(App.staffId, null)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<GymList>>() {
-                @Override public void call(QcResponseData<GymList> gymListQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<GymList>>() {
+                @Override public void call(QcDataResponse<GymList> gymListQcResponseData) {
                     mLoginView.cancelLogin();
                     if (ResponseConstant.checkSuccess(gymListQcResponseData)) {
                         Staff staff = new Staff(qcResponLogin.data.user);
@@ -164,8 +165,8 @@ public class LoginPresenter extends BasePresenter {
     }
 
     public void queryCode(GetCodeBody phone) {
-        loginUsecase.queryCode(phone).subscribe(new Action1<cn.qingchengfit.model.responese.QcResponse>() {
-            @Override public void call(cn.qingchengfit.model.responese.QcResponse qcResponse) {
+        loginUsecase.queryCode(phone).subscribe(new Action1<QcResponse>() {
+            @Override public void call(QcResponse qcResponse) {
                 if (qcResponse.status != 200) {
                     ToastUtils.show(qcResponse.getMsg());
                 }
@@ -188,8 +189,8 @@ public class LoginPresenter extends BasePresenter {
         if (StringUtils.isEmpty(body.getPassword())) {
             mLoginView.onError("请填写密码");
         }
-        loginUsecase.registe(body).subscribe(new Action1<QcResponseData<Login>>() {
-            @Override public void call(QcResponseData<Login> qcResponLogin) {
+        loginUsecase.registe(body).subscribe(new Action1<QcDataResponse<Login>>() {
+            @Override public void call(QcDataResponse<Login> qcResponLogin) {
 
                 if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
                     PreferenceUtils.setPrefString(App.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);

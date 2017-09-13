@@ -19,11 +19,11 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.BrandResponse;
 import cn.qingchengfit.model.responese.ClassStatmentFilterBean;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.SaleFilter;
 import cn.qingchengfit.model.responese.SigninFilter;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -157,8 +157,8 @@ public class OutExcelFragment extends BaseFragment {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<BrandResponse>>() {
-                @Override public void call(QcResponseData<BrandResponse> qcResponseBrand) {
+            .subscribe(new Action1<QcDataResponse<BrandResponse>>() {
+                @Override public void call(QcDataResponse<BrandResponse> qcResponseBrand) {
                     if (ResponseConstant.checkSuccess(qcResponseBrand)) {
                         String brandStr = qcResponseBrand.data.brand.getName();
                         titleStr = "";

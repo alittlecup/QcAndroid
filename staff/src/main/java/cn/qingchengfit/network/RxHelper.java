@@ -1,7 +1,7 @@
 package cn.qingchengfit.network;
 
 import android.text.TextUtils;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,13 +18,13 @@ public class RxHelper {
     /**
      * 对结果进行预处理
      */
-    public static <T> Observable.Transformer<QcResponseData<T>, T> handleResult() {
-        return new Observable.Transformer<QcResponseData<T>, T>() {
-            @Override public Observable<T> call(Observable<QcResponseData<T>> tObservable) {
-                return tObservable.flatMap(new Func1<QcResponseData<T>, Observable<T>>() {
-                    @Override public Observable<T> call(QcResponseData<T> result) {
+    public static <T> Observable.Transformer<QcDataResponse<T>, T> handleResult() {
+        return new Observable.Transformer<QcDataResponse<T>, T>() {
+            @Override public Observable<T> call(Observable<QcDataResponse<T>> tObservable) {
+                return tObservable.flatMap(new Func1<QcDataResponse<T>, Observable<T>>() {
+                    @Override public Observable<T> call(QcDataResponse<T> result) {
                         Timber.e(result.status + "");
-                        if (result.status == 200) {
+                        if (ResponseConstant.checkSuccess(result)) {
                             return createData(result.data);
                         } else {
                             return Observable.error(new RuntimeException(TextUtils.isEmpty(result.msg) ? "请求失败" : result.msg));
@@ -39,10 +39,10 @@ public class RxHelper {
     /**
      * 对结果进行预处理--带生命周期管理
      */
-    public static <T> Observable.Transformer<QcResponseData<T>, T> handleResult(final ActivityLifeCycleEvent event,
+    public static <T> Observable.Transformer<QcDataResponse<T>, T> handleResult(final ActivityLifeCycleEvent event,
         final PublishSubject<ActivityLifeCycleEvent> lifecycleSubject) {
-        return new Observable.Transformer<QcResponseData<T>, T>() {
-            @Override public Observable<T> call(Observable<QcResponseData<T>> tObservable) {
+        return new Observable.Transformer<QcDataResponse<T>, T>() {
+            @Override public Observable<T> call(Observable<QcDataResponse<T>> tObservable) {
                 // 生命周期管理
                 Observable<ActivityLifeCycleEvent> compareLifecycleObservable =
                     lifecycleSubject.takeFirst(new Func1<ActivityLifeCycleEvent, Boolean>() {
@@ -50,8 +50,8 @@ public class RxHelper {
                             return activityLifeCycleEvent.equals(event);
                         }
                     });
-                return tObservable.flatMap(new Func1<QcResponseData<T>, Observable<T>>() {
-                    @Override public Observable<T> call(QcResponseData<T> result) {
+                return tObservable.flatMap(new Func1<QcDataResponse<T>, Observable<T>>() {
+                    @Override public Observable<T> call(QcDataResponse<T> result) {
                         Timber.e(result.status + "");
                         if (result.status == 200) {
                             return createData(result.data);

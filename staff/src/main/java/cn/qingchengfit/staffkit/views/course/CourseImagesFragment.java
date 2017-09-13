@@ -16,7 +16,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.responese.QcResponseSchedulePhotos;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;

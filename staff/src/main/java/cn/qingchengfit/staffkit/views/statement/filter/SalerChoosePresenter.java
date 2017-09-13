@@ -3,9 +3,9 @@ package cn.qingchengfit.staffkit.views.statement.filter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.StudentBean;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Sellers;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
@@ -57,8 +57,8 @@ public class SalerChoosePresenter extends BasePresenter {
 
     public void querySaler() {
         usecase.querySalers(gymWrapper.brand_id(), gymWrapper.shop_id(), gymWrapper.id(), gymWrapper.model(),
-            new Action1<QcResponseData<Sellers>>() {
-                @Override public void call(QcResponseData<Sellers> qcResponseSalers) {
+            new Action1<QcDataResponse<Sellers>>() {
+                @Override public void call(QcDataResponse<Sellers> qcResponseSalers) {
                     if (ResponseConstant.checkSuccess(qcResponseSalers)) {
                         if (qcResponseSalers.data.users != null) {
                             List<StudentBean> ret = new ArrayList<StudentBean>();

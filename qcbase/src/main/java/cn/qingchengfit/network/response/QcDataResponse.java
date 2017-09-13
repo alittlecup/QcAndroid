@@ -23,4 +23,16 @@ package cn.qingchengfit.network.response;
 
 public class QcDataResponse<T> extends QcResponse {
     public T data;
+    public int total_count;
+    public int current_page;
+    public int pages;
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
 }

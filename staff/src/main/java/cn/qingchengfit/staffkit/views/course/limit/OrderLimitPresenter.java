@@ -3,10 +3,10 @@ package cn.qingchengfit.staffkit.views.course.limit;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ShopConfigBody;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.SignInConfig;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.network.response.QcResponseData;
 import cn.qingchengfit.staffkit.constant.ShopConfigs;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -58,8 +58,8 @@ public class OrderLimitPresenter extends BasePresenter {
             .qcGetShopConfig(loginStatus.staff_id(), isPrivate ? ShopConfigs.PRIVATE_MINUTES_CAN_ORDER : ShopConfigs.TEAM_MINUTES_CAN_ORDER,
                 gymWrapper.getParams()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<SignInConfig.Data>>() {
-                @Override public void call(QcResponseData<SignInConfig.Data> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<SignInConfig.Data>>() {
+                @Override public void call(QcDataResponse<SignInConfig.Data> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.getData().configs != null && qcResponse.getData().configs.size() > 0) {
                             view.onCourseOrderLimit(qcResponse.getData().configs.get(0));
@@ -82,8 +82,8 @@ public class OrderLimitPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<SignInConfig.Data>>() {
-                @Override public void call(QcResponseData<SignInConfig.Data> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<SignInConfig.Data>>() {
+                @Override public void call(QcDataResponse<SignInConfig.Data> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.getData().configs != null && qcResponse.getData().configs.size() > 0) {
                             view.onCourseCancelLimit(qcResponse.getData().configs.get(0));
@@ -104,8 +104,8 @@ public class OrderLimitPresenter extends BasePresenter {
             .qcGetShopConfig(loginStatus.staff_id(), isPrivate ? ShopConfigs.PRIVATE_MINUTES_CAN_ORDER : ShopConfigs.TEAM_MINUTES_CAN_ORDER,
                 gymWrapper.getParams()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<SignInConfig.Data>>() {
-                @Override public void call(QcResponseData<SignInConfig.Data> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<SignInConfig.Data>>() {
+                @Override public void call(QcDataResponse<SignInConfig.Data> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.getData().configs != null && qcResponse.getData().configs.size() > 0) {
                             view.onCourseSubstituteLimit(qcResponse.getData().configs.get(0));

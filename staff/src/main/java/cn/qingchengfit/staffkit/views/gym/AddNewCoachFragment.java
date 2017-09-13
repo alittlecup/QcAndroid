@@ -31,8 +31,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.CoachResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -215,8 +215,8 @@ public class AddNewCoachFragment extends BaseDialogFragment {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CoachResponse>>() {
-                @Override public void call(QcResponseData<CoachResponse> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<CoachResponse>>() {
+                @Override public void call(QcDataResponse<CoachResponse> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         getTargetFragment().onActivityResult(getTargetRequestCode(), IntentUtils.RESULT_OK,
                             IntentUtils.instanceStringsIntent(qcResponse.data.teacher.getUsername(), qcResponse.data.teacher.getId(),

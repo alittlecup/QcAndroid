@@ -4,8 +4,8 @@ import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.TrackSellers;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -87,8 +87,8 @@ public class TopFilterSalePresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<TrackSellers>>() {
-                @Override public void call(QcResponseData<TrackSellers> trackSellersQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<TrackSellers>>() {
+                @Override public void call(QcDataResponse<TrackSellers> trackSellersQcResponseData) {
                     view.onSalers(trackSellersQcResponseData.data.sellers);
                 }
             }, new Action1<Throwable>() {

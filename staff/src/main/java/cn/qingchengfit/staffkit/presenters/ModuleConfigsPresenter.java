@@ -3,10 +3,10 @@ package cn.qingchengfit.staffkit.presenters;
 import android.support.v4.util.ArrayMap;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ScoreStatus;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -38,8 +38,8 @@ public class ModuleConfigsPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<ScoreStatus>>() {
-                @Override public void call(QcResponseData<ScoreStatus> scoreStatusQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<ScoreStatus>>() {
+                @Override public void call(QcDataResponse<ScoreStatus> scoreStatusQcResponseData) {
                     view.onModuleStatus(scoreStatusQcResponseData.getData().getModule());
                 }
             }, new NetWorkThrowable()));
@@ -53,8 +53,8 @@ public class ModuleConfigsPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData>() {
-                @Override public void call(QcResponseData qcResponseData) {
+            .subscribe(new Action1<QcDataResponse>() {
+                @Override public void call(QcDataResponse qcResponseData) {
                     if (ResponseConstant.checkSuccess(qcResponseData)) {
                         view.onStatusSuccess();
                     } else {

@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.train.presenter;
 
-import android.text.TextUtils;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -53,8 +53,8 @@ public class SignUpPersonalPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetSignPersonal(params, keyword).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<SignRecord>>() {
-                @Override public void call(cn.qingchengfit.network.response.QcResponseData<SignRecord> signRecord) {
+            .subscribe(new Action1<QcDataResponse<SignRecord>>() {
+                @Override public void call(QcDataResponse<SignRecord> signRecord) {
                     totalpage = signRecord.data.pages;
                     if (ResponseConstant.checkSuccess(signRecord)) {
                         if (signUpView != null) {

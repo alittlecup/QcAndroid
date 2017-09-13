@@ -2,9 +2,9 @@ package cn.qingchengfit.staffkit.usecase;
 
 import cn.qingchengfit.model.body.ChargeBody;
 import cn.qingchengfit.model.body.CreateCardBody;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.Sellers;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import javax.inject.Inject;
@@ -34,7 +34,7 @@ public class BuyCardUsecase {
         this.restRepository = restRepository;
     }
 
-    public Subscription getSalers(String brandid, String shop, String gymid, String gymmodle, Action1<QcResponseData<Sellers>> action1) {
+    public Subscription getSalers(String brandid, String shop, String gymid, String gymmodle, Action1<QcDataResponse<Sellers>> action1) {
         return restRepository.getGet_api()
             .qcGetSalersAndCoach(App.staffId, brandid, shop, gymid, gymmodle)
             .observeOn(AndroidSchedulers.mainThread())

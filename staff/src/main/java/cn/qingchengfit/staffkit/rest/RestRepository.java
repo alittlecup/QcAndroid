@@ -5,9 +5,9 @@ import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.Login;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -207,7 +207,7 @@ public class RestRepository implements Repository {
         return post_api;
     }
 
-    @Override public Observable<QcResponseData<Login>> qcLogin(LoginBody loginBody) {
+    @Override public Observable<QcDataResponse<Login>> qcLogin(LoginBody loginBody) {
         return post_api.qcLogin(loginBody).doOnError(doOnError);
     }
 
@@ -215,14 +215,14 @@ public class RestRepository implements Repository {
         return post_api.qcGetCode(body).doOnError(doOnError);
     }
 
-    public Observable<QcResponseData<Login>> qcRegiste(RegisteBody registeBody) {
+    public Observable<QcDataResponse<Login>> qcRegiste(RegisteBody registeBody) {
         return post_api.qcRegister(registeBody).doOnError(doOnError);
     }
 
     /**
      * 获取健身房服务列表
      */
-    public Observable<QcResponseData<GymList>> qcGetGymList(String coach_id, String brand_id) {
+    public Observable<QcDataResponse<GymList>> qcGetGymList(String coach_id, String brand_id) {
         return get_api.qcGetCoachService(coach_id, brand_id).retry(new Func2<Integer, Throwable, Boolean>() {
             @Override public Boolean call(Integer integer, Throwable throwable) {
                 return integer < 3 && throwable instanceof SocketTimeoutException;
@@ -257,7 +257,7 @@ public class RestRepository implements Repository {
         }).doOnError(doOnError);
     }
 
-    public Observable<QcResponseData<CreatBrand>> qcCreateBrand(CreatBrandBody bean) {
+    public Observable<QcDataResponse<CreatBrand>> qcCreateBrand(CreatBrandBody bean) {
         return post_api.qcCreatBrand(bean).retry(new Func2<Integer, Throwable, Boolean>() {
             @Override public Boolean call(Integer integer, Throwable throwable) {
                 return integer < 3 && throwable instanceof SocketTimeoutException;

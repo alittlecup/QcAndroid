@@ -4,9 +4,9 @@ import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.GroupCourseScheduleDetail;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponsePrivateDetail;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
@@ -86,8 +86,8 @@ public class CourseBatchDetailPresenter implements Presenter {
 
     public void queryGroup(String id) {
         groupSp = gymUseCase.getGroupBatches(id, gymWrapper.id(), gymWrapper.model(), null,
-            new Action1<QcResponseData<GroupCourseScheduleDetail>>() {
-                @Override public void call(QcResponseData<GroupCourseScheduleDetail> qcResponseGroupDetail) {
+            new Action1<QcDataResponse<GroupCourseScheduleDetail>>() {
+                @Override public void call(QcDataResponse<GroupCourseScheduleDetail> qcResponseGroupDetail) {
                     if (qcResponseGroupDetail.getStatus() == ResponseConstant.SUCCESS) {
                         view.onGoup(qcResponseGroupDetail.data.course, qcResponseGroupDetail.data.batches);
                     } else {

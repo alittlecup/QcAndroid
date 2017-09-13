@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.setting.brand;
 
 import cn.qingchengfit.model.responese.BrandsResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.usecase.InitUseCase;
@@ -48,8 +48,8 @@ public class BrandManagePresenter extends BasePresenter {
     }
 
     public void queryBrands() {
-        RxRegiste(useCase.getBrandList(new Action1<QcResponseData<BrandsResponse>>() {
-            @Override public void call(QcResponseData<BrandsResponse> qcResponseBrands) {
+        RxRegiste(useCase.getBrandList(new Action1<QcDataResponse<BrandsResponse>>() {
+            @Override public void call(QcDataResponse<BrandsResponse> qcResponseBrands) {
                 if (ResponseConstant.checkSuccess(qcResponseBrands)) {
                     view.onList(qcResponseBrands.data.brands);
                 } else {

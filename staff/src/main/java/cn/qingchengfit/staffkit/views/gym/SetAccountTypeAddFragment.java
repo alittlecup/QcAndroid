@@ -25,8 +25,8 @@ import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.OnlineLimit;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -231,7 +231,7 @@ public class SetAccountTypeAddFragment extends BaseFragment {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Subscriber<QcResponseData<CardTpls>>() {
+            .subscribe(new Subscriber<QcDataResponse<CardTpls>>() {
                 @Override public void onCompleted() {
 
                 }
@@ -240,7 +240,7 @@ public class SetAccountTypeAddFragment extends BaseFragment {
 
                 }
 
-                @Override public void onNext(QcResponseData<CardTpls> qcResponseGymCardtpl) {
+                @Override public void onNext(QcDataResponse<CardTpls> qcResponseGymCardtpl) {
                     if (qcResponseGymCardtpl.getStatus() == ResponseConstant.SUCCESS) {
                         card_tpls = qcResponseGymCardtpl.data.card_tpls;
                         for (int i = 0; i < qcResponseGymCardtpl.data.card_tpls.size(); i++) {

@@ -4,8 +4,8 @@ import android.util.Pair;
 import cn.qingchengfit.chat.model.ChatGym;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.ChatFriendsData;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -29,9 +29,9 @@ public class ChatFriendPresenter extends BasePresenter {
     public void queryChatFriend() {
         RxRegiste(restRepository.getGet_api()
             .qcQueryChatFriends().onBackpressureBuffer().subscribeOn(Schedulers.computation())
-            .flatMap(new Func1<QcResponseData<ChatFriendsData>, Observable<Pair<List<ChatGym>, List<Staff>>>>() {
+            .flatMap(new Func1<QcDataResponse<ChatFriendsData>, Observable<Pair<List<ChatGym>, List<Staff>>>>() {
                 @Override
-                public Observable<Pair<List<ChatGym>, List<Staff>>> call(QcResponseData<ChatFriendsData> chatFriendsDataQcResponseData) {
+                public Observable<Pair<List<ChatGym>, List<Staff>>> call(QcDataResponse<ChatFriendsData> chatFriendsDataQcResponseData) {
                     List<ChatGym> chatGyms = chatFriendsDataQcResponseData.getData().gyms;
                     List<Staff> staffs = new ArrayList<Staff>();
                     if (chatGyms != null) {

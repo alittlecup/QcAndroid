@@ -4,8 +4,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.model.responese.LockerRegions;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -55,8 +55,8 @@ public class DistrictListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<LockerRegions>>() {
-                @Override public void call(QcResponseData<LockerRegions> qcResponseLocerRegion) {
+            .subscribe(new Action1<QcDataResponse<LockerRegions>>() {
+                @Override public void call(QcDataResponse<LockerRegions> qcResponseLocerRegion) {
                     if (ResponseConstant.checkSuccess(qcResponseLocerRegion)) {
                         view.onList(qcResponseLocerRegion.data.locker_regions);
                     } else {

@@ -5,11 +5,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.FollowUpDataStatistic;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.SettingUsecase;
 import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.model.responese.StudentTrackPreview;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -94,8 +94,8 @@ public class FollowUpPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<StudentTrackPreview>>() {
-                @Override public void call(QcResponseData<StudentTrackPreview> studentTrackPreviewQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<StudentTrackPreview>>() {
+                @Override public void call(QcDataResponse<StudentTrackPreview> studentTrackPreviewQcResponseData) {
                     view.onTrackPreview(studentTrackPreviewQcResponseData.data);
                 }
             }, new Action1<Throwable>() {
@@ -115,8 +115,8 @@ public class FollowUpPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<FollowUpDataStatistic>>() {
-                @Override public void call(QcResponseData<FollowUpDataStatistic> trackStudentsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<FollowUpDataStatistic>>() {
+                @Override public void call(QcDataResponse<FollowUpDataStatistic> trackStudentsQcResponseData) {
                     view.onFollowUpStatistics(trackStudentsQcResponseData.data);
                 }
             }, new Action1<Throwable>() {
@@ -128,8 +128,8 @@ public class FollowUpPresenter extends BasePresenter {
     }
 
     public void getSelfInfo() {
-        usecase.getSelfInfo(new Action1<QcResponseData<StaffResponse>>() {
-            @Override public void call(QcResponseData<StaffResponse> qcResponseSelfInfo) {
+        usecase.getSelfInfo(new Action1<QcDataResponse<StaffResponse>>() {
+            @Override public void call(QcDataResponse<StaffResponse> qcResponseSelfInfo) {
                 if (qcResponseSelfInfo.getStatus() == ResponseConstant.SUCCESS) {
                     view.onSelfInfo(qcResponseSelfInfo.data.staff);
                 } else {

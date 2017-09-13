@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.StatementGlance;
 import cn.qingchengfit.model.responese.StatementGlanceResp;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -43,8 +43,8 @@ public class GlancePresenter extends BasePresenter {
     private Subscription saleSp;
     private Subscription classSp;
     private RestRepository restRepository;
-    private Action1<QcResponseData<StatementGlanceResp>> actionSaleGlance = new Action1<QcResponseData<StatementGlanceResp>>() {
-        @Override public void call(QcResponseData<StatementGlanceResp> qcResponseSaleGlance) {
+    private Action1<QcDataResponse<StatementGlanceResp>> actionSaleGlance = new Action1<QcDataResponse<StatementGlanceResp>>() {
+        @Override public void call(QcDataResponse<StatementGlanceResp> qcResponseSaleGlance) {
             if (qcResponseSaleGlance.getStatus() == ResponseConstant.SUCCESS) {
                 StatementGlance month = qcResponseSaleGlance.data.month;
                 StatementGlance week = qcResponseSaleGlance.data.week;
@@ -58,8 +58,8 @@ public class GlancePresenter extends BasePresenter {
             }
         }
     };
-    private Action1<QcResponseData<StatementGlanceResp>> actionGlassGlance = new Action1<QcResponseData<StatementGlanceResp>>() {
-        @Override public void call(QcResponseData<StatementGlanceResp> qcResponseReportGlance) {
+    private Action1<QcDataResponse<StatementGlanceResp>> actionGlassGlance = new Action1<QcDataResponse<StatementGlanceResp>>() {
+        @Override public void call(QcDataResponse<StatementGlanceResp> qcResponseReportGlance) {
             if (qcResponseReportGlance.getStatus() == ResponseConstant.SUCCESS) {
                 StatementGlance month = qcResponseReportGlance.data.month;
                 StatementGlance week = qcResponseReportGlance.data.week;
@@ -118,8 +118,8 @@ public class GlancePresenter extends BasePresenter {
                 saleSp = usecase.querySaleGlance(null, gymWrapper.id(), gymWrapper.model(), actionSaleGlance);
             }
         } else {
-            saleSp = usecase.querySaleGlance(gymWrapper.brand_id(), shopid, new Action1<QcResponseData<StatementGlanceResp>>() {
-                @Override public void call(QcResponseData<StatementGlanceResp> qcResponseSaleGlance) {
+            saleSp = usecase.querySaleGlance(gymWrapper.brand_id(), shopid, new Action1<QcDataResponse<StatementGlanceResp>>() {
+                @Override public void call(QcDataResponse<StatementGlanceResp> qcResponseSaleGlance) {
                     if (qcResponseSaleGlance.getStatus() == ResponseConstant.SUCCESS) {
                         StatementGlance month = qcResponseSaleGlance.data.month;
                         StatementGlance week = qcResponseSaleGlance.data.week;
@@ -164,8 +164,8 @@ public class GlancePresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<StatementGlanceResp>>() {
-                @Override public void call(QcResponseData<StatementGlanceResp> qcResponseReportGlance) {
+            .subscribe(new Action1<QcDataResponse<StatementGlanceResp>>() {
+                @Override public void call(QcDataResponse<StatementGlanceResp> qcResponseReportGlance) {
                     if (qcResponseReportGlance.getStatus() == ResponseConstant.SUCCESS) {
                         StatementGlance month = qcResponseReportGlance.data.month;
                         StatementGlance week = qcResponseReportGlance.data.week;

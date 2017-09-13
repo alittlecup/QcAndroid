@@ -7,8 +7,8 @@ import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.BodyTestBean;
 import cn.qingchengfit.model.responese.BodyTestPreview;
 import cn.qingchengfit.model.responese.BodyTestPreviews;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -79,8 +79,8 @@ public class BodyTestListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<BodyTestPreviews>>() {
-                @Override public void call(QcResponseData<BodyTestPreviews> bodyTestReponse) {
+            .subscribe(new Action1<QcDataResponse<BodyTestPreviews>>() {
+                @Override public void call(QcDataResponse<BodyTestPreviews> bodyTestReponse) {
                     List<BodyTestBean> strings = new ArrayList<BodyTestBean>();
                     for (BodyTestPreview measure : bodyTestReponse.data.measures) {
                         strings.add(measure.toBodyTestBean());

@@ -3,7 +3,7 @@ package cn.qingchengfit.staffkit.presenters;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -30,8 +30,8 @@ public class SignInConfigPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<SignInCardCostBean.Data>>() {
-                @Override public void call(QcResponseData<SignInCardCostBean.Data> dataQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<SignInCardCostBean.Data>>() {
+                @Override public void call(QcDataResponse<SignInCardCostBean.Data> dataQcResponseData) {
                     view.onCardCost(dataQcResponseData.getData().card_costs);
                 }
             }));

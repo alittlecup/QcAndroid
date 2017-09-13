@@ -50,10 +50,8 @@ import cn.qingchengfit.model.responese.Notification;
 import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.model.responese.NotityIsOpenConfigs;
 import cn.qingchengfit.model.responese.QcResponToken;
-import cn.qingchengfit.model.responese.QcResponse;
 import cn.qingchengfit.model.responese.QcResponseBtaches;
 import cn.qingchengfit.model.responese.QcResponseCards;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseJacket;
 import cn.qingchengfit.model.responese.QcResponseOption;
 import cn.qingchengfit.model.responese.QcResponsePermission;
@@ -108,6 +106,8 @@ import cn.qingchengfit.model.responese.Students;
 import cn.qingchengfit.model.responese.TrackFilterOrigins;
 import cn.qingchengfit.model.responese.TrackSellers;
 import cn.qingchengfit.model.responese.TrackStudents;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
 import cn.qingchengfit.staffkit.train.model.GroupListResponse;
@@ -147,37 +147,37 @@ public interface Get_Api {
      */
     @Deprecated @GET("/api/brands/") rx.Observable<BrandsResponse> qcGetBrands();
 
-    @GET("/api/staffs/{staff_id}/brands/{id}/") rx.Observable<QcResponseData<BrandResponse>> qcGetBrand(@Path("staff_id") String staff_id,
+    @GET("/api/staffs/{staff_id}/brands/{id}/") rx.Observable<QcDataResponse<BrandResponse>> qcGetBrand(@Path("staff_id") String staff_id,
         @Path("id") String id);
 
-    @GET("/api/staffs/{id}/brands/") rx.Observable<QcResponseData<BrandsResponse>> qcGetBrands(@Path("id") String id);
+    @GET("/api/staffs/{id}/brands/") rx.Observable<QcDataResponse<BrandsResponse>> qcGetBrands(@Path("id") String id);
 
-    @GET("/api/staffs/{id}/services/") rx.Observable<QcResponseData<GymList>> qcGetCoachService(@Path("id") String id,
+    @GET("/api/staffs/{id}/services/") rx.Observable<QcDataResponse<GymList>> qcGetCoachService(@Path("id") String id,
         @Query("brand_id") String brand_id);
 
     @GET("/api/staffs/{id}/services/{sid}/") rx.Observable<ResponseService> qcGetService(@Path("id") String id, @Path("sid") String sid,
         @Query("model") String model);
 
-    @GET("/api/staffs/{id}/check/superuser/") rx.Observable<QcResponseData<ResponseSu>> qcCheckSu(@Path("id") String id,
+    @GET("/api/staffs/{id}/check/superuser/") rx.Observable<QcDataResponse<ResponseSu>> qcCheckSu(@Path("id") String id,
         @QueryMap HashMap<String, Object> params);
 
-    @GET("/api/v2/staffs/{id}/gyms/welcome/") rx.Observable<QcResponseData<GymDetail>> qcGetGymDetail(@Path("id") String staffid,
+    @GET("/api/v2/staffs/{id}/gyms/welcome/") rx.Observable<QcDataResponse<GymDetail>> qcGetGymDetail(@Path("id") String staffid,
         @Query("id") String id, @Query("model") String model);
 
-    @GET("/api/v2/staffs/{staff_id}/gyms/pay/") rx.Observable<QcResponseData<RenewalList>> qcGetGymPay(@Path("staff_id") String staff_id,
+    @GET("/api/v2/staffs/{staff_id}/gyms/pay/") rx.Observable<QcDataResponse<RenewalList>> qcGetGymPay(@Path("staff_id") String staff_id,
         @QueryMap HashMap<String, Object> params);
 
-    @GET("/api/v2/staffs/{staff_id}/gym-extra/") rx.Observable<QcResponseData<GymExtra>> qcGetGymExtra(@Path("staff_id") String staff_id,
+    @GET("/api/v2/staffs/{staff_id}/gym-extra/") rx.Observable<QcDataResponse<GymExtra>> qcGetGymExtra(@Path("staff_id") String staff_id,
         @QueryMap HashMap<String, Object> params);
 
     //获取通知 分页和不分页接口 ,后者只为拿 未读
-    @Deprecated @GET("/api/notifications/") rx.Observable<QcResponseData<Notification>> qcGetMessages(@Query("staff_id") String id,
+    @Deprecated @GET("/api/notifications/") rx.Observable<QcDataResponse<Notification>> qcGetMessages(@Query("staff_id") String id,
         @QueryMap HashMap<String, Object> params);
 
-    @GET("/api/v2/notifications/?order_by=-created_at") rx.Observable<QcResponseData<Notification>> qcGetNotification(
+    @GET("/api/v2/notifications/?order_by=-created_at") rx.Observable<QcDataResponse<Notification>> qcGetNotification(
         @QueryMap HashMap<String, Object> query);
 
-    @GET("/api/v2/notifications/index/") rx.Observable<QcResponseData<List<NotificationGlance>>> qcGetNotificationIndex(
+    @GET("/api/v2/notifications/index/") rx.Observable<QcDataResponse<List<NotificationGlance>>> qcGetNotificationIndex(
         @Query("type_json") String query);
 
     /**
@@ -189,27 +189,27 @@ public interface Get_Api {
         @QueryMap HashMap<String, Object> params);
 
     @GET("/api/staffs/{id}/{type}/{single_id}/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<SingleBatchData>> qcGetSingleBatch(@Path("id") String id,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<SingleBatchData>> qcGetSingleBatch(@Path("id") String id,
         @Path("type") String type, @Path("single_id") String single_id, @QueryMap HashMap<String, Object> params);
 
     //工作人员详情
-    @GET("/api/staffs/{id}/") rx.Observable<QcResponseData<StaffResponse>> qcGetSelfInfo(@Path("id") String id);
+    @GET("/api/staffs/{id}/") rx.Observable<QcDataResponse<StaffResponse>> qcGetSelfInfo(@Path("id") String id);
 
     // 连锁
-    @GET("/api/v2/staffs/{id}/android/welcome/") rx.Observable<QcResponseData<HomeInfo>> qcWelcomeHome(@Path("id") String id,
+    @GET("/api/v2/staffs/{id}/android/welcome/") rx.Observable<QcDataResponse<HomeInfo>> qcWelcomeHome(@Path("id") String id,
         @Query("brand_id") String brandid);
 
     //工作人员下所有会员
     //    @GET("/api/staffs/{id}/users/all/?show_all=1")
-    @GET("/api/staffs/{id}/users/?show_all=1") rx.Observable<QcResponseData<Students>> qcGetAllStudents(@Path("id") String id,
+    @GET("/api/staffs/{id}/users/?show_all=1") rx.Observable<QcDataResponse<Students>> qcGetAllStudents(@Path("id") String id,
         @QueryMap HashMap<String, Object> params);
 
     //工作人员下某家健身房会员
-    @GET("/api/staffs/{id}/users/") rx.Observable<QcResponseData<Students>> qcGetAllStudents(@Path("id") String id,
+    @GET("/api/staffs/{id}/users/") rx.Observable<QcDataResponse<Students>> qcGetAllStudents(@Path("id") String id,
         @Query("id") String gymid, @Query("model") String model);
 
     //会员卡可绑定的会员列表
-    @GET("/api/staffs/{staff_id}/method/users/?show_all=1") rx.Observable<QcResponseData<Students>> qcGetCardBundldStudents(
+    @GET("/api/staffs/{staff_id}/method/users/?show_all=1") rx.Observable<QcDataResponse<Students>> qcGetCardBundldStudents(
         @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -221,11 +221,11 @@ public interface Get_Api {
      * @return "attendances": [{"user": {"username": "俞小西","gender": 1,"id": 2131,"avatar": "http://zoneke-img.b0.upaiyun.com/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
      * "18611985427"},"absence": 390,"date_and_time": "2016-01-30 13:30-14:30","id": 5933,"title": "娜娜私教 杨娜娜"},]
      */
-    @GET("/api/staffs/{staff_id}/users/absence/") rx.Observable<QcResponseData<Absentces>> qcGetUsersAbsences(@Path("staff_id") String id,
+    @GET("/api/staffs/{staff_id}/users/absence/") rx.Observable<QcDataResponse<Absentces>> qcGetUsersAbsences(@Path("staff_id") String id,
         @QueryMap HashMap<String, Object> params);
 
     //获取缺勤图表数据
-    @GET("/api/staffs/{id}/users/attendance/glance/") rx.Observable<QcResponseData<AttendanceCharDataBean>> qcGetAttendanceChart(
+    @GET("/api/staffs/{id}/users/attendance/glance/") rx.Observable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(
         @Path("id") String id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -240,28 +240,28 @@ public interface Get_Api {
      * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
      * 142},
      */
-    @GET("/api/staffs/{staff_id}/users/attendance/") Observable<QcResponseData<Attendances>> qcGetUsersAttendances(
+    @GET("/api/staffs/{staff_id}/users/attendance/") Observable<QcDataResponse<Attendances>> qcGetUsersAttendances(
         @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
     /**
      * 日程安排
      */
-    @GET("/api/staffs/{id}/actions/redirect/") rx.Observable<QcResponseData<ScheduleActions>> qcGetScheduleAciton(@Path("id") String id,
+    @GET("/api/staffs/{id}/actions/redirect/") rx.Observable<QcDataResponse<ScheduleActions>> qcGetScheduleAciton(@Path("id") String id,
         @Query("action") String action, @QueryMap HashMap<String, Object> params);
 
     /**
      * 卡类型
      */
     //工作人员 卡类型
-    @GET("/api/v2/staffs/{id}/cardtpls/all/?show_all=1&order_by=-id") rx.Observable<QcResponseData<CardTpls>> qcGetCardTpls(
+    @GET("/api/v2/staffs/{id}/cardtpls/all/?show_all=1&order_by=-id") rx.Observable<QcDataResponse<CardTpls>> qcGetCardTpls(
         @Path("id") String id, @QueryMap HashMap<String, Object> params, @Query("type") String type, @Query("is_enable") String isEnable);
 
     // 卡类型
-    @GET("/api/staffs/{id}/method/cardtpls/?show_all=1") rx.Observable<QcResponseData<CardTpls>> qcGetCardTplsPermission(
+    @GET("/api/staffs/{id}/method/cardtpls/?show_all=1") rx.Observable<QcDataResponse<CardTpls>> qcGetCardTplsPermission(
         @Path("id") String id, @QueryMap HashMap<String, Object> parasm);
 
     //工作人员 卡类型详情
-    @GET("/api/staffs/{Staff}/cardtpls/{id}/") rx.Observable<QcResponseData<CardTplResponse>> qcGetCardTplsDetail(
+    @GET("/api/staffs/{Staff}/cardtpls/{id}/") rx.Observable<QcDataResponse<CardTplResponse>> qcGetCardTplsDetail(
         @Path("Staff") String staff, @Path("id") String id, @QueryMap HashMap<String, Object> parasm);
 
     // 工作人员 卡类型 规格
@@ -270,50 +270,50 @@ public interface Get_Api {
         @Query("brand_id") String brand_id);
 
     //学员体测数据
-    @GET("/api/staffs/{id}/users/{student_id}/measures/") rx.Observable<QcResponseData<BodyTestPreviews>> qcGetStuedntBodyTest(
+    @GET("/api/staffs/{id}/users/{student_id}/measures/") rx.Observable<QcDataResponse<BodyTestPreviews>> qcGetStuedntBodyTest(
 
         @Path("id") String staffid, @Path("student_id") String student_id, @QueryMap HashMap<String, Object> params);
 
     //体测模板接口
-    @GET("/api/measures/tpl/") rx.Observable<QcResponseData<BodyTestTemplateData>> qcGetBodyTestModel(
+    @GET("/api/measures/tpl/") rx.Observable<QcDataResponse<BodyTestTemplateData>> qcGetBodyTestModel(
         @QueryMap HashMap<String, Object> params);
 
     //获取体测数据
-    @GET("/api/staffs/{id}/measures/{measure_id}/") rx.Observable<QcResponseData<BodyTestMeasureData>> qcGetBodyTest(
+    @GET("/api/staffs/{id}/measures/{measure_id}/") rx.Observable<QcDataResponse<BodyTestMeasureData>> qcGetBodyTest(
         @Path("id") String staffid, @Path("measure_id") String measure_id, @QueryMap HashMap<String, Object> params);
 
     //获取某个健身房的教练列表
-    @GET("/api/staffs/{id}/coaches/") rx.Observable<QcResponseData<Staffs>> qcGetGymCoaches(@Path("id") String id,
+    @GET("/api/staffs/{id}/coaches/") rx.Observable<QcDataResponse<Staffs>> qcGetGymCoaches(@Path("id") String id,
         @Query("id") String gymid, @Query("model") String model, @Query("q") String keyword);
 
     //获取某个健身房的教练列表
-    @GET("/api/staffs/{id}/method/coaches/") rx.Observable<QcResponseData<Staffs>> qcGetGymCoachesPermission(@Path("id") String id,
+    @GET("/api/staffs/{id}/method/coaches/") rx.Observable<QcDataResponse<Staffs>> qcGetGymCoachesPermission(@Path("id") String id,
         @QueryMap HashMap<String, Object> params);
 
     //获取某个健身房的教练列表
-    @GET("/api/staffs/{id}/coaches/") rx.Observable<QcResponseData<Staffs>> qcGetAllCoaches(@Path("id") String id,
+    @GET("/api/staffs/{id}/coaches/") rx.Observable<QcDataResponse<Staffs>> qcGetAllCoaches(@Path("id") String id,
         @Query("brand_id") String brandid, @Query("id") String gymid, @Query("model") String model);
 
     //获取某个健身房的场地列表
-    @GET("/api/staffs/{id}/spaces/") rx.Observable<QcResponseData<GymSites>> qcGetGymSites(@Path("id") String id, @Query("id") String gymid,
+    @GET("/api/staffs/{id}/spaces/") rx.Observable<QcDataResponse<GymSites>> qcGetGymSites(@Path("id") String id, @Query("id") String gymid,
         @Query("model") String model);
 
     //获取某个健身房的场地列表
-    @GET("/api/staffs/{id}/method/spaces/") rx.Observable<QcResponseData<GymSites>> qcGetGymSitesPermisson(@Path("id") String id,
+    @GET("/api/staffs/{id}/method/spaces/") rx.Observable<QcDataResponse<GymSites>> qcGetGymSitesPermisson(@Path("id") String id,
         @QueryMap HashMap<String, Object> params);
 
-    @GET("/api/staffs/{id}/shops/") rx.Observable<QcResponseData<Shops>> qcGetBrandShops(@Path("id") String id,
+    @GET("/api/staffs/{id}/shops/") rx.Observable<QcDataResponse<Shops>> qcGetBrandShops(@Path("id") String id,
         @Query("brand_id") String brand_id);
 
-    @GET("/api/staffs/{id}/shops/detail") rx.Observable<QcResponseData<ShopDetail>> qcGetShopDetail(@Path("id") String id,
+    @GET("/api/staffs/{id}/shops/detail") rx.Observable<QcDataResponse<ShopDetail>> qcGetShopDetail(@Path("id") String id,
         @QueryMap HashMap<String, Object> params);
     //某品牌下所有场馆 ?????
 
-    @GET("/api/staffs/{id}/brands/{brand_id}/shops/") rx.Observable<QcResponseData<Shops>> qcGetBrandAllShops(@Path("id") String id,
+    @GET("/api/staffs/{id}/brands/{brand_id}/shops/") rx.Observable<QcDataResponse<Shops>> qcGetBrandAllShops(@Path("id") String id,
         @Path("brand_id") String brand_id);
 
     //获取某个健身房的卡模板
-    @GET("/api/staffs/{id}/cardtpls/?show_all=1") rx.Observable<QcResponseData<GymCardtpl>> qcGetGymCardtpl(@Path("id") String id,
+    @GET("/api/staffs/{id}/cardtpls/?show_all=1") rx.Observable<QcDataResponse<GymCardtpl>> qcGetGymCardtpl(@Path("id") String id,
         @Query("id") String gymid, @Query("model") String model, @Query("type") String type);
 
     //获取某个学员的基本信息
@@ -321,7 +321,7 @@ public interface Get_Api {
         @Path("id") String studentid, @Query("id") String gymid, @Query("model") String model, @Query("brand_id") String brand_id);
 
     //获取某个学员的课程
-    @GET("/api/staffs/{staff_id}/users/attendance/records/") rx.Observable<QcResponseData<ClassRecords>> qcGetStudentClassRecords(
+    @GET("/api/staffs/{staff_id}/users/attendance/records/") rx.Observable<QcDataResponse<ClassRecords>> qcGetStudentClassRecords(
         @Path("staff_id") String staffid, @Query("user_id") String studentid, @QueryMap HashMap<String, Object> params);
 
     //获取某个学员的cardlist
@@ -337,7 +337,7 @@ public interface Get_Api {
     //    @Query("brand_id") String brand_id, @Query("shop_id") String shop_id);
 
     //获取某个学员的跟进记录
-    @GET("/api/staffs/{id}/users/{student_id}/records/?format=app") rx.Observable<QcResponseData<FollowRecords>> qcGetStudentFollow(
+    @GET("/api/staffs/{id}/users/{student_id}/records/?format=app") rx.Observable<QcDataResponse<FollowRecords>> qcGetStudentFollow(
         @Path("id") String staffid, @Path("student_id") String user_id, @Query("id") String gymid, @Query("model") String model,
         @Query("brand_id") String brand_id, @Query("page") int page);
 
@@ -360,28 +360,28 @@ public interface Get_Api {
     @GET("/api/staffs/{id}/cards/?order_by=-id") rx.Observable<Cards> qcGetAllCard(@Path("id") String staffid);
 
     //获取会员卡
-    @GET("/api/staffs/{id}/cards/all/?order_by=-id") rx.Observable<QcResponseData<Cards>> qcGetBrandCard(@Path("id") String staffid,
+    @GET("/api/staffs/{id}/cards/all/?order_by=-id") rx.Observable<QcDataResponse<Cards>> qcGetBrandCard(@Path("id") String staffid,
         @Query("brand_id") String brand_id, @Query("id") String gymid, @Query("model") String gymmodel, @Query("page") int page,
         @Query("q") String keyword, @QueryMap HashMap<String, Object> params);
 
     //获取会员卡
-    @GET("api/staffs/{id}/balance/cards/") rx.Observable<QcResponseData<Cards>> qcGetBalanceCard(@Path("id") String staffid,
+    @GET("api/staffs/{id}/balance/cards/") rx.Observable<QcDataResponse<Cards>> qcGetBalanceCard(@Path("id") String staffid,
         @Query("brand_id") String brand_id, @Query("id") String gymid, @Query("model") String gymmodel, @Query("page") int page,
         @Query("q") String keyword, @QueryMap HashMap<String, Object> params);
 
     //获取卡详情
-    @GET("/api/staffs/{id}/cards/{card_id}/") rx.Observable<QcResponseData<CardResponse>> qcGetCardDetail(@Path("id") String staff,
+    @GET("/api/staffs/{id}/cards/{card_id}/") rx.Observable<QcDataResponse<CardResponse>> qcGetCardDetail(@Path("id") String staff,
         @Path("card_id") String card_id, @QueryMap HashMap<String, Object> params);
 
-    @GET("/api/staffs/{id}/cards/bind/users/") rx.Observable<QcResponseData<CardBindStudents>> qcGetBindStudent(@Path("id") String staff,
+    @GET("/api/staffs/{id}/cards/bind/users/") rx.Observable<QcDataResponse<CardBindStudents>> qcGetBindStudent(@Path("id") String staff,
         @QueryMap HashMap<String, Object> params);
 
     //获取筛选列表
-    @GET("/api/staffs/{id}/filter/cardtpls/?show_all=1") rx.Observable<QcResponseData<CardTpls>> qcGetCardFilterCondition(
+    @GET("/api/staffs/{id}/filter/cardtpls/?show_all=1") rx.Observable<QcDataResponse<CardTpls>> qcGetCardFilterCondition(
         @Path("id") String staff, @QueryMap HashMap<String, Object> params);
 
     //设置余额条件
-    @GET("api/v2/staffs/{id}/users/configs/") rx.Observable<QcResponseData<BalanceConfigs>> qcGetBalanceCondition(
+    @GET("api/v2/staffs/{id}/users/configs/") rx.Observable<QcDataResponse<BalanceConfigs>> qcGetBalanceCondition(
         @Path("id") String staffId, @QueryMap HashMap<String, Object> params, @Query("keys") String permission);
 
     /**
@@ -391,14 +391,14 @@ public interface Get_Api {
         @Query("brand_id") String brand_id);
 
     //获取请假列表
-    @GET("/api/staffs/{id}/leaves/?order_by=-created_at") rx.Observable<QcResponseData<DayOffs>> qcGetDayOff(@Path("id") String staffid,
+    @GET("/api/staffs/{id}/leaves/?order_by=-created_at") rx.Observable<QcDataResponse<DayOffs>> qcGetDayOff(@Path("id") String staffid,
         @Query("brand_id") String brandid, @Query("card_id") String card_id, @Query("id") String gymid, @Query("model") String model);
 
-    @GET("/api/staffs/{id}/reports/schedules/glance/") rx.Observable<QcResponseData<StatementGlanceResp>> qcGetReportGlance(
+    @GET("/api/staffs/{id}/reports/schedules/glance/") rx.Observable<QcDataResponse<StatementGlanceResp>> qcGetReportGlance(
         @Path("id") String id, @Query("brand_id") String brand_id, @Query("shop_id") String shop_id, @Query("id") String gymid,
         @Query("model") String model);
 
-    @GET("/api/staffs/{id}/reports/sells/glance/") rx.Observable<QcResponseData<StatementGlanceResp>> qcGetSaleGlance(@Path("id") String id,
+    @GET("/api/staffs/{id}/reports/sells/glance/") rx.Observable<QcDataResponse<StatementGlanceResp>> qcGetSaleGlance(@Path("id") String id,
         @Query("brand_id") String brand_id, @Query("shop_id") String shop_id, @Query("id") String gymid, @Query("model") String model);
 
     /**
@@ -409,7 +409,7 @@ public interface Get_Api {
      *
      * @return Observable
      */
-    @GET("/api/staffs/{staff_id}/reports/checkin/glance/") rx.Observable<QcResponseData<StatementGlanceResp>> qcGetSigninGlance(
+    @GET("/api/staffs/{staff_id}/reports/checkin/glance/") rx.Observable<QcDataResponse<StatementGlanceResp>> qcGetSigninGlance(
         @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -420,7 +420,7 @@ public interface Get_Api {
      *
      * @return Observable
      */
-    @GET("/api/staffs/{staff_id}/reports/checkin/") rx.Observable<QcResponseData<SigninReportDetail>> qcGetSigninReportDetail(
+    @GET("/api/staffs/{staff_id}/reports/checkin/") rx.Observable<QcDataResponse<SigninReportDetail>> qcGetSigninReportDetail(
         @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
     @GET("/api/v3/staffs/{id}/reports/schedules/") rx.Observable<QcResponseStatementDetail> qcGetStatementDatail(@Path("id") String id,
@@ -444,11 +444,11 @@ public interface Get_Api {
     @GET("/api/v1/coaches/{id}/reports/sale/cardtpls/") rx.Observable<QcResponseCards> qcGetSaleCard(@Path("id") String id);
 
     //获取销售 卖卡  包含销售和教练
-    @GET("/api/staffs/{staff_id}/sellers/") rx.Observable<QcResponseData<Sellers>> qcGetSalersAndCoach(@Path("staff_id") String staff_id,
+    @GET("/api/staffs/{staff_id}/sellers/") rx.Observable<QcDataResponse<Sellers>> qcGetSalersAndCoach(@Path("staff_id") String staff_id,
         @Query("brand_id") String brandid, @Query("shop_id") String shopid, @Query("id") String gymid, @Query("model") String model);
 
     //获取销售 卖卡  包含销售 不包含教练
-    @GET("/api/staffs/{staff_id}/sellers-without-coach/") rx.Observable<QcResponseData<Sellers>> qcGetSalers(
+    @GET("/api/staffs/{staff_id}/sellers-without-coach/") rx.Observable<QcDataResponse<Sellers>> qcGetSalers(
         @Path("staff_id") String staff_id, @Query("brand_id") String brandid, @Query("shop_id") String shopid, @Query("id") String gymid,
         @Query("model") String model);
 
@@ -457,7 +457,7 @@ public interface Get_Api {
         @Query("brand_id") String brand_id, @Query("teacher_id") String teacher_id);
 
     //获取工作人员列表
-    @GET("/api/staffs/{id}/managers/?show_all=1") rx.Observable<QcResponseData<StaffShipResponse>> qcGetStaffs(@Path("id") String staff_id,
+    @GET("/api/staffs/{id}/managers/?show_all=1") rx.Observable<QcDataResponse<StaffShipResponse>> qcGetStaffs(@Path("id") String staff_id,
         @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id, @Query("q") String keywork);
 
     //获取工作人员职位列表
@@ -472,7 +472,7 @@ public interface Get_Api {
      */
 
     //获取团课排课
-    @GET("/api/staffs/{id}/group/courses/") rx.Observable<QcResponseData<GroupCourseResponse>> qcGetGroupCourse(@Path("id") String staff_id,
+    @GET("/api/staffs/{id}/group/courses/") rx.Observable<QcDataResponse<GroupCourseResponse>> qcGetGroupCourse(@Path("id") String staff_id,
         @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
 
     //获取私教排课
@@ -485,7 +485,7 @@ public interface Get_Api {
         @Query("brand_id") String brand_id);
 
     //获取团课排期
-    @GET("/api/staffs/{id}/courses/{course_id}/batches/") rx.Observable<QcResponseData<GroupCourseScheduleDetail>> qcGetGroupCourses(
+    @GET("/api/staffs/{id}/courses/{course_id}/batches/") rx.Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(
         @Path("id") String staff_id, @Path("course_id") String course_id, @Query("id") String gym_id, @Query("model") String gym_model,
         @Query("brand_id") String brand_id);
 
@@ -495,46 +495,46 @@ public interface Get_Api {
         @Query("brand_id") String brand_id);
 
     //获取健身房课程
-    @GET("/api/staffs/{id}/courses/?&show_all=1") rx.Observable<QcResponseData<CourseTypeSamples>> qcGetCourses(@Path("id") String staff_id,
+    @GET("/api/staffs/{id}/courses/?&show_all=1") rx.Observable<QcDataResponse<CourseTypeSamples>> qcGetCourses(@Path("id") String staff_id,
         @Query("id") String gym_id, @Query("model") String gym_model, @Query("is_private") int is_private);
 
     //获取健身房课程权限
-    @GET("/api/v2/staffs/{id}/method/courses/?&show_all=1") rx.Observable<QcResponseData<CourseTypeSamples>> qcGetCoursesPermission(
+    @GET("/api/v2/staffs/{id}/method/courses/?&show_all=1") rx.Observable<QcDataResponse<CourseTypeSamples>> qcGetCoursesPermission(
         @Path("id") String staff_id, @QueryMap HashMap<String, Object> params, @Query("is_private") int is_private);
 
     //获取健身房课程权限
-    @GET("/api/v2/staffs/{id}/method/courses/?&show_all=1") rx.Observable<QcResponseData<CourseTypeSamples>> qcGetAllCoursesPermission(
+    @GET("/api/v2/staffs/{id}/method/courses/?&show_all=1") rx.Observable<QcDataResponse<CourseTypeSamples>> qcGetAllCoursesPermission(
         @Path("id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     //获取健身房课程列表
-    @GET("/api/v2/staffs/{id}/courses/?&show_all=1") rx.Observable<QcResponseData<CourseTypes>> qcGetCourses(@Path("id") String staff_id,
+    @GET("/api/v2/staffs/{id}/courses/?&show_all=1") rx.Observable<QcDataResponse<CourseTypes>> qcGetCourses(@Path("id") String staff_id,
         @QueryMap HashMap<String, Object> params, @Query("is_private") int is_private);
 
-    @GET("/api/staffs/{id}/courses/?&show_all=1") rx.Observable<QcResponseData<CourseTypeSamples>> qcGetAllCourses(
+    @GET("/api/staffs/{id}/courses/?&show_all=1") rx.Observable<QcDataResponse<CourseTypeSamples>> qcGetAllCourses(
         @Path("id") String staff_id, @Query("brand_id") String brandid, @Query("id") String gym_id, @Query("model") String gym_model);
 
     @GET("/api/staffs/{staff_id}/batches/{batch_id}/{type}/?order_by=start&show_all=1")
-    rx.Observable<QcResponseData<CourseSchedules>> qcGetbatchSchedules(@Path("staff_id") String staff_id, @Path("batch_id") String batch_id,
+    rx.Observable<QcDataResponse<CourseSchedules>> qcGetbatchSchedules(@Path("staff_id") String staff_id, @Path("batch_id") String batch_id,
         @Path("type") String type, @Query("brand_id") String brandid, @Query("id") String gymid, @Query("model") String gymmodel);
 
     //排课填充
-    @GET("/api/staffs/{id}/{type}/arrange/template/") rx.Observable<QcResponseData<ScheduleTemplete>> qcGetBatchTemplate(
+    @GET("/api/staffs/{id}/{type}/arrange/template/") rx.Observable<QcDataResponse<ScheduleTemplete>> qcGetBatchTemplate(
         @Path("id") String id, @Path("type") String type, @Query("id") String gymid, @Query("model") String gymmodel,
         @Query("teacher_id") String teacher_id, @Query("course_id") String course_id);
 
-    @GET("/api/v2/staffs/{staff_id}/courses/photos/") rx.Observable<QcResponseData<QcResponseJacket>> qcGetJacket(
+    @GET("/api/v2/staffs/{staff_id}/courses/photos/") rx.Observable<QcDataResponse<QcResponseJacket>> qcGetJacket(
         @Path("staff_id") String id, @Query("course_id") String course_id, @QueryMap HashMap<String, Object> params);
 
     /**
      * 获取课程计划
      */
-    @GET("/api/v2/staffs/{staff_id}/plantpls/?show_all=1") rx.Observable<QcResponseData<CoursePlans>> qcGetCoursePlan(
+    @GET("/api/v2/staffs/{staff_id}/plantpls/?show_all=1") rx.Observable<QcDataResponse<CoursePlans>> qcGetCoursePlan(
         @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
     /**
      * 获取课程下教练
      */
-    @GET("/api/v2/staffs/{staff_id}/courses/teachers/") rx.Observable<QcResponseData<CourseTeacherResponse>> qcGetCourseTeacher(
+    @GET("/api/v2/staffs/{staff_id}/courses/teachers/") rx.Observable<QcDataResponse<CourseTeacherResponse>> qcGetCourseTeacher(
         @Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -547,7 +547,7 @@ public interface Get_Api {
     /**
      * 获取课程详情
      */
-    @GET("/api/v2/staffs/{staff_id}/courses/") rx.Observable<QcResponseData<CourseTypeResponse>> qcGetCourseDetail(
+    @GET("/api/v2/staffs/{staff_id}/courses/") rx.Observable<QcDataResponse<CourseTypeResponse>> qcGetCourseDetail(
         @Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -564,7 +564,7 @@ public interface Get_Api {
      * {@link ShopConfigs}
      */
     @GET("/api/staffs/{staff_id}/shops/configs/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<SignInConfig.Data>> qcGetShopConfig(@Path("staff_id") String staff_id,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<SignInConfig.Data>> qcGetShopConfig(@Path("staff_id") String staff_id,
         @Query("keys") String key, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -572,7 +572,7 @@ public interface Get_Api {
      * http://192.168.1.7:8000/api/v2/staffs/3281/checkin/settings/?id=5370&model=staff_gym
      */
     @GET("/api/v2/staffs/{staff_id}/checkin/settings/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<SignInCardCostBean.Data>> qcGetSignInCostConfig(
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<SignInCardCostBean.Data>> qcGetSignInCostConfig(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -585,13 +585,13 @@ public interface Get_Api {
     /**
      * 更衣柜
      */
-    @GET("/api/v2/staffs/{staff_id}/lockers/?show_all=1") rx.Observable<QcResponseData<AllLockers>> qcGetAllLockers(
+    @GET("/api/v2/staffs/{staff_id}/lockers/?show_all=1") rx.Observable<QcDataResponse<AllLockers>> qcGetAllLockers(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
      * 获取更衣柜区域
      */
-    @GET("/api/v2/staffs/{staff_id}/locker/regions/") rx.Observable<QcResponseData<LockerRegions>> qcGetAllRegion(
+    @GET("/api/v2/staffs/{staff_id}/locker/regions/") rx.Observable<QcDataResponse<LockerRegions>> qcGetAllRegion(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -640,11 +640,11 @@ public interface Get_Api {
      * 签到签出通知设置
      * /api/staffs/3281/checkin/notification/configs/?keys=app_checkin_notification 签到签出通知设置get接口
      */
-    @GET("/api/staffs/{staff_id}/checkin/notification/configs/") rx.Observable<QcResponseData<SigninNoticeConfigs>> qcGetCheckinNotiConfigs(
+    @GET("/api/staffs/{staff_id}/checkin/notification/configs/") rx.Observable<QcDataResponse<SigninNoticeConfigs>> qcGetCheckinNotiConfigs(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     //余额不足是否提醒通知
-    @GET("/api/staffs/{staff_id}/configs/") rx.Observable<QcResponseData<BalanceNotifyConfigs>> qcGetBalanceNotify(
+    @GET("/api/staffs/{staff_id}/configs/") rx.Observable<QcDataResponse<BalanceNotifyConfigs>> qcGetBalanceNotify(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -652,7 +652,7 @@ public interface Get_Api {
      * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/preview/?brand_id=2&shop_id=1
      * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/preview/?id=5370&model=staff_gym
      */
-    @GET("/api/v2/staffs/{staff_id}/sellers/preview/") rx.Observable<QcResponseData<AllotSalePreViews>> qcGetAllotSalesPreView(
+    @GET("/api/v2/staffs/{staff_id}/sellers/preview/") rx.Observable<QcDataResponse<AllotSalePreViews>> qcGetAllotSalesPreView(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -660,7 +660,7 @@ public interface Get_Api {
      * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/?brand_id=2&shop_id=2&seller_id=1
      * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/?id=5370&model=staff_gym&seller_id=1
      */
-    @GET("/api/v2/staffs/{staff_id}/sellers/users/") rx.Observable<QcResponseData<AllotSaleStudents>> qcGetAllotSaleOwenUsers(
+    @GET("/api/v2/staffs/{staff_id}/sellers/users/") rx.Observable<QcDataResponse<AllotSaleStudents>> qcGetAllotSaleOwenUsers(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -668,7 +668,7 @@ public interface Get_Api {
      * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/all/?brand_id=2&shop_id=2&seller_id=1
      * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/all/?id=5370&model=staff_gym&seller_id=1
      */
-    @GET("/api/v2/staffs/{staff_id}/sellers/users/all/") rx.Observable<QcResponseData<AllotSaleStudents>> qcGetAllotSaleUsersOfAddStudents(
+    @GET("/api/v2/staffs/{staff_id}/sellers/users/all/") rx.Observable<QcDataResponse<AllotSaleStudents>> qcGetAllotSaleUsersOfAddStudents(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -681,7 +681,7 @@ public interface Get_Api {
      * 会员跟进预览页
      * /api/staffs/:staff_id/users/tracking/?brand_id=&shop_id= 或者 id=&model=
      */
-    @GET("/api/staffs/{staff_id}/users/track/glance/") rx.Observable<QcResponseData<StudentTrackPreview>> qcGetTrackStudentPreview(
+    @GET("/api/staffs/{staff_id}/users/track/glance/") rx.Observable<QcDataResponse<StudentTrackPreview>> qcGetTrackStudentPreview(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -690,25 +690,25 @@ public interface Get_Api {
      * GET参数:status, [star][end][seller_id(无销售seller_id=0)][recommend_user_id][字符串origin]
      */
     @Deprecated @GET("/api/staffs/{staff_id}/status/users/?show_all=1")
-    rx.Observable<QcResponseData<TrackStudents>> qcGetTrackStudentsWithStatus(@Path("staff_id") String staff_id,
+    rx.Observable<QcDataResponse<TrackStudents>> qcGetTrackStudentsWithStatus(@Path("staff_id") String staff_id,
         @QueryMap HashMap<String, Object> params);
 
     /**
      * 新增注册
      */
-    @GET("/api/staffs/{staff_id}/users/new/create/") rx.Observable<QcResponseData<TrackStudents>> qcGetTrackStudentCreate(
+    @GET("/api/staffs/{staff_id}/users/new/create/") rx.Observable<QcDataResponse<TrackStudents>> qcGetTrackStudentCreate(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
      * 新增跟进
      */
-    @GET("/api/staffs/{staff_id}/users/new/follow/") rx.Observable<QcResponseData<TrackStudents>> qcGetTrackStudentFollow(
+    @GET("/api/staffs/{staff_id}/users/new/follow/") rx.Observable<QcDataResponse<TrackStudents>> qcGetTrackStudentFollow(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
      * 新增学员
      */
-    @GET("/api/staffs/{staff_id}/users/new/member/") rx.Observable<QcResponseData<TrackStudents>> qcGetTrackStudentMember(
+    @GET("/api/staffs/{staff_id}/users/new/member/") rx.Observable<QcDataResponse<TrackStudents>> qcGetTrackStudentMember(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -717,32 +717,32 @@ public interface Get_Api {
      * GET参数:status, [star][end][seller_id(无销售seller_id=0)][recommend_user_id][字符串origin]
      */
     @Deprecated @GET("/api/staffs/{staff_id}/status/users/new/?show_all=1")
-    rx.Observable<QcResponseData<TrackStudents>> qcGetTrackStudentsWithStatusToday(@Path("staff_id") String staff_id,
+    rx.Observable<QcDataResponse<TrackStudents>> qcGetTrackStudentsWithStatusToday(@Path("staff_id") String staff_id,
         @QueryMap HashMap<String, Object> params);
 
     /**
      * 具有名下会员的销售列表
      * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
      */
-    @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1") rx.Observable<QcResponseData<TrackSellers>> qcGetTrackStudentsFilterSalers(
+    @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1") rx.Observable<QcDataResponse<TrackSellers>> qcGetTrackStudentsFilterSalers(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
      * 来源列表
      * /api/v2/staffs/:staff_id/users/origins/?brand_id=&shop_id= 或者 id=&model=
      */
-    @GET("/api/staffs/{staff_id}/filter/origins/?show_all=1") rx.Observable<QcResponseData<TrackFilterOrigins>> qcGetTrackStudentsOrigins(
+    @GET("/api/staffs/{staff_id}/filter/origins/?show_all=1") rx.Observable<QcDataResponse<TrackFilterOrigins>> qcGetTrackStudentsOrigins(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     //给会员添加的时候使用
-    @GET("/api/v2/staffs/{staff_id}/users/origins/?show_all=1") rx.Observable<QcResponseData<TrackFilterOrigins>> qcGetUsersStudentsOrigins(
+    @GET("/api/v2/staffs/{staff_id}/users/origins/?show_all=1") rx.Observable<QcDataResponse<TrackFilterOrigins>> qcGetUsersStudentsOrigins(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
      * 推荐人列表
      * /api/staffs/:staff_id/users/recommends/?brand_id=&shop_id= 或者 id=&model=
      */
-    @GET("/api/staffs/{staff_id}/users/recommends/?show_all=1") rx.Observable<QcResponseData<Referrers>> qcGetTrackStudentsRecommends(
+    @GET("/api/staffs/{staff_id}/users/recommends/?show_all=1") rx.Observable<QcDataResponse<Referrers>> qcGetTrackStudentsRecommends(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -751,7 +751,7 @@ public interface Get_Api {
      * 参数:q={phone}{姓名}
      */
     @GET("/api/staffs/{staff_id}/users/recommends/select/?show_all=1")
-    rx.Observable<QcResponseData<Referrers>> qcGetTrackStudentsRecommendsSelect(@Path("staff_id") String staff_id,
+    rx.Observable<QcDataResponse<Referrers>> qcGetTrackStudentsRecommendsSelect(@Path("staff_id") String staff_id,
         @QueryMap HashMap<String, Object> params);
 
     /**
@@ -759,7 +759,7 @@ public interface Get_Api {
      * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=
      * GET参数:[start] [end] [seller_id(无销售seller_id=0)]
      */
-    @GET("/api/staffs/{staff_id}/users/conver/stat/") rx.Observable<QcResponseData<FollowUpConver>> qcGetTrackStudentsConver(
+    @GET("/api/staffs/{staff_id}/users/conver/stat/") rx.Observable<QcDataResponse<FollowUpConver>> qcGetTrackStudentsConver(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -767,7 +767,7 @@ public interface Get_Api {
      * /api/staffs/:staff_id/users/stat/?brand_id=&shop_id= 或者 id=&model=
      * GET参数:status,[start][end][seller_id(无销售seller_id=0)]
      */
-    @GET("/api/staffs/{staff_id}/users/stat/") rx.Observable<QcResponseData<FollowUpDataStatistic>> qcGetTrackStudentsStatistics(
+    @GET("/api/staffs/{staff_id}/users/stat/") rx.Observable<QcDataResponse<FollowUpDataStatistic>> qcGetTrackStudentsStatistics(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -775,7 +775,7 @@ public interface Get_Api {
      * /api/v2/staffs/:id/modules/
      */
     @GET("/api/v2/staffs/{staff_id}/modules/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<ScoreStatus>> qcGetStudentScoreStatus(@Path("staff_id") String staff_id,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ScoreStatus>> qcGetStudentScoreStatus(@Path("staff_id") String staff_id,
         @QueryMap ArrayMap<String, String> params);
 
     /**
@@ -783,7 +783,7 @@ public interface Get_Api {
      * /api/v2/staffs/:id/scores/rank/
      */
     @GET("/api/v2/staffs/{staff_id}/scores/rank/?show_all=1")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<ScoreRankResponse>> qcGetStudentScoresRank(
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ScoreRankResponse>> qcGetStudentScoresRank(
         @Path("staff_id") String staff_id, @QueryMap ArrayMap<String, String> params);
 
     /**
@@ -791,7 +791,7 @@ public interface Get_Api {
      * /api/v2/staffs/:id/scores/rules/
      */
     @GET("/api/v2/staffs/{staff_id}/scores/rules/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<ScoreRuleResponse>> qcGetStudentScoreRules(
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ScoreRuleResponse>> qcGetStudentScoreRules(
         @Path("staff_id") String staff_id, @QueryMap ArrayMap<String, String> params);
 
     /**
@@ -799,7 +799,7 @@ public interface Get_Api {
      * /api/v2/staffs/:id/scores/favors/
      */
     @GET("/api/v2/staffs/{staff_id}/scores/favors/?show_all=1")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<ScoreRuleAwardResponse>> qcGetStudentScoreAward(
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ScoreRuleAwardResponse>> qcGetStudentScoreAward(
         @Path("staff_id") String staff_id, @QueryMap ArrayMap<String, String> params);
 
     /**
@@ -807,7 +807,7 @@ public interface Get_Api {
      * /api/v2/staffs/:id/users/:user_id/scores/histories/
      */
     @GET("/api/v2/staffs/{staff_id}/users/{user_id}/scores/histories/?show_all=1&order_by=-created_at")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<ScoreHistoryResponse>> qcGetStudentScoreHistory(
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ScoreHistoryResponse>> qcGetStudentScoreHistory(
         @Path("staff_id") String staff_id, @Path("user_id") String user_id, @QueryMap ArrayMap<String, String> params);
 
     /**
@@ -815,7 +815,7 @@ public interface Get_Api {
      * /api/v2/staffs/:id/users/:user_id/scores/
      */
     @GET("/api/v2/staffs/{staff_id}/users/{user_id}/scores/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<Score>> qcGetStudentScore(@Path("staff_id") String staff_id,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<Score>> qcGetStudentScore(@Path("staff_id") String staff_id,
         @Path("user_id") String user_id, @QueryMap ArrayMap<String, String> params);
 
     /**
@@ -824,41 +824,41 @@ public interface Get_Api {
      */
 
     @GET("/api/v2/staffs/{staff_id}/scores/calu/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<CacluScore>> qcGetScoreCalu(@Path("staff_id") String staff_id,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CacluScore>> qcGetScoreCalu(@Path("staff_id") String staff_id,
         @Query("type") String type, @Query("number") String money, @QueryMap ArrayMap<String, String> params);
 
     //获取余额不足会员卡总数
     @GET("api/staffs/{id}/balance/cards/count/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<BalanceCount>> qcGetCardCount(@Path("id") String staffId,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<BalanceCount>> qcGetCardCount(@Path("id") String staffId,
         @QueryMap HashMap<String, Object> params);
 
     //获取自动提醒配置
     @GET("api/staffs/{id}/shops/configs/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<NotityIsOpenConfigs>> qcGetNotifySetting(@Path("id") String staffId,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(@Path("id") String staffId,
         @QueryMap HashMap<String, Object> params);
 
     /**
      * 短信部分
      */
-    @GET("/api/staffs/{staffid}/group/messages/?order_by=-created_at") rx.Observable<QcResponseData<ShortMsgList>> qcQueryShortMsgList(
+    @GET("/api/staffs/{staffid}/group/messages/?order_by=-created_at") rx.Observable<QcDataResponse<ShortMsgList>> qcQueryShortMsgList(
         @Path("staffid") String id, @IntRange(from = 1, to = 2) @Query("status") Integer status, @QueryMap HashMap<String, Object> params);
 
-    @GET("/api/staffs/{staffid}/group/message/detail/") rx.Observable<QcResponseData<ShortMsgDetail>> qcQueryShortMsgDetail(
+    @GET("/api/staffs/{staffid}/group/message/detail/") rx.Observable<QcDataResponse<ShortMsgDetail>> qcQueryShortMsgDetail(
         @Path("staffid") String id, @Query("message_id") String messageid, @QueryMap HashMap<String, Object> params);
 
     /**
      * 聊天相关
      */
-    @GET("/api/im/gym/contacts/") rx.Observable<QcResponseData<ChatFriendsData>> qcQueryChatFriends();
+    @GET("/api/im/gym/contacts/") rx.Observable<QcDataResponse<ChatFriendsData>> qcQueryChatFriends();
 
     /*
      *
       *  评论相关
      */
-    @GET("/api/news/{news_id}/comment/") rx.Observable<QcResponseData<ArticleCommentListData>> qcQueryComments(@Path("news_id") String id,
+    @GET("/api/news/{news_id}/comment/") rx.Observable<QcDataResponse<ArticleCommentListData>> qcQueryComments(@Path("news_id") String id,
         @QueryMap HashMap<String, Object> params);
 
-    @GET("/api/my/news/replies/") rx.Observable<QcResponseData<ArticleCommentListData>> qcQueryReplies(
+    @GET("/api/my/news/replies/") rx.Observable<QcDataResponse<ArticleCommentListData>> qcQueryReplies(
         @QueryMap HashMap<String, Object> params);
 
     /**
@@ -867,14 +867,14 @@ public interface Get_Api {
      * competition_id
      */
     @GET("api/staffs/competitions/members/orders/?show_all=1")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<SignRecord>> qcGetSignPersonal(@QueryMap HashMap<String, Object> params,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<SignRecord>> qcGetSignPersonal(@QueryMap HashMap<String, Object> params,
         @Query("q") String keyword);
 
     /**
      * 个人报名表详情
      */
     @GET("api/staffs/competitions/members/orders/{orders}/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<SignUpDetailResponse>> qcGetSignDetail(@Path("orders") String orderId);
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<SignUpDetailResponse>> qcGetSignDetail(@Path("orders") String orderId);
 
     /**
      * 报名分组列表
@@ -883,50 +883,50 @@ public interface Get_Api {
      */
 
     @GET("api/staffs/competitions/teams/?show_all=1")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<GroupListResponse>> qcGetGroupList(
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<GroupListResponse>> qcGetGroupList(
         @QueryMap HashMap<String, Object> params, @Query("q") String keyword);
 
     /**
      * 小组详情
      */
     @GET("api/staffs/competitions/teams/{team_id}/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<TeamDetailResponse>> qcGetGroupDetail(@Path("team_id") String teamId);
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<TeamDetailResponse>> qcGetGroupDetail(@Path("team_id") String teamId);
 
     /**
      * 课程报表详情
      */
     @GET("/api/staffs/{staff_id}/reports/schedules/{schedule_id}/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<CourseReportDetail>> qcGetCourseReportDetail(
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CourseReportDetail>> qcGetCourseReportDetail(
         @Path("staff_id") String staffId, @Path("schedule_id") String scheduleId, @QueryMap HashMap<String, Object> params);
 
     /**
      * 教练分配
      */
     @GET("api/v2/staffs/{staff_id}/coaches/preview/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<CoachResponseList>> qcGetCoachList(@Path("staff_id") String staff_id,
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CoachResponseList>> qcGetCoachList(@Path("staff_id") String staff_id,
         @QueryMap HashMap<String, Object> params);
 
     @GET("api/v2/staffs/{staff_id}/coaches/users/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<AllocateStudentBean>> qcGetCoachStudentDetail(
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<AllocateStudentBean>> qcGetCoachStudentDetail(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-    @GET("/api/v2/staffs/{staff_id}/coaches/users/") rx.Observable<QcResponseData<AllocateStudentBean>> qcGetAllocateCoachStudents(
+    @GET("/api/v2/staffs/{staff_id}/coaches/users/") rx.Observable<QcDataResponse<AllocateStudentBean>> qcGetAllocateCoachStudents(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-    @GET("/api/staffs/{staff_id}/coaches/") rx.Observable<cn.qingchengfit.network.response.QcResponseData<Staffs>> qcGetAllAllocateCoaches(
+    @GET("/api/staffs/{staff_id}/coaches/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse<Staffs>> qcGetAllAllocateCoaches(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     //获取消息首页求职招聘信息列表
     @GET("/api/user/job/records/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<RecordWrap>> qcGetRecruitMessageList();
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<RecordWrap>> qcGetRecruitMessageList();
 
     //导出记录
     @GET("/api/staffs/{staff_id}/export/records/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<ExportRecordWrapper>> qcGetExportRecord(@Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ExportRecordWrapper>> qcGetExportRecord(@Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     //判断是否同意用户协议
     @GET(" /api/user/check/read_agreement/")
-    rx.Observable<cn.qingchengfit.network.response.QcResponseData<CheckProtocolModel>> qcCheckProtocol(
+    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CheckProtocolModel>> qcCheckProtocol(
         @QueryMap HashMap<String, Object> params);
 
 }

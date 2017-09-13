@@ -6,14 +6,14 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.fragment.statement.CourseChooseView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
-import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,8 +145,8 @@ public class CourseChoosePresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CourseTypeSamples>>() {
-                @Override public void call(QcResponseData<CourseTypeSamples> courseTypeSamplesQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<CourseTypeSamples>>() {
+                @Override public void call(QcDataResponse<CourseTypeSamples> courseTypeSamplesQcResponseData) {
                     if (ResponseConstant.checkSuccess(courseTypeSamplesQcResponseData)) {
                         mAllCourse = courseTypeSamplesQcResponseData.data.courses;
                         mPrivateCourse.clear();

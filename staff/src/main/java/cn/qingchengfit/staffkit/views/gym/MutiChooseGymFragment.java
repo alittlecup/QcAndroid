@@ -16,10 +16,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.model.responese.Shops;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -208,8 +208,8 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<Shops>>() {
-                           @Override public void call(QcResponseData<Shops> qcResponseBrandShops) {
+            .subscribe(new Action1<QcDataResponse<Shops>>() {
+                           @Override public void call(QcDataResponse<Shops> qcResponseBrandShops) {
                                if (ResponseConstant.checkSuccess(qcResponseBrandShops)) {
                                    mShops = qcResponseBrandShops.data.shops;
                                    mDatas.clear();

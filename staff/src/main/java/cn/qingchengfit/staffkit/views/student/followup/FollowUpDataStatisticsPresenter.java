@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.FollowUpDataStatistic;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -94,8 +94,8 @@ public class FollowUpDataStatisticsPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<FollowUpDataStatistic>>() {
-                @Override public void call(QcResponseData<FollowUpDataStatistic> trackStudentsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<FollowUpDataStatistic>>() {
+                @Override public void call(QcDataResponse<FollowUpDataStatistic> trackStudentsQcResponseData) {
                     view.onFollowUpStatistics(trackStudentsQcResponseData.data);
                 }
             }, new Action1<Throwable>() {

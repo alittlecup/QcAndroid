@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym.staff;
 
 import cn.qingchengfit.model.body.CheckCodeBody;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
 import cn.qingchengfit.staffkit.mvpbase.PView;

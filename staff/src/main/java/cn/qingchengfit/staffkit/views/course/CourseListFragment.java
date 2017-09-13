@@ -21,9 +21,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CourseType;
 import cn.qingchengfit.model.responese.CourseTypes;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -170,8 +170,8 @@ public class CourseListFragment extends BaseFragment implements FlexibleAdapter.
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .filter(new Func1<QcResponseData<CourseTypes>, Boolean>() {
-                @Override public Boolean call(QcResponseData<CourseTypes> qcResponseCourseList) {
+            .filter(new Func1<QcDataResponse<CourseTypes>, Boolean>() {
+                @Override public Boolean call(QcDataResponse<CourseTypes> qcResponseCourseList) {
                     if (qcResponseCourseList == null || qcResponseCourseList.data == null || qcResponseCourseList.data.courses == null) {
                         return false;
                     } else {
@@ -179,8 +179,8 @@ public class CourseListFragment extends BaseFragment implements FlexibleAdapter.
                     }
                 }
             })
-            .subscribe(new Action1<QcResponseData<CourseTypes>>() {
-                @Override public void call(QcResponseData<CourseTypes> qcResponseCourseList) {
+            .subscribe(new Action1<QcDataResponse<CourseTypes>>() {
+                @Override public void call(QcDataResponse<CourseTypes> qcResponseCourseList) {
                     rv.stopLoading();
                     mDatas.clear();
                     if (qcResponseCourseList.data.courses == null || qcResponseCourseList.data.courses.size() == 0) {

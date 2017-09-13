@@ -6,11 +6,11 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.GymDetail;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponsePermission;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
@@ -107,8 +107,8 @@ public class GymDetailPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetBrands(loginStatus.staff_id()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
-                @Override public void call(QcResponseData<BrandsResponse> brandsResponse) {
+            .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {
+                @Override public void call(QcDataResponse<BrandsResponse> brandsResponse) {
                     if (brandsResponse.getData().brands != null) {
                         for (Brand brand : brandsResponse.getData().brands) {
                             if (brand.id.equals(gymWrapper.brand_id())) {
@@ -143,8 +143,8 @@ public class GymDetailPresenter extends BasePresenter {
     }
 
     public void getGymWelcome() {
-        spWelcome = gymUseCase.getGymWelcom(gymWrapper.id(), gymWrapper.model(), new Action1<QcResponseData<GymDetail>>() {
-            @Override public void call(QcResponseData<GymDetail> qcResponseGymDetail) {
+        spWelcome = gymUseCase.getGymWelcom(gymWrapper.id(), gymWrapper.model(), new Action1<QcDataResponse<GymDetail>>() {
+            @Override public void call(QcDataResponse<GymDetail> qcResponseGymDetail) {
                 if (ResponseConstant.checkSuccess(qcResponseGymDetail)) {
                     gymDetailView.onGymInfo(qcResponseGymDetail.data.gym);
                     gymDetailView.onSuperUser(qcResponseGymDetail.data.superuser);

@@ -10,8 +10,8 @@ import cn.qingchengfit.model.responese.BalanceConfigs;
 import cn.qingchengfit.model.responese.BalanceCount;
 import cn.qingchengfit.model.responese.BalanceDetail;
 import cn.qingchengfit.model.responese.Cards;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
@@ -136,13 +136,15 @@ public class RealCardListPresenter extends BasePresenter {
             brandid = null;
         }
 
-        usecase.getAllCards(null, id, model, page, keyword, p, new Action1<QcResponseData<Cards>>() {
-            @Override public void call(QcResponseData<Cards> qcResponseAllRealCards) {
-                totalpage = qcResponseAllRealCards.data.pages;
-                view.onSuccees(qcResponseAllRealCards.data.total_count, qcResponseAllRealCards.data.current_page,
-                    qcResponseAllRealCards.data.cards);
+        usecase.getAllCards(null, id, model, page, keyword, p, new Action1<QcDataResponse<Cards>>() {
+            @Override public void call(QcDataResponse<Cards> qcResponseAllRealCards) {
+                if (ResponseConstant.checkSuccess(qcResponseAllRealCards)) {
+                    totalpage = qcResponseAllRealCards.data.pages;
+                    view.onSuccees(qcResponseAllRealCards.data.total_count, qcResponseAllRealCards.data.current_page,
+                        qcResponseAllRealCards.data.cards);
 
-                page++;
+                    page++;
+                }
             }
         });
     }
@@ -185,12 +187,14 @@ public class RealCardListPresenter extends BasePresenter {
             model = gym.getModel();
             brandid = null;
         }
-        RxRegiste(usecase.getBalanceCard(null, id, model, balance_page, keyword, p, new Action1<QcResponseData<Cards>>() {
-            @Override public void call(QcResponseData<Cards> qcResponseAllRealCards) {
-                balance_totalpage = qcResponseAllRealCards.data.pages;
-                view.onSuccees(qcResponseAllRealCards.data.total_count, qcResponseAllRealCards.data.current_page,
-                    qcResponseAllRealCards.data.cards);
-                balance_page++;
+        RxRegiste(usecase.getBalanceCard(null, id, model, balance_page, keyword, p, new Action1<QcDataResponse<Cards>>() {
+            @Override public void call(QcDataResponse<Cards> qcResponseAllRealCards) {
+                if (ResponseConstant.checkSuccess(qcResponseAllRealCards)) {
+                    balance_totalpage = qcResponseAllRealCards.data.pages;
+                    view.onSuccees(qcResponseAllRealCards.data.total_count, qcResponseAllRealCards.data.current_page,
+                        qcResponseAllRealCards.data.cards);
+                    balance_page++;
+                }
             }
         }));
     }
@@ -205,7 +209,7 @@ public class RealCardListPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
-                    if (qcResponse.getStatus() == 200) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
                         onSettingBalanceListener.onSettingSuccess();
                     } else {
                         onSettingBalanceListener.onSettingFailed();
@@ -226,8 +230,8 @@ public class RealCardListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<BalanceConfigs>>() {
-                @Override public void call(QcResponseData<BalanceConfigs> balanceDetailQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<BalanceConfigs>>() {
+                @Override public void call(QcDataResponse<BalanceConfigs> balanceDetailQcResponseData) {
                     if (ResponseConstant.checkSuccess(balanceDetailQcResponseData)) {
                         if (onSettingBalanceListener != null) {
                             onSettingBalanceListener.onGetBalance(balanceDetailQcResponseData.data.balances);
@@ -249,8 +253,9 @@ public class RealCardListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<BalanceCount>>() {
-                @Override public void call(cn.qingchengfit.network.response.QcResponseData<BalanceCount> balanceCountQcResponseData) {
+            .subscribe(new Action1<cn.qingchengfit.network.response.QcDataResponse<BalanceCount>>() {
+                @Override public void call(
+                    cn.qingchengfit.network.response.QcDataResponse<BalanceCount> balanceCountQcResponseData) {
                     if (onSettingBalanceListener != null) {
                         onSettingBalanceListener.onGetCardCount(balanceCountQcResponseData.data.count);
                     }

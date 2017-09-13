@@ -2,11 +2,11 @@ package cn.qingchengfit.staffkit.usecase;
 
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.ManagerBody;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponsePostions;
 import cn.qingchengfit.model.responese.StaffShipResponse;
 import cn.qingchengfit.model.responese.Staffs;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import javax.inject.Inject;
@@ -35,7 +35,7 @@ public class CoachUseCase {
         this.restRepository = restRepository;
     }
 
-    public Subscription getAllCoach(String gymid, String gymModel, String keyword, Action1<QcResponseData<Staffs>> action1) {
+    public Subscription getAllCoach(String gymid, String gymModel, String keyword, Action1<QcDataResponse<Staffs>> action1) {
         return restRepository.getGet_api()
             .qcGetGymCoaches(App.staffId, gymid, gymModel, keyword)
             .observeOn(AndroidSchedulers.mainThread())
@@ -48,7 +48,7 @@ public class CoachUseCase {
             });
     }
 
-    public Subscription getAllStaffs(String gymid, String gymModel, String keyword, Action1<QcResponseData<StaffShipResponse>> action1) {
+    public Subscription getAllStaffs(String gymid, String gymModel, String keyword, Action1<QcDataResponse<StaffShipResponse>> action1) {
         return restRepository.getGet_api()
             .qcGetStaffs(App.staffId, gymid, gymModel, null, keyword)
             .observeOn(AndroidSchedulers.mainThread())

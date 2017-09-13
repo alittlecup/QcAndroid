@@ -4,9 +4,9 @@ import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Students;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -57,8 +57,8 @@ public class StudentListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<Students>>() {
-                @Override public void call(QcResponseData<Students> studentsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<Students>>() {
+                @Override public void call(QcDataResponse<Students> studentsQcResponseData) {
                     if (ResponseConstant.checkSuccess(studentsQcResponseData)) {
                         view.onStudentsList(studentsQcResponseData.getData().users);
                     }

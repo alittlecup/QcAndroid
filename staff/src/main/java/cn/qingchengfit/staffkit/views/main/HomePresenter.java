@@ -4,10 +4,10 @@ import android.content.Intent;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.HomeInfo;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponsePermission;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
@@ -85,9 +85,9 @@ public class HomePresenter extends BasePresenter {
         spBrand = restRepository.getGet_api()
             .qcGetBrands(loginStatus.staff_id()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .lift(new QcResponseOperator<QcResponseData<BrandsResponse>>())
-            .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
-                @Override public void call(final QcResponseData<BrandsResponse> qcResponseBrands) {
+            .lift(new QcResponseOperator<QcDataResponse<BrandsResponse>>())
+            .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {
+                @Override public void call(final QcDataResponse<BrandsResponse> qcResponseBrands) {
                     if (qcResponseBrands.getStatus() == ResponseConstant.SUCCESS) {
                         if (homeView != null) homeView.onBrands(qcResponseBrands.data.brands);
                     } else {
@@ -127,8 +127,8 @@ public class HomePresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<HomeInfo>>() {
-                @Override public void call(QcResponseData<HomeInfo> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<HomeInfo>>() {
+                @Override public void call(QcDataResponse<HomeInfo> qcResponse) {
                     if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                         homeView.setInfo(qcResponse.data.getStat());
                         homeView.setSpecialPoint(qcResponse.data.getQingcheng_activity_count());

@@ -3,10 +3,10 @@ package cn.qingchengfit.staffkit.views.course;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.EditJacketBody;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseJacket;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -83,8 +83,8 @@ public class JacketManagerPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<QcResponseJacket>>() {
-                @Override public void call(QcResponseData<QcResponseJacket> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<QcResponseJacket>>() {
+                @Override public void call(QcDataResponse<QcResponseJacket> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         ArrayList<String> r = new ArrayList<String>();
                         for (int i = 0; i < qcResponse.data.photos.size(); i++) {

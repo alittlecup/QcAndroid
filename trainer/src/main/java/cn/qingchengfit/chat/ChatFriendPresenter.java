@@ -7,8 +7,8 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.ChatFriendsData;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +30,9 @@ public class ChatFriendPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api().qcQueryChatFriends()
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.computation())
-            .flatMap(new Func1<QcResponseData<ChatFriendsData>, Observable<Pair<List<ChatGym>, List<Staff>>>>() {
+            .flatMap(new Func1<QcDataResponse<ChatFriendsData>, Observable<Pair<List<ChatGym>, List<Staff>>>>() {
                 @Override
-                public Observable<Pair<List<ChatGym>, List<Staff>>> call(QcResponseData<ChatFriendsData> chatFriendsDataQcResponseData) {
+                public Observable<Pair<List<ChatGym>, List<Staff>>> call(QcDataResponse<ChatFriendsData> chatFriendsDataQcResponseData) {
                     List<ChatGym> chatGyms = chatFriendsDataQcResponseData.getData().gyms;
                     List<Staff> staffs = new ArrayList<Staff>();
                     if (chatGyms != null) {

@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.StudentSourceBean;
 import cn.qingchengfit.model.responese.TrackFilterOrigin;
 import cn.qingchengfit.model.responese.TrackFilterOrigins;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -124,8 +124,8 @@ public class SourcePresenter extends BasePresenter {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<QcResponseData<TrackFilterOrigins>, List<StudentSourceBean>>() {
-                    @Override public List<StudentSourceBean> call(QcResponseData<TrackFilterOrigins> responseData) {
+                .map(new Func1<QcDataResponse<TrackFilterOrigins>, List<StudentSourceBean>>() {
+                    @Override public List<StudentSourceBean> call(QcDataResponse<TrackFilterOrigins> responseData) {
                         List<StudentSourceBean> sourceList = new ArrayList<StudentSourceBean>();
                         if (responseData.data.origins != null) {
                             for (TrackFilterOrigin origin : responseData.data.origins) {
@@ -158,8 +158,8 @@ public class SourcePresenter extends BasePresenter {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<QcResponseData<TrackFilterOrigins>, List<StudentSourceBean>>() {
-                    @Override public List<StudentSourceBean> call(QcResponseData<TrackFilterOrigins> responseData) {
+                .map(new Func1<QcDataResponse<TrackFilterOrigins>, List<StudentSourceBean>>() {
+                    @Override public List<StudentSourceBean> call(QcDataResponse<TrackFilterOrigins> responseData) {
                         List<StudentSourceBean> sourceList = new ArrayList<StudentSourceBean>();
                         if (responseData.data.origins != null) {
                             for (TrackFilterOrigin origin : responseData.data.origins) {

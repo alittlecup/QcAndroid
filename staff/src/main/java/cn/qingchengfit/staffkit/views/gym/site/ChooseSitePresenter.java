@@ -4,9 +4,9 @@ import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.GymSites;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Space;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -97,8 +97,8 @@ public class ChooseSitePresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<GymSites>>() {
-                @Override public void call(QcResponseData<GymSites> qcResponseGymSite) {
+            .subscribe(new Action1<QcDataResponse<GymSites>>() {
+                @Override public void call(QcDataResponse<GymSites> qcResponseGymSite) {
                     if (qcResponseGymSite.getStatus() == ResponseConstant.SUCCESS) {
                         spaces = qcResponseGymSite.data.spaces;
                         List<ImageTwoTextBean> beans = new ArrayList<ImageTwoTextBean>();
@@ -146,8 +146,8 @@ public class ChooseSitePresenter extends BasePresenter {
     }
 
     public void querySiteList(final int courseType) {
-        useCase.querySite(gymWrapper.id(), gymWrapper.model(), new Action1<QcResponseData<GymSites>>() {
-            @Override public void call(QcResponseData<GymSites> qcResponseGymSite) {
+        useCase.querySite(gymWrapper.id(), gymWrapper.model(), new Action1<QcDataResponse<GymSites>>() {
+            @Override public void call(QcDataResponse<GymSites> qcResponseGymSite) {
 
                 if (qcResponseGymSite.getStatus() == ResponseConstant.SUCCESS) {
                     spaces = qcResponseGymSite.data.spaces;

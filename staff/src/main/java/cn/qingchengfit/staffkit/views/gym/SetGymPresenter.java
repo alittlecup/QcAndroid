@@ -5,12 +5,12 @@ import android.support.v4.app.Fragment;
 import cn.qingchengfit.model.body.GymBody;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.BrandsResponse;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ResponseService;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -83,8 +83,8 @@ public class SetGymPresenter extends BasePresenter {
     }
 
     public void queryBrandList() {
-        spQueryBrand = initUseCase.getBrandList(new Action1<QcResponseData<BrandsResponse>>() {
-            @Override public void call(QcResponseData<BrandsResponse> qcResponse) {
+        spQueryBrand = initUseCase.getBrandList(new Action1<QcDataResponse<BrandsResponse>>() {
+            @Override public void call(QcDataResponse<BrandsResponse> qcResponse) {
                 if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                     iSetGymView.onBrandList(qcResponse.data.brands);
                 }
@@ -111,7 +111,7 @@ public class SetGymPresenter extends BasePresenter {
             .subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseSystenInit>() {
                 @Override public void call(QcResponseSystenInit qcResponseSystenInit) {
-                    if (qcResponseSystenInit.status == ResponseConstant.SUCCESS) {
+                    if (ResponseConstant.checkSuccess(qcResponseSystenInit)) {
                         iSetGymView.onSuccess(qcResponseSystenInit.data);
                     } else {
                         iSetGymView.onFailed();

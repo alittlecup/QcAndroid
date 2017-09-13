@@ -8,10 +8,10 @@ import cn.qingchengfit.model.responese.CardStandard;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTplOption;
 import cn.qingchengfit.model.responese.CardTplResponse;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseOption;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
@@ -86,8 +86,8 @@ public class CardtypeDetailPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CardTplResponse>>() {
-                @Override public void call(QcResponseData<CardTplResponse> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<CardTplResponse>>() {
+                @Override public void call(QcDataResponse<CardTplResponse> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         CardTpl card_tpl = qcResponse.getData().card_tpl;
                         if (card_tpl.is_limit()) {

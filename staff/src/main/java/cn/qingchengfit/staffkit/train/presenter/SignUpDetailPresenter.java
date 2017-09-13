@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.train.presenter;
 
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -37,8 +37,8 @@ public class SignUpDetailPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetSignDetail(orderId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<SignUpDetailResponse>>() {
-                @Override public void call(cn.qingchengfit.network.response.QcResponseData<SignUpDetailResponse> signDetail) {
+            .subscribe(new Action1<QcDataResponse<SignUpDetailResponse>>() {
+                @Override public void call(QcDataResponse<SignUpDetailResponse> signDetail) {
                     if (ResponseConstant.checkSuccess(signDetail)) {
                         if (signUpView != null) {
                             signUpView.onGetSignUpDataSuccess(signDetail.data);
