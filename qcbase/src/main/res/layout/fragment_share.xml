@@ -24,12 +24,12 @@
 
     <LinearLayout
         android:id="@+id/wechat_friend"
-
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:background="@drawable/bg_click"
         >
 
       <ImageView
@@ -51,12 +51,12 @@
 
     <LinearLayout
         android:id="@+id/wechat_circle"
-
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:background="@drawable/bg_click"
         >
 
       <ImageView
@@ -78,12 +78,12 @@
 
     <LinearLayout
         android:id="@+id/copy_link"
-
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:background="@drawable/bg_click"
         >
 
       <ImageView
@@ -112,5 +112,4 @@
       android:layout_height="wrap_content"
       android:orientation="vertical"
       />
-
 </LinearLayout>
