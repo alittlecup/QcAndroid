@@ -4020,7 +4020,7 @@ public interface AppComponent {
         @Binds @IntoMap @FragmentKey(CardImportExportFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CardImportExportFragmentSubcomponent.Builder builder);
     }
-7
+
 
     @Subcomponent() public interface LoginFragmentSubcomponent
         extends AndroidInjector<LoginFragment> {
