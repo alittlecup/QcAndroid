@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
@@ -184,7 +185,7 @@ public class LoginFragment extends BaseFragment
   }
 
   @Override public void onShowLogining() {
-
+    RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
   }
 
   @Override public void onError(String msg) {
@@ -192,7 +193,7 @@ public class LoginFragment extends BaseFragment
   }
 
   @Override public void cancelLogin() {
-
+    RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_HIDE_DIALOG));
   }
 
   @Override public void onSuccess(int status) {
