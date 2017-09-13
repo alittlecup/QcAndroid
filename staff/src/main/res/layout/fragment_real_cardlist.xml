@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/img_balance"
-            android:text="余额不足"
+            android:text="续卡提醒"
             android:textColor="@color/qc_text_black"
             />
 

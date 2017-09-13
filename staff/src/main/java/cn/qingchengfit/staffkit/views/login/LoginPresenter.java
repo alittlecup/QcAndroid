@@ -110,6 +110,7 @@ public class LoginPresenter extends BasePresenter {
                     PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, qcResponLogin.data.staff.getUsername());
                     PreferenceUtils.setPrefString(App.context, Configs.PREFER_USER_ID, qcResponLogin.getData().user.getId());
                     StudentAction.newInstance().delAllStudent();
+                    mLoginView.onShowLogining();
                     getService(qcResponLogin);
                 } else {
                     mLoginView.onError(qcResponLogin.msg);

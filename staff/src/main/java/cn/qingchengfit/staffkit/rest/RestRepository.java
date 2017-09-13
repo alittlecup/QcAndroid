@@ -101,7 +101,7 @@ public class RestRepository implements Repository {
                                     R.string.oem_tag) + "  QingchengApp/Staff")
                             .build();
                         Response response = chain.proceed(request);
-                        if (response.isSuccessful()){
+                        if (response != null){
                             RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_HIDE_DIALOG));
                         }
                         return response;
