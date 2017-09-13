@@ -99,9 +99,15 @@ public class LoginView extends LinearLayout {
     }
 
     public void doLogin() {
-        if (mPhoneNumView.checkPhoneNum() && mPasswordView.checkValid()) {
-            loginPresenter.doLogin(mPhoneNumView.getDistrictInt(), mPhoneNumView.getPhoneNum(), mPasswordView.getCode());
+        if (!mPhoneNumView.checkPhoneNum()){
+            ToastUtils.show(getResources().getString(R.string.err_login_phonenum));
+            return;
         }
+        if (!mPasswordView.checkValid()){
+            ToastUtils.show(getResources().getString(cn.qingchengfit.widgets.R.string.err_checkcode_length));
+            return;
+        }
+        loginPresenter.doLogin(mPhoneNumView.getDistrictInt(), mPhoneNumView.getPhoneNum(), mPasswordView.getCode());
     }
 
     public boolean isPassword() {
