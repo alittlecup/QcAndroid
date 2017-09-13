@@ -62,8 +62,6 @@ public class ShareDialogWithExtendFragment extends ShareDialogFragment
       ShareDialogExtendLayout extendLayout = new ShareDialogExtendLayout(getContext());
       extendLayout.setExtend(getContext(), shareBean.extra.get(i));
       extendLayout.setListener(this);
-      layoutExtends.setDividerDrawable(
-          getResources().getDrawable(R.drawable.bg_rect_square_divider_grey_1dp));
       layoutExtends.addView(extendLayout, i);
     }
     layoutExtends.postInvalidate();
