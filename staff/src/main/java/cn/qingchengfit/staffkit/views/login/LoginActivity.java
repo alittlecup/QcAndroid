@@ -12,11 +12,12 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.LoadingDialog;
 import dagger.android.AndroidInjection;
 import javax.inject.Inject;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.viewpager) ViewPager viewpager;
     @BindView(R.id.login_tabview) TabLayout loginTabview;
