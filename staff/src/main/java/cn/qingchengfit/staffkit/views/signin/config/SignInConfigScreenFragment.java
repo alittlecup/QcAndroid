@@ -16,8 +16,8 @@ import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.GymExtra;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -74,8 +74,8 @@ public class SignInConfigScreenFragment extends BaseFragment {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<GymExtra>>() {
-                @Override public void call(QcResponseData<GymExtra> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<GymExtra>>() {
+                @Override public void call(QcDataResponse<GymExtra> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.getData().urls != null) {
                             for (int i = 0; i < qcResponse.getData().urls.size(); i++) {

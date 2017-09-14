@@ -3,9 +3,9 @@ package cn.qingchengfit.staffkit.views.gym;
 import android.content.Intent;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.ArrangeBatchBody;
-import cn.qingchengfit.model.responese.QcResponse;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
@@ -82,7 +82,7 @@ public class BatchPresenter implements Presenter {
         body.auto_trial = false;
         sp = initUseCase.systemInit(body, new Action1<QcResponseSystenInit>() {
             @Override public void call(QcResponseSystenInit qcResponseSystenInit) {
-                if (qcResponseSystenInit.status == ResponseConstant.SUCCESS) {
+                if (ResponseConstant.checkSuccess(qcResponseSystenInit)) {
                     view.onSucceed(qcResponseSystenInit.data);
                 } else {
                     view.onFailed();

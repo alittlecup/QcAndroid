@@ -6,10 +6,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.BodyTestBody;
 import cn.qingchengfit.model.responese.BodyTestMeasureData;
 import cn.qingchengfit.model.responese.BodyTestTemplateData;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -78,8 +78,8 @@ public class ModifyBodyTestPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<BodyTestMeasureData>>() {
-                @Override public void call(QcResponseData<BodyTestMeasureData> responseData) {
+            .subscribe(new Action1<QcDataResponse<BodyTestMeasureData>>() {
+                @Override public void call(QcDataResponse<BodyTestMeasureData> responseData) {
                     if (responseData.data != null) {
                         view.onShowMeasure(responseData.data.measure);
                         view.onShowExtra(true, responseData.data.measure.photos, responseData.data.measure.extra);
@@ -153,8 +153,8 @@ public class ModifyBodyTestPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<BodyTestTemplateData>>() {
-                @Override public void call(QcResponseData<BodyTestTemplateData> responseData) {
+            .subscribe(new Action1<QcDataResponse<BodyTestTemplateData>>() {
+                @Override public void call(QcDataResponse<BodyTestTemplateData> responseData) {
                     if (responseData.getStatus() == ResponseConstant.SUCCESS) {
                         view.onShowBase(responseData.data.template.base);
                         view.onShowExtra(true, null, responseData.data.template.extra);

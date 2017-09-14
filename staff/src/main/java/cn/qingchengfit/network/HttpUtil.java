@@ -1,6 +1,6 @@
 package cn.qingchengfit.network;
 
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action0;
@@ -28,7 +28,7 @@ public class HttpUtil {
     //添加线程管理并订阅
     public Subscription toSubscribe(Observable ob, final ResultSubscribe subscriber) {
         //数据预处理
-        Observable.Transformer<QcResponseData<Object>, Object> result = RxHelper.handleResult();
+        Observable.Transformer<QcDataResponse<Object>, Object> result = RxHelper.handleResult();
         //重用操作符
         Observable observable = ob.compose(result).doOnSubscribe(new Action0() {
             @Override public void call() {
@@ -43,7 +43,7 @@ public class HttpUtil {
     public Subscription toSubscribe(Observable ob, final ResultSubscribe subscriber, final ActivityLifeCycleEvent event,
         final PublishSubject<ActivityLifeCycleEvent> lifecycleSubject) {
         //数据预处理
-        Observable.Transformer<QcResponseData<Object>, Object> result = RxHelper.handleResult(event, lifecycleSubject);
+        Observable.Transformer<QcDataResponse<Object>, Object> result = RxHelper.handleResult(event, lifecycleSubject);
         //重用操作符
         Observable observable = ob.compose(result).doOnSubscribe(new Action0() {
             @Override public void call() {

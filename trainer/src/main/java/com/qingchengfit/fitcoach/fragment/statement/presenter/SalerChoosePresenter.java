@@ -4,12 +4,12 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.fragment.statement.SalerChooseDialogView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
 import com.qingchengfit.fitcoach.fragment.statement.model.Sellers;
-import com.qingchengfit.fitcoach.http.ResponseConstant;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -57,8 +57,8 @@ public class SalerChoosePresenter extends BasePresenter {
     }
 
     public void querySaler() {
-        usecase.querySalers(gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model(), new Action1<QcResponseData<Sellers>>() {
-            @Override public void call(QcResponseData<Sellers> qcResponseSalers) {
+        usecase.querySalers(gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model(), new Action1<QcDataResponse<Sellers>>() {
+            @Override public void call(QcDataResponse<Sellers> qcResponseSalers) {
                 if (ResponseConstant.checkSuccess(qcResponseSalers)) {
                     if (qcResponseSalers.data.users != null) {
                         List<StudentBean> ret = new ArrayList<StudentBean>();

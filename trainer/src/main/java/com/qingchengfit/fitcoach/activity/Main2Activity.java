@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.events.EventSessionError;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.views.RecruitActivity;
@@ -117,6 +118,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     private Observable<EventInit> obPopWinEvent;
 
     private Observable<EventLoginChange> obLoginChange;
+    private Observable<EventSessionError> obLogOut;
 
 
     private Snackbar NonetworkSnack;
@@ -182,6 +184,8 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
                 changeLogin();
             }
         });
+
+
 
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
@@ -432,6 +436,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
             }
         });
     }
+
 
     public void freshNotiCount(int count) {
         tvNotiCount.setVisibility(count > 0 ? View.VISIBLE : View.GONE);

@@ -27,8 +27,9 @@ import cn.qingchengfit.constant.ConstantNotification;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.common.NotificationMsg;
 import cn.qingchengfit.model.responese.Notification;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -43,7 +44,6 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.EventLatestNoti;
 import com.qingchengfit.fitcoach.bean.EventNotiFresh;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.ResponseConstant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -240,8 +240,8 @@ public class NotificationFragment extends BaseSettingFragment {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<Notification>>() {
-                @Override public void call(QcResponseData<Notification> qcNotificationResponse) {
+            .subscribe(new Action1<QcDataResponse<Notification>>() {
+                @Override public void call(QcDataResponse<Notification> qcNotificationResponse) {
                     list.clear();
                     totalPage = qcNotificationResponse.getData().pages;
                     list.addAll(qcNotificationResponse.getData().notifications);

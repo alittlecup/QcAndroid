@@ -5,10 +5,10 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CourseType;
 import cn.qingchengfit.model.responese.CourseTypeResponse;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.TeacherImpression;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
@@ -69,8 +69,8 @@ public class CourseDetailPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<CourseTypeResponse>>() {
-                @Override public void call(QcResponseData<CourseTypeResponse> qcResponseCourseDetail) {
+            .subscribe(new Action1<QcDataResponse<CourseTypeResponse>>() {
+                @Override public void call(QcDataResponse<CourseTypeResponse> qcResponseCourseDetail) {
                     if (ResponseConstant.checkSuccess(qcResponseCourseDetail)) {
                         if (qcResponseCourseDetail.data != null && qcResponseCourseDetail.data.courseDetail != null) {
                             view.setScore(qcResponseCourseDetail.data.courseDetail.getTeacher_score(),

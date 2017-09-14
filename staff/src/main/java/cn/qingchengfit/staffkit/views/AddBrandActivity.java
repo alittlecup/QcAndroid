@@ -16,8 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.CreatBrand;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -123,8 +123,8 @@ public class AddBrandActivity extends BaseActivity implements AddBrandView {
         restRepository.getGet_api()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
-                @Override public void call(QcResponseData<BrandsResponse> qcResponseBrands) {
+            .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {
+                @Override public void call(QcDataResponse<BrandsResponse> qcResponseBrands) {
                     hideLoading();
                     if (ResponseConstant.checkSuccess(qcResponseBrands)) {
                         if (qcResponseBrands.data.brands.size() > 0) {

@@ -6,9 +6,9 @@ import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.CardBindStudents;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -47,8 +47,8 @@ public class FixRealCardBindPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CardBindStudents>>() {
-                @Override public void call(QcResponseData<CardBindStudents> cardBindStudentsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<CardBindStudents>>() {
+                @Override public void call(QcDataResponse<CardBindStudents> cardBindStudentsQcResponseData) {
                     if (ResponseConstant.checkSuccess(cardBindStudentsQcResponseData)) {
                         handleBindData(cardBindStudentsQcResponseData.data.users);
                     } else {

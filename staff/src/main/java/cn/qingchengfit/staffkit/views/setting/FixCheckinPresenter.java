@@ -2,10 +2,10 @@ package cn.qingchengfit.staffkit.views.setting;
 
 import android.content.Intent;
 import cn.qingchengfit.model.body.SignInNoticeConfigBody;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.SigninNoticeConfig;
 import cn.qingchengfit.model.responese.SigninNoticeConfigs;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -68,8 +68,8 @@ public class FixCheckinPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<SigninNoticeConfigs>>() {
-                @Override public void call(QcResponseData<SigninNoticeConfigs> responseData) {
+            .subscribe(new Action1<QcDataResponse<SigninNoticeConfigs>>() {
+                @Override public void call(QcDataResponse<SigninNoticeConfigs> responseData) {
                     if (responseData.status == 200) {
                         if (view != null) {
                             view.onGetConfigSuccess(responseData.data.configs);

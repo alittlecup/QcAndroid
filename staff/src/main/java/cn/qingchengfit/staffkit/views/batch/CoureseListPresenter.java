@@ -4,8 +4,9 @@ import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.GroupCourseResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponsePrivateCourse;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
@@ -70,10 +71,12 @@ public class CoureseListPresenter implements Presenter {
     }
 
     public void getGroup() {
-        spgourp = gymUseCase.getGroupCourse(null, gymWrapper.id(), gymWrapper.model(), new Action1<QcResponseData<GroupCourseResponse>>() {
-            @Override public void call(QcResponseData<GroupCourseResponse> qcResponseGroupCourse) {
-                view.onGroup(qcResponseGroupCourse.data.courses);
-                view.onCoursesInfo(qcResponseGroupCourse.data.total_count, qcResponseGroupCourse.data.order_url);
+        spgourp = gymUseCase.getGroupCourse(null, gymWrapper.id(), gymWrapper.model(), new Action1<QcDataResponse<GroupCourseResponse>>() {
+            @Override public void call(QcDataResponse<GroupCourseResponse> qcResponseGroupCourse) {
+                if (ResponseConstant.checkSuccess(qcResponseGroupCourse)) {
+                    view.onGroup(qcResponseGroupCourse.data.courses);
+                    view.onCoursesInfo(qcResponseGroupCourse.data.total_count, qcResponseGroupCourse.data.order_url);
+                }
             }
         });
     }
@@ -81,8 +84,12 @@ public class CoureseListPresenter implements Presenter {
     public void getPrivate() {
         spPrivate = gymUseCase.getPrivateCourse(null, gymWrapper.id(), gymWrapper.model(), new Action1<QcResponsePrivateCourse>() {
             @Override public void call(QcResponsePrivateCourse qcResponsePrivateCourse) {
-                view.onCoursesInfo(qcResponsePrivateCourse.data.total_count, qcResponsePrivateCourse.data.order_url);
-                view.onPrivate(qcResponsePrivateCourse.data.coaches);
+                if (ResponseConstant.checkSuccess(qcResponsePrivateCourse)) {
+
+                    view.onCoursesInfo(qcResponsePrivateCourse.data.total_count,
+                        qcResponsePrivateCourse.data.order_url);
+                    view.onPrivate(qcResponsePrivateCourse.data.coaches);
+                }
             }
         });
     }

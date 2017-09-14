@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.train.presenter;
 
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -53,8 +53,8 @@ public class SignUpGroupListPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetGroupList(params, keyword).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<GroupListResponse>>() {
-                @Override public void call(cn.qingchengfit.network.response.QcResponseData<GroupListResponse> groupListResponse) {
+            .subscribe(new Action1<QcDataResponse<GroupListResponse>>() {
+                @Override public void call(QcDataResponse<GroupListResponse> groupListResponse) {
                     totalpage = groupListResponse.data.pages;
                     if (ResponseConstant.checkSuccess(groupListResponse)) {
                         if (signUpView != null) {

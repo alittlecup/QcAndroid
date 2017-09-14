@@ -5,7 +5,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.AllotSalePreView;
 import cn.qingchengfit.model.responese.AllotSalePreViews;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -69,8 +69,8 @@ public class SalesListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<AllotSalePreViews>>() {
-                @Override public void call(QcResponseData<AllotSalePreViews> allotSalePreViewsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<AllotSalePreViews>>() {
+                @Override public void call(QcDataResponse<AllotSalePreViews> allotSalePreViewsQcResponseData) {
                     if (allotSalePreViewsQcResponseData.status == 200) {
                         view.onSalesPreview(allotSalePreViewsQcResponseData.data.sellers);
                     } else {

@@ -3,10 +3,10 @@ package cn.qingchengfit.staffkit.views.allotsales.choose;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Sellers;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -35,8 +35,8 @@ public class MutiChooseSalersPresenterPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<Sellers>>() {
-                @Override public void call(QcResponseData<Sellers> qcResponseSalers) {
+            .subscribe(new Action1<QcDataResponse<Sellers>>() {
+                @Override public void call(QcDataResponse<Sellers> qcResponseSalers) {
                     if (ResponseConstant.checkSuccess(qcResponseSalers)) {
                         view.onSalers(qcResponseSalers.data.users);
                     } else {

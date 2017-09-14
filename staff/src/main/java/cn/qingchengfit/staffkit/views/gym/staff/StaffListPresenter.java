@@ -3,10 +3,10 @@ package cn.qingchengfit.staffkit.views.gym.staff;
 import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.model.responese.StaffShipResponse;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -74,9 +74,9 @@ public class StaffListPresenter extends BasePresenter {
     }
 
     public void queryData(String keyword) {
-        spQuery = useCase.getAllStaffs(gymWrapper.id(), gymWrapper.model(), keyword, new Action1<QcResponseData<StaffShipResponse>>() {
-            @Override public void call(QcResponseData<StaffShipResponse> qcResponseStaffs) {
-                if (qcResponseStaffs.getStatus() == ResponseConstant.SUCCESS) {
+        spQuery = useCase.getAllStaffs(gymWrapper.id(), gymWrapper.model(), keyword, new Action1<QcDataResponse<StaffShipResponse>>() {
+            @Override public void call(QcDataResponse<StaffShipResponse> qcResponseStaffs) {
+                if (ResponseConstant.checkSuccess(qcResponseStaffs)) {
                     view.onData(qcResponseStaffs.data.ships);
                 } else {
                     view.onFailed();
@@ -90,8 +90,8 @@ public class StaffListPresenter extends BasePresenter {
         RxRegiste(mRestRepository.getGet_api()
             .qcGetSelfInfo(id).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<StaffResponse>>() {
-                @Override public void call(QcResponseData<StaffResponse> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<StaffResponse>>() {
+                @Override public void call(QcDataResponse<StaffResponse> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         view.onSelfInfo(qcResponse.getData().staff);
                     }

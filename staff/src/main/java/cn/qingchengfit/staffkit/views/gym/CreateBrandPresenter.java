@@ -3,8 +3,8 @@ package cn.qingchengfit.staffkit.views.gym;
 import android.content.Intent;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.responese.CreatBrand;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.rxbus.event.LoadingEvent;
@@ -71,10 +71,10 @@ public class CreateBrandPresenter implements Presenter {
         body.name = brand;
         body.photo = s;
         RxBus.getBus().post(new LoadingEvent(true));
-        spBrand = useCase.createBrand(body, new Action1<QcResponseData<CreatBrand>>() {
-            @Override public void call(QcResponseData<CreatBrand> qcResponsCreatBrand) {
+        spBrand = useCase.createBrand(body, new Action1<QcDataResponse<CreatBrand>>() {
+            @Override public void call(QcDataResponse<CreatBrand> qcResponsCreatBrand) {
                 RxBus.getBus().post(new LoadingEvent(false));
-                if (qcResponsCreatBrand.status == ResponseConstant.SUCCESS) {
+                if (ResponseConstant.checkSuccess(qcResponsCreatBrand)) {
                     addBrandView.onSucceed(qcResponsCreatBrand.data);
                 } else {
                     addBrandView.onFailed(qcResponsCreatBrand.msg);

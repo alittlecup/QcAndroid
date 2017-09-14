@@ -222,7 +222,7 @@ import rx.schedulers.Schedulers;
    * 期望职位
    */
   @OnClick(R2.id.civ_intent_postion) public void onCivIntentPostionClicked() {
-    router.toIntentPosition(resumeHome.exp_jobs);
+    router.toIntentPosition((body!= null && body.exp_jobs != null)?body.exp_jobs :  resumeHome.exp_jobs);
   }
 
   /**

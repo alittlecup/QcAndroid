@@ -1,5 +1,6 @@
 package cn.qingchengfit.model.responese;
 
+import cn.qingchengfit.network.response.QcResponse;
 import java.util.List;
 
 /**

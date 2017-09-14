@@ -8,10 +8,10 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.responese.NotificationGlance;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import java.util.List;
 import javax.inject.Inject;
@@ -33,8 +33,8 @@ public class SystemMsgPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<List<NotificationGlance>>>() {
-                @Override public void call(QcResponseData<List<NotificationGlance>> notificationGlanceQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<List<NotificationGlance>>>() {
+                @Override public void call(QcDataResponse<List<NotificationGlance>> notificationGlanceQcResponseData) {
                     if (ResponseConstant.checkSuccess(notificationGlanceQcResponseData)) {
                         view.onNotificationList(notificationGlanceQcResponseData.getData());
                     } else {
@@ -67,9 +67,9 @@ public class SystemMsgPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<RecordWrap>>() {
+            .subscribe(new Action1<QcDataResponse<RecordWrap>>() {
                 @Override public void call(
-                    QcResponseData<RecordWrap> recordWrapQcResponseData) {
+                    QcDataResponse<RecordWrap> recordWrapQcResponseData) {
                     if (ResponseConstant.checkSuccess(recordWrapQcResponseData)){
                         view.onMessageList(recordWrapQcResponseData.data.records);
                     }else{

@@ -7,10 +7,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.PostCommentBody;
 import cn.qingchengfit.model.responese.ArticleComment;
 import cn.qingchengfit.model.responese.ArticleCommentListData;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -60,8 +60,8 @@ public class ArticleCommentsPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<ArticleCommentListData>>() {
-                @Override public void call(QcResponseData<ArticleCommentListData> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<ArticleCommentListData>>() {
+                @Override public void call(QcDataResponse<ArticleCommentListData> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         view.onCommentList(qcResponse.getData().comments, qcResponse.data.current_page);
                         view.onCommentTotal(qcResponse.data.total_count, qcResponse.data.pages);

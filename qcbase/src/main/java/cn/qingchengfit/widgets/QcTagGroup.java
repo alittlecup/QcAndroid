@@ -387,19 +387,13 @@ public class QcTagGroup extends ViewGroup {
     final List<String> tagList = new ArrayList<>();
     for (int i = 0; i < count; i++) {
       final TagView tagView = getTagAt(i);
-      if (tagView.mState == TagView.STATE_NORMAL) {
+      //if (tagView.mState == TagView.STATE_NORMAL) {
+      if (!TextUtils.isEmpty(tagView.getText().toString()))
         tagList.add(tagView.getText().toString());
-      }
+      //}
     }
 
     return tagList.toArray(new String[tagList.size()]);
-  }
-
-  /**
-   * @see #setTags(String...)
-   */
-  public void setTags(List<String> tagList) {
-    setTags(tagList.toArray(new String[tagList.size()]));
   }
 
   /**
@@ -416,6 +410,13 @@ public class QcTagGroup extends ViewGroup {
     if (isAppendMode) {
       appendInputTag();
     }
+  }
+
+  /**
+   * @see #setTags(String...)
+   */
+  public void setTags(List<String> tagList) {
+    setTags(tagList.toArray(new String[tagList.size()]));
   }
 
   /**

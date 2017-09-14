@@ -7,9 +7,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.StudentBean;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Students;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
@@ -101,8 +101,8 @@ public class StudentListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map(new Func1<QcResponseData<Students>, Boolean>() {
-                @Override public Boolean call(QcResponseData<Students> qcResponseAllStudent) {
+            .map(new Func1<QcDataResponse<Students>, Boolean>() {
+                @Override public Boolean call(QcDataResponse<Students> qcResponseAllStudent) {
 
                     if (ResponseConstant.checkSuccess(qcResponseAllStudent)) {
                         for (QcStudentBean bean : qcResponseAllStudent.data.users) {
@@ -166,8 +166,8 @@ public class StudentListPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetAllStudents(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
-            .flatMap(new Func1<QcResponseData<Students>, Observable<Boolean>>() {
-                @Override public Observable<Boolean> call(QcResponseData<Students> qcResponseAllStudent) {
+            .flatMap(new Func1<QcDataResponse<Students>, Observable<Boolean>>() {
+                @Override public Observable<Boolean> call(QcDataResponse<Students> qcResponseAllStudent) {
                     if (ResponseConstant.checkSuccess(qcResponseAllStudent)) {
                         for (QcStudentBean bean : qcResponseAllStudent.data.users) {
                             bean.setBrand_id(gymWrapper.brand_id());

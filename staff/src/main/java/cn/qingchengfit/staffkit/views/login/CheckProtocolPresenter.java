@@ -5,7 +5,7 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -42,9 +42,9 @@ public class CheckProtocolPresenter extends BasePresenter {
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcResponseData<CheckProtocolModel>>() {
+        .subscribe(new Action1<QcDataResponse<CheckProtocolModel>>() {
           @Override
-          public void call(QcResponseData<CheckProtocolModel> checkProtocolModelQcResponseData) {
+          public void call(QcDataResponse<CheckProtocolModel> checkProtocolModelQcResponseData) {
             if (ResponseConstant.checkSuccess(checkProtocolModelQcResponseData)) {
               if (view != null) {
                 view.onCheck(checkProtocolModelQcResponseData.data.has_read_agreement);

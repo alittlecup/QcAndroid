@@ -3,9 +3,9 @@ package cn.qingchengfit.staffkit.usecase;
 import cn.qingchengfit.model.body.GymBody;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.CreatBrand;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
@@ -37,7 +37,7 @@ public class InitUseCase {
         this.restRepository = restRepository;
     }
 
-    public Subscription createBrand(CreatBrandBody body, Action1<QcResponseData<CreatBrand>> action1, Action1<Throwable> error) {
+    public Subscription createBrand(CreatBrandBody body, Action1<QcDataResponse<CreatBrand>> action1, Action1<Throwable> error) {
         return restRepository.qcCreateBrand(body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -55,7 +55,7 @@ public class InitUseCase {
             });
     }
 
-    public Subscription getBrandList(Action1<QcResponseData<BrandsResponse>> action1) {
+    public Subscription getBrandList(Action1<QcDataResponse<BrandsResponse>> action1) {
         return restRepository.getGet_api()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

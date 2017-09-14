@@ -22,7 +22,7 @@
 //import com.qingchengfit.fitcoach.activity.ChooseActivity;
 //import cn.qingchengfit.model.base.Course;
 //import com.qingchengfit.fitcoach.fragment.BaseFragment;
-//import com.qingchengfit.fitcoach.http.ResponseConstant;
+//import cn.qingchengfit.network.ResponseConstant;
 //import cn.qingchengfit.model.base.CoachService;
 //
 //import java.util.ArrayList;

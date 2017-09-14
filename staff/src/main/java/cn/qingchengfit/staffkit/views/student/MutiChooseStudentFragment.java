@@ -23,9 +23,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.StudentBean;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Students;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
@@ -155,8 +155,8 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<Students>>() {
-                @Override public void call(QcResponseData<Students> studentsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<Students>>() {
+                @Override public void call(QcDataResponse<Students> studentsQcResponseData) {
                     hideLoadingTrans();
                     if (ResponseConstant.checkSuccess(studentsQcResponseData)) {
                         if (studentsQcResponseData.getData().users != null) {

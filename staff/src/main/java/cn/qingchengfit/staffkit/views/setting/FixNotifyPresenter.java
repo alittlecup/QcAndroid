@@ -3,8 +3,9 @@ package cn.qingchengfit.staffkit.views.setting;
 import cn.qingchengfit.model.body.CardBalanceNotifyBody;
 import cn.qingchengfit.model.responese.BalanceNotify;
 import cn.qingchengfit.model.responese.BalanceNotifyConfigs;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -43,8 +44,8 @@ public class FixNotifyPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<BalanceNotifyConfigs>>() {
-                @Override public void call(QcResponseData<BalanceNotifyConfigs> responseData) {
+            .subscribe(new Action1<QcDataResponse<BalanceNotifyConfigs>>() {
+                @Override public void call(QcDataResponse<BalanceNotifyConfigs> responseData) {
                     if (responseData.status == 200) {
                         if (onGetBalanceNotifyListener != null) {
                             onGetBalanceNotifyListener.onGetSuccess(responseData.data.balanceNotifies);
@@ -72,7 +73,7 @@ public class FixNotifyPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
-                    if (qcResponse.getStatus() == 200) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
                         onGetBalanceNotifyListener.onDone();
                     } else {
                         onGetBalanceNotifyListener.onGetFailed(qcResponse.msg);

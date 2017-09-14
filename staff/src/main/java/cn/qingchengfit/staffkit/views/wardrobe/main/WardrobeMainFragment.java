@@ -24,8 +24,8 @@ import cn.qingchengfit.model.responese.AllLockers;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.LockerRegion;
 import cn.qingchengfit.model.responese.LockerRegions;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -135,8 +135,8 @@ public class WardrobeMainFragment extends BaseFragment implements FlexibleAdapte
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<LockerRegions>>() {
-                @Override public void call(QcResponseData<LockerRegions> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<LockerRegions>>() {
+                @Override public void call(QcDataResponse<LockerRegions> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         regions.clear();
                         regions.addAll(qcResponse.data.locker_regions);
@@ -145,8 +145,8 @@ public class WardrobeMainFragment extends BaseFragment implements FlexibleAdapte
                             .observeOn(AndroidSchedulers.mainThread())
                             .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
-                            .subscribe(new Action1<QcResponseData<AllLockers>>() {
-                                @Override public void call(QcResponseData<AllLockers> qcResponseAllLockers) {
+                            .subscribe(new Action1<QcDataResponse<AllLockers>>() {
+                                @Override public void call(QcDataResponse<AllLockers> qcResponseAllLockers) {
                                     if (ResponseConstant.checkSuccess(qcResponseAllLockers)) {
                                         handleLockers(qcResponseAllLockers.data.lockers);
                                     } else {
@@ -187,8 +187,8 @@ public class WardrobeMainFragment extends BaseFragment implements FlexibleAdapte
                     .observeOn(AndroidSchedulers.mainThread())
                     .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
-                    .subscribe(new Action1<QcResponseData<AllLockers>>() {
-                        @Override public void call(QcResponseData<AllLockers> qcResponseAllLockers) {
+                    .subscribe(new Action1<QcDataResponse<AllLockers>>() {
+                        @Override public void call(QcDataResponse<AllLockers> qcResponseAllLockers) {
                             if (ResponseConstant.checkSuccess(qcResponseAllLockers)) {
                                 mSaveState.putInt("page", viewpager.getCurrentItem());
                                 handleLockers(qcResponseAllLockers.data.lockers);

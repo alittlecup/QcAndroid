@@ -1,5 +1,7 @@
 package cn.qingchengfit.network;
 
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventSessionError;
 import cn.qingchengfit.network.response.QcResponse;
 
 /**
@@ -24,7 +26,18 @@ import cn.qingchengfit.network.response.QcResponse;
  */
 
 public class ResponseConstant {
+  public static final int SUCCESS = 200;
+  public static final String E_Login = "400001";
+
   public static boolean checkSuccess(QcResponse qcResponse) {
-    return qcResponse.status == 200;
+    if (qcResponse.getStatus() == SUCCESS) {
+      return true;
+    } else {
+      if(qcResponse.error_code.equalsIgnoreCase(E_Login)){
+        RxBus.getBus().post(new EventSessionError());
+      }
+      return false;
+    }
   }
+
 }

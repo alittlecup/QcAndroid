@@ -19,9 +19,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.AllLockers;
 import cn.qingchengfit.model.responese.Locker;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -127,8 +127,8 @@ public class WardrobeActivity extends BaseActivity implements FragCallBack {
         sp = restRepository.getGet_api()
             .qcGetAllLockers(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<AllLockers>>() {
-                @Override public void call(QcResponseData<AllLockers> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<AllLockers>>() {
+                @Override public void call(QcDataResponse<AllLockers> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         onSearch(qcResponse.data.lockers);
                     } else {

@@ -1,5 +1,6 @@
 package cn.qingchengfit.model.responese;
 
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import javax.inject.Inject;
@@ -28,7 +29,7 @@ public class SettingUsecase {
         this.restRepository = restRepository;
     }
 
-    public Subscription getSelfInfo(Action1<QcResponseData<StaffResponse>> action1) {
+    public Subscription getSelfInfo(Action1<QcDataResponse<StaffResponse>> action1) {
         return restRepository.getGet_api()
             .qcGetSelfInfo(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

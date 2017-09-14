@@ -21,7 +21,7 @@ import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -172,7 +172,7 @@ import rx.schedulers.Schedulers;
                     .subscribeOn(Schedulers.io())
                     .subscribe(new Action1<QcResponseSystenInit>() {
                         @Override public void call(QcResponseSystenInit qcResponseSystenInit) {
-                            if (qcResponseSystenInit.status == ResponseConstant.SUCCESS) {
+                            if (ResponseConstant.checkSuccess(qcResponseSystenInit)) {
                                 if (getActivity() instanceof MainActivity) {
                                     List<CoachService> coachServices = new ArrayList<>();
                                     coachServices.add(qcResponseSystenInit.data);

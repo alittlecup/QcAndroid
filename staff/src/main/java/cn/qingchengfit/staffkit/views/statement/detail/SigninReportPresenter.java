@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.SigninReportDetail;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -74,9 +74,9 @@ public class SigninReportPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<SigninReportDetail>>() {
-                @Override public void call(QcResponseData<SigninReportDetail> responseData) {
-                    if (responseData.status == ResponseConstant.SUCCESS) {
+            .subscribe(new Action1<QcDataResponse<SigninReportDetail>>() {
+                @Override public void call(QcDataResponse<SigninReportDetail> responseData) {
+                    if (ResponseConstant.checkSuccess(responseData)) {
                         view.onSuccess(responseData.data);
                     } else {
                         view.onFailed(responseData.getMsg());

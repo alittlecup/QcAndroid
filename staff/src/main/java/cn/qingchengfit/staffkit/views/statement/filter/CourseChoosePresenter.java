@@ -6,8 +6,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.model.responese.CourseTypeSamples;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
@@ -144,8 +144,8 @@ public class CourseChoosePresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CourseTypeSamples>>() {
-                @Override public void call(QcResponseData<CourseTypeSamples> qcResponseChooseCourses) {
+            .subscribe(new Action1<QcDataResponse<CourseTypeSamples>>() {
+                @Override public void call(QcDataResponse<CourseTypeSamples> qcResponseChooseCourses) {
                     if (ResponseConstant.checkSuccess(qcResponseChooseCourses)) {
                         mAllCourse = qcResponseChooseCourses.data.courses;
                         mPrivateCourse.clear();

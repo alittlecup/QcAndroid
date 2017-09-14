@@ -1,5 +1,6 @@
 package cn.qingchengfit.model.responese;
 
+import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 

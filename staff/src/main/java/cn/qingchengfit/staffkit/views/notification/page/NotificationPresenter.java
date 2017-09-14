@@ -3,10 +3,10 @@ package cn.qingchengfit.staffkit.views.notification.page;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.responese.Notification;
 import cn.qingchengfit.model.responese.NotificationMsg;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -39,8 +39,8 @@ public class NotificationPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<Notification>>() {
-                @Override public void call(QcResponseData<Notification> qcResponseNotification) {
+            .subscribe(new Action1<QcDataResponse<Notification>>() {
+                @Override public void call(QcDataResponse<Notification> qcResponseNotification) {
                     if (ResponseConstant.checkSuccess(qcResponseNotification)) {
                         totalpage = qcResponseNotification.data.pages;
                         view.onRefresh(qcResponseNotification.data.notifications, qcResponseNotification.data.unread_count);
@@ -76,8 +76,8 @@ public class NotificationPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<Notification>>() {
-                @Override public void call(QcResponseData<Notification> qcResponseNotification) {
+            .subscribe(new Action1<QcDataResponse<Notification>>() {
+                @Override public void call(QcDataResponse<Notification> qcResponseNotification) {
                     if (ResponseConstant.checkSuccess(qcResponseNotification)) {
                         view.onLoadmore(qcResponseNotification.data.notifications, qcResponseNotification.data.unread_count);
                     }

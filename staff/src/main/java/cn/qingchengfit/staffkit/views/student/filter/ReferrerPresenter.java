@@ -5,8 +5,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.Referrers;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -90,8 +90,8 @@ public class ReferrerPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map(new Func1<QcResponseData<Referrers>, List<StudentReferrerBean>>() {
-                @Override public List<StudentReferrerBean> call(QcResponseData<Referrers> referrersQcResponseData) {
+            .map(new Func1<QcDataResponse<Referrers>, List<StudentReferrerBean>>() {
+                @Override public List<StudentReferrerBean> call(QcDataResponse<Referrers> referrersQcResponseData) {
                     List<StudentReferrerBean> referrers = new ArrayList<StudentReferrerBean>();
                     if (referrersQcResponseData.data.users != null) {
                         for (Staff staff : referrersQcResponseData.data.users) {
@@ -122,8 +122,8 @@ public class ReferrerPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map(new Func1<QcResponseData<Referrers>, List<StudentReferrerBean>>() {
-                @Override public List<StudentReferrerBean> call(QcResponseData<Referrers> referrersQcResponseData) {
+            .map(new Func1<QcDataResponse<Referrers>, List<StudentReferrerBean>>() {
+                @Override public List<StudentReferrerBean> call(QcDataResponse<Referrers> referrersQcResponseData) {
                     List<StudentReferrerBean> referrers = new ArrayList<StudentReferrerBean>();
                     if (referrersQcResponseData.data.users != null) {
                         for (Staff staff : referrersQcResponseData.data.users) {

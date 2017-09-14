@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.TrackStudents;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -107,7 +107,7 @@ public class FollowUpStatusPresenter extends BasePresenter {
     public void loadMore(int changeStautsType) {
         if (curPage <= totalPages) {
             params.put("page", curPage);
-            Observable<QcResponseData<TrackStudents>> observable;
+            Observable<QcDataResponse<TrackStudents>> observable;
             switch (changeStautsType) {
                 case 1:
                     observable = restRepository.getGet_api().qcGetTrackStudentFollow(App.staffId, params);
@@ -122,8 +122,8 @@ public class FollowUpStatusPresenter extends BasePresenter {
 
           RxRegiste(observable.onBackpressureBuffer().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponseData<TrackStudents>>() {
-                    @Override public void call(QcResponseData<TrackStudents> trackStudentsQcResponseData) {
+                .subscribe(new Action1<QcDataResponse<TrackStudents>>() {
+                    @Override public void call(QcDataResponse<TrackStudents> trackStudentsQcResponseData) {
                         totalPages = trackStudentsQcResponseData.data.pages;
                         view.onToatalPages(trackStudentsQcResponseData.data.total_count);
                         view.onTrackStudent(trackStudentsQcResponseData.data, curPage);

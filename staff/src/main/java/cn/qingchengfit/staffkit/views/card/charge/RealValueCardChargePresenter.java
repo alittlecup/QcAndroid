@@ -8,7 +8,7 @@ import cn.qingchengfit.model.responese.CardStandard;
 import cn.qingchengfit.model.responese.CardTplOption;
 import cn.qingchengfit.model.responese.QcResponseOption;
 import cn.qingchengfit.model.responese.QcResponsePostions;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;

@@ -6,9 +6,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.DelBatchScheduleBody;
 import cn.qingchengfit.model.body.SingleBatchBody;
 import cn.qingchengfit.model.responese.CourseSchedules;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
@@ -76,8 +76,8 @@ public class CourseManagePresenter implements Presenter {
 
     public void queryList(String batchid, final int coursetype) {
         spQuery = useCase.queryBatchSchedule(batchid, coursetype, null, gymWrapper.id(), gymWrapper.model(),
-            new Action1<QcResponseData<CourseSchedules>>() {
-                @Override public void call(QcResponseData<CourseSchedules> qcResponseBatchSchedules) {
+            new Action1<QcDataResponse<CourseSchedules>>() {
+                @Override public void call(QcDataResponse<CourseSchedules> qcResponseBatchSchedules) {
                     if (qcResponseBatchSchedules.getStatus() == ResponseConstant.SUCCESS) {
                         if (coursetype == Configs.TYPE_PRIVATE && qcResponseBatchSchedules.data.timetables != null) {
                             view.onList(qcResponseBatchSchedules.data.timetables);

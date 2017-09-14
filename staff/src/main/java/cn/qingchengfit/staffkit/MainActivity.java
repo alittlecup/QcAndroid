@@ -31,14 +31,16 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventInitApp;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.events.EventSessionError;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.PushBody;
 import cn.qingchengfit.model.responese.GymList;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.model.responese.UpdateVersion;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.BusEventThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -72,7 +74,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
 import com.google.gson.Gson;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tencent.TIMManager;
 import com.tencent.qcloud.timchat.MyApplication;
+import com.tencent.qcloud.timchat.common.AppData;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import im.fir.sdk.FIR;
 import im.fir.sdk.VersionCheckCallback;
 import java.util.Date;
@@ -141,6 +146,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
             }
         }
     };
+  private Observable<EventSessionError> obLogOut;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,8 +203,8 @@ public class MainActivity extends BaseActivity implements FragCallBack {
                     .qcGetCoachService(loginStatus.staff_id(), null)
                     .delay(2, TimeUnit.SECONDS).onBackpressureBuffer().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<QcResponseData<GymList>>() {
-                        @Override public void call(QcResponseData<GymList> qcResponseGymList) {
+                    .subscribe(new Action1<QcDataResponse<GymList>>() {
+                        @Override public void call(QcDataResponse<GymList> qcResponseGymList) {
                             if (ResponseConstant.checkSuccess(qcResponseGymList) && qcResponseGymList.data.services != null) {
                                 GymBaseInfoAction.writeGyms(qcResponseGymList.data.services);
                             }
@@ -297,7 +303,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
                     }
 
                     @Override public void onNext(QcResponse qcResponse) {
-                        if (qcResponse.status == ResponseConstant.SUCCESS) {
+                        if (ResponseConstant.checkSuccess(qcResponse)) {
                             PreferenceUtils.setPrefBoolean(MainActivity.this, "hasPushId", true);
                         }
                     }
@@ -346,6 +352,20 @@ public class MainActivity extends BaseActivity implements FragCallBack {
                     }
                 }
             });
+      obLogOut = RxBus.getBus().register(EventSessionError.class)
+          .observeOn(AndroidSchedulers.mainThread());
+      obLogOut.subscribe(new Action1<EventSessionError>() {
+        @Override public void call(EventSessionError eventSessionError) {
+          logout();
+          ToastUtils.show("登录过期");
+          RxBus.getBus().post(new EventLoginChange());
+          goLogin();
+        }
+      },new BusEventThrowable());
+    }
+
+    void goLogin(){
+      baseRouter.toLogin(this);
     }
 
     @Override protected void onNewIntent(Intent intent) {
@@ -507,7 +527,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         RxBus.getBus().unregister(EventFreshCoachService.class.getName(), mFreshCoachService);
         RxBus.getBus().unregister(EventBrandChange.class.getName(), brandChangeOb);
       RxBus.getBus().unregister(EventInitApp.class.getName(), mBackMainOb);
-
+      RxBus.getBus().unregister(EventSessionError.class.getName(),obLogOut);
         if (updateSp != null) updateSp.unsubscribe();
         if (sp != null) sp.unsubscribe();
         unregisterReceiver(receiver);
@@ -515,10 +535,15 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     }
 
     public void logout() {
-        PushManager.stopWork(getApplicationContext());
+        loginStatus.logout(this);
+        App.staffId = "";
+        PushManager.stopWork(this.getApplicationContext());
+        AppData.clear(this);
+        TIMManager.getInstance().logout();
         PreferenceUtils.setPrefString(this, Configs.PREFER_SESSION, "");
         PreferenceUtils.setPrefString(this, Configs.PREFER_WORK_ID, "");
         PreferenceUtils.setPrefString(this, Configs.CUR_BRAND_ID, "");
+        MiPushClient.unregisterPush(this.getApplicationContext());
     }
 
     @Override public int getFragId() {

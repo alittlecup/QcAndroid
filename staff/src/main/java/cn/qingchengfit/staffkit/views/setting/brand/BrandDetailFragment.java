@@ -21,12 +21,12 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.model.responese.Shops;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -233,8 +233,8 @@ public class BrandDetailFragment extends BaseFragment {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<Shops>>() {
-                @Override public void call(QcResponseData<Shops> qcResponseBrandShops) {
+            .subscribe(new Action1<QcDataResponse<Shops>>() {
+                @Override public void call(QcDataResponse<Shops> qcResponseBrandShops) {
                     if (ResponseConstant.checkSuccess(qcResponseBrandShops)) {
                         datas.clear();
                         datas.addAll(qcResponseBrandShops.data.shops);

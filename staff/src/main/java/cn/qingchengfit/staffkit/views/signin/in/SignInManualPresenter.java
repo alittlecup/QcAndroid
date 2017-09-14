@@ -5,13 +5,13 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.body.SignInManualBody;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.model.responese.SignInSchdule;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.model.responese.SigninValidCard;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -105,8 +105,8 @@ public class SignInManualPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<SignInCardCostBean.Data>>() {
-                @Override public void call(QcResponseData<SignInCardCostBean.Data> signInCardCostBean) {
+            .subscribe(new Action1<QcDataResponse<SignInCardCostBean.Data>>() {
+                @Override public void call(QcDataResponse<SignInCardCostBean.Data> signInCardCostBean) {
                     if (view != null) view.getCardCost(signInCardCostBean.data.card_costs);
                 }
             }, new Action1<Throwable>() {

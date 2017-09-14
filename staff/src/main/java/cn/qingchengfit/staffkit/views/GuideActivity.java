@@ -21,9 +21,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.responese.BrandsResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -91,8 +91,8 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
           spQueryBrand = mRestRepository.getGet_api()
                 .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
-                    @Override public void call(final QcResponseData<BrandsResponse> qcResponseBrands) {
+                .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {
+                    @Override public void call(final QcDataResponse<BrandsResponse> qcResponseBrands) {
                         if (ResponseConstant.checkSuccess(qcResponseBrands)) {
                             if (qcResponseBrands.data.brands.size() > 0) {
 

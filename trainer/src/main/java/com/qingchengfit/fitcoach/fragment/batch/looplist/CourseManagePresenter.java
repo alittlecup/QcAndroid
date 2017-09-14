@@ -5,7 +5,7 @@
 //import cn.qingchengfit.di.PView;
 //import cn.qingchengfit.di.Presenter;
 //import com.qingchengfit.fitcoach.Configs;
-//import com.qingchengfit.fitcoach.http.ResponseConstant;
+//import cn.qingchengfit.network.ResponseConstant;
 //import cn.qingchengfit.model.base.CoachService;
 //import com.qingchengfit.fitcoach.http.bean.FixBatchBean;
 //import cn.qingchengfit.network.response.QcResponse;

@@ -2,10 +2,10 @@ package cn.qingchengfit.staffkit.views.setting;
 
 import android.content.Intent;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.StaffResponse;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.CommonPView;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
@@ -69,8 +69,8 @@ public class FixSelfInofPresneter implements Presenter {
     }
 
     public void querySelfInfo() {
-        sp = useCase.getSelfInfo(new Action1<QcResponseData<StaffResponse>>() {
-            @Override public void call(QcResponseData<StaffResponse> qcResponse) {
+        sp = useCase.getSelfInfo(new Action1<QcDataResponse<StaffResponse>>() {
+            @Override public void call(QcDataResponse<StaffResponse> qcResponse) {
 
             }
         });

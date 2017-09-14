@@ -26,9 +26,9 @@ import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.Notification;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -233,8 +233,8 @@ public class ChainFragment extends BaseFragment {
         RxRegiste(mRestRepository.getGet_api()
             .qcGetMessages(App.staffId, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<Notification>>() {
-                @Override public void call(QcResponseData<Notification> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<Notification>>() {
+                @Override public void call(QcDataResponse<Notification> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.data.unread_count > 0 && toolbar.getMenu().hasVisibleItems()) {
                             scheduleNotificationCount.setVisibility(View.VISIBLE);

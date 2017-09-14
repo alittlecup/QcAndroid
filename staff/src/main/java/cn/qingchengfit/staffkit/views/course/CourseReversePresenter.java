@@ -4,6 +4,7 @@ import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.responese.CourseReportDetail;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -63,9 +64,9 @@ public class CourseReversePresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<CourseReportDetail>>() {
+            .subscribe(new Action1<QcDataResponse<CourseReportDetail>>() {
                 @Override
-                public void call(cn.qingchengfit.network.response.QcResponseData<CourseReportDetail> courseReportDetailQcResponseData) {
+                public void call(QcDataResponse<CourseReportDetail> courseReportDetailQcResponseData) {
                     if (courseReportDetailQcResponseData.status == 200) {
                         view.onGetSuccessed(courseReportDetailQcResponseData.data);
                     } else {

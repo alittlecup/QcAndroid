@@ -5,8 +5,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymList;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -105,8 +105,8 @@ public class GymListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<GymList>>() {
-                @Override public void call(QcResponseData<GymList> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<GymList>>() {
+                @Override public void call(QcDataResponse<GymList> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         GymBaseInfoAction.writeGyms(qcResponse.getData().services);
                     } else {

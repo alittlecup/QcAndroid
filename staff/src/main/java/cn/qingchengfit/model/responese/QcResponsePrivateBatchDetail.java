@@ -3,6 +3,7 @@ package cn.qingchengfit.model.responese;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Rule;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.usecase.bean.QcScheduleBean;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;

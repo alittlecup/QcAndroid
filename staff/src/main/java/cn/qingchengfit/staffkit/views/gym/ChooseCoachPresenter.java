@@ -3,9 +3,9 @@ package cn.qingchengfit.staffkit.views.gym;
 import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Staffs;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
@@ -86,8 +86,8 @@ public class ChooseCoachPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<Staffs>>() {
-                @Override public void call(QcResponseData<Staffs> qcResponseGymCoach) {
+            .subscribe(new Action1<QcDataResponse<Staffs>>() {
+                @Override public void call(QcDataResponse<Staffs> qcResponseGymCoach) {
                     if (qcResponseGymCoach.getStatus() == ResponseConstant.SUCCESS) {
                         List<ImageTwoTextBean> d = new ArrayList<ImageTwoTextBean>();
                         for (Staff coach : qcResponseGymCoach.data.teachers) {

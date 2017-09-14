@@ -2,10 +2,10 @@ package cn.qingchengfit.staffkit.train.presenter;
 
 import android.text.TextUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -44,8 +44,8 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetGroupDetail(teamId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<TeamDetailResponse>>() {
-                @Override public void call(cn.qingchengfit.network.response.QcResponseData<TeamDetailResponse> teamDetail) {
+            .subscribe(new Action1<QcDataResponse<TeamDetailResponse>>() {
+                @Override public void call(QcDataResponse<TeamDetailResponse> teamDetail) {
                     if (ResponseConstant.checkSuccess(teamDetail)) {
                         if (signUpView != null) {
                             signUpView.onGetSignUpDataSuccess(teamDetail.data.groupBean);
@@ -65,7 +65,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
-                    if (qcResponse.getStatus() == 200) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
                         signUpView.onSuccess();
                         signUpView.onDelSuccess();
                     } else {
@@ -88,7 +88,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
-                    if (qcResponse.getStatus() == 200) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
                         signUpView.onSuccess();
                     } else {
                         signUpView.onFailed(qcResponse.getMsg());
@@ -126,7 +126,7 @@ public class SignUpGroupDetailPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
-                    if (qcResponse.getStatus() == 200) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
                         signUpView.onSuccess();
                     } else {
                         signUpView.onFailed(qcResponse.getMsg());

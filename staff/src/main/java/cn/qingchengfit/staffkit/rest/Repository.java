@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.rest;
 
 import cn.qingchengfit.model.responese.Login;
-import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.usecase.bean.LoginBody;
 import rx.Observable;
 
@@ -20,5 +20,5 @@ import rx.Observable;
  */
 public interface Repository {
 
-    Observable<QcResponseData<Login>> qcLogin(LoginBody loginBody);
+    Observable<QcDataResponse<Login>> qcLogin(LoginBody loginBody);
 }

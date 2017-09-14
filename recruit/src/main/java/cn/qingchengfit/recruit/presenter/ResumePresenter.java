@@ -5,6 +5,7 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
@@ -91,7 +92,7 @@ public class ResumePresenter extends BasePresenter {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<EduExpListWrap>>() {
           @Override public void call(QcDataResponse<EduExpListWrap> eduExpListWrapQcDataResponse) {
-            if (eduExpListWrapQcDataResponse.getStatus() == 200) {
+            if (ResponseConstant.checkSuccess(eduExpListWrapQcDataResponse)) {
               view.onEduExpList(eduExpListWrapQcDataResponse.data.educations);
             } else {
               view.onShowError(eduExpListWrapQcDataResponse.getMsg());

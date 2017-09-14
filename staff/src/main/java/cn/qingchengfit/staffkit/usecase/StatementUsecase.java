@@ -4,12 +4,12 @@ import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.CourseTypeSamples;
 import cn.qingchengfit.model.responese.GymCardtpl;
 import cn.qingchengfit.model.responese.QcResponseCards;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseServiceDetial;
 import cn.qingchengfit.model.responese.QcResponseStatementDetail;
 import cn.qingchengfit.model.responese.Sellers;
 import cn.qingchengfit.model.responese.Staffs;
 import cn.qingchengfit.model.responese.StatementGlanceResp;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class StatementUsecase {
         this.restRepository = restRepository;
     }
 
-    public Subscription queryClassGlance(String brand_id, String id, String model, Action1<QcResponseData<StatementGlanceResp>> action1) {
+    public Subscription queryClassGlance(String brand_id, String id, String model, Action1<QcDataResponse<StatementGlanceResp>> action1) {
         return restRepository.getGet_api()
             .qcGetReportGlance(App.staffId, brand_id, null, id, model)
             .observeOn(AndroidSchedulers.mainThread())
@@ -54,7 +54,7 @@ public class StatementUsecase {
             });
     }
 
-    public Subscription queryClassGlance(String brand_id, String shopid, Action1<QcResponseData<StatementGlanceResp>> action1) {
+    public Subscription queryClassGlance(String brand_id, String shopid, Action1<QcDataResponse<StatementGlanceResp>> action1) {
         return restRepository.getGet_api()
             .qcGetReportGlance(App.staffId, brand_id, shopid, null, null)
             .observeOn(AndroidSchedulers.mainThread())
@@ -67,7 +67,7 @@ public class StatementUsecase {
             });
     }
 
-    public Subscription querySaleGlance(String brand_id, String id, String model, Action1<QcResponseData<StatementGlanceResp>> action1) {
+    public Subscription querySaleGlance(String brand_id, String id, String model, Action1<QcDataResponse<StatementGlanceResp>> action1) {
         return restRepository.getGet_api()
             .qcGetSaleGlance(App.staffId, brand_id, null, id, model)
             .observeOn(AndroidSchedulers.mainThread())
@@ -80,7 +80,7 @@ public class StatementUsecase {
             });
     }
 
-    public Subscription querySaleGlance(String brand_id, String shopid, Action1<QcResponseData<StatementGlanceResp>> action1) {
+    public Subscription querySaleGlance(String brand_id, String shopid, Action1<QcDataResponse<StatementGlanceResp>> action1) {
         return restRepository.getGet_api()
             .qcGetSaleGlance(App.staffId, brand_id, shopid, null, null)
             .observeOn(AndroidSchedulers.mainThread())
@@ -135,7 +135,7 @@ public class StatementUsecase {
             });
     }
 
-    public Subscription queryCardTypeList(String brand_id, int type, Action1<QcResponseData<CardTpls>> action1) {
+    public Subscription queryCardTypeList(String brand_id, int type, Action1<QcDataResponse<CardTpls>> action1) {
         String t = type == 0 ? null : Integer.toString(type);
         HashMap<String, Object> params = new HashMap<>();
         params.put("brand_id", brand_id);
@@ -151,7 +151,7 @@ public class StatementUsecase {
             });
     }
 
-    public Subscription queryGymCardTpl(String gymid, String model, int type, Action1<QcResponseData<GymCardtpl>> action1) {
+    public Subscription queryGymCardTpl(String gymid, String model, int type, Action1<QcDataResponse<GymCardtpl>> action1) {
         String t = type == 0 ? null : Integer.toString(type);
         return restRepository.getGet_api()
             .qcGetGymCardtpl(App.staffId, gymid, model, t)
@@ -164,7 +164,7 @@ public class StatementUsecase {
             });
     }
 
-    public Subscription queryCourse(String brand_id, String gymid, String gymmodel, Action1<QcResponseData<CourseTypeSamples>> action1) {
+    public Subscription queryCourse(String brand_id, String gymid, String gymmodel, Action1<QcDataResponse<CourseTypeSamples>> action1) {
         return restRepository.getGet_api()
             .qcGetAllCourses(App.staffId, brand_id, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
@@ -177,7 +177,7 @@ public class StatementUsecase {
             });
     }
 
-    public Subscription queryCoach(String brand_id, String gymid, String gymmodel, Action1<QcResponseData<Staffs>> action1) {
+    public Subscription queryCoach(String brand_id, String gymid, String gymmodel, Action1<QcDataResponse<Staffs>> action1) {
         return restRepository.getGet_api()
             .qcGetAllCoaches(App.staffId, brand_id, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())
@@ -187,7 +187,7 @@ public class StatementUsecase {
     }
 
     public Subscription querySalers(String brandid, String shopid, String gymid, String gymmodel,
-        Action1<QcResponseData<Sellers>> action1) {
+        Action1<QcDataResponse<Sellers>> action1) {
         return restRepository.getGet_api()
             .qcGetSalersAndCoach(App.staffId, brandid, shopid, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())

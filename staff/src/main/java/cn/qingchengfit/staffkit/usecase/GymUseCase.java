@@ -13,16 +13,16 @@ import cn.qingchengfit.model.responese.GymCardtpl;
 import cn.qingchengfit.model.responese.GymDetail;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.GymSites;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponsePrivateBatchDetail;
 import cn.qingchengfit.model.responese.QcResponsePrivateCourse;
 import cn.qingchengfit.model.responese.QcResponsePrivateDetail;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ResponseService;
 import cn.qingchengfit.model.responese.ScheduleTemplete;
 import cn.qingchengfit.model.responese.Space;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -70,10 +70,10 @@ public class GymUseCase {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<GymList>>() {
-                @Override public void call(QcResponseData<GymList> qcResponseGymList) {
+            .subscribe(new Action1<QcDataResponse<GymList>>() {
+                @Override public void call(QcDataResponse<GymList> qcResponseGymList) {
                     //                        GymBaseInfoAction.writeGyms(qcResponseGymList.data.services);
-                    if (qcResponseGymList.status == ResponseConstant.SUCCESS) {
+                    if (ResponseConstant.checkSuccess(qcResponseGymList)) {
                         action1.call(qcResponseGymList.data.services);
                     } else {
                         action1.call(new ArrayList<CoachService>());
@@ -82,7 +82,7 @@ public class GymUseCase {
             }, new NetWorkThrowable());
     }
 
-    public Subscription querySite(String gymid, String gymModel, Action1<QcResponseData<GymSites>> action1) {
+    public Subscription querySite(String gymid, String gymModel, Action1<QcDataResponse<GymSites>> action1) {
         return restRepository.getGet_api()
             .qcGetGymSites(App.staffId, gymid, gymModel)
             .observeOn(AndroidSchedulers.mainThread())
@@ -117,7 +117,7 @@ public class GymUseCase {
     }
 
 
-    public Subscription getGroupCourse(String brandid, String gymid, String model, Action1<QcResponseData<GroupCourseResponse>> action1) {
+    public Subscription getGroupCourse(String brandid, String gymid, String model, Action1<QcDataResponse<GroupCourseResponse>> action1) {
         return restRepository.getGet_api()
             .qcGetGroupCourse(App.staffId, gymid, model, brandid)
             .observeOn(AndroidSchedulers.mainThread())
@@ -126,7 +126,7 @@ public class GymUseCase {
             .subscribe(action1, new NetWorkThrowable());
     }
 
-    public Subscription getAllCourse(String brandid, String gymid, String model, Action1<QcResponseData<GroupCourseResponse>> action1) {
+    public Subscription getAllCourse(String brandid, String gymid, String model, Action1<QcDataResponse<GroupCourseResponse>> action1) {
         return restRepository.getGet_api()
             .qcGetGroupCourse(App.staffId, gymid, model, brandid)
             .observeOn(AndroidSchedulers.mainThread())
@@ -155,7 +155,7 @@ public class GymUseCase {
     }
 
     public Subscription getGroupBatches(String coach_id, String gymid, String gymmodle, String brandid,
-        Action1<QcResponseData<GroupCourseScheduleDetail>> action1) {
+        Action1<QcDataResponse<GroupCourseScheduleDetail>> action1) {
         return restRepository.getGet_api()
             .qcGetGroupCourses(App.staffId, coach_id, gymid, gymmodle, brandid)
             .observeOn(AndroidSchedulers.mainThread())
@@ -202,7 +202,7 @@ public class GymUseCase {
     }
 
     public Subscription getBatchTemplete(int gymtype, String gymid, String gymmodel, String teacher_id, String course_id,
-        Action1<QcResponseData<ScheduleTemplete>> action1) {
+        Action1<QcDataResponse<ScheduleTemplete>> action1) {
         return restRepository.getGet_api()
             .qcGetBatchTemplate(App.staffId, gymtype == Configs.TYPE_PRIVATE ? "private" : "group", gymid, gymmodel, teacher_id, course_id)
             .observeOn(AndroidSchedulers.mainThread())
@@ -211,7 +211,7 @@ public class GymUseCase {
             .subscribe(action1, new NetWorkThrowable());
     }
 
-    public Subscription getCourses(String gymid, String gymmode, boolean isPrivate, Action1<QcResponseData<CourseTypeSamples>> action1) {
+    public Subscription getCourses(String gymid, String gymmode, boolean isPrivate, Action1<QcDataResponse<CourseTypeSamples>> action1) {
         return restRepository.getGet_api()
             .qcGetCourses(App.staffId, gymid, gymmode, isPrivate ? 1 : 0)
             .observeOn(AndroidSchedulers.mainThread())
@@ -220,7 +220,7 @@ public class GymUseCase {
             .subscribe(action1, new NetWorkThrowable());
     }
 
-    public Subscription queryGymCardTpl(String gymid, String model, int type, Action1<QcResponseData<GymCardtpl>> action1) {
+    public Subscription queryGymCardTpl(String gymid, String model, int type, Action1<QcDataResponse<GymCardtpl>> action1) {
         String t = type == 0 ? null : Integer.toString(type);
         return restRepository.getGet_api()
             .qcGetGymCardtpl(App.staffId, gymid, model, t)
@@ -231,7 +231,7 @@ public class GymUseCase {
     }
 
     public Subscription queryBatchSchedule(String batchid, int courseType, String brandid, String gymid, String gymmodel,
-        Action1<QcResponseData<CourseSchedules>> action1) {
+        Action1<QcDataResponse<CourseSchedules>> action1) {
         return restRepository.getGet_api()
             .qcGetbatchSchedules(App.staffId, batchid, courseType == Configs.TYPE_PRIVATE ? "timetables" : "schedules", brandid, gymid,
                 gymmodel)
@@ -277,7 +277,7 @@ public class GymUseCase {
             .subscribe(action1, new NetWorkThrowable());
     }
 
-    public Subscription getGymWelcom(String id, String model, Action1<QcResponseData<GymDetail>> action1) {
+    public Subscription getGymWelcom(String id, String model, Action1<QcDataResponse<GymDetail>> action1) {
         return restRepository.getGet_api()
             .qcGetGymDetail(App.staffId, id, model)
             .observeOn(AndroidSchedulers.mainThread())

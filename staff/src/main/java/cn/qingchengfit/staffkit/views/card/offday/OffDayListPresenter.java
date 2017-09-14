@@ -8,10 +8,10 @@ import cn.qingchengfit.model.body.AheadOffDayBody;
 import cn.qingchengfit.model.common.OffDay;
 import cn.qingchengfit.model.responese.DayOffs;
 import cn.qingchengfit.model.responese.Leave;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -84,8 +84,8 @@ public class OffDayListPresenter extends BasePresenter {
 
     public void queryData() {
         querysp = usecase.getDayOffList(realCard.id(), gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model(),
-            new Action1<QcResponseData<DayOffs>>() {
-                @Override public void call(QcResponseData<DayOffs> qcResponseDayOffs) {
+            new Action1<QcDataResponse<DayOffs>>() {
+                @Override public void call(QcDataResponse<DayOffs> qcResponseDayOffs) {
                     if (qcResponseDayOffs.getStatus() == ResponseConstant.SUCCESS) {
                         List<OffDay> datas = new ArrayList<OffDay>();
                         for (Leave leave : qcResponseDayOffs.data.leaves) {

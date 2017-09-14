@@ -7,10 +7,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.AllotSaleStudents;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Student;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.PView;
@@ -79,8 +79,8 @@ public class SaleDetailPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<AllotSaleStudents>>() {
-                @Override public void call(QcResponseData<AllotSaleStudents> allotSaleStudentsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<AllotSaleStudents>>() {
+                @Override public void call(QcDataResponse<AllotSaleStudents> allotSaleStudentsQcResponseData) {
                     if (allotSaleStudentsQcResponseData.status == 200) {
                         handleData(allotSaleStudentsQcResponseData.data.users, true);
                     } else {
@@ -145,8 +145,8 @@ public class SaleDetailPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<AllotSaleStudents>>() {
-                @Override public void call(QcResponseData<AllotSaleStudents> qcResponseAllSaleStudent) {
+            .subscribe(new Action1<QcDataResponse<AllotSaleStudents>>() {
+                @Override public void call(QcDataResponse<AllotSaleStudents> qcResponseAllSaleStudent) {
 
                     if (ResponseConstant.checkSuccess(qcResponseAllSaleStudent)) {
                         for (Student bean : qcResponseAllSaleStudent.data.users) {

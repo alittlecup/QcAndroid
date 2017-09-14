@@ -3,8 +3,9 @@ package cn.qingchengfit.staffkit.views.course.msg;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ShopConfigBody;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.SignInConfig;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -53,8 +54,8 @@ public class MsgNotiPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<SignInConfig.Data>>() {
-                @Override public void call(cn.qingchengfit.network.response.QcResponseData<SignInConfig.Data> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<SignInConfig.Data>>() {
+                @Override public void call(QcDataResponse<SignInConfig.Data> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         view.onShopConfigs(qcResponse.data.configs);
                     } else {

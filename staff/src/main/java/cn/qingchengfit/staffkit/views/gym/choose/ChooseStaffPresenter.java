@@ -2,10 +2,10 @@ package cn.qingchengfit.staffkit.views.gym.choose;
 
 import android.content.Intent;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.StaffShip;
 import cn.qingchengfit.model.responese.StaffShipResponse;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.CoachUseCase;
@@ -68,8 +68,8 @@ public class ChooseStaffPresenter implements Presenter {
     }
 
     @SuppressWarnings("unused") public void getStaffs() {
-        coachUseCase.getAllStaffs(coachService.getId(), coachService.getModel(), null, new Action1<QcResponseData<StaffShipResponse>>() {
-            @Override public void call(QcResponseData<StaffShipResponse> qcResponseStaffs) {
+        coachUseCase.getAllStaffs(coachService.getId(), coachService.getModel(), null, new Action1<QcDataResponse<StaffShipResponse>>() {
+            @Override public void call(QcDataResponse<StaffShipResponse> qcResponseStaffs) {
                 if (qcResponseStaffs.getStatus() == ResponseConstant.SUCCESS) {
                     List<ImageTwoTextBean> datas = new ArrayList<ImageTwoTextBean>();
                     for (StaffShip bean : qcResponseStaffs.data.ships) {

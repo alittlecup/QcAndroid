@@ -7,10 +7,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.model.body.ChargeBody;
 import cn.qingchengfit.model.responese.CacluScore;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Sellers;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
@@ -94,8 +94,8 @@ public class CompletedChargePresenter extends BasePresenter {
     public void getSalers(String shopid) {
 
         spSales = buyCardUsecase.getSalers(gymWrapper.brand_id(), shopid, gymWrapper.id(), gymWrapper.model(),
-            new Action1<QcResponseData<Sellers>>() {
-                @Override public void call(QcResponseData<Sellers> qcResponseSalers) {
+            new Action1<QcDataResponse<Sellers>>() {
+                @Override public void call(QcDataResponse<Sellers> qcResponseSalers) {
                     if (qcResponseSalers.getStatus() == ResponseConstant.SUCCESS) {
                         view.onSalers(qcResponseSalers.data.users);
                     } else {
@@ -151,8 +151,9 @@ public class CompletedChargePresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<cn.qingchengfit.network.response.QcResponseData<CacluScore>>() {
-                @Override public void call(cn.qingchengfit.network.response.QcResponseData<CacluScore> cacluScoreQcResponseData) {
+            .subscribe(new Action1<cn.qingchengfit.network.response.QcDataResponse<CacluScore>>() {
+                @Override public void call(
+                    cn.qingchengfit.network.response.QcDataResponse<CacluScore> cacluScoreQcResponseData) {
                     if (cacluScoreQcResponseData.getStatus() == 200) {
                         if (cacluScoreQcResponseData.getData().has_score) {
                             if (user_ids.contains(",") || user_ids.contains(Configs.SEPARATOR)) {

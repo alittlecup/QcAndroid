@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.ListAddItem;
 import cn.qingchengfit.model.responese.BrandsResponse;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventUnloginHomeLevel;
@@ -73,8 +73,8 @@ import rx.schedulers.Schedulers;
         RxRegiste(mRestRepository.getGet_api()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<BrandsResponse>>() {
-                @Override public void call(QcResponseData<BrandsResponse> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<BrandsResponse>>() {
+                @Override public void call(QcDataResponse<BrandsResponse> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         mDatas.clear();
                         if (qcResponse.data.brands != null && qcResponse.data.brands.size() > 0) {

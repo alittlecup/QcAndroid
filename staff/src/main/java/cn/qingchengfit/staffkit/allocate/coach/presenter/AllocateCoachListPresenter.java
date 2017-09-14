@@ -2,7 +2,7 @@ package cn.qingchengfit.staffkit.allocate.coach.presenter;
 
 import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.allocate.coach.model.Coach;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
@@ -66,8 +66,8 @@ public class AllocateCoachListPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetCoachList(App.staffId, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CoachResponseList>>() {
-                @Override public void call(QcResponseData<CoachResponseList> allotSalePreViewsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<CoachResponseList>>() {
+                @Override public void call(QcDataResponse<CoachResponseList> allotSalePreViewsQcResponseData) {
                     if (allotSalePreViewsQcResponseData.status == 200) {
                         view.onCoachessPreview(allotSalePreViewsQcResponseData.data.coaches);
                     } else {

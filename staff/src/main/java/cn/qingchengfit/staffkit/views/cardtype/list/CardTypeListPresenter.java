@@ -6,9 +6,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTpls;
-import cn.qingchengfit.model.responese.QcResponseData;
-import cn.qingchengfit.model.responese.ResponseConstant;
-import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
@@ -94,7 +93,7 @@ public class CardTypeListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Subscriber<QcResponseData<CardTpls>>() {
+            .subscribe(new Subscriber<QcDataResponse<CardTpls>>() {
                 @Override public void onCompleted() {
 
                 }
@@ -103,7 +102,7 @@ public class CardTypeListPresenter extends BasePresenter {
                     ToastUtils.show(e.getMessage());
                 }
 
-                @Override public void onNext(QcResponseData<CardTpls> qcResponse) {
+                @Override public void onNext(QcDataResponse<CardTpls> qcResponse) {
                     if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                         List<CardTpl> card_tpls = new ArrayList<>();
                         for (CardTpl card_tpl : qcResponse.data.card_tpls) {
@@ -161,8 +160,8 @@ public class CardTypeListPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcResponseData<CardTpls>>() {
-                @Override public void call(QcResponseData<CardTpls> qcResponseCardTpls) {
+            .subscribe(new Action1<QcDataResponse<CardTpls>>() {
+                @Override public void call(QcDataResponse<CardTpls> qcResponseCardTpls) {
                     if (qcResponseCardTpls.getStatus() == ResponseConstant.SUCCESS) {
                         List<CardTpl> card_tpls = new ArrayList<>();
                         for (CardTpl card_tpl : qcResponseCardTpls.data.card_tpls) {
@@ -222,8 +221,8 @@ public class CardTypeListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<CardTpls>>() {
-                @Override public void call(QcResponseData<CardTpls> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<CardTpls>>() {
+                @Override public void call(QcDataResponse<CardTpls> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                             List<CardTpl> card_tpls = new ArrayList<>();

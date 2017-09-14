@@ -3,10 +3,10 @@ package cn.qingchengfit.staffkit.allocate.coach.presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.Staffs;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CView;
@@ -42,8 +42,8 @@ public class MutiChooseCoachPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<Staffs>>() {
-                @Override public void call(QcResponseData<Staffs> allotSalePreViewsQcResponseData) {
+            .subscribe(new Action1<QcDataResponse<Staffs>>() {
+                @Override public void call(QcDataResponse<Staffs> allotSalePreViewsQcResponseData) {
                     if (allotSalePreViewsQcResponseData.status == 200) {
                         view.onCoaches(allotSalePreViewsQcResponseData.data.teachers);
                     } else {

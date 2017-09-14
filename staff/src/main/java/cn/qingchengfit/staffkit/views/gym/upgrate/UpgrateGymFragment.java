@@ -24,12 +24,12 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.body.RenewBody;
 import cn.qingchengfit.model.responese.GymFuntion;
-import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.model.responese.QcResponseRenew;
 import cn.qingchengfit.model.responese.RenewalList;
 import cn.qingchengfit.model.responese.RenewalPay;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.BaseFragment;
@@ -181,8 +181,8 @@ public class UpgrateGymFragment extends BaseFragment {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseData<RenewalList>>() {
-                @Override public void call(QcResponseData<RenewalList> qcResponse) {
+            .subscribe(new Action1<QcDataResponse<RenewalList>>() {
+                @Override public void call(QcDataResponse<RenewalList> qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         mOriDatas.clear();
                         mDisCountDatas.clear();

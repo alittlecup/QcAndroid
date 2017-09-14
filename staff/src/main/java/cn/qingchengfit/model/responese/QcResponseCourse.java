@@ -2,6 +2,7 @@ package cn.qingchengfit.model.responese;
 
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Course;
+import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 

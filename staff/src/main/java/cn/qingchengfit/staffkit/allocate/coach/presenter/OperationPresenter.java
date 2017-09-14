@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.network.response.QcResponseData;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
 import cn.qingchengfit.staffkit.allocate.coach.model.StudentWithCoach;
@@ -188,8 +188,9 @@ public class OperationPresenter extends BasePresenter {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponseData<AllocateStudentBean>>() {
-                    @Override public void call(QcResponseData<AllocateStudentBean> allocateStudentBeanQcResponseData) {
+                .subscribe(new Action1<cn.qingchengfit.network.response.QcDataResponse<AllocateStudentBean>>() {
+                    @Override public void call(
+                        cn.qingchengfit.network.response.QcDataResponse<AllocateStudentBean> allocateStudentBeanQcResponseData) {
                         view.onStudentList(allocateStudentBeanQcResponseData.data.users);
                     }
                 }));
@@ -199,9 +200,9 @@ public class OperationPresenter extends BasePresenter {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<cn.qingchengfit.model.responese.QcResponseData<AllocateStudentBean>>() {
+                .subscribe(new Action1<QcDataResponse<AllocateStudentBean>>() {
                     @Override public void call(
-                        cn.qingchengfit.model.responese.QcResponseData<AllocateStudentBean> allocateStudentBeanQcResponseData) {
+                        QcDataResponse<AllocateStudentBean> allocateStudentBeanQcResponseData) {
                         view.onStudentList(allocateStudentBeanQcResponseData.data.users);
                     }
                 }));

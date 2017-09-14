@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
@@ -159,7 +160,7 @@ import rx.schedulers.Schedulers;
               .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
                   hideLoading();
-                  if (qcResponse.getStatus() == 200) {
+                  if (ResponseConstant.checkSuccess(qcResponse)) {
                     getActivity().onBackPressed();
                     RxBus.getBus().post(new EventResumeFresh());
                     onShowError("修改成功！");
