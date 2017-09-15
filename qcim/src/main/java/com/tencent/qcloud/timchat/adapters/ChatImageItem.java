@@ -29,8 +29,8 @@ import java.util.List;
  * Created by fb on 2017/5/22.
  */
 
-public class ChatImageItem extends ChatItem<ChatImageItem.ChatImageVH> implements
-    View.OnClickListener {
+public class ChatImageItem extends ChatItem<ChatImageItem.ChatImageVH>
+    implements View.OnClickListener {
 
   private ImageMessage imageMessage;
   private Context context;
@@ -59,10 +59,22 @@ public class ChatImageItem extends ChatItem<ChatImageItem.ChatImageVH> implement
     super.bindViewHolder(adapter, holder, position, payloads);
     TIMMessage message = imageMessage.getMessage();
     e = (TIMImageElem) message.getElement(0);
-    if(message.isSelf()){
-      Glide.with(context).load(e.getPath()).asBitmap().override(368, 368).fitCenter().transform(new CustomShapeTransformation(context, R.drawable.chat_bubble_green)).into(holder.rightImageMessage);
-    }else{
-      Glide.with(context).load(e.getImageList().get(0).getUrl()).asBitmap().override(400, 400).centerCrop().transform(new CustomShapeTransformation(context, R.drawable.chat_bubble_grey)).into(holder.leftImageMessage);
+    if (message.isSelf()) {
+      Glide.with(context)
+          .load(e.getImageList().size() > 0 ? e.getImageList().get(0).getUrl() : e.getPath())
+          .asBitmap()
+          .override(368, 368)
+          .fitCenter()
+          .transform(new CustomShapeTransformation(context, R.drawable.chat_bubble_green))
+          .into(holder.rightImageMessage);
+    } else {
+      Glide.with(context)
+          .load(e.getImageList().get(0).getUrl())
+          .asBitmap()
+          .override(400, 400)
+          .centerCrop()
+          .transform(new CustomShapeTransformation(context, R.drawable.chat_bubble_grey))
+          .into(holder.leftImageMessage);
     }
     imageMessage.showStatus(holder);
   }
@@ -71,7 +83,7 @@ public class ChatImageItem extends ChatItem<ChatImageItem.ChatImageVH> implement
     return e;
   }
 
-  public ImageMessage getImageMessage(){
+  public ImageMessage getImageMessage() {
     return imageMessage;
   }
 
@@ -81,9 +93,9 @@ public class ChatImageItem extends ChatItem<ChatImageItem.ChatImageVH> implement
 
   @Override public void onClick(View view) {
     TIMImageElem elem = (TIMImageElem) imageMessage.getMessage().getElement(0);
-    if (elem.getImageList() != null && elem.getImageList().size() > 0){
+    if (elem.getImageList() != null && elem.getImageList().size() > 0) {
       //for (TIMImage image : elem.getImageList()){
-        imageMessage.navToImageview(elem.getImageList().get(0), context);
+      imageMessage.navToImageview(elem.getImageList().get(0), context);
       //}
     }
   }
