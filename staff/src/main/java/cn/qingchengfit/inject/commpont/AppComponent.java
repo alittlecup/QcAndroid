@@ -2,6 +2,7 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import cn.qingchengfit.article.ArticleCommentsListFragment;
 import cn.qingchengfit.article.ArticleReplyFragment;
 import cn.qingchengfit.chat.ChatChooseInGymFragment;
@@ -254,9 +255,11 @@ import cn.qingchengfit.staffkit.views.student.StudentSearchFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.AbsenceStuentListFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.AttendanceActivity;
 import cn.qingchengfit.staffkit.views.student.attendance.AttendanceHomeFragment;
+import cn.qingchengfit.staffkit.views.student.attendance.AttendanceNotSignFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.AttendanceRankFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.AttendanceStaticFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.FilterCustomFragment;
+import cn.qingchengfit.staffkit.views.student.attendance.NotSignFilterFragment;
 import cn.qingchengfit.staffkit.views.student.bodytest.BodyTestFragment;
 import cn.qingchengfit.staffkit.views.student.bodytest.BodyTestListFragment;
 import cn.qingchengfit.staffkit.views.student.bodytest.ModifyBodyTestFragment;
@@ -539,6 +542,11 @@ import dagger.multibindings.IntoMap;
     //导入导出
     AppComponent.ImportExportFragmentModule.class, AppComponent.ExportRecordFragmentModule.class,
     AppComponent.ExportSendEmailFragmentModule.class, AppComponent.CardImportExportFragmentModule.class,
+    AppComponent.LoginFragmentModule.class, AppComponent.RegisteFragmentModule.class,
+
+    //筛选，签课
+    AppComponent.NotSignFilterFragmentModule.class, AppComponent.AttendanceNotSignFragmentModule.class,
+
 })
 
 public interface AppComponent {
@@ -4193,6 +4201,22 @@ public interface AppComponent {
         @Binds @IntoMap @FragmentKey(RegisteFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             RegisteFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface NotSignFilterFragmentSubcomponent extends AndroidInjector<NotSignFilterFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<NotSignFilterFragment> {}
+    }
+    @Module(subcomponents = NotSignFilterFragmentSubcomponent.class) abstract class NotSignFilterFragmentModule {
+        @Binds @IntoMap @FragmentKey(NotSignFilterFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(NotSignFilterFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface AttendanceNotSignFragmentSubcomponent extends AndroidInjector<AttendanceNotSignFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AttendanceNotSignFragment> {}
+    }
+    @Module(subcomponents = AttendanceNotSignFragmentSubcomponent.class) abstract class AttendanceNotSignFragmentModule {
+        @Binds @IntoMap @FragmentKey(AttendanceNotSignFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AttendanceNotSignFragmentSubcomponent.Builder builder);
     }
 
 }

@@ -863,4 +863,19 @@
   <string name="text_user_protocol">我已阅读并同意</string>
   <string name="text_protocol_name">《用户注册协议》</string>
 
+  //签课
+  <string name="text_sign_group_class">团课是否需要签课?</string>
+  <string name="text_sign_class_way">签课方式</string>
+  <string name="text_sign_class_select">请选择</string>
+  <string name="text_sign_class_start">签课开始于课程前(分钟)</string>
+  <string name="text_sign_class_end">签课开始于课程后(分钟)</string>
+  <string name="label_sign_group_class">团课是否需要签课？</string>
+  <string name="label_sign_private_class">私教是否需要签课?</string>
+  <string name="not_sign_class_count">未签课统计</string>
+  <string name="btn_contact_him">联系TA</string>
+  <string formatted="false" name="text_filter_not_sign_time">未签课%d天内</string>
+  <string formatted="false" name="text_filter_not_sign_count">%d节以上</string>
+  <string formatted="false" name="text_not_sign_tip">%d天内未签课%d节以上的会员共计%d人</string>
+  <string name="text_empty_title_not_sign">您的场馆未开启签课功能</string>
+  <string name="text_empty_content_not_sign">请去团课/私教预约限制中开启</string>
 </resources>

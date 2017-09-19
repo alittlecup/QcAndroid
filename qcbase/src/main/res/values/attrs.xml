@@ -151,4 +151,9 @@
     <attr format="float" name="ddmenuMenuHeightPercent"/>
   </declare-styleable>
 
+  <declare-styleable name="FilterTextLayout">
+    <attr format="reference" name="img_filter"/>
+    <attr format="string" name="filter_label"/>
+  </declare-styleable>
+
 </resources>

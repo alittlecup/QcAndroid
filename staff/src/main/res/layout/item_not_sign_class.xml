@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:padding="12dp"
+    android:background="@color/white"
+    >
+
+  <RelativeLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      android:gravity="center"
+      >
+
+    <TextView
+        android:id="@+id/title_not_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="未签课"
+        style="@style/QcTextStyleSmallWarm"
+        android:textSize="10sp"
+        />
+
+    <TextView
+        android:id="@+id/text_not_sign_class_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="30"
+        style="@style/QcTextStyleLargeWarm"
+        android:textSize="18sp"
+        android:layout_below="@id/title_not_sign"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="节"
+        android:layout_toRightOf="@id/text_not_sign_class_count"
+        android:layout_alignTop="@id/text_not_sign_class_count"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="3dp"
+        />
+
+  </RelativeLayout>
+  
+  <ImageView
+      android:id="@+id/img_not_sign_head"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_marginLeft="17dp"
+      tools:background="@drawable/head"
+      />
+  
+  <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_marginLeft="12dp">
+
+    <TextView
+        android:id="@+id/text_not_sign_class_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="嗔痴怨"
+        style="@style/QcTextStyleMediumDark"
+        />
+
+    <ImageView
+        android:id="@+id/image_not_sign_gender"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        tools:src="@drawable/ic_gender_signal_female"
+        android:layout_toRightOf="@id/text_not_sign_class_name"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="2dp"
+        />
+
+    <TextView
+        android:id="@+id/text_not_sign_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="18090900900"
+        android:layout_below="@id/text_not_sign_class_name"
+        android:layout_marginTop="6dp"
+        />
+  </RelativeLayout>
+
+  <android.support.v4.widget.Space
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="2"
+      />
+
+  <TextView
+      android:id="@+id/btn_contact_him"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/btn_contact_him"
+      android:background="@drawable/textview_border_black"
+      style="@style/QcTextStyleMediumDark"
+      android:paddingLeft="9dp"
+      android:paddingRight="9dp"
+      android:paddingTop="2dp"
+      android:paddingBottom="2dp"
+      android:layout_gravity="center_vertical"
+      />
+  
+</LinearLayout>

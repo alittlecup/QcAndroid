@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindColor;
@@ -47,140 +48,161 @@ import javax.inject.Inject;
 public class AttendanceHomeFragment extends BaseFragment
     implements FilterFragment.OnSelectListener, AttendanceChartPresenter.AttendanceView {
 
-    @BindView(R.id.btn_absentee) ViewGroup btnAbsentete;
-    @BindView(R.id.btn_attendence) ViewGroup btnAttendence;
-    @BindView(R.id.rl_absence_top_filter) RelativeLayout rlAbsenceTopFilter;
-    @BindView(R.id.text_recent_condition) TextView textRecentCondition;
-    @BindView(R.id.image_up) ImageView imgUp;
-    @BindView(R.id.attendance_list_shadow) View shadow;
-    @BindView(R.id.filter_fragment) ViewGroup filterLayout;
+  @BindView(R.id.btn_absentee) ViewGroup btnAbsentete;
+  @BindView(R.id.btn_attendence) ViewGroup btnAttendence;
+  @BindView(R.id.rl_absence_top_filter) RelativeLayout rlAbsenceTopFilter;
+  @BindView(R.id.text_recent_condition) TextView textRecentCondition;
+  @BindView(R.id.image_up) ImageView imgUp;
+  @BindView(R.id.attendance_list_shadow) View shadow;
+  @BindView(R.id.filter_fragment) ViewGroup filterLayout;
 
-    @BindColor(R.color.white) int white;
-    @BindColor(R.color.bg_grey) int grey;
-    @Inject AttendanceChartPresenter chartPresenter;
-    private List<AbstractFlexibleItem> filterList = new ArrayList<>();
-    private FilterFragment filterFragment;
-    private AttendanceStaticFragment staticFragment;
+  @BindColor(R.color.white) int white;
+  @BindColor(R.color.bg_grey) int grey;
+  @Inject AttendanceChartPresenter chartPresenter;
+  @BindView(R.id.btn_not_sign_class) LinearLayout btnNotSignClass;
+  private List<AbstractFlexibleItem> filterList = new ArrayList<>();
+  private FilterFragment filterFragment;
+  private AttendanceStaticFragment staticFragment;
 
-    private boolean isThirty;
-    private boolean isShow = false;
+  private boolean isThirty;
+  private boolean isShow = false;
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_attendance_home, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        mCallbackActivity.setToolbar("会员出勤", false, null, 0, null);
-        delegatePresenter(chartPresenter, this);
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_attendance_home, container, false);
+    unbinder = ButterKnife.bind(this, view);
+    mCallbackActivity.setToolbar("会员出勤", false, null, 0, null);
+    delegatePresenter(chartPresenter, this);
 
-        rlAbsenceTopFilter.setTag(false);
+    rlAbsenceTopFilter.setTag(false);
 
-        initFilterData();
-        filterFragment = new FilterFragment();
-        filterFragment.setItemList(filterList);
-        filterFragment.setOnSelectListener(this);
+    initFilterData();
+    filterFragment = new FilterFragment();
+    filterFragment.setItemList(filterList);
+    filterFragment.setOnSelectListener(this);
 
-        getChildFragmentManager().beginTransaction().replace(R.id.filter_fragment, filterFragment).commit();
+    getChildFragmentManager().beginTransaction()
+        .replace(R.id.filter_fragment, filterFragment)
+        .commit();
 
+    toggleViewState();
+
+    staticFragment = new AttendanceStaticFragmentBuilder().build();
+    staticFragment.setAttendance(true);
+    staticFragment.touchable = true;
+    getChildFragmentManager().beginTransaction()
+        .replace(R.id.frag_attendance_home, staticFragment)
+        .commit();
+
+    chartPresenter.queryChartData("", "");
+    return view;
+  }
+
+  private void toggleViewState() {
+    rlAbsenceTopFilter.setAlpha(isShow ? 1f : 0.4f);
+    rlAbsenceTopFilter.setBackgroundColor(isShow ? white : grey);
+    imgUp.setImageResource(
+        isShow ? R.drawable.vector_arrow_up_grey : R.drawable.vector_arrow_down_grey);
+    shadow.setVisibility(isShow ? View.VISIBLE : View.GONE);
+    if (isShow) {
+      filterFragment.setFilterAnimation(filterLayout, isShow);
+    } else if (filterLayout.getHeight() > 0) {
+      filterFragment.setFilterAnimation(filterLayout, isShow);
+    }
+  }
+
+  @OnClick({ R.id.btn_absentee, R.id.btn_attendence, R.id.rl_absence_top_filter, R.id.btn_not_sign_class})
+  public void onJump(View view) {
+    switch (view.getId()) {
+      case R.id.btn_absentee:
+        getActivity().getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.activity_attendance_frag, new AbsenceStuentListFragment())
+            .addToBackStack(null)
+            .commit();
+        break;
+
+      case R.id.btn_attendence:
+        getActivity().getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.activity_attendance_frag, new AttendanceRankFragment())
+            .addToBackStack(null)
+            .commit();
+        break;
+
+      case R.id.rl_absence_top_filter:
+        isShow = !isShow;
         toggleViewState();
-
-        staticFragment = new AttendanceStaticFragmentBuilder().build();
-        staticFragment.setAttendance(true);
-        staticFragment.touchable = true;
-        getChildFragmentManager().beginTransaction().replace(R.id.frag_attendance_home, staticFragment).commit();
-
-        chartPresenter.queryChartData("", "");
-        return view;
+        break;
+      case R.id.btn_not_sign_class:
+        getActivity().getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.activity_attendance_frag, new AttendanceNotSignFragment())
+            .addToBackStack(null)
+            .commit();
+        break;
     }
+  }
 
-    private void toggleViewState() {
-        rlAbsenceTopFilter.setAlpha(isShow ? 1f : 0.4f);
-        rlAbsenceTopFilter.setBackgroundColor(isShow ? white : grey);
-        imgUp.setImageResource(isShow ? R.drawable.vector_arrow_up_grey : R.drawable.vector_arrow_down_grey);
-        shadow.setVisibility(isShow ? View.VISIBLE : View.GONE);
-        if (isShow) {
-            filterFragment.setFilterAnimation(filterLayout, isShow);
-        } else if (filterLayout.getHeight() > 0) {
-            filterFragment.setFilterAnimation(filterLayout, isShow);
-        }
+  @OnClick(R.id.attendance_list_shadow) public void onDismiss() {
+    isShow = false;
+    toggleViewState();
+  }
+
+  private void initFilterData() {
+    filterList.clear();
+    filterList.add(new FilterCommonLinearItem(
+        "最近7天 (" + (DateUtils.minusDay(new Date(), 6)) + "至" + DateUtils.getStringToday() + ")"));
+    filterList.add(new FilterCommonLinearItem(
+        "最近30天 (" + (DateUtils.minusDay(new Date(), 29)) + "至" + DateUtils.getStringToday() + ")"));
+  }
+
+  @Override public String getFragmentName() {
+    return AttendanceHomeFragment.class.getName();
+  }
+
+  @Override public void onSelectItem(int position) {
+    textRecentCondition.setText(
+        ((FilterCommonLinearItem) filterList.get(position)).getData().split(" ")[0]);
+    switch (position) {
+      case 0:
+        isThirty = false;
+        chartPresenter.refreshData("", "");
+        break;
+      case 1:
+        isThirty = true;
+        chartPresenter.refreshData(DateUtils.minusDay(new Date(), 29), DateUtils.getStringToday());
+        break;
     }
+    isShow = false;
+    toggleViewState();
+  }
 
-    @OnClick({ R.id.btn_absentee, R.id.btn_attendence, R.id.rl_absence_top_filter }) public void onJump(View view) {
-        switch (view.getId()) {
-            case R.id.btn_absentee:
-                getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.activity_attendance_frag, new AbsenceStuentListFragment())
-                    .addToBackStack(null)
-                    .commit();
-                break;
-
-            case R.id.btn_attendence:
-                getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.activity_attendance_frag, new AttendanceRankFragment())
-                    .addToBackStack(null)
-                    .commit();
-                break;
-
-            case R.id.rl_absence_top_filter:
-                isShow = !isShow;
-                toggleViewState();
-                break;
-        }
+  @Override public void onAbsence(AttendanceCharDataBean statistic) {
+    if (isThirty) {
+      staticFragment.setData(statistic, 30);
+    } else {
+      staticFragment.setData(statistic, 7);
     }
+  }
 
-    @OnClick(R.id.attendance_list_shadow) public void onDismiss() {
-        isShow = false;
-        toggleViewState();
-    }
+  @Override public void onNoMore() {
 
-    private void initFilterData() {
-        filterList.clear();
-        filterList.add(new FilterCommonLinearItem("最近7天 (" + (DateUtils.minusDay(new Date(), 6)) + "至" + DateUtils.getStringToday() + ")"));
-        filterList.add(
-            new FilterCommonLinearItem("最近30天 (" + (DateUtils.minusDay(new Date(), 29)) + "至" + DateUtils.getStringToday() + ")"));
-    }
+  }
 
-    @Override public String getFragmentName() {
-        return AttendanceHomeFragment.class.getName();
-    }
+  @Override public void clearDatas() {
 
-    @Override public void onSelectItem(int position) {
-        textRecentCondition.setText(((FilterCommonLinearItem) filterList.get(position)).getData().split(" ")[0]);
-        switch (position) {
-            case 0:
-                isThirty = false;
-                chartPresenter.refreshData("", "");
-                break;
-            case 1:
-                isThirty = true;
-                chartPresenter.refreshData(DateUtils.minusDay(new Date(), 29), DateUtils.getStringToday());
-                break;
-        }
-        isShow = false;
-        toggleViewState();
-    }
+  }
 
-    @Override public void onAbsence(AttendanceCharDataBean statistic) {
-        if (isThirty) {
-            staticFragment.setData(statistic, 30);
-        } else {
-            staticFragment.setData(statistic, 7);
-        }
-    }
+  @Override public void onShowError(String e) {
 
-    @Override public void onNoMore() {
+  }
 
-    }
+  @Override public void onShowError(@StringRes int e) {
 
-    @Override public void clearDatas() {
+  }
 
-    }
-
-    @Override public void onShowError(String e) {
-
-    }
-
-    @Override public void onShowError(@StringRes int e) {
-
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+  }
 }

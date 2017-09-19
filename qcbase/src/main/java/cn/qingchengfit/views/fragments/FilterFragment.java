@@ -18,6 +18,7 @@ import com.nineoldandroids.animation.ValueAnimator;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +31,8 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     private CommonFlexAdapter commonFlexAdapter;
     private OnSelectListener onSelectListener;
-
+    private List<AbstractFlexibleItem> items = new ArrayList<>();
+    private int maxHeight;
 
     public void setOnSelectListener(OnSelectListener onSelectListener) {
         this.onSelectListener = onSelectListener;
@@ -42,6 +44,7 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
         unbinder = ButterKnife.bind(this, view);
         rlPopWindowCommon.setLayoutManager(new LinearLayoutManager(getContext()));
         rlPopWindowCommon.setAdapter(commonFlexAdapter);
+        commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
         commonFlexAdapter.addListener(this);
         return view;
     }
@@ -58,9 +61,25 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     public void setItemList(List<? extends AbstractFlexibleItem> items) {
         if (items.size() > 0) {
-            commonFlexAdapter = new CommonFlexAdapter(items, this);
-            commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+            this.items.clear();
+            this.items.addAll(items);
+            if(commonFlexAdapter == null) {
+                commonFlexAdapter = new CommonFlexAdapter(this.items, this);
+            }
+            commonFlexAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void setMaxHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+    }
+
+    public AbstractFlexibleItem getItemAtPosition(int position){
+        return items.get(position);
+    }
+
+    public int getItemCount(){
+        return commonFlexAdapter.getItemCount();
     }
 
     public void setFilterAnimation(final ViewGroup filterLayout, boolean isShow) {
@@ -71,11 +90,22 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
         final int endHeight;
         if (isShow) {
             startHeight = 0;
-            endHeight = commonFlexAdapter.getItemCount() * MeasureUtils.dpToPx(40f, getResources());
+            int height = commonFlexAdapter.getItemCount() * MeasureUtils.dpToPx(40f, getResources());
+            if (maxHeight > 0) {
+                endHeight = height > maxHeight ? maxHeight : height;
+            }else{
+                endHeight = height;
+            }
         } else {
-            startHeight = commonFlexAdapter.getItemCount() * MeasureUtils.dpToPx(40f, getResources());
+            int height = commonFlexAdapter.getItemCount() * MeasureUtils.dpToPx(40f, getResources());
+            if (maxHeight > 0) {
+                startHeight = height > maxHeight ? maxHeight : height;
+            }else{
+                startHeight = height;
+            }
             endHeight = 0;
         }
+
         ValueAnimator valueAnimator = ObjectAnimator.ofFloat(startHeight, endHeight);
         valueAnimator.setDuration(500);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

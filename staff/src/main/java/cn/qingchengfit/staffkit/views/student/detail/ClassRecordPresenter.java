@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit.views.student.detail;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -70,20 +71,43 @@ public class ClassRecordPresenter extends BasePresenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
     }
 
-    public void queryData(String shopid) {
-        HashMap<String, Object> params = new HashMap<>();
+    public void queryData(HashMap<String, Object> params) {
+
         params.put("brand_id", gymWrapper.brand_id());
-        if (StringUtils.isEmpty(shopid)) {
+
+        if (params.containsKey("type")){
+            if (TextUtils.isEmpty(String.valueOf(params.get("type")))){
+                params.remove("type");
+            }
+        }
+
+        if (params.containsKey("status")){
+            if (String.valueOf(params.get("status")).equals("0")){
+                params.remove("status");
+            }
+        }
+
+        if (params.containsKey("start")){
+            if (TextUtils.isEmpty(String.valueOf(params.get("start")))){
+                params.remove("start");
+            }
+        }
+
+        if (params.containsKey("end")){
+            if (TextUtils.isEmpty(String.valueOf(params.get("end")))){
+                params.remove("end");
+            }
+        }
+
+        if (StringUtils.isEmpty(String.valueOf(params.get("shop_ids")))) {
             params.put("shop_ids", 0);
-        } else {
-            params.put("shop_ids", shopid);
         }
 
         RxRegiste(restRepository.getGet_api()
-
             .qcGetStudentClassRecords(App.staffId, studentBase.id(), params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -101,45 +125,6 @@ public class ClassRecordPresenter extends BasePresenter {
                 @Override public void call(Throwable throwable) {
                 }
             }));
-
-        //usecase.queryClassRecords(studentBase.getId(), coachService.getId(), coachService.getModel(), brand.getId(), new Action1<QcResponseData<ClassRecords>>() {
-        //    @Override
-        //    public void call(QcResponseData<ClassRecords> qcResponseClassRecords) {
-        //        int lastyear = 0,lastMonth = 0;
-        //        List<StatementBean> d = new ArrayList<StatementBean>();
-        //        int private_count=0,group_count=0,lastHeaderpos=0,i=0;
-        //
-        //        for (Schedule schedule : qcResponseClassRecords.data.schedules) {
-        //            int year = DateUtils.getYear(DateUtils.formatDateFromServer(schedule.start));
-        //            int month = DateUtils.getMonth(DateUtils.formatDateFromServer(schedule.start));
-        //            boolean showHeader = false, showBottom = false;
-        //            if (lastyear != year  || lastMonth != month)  {
-        //                lastyear = year;
-        //                lastMonth = month;
-        //                if (d.size() >lastHeaderpos)
-        //                    d.get(lastHeaderpos).month_data =String.format(Locale.CHINA,"%d节团课,%d节私教",group_count,private_count);
-        //                lastHeaderpos = i;
-        //                showHeader = true;
-        //                private_count = group_count =0;
-        //            }
-        //            if (i == qcResponseClassRecords.data.schedules.size() -1){
-        //                if (d.size() >lastHeaderpos)
-        //                    d.get(lastHeaderpos).month_data =String.format(Locale.CHINA,"%d节团课,%d节私教",group_count,private_count);
-        //
-        //            }
-        //
-        //
-        //            if (schedule.course.is_private)
-        //                private_count++;
-        //            else group_count++;
-        //            String start = DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.start));
-        //            String end = DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.end));
-        //            d.add(new StatementBean(DateUtils.formatDateFromServer(schedule.start), schedule.course.photo, schedule.course.name
-        //                    , start + "-" + end + "   教练:" + schedule.teacher.username, false, false, showHeader, schedule.url,""));
-        //            i++;
-        //        }
-        //        view.onData(d);
-        //    }
-        //});
     }
+
 }

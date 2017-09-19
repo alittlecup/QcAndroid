@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="青城卡"
-        style="@style/Qc.TextCommonBlack"
+        style="@style/QcTextStyleLargeDark"
         />
     <Space
         android:layout_width="5dp"
