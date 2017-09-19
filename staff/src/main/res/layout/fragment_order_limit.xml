@@ -56,7 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-
         app:el_expanded="false"
         app:el_label="团课取消预约限制"
         >
@@ -89,14 +88,84 @@
         app:el_expanded="false"
         app:el_label="团课候补"
         >
-
       <View
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           />
     </cn.qingchengfit.widgets.ExpandedLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="16dp"
+        android:text="签课"
+        />
 
+    <include layout="@layout/divider_grey"/>
+
+    <cn.qingchengfit.widgets.ExpandedLayout
+        android:id="@+id/sw_sign_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:el_expanded="false"
+        app:el_label="@string/text_sign_group_class"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/input_sign_class_way"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height_new"
+            app:civ_content="@string/text_sign_class_select"
+            app:civ_content_color="@color/qc_text_grey"
+            app:civ_lable="@string/text_sign_class_way"
+            app:civ_showright="true"
+            app:civ_clickable="true"
+            app:civ_text_color="@color/qc_text_black"
+            />
+
+        <include layout="@layout/divider_grey"/>
+
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/input_sign_class_start"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height_new"
+            android:clickable="false"
+            app:civ_content_color="@color/qc_text_grey"
+            app:civ_hint="60"
+            app:civ_inputnum="true"
+            app:civ_lable="@string/text_sign_class_start"
+            app:civ_showright="false"
+            app:civ_text_color="@color/qc_text_black"
+            />
+
+        <include layout="@layout/divider_grey"/>
+
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/input_sign_class_end"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height_new"
+            android:clickable="false"
+            app:civ_content_color="@color/qc_text_grey"
+            app:civ_hint="30"
+            app:civ_inputnum="true"
+            app:civ_lable="@string/text_sign_class_end"
+            app:civ_showright="false"
+            app:civ_text_color="@color/qc_text_black"
+            />
+
+        <include layout="@layout/divider_grey"/>
+
+      </LinearLayout>
+    </cn.qingchengfit.widgets.ExpandedLayout>
   </LinearLayout>
 
 </ScrollView>

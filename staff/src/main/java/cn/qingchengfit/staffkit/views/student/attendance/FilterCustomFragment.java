@@ -45,9 +45,20 @@ import java.util.Locale;
     private Date start;
     private Date end;
 
+    public static FilterCustomFragment newInstance(String title) {
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        FilterCustomFragment fragment = new FilterCustomFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FragmentArgs.inject(this);
+        if (getArguments() != null){
+            title = getArguments().getString("title");
+        }
     }
 
     @Nullable @Override

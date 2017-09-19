@@ -5,11 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
 import cn.qingchengfit.widgets.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -52,10 +54,11 @@ public class BottomListFragment extends BottomSheetDialogFragment
 
   protected FlexibleAdapter mFlexibleAdapter;
   protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
+  private int selectedPos = -1;
+  private ArrayList<String> items = new ArrayList<>();
   protected int mChooseMode = MODE_SINGLE;
   private String title;
   private ComfirmChooseListener listener;
-  private int selectedPos = -1;
 
   public static BottomListFragment newInstance(String title) {
     Bundle args = new Bundle();
@@ -74,6 +77,15 @@ public class BottomListFragment extends BottomSheetDialogFragment
     return fragment;
   }
 
+  public static BottomListFragment newInstance(String title, ArrayList<String> items) {
+    Bundle args = new Bundle();
+    args.putString("title", title);
+    args.putStringArrayList("items", items);
+    BottomListFragment fragment = new BottomListFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) title = getArguments().getString("title");
@@ -85,48 +97,6 @@ public class BottomListFragment extends BottomSheetDialogFragment
 
   public void setSelectedPos(int selectedPos) {
     this.selectedPos = selectedPos;
-  }
-
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.layout_bottom_list, container, false);
-    tvtitle = (TextView) view.findViewById(R.id.title);
-    btnComfirm = (TextView) view.findViewById(R.id.btn_comfirm);
-    btnClose = (ImageView) view.findViewById(R.id.btn_close);
-    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
-    recycleview.setHasFixedSize(true);
-    recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-    recycleview.addItemDecoration(new QcLeftRightDivider(getContext(), 1, 0, 50, 0));
-    if (getArguments().containsKey("chooseMode")) {
-      mChooseMode = getArguments().getInt("chooseMode", MODE_SINGLE);
-    }
-    mFlexibleAdapter = new FlexibleAdapter(mDatas, this);
-    mFlexibleAdapter.setMode(mChooseMode);
-    if (selectedPos >= 0) mFlexibleAdapter.toggleSelection(selectedPos);
-    recycleview.setAdapter(mFlexibleAdapter);
-    tvtitle.setText(TextUtils.isEmpty(title) ? getTitle() : title);
-    btnComfirm.setVisibility(mChooseMode == MODE_SINGLE ? View.GONE : View.VISIBLE);
-    btnClose.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        dismiss();
-      }
-    });
-    btnComfirm.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (listener != null) {
-          List<IFlexible> ret = new ArrayList<>();
-          for (int j = 0; j < mFlexibleAdapter.getSelectedPositions().size(); j++) {
-            ret.add(mFlexibleAdapter.getItem(mFlexibleAdapter.getSelectedPositions().get(j)));
-          }
-          listener.onComfirmClick(ret, mFlexibleAdapter.getSelectedPositions());
-        }
-        dismiss();
-      }
-    });
-    //BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(((View) view.getParent()));
-    //bottomSheetBehavior.setPeekHeight(MeasureUtils.getScreenHeight(getResources())/3);
-    return view;
   }
 
   public void loadData(List<AbstractFlexibleItem> ds) {
@@ -162,4 +132,58 @@ public class BottomListFragment extends BottomSheetDialogFragment
   public interface ComfirmChooseListener {
     void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos);
   }
+
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.layout_bottom_list, container, false);
+    tvtitle = (TextView) view.findViewById(R.id.title);
+    btnComfirm = (TextView) view.findViewById(R.id.btn_comfirm);
+    btnClose = (ImageView) view.findViewById(R.id.btn_close);
+    recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+    recycleview.setHasFixedSize(true);
+    recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
+    recycleview.addItemDecoration(new QcLeftRightDivider(getContext(), 1, 0, 50, 0));
+    if (getArguments().containsKey("chooseMode")) {
+      mChooseMode = getArguments().getInt("chooseMode", MODE_SINGLE);
+    }
+    if (getArguments().containsKey("items")){
+      items = getArguments().getStringArrayList("items");
+      initList(items);
+    }
+    mFlexibleAdapter = new FlexibleAdapter(mDatas, this);
+    mFlexibleAdapter.setMode(mChooseMode);
+    if (selectedPos >= 0) mFlexibleAdapter.toggleSelection(selectedPos);
+    recycleview.setAdapter(mFlexibleAdapter);
+    tvtitle.setText(TextUtils.isEmpty(title) ? getTitle() : title);
+    btnComfirm.setVisibility(mChooseMode == MODE_SINGLE ? View.GONE : View.VISIBLE);
+    btnClose.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        dismiss();
+      }
+    });
+    btnComfirm.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (listener != null) {
+          List<IFlexible> ret = new ArrayList<>();
+          for (int j = 0; j < mFlexibleAdapter.getSelectedPositions().size(); j++) {
+            ret.add(mFlexibleAdapter.getItem(mFlexibleAdapter.getSelectedPositions().get(j)));
+          }
+          listener.onComfirmClick(ret, mFlexibleAdapter.getSelectedPositions());
+        }
+        dismiss();
+      }
+    });
+    return view;
+  }
+
+  public void initList(List<String> items){
+    if (items != null && items.size() > 0){
+      mDatas.clear();
+      for (String item : items){
+        mDatas.add(new SimpleTextItemItem(item, Gravity.CENTER));
+      }
+    }
+  }
+
 }

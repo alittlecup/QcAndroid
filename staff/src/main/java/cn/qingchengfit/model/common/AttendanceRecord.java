@@ -29,15 +29,6 @@ import cn.qingchengfit.staffkit.usecase.bean.User_Student;
 
 public class AttendanceRecord implements Parcelable {
 
-    public static final Parcelable.Creator<AttendanceRecord> CREATOR = new Parcelable.Creator<AttendanceRecord>() {
-        @Override public AttendanceRecord createFromParcel(Parcel source) {
-            return new AttendanceRecord(source);
-        }
-
-        @Override public AttendanceRecord[] newArray(int size) {
-            return new AttendanceRecord[size];
-        }
-    };
     public Shop shop;
     public Course course;
     public User_Student teacher;
@@ -46,20 +37,7 @@ public class AttendanceRecord implements Parcelable {
     public String url;
     public String id;
     public int type;
-
-    public AttendanceRecord() {
-    }
-
-    protected AttendanceRecord(Parcel in) {
-        this.shop = in.readParcelable(Shop.class.getClassLoader());
-        this.course = in.readParcelable(Course.class.getClassLoader());
-        this.teacher = in.readParcelable(User_Student.class.getClassLoader());
-        this.start = in.readString();
-        this.end = in.readString();
-        this.url = in.readString();
-        this.id = in.readString();
-        this.type = in.readInt();
-    }
+    public boolean checked_in;
 
     @Override public int describeContents() {
         return 0;
@@ -74,5 +52,31 @@ public class AttendanceRecord implements Parcelable {
         dest.writeString(this.url);
         dest.writeString(this.id);
         dest.writeInt(this.type);
+        dest.writeByte(this.checked_in ? (byte) 1 : (byte) 0);
     }
+
+    public AttendanceRecord() {
+    }
+
+    protected AttendanceRecord(Parcel in) {
+        this.shop = in.readParcelable(Shop.class.getClassLoader());
+        this.course = in.readParcelable(Course.class.getClassLoader());
+        this.teacher = in.readParcelable(User_Student.class.getClassLoader());
+        this.start = in.readString();
+        this.end = in.readString();
+        this.url = in.readString();
+        this.id = in.readString();
+        this.type = in.readInt();
+        this.checked_in = in.readByte() != 0;
+    }
+
+    public static final Creator<AttendanceRecord> CREATOR = new Creator<AttendanceRecord>() {
+        @Override public AttendanceRecord createFromParcel(Parcel source) {
+            return new AttendanceRecord(source);
+        }
+
+        @Override public AttendanceRecord[] newArray(int size) {
+            return new AttendanceRecord[size];
+        }
+    };
 }

@@ -95,8 +95,8 @@ public class StudentHomeFragment extends BaseFragment {
     @BindView(R.id.orderbtn_layout) LinearLayout orderbtnLayout;
     @BindView(R.id.student_status) TextView studentStatus;
     @BindView(R.id.phone) TextView phone;
-    @BindView(R.id.tv_student_call) TextView tvStudentCall;
-    @BindView(R.id.tv_student_msg) TextView tvStudentMsg;
+    @BindView(R.id.tv_student_call) ImageView tvStudentCall;
+    @BindView(R.id.tv_student_msg) ImageView tvStudentMsg;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject RestRepository restRepository;
@@ -120,10 +120,7 @@ public class StudentHomeFragment extends BaseFragment {
 
             mAdapter = new FragmentAdapter(getChildFragmentManager(), fragments);
         }
-        tvStudentCall.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), R.drawable.vector_student_phone),
-            null, null, null);
-        tvStudentMsg.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), R.drawable.vector_student_message),
-            null, null, null);
+
         student.setAdapter(mAdapter);
         student.setOffscreenPageLimit(3);
         tab.setupWithViewPager(student);
@@ -154,10 +151,8 @@ public class StudentHomeFragment extends BaseFragment {
         ObInfo = RxBus.getBus().register(StudentBaseInfoEvent.class);
         Drawable drawableCall = ContextCompat.getDrawable(getContext(), R.drawable.vector_student_phone);
         drawableCall.setBounds(0, 0, drawableCall.getMinimumWidth(), drawableCall.getMinimumHeight());
-        tvStudentCall.setCompoundDrawables(drawableCall, null, null, null);
         Drawable drawableMsg = ContextCompat.getDrawable(getContext(), R.drawable.vector_student_message);
         drawableMsg.setBounds(0, 0, drawableMsg.getMinimumWidth(), drawableMsg.getMinimumHeight());
-        tvStudentMsg.setCompoundDrawables(drawableMsg, null, null, null);
         ObInfo.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<StudentBaseInfoEvent>() {
             @Override public void call(final StudentBaseInfoEvent studentBaseInfoEvent) {
                 if (studentBaseInfoEvent.user_student != null) {

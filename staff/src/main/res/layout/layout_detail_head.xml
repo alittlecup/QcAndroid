@@ -2,7 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="135dp"
+    android:layout_height="89dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:minHeight="?attr/actionBarSize"
     >
@@ -41,14 +42,13 @@
       android:layout_marginLeft="10dp"
       android:layout_marginRight="16dp"
       android:layout_marginTop="2dp"
-      android:layout_toLeftOf="@+id/student_status"
       android:layout_toRightOf="@+id/header"
       android:ellipsize="end"
       android:lines="1"
-      android:maxWidth="200dp"
+      android:maxLength="5"
       android:textColor="@color/white"
       android:textSize="@dimen/common_font"
-      tools:text="@string/test_long"
+      tools:text="嗔痴怨"
       />
 
   <TextView
@@ -72,41 +72,48 @@
       android:id="@+id/student_status"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignParentRight="true"
       android:layout_alignTop="@+id/name"
       android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_toRightOf="@id/name"
       android:gravity="center"
       android:textColor="@color/white"
       android:textSize="12sp"
       android:visibility="visible"
+      android:drawableLeft="@drawable/circle_orange"
+      android:drawablePadding="4dp"
       tools:text="跟进中"
       />
 
+
   <LinearLayout
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="40dp"
-      android:layout_alignParentBottom="true"
       android:background="@color/transparent"
       android:orientation="horizontal"
+      android:visibility="visible"
+      android:layout_toRightOf="@id/phone"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:gravity="right"
       >
 
     <LinearLayout
         android:id="@+id/ll_student_call"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginRight="0dp"
-        android:layout_weight="1"
-        android:background="@color/halftransparent_grey"
+        android:background="@drawable/bg_click_circle"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="visible"
         >
 
-      <TextView
+      <ImageView
           android:id="@+id/tv_student_call"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:drawablePadding="12dp"
+          android:layout_width="14dp"
+          android:layout_height="14dp"
           android:text="拨打电话"
+          app:srcCompat="@drawable/ic_student_phone"
           android:textColor="@color/white"
           android:textSize="@dimen/min_font"
           />
@@ -114,20 +121,22 @@
 
     <LinearLayout
         android:id="@+id/ll_student_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="1dp"
-        android:layout_weight="1"
-        android:background="@color/halftransparent_grey"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/bg_click_circle"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="visible"
+        android:layout_marginRight="20dp"
         >
 
-      <TextView
+      <ImageView
           android:id="@+id/tv_student_msg"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="14dp"
+          android:layout_height="14dp"
           android:drawablePadding="12dp"
+          app:srcCompat="@drawable/ic_student_message"
           android:text="发送短信"
           android:textColor="@color/white"
           android:textSize="@dimen/min_font"

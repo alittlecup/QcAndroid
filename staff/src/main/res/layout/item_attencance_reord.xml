@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="75dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_click"
     android:orientation="vertical"
     >
@@ -25,6 +26,7 @@
       android:layout_alignParentBottom="true"
       android:background="@color/divider_white"
       android:visibility="gone"
+      tools:visibility="visible"
       >
   </View>
 
@@ -118,6 +120,33 @@
         tools:text="5月"
         style="@style/Qc.TextCommonGrey"
         />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/not_sign_class"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:orientation="horizontal"
+      android:layout_marginRight="12dp"
+      android:gravity="center_vertical"
+      android:visibility="gone"
+      >
+
+    <ImageView
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_margin="8dp"
+        app:srcCompat="@drawable/circle_orange"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="未签课"
+        />
+
   </LinearLayout>
 
   <TextView
