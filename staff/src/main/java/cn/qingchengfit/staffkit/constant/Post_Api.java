@@ -123,7 +123,7 @@ public interface Post_Api {
     /**
      * 场馆续费
      */
-    @POST("/api/gyms/orders/") rx.Observable<QcResponseRenew> qcRenew(@Body RenewBody body);
+    @POST("/api/gyms/orders/") rx.Observable<QcResponseRenew> qcCharge(@Body RenewBody body);
 
     /**
      * 场馆试用

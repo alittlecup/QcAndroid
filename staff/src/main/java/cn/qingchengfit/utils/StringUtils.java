@@ -444,4 +444,16 @@ public class StringUtils {
         }
         return ret;
     }
+
+    public static String array2str(String[] from) {
+        String ret = "";
+        for (int i = 0; i < from.length; i++) {
+            if (i < from.length - 1) {
+                ret = ret.concat(from[i]).concat(",");
+            } else {
+                ret = ret.concat(from[i]);
+            }
+        }
+        return ret;
+    }
 }

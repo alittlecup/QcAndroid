@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.views.gym.addcourse.AddGuideCourseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
  * power by

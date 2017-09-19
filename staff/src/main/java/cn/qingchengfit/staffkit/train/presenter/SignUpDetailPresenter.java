@@ -1,10 +1,11 @@
 package cn.qingchengfit.staffkit.train.presenter;
 
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.train.model.SignUpDetailResponse;
 import javax.inject.Inject;

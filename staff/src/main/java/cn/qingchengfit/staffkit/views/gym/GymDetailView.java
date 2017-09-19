@@ -1,11 +1,11 @@
 package cn.qingchengfit.staffkit.views.gym;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.Banner;
 import cn.qingchengfit.model.responese.GymDetail;
 import cn.qingchengfit.model.responese.HomeStatement;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

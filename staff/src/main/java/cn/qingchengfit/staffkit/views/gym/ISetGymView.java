@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

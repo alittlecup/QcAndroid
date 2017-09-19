@@ -2,6 +2,8 @@ package cn.qingchengfit.staffkit.views.statement.custom;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
@@ -9,8 +11,6 @@ import cn.qingchengfit.model.responese.ClassStatmentFilterBean;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import cn.qingchengfit.staffkit.views.statement.detail.StatementDetailFragment;
 import cn.qingchengfit.utils.DateUtils;

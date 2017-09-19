@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.card.charge;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.CardStandard;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

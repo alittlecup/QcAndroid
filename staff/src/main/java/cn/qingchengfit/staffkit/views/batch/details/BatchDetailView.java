@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.batch.details;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.common.Rule;
@@ -7,7 +8,6 @@ import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.model.responese.Time_repeat;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

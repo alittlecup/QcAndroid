@@ -17,11 +17,11 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventFreshUnloginAd;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.rxbus.event.EventUnloginHomeLevel;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.staffkit.views.login.LoginActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import rx.functions.Action1;
 

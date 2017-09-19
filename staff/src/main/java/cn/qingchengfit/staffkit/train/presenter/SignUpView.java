@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.train.presenter;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.PView;
 
 /**
  * Created by fb on 2017/3/22.

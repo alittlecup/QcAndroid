@@ -195,6 +195,12 @@ public class DateUtils {
     return formatter.format(d);
   }
 
+  public static String Date2MMDDHHmm(Date d) {
+
+    SimpleDateFormat formatter = new SimpleDateFormat("MM-dd HH:mm", Locale.CHINA);
+    return formatter.format(d);
+  }
+
   public static String Date2MMDD(Date d) {
 
     SimpleDateFormat formatter = new SimpleDateFormat("MM-dd", Locale.CHINA);

@@ -14,8 +14,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 
 /**

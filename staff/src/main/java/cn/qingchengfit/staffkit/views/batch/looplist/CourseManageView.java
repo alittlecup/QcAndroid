@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.batch.looplist;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.CourseSchedule;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

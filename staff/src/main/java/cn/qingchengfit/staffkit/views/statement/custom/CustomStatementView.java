@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.views.statement.custom;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.PView;
 import java.util.List;
 
 /**

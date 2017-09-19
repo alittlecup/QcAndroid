@@ -6,13 +6,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.ToolbarBean;
+import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.views.FragCallBack;
 import cn.qingchengfit.staffkit.views.main.SettingPresenter;
 import cn.qingchengfit.staffkit.views.main.SettingView;
+import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import javax.inject.Inject;
 import rx.functions.Action1;
 

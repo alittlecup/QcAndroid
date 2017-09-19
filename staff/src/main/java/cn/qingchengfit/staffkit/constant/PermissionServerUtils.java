@@ -35,8 +35,7 @@ public class PermissionServerUtils {
     public static final String PERMISSIONSETTING_CAN_WRITE = "permissionsetting_can_write";
     public static final String PERMISSIONSETTING_CAN_CHANGE = "permissionsetting_can_change";
     public static final String PERMISSIONSETTING_CAN_DELETE = "permissionsetting_can_delete";
-    public static final String MESSAGESETTING = "messagesetting";
-    public static final String MESSAGESETTING_CAN_CHANGE = "messagesetting_can_change";
+
     public static final String MANAGE_STAFF = "manage_staff";
     public static final String MANAGE_STAFF_CAN_WRITE = "manage_staff_can_write";
     public static final String MANAGE_STAFF_CAN_CHANGE = "manage_staff_can_change";
@@ -217,6 +216,13 @@ public class PermissionServerUtils {
     public static final String CHECKIN_SCREEN = "checkin_screen";
     public static final String CHECKIN_SCREEN_CAN_WRITE = "checkin_screen_can_write";
     public static final String CHECKIN_SCREEN_CAN_CHANGE = "checkin_screen_can_change";
+    /**
+     * 通知权限
+     */
+    public static final String MESSAGESETTING = "messagesetting";
+    public static final String MESSAGEDETAILS = "messagedetails";
+    public static final String MESSAGECHANNELS = "messagechannels";
+    public static final String MESSAGESETTING_CAN_WRITE = "messagesetting_can_write";
 
     //导入导出
     public static final String STUDENT_EXPORT = "manage_members_export";

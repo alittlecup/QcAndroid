@@ -147,6 +147,34 @@
     <item>设置</item>
   </string-array>
 
+
+  <string-array name="noti_setting_methods_user">
+    <item>自动</item>
+    <item>仅发送短信</item>
+    <item>仅发送微信模板消息</item>
+    <item>短信+微信模板消息</item>
+  </string-array>
+  <string-array name="noti_setting_methods_staff">
+    <item>自动</item>
+    <item>仅发送短信</item>
+    <item>仅发送APP推送消息</item>
+    <item>短信+APP推送</item>
+  </string-array>
+
+  <string-array name="noti_setting_filter_channel">
+    <item>全部</item>
+    <item>短信</item>
+    <item>微信模板消息</item>
+    <item>青橙健身APP推送</item>
+    <item>青橙健身教练APP推送</item>
+  </string-array>
+  <string-array name="noti_setting_filter_status">
+    <item>全部</item>
+    <item>发送成功</item>
+    <item>发送失败</item>
+  </string-array>
+
+
   <string-array name="order_open_time">
     <item >立即开放</item>
     <item >定时开放</item>

@@ -1,5 +1,7 @@
 package cn.qingchengfit.staffkit.mvpbase;
 
+import cn.qingchengfit.di.PView;
+
 /**
  * power by
  * <p/>

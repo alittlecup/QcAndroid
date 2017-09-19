@@ -11,8 +11,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.rxbus.event.SignInLogEvent;
+import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
  * Created by yangming on 16/8/25.

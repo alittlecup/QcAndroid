@@ -2,6 +2,8 @@ package cn.qingchengfit.staffkit.views.batch.details;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ArrangeBatchBody;
@@ -9,8 +11,6 @@ import cn.qingchengfit.model.common.BatchOpenRule;
 import cn.qingchengfit.model.responese.QcResponsePrivateBatchDetail;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import cn.qingchengfit.utils.StringUtils;

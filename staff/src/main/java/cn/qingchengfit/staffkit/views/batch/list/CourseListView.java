@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.views.batch.list;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.PView;
 
 /**
  * power by

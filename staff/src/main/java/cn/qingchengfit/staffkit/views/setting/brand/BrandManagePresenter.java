@@ -1,10 +1,10 @@
 package cn.qingchengfit.staffkit.views.setting.brand;
 
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.usecase.InitUseCase;
 import javax.inject.Inject;
 import rx.functions.Action1;

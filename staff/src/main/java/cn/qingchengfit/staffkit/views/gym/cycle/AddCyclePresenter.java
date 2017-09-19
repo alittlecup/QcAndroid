@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym.cycle;
 
 import android.content.Intent;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import javax.inject.Inject;
 
 /**

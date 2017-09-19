@@ -10,9 +10,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.responese.NotifyIsOpen;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.List;
 import javax.inject.Inject;
 

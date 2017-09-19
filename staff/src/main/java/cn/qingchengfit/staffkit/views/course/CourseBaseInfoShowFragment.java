@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.responese.CourseType;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import java.util.Locale;
 

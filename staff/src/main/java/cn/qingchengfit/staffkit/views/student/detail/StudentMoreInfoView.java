@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.views.student.detail;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
 
 /**

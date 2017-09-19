@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.cardtype.detail;
 
+import cn.qingchengfit.di.CView;
 import cn.qingchengfit.model.responese.CardStandard;
 import cn.qingchengfit.model.responese.CardTpl;
-import cn.qingchengfit.staffkit.mvpbase.CView;
 import java.util.List;
 
 /**

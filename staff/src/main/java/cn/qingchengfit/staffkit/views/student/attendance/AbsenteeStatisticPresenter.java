@@ -1,5 +1,8 @@
 package cn.qingchengfit.staffkit.views.student.attendance;
 
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Absentce;
@@ -7,9 +10,6 @@ import cn.qingchengfit.model.common.Absentces;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.CView;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.utils.GymUtils;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.views.gym.choose;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import java.util.List;
 

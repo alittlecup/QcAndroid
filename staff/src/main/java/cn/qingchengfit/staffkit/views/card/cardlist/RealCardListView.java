@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.card.cardlist;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.common.Card;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

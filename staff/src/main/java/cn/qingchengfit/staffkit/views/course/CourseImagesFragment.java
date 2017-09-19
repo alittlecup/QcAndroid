@@ -19,7 +19,6 @@ import cn.qingchengfit.model.responese.QcResponseSchedulePhotos;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.CourseImageManageEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SchedulePhoto;
@@ -28,6 +27,7 @@ import cn.qingchengfit.staffkit.views.abstractflexibleitem.AllCourseImageHeaderI
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.AllCourseImageItem;
 import cn.qingchengfit.staffkit.views.adapter.AllCourseImagesAdapter;
 import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;

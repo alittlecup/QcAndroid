@@ -1,6 +1,6 @@
 package cn.qingchengfit.chat;
 
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
+import cn.qingchengfit.di.BasePresenter;
 
 /**
  * Created by fb on 2017/3/15.

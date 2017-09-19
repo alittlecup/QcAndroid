@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.card.cardlist;
 
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.CardBalanceNotifyBody;
@@ -8,7 +9,6 @@ import cn.qingchengfit.model.responese.NotityIsOpenConfigs;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.HashMap;
 import java.util.List;

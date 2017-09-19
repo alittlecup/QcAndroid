@@ -24,6 +24,7 @@ import cn.qingchengfit.di.PresenterDelegate;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.R;
 import dagger.android.support.AndroidSupportInjection;
@@ -49,10 +50,12 @@ import rx.Subscription;
 public abstract class BaseFragment extends Fragment
     implements BaseActivity.FragmentBackPress, CView {
 
+  public FragCallBack mCallbackActivity;
     public Unbinder unbinder;
     // 标志位，标志已经初始化完成
     protected boolean isVisible;
     protected  boolean isInit = false;
+  protected boolean isLoading = false;
     protected boolean isLazyLoad = true;
     protected boolean isPrepared;
     List<Subscription> sps = new ArrayList<>();
@@ -96,9 +99,17 @@ public abstract class BaseFragment extends Fragment
             LogUtil.e("not find fragment:"+getFragmentName());
         }
         super.onAttach(context);
+      if (context instanceof FragCallBack) {
+        mCallbackActivity = (FragCallBack) context;
+      }
     }
 
-    protected void delegatePresenter(Presenter presenter, PView pView) {
+  @Override public void onDetach() {
+    super.onDetach();
+    mCallbackActivity = null;
+  }
+
+  protected void delegatePresenter(Presenter presenter, PView pView) {
         PresenterDelegate delegate = new PresenterDelegate(presenter);
         delegate.attachView(pView);
         delegates.add(delegate);
@@ -273,6 +284,35 @@ public abstract class BaseFragment extends Fragment
                 .commitAllowingStateLoss();
         }
     }
+
+  protected void routeTo(Fragment fragment, String tag) {
+    if (getActivity() instanceof BaseActivity) {
+      getActivity().getSupportFragmentManager()
+          .beginTransaction()
+          .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
+              R.anim.slide_right_out)
+          .replace(((BaseActivity) getActivity()).getFragId(), fragment)
+          .addToBackStack(tag)
+          .commit();
+    }
+  }
+
+  protected void rmAndTo(Fragment rm, Fragment fragment, String tag) {
+    if (getActivity() instanceof BaseActivity) {
+      getActivity().getSupportFragmentManager()
+          .beginTransaction()
+          .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
+              R.anim.slide_right_out)
+          .remove(rm)
+          .replace(((BaseActivity) getActivity()).getFragId(), fragment)
+          .addToBackStack(tag)
+          .commit();
+    }
+  }
+
+  protected void routeTo(Fragment fragment) {
+    routeTo(fragment, null);
+  }
 
   /**
    * 用语页面为空的状态

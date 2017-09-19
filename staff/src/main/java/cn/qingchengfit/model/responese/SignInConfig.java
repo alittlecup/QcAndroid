@@ -16,6 +16,7 @@ public class SignInConfig {
 
     public class Config {
 
+      public String show_text;
         @SerializedName("name") private String name;
         @SerializedName("editable") private Boolean editable;
         @SerializedName("readable") private Boolean readable;
@@ -81,7 +82,7 @@ public class SignInConfig {
         }
 
         public Integer getValueInt() {
-            if (value instanceof Double) {
+          if (value instanceof Number) {
                 return ((Double) value).intValue();
             } else {
                 return 0;

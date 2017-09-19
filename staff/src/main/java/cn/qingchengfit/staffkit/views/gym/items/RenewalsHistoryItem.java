@@ -46,34 +46,9 @@ public class RenewalsHistoryItem extends AbstractFlexibleItem<RenewalsHistoryIte
         if (mHistory.created_by != null) {
             holder.operaUser.setText(mContext.getString(R.string.control_person, mHistory.created_by.getUsername()));
         }
-        //        switch (mHistory.status){
-        //            case 0:
-        //                holder.payStatus.setText(mContext.getResources().getStringArray(R.array.renewal_status)[0]);
-        //                holder.payStatus.setTextColor(CompatUtils.getColor(mContext,R.color.red));
-        //                break;
-        //            case 1:
-        //
-        //                break;
-        //            default:
-        //                holder.payStatus.setText("");
-        //                break;
-        //        }
         holder.payStatus.setText(mContext.getResources().getStringArray(R.array.renewal_status)[1]);
         holder.payStatus.setTextColor(CompatUtils.getColor(mContext, R.color.green));
         holder.payOnline.setText(mHistory.remark);
-        //        switch (mHistory.channel){
-        //            case Configs.DEAL_ADMIN:
-        //                holder.payOnline.setText("线下续费");
-        //                break;
-        //            case Configs.DEAL_WECHAT:
-        //            case Configs.DEAL_ALIPAY:
-        //            case Configs.DEAL_WEIXIN_QR:
-        //                holder.payOnline.setText("在线续费");
-        //                break;
-        //            default:
-        //                break;
-        //        }
-
     }
 
     @Override public boolean equals(Object o) {

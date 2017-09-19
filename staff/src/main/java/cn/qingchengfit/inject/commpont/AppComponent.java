@@ -13,6 +13,15 @@ import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
 import cn.qingchengfit.inject.moudle.StaffWrapperMoudle;
 import cn.qingchengfit.inject.moudle.StudentWrapperModule;
+import cn.qingchengfit.notisetting.view.NotiSettingChargeHistoryFragment;
+import cn.qingchengfit.notisetting.view.NotiSettingChargeResultFragment;
+import cn.qingchengfit.notisetting.view.NotiSettingHomeFragment;
+import cn.qingchengfit.notisetting.view.NotiSettingMsgChargeFragment;
+import cn.qingchengfit.notisetting.view.NotiSettingMsgDetailFragment;
+import cn.qingchengfit.notisetting.view.NotiSettingMsgRuleFragment;
+import cn.qingchengfit.notisetting.view.NotiSettingSendListDetailFragment;
+import cn.qingchengfit.notisetting.view.NotiSettingWxTemplateFragment;
+import cn.qingchengfit.notisetting.view.SendChannelTabFragment;
 import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
@@ -515,13 +524,21 @@ import dagger.multibindings.IntoMap;
      */
     AppComponent.JobSearchChatModule.class, AppComponent.RecruitMessageListFragmentModule.class,
     //AppComponent.JobSearchChatModule.class,
-
+    /**
+     * 消息
+     */
+    AppComponent.SendChannelTabFragmentModule.class,
+    AppComponent.NotiSettingWxTemplateFragmentModule.class,
+    AppComponent.NotiSettingHomeFragmentModule.class,
+    AppComponent.NotiSettingSendListDetailFragmentModule.class,
+    AppComponent.NotiSettingMsgRuleFragmentModule.class,
+    AppComponent.NotiSettingMsgDetailFragmentModule.class,
+    AppComponent.NotiSettingMsgChargeFragmentModule.class,
+    AppComponent.NotiSettingChargeResultFragmentModule.class,
+    AppComponent.NotiSettingChargeHistoryFragmentModule.class,
     //导入导出
     AppComponent.ImportExportFragmentModule.class, AppComponent.ExportRecordFragmentModule.class,
     AppComponent.ExportSendEmailFragmentModule.class, AppComponent.CardImportExportFragmentModule.class,
-
-    AppComponent.LoginFragmentModule.class, AppComponent.RegisteFragmentModule.class,
-
 })
 
 public interface AppComponent {
@@ -2366,6 +2383,72 @@ public interface AppComponent {
   }
 
     /**
+     * 通知模块相关
+     */
+    @Subcomponent() public interface NotiSettingChargeHistoryFragmentSubcomponent
+        extends AndroidInjector<NotiSettingChargeHistoryFragment> {
+      @Subcomponent.Builder public abstract class Builder
+          extends AndroidInjector.Builder<NotiSettingChargeHistoryFragment> {
+      }
+    }
+
+  @Subcomponent() public interface NotiSettingChargeResultFragmentSubcomponent
+      extends AndroidInjector<NotiSettingChargeResultFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<NotiSettingChargeResultFragment> {
+    }
+  }
+
+  @Subcomponent() public interface NotiSettingMsgChargeFragmentSubcomponent
+      extends AndroidInjector<NotiSettingMsgChargeFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<NotiSettingMsgChargeFragment> {
+    }
+  }
+
+  @Subcomponent() public interface NotiSettingMsgDetailFragmentSubcomponent
+      extends AndroidInjector<NotiSettingMsgDetailFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<NotiSettingMsgDetailFragment> {
+    }
+  }
+
+  @Subcomponent() public interface NotiSettingMsgRuleFragmentSubcomponent
+      extends AndroidInjector<NotiSettingMsgRuleFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<NotiSettingMsgRuleFragment> {
+    }
+  }
+
+  @Subcomponent() public interface NotiSettingSendListDetailFragmentSubcomponent
+      extends AndroidInjector<NotiSettingSendListDetailFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<NotiSettingSendListDetailFragment> {
+    }
+  }
+
+  @Subcomponent() public interface NotiSettingWxTemplateFragmentSubcomponent
+      extends AndroidInjector<NotiSettingWxTemplateFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<NotiSettingWxTemplateFragment> {
+    }
+  }
+
+  @Subcomponent() public interface SendChannelTabFragmentSubcomponent
+      extends AndroidInjector<SendChannelTabFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<SendChannelTabFragment> {
+    }
+  }
+
+  @Subcomponent() public interface NotiSettingHomeFragmentSubcomponent
+      extends AndroidInjector<NotiSettingHomeFragment> {
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<NotiSettingHomeFragment> {
+    }
+  }
+
+  /**
      * {@link GymInfoNoEditFragment}
      */
 
@@ -3979,6 +4062,69 @@ public interface AppComponent {
     @Binds @IntoMap @FragmentKey(ChooseStaffFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
         ChooseStaffFragmentSubcomponent.Builder builder);
+    }
+
+  @Module(subcomponents = NotiSettingChargeHistoryFragmentSubcomponent.class)
+  abstract class NotiSettingChargeHistoryFragmentModule {
+    @Binds @IntoMap @FragmentKey(NotiSettingChargeHistoryFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        NotiSettingChargeHistoryFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = NotiSettingChargeResultFragmentSubcomponent.class)
+  abstract class NotiSettingChargeResultFragmentModule {
+    @Binds @IntoMap @FragmentKey(NotiSettingChargeResultFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        NotiSettingChargeResultFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = NotiSettingMsgChargeFragmentSubcomponent.class)
+  abstract class NotiSettingMsgChargeFragmentModule {
+    @Binds @IntoMap @FragmentKey(NotiSettingMsgChargeFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        NotiSettingMsgChargeFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = NotiSettingMsgDetailFragmentSubcomponent.class)
+  abstract class NotiSettingMsgDetailFragmentModule {
+    @Binds @IntoMap @FragmentKey(NotiSettingMsgDetailFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        NotiSettingMsgDetailFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = NotiSettingMsgRuleFragmentSubcomponent.class)
+  abstract class NotiSettingMsgRuleFragmentModule {
+    @Binds @IntoMap @FragmentKey(NotiSettingMsgRuleFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        NotiSettingMsgRuleFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = NotiSettingSendListDetailFragmentSubcomponent.class)
+  abstract class NotiSettingSendListDetailFragmentModule {
+    @Binds @IntoMap @FragmentKey(NotiSettingSendListDetailFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        NotiSettingSendListDetailFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = NotiSettingWxTemplateFragmentSubcomponent.class)
+  abstract class NotiSettingWxTemplateFragmentModule {
+    @Binds @IntoMap @FragmentKey(NotiSettingWxTemplateFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        NotiSettingWxTemplateFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = SendChannelTabFragmentSubcomponent.class)
+  abstract class SendChannelTabFragmentModule {
+    @Binds @IntoMap @FragmentKey(SendChannelTabFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        SendChannelTabFragmentSubcomponent.Builder builder);
+  }
+
+  @Module(subcomponents = NotiSettingHomeFragmentSubcomponent.class)
+  abstract class NotiSettingHomeFragmentModule {
+    @Binds @IntoMap @FragmentKey(NotiSettingHomeFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+        NotiSettingHomeFragmentSubcomponent.Builder builder);
     }
 
     @Subcomponent() public interface EditGymInfoFragmentSubcomponent extends AndroidInjector<EditGymInfoFragment> {

@@ -350,4 +350,21 @@ public class BusinessUtils {
         }
         return ret;
     }
+
+    public static String getOrderPayChannel(int x) {
+        switch (x) {
+            case Configs.DEAL_ADMIN:
+                return "人工操作";
+            case Configs.DEAL_ALIPAY:
+                return "在线支付（支付宝）";
+            case Configs.DEAL_CARD:
+            case Configs.DEAL_CASH:
+                return "线下续费）";
+            case Configs.DEAL_WECHAT:
+            case Configs.DEAL_WEIXIN_QR:
+                return "在线支付（微信支付）";
+            default:
+                return "";
+        }
+    }
 }

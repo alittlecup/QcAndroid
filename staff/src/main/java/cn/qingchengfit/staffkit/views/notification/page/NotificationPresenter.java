@@ -1,15 +1,16 @@
 package cn.qingchengfit.staffkit.views.notification.page;
 
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.responese.Notification;
 import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.CView;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.HashMap;
 import java.util.List;

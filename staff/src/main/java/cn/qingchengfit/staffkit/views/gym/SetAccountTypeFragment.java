@@ -18,7 +18,6 @@ import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.DoneAccountEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
@@ -27,6 +26,7 @@ import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import java.util.ArrayList;
 

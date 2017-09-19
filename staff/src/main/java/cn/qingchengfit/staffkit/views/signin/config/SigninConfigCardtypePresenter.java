@@ -1,5 +1,8 @@
 package cn.qingchengfit.staffkit.views.signin.config;
 
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.SignInCostBody;
@@ -10,9 +13,6 @@ import cn.qingchengfit.network.ResultSubscribe;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.Post_Api;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.CView;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import java.util.HashMap;
 import java.util.List;

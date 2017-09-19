@@ -1,16 +1,16 @@
 package cn.qingchengfit.staffkit.views.card;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.model.body.FixCard;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
 import cn.qingchengfit.staffkit.mvpbase.CommonPView;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.usecase.RealCardUsecase;
 import javax.inject.Inject;
 import rx.functions.Action1;
@@ -63,7 +63,8 @@ public class FixRealcardNumPresenter extends BasePresenter implements Presenter 
     }
 
     @Override public void unattachView() {
-        view = null;
+      super.unattachView();
+      view = null;
     }
 
     public void fixCardNum(String cardnum) {

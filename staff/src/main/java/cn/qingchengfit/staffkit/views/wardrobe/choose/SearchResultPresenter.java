@@ -1,10 +1,10 @@
 package cn.qingchengfit.staffkit.views.wardrobe.choose;
 
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.Locker;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.CView;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.List;
 import javax.inject.Inject;

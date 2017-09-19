@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:id="@+id/layout_channel_msg"
+      android:layout_width="match_parent"
+      android:layout_height="78dp"
+      android:background="@drawable/bg_click"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/vd_notification_msg"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="@dimen/activity_horizontal_margin"
+        android:layout_height="match_parent"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="渠道1："
+          style="@style/QcTextStyleXsGrey"
+          />
+
+      <android.support.v4.widget.Space
+          android:layout_width="wrap_content"
+          android:layout_height="2dp"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="短信"
+            style="@style/QcTextStyleStandardDark"
+            />
+
+        <cn.qingchengfit.support.widgets.CompatTextView
+            android:id="@+id/tv_msg_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/little"
+            app:drawableEnd="@drawable/vd_chevron_right_text_hint_7x12dp"
+            tools:text="xxx条短信"
+            style="@style/QcTextStyleStandardGrey"
+            />
+      </LinearLayout>
+
+    </LinearLayout>
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:id="@+id/layout_channel_wx"
+      android:layout_width="match_parent"
+      android:layout_height="78dp"
+      android:background="@drawable/bg_click"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/vd_notification_wechat"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="@dimen/activity_horizontal_margin"
+        android:layout_height="match_parent"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="渠道2："
+          style="@style/QcTextStyleXsGrey"
+          />
+
+      <android.support.v4.widget.Space
+          android:layout_width="wrap_content"
+          android:layout_height="2dp"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="微信模板消息"
+            style="@style/QcTextStyleStandardDark"
+            />
+
+        <cn.qingchengfit.support.widgets.CompatTextView
+            android:id="@+id/tv_has_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/little"
+            app:drawableEnd="@drawable/vd_chevron_right_text_hint_7x12dp"
+            tools:text="xxx条短信"
+            style="@style/QcTextStyleStandardGrey"
+            />
+      </LinearLayout>
+
+    </LinearLayout>
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:id="@+id/layout_channel_app"
+      android:layout_width="match_parent"
+      android:layout_height="78dp"
+      android:background="@drawable/bg_click"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/vd_notification_app"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="@dimen/activity_horizontal_margin"
+        android:layout_height="match_parent"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="渠道3："
+          style="@style/QcTextStyleXsGrey"
+          />
+
+      <android.support.v4.widget.Space
+          android:layout_width="wrap_content"
+          android:layout_height="2dp"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="APP推送消息"
+            style="@style/QcTextStyleStandardDark"
+            />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_laucher_trainer"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        />
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@mipmap/ic_launcher"
+        />
+  </LinearLayout>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/bg_grey"
+      android:paddingBottom="8dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="18dp"
+      android:text="发送渠道优先级"
+      android:textSize="@dimen/txt_13sp"
+      />
+
+  <include layout="@layout/divider_grey"/>
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_send_student"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="自动"
+      app:civ_content_color="@color/text_grey"
+      app:civ_label_width="200dp"
+      app:civ_lable="发送给会员的通知"
+      app:civ_showdivier="true"
+      app:civ_showright="true"
+      app:civ_text_color="@color/text_dark"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_send_staff"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content_color="@color/text_grey"
+      app:civ_label_width="200dp"
+      app:civ_lable="发送给员工的通知"
+      app:civ_showdivier="false"
+      app:civ_showright="true"
+      app:civ_text_color="@color/text_dark"
+      />
+
+  <include layout="@layout/divider_grey"/>
+</LinearLayout>

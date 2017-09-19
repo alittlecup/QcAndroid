@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.views.gym.cycle;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
+import cn.qingchengfit.di.PView;
 
 /**
  * power by

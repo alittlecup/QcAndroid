@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.student.bodytest;
 
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.BodyTestBean;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 import java.util.List;
 
 /**

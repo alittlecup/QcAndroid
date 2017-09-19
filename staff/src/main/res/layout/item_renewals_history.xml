@@ -97,13 +97,16 @@
 
     <TextView
         android:id="@+id/pay_online"
-        android:layout_width="72dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/text_less"
-
         tools:text="在线续费"
         />
 
+    <android.support.v4.widget.Space
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        />
     <TextView
         android:id="@+id/opera_user"
         android:layout_width="wrap_content"

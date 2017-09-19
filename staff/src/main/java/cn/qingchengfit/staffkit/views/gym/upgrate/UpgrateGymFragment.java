@@ -23,16 +23,15 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.body.RenewBody;
+import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.responese.GymFuntion;
 import cn.qingchengfit.model.responese.QcResponseRenew;
 import cn.qingchengfit.model.responese.RenewalList;
 import cn.qingchengfit.model.responese.RenewalPay;
-import cn.qingchengfit.model.responese.ToolbarBean;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -42,6 +41,7 @@ import cn.qingchengfit.staffkit.views.gym.upgrate.item.LinearFunItem;
 import cn.qingchengfit.staffkit.views.gym.upgrate.item.PayItem;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.views.activity.WebActivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.AnimatedButton;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
@@ -236,7 +236,7 @@ public class UpgrateGymFragment extends BaseFragment {
     @OnClick(R.id.btn_pay) public void onClickPay() {
         showLoading();
         RxRegiste(new RestRepository().getPost_api()
-            .qcRenew(new RenewBody.Builder().app_id(getString(R.string.wechat_code))
+            .qcCharge(new RenewBody.Builder().app_id(getString(R.string.wechat_code))
                 .type("gym_time")
                 .channel(12)
                 .favorable(choosehasDiscount)

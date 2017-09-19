@@ -24,7 +24,6 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.IntervalCancelEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignInManualEvent;
@@ -32,6 +31,7 @@ import cn.qingchengfit.staffkit.rxbus.event.SignInStudentItemClickEvent;
 import cn.qingchengfit.staffkit.views.adapter.SignInStudentAdapter;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.List;
 import javax.inject.Inject;
 

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:background="@drawable/bg_click"
+      android:divider="@drawable/divier_linear"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <cn.qingchengfit.widgets.QcFilterToggle
+        android:id="@+id/qft_channel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:ft_text_off="发送渠道"
+        app:ft_text_on="发送渠道"
+        style="@style/QcFilterStyle"
+        />
+
+    <cn.qingchengfit.widgets.QcFilterToggle
+        android:id="@+id/qft_status"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:ft_text_off="状态"
+        app:ft_text_on="状态"
+        style="@style/QcFilterStyle"
+        />
+
+    <cn.qingchengfit.widgets.QcFilterToggle
+        android:id="@+id/qft_times"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:ft_text_off="发送时间"
+        app:ft_text_on="发送时间"
+        style="@style/QcFilterStyle"
+        />
+  </LinearLayout>
+  <include layout="@layout/divider_grey"/>
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <RelativeLayout
+        android:id="@+id/layout_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin"
+        >
+
+      <TextView
+          android:id="@+id/tv_total_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="消息发送数量：(成功/总数)"
+          style="@style/QcTextStyleXsDark"
+          />
+
+      <TextView
+          android:id="@+id/tv_msg"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/tv_total_title"
+          android:layout_marginTop="6dp"
+          tools:text="123123"
+          style="@style/QcTextStyleSmallGrey"
+          />
+
+      <TextView
+          android:id="@+id/tv_wechat"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/tv_total_title"
+          android:layout_marginLeft="20dp"
+          android:layout_marginRight="20dp"
+          android:layout_marginTop="6dp"
+          android:layout_toEndOf="@id/tv_msg"
+          android:layout_toRightOf="@id/tv_msg"
+          tools:text="123123"
+          style="@style/QcTextStyleSmallGrey"
+          />
+
+      <TextView
+          android:id="@+id/tv_app"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/tv_total_title"
+          android:layout_marginTop="6dp"
+          android:layout_toEndOf="@id/tv_wechat"
+          android:layout_toRightOf="@id/tv_wechat"
+          tools:text="123123"
+          style="@style/QcTextStyleSmallGrey"
+          />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_total"
+        >
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:clipToPadding="false"
+          android:paddingBottom="@dimen/qc_item_height"
+          />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frag_noti_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="@color/halftransparent_grey"
+        android:visibility="gone"
+        />
+  </RelativeLayout>
+
+</LinearLayout>

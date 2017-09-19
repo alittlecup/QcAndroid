@@ -2,11 +2,11 @@ package cn.qingchengfit.staffkit.views.setting;
 
 import android.content.Intent;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.CommonPView;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
 import cn.qingchengfit.staffkit.rxbus.event.LoadingEvent;
 import cn.qingchengfit.staffkit.usecase.SettingUseCase;
 import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
