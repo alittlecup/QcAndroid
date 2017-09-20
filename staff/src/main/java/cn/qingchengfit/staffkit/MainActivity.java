@@ -526,8 +526,8 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         RxBus.getBus().unregister(RxCloseAppEvent.class.getName(), mCloseOb);
         RxBus.getBus().unregister(EventFreshCoachService.class.getName(), mFreshCoachService);
         RxBus.getBus().unregister(EventBrandChange.class.getName(), brandChangeOb);
-      RxBus.getBus().unregister(EventInitApp.class.getName(), mBackMainOb);
-      RxBus.getBus().unregister(EventSessionError.class.getName(),obLogOut);
+        RxBus.getBus().unregister(EventInitApp.class.getName(), mBackMainOb);
+        RxBus.getBus().unregister(EventSessionError.class.getName(),obLogOut);
         if (updateSp != null) updateSp.unsubscribe();
         if (sp != null) sp.unsubscribe();
         unregisterReceiver(receiver);
