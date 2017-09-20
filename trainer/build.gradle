@@ -87,7 +87,7 @@ android {
 
   productFlavors {
     dev {
-      minSdkVersion 21
+      minSdkVersion 16
       applicationId "com.qingchengfit.fitcoach.dev"
       manifestPlaceholders = [APP_NAME            : "内部测试"
                               , bdpush_authorities: "com.qingchengfit.fitcoach.debug.bdpush"
