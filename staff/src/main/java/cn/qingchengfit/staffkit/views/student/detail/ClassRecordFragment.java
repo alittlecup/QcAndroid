@@ -284,35 +284,4 @@ public class ClassRecordFragment extends BaseFragment
     layoutStatusFilter.setLabel(String.valueOf(params.get(NotSignFilterFragment.STATUS_FILTER)));
     layoutTimeFilter.setLabel(String.valueOf(params.get(NotSignFilterFragment.TIME_LABEL)));
   }
-
-  //@OnClick(R.id.tv_gym) public void onClickGym() {
-  //    if (chooseGymPopWin == null) {
-  //        chooseGymPopWin = new ChooseGymPopWin(getContext());
-  //        chooseGymPopWin.setOnDismissListener(new PopupWindow.OnDismissListener() {
-  //            @Override public void onDismiss() {
-  //                tvGym.setCompoundDrawablesWithIntrinsicBounds(null, null,
-  //                    ContextCompat.getDrawable(getContext(), R.drawable.vector_arrow_down_green), null);
-  //            }
-  //        });
-  //        chooseGymPopWin.setListener(new FlexibleAdapter.OnItemClickListener() {
-  //            @Override public boolean onItemClick(int position) {
-  //                if (position == 0) {
-  //                    tvGym.setCompoundDrawablesWithIntrinsicBounds(null, null,
-  //                        ContextCompat.getDrawable(getContext(), R.drawable.vector_arrow_down_green), null);
-  //                    tvGym.setText(R.string.all_gyms);
-  //                    curShopid = "";
-  //                } else if (shops.size() > (position - 1)) {
-  //                    tvGym.setText(shops.get(position - 1).name);
-  //                    curShopid = shops.get(position - 1).id;
-  //                }
-  //                presenter.queryData(curShopid);
-  //                return true;
-  //            }
-  //        });
-  //    }
-  //    chooseGymPopWin.setDatas(shops);
-  //    chooseGymPopWin.showAsDropDown(tvGym);
-  //    tvGym.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(getContext(), R.drawable.vector_arrow_up_green),
-  //        null);
-  //}
 }
