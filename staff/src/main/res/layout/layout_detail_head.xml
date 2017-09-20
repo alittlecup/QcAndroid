@@ -112,10 +112,7 @@
           android:id="@+id/tv_student_call"
           android:layout_width="30dp"
           android:layout_height="30dp"
-          android:text="拨打电话"
           app:srcCompat="@drawable/vd_student_detail_phone"
-          android:textColor="@color/white"
-          android:textSize="@dimen/min_font"
           />
     </LinearLayout>
 
@@ -135,11 +132,7 @@
           android:id="@+id/tv_student_msg"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:drawablePadding="12dp"
           app:srcCompat="@drawable/vd_student_detail_message"
-          android:text="发送短信"
-          android:textColor="@color/white"
-          android:textSize="@dimen/min_font"
           />
     </LinearLayout>
   </LinearLayout>

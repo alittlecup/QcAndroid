@@ -26,7 +26,6 @@ import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.FilterFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
-import cn.qingchengfit.widgets.QcLeftRightDivider;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -101,11 +100,10 @@ public class AttendanceNotSignFragment extends BaseFragment
     presenter.getNotSignStudent(start, end, count);
     adapter = new CommonFlexAdapter(itemList);
     recyclerNotSign.setLayoutManager(new LinearLayoutManager(getContext()));
-    recyclerNotSign.addItemDecoration(new QcLeftRightDivider(getContext()));
-        //new FlexibleItemDecoration(getContext())
-        //    //.addItemViewType(R.layout.item_not_sign_class, MeasureUtils.dpToPx(120f, getResources()), 0, 0, 0)
-        //    .withDefaultDivider()
-        //    .withBottomEdge(true));
+    recyclerNotSign.addItemDecoration(
+        new FlexibleItemDecoration(getContext())
+            .withDivider(R.drawable.divider_card_list)
+            .withBottomEdge(true));
     recyclerNotSign.setAdapter(adapter);
   }
 
