@@ -227,7 +227,7 @@ import javax.inject.Inject;
 
       mSignWayId = String.valueOf(configs.get(1).getId());
       inputSignClassWay.setContent(
-          ((Double) configs.get(1).getValue()).intValue() == 1 ? "教练点名" : "扫码签到");
+          ((Double) configs.get(1).getValue()).intValue() == 1 ? "教练点名" : "会员扫码");
 
       mSignStartId = String.valueOf(configs.get(2).getId());
       inputSignClassStart.setContent(((Double) configs.get(2).getValue()).intValue() + "");
