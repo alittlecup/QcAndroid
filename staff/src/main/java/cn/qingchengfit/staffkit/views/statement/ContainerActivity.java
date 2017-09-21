@@ -28,6 +28,8 @@ import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffDetailFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment;
+import cn.qingchengfit.staffkit.views.signin.zq.AddZqFragment;
+import cn.qingchengfit.staffkit.views.signin.zq.ZqAccessFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SaleGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SigninGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.StatementGlanceFragment;
@@ -158,6 +160,12 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 String replyId = IntentUtils.getIntentFromUri(getIntent(), "replyId");
                 String replayname = IntentUtils.getIntentFromUri(getIntent(), "replyName");
                 fragment = new ArticleCommentsListFragmentBuilder(articleid).replyId(replyId).replyName(replayname).build();
+                break;
+            case GymFunctionFactory.ZQ_ACCESS:
+                fragment = new ZqAccessFragment();
+                break;
+            case GymFunctionFactory.ADD_ZQ_ACCESS:
+                fragment = new AddZqFragment();
                 break;
         }
 

@@ -141,6 +141,10 @@ public class GymFunctionFactory {
     public static final String USER_PROTOCOL = "/user/protocol";
     public static final String USER_PROTOCOL_URL = "/protocol/staff/";
 
+    //智奇门禁
+    public static final String ZQ_ACCESS = "/zq/access";
+    public static final String ADD_ZQ_ACCESS = "/add/zq/access";
+
     public static GymFuntion instanceGymFuntion(String module) {
         GymFuntion gym = new GymFuntion.Builder().moduleName(module).text(getModuleTxt(module)).img(getDrawableRes(module)).build();
         return gym;

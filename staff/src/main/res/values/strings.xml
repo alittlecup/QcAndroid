@@ -17,7 +17,31 @@
   <string name="app_name">青橙健身管理</string>
   <string name="gym_label">场馆</string>
   <string name="action_settings">Settings</string>
-
+  <string name="common_written">已填写</string>
+  <string name="common_city">城市</string>
+  <string name="common_address">详细地址</string>
+  <string name="common_comfirm">确定</string>
+  <string name="common_cancel">取消</string>
+  <string name="common_complete">完成</string>
+  <string name="common_name">名称</string>
+  <string name="common_nextstep">下一步</string>
+  <string name="common_time_length">时长</string>
+  <string name="common_min">分钟</string>
+  <string name="course_time_length">时长%s分钟</string>
+  <string name="common_please_choose">请选择</string>
+  <string name="common_please_write">请填写</string>
+  <string name="common_un_setting">未设置</string>
+  <string name="common_have_setting">已设置</string>
+  <string name="common_wait">请稍后&#8230;</string>
+  <string name="common_del">删除</string>
+  <string name="mark">备注</string>
+  <string name="start_day">开始日期</string>
+  <string name="end_day">结束日期</string>
+  <string name="name">姓名</string>
+  <string name="gender">性别</string>
+  <string name="phone">手机</string>
+  <string name="type">类型</string>
+  <string name="name_call">名称</string>
   <string name="instruction">说明</string>
   <string name="logout">退出登录</string>
   <string name="course_type_private">私教课</string>
@@ -46,7 +70,17 @@
   <string name="title_brand">添加健身房品牌</string>
   <string name="brand">品牌名</string>
 
-
+  <string name="titile_manage_course">安排课程</string>
+  <string name="course_picture">课程图片</string>
+  <string name="course_type">课程类型</string>
+  <string name="course_length">时长(分钟)</string>
+  <string name="course_coach">课程教练</string>
+  <string name="course_place">场地</string>
+  <string name="course_account_type">结算方式</string>
+  <string name="course_batch">课程排期</string>
+  <string name="course_add_week_time">+课程周期</string>
+  <string name="course_choose_coach">选择教练</string>
+  <string name="course_add_new_coach">添加新教练</string>
   <string name="titie_set_account_type">设置结算方式</string>
   <string name="course_order_student_count">单节课可约人数</string>
   <string name="course_default_value_card">默认储值卡</string>
@@ -147,7 +181,7 @@
   <string name="charge_day">充值(天)</string>
 
   <string name="alert_endtime_greater_starttime">结束时间不能早于开始时间</string>
-  <string name="alert_batch_greater_three_month">课程排期时间不能超过一年</string>
+  <string name="alert_batch_greater_three_month">课程排期时间不能超过三个月</string>
   <string name="choose_time">选择时间</string>
   <string name="choose_week">选择星期</string>
 
@@ -336,8 +370,15 @@
   <string name="permission_forbid_del">无删除权限</string>
   <string name="copy_link_to_board">复制链接到剪切板</string>
   <string name="add">添加</string>
+  <string name="alert_del_course">该课程种类适用于%d家场馆，删除后，已有的排期和课程预约都不会受到影响。</string>
+  <string name="alert_del_course_forbid">需由同时具有%d家场馆删除课程种类权限的工作人员，才可删除该课程种类</string>
+  <string name="alert_del_cardtype_link_manage">该会员卡种类适用于多个场馆，请到[连锁运营]中进行停用。</string>
+  <string name="alert_del_cardtype_forbid">此会员卡种类适用于多个场馆，需要具有所有适用场馆下删除会员卡种类权限的用户才能进行删除。</string>
+  <string name="alert_edit_cardtype_link_manage">该会员卡种类适用于多个场馆，请到[连锁运营]中进行编辑。</string>
+  <string name="alert_edit_cardtype_forbid">此会员卡种类适用于多个场馆，需要具有所有适用场馆下修改会员卡种类权限的用户才能进行编辑。</string>
 
-
+  <string name="course_category">课程种类</string>
+  <string name="no_teacher_in_course">本课程暂无教练</string>
   <string name="desperately_loading">玩儿命加载中…</string>
   <string name="alert_permission_forbid">抱歉，您无该功能权限</string>
   <string name="no_read_permission">无查看权限</string>
@@ -345,7 +386,9 @@
   <string name="alert_at_least_one_gym">至少选择一家场馆</string>
   <string name="simple_desc">简介</string>
   <string name="limit">限制</string>
-   <string name="notification">通知</string>
+  <string name="alert_edit_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有编辑课程种类权限的用户才能进行编辑.</string>
+  <string name="alert_del_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有删除课程种类权限的用户才能进行删除.</string>
+  <string name="notification">通知</string>
 
   <!-- 签到 签出-->
   <string name="sign_type_in">签到</string>
@@ -512,11 +555,11 @@
   <string name="err_sacn_qrcode">无法识别该二维码，请确认后再进行扫描。</string>
   <string name="open_link_in_computer">请在电脑浏览器中打开以下网址</string>
   <string name="scan_url">sao.qingchengfit.cn</string>
-  <string name="scan_url_test">saotest.qingchengfit.cn</string>
   <string name="realy_open_next">我已经打开，下一步</string>
   <string name="activity_list">活动营销</string>
   <string name="fix_password">修改密码</string>
   <string name="please_input_phone_num">请输入手机号</string>
+  <string name="custom_jacket_hint">关闭自定义封面照片后，封面照片将随机展示公开上课照片</string>
   <string name="need_pay">需要支付</string>
   <string name="gym_valid_time">系统有效期: </string>
   <string name="real_recieve">实收金额</string>
@@ -553,6 +596,7 @@
   <string name="qc_follow_up_lable_toady_member">新增会员</string>
   <string name="hint_refund_less_7">该场馆将在%s到期，请及时续费</string>
   <string name="hint_refund_less_0">该场馆已于%s到期，请续费</string>
+  <string name="alert_batch_has_ordered">该结算方式已约课，无法切换。如需切换结课方式，请先取消预约。</string>
   <string name="alert_cardtype_use_other">仅限%s使用\"其他\"规格</string>
   <string name="new_su_info">新超级管理员信息</string>
   <string name="comfirm_change">确认变更</string>
@@ -622,7 +666,12 @@
   <string name="none">" "</string>
 
 
-
+  <string formatted="false" name="msg_noti_before">%s开始前提醒会员</string>
+  <string formatted="false" name="msg_less_student">上课人数不足提醒教练</string>
+  <string formatted="false" name="msg_new_noti_trainer">有新预约提醒教练</string>
+  <string formatted="false" name="msg_help_order_noti_student">教练工作人员代约%s提醒会员</string>
+  <string formatted="false" name="msg_cancle_order_noti_student">会员取消%s预约提醒会员</string>
+  <string formatted="false" name="msg_send_to_substitute">当有可约名额时发送短信给排队候补会员</string>
   <string name="help">帮助</string>
   <string name="popularize">推广</string>
   <string name="config_homepage">配置页面</string>
@@ -644,6 +693,7 @@
   <string name="module_manage_staff_desc">管理工作人员并分配权限</string>
   <string name="module_fi_card_statement_desc">可查看全部报表，包括销售报表、评分报表、会员卡报表、签到报表等</string>
   <string name="start">开始</string>
+  <string name="title_welcome_trial">欢迎试用高级版</string>
   <string name="hint_empty_fun_edit">将常用功能添加到这里</string>
   <string name="hint_empty_fun_nomal">点击【管理】，将常用功能添加到这里</string>
   <string name="lable_signin_type">签到方式</string>
@@ -814,7 +864,13 @@
   <string name="text_protocol_name">《用户注册协议》</string>
 
   //签课
-
+  <string name="text_sign_group_class">团课是否需要签课?</string>
+  <string name="text_sign_class_way">签课方式</string>
+  <string name="text_sign_class_select">请选择</string>
+  <string name="text_sign_class_start">签课开始于课程前(分钟)</string>
+  <string name="text_sign_class_end">签课开始于课程后(分钟)</string>
+  <string name="label_sign_group_class">团课是否需要签课？</string>
+  <string name="label_sign_private_class">私教是否需要签课?</string>
   <string name="not_sign_class_count">未签课统计</string>
   <string name="btn_contact_him">联系TA</string>
   <string formatted="false" name="text_filter_not_sign_time">未签课%d天内</string>
@@ -824,17 +880,22 @@
   <string name="text_empty_content_not_sign">请去团课/私教预约限制中开启</string>
   <string name="text_empty_title_not_sign_no_student">暂无未签课学员</string>
 
-  <!--会员卡服务协议-->
-  <string name="card_protocol_switcher">会员卡服务条款</string>
-  <string name="card_protocol_content">会员卡服务条款内容</string>
-  <string formatted="false" name="card_protocol_user_read_info">已阅读第%d版(%s版)</string>
-  <string name="card_protocol_first_can_not">在电脑中编辑条款</string>
+  //入场签到设置
+  <string name="signin_way">签到方式</string>
+  <string name="signin_use_card">刷卡签到</string>
+  <string name="signin_use_qrcode">扫码签到</string>
+  <string name="signin_use_zq">智奇门禁</string>
+  <string name="signin_settlement">签到结算</string>
+  <string name="text_zq_introduce">智奇门禁介绍</string>
+  <string name="text_zq_buy">智奇门禁购买</string>
 
-  <string formatted="false" name="qr_code_2web">%sapp2web/?brand_id=%s\u0026shop_id=%s\u0026module=%s</string>
-  <string formatted="false" name="qr_code_2web_add_card_term">/card_tpl/%s/term/add</string>
-  <string formatted="false" name="qr_code_2web_modify_card">/card_tpl/%s/term/edit</string>
-  <string formatted="false" name="qr_code_2web_multi_card_add">brand/%s/card-templates/%s/term/add </string>
-  <string formatted="false" name="qr_code_2web_multi_card_edit">brand/%s/card-templates/%s/term/edit</string>
-  <string name="modify">修改</string>
+  //门禁
+  <string name="add_zq_gym_name">场馆名称</string>
+  <string name="add_zq_gym_address">场馆地址</string>
+  <string name="add_zq_find_equip">如何找到设备号？</string>
+  <string name="add_zq_fun">功能</string>
+  <string name="add_zq_sign_time">可签到时间</string>
+  <string name="add_zq_sign_start">开始时间</string>
+  <string name="add_zq_sign_end">结束时间</string>
 
 </resources>
