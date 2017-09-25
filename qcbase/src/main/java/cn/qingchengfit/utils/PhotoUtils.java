@@ -1,6 +1,7 @@
 package cn.qingchengfit.utils;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import cn.qingchengfit.widgets.R;
@@ -54,18 +55,26 @@ public class PhotoUtils {
   }
 
   public static void origin(ImageView v, String url, int placeholder, int error) {
-    Glide.with(v.getContext()).load(url).placeholder(placeholder).error(error).into(v);
+    Glide.with(v.getContext())
+        .load(url)
+        .placeholder(ContextCompat.getDrawable(v.getContext(), placeholder))
+        .error(error)
+        .into(v);
   }
 
   public static void originCenterCrop(ImageView v, String url, int placeholder, int error) {
-    Glide.with(v.getContext()).load(url).centerCrop().placeholder(placeholder).error(error).into(v);
+    Glide.with(v.getContext())
+        .load(url)
+        .centerCrop()
+        .placeholder(ContextCompat.getDrawable(v.getContext(), placeholder))
+        .error(error)
+        .into(v);
   }
 
   public static void originCircle(ImageView v, String url, int placeholder, int error) {
     Glide.with(v.getContext())
         .load(url)
-        .asBitmap()
-        .placeholder(placeholder)
+        .asBitmap().placeholder(ContextCompat.getDrawable(v.getContext(), placeholder))
         .error(error)
         .into(new CircleImgWrapper(v, v.getContext()));
   }
@@ -77,8 +86,7 @@ public class PhotoUtils {
   public static void smallCircle(ImageView v, String url, int placeholder, int error) {
     Glide.with(v.getContext())
         .load(getSmall(url))
-        .asBitmap()
-        .placeholder(placeholder)
+        .asBitmap().placeholder(ContextCompat.getDrawable(v.getContext(), placeholder))
         .error(error)
         .into(new CircleImgWrapper(v, v.getContext()));
   }

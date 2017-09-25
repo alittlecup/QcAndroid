@@ -61,7 +61,7 @@ android {
   }
   productFlavors {
     dev {
-      minSdkVersion 16
+      minSdkVersion 21
       applicationId "cn.qingchengfit.staffkit.internaltest"
       manifestPlaceholders = [APP_NAME          : "内部测试",
                               bdpush_authorities: "cn.qingchengfit.bdpush.internaltest",
@@ -159,6 +159,8 @@ dependencies {
   }
   //支持左滑菜单的recyclerview
   compile 'com.tubb.smrv:swipemenu-recyclerview:5.3.0'
+  //图片选择库
+  compile 'com.zhihu.android:matisse:0.5.0-alpha4'
   //activity intent 传参数
   compile 'se.emilsjolander:intentbuilder-api:0.14.0'
   annotationProcessor 'se.emilsjolander:intentbuilder-compiler:0.14.0'

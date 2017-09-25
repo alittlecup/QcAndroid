@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
 import com.huawei.android.pushagent.PushManager;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMFriendshipManager;
@@ -109,7 +108,6 @@ public class LoginProcessor implements TIMCallBack {
         TIMFriendshipManager.getInstance().setNickName(username, new TIMCallBack() {
             @Override
             public void onError(int i, String s) {
-                Log.d("qcim","设置用户昵称：" + s);
                 //Toast.makeText(context, "设置用户昵称：" + s, Toast.LENGTH_SHORT).show();
             }
 
@@ -121,7 +119,6 @@ public class LoginProcessor implements TIMCallBack {
         TIMFriendshipManager.getInstance().setFaceUrl(avatarUrl, new TIMCallBack() {
             @Override
             public void onError(int i, String s) {
-                Log.d("qcim","设置用户头像：" + s);
                 //Toast.makeText(context, "设置用户头像：" + s, Toast.LENGTH_SHORT).show();
             }
 

@@ -72,5 +72,6 @@
   <dimen name="font_13">13sp</dimen>
   <dimen name="quarter_width">100dp</dimen>
 
+  <dimen name="grid_expected_size">120dp</dimen>
 
 </resources>

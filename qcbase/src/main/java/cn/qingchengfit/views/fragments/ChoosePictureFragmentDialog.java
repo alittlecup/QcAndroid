@@ -3,6 +3,7 @@ package cn.qingchengfit.views.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,21 +17,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.R;
-import com.commonsware.cwac.cam2.CameraActivity;
-import com.jakewharton.rxbinding.view.RxView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import java.io.File;
 import java.util.UUID;
 import rx.functions.Action1;
-
-
 
 /**
  * power by
@@ -47,186 +47,167 @@ import rx.functions.Action1;
  */
 public class ChoosePictureFragmentDialog extends DialogFragment {
 
-    public static final int CHOOSE_CAMERA = 701;
-    public static final int CHOOSE_GALLERY = 702;
-    public static final int CLIP = 703;
-    File fileClip;
-    File fileCamera;
-    private ChoosePicResult mResult;
+  public static final int CHOOSE_CAMERA = 701;
+  public static final int CHOOSE_GALLERY = 702;
+  public static final int CLIP = 703;
+  File fileClip;
+  File fileCamera;
+  private ChoosePicResult mResult;
 
-    public static ChoosePictureFragmentDialog newInstance() {
-        Bundle args = new Bundle();
-        ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
-        fragment.setArguments(args);
-        return fragment;
+  public static ChoosePictureFragmentDialog newInstance() {
+    Bundle args = new Bundle();
+    ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  public static ChoosePictureFragmentDialog newInstance(boolean clip) {
+    Bundle args = new Bundle();
+    args.putBoolean("c", clip);
+    ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  public static ChoosePictureFragmentDialog newInstance(boolean clip, int request) {
+    Bundle args = new Bundle();
+    args.putBoolean("c", clip);
+    args.putInt("r", request);
+    ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  public ChoosePicResult getResult() {
+    return mResult;
+  }
+
+  public void setResult(ChoosePicResult mResult) {
+    this.mResult = mResult;
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    this.setStyle(STYLE_NO_TITLE, R.style.ChoosePicDialogStyle);
+    fileClip = FileUtils.getTmpImageFileName(getActivity(), "clip" + UUID.randomUUID());
+    fileCamera = FileUtils.getTmpImageFileName(getActivity(), "camara" + UUID.randomUUID());
+  }
+
+  @Nullable @Override public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    Window window = this.getDialog().getWindow();
+    window.setGravity(Gravity.BOTTOM);
+    window.getDecorView().setPadding(0, 0, 0, 0);
+    WindowManager.LayoutParams lp = window.getAttributes();
+    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+    lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+    window.setAttributes(lp);
+    window.setWindowAnimations(R.style.ButtomDialogStyle);
+
+    View view = inflater.inflate(R.layout.dialog_pic_choose, container, false);
+    if (savedInstanceState != null) {
+      mResult = (ChoosePicResult) savedInstanceState.getSerializable("callback");
     }
+    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA)
+        .subscribe(new Action1<Boolean>() {
+          @Override public void call(Boolean aBoolean) {
+            if (aBoolean) {
+              Matisse.from(ChoosePictureFragmentDialog.this)
+                  .choose(MimeType.ofAll(), false)
+                  .countable(true)
+                  .capture(true)
+                  .maxSelectable(1)
+                  .captureStrategy(
+                      new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
+                  //.addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
+                  .gridExpectedSize(
+                      getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
+                  .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                  .thumbnailScale(0.85f)
+                  .imageEngine(new GlideEngine())
+                  .forResult(CHOOSE_CAMERA);
+              //Uri uri = Uri.fromFile(fileCamera);
+              //startActivityForResult(new CameraActivity.IntentBuilder(getContext()).confirmationQuality(0.7f).to(uri).build(),
+              //    CHOOSE_CAMERA);
 
-    public static ChoosePictureFragmentDialog newInstance(boolean clip) {
-        Bundle args = new Bundle();
-        args.putBoolean("c", clip);
-        ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public static ChoosePictureFragmentDialog newInstance(boolean clip, int request) {
-        Bundle args = new Bundle();
-        args.putBoolean("c", clip);
-        args.putInt("r", request);
-        ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public ChoosePicResult getResult() {
-        return mResult;
-    }
-
-    public void setResult(ChoosePicResult mResult) {
-        this.mResult = mResult;
-    }
-
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setStyle(STYLE_NO_TITLE, R.style.ChoosePicDialogStyle);
-        fileClip = FileUtils.getTmpImageFileName(getActivity(),"clip"+ UUID.randomUUID());
-        fileCamera = FileUtils.getTmpImageFileName(getActivity(),"camara"+ UUID.randomUUID());
-    }
-
-    @Nullable @Override public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Window window = this.getDialog().getWindow();
-        window.setGravity(Gravity.BOTTOM);
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setAttributes(lp);
-        window.setWindowAnimations(R.style.ButtomDialogStyle);
-
-        View view = inflater.inflate(R.layout.dialog_pic_choose, container, false);
-        if (savedInstanceState != null) {
-            mResult = (ChoosePicResult) savedInstanceState.getSerializable("callback");
-        }
-
-        TextView choosepicCameraTextView = (TextView) view.findViewById(R.id.choosepic_camera);
-        TextView choosepicGalleyTextView = (TextView) view.findViewById(R.id.choosepic_galley);
-        choosepicCameraTextView.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                new RxPermissions(getActivity()).request(Manifest.permission.CAMERA).subscribe(new Action1<Boolean>() {
-                    @Override public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                            Uri uri = Uri.fromFile(fileCamera);
-                            startActivityForResult(new CameraActivity.IntentBuilder(getContext()).confirmationQuality(0.7f).to(uri).build(),
-                                CHOOSE_CAMERA);
-
-                        } else {
-                            ToastUtils.show("请开启拍照权限");
-                        }
-                    }
-                });
+            } else {
+              ToastUtils.show("请开启拍照权限");
             }
+          }
         });
+    return view;
+  }
 
-        RxView.clicks(choosepicGalleyTextView)
-            .compose(new RxPermissions(getActivity()).ensure(Manifest.permission.READ_EXTERNAL_STORAGE))
-            .subscribe(new Action1<Boolean>() {
-                @Override public void call(Boolean aBoolean) {
-                    if (aBoolean) {
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        intent.setType("image/*");
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                            startActivityForResult(intent, CHOOSE_GALLERY);
-                        } else {
-                            startActivityForResult(intent, CHOOSE_GALLERY);
-                        }
-                    } else {
-                        new RxPermissions(getActivity()).request(Manifest.permission.READ_EXTERNAL_STORAGE)
-                            .subscribe(new Action1<Boolean>() {
-                                @Override public void call(Boolean aBoolean) {
-                                    if (aBoolean) {
-                                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
-                                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-                                        intent.setType("image/jpeg");
-
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                                            startActivityForResult(intent, CHOOSE_GALLERY);
-                                        } else {
-                                            startActivityForResult(intent, CHOOSE_GALLERY);
-                                        }
-                                    } else {
-                                        ToastUtils.show("您拒绝了读取图片请求");
-                                    }
-                                }
-                            });
-                    }
-                }
-            });
-        return view;
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+      CropImage.ActivityResult result = CropImage.getActivityResult(data);
+      if (resultCode == Activity.RESULT_OK) {
+        Uri resultUri = result.getUri();
+        RxBus.getBus()
+            .post(new EventChooseImage(FileUtils.getFilePath(getContext(), resultUri),
+                getArguments().getInt("r", 0)));
+        dismissAllowingStateLoss();
+      } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+        Exception error = result.getError();
+        ToastUtils.show(error.getMessage());
+      }
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == Activity.RESULT_OK) {
-                Uri resultUri = result.getUri();
-                RxBus.getBus().post(new EventChooseImage(FileUtils.getFilePath(getContext(), resultUri), getArguments().getInt("r", 0)));
-                dismissAllowingStateLoss();
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-                ToastUtils.show(error.getMessage());
-            }
-        }
+    String filepath = "";
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == CHOOSE_CAMERA || requestCode == CHOOSE_GALLERY) {
+        //if (requestCode == CHOOSE_GALLERY) {
+        //    filepath = FileUtils.getPath(getActivity(), data.getData());
+        //} else {
+        //    filepath = fileCamera.getAbsolutePath();
+        //}
+        filepath = Matisse.obtainPathResult(data).get(0);
+        if (getArguments() != null && getArguments().getBoolean("c") && !TextUtils.isEmpty(
+            filepath)) {
 
-        String filepath = "";
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == CHOOSE_CAMERA || requestCode == CHOOSE_GALLERY) {
-                if (requestCode == CHOOSE_GALLERY) {
-                    filepath = FileUtils.getPath(getActivity(), data.getData());
-                } else {
-                    filepath = fileCamera.getAbsolutePath();
-                }
-                if (getArguments() != null && getArguments().getBoolean("c") && !TextUtils.isEmpty(filepath)) {
-
-                    Uri uri;
-                    if (Build.VERSION.SDK_INT >= 24){
-                        uri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider", new File(filepath));
-                        getContext().grantUriPermission(getContext().getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    }else {
-                        uri = Uri.fromFile(new File(filepath));
-                    }
-                    clipPhoto(uri);
-                } else {
-                    if (mResult != null) {
-                        mResult.onChoosePicResult(true, filepath);
-                    }
-                    RxBus.getBus().post(new EventChooseImage(filepath, getArguments() == null ? 0 : getArguments().getInt("r", 0)));
-                    dismissAllowingStateLoss();
-                }
-            } else if (requestCode == CLIP) {
-                filepath = fileClip.getAbsolutePath();
-                RxBus.getBus().post(new EventChooseImage(filepath, getArguments().getInt("r", 0)));
-                dismissAllowingStateLoss();
-            }
+          Uri uri;
+          if (Build.VERSION.SDK_INT >= 24) {
+            uri = FileProvider.getUriForFile(getContext(),
+                getContext().getApplicationContext().getPackageName() + ".provider",
+                new File(filepath));
+            getContext().grantUriPermission(getContext().getPackageName(), uri,
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+          } else {
+            uri = Uri.fromFile(new File(filepath));
+          }
+          clipPhoto(uri);
         } else {
-            if (mResult != null) {
-                mResult.onChoosePicResult(false, filepath);
-            }
-            dismissAllowingStateLoss();
-            //            RxBus.getBus().post(new EventChooseImage(""));
+          if (mResult != null) {
+            mResult.onChoosePicResult(true, filepath);
+          }
+          RxBus.getBus()
+              .post(new EventChooseImage(filepath,
+                  getArguments() == null ? 0 : getArguments().getInt("r", 0)));
+          dismissAllowingStateLoss();
         }
+      } else if (requestCode == CLIP) {
+        filepath = fileClip.getAbsolutePath();
+        RxBus.getBus().post(new EventChooseImage(filepath, getArguments().getInt("r", 0)));
+        dismissAllowingStateLoss();
+      }
+    } else {
+      if (mResult != null) {
+        mResult.onChoosePicResult(false, filepath);
+      }
+      dismissAllowingStateLoss();
+      //            RxBus.getBus().post(new EventChooseImage(""));
     }
+  }
 
-    /* 裁剪图片方法实现
-    * @param uri
-    */
-    public void clipPhoto(Uri uri) {
-        CropImage.activity(uri).setAspectRatio(1, 1).start(getContext(), this);
-    }
+  /* 裁剪图片方法实现
+  * @param uri
+  */
+  public void clipPhoto(Uri uri) {
+    CropImage.activity(uri).setAspectRatio(1, 1).start(getContext(), this);
+  }
 
-    public interface ChoosePicResult {
-        void onChoosePicResult(boolean isSuccess, String filePath);
-    }
+  public interface ChoosePicResult {
+    void onChoosePicResult(boolean isSuccess, String filePath);
+  }
 }

@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
+import static android.view.View.GONE;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -65,7 +67,9 @@ import javax.inject.Inject;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private String mBeginNotiId;
+    private String mBeginMinuteId;
     private String mLessNotiId;
+    private String mLessNotMinuteId;
     private String mCancelId;
     private String mNewNotiId;
     private String mOrderNotiId;
@@ -91,7 +95,12 @@ import javax.inject.Inject;
         String courseTypeStr = getString(mIsPrivate ? R.string.course_type_private : R.string.course_type_group);
 
         swBeginNoti.setLabel(getString(R.string.msg_noti_before, courseTypeStr));
-        swLessNoti.setLabel(getString(R.string.msg_less_student));
+        if (mIsPrivate) {
+            swLessNoti.setVisibility(GONE);
+        } else {
+            swLessNoti.setVisibility(View.VISIBLE);
+            swLessNoti.setLabel(getString(R.string.msg_less_student));
+        }
         swCancleNoti.setLabel(getString(R.string.msg_cancle_order_noti_student, courseTypeStr));
         swNewNoti.setLabel(getString(R.string.msg_new_noti_trainer));
         swOrderNoti.setLabel(getString(R.string.msg_help_order_noti_student, courseTypeStr));
@@ -116,9 +125,11 @@ import javax.inject.Inject;
     void onComfirm() {
         List<ShopConfigBody.Config> data = new ArrayList<>();
         data.add(new ShopConfigBody.Config(mBeginNotiId, swBeginNotiMin.getContent()));
-        //        data.add(new ShopConfigBody.Config(mIsPrivate ? ShopConfigs.PRIVATE_BEFORE_REMIND_USER : ShopConfigs.TEAM_BEFORE_REMIND_USER, swBeginNoti.isExpanded() ? "1" : "0"));
-        data.add(new ShopConfigBody.Config(mLessNotiId, swLessNotiMin.getContent()));
-        //        data.add(new ShopConfigBody.Config(mIsPrivate ? , swLessNoti.isExpanded() ? "1" : "0"));
+        data.add(new ShopConfigBody.Config(mBeginMinuteId, swBeginNoti.isExpanded() ? "1" : "0"));
+        if (!mIsPrivate) {
+            data.add(new ShopConfigBody.Config(mLessNotiId, swLessNoti.isExpanded() ? "1" : "0"));
+            data.add(new ShopConfigBody.Config(mLessNotMinuteId, swLessNotiMin.getContent()));
+        }
 
         data.add(new ShopConfigBody.Config(mCancelId, swCancleNoti.isExpanded() ? "1" : "0"));
         // 有新预约时提醒教练
@@ -134,8 +145,10 @@ import javax.inject.Inject;
         return (mIsPrivate ? ShopConfigs.PRIVATE_BEFORE_REMIND_USER_MINUTES : ShopConfigs.TEAM_BEFORE_REMIND_USER_MINUTES).concat(",")
             .concat(mIsPrivate ? ShopConfigs.PRIVATE_BEFORE_REMIND_USER : ShopConfigs.TEAM_BEFORE_REMIND_USER)
             .concat(",")
-            //.concat(mIsPrivate ? ShopConfigs.PRIVATE_COURSE_REMIND_TEACHER_MINUTES : ShopConfigs.TEAM_COURSE_REMIND_TEACHER_MINUTES)
-            // .concat(",")
+            .concat(mIsPrivate ? "" : ShopConfigs.TEAM_COURSE_REMIND_TEACHER)
+            .concat(mIsPrivate ? "" : ",")
+            .concat(mIsPrivate ? "" : ShopConfigs.TEAM_COURSE_REMIND_TEACHER_MINUTES)
+            .concat(mIsPrivate ? "" : ",")
             .concat(
                 mIsPrivate ? ShopConfigs.PRIVATE_SMS_TEACHER_AFTER_USER_ORDER_CANCEL : ShopConfigs.TEAM_SMS_TEACHER_AFTER_USER_ORDER_CANCEL)
             .concat(",")
@@ -157,18 +170,29 @@ import javax.inject.Inject;
                     case ShopConfigs.PRIVATE_BEFORE_REMIND_USER_MINUTES:
                     case ShopConfigs.TEAM_BEFORE_REMIND_USER_MINUTES:
                         if (c.getValue() instanceof Double) {
-                            swBeginNoti.setExpanded(c.getValueInt() > 0);
                             swBeginNotiMin.setContent(c.getValueInt() + "");
                             mBeginNotiId = c.getId() + "";
                         }
                         break;
+                    case ShopConfigs.PRIVATE_BEFORE_REMIND_USER:
+                    case ShopConfigs.TEAM_BEFORE_REMIND_USER:
+                        if (c.getValue() instanceof Boolean) {
+                            swBeginNoti.setExpanded((Boolean) c.getValue());
+                            mBeginMinuteId = c.getId() + "";
+                        }
+                        break;
                     //r人数不足提醒教练
-                    case ShopConfigs.TEAM_COURSE_REMIND_TEACHER_MINUTES:
+                    case ShopConfigs.TEAM_COURSE_REMIND_TEACHER:
                     //case ShopConfigs.PRIVATE_COURSE_REMIND_TEACHER_MINUTES:
-                        if (c.getValue() instanceof Double) {
-                            swLessNoti.setExpanded(c.getValueInt() > 0);
-                            swLessNotiMin.setContent(c.getValueInt() + "");
+                        if (c.getValue() instanceof Boolean) {
+                            swLessNoti.setExpanded((Boolean) c.getValue());
                             mLessNotiId = c.getId() + "";
+                        }
+                        break;
+                    case ShopConfigs.TEAM_COURSE_REMIND_TEACHER_MINUTES:
+                        if (c.getValue() instanceof Double) {
+                            swLessNotiMin.setContent(c.getValueInt() + "");
+                            mLessNotMinuteId = c.getId() + "";
                         }
                         break;
                     case ShopConfigs.PRIVATE_SMS_TEACHER_AFTER_USER_ORDER_SAVE:

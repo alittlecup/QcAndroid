@@ -126,7 +126,8 @@ public class LoginFragment extends BaseFragment
     loginPhone.setOnEditFocusListener(new PhoneEditText.OnEditFocusListener() {
       @Override public void onFocusChange(boolean isFocus) {
         if (!isFocus) {
-          if (loginPhone.getPhoneNum().length() == 11 || loginPhone.getPhoneNum().length() == 10) {
+          if (loginPhone != null && (loginPhone.getPhoneNum().length() == 11
+              || loginPhone.getPhoneNum().length() == 10)) {
             //TODO 请求是否勾选过协议
             presenter.getIsAgree(loginPhone.getPhoneNum());
           }
@@ -189,7 +190,7 @@ public class LoginFragment extends BaseFragment
   }
 
   @Override public void onError(String msg) {
-
+    ToastUtils.show(msg);
   }
 
   @Override public void cancelLogin() {

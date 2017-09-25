@@ -180,7 +180,7 @@
   <string name="charge_times">充值(次)</string>
   <string name="charge_day">充值(天)</string>
 
-  <string name="alert_endtime_greater_starttime">结束时间不能早于结束时间</string>
+  <string name="alert_endtime_greater_starttime">结束时间不能早于开始时间</string>
   <string name="alert_batch_greater_three_month">课程排期时间不能超过三个月</string>
   <string name="choose_time">选择时间</string>
   <string name="choose_week">选择星期</string>

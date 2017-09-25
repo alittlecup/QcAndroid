@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:padding="12dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
     android:background="@color/white"
     >
 
@@ -57,7 +58,7 @@
   
   <RelativeLayout
       android:layout_width="wrap_content"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
       android:layout_marginLeft="12dp">
 
     <TextView

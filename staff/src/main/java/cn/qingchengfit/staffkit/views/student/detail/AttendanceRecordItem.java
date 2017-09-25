@@ -63,11 +63,7 @@ public class AttendanceRecordItem
       holder.itemStatementDetailHeaderdivier.setVisibility(View.INVISIBLE);
       holder.itemStatementDetailDate.setVisibility(View.GONE);
     }
-    if (!attendanceRecord.checked_in) {
-      holder.notSignClass.setVisibility(View.VISIBLE);
-    } else {
-      holder.notSignClass.setVisibility(View.GONE);
-    }
+
     if (attendanceRecord.type == 3) { //签到
       holder.itemStatementDetailPic.setImageResource(R.drawable.ic_wechat_scan);
       holder.itemStatementDetailName.setText("入场签到");
@@ -75,6 +71,7 @@ public class AttendanceRecordItem
           DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(attendanceRecord.start))
               + "  "
               + attendanceRecord.shop.name);
+      holder.notSignClass.setVisibility(View.GONE);
     } else {// 团课私教
       Glide.with(holder.itemView.getContext())
           .load(PhotoUtils.getSmall(attendanceRecord.course.photo))
@@ -88,6 +85,11 @@ public class AttendanceRecordItem
               + DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(attendanceRecord.end))
               + "  "
               + attendanceRecord.shop.name);
+      if (!attendanceRecord.checked_in) {
+        holder.notSignClass.setVisibility(View.VISIBLE);
+      } else {
+        holder.notSignClass.setVisibility(View.GONE);
+      }
     }
   }
 

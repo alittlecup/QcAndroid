@@ -124,11 +124,11 @@ public class JacketManagerFragment extends BaseFragment
         mAdapter = new JacketManageAdapter(mDatas, this);
         mAdapter.addItem(0, new JackTitleItem());
         mAdapter.addItem(1, new JacketAddItem());
+      mRecyclerView.setAdapter(mAdapter);
         mAdapter.setHandleDragEnabled(true);
         SmoothScrollLinearLayoutManager manager = new SmoothScrollLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mAdapter);
         customSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {

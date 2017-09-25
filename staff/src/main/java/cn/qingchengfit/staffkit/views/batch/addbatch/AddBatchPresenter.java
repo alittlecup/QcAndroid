@@ -116,7 +116,6 @@ public class AddBatchPresenter implements Presenter {
                     view.onSuccess();
                 } else {
                     view.onFailed();
-                    ToastUtils.logHttp(qcResponse);
                 }
             }
         });
@@ -129,7 +128,6 @@ public class AddBatchPresenter implements Presenter {
                     view.checkOk();
                 } else {
                     view.checkFailed(qcResponse.getMsg());
-                    ToastUtils.logHttp(qcResponse);
                 }
             }
         });
