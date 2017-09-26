@@ -14,7 +14,7 @@
       android:layout_height="50dp"
       android:background="@color/white"
       app:civ_text_color="@color/qc_text_black"
-      app:civ_lable="@string/add_zq_gym_name"
+      app:civ_lable="@string/add_zq_access_name"
       app:civ_clickable="false"
       app:civ_hint="请填写"
       />
@@ -27,7 +27,7 @@
       android:layout_height="50dp"
       android:background="@color/white"
       app:civ_text_color="@color/qc_text_black"
-      app:civ_lable="@string/add_zq_gym_address"
+      app:civ_lable="@string/add_zq_gym_id"
       app:civ_clickable="false"
       app:civ_hint="请填写"
       />
@@ -51,10 +51,12 @@
       android:layout_height="50dp"
       android:background="@color/white"
       app:civ_text_color="@color/qc_text_black"
-      app:civ_lable="@string/add_zq_gym_address"
+      app:civ_lable="@string/add_zq_fun"
       app:civ_clickable="true"
       app:civ_showright="true"
       />
+
+  <include layout="@layout/divider_grey"/>
 
   <TextView
       android:layout_width="match_parent"

@@ -890,8 +890,8 @@
   <string name="text_zq_buy">智奇门禁购买</string>
 
   //门禁
-  <string name="add_zq_gym_name">场馆名称</string>
-  <string name="add_zq_gym_address">场馆地址</string>
+  <string name="add_zq_access_name">门禁名称</string>
+  <string name="add_zq_gym_id">设备号</string>
   <string name="add_zq_find_equip">如何找到设备号？</string>
   <string name="add_zq_fun">功能</string>
   <string name="add_zq_sign_time">可签到时间</string>
