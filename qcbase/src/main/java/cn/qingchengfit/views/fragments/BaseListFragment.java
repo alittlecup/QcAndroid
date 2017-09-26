@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.items.CommonNoDataItem;
@@ -16,6 +17,7 @@ import cn.qingchengfit.widgets.QcLeftRightDivider;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
+import eu.davidea.flexibleadapter.helpers.AnimatorHelper;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -82,12 +84,21 @@ public abstract class BaseListFragment extends BaseFragment {
     }
     rv.setLayoutManager(linearLayoutManager);
     addDivider();
+    setAnimation();
     rv.setAdapter(commonFlexAdapter);
     if (listeners != null) commonFlexAdapter.addListener(listeners);
     if (srl != null && listeners instanceof SwipeRefreshLayout.OnRefreshListener) {
       srl.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) listeners);
     }
 
+  }
+
+  private void setAnimation() {
+    commonFlexAdapter.setAnimationEntryStep(true)
+    .setAnimationOnScrolling(true)
+    .setAnimationInitialDelay(300)
+    .setAnimationDuration(300)
+    .setAnimationInterpolator(new DecelerateInterpolator());
   }
 
   protected void addDivider() {
@@ -116,7 +127,7 @@ public abstract class BaseListFragment extends BaseFragment {
   protected void clearItems() {
     commonFlexAdapter.clear();
   }
-  public void setDatas(List<AbstractFlexibleItem> ds, int page) {
+  public void setDatas(List<? extends AbstractFlexibleItem> ds, int page) {
     stopRefresh();
     if (rv != null && commonFlexAdapter != null) {
       if (page == 1) clearItems();

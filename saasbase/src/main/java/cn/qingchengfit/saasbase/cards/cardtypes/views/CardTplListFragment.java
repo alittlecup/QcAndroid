@@ -5,6 +5,8 @@ import cn.qingchengfit.saasbase.cards.cardtypes.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.cardtypes.item.CardTplItem;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
+import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,15 +45,18 @@ public class CardTplListFragment extends BaseListFragment {
     );
   }
 
+
+
   public void setCardtpls(List<CardTpl> list){
     stopRefresh();
     if (commonFlexAdapter != null) {
-      commonFlexAdapter.clear();
+      List<IFlexible> datas = new ArrayList<>();
       if (list != null) {
         for (CardTpl cardTpl : list) {
-          commonFlexAdapter.addItem(generateItem(cardTpl));
+          datas.add(generateItem(cardTpl));
         }
       }
+      commonFlexAdapter.updateDataSet(datas,true);
     }
   }
 
@@ -67,5 +72,6 @@ public class CardTplListFragment extends BaseListFragment {
   @Override public String getNoDataStr() {
     return "暂无会员卡种类";
   }
+
 
 }

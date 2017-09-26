@@ -30,7 +30,7 @@ import java.util.Calendar;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/21.
  */
-@Leaf(module = "Course",path = "/batch/loop/add/",activity = "cn.qingchengfit.saas.SaasContainerActivity")
+@Leaf(module = "Course",path = "/batch/loop/add/")
 public class AddBatchLoopFragment extends IBatchLoopFragment {
 
   public static AddBatchLoopFragment newInstance(boolean isPrivate,int courseLenth) {

@@ -111,6 +111,10 @@ public class JobSearchChatActivity extends ChatActivity
 
   }
 
+  @Override public void popBack() {
+
+  }
+
   @Override public void onEditOk() {
 
   }

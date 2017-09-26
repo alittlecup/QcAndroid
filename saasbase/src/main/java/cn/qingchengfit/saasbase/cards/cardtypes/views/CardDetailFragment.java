@@ -1,0 +1,99 @@
+package cn.qingchengfit.saasbase.cards.cardtypes.views;
+
+import cn.qingchengfit.items.ActionDescItem;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.cards.cardtypes.bean.Card;
+import cn.qingchengfit.saasbase.cards.cardtypes.item.CardActionsItem;
+import cn.qingchengfit.saasbase.cards.cardtypes.item.CardTplItem;
+import cn.qingchengfit.saasbase.cards.cardtypes.presenters.CardDetailPresenter;
+import cn.qingchengfit.views.fragments.BaseListFragment;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
+
+/**
+ * power by
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MM.:  .:'   `:::  .:`MMMMMMMMMMM|`MMM'|MMMMMMMMMMM':  .:'   `:::  .:'.MM
+ * MMMM.     :          `MMMMMMMMMM  :*'  MMMMMMMMMM'        :        .MMMM
+ * MMMMM.    ::    .     `MMMMMMMM'  ::   `MMMMMMMM'   .     ::   .  .MMMMM
+ * MMMMMM. :   :: ::'  :   :: ::'  :   :: ::'      :: ::'  :   :: ::.MMMMMM
+ * MMMMMMM    ;::         ;::         ;::         ;::         ;::   MMMMMMM
+ * MMMMMMM .:'   `:::  .:'   `:::  .:'   `:::  .:'   `:::  .:'   `::MMMMMMM
+ * MMMMMM'     :           :           :           :           :    `MMMMMM
+ * MMMMM'______::____      ::    .     ::    .     ::     ___._::____`MMMMM
+ * MMMMMMMMMMMMMMMMMMM`---._ :: ::'  :   :: ::'  _.--::MMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMM::.         ::  .--MMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM-.     ;::-MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM. .:' .M:F_P:MMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * Created by Paper on 2017/9/29.
+ */
+public class CardDetailFragment extends BaseListFragment
+    implements CardDetailPresenter.MVPView,FlexibleAdapter.OnItemClickListener{
+
+  @Inject CardDetailPresenter presenter;
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    presenter.queryCardDetail();
+  }
+
+
+
+  @Override public String getFragmentName() {
+    return CardDetailFragment.class.getName();
+  }
+
+  @Override public int getNoDataIconRes() {
+    return 0;
+  }
+
+  @Override public String getNoDataStr() {
+    return null;
+  }
+
+  @Override public void onCardDetail(Card card) {
+    List<AbstractFlexibleItem> items = new ArrayList<>();
+    items.add(new CardTplItem(card.getCard_tpl()));
+    items.add(new CardActionsItem(card));
+    items.add(new ActionDescItem.Builder()
+        .action(1).action(R.drawable.vd_add_batch).title("绑定会员").desc(card.getBundleUsers())
+        .build());
+    items.add(new ActionDescItem.Builder()
+        .action(2).action(R.drawable.vd_add_batch).title("适用场馆").desc(card.getSupportGyms())
+        .build());
+    items.add(new ActionDescItem.Builder()
+        .action(3).action(R.drawable.vd_add_batch).title("消费记录").desc("todo")
+        .build());
+    items.add(new ActionDescItem.Builder()
+        .action(4).action(R.drawable.vd_add_batch).title("实体卡号").desc(card.getId())
+        .build());
+  }
+
+  @Override public boolean onItemClick(int position) {
+    IFlexible item = commonFlexAdapter.getItem(position);
+    if (item instanceof ActionDescItem){
+      switch (((ActionDescItem) item).getAction()){
+        case 1://绑定会员
+
+          break;
+        case 2://适用场馆
+          break;
+
+        case 3://消费记录
+          break;
+
+        case 4://实体卡号
+          break;
+      }
+    }
+
+    return true;
+  }
+}

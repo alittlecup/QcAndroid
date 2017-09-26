@@ -279,6 +279,10 @@ public abstract class BaseDialogFragment extends DialogFragment implements CView
     ToastUtils.show(e);
   }
 
+  @Override public void popBack() {
+    dismiss();
+  }
+
   @Override public void onShowError(@StringRes int e) {
     onShowError(getString(e));
   }

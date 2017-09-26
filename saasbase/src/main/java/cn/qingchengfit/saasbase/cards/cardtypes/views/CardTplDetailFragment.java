@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.cards.cardtypes.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -10,25 +9,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
-import cn.qingchengfit.saasbase.SaasRouter;
 import cn.qingchengfit.saasbase.cards.cardtypes.bean.CardTpl;
-import cn.qingchengfit.saasbase.cards.cardtypes.bean.CardTplStandard;
 import cn.qingchengfit.saasbase.cards.cardtypes.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.cardtypes.item.CardtplStandardItem;
 import cn.qingchengfit.saasbase.cards.cardtypes.presenters.CardTplDetailPresenter;
-import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
-import cn.qingchengfit.utils.ColorUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
-import cn.qingchengfit.widgets.ConnerTag;
 import cn.qingchengfit.widgets.DialogList;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -60,25 +56,23 @@ import javax.inject.Inject;
  * Created by Paper on 2017/8/23.
  */
 public class CardTplDetailFragment extends BaseFragment
-    implements CardTplDetailPresenter.MVPView ,FlexibleAdapter.OnItemClickListener {
-
-  @BindView(R2.id.cardname) TextView cardname;
-  @BindView(R2.id.cardid) TextView cardid;
-  @BindView(R2.id.support_gyms) TextView supportGyms;
-  @BindView(R2.id.limit) TextView limit;
-  @BindView(R2.id.intro) TextView intro;
-  @BindView(R2.id.type) TextView type;
-  @BindView(R2.id.card_bg) LinearLayout cardBg;
-  @BindView(R2.id.img_stutus) ConnerTag imgStutus;
-  @BindView(R2.id.cardview) CardView cardview;
-  @BindView(R2.id.recycleview) RecyclerView recycleview;
+    implements CardTplDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
+  @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
+  @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
+  @BindView(R2.id.tv_gym_name) TextView tvGymName;
+  @BindView(R2.id.tv_card_id) TextView tvCardId;
+  @BindView(R2.id.cardview) RelativeLayout cardview;
+  @BindView(R2.id.recycleview) RecyclerView recycleview;
+  @BindView(R2.id.btn_del) TextView btnDel;
 
   @Inject CardTplDetailPresenter presenter;
-  @Inject SaasRouter saasRouter;
+  //@Inject SaasRouter saasRouter;
 
   CommonFlexAdapter comonAdapter;
+
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -86,7 +80,7 @@ public class CardTplDetailFragment extends BaseFragment
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
-    comonAdapter = new CommonFlexAdapter(new ArrayList(),this);
+    comonAdapter = new CommonFlexAdapter(new ArrayList(), this);
     recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     recycleview.setAdapter(comonAdapter);
     return view;
@@ -163,39 +157,35 @@ public class CardTplDetailFragment extends BaseFragment
    * 获取会员卡基本信息
    */
   @Override public void onGetCardTypeInfo(CardTpl card_tpl) {
-    imgStutus.setText("已停卡");
-    imgStutus.setVisibility(card_tpl.is_enable ? View.GONE : View.VISIBLE);
-    cardname.setText(card_tpl.getName());
-    cardid.setText("ID:" + card_tpl.getId());
-    cardview.setCardBackgroundColor(ColorUtils.parseColor(card_tpl.getColor(), 200).getColor());
-    limit.setText(card_tpl.getLimit());
-    intro.setText(card_tpl.getDescription());
-    supportGyms.setText("适用于: " + card_tpl.getShopNames());
-    type.setText(CardBusinessUtils.getCardTypeCategoryStr(card_tpl.getType(),getContext()));
+    //imgStutus.setText("已停卡");
+    //imgStutus.setVisibility(card_tpl.is_enable ? View.GONE : View.VISIBLE);
+    //cardname.setText(card_tpl.getName());
+    //cardid.setText("ID:" + card_tpl.getId());
+    //cardview.setCardBackgroundColor(ColorUtils.parseColor(card_tpl.getColor(), 200).getColor());
+    //limit.setText(card_tpl.getLimit());
+    //intro.setText(card_tpl.getDescription());
+    //supportGyms.setText("适用于: " + card_tpl.getShopNames());
+    //type.setText(CardBusinessUtils.getCardTypeCategoryStr(card_tpl.getType(), getContext()));
   }
 
-  @Override public void onGetStandards(List<CardTplStandard> cardStandards) {
-    if (cardStandards != null){
+  @Override public void onGetStandards(List<CardTplOption> cardStandards) {
+    if (cardStandards != null) {
       comonAdapter.clear();
-      comonAdapter.setStatus(presenter.isCardTplEnable()?0:1);
-      for (CardTplStandard cardStandard : cardStandards) {
+      comonAdapter.setStatus(presenter.isCardTplEnable() ? 0 : 1);
+      for (CardTplOption cardStandard : cardStandards) {
         comonAdapter.addItem(new CardtplStandardItem(cardStandard));
       }
-      if (presenter.isCardTplEnable()){
+      if (presenter.isCardTplEnable()) {
         comonAdapter.addItem(new AddCardtplStantardItem());
       }
     }
   }
 
-
   @Override public void onDelSucceess() {
     onFinishAnimation();
     hideLoading();
     ToastUtils.show("已停卡");
-
   }
-
-
 
   @Override public void onResumeOk() {
     onFinishAnimation();
@@ -209,10 +199,10 @@ public class CardTplDetailFragment extends BaseFragment
 
   @Override public boolean onItemClick(int i) {
     IFlexible item = comonAdapter.getItem(i);
-    if (item instanceof CardtplStandardItem){
-      saasRouter.routerTo("/cardtpl/standard/?id="+((CardtplStandardItem) item).getStandard().getId());
-    }else if (item instanceof AddCardtplStantardItem){
-      saasRouter.routerTo("/cardtpl/standard/add/?cardtplid="+presenter.getCardtplId());
+    if (item instanceof CardtplStandardItem) {
+      //saasRouter.routerTo("/cardtpl/standard/?id="+((CardtplStandardItem) item).getStandard().getId());
+    } else if (item instanceof AddCardtplStantardItem) {
+      //saasRouter.routerTo("/cardtpl/standard/add/?cardtplid="+presenter.getCardtplId());
     }
     return true;
   }

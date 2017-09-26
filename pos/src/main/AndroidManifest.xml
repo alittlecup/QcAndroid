@@ -4,11 +4,37 @@
 >
 
   <application android:allowBackup="true"
+               android:name=".PosApp"
                android:icon="@mipmap/ic_launcher"
                android:label="@string/app_name"
                android:roundIcon="@mipmap/ic_launcher_round"
                android:supportsRtl="true"
-               android:theme="@style/AppTheme">
+               android:theme="@style/QcAppTheme">
+    <activity
+        android:name="cn.qingchengfit.saasbase.cards.CardActivity"
+        android:launchMode="standard"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+
+    </activity>
+
+    <activity android:name="cn.qingchengfit.saasbase.student.StudentActivity"
+      >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data
+            android:scheme="pos"
+            android:host="student"
+            />
+      </intent-filter>
+    </activity>
+
 
   </application>
 

@@ -243,6 +243,10 @@ public class MutiChooseCoachActivity extends BaseActivity
         onShowError(getString(e));
     }
 
+    @Override public void popBack() {
+
+    }
+
     @Override public boolean onItemClick(int position) {
         mFlexAdapter.toggleSelection(position);
         mFlexAdapter.notifyItemChanged(position);

@@ -80,4 +80,15 @@
     <item name="tabBackground">@drawable/bg_click</item>
     <item name="tabTextAppearance">@style/QcTextStyleStandardGrey</item>
   </style>
+  <style name="QcTabLayoutDark">
+    <item name="android:background">@color/toolbar</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">50dp</item>
+    <item name="tabGravity">center</item>
+    <item name="tabIndicatorColor">@color/colorPrimary</item>
+    <item name="tabMode">fixed</item>
+    <item name="tabMaxWidth">100dp</item>
+    <item name="tabSelectedTextColor">@color/colorPrimary</item>
+    <item name="tabTextAppearance">@style/QcTextStyleStandardGrey</item>
+  </style>
 </resources>

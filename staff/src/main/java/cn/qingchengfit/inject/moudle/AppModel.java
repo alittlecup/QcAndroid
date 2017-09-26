@@ -8,18 +8,25 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.ISaasRouter;
+import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplListWrap;
+import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplOptionListWrap;
+import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplWrapper;
+import cn.qingchengfit.saasbase.cards.cardtypes.network.body.ChargeBody;
+import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardWrap;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchCoachListWrap;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchCourseListWrap;
+import cn.qingchengfit.saasbase.course.batch.network.response.BatchDetailWrap;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchSchedulesWrap;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseScheduleDetail;
-import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateBatchDetail;
 import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
+import cn.qingchengfit.saasbase.course.batch.network.response.SingleBatchWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
 import cn.qingchengfit.saasbase.routers.ICourseRouter;
@@ -91,7 +98,7 @@ import rx.Observable;
     return new QCDbManagerImpl(app);
   }
 
-  @Provides SerPermissionImpl provoidePermission(SerPermissionImpl serPermission) {
+  @Provides SerPermissionImpl provoidePermission() {
     return serPermission;
   }
 
@@ -163,7 +170,7 @@ import rx.Observable;
         return null;
       }
 
-      @Override public Observable<QcResponsePrivateBatchDetail> qcGetBatchDetail(
+      @Override public Observable<QcDataResponse<BatchDetailWrap>> qcGetBatchDetail(
           @Path("batch_id") String batch_id) {
         return null;
       }
@@ -198,6 +205,12 @@ import rx.Observable;
         return null;
       }
 
+      @Override
+      public Observable<QcDataResponse<SingleBatchWrap>> qcGetSingleBatch(boolean isPrivate,
+          String single_id) {
+        return null;
+      }
+
       @Override public Observable<QcResponse> delBatch(String batch_id) {
         return null;
       }
@@ -205,6 +218,42 @@ import rx.Observable;
       @Override
       public Observable<QcResponse> qcUpdateBatchSchedule(boolean isPirvate, String scheduleid,
           SingleBatchBody body) {
+        return null;
+      }
+    };
+  }
+
+  @Provides ICardModel providerCardModel(){
+    return new ICardModel() {
+      @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(String type,
+          String isEnable) {
+        return null;
+      }
+
+      @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission() {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(String cardid) {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse<CardTplOptionListWrap>> qcGetOptions(String cardtps_id) {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse<CardTplListWrap>> qcGetCardFilterTpls(boolean is_active) {
+        return null;
+      }
+
+      @Override public Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id) {
+        return null;
+      }
+
+      @Override public Observable<QcResponse> qcChargeCard(ChargeBody chargeBody) {
         return null;
       }
     };

@@ -306,6 +306,10 @@ public class MutiChooseStudentActivity extends BaseActivity implements MutiChoos
         onShowError(getString(e));
     }
 
+    @Override public void popBack() {
+
+    }
+
     /**
      * recycle adapter
      */

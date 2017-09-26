@@ -27,6 +27,7 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.saasbase.course.batch.items.BatchLoopItem;
+import cn.qingchengfit.saasbase.course.batch.presenters.AddBatchPresenter;
 import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -64,7 +65,7 @@ import javax.inject.Inject;
  * <p/>
  * Created by Paper on 16/5/4 2016.
  */
-@Leaf(module = "Course", path = "/batch/add/" ,activity = "cn.qingchengfit.saasbase.SaasContainerActivity")
+@Leaf(module = "Course", path = "/batch/add/" )
 public class AddBatchFragment extends BaseFragment
     implements IBatchPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
 
@@ -81,7 +82,7 @@ public class AddBatchFragment extends BaseFragment
   @BindView(R2.id.civ_to_open_time) CommonInputView civOpenTime;
   @BindArray(R2.array.order_open_time) String[] arrayOpenTime;
 
-  @Inject IBatchPresenter presenter;
+  @Inject AddBatchPresenter presenter;
 
   /**
    * 选择准确的时间

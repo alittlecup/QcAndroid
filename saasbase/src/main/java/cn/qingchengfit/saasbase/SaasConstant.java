@@ -1,12 +1,4 @@
-package cn.qingchengfit.saasbase.repository;
-
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplListWrap;
-import java.util.HashMap;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
+package cn.qingchengfit.saasbase;
 
 /**
  * power by
@@ -26,18 +18,11 @@ import retrofit2.http.QueryMap;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/8/14.
+ * Created by Paper on 2017/9/27.
  */
 
-public interface CardApi {
-  /**
-   * 卡类型
-   */
-  //工作人员 卡类型
-  @GET("/api/v2/staffs/{id}/cardtpls/all/?show_all=1&order_by=-id") rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(
-      @Path("id") String id, @QueryMap HashMap<String, Object> params, @Query("type") String type, @Query("is_enable") String isEnable);
-  // 卡类型
-  @GET("/api/staffs/{id}/method/cardtpls/?show_all=1&order_by=-id") rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission(
-      @Path("id") String id, @QueryMap HashMap<String, Object> parasm);
-
+public class SaasConstant {
+  public static final int CATEGORY_VALUE = 1;    //储值卡
+  public static final int CATEGORY_TIMES = 2;    //次卡
+  public static final int CATEGORY_DATE = 3;    //期限卡
 }

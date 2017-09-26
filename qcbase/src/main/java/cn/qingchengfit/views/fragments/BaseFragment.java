@@ -1,6 +1,8 @@
 package cn.qingchengfit.views.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +24,7 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.PresenterDelegate;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragCallBack;
@@ -283,6 +286,23 @@ public abstract class BaseFragment extends Fragment
         return 0;
     }
 
+    protected void stuff(int res, Fragment fragment){
+      String tag = UUID.randomUUID().toString();
+      if (fragment instanceof BaseFragment) {
+        tag = ((BaseFragment) fragment).getFragmentName();
+      }
+      stuff(res, fragment, tag, R.anim.slide_hold, R.anim.slide_hold);
+    }
+
+    public void showChild(Fragment f){
+      getChildFragmentManager().beginTransaction()
+          .show(f).commitAllowingStateLoss();
+    }
+    public void hideChild(Fragment f){
+      getChildFragmentManager().beginTransaction()
+          .hide(f).commitAllowingStateLoss();
+    }
+
     protected void stuff(int res, Fragment fragment, String tag, int resIn, int resOut) {
         Fragment fragment1 = getChildFragmentManager().findFragmentByTag(tag);
         if (fragment1 != null) {
@@ -306,6 +326,28 @@ public abstract class BaseFragment extends Fragment
           .commit();
     }
   }
+
+  /**
+   * 根据uri 跳转
+   */
+  protected void routeTo(Uri uri,Bundle bd){
+    try {
+      Intent to = new Intent(Intent.ACTION_VIEW, uri);
+      startActivity(to,bd);
+    }catch (Exception e){
+      LogUtil.e("找不到模块去处理"+uri);
+      CrashUtils.sendCrash(e);
+    }
+  }
+
+  /**
+   * 跳转当前模块
+   */
+  protected void routeTo(String uri,Bundle bd){
+    if (getActivity() instanceof BaseActivity)
+      routeTo(Uri.parse(AppUtils.getCurAppSchema(getContext())+"://"+((BaseActivity) getActivity()).getModuleName()+"uri"),bd);
+  }
+
 
   protected void rmAndTo(Fragment rm, Fragment fragment, String tag) {
     if (getActivity() instanceof BaseActivity) {

@@ -11,7 +11,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.cardtypes.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplListWrap;
-import cn.qingchengfit.saasbase.repository.SaasModel;
+import cn.qingchengfit.saasbase.repository.ICardModel;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -23,7 +23,8 @@ public class CardTypeListPresenter extends BasePresenter {
   @Inject GymWrapper gymWrapper;
   @Inject QcRestRepository qcRestRepository;
   @Inject LoginStatus loginStatus;
-  @Inject SaasModel saasModel;
+  @Inject ICardModel cardModel;
+
   private MVPView view;
   private List<CardTpl> cardTpls = new ArrayList<>();
   private boolean enable = true;
@@ -62,8 +63,11 @@ public class CardTypeListPresenter extends BasePresenter {
     view = null;
   }
 
+  /**
+   * 获取所有卡种类
+   */
   public void queryCardtypeList() {
-    RxRegiste(saasModel.qcGetCardTpls(null,enable?"1":"0")
+    RxRegiste(cardModel.qcGetCardTpls(null, enable ? "1" : "0")
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

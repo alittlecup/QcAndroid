@@ -78,6 +78,8 @@ public abstract class IBatchPresenter extends BasePresenter {
     isPrivate = aPrivate;
   }
 
+
+
   /**
    * 判断规则合法性（type //1 立即开放 2 固定时间 3 提前X小时）
    */

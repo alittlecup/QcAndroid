@@ -10,6 +10,7 @@
   <color name="text_black">#333333</color>
   <color name="text_light">#ccc</color>
   <color name="bg_grey">#f4f4f4</color>
+  <color name="bg_grey_dark">#454545</color>
   <color name="backgroud_grey">@color/bg_grey</color>
   <color name="toolbar">#232428</color>
   <color name="most_black">#222222</color>
@@ -89,6 +90,7 @@
   <color name="white_two">#f4f4f4</color>
   <color name="shamrock_green">#0db14b</color>
   <color name="black">#000000</color>
+  <color name="black_a_20">#33000000</color>
 
   <!-- Fonts -->
   <color name="month_title">@color/text_black</color>

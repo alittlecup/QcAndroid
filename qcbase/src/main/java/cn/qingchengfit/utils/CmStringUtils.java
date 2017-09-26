@@ -229,4 +229,14 @@ public class CmStringUtils {
     return ret;
   }
 
+  /**
+   * 保留两位小数
+   */
+  public static String getFloatDot2(float f) {
+    if (((int) (f * 100)) % 100 != 0) return String.format(Locale.CHINA, "%.2f", f);
+    if (f == 0) return "0";
+
+    return String.format(Locale.CHINA, "%.0f", f);
+  }
+
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="bg_card_off_day">#F9944E</color>
+  <color name="bg_card_stop">#ea6161</color>
+  <color name="bg_card_out_of_day">#cccccc</color>
+</resources>

@@ -163,6 +163,10 @@ public class WardrobeReturnDialog extends BaseDialogFragment implements Wardrobe
 
   }
 
+    @Override public void popBack() {
+
+    }
+
     @OnClick(R.id.btn_close) public void onClick() {
         dismiss();
     }

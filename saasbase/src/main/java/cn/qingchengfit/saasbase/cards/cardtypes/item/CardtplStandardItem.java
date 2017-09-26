@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
-import cn.qingchengfit.saasbase.cards.cardtypes.bean.CardTplStandard;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -23,18 +23,18 @@ import java.util.List;
 public class CardtplStandardItem
     extends AbstractFlexibleItem<CardtplStandardItem.CardtplStandardVH> {
 
-  CardTplStandard standard;
+  CardTplOption option;
 
-  public CardtplStandardItem(CardTplStandard standard) {
-    this.standard = standard;
+  public CardtplStandardItem(CardTplOption option) {
+    this.option = option;
   }
 
-  public CardTplStandard getStandard() {
-    return standard;
+  public CardTplOption getOption() {
+    return option;
   }
 
-  public void setStandard(CardTplStandard standard) {
-    this.standard = standard;
+  public void setOption(CardTplOption option) {
+    this.option = option;
   }
 
   @Override public int getLayoutRes() {
@@ -50,32 +50,35 @@ public class CardtplStandardItem
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, CardtplStandardVH holder, int position,
       List payloads) {
-    holder.title.setText(standard.getContent() + CardBusinessUtils.getCardTypeCategoryUnit(standard.cardtype,holder.title.getContext()));
-    if (TextUtils.isEmpty(standard.getReal_income())) {
+    String unitStr = CardBusinessUtils.getCardTypeCategoryUnit(option.card_tpl.getCardTypeInt(),holder.title.getContext());
+    holder.title.setText(option.charge + unitStr);
+    if (TextUtils.isEmpty(option.price)) {
       holder.realIncome.setVisibility(View.GONE);
     } else {
-      holder.realIncome.setText(standard.getReal_income());
+      holder.realIncome.setText(option.price + unitStr);
       holder.realIncome.setVisibility(View.VISIBLE);
     }
-    if (TextUtils.isEmpty(standard.getValid_date())) {
+    if (option.days == 0) {
       holder.validDate.setVisibility(View.GONE);
     } else {
       holder.validDate.setVisibility(View.VISIBLE);
-      holder.validDate.setText(standard.getValid_date());
+      holder.validDate.setText(option.days+"天");
     }
-    if (TextUtils.isEmpty(standard.getSupport_type())) {
-      holder.supportType.setVisibility(View.GONE);
-    } else {
-      holder.supportType.setVisibility(View.VISIBLE);
-      holder.supportType.setText(standard.getSupport_type());
-    }
+    //是否支持充卡 和 购卡
+    //if (option.can_charge) {
+    //  holder.supportType.setVisibility(View.GONE);
+    //} else {
+    //  holder.supportType.setVisibility(View.VISIBLE);
+    //  holder.supportType.setText(standard.getSupport_type());
+    //}
+
     if (adapter.isSelected(position) ) {
       holder.chosen.setVisibility( View.VISIBLE);
     } else {
       holder.chosen.setVisibility(View.GONE);
     }
-
-    holder.tagOnlyStaff.setVisibility(standard.for_staff ? View.VISIBLE : View.GONE);
+    // TODO: 2017/9/26 是否紧用以工作人员 
+    //holder.tagOnlyStaff.setVisibility(.for_staff ? View.VISIBLE : View.GONE);
     if (adapter instanceof CommonFlexAdapter && ((CommonFlexAdapter) adapter).getStatus() == 1) {
       int colorgrey = CompatUtils.getColor(holder.title.getContext(), R.color.text_grey);
       holder.supportType.setTextColor(colorgrey);
@@ -83,11 +86,15 @@ public class CardtplStandardItem
       holder.validDate.setTextColor(colorgrey);
       holder.title.setTextColor(colorgrey);
       holder.chargeLayout.setBackgroundResource(R.drawable.shape_bg_rect_grey_corner4);
+    }else {
+      // TODO: 2017/9/26
     }
   }
 
   @Override public boolean equals(Object o) {
-    return false;
+    if (o instanceof CardtplStandardItem){
+      return ((CardtplStandardItem) o).option.id.equalsIgnoreCase(option.id);
+    }else return false;
   }
 
   public class CardtplStandardVH extends FlexibleViewHolder {

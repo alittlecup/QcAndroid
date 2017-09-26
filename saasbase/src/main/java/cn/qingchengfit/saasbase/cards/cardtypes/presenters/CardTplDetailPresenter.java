@@ -4,14 +4,13 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.SaasRouter;
 import cn.qingchengfit.saasbase.cards.cardtypes.bean.CardTpl;
-import cn.qingchengfit.saasbase.cards.cardtypes.bean.CardTplStandard;
 import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.SaasModel;
@@ -25,11 +24,10 @@ public class CardTplDetailPresenter extends BasePresenter {
   @Inject GymWrapper gymWrapper;
   @Inject SaasModel saasModel;
   @Inject SerPermisAction serPermisAction;
-  @Inject SaasRouter saasRouter;
   CardTpl cardTpl;
   private MVPView view;
 
-  @Inject public CardTplDetailPresenter() {
+  @Inject CardTplDetailPresenter() {
   }
 
   public void setCardTpl(CardTpl cardTpl) {
@@ -58,6 +56,7 @@ public class CardTplDetailPresenter extends BasePresenter {
         .subscribe(new Action1<QcDataResponse<CardTplWrapper>>() {
           @Override public void call(QcDataResponse<CardTplWrapper> qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
+              cardTpl = qcResponse.data.card_tpl;
               view.onGetCardTypeInfo(qcResponse.data.card_tpl);
             } else {
               view.onShowError(qcResponse.getMsg());
@@ -79,7 +78,7 @@ public class CardTplDetailPresenter extends BasePresenter {
       return;
     }
     if (hasPermission(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
-      saasRouter.routerTo("/cardtpl/edit/?id=" + cardTpl.getId());
+      //saasRouter.routerTo("/cardtpl/edit/?id=" + cardTpl.getId());
     }
   }
 
@@ -140,10 +139,6 @@ public class CardTplDetailPresenter extends BasePresenter {
 
 
 
-
-
-
-
   @Override public void attachView(PView v) {
     view = (MVPView) v;
   }
@@ -156,11 +151,10 @@ public class CardTplDetailPresenter extends BasePresenter {
   public interface MVPView extends CView {
 
     void onGetCardTypeInfo(CardTpl card_tpl);
+    void onGetStandards(List<CardTplOption> options);
 
-    void onGetStandards(List<CardTplStandard> cardStandards);
 
     void onDelSucceess();
-
     void onResumeOk();
 
   }

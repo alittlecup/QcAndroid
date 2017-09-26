@@ -28,7 +28,7 @@ import java.util.Calendar;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/21.
  */
-@Leaf(module = "Course",path = "/batch/loop/edit/",activity = "cn.qingchengfit.saas.SaasContainerActivity")
+@Leaf(module = "Course",path = "/batch/loop/edit/")
 public class EditBatchLoopFragment extends IBatchLoopFragment {
 
   private BatchLoop batchLoop;

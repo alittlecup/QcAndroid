@@ -9,4 +9,28 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+
+  <style name="QcAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowActionBar">false</item>
+    <item name="colorControlNormal">@color/divider_white</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/toolbar</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>
+    <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
+    <item name="android:windowIsTranslucent">false</item>
+    <item name="buttonStyle">@style/Qc.CommonBtn</item>
+    <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
+    <item name="editTextStyle">@style/Qc.EditTextStyle</item>
+    <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
+    <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
+    <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
+
+  </style>
+
 </resources>

@@ -1,7 +1,10 @@
 package cn.qingchengfit.saasbase.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.cards.cardtypes.bean.Card;
+import cn.qingchengfit.utils.CmStringUtils;
 
 /**
  * power by
@@ -35,6 +38,38 @@ public class CardBusinessUtils {
         return context.getResources().getStringArray(R.array.cardtype_category)[0];
     }
   }
+
+  public static int[] getDefaultCardbgColor(int type){
+    int[]  colors = new int[2];
+    switch (type){
+      case 1:
+        colors[0] = Color.parseColor("#4d90fe");
+        colors[1] = Color.parseColor("#54c2fa");
+        break;
+      case 2:
+        colors[0] = Color.parseColor("#ff6098");
+        colors[1] = Color.parseColor("#ffa467");
+        break;
+      default:
+        colors[0] = Color.parseColor("#24beb8");
+        colors[1] = Color.parseColor("#43e695");
+        break;
+    }
+    return colors;
+
+  }
+
+  public static String getCardBlance(Card card) {
+    switch (card.getType()) {
+      case 2:
+        return ((Float) card.getBalance()).intValue() + "次";
+      case 3:
+        return ((Float) card.getBalance()).intValue() + "天";
+      default:
+        return CmStringUtils.getFloatDot2(card.getBalance()) + "元";
+    }
+  }
+
   public static String getCardTypeCategoryUnit(int type,Context context){
     switch (type){
       case 2:

@@ -186,8 +186,9 @@ public class BaseActivity extends AppCompatActivity {
     if (backPress == null || !backPress.onFragmentBackPress()) super.onBackPressed();
   }
 
-
-
+  public String getModuleName(){
+    return "";
+  }
 
   public FragmentBackPress getBackPress() {
     return backPress;

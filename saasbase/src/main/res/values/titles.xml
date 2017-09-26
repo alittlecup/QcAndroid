@@ -14,4 +14,7 @@
   <string name="t_noti_order_msm">预约短信通知</string>
   <string name="t_batch_schedule_list">所有课程</string>
 
+
+  <string name="t_card_bind_student">绑定会员</string>
+
 </resources>

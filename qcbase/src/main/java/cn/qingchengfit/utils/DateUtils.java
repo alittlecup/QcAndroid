@@ -31,8 +31,7 @@ public class DateUtils {
 
   public static Date formatDateFromServer(String s) {
     try {
-      if (s.contains("T"))
-        s = s.replace("T", " ");
+      if (s.contains("T")) s = s.replace("T", " ");
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
       Date date = null;
       date = formatter.parse(s);
@@ -131,7 +130,7 @@ public class DateUtils {
     }
   }
 
-  public static String replaceTFromServer(String s){
+  public static String replaceTFromServer(String s) {
     return s.replace("T", " ");
   }
 
@@ -191,6 +190,7 @@ public class DateUtils {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
     return formatter.format(d);
   }
+
   public static String Date2YYYYMMDDHHmmss(Date d) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
     return formatter.format(d);
@@ -255,6 +255,16 @@ public class DateUtils {
     c.setTime(d);
     c.add(Calendar.DATE, i);
     return c.getTime();
+  }
+
+  /**
+   * 以YYMMDD的格式增加天数
+   */
+  public static String addDay(String d, int i) {
+    Calendar c = Calendar.getInstance();
+    c.setTime(formatDateFromYYYYMMDD(d));
+    c.add(Calendar.DATE, i);
+    return Date2YYYYMMDD(c.getTime());
   }
 
   /**
@@ -335,7 +345,7 @@ public class DateUtils {
     return (int) ((end.getTime() - start.getTime()) / DAY_TIME);
   }
 
-  @IntRange(from = 0 ,to = 6) public static int getDayOfWeek(Date date) {
+  @IntRange(from = 0, to = 6) public static int getDayOfWeek(Date date) {
     Calendar c = Calendar.getInstance();
     c.setTime(date);
     int i = c.get(Calendar.DAY_OF_WEEK);
@@ -382,6 +392,7 @@ public class DateUtils {
     c.add(Calendar.DATE, -day);
     return Date2YYYYMMDD(c.getTime());
   }
+
   public static Date addHour(Date d, int hour) {
     Calendar c = Calendar.getInstance();
     c.setTime(d);
@@ -491,7 +502,7 @@ public class DateUtils {
     return curYear - c.get(Calendar.YEAR);
   }
 
-  public static String getFileNameFormServer(String str){
+  public static String getFileNameFormServer(String str) {
     return str.replace("T", " ");
   }
 }

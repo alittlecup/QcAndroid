@@ -28,6 +28,7 @@ import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.google.gson.Gson;
+import dagger.android.AndroidInjection;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -61,6 +62,8 @@ public class PushReciever extends PushMessageReceiver {
      */
     public static String BD_CHANNELID = "bd_channelid";
     public static String BD_USERLID = "bd_userid";
+    @Inject GymBaseInfoAction gymBaseInfoAction;
+    @Inject SerPermisAction serPermisAction;
 
     @Override public void onBind(Context context, int i, String s, String s1, String s2, String s3) {
         Timber.e("error:" + i + "   " + s + "  " + s1 + "  channelid:" + s2 + "    " + s3);
@@ -90,6 +93,7 @@ public class PushReciever extends PushMessageReceiver {
     }
 
     @Override public void onNotificationClicked(final Context context, String s, String s1, String s2) {
+        AndroidInjection.inject(this, context);
         Timber.d("title:" + s + "   content:" + s1 + "   self:" + s2);
         if (!TextUtils.isEmpty(s2)) {
             final PushBean bean = new Gson().fromJson(s2, PushBean.class);
@@ -100,7 +104,7 @@ public class PushReciever extends PushMessageReceiver {
             restRepository.getPost_api().qcClearAllNoti(App.staffId, params);
             if (TextUtils.isEmpty(bean.url)) {
                 if (bean.type != 0 && bean.type < 16) {
-                    final CoachService coachService = GymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
+                    final CoachService coachService = gymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
                     String staffid = PreferenceUtils.getPrefString(context, Configs.PREFER_WORK_ID, "");
                     Intent intent = new Intent();
                     intent.putExtra(Configs.EXTRA_GYM_SERVICE, coachService);

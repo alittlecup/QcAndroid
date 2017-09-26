@@ -15,5 +15,6 @@ package cn.qingchengfit.utils;
  */
 public class CrashUtils {
     public static void sendCrash(Throwable throwable) {
+        LogUtil.e("Crash",throwable.getMessage());
     }
 }

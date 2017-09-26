@@ -102,6 +102,10 @@ public class ChooseCardTypeActivity extends BaseActivity implements CardTypeList
         ToastUtils.show(getString(e));
     }
 
+    @Override public void popBack() {
+
+    }
+
     class TypeListAdatper extends RecyclerView.Adapter<TypeListVH> implements View.OnClickListener {
 
         private OnRecycleItemClickListener listener;

@@ -116,6 +116,10 @@ public class ChooseWardrobeActivity extends BaseActivity implements ChooseWardro
 
     }
 
+    @Override public void popBack() {
+
+    }
+
     @Override public void onList(List<Locker> lockers, List<LockerRegion> regions) {
         getSupportFragmentManager().beginTransaction().replace(R.id.frag, ChooseMainFragment.newInstance(lockers, regions)).commit();
     }

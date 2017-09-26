@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.cards.cardtypes.views;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -17,13 +18,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.saasbase.ISaasRouter;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.cardtypes.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.cardtypes.presenters.CardTypeListPresenter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.DialogList;
+import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -50,6 +51,8 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/8/14.
  */
+
+@Leaf(module = "card",path = "/cardtpl/list/" )
 public class CardTplsHomeInGymFragment extends BaseFragment implements
     CardTypeListPresenter.MVPView,SwipeRefreshLayout.OnRefreshListener,
     FlexibleAdapter.OnItemClickListener{
@@ -62,7 +65,6 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
   @BindView(R2.id.card_disable) TextView cardDisable;
 
   @Inject CardTypeListPresenter presenter;
-  @Inject ISaasRouter iSaasRouter;
 
   int childCount = 0;
   private List<CardTplListFragment> fragmentList = new ArrayList<>();
@@ -122,9 +124,6 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
     return CardTplsHomeInGymFragment.class.getName();
   }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-  }
 
   @OnClick({ R2.id.card_disable,R2.id.card_disable_status})
   public void onClickCardDisable(){
@@ -159,7 +158,7 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
   @Override public boolean onItemClick(int i) {
     IFlexible item =fragmentList.get(viewpager.getCurrentItem()).getItem(i);
     if (item instanceof CardTplItem){
-      routeTo(iSaasRouter.toCardTplDetail(((CardTplItem) item).getCardTpl().getId()));
+      routeTo(Uri.parse("pos://student/choose/student/"),new Bundle(1));
     }
     return true;
   }

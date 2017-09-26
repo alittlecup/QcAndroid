@@ -2,7 +2,6 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import cn.qingchengfit.article.ArticleCommentsListFragment;
 import cn.qingchengfit.article.ArticleReplyFragment;
 import cn.qingchengfit.chat.ChatChooseInGymFragment;
@@ -30,8 +29,6 @@ import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
-import cn.qingchengfit.saasbase.cards.cardtypes.di.BindCardTplModule;
-import cn.qingchengfit.saasbase.di.BindSaasContainerActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -357,8 +354,6 @@ import dagger.multibindings.IntoMap;
 @SuppressWarnings({ "unused", "SpellCheckingInspection", "UnnecessaryInterfaceModifier" }) @Component(modules = {
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class,
-    BindCardTplModule.class,
-    BindSaasContainerActivity.class,
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,
     AppComponent.UnloginAdModule.class, AppComponent.HomeModule.class, AppComponent.QcVipModule.class,
     AppComponent.BaseStatementChartModule.class, AppComponent.YourFragmentModule.class, AppComponent.ChooseModule.class,

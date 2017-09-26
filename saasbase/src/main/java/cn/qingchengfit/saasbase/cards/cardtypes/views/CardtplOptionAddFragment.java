@@ -15,7 +15,6 @@ import butterknife.OnClick;
 import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
-import cn.qingchengfit.saasbase.SaasRouter;
 import cn.qingchengfit.saasbase.cards.cardtypes.presenters.AddCardtplStandardPresenter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.CommonInputTextFragment;
@@ -45,8 +44,8 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/8/23.
  */
-@Leaf(module = "Card", path = "/cardtpl/standard/add/" ,activity = "cn.qingchengfit.saasbase.SaasContainerActivity")
-public class AddCardtplStandardFragment extends BaseFragment {
+@Leaf(module = "Card", path = "/cardtpl/standard/add/" )
+public class CardtplOptionAddFragment extends BaseFragment {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
@@ -61,14 +60,14 @@ public class AddCardtplStandardFragment extends BaseFragment {
   @BindView(R2.id.btn_del) TextView btnDel;
 
   @Inject AddCardtplStandardPresenter presenter;
-  @Inject SaasRouter saasRouter;
+  //@Inject SaasRouter saasRouter;
 
 
-  public static AddCardtplStandardFragment newInstance(int type,String cardtplid) {
+  public static CardtplOptionAddFragment newInstance(int type,String cardtplid) {
     Bundle args = new Bundle();
     args.putInt("type",type);
     args.putString("id",cardtplid);
-    AddCardtplStandardFragment fragment = new AddCardtplStandardFragment();
+    CardtplOptionAddFragment fragment = new CardtplOptionAddFragment();
     fragment.setArguments(args);
     return fragment;
   }
@@ -137,7 +136,7 @@ public class AddCardtplStandardFragment extends BaseFragment {
   }
 
   @Override public String getFragmentName() {
-    return AddCardtplStandardFragment.class.getName();
+    return CardtplOptionAddFragment.class.getName();
   }
 
   @Override public void onDestroyView() {
@@ -148,7 +147,7 @@ public class AddCardtplStandardFragment extends BaseFragment {
    * {@link  CommonInputTextFragment}
    */
   @OnClick(R2.id.civ_desc) public void onCivDescClicked() {
-    saasRouter.routerTo("/common/inputtext/?t=规格描述&hint=请填写规格描述&c="+presenter.getDesc());
+    //saasRouter.routerTo("/common/inputtext/?t=规格描述&hint=请填写规格描述&c="+presenter.getDesc());
   }
 
 }

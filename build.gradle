@@ -20,7 +20,7 @@ ext {
                retrofit        : "2.3.0",
                rxbind          : "0.4.0",
                okhttp          : "3.8.1",
-               butterknife     : "8.6.0",
+               butterknife     : "8.8.1",
                javax_annotation: "10.0-b28",
                glide           : "3.7.0",
                fragmentArg     : "3.0.2",
@@ -44,12 +44,12 @@ buildscript {
     classpath 'com.android.tools.build:gradle:2.3.3'
     classpath 'me.tatarka:gradle-retrolambda:3.3.1'
     classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
-    classpath 'com.jakewharton:butterknife-gradle-plugin:8.6.0'
+    classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     classpath("com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:1.1.3") {
       changing = true
     }
-    classpath 'com.antfortune.freeline:gradle:0.8.7'
+//    classpath 'com.antfortune.freeline:gradle:0.8.7'
   }
 }
 

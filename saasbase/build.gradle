@@ -40,16 +40,16 @@ dependencies {
   })
   compile 'com.android.support:appcompat-v7:25.3.1'
   testCompile 'junit:junit:4.12'
-  annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-  compile 'com.jakewharton:butterknife:8.6.0'
+  annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
+  compile "com.jakewharton:butterknife:${libs.butterknife}"
   compile "com.google.dagger:dagger:${libs.dagger}"
   compile "com.google.dagger:dagger-android:${libs.dagger}"
   compile "com.google.dagger:dagger-android-support:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  compile "com.anbillon.flabellum:flabellum:0.1"
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:0.1"
-  annotationProcessor "com.anbillon.flabellum:dagger2:0.1"
+  compile "com.anbillon.flabellum:flabellum:0.2"
+  annotationProcessor "com.anbillon.flabellum:flabellum-processor:0.2"
+  annotationProcessor "com.anbillon.flabellum:dagger2:0.2"
 
 }
 

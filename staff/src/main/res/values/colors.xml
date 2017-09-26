@@ -22,9 +22,7 @@
   <color name="most_black">#222222</color>
 
 
-  <color name="bg_card_off_day">#F9944E</color>
-  <color name="bg_card_stop">#ea6161</color>
-  <color name="bg_card_out_of_day">#cccccc</color>
+
 
   <!--  calendar Fonts -->
   <color name="month_title">@color/text_black</color>

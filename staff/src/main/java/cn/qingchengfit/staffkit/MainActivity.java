@@ -76,6 +76,7 @@ import com.baidu.android.pushservice.PushManager;
 import com.google.gson.Gson;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.TIMManager;
+import com.tencent.qcloud.sdk.Constant;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.common.AppData;
 import com.xiaomi.mipush.sdk.MiPushClient;
@@ -213,7 +214,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
                     .subscribe(new Action1<QcDataResponse<GymList>>() {
                         @Override public void call(QcDataResponse<GymList> qcResponseGymList) {
                             if (ResponseConstant.checkSuccess(qcResponseGymList) && qcResponseGymList.data.services != null) {
-                                GymBaseInfoAction.writeGyms(qcResponseGymList.data.services);
+                                gymBaseInfoAction.writeGyms(qcResponseGymList.data.services);
                             }
                         }
                     });

@@ -1,10 +1,11 @@
 package cn.qingchengfit.saasbase.cards.cardtypes.item;
 
-import android.support.v7.widget.CardView;
+import android.animation.Animator;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -12,8 +13,9 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.cardtypes.bean.CardTpl;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
-import cn.qingchengfit.widgets.ConnerTag;
+import cn.qingchengfit.utils.DrawableUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.helpers.AnimatorHelper;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
 
   CardTpl cardTpl;
+
 
   public CardTplItem(CardTpl cardTpl) {
     this.cardTpl = cardTpl;
@@ -45,35 +48,33 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CardTplVH holder, int position,
       List payloads) {
-    holder.cardname.setText(cardTpl.getName());
-    holder.cardid.setText("ID: " + cardTpl.getId());
-    holder.intro.setText(cardTpl.getDescription());
-    holder.limit.setText(cardTpl.getLimit());
-    holder.cardview.setCardBackgroundColor(
-        cn.qingchengfit.utils.ColorUtils.parseColor(cardTpl.getColor(), 200).getColor());
-    holder.supportGyms.setText("适用场馆: " + cardTpl.getShopNames());
-    holder.imgStutus.setVisibility(cardTpl.is_enable?View.GONE:View.VISIBLE);
-    holder.type.setText(CardBusinessUtils.getCardTypeCategoryStr(cardTpl.type,holder.type.getContext()));
+    holder.tvCardTplType.setText(CardBusinessUtils.getCardTypeCategoryStr(cardTpl.type,holder.tvCardtplName.getContext()).substring(0,1));
+    holder.cardview.setBackground(DrawableUtils.generateBg(8f,CardBusinessUtils.getDefaultCardbgColor(cardTpl.type)));
+    holder.tvCardtplName.setText(cardTpl.getName());
+    holder.tvCardId.setText(cardTpl.getId());
+    holder.tvGymName.setText(cardTpl.getShopNames());
   }
 
   @Override public boolean equals(Object o) {
-    return false;
+    if (o instanceof CardTplItem){
+      return ((CardTplItem) o).getCardTpl().getId().equalsIgnoreCase(cardTpl.getId());
+    }else return false;
   }
 
   public class CardTplVH extends FlexibleViewHolder {
-    @BindView(R2.id.cardname) TextView cardname;
-    @BindView(R2.id.cardid) TextView cardid;
-    @BindView(R2.id.support_gyms) TextView supportGyms;
-    @BindView(R2.id.limit) TextView limit;
-    @BindView(R2.id.intro) TextView intro;
-    @BindView(R2.id.type) TextView type;
-    @BindView(R2.id.card_bg) LinearLayout cardBg;
-    @BindView(R2.id.img_stutus) ConnerTag imgStutus;
-    @BindView(R2.id.cardview) CardView cardview;
-
+    @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
+    @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
+    @BindView(R2.id.tv_gym_name) TextView tvGymName;
+    @BindView(R2.id.tv_card_id) TextView tvCardId;
+    @BindView(R2.id.cardview) RelativeLayout cardview;
     public CardTplVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
+    }
+
+    @Override public void scrollAnimators(@NonNull List<Animator> animators, int position,
+        boolean isForward) {
+      AnimatorHelper.slideInFromBottomAnimator(animators,itemView,mAdapter.getRecyclerView());
     }
   }
 }
