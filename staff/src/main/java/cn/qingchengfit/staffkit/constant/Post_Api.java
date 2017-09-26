@@ -67,6 +67,7 @@ import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
 import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
+import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
 import java.util.HashMap;
 import java.util.List;
 import retrofit2.Call;
@@ -307,6 +308,7 @@ public interface Post_Api {
 
     @PUT("/api/v2/staffs/{staff_id}/users/{id}/") rx.Observable<QcDataResponse> qcUpdateStudent(@Path("staff_id") String staff_id,
         @Path("id") String id, @Query("id") String gymid, @Query("model") String model, @Query("brand_id") String brandid
+
         , @Body User_Student student);
 
     @DELETE("/api/staffs/{staff_id}/users/{id}/") rx.Observable<QcResponse> qcDelStudent(@Path("staff_id") String staff_id,
@@ -677,6 +679,19 @@ public interface Post_Api {
     //发送邮件
     @POST("/api/staffs/{staff_id}/export/mail/") rx.Observable<QcResponse> qcSendMail(@Path("staff_id") String staff_id,
         @Body HashMap<String, Object> body);
+
+    //修改门禁状态
+    @PUT("/api/staffs/{staff_id}/guards/{guard_id}/")
+    rx.Observable<QcResponse> qcChangeAccessStatus(@Path("staff_id") String staff_id,
+        @Path("guard_id") String guard_id, @QueryMap HashMap<String, Object> params);
+
+    //删除门禁
+    @PUT("/api/staffs/{staff_id}/guards/{guard_id}/")
+    rx.Observable<QcResponse> qcDeleteAccess(@Path("staff_id") String staff_id,
+        @Path("guard_id") String guard_id);
+
+    @POST("/api/staffs/{staff_id}/guards/")
+    rx.Observable<QcResponse> qcAddAccess(@Path("staff_id") String staff_id, @Body AccessBody body);
 
     //暂存添加会员卡种类信息
     @POST("api/staffs/{staff_id}/cache/")

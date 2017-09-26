@@ -897,5 +897,14 @@
   <string name="add_zq_sign_time">可签到时间</string>
   <string name="add_zq_sign_start">开始时间</string>
   <string name="add_zq_sign_end">结束时间</string>
+  <string formatted="false" name="item_zq_equip_no">设备号：%s</string>
+  <string formatted="false" name="item_zq_fun">功能：%s</string>
+  <string formatted="false" name="item_zq_sign_time">可签到时间：%s 至 %s</string>
+  <string name="edit_zq_access">编辑门禁</string>
+  <string name="delete_zq_access">删除门禁</string>
+  <string name="setting_long_open">设置长开</string>
+  <string name="cancel_long_open">取消长开</string>
+  <string name="setting_long_close">设置长关</string>
+  <string name="cancel_long_close">取消长关</string>
 
 </resources>
