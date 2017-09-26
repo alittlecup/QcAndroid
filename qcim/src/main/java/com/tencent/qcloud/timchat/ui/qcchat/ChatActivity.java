@@ -1,5 +1,6 @@
 package com.tencent.qcloud.timchat.ui.qcchat;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,11 +40,13 @@ import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberInfo;
+import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMMessageDraft;
 import com.tencent.TIMMessageStatus;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
+import com.tencent.qcloud.sdk.Constant;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.R2;
 import com.tencent.qcloud.timchat.adapters.ChatImageItem;
@@ -67,6 +70,7 @@ import com.tencent.qcloud.timchat.chatutils.FileUtil;
 import com.tencent.qcloud.timchat.chatutils.MediaUtil;
 import com.tencent.qcloud.timchat.chatutils.RecorderUtil;
 import com.tencent.qcloud.timchat.chatutils.RecruitBusinessUtils;
+import com.tencent.qcloud.timchat.common.AppData;
 import com.tencent.qcloud.timchat.common.Configs;
 import com.tencent.qcloud.timchat.common.Util;
 import com.tencent.qcloud.timchat.presenter.ChatPresenter;
@@ -81,9 +85,11 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import tencent.tls.platform.TLSErrInfo;
 
 public class ChatActivity extends AppCompatActivity
-    implements ChatView, ChatItem.OnDeleteMessageItem, FlexibleAdapter.OnItemClickListener {
+    implements ChatView, ChatItem.OnDeleteMessageItem, FlexibleAdapter.OnItemClickListener,
+    LoginProcessor.OnLoginListener {
 
   static {
     AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -135,6 +141,7 @@ public class ChatActivity extends AppCompatActivity
   private String resumeJson;
   private boolean isLatestMessage;
   private String faceUrl;
+  private ProgressDialog dialog;
 
   public static void navToChat(Context context, String identify, TIMConversationType type) {
     Intent intent = new Intent(context, ChatActivity.class);
@@ -173,6 +180,23 @@ public class ChatActivity extends AppCompatActivity
       faceUrl = getIntent().getStringExtra(Configs.FACEURL);
     }
     identify = getIntent().getStringExtra(Configs.IDENTIFY);
+    input = (ChatInput) findViewById(R.id.input_panel);
+    input.setChatView(this);
+    if (TextUtils.isEmpty(TIMManager.getInstance().getLoginUser())) {
+      dialog = ProgressDialog.show(this, "", "正在登录，请稍后...");
+      try {
+        LoginProcessor processor =
+            new LoginProcessor(getApplicationContext(), Constant.username, Constant.host, this);
+        processor.sientInstall();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    } else {
+      initView();
+    }
+  }
+
+  private void initView() {
     if (getIntent().getStringExtra("groupName") != null) {
       titleStr = getIntent().getStringExtra("groupName");
       title.setTitleText(titleStr);
@@ -188,8 +212,6 @@ public class ChatActivity extends AppCompatActivity
       }
     }
     presenter = new ChatPresenter(this, identify, type);
-    input = (ChatInput) findViewById(R.id.input_panel);
-    input.setChatView(this);
     flexibleAdapter = new FlexibleAdapter(itemList, this);
     listView = (RecyclerView) findViewById(R.id.list);
     //linearLayoutManager.setStackFromEnd(false);
@@ -505,8 +527,9 @@ public class ChatActivity extends AppCompatActivity
           itemList.add(
               new ChatRercuitItem(this, (RecruitModel) (((CustomMessage) message).getData()),
                   message, (isC2C() && message.isSelf()) ? avatar
-                  : TextUtils.isEmpty(faceUrl) ? message.getMessage().getSenderProfile().getFaceUrl() : faceUrl,
-                  ChatActivity.this));
+                  : TextUtils.isEmpty(faceUrl) ? message.getMessage()
+                      .getSenderProfile()
+                      .getFaceUrl() : faceUrl, ChatActivity.this));
           break;
         case RESUME:
           itemList.add(new ChatResumeItem(this, message, (isC2C() && message.isSelf()) ? avatar
@@ -937,5 +960,23 @@ public class ChatActivity extends AppCompatActivity
     } catch (Exception e) {
 
     }
+  }
+
+  @Override public void onLoginSuccess() {
+    TIMFriendshipManager.getInstance().getSelfProfile(new TIMValueCallBack<TIMUserProfile>() {
+      @Override public void onError(int i, String s) {
+        Util.showToast(getApplicationContext(), s);
+      }
+
+      @Override public void onSuccess(TIMUserProfile timUserProfile) {
+        dialog.hide();
+        AppData.putUserAvatar(getApplicationContext(), timUserProfile.getFaceUrl());
+        initView();
+      }
+    });
+  }
+
+  @Override public void onLoginFailed(TLSErrInfo errInfo) {
+    dialog.hide();
   }
 }

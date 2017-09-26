@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,6 +29,7 @@ import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.PasswordView;
@@ -40,7 +43,7 @@ import rx.functions.Action1;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisteFragment extends BaseFragment {
+public class RegisteFragment extends BaseFragment implements LoginView {
 
   @BindView(R.id.comple_gender_label) TextView compleGenderLabel;
   @BindView(R.id.comple_gender_male) RadioButton compleGenderMale;
@@ -67,6 +70,7 @@ public class RegisteFragment extends BaseFragment {
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_registe, container, false);
     unbinder = ButterKnife.bind(this, view);
+    delegatePresenter(loginPresenter, this);
     registeBtn.setEnabled(false);
     registeGender.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -142,6 +146,23 @@ public class RegisteFragment extends BaseFragment {
   @Override public void onDestroyView() {
     RxBus.getBus().unregister(SendMsgEvent.class.getName(), RxObMsg);
     super.onDestroyView();
+  }
+
+  @Override public void onShowLogining() {
+
+  }
+
+  @Override public void onError(String msg) {
+    ToastUtils.show(msg);
+  }
+
+  @Override public void cancelLogin() {
+
+  }
+
+  @Override public void onSuccess(int status) {
+    getActivity().setResult(Activity.RESULT_OK);
+    getActivity().finish();
   }
 
   private class InternalHandler extends Handler {

@@ -18,12 +18,12 @@ import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.UpYunClient;
+import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
-import com.qingchengfit.fitcoach.bean.EventChooseImage;
+import cn.qingchengfit.events.EventChooseImage;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
-import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.items.ImageItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -165,6 +165,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
             cn.qingchengfit.utils.ToastUtils.show("您最多只能上传五张图片");
             return;
         }
+
         ChoosePictureFragmentDialog.newInstance(true).show(getFragmentManager(), "");
     }
 

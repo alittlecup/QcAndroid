@@ -21,6 +21,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -36,8 +39,9 @@ import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import rx.Observer;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -52,6 +56,7 @@ public class MyCoursePlanFragment extends BaseFragment {
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
+    @Inject QcRestRepository restRepository;
     private GymsAdapter mGymAdapter;
     private List<CoursePlan> adapterData = new ArrayList<>();
     private Unbinder unbinder;
@@ -150,33 +155,29 @@ public class MyCoursePlanFragment extends BaseFragment {
             HashMap<String, Object> params = new HashMap<>();
             params.put("id", coachService.getId());
             params.put("model", coachService.getModel());
-            RxRegiste(QcCloudClient.getApi().getApi.qcGetGymAllPlans(App.coachid, params)
+
+            RxRegiste(restRepository.createGetApi(QcCloudClient.GetApi.class)
+                .qcGetGymAllPlans(App.coachid, params)
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<QcAllCoursePlanResponse>() {
-                    @Override public void onCompleted() {
-
-                    }
-
-                    @Override public void onError(Throwable e) {
-
-                    }
-
-                    @Override public void onNext(QcAllCoursePlanResponse qcAllCoursePlanResponse) {
-                        adapterData.clear();
-                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                        if (adapterData.size() == 0) {
-                            refresh.setVisibility(View.GONE);
-                            noData.setVisibility(View.VISIBLE);
-                        } else {
-                            noData.setVisibility(View.GONE);
-                            refresh.setVisibility(View.VISIBLE);
-                            mGymAdapter.notifyDataSetChanged();
+                .subscribe(new Action1<QcAllCoursePlanResponse>() {
+                    @Override public void call(QcAllCoursePlanResponse qcAllCoursePlanResponse) {
+                        if (ResponseConstant.checkSuccess(qcAllCoursePlanResponse)) {
+                            adapterData.clear();
+                            adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                            if (adapterData.size() == 0) {
+                                refresh.setVisibility(View.GONE);
+                                noData.setVisibility(View.VISIBLE);
+                            } else {
+                                noData.setVisibility(View.GONE);
+                                refresh.setVisibility(View.VISIBLE);
+                                mGymAdapter.notifyDataSetChanged();
+                            }
+                            refresh.setRefreshing(false);
                         }
-                        refresh.setRefreshing(false);
                     }
-                }));
+                }, new NetWorkThrowable()));
         }
     }
 

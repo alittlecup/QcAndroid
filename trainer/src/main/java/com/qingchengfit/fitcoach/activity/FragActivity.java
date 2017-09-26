@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
 import com.qingchengfit.fitcoach.fragment.batch.SetAccountFragment;
 import com.qingchengfit.fitcoach.fragment.batch.space.SpaceListFragment;
 import com.qingchengfit.fitcoach.fragment.course.plan.CoursePlanHomeFragment;
-import com.qingchengfit.fitcoach.fragment.manage.EditGymFragmentBuilder;
+import com.qingchengfit.fitcoach.fragment.manage.EditGymFragment;
 
 /**
  * power by
@@ -95,7 +95,7 @@ public class FragActivity extends BaseActivity {
                 fragment = SetAccountFragment.newInstance(getIntent().getIntExtra("count", 1), getIntent().getBooleanExtra("isfree", true));
                 break;
             case 13:
-                fragment = new EditGymFragmentBuilder("", mCoachService.getBrand_name(), "", mCoachService.id, mCoachService.model).build();
+                fragment = EditGymFragment.newInstance(mCoachService.id, mCoachService.model, mCoachService.getBrand_name());
                 break;
             case 14:
                 fragment = new CoursePlanHomeFragment();

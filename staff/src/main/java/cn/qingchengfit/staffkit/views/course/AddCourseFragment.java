@@ -16,6 +16,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.CourseBody;
@@ -187,6 +188,7 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
     }
 
     @Override public void onSuccess() {
+        RxBus.getBus().post(new RefreshCourseEvent());
         hideLoading();
         getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();

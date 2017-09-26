@@ -15,6 +15,7 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -57,10 +58,16 @@ public class ResumeAndJobItem extends AbstractFlexibleItem<ResumeAndJobItem.Resu
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeAndJobVH holder, int position,
       List payloads) {
     if (jobListIndex != null) {
-      PhotoUtils.smallCircle(holder.imgMyResume, jobListIndex.avatar,
-          R.drawable.vd_default_myprofile, R.drawable.vd_default_myprofile);
-      PhotoUtils.smallCircle(holder.imgMyJobFair, jobListIndex.fair_banner,
-          R.drawable.vd_default_jobfair, R.drawable.vd_default_jobfair);
+      if (CmStringUtils.isEmpty(jobListIndex.avatar)) {
+        holder.imgMyResume.setImageResource(R.drawable.vd_default_myprofile);
+      } else {
+        PhotoUtils.smallCircle(holder.imgMyResume, jobListIndex.avatar);
+      }
+      if (CmStringUtils.isEmpty(jobListIndex.fair_banner)) {
+        holder.imgMyJobFair.setImageResource(R.drawable.vd_default_jobfair);
+      } else {
+        PhotoUtils.smallCircle(holder.imgMyJobFair, jobListIndex.fair_banner);
+      }
       if (!isLogin) {
         holder.tvResumeCompletedTip.setVisibility(GONE);
         holder.tvResumeCompleted.setText("登陆查看");

@@ -21,12 +21,23 @@ public class Constant {
     //华为证书ID
     public static int HUAWEI_BUSS_ID;
 
+    public static String username;
+    public static String host;
+
     public static void setAccountType(int accountType) {
         ACCOUNT_TYPE = accountType;
     }
 
     public static void setSdkAppid(int sdkAppid) {
         SDK_APPID = sdkAppid;
+    }
+
+    public static void setUsername(String username) {
+        Constant.username = username;
+    }
+
+    public static void setHost(String host) {
+        Constant.host = host;
     }
 
     public static void setXiaomiPushAppid(String xiaomiPushAppid) {

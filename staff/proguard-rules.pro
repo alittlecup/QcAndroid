@@ -436,6 +436,7 @@
 -dontwarn  com.jakewharton.**
 -dontwarn  com.baidu.android.pushservice.**
 -dontwarn  com.xiaomi.mipush.**
+-dontwarn com.squareup.picasso.**
 
 
 -keep class com.commonsware.cwac.** { *; }

@@ -1,7 +1,6 @@
 package com.tencent.qcloud.timchat.adapters;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,26 +9,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-import com.tencent.TIMConversationType;
-import com.tencent.TIMFriendshipManager;
-import com.tencent.TIMUserProfile;
-import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.chatmodel.Message;
-import com.tencent.qcloud.timchat.chatutils.TimeUtil;
 import com.tencent.qcloud.timchat.common.AppData;
-import com.tencent.qcloud.timchat.common.Util;
 import com.tencent.qcloud.timchat.widget.CircleImageView;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
 
 /**
  * 聊天界面adapter
@@ -108,7 +97,9 @@ public class ChatItem<T extends ChatItem.ViewHolder> extends AbstractFlexibleIte
                 .into(holder.leftAvatar);
         }else {
             Glide.with(context)
-                .load(PhotoUtils.getSmall(AppData.getAvatar(context)))
+                .load(PhotoUtils.getSmall(
+                    TextUtils.isEmpty(AppData.getAvatar(context)) ? AppData.defaultAvatar
+                        : AppData.getAvatar(context)))
                 .asBitmap()
                 .into(holder.rightAvatar);
         }

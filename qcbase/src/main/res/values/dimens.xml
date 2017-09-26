@@ -40,6 +40,7 @@
   <dimen name="qc_dialog_height">200dp</dimen>
   <dimen name="qc_text_margin">8dp</dimen>
   <dimen name="qc_icon_size">16dp</dimen>
+  <dimen name="qc_item_height_new">50dp</dimen>
 
   <dimen name="qc_divider_height">1px</dimen>
 
@@ -71,5 +72,6 @@
   <dimen name="font_13">13sp</dimen>
   <dimen name="quarter_width">100dp</dimen>
 
+  <dimen name="grid_expected_size">120dp</dimen>
 
 </resources>

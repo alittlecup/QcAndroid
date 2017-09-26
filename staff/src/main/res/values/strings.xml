@@ -180,7 +180,7 @@
   <string name="charge_times">充值(次)</string>
   <string name="charge_day">充值(天)</string>
 
-  <string name="alert_endtime_greater_starttime">结束时间不能早于结束时间</string>
+  <string name="alert_endtime_greater_starttime">结束时间不能早于开始时间</string>
   <string name="alert_batch_greater_three_month">课程排期时间不能超过三个月</string>
   <string name="choose_time">选择时间</string>
   <string name="choose_week">选择星期</string>
@@ -831,7 +831,7 @@
   <string name="shared_course">课程共享</string>
   <string name="markting_acitivies">营销活动</string>
   <string name="brand_manange">品牌管理</string>
-  <string name="alert_no_manage_permission">您没有改场馆管理权限</string>
+  <string name="alert_no_manage_permission">您没有该场馆管理权限</string>
 
   <string name="course_report_detail_number">%d人次</string>
   <string name="fun_name_export">导入导出</string>
@@ -863,4 +863,19 @@
   <string name="text_user_protocol">我已阅读并同意</string>
   <string name="text_protocol_name">《用户注册协议》</string>
 
+  //签课
+  <string name="text_sign_group_class">团课是否需要签课?</string>
+  <string name="text_sign_class_way">签课方式</string>
+  <string name="text_sign_class_select">请选择</string>
+  <string name="text_sign_class_start">签课开始于课程前(分钟)</string>
+  <string name="text_sign_class_end">签课开始于课程后(分钟)</string>
+  <string name="label_sign_group_class">团课是否需要签课？</string>
+  <string name="label_sign_private_class">私教是否需要签课?</string>
+  <string name="not_sign_class_count">未签课统计</string>
+  <string name="btn_contact_him">联系TA</string>
+  <string formatted="false" name="text_filter_not_sign_time">未签课%d天内</string>
+  <string formatted="false" name="text_filter_not_sign_count">%d节以上</string>
+  <string formatted="false" name="text_not_sign_tip">%d天内未签课%d节以上的会员共计%d人</string>
+  <string name="text_empty_title_not_sign">您的场馆未开启签课功能</string>
+  <string name="text_empty_content_not_sign">请去团课/私教预约限制中开启</string>
 </resources>

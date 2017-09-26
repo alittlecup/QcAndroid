@@ -12,6 +12,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.constant.ShopConfigs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
+import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -63,6 +64,41 @@ public class OrderLimitPresenter extends BasePresenter {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.getData().configs != null && qcResponse.getData().configs.size() > 0) {
                             view.onCourseOrderLimit(qcResponse.getData().configs.get(0));
+                        }
+                    } else {
+                        view.onShowError(qcResponse.getMsg());
+                    }
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
+                    view.onShowError(throwable.getMessage());
+                }
+            }));
+    }
+
+    void querySignLimit(boolean isPrivate) {
+        String keys = isPrivate ? ShopConfigs.PRIVATE_SIGN_CLASS_OPEN
+            + ","
+            + ShopConfigs.PRIVATE_SIGN_CLASS_WAY
+            + ","
+            + ShopConfigs.PRIVATE_SIGN_CLASS_START
+            + ","
+            + ShopConfigs.PRIVATE_SIGN_CLASS_END : ShopConfigs.GROUP_SIGN_CLASS_OPEN
+            + ","
+            + ShopConfigs.GROUP_SIGN_CLASS_WAY
+            + ","
+            + ShopConfigs.GROUP_SIGN_CLASS_START
+            + ","
+            + ShopConfigs.GROUP_SIGN_CLASS_END;
+        RxRegiste(restRepository.getGet_api()
+            .qcGetShopConfig(loginStatus.staff_id(), keys,
+                gymWrapper.getParams()).onBackpressureBuffer().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcDataResponse<SignInConfig.Data>>() {
+                @Override public void call(QcDataResponse<SignInConfig.Data> qcResponse) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
+                        if (qcResponse.getData().configs != null && qcResponse.getData().configs.size() > 0) {
+                            view.onSignClassLimit(qcResponse.getData().configs);
                         }
                     } else {
                         view.onShowError(qcResponse.getMsg());
@@ -144,5 +180,6 @@ public class OrderLimitPresenter extends BasePresenter {
         void onCourseSubstituteLimit(SignInConfig.Config config);
 
         void onSaveOk();
+        void onSignClassLimit(List<SignInConfig.Config> configs);
     }
 }

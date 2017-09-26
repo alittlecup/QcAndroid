@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.views.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -29,6 +30,7 @@ import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import com.tencent.qcloud.sdk.Constant;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -125,6 +127,17 @@ public class LoginPresenter extends BasePresenter {
         });
     }
 
+  private void initIM() {
+    Constant.setAccountType(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 12162 : 12165);
+    Constant.setSdkAppid(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 1400029014 : 1400029022);
+    Constant.setXiaomiPushAppid("2882303761517568688");
+    Constant.setBussId(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 609 : 604);
+    Constant.setXiaomiPushAppkey("5651756859688");
+    Constant.setHuaweiBussId(606);
+    Constant.setUsername("qctest_" + loginStatus.getUserId());
+    Constant.setHost(Uri.parse(Configs.Server).getHost());
+  }
+
     public void getService(final QcDataResponse<Login> qcResponLogin) {
         spGetSer = mRestRepository.getGet_api()
             .qcGetCoachService(App.staffId, null)
@@ -152,6 +165,7 @@ public class LoginPresenter extends BasePresenter {
                             gymWrapper.setBrand(new Brand.Builder().id(services.get(0).brand_id()).name(services.get(0).name()).build());
                         }
                         mLoginView.onSuccess(1);
+                        initIM();
                         RxBus.getBus().post(new EventFreshCoachService());
                         RxBus.getBus().post(new EventLoginChange());
                     }

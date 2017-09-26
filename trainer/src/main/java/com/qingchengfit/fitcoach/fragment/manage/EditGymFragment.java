@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.manage;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -16,12 +17,11 @@ import android.widget.TextView;
 import butterknife.OnClick;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.bumptech.glide.Glide;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
@@ -54,9 +54,31 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2016/12/1.
  */
-@FragmentWithArgs public class EditGymFragment extends GuideSetGymFragment {
-    @Arg String id;
-    @Arg String model;
+ public class EditGymFragment extends GuideSetGymFragment {
+
+    private String id;
+    private String model;
+
+    public static EditGymFragment newInstance(String id, String model, String name) {
+        Bundle args = new Bundle();
+        args.putString("id", id);
+        args.putString("model", model);
+        args.putString("name", name);
+        EditGymFragment fragment = new EditGymFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null){
+            id = getArguments().getString("id");
+            model = getArguments().getString("model");
+            brandNameStr = getArguments().getString("name");
+            lng = getArguments().getDouble("gd_lng");
+            lat = getArguments().getDouble("gd_lat");
+        }
+    }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
@@ -93,8 +115,12 @@ import rx.schedulers.Schedulers;
                         HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("id", ((FragActivity) getActivity()).getCoachService().getId());
                         params.put("model", ((FragActivity) getActivity()).getCoachService().getModel());
-                        Shop shop =
-                            new Shop.Builder().gd_district_id(city_code + "").gd_lat(lat).gd_lng(lng).name(gymName.getContent()).build();
+                        Shop shop = new Shop.Builder().photo(imgUrl)
+                            .gd_district_id(city_code + "")
+                            .gd_lat(lat)
+                            .gd_lng(lng)
+                            .name(gymName.getContent())
+                            .build();
                         RxRegiste(QcCloudClient.getApi().postApi.qcUpdateGym(App.coachid + "", params, shop)
                             .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
@@ -143,15 +169,14 @@ import rx.schedulers.Schedulers;
                             .into(new CircleImgWrapper(gymImg, getContext()));
                         gymName.setContent(qcResponse.data.gym.getName());
                         gymAddress.setContent(qcResponse.data.gym.getDistrictStr());
+                        lat = qcResponse.data.gym.gd_lat;
+                        lng = qcResponse.data.gym.gd_lng;
+                        city_code = Integer.valueOf(qcResponse.data.gym.getGd_district().city.id);
                     } else {
                         ToastUtils.show(qcResponse.getMsg());
                     }
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    ToastUtils.show(throwable.getMessage());
-                }
-            }));
+            }, new NetWorkThrowable()));
     }
 
     @OnClick(R.id.next_step) public void onNextStep() {

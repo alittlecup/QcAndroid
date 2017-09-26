@@ -94,10 +94,12 @@ public class RxBus {
     public void unregister(@NonNull String tag, @NonNull Observable observable) {
         List<Subject> subjects = subjectMapper.get(tag);
         if (null != subjects) {
-            subjects.remove((Subject) observable);
-            if (subjects.size() == 0) {
-                subjectMapper.remove(tag);
-                LogUtil.d(TAG, "[unregister]subjectMapper: " + subjectMapper);
+            if (observable instanceof Subject) {
+                subjects.remove((Subject) observable);
+                if (subjects.size() == 0) {
+                    subjectMapper.remove(tag);
+                    LogUtil.d(TAG, "[unregister]subjectMapper: " + subjectMapper);
+                }
             }
         }
     }

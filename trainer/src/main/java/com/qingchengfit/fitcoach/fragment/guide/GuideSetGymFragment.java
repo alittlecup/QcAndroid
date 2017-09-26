@@ -22,10 +22,12 @@ import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -39,11 +41,10 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
-import com.qingchengfit.fitcoach.bean.EventChooseImage;
+import cn.qingchengfit.events.EventChooseImage;
 import com.qingchengfit.fitcoach.bean.EventStep;
 import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import javax.inject.Inject;
@@ -144,7 +145,7 @@ import rx.schedulers.Schedulers;
         RxBusAdd(EventChooseImage.class).subscribe(new Action1<EventChooseImage>() {
             @Override public void call(EventChooseImage eventChooseImage) {
                 showLoading();
-                UpYunClient.rxUpLoad("gym/", eventChooseImage.filePath)
+                UpYunClient.rxUpLoad("/gym/", eventChooseImage.filePath)
                     .onBackpressureBuffer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -157,10 +158,7 @@ import rx.schedulers.Schedulers;
                                 .into(new CircleImgWrapper(gymImg, getContext()));
                             imgUrl = s;
                         }
-                    }, new Action1<Throwable>() {
-                        @Override public void call(Throwable throwable) {
-                        }
-                    });
+                    },new NetWorkThrowable());
             }
         });
         initData();
@@ -193,7 +191,33 @@ import rx.schedulers.Schedulers;
                 //startActivityForResult(toChooseBrand, 1);
                 break;
             case R.id.layout_gym_img:
-                ChoosePictureFragmentDialog.newInstance(true).show(getFragmentManager(), "");
+                ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance(true);;
+                //choosePictureFragmentDialog.setResult(
+                //    new ChoosePictureFragmentDialog.ChoosePicResult() {
+                //        @Override
+                //        public void onChoosePicResult(boolean isSuccess, String filePath) {
+                //            if (isSuccess) {
+                //                showLoading();
+                //                UpYunClient.rxUpLoad("/header/", filePath)
+                //                    .onBackpressureBuffer()
+                //                    .subscribeOn(Schedulers.io())
+                //                    .observeOn(AndroidSchedulers.mainThread())
+                //                    .subscribe(new Action1<String>() {
+                //                        @Override public void call(String s) {
+                //                            imgHeader = s;
+                //                            Glide.with(getContext())
+                //                                .load(
+                //                                    com.tencent.qcloud.timchat.widget.PhotoUtils.getSmall(s))
+                //                                .asBitmap()
+                //                                .into(
+                //                                    new com.tencent.qcloud.timchat.widget.CircleImgWrapper(
+                //                                        gymImg, getContext()));
+                //                        }
+                //                    }, new NetWorkThrowable());
+                //            }
+                //        }
+                //    });
+                choosePictureFragmentDialog.show(getFragmentManager(), "");
                 break;
             case R.id.gym_address:
                 new RxPermissions(getActivity())

@@ -29,7 +29,7 @@ import cn.qingchengfit.utils.FileUtils;
 import com.jakewharton.rxbinding.view.RxView;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.bean.EventChooseImage;
+import cn.qingchengfit.events.EventChooseImage;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import java.io.File;
 import java.util.List;

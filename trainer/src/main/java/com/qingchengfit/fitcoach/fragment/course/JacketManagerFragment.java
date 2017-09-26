@@ -20,11 +20,11 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.JacketManageAdapter;
-import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.items.JackManageItem;
 import com.qingchengfit.fitcoach.items.JackTitleItem;
 import com.qingchengfit.fitcoach.items.JacketAddItem;
@@ -124,11 +124,11 @@ public class JacketManagerFragment extends BaseFragment
         mAdapter = new JacketManageAdapter(mDatas, this);
         mAdapter.addItem(0, new JackTitleItem());
         mAdapter.addItem(1, new JacketAddItem());
+      mRecyclerView.setAdapter(mAdapter);
         mAdapter.setHandleDragEnabled(true);
         SmoothScrollLinearLayoutManager manager = new SmoothScrollLinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mAdapter);
         customSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {

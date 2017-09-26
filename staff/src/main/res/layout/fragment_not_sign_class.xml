@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:background="@color/white"
+      android:orientation="horizontal"
+      >
+
+    <LinearLayout
+        android:id="@+id/layout_not_sign_time"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+      <TextView
+          android:id="@+id/text_not_sign_filter_time"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          tools:text="未签课7天内"
+          style="@style/QcTextStyleSmallDark"
+          />
+
+      <ImageView
+          android:id="@+id/image_not_sign_filter_time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="5dp"
+          android:src="@drawable/ic_arrow_down"
+          />
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey_vertical"/>
+
+    <LinearLayout
+        android:id="@+id/layout_not_sign_count"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+      <TextView
+          android:id="@+id/text_not_sign_filter_count"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          tools:text="5节以上"
+          style="@style/QcTextStyleSmallDark"
+          />
+
+      <ImageView
+          android:id="@+id/image_not_sign_filter_count"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="5dp"
+          android:src="@drawable/ic_arrow_down"
+          />
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/text_filter_total"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:paddingLeft="15dp"
+          android:paddingRight="15dp"
+          tools:text="缺勤7天内的会员共计30人"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+      <include layout="@layout/divider_grey"/>
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recycler_not_sign"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey"
+        android:alpha="0.4"
+        android:visibility="gone"
+        />
+
+    <FrameLayout
+        android:id="@+id/fragment_not_sign_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <FrameLayout
+        android:id="@+id/frag_not_sign_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+  </FrameLayout>
+
+</LinearLayout>

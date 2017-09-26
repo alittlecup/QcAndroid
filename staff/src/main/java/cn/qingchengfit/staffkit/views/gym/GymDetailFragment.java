@@ -522,7 +522,7 @@ public class GymDetailFragment extends BaseFragment
     @Override public void onManageBrand() {
         //品牌管理
         if (!gymWrapper.getBrand().has_add_permission) {
-            cn.qingchengfit.utils.ToastUtils.show("您没有改场馆管理权限");
+            cn.qingchengfit.utils.ToastUtils.show("您没有该场馆管理权限");
             return;
         }
         Intent toBrandManage = new Intent(getActivity(), BrandManageActivity.class);
