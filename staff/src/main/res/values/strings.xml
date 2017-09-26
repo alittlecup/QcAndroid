@@ -831,7 +831,7 @@
   <string name="shared_course">课程共享</string>
   <string name="markting_acitivies">营销活动</string>
   <string name="brand_manange">品牌管理</string>
-  <string name="alert_no_manage_permission">您没有改场馆管理权限</string>
+  <string name="alert_no_manage_permission">您没有该场馆管理权限</string>
 
   <string name="course_report_detail_number">%d人次</string>
   <string name="fun_name_export">导入导出</string>

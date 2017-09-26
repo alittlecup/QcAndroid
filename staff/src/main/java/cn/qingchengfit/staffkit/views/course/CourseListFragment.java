@@ -3,6 +3,7 @@ package cn.qingchengfit.staffkit.views.course;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CourseType;
@@ -120,6 +122,8 @@ public class CourseListFragment extends BaseFragment implements FlexibleAdapter.
             return v;
         }
 
+        initBus();
+
         mAdatper = new CommonFlexAdapter(mDatas, this);
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -162,6 +166,18 @@ public class CourseListFragment extends BaseFragment implements FlexibleAdapter.
             });
         }
         //toolbarLayout.setVisibility(getParentFragment() == null ?View.GONE:View.VISIBLE);
+    }
+
+    private void initBus(){
+        RxBusAdd(RefreshCourseEvent.class)
+            .onBackpressureLatest()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<RefreshCourseEvent>() {
+                @Override public void call(RefreshCourseEvent refreshCourseEvent) {
+                    freshData();
+                }
+            });
     }
 
     public void freshData() {

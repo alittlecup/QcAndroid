@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -159,7 +161,8 @@ public class RegisteFragment extends BaseFragment implements LoginView {
   }
 
   @Override public void onSuccess(int status) {
-
+    getActivity().setResult(Activity.RESULT_OK);
+    getActivity().finish();
   }
 
   private class InternalHandler extends Handler {

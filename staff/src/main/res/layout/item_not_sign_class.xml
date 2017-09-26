@@ -7,6 +7,7 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:background="@color/white"
+    android:gravity="center_vertical"
     >
 
   <RelativeLayout

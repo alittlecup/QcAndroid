@@ -165,7 +165,7 @@ public class LoginPresenter extends BasePresenter {
                             gymWrapper.setBrand(new Brand.Builder().id(services.get(0).brand_id()).name(services.get(0).name()).build());
                         }
                         mLoginView.onSuccess(1);
-                      initIM();
+                        initIM();
                         RxBus.getBus().post(new EventFreshCoachService());
                         RxBus.getBus().post(new EventLoginChange());
                     }
