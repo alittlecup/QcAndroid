@@ -206,7 +206,6 @@
             app:civ_lable="@string/end_day"
             app:civ_showright="true"
             tools:visibility="visible"
-
             />
 
 
@@ -264,14 +263,16 @@
               app:civ_showdivier="false"
               app:civ_showright="true"
               />
-
-
         </LinearLayout>
+
+        <include layout="@layout/divider_grey"/>
+
         <cn.qingchengfit.widgets.ExpandedLayout
             android:id="@+id/el_auto_open_card"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             android:visibility="gone"
+            android:background="@color/white"
             app:el_label="自动开卡"
             />
         <TextView

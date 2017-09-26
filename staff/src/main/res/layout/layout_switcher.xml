@@ -16,8 +16,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerVertical="true"
-
       tools:text="设置限制条件"
+      style="@style/QcTextStyleStandardDark"
       />
 
   <android.support.v7.widget.SwitchCompat
