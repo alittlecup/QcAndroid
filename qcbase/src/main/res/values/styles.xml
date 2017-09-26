@@ -8,7 +8,7 @@
     <item name="colorAccent">@color/red</item>
   </style>
 
-  <style name="QcAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+  <style name="QcPicAppTheme" parent="Matisse.Zhihu">
     <!-- Customize your theme here. -->
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>

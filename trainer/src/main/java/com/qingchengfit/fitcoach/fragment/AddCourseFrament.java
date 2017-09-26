@@ -22,6 +22,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.UpYunClient;
+import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;

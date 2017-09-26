@@ -124,7 +124,7 @@ public class CourseManageFragment extends BaseFragment {
         courseManagerAdapter.setClickTimeListener(new OnRecycleItemClickListener() {
             @Override public void onItemClick(View v, int pos) {
                 CourseManageBean bean = datas.get(pos);
-                if (!courseManagerAdapter.isEditable()) {
+                if (!bean.outdue && !courseManagerAdapter.isEditable()) {
                     getFragmentManager().beginTransaction()
                         .replace(R.id.frag, new SingleBatchFragmentBuilder(mCourseType == Configs.TYPE_PRIVATE, bean.id).build())
                         .addToBackStack(null)

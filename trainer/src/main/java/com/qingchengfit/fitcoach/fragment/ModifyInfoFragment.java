@@ -27,6 +27,7 @@ import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.CitiesChooser;
+import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;

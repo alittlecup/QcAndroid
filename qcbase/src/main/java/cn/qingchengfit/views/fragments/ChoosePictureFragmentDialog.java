@@ -32,6 +32,8 @@ import java.io.File;
 import java.util.UUID;
 import rx.functions.Action1;
 
+import static com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE;
+
 /**
  * power by
  * <p/>
@@ -114,6 +116,7 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
             if (aBoolean) {
               Matisse.from(ChoosePictureFragmentDialog.this)
                   .choose(MimeType.ofAll(), false)
+                  .theme(R.style.QcPicAppTheme)
                   .countable(true)
                   .capture(true)
                   .maxSelectable(1)
@@ -140,7 +143,7 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+    if (requestCode == CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
       CropImage.ActivityResult result = CropImage.getActivityResult(data);
       if (resultCode == Activity.RESULT_OK) {
         Uri resultUri = result.getUri();
@@ -157,11 +160,6 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
     String filepath = "";
     if (resultCode == Activity.RESULT_OK) {
       if (requestCode == CHOOSE_CAMERA || requestCode == CHOOSE_GALLERY) {
-        //if (requestCode == CHOOSE_GALLERY) {
-        //    filepath = FileUtils.getPath(getActivity(), data.getData());
-        //} else {
-        //    filepath = fileCamera.getAbsolutePath();
-        //}
         filepath = Matisse.obtainPathResult(data).get(0);
         if (getArguments() != null && getArguments().getBoolean("c") && !TextUtils.isEmpty(
             filepath)) {
@@ -178,9 +176,6 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
           }
           clipPhoto(uri);
         } else {
-          if (mResult != null) {
-            mResult.onChoosePicResult(true, filepath);
-          }
           RxBus.getBus()
               .post(new EventChooseImage(filepath,
                   getArguments() == null ? 0 : getArguments().getInt("r", 0)));
@@ -190,6 +185,9 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
         filepath = fileClip.getAbsolutePath();
         RxBus.getBus().post(new EventChooseImage(filepath, getArguments().getInt("r", 0)));
         dismissAllowingStateLoss();
+      }
+      if (mResult != null) {
+        mResult.onChoosePicResult(true, filepath);
       }
     } else {
       if (mResult != null) {

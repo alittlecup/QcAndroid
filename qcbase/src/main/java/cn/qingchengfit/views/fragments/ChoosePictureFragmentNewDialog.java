@@ -120,7 +120,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
                   .choose(MimeType.ofAll(), false)
                   .countable(true)
                   .capture(true)
-                  .theme(R.style.QcAppTheme)
+                  .theme(R.style.QcPicAppTheme)
                   .maxSelectable(1)
                   .captureStrategy(
                       new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
