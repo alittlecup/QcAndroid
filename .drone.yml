@@ -12,15 +12,29 @@ pipeline:
     image: androidci
     workspace:
       base: /root
+    secrets: 
+      - DEBUG
+    when: 
+      event: pull_request
     commands:
       - agree-license.sh android-sdk-license 8933bad161af4178b1185d1a37fbf41ea5269c55
       - echo 'start'
       - ./gradlew -g gradle_cache assembleDevDebug --no-daemon
-#      - ./gradlew -g gradle_cache widgets:androidDependencies
-#      when:
-#        branch: drone
-      - fir publish staff/build/outputs/apk/staff-dev-debug.apk -T 194a7a7976904a110a45f5a34a614323
-      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T 194a7a7976904a110a45f5a34a614323
+      - fir publish staff/build/outputs/apk/staff-dev-debug.apk -T $DEBUG
+      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T $DEBUG
+  mirror:
+    image: androidci
+    workspace:
+      base: /root
+    secrets: 
+      - PRO
+    when: 
+      branch: develop
+    commands:
+      - agree-license.sh android-sdk-license 8933bad161af4178b1185d1a37fbf41ea5269c55
+      - ./gradlew -g gradle_cache assembleProdcutRelease --no-daemon
+      - fir publish staff/build/outputs/apk/staff-product-release.apk -T $PRO
+      - fir publish trainer/build/outputs/apk/trainer-product-release.apk -T $PRO
   rebuild-cache:
     image: drillster/drone-volume-cache
     rebuild: true
@@ -29,4 +43,3 @@ pipeline:
       - gradle_cache
 #      - build
     volumes:
-      - /tmp/cache:/cache/

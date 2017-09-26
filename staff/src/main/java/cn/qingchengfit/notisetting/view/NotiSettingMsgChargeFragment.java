@@ -16,6 +16,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.notisetting.item.NotiSettingChargeItem;
 import cn.qingchengfit.notisetting.presenter.NotiSettingMsgChargePresenter;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -127,9 +128,8 @@ public class NotiSettingMsgChargeFragment extends BaseFragment
 
   @Override public void onPayPage(String s) {
     hideLoading();
-    // TODO: 2017/8/8 test
-    //WebActivity.startWeb(s, getContext());
-    onPaySuccess();
+    WebActivity.startWeb(s, getContext());
+    //onPaySuccess();
   }
 
   @Override public void onPaySuccess() {
