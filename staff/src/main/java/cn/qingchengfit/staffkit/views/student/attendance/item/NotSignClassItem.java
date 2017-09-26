@@ -24,10 +24,12 @@ import java.util.List;
 
 public class NotSignClassItem extends AbstractFlexibleItem<NotSignClassItem.NotSignVH>{
 
-  NotSignStudent student;
+  private NotSignStudent student;
+  private OnClickContactListener contactListener;
 
-  public NotSignClassItem(NotSignStudent student) {
+  public NotSignClassItem(NotSignStudent student, OnClickContactListener contactListener) {
     this.student = student;
+    this.contactListener = contactListener;
   }
 
   public NotSignStudent getData() {
@@ -39,7 +41,9 @@ public class NotSignClassItem extends AbstractFlexibleItem<NotSignClassItem.NotS
     NotSignVH holder = new NotSignVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     holder.btnContactHim.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-
+        if (contactListener != null){
+          contactListener.onContact(student.phone);
+        }
       }
     });
     return holder;
@@ -83,4 +87,9 @@ public class NotSignClassItem extends AbstractFlexibleItem<NotSignClassItem.NotS
       ButterKnife.bind(this, view);
     }
   }
+
+  public interface OnClickContactListener{
+    void onContact(String phone);
+  }
+
 }

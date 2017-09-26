@@ -44,21 +44,6 @@ public class ShareDialogExtendLayout extends LinearLayout {
     this.listener = listener;
   }
 
-  //@Override protected void onFinishInflate() {
-  //  super.onFinishInflate();
-  //  imgIcon = (ImageView)findViewById(R.id.img_fun_share);
-  //  title = (TextView)findViewById(R.id.text_fun_name_share);
-  //  imgRightArrow = (ImageView)findViewById(R.id.img_right_arrow_share);
-  //  content = (TextView)findViewById(R.id.text_content_share_extends);
-  //  this.setOnClickListener(new OnClickListener() {
-  //    @Override public void onClick(View v) {
-  //      if (listener != null){
-  //        listener.onSelectExtend(shareExtends.key);
-  //      }
-  //    }
-  //  });
-  //}
-
   private void init(Context context) {
     View view = inflate(context, R.layout.item_share_dialog_extends, this);
     imgIcon = (ImageView) view.findViewById(R.id.img_fun_share);
