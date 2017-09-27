@@ -55,6 +55,10 @@ public class ConstantNotification {
     public static final int TYPE_MEETING_CERTIFICATES = 10006;              //会议-发送证书-学员
     public static final int TYPE_MEETING_PAY_CHECK = 10007;             //会议-转账审核通过-学员
     public static final int TYPE_MEETING_PAY_CHECK_FAIL = 10008;                //会议-转账审核不通过-学员
+    public static final int TYPE_MEETING_TICKET_REFUND = 10009;                //会议-作废门票-学员
+    public static final int TYPE_MEETING_TRADE_REFUND = 10010;                //会议-取消订单-学员
+
+
     public static final int TYPE_CLOUD_MESSAGE_COACH = 20001;               //系统-发送通知-教练
     public static final int TYPE_CLOUD_MESSAGE_STAFF = 20002;               //系统-发送通知-工作人员
     public static final int TYPE_CLOUD_COMMENT = 20003;               //评论-收到评论
@@ -81,7 +85,7 @@ public class ConstantNotification {
     public static final String STUDY_TRAIN_NOTIFICATION_STR = "meeting";
     public static final int[] STUDY_TRAIN_NOTIFICATION = {
         TYPE_MEETING_PAY, TYPE_MEETING_TICKET, TYPE_MEETING_PAY_CERTIFICATES, TYPE_MEETING_SCHEDULE, TYPE_MEETING_SCHEDULE_CANCEL,
-        TYPE_MEETING_CERTIFICATES, TYPE_MEETING_PAY_CHECK, TYPE_MEETING_PAY_CHECK_FAIL
+        TYPE_MEETING_CERTIFICATES, TYPE_MEETING_PAY_CHECK, TYPE_MEETING_PAY_CHECK_FAIL,TYPE_MEETING_TICKET_REFUND,TYPE_MEETING_TRADE_REFUND
     };
     /*
      * 签到处理

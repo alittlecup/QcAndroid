@@ -98,7 +98,7 @@ public class PushReciever extends PushMessageReceiver {
             params.put("id", bean.notification_id);
             restRepository.getPost_api().qcClearAllNoti(App.staffId, params);
             if (TextUtils.isEmpty(bean.url)) {
-                if (bean.type != 0 && bean.type >= 11) {
+                if (bean.type != 0 && bean.type < 16) {
                     final CoachService coachService = GymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
                     String staffid = PreferenceUtils.getPrefString(context, Configs.PREFER_WORK_ID, "");
                     Intent intent = new Intent();
@@ -132,16 +132,15 @@ public class PushReciever extends PushMessageReceiver {
                 return;
             } else {
                 try {
-                    if (Uri.parse(bean.url).getScheme().startsWith("http")) {
-                        Intent intent = new Intent(context, WebActivity.class);
-                        intent.putExtra("url", bean.url);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
-                    } else {
+                    //if (Uri.parse(bean.url).getScheme().startsWith("http")) {
+                    //    Intent intent = new Intent(context, WebActivity.class);
+                    //    intent.putExtra("url", bean.url);
+                    //    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //    context.startActivity(intent);
+                    //} else {
 
                         final Intent toActivity =
                             new Intent(context.getPackageName(), Uri.parse(bean.url));
-
                         String staffid = PreferenceUtils.getPrefString(context, Configs.PREFER_WORK_ID, "");
                         if (!StringUtils.isEmpty(bean.brand_id) && !StringUtils.isEmpty(bean.shop_id)) {
                             final CoachService coachService1 = GymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
@@ -175,12 +174,12 @@ public class PushReciever extends PushMessageReceiver {
                                 throw new Exception("notification native has no such shop");
                             }
                         } else {
-                            if (Uri.parse(bean.url).getScheme().startsWith("http")) {
-                                Intent intent = new Intent(context, WebActivity.class);
-                                intent.putExtra("url", bean.url);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                context.startActivity(intent);
-                            } else {
+                            //if (Uri.parse(bean.url).getScheme().startsWith("http")) {
+                            //    Intent intent = new Intent(context, WebActivity.class);
+                            //    intent.putExtra("url", bean.url);
+                            //    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            //    context.startActivity(intent);
+                            //} else {
                                 Uri uri = Uri.parse(bean.url);
                                 Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
                                 if (uri.getQueryParameterNames() != null) {
@@ -190,15 +189,15 @@ public class PushReciever extends PushMessageReceiver {
                                 }
                                 tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(tosb);
-                            }
+                            //}
                         }
-                    }
-                } catch (Exception e) {
+                    } catch (Exception e) {
                     Timber.e("notification: " + e.getMessage());
                     Intent intent = new Intent(context, WebActivity.class);
                     intent.putExtra("url", bean.url);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
+
                 }
             }
         }
