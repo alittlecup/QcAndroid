@@ -28,4 +28,12 @@ public class RecruitPositionsInGymFragment extends RecruitPositionsFragment {
   @Override protected AbstractFlexibleItem generatItem(Job job) {
     return new RecruitPositionInGymItem(job);
   }
+
+  @Override protected int getNoDataRes() {
+    return 0;
+  }
+
+  @Override protected String getNoDataStr() {
+    return "暂无职位";
+  }
 }

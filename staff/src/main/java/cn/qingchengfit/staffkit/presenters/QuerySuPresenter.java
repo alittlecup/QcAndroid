@@ -47,7 +47,20 @@ public class QuerySuPresenter extends BasePresenter {
                         view.onGetSu(hasPermission,coachService);
                     }else view.onShowError(qcResponsePermission.getMsg());
                 }
-            }, new NetWorkThrowable()));
+            },new NetWorkThrowable()));
+            //.subscribe(new Action1<QcResponseData<ResponseSu>>() {
+            //    @Override public void call(QcResponseData<ResponseSu> jsonObjectQcResponseData) {
+            //        if (ResponseConstant.checkSuccess(jsonObjectQcResponseData)) {
+            //            try {
+            //                view.onGetSu(jsonObjectQcResponseData.data.is_superuser(), coachService);
+            //            } catch (Exception e) {
+            //
+            //            }
+            //        } else {
+            //            view.onShowError(jsonObjectQcResponseData.getMsg());
+            //        }
+            //    }
+            //}, new NetWorkThrowable()));
     }
 
     @Override public void attachView(PView v) {

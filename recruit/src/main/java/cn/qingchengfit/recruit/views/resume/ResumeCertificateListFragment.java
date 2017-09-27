@@ -20,11 +20,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.event.EventDownlowdCertification;
+import cn.qingchengfit.recruit.event.EventResumeFresh;
 import cn.qingchengfit.recruit.item.ResumeCertificateInListItem;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Organization;
@@ -85,6 +87,23 @@ public class ResumeCertificateListFragment extends BaseFragment implements Flexi
     rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 1));
     rv.setAdapter(commonFlexAdapter);
+    RxBusAdd(EventResumeFresh.class)
+        .onBackpressureLatest()
+        .subscribe(new Action1<EventResumeFresh>() {
+          @Override public void call(EventResumeFresh eventResumeFresh) {
+            refresh();
+          }
+        });
+    refresh();
+    RxBusAdd(EventDownlowdCertification.class).subscribe(new Action1<EventDownlowdCertification>() {
+      @Override public void call(EventDownlowdCertification eventDownlowdCertification) {
+        downloadFile(eventDownlowdCertification.url, "image/*");
+      }
+    });
+    return view;
+  }
+
+  public void refresh(){
     RxRegiste(restRepository.createGetApi(GetApi.class)
         .queryCertifications().onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -99,17 +118,7 @@ public class ResumeCertificateListFragment extends BaseFragment implements Flexi
               onShowError(certificateListWrapQcDataResponse.getMsg());
             }
           }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-
-          }
-        }));
-    RxBusAdd(EventDownlowdCertification.class).subscribe(new Action1<EventDownlowdCertification>() {
-      @Override public void call(EventDownlowdCertification eventDownlowdCertification) {
-        downloadFile(eventDownlowdCertification.url, "image/*");
-      }
-    });
-    return view;
+        }, new NetWorkThrowable()));
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {

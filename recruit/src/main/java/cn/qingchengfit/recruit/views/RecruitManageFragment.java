@@ -38,9 +38,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import javax.inject.Inject;
+import retrofit2.http.HEAD;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
 
 /**
  * power by
@@ -146,10 +148,11 @@ public class RecruitManageFragment extends BaseFragment
                 });
                 if (qcResponse.data.gyms.size() > 0) {
                   boolean hasJob = qcResponse.data.gyms.get(0).has_jobs;
-                  commonFlexAdapter.addItem(new TextItem(hasJob ? "正在招聘的场馆" : "未发布职位的场馆",R.style.QcTextStyleStandardHint_item));
+
+                  commonFlexAdapter.addItem(new StickerHintItem(hasJob ? "正在招聘的场馆" : "未发布职位的场馆"));
                   for (GymHasResume gym : qcResponse.data.gyms) {
                     if (gym.has_jobs != hasJob){
-                      commonFlexAdapter.addItem(new TextItem("未发布职位的场馆",R.style.QcTextStyleStandardHint_item));
+                      commonFlexAdapter.addItem(new StickerHintItem("未发布职位的场馆"));
                       hasJob = gym.has_jobs;
                     }
                     commonFlexAdapter.addItem(new RecruitGymItem(gym));
