@@ -32,7 +32,7 @@ pipeline:
       branch: develop
     commands:
       - agree-license.sh android-sdk-license 8933bad161af4178b1185d1a37fbf41ea5269c55
-      - ./gradlew -g gradle_cache assembleProdcutRelease --no-daemon
+      - ./gradlew -g gradle_cache assembleProductRelease --no-daemon
       - fir publish staff/build/outputs/apk/staff-product-release.apk -T $PRO
       - fir publish trainer/build/outputs/apk/trainer-product-release.apk -T $PRO
   rebuild-cache:
