@@ -1,7 +1,5 @@
 package cn.qingchengfit;
 
-import cn.qingchengfit.widgets.BuildConfig;
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -32,7 +30,7 @@ public class Constants {
   public static final String EXTRA_BRAND = "qingcheng.brand";
 
   public static final String Server =
-      BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
+      "http://cloud.qingchengfit.cn/";
   public static final String ServerDebug = "http://cloudtest.qingchengfit.cn/";
   public static final String ServerMirror =
       "http://cloudmirror.qingchengfit.cn/";

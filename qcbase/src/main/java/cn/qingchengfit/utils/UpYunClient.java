@@ -1,6 +1,8 @@
 package cn.qingchengfit.utils;
 
 import android.util.Log;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.NetWorkDialogEvent;
 import com.upyun.library.common.Params;
 import com.upyun.library.common.UploadEngine;
 import com.upyun.library.listener.UpCompleteListener;
@@ -65,6 +67,7 @@ public class UpYunClient {
           //paramsMap.put(Params.RETURN_URL, UPYUNPATH);
           UpCompleteListener completeListener = new UpCompleteListener() {
             @Override public void onComplete(boolean isSuccess, String result) {
+              RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_HIDE_DIALOG));
               if (isSuccess) {
                 try {
                   JSONObject jsonObject = new JSONObject(result);
@@ -83,6 +86,7 @@ public class UpYunClient {
           UploadEngine.getInstance()
               .formUpload(upFile, paramsMap, OPERATER, UpYunUtils.md5(PASSWORD), completeListener,
                   null);
+          RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
           //String upImg = UpYunClient.upLoadImg(cloudpath, new File(filePath));
 
         }

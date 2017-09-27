@@ -169,7 +169,16 @@ public abstract class BaseFragment extends Fragment
         }
     }
 
-    @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+  @Override public void onHiddenChanged(boolean hidden) {
+    super.onHiddenChanged(hidden);
+    if (hidden){
+      onInVisible();
+    }else {
+      onVisible();
+    }
+  }
+
+  @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
         if (enter && nextAnim > 0) {
             Animation animation = AnimationUtils.loadAnimation(getActivity(), nextAnim);
             if (animation != null) {
@@ -306,7 +315,7 @@ public abstract class BaseFragment extends Fragment
           .remove(rm)
           .replace(((BaseActivity) getActivity()).getFragId(), fragment)
           .addToBackStack(tag)
-          .commit();
+          .commitAllowingStateLoss();
     }
   }
 

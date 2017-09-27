@@ -76,7 +76,7 @@ public class NotiSettingMsgRulePresenter extends BasePresenter {
                     content[idx] = config.show_text == null?"":config.show_text;
                   }
                 }
-                if (CmStringUtils.isEmpty(content[0]))
+                if (!CmStringUtils.isEmpty(content[0]))
                   view.onSysSmsNoti(content[0]);
                 StringBuilder teamStr = new StringBuilder();
                 for (int i = 1; i < 13; i++) {

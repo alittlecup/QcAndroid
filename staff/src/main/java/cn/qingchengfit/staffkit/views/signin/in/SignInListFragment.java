@@ -297,7 +297,7 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
 
     @Override public void confirmFail(int position, String erroCode, String msg) {
         hideLoading();
-        if (TextUtils.isEmpty(erroCode) || TextUtils.isEmpty(msg)) {
+        if (TextUtils.isEmpty(erroCode) && TextUtils.isEmpty(msg)) {
             ToastUtils.show("操作失败,请检查网络,再重试");
         } else {
             SnackbarUtils.showSnackBar(this.getView(), msg);
