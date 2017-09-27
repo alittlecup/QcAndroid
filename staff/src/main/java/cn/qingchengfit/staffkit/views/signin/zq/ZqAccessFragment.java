@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.views.signin.zq;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -48,7 +49,8 @@ public class ZqAccessFragment extends BaseFragment implements FlexibleAdapter.On
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
   private BottomListFragment bottomListFragment;
   private List<BottomModel> bottomList = new ArrayList<>();
-  private int status;
+  private BottomModel bottomModel;
+  private Guard guard;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -63,6 +65,9 @@ public class ZqAccessFragment extends BaseFragment implements FlexibleAdapter.On
 
   private void initData(){
     presenter.getAccess();
+    adapter = new CommonFlexAdapter(itemList, this);
+    recyclerZqAccess.setLayoutManager(new LinearLayoutManager(getContext()));
+    recyclerZqAccess.setAdapter(adapter);
   }
 
   private void setToolbar(){
@@ -76,6 +81,7 @@ public class ZqAccessFragment extends BaseFragment implements FlexibleAdapter.On
     });
   }
 
+  //bottomList 用于区分不同情况下的bottom弹出菜单
   private void initBottomList(int status){
     List<AbstractFlexibleItem> bottomItems = new ArrayList<>();
     if (presenter.getBottomList(getContext(), status).size() > 0) {
@@ -97,7 +103,7 @@ public class ZqAccessFragment extends BaseFragment implements FlexibleAdapter.On
 
   @Override public boolean onItemClick(int position) {
     if (adapter.getItem(position) instanceof ItemZqAccess) {
-      this.status = ((ItemZqAccess)adapter.getItem(position)).getData().status;
+      guard = ((ItemZqAccess)adapter.getItem(position)).getData();
       initBottomList(((ItemZqAccess)adapter.getItem(position)).getData().status);
     }
     return false;
@@ -113,19 +119,34 @@ public class ZqAccessFragment extends BaseFragment implements FlexibleAdapter.On
     adapter.notifyDataSetChanged();
   }
 
-  @Override public void onComfirmClick(List<IFlexible> dats) {
+  @Override public void changeStatusOk() {
 
   }
 
+  @Override public void onDeleteOk() {
+
+  }
+
+  @Override public void onAddOk() {
+
+  }
+
+  @Override public void onComfirmClick(List<IFlexible> dats) {
+    //TODO 等待合代码之后回调接口包含选择位置
+  }
+
+  //1、2、3改变状态 4 删除门禁  0编辑门禁  5取消
   private void changeAccessStatus(int status){
     switch (status){
       case 1:
       case 2:
       case 3:
+        presenter.changeZqStatus(guard.id, status);
         break;
       case 0:
         break;
       case 4:
+        presenter.deleteZqAccess(guard.id);
         break;
       case 5:
         break;

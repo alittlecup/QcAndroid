@@ -906,5 +906,6 @@
   <string name="cancel_long_open">取消长开</string>
   <string name="setting_long_close">设置长关</string>
   <string name="cancel_long_close">取消长关</string>
+  <string name="dialog_tips_add_access">请完善门禁信息</string>
 
 </resources>
