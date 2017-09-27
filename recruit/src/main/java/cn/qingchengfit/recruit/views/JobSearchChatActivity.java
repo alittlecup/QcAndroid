@@ -54,7 +54,7 @@ public class JobSearchChatActivity extends ChatActivity
   private void initView() {
     chatSendResume.setVisibility(GONE);
     tvSendResume.setVisibility(GONE);
-    if (getIntent().getBooleanExtra(RecruitConstants.CHAT_RECRUIT_STATE, false)) {
+    if (!getIntent().getBooleanExtra(RecruitConstants.CHAT_RECRUIT_STATE, false)) {
       chatSendResume.setVisibility(View.VISIBLE);
       tvSendResume.setVisibility(View.VISIBLE);
       switch (type) {

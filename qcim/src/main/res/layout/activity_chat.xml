@@ -49,7 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/chat_send_resume"
         android:visibility="visible"
-        android:layout_marginTop="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         >
 
         <include android:id="@+id/layout_recruit"
