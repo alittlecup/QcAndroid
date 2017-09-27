@@ -103,7 +103,9 @@ public class NotiSettingChargeResultFragment extends BaseFragment {
   }
 
   @OnClick(R.id.btn_charge_history) public void onBtnChargeHistoryClicked() {
-    routeTo(new NotiSettingChargeHistoryFragment());
+    if (result)
+      routeTo(new NotiSettingChargeHistoryFragment());
+    else getActivity().onBackPressed();
   }
 
   @OnClick(R.id.btn_back) public void onBtnBackClicked() {

@@ -222,7 +222,7 @@ public class PermissionServerUtils {
     public static final String MESSAGESETTING = "messagesetting";
     public static final String MESSAGEDETAILS = "messagedetails";
     public static final String MESSAGECHANNELS = "messagechannels";
-    public static final String MESSAGESETTING_CAN_WRITE = "messagesetting_can_write";
+    public static final String MESSAGESETTING_CAN_WRITE = "messagechannels_can_write";
 
     //导入导出
     public static final String STUDENT_EXPORT = "manage_members_export";
