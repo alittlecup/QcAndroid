@@ -389,8 +389,8 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
     getFragmentManager().popBackStackImmediate();
   }
 
-  @Override public void onFailed() {
-    hideLoading();
+  @Override public void onFailed(String s) {
+    onShowError(s);
   }
 
   //通过检查

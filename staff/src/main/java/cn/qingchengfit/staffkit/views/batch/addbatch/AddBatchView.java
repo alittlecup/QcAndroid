@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public interface AddBatchView extends PView {
     void onSuccess();
 
-    void onFailed();
+    void onFailed(String s);
 
     void checkOk();
 

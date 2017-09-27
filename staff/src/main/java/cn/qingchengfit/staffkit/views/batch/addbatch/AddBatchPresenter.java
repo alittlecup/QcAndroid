@@ -115,7 +115,7 @@ public class AddBatchPresenter implements Presenter {
                 if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                     view.onSuccess();
                 } else {
-                    view.onFailed();
+                    view.onFailed(qcResponse.getMsg());
                 }
             }
         });
