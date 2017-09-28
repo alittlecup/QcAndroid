@@ -74,7 +74,11 @@ public class UpYunClient {
                   subscriber.onNext(UPYUNPATH + jsonObject.getString("url"));
                   subscriber.onCompleted();
                 } catch (JSONException e) {
-                  subscriber.onError(new Throwable(e));
+                  if (subscriber != null)
+                    subscriber.onError(new Throwable(e));
+
+                }catch (Exception e){
+                  CrashUtils.sendCrash(e);
                 }
               } else {
                 //subscriber.onError(new Throwable("上传图片失败"));
@@ -83,10 +87,15 @@ public class UpYunClient {
                             }
                         }
           };
-          UploadEngine.getInstance()
-              .formUpload(upFile, paramsMap, OPERATER, UpYunUtils.md5(PASSWORD), completeListener,
-                  null);
-          RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
+          try {
+            UploadEngine.getInstance()
+                .formUpload(upFile, paramsMap, OPERATER, UpYunUtils.md5(PASSWORD), completeListener,
+                    null);
+            RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
+          }catch (Exception e){
+            CrashUtils.sendCrash(e);
+          }
+
           //String upImg = UpYunClient.upLoadImg(cloudpath, new File(filePath));
 
         }

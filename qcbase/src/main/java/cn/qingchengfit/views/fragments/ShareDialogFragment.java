@@ -63,7 +63,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
   private String mTitle, mText, mImg, mUrl;
   private Bitmap mBitmap;
   private boolean isImg;
-  private Unbinder unbinder;
+  protected Unbinder unbinder;
   private String wechat_code;
 
   public static ShareDialogFragment newInstance(String title, String text, String img, String url) {
@@ -118,7 +118,8 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
     unbinder = ButterKnife.bind(this, view);
     api = WXAPIFactory.createWXAPI(getActivity(), wechat_code, true);
     api.registerApp(wechat_code);
-    layoutExtends.setVisibility(GONE);
+    if (layoutExtends != null)
+      layoutExtends.setVisibility(GONE);
     if (TextUtils.isEmpty(mUrl) && (!TextUtils.isEmpty(mImg) || mBitmap != null)) {
       isImg = true;
     } else {

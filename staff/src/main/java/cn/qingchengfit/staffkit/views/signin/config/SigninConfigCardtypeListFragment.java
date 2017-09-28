@@ -125,9 +125,11 @@ import javax.inject.Inject;
             return false;
         }
         for (int i = 0; i < flexibleAdapter.getItemCount(); i++) {
-            SignInConfigItem item = (SignInConfigItem) flexibleAdapter.getItem(i);
-            if (item.bean.isSelected()) {
-                return true;
+            if (flexibleAdapter.getItem(i) instanceof SignInConfigItem) {
+                SignInConfigItem item = (SignInConfigItem) flexibleAdapter.getItem(i);
+                if (item.bean.isSelected()) {
+                    return true;
+                }
             }
         }
         return false;

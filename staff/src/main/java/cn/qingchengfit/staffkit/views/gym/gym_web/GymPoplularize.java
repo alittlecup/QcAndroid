@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventPoplularize;
@@ -37,7 +36,6 @@ import cn.qingchengfit.views.fragments.ShareDialogFragment;
 
 public class GymPoplularize extends ShareDialogFragment {
 
-  Unbinder unbinder;
   private TextView btnToWX;
 
   public static GymPoplularize newInstance(String title, String text, String img, String url,
@@ -61,16 +59,15 @@ public class GymPoplularize extends ShareDialogFragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = super.onCreateView(inflater, container, savedInstanceState);
+    unbinder = ButterKnife.bind(this,view);
     btnToWX = (TextView) view.findViewById(R.id.connect_public);
-
     btnToWX.setText(getArguments().getBoolean("s", false) ? "已对接" : "未对接");
-    unbinder = ButterKnife.bind(this, view);
+
     return view;
   }
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
   }
 
   @OnClick(R.id.btn_to_wechat_public) public void onBtnToWechatPublicClicked() {

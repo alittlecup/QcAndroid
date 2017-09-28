@@ -280,7 +280,7 @@ public class MainMsgFragment extends BaseFragment
           .replace(R.id.frame_chat, conversationFragment, "chat")
           .commitAllowingStateLoss();
     } else {
-      getChildFragmentManager().beginTransaction().show(conversationFragment).commit();
+      getChildFragmentManager().beginTransaction().show(conversationFragment).commitAllowingStateLoss();
     }
 
     if (getActivity() instanceof MainActivity) {
