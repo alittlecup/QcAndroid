@@ -5,12 +5,11 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.model.responese.QcResponse;
-import cn.qingchengfit.model.responese.ResponseConstant;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcResponseData;
-import cn.qingchengfit.saas.network.PostApi;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Get_Api;
@@ -38,6 +37,10 @@ public class ZqAccessPresenter extends BasePresenter {
 
   MVPView view;
 
+  @Inject
+  public ZqAccessPresenter() {
+  }
+
   @Override public void attachView(PView v) {
     view = (MVPView) v;
   }
@@ -49,14 +52,14 @@ public class ZqAccessPresenter extends BasePresenter {
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcResponseData<GuardWrapper>>() {
-          @Override public void call(QcResponseData<GuardWrapper> guardWrapperQcResponseData) {
-            if (ResponseConstant.checkSuccess(guardWrapperQcResponseData)){
+        .subscribe(new Action1<QcDataResponse<GuardWrapper>>() {
+          @Override public void call(QcDataResponse<GuardWrapper> guardWrapperQcDataResponse) {
+            if (ResponseConstant.checkSuccess(guardWrapperQcDataResponse)){
               if (view != null){
-                view.onGetAccess(guardWrapperQcResponseData.data.guards);
+                view.onGetAccess(guardWrapperQcDataResponse.data.guards);
               }
             }else{
-              view.onShowError(guardWrapperQcResponseData.getMsg());
+              view.onShowError(guardWrapperQcDataResponse.getMsg());
             }
           }
         }, new NetWorkThrowable()));
@@ -66,7 +69,7 @@ public class ZqAccessPresenter extends BasePresenter {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("status", status);
     RxRegiste(restRepository.createPostApi(Post_Api.class)
-        .qcChangeAccessStatus(App.staffId, guardId, params)
+        .qcChangeAccessStatus(App.staffId, guardId, gymWrapper.getParams(), params)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -86,7 +89,7 @@ public class ZqAccessPresenter extends BasePresenter {
 
   public void deleteZqAccess(String guardId) {
     RxRegiste(restRepository.createPostApi(Post_Api.class)
-        .qcDeleteAccess(App.staffId, guardId)
+        .qcDeleteAccess(App.staffId, guardId, gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -105,7 +108,7 @@ public class ZqAccessPresenter extends BasePresenter {
 
   public void addZqAccess(AccessBody body){
     RxRegiste(restRepository.createPostApi(Post_Api.class)
-        .qcAddAccess(App.staffId, body)
+        .qcAddAccess(App.staffId, gymWrapper.getParams(), body)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -114,6 +117,25 @@ public class ZqAccessPresenter extends BasePresenter {
             if(ResponseConstant.checkSuccess(qcResponse)){
               if (view != null){
                 view.onAddOk();
+              }
+            }else{
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
+
+  public void editZqAccess(String guardId, AccessBody body){
+    RxRegiste(restRepository.createPostApi(Post_Api.class)
+        .qcEditAccess(App.staffId, guardId, gymWrapper.getParams(), body)
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcResponse>() {
+          @Override public void call(QcResponse qcResponse) {
+            if(ResponseConstant.checkSuccess(qcResponse)){
+              if (view != null){
+                view.onEditOk();
               }
             }else{
               view.onShowError(qcResponse.getMsg());
@@ -159,6 +181,8 @@ public class ZqAccessPresenter extends BasePresenter {
     void onDeleteOk();
 
     void onAddOk();
+
+    void onEditOk();
   }
 
 }

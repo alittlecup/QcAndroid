@@ -120,11 +120,8 @@ import cn.qingchengfit.staffkit.train.model.SignUpDetailResponse;
 import cn.qingchengfit.staffkit.train.model.TeamDetailResponse;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecordWrapper;
 import cn.qingchengfit.staffkit.views.login.CheckProtocolModel;
-<<<<<<< HEAD
 import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
-=======
 import cn.qingchengfit.staffkit.views.signin.zq.model.GuardWrapper;
->>>>>>> 门禁
 import java.util.HashMap;
 import java.util.List;
 import retrofit2.Call;

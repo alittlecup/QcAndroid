@@ -10,6 +10,7 @@
   <include layout="@layout/common_simple_toolbar"/>
 
   <ImageView
+      android:id="@+id/img_access"
       android:layout_width="match_parent"
       android:layout_height="180dp"
       android:src="@drawable/bg_brand"

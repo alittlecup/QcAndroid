@@ -144,6 +144,9 @@ public class GymFunctionFactory {
     //智奇门禁
     public static final String ZQ_ACCESS = "/zq/access";
     public static final String ADD_ZQ_ACCESS = "/add/zq/access";
+    public static final String EDIT_ZQ_ACCESS = "/edit/zq/access";
+    public static final String SIGN_IN_CODE = "/sign/code";
+    public static final String SIGN_IN_CARD = "/sign/card";
 
     public static GymFuntion instanceGymFuntion(String module) {
         GymFuntion gym = new GymFuntion.Builder().moduleName(module).text(getModuleTxt(module)).img(getDrawableRes(module)).build();

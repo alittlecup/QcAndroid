@@ -907,5 +907,25 @@
   <string name="setting_long_close">设置长关</string>
   <string name="cancel_long_close">取消长关</string>
   <string name="dialog_tips_add_access">请完善门禁信息</string>
+  <string name="dialog_buy_access_zq">购买请联系：400-900-7986</string>
+  <string name="bug_access_phone">400-900-7986</string>
+  <string formatted="false" name="dialog_delete_access">确定删除门禁：%s？</string>
+
+  <string name="qrcode">二维码</string>
+  <string name="fun_introduction">// 功能说明 //</string>
+  <string name="code_sign_in_introduction">会员到店后\n
+进入自由练习区前可以扫描此二维码进行签到
+会员扫描的同时，后台会出现提示</string>
+
+  <string name="code_sign_out_introduction">会员自由训练结束
+离店前可以扫描此二维码进行签出
+会员扫描的同时，后台会出现提示</string>
+
+  <string name="code_sign_tips">你可以把二维码打印出来\n
+放置在前台签到处方便会员扫码签到</string>
+
+  <string name="code_sign_card_tip">青橙系统支持无需驱动的USB刷卡器</string>
+  <string name="sign_in_card_judge_use">如何判断刷卡器是否适用？</string>
+  <string name="sign_in_card_bind">如何绑定以及刷卡签到？</string>
 
 </resources>

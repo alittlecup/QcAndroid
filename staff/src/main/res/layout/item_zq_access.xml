@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:padding="15dp"
+    android:background="@drawable/bg_click"
+    android:layout_marginBottom="15dp"
+    >
+
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="4"
+      android:orientation="vertical"
+      >
+    <TextView
+        android:id="@+id/text_access_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="01号门禁"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <TextView
+        android:id="@+id/text_access_equip_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="设备号：03099284"
+        android:layout_marginTop="5dp"
+        style="@style/QcTextStyleSmallWarm"
+        />
+
+    <TextView
+        android:id="@+id/text_equip_features"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="功能：签到"
+        android:layout_marginTop="5dp"
+        style="@style/QcTextStyleSmallWarm"
+        />
+
+    <TextView
+        android:id="@+id/text_signout_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="可签到时间：06:00 至 23:00"
+        android:layout_marginTop="5dp"
+        style="@style/QcTextStyleSmallWarm"
+        />
+
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/text_zq_status"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:gravity="center_vertical"
+      tools:text="长开中"
+      style="@style/QcTextStyleSmallDark"
+      />
+
+  <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:src="@drawable/ic_arrow_right"
+      android:layout_marginLeft="4dp"
+      />
+
+</LinearLayout>

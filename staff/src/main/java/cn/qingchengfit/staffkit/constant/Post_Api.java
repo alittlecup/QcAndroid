@@ -683,13 +683,14 @@ public interface Post_Api {
     //修改门禁状态
     @PUT("/api/staffs/{staff_id}/guards/{guard_id}/")
     rx.Observable<QcResponse> qcChangeAccessStatus(@Path("staff_id") String staff_id,
-        @Path("guard_id") String guard_id, @QueryMap HashMap<String, Object> params);
+        @Path("guard_id") String guard_id, @QueryMap HashMap<String, Object> params, @Body HashMap<String, Object> body);
 
     //删除门禁
-    @PUT("/api/staffs/{staff_id}/guards/{guard_id}/")
+    @DELETE("/api/staffs/{staff_id}/guards/{guard_id}/")
     rx.Observable<QcResponse> qcDeleteAccess(@Path("staff_id") String staff_id,
-        @Path("guard_id") String guard_id);
+        @Path("guard_id") String guard_id, @QueryMap HashMap<String, Object> params);
 
+    //添加门禁
     @POST("/api/staffs/{staff_id}/guards/")
     rx.Observable<QcResponse> qcAddAccess(@Path("staff_id") String staff_id, @Body AccessBody body);
 
@@ -697,4 +698,8 @@ public interface Post_Api {
     @POST("api/staffs/{staff_id}/cache/")
     rx.Observable<QcDataResponse> qcStashNewCardTpl(@Path("staff_id") String staff_id,
         @Body CardtplBody body, @QueryMap HashMap<String, Object> params);
+
+    //编辑门禁
+    @POST("/api/staffs/{staff_id}/guards/{guard_id}/")
+    rx.Observable<QcResponse> qcEditAccess(@Path("staff_id") String staff_id, @Path("guard_id") String guard_id, @QueryMap HashMap<String, Object> params, @Body AccessBody body);
 }

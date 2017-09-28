@@ -46,7 +46,7 @@
       app:civ_lable="@string/signin_use_card"
       app:civ_text_color="@color/qc_text_black"
       app:civ_showright="true"
-      android:clickable="true"
+      app:civ_clickable="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
@@ -56,7 +56,7 @@
       app:civ_lable="@string/signin_use_qrcode"
       app:civ_text_color="@color/qc_text_black"
       app:civ_showright="true"
-      android:clickable="true"
+      app:civ_clickable="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView
@@ -66,7 +66,7 @@
       app:civ_lable="@string/signin_use_zq"
       app:civ_text_color="@color/qc_text_black"
       app:civ_showright="true"
-      android:clickable="true"
+      app:civ_clickable="true"
       />
 
   <LinearLayout

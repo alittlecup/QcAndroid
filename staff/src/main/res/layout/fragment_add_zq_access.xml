@@ -16,7 +16,7 @@
       app:civ_text_color="@color/qc_text_black"
       app:civ_lable="@string/add_zq_access_name"
       app:civ_clickable="false"
-      app:civ_hint="请填写"
+      app:civ_hint="请输入设备名称"
       />
 
   <include layout="@layout/divider_grey"/>
@@ -29,7 +29,7 @@
       app:civ_text_color="@color/qc_text_black"
       app:civ_lable="@string/add_zq_gym_id"
       app:civ_clickable="false"
-      app:civ_hint="请填写"
+      app:civ_hint="请输入9位设备号"
       />
 
   <TextView

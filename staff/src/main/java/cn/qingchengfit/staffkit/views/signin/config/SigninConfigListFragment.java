@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.signin.config;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -127,17 +128,17 @@ public class SigninConfigListFragment extends BaseFragment
 
   @OnClick(R.id.input_sign_use_card)
   public void onSignUseCard(){
-
+    ContainerActivity.router(GymFunctionFactory.SIGN_IN_CARD, getContext());
   }
 
   @OnClick(R.id.input_sign_use_qrcode)
   public void onSignUseQrCode(){
-
+    ContainerActivity.router(GymFunctionFactory.SIGN_IN_CODE, getContext());
   }
 
   @OnClick(R.id.input_sign_use_zq)
   public void onSignUseZq(){
-
+    ContainerActivity.router(GymFunctionFactory.ZQ_ACCESS, getContext());
   }
 
   @OnClick({ R.id.layout_signin_type, R.id.layout_signin_wardrobe, R.id.layout_signin_screen })
@@ -181,12 +182,6 @@ public class SigninConfigListFragment extends BaseFragment
         break;
     }
   }
-
-  @OnClick(R.id.input_sign_use_zq)
-  public void onZqAccess(){
-    ContainerActivity.router(GymFunctionFactory.ZQ_ACCESS, getContext());
-  }
-
   @Override public void onShowError(String e) {
 
   }

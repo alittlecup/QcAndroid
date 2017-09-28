@@ -13,13 +13,17 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.course.SimpleTextItemItem;
+import cn.qingchengfit.staffkit.views.signin.zq.event.EventAddZq;
 import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
 import cn.qingchengfit.staffkit.views.signin.zq.model.Guard;
 import cn.qingchengfit.staffkit.views.signin.zq.presenter.ZqAccessPresenter;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.BottomListFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -40,8 +44,10 @@ import org.w3c.dom.Text;
 public class AddZqFragment extends BaseFragment implements
     BottomListFragment.ComfirmChooseListener, ZqAccessPresenter.MVPView {
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
+  public static final String FIND_NO_URL = "https://mp.weixin.qq.com/s/eyKfbS8cRHNt_bqHk6DfJQ";
+
+  @BindView(R.id.toolbar) public Toolbar toolbar;
+  @BindView(R.id.toolbar_title) public TextView toolbarTitle;
   @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
   @BindView(R.id.input_gym_name) CommonInputView inputGymName;
   @BindView(R.id.input_gym_address) CommonInputView inputGymAddress;
@@ -50,7 +56,7 @@ public class AddZqFragment extends BaseFragment implements
   @BindView(R.id.input_gym_start) CommonInputView inputGymStart;
   @BindView(R.id.input_gym_end) CommonInputView inputGymEnd;
   @Inject ZqAccessPresenter presenter;
-  private AccessBody body;
+  public AccessBody body;
   BottomListFragment listFragment;
 
   @Nullable @Override
@@ -58,6 +64,7 @@ public class AddZqFragment extends BaseFragment implements
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_add_zq_access, container, false);
     unbinder = ButterKnife.bind(this, view);
+    delegatePresenter(presenter, this);
     if (body == null){
       body = new AccessBody();
     }
@@ -69,28 +76,34 @@ public class AddZqFragment extends BaseFragment implements
   private void setToolbar(){
     initToolbar(toolbar);
     toolbar.inflateMenu(R.menu.menu_save);
+    toolbarTitle.setText("添加门禁");
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
+        if (TextUtils.isEmpty(inputGymName.getContent())
+            || TextUtils.isEmpty(inputGymAddress.getContent())
+            || TextUtils.isEmpty(inputGymFun.getContent())
+            || TextUtils.isEmpty(inputGymStart.getContent())
+            || TextUtils.isEmpty(inputGymEnd.getContent())) {
+          DialogUtils.showAlert(getContext(), getResources().getString(R.string.dialog_tips_add_access));
+          return false;
+        }
+        body.name = inputGymName.getContent();
+        body.device_id = inputGymAddress.getContent();
+        body.behavior = getStatus(inputGymFun.getContent());
+        body.start = inputGymStart.getContent();
+        body.end = inputGymEnd.getContent();
         save();
         return false;
       }
     });
   }
 
+  @OnClick(R.id.btn_find_equip)
+  public void onFind(){
+    WebActivity.startWeb(FIND_NO_URL, getContext());
+  }
+
   public void save(){
-    if (TextUtils.isEmpty(inputGymName.getContent())
-        || TextUtils.isEmpty(inputGymAddress.getContent())
-        || TextUtils.isEmpty(inputGymFun.getContent())
-        || TextUtils.isEmpty(inputGymStart.getContent())
-        || TextUtils.isEmpty(inputGymEnd.getContent())) {
-      DialogUtils.showAlert(getContext(), getResources().getString(R.string.dialog_tips_add_access));
-      return;
-    }
-    body.name = inputGymName.getContent();
-    body.device_id = inputGymAddress.getContent();
-    body.behavior = getStatus(inputGymFun.getContent());
-    body.start = inputGymStart.getContent();
-    body.end = inputGymEnd.getContent();
     presenter.addZqAccess(body);
   }
 
@@ -115,7 +128,7 @@ public class AddZqFragment extends BaseFragment implements
 
   @OnClick(R.id.input_gym_fun)
   public void selectFun(){
-
+    listFragment.show(getFragmentManager(), null);
   }
 
   @OnClick({R.id.input_gym_start, R.id.input_gym_end})
@@ -140,16 +153,11 @@ public class AddZqFragment extends BaseFragment implements
     super.onDestroyView();
   }
 
-  @Override public void onComfirmClick(List<IFlexible> dats) {
-    
-  }
-
   @Override public void onGetAccess(List<Guard> guardList) {
 
   }
 
   @Override public void changeStatusOk() {
-
   }
 
   @Override public void onDeleteOk() {
@@ -157,6 +165,16 @@ public class AddZqFragment extends BaseFragment implements
   }
 
   @Override public void onAddOk() {
+    RxBus.getBus().post(new EventAddZq());
     getActivity().onBackPressed();
+  }
+
+  @Override public void onEditOk() {
+    ToastUtils.show("修改成功");
+    getActivity().onBackPressed();
+  }
+
+  @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {
+    inputGymFun.setContent(selectedPos.get(0) == 0 ? "签到" : "签出");
   }
 }

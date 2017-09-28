@@ -1,5 +1,7 @@
 package cn.qingchengfit.staffkit.views.signin.zq;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,10 @@ public class ItemZqAccess extends AbstractFlexibleItem<ItemZqAccess.ZqAccessVH> 
     this.guard = guard;
   }
 
+  public void setGuard(Guard guard) {
+    this.guard = guard;
+  }
+
   public Guard getData(){
     return guard;
   }
@@ -47,7 +53,23 @@ public class ItemZqAccess extends AbstractFlexibleItem<ItemZqAccess.ZqAccessVH> 
         .getString(R.string.item_zq_sign_time, guard.start, guard.end));
 
     holder.textZqStatus.setText(judgeStatus(guard.status));
+    holder.textZqStatus.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), getStatusColor(guard.status)));
+  }
 
+  private int getStatusColor(int status){
+    int color = 0;
+    switch (status){
+      case 1:
+        color = R.color.shamrock_green;
+        break;
+      case 2:
+        color =  R.color.orange;
+        break;
+      case 3:
+        color = R.color.red;
+        break;
+    }
+    return color;
   }
 
   private String judgeStatus(int status){
