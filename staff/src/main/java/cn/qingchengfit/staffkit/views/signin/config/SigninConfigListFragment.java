@@ -88,6 +88,7 @@ public class SigninConfigListFragment extends BaseFragment
     View view = inflater.inflate(R.layout.fragment_signin_config_list, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
+    delegatePresenter(zqPresenter, this);
     initToolbar(toolbar);
     swOpen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
