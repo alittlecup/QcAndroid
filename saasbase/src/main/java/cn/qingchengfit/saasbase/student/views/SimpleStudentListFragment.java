@@ -68,6 +68,10 @@ public class SimpleStudentListFragment extends BaseFragment
     return recyclerView;
   }
 
+  @Override public boolean isBlockTouch() {
+    return false;
+  }
+
   public void setData(List<QcStudentBean> studentBeen) {
     if (studentBeen != null) {
       qcStudentBeens.clear();

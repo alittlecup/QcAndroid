@@ -142,8 +142,10 @@ public class AppUtils {
     String packagename = context.getPackageName();
     if (packagename.contains("coach")) {
       return 0;
-    } else {
+    } else if (packagename.contains("staff")){
       return 1;
+    }else {
+      return 2;
     }
   }
 
@@ -151,6 +153,8 @@ public class AppUtils {
     switch (getCurApp(context)) {
       case 1:
         return "Staff";
+      case 2:
+        return "Pos";
       default:
         return "Trainer";
     }
@@ -159,9 +163,17 @@ public class AppUtils {
     switch (getCurApp(context)) {
       case 1:
         return "qcstaff";
+      case 2:
+        return "qcpos";
       default:
         return "qccoach";
     }
+  }
+
+  public static Uri getRouterUri(Context context,String path){
+    if (!path.startsWith("/"))
+      path = "/"+path;
+    return Uri.parse(getCurAppSchema(context)+":/"+path);
   }
 
   /**

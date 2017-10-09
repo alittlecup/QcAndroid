@@ -41,6 +41,14 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
     return v;
   }
 
+  @Override public boolean onItemClick(int i) {
+    if (commonFlexAdapter.getItem(i) instanceof StudentItem) {
+      commonFlexAdapter.toggleSelection(i);
+      commonFlexAdapter.notifyItemChanged(i);
+    }
+    return true;
+  }
+
   @Override protected IFlexible instanceItem(QcStudentBean qcStudentBean) {
     return new ChosenStudentItem(qcStudentBean);
   }

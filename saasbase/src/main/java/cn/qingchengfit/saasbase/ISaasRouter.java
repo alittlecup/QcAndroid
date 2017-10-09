@@ -1,6 +1,6 @@
 package cn.qingchengfit.saasbase;
 
-import cn.qingchengfit.saasbase.cards.cardtypes.views.CardTplsHomeInGymFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**

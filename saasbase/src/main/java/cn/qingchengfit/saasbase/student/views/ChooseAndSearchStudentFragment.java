@@ -7,17 +7,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.student.presenters.ChooseAndSearchPresenter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.anbillon.flabellum.annotations.Leaf;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -42,7 +47,7 @@ import javax.inject.Inject;
  */
 
 @Leaf(module = "student", path = "/choose/student/") public class ChooseAndSearchStudentFragment
-    extends BaseFragment {
+    extends BaseFragment implements ChooseAndSearchPresenter.MVPView{
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -72,6 +77,7 @@ import javax.inject.Inject;
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_student_choose, container, false);
     unbinder = ButterKnife.bind(this, view);
+    delegatePresenter(presenter,this);
     initToolbar(toolbar);
     return view;
   }
@@ -105,6 +111,15 @@ import javax.inject.Inject;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("选择会员");
+    toolbar.getMenu().clear();
+    toolbar.getMenu().add("下一步").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        RxBus.getBus().post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent()));
+        getActivity().onBackPressed();
+        return false;
+      }
+    });
   }
 
   @Override public String getFragmentName() {
@@ -121,6 +136,12 @@ import javax.inject.Inject;
   //@OnClick(R2.id.btn_add_student)
   public void onBtnAddStudentClicked() {
     // TODO: 2017/8/29 跳去新增会员
+  }
+
+  @Override public void onStudentList(List<QcStudentBean> stus) {
+    if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()){
+      chooseStudentListFragment.setData(stus);
+    }
   }
   //
   ///**

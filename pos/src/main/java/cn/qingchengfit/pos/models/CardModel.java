@@ -6,12 +6,20 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.pos.net.PosApi;
+import cn.qingchengfit.saasbase.cards.cardtypes.network.body.CardBuyBody;
+import cn.qingchengfit.saasbase.cards.cardtypes.network.body.CardtplBody;
+import cn.qingchengfit.saasbase.cards.cardtypes.network.body.ChargeBody;
+import cn.qingchengfit.saasbase.cards.cardtypes.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplWrapper;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
+import java.util.HashMap;
+import retrofit2.http.Body;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -41,8 +49,6 @@ public class CardModel implements ICardModel {
   GymWrapper gymWrapper;
   LoginStatus loginStatus;
 
-
-
   public CardModel(QcRestRepository repository, GymWrapper gymWrapper, LoginStatus loginStatus) {
     this.repository = repository;
     this.gymWrapper = gymWrapper;
@@ -52,7 +58,7 @@ public class CardModel implements ICardModel {
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(String type, String isEnable) {
     return repository.createGetApi(PosApi.class)
-        .qcGetCardTpls(loginStatus.staff_id(),gymWrapper.getParams(),null,"1");
+        .qcGetCardTpls(loginStatus.staff_id(), gymWrapper.getParams(), null, "1");
   }
 
   @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission() {
@@ -60,12 +66,14 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(String cardid) {
-    return null;
+    return repository.createGetApi(PosApi.class)
+        .qcGetCardTplsDetail(loginStatus.staff_id(), cardid, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse<CardTplOptionListWrap>> qcGetOptions(String cardtps_id) {
-    return null;
+    return repository.createGetApi(PosApi.class)
+        .qcGetOptions(loginStatus.staff_id(), cardtps_id, gymWrapper.getParams());
   }
 
   @Override
@@ -77,7 +85,67 @@ public class CardModel implements ICardModel {
     return null;
   }
 
+  @Override public Observable<QcDataResponse> qcCreateCardtpl(@Body CardtplBody body) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse> qcUpdateCardtpl(@Path("card_tpl_id") String card_tpl_id,
+      @Body CardtplBody body) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse> qcDelCardtpl(@Path("card_tpl_id") String card_tpl_id) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse> qcResumeCardtpl(@Path("card_tpl_id") String card_tpl_id) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse> qcFixGyms(@Path("cardtpl_id") String card_tpl, String shops) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse> qcDelCardStandard(@Path("option_id") String option_id) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse> qcUpdateCardStandard(@Path("option_id") String option_id,
+      @Body OptionBody body) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse> qcCreateStandard(@Path("card_tpl_id") String card_tpl_id,
+      @Body OptionBody body) {
+    return null;
+  }
+
   @Override public Observable<QcResponse> qcChargeCard(ChargeBody chargeBody) {
+    return null;
+  }
+
+  @Override public Observable<QcResponse> buyCard(@Body CardBuyBody body) {
+    return null;
+  }
+
+  @Override
+  public Observable<QcDataResponse<CardListWrap>> qcGetAllCard(HashMap<String, Object> params) {
+    params.putAll(gymWrapper.getParams());
+    return repository.createGetApi(PosApi.class).getAllCards(loginStatus.staff_id(), params);
+  }
+
+  @Override public Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard() {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<StudentListWrapper>> qcGetBindStudent(String cardid) {
     return null;
   }
 }

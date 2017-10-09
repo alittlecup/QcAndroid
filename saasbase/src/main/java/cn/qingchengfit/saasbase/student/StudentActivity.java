@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import butterknife.ButterKnife;
@@ -16,7 +15,6 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.routers.Istudent;
 import cn.qingchengfit.saasbase.routers.RouterCenter;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
-import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -54,22 +52,10 @@ public class StudentActivity extends BaseActivity
   @Inject RouterCenter routerCenter;
   @Inject Istudent istudent;
 
-  @Override protected void onNewIntent(Intent intent) {
-    super.onNewIntent(intent);
-    Fragment f = routerCenter.getFragment(intent.getData(), intent.getExtras());
-    FragmentTransaction tr = getSupportFragmentManager().beginTransaction();
-    if (getSupportFragmentManager().getBackStackEntryCount() > 0)
-      tr.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
-        R.anim.slide_right_out);
-    else tr.setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold);
-    tr.replace(R.id.web_frag_layout, f);
-    if (getSupportFragmentManager().getBackStackEntryCount() > 0) tr.addToBackStack(null);
-    try {
-      tr.commit();
-    } catch (Exception e) {
-      CrashUtils.sendCrash(e);
-      tr.commitAllowingStateLoss();
-    }
+
+
+  @Override protected Fragment getRouterFragment(Intent intent) {
+    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {

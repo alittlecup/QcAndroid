@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.widget.FrameLayout;
-import cn.qingchengfit.saasbase.cards.cardtypes.views.CardTplsHomeInGymFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
 import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;

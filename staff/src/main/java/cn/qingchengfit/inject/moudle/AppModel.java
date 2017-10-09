@@ -30,6 +30,8 @@ import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
 import cn.qingchengfit.saasbase.routers.ICourseRouter;
+import cn.qingchengfit.saasbase.routers.Icard;
+import cn.qingchengfit.saasbase.routers.cardImpl;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.SaasRouterImpl;
@@ -129,6 +131,7 @@ import rx.Observable;
   @Provides ISaasRouter providerSaasRouter(){
     return new SaasRouterImpl();
   }
+
 
   @Provides ICourseRouter providerCourseRouter(){
     return new ICourseRouter() {

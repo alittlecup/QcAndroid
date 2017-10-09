@@ -1,7 +1,7 @@
 package cn.qingchengfit.saasbase.events;
 
 import android.support.annotation.NonNull;
-import cn.qingchengfit.saasbase.cards.cardtypes.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 
 /**
  * power by
