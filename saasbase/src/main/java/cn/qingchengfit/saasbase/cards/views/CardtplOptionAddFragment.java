@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.presenters.AddCardtplStandardPresenter;
@@ -41,8 +42,8 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/8/23.
  */
-@Leaf(module = "card", path = "/cardtpl/standard/add/") public class CardtplOptionAddFragment
-    extends BaseFragment {
+@Leaf(module = "card", path = "/cardtpl/option/add/") public class CardtplOptionAddFragment
+    extends BaseFragment implements AddCardtplStandardPresenter.MVPView{
 
   @Inject AddCardtplStandardPresenter presenter;
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -78,7 +79,6 @@ import javax.inject.Inject;
   }
 
   public void initView() {
-
     elUseCharge.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         presenter.setCanCharge(isChecked);
@@ -116,6 +116,9 @@ import javax.inject.Inject;
     });
   }
 
+  @OnClick(R2.id.btn_del)
+  public void delOption(){}
+
   @Override public String getFragmentName() {
     return CardtplOptionAddFragment.class.getName();
   }
@@ -124,4 +127,13 @@ import javax.inject.Inject;
     super.onDestroyView();
   }
 
+  @Override public void onSaveOk() {
+    onShowError("添加成功");
+    getActivity().onBackPressed();
+  }
+
+  @Override public void onDelOk() {
+    onShowError("删除成功");
+    getActivity().onBackPressed();
+  }
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="121.5dp"
+      android:background="@color/toolbar"
+      android:gravity="center"
+      >
+
+    <cn.qingchengfit.support.widgets.CompatTextView
+        android:id="@+id/btn_cash"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/little"
+        android:gravity="center"
+        android:text="直接收银"
+        app:drawableTop="@drawable/vd_btn_home_checkstand"
+        />
+
+    <cn.qingchengfit.support.widgets.CompatTextView
+        android:id="@+id/btn_create_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/little"
+        android:gravity="center"
+        android:text="新开会员卡"
+        app:drawableTop="@drawable/vd_btn_home_newcard"
+        />
+
+    <cn.qingchengfit.support.widgets.CompatTextView
+        android:id="@+id/btn_charge_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/little"
+        android:gravity="center"
+        android:text="会员卡续卡"
+        app:drawableTop="@drawable/vd_btn_home_charge"
+        />
+  </LinearLayout>
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv"
+      android:paddingTop="@dimen/activity_vertical_margin"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+</LinearLayout>

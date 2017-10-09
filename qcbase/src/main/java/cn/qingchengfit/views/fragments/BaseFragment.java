@@ -341,7 +341,7 @@ public abstract class BaseFragment extends Fragment
         if (((BaseActivity) getActivity()).getModuleName().equalsIgnoreCase(uri.getHost())){
           to.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         }else {
-          to.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+          to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
       }
       if (bd != null){

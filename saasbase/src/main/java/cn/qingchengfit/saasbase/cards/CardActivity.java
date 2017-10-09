@@ -1,18 +1,18 @@
 package cn.qingchengfit.saasbase.cards;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.cards.BuyCardRouter;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
 import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
 import cn.qingchengfit.saasbase.cards.views.CardListHomeFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplDetailFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplOptionFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
+import cn.qingchengfit.saasbase.cards.views.CardtplOptionAddFragment;
 import cn.qingchengfit.saasbase.cards.views.ChooseCardTplForBuyCardFragment;
 import cn.qingchengfit.saasbase.routers.Icard;
 import cn.qingchengfit.saasbase.routers.RouterCenter;
@@ -47,7 +47,7 @@ import javax.inject.Inject;
 @Trunk(fragments = {
     CardTplsHomeInGymFragment.class, CardTplDetailFragment.class, ChooseCardTplForBuyCardFragment.class,
     CardBuyFragment.class, CardListHomeFragment.class, CardFilterTplFragment.class,
-    CardDetailFragment.class
+    CardDetailFragment.class, CardtplOptionAddFragment.class, CardTplOptionFragment.class
 })
 public class CardActivity extends BaseActivity implements HasSupportFragmentInjector {
 
@@ -60,7 +60,7 @@ public class CardActivity extends BaseActivity implements HasSupportFragmentInje
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_base_frag);
     routerCenter.registe(cardImpl);
-    getIntent().setData(Uri.parse("pos://card/list/home/"));
+    //getIntent().setData(Uri.parse("pos://card/list/home/"));
     onNewIntent(getIntent());
   }
 

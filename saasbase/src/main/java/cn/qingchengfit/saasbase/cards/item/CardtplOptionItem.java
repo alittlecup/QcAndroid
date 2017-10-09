@@ -77,8 +77,8 @@ public class CardtplOptionItem
     } else {
       holder.chosen.setVisibility(View.GONE);
     }
-    // TODO: 2017/9/26 是否紧用以工作人员 
-    //holder.tagOnlyStaff.setVisibility(.for_staff ? View.VISIBLE : View.GONE);
+
+    holder.tagOnlyStaff.setVisibility(option.for_staff ? View.VISIBLE : View.GONE);
     if (adapter instanceof CommonFlexAdapter && ((CommonFlexAdapter) adapter).getStatus() == 1) {
       int colorgrey = CompatUtils.getColor(holder.title.getContext(), R.color.text_grey);
       holder.supportType.setTextColor(colorgrey);

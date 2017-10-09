@@ -94,7 +94,7 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
 
       //页面变化
       @Override public void onPageSelected(int position) {
-        cardCount.setText("");// TODO: 2017/8/15
+        cardCount.setText("");// TODO: 2017/8/15 不同页面会员卡数量变化
         cardDisable.setText("");
       }
 

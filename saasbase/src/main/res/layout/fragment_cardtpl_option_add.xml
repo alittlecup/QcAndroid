@@ -69,4 +69,18 @@
       android:background="@color/white"
       app:el_label="仅工作人员可见"
       />
+  <android.support.v4.widget.Space
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/activity_vertical_margin"
+      />
+  <Button
+      android:visibility="gone"
+      android:id="@+id/btn_del"
+      style="@style/QcTextStyleMediumGrey"
+      android:text="删除该会员卡价格"
+      android:textColor="@color/red"
+      android:background="@drawable/bg_click"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      />
 </LinearLayout>

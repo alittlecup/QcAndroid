@@ -1,10 +1,10 @@
 package cn.qingchengfit.pos.net;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardListWrap;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplListWrap;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplOptionListWrap;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplWrapper;
+import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import java.util.HashMap;
 import retrofit2.http.GET;

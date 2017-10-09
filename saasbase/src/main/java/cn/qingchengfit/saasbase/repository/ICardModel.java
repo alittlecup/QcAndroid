@@ -102,7 +102,7 @@ public interface ICardModel {
   rx.Observable<QcDataResponse> qcFixGyms(@Path("cardtpl_id") String card_tpl, String shops);
 
   /**
-   * 卡规格操作
+   * 卡规格删除操作
    */
   rx.Observable<QcDataResponse> qcDelCardStandard(@Path("option_id") String option_id);
 
