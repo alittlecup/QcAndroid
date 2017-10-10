@@ -44,10 +44,6 @@ dependencies {
   compile "org.glassfish:javax.annotation:${libs.javax_annotation}"
   compile 'com.android.support:multidex:1.0.1'
 
-  compile "com.anbillon.flabellum:flabellum:0.1"
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:0.1"
-  annotationProcessor "com.anbillon.flabellum:dagger2:0.1"
-
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
