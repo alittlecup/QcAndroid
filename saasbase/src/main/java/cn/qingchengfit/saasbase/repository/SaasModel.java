@@ -2,10 +2,10 @@ package cn.qingchengfit.saasbase.repository;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.body.CardtplBody;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.body.OptionBody;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplListWrap;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplWrapper;
+import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
+import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.student.bean.ClassRecords;
 import cn.qingchengfit.saasbase.student.network.body.AddFollowRecordBody;
 import cn.qingchengfit.saasbase.student.network.body.EditStudentBody;

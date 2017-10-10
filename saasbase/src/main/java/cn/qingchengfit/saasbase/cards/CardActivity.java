@@ -1,12 +1,24 @@
 package cn.qingchengfit.saasbase.cards;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.cards.cardtypes.views.CardTplsHomeInGymFragment;
+import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
+import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
+import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
+import cn.qingchengfit.saasbase.cards.views.CardListHomeFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplDetailFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplOptionFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
+import cn.qingchengfit.saasbase.cards.views.CardtplOptionAddFragment;
+import cn.qingchengfit.saasbase.cards.views.ChooseCardTplForBuyCardFragment;
+import cn.qingchengfit.saasbase.routers.Icard;
+import cn.qingchengfit.saasbase.routers.RouterCenter;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.anbillon.flabellum.annotations.Trunk;
+import dagger.Lazy;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -33,18 +45,27 @@ import javax.inject.Inject;
  * Created by Paper on 2017/9/29.
  */
 @Trunk(fragments = {
-    CardTplsHomeInGymFragment.class
+    CardTplsHomeInGymFragment.class, CardTplDetailFragment.class, ChooseCardTplForBuyCardFragment.class,
+    CardBuyFragment.class, CardListHomeFragment.class, CardFilterTplFragment.class,
+    CardDetailFragment.class, CardtplOptionAddFragment.class, CardTplOptionFragment.class
 })
 public class CardActivity extends BaseActivity implements HasSupportFragmentInjector {
+
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+  @Inject RouterCenter routerCenter;
+  @Inject Icard cardImpl;
+  @Inject Lazy<BuyCardRouter> buyCardRouterLazy;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_base_frag);
-    getSupportFragmentManager().beginTransaction()
-        .setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold)
-        .replace(R.id.web_frag_layout,new CardTplsHomeInGymFragment())
-        .commit();
+    routerCenter.registe(cardImpl);
+    //getIntent().setData(Uri.parse("pos://card/list/home/"));
+    onNewIntent(getIntent());
+  }
+
+  @Override protected Fragment getRouterFragment(Intent intent) {
+    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
   }
 
   @Override public AndroidInjector<Fragment> supportFragmentInjector() {
@@ -53,5 +74,14 @@ public class CardActivity extends BaseActivity implements HasSupportFragmentInje
 
   @Override public String getModuleName() {
     return "card";
+  }
+
+  @Override protected boolean preHandle(Intent intent) {
+    if (intent.getData().getPath().equalsIgnoreCase("/buy/")){
+      getSupportFragmentManager().beginTransaction()
+          .add(buyCardRouterLazy.get(),"buycard").commitAllowingStateLoss();
+      return true;
+    }
+    return false;
   }
 }

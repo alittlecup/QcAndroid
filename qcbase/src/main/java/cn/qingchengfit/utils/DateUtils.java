@@ -3,6 +3,7 @@ package cn.qingchengfit.utils;
 import android.support.annotation.IntRange;
 import android.text.TextUtils;
 import android.util.Pair;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -205,6 +206,11 @@ public class DateUtils {
   public static String Date2MMDD(Date d) {
 
     SimpleDateFormat formatter = new SimpleDateFormat("MM-dd", Locale.CHINA);
+    return formatter.format(d);
+  }
+  public static String Date2HHmm(Date d) {
+
+    SimpleDateFormat formatter = new SimpleDateFormat("HH-mm", Locale.CHINA);
     return formatter.format(d);
   }
 
@@ -500,6 +506,23 @@ public class DateUtils {
     int curYear = c.get(Calendar.YEAR);
     c.setTime(d);
     return curYear - c.get(Calendar.YEAR);
+  }
+
+  public static String date2TimePicker(Date d,TimePopupWindow.Type type){
+    switch (type){
+      case ALL:
+        return date2YYMMDDTHHMMSS(d);
+      case YEAR_MONTH:
+        return date2YYMM(d);
+      case YEAR_MONTH_DAY:
+        return Date2YYYYMMDD(d);
+      case MONTH_DAY:
+        return Date2MMDD(d);
+      case HOURS_MINS:
+        return Date2HHmm(d);
+      default:
+        return Date2MMDDHHmm(d);
+    }
   }
 
   public static String getFileNameFormServer(String str) {

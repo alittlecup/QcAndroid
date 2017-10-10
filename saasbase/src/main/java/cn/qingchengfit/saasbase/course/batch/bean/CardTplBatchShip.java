@@ -2,7 +2,7 @@ package cn.qingchengfit.saasbase.course.batch.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import cn.qingchengfit.saasbase.cards.cardtypes.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 
 public class CardTplBatchShip extends CardTpl implements Parcelable {
     public static final Creator<CardTplBatchShip> CREATOR = new Creator<CardTplBatchShip>() {

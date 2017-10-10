@@ -1,13 +1,16 @@
 package cn.qingchengfit.views.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.view.Gravity;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -19,10 +22,14 @@ import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.LoadingDialog;
 import cn.qingchengfit.widgets.LoadingDialogTransParent;
+import cn.qingchengfit.widgets.R;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.manager.SupportRequestManagerFragment;
 import com.umeng.analytics.MobclickAgent;
 import dagger.android.AndroidInjection;
+import java.util.Date;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -94,6 +101,34 @@ public class BaseActivity extends AppCompatActivity {
     });
     getSupportFragmentManager().registerFragmentLifecycleCallbacks(fcb,false);
   }
+
+  boolean hasFrag = false;
+  @Override protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    if (preHandle(intent)) return;
+    FragmentTransaction tr = getSupportFragmentManager().beginTransaction();
+    if (hasFrag)
+      tr.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
+          R.anim.slide_right_out);
+    else tr.setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold);
+    tr.replace(R.id.web_frag_layout, getRouterFragment(intent));
+    if (hasFrag) tr.addToBackStack(null);
+    try {
+      tr.commit();
+    } catch (Exception e) {
+      CrashUtils.sendCrash(e);
+      tr.commitAllowingStateLoss();
+    }
+    hasFrag = true;
+  }
+  protected boolean preHandle(Intent intent){
+    return false;
+  }
+
+  protected  Fragment getRouterFragment(Intent intent){
+    return new Fragment();
+  };
+
 
   @Override protected void onDestroy() {
     getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fcb);
@@ -178,6 +213,17 @@ public class BaseActivity extends AppCompatActivity {
     }
   }
 
+  TimeDialogWindow timeDialogWindow;
+  public void chooseTime(TimePopupWindow.Type type,int start,int end ,Date date ,TimeDialogWindow.OnTimeSelectListener listener){
+    if (timeDialogWindow == null){
+      timeDialogWindow = new TimeDialogWindow(this,type);
+      timeDialogWindow.setRange(start == 0?1990:start,end == 0? 2100 : end);
+    }
+    timeDialogWindow.setOnTimeSelectListener(listener);
+    timeDialogWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM,0,0,date);
+
+  }
+
   public void hideLoadingTransparent() {
     if (loadingDialogTrans != null) loadingDialogTrans.dismiss();
   }
@@ -189,6 +235,7 @@ public class BaseActivity extends AppCompatActivity {
   public String getModuleName(){
     return "";
   }
+
 
   public FragmentBackPress getBackPress() {
     return backPress;

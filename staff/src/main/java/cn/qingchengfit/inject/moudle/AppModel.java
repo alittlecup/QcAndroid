@@ -8,11 +8,15 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.ISaasRouter;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplListWrap;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplOptionListWrap;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardTplWrapper;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.body.ChargeBody;
-import cn.qingchengfit.saasbase.cards.cardtypes.network.response.CardWrap;
+import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
+import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
+import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
+import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
+import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
@@ -30,6 +34,7 @@ import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
 import cn.qingchengfit.saasbase.routers.ICourseRouter;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.SaasRouterImpl;
@@ -39,6 +44,7 @@ import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import dagger.Module;
 import dagger.Provides;
+import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -129,6 +135,7 @@ import rx.Observable;
   @Provides ISaasRouter providerSaasRouter(){
     return new SaasRouterImpl();
   }
+
 
   @Provides ICourseRouter providerCourseRouter(){
     return new ICourseRouter() {
@@ -253,7 +260,67 @@ import rx.Observable;
         return null;
       }
 
+      @Override public Observable<QcDataResponse> qcCreateCardtpl(@Body CardtplBody body) {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse> qcUpdateCardtpl(@Path("card_tpl_id") String card_tpl_id,
+          @Body CardtplBody body) {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse> qcDelCardtpl(@Path("card_tpl_id") String card_tpl_id) {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse> qcResumeCardtpl(@Path("card_tpl_id") String card_tpl_id) {
+        return null;
+      }
+
+      @Override public Observable<QcDataResponse> qcFixGyms(@Path("cardtpl_id") String card_tpl,
+          String shops) {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse> qcDelCardStandard(@Path("option_id") String option_id) {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse> qcUpdateCardStandard(@Path("option_id") String option_id,
+          @Body OptionBody body) {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse> qcCreateStandard(@Path("card_tpl_id") String card_tpl_id,
+          @Body OptionBody body) {
+        return null;
+      }
+
       @Override public Observable<QcResponse> qcChargeCard(ChargeBody chargeBody) {
+        return null;
+      }
+
+      @Override public Observable<QcResponse> buyCard(@Body CardBuyBody body) {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse<CardListWrap>> qcGetAllCard(HashMap<String, Object> params) {
+        return null;
+      }
+
+      @Override public Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard() {
+        return null;
+      }
+
+      @Override
+      public Observable<QcDataResponse<StudentListWrapper>> qcGetBindStudent(String cardid) {
         return null;
       }
     };

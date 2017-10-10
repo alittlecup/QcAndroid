@@ -7,6 +7,8 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowActionBar">false</item>
   </style>
 
 
@@ -23,13 +25,13 @@
     <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
     <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>
     <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
-    <item name="android:windowIsTranslucent">false</item>
     <item name="buttonStyle">@style/Qc.CommonBtn</item>
     <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
     <item name="editTextStyle">@style/Qc.EditTextStyle</item>
     <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
     <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
     <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
+    <item name="android:windowTranslucentStatus">true</item>
 
   </style>
 

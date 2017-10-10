@@ -25,13 +25,18 @@ import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.PresenterDelegate;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
+import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.R;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import rx.Observable;
@@ -99,7 +104,6 @@ public abstract class BaseFragment extends Fragment
         try {
             AndroidSupportInjection.inject(this);
         } catch (Exception e) {
-          e.printStackTrace();
             LogUtil.e("not find fragment:"+getFragmentName());
         }
         super.onAttach(context);
@@ -333,7 +337,17 @@ public abstract class BaseFragment extends Fragment
   protected void routeTo(Uri uri,Bundle bd){
     try {
       Intent to = new Intent(Intent.ACTION_VIEW, uri);
-      startActivity(to,bd);
+      if (getActivity() instanceof BaseActivity){
+        if (((BaseActivity) getActivity()).getModuleName().equalsIgnoreCase(uri.getHost())){
+          to.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        }else {
+          to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+      }
+      if (bd != null){
+        to.putExtra("b",bd);
+      }
+      startActivity(to);
     }catch (Exception e){
       LogUtil.e("找不到模块去处理"+uri);
       CrashUtils.sendCrash(e);
@@ -341,11 +355,39 @@ public abstract class BaseFragment extends Fragment
   }
 
   /**
+   * 时间选择器
+   * @param type  有哪些可选项
+   * @param start 开始年份
+   * @param end   结束年份
+   * @param inputDate 初始时间
+   * @param civ    接受结果的civ
+   */
+  protected void choosTime(final TimePopupWindow.Type type,int start,int end ,Date inputDate ,
+      final CommonInputView civ){
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity)getActivity()).chooseTime(type, start, end, inputDate, new TimeDialogWindow.OnTimeSelectListener() {
+        @Override public void onTimeSelect(Date date) {
+          civ.setContent(DateUtils.date2TimePicker(date,type));
+        }
+      });
+    }
+  }
+  protected void chooseTime(final CommonInputView civ){
+    choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY,0,0,new Date(),civ);
+  }
+  protected void chooseTime(Date d,final CommonInputView civ){
+    choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY,0,0,d,civ);
+  }
+
+
+  /**
    * 跳转当前模块
    */
   protected void routeTo(String uri,Bundle bd){
+    if (!uri.startsWith("/"))
+      uri = "/"+uri;
     if (getActivity() instanceof BaseActivity)
-      routeTo(Uri.parse(AppUtils.getCurAppSchema(getContext())+"://"+((BaseActivity) getActivity()).getModuleName()+"uri"),bd);
+      routeTo(Uri.parse(AppUtils.getCurAppSchema(getContext())+"://"+((BaseActivity) getActivity()).getModuleName()+uri),bd);
   }
 
 

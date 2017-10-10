@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.router.ModuleRouter;
-import cn.qingchengfit.saasbase.cards.cardtypes.views.ChooseCardTplFragment;
+import cn.qingchengfit.saasbase.cards.views.ChooseCardTplFragment;
 import cn.qingchengfit.saasbase.routers.ICourseRouter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;

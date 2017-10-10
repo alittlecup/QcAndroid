@@ -2,19 +2,21 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar_layout"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="wrap_content"
     >
 
   <android.support.v7.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
-      android:background="?colorPrimary"
+      android:layout_height="wrap_content"
+      android:background="@color/toolbar"
       android:gravity="center_vertical"
       android:minHeight="?attr/actionBarSize"
       android:theme="@style/Qc.toolbarStyle"
+      tools:paddingTop="15dp"
       app:popupTheme="@style/ToolbarStyle.Overflow"
       app:theme="@style/Qc.toolbarStyle"
       app:titleTextAppearance="@style/ToolbarStyle"
@@ -27,6 +29,8 @@
       android:layout_gravity="center"
       android:textColor="@color/white"
       android:textSize="18sp"
+      android:lines="1"
+      tools:text="我是标题"
       style="@style/Qc.TextCommonBlack"
       />
 

@@ -79,6 +79,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        app:ft_text_on="会员卡种类"
         />
 
     <cn.qingchengfit.widgets.QcFilterToggle
@@ -86,6 +87,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        app:ft_text_on="会员卡状态"
         />
   </cn.qingchengfit.widgets.QcRadioGroup>
   <FrameLayout

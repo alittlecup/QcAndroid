@@ -3,7 +3,7 @@ package cn.qingchengfit.saasbase.utils;
 import android.content.Context;
 import android.graphics.Color;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.cards.cardtypes.bean.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.utils.CmStringUtils;
 
 /**
