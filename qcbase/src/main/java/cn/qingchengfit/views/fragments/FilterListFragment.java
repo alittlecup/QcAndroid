@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.utils.CrashUtils;
+import cn.qingchengfit.widgets.R;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.SelectableAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +34,8 @@ import java.util.List;
  * Created by Paper on 2017/9/28.
  */
 
-public class FilterListFragment extends BaseListFragment {
+public class FilterListFragment extends BaseListFragment implements
+    FlexibleAdapter.OnItemClickListener{
 
   public static FilterListFragment newInstance(@ArrayRes int strs) {
     Bundle args = new Bundle();
@@ -43,7 +47,15 @@ public class FilterListFragment extends BaseListFragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    isChild = true;
     View v = super.onCreateView(inflater, container, savedInstanceState);
+    ViewGroup.LayoutParams p =  rv.getLayoutParams();
+    p.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    p.width = ViewGroup.LayoutParams.MATCH_PARENT;
+    commonFlexAdapter.setStatus(SelectableAdapter.MODE_SINGLE);
+    rv.setLayoutParams(p);
+    rv.setBackgroundResource(R.color.white);
+    initListener(this);
     List<FilterCommonLinearItem> items  =new ArrayList<>();
     if (getArguments() != null && getArguments().getInt("a", 0) != 0){
       try {
@@ -65,5 +77,12 @@ public class FilterListFragment extends BaseListFragment {
 
   @Override public String getNoDataStr() {
     return null;
+  }
+
+  @Override public boolean onItemClick(int position) {
+    commonFlexAdapter.toggleSelection(position);
+    commonFlexAdapter.notifyDataSetChanged();
+    //RxBus.getBus().post(new );// TODO: 2017/10/10 发送选中消息
+    return true;
   }
 }

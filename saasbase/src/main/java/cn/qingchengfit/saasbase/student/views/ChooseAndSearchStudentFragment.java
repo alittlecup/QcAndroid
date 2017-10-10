@@ -52,17 +52,6 @@ import javax.inject.Inject;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
 
-  //@BindView(R2.id.et_searchview) EditText etSearchview;
-  //@BindView(R2.id.toolbar) Toolbar toolbar;
-  //@BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  //@BindView(R2.id.btn_add_student) ImageView btnAddStudent;
-  //@BindView(R2.id.ll_head_search) LinearLayout llHeadSearch;
-  //@BindView(R2.id.frag_student_list) FrameLayout fragStudentList;
-  //@BindView(R2.id.tv_select_count) TextView tvSelectCount;
-  //@BindView(R2.id.img_down) ImageView imgDown;
-  //@BindView(R2.id.ll_show_select) LinearLayout llShowSelect;
-  //@BindView(R2.id.ll_bottom) LinearLayout llBottom;
-
 
   private ChooseStudentListFragment chooseStudentListFragment;
   @Inject ChooseAndSearchPresenter presenter;

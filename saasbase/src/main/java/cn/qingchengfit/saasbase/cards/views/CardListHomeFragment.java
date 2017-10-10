@@ -76,6 +76,9 @@ public class CardListHomeFragment extends BaseFragment implements CardListPresen
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     stuff(cardListFragment);
+    filterFragment = new CardListFilterFragment();
+    stuff(R.id.frag_card_filter,filterFragment);
+    hideChild(filterFragment);
   }
 
   @Override public int getLayoutRes() {
@@ -116,7 +119,7 @@ public class CardListHomeFragment extends BaseFragment implements CardListPresen
    * 按卡种类筛选
    */
   @OnClick(R2.id.filter_tpl) public void onFilterTplClicked() {
-    toggleFilter(1);
+    toggleFilter(0);
   }
   /**
    * 按状态筛选
@@ -127,9 +130,7 @@ public class CardListHomeFragment extends BaseFragment implements CardListPresen
 
   private void toggleFilter(int index){
     if (filterFragment == null){
-      filterFragment = new CardListFilterFragment();
-      stuff(R.id.frag_card_filter,filterFragment);
-      filterFragment.showPage(index);
+
     }else {
       if (filterFragment.isVisible()){
         if (filterFragment.getCurIndex() == index){

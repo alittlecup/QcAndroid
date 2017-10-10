@@ -60,7 +60,6 @@ public class CardActivity extends BaseActivity implements HasSupportFragmentInje
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_base_frag);
     routerCenter.registe(cardImpl);
-    //getIntent().setData(Uri.parse("pos://card/list/home/"));
     onNewIntent(getIntent());
   }
 
@@ -77,11 +76,11 @@ public class CardActivity extends BaseActivity implements HasSupportFragmentInje
   }
 
   @Override protected boolean preHandle(Intent intent) {
-    if (intent.getData().getPath().equalsIgnoreCase("/buy/")){
-      getSupportFragmentManager().beginTransaction()
-          .add(buyCardRouterLazy.get(),"buycard").commitAllowingStateLoss();
-      return true;
-    }
+    //if (intent.getData().getPath().equalsIgnoreCase("/buy/")){
+    //  getSupportFragmentManager().beginTransaction()
+    //      .add(buyCardRouterLazy.get(),"buycard").commitAllowingStateLoss();
+    //  return true;
+    //}
     return false;
   }
 }
