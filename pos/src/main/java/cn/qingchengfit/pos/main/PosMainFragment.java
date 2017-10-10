@@ -119,6 +119,6 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
    * 会员卡续卡
    */
   @OnClick(R.id.btn_charge_card) public void onBtnChargeCardClicked() {
-    //routeTo(AppUtils.getRouterUri(getContext(),"/choose/cardtpl/"));
+    routeTo(AppUtils.getRouterUri(getContext(), "/card/list/home/"), null);
   }
 }

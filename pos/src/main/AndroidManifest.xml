@@ -15,7 +15,6 @@
       >
     <activity
         android:name="cn.qingchengfit.saasbase.cards.CardActivity"
-        android:launchMode="singleInstance"
         android:screenOrientation="portrait"
         android:taskAffinity="com.rongcapital.pos"
         >
@@ -31,13 +30,13 @@
             />
       </intent-filter>
     </activity>
-    <activity android:name="cn.qingchengfit.saasbase.student.StudentActivity">
+    <activity android:name="cn.qingchengfit.saasbase.student.StudentActivity"
+              android:taskAffinity="com.rongcapital.pos"
+        >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
-
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-
         <data
             android:host="student"
             android:scheme="qcpos"

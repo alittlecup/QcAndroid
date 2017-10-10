@@ -48,11 +48,13 @@ public class CardModel implements ICardModel {
   QcRestRepository repository;
   GymWrapper gymWrapper;
   LoginStatus loginStatus;
+  PosApi posApi;
 
   public CardModel(QcRestRepository repository, GymWrapper gymWrapper, LoginStatus loginStatus) {
     this.repository = repository;
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
+    posApi = repository.createGetApi(PosApi.class);
   }
 
   @Override
@@ -78,31 +80,33 @@ public class CardModel implements ICardModel {
 
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardFilterTpls(boolean is_active) {
-    return null;
+    return repository.createGetApi(PosApi.class)
+        .qcGetCardFilterCondition(loginStatus.staff_id(), gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id) {
-    return null;
+    return posApi.qcGetCardDetail(loginStatus.staff_id(), card_id, gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse> qcCreateCardtpl(@Body CardtplBody body) {
-    return null;
+    return posApi.qcCreateCardtpl(loginStatus.staff_id(), body, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse> qcUpdateCardtpl(@Path("card_tpl_id") String card_tpl_id,
       @Body CardtplBody body) {
-    return null;
+    return posApi.qcUpdateCardtpl(loginStatus.staff_id(), card_tpl_id, body,
+        gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse> qcDelCardtpl(@Path("card_tpl_id") String card_tpl_id) {
-    return null;
+    return posApi.qcDelCardtpl(loginStatus.staff_id(), card_tpl_id, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse> qcResumeCardtpl(@Path("card_tpl_id") String card_tpl_id) {
-    return null;
+    return posApi.qcResumeCardtpl(loginStatus.staff_id(), card_tpl_id, gymWrapper.getParams());
   }
 
   @Override
@@ -112,19 +116,19 @@ public class CardModel implements ICardModel {
 
   @Override
   public Observable<QcDataResponse> qcDelCardStandard(@Path("option_id") String option_id) {
-    return null;
+    return posApi.qcDelCardtplOption(loginStatus.staff_id(), option_id, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse> qcUpdateCardStandard(@Path("option_id") String option_id,
       @Body OptionBody body) {
-    return null;
+    return posApi.qcUpdateCardtplOption(loginStatus.staff_id(),option_id,gymWrapper.getParams(),body);
   }
 
   @Override
   public Observable<QcDataResponse> qcCreateStandard(@Path("card_tpl_id") String card_tpl_id,
       @Body OptionBody body) {
-    return null;
+    return posApi.qcCreateCardtplOption(loginStatus.staff_id(),card_tpl_id,gymWrapper.getParams(),body);
   }
 
   @Override public Observable<QcResponse> qcChargeCard(ChargeBody chargeBody) {

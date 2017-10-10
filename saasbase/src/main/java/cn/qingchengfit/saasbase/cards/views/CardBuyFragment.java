@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,6 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -119,6 +120,19 @@ import javax.inject.Inject;
     });
     rv.setLayoutManager(manager);
     rv.setAdapter(commonFlexAdapter);
+    civRealMoney.addTextWatcher(new TextWatcher() {
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+        tvPayMoney.setText(s.toString());
+      }
+
+      @Override public void afterTextChanged(Editable s) {
+
+      }
+    });
     return view;
   }
 
@@ -154,14 +168,13 @@ import javax.inject.Inject;
   }
 
   @Override public void onGetOptions(List<CardTplOption> options) {
-    List<AbstractFlexibleItem> items = new ArrayList<>();
+    commonFlexAdapter.clear();
+    //List<AbstractFlexibleItem> items = new ArrayList<>();
     for (CardTplOption option : options) {
-      items.add(new CardtplOptionItem(option));
+      commonFlexAdapter.addItem(new CardtplOptionItem(option));
     }
     // TODO: 2017/9/30 判断权限
-    items.add(new CardtplOptionOhterItem());
-    commonFlexAdapter.clear();
-    commonFlexAdapter.updateDataSet(items);
+    commonFlexAdapter.addItem(new CardtplOptionOhterItem());
     onItemClick(0);
   }
 
