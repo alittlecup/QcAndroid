@@ -52,6 +52,14 @@
     <item name="ft_text_size">13sp</item>
   </style>
 
+  <style name="QcFilterStyle_Dark">
+    <item name="ft_vc_drawable_on">@drawable/vd_filter_arrow_up</item>
+    <item name="ft_vc_drawable_off">@drawable/vd_filter_arrow_down</item>
+    <item name="ft_color_on">@color/colorPrimary</item>
+    <item name="ft_color_off">@color/white</item>
+    <item name="ft_text_size">13sp</item>
+  </style>
+
   <style name="TagGroup.Qc" parent="@style/TagGroup">
     <item name="atg_borderColor">?colorPrimary</item>
     <item name="atg_textSize">@dimen/txt_stanrdant</item>

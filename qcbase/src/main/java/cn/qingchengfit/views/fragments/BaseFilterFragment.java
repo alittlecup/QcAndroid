@@ -40,7 +40,7 @@ public abstract class BaseFilterFragment extends BaseFragment {
     View view = inflater.inflate(R.layout.fragment_base_filter, container, false);
     view.findViewById(R.id.bg_filter).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        getFragmentManager().beginTransaction().hide(BaseFilterFragment.this).commitAllowingStateLoss();
+        dismiss();
       }
     });
     return view;
@@ -74,12 +74,16 @@ public abstract class BaseFilterFragment extends BaseFragment {
     //如果没有先生成
     if (f == null) {
       f = getFragmentByTag(tag);
+      tr.setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold);
       tr.add(R.id.frag_base_filter,f,tag);
     }
     //展示
-    tr.setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out);
     tr.show(f);
     tr.commit();
+  }
+
+  public void dismiss(){
+    getFragmentManager().beginTransaction().hide(this).commitAllowingStateLoss();
   }
 
   protected abstract String[] getTags();

@@ -75,6 +75,7 @@
       >
 
     <cn.qingchengfit.widgets.QcFilterToggle
+        style="@style/QcFilterStyle_Dark"
         android:id="@+id/filter_tpl"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -83,6 +84,7 @@
         />
 
     <cn.qingchengfit.widgets.QcFilterToggle
+        style="@style/QcFilterStyle_Dark"
         android:id="@+id/filter_status"
         android:layout_width="0dp"
         android:layout_height="match_parent"

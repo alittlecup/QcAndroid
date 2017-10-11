@@ -59,58 +59,64 @@ public abstract class BaseFragment extends Fragment
     implements BaseActivity.FragmentBackPress, CView {
 
   public FragCallBack mCallbackActivity;
-    public Unbinder unbinder;
-    // 标志位，标志已经初始化完成
-    protected boolean isVisible;
-    protected  boolean isInit = false;
+  public Unbinder unbinder;
+  // 标志位，标志已经初始化完成
+  protected boolean isVisible;
+  protected boolean isInit = false;
   protected boolean isLoading = false;
-    protected boolean isLazyLoad = true;
-    protected boolean isPrepared;
-    List<Subscription> sps = new ArrayList<>();
-    private List<PresenterDelegate> delegates = new ArrayList<>();
-    private List<Pair<String, Observable>> observables = new ArrayList<>();
-    private FragmentManager.FragmentLifecycleCallbacks childrenCB = new FragmentManager.FragmentLifecycleCallbacks() {
+  protected boolean isLazyLoad = true;
+  protected boolean isPrepared;
+  //已经是否已经展示过，展示过说明是从栈中出来
+  protected boolean hasShown;
+  List<Subscription> sps = new ArrayList<>();
+  private List<PresenterDelegate> delegates = new ArrayList<>();
+  private List<Pair<String, Observable>> observables = new ArrayList<>();
+  private FragmentManager.FragmentLifecycleCallbacks childrenCB =
+      new FragmentManager.FragmentLifecycleCallbacks() {
 
-        @Override public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
-            super.onFragmentViewCreated(fm, f, v, savedInstanceState);
-            onChildViewCreated(fm, f, v, savedInstanceState);
+        @Override public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v,
+            Bundle savedInstanceState) {
+          super.onFragmentViewCreated(fm, f, v, savedInstanceState);
+          onChildViewCreated(fm, f, v, savedInstanceState);
         }
-    };
+      };
 
-    protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
-    }
+  protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+      Bundle savedInstanceState) {
+  }
 
-    @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getChildFragmentManager().registerFragmentLifecycleCallbacks(childrenCB, false);
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    getChildFragmentManager().registerFragmentLifecycleCallbacks(childrenCB, false);
+    return super.onCreateView(inflater, container, savedInstanceState);
+  }
 
-    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        super.onViewCreated(view, savedInstanceState);
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override public boolean onTouch(View v, MotionEvent event) {
-                return isBlockTouch();
-            }
-        });
-    }
-
-    public boolean isBlockTouch() {
-        return true;
-    }
-
-    @Override public void onAttach(Context context) {
-        try {
-            AndroidSupportInjection.inject(this);
-        } catch (Exception e) {
-            LogUtil.e("not find fragment:"+getFragmentName());
-        }
-        super.onAttach(context);
-      if (context instanceof FragCallBack) {
-        mCallbackActivity = (FragCallBack) context;
+    super.onViewCreated(view, savedInstanceState);
+    view.setOnTouchListener(new View.OnTouchListener() {
+      @Override public boolean onTouch(View v, MotionEvent event) {
+        return isBlockTouch();
       }
+    });
+  }
+
+  public boolean isBlockTouch() {
+    return true;
+  }
+
+  @Override public void onAttach(Context context) {
+    try {
+      AndroidSupportInjection.inject(this);
+    } catch (Exception e) {
+      LogUtil.e("inject not find fragment:" + getFragmentName());
     }
+    super.onAttach(context);
+    if (context instanceof FragCallBack) {
+      mCallbackActivity = (FragCallBack) context;
+    }
+  }
 
   @Override public void onDetach() {
     super.onDetach();
@@ -118,14 +124,14 @@ public abstract class BaseFragment extends Fragment
   }
 
   protected void delegatePresenter(Presenter presenter, PView pView) {
-        PresenterDelegate delegate = new PresenterDelegate(presenter);
-        delegate.attachView(pView);
-        delegates.add(delegate);
+    PresenterDelegate delegate = new PresenterDelegate(presenter);
+    delegate.attachView(pView);
+    delegates.add(delegate);
 
-      if (getActivity() instanceof BaseActivity) {
-        ((BaseActivity) getActivity()).setBackPress(this);
-      }
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).setBackPress(this);
     }
+  }
 
   public void setBackPress() {
     if (getActivity() instanceof BaseActivity) {
@@ -139,185 +145,185 @@ public abstract class BaseFragment extends Fragment
     }
   }
 
-    public void initToolbar(@NonNull Toolbar toolbar) {
-        toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-    }
+  public void initToolbar(@NonNull Toolbar toolbar) {
+    toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
+    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        getActivity().onBackPressed();
+      }
+    });
+  }
 
-    public void showLoading() {
-      //if (getActivity() instanceof BaseActivity) {
-      //  ((BaseActivity) getActivity()).showLoading();
-      //  }
-    }
+  public void showLoading() {
+    //if (getActivity() instanceof BaseActivity) {
+    //  ((BaseActivity) getActivity()).showLoading();
+    //  }
+  }
 
-    public void hideLoading() {
-      //if (getActivity() instanceof BaseActivity) {
-      //  ((BaseActivity) getActivity()).hideLoading();
-      //  }
-    }
+  public void hideLoading() {
+    //if (getActivity() instanceof BaseActivity) {
+    //  ((BaseActivity) getActivity()).hideLoading();
+    //  }
+  }
 
   @Override public boolean onFragmentBackPress() {
     return false;
-    }
+  }
 
-    @Override public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (getView() != null) {
-            if (getUserVisibleHint()) {
-                isVisible = true;
-                onVisible();
-            } else {
-                isVisible = false;
-                onInVisible();
-            }
-        }
+  @Override public void setUserVisibleHint(boolean isVisibleToUser) {
+    super.setUserVisibleHint(isVisibleToUser);
+    if (getView() != null) {
+      if (getUserVisibleHint()) {
+        isVisible = true;
+        onVisible();
+      } else {
+        isVisible = false;
+        onInVisible();
+      }
     }
+  }
 
   @Override public void onHiddenChanged(boolean hidden) {
     super.onHiddenChanged(hidden);
-    if (hidden){
+    if (hidden) {
       onInVisible();
-    }else {
+    } else {
       onVisible();
     }
   }
 
   @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if (enter && nextAnim > 0) {
-            Animation animation = AnimationUtils.loadAnimation(getActivity(), nextAnim);
-            if (animation != null) {
-                animation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override public void onAnimationStart(Animation animation) {
+    if (enter && nextAnim > 0 && !hasShown) {
+      Animation animation = AnimationUtils.loadAnimation(getActivity(), nextAnim);
+      if (animation != null) {
+        animation.setAnimationListener(new Animation.AnimationListener() {
+          @Override public void onAnimationStart(Animation animation) {
 
-                    }
+          }
 
-                    @Override public void onAnimationEnd(Animation animation) {
-                        onFinishAnimation();
-                    }
+          @Override public void onAnimationEnd(Animation animation) {
+            hasShown = true;
+            onFinishAnimation();
+          }
 
-                    @Override public void onAnimationRepeat(Animation animation) {
+          @Override public void onAnimationRepeat(Animation animation) {
 
-                    }
-                });
-            }
-            return animation;
-        } else {
-            return super.onCreateAnimation(transit, enter, nextAnim);
-        }
-    }
-
-    protected void onFinishAnimation() {
-
-    }
-
-    protected void onVisible() {
-        lazyLoad();
-    }
-
-    protected void lazyLoad() {
-
-    }
-
-    public void showAlert(int res) {
-        showAlert(getString(res));
-    }
-
-    public void showAlert(String res) {
-      if (getActivity() instanceof BaseActivity) {
-        ((BaseActivity) getActivity()).showAlert(res);
-        }
-    }
-
-    protected void onInVisible() {
-    }
-
-    @Override public void onDestroyView() {
-        getChildFragmentManager().unregisterFragmentLifecycleCallbacks(childrenCB);
-        if (getActivity() != null) {
-            AppUtils.hideKeyboard(getActivity());
-        }
-        if (delegates.size() > 0) {
-            for (int i = 0; i < delegates.size(); i++) {
-                delegates.get(i).unattachView();
-            }
-        }
-        unattachView();
-        super.onDestroyView();
-        if (unbinder != null) unbinder.unbind();
-    }
-
-    public void unattachView() {
-        for (int i = 0; i < sps.size(); i++) {
-            sps.get(i).unsubscribe();
-        }
-        for (int i = 0; i < observables.size(); i++) {
-            RxBus.getBus().unregister(observables.get(i).first, observables.get(i).second);
-        }
-    }
-
-    public String getFragmentName() {
-        return "fragment";
-    }
-
-    public Subscription RxRegiste(Subscription subscription) {
-        sps.add(subscription);
-        return subscription;
-    }
-
-    public <T> Observable<T> RxBusAdd(@NonNull Class<T> clazz) {
-        Observable ob = RxBus.getBus().register(clazz);
-        observables.add(new Pair<String, Observable>(clazz.getName(), ob));
-        return ob;
-    }
-
-    protected void stuff(Fragment fragment) {
-        String tag = UUID.randomUUID().toString();
-        if (fragment instanceof BaseFragment) {
-            tag = ((BaseFragment) fragment).getFragmentName();
-        }
-        stuff(getLayoutRes(), fragment, tag, R.anim.slide_hold, R.anim.slide_hold);
-    }
-
-    protected void stuff(Fragment fragment, String tag) {
-        stuff(getLayoutRes(), fragment, tag, R.anim.slide_hold, R.anim.slide_hold);
-    }
-
-    public int getLayoutRes() {
-        return 0;
-    }
-
-    protected void stuff(int res, Fragment fragment){
-      String tag = UUID.randomUUID().toString();
-      if (fragment instanceof BaseFragment) {
-        tag = ((BaseFragment) fragment).getFragmentName();
+          }
+        });
       }
-      stuff(res, fragment, tag, R.anim.slide_hold, R.anim.slide_hold);
+      return animation;
+    } else {
+      return super.onCreateAnimation(transit, enter, nextAnim);
     }
+  }
 
-    public void showChild(Fragment f){
-      getChildFragmentManager().beginTransaction()
-          .show(f).commitAllowingStateLoss();
-    }
-    public void hideChild(Fragment f){
-      getChildFragmentManager().beginTransaction()
-          .hide(f).commitAllowingStateLoss();
-    }
+  protected void onFinishAnimation() {
 
-    protected void stuff(int res, Fragment fragment, String tag, int resIn, int resOut) {
-        Fragment fragment1 = getChildFragmentManager().findFragmentByTag(tag);
-        if (fragment1 != null) {
-            getChildFragmentManager().beginTransaction().show(fragment1).commitAllowingStateLoss();
-        } else {
-            getChildFragmentManager().beginTransaction()
-                .setCustomAnimations(resIn, resOut)
-                .replace(res, fragment)
-                .commitAllowingStateLoss();
-        }
+  }
+
+  protected void onVisible() {
+    lazyLoad();
+  }
+
+  protected void lazyLoad() {
+
+  }
+
+  public void showAlert(int res) {
+    showAlert(getString(res));
+  }
+
+  public void showAlert(String res) {
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).showAlert(res);
     }
+  }
+
+  protected void onInVisible() {
+  }
+
+  @Override public void onDestroyView() {
+    getChildFragmentManager().unregisterFragmentLifecycleCallbacks(childrenCB);
+    if (getActivity() != null) {
+      AppUtils.hideKeyboard(getActivity());
+    }
+    if (delegates.size() > 0) {
+      for (int i = 0; i < delegates.size(); i++) {
+        delegates.get(i).unattachView();
+      }
+    }
+    unattachView();
+    super.onDestroyView();
+    if (unbinder != null) unbinder.unbind();
+  }
+
+  public void unattachView() {
+    for (int i = 0; i < sps.size(); i++) {
+      sps.get(i).unsubscribe();
+    }
+    for (int i = 0; i < observables.size(); i++) {
+      RxBus.getBus().unregister(observables.get(i).first, observables.get(i).second);
+    }
+  }
+
+  public String getFragmentName() {
+    return "fragment";
+  }
+
+  public Subscription RxRegiste(Subscription subscription) {
+    sps.add(subscription);
+    return subscription;
+  }
+
+  public <T> Observable<T> RxBusAdd(@NonNull Class<T> clazz) {
+    Observable ob = RxBus.getBus().register(clazz);
+    observables.add(new Pair<String, Observable>(clazz.getName(), ob));
+    return ob;
+  }
+
+  protected void stuff(Fragment fragment) {
+    String tag = UUID.randomUUID().toString();
+    if (fragment instanceof BaseFragment) {
+      tag = ((BaseFragment) fragment).getFragmentName();
+    }
+    stuff(getLayoutRes(), fragment, tag, R.anim.slide_hold, R.anim.slide_hold);
+  }
+
+  protected void stuff(Fragment fragment, String tag) {
+    stuff(getLayoutRes(), fragment, tag, R.anim.slide_hold, R.anim.slide_hold);
+  }
+
+  public int getLayoutRes() {
+    return 0;
+  }
+
+  protected void stuff(int res, Fragment fragment) {
+    String tag = UUID.randomUUID().toString();
+    if (fragment instanceof BaseFragment) {
+      tag = ((BaseFragment) fragment).getFragmentName();
+    }
+    stuff(res, fragment, tag, R.anim.slide_hold, R.anim.slide_hold);
+  }
+
+  public void showChild(Fragment f) {
+    getChildFragmentManager().beginTransaction().show(f).commitAllowingStateLoss();
+  }
+
+  public void hideChild(Fragment f) {
+    getChildFragmentManager().beginTransaction().hide(f).commitAllowingStateLoss();
+  }
+
+  protected void stuff(int res, Fragment fragment, String tag, int resIn, int resOut) {
+    Fragment fragment1 = getChildFragmentManager().findFragmentByTag(tag);
+    if (fragment1 != null) {
+      getChildFragmentManager().beginTransaction().show(fragment1).commitAllowingStateLoss();
+    } else {
+      getChildFragmentManager().beginTransaction()
+          .setCustomAnimations(resIn, resOut)
+          .replace(res, fragment)
+          .commitAllowingStateLoss();
+    }
+  }
 
   protected void routeTo(Fragment fragment, String tag) {
     if (getActivity() instanceof BaseActivity) {
@@ -334,63 +340,68 @@ public abstract class BaseFragment extends Fragment
   /**
    * 根据uri 跳转
    */
-  protected void routeTo(Uri uri,Bundle bd){
+  protected void routeTo(Uri uri, Bundle bd) {
     try {
       Intent to = new Intent(Intent.ACTION_VIEW, uri);
-      if (getActivity() instanceof BaseActivity){
+      if (getActivity() instanceof BaseActivity) {
         if (((BaseActivity) getActivity()).getModuleName().equalsIgnoreCase(uri.getHost())
-            && !uri.getPath().startsWith("/choose")){
+            && !uri.getPath().startsWith("/choose")) {
           to.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        }else {
+        } else {
           to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
       }
-      if (bd != null){
-        to.putExtra("b",bd);
+      if (bd != null) {
+        to.putExtra("b", bd);
       }
       startActivity(to);
-    }catch (Exception e){
-      LogUtil.e("找不到模块去处理"+uri);
+    } catch (Exception e) {
+      LogUtil.e("找不到模块去处理" + uri);
       CrashUtils.sendCrash(e);
     }
   }
 
   /**
    * 时间选择器
-   * @param type  有哪些可选项
+   *
+   * @param type 有哪些可选项
    * @param start 开始年份
-   * @param end   结束年份
+   * @param end 结束年份
    * @param inputDate 初始时间
-   * @param civ    接受结果的civ
+   * @param civ 接受结果的civ
    */
-  protected void choosTime(final TimePopupWindow.Type type,int start,int end ,Date inputDate ,
-      final CommonInputView civ){
+  protected void choosTime(final TimePopupWindow.Type type, int start, int end, Date inputDate,
+      final CommonInputView civ) {
     if (getActivity() instanceof BaseActivity) {
-      ((BaseActivity)getActivity()).chooseTime(type, start, end, inputDate, new TimeDialogWindow.OnTimeSelectListener() {
-        @Override public void onTimeSelect(Date date) {
-          civ.setContent(DateUtils.date2TimePicker(date,type));
-        }
-      });
+      ((BaseActivity) getActivity()).chooseTime(type, start, end, inputDate,
+          new TimeDialogWindow.OnTimeSelectListener() {
+            @Override public void onTimeSelect(Date date) {
+              civ.setContent(DateUtils.date2TimePicker(date, type));
+            }
+          });
     }
   }
-  protected void chooseTime(final CommonInputView civ){
-    choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY,0,0,new Date(),civ);
-  }
-  protected void chooseTime(Date d,final CommonInputView civ){
-    choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY,0,0,d,civ);
+
+  protected void chooseTime(final CommonInputView civ) {
+    choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY, 0, 0, new Date(), civ);
   }
 
+  protected void chooseTime(Date d, final CommonInputView civ) {
+    choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY, 0, 0, d, civ);
+  }
 
   /**
    * 跳转当前模块
    */
-  protected void routeTo(String uri,Bundle bd){
-    if (!uri.startsWith("/"))
-      uri = "/"+uri;
-    if (getActivity() instanceof BaseActivity)
-      routeTo(Uri.parse(AppUtils.getCurAppSchema(getContext())+"://"+((BaseActivity) getActivity()).getModuleName()+uri),bd);
+  protected void routeTo(String uri, Bundle bd) {
+    if (!uri.startsWith("/")) uri = "/" + uri;
+    if (getActivity() instanceof BaseActivity) {
+      routeTo(Uri.parse(AppUtils.getCurAppSchema(getContext())
+          + "://"
+          + ((BaseActivity) getActivity()).getModuleName()
+          + uri), bd);
+    }
   }
-
 
   protected void rmAndTo(Fragment rm, Fragment fragment, String tag) {
     if (getActivity() instanceof BaseActivity) {
@@ -412,29 +423,29 @@ public abstract class BaseFragment extends Fragment
   /**
    * 用语页面为空的状态
    */
-    public void showLoadingTrans() {
-      if (getActivity() instanceof BaseActivity) {
-        ((BaseActivity) getActivity()).showLoadingTransparent();
-      }
+  public void showLoadingTrans() {
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).showLoadingTransparent();
     }
+  }
 
-    public void hideLoadingTrans() {
-      if (getActivity() instanceof BaseActivity) {
-        ((BaseActivity) getActivity()).hideLoadingTransparent();
-      }
+  public void hideLoadingTrans() {
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).hideLoadingTransparent();
     }
+  }
 
-    @Override public void onShowError(String e) {
-        hideLoading();
-        hideLoadingTrans();
-        ToastUtils.show(e);
-    }
+  @Override public void onShowError(String e) {
+    hideLoading();
+    hideLoadingTrans();
+    ToastUtils.show(e);
+  }
 
   @Override public void popBack() {
     getFragmentManager().popBackStackImmediate();
   }
 
   @Override public void onShowError(@StringRes int e) {
-        onShowError(getString(e));
-    }
+    onShowError(getString(e));
+  }
 }

@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.StyleRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -66,11 +67,11 @@ public class QcFilterToggle extends CompoundButton implements QcCheckable {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.QcFilterToggle, defStyleAttr, 0);
         int dr = a.getResourceId(R.styleable.QcFilterToggle_ft_vc_drawable_on,-1);
         if (dr > 0){
-            buttonDrawableOn = ContextCompat.getDrawable(getContext(),dr);
+            buttonDrawableOn = ContextCompat.getDrawable(getContext(),dr).mutate();
         }
         int dr2 = a.getResourceId(R.styleable.QcFilterToggle_ft_vc_drawable_off,-1);
         if (dr2 > 0){
-            buttonDrawableOff = ContextCompat.getDrawable(getContext(),dr2);
+            buttonDrawableOff = ContextCompat.getDrawable(getContext(),dr2).mutate();
         }
         textOn = a.getString(R.styleable.QcFilterToggle_ft_text_on);
         textOff = a.getString(R.styleable.QcFilterToggle_ft_text_off);
@@ -79,6 +80,8 @@ public class QcFilterToggle extends CompoundButton implements QcCheckable {
         mChecked = a.getBoolean(R.styleable.QcFilterToggle_ft_checked,false);
         textSize = a.getDimension(R.styleable.QcFilterToggle_ft_text_size,getResources().getDimension(R.dimen.common_font));
         a.recycle();
+        DrawableCompat.setTint(buttonDrawableOn,colorOn);
+        DrawableCompat.setTint(buttonDrawableOff,colorOff);
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextSize(textSize);
         if (TextUtils.isEmpty(textOn))

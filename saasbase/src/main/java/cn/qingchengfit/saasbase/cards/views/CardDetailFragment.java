@@ -5,12 +5,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.items.ActionDescItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardActionsItem;
-import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
@@ -50,9 +50,9 @@ import javax.inject.Inject;
   @Need
   String cardid;
 
-  public static CardDetailFragment newInstance(String id) {
+  public static CardDetailFragment newInstance(String cardid) {
     Bundle args = new Bundle();
-    args.putString("id", id);
+    args.putString("id", cardid);
     CardDetailFragment fragment = new CardDetailFragment();
     fragment.setArguments(args);
     return fragment;
@@ -69,6 +69,8 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
+    LinearLayout parent = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container,container,false);
+    parent.addView(v,1);
     delegatePresenter(presenter,this);
     presenter.setCardId(cardid);
     RxBusAdd(EventRecycleClick.class)
@@ -81,7 +83,7 @@ import javax.inject.Inject;
             }
           }
         });
-    return v;
+    return parent;
   }
 
   @Override protected void onFinishAnimation() {
@@ -103,7 +105,7 @@ import javax.inject.Inject;
 
   @Override public void onCardDetail(Card card) {
     List<AbstractFlexibleItem> items = new ArrayList<>();
-    items.add(new CardTplItem(card.getCard_tpl()));
+    //items.add(new CardTplItem(card.getCard_tpl()));
     items.add(new CardActionsItem(card));
     items.add(new ActionDescItem.Builder().action(1)
         .action(R.drawable.vd_add_batch)
@@ -125,6 +127,7 @@ import javax.inject.Inject;
         .title("实体卡号")
         .desc(card.getId())
         .build());
+    setDatas(items,1);
   }
 
   @Override public boolean onItemClick(int position) {

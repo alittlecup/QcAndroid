@@ -1,6 +1,9 @@
-package cn.qingchengfit.events;
+package cn.qingchengfit.saasbase.cards.item;
 
-import android.support.annotation.IntRange;
+import cn.qingchengfit.items.FilterCommonLinearItem;
+import cn.qingchengfit.saasbase.R;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import java.util.List;
 
 /**
  * power by
@@ -20,17 +23,22 @@ import android.support.annotation.IntRange;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/27.
+ * Created by Paper on 2017/10/11.
  */
 
-public class EventCommonFilter {
-  int pos = 0;
-
-  public EventCommonFilter(@IntRange(from = 0) int pos) {
-    this.pos = pos;
+public class CardCateFilterItem extends FilterCommonLinearItem {
+  public CardCateFilterItem(String data) {
+    super(data,false);
   }
 
-  public int getPos() {
-    return pos;
+  public CardCateFilterItem(String data, boolean isShowState) {
+    super(data, isShowState);
+  }
+
+  @Override public void bindViewHolder(FlexibleAdapter adapter,
+      FilterCommonLinearItem.FilterCommonLinearVH holder, int position, List payloads) {
+    super.bindViewHolder(adapter, holder, position, payloads);
+    holder.itemView.setBackgroundResource(
+        adapter.isSelected(position) ? R.color.white : R.color.bg_grey);
   }
 }

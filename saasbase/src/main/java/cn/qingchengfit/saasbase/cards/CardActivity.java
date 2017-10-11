@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
+import cn.qingchengfit.saasbase.cards.views.CardChargeFragment;
 import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
 import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
 import cn.qingchengfit.saasbase.cards.views.CardListHomeFragment;
@@ -48,6 +49,7 @@ import javax.inject.Inject;
     CardTplsHomeInGymFragment.class, CardTplDetailFragment.class, ChooseCardTplForBuyCardFragment.class,
     CardBuyFragment.class, CardListHomeFragment.class, CardFilterTplFragment.class,
     CardDetailFragment.class, CardtplOptionAddFragment.class, CardTplOptionFragment.class
+    , CardChargeFragment.class
 })
 public class CardActivity extends BaseActivity implements HasSupportFragmentInjector {
 

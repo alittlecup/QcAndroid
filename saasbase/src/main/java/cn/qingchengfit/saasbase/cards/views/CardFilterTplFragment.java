@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.item.CardCateFilterItem;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
@@ -24,6 +26,7 @@ import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +76,7 @@ public class CardFilterTplFragment extends BaseFragment {
     rvLeft.setLayoutManager(new LinearLayoutManager(getContext()));
     rvRight.setLayoutManager(new LinearLayoutManager(getContext()));
     rvLeft.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_qc_base_line).withBottomEdge(true));
-    rvRight.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_qc_base_line).withBottomEdge(true));
+    rvRight.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin).withBottomEdge(true));
     rvLeft.setAdapter(adapterLeft);
     rvRight.setAdapter(adapterRight);
     return view;
@@ -91,10 +94,17 @@ public class CardFilterTplFragment extends BaseFragment {
             //获取到所有可以筛选的会员卡种类，然后分类
             HashMap<String,List<CardTpl>> ret = new HashMap<String, List<CardTpl>>();
             if (ResponseConstant.checkSuccess(cardTplListWrapQcDataResponse)) {
-              ret.put(cardCategory[0],cardTplListWrapQcDataResponse.data.card_tpls);
+              ret.put(cardCategory[0],new ArrayList<CardTpl>());
               ret.put(cardCategory[1],new ArrayList<CardTpl>());
               ret.put(cardCategory[2],new ArrayList<CardTpl>());
               ret.put(cardCategory[3],new ArrayList<CardTpl>());
+              //全部卡种类
+              ret.get(cardCategory[0]).add(new CardTpl("全部卡种类",0,"","",""));
+              ret.get(cardCategory[0]).addAll(cardTplListWrapQcDataResponse.data.card_tpls);
+              ret.get(cardCategory[1]).add(new CardTpl("全部储值卡",1,"","",""));
+              ret.get(cardCategory[2]).add(new CardTpl("全部次卡",2,"","",""));
+              ret.get(cardCategory[3]).add(new CardTpl("全部期限卡",3,"","",""));
+
               for (CardTpl card_tpl : cardTplListWrapQcDataResponse.data.card_tpls) {
                 ret.get(cardCategory[card_tpl.type]).add(card_tpl);
               }
@@ -112,7 +122,7 @@ public class CardFilterTplFragment extends BaseFragment {
             //有数据的会员卡类型添加进去
             for (String s : cardCategory) {
               if (hashmap.get(s).size() > 0){
-                adapterLeft.addItem(new FilterCommonLinearItem(s,false));
+                adapterLeft.addItem(new CardCateFilterItem(s,false));
               }
             }
           }
@@ -142,6 +152,16 @@ public class CardFilterTplFragment extends BaseFragment {
           //选中某一个卡种类
           adapterRight.toggleSelection(position);
           adapterRight.notifyDataSetChanged();
+          int x = 0;
+          try {
+            x = adapterLeft.getSelectedPositions().get(0);
+          }catch (Exception e){
+
+          }
+          IFlexible item = adapterRight.getItem(position);
+          if (item instanceof FilterCommonLinearItem) {
+              RxBus.getBus().post(mAllDatas.get(cardCategory[x]).get(position));
+          }
           return true;
         }
       };

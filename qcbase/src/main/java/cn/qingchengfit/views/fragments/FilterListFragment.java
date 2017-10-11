@@ -5,9 +5,10 @@ import android.support.annotation.ArrayRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventCommonFilter;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.utils.CrashUtils;
-import cn.qingchengfit.widgets.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import java.util.ArrayList;
@@ -45,16 +46,18 @@ public class FilterListFragment extends BaseListFragment implements
     return fragment;
   }
 
+
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     isChild = true;
     View v = super.onCreateView(inflater, container, savedInstanceState);
-    ViewGroup.LayoutParams p =  rv.getLayoutParams();
-    p.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-    p.width = ViewGroup.LayoutParams.MATCH_PARENT;
-    commonFlexAdapter.setStatus(SelectableAdapter.MODE_SINGLE);
-    rv.setLayoutParams(p);
-    rv.setBackgroundResource(R.color.white);
+    //ViewGroup.LayoutParams p =  rv.getLayoutParams();
+    //p.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    //p.width = ViewGroup.LayoutParams.MATCH_PARENT;
+    commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+    //rv.setLayoutParams(p);
+
     initListener(this);
     List<FilterCommonLinearItem> items  =new ArrayList<>();
     if (getArguments() != null && getArguments().getInt("a", 0) != 0){
@@ -71,6 +74,10 @@ public class FilterListFragment extends BaseListFragment implements
     return v;
   }
 
+  @Override public boolean isBlockTouch() {
+    return false;
+  }
+
   @Override public int getNoDataIconRes() {
     return 0;
   }
@@ -82,7 +89,7 @@ public class FilterListFragment extends BaseListFragment implements
   @Override public boolean onItemClick(int position) {
     commonFlexAdapter.toggleSelection(position);
     commonFlexAdapter.notifyDataSetChanged();
-    //RxBus.getBus().post(new );// TODO: 2017/10/10 发送选中消息
+    RxBus.getBus().post(new EventCommonFilter(position));
     return true;
   }
 }
