@@ -72,8 +72,8 @@ public class CardFilterTplFragment extends BaseFragment {
     adapterRight.setMode(SelectableAdapter.MODE_SINGLE);
     rvLeft.setLayoutManager(new LinearLayoutManager(getContext()));
     rvRight.setLayoutManager(new LinearLayoutManager(getContext()));
-    rvLeft.addItemDecoration(new FlexibleItemDecoration(getContext()).withDefaultDivider().withBottomEdge(true));
-    rvRight.addItemDecoration(new FlexibleItemDecoration(getContext()).withDefaultDivider().withBottomEdge(true));
+    rvLeft.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_qc_base_line).withBottomEdge(true));
+    rvRight.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_qc_base_line).withBottomEdge(true));
     rvLeft.setAdapter(adapterLeft);
     rvRight.setAdapter(adapterRight);
     return view;
@@ -127,7 +127,7 @@ public class CardFilterTplFragment extends BaseFragment {
       new FlexibleAdapter.OnItemClickListener() {
         @Override public boolean onItemClick(int position) {
           adapterLeft.toggleSelection(position);
-          adapterLeft.notifyItemChanged(position);
+          adapterLeft.notifyDataSetChanged();
           adapterRight.clear();
           adapterRight.clearSelection();
           for (CardTpl cardTpl : mAllDatas.get(cardCategory[position])) {
@@ -140,6 +140,8 @@ public class CardFilterTplFragment extends BaseFragment {
       new FlexibleAdapter.OnItemClickListener() {
         @Override public boolean onItemClick(int position) {
           //选中某一个卡种类
+          adapterRight.toggleSelection(position);
+          adapterRight.notifyDataSetChanged();
           return true;
         }
       };

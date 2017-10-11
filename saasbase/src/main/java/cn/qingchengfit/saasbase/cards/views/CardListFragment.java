@@ -9,6 +9,8 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -43,6 +45,10 @@ public class CardListFragment extends BaseListFragment {
         .withLeftEdge(true)
         .withRightEdge(true)
     );
+  }
+
+  @Override protected void setAnimation() {
+    super.setAnimation();
   }
 
   public void setCardtpls(List<Card> list){

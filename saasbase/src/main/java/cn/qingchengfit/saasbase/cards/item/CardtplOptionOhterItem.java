@@ -21,7 +21,7 @@ public class CardtplOptionOhterItem
 
 
   @Override public int getLayoutRes() {
-    return R.layout.item_cardtpl_standard;
+    return R.layout.item_cardtpl_standard_other;
   }
 
   @Override

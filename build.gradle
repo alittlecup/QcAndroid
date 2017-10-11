@@ -13,7 +13,7 @@ ext {
 
   ]
 
-  libraries = [supportVersion  : "25.3.1",
+  libraries = [supportVersion  : "25.4.0",
                dagger          : "2.11",
                rxjava          : "1.1.6",
                rxandroid       : "1.2.1",
@@ -62,9 +62,9 @@ allprojects {
     maven() {
       url uri('../repo')
     }
-    maven() {
-      url "http://maven.aliyun.com/nexus/content/groups/public/"
-    }
+//    maven() {
+//      url "http://maven.aliyun.com/nexus/content/groups/public/"
+//    }
     maven { url "https://jitpack.io" }
 
     repositories{
@@ -77,7 +77,7 @@ allprojects {
 
     mavenCentral()
 
-//    maven { url "https://maven.google.com" }
+    maven { url "https://maven.google.com" }
 
     maven {
       url "https://s3.amazonaws.com/repo.commonsware.com"

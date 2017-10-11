@@ -1,7 +1,7 @@
 package cn.qingchengfit.saasbase.network.body;
 
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.saasbase.cardtypes.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.network.model.Batch;
 import cn.qingchengfit.saasbase.network.model.CourseTypeSample;
 import cn.qingchengfit.saasbase.network.model.Shop;

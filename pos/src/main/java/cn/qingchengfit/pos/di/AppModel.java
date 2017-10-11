@@ -7,6 +7,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.pos.PosApp;
 import cn.qingchengfit.pos.models.CardModel;
+import cn.qingchengfit.pos.models.StaffModel;
 import cn.qingchengfit.pos.models.StudentModel;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
@@ -24,10 +25,13 @@ import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.routers.Icard;
+import cn.qingchengfit.saasbase.routers.Istaff;
 import cn.qingchengfit.saasbase.routers.Istudent;
 import cn.qingchengfit.saasbase.routers.RouterCenter;
 import cn.qingchengfit.saasbase.routers.cardImpl;
+import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.studentImpl;
+import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.http.Body;
@@ -95,10 +99,18 @@ public class AppModel {
   @Provides ICardModel providerCardModel() {
     return new CardModel(qcrestRepository,gymWrapper,loginStatus);
   }
+  @Provides Istaff prividerStaffRouter(){
+    return new staffImpl();
+  }
 
   @Provides Icard providerICards(){
     return new cardImpl();
   }
+
+  @Provides IStaffModel providerStaffModel(){
+    return new StaffModel(qcrestRepository,gymWrapper,loginStatus);
+  }
+
 
   @Provides ICourseModel provideCourseModel(){
     return new ICourseModel() {

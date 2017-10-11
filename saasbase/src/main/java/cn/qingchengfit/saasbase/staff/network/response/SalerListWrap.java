@@ -1,12 +1,8 @@
-package cn.qingchengfit.pos;
+package cn.qingchengfit.saasbase.staff.network.response;
 
-import cn.qingchengfit.pos.di.AppModel;
-import cn.qingchengfit.saasbase.di.BindCardActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
-import dagger.android.support.AndroidSupportInjectionModule;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.network.response.QcListData;
+import java.util.List;
 
 /**
  * power by
@@ -26,12 +22,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/10.
  */
-@Component(modules = { AppModel.class,
-    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-    BindCardActivity.class, BindStaffActivity.class
-})
-public interface PosAppComponent {
-  void inject(PosApp app);
+
+public class SalerListWrap extends QcListData {
+  public List<Staff> users;
 }

@@ -17,7 +17,6 @@ import cn.qingchengfit.widgets.QcLeftRightDivider;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
-import eu.davidea.flexibleadapter.helpers.AnimatorHelper;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -83,8 +82,8 @@ public abstract class BaseListFragment extends BaseFragment {
       linearLayoutManager.scrollToPosition(savedInstanceState.getInt("p",0));
     }
     rv.setLayoutManager(linearLayoutManager);
-    addDivider();
     setAnimation();
+    addDivider();
     rv.setAdapter(commonFlexAdapter);
     if (listeners != null) commonFlexAdapter.addListener(listeners);
     if (srl != null && listeners instanceof SwipeRefreshLayout.OnRefreshListener) {
@@ -93,10 +92,10 @@ public abstract class BaseListFragment extends BaseFragment {
 
   }
 
-  private void setAnimation() {
+  protected void setAnimation() {
     commonFlexAdapter.setAnimationEntryStep(true)
+        .setAnimationOnReverseScrolling(true)
     .setAnimationOnScrolling(true)
-    .setAnimationInitialDelay(300)
     .setAnimationDuration(300)
     .setAnimationInterpolator(new DecelerateInterpolator());
   }

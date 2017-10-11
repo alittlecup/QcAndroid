@@ -14,6 +14,7 @@ import cn.qingchengfit.saasbase.student.items.StudentItem;
 import cn.qingchengfit.saasbase.student.utils.StudentCompareByAlphabet;
 import cn.qingchengfit.saasbase.student.utils.StudentCompareJoinAt;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.AlphabetLessView;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -96,6 +97,11 @@ public class SimpleStudentListFragment extends BaseFragment
   private void addItems() {
     if (commonFlexAdapter != null) {
       if (orderType == 0) {
+        for (QcStudentBean qcStudentBeen : qcStudentBeens) {
+          if (qcStudentBeen.head() != null && !AlphabetLessView.Alphabet.contains(qcStudentBeen.head())){
+            qcStudentBeen.setHead("#");
+          }
+        }
         Collections.sort(qcStudentBeens, new StudentCompareByAlphabet());//按字母排序
         if (qcStudentBeens.size() > 0){
           String head = qcStudentBeens.get(0).head();
@@ -103,6 +109,7 @@ public class SimpleStudentListFragment extends BaseFragment
           for (QcStudentBean qcStudentBeen : qcStudentBeens) {
             if (!qcStudentBeen.head().equalsIgnoreCase(head)){
               commonFlexAdapter.addItem(new StickerDateItem(qcStudentBeen.head().toUpperCase()));
+              head = qcStudentBeen.head();
             }
             commonFlexAdapter.addItem(instanceItem(qcStudentBeen));
           }

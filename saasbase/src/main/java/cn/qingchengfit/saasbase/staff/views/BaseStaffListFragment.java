@@ -1,12 +1,11 @@
-package cn.qingchengfit.pos;
+package cn.qingchengfit.saasbase.staff.views;
 
-import cn.qingchengfit.pos.di.AppModel;
-import cn.qingchengfit.saasbase.di.BindCardActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
-import dagger.android.support.AndroidSupportInjectionModule;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.views.fragments.BaseListFragment;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 
 /**
  * power by
@@ -26,12 +25,32 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/11.
  */
-@Component(modules = { AppModel.class,
-    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-    BindCardActivity.class, BindStaffActivity.class
-})
-public interface PosAppComponent {
-  void inject(PosApp app);
+
+public abstract class BaseStaffListFragment extends BaseListFragment implements
+    FlexibleAdapter.OnItemClickListener{
+
+
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    initData();
+  }
+
+  abstract void initData();
+
+  protected NetSubscribe<QcDataResponse<SalerListWrap>> response = new NetSubscribe<QcDataResponse<SalerListWrap>>() {
+    @Override public void onNext(QcDataResponse<SalerListWrap> staffListWrapQcDataResponse) {
+
+    }
+  };
+
+  @Override public int getNoDataIconRes() {
+    return R.drawable.vd_img_empty_universe;
+  }
+
+  @Override public String getNoDataStr() {
+    return "";
+  }
 }

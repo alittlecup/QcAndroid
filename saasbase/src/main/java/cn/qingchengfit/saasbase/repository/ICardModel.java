@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.repository;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
@@ -121,12 +120,12 @@ public interface ICardModel {
   /**
    * 充卡
    */
-  rx.Observable<QcResponse> qcChargeCard(ChargeBody chargeBody);
+  rx.Observable<QcDataResponse> qcChargeCard(ChargeBody chargeBody);
 
   /**
    * 购卡操作
    */
-  @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcResponse> buyCard(
+  @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse> buyCard(
       @Body CardBuyBody body);
 
   /**

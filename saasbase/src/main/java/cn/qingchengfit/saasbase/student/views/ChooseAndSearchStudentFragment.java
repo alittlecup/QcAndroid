@@ -21,9 +21,14 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.student.presenters.ChooseAndSearchPresenter;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CompatEditView;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -47,11 +52,11 @@ import javax.inject.Inject;
  */
 
 @Leaf(module = "student", path = "/choose/student/") public class ChooseAndSearchStudentFragment
-    extends BaseFragment implements ChooseAndSearchPresenter.MVPView{
+    extends BaseFragment implements ChooseAndSearchPresenter.MVPView {
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-
+  @BindView(R2.id.et_search) CompatEditView etSearch;
 
   private ChooseStudentListFragment chooseStudentListFragment;
   @Inject ChooseAndSearchPresenter presenter;
@@ -66,7 +71,7 @@ import javax.inject.Inject;
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_student_choose, container, false);
     unbinder = ButterKnife.bind(this, view);
-    delegatePresenter(presenter,this);
+    delegatePresenter(presenter, this);
     initToolbar(toolbar);
     return view;
   }
@@ -76,15 +81,15 @@ import javax.inject.Inject;
     if (f instanceof ChooseStudentListFragment) {
       presenter.getAllStudents();
       //搜索变化
-      //RxTextView.afterTextChangeEvents(etSearchview)
-      //    .throttleLast(1000, TimeUnit.MILLISECONDS)
-      //    .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
-      //      @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
-      //        if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
-      //          chooseStudentListFragment.filter(etSearchview.getText().toString());
-      //        }
-      //      }
-      //    });
+      RxTextView.afterTextChangeEvents(etSearch)
+          .throttleLast(1000, TimeUnit.MILLISECONDS)
+          .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
+            @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
+              if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
+                chooseStudentListFragment.filter(etSearch.getText().toString());
+              }
+            }
+          });
     }
   }
 
@@ -101,10 +106,11 @@ import javax.inject.Inject;
     super.initToolbar(toolbar);
     toolbarTitle.setText("选择会员");
     toolbar.getMenu().clear();
-    toolbar.getMenu().add("下一步").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    toolbar.getMenu().add("确定").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        RxBus.getBus().post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent()));
+        RxBus.getBus()
+            .post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent()));
         getActivity().onBackPressed();
         return false;
       }
@@ -128,7 +134,7 @@ import javax.inject.Inject;
   }
 
   @Override public void onStudentList(List<QcStudentBean> stus) {
-    if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()){
+    if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
       chooseStudentListFragment.setData(stus);
     }
   }

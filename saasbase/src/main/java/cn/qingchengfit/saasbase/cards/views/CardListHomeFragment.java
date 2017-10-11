@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.cards.views;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ import javax.inject.Inject;
  */
 @Leaf(module = "card" ,path = "/list/home/")
 public class CardListHomeFragment extends BaseFragment implements CardListPresenter.MVPView
-  ,FlexibleAdapter.OnItemClickListener{
+  ,FlexibleAdapter.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener{
 
   CardListFragment cardListFragment;
   CardListFilterFragment filterFragment;
@@ -89,7 +90,7 @@ public class CardListHomeFragment extends BaseFragment implements CardListPresen
       Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof CardListFragment) {
-      presenter.queryAllCards();
+      onRefresh();
     }
   }
 
@@ -158,5 +159,9 @@ public class CardListHomeFragment extends BaseFragment implements CardListPresen
       routeTo("/detail/",b);
     }
     return true;
+  }
+
+  @Override public void onRefresh() {
+    presenter.queryAllCards();
   }
 }

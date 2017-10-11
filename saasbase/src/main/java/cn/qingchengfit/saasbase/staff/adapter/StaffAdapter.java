@@ -58,7 +58,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffVh> imp
     @Override public void onBindViewHolder(StaffVh holder, int position) {
         holder.itemView.setTag(position);
         Staff staff = datas.get(position).user;
-        holder.itemStudentAlpha.setVisibility(View.GONE);
+        //holder.itemStudentAlpha.setVisibility(View.GONE);
         holder.itemStudentName.setText(staff.getUsername());
         holder.itemStudentPhonenum.setText(staff.getPhone());
         holder.itemStudentGymname.setText(datas.get(position).position.name);
@@ -81,7 +81,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffVh> imp
 
     public class StaffVh extends RecyclerView.ViewHolder {
 
-        @BindView(R2.id.item_student_alpha) TextView itemStudentAlpha;
+        //@BindView(R2.id.item_student_alpha) TextView itemStudentAlpha;
         @BindView(R2.id.item_student_header) ImageView itemStudentHeader;
         @BindView(R2.id.item_student_header_loop) RelativeLayout itemStudentHeaderLoop;
         @BindView(R2.id.item_student_name) TextView itemStudentName;

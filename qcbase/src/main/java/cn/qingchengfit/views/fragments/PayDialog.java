@@ -18,6 +18,8 @@ import butterknife.Unbinder;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -44,7 +46,8 @@ import java.util.List;
  * Created by Paper on 2017/10/9.
  */
 
-public abstract class PayDialog extends BottomSheetDialogFragment {
+public abstract class PayDialog extends BottomSheetDialogFragment implements
+    FlexibleAdapter.OnItemClickListener{
 
   @BindView(R2.id.btn_close) ImageView btnClose;
   @BindView(R2.id.rv) RecyclerView rv;
@@ -59,6 +62,7 @@ public abstract class PayDialog extends BottomSheetDialogFragment {
     unbinder = ButterKnife.bind(this, view);
     rv.setLayoutManager(new LinearLayoutManager(getContext()));
     adapter = new CommonFlexAdapter(getItems(),this);
+    adapter.setMode(SelectableAdapter.MODE_SINGLE);
     rv.addItemDecoration(
         new FlexibleItemDecoration(getContext())
         .withDivider(R.drawable.divider_grey)
@@ -72,7 +76,7 @@ public abstract class PayDialog extends BottomSheetDialogFragment {
     unbinder.unbind();
   }
 
-  protected abstract List<AbstractFlexibleItem> getItems();
+  protected abstract List<? extends AbstractFlexibleItem> getItems();
 
   @OnClick(R2.id.btn_close) public void onBtnCloseClicked() {
     dismiss();
@@ -80,5 +84,11 @@ public abstract class PayDialog extends BottomSheetDialogFragment {
 
   @OnClick(R2.id.btn_pay) public void onBtnPayClicked() {
 
+  }
+
+  @Override public boolean onItemClick(int position) {
+    adapter.toggleSelection(position);
+    adapter.notifyDataSetChanged();
+    return true;
   }
 }

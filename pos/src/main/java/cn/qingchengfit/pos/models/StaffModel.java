@@ -1,12 +1,13 @@
-package cn.qingchengfit.pos;
+package cn.qingchengfit.pos.models;
 
-import cn.qingchengfit.pos.di.AppModel;
-import cn.qingchengfit.saasbase.di.BindCardActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
-import dagger.android.support.AndroidSupportInjectionModule;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.pos.net.PosApi;
+import cn.qingchengfit.saasbase.staff.model.IStaffModel;
+import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import rx.Observable;
 
 /**
  * power by
@@ -28,10 +29,22 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/25.
  */
-@Component(modules = { AppModel.class,
-    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-    BindCardActivity.class, BindStaffActivity.class
-})
-public interface PosAppComponent {
-  void inject(PosApp app);
+
+public class StaffModel implements IStaffModel {
+
+  QcRestRepository repository;
+  GymWrapper gymWrapper;
+  LoginStatus loginStatus;
+  PosApi posApi;
+
+  public StaffModel(QcRestRepository repository, GymWrapper gymWrapper, LoginStatus loginStatus) {
+    this.repository = repository;
+    this.gymWrapper = gymWrapper;
+    this.loginStatus = loginStatus;
+    posApi = repository.createGetApi(PosApi.class);
+  }
+
+  @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {
+    return posApi.qcGetSalers(loginStatus.staff_id(), gymWrapper.getParams());
+  }
 }

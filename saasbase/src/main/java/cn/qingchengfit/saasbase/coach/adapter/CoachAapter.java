@@ -70,7 +70,7 @@ public class CoachAapter extends RecyclerView.Adapter<CoachAapter.CoachVh> imple
         Staff coach = datas.get(position);
         holder.itemStudentName.setText(coach.username);
         holder.itemStudentPhonenum.setText(coach.phone);
-        holder.itemStudentAlpha.setVisibility(View.GONE);
+        //holder.itemStudentAlpha.setVisibility(View.GONE);
         if (coach.gender == 0) {
             holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_male);
         } else {
@@ -104,7 +104,7 @@ public class CoachAapter extends RecyclerView.Adapter<CoachAapter.CoachVh> imple
     }
 
     public class CoachVh extends RecyclerView.ViewHolder {
-        @BindView(R2.id.item_student_alpha) TextView itemStudentAlpha;
+        //@BindView(R2.id.item_student_alpha) TextView itemStudentAlpha;
         @BindView(R2.id.item_student_header) ImageView itemStudentHeader;
         @BindView(R2.id.item_student_header_loop) RelativeLayout itemStudentHeaderLoop;
         @BindView(R2.id.item_student_name) TextView itemStudentName;

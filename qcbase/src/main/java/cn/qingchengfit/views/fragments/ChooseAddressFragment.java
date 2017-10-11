@@ -68,6 +68,10 @@ public class ChooseAddressFragment extends BaseFragment {
     private String mCityCode;
     private Unbinder unbinder;
     private CitiesChooser mCitiesChooser;
+    private double g_lon;
+    private double g_lat;
+    private String defaultAddress;
+    private String city;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_address, container, false);
@@ -146,11 +150,7 @@ public class ChooseAddressFragment extends BaseFragment {
                         address.setContent(aMapLocation.getDistrict() + aMapLocation.getStreet() + aMapLocation.getStreetNum());
                     }
                 });
-            }
-        });
-
         showLoading();
-        return view;
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

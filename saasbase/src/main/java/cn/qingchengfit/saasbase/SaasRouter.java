@@ -6,8 +6,6 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.router.ModuleRouter;
-import cn.qingchengfit.saasbase.cards.views.ChooseCardTplFragment;
-import cn.qingchengfit.saasbase.routers.ICourseRouter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;
 import java.util.HashMap;
@@ -85,24 +83,24 @@ public class SaasRouter extends ModuleRouter {
   }
 
   private BaseFragment getFragment(Uri x) {
-
-    if (x.getHost().startsWith("cardtpl")) {
-      //卡模板模块
-      if (x.getPath().startsWith("/home")) {
-        //卡模板首页
-        if (gymWrapper.inBrand()) {
-          //品牌下
-        } else {
-          //场馆下
-          return iCourseRouter.cardTplsHomeInGymFragment();
-        }
-      } else if (x.getPath().startsWith("/choose")) {
-        //选择卡模板
-        return new ChooseCardTplFragment();
-      }
-    }else if (x.getHost().startsWith("course")){
-
-    }
+    //
+    //if (x.getHost().startsWith("cardtpl")) {
+    //  //卡模板模块
+    //  if (x.getPath().startsWith("/home")) {
+    //    //卡模板首页
+    //    if (gymWrapper.inBrand()) {
+    //      //品牌下
+    //    } else {
+    //      //场馆下
+    //      return iCourseRouter.cardTplsHomeInGymFragment();
+    //    }
+    //  } else if (x.getPath().startsWith("/choose")) {
+    //    //选择卡模板
+    //    return new ChooseCardTplFragment();
+    //  }
+    //}else if (x.getHost().startsWith("course")){
+    //
+    //}
     return new EmptyFragment();
   }
 
