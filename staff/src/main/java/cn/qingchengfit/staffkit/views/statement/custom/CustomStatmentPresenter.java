@@ -13,6 +13,7 @@ import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import cn.qingchengfit.staffkit.views.statement.detail.StatementDetailFragment;
+import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.Date;
@@ -132,6 +133,10 @@ public class CustomStatmentPresenter implements Presenter {
                 }
                 customStatementView.onGetStudents(stringList);
                 studentBeans = qcStudentBeen;
+            }
+        }, new Action1<Throwable>() {
+            @Override public void call(Throwable throwable) {
+                CrashUtils.sendCrash(throwable);
             }
         });
         //        spCourse = usecase.queryCourse(id,, model, new Action1<CourseTypeSamples>() {
