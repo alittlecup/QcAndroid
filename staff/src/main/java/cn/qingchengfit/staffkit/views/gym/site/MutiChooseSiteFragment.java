@@ -111,12 +111,16 @@ public class MutiChooseSiteFragment extends BaseDialogFragment implements Choose
                 @Override public boolean onMenuItemClick(MenuItem item) {
                     ArrayList<String> ret = new ArrayList<>();
                     String retStr = "";
-                    for (int i = 0; i < datas.size(); i++) {
-                        ImageTwoTextBean b = datas.get(i);
-                        if (b.rightIcon == R.drawable.ic_radio_checked) {
-                            ret.add(b.tags.get("id"));
-                            retStr = TextUtils.concat(retStr, b.text1, "、").toString();
+                    if (datas!=null && datas.size() >0) {
+                        for (int i = 0; i < datas.size(); i++) {
+                            ImageTwoTextBean b = datas.get(i);
+                            if (b.rightIcon == R.drawable.ic_radio_checked) {
+                                ret.add(b.tags.get("id"));
+                                retStr = TextUtils.concat(retStr, b.text1, "、").toString();
+                            }
                         }
+                    }else {
+                        return true;
                     }
                     Intent result = new Intent();
                     result.putStringArrayListExtra("ids", ret);

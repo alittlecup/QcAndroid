@@ -375,6 +375,8 @@ public class StudentHomeFragment extends BaseFragment {
     }
 
     @OnClick({ R.id.ll_student_call, R.id.ll_student_msg }) public void onClick(View view) {
+        if (mQcStudentBean == null)
+            return;
         switch (view.getId()) {
             case R.id.ll_student_call:
                 new MaterialDialog.Builder(getContext()).autoDismiss(true)
