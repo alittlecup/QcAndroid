@@ -302,11 +302,11 @@ import rx.Observable;
         return null;
       }
 
-      @Override public Observable<QcResponse> qcChargeCard(ChargeBody chargeBody) {
+      @Override public Observable<QcDataResponse> qcChargeCard(ChargeBody chargeBody) {
         return null;
       }
 
-      @Override public Observable<QcResponse> buyCard(@Body CardBuyBody body) {
+      @Override public Observable<QcDataResponse> buyCard(@Body CardBuyBody body) {
         return null;
       }
 

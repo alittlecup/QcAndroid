@@ -41,6 +41,7 @@ public class QcAutoLineRadioGroup extends LinearLayout
   private int mHorizontalSpacing;
   private int mVerticalSpacing;
   private CheckedChange checkedChange;
+  public boolean isSingleSelected;
 
   public QcAutoLineRadioGroup(Context context) {
     super(context);

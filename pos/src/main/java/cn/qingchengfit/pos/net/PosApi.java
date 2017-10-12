@@ -147,11 +147,13 @@ public interface PosApi {
   /**
    * 登录
    */
+  //TODO 后续需要改
   @POST("/api/staffs/login/") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
 
   //充值扣费
   @POST("/api/staffs/{staff_id}/cards/{card_id}/charge/") rx.Observable<QcDataResponse> qcCardCharge(@Path("staff_id") String staff_id,
       @Path("card_id") String cardid,@QueryMap HashMap<String, Object> params , @Body ChargeBody body);
+
   //购卡
   @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse> qcCreateRealcard(@Path("id") String staffid,
       @Body CardBuyBody body, @QueryMap HashMap<String, Object> params);

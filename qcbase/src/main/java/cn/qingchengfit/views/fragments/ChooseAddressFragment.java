@@ -73,6 +73,25 @@ public class ChooseAddressFragment extends BaseFragment {
     private String defaultAddress;
     private String city;
 
+    public static ChooseAddressFragment newInstance() {
+        ChooseAddressFragment fragment = new ChooseAddressFragment();
+        return fragment;
+    }
+
+    public static ChooseAddressFragment newInstance(Double g_lon, Double g_lat, String address,
+        String city, String cityCode) {
+
+        Bundle args = new Bundle();
+        args.putDouble("g_lon", g_lon);
+        args.putDouble("g_lat", g_lat);
+        args.putString("address", address);
+        args.putString("city", city);
+        args.putString("cityCode", cityCode);
+        ChooseAddressFragment fragment = new ChooseAddressFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_address, container, false);
         unbinder = ButterKnife.bind(this, view);
