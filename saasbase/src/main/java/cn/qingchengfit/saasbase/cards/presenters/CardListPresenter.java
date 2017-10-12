@@ -19,7 +19,6 @@ import rx.schedulers.Schedulers;
 
 public class CardListPresenter extends BasePresenter {
   private MVPView view;
-
   @Inject ICardModel cardModel;
 
   private HashMap<String,Object> p = new HashMap<>();

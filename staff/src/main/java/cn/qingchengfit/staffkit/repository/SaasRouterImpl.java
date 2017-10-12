@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.repository;
 
 import cn.qingchengfit.saasbase.ISaasRouter;
-import cn.qingchengfit.saasbase.cards.cardtypes.views.CardTplsHomeInGymFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**

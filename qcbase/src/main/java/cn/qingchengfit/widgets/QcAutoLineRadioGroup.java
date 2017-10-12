@@ -32,6 +32,8 @@ import cn.qingchengfit.utils.MeasureUtils;
  * Created by Paper on 2017/5/8.
  * 用于单选 但是可以全不选的状态，点击选中，再点取消
  */
+
+//可自动换行的RadioGroup
 public class QcAutoLineRadioGroup extends LinearLayout
     implements CompoundButton.OnCheckedChangeListener {
 

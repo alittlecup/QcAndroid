@@ -3,4 +3,10 @@
   <!--<color name="colorPrimary">#3F51B5</color>-->
   <!--<color name="colorPrimaryDark">#303F9F</color>-->
   <color name="colorAccent">#FF4081</color>
+
+  <!--账单-->
+  <color name="bill_head_background">#3a3a3a</color>
+  <color name="bill_withdraw_color">#00ced8</color>
+  <color name="bill_can_withdraw_color">#d88c00</color>
+  <color name="bill_settlement">#d83600</color>
 </resources>

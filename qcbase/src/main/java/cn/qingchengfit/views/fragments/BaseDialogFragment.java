@@ -259,7 +259,7 @@ public abstract class BaseDialogFragment extends DialogFragment implements CView
   }
 
   /**
-   * 用语页面为空的状态
+   * 用于页面为空的状态
    */
   public void showLoadingTrans() {
     if (getActivity() instanceof BaseActivity) {
