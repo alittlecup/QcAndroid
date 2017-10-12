@@ -585,7 +585,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
             }
             timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
                 @Override public void onTimeSelect(Date start, Date end) {
-                    if (start.getTime() >= end.getTime()) {
+                    if (start.getTime() > end.getTime()) {
                         ToastUtils.showDefaultStyle("开始时间不能小于结束时间");
                         return;
                     }
