@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
+import cn.qingchengfit.saasbase.cards.views.CardChargeFragment;
 import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
 import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
 import cn.qingchengfit.saasbase.cards.views.CardListHomeFragment;
@@ -48,6 +49,7 @@ import javax.inject.Inject;
     CardTplsHomeInGymFragment.class, CardTplDetailFragment.class, ChooseCardTplForBuyCardFragment.class,
     CardBuyFragment.class, CardListHomeFragment.class, CardFilterTplFragment.class,
     CardDetailFragment.class, CardtplOptionAddFragment.class, CardTplOptionFragment.class
+    , CardChargeFragment.class
 })
 public class CardActivity extends BaseActivity implements HasSupportFragmentInjector {
 
@@ -60,7 +62,6 @@ public class CardActivity extends BaseActivity implements HasSupportFragmentInje
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_base_frag);
     routerCenter.registe(cardImpl);
-    //getIntent().setData(Uri.parse("pos://card/list/home/"));
     onNewIntent(getIntent());
   }
 
@@ -77,11 +78,11 @@ public class CardActivity extends BaseActivity implements HasSupportFragmentInje
   }
 
   @Override protected boolean preHandle(Intent intent) {
-    if (intent.getData().getPath().equalsIgnoreCase("/buy/")){
-      getSupportFragmentManager().beginTransaction()
-          .add(buyCardRouterLazy.get(),"buycard").commitAllowingStateLoss();
-      return true;
-    }
+    //if (intent.getData().getPath().equalsIgnoreCase("/buy/")){
+    //  getSupportFragmentManager().beginTransaction()
+    //      .add(buyCardRouterLazy.get(),"buycard").commitAllowingStateLoss();
+    //  return true;
+    //}
     return false;
   }
 }

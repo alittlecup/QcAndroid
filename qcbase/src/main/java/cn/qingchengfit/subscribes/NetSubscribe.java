@@ -1,7 +1,6 @@
 package cn.qingchengfit.subscribes;
 
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.ToastUtils;
 import rx.Subscriber;
 
 public abstract class NetSubscribe<T> extends Subscriber<T> {
@@ -14,7 +13,8 @@ public abstract class NetSubscribe<T> extends Subscriber<T> {
             s = "";
         }
         LogUtil.e("NetWorkThrowable", s);
-        ToastUtils.show(s);
+        //// TODO: 2017/10/11 展示
+        //ToastUtils.show(s);
     }
 
     @Override public void onCompleted() {

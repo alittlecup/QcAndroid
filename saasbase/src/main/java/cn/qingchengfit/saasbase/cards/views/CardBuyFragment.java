@@ -154,7 +154,7 @@ import javax.inject.Inject;
    * 点击支付
    */
   @OnClick(R2.id.btn_pay) public void onViewClicked() {
-
+    presenter.buyCard();
   }
 
   /**
@@ -207,15 +207,16 @@ import javax.inject.Inject;
   }
 
 
-
-
-
   @Override public void showInputMoney(boolean show) {
     loInputMoney.setVisibility(show?View.VISIBLE:View.GONE);
   }
 
   @Override public void bindStudent(String student) {
     civBindMenbers.setContent(student);
+  }
+
+  @Override public void bindSaler(String saler) {
+    civSaler.setContent(saler);
   }
 
   @Override public String realCardNum() {

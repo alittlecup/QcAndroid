@@ -1,7 +1,10 @@
 package cn.qingchengfit.pos.pay;
 
+import cn.qingchengfit.items.PayMethdItem;
+import cn.qingchengfit.pos.R;
 import cn.qingchengfit.views.fragments.PayDialog;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +29,25 @@ import java.util.List;
  */
 
 public class PosPayDialog extends PayDialog {
-  @Override protected List<AbstractFlexibleItem> getItems() {
-    return null;
+
+  String[] payStr = new String[]{"微信支付","支付宝支付","刷卡支付"};
+
+  int[] payIcon = new int[]{
+      R.drawable.vd_pay_wechat,
+      R.drawable.vd_pay_alipay,
+      R.drawable.vd_pay_card
+  };
+
+
+  @Override protected List<? extends AbstractFlexibleItem> getItems() {
+    List<PayMethdItem> ret = new ArrayList<>();
+    for (int i = 0; i < payIcon.length; i++) {
+      ret.add(new PayMethdItem(payIcon[i],payStr[i]));
+    }
+    return ret;
+  }
+
+  @Override public void onBtnPayClicked() {
+
   }
 }

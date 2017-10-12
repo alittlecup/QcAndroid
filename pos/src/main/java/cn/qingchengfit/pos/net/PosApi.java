@@ -3,13 +3,16 @@ package cn.qingchengfit.pos.net;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.login.model.Login;
 import cn.qingchengfit.pos.login.model.LoginBody;
+import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
+import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
+import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -144,6 +147,16 @@ public interface PosApi {
   /**
    * 登录
    */
-
   @POST("/api/staffs/login/") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
+
+  //充值扣费
+  @POST("/api/staffs/{staff_id}/cards/{card_id}/charge/") rx.Observable<QcDataResponse> qcCardCharge(@Path("staff_id") String staff_id,
+      @Path("card_id") String cardid,@QueryMap HashMap<String, Object> params , @Body ChargeBody body);
+  //购卡
+  @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse> qcCreateRealcard(@Path("id") String staffid,
+      @Body CardBuyBody body, @QueryMap HashMap<String, Object> params);
+
+  //获取销售 卖卡  包含销售和教练
+  @GET("/api/staffs/{staff_id}/sellers/") rx.Observable<QcDataResponse<SalerListWrap>> qcGetSalers(@Path("staff_id") String staff_id,
+      @QueryMap HashMap<String, Object> params);
 }

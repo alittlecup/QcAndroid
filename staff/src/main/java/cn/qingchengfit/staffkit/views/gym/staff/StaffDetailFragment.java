@@ -90,7 +90,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
     private boolean mIsAdd = true;
     private StaffShip mStaff;
     private List<String> mPositionStrList = new ArrayList<>();
-    private List<StaffPosition> mPostions;
+    private List<StaffPosition> mPositions;
 
     public static StaffDetailFragment newInstance(StaffShip staffShip) {
 
@@ -314,8 +314,8 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
             dialogList.list(mPositionStrList, new AdapterView.OnItemClickListener() {
                 @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     dialogList.dismiss();
-                    body.setPosition_id(mPostions.get(position).id);
-                    StaffDetailFragment.this.position.setContent(mPostions.get(position).name);
+                    body.setPosition_id(mPositions.get(position).id);
+                    StaffDetailFragment.this.position.setContent(mPositions.get(position).name);
                 }
             });
             dialogList.show();
@@ -347,27 +347,29 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
 
     @Override public void onPositions(List<StaffPosition> positions) {
         hideLoading();
-        mPostions = positions;
+        mPositions = positions;
         mPositionStrList.clear();
         for (int i = 0; i < positions.size(); i++) {
             mPositionStrList.add(positions.get(i).name);
         }
-        if (mPostions.size() > 0) {
+        if (mPositions.size() > 0) {
             if (mStaff != null && mStaff.position != null) {
-                for (StaffPosition p : mPostions) {
+                for (StaffPosition p : mPositions) {
                     if (p.id.equals(mStaff.position.id)) {
                         position.setContent(p.name);
                         break;
                     }
                 }
             } else {
-                position.setContent(mPostions.get(0).name);
-                body.setPosition_id(mPostions.get(0).id);
+                position.setContent(mPositions.get(0).name);
+                body.setPosition_id(mPositions.get(0).id);
             }
         }
     }
 
     @OnClick(R.id.go_to_web) public void onClickGoWeb() {
         gymFunctionFactory.goQrScan(this, GymFunctionFactory.PERMISSION_STAFF, null, null);
+
+
     }
 }

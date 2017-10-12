@@ -56,7 +56,7 @@ import eu.davidea.flexibleadapter.items.ISectionable;
  * <li>Supports a custom divider by {@code DrawableRes id}.</li>
  * <li>Supports drawing the divider over or underneath the items.</li>
  * </ul>
- * //* <b>Tip:</b> Call the method {@link FlexibleAdapter#invalidateItemDecorations(long)} to
+ * //* <b>Tip:</b> Call the method {@link FlexibleAdapter(long)} to
  * rebuild
  * the invalidated offsets due to the changes coming from events like moveItem or any layout
  * change that modifies the order of the items.

@@ -5,8 +5,12 @@ import android.support.annotation.ArrayRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventCommonFilter;
 import cn.qingchengfit.items.FilterCommonLinearItem;
 import cn.qingchengfit.utils.CrashUtils;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.SelectableAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +35,8 @@ import java.util.List;
  * Created by Paper on 2017/9/28.
  */
 
-public class FilterListFragment extends BaseListFragment {
+public class FilterListFragment extends BaseListFragment implements
+    FlexibleAdapter.OnItemClickListener{
 
   public static FilterListFragment newInstance(@ArrayRes int strs) {
     Bundle args = new Bundle();
@@ -41,9 +46,19 @@ public class FilterListFragment extends BaseListFragment {
     return fragment;
   }
 
+
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    isChild = true;
     View v = super.onCreateView(inflater, container, savedInstanceState);
+    //ViewGroup.LayoutParams p =  rv.getLayoutParams();
+    //p.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    //p.width = ViewGroup.LayoutParams.MATCH_PARENT;
+    commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+    //rv.setLayoutParams(p);
+
+    initListener(this);
     List<FilterCommonLinearItem> items  =new ArrayList<>();
     if (getArguments() != null && getArguments().getInt("a", 0) != 0){
       try {
@@ -59,11 +74,22 @@ public class FilterListFragment extends BaseListFragment {
     return v;
   }
 
+  @Override public boolean isBlockTouch() {
+    return false;
+  }
+
   @Override public int getNoDataIconRes() {
     return 0;
   }
 
   @Override public String getNoDataStr() {
     return null;
+  }
+
+  @Override public boolean onItemClick(int position) {
+    commonFlexAdapter.toggleSelection(position);
+    commonFlexAdapter.notifyDataSetChanged();
+    RxBus.getBus().post(new EventCommonFilter(position));
+    return true;
   }
 }

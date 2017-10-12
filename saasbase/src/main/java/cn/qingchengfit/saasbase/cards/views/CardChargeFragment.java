@@ -27,6 +27,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +100,7 @@ public class CardChargeFragment extends BaseFragment implements
         return 1;
       }
     });
+    rv.addItemDecoration(new FlexibleItemDecoration(getContext()).withOffset(6).withBottomEdge(true).withRightEdge(true));
     rv.setLayoutManager(manager);
     rv.setAdapter(commonFlexAdapter);
     return view;
@@ -124,9 +126,9 @@ public class CardChargeFragment extends BaseFragment implements
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.civ_bind_menbers) public void onCivBindMenbersClicked() {
-    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"), null);
-  }
+  //@OnClick(R2.id.civ_bind_menbers) public void onCivBindMenbersClicked() {
+  //  routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"), null);
+  //}
 
   @OnClick(R2.id.civ_saler) public void onCivSalerClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/staff/choose/saler/"), null);

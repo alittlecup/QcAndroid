@@ -4,7 +4,6 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.pos.net.PosApi;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
@@ -64,6 +63,7 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission() {
+    // TODO: 2017/10/10
     return null;
   }
 
@@ -131,12 +131,12 @@ public class CardModel implements ICardModel {
     return posApi.qcCreateCardtplOption(loginStatus.staff_id(),card_tpl_id,gymWrapper.getParams(),body);
   }
 
-  @Override public Observable<QcResponse> qcChargeCard(ChargeBody chargeBody) {
-    return null;
+  @Override public Observable<QcDataResponse> qcChargeCard(ChargeBody chargeBody) {
+    return posApi.qcCardCharge(loginStatus.staff_id(),chargeBody.getCard_id(),gymWrapper.getParams(),chargeBody);
   }
 
-  @Override public Observable<QcResponse> buyCard(@Body CardBuyBody body) {
-    return null;
+  @Override public Observable<QcDataResponse> buyCard(@Body CardBuyBody body) {
+    return posApi.qcCreateRealcard(loginStatus.staff_id(),body,gymWrapper.getParams());
   }
 
   @Override

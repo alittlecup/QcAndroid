@@ -1,9 +1,14 @@
 package cn.qingchengfit.saasbase.cards.item;
 
+import android.animation.Animator;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -16,7 +21,9 @@ import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.widgets.ConnerTag;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.helpers.AnimatorHelper;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.viewholders.AnimatedViewHolder;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -78,7 +85,7 @@ public class CardItem extends AbstractFlexibleItem<CardItem.CardVH> {
       return false;
   }
 
-  public class CardVH extends FlexibleViewHolder {
+  public class CardVH extends FlexibleViewHolder implements AnimatedViewHolder {
     @BindView(R2.id.realcard_name) TextView realcardName;
     @BindView(R2.id.realcard_students) TextView realcardStudents;
     @BindView(R2.id.realcard_balance) TextView realcardBalance;
@@ -88,6 +95,38 @@ public class CardItem extends AbstractFlexibleItem<CardItem.CardVH> {
     public CardVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
+    }
+
+    @Override public void scrollAnimators(@NonNull List<Animator> animators, int position,
+        boolean isForward) {
+      AnimatorHelper.slideInFromRightAnimator(animators,itemView,mAdapter.getRecyclerView(),0.7f);
+    }
+
+    @Override public boolean preAnimateAddImpl() {
+      ViewCompat.setTranslationX(itemView,-100);
+      return false;
+    }
+
+    @Override public boolean preAnimateRemoveImpl() {
+      return false;
+    }
+
+    @Override public boolean animateAddImpl(ViewPropertyAnimatorListener listener, long addDuration,
+        int index) {
+      ViewCompat.animate(itemView)
+          .translationX(100)
+          .setDuration(addDuration)
+          .setInterpolator(new DecelerateInterpolator())
+          .setListener(listener)
+          .setStartDelay(index * 150L)
+          .start();
+      return true;
+    }
+
+    @Override
+    public boolean animateRemoveImpl(ViewPropertyAnimatorListener listener, long removeDuration,
+        int index) {
+      return false;
     }
   }
 }

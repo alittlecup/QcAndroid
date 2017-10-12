@@ -1,6 +1,6 @@
 package cn.qingchengfit.events;
 
-import java.util.HashMap;
+import android.support.annotation.IntRange;
 
 /**
  * power by
@@ -24,5 +24,13 @@ import java.util.HashMap;
  */
 
 public class EventCommonFilter {
-  HashMap<String,Object> filters = new HashMap<>();
+  int pos = 0;
+
+  public EventCommonFilter(@IntRange(from = 0) int pos) {
+    this.pos = pos;
+  }
+
+  public int getPos() {
+    return pos;
+  }
 }

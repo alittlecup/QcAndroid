@@ -61,6 +61,7 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
     }else return false;
   }
 
+
   public class CardTplVH extends FlexibleViewHolder {
     @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
     @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
@@ -76,5 +77,6 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
         boolean isForward) {
       AnimatorHelper.slideInFromBottomAnimator(animators,itemView,mAdapter.getRecyclerView());
     }
+
   }
 }

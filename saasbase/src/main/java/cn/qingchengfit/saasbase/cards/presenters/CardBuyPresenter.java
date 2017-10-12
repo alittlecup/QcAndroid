@@ -5,6 +5,7 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CardTplOption;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
@@ -38,7 +39,7 @@ public class CardBuyPresenter extends BasePresenter {
   /**
    * 购卡数据
    */
-  private CardBuyBody cardBuyBody;
+  private CardBuyBody cardBuyBody = new CardBuyBody();
 
 
   public String getmCardTplId() {
@@ -71,7 +72,15 @@ public class CardBuyPresenter extends BasePresenter {
    * 初始化 监听选择
    */
   public void initBus(){
-    //RxBusAdd()销售
+    RxBusAdd(Staff.class)
+        .onBackpressureLatest()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<Staff>() {
+          @Override public void onNext(Staff staff) {
+            view.bindSaler(staff.getUsername());
+            cardBuyBody.setSeller_id(staff.id);
+          }
+        });
 
     //备注信息
 
@@ -81,6 +90,7 @@ public class CardBuyPresenter extends BasePresenter {
         .subscribe(new BusSubscribe<EventSelectedStudent>() {
           @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
             view.bindStudent(eventSelectedStudent.getNameStr());
+            cardBuyBody.user_ids = eventSelectedStudent.getIdStr();
           }
         });
   }
@@ -189,7 +199,7 @@ public class CardBuyPresenter extends BasePresenter {
     void onGetCardTpl(CardTpl cardTpl);
     void showInputMoney(boolean show);
     void bindStudent(String student);
-    //void bindSaler(String saler);
+    void bindSaler(String saler);
     //
     /**
      * @return 实体卡号

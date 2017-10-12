@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.cards.di;
 
-import cn.qingchengfit.saasbase.SaasContainerActivity;
 import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
 
 /**
  * power by
@@ -25,9 +23,5 @@ import dagger.android.ContributesAndroidInjector;
  * Created by Paper on 2017/8/15.
  */
 @Module public abstract class BindCardTplModule {
-  @ContributesAndroidInjector(modules = {
-      CardTplDI.CardTypeListFragmentModule.class,
-      CardTplDI.CardTypesHomeInGymFragmentModule.class,
-      CardTplDI.ChooseCardTplFragmentModule.class,
-  }) abstract SaasContainerActivity contributeSassContainerActivityInjector();
+
 }

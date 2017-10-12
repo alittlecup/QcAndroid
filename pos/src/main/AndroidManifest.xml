@@ -43,6 +43,21 @@
             />
       </intent-filter>
     </activity>
+
+    <activity android:name="cn.qingchengfit.saasbase.staff.StaffActivity"
+              android:taskAffinity="com.rongcapital.pos"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data
+            android:host="staff"
+            android:scheme="qcpos"
+            />
+      </intent-filter>
+    </activity>
+
     <activity android:name=".main.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

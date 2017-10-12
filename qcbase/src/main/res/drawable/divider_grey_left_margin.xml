@@ -6,6 +6,6 @@
     android:shape="rectangle"
     >
     <solid android:color="@color/divider_grey"/>
-    <size android:height="@dimen/qc_item_height" />
+    <size android:height="0.5dp" />
 </shape>
 </inset>

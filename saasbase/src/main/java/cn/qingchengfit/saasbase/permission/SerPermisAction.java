@@ -49,8 +49,6 @@ public class SerPermisAction {
     QCDbManager.delPermiss();
   }
 
-  ;
-
   public boolean check(String shopid, String key) {
     return QCDbManager.check(shopid, key);
   }
