@@ -68,7 +68,7 @@
   <cn.qingchengfit.widgets.QcRadioGroup
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
-      android:background="@color/bg_grey_dark"
+      android:background="@color/toolbar"
       android:divider="@drawable/divider_linearlayout_horizon"
       android:orientation="horizontal"
       android:showDividers="middle"
@@ -95,6 +95,7 @@
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:background="@color/bg_grey_dark"
       >
 
     <FrameLayout

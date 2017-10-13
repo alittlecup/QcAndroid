@@ -1,13 +1,4 @@
-package cn.qingchengfit.pos;
-
-import cn.qingchengfit.pos.di.AppModel;
-import cn.qingchengfit.pos.login.di.BindLoginModule;
-import cn.qingchengfit.saasbase.di.BindPosCardActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
-import dagger.android.support.AndroidSupportInjectionModule;
+package cn.qingchengfit.saasbase.cards.network.response;
 
 /**
  * power by
@@ -27,12 +18,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/12.
  */
-@Component(modules = { AppModel.class,
-    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-     BindLoginModule.class,BindStaffActivity.class, BindPosCardActivity.class
-})
-public interface PosAppComponent {
-  void inject(PosApp app);
+
+public class PayBusinessResponse {
 }

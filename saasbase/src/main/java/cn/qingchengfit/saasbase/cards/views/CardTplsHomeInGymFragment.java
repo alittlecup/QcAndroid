@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -103,6 +105,17 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
       }
     });
     return view;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbar.inflateMenu(R.menu.menu_add);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        routeTo("/cardtpl/add/",null);
+        return true;
+      }
+    });
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,

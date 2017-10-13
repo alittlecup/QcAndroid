@@ -1,13 +1,15 @@
-package cn.qingchengfit.pos;
+package cn.qingchengfit.pos.card;
 
-import cn.qingchengfit.pos.di.AppModel;
-import cn.qingchengfit.pos.login.di.BindLoginModule;
-import cn.qingchengfit.saasbase.di.BindPosCardActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
-import dagger.android.support.AndroidSupportInjectionModule;
+import cn.qingchengfit.saasbase.cards.CardActivity;
+import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
+import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
+import cn.qingchengfit.saasbase.cards.views.CardListHomeFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplDetailFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplOptionFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
+import cn.qingchengfit.saasbase.cards.views.CardtplOptionAddFragment;
+import cn.qingchengfit.saasbase.cards.views.ChooseCardTplForBuyCardFragment;
+import com.anbillon.flabellum.annotations.Trunk;
 
 /**
  * power by
@@ -27,12 +29,13 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/12.
  */
-@Component(modules = { AppModel.class,
-    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-     BindLoginModule.class,BindStaffActivity.class, BindPosCardActivity.class
+@Trunk(fragments = {
+    CardTplsHomeInGymFragment.class, CardTplDetailFragment.class, ChooseCardTplForBuyCardFragment.class,
+    PosCardBuyFragment.class, CardListHomeFragment.class, CardFilterTplFragment.class,
+    CardDetailFragment.class, CardtplOptionAddFragment.class, CardTplOptionFragment.class
+    , PosCardChargeFragment.class
 })
-public interface PosAppComponent {
-  void inject(PosApp app);
+public class PosCardActivity extends CardActivity {
 }

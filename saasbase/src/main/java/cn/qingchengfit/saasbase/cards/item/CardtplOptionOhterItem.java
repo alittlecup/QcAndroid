@@ -33,6 +33,7 @@ public class CardtplOptionOhterItem
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, CardtplOptionOhterVH holder, int position,
       List payloads) {
+    holder.chosen.setVisibility(adapter.isSelected(position)?View.VISIBLE:View.GONE);
   }
 
   @Override public boolean equals(Object o) {

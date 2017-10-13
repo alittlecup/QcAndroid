@@ -9,6 +9,7 @@ import cn.qingchengfit.pos.PosApp;
 import cn.qingchengfit.pos.models.CardModel;
 import cn.qingchengfit.pos.models.StaffModel;
 import cn.qingchengfit.pos.models.StudentModel;
+import cn.qingchengfit.pos.routers.CardRouters;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
@@ -28,7 +29,6 @@ import cn.qingchengfit.saasbase.routers.Icard;
 import cn.qingchengfit.saasbase.routers.Istaff;
 import cn.qingchengfit.saasbase.routers.Istudent;
 import cn.qingchengfit.saasbase.routers.RouterCenter;
-import cn.qingchengfit.saasbase.routers.cardImpl;
 import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.studentImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
@@ -95,7 +95,9 @@ public class AppModel {
   @Provides Istudent provideStudent(){
     return new studentImpl();
   }
+
   @Provides IStudentModel providerStudentModel(){return  new StudentModel(qcrestRepository,gymWrapper,loginStatus);}
+
   @Provides ICardModel providerCardModel() {
     return new CardModel(qcrestRepository,gymWrapper,loginStatus);
   }
@@ -104,7 +106,7 @@ public class AppModel {
   }
 
   @Provides Icard providerICards(){
-    return new cardImpl();
+    return new CardRouters();
   }
 
   @Provides IStaffModel providerStaffModel(){

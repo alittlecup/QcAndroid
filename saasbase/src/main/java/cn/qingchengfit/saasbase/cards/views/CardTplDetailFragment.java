@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -74,6 +75,10 @@ public class CardTplDetailFragment extends BaseFragment
 
   CommonFlexAdapter comonAdapter;
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    comonAdapter = new CommonFlexAdapter(new ArrayList(), this);
+  }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -81,7 +86,7 @@ public class CardTplDetailFragment extends BaseFragment
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
-    comonAdapter = new CommonFlexAdapter(new ArrayList(), this);
+
     recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     recycleview.setAdapter(comonAdapter);
     return view;

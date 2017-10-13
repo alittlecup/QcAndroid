@@ -1,13 +1,15 @@
-package cn.qingchengfit.pos;
+package cn.qingchengfit.saasbase.cards.views;
 
-import cn.qingchengfit.pos.di.AppModel;
-import cn.qingchengfit.pos.login.di.BindLoginModule;
-import cn.qingchengfit.saasbase.di.BindPosCardActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
-import dagger.android.support.AndroidSupportInjectionModule;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CommonFlexAdapter;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import java.util.ArrayList;
 
 /**
  * power by
@@ -27,12 +29,30 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/12.
  */
-@Component(modules = { AppModel.class,
-    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-     BindLoginModule.class,BindStaffActivity.class, BindPosCardActivity.class
-})
-public interface PosAppComponent {
-  void inject(PosApp app);
+public class CardtplAddFragment extends BaseFragment implements
+    FlexibleAdapter.OnItemClickListener{
+
+  CommonFlexAdapter adapter ;
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    adapter = new CommonFlexAdapter(new ArrayList(),this);
+  }
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_cardtpl_add, container, false);
+    return view;
+  }
+
+  @Override public String getFragmentName() {
+    return CardtplAddFragment.class.getName();
+  }
+
+  @Override public boolean onItemClick(int position) {
+    
+    return true;
+  }
 }

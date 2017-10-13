@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import cn.qingchengfit.items.ActionDescItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardActionsItem;
+import cn.qingchengfit.saasbase.cards.item.CardDetailItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
@@ -46,7 +48,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/9/29.
  */
 @Leaf(module = "card", path = "/detail/") public class CardDetailFragment extends BaseListFragment
-    implements CardDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
+    implements CardDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener {
   @Need
   String cardid;
 
@@ -88,7 +90,7 @@ import javax.inject.Inject;
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    presenter.queryCardDetail();
+    onRefresh();
   }
 
   @Override public String getFragmentName() {
@@ -105,7 +107,7 @@ import javax.inject.Inject;
 
   @Override public void onCardDetail(Card card) {
     List<AbstractFlexibleItem> items = new ArrayList<>();
-    //items.add(new CardTplItem(card.getCard_tpl()));
+    items.add(new CardDetailItem(card));
     items.add(new CardActionsItem(card));
     items.add(new ActionDescItem.Builder().action(1)
         .action(R.drawable.vd_add_batch)
@@ -150,5 +152,9 @@ import javax.inject.Inject;
     }
 
     return true;
+  }
+
+  @Override public void onRefresh() {
+    presenter.queryCardDetail();
   }
 }

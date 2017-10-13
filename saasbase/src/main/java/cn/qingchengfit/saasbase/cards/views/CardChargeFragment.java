@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -17,6 +21,7 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardChargePresenter;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -53,9 +58,8 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/30.
  */
-@Leaf(module = "card" ,path = "/charge/")
-public class CardChargeFragment extends BaseFragment implements
-    FlexibleAdapter.OnItemClickListener,CardChargePresenter.MVPView{
+@Leaf(module = "card", path = "/charge/") public class CardChargeFragment extends BaseFragment
+    implements FlexibleAdapter.OnItemClickListener, CardChargePresenter.MVPView {
 
   @BindView(R2.id.rv) RecyclerView rv;
   @BindView(R2.id.civ_charge_money) CommonInputView civChargeMoney;
@@ -66,14 +70,17 @@ public class CardChargeFragment extends BaseFragment implements
   @BindView(R2.id.lo_input_money) LinearLayout loInputMoney;
   @BindView(R2.id.civ_saler) CommonInputView civSaler;
   @BindView(R2.id.civ_mark) CommonInputView civMark;
+  @BindView(R2.id.tv_money_label) TextView tvMoneyLabel;
+  @BindView(R2.id.tv_pay_money) TextView tvPayMoney;
+  @BindView(R2.id.btn_pay) Button btnPay;
 
-  @Need
-  Card card;
+  @Need Card card;
+
 
   public static CardChargeFragment newInstance(Card card) {
-     Bundle args = new Bundle();
-    args.putParcelable("card",card);
-     CardChargeFragment fragment = new CardChargeFragment();
+    Bundle args = new Bundle();
+    args.putParcelable("card", card);
+    CardChargeFragment fragment = new CardChargeFragment();
     fragment.setArguments(args);
     return fragment;
   }
@@ -90,19 +97,35 @@ public class CardChargeFragment extends BaseFragment implements
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.frag_card_order_content, container, false);
     unbinder = ButterKnife.bind(this, view);
-    delegatePresenter(presenter,this);
+    delegatePresenter(presenter, this);
     presenter.setmCard(card);
-    commonFlexAdapter = new CommonFlexAdapter(new ArrayList(),this);
+    commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
-    GridLayoutManager manager = new GridLayoutManager(getContext(),getResources().getInteger(R.integer.grid_item_count));
+    GridLayoutManager manager =
+        new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_item_count));
     manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
       @Override public int getSpanSize(int position) {
         return 1;
       }
     });
-    rv.addItemDecoration(new FlexibleItemDecoration(getContext()).withOffset(6).withBottomEdge(true).withRightEdge(true));
+    rv.addItemDecoration(new FlexibleItemDecoration(getContext()).withOffset(6)
+        .withBottomEdge(true)
+        .withRightEdge(true));
     rv.setLayoutManager(manager);
     rv.setAdapter(commonFlexAdapter);
+    civRealMoney.addTextWatcher(new TextWatcher() {
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+        setMoneyPay(s.toString());
+      }
+
+      @Override public void afterTextChanged(Editable s) {
+
+      }
+    });
     return view;
   }
 
@@ -126,9 +149,6 @@ public class CardChargeFragment extends BaseFragment implements
     super.onDestroyView();
   }
 
-  //@OnClick(R2.id.civ_bind_menbers) public void onCivBindMenbersClicked() {
-  //  routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"), null);
-  //}
 
   @OnClick(R2.id.civ_saler) public void onCivSalerClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/staff/choose/saler/"), null);
@@ -146,6 +166,9 @@ public class CardChargeFragment extends BaseFragment implements
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"), null);
   }
 
+  @OnClick(R2.id.btn_pay) public void clickPayMoney(){
+    presenter.chargeCard();
+  }
 
   @Override public void onGetOptions(List<CardTplOption> options) {
     List<AbstractFlexibleItem> items = new ArrayList<>();
@@ -160,7 +183,15 @@ public class CardChargeFragment extends BaseFragment implements
   }
 
   @Override public void showInputMoney(boolean show) {
-    loInputMoney.setVisibility(show?View.VISIBLE:View.GONE);
+    loInputMoney.setVisibility(show ? View.VISIBLE : View.GONE);
+  }
+
+  @Override public void setMoneyPay(String m) {
+    tvPayMoney.setText(getString(R.string.pay_money,m));
+  }
+
+  @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {
+
   }
 
   @Override public String chargeMoney() {
@@ -182,7 +213,4 @@ public class CardChargeFragment extends BaseFragment implements
   public String endDay() {
     return civEndTime.getContent();
   }
-
-
-
 }

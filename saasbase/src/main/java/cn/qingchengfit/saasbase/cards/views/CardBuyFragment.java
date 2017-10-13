@@ -23,6 +23,7 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
@@ -217,6 +218,10 @@ import javax.inject.Inject;
 
   @Override public void bindSaler(String saler) {
     civSaler.setContent(saler);
+  }
+
+  @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {
+
   }
 
   @Override public String realCardNum() {

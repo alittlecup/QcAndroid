@@ -14,7 +14,7 @@
       android:taskAffinity="com.rongcapital.pos"
       >
     <activity
-        android:name="cn.qingchengfit.saasbase.cards.CardActivity"
+        android:name=".card.PosCardActivity"
         android:screenOrientation="portrait"
         android:taskAffinity="com.rongcapital.pos"
         >

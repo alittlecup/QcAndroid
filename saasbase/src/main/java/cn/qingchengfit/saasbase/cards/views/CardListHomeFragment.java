@@ -1,12 +1,14 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -75,8 +77,15 @@ import javax.inject.Inject;
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_saas_card_list, container, false);
     unbinder = ButterKnife.bind(this, view);
+    initToolbar(toolbar);
     delegatePresenter(presenter, this);
     return view;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("会员卡");
+    
   }
 
   @Override protected void onFinishAnimation() {

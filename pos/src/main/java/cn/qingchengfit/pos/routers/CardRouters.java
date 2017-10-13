@@ -1,13 +1,11 @@
-package cn.qingchengfit.pos;
+package cn.qingchengfit.pos.routers;
 
-import cn.qingchengfit.pos.di.AppModel;
-import cn.qingchengfit.pos.login.di.BindLoginModule;
-import cn.qingchengfit.saasbase.di.BindPosCardActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
-import dagger.android.support.AndroidSupportInjectionModule;
+import android.support.v4.app.Fragment;
+import cn.qingchengfit.pos.card.PosCardBuyFragment;
+import cn.qingchengfit.pos.card.PosCardChargeFragment;
+import cn.qingchengfit.saasbase.cards.bean.Card;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.routers.cardImpl;
 
 /**
  * power by
@@ -27,12 +25,17 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/12.
  */
-@Component(modules = { AppModel.class,
-    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-     BindLoginModule.class,BindStaffActivity.class, BindPosCardActivity.class
-})
-public interface PosAppComponent {
-  void inject(PosApp app);
+
+public class CardRouters extends cardImpl {
+  @Override public Fragment toCardChargeFragment(Card card) {
+    return PosCardChargeFragment.newInstance(card);
+  }
+
+  @Override public Fragment toCardBuyFragment(CardTpl cardTpl) {
+    return PosCardBuyFragment.newInstance(cardTpl);
+  }
+
+
 }
