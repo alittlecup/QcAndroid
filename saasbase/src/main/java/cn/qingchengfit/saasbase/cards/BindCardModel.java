@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.cards;
 
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Singleton;
 
 /**
  * power by
@@ -32,7 +31,6 @@ public class BindCardModel {
    */
   SelectedData selectedData =new SelectedData();
 
-  @Singleton
   @Provides SelectedData provideSelectedInfo(){
     return selectedData;
   }
