@@ -146,7 +146,7 @@ public class CardBuyPresenter extends BasePresenter {
       cardBuyBody.setBuyAccount(view.chargeMoney(),view.startDay(),view.endDay());
     }else {
       cardBuyBody.setPrice(mChosenOption.price);
-      cardBuyBody.setBuyAccount(mChosenOption.charge,view.startDay(), DateUtils.addDay(view.startDay(),mChosenOption.days));
+      cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), DateUtils.addDay(view.startDay(),mChosenOption.days));
     }
 
     /*
@@ -166,19 +166,20 @@ public class CardBuyPresenter extends BasePresenter {
     }
     cardBuyBody.is_auto_start = view.autoOpen();
     
-    RxRegiste(cardModel.buyCard(cardBuyBody)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponse>>() {
-          @Override public void onNext(QcDataResponse<PayBusinessResponse> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onBusinessOrder(qcResponse.data);
-            } else {
-              view.onShowError(qcResponse.getMsg());
-            }
-          }
-        }));
+    //RxRegiste(cardModel.buyCard(cardBuyBody)
+    //    .onBackpressureLatest()
+    //    .subscribeOn(Schedulers.io())
+    //    .observeOn(AndroidSchedulers.mainThread())
+    //    .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponse>>() {
+    //      @Override public void onNext(QcDataResponse<PayBusinessResponse> qcResponse) {
+    //        if (ResponseConstant.checkSuccess(qcResponse)) {
+    //          view.onBusinessOrder(qcResponse.data);
+    //        } else {
+    //          view.onShowError(qcResponse.getMsg());
+    //        }
+    //      }
+    //    }));
+    view.onBusinessOrder(new PayBusinessResponse());
   }
 
 

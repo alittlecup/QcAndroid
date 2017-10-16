@@ -173,7 +173,7 @@ import javax.inject.Inject;
   @Override public void onGetOptions(List<CardTplOption> options) {
     List<AbstractFlexibleItem> items = new ArrayList<>();
     for (CardTplOption option : options) {
-      items.add(new CardtplOptionItem(option));
+      items.add(new CardtplOptionItem(option,card.getType()));
     }
     // TODO: 2017/9/30 判断权限
     items.add(new CardtplOptionOhterItem());

@@ -85,7 +85,7 @@ import javax.inject.Inject;
   @BindView(R2.id.civ_real_money) CommonInputView civRealMoney;
   @BindView(R2.id.lo_input_money) LinearLayout loInputMoney;
 
-  @Inject CardBuyPresenter presenter;
+  @Inject public CardBuyPresenter presenter;
   @Need CardTpl cardTpl;
 
   public static CardBuyFragment newInstance(CardTpl cardTpl) {
@@ -172,7 +172,7 @@ import javax.inject.Inject;
     commonFlexAdapter.clear();
     //List<AbstractFlexibleItem> items = new ArrayList<>();
     for (CardTplOption option : options) {
-      commonFlexAdapter.addItem(new CardtplOptionItem(option));
+      commonFlexAdapter.addItem(new CardtplOptionItem(option,cardTpl.type));
     }
     // TODO: 2017/9/30 判断权限
     commonFlexAdapter.addItem(new CardtplOptionOhterItem());

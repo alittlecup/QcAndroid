@@ -12,6 +12,7 @@
       style="@style/QcCivInputStyle"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      app:civ_inputnum="true"
       app:civ_lable="充值"
       app:civ_unit="次"
 
@@ -21,6 +22,7 @@
       style="@style/QcCivInputStyle"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
+      app:civ_inputnum="true"
       app:civ_lable="实收"
       app:civ_unit="元"
 
@@ -40,6 +42,7 @@
         android:id="@+id/civ_valid_day"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
+        app:civ_inputnum="true"
         app:civ_lable="有效期天数"
         app:civ_unit="天"
         />

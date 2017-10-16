@@ -2,8 +2,10 @@ package cn.qingchengfit.saasbase.utils;
 
 import android.content.Context;
 import android.graphics.Color;
+import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
+import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.utils.CmStringUtils;
 
 /**
@@ -28,8 +30,8 @@ import cn.qingchengfit.utils.CmStringUtils;
  */
 
 public class CardBusinessUtils {
-  public static String getCardTypeCategoryStr(int type,Context context){
-    switch (type){
+  public static String getCardTypeCategoryStr(int type, Context context) {
+    switch (type) {
       case 2:
         return context.getResources().getStringArray(R.array.cardtype_category)[1];
       case 3:
@@ -39,9 +41,9 @@ public class CardBusinessUtils {
     }
   }
 
-  public static int[] getDefaultCardbgColor(int type){
-    int[]  colors = new int[2];
-    switch (type){
+  public static int[] getDefaultCardbgColor(int type) {
+    int[] colors = new int[2];
+    switch (type) {
       case 1:
         colors[0] = Color.parseColor("#4d90fe");
         colors[1] = Color.parseColor("#54c2fa");
@@ -56,7 +58,6 @@ public class CardBusinessUtils {
         break;
     }
     return colors;
-
   }
 
   public static String getCardBlance(Card card) {
@@ -70,8 +71,8 @@ public class CardBusinessUtils {
     }
   }
 
-  public static String getCardTypeCategoryUnit(int type,Context context){
-    switch (type){
+  public static String getCardTypeCategoryUnit(int type, Context context) {
+    switch (type) {
       case 2:
         return "次";
       case 3:
@@ -79,5 +80,17 @@ public class CardBusinessUtils {
       default:
         return "元";
     }
+  }
+
+  public static CardTplOption optionBody2Option(OptionBody body) {
+    CardTplOption o = new CardTplOption();
+    o.can_charge = body.can_charge;
+    o.can_create = body.can_create;
+    o.limit_days = body.limit_days;
+    o.days       = body.days;
+    o.charge     = body.charge;
+    o.for_staff  = body.for_staff;
+    o.price      = body.price;
+    return o;
   }
 }

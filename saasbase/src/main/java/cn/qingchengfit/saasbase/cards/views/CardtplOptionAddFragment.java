@@ -57,23 +57,12 @@ import javax.inject.Inject;
   @BindView(R2.id.el_use_charge) ExpandedLayout elUseCharge;
   @BindView(R2.id.el_only_staff) ExpandedLayout elOnlyStaff;
 
-  public static CardtplOptionAddFragment newInstance(int type, String cardtplid) {
-    Bundle args = new Bundle();
-    args.putInt("type", type);
-    args.putString("id", cardtplid);
-    CardtplOptionAddFragment fragment = new CardtplOptionAddFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cardtpl_option_add, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
-    presenter.setCardtplId(getArguments().getString("id"));
-    presenter.setCardtplType(getArguments().getInt("type"));
     initView();
     return view;
   }

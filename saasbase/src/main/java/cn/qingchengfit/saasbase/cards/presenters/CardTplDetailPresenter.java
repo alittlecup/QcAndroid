@@ -3,13 +3,13 @@ package cn.qingchengfit.saasbase.cards.presenters;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
@@ -21,8 +21,8 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class CardTplDetailPresenter extends BasePresenter {
-  @Inject GymWrapper gymWrapper;
   @Inject ICardModel cardModel;
+  @Inject BindCardModel.SelectedData selectedData;
   SerPermisAction serPermisAction;
   CardTpl cardTpl;
   private MVPView view;
@@ -39,7 +39,11 @@ public class CardTplDetailPresenter extends BasePresenter {
       return cardTpl.getId();
     }else return "";
   }
-
+  public int getCardCate(){
+    if (cardTpl != null)
+      return cardTpl.getCardTypeInt();
+    else return 0;
+  }
   public boolean isCardTplEnable() {
     if (cardTpl != null) {
       return cardTpl.is_enable;
@@ -49,7 +53,7 @@ public class CardTplDetailPresenter extends BasePresenter {
   }
 
   public void queryCardtpl() {
-    RxRegiste(cardModel.qcGetCardTplsDetail("366")
+    RxRegiste(cardModel.qcGetCardTplsDetail(selectedData.cardtplId)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -128,10 +132,10 @@ public class CardTplDetailPresenter extends BasePresenter {
    * 不仅判断是否有权限，还会禁止单场馆下 操作多场馆的卡
    */
   public boolean hasPermission(String p) {
-    if (!gymWrapper.inBrand() && cardTpl.getShopIds().size() > 1) {
-      view.onShowError(R.string.alert_edit_cardtype_link_manage);
-      return false;
-    }
+    //if (!gymWrapper.inBrand() && cardTpl.getShopIds().size() > 1) {
+    //  view.onShowError(R.string.alert_edit_cardtype_link_manage);
+    //  return false;
+    //}
     boolean ret = serPermisAction.check(p);
     if (!ret) view.onShowError(R.string.alert_permission_forbid);
     return ret;

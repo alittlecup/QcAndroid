@@ -1,14 +1,17 @@
 package cn.qingchengfit.saasbase.cards.presenters;
 
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.utils.CmStringUtils;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -17,10 +20,8 @@ public class AddCardtplStandardPresenter extends BasePresenter {
 
   @Inject GymWrapper gymWrapper;
   @Inject ICardModel cardModel;
-
+  @Inject BindCardModel.SelectedData selectedData;
   private MVPView view;
-  private String cardtplId;
-  private int cardtplType = 1;
   private OptionBody ob = new OptionBody();
   private String optionId;
 
@@ -36,20 +37,14 @@ public class AddCardtplStandardPresenter extends BasePresenter {
   }
 
   public String getCardtplId() {
-    return cardtplId;
+    return selectedData.cardtplId;
   }
 
-  public void setCardtplId(String cardtplId) {
-    this.cardtplId = cardtplId;
-  }
 
   public int getCardtplType() {
-    return cardtplType;
+    return selectedData.cardcategory;
   }
 
-  public void setCardtplType(int cardtplType) {
-    this.cardtplType = cardtplType;
-  }
 
   public void setLimit(boolean limit) {
     this.ob.limit_days = limit;
@@ -105,8 +100,15 @@ public class AddCardtplStandardPresenter extends BasePresenter {
     view = null;
   }
 
+  /**
+   * 如果是新开卡，保存在本地
+   */
   public void addOption() {
-    RxRegiste(cardModel.qcCreateStandard(cardtplId, ob)
+    if (CmStringUtils.isEmpty(selectedData.cardtplId)){
+      RxBus.getBus().post(ob);
+      view.onSaveOk();
+    }else
+      RxRegiste(cardModel.qcCreateStandard(selectedData.cardtplId, ob)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -138,7 +140,11 @@ public class AddCardtplStandardPresenter extends BasePresenter {
   }
 
   public void saveOption() {
-    RxRegiste(cardModel.qcUpdateCardStandard(optionId, ob)
+    if (CmStringUtils.isEmpty(selectedData.cardtplId)){
+      RxBus.getBus().post(ob);
+      view.onSaveOk();
+    }else
+      RxRegiste(cardModel.qcUpdateCardStandard(optionId, ob)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.cards.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -31,7 +32,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,8 +86,13 @@ public class CardTplDetailFragment extends BaseFragment
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
-
-    recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
+    GridLayoutManager layoutManager = new GridLayoutManager(getContext(),getResources().getInteger(R.integer.grid_item_count));
+    layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+      @Override public int getSpanSize(int position) {
+        return 1;
+      }
+    });
+    recycleview.setLayoutManager(layoutManager);
     recycleview.setAdapter(comonAdapter);
     return view;
   }
@@ -179,7 +184,7 @@ public class CardTplDetailFragment extends BaseFragment
       comonAdapter.clear();
       comonAdapter.setStatus(presenter.isCardTplEnable() ? 0 : 1);
       for (CardTplOption cardStandard : cardStandards) {
-        comonAdapter.addItem(new CardtplOptionItem(cardStandard));
+        comonAdapter.addItem(new CardtplOptionItem(cardStandard,presenter.getCardCate()));
       }
       if (presenter.isCardTplEnable()) {
         comonAdapter.addItem(new AddCardtplStantardItem());
@@ -205,9 +210,16 @@ public class CardTplDetailFragment extends BaseFragment
 
   @Override public boolean onItemClick(int i) {
     IFlexible item = comonAdapter.getItem(i);
+    Bundle bd = new Bundle();
+
     if (item instanceof CardtplOptionItem) {
+      bd.putParcelable("cardTplOption",((CardtplOptionItem) item).getOption());
+      routeTo("/cardtpl/option/",bd);
       //saasRouter.routerTo("/cardtpl/standard/?id="+((CardtplStandardItem) item).getStandard().getId());
     } else if (item instanceof AddCardtplStantardItem) {
+      bd.putString("cardtplid",presenter.getCardtplId());
+      bd.putInt("type",presenter.getCardCate());
+      routeTo("/cardtpl/option/add/",bd);
       //saasRouter.routerTo("/cardtpl/standard/add/?cardtplid="+presenter.getCardtplId());
     }
     return true;

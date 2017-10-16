@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 
 /**
  * power by
@@ -34,10 +35,11 @@ import com.anbillon.flabellum.annotations.Leaf;
 @Leaf(module = "card",path = "/cardtpl/option/")
 public class CardTplOptionFragment extends CardtplOptionAddFragment {
 
+  @Need CardTplOption cardTplOption;
+
   public static CardTplOptionFragment newInstance(CardTplOption option) {
     Bundle args = new Bundle();
     args.putParcelable("option",option);
-    args.putInt("type", option.card_tpl.getCardTypeInt());
     args.putString("id", option.card_tpl.getId());
     CardTplOptionFragment fragment = new CardTplOptionFragment();
     fragment.setArguments(args);

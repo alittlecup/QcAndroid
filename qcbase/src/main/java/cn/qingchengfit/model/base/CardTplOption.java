@@ -31,6 +31,7 @@ public class CardTplOption implements Parcelable {
     @SerializedName("card_tpl") public Card_tpl card_tpl;
     public boolean for_staff;
 
+
     public CardTplOption() {
     }
 
