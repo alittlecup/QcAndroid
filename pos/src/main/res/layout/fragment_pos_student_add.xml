@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_name"
+      style="@style/QcCivInputStyle"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="姓名"
+      />
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_gender"
+      style="@style/QcCivClickStyle"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="@string/gender"
+      app:civ_content="@string/gender_male"
+      />
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_phone"
+      style="@style/QcCivInputStyle"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="@string/phone"
+      app:civ_showdivier="false"
+      />
+  <include layout="@layout/divider_grey"/>
+
+</LinearLayout>

@@ -14,6 +14,7 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -162,4 +163,11 @@ public interface PosApi {
   //获取销售 卖卡  包含销售和教练
   @GET("/api/staffs/{staff_id}/sellers/") rx.Observable<QcDataResponse<SalerListWrap>> qcGetSalers(@Path("staff_id") String staff_id,
       @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 新增会员
+   */
+  @POST("/api/staffs/{id}/users/") rx.Observable<QcDataResponse> qcCreateStudent(
+      @Path("id") String id, @QueryMap HashMap<String, Object> params,
+      @Body AddStdudentBody body);
 }

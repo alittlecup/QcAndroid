@@ -101,6 +101,7 @@
             android:layout_height="match_parent"
             android:text="@string/gender"
             android:textColor="@color/text_warm"
+            android:gravity="center"
             />
 
         <RadioGroup

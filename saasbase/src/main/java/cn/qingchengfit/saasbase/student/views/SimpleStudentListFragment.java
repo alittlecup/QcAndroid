@@ -99,7 +99,7 @@ public class SimpleStudentListFragment extends BaseFragment
       if (orderType == 0) {
         for (QcStudentBean qcStudentBeen : qcStudentBeens) {
           if (qcStudentBeen.head() != null && !AlphabetLessView.Alphabet.contains(qcStudentBeen.head())){
-            qcStudentBeen.setHead("#");
+            qcStudentBeen.setHead("~");
           }
         }
         Collections.sort(qcStudentBeens, new StudentCompareByAlphabet());//按字母排序

@@ -1,9 +1,10 @@
-package cn.qingchengfit.saasbase.repository;
+package cn.qingchengfit.pos.staff;
 
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
-import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
-import rx.Observable;
+import cn.qingchengfit.pos.student.PosStudentAddFragment;
+import cn.qingchengfit.saasbase.staff.StaffActivity;
+import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
+import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
+import com.anbillon.flabellum.annotations.Trunk;
 
 /**
  * power by
@@ -23,18 +24,10 @@ import rx.Observable;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/30.
+ * Created by Paper on 2017/10/16.
  */
-
-public interface IStudentModel {
-  /**
-   * 购卡 绑定会员时选择会员列表
-   */
-  Observable<QcDataResponse<StudentListWrapper>> getAllStudentNoPermission();
-
-  /**
-   * 新增会员
-   */
-  Observable<QcDataResponse> addStudent(AddStdudentBody body);
-
+@Trunk(fragments = {
+    ChooseSalerFragment.class, ChooseAndSearchStudentFragment.class, PosStudentAddFragment.class
+})
+public class PosStaffActivity extends StaffActivity {
 }

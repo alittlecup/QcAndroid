@@ -1,9 +1,4 @@
-package cn.qingchengfit.saasbase.repository;
-
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
-import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
-import rx.Observable;
+package cn.qingchengfit.saasbase.events;
 
 /**
  * power by
@@ -23,18 +18,10 @@ import rx.Observable;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/30.
+ * Created by Paper on 2017/10/16.
  */
 
-public interface IStudentModel {
-  /**
-   * 购卡 绑定会员时选择会员列表
-   */
-  Observable<QcDataResponse<StudentListWrapper>> getAllStudentNoPermission();
-
-  /**
-   * 新增会员
-   */
-  Observable<QcDataResponse> addStudent(AddStdudentBody body);
-
+public class EventSaasFresh {
+  public class StudentList{}
+  public class CardList{}
 }
