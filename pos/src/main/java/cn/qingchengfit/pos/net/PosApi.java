@@ -1,6 +1,7 @@
 package cn.qingchengfit.pos.net;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.pos.login.model.Gym;
 import cn.qingchengfit.pos.login.model.Login;
 import cn.qingchengfit.pos.login.model.LoginBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
@@ -150,7 +151,19 @@ public interface PosApi {
    * 登录
    */
   //TODO 后续需要改
-  @POST("/api/staffs/login/") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
+  @POST("/api/rongshu/cashier/login/") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
+
+  /**
+   * 根据设备IMEI号查询场馆相关信息
+   */
+  @GET("/api/rongshu/gym/") rx.Observable<QcDataResponse<Gym>> qcGetGym(
+      @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 获取验证码
+   */
+  @POST("/api/rongshu/gym/") Observable<QcDataResponse> qcGetCode(
+      @QueryMap HashMap<String, Object> params);
 
   //充值扣费
   @POST("/api/staffs/{staff_id}/cards/{card_id}/charge/") rx.Observable<QcDataResponse<PayBusinessResponse>> qcCardCharge(@Path("staff_id") String staff_id,

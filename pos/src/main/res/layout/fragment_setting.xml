@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:id="@+id/layout_setting_gym"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <ImageView
+        android:id="@+id/img_setting_gym"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:src="@drawable/vector_student_management_follow"
+        />
+
+    <TextView
+        android:id="@+id/tv_setting_gym_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        tools:text="798店"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_arrow_right"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_setting_pos_no"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      app:civ_content="0000000000"
+      app:civ_content_color="@color/text_warm"
+      app:civ_lable="@string/bill_pos_no"
+      app:civ_text_color="@color/black"
+      />
+
+  <LinearLayout
+      android:id="@+id/layout_setting_staff"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:layout_marginTop="16dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <ImageView
+        android:id="@+id/img_setting_staff"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:src="@drawable/vector_student_management_follow"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/tv_setting_staff_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="14dp"
+          tools:text="杨娜（1888888888）"
+          style="@style/QcTextStyleLargeDark"
+          />
+
+      <TextView
+          android:id="@+id/tv_setting_staff_position"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="14dp"
+          tools:text="店长"
+          style="@style/QcTextStyleSmallWarm"
+          />
+    </LinearLayout>
+
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_arrow_right"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_cashier"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      app:civ_lable="@string/bill_setting_cashier"
+      app:civ_text_color="@color/black"
+      app:civ_showright="true"
+      app:civ_content="4"
+      app:civ_content_color="@color/text_warm"
+      />
+
+</LinearLayout>

@@ -91,6 +91,7 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
           routeTo(AppUtils.getRouterUri(getContext(), "/card/cardtpl/list/"), null);
           break;
         case R.drawable.vd_btn_home_bill:
+          routeTo(AppUtils.getRouterUri(getContext(), "/bill/home/list/"), null);
           break;
         case R.drawable.vd_btn_home_sell:
           break;

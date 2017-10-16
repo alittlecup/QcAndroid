@@ -49,5 +49,7 @@ dependencies {
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:latest.integration"
   annotationProcessor "com.anbillon.flabellum:dagger2:latest.integration"
   testCompile 'junit:junit:4.12'
+  annotationProcessor "com.anbillon.flabellum:flabellum-processor:0.2.1"
+  annotationProcessor "com.anbillon.flabellum:dagger2:0.2.1"
 
 }
