@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,12 +15,16 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.student.presenters.ChooseAndSearchPresenter;
+import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CompatEditView;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -52,7 +57,8 @@ import rx.functions.Action1;
  */
 
 @Leaf(module = "student", path = "/choose/student/") public class ChooseAndSearchStudentFragment
-    extends BaseFragment implements ChooseAndSearchPresenter.MVPView {
+    extends BaseFragment
+    implements ChooseAndSearchPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener {
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -73,13 +79,18 @@ import rx.functions.Action1;
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
+    RxBusAdd(EventSaasFresh.CardList.class).subscribe(new BusSubscribe<EventSaasFresh.CardList>() {
+      @Override public void onNext(EventSaasFresh.CardList cardList) {
+           onRefresh();
+      }
+    });
     return view;
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
       Bundle savedInstanceState) {
     if (f instanceof ChooseStudentListFragment) {
-      presenter.getAllStudents();
+      onRefresh();
       //搜索变化
       RxTextView.afterTextChangeEvents(etSearch)
           .throttleLast(1000, TimeUnit.MILLISECONDS)
@@ -128,9 +139,8 @@ import rx.functions.Action1;
   /**
    * 新增会员
    */
-  //@OnClick(R2.id.btn_add_student)
-  public void onBtnAddStudentClicked() {
-    // TODO: 2017/8/29 跳去新增会员
+  @OnClick(R2.id.btn_add_student) public void onBtnAddStudentClicked() {
+    routeTo(AppUtils.getRouterUri(getContext(), "/student/add/"), null);
   }
 
   @Override public void onStudentList(List<QcStudentBean> stus) {
@@ -138,7 +148,10 @@ import rx.functions.Action1;
       chooseStudentListFragment.setData(stus);
     }
   }
-  //
+
+  @Override public void onRefresh() {
+    presenter.getAllStudents();
+  }
   ///**
   // * 底部选择框
   // */

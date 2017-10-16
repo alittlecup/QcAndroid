@@ -5,20 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
-import cn.qingchengfit.saasbase.cards.views.CardChargeFragment;
-import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
-import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
-import cn.qingchengfit.saasbase.cards.views.CardListHomeFragment;
-import cn.qingchengfit.saasbase.cards.views.CardTplDetailFragment;
-import cn.qingchengfit.saasbase.cards.views.CardTplOptionFragment;
-import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
-import cn.qingchengfit.saasbase.cards.views.CardtplOptionAddFragment;
-import cn.qingchengfit.saasbase.cards.views.ChooseCardTplForBuyCardFragment;
 import cn.qingchengfit.saasbase.routers.Icard;
 import cn.qingchengfit.saasbase.routers.RouterCenter;
 import cn.qingchengfit.views.activity.BaseActivity;
-import com.anbillon.flabellum.annotations.Trunk;
 import dagger.Lazy;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -45,12 +34,7 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/29.
  */
-@Trunk(fragments = {
-    CardTplsHomeInGymFragment.class, CardTplDetailFragment.class, ChooseCardTplForBuyCardFragment.class,
-    CardBuyFragment.class, CardListHomeFragment.class, CardFilterTplFragment.class,
-    CardDetailFragment.class, CardtplOptionAddFragment.class, CardTplOptionFragment.class
-    , CardChargeFragment.class
-})
+
 public class CardActivity extends BaseActivity implements HasSupportFragmentInjector {
 
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;

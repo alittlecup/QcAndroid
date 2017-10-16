@@ -6,10 +6,10 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.DateUtils;
@@ -54,6 +54,7 @@ public class CardChargePresenter extends BasePresenter {
     if (pos < mOptions.size()) {
       //选择了规格
       mChosenOption = mOptions.get(pos);
+      view.setMoneyPay(mChosenOption.price);
     } else {
       //选择其他
       mChosenOption = null;
@@ -91,11 +92,10 @@ public class CardChargePresenter extends BasePresenter {
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcResponse>() {
-          @Override public void onNext(QcResponse qcResponse) {
+        .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponse>>() {
+          @Override public void onNext(QcDataResponse<PayBusinessResponse> qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              //下单之后做什么？// TODO: 2017/9/25
-              //view.
+              view.onBusinessOrder(qcResponse.data);
             } else {
               view.onShowError(qcResponse.getMsg());
             }
@@ -138,8 +138,11 @@ public class CardChargePresenter extends BasePresenter {
     void onGetOptions(List<CardTplOption> options);
 
     void showInputMoney(boolean show);
-
-
+    void setMoneyPay(String m);
+    /**
+     * 下单完成后返回的数据
+     */
+    void onBusinessOrder(PayBusinessResponse payBusinessResponse);
     String chargeMoney();
     String realMoney();
     boolean openValidDay();

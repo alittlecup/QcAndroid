@@ -23,6 +23,7 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
@@ -84,7 +85,7 @@ import javax.inject.Inject;
   @BindView(R2.id.civ_real_money) CommonInputView civRealMoney;
   @BindView(R2.id.lo_input_money) LinearLayout loInputMoney;
 
-  @Inject CardBuyPresenter presenter;
+  @Inject public CardBuyPresenter presenter;
   @Need CardTpl cardTpl;
 
   public static CardBuyFragment newInstance(CardTpl cardTpl) {
@@ -171,7 +172,7 @@ import javax.inject.Inject;
     commonFlexAdapter.clear();
     //List<AbstractFlexibleItem> items = new ArrayList<>();
     for (CardTplOption option : options) {
-      commonFlexAdapter.addItem(new CardtplOptionItem(option));
+      commonFlexAdapter.addItem(new CardtplOptionItem(option,cardTpl.type));
     }
     // TODO: 2017/9/30 判断权限
     commonFlexAdapter.addItem(new CardtplOptionOhterItem());
@@ -217,6 +218,10 @@ import javax.inject.Inject;
 
   @Override public void bindSaler(String saler) {
     civSaler.setContent(saler);
+  }
+
+  @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {
+
   }
 
   @Override public String realCardNum() {

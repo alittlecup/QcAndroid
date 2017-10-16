@@ -1,57 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    tools:background="@drawable/bg_default_cardtpl"
-    android:padding="10dp"
-    android:id="@+id/bg_card"
+    android:layout_height="80dp"
+    android:padding="6dp"
     >
 
+  <RelativeLayout
+      android:id="@+id/bg_card"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:padding="10dp"
+      tools:background="@drawable/bg_default_card"
+      >
 
-  <TextView
-      android:id="@+id/realcard_name"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="@color/white"
-      tools:text="中美引力储值卡(123)1"
-      />
-  <TextView
-      android:id="@+id/realcard_students"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/realcard_name"
-      android:layout_marginTop="30dp"
-      android:maxWidth="200dp"
-      android:lines="1"
-      android:textColor="@color/white"
-      tools:text="陈驰元,陈驰元,陈驰元,陈驰元,陈驰元,陈驰元,陈驰元,"
-      />
 
-  <TextView
-      android:id="@+id/realcard_balance"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentRight="true"
-      android:layout_below="@id/realcard_name"
-      android:layout_marginRight="@dimen/activity_horizontal_margin"
-      android:layout_marginTop="4dp"
-      android:textColor="@color/white"
-      tools:text="余额:105000元"
-      />
+    <TextView
+        android:id="@+id/realcard_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        tools:text="中美引力储值卡(123)1"
+        />
 
+    <TextView
+        android:id="@+id/realcard_students"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/realcard_name"
+        android:layout_marginTop="4dp"
+        android:lines="1"
+        android:maxWidth="200dp"
+        android:textColor="@color/white"
+        tools:text="陈驰元,陈驰元,陈驰元,陈驰元,陈驰元,陈驰元,陈驰元,"
+        />
+
+    <TextView
+        android:id="@+id/realcard_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/realcard_name"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/white"
+        tools:text="余额:105000元"
+        />
+
+  </RelativeLayout>
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="10dp"
+      android:background="@drawable/card_bottom_shadow"
+      android:layout_gravity="bottom"
+      />
   <cn.qingchengfit.widgets.ConnerTag
       android:id="@+id/img_stutus"
       android:layout_width="35dp"
       android:layout_height="35dp"
-      android:layout_alignParentRight="true"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentTop="true"
+      android:layout_gravity="end"
 
       />
-
-
-</RelativeLayout>
-
+</FrameLayout>

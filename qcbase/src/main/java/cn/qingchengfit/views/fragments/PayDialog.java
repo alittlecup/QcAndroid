@@ -20,7 +20,6 @@ import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;
@@ -55,6 +54,9 @@ public abstract class PayDialog extends BottomSheetDialogFragment implements
   @BindView(R2.id.btn_pay) Button btnPay;
   Unbinder unbinder;
   CommonFlexAdapter adapter;
+
+
+
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public abstract class PayDialog extends BottomSheetDialogFragment implements
         .withDivider(R.drawable.divider_grey)
         .withBottomEdge(true));
     rv.setAdapter(adapter);
+    tvMoney.setText("￥"+100);
     return view;
   }
 

@@ -38,9 +38,10 @@ public class CardListFragment extends BaseListFragment {
   }
 
   @Override protected void addDivider() {
+    rv.setBackgroundResource(R.color.transparent);
     rv.addItemDecoration(new FlexibleItemDecoration(getContext())
         .addItemViewType(R.layout.item_saas_realcard)
-        .withOffset(15)
+        .withOffset(10)
         .withTopEdge(true)
         .withLeftEdge(true)
         .withRightEdge(true)

@@ -24,9 +24,11 @@ public class CardtplOptionItem
     extends AbstractFlexibleItem<CardtplOptionItem.CardtplStandardVH> {
 
   CardTplOption option;
+  int cardtplType;
 
-  public CardtplOptionItem(CardTplOption option) {
+  public CardtplOptionItem(CardTplOption option, int cardtplType) {
     this.option = option;
+    this.cardtplType = cardtplType;
   }
 
   public CardTplOption getOption() {
@@ -50,7 +52,7 @@ public class CardtplOptionItem
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, CardtplStandardVH holder, int position,
       List payloads) {
-    String unitStr = CardBusinessUtils.getCardTypeCategoryUnit(option.card_tpl.getCardTypeInt(),holder.title.getContext());
+    String unitStr = CardBusinessUtils.getCardTypeCategoryUnit(cardtplType,holder.title.getContext());
     holder.title.setText(option.charge + unitStr);
     if (TextUtils.isEmpty(option.price)) {
       holder.realIncome.setVisibility(View.GONE);

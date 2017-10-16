@@ -1,6 +1,7 @@
 package cn.qingchengfit.views.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -126,7 +127,7 @@ public abstract class BaseListFragment extends BaseFragment {
   protected void clearItems() {
     commonFlexAdapter.clear();
   }
-  public void setDatas(List<? extends AbstractFlexibleItem> ds, int page) {
+  public void setDatas(List<? extends AbstractFlexibleItem> ds,@IntRange(from = 1) int page) {
     stopRefresh();
     if (rv != null && commonFlexAdapter != null) {
       if (page == 1) clearItems();

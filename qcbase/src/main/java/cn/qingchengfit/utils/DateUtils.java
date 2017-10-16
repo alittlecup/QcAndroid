@@ -267,10 +267,14 @@ public class DateUtils {
    * 以YYMMDD的格式增加天数
    */
   public static String addDay(String d, int i) {
-    Calendar c = Calendar.getInstance();
-    c.setTime(formatDateFromYYYYMMDD(d));
-    c.add(Calendar.DATE, i);
-    return Date2YYYYMMDD(c.getTime());
+    try {
+      Calendar c = Calendar.getInstance();
+      c.setTime(formatDateFromYYYYMMDD(d));
+      c.add(Calendar.DATE, i);
+      return Date2YYYYMMDD(c.getTime());
+    }catch (Exception e){
+      return "";
+    }
   }
 
   /**

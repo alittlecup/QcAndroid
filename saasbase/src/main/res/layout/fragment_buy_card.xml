@@ -196,6 +196,7 @@
             android:layout_alignBaseline="@id/tv_money_label"
             android:layout_toEndOf="@id/tv_money_label"
             android:layout_toRightOf="@id/tv_money_label"
+            android:textColor="@color/red"
             />
         <Button
             android:id="@+id/btn_pay"
@@ -203,6 +204,8 @@
             android:layout_alignParentRight="true"
             android:layout_width="100dp"
             android:layout_height="match_parent"
+            android:text="收 款"
+            android:textColor="@color/white"
             android:background="@drawable/btn_prime_no_corner"
             />
       </RelativeLayout>

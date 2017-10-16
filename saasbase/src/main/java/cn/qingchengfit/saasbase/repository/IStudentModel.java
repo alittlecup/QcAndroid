@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.repository;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import rx.Observable;
 
@@ -30,4 +31,10 @@ public interface IStudentModel {
    * 购卡 绑定会员时选择会员列表
    */
   Observable<QcDataResponse<StudentListWrapper>> getAllStudentNoPermission();
+
+  /**
+   * 新增会员
+   */
+  Observable<QcDataResponse> addStudent(AddStdudentBody body);
+
 }

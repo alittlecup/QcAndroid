@@ -6,4 +6,9 @@
   <string name="e_card_charge_period_cannot_empty">xx</string>
   <string name="e_card_start_or_end_cannot_empty">xx</string>
   <string name="e_card_saler_cannot_empty">xx</string>
+
+
+
+  <string name="e_student_username">请填写会员姓名</string>
+  <string name="e_phone">请填写正确的手机号</string>
 </resources>

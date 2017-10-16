@@ -6,6 +6,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.net.PosApi;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
+import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import rx.Observable;
 
@@ -45,5 +46,10 @@ public class StudentModel implements IStudentModel {
   @Override public Observable<QcDataResponse<StudentListWrapper>> getAllStudentNoPermission() {
     return repository.createGetApi(PosApi.class)
         .qcGetCardBundldStudents(loginStatus.staff_id(),gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse> addStudent(AddStdudentBody body) {
+    return repository.createGetApi(PosApi.class)
+        .qcCreateStudent(loginStatus.staff_id(),gymWrapper.getParams(),body);
   }
 }

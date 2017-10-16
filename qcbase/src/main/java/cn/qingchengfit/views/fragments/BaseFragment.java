@@ -345,7 +345,7 @@ public abstract class BaseFragment extends Fragment
       Intent to = new Intent(Intent.ACTION_VIEW, uri);
       if (getActivity() instanceof BaseActivity) {
         if (((BaseActivity) getActivity()).getModuleName().equalsIgnoreCase(uri.getHost())
-            && !uri.getPath().startsWith("/choose")) {
+            && !uri.getPath().startsWith("/choose") && !uri.getPath().endsWith("add/")) {
           to.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         } else {
           to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

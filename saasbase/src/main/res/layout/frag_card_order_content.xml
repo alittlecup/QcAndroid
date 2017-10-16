@@ -27,6 +27,7 @@
           android:id="@+id/rv"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:minHeight="100dp"
           android:paddingLeft="@dimen/activity_horizontal_margin"
           android:paddingStart="@dimen/activity_horizontal_margin"
           />
@@ -38,14 +39,14 @@
           >
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/civ_charge_money"
-            style="@style/QcCivClickStyle"
+            style="@style/QcCivInputStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_lable="充值金额"
             />
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/civ_real_money"
-            style="@style/QcCivClickStyle"
+            style="@style/QcCivInputStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_lable="实收金额(元)"
@@ -60,6 +61,7 @@
             android:id="@+id/el_need_valid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:el_label="设置有效期"
             >
           <LinearLayout
@@ -100,40 +102,44 @@
           android:layout_height="@dimen/qc_item_height"
           app:civ_lable="备注"
           />
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          android:orientation="horizontal"
-          >
 
-        <TextView
-            style="@style/QcTextStyleMediumDark"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:id="@+id/tv_money_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="充值金额："
-            />
-        <TextView
-            android:id="@+id/tv_pay_money"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/tv_money_label"
-            android:layout_toEndOf="@id/tv_money_label"
-            android:layout_toRightOf="@id/tv_money_label"
-            />
-        <Button
-            android:id="@+id/btn_pay"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/btn_prime_no_corner"
-            />
-      </RelativeLayout>
     </LinearLayout>
   </ScrollView>
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:orientation="horizontal"
+      android:background="@color/white"
+      >
 
+    <TextView
+        style="@style/QcTextStyleMediumDark"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:id="@+id/tv_money_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="充值金额："
+        />
+    <TextView
+        android:id="@+id/tv_pay_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tv_money_label"
+        android:layout_toEndOf="@id/tv_money_label"
+        android:layout_toRightOf="@id/tv_money_label"
+        android:textColor="@color/red"
+        />
+    <Button
+        android:id="@+id/btn_pay"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:text="收 款"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_prime_no_corner"
+        />
+  </RelativeLayout>
 </LinearLayout>

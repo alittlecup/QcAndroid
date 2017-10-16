@@ -2,7 +2,7 @@ package cn.qingchengfit.pos;
 
 import cn.qingchengfit.pos.di.AppModel;
 import cn.qingchengfit.pos.login.di.BindLoginModule;
-import cn.qingchengfit.saasbase.di.BindCardActivity;
+import cn.qingchengfit.saasbase.di.BindPosCardActivity;
 import cn.qingchengfit.saasbase.di.BindStaffActivity;
 import cn.qingchengfit.saasbase.di.BindStudentActivity;
 import dagger.Component;
@@ -31,7 +31,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
  */
 @Component(modules = { AppModel.class,
     AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-    BindCardActivity.class, BindLoginModule.class,BindStaffActivity.class
+     BindLoginModule.class,BindStaffActivity.class, BindPosCardActivity.class
 })
 public interface PosAppComponent {
   void inject(PosApp app);
