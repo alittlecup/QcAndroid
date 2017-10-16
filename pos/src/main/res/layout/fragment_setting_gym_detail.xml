@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:orientation="horizontal"
+      android:paddingLeft="17dp"
+      android:paddingRight="17dp"
+      android:gravity="center_vertical"
+      android:background="@color/white"
+      >
+
+    <TextView
+        android:id="@+id/tv_setting_gym_detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bill_setting_gym_detail_logo"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:src="@drawable/ic_default_head_nogender"
+        />
+
+  </LinearLayout>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_setting_gym_detail_name"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      app:civ_lable="@string/bill_setting_gym_detail_name"
+      app:civ_text_color="@color/black"
+      app:civ_content_color="@color/text_warm"
+      app:civ_showright="true"
+      android:layout_marginTop="16dp"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_setting_gym_detail_no"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      app:civ_lable="@string/bill_setting_gym_detail_no"
+      app:civ_text_color="@color/black"
+      app:civ_content_color="@color/text_warm"
+      />
+
+</LinearLayout>

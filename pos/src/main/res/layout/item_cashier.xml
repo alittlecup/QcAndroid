@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:gravity="center_vertical"
+    android:paddingLeft="17dp"
+    android:paddingRight="17dp"
+    android:background="@color/white"
+    >
+
+  <ImageView
+      android:id="@+id/img_cashier_head"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:src="@drawable/ic_default_head_nogender"
+      />
+
+  <TextView
+      android:id="@+id/tv_cashier_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@id/img_cashier_head"
+      tools:text="陈晓明"
+      android:layout_marginLeft="16dp"
+      style="@style/QcTextStyleLargeDark"
+      android:layout_marginTop="3dp"
+      />
+
+  <TextView
+      android:id="@+id/tv_cashier_phone"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@id/img_cashier_head"
+      android:layout_below="@id/tv_cashier_name"
+      android:layout_marginLeft="16dp"
+      android:layout_marginTop="3dp"
+      tools:text="15688888888"
+      />
+  
+  <ImageView
+      android:layout_width="12dp"
+      android:layout_height="12dp"
+      android:src="@drawable/ic_gender_signal_female"
+      android:layout_toRightOf="@id/tv_cashier_name"
+      android:layout_alignTop="@id/tv_cashier_name"
+      android:layout_marginTop="3dp"
+      android:layout_marginLeft="4dp"
+      />
+
+</RelativeLayout>

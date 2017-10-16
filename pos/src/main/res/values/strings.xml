@@ -1,13 +1,19 @@
 <resources>
   <string name="app_name">Pos</string>
-  
+
+  <!--通用-->
+  <string name="dialog_confirm_login_failed">好，知道了！</string>
+  <string name="head">头像</string>
+  <string name="name">姓名</string>
+  <string name="gender">性别</string>
+  <string name="phone">手机号</string>
+
   <!--登录-->
   <string name="login_title">健身房专用POS机</string>
   <string name="login_btn_confirm">登录</string>
   <string name="login_have_some_question">登录遇到问题?</string>
   <string name="login_get_code">获取验证码</string>
   <string name="login_resend_msg">%ds</string>
-  <string name="dialog_confirm_login_failed">好，知道了！</string>
   <string name="tips_login_failed">登录失败</string>
   
   <!--账单-->
@@ -25,5 +31,10 @@
   <string name="bill_filter_card">会员卡购卡</string>
   <string name="bill_filter_recharge">充值</string>
   <string name="bill_filter_cashier">收银</string>
+  <string name="bill_pos_no">POS机编号</string>
+  <string name="bill_setting_cashier">收银员</string>
+  <string name="bill_setting_gym_detail_logo">场馆Logo</string>
+  <string name="bill_setting_gym_detail_name">场馆名称</string>
+  <string name="bill_setting_gym_detail_no">商户编号</string>
 
 </resources>

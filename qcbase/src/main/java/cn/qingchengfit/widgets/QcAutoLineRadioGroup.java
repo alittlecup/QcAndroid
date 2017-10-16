@@ -1,6 +1,7 @@
 package cn.qingchengfit.widgets;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -45,24 +46,23 @@ public class QcAutoLineRadioGroup extends LinearLayout
 
   public QcAutoLineRadioGroup(Context context) {
     super(context);
-    init();
   }
 
   public QcAutoLineRadioGroup(Context context, @Nullable AttributeSet attrs) {
     super(context, attrs);
-    init();
+    init(context, attrs);
   }
 
   public QcAutoLineRadioGroup(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    init();
+    init(context, attrs);
   }
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   public QcAutoLineRadioGroup(Context context, AttributeSet attrs, int defStyleAttr,
       int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
-    init();
+    init(context, attrs);
   }
 
   public void setSpacing(int horizontalSpacing, int verticalSpacing) {
@@ -70,7 +70,9 @@ public class QcAutoLineRadioGroup extends LinearLayout
     mVerticalSpacing = verticalSpacing;
   }
 
-  private void init() {
+  private void init(Context context, AttributeSet attrs) {
+    TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.QcRadioGroup);
+    isSingleSelected = ta.getBoolean(R.styleable.QcRadioGroup_qc_single, true);
     DisplayMetrics dm = getResources().getDisplayMetrics();
     mScreenWidth = dm.widthPixels;
     mHorizontalSpacing = MeasureUtils.dpToPx(10f, getResources());
@@ -119,10 +121,12 @@ public class QcAutoLineRadioGroup extends LinearLayout
 
   @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
     if (getChildCount() > 0) {
-      for (int i = 0; i < getChildCount(); i++) {
-        View v = getChildAt(i);
-        if (v instanceof QcCheckable && !((QcCheckable) v).isOrContainCheck(buttonView)) {
-          ((QcCheckable) v).setChecked(false);
+      if (isSingleSelected) {
+        for (int i = 0; i < getChildCount(); i++) {
+          View v = getChildAt(i);
+          if (v instanceof QcCheckable && !((QcCheckable) v).isOrContainCheck(buttonView)) {
+            ((QcCheckable) v).setChecked(false);
+          }
         }
       }
     }

@@ -6,11 +6,13 @@ package cn.qingchengfit.pos.login.model;
 
 public class LoginBody {
 
-  public String username;
-  public String passward;
+  public String phone;
+  public String code;
+  public String area_code;
 
-  public LoginBody(String username, String passward) {
-    this.username = username;
-    this.passward = passward;
+  public LoginBody(String phone, String code, String area_code) {
+    this.phone = phone;
+    this.code = code;
+    this.area_code = area_code;
   }
 }

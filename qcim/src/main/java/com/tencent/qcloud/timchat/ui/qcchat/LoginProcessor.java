@@ -164,6 +164,7 @@ public class LoginProcessor implements TIMCallBack {
         tlsErrInfo.ErrCode = i;
         tlsErrInfo.Msg = s;
 
+        //同时重新获取了userSig
         if (i / 10000 == 7 && errorTimes < 3){
             navToHome();
             errorTimes++;

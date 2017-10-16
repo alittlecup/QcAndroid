@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.pos.login.model.Gym;
 import cn.qingchengfit.pos.login.model.LoginBody;
 import cn.qingchengfit.pos.login.presenter.LoginPresenter;
 import cn.qingchengfit.pos.main.MainActivity;
@@ -61,12 +62,16 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
     if (!TextUtils.isEmpty(editLoginPhone.getText()) && !TextUtils.isEmpty(
         editLoginAuthCode.getText())) {
       presenter.qcLogin(new LoginBody(editLoginPhone.getText().toString(),
-          editLoginAuthCode.getText().toString()));
+          editLoginAuthCode.getText().toString(), "+86"));
     }
   }
 
   @Override public void onDestroyView() {
     super.onDestroyView();
+  }
+
+  @Override public void onGetGym(Gym gym) {
+
   }
 
   @Override public void onSuccess() {
@@ -78,6 +83,10 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
     TipTextDialogFragment.newInstance(s,
         getResources().getString(R.string.dialog_confirm_login_failed),
         getResources().getString(R.string.tips_login_failed)).show(getFragmentManager(), null);
+  }
+
+  @Override public void onGetCodeSuccess() {
+
   }
 
   private class InternalHandler extends Handler {

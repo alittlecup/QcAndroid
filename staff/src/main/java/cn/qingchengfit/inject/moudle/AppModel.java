@@ -17,6 +17,7 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
@@ -302,11 +303,13 @@ import rx.Observable;
         return null;
       }
 
-      @Override public Observable<QcDataResponse> qcChargeCard(ChargeBody chargeBody) {
+      @Override
+      public Observable<QcDataResponse<PayBusinessResponse>> qcChargeCard(ChargeBody chargeBody) {
         return null;
       }
 
-      @Override public Observable<QcDataResponse> buyCard(@Body CardBuyBody body) {
+      @Override
+      public Observable<QcDataResponse<PayBusinessResponse>> buyCard(@Body CardBuyBody body) {
         return null;
       }
 
