@@ -7,6 +7,8 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.utils.CmStringUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * power by
@@ -38,6 +40,16 @@ public class CardBusinessUtils {
         return context.getResources().getStringArray(R.array.cardtype_category)[2];
       default:
         return context.getResources().getStringArray(R.array.cardtype_category)[0];
+    }
+  }
+  public static String getCardTypeCategoryStrHead(int type, Context context) {
+    switch (type) {
+      case 2:
+        return context.getResources().getStringArray(R.array.cardtype_category)[1].substring(0,1);
+      case 3:
+        return context.getResources().getStringArray(R.array.cardtype_category)[2].substring(0,1);
+      default:
+        return context.getResources().getStringArray(R.array.cardtype_category)[0].substring(0,1);
     }
   }
 
@@ -93,4 +105,12 @@ public class CardBusinessUtils {
     o.price      = body.price;
     return o;
   }
+
+  public static String supportChargeAndCreate(boolean charge,boolean create){
+    List<String> ret = new ArrayList<>();
+    if (charge) ret.add("充值");
+    if (charge) ret.add("购卡");
+    return CmStringUtils.List2StrChinese(ret);
+  }
+
 }

@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/bg_grey"
     android:orientation="vertical"
-    android:paddingTop="10dp"
     >
   <include layout="@layout/common_simple_toolbar"/>
   <include
       layout="@layout/item_card_detail"
       android:layout_width="match_parent"
-      android:layout_height="170dp"
+      android:layout_height="wrap_content"
       />
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/civ_input_card_name"

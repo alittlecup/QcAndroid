@@ -1,11 +1,10 @@
-package cn.qingchengfit.utils;
+package cn.qingchengfit.pos.card;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import cn.qingchengfit.widgets.R;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import cn.qingchengfit.saasbase.cards.views.CardListHomeFragment;
 
 /**
  * power by
@@ -25,18 +24,14 @@ import cn.qingchengfit.widgets.R;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/17.
  */
 
-public class DrawableUtils {
-  public  static Drawable generateBg(float radius, int[] colors){
-    GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,colors);
-    gradientDrawable.setCornerRadius(radius);
-    return gradientDrawable;
-  }
-  public  static Drawable generateCardStatusBg(int color,Context context){
-    Drawable d  =ContextCompat.getDrawable(context, R.drawable.bg_card_stauts).mutate();
-    DrawableCompat.setTint(d,color);
-    return d;
+public class PosCardListHomeFragment extends CardListHomeFragment {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    Bundle savedInstanceState) {
+    View v = super.onCreateView(inflater, container, savedInstanceState);
+    layoutCardOperate.setVisibility(View.GONE);
+    return v;
   }
 }

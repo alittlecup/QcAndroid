@@ -4,6 +4,7 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
@@ -41,7 +42,9 @@ public class CardBuyPresenter extends BasePresenter {
    */
   private CardBuyBody cardBuyBody = new CardBuyBody();
 
-
+  public String getRemarks(){
+    return cardBuyBody.remarks;
+  }
   public String getmCardTplId() {
     return mCardTplId;
   }
@@ -83,6 +86,15 @@ public class CardBuyPresenter extends BasePresenter {
         });
 
     //备注信息
+    RxBusAdd(EventTxT.class)
+      .onBackpressureLatest()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventTxT>() {
+        @Override public void onNext(EventTxT eventTxT) {
+          view.remark(!eventTxT.txt.isEmpty());
+          cardBuyBody.remarks = eventTxT.txt;
+        }
+      });
 
     //学员 选择某个学员
     RxBusAdd(EventSelectedStudent.class)
@@ -200,6 +212,7 @@ public class CardBuyPresenter extends BasePresenter {
     void showInputMoney(boolean show);
     void bindStudent(String student);
     void bindSaler(String saler);
+    void remark(boolean remark);
     /**
      * 下单完成后返回的数据
      */

@@ -1,11 +1,4 @@
-package cn.qingchengfit.utils;
-
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import cn.qingchengfit.widgets.R;
+package cn.qingchengfit.events;
 
 /**
  * power by
@@ -25,18 +18,12 @@ import cn.qingchengfit.widgets.R;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/16.
  */
 
-public class DrawableUtils {
-  public  static Drawable generateBg(float radius, int[] colors){
-    GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,colors);
-    gradientDrawable.setCornerRadius(radius);
-    return gradientDrawable;
-  }
-  public  static Drawable generateCardStatusBg(int color,Context context){
-    Drawable d  =ContextCompat.getDrawable(context, R.drawable.bg_card_stauts).mutate();
-    DrawableCompat.setTint(d,color);
-    return d;
-  }
+public class EventRouter {
+  String host;
+  String path;
+
+
 }

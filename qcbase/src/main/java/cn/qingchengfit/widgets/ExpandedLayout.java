@@ -122,7 +122,8 @@ public class ExpandedLayout extends LinearLayout {
             leftDrawable = ContextCompat.getDrawable(getContext(),resId);
         }
         ta.recycle();
-
+        setDividerDrawable(ContextCompat.getDrawable(getContext(),R.drawable.divider_grey_left_margin));
+        setShowDividers(SHOW_DIVIDER_MIDDLE);
     }
 
     public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener l){

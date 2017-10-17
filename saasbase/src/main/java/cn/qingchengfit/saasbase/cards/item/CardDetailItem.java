@@ -3,9 +3,16 @@ package cn.qingchengfit.saasbase.cards.item;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.Card;
+import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
+import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DrawableUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -19,7 +26,7 @@ public class CardDetailItem extends AbstractFlexibleItem<CardDetailItem.CardDeta
     this.mCard = mCard;
   }
 
-  public Card getCard(){
+  public Card getCard() {
     return mCard;
   }
 
@@ -28,13 +35,25 @@ public class CardDetailItem extends AbstractFlexibleItem<CardDetailItem.CardDeta
   }
 
   @Override public CardDetailVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
+    ViewGroup parent) {
     return new CardDetailVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CardDetailVH holder, int position,
-      List payloads) {
-
+    List payloads) {
+    holder.tvCardtplName.setText(mCard.getName());
+    holder.tvCardId.setText(mCard.getId());
+    holder.tvGymName.setText(mCard.getSupportGyms());
+    holder.tvCardTplType.setText(
+      CardBusinessUtils.getCardTypeCategoryStrHead(mCard.getType(), holder.tvCardTplType.getContext()));
+    holder.cardview.setBackground(
+      DrawableUtils.generateBg(8f, CardBusinessUtils.getDefaultCardbgColor(mCard.getType())));
+    if (mCard.isCheck_valid()) {
+      holder.tvCardAppend.setText("有效期：" + DateUtils.getYYMMfromServer(mCard.getValid_from()) + "至"
+        + DateUtils.getYYMMfromServer(mCard.getValid_to()));
+    } else {
+      holder.tvCardAppend.setText("");
+    }
   }
 
   @Override public boolean equals(Object o) {
@@ -42,6 +61,12 @@ public class CardDetailItem extends AbstractFlexibleItem<CardDetailItem.CardDeta
   }
 
   public class CardDetailVH extends FlexibleViewHolder {
+    @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
+    @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
+    @BindView(R2.id.tv_gym_name) TextView tvGymName;
+    @BindView(R2.id.tv_card_id) TextView tvCardId;
+    @BindView(R2.id.cardview) RelativeLayout cardview;
+    @BindView(R2.id.tv_card_append) TextView tvCardAppend;
 
     public CardDetailVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

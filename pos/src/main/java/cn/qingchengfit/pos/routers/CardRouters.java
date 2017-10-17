@@ -3,6 +3,7 @@ package cn.qingchengfit.pos.routers;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.pos.card.PosCardBuyFragment;
 import cn.qingchengfit.pos.card.PosCardChargeFragment;
+import cn.qingchengfit.pos.card.PosCardListHomeFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.routers.cardImpl;
@@ -37,5 +38,7 @@ public class CardRouters extends cardImpl {
     return PosCardBuyFragment.newInstance(cardTpl);
   }
 
-
+  @Override public Fragment toCardListHomeFragment() {
+    return new PosCardListHomeFragment();
+  }
 }

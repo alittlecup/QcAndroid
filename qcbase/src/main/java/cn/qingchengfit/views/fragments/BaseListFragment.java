@@ -16,6 +16,7 @@ import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -93,6 +94,7 @@ public abstract class BaseListFragment extends BaseFragment {
 
   }
 
+
   protected void setAnimation() {
     commonFlexAdapter.setAnimationEntryStep(true)
         .setAnimationOnReverseScrolling(true)
@@ -108,6 +110,12 @@ public abstract class BaseListFragment extends BaseFragment {
   public void initLoadMore() {
     if (commonFlexAdapter != null) {
       commonFlexAdapter.setEndlessProgressItem(progressItem);
+    }
+  }
+  public void initLoadMore(int count,FlexibleAdapter.EndlessScrollListener l) {
+    if (commonFlexAdapter != null) {
+      commonFlexAdapter.setEndlessScrollListener(l,progressItem);
+      commonFlexAdapter.setEndlessTargetCount(count);
     }
   }
 

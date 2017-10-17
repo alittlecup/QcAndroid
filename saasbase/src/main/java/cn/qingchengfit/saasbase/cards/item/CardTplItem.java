@@ -48,7 +48,7 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CardTplVH holder, int position,
       List payloads) {
-    holder.tvCardTplType.setText(CardBusinessUtils.getCardTypeCategoryStr(cardTpl.type,holder.tvCardtplName.getContext()).substring(0,1));
+    holder.tvCardTplType.setText(CardBusinessUtils.getCardTypeCategoryStrHead(cardTpl.type,holder.tvCardtplName.getContext()).substring(0,1));
     holder.cardview.setBackground(DrawableUtils.generateBg(8f,CardBusinessUtils.getDefaultCardbgColor(cardTpl.type)));
     holder.tvCardtplName.setText(cardTpl.getName());
     holder.tvCardId.setText(cardTpl.getId());

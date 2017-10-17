@@ -46,9 +46,9 @@ dependencies {
   compile "com.google.dagger:dagger-android-support:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  compile "com.anbillon.flabellum:flabellum:latest.integration"
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:latest.integration"
-  annotationProcessor "com.anbillon.flabellum:dagger2:latest.integration"
+  compile "com.anbillon.flabellum:flabellum:${libs.flabellum}"
+  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
+  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
 }
 
 

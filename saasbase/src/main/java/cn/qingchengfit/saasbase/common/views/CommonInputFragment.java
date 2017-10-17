@@ -1,11 +1,9 @@
-package cn.qingchengfit.utils;
+package cn.qingchengfit.saasbase.common.views;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import cn.qingchengfit.widgets.R;
+import android.os.Bundle;
+import cn.qingchengfit.views.fragments.CommonInputTextFragment;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 
 /**
  * power by
@@ -25,18 +23,21 @@ import cn.qingchengfit.widgets.R;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/16.
  */
+@Leaf(module = "common", path = "/input/") public class CommonInputFragment
+  extends CommonInputTextFragment {
+  @Need private String title;
+  @Need private String hint;
+  @Need private String content;
 
-public class DrawableUtils {
-  public  static Drawable generateBg(float radius, int[] colors){
-    GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,colors);
-    gradientDrawable.setCornerRadius(radius);
-    return gradientDrawable;
-  }
-  public  static Drawable generateCardStatusBg(int color,Context context){
-    Drawable d  =ContextCompat.getDrawable(context, R.drawable.bg_card_stauts).mutate();
-    DrawableCompat.setTint(d,color);
-    return d;
+  public static CommonInputFragment newInstance(String title, String content, String hint) {
+    Bundle args = new Bundle();
+    args.putString("t", title);
+    args.putString("c", content);
+    args.putString("h", hint);
+    CommonInputFragment fragment = new CommonInputFragment();
+    fragment.setArguments(args);
+    return fragment;
   }
 }

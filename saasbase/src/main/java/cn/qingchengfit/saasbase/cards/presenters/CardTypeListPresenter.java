@@ -9,6 +9,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
@@ -24,12 +25,25 @@ public class CardTypeListPresenter extends BasePresenter {
   @Inject QcRestRepository qcRestRepository;
   @Inject LoginStatus loginStatus;
   @Inject ICardModel cardModel;
-
+  @Inject BindCardModel.SelectedData selectedData;
   private MVPView view;
   private List<CardTpl> cardTpls = new ArrayList<>();
   private boolean enable = true;
 
   @Inject public CardTypeListPresenter() {
+  }
+
+  /**
+   * 选择某个卡种类
+   * @param cardTpl 选择某个卡种类
+   */
+  public void chooseOneCardTpl(CardTpl cardTpl){
+    selectedData.cardcategory = cardTpl.type;
+    selectedData.cardtplId = cardTpl.id;
+  }
+
+  public void createCardCate(int cate) {
+    selectedData.cardcategory = cate;
   }
 
   /**
@@ -83,6 +97,7 @@ public class CardTypeListPresenter extends BasePresenter {
           }
         }, new NetWorkThrowable()));
   }
+
 
   public interface MVPView extends CView {
     void onDoneCardtplList();

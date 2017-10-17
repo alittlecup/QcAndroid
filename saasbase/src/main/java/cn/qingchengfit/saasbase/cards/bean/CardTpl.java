@@ -345,6 +345,7 @@ public class CardTpl implements Parcelable {
     dest.writeTypedList(this.options);
   }
 
+
   public static final class Builder {
     private String name;
     private String type_name;

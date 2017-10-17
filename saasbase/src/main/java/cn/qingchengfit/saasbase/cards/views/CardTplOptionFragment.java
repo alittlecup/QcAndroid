@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.utils.CmStringUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -40,7 +41,6 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
   public static CardTplOptionFragment newInstance(CardTplOption option) {
     Bundle args = new Bundle();
     args.putParcelable("option",option);
-    args.putString("id", option.card_tpl.getId());
     CardTplOptionFragment fragment = new CardTplOptionFragment();
     fragment.setArguments(args);
     return fragment;
@@ -48,7 +48,7 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_cardtpl_option_add, container, false);
+    View view = super.onCreateView(inflater,container,savedInstanceState);
     if (view != null && view.findViewById(R.id.btn_del) != null)
       view.findViewById(R.id.btn_del).setVisibility(View.VISIBLE);
     return view;
@@ -57,10 +57,10 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     CardTplOption cardTplOption = getArguments().getParcelable("option");
-    if (cardTplOption != null) {
+    if (cardTplOption != null && !CmStringUtils.isEmpty(cardTplOption.id)) {
       presenter.setOptionId(cardTplOption.id);
-      onDetail(cardTplOption);
     }
+    onDetail(cardTplOption);
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {

@@ -58,20 +58,24 @@ public class CardListFilterFragment extends BaseFilterFragment {
       @Override public void onNext(CardTpl cardTpl) {
         mCardTpl = cardTpl;
         dismiss();
-        if (listener != null)
-          listener.onFilterResult(mCardTpl, mStatus);
+
       }
     });
     RxBusAdd(EventCommonFilter.class).subscribe(new BusSubscribe<EventCommonFilter>() {
       @Override public void onNext(EventCommonFilter eventCommonFilter) {
         mStatus = eventCommonFilter.getPos();
         dismiss();
-        if (listener != null)
-          listener.onFilterResult(mCardTpl, mStatus);
+
       }
     });
 
     return view;
+  }
+
+  @Override public void dismiss() {
+    if (listener != null)
+      listener.onFilterResult(mCardTpl, mStatus);
+    super.dismiss();
   }
 
   @Override protected String[] getTags() {

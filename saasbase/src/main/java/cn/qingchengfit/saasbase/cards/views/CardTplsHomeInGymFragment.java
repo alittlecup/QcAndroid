@@ -69,6 +69,7 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
 
   int childCount = 0;
   protected List<CardTplListFragment> fragmentList = new ArrayList<>();
+  private CardViewpagerAdapter pageAdapter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -85,7 +86,8 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
     delegatePresenter(presenter,this);
     initToolbar(toolbar);
     toolbarTitle.setText(R.string.title_cardtpl_types);
-    viewpager.setAdapter(new CardViewpagerAdapter(getChildFragmentManager()));
+    pageAdapter = new CardViewpagerAdapter(getChildFragmentManager());
+    viewpager.setAdapter(pageAdapter);
     tab.setupWithViewPager(viewpager);
     viewpager.setOffscreenPageLimit(4);
     viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -96,8 +98,7 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
 
       //页面变化
       @Override public void onPageSelected(int position) {
-        cardCount.setText("");// TODO: 2017/8/15 不同页面会员卡数量变化
-        cardDisable.setText("");
+        cardCount.setText(fragmentList.get(position).getItemCount()+"");
       }
 
       @Override public void onPageScrollStateChanged(int state) {
@@ -112,7 +113,13 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
     toolbar.inflateMenu(R.menu.menu_add);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        routeTo("/cardtpl/add/",null);
+        new DialogList(getContext()).list(getResources().getStringArray(R.array.cardtype_category), new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            presenter.createCardCate(position+1);
+            routeTo("/cardtpl/add/",null);
+          }
+        }).show();
         return true;
       }
     });
@@ -139,7 +146,6 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
 
   @OnClick({ R2.id.card_disable,R2.id.card_disable_status})
   public void onClickCardDisable(){
-      //BottomSheetListDialogFragment.start(this, 2, getResources().getStringArray(R.array.cardtype_disable_stauts));
     final String[] status =  getResources().getStringArray(R.array.cardtype_disable_stauts);
     DialogList.builder(getContext())
         .list(status, new AdapterView.OnItemClickListener() {
@@ -170,6 +176,7 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
   @Override public boolean onItemClick(int i) {
     IFlexible item =fragmentList.get(viewpager.getCurrentItem()).getItem(i);
     if (item instanceof CardTplItem){
+      presenter.chooseOneCardTpl(((CardTplItem) item).getCardTpl());
       routeTo("/cardtpl/detail/",null);
     }
     return true;

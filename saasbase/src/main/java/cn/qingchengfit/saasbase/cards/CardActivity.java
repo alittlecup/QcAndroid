@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.routers.Icard;
 import cn.qingchengfit.saasbase.routers.RouterCenter;
 import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.Lazy;
@@ -39,13 +38,11 @@ public class CardActivity extends BaseActivity implements HasSupportFragmentInje
 
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
   @Inject RouterCenter routerCenter;
-  @Inject Icard cardImpl;
   @Inject Lazy<BuyCardRouter> buyCardRouterLazy;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_base_frag);
-    routerCenter.registe(cardImpl);
     onNewIntent(getIntent());
   }
 

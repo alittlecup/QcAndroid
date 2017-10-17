@@ -25,13 +25,12 @@ import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.routers.Ibill;
 import cn.qingchengfit.saasbase.routers.Icard;
 import cn.qingchengfit.saasbase.routers.Istaff;
 import cn.qingchengfit.saasbase.routers.Istudent;
 import cn.qingchengfit.saasbase.routers.RouterCenter;
-import cn.qingchengfit.saasbase.routers.billImpl;
-import cn.qingchengfit.saasbase.routers.cardImpl;
+import cn.qingchengfit.saasbase.routers.commonImpl;
+import cn.qingchengfit.saasbase.routers.courseImpl;
 import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.studentImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
@@ -76,7 +75,7 @@ public class AppModel {
   }
 
   @Provides RouterCenter providerRouterCenter(){
-    return new RouterCenter();
+    return new RouterCenter(new CardRouters(),new commonImpl(),new courseImpl(),new staffImpl(),new studentImpl());
   }
 
   @Provides PosApp provideApplicationContext() {
@@ -112,7 +111,7 @@ public class AppModel {
     return new CardRouters();
   }
 
-  @Provides Ibill providerIBill(){return new billImpl();}
+  //@Provides Ibill providerIBill(){return new billImpl();}
 
   @Provides IStaffModel providerStaffModel(){
     return new StaffModel(qcrestRepository,gymWrapper,loginStatus);

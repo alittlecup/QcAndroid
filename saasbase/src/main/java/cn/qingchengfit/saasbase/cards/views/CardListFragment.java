@@ -9,8 +9,6 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -32,41 +30,40 @@ import java.util.List;
  * Created by Paper on 2017/8/14.
  */
 public class CardListFragment extends BaseListFragment {
-  
+
   @Override public String getFragmentName() {
     return CardListFragment.class.getName();
   }
 
+
+
   @Override protected void addDivider() {
     rv.setBackgroundResource(R.color.transparent);
-    rv.addItemDecoration(new FlexibleItemDecoration(getContext())
-        .addItemViewType(R.layout.item_saas_realcard)
-        .withOffset(10)
-        .withTopEdge(true)
-        .withLeftEdge(true)
-        .withRightEdge(true)
-    );
+    if (srl != null) srl.setBackgroundResource(R.color.transparent);
+    rv.setPadding(15, 0, 15, 0);
+    rv.addItemDecoration(
+      new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_saas_realcard));
   }
 
   @Override protected void setAnimation() {
     super.setAnimation();
   }
 
-  public void setCardtpls(List<Card> list){
+  public void setCardtpls(List<Card> list, int page) {
     stopRefresh();
     if (commonFlexAdapter != null) {
+      if (page == 1) commonFlexAdapter.clear();
       List<IFlexible> datas = new ArrayList<>();
       if (list != null) {
         for (Card cardTpl : list) {
           datas.add(generateItem(cardTpl));
         }
-      }
-      commonFlexAdapter.updateDataSet(datas,true);
+        commonFlexAdapter.onLoadMoreComplete(datas, 500);
+      }else commonFlexAdapter.onLoadMoreComplete(null,500);
     }
   }
 
-
-  protected CardItem generateItem(Card cardTpl){
+  protected CardItem generateItem(Card cardTpl) {
     return new CardItem(cardTpl);
   }
 
@@ -77,5 +74,4 @@ public class CardListFragment extends BaseListFragment {
   @Override public String getNoDataStr() {
     return "暂无会员卡种类";
   }
-
 }

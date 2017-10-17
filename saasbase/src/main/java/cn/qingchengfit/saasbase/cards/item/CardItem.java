@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.cards.item;
 
 import android.animation.Animator;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import cn.qingchengfit.saasbase.SaasConstant;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.DrawableUtils;
-import cn.qingchengfit.widgets.ConnerTag;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.helpers.AnimatorHelper;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -58,15 +56,15 @@ public class CardItem extends AbstractFlexibleItem<CardItem.CardVH> {
 
     if (realCard.is_locked()) {
       holder.imgStatus.setVisibility(View.VISIBLE);
-      holder.imgStatus.setBgColor(ContextCompat.getColor(holder.imgStatus.getContext(), R.color.bg_card_off_day));
+      holder.imgStatus.setBackground(DrawableUtils.generateCardStatusBg(R.color.bg_card_off_day , holder.imgStatus.getContext()));
       holder.imgStatus.setText("请假中");
     } else if (!realCard.is_active()) {
       holder.imgStatus.setVisibility(View.VISIBLE);
-      holder.imgStatus.setBgColor(ContextCompat.getColor(holder.imgStatus.getContext(), R.color.bg_card_stop));
+      holder.imgStatus.setBackground(DrawableUtils.generateCardStatusBg(R.color.bg_card_stop , holder.imgStatus.getContext()));
       holder.imgStatus.setText("已停卡");
     } else if (realCard.isExpired()) {
       holder.imgStatus.setVisibility(View.VISIBLE);
-      holder.imgStatus.setBgColor(ContextCompat.getColor(holder.imgStatus.getContext(), R.color.bg_card_out_of_day));
+      holder.imgStatus.setBackground(DrawableUtils.generateCardStatusBg(R.color.bg_card_out_of_day , holder.imgStatus.getContext()));
       holder.imgStatus.setText("已过期");
       if (realCard.getType() == SaasConstant.CATEGORY_DATE) {
         holder.realcardBalance.setText("已过期" + (-((Float) realCard.getBalance()).intValue()) + "天");
@@ -74,7 +72,7 @@ public class CardItem extends AbstractFlexibleItem<CardItem.CardVH> {
     } else {
       holder.imgStatus.setVisibility(View.GONE);
     }
-    holder.bgCard.setBackground(DrawableUtils.generateBg(8,CardBusinessUtils.getDefaultCardbgColor(realCard.getType())));
+    holder.bgCard.setBackground(DrawableUtils.generateBg(16,CardBusinessUtils.getDefaultCardbgColor(realCard.getType())));
     holder.realcardStudents.setText(realCard.getUsersStr());
   }
 
@@ -89,7 +87,7 @@ public class CardItem extends AbstractFlexibleItem<CardItem.CardVH> {
     @BindView(R2.id.realcard_name) TextView realcardName;
     @BindView(R2.id.realcard_students) TextView realcardStudents;
     @BindView(R2.id.realcard_balance) TextView realcardBalance;
-    @BindView(R2.id.img_stutus) ConnerTag imgStatus;
+    @BindView(R2.id.img_stutus) TextView imgStatus;
     @BindView(R2.id.bg_card) RelativeLayout bgCard;
 
     public CardVH(View view, FlexibleAdapter adapter) {

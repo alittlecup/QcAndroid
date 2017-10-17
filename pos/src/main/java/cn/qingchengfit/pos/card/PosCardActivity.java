@@ -4,7 +4,6 @@ import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.CardActivity;
 import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
 import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
-import cn.qingchengfit.saasbase.cards.views.CardListHomeFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplDetailFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplOptionFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
@@ -35,7 +34,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  */
 @Trunk(fragments = {
     CardTplsHomeInGymFragment.class, CardTplDetailFragment.class, ChooseCardTplForBuyCardFragment.class,
-    PosCardBuyFragment.class, CardListHomeFragment.class, CardFilterTplFragment.class,
+    PosCardBuyFragment.class, PosCardListHomeFragment.class, CardFilterTplFragment.class,
     CardDetailFragment.class, CardtplOptionAddFragment.class, CardTplOptionFragment.class
     , PosCardChargeFragment.class,CardtplAddFragment.class, BindCardModel.class
 })

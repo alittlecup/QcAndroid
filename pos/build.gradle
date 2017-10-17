@@ -44,11 +44,6 @@ dependencies {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
   compile 'com.android.support:multidex:1.0.1'
-  compile 'com.anbillon.flabellum:flabellum:0.1'
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:latest.integration"
-  annotationProcessor "com.anbillon.flabellum:dagger2:latest.integration"
+  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
   testCompile 'junit:junit:4.12'
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:0.2.1"
-  annotationProcessor "com.anbillon.flabellum:dagger2:0.2.1"
-
 }

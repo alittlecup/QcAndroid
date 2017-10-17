@@ -53,41 +53,52 @@ public class CardtplOptionItem
   public void bindViewHolder(FlexibleAdapter adapter, CardtplStandardVH holder, int position,
       List payloads) {
     String unitStr = CardBusinessUtils.getCardTypeCategoryUnit(cardtplType,holder.title.getContext());
-    holder.title.setText(option.charge + unitStr);
-    if (TextUtils.isEmpty(option.price)) {
+    holder.title.setText("售价"+option.price + unitStr);
+    if (TextUtils.isEmpty(option.charge)) {
       holder.realIncome.setVisibility(View.GONE);
     } else {
-      holder.realIncome.setText(option.price + unitStr);
+      holder.realIncome.setText("（储值"+option.charge + unitStr+"）");
       holder.realIncome.setVisibility(View.VISIBLE);
     }
     if (option.days == 0) {
       holder.validDate.setVisibility(View.GONE);
     } else {
       holder.validDate.setVisibility(View.VISIBLE);
-      holder.validDate.setText(option.days+"天");
+      holder.validDate.setText("(有效期"+option.days+"天)");
     }
     //是否支持充卡 和 购卡
-    //if (option.can_charge) {
-    //  holder.supportType.setVisibility(View.GONE);
-    //} else {
-    //  holder.supportType.setVisibility(View.VISIBLE);
-    //  holder.supportType.setText(standard.getSupport_type());
-    //}
+    if (!option.can_charge && !option.can_create) {
+      holder.supportType.setVisibility(View.GONE);
+    } else {
+      holder.supportType.setVisibility(View.VISIBLE);
+      holder.supportType.setText(CardBusinessUtils.supportChargeAndCreate(option.can_charge,option.can_create));
+    }
 
     if (adapter.isSelected(position) ) {
       holder.chosen.setVisibility( View.VISIBLE);
+      int colorPrimary = CompatUtils.getColor(holder.title.getContext(), R.color.colorPrimary);
+      holder.supportType.setTextColor(colorPrimary);
+      holder.realIncome.setTextColor(colorPrimary);
+      holder.validDate.setTextColor(colorPrimary);
+      holder.title.setTextColor(colorPrimary);
+      holder.chargeLayout.setBackgroundResource(R.drawable.bg_rect_corner_primary);
     } else {
       holder.chosen.setVisibility(View.GONE);
-    }
-
-    holder.tagOnlyStaff.setVisibility(option.for_staff ? View.VISIBLE : View.GONE);
-    if (adapter instanceof CommonFlexAdapter && ((CommonFlexAdapter) adapter).getStatus() == 1) {
       int colorgrey = CompatUtils.getColor(holder.title.getContext(), R.color.text_grey);
       holder.supportType.setTextColor(colorgrey);
       holder.realIncome.setTextColor(colorgrey);
       holder.validDate.setTextColor(colorgrey);
       holder.title.setTextColor(colorgrey);
       holder.chargeLayout.setBackgroundResource(R.drawable.shape_bg_rect_grey_corner4);
+    }
+
+    holder.tagOnlyStaff.setVisibility(option.for_staff ? View.VISIBLE : View.GONE);
+
+
+
+
+    if (adapter instanceof CommonFlexAdapter && ((CommonFlexAdapter) adapter).getStatus() == 1) {
+
     }else {
       // TODO: 2017/9/26
     }
