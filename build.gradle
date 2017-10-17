@@ -56,12 +56,10 @@ buildscript {
 
 allprojects {
   repositories {
-    maven() {
-      url uri('../../repo')
+    maven {
+      url 'http://43.241.209.158:15004/repository/maven-releases/'
     }
-    maven() {
-      url uri('../repo')
-    }
+
 //    maven() {
 //      url "http://maven.aliyun.com/nexus/content/groups/public/"
 //    }
