@@ -1,9 +1,15 @@
-package cn.qingchengfit.saasbase.staff;
+package cn.qingchengfit.pos;
 
-import cn.qingchengfit.saasbase.SaasContainerActivity;
-import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
-import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
-import com.anbillon.flabellum.annotations.Trunk;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import cn.qingchengfit.pos.routers.PosRouterCenter;
+import cn.qingchengfit.views.activity.BaseActivity;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -23,16 +29,25 @@ import com.anbillon.flabellum.annotations.Trunk;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/29.
+ * Created by Paper on 2017/10/17.
  */
-@Trunk(fragments = {
-    ChooseSalerFragment.class, ChooseAndSearchStudentFragment.class
-})
-public class StaffActivity extends SaasContainerActivity  {
 
+public class PosBaseActivity extends BaseActivity implements HasSupportFragmentInjector {
+  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+  @Inject PosRouterCenter routerCenter;
 
-  @Override public String getModuleName() {
-    return "staff";
+  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_base_frag);
+    onNewIntent(getIntent());
   }
 
+  @Override protected Fragment getRouterFragment(Intent intent) {
+    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
+  }
+
+
+  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+    return dispatchingFragmentInjector;
+  }
 }

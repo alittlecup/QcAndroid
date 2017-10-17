@@ -1,27 +1,18 @@
 package cn.qingchengfit.pos.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import cn.qingchengfit.pos.PosBaseActivity;
 import cn.qingchengfit.pos.R;
-import cn.qingchengfit.saasbase.routers.RouterCenter;
-import cn.qingchengfit.views.activity.BaseActivity;
 import com.anbillon.flabellum.annotations.Trunk;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
-import javax.inject.Inject;
 
 /**
  * Created by fb on 2017/10/10.
  */
 
 @Trunk(fragments = {LoginFragment.class})
-public class LoginActivity extends BaseActivity implements HasSupportFragmentInjector{
-
-  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-  @Inject RouterCenter routerCenter;
+public class LoginActivity extends PosBaseActivity implements HasSupportFragmentInjector{
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -33,20 +24,9 @@ public class LoginActivity extends BaseActivity implements HasSupportFragmentInj
         .commit();
   }
 
-  @Override protected Fragment getRouterFragment(Intent intent) {
-    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
-  }
 
   @Override public String getModuleName() {
     return "login";
   }
 
-  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-    return dispatchingFragmentInjector;
-  }
-
-  @Override protected boolean preHandle(Intent intent) {
-    //return super.preHandle(intent);
-    return false;
-  }
 }

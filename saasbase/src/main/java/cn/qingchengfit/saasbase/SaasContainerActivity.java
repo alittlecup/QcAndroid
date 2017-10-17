@@ -1,10 +1,10 @@
 package cn.qingchengfit.saasbase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.widget.FrameLayout;
-import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
+import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -34,22 +34,18 @@ import javax.inject.Inject;
 
 public class SaasContainerActivity extends BaseActivity implements HasSupportFragmentInjector {
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-  //@Inject SaasRouter saasRouter;
+  @Inject SaasbaseRouterCenter routerCenter;
+
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    FrameLayout frameLayout = new FrameLayout(this);
-    frameLayout.setId(R.id.frag_saas);
-    setContentView(frameLayout);
-    //saasRouter.init(getIntent().getData());
-    getSupportFragmentManager().beginTransaction()
-        .setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold)
-        .replace(getFragId(),new CardTplsHomeInGymFragment())
-        .commit();
+    setContentView(R.layout.activity_base_frag);
+    onNewIntent(getIntent());
   }
 
-  @Override public int getFragId() {
-    return R.id.frag_saas;
+  @Override protected Fragment getRouterFragment(Intent intent) {
+    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
   }
+
 
   @Override public AndroidInjector<Fragment> supportFragmentInjector() {
     return dispatchingFragmentInjector;

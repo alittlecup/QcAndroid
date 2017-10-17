@@ -1,17 +1,6 @@
 package cn.qingchengfit.saasbase.cards;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.routers.RouterCenter;
-import cn.qingchengfit.views.activity.BaseActivity;
-import dagger.Lazy;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
-import javax.inject.Inject;
+import cn.qingchengfit.saasbase.SaasContainerActivity;
 
 /**
  * power by
@@ -34,36 +23,10 @@ import javax.inject.Inject;
  * Created by Paper on 2017/9/29.
  */
 
-public class CardActivity extends BaseActivity implements HasSupportFragmentInjector {
-
-  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-  @Inject RouterCenter routerCenter;
-  @Inject Lazy<BuyCardRouter> buyCardRouterLazy;
-
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_base_frag);
-    onNewIntent(getIntent());
-  }
-
-  @Override protected Fragment getRouterFragment(Intent intent) {
-    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
-  }
-
-  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-    return dispatchingFragmentInjector;
-  }
+public class CardActivity extends SaasContainerActivity  {
 
   @Override public String getModuleName() {
     return "card";
   }
 
-  @Override protected boolean preHandle(Intent intent) {
-    //if (intent.getData().getPath().equalsIgnoreCase("/buy/")){
-    //  getSupportFragmentManager().beginTransaction()
-    //      .add(buyCardRouterLazy.get(),"buycard").commitAllowingStateLoss();
-    //  return true;
-    //}
-    return false;
-  }
 }
