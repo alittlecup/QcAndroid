@@ -8,6 +8,7 @@ pipeline:
 #      - build
     volumes:
       - /tmp/cache:/cache/
+
   build:
     image: androidci
     workspace:
@@ -18,6 +19,7 @@ pipeline:
       event: pull_request
     commands:
       - agree-license.sh android-sdk-license 8933bad161af4178b1185d1a37fbf41ea5269c55
+      - agree-license.sh android-sdk-preview-license n84831b9409646a918e30573bab4c9c91346d8abd
       - echo 'start'
       - ./gradlew -g gradle_cache assembleDevDebug --no-daemon
       - fir publish staff/build/outputs/apk/staff-dev-debug.apk -T $DEBUG
@@ -32,6 +34,7 @@ pipeline:
       branch: develop
     commands:
       - agree-license.sh android-sdk-license 8933bad161af4178b1185d1a37fbf41ea5269c55
+      - agree-license.sh android-sdk-preview-license n84831b9409646a918e30573bab4c9c91346d8abd
       - ./gradlew -g gradle_cache assembleProductRelease --no-daemon
       - fir publish staff/build/outputs/apk/staff-product-release.apk -T $PRO
       - fir publish trainer/build/outputs/apk/trainer-product-release.apk -T $PRO
@@ -43,11 +46,3 @@ pipeline:
       - gradle_cache
 #      - build
     volumes:
-
-  before_install:
-    - mkdir "$ANDROID_HOME/licenses" || true
-    - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-    - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
-  licenses:
-    - android-sdk-license-.+
-    - '.+'
