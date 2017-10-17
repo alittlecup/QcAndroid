@@ -21,6 +21,8 @@ import cn.qingchengfit.pos.login.model.Gym;
 import cn.qingchengfit.pos.login.model.LoginBody;
 import cn.qingchengfit.pos.login.presenter.LoginPresenter;
 import cn.qingchengfit.pos.main.MainActivity;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 import java.lang.ref.WeakReference;
@@ -46,23 +48,32 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_login, container, false);
+    delegatePresenter(presenter, this);
     unbinder = ButterKnife.bind(this, view);
     tvGetCode = (TextView) view.findViewById(R.id.btn_get_code);
     handler = new InternalHandler(getContext());
+    presenter.qcGetGym("");   //TODO IMEI
     return view;
   }
 
   @OnClick(R.id.btn_get_code)
   public void getCode(){
-    handler.sendEmptyMessage(0);
+    if (!TextUtils.isEmpty(editLoginPhone.getText()) && AppUtils.isMobiPhoneNum(editLoginPhone.getText().toString())){
+      presenter.qcGetCode(editLoginPhone.getText().toString());
+    }else{
+      DialogUtils.showAlert(getContext(), getResources().getString(R.string.tips_phone_not_correct));
+    }
   }
 
   @OnClick(R.id.login_btn)
   public void onLogin(){
-    if (!TextUtils.isEmpty(editLoginPhone.getText()) && !TextUtils.isEmpty(
-        editLoginAuthCode.getText())) {
+    if (!TextUtils.isEmpty(editLoginPhone.getText())) {
       presenter.qcLogin(new LoginBody(editLoginPhone.getText().toString(),
           editLoginAuthCode.getText().toString(), "+86"));
+      Intent intent = new Intent(getActivity(), MainActivity.class);
+      getContext().startActivity(intent);
+    }else{
+      DialogUtils.showAlert(getContext(), getResources().getString(R.string.tips_phone_not_correct));
     }
   }
 
@@ -71,7 +82,7 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   }
 
   @Override public void onGetGym(Gym gym) {
-
+    tvLoginGymName.setText(gym.brand_name + gym.name);
   }
 
   @Override public void onSuccess() {
@@ -86,7 +97,7 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   }
 
   @Override public void onGetCodeSuccess() {
-
+    handler.sendEmptyMessage(0);
   }
 
   private class InternalHandler extends Handler {

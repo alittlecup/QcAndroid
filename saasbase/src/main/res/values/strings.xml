@@ -5,6 +5,10 @@
   <string name="oem_tag">@string/oem</string>
   <string name="oem">staff-test</string>
 
+  <!--通用-->
+  <string name="confirm">确定</string>
+  <string name="reset">重置</string>
+
   <!--菜单相关-->
   <string name="edit">编辑</string>
 
@@ -50,5 +54,26 @@
   <string name="unit_time">次</string>
   <string name="unit_day">天</string>
   <string name="pay_money" formatted="false">￥%s</string>
+
+  <!--账单-->
+  <string name="bill_head_total_amount">总金额(元)</string>
+  <string name="bill_withdraw">提现中</string>
+  <string name="bill_can_withdraw">可提现</string>
+  <string name="bill_settlement">待结算</string>
+  <string name="bill_back_crash">退款中</string>
+  <string name="bill_already_settlement">已结算</string>
+  <string name="bill_title">账单流水纪录(POS)</string>
+  <string name="bill_filter">筛选</string>
+  <string formatted="false" name="bill_total_crash">提现: %s</string>
+  <string formatted="false" name="bill_total_income">收入: %s</string>
+  <string formatted="false" name="bill_operator">操作人: </string>
+  <string name="bill_filter_card">会员卡购卡</string>
+  <string name="bill_filter_recharge">充值</string>
+  <string name="bill_filter_cashier">收银</string>
+  <string name="bill_pos_no">POS机编号</string>
+  <string name="bill_setting_cashier">收银员</string>
+  <string name="bill_setting_gym_detail_logo">场馆Logo</string>
+  <string name="bill_setting_gym_detail_name">场馆名称</string>
+  <string name="bill_setting_gym_detail_no">商户编号</string>
 
 </resources>

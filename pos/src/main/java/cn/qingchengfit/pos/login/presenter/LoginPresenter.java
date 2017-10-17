@@ -56,6 +56,7 @@ public class LoginPresenter extends BasePresenter {
     HashMap<String, Object> params = new HashMap<>();
     params.put("phone", phone);
     params.put("gym_id", gymWrapper.id());
+    params.put("area_code", "+86");
     qcRestRepository.createPostApi(PosApi.class)
         .qcGetCode(params)
         .subscribe(new Action1<QcDataResponse>() {

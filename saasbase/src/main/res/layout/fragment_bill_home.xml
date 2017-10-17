@@ -162,6 +162,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/bill_title"
+            style="@style/QcTextStyleMediumWarm"
             />
 
         <android.support.v4.widget.Space
@@ -177,6 +178,7 @@
             android:drawablePadding="3dp"
             android:drawableRight="@drawable/vd_order_filter"
             android:text="@string/bill_filter"
+            android:textColor="@color/white"
             />
 
       </LinearLayout>
@@ -239,6 +241,8 @@
       android:layout_height="match_parent"
       android:layout_gravity="end"
       android:orientation="vertical"
+      android:fitsSystemWindows="true"
+      android:background="#e211"
       />
 
 </android.support.v4.widget.DrawerLayout>

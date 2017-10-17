@@ -1,4 +1,4 @@
-package cn.qingchengfit.pos.bill.filter;
+package cn.qingchengfit.saasbase.bill.filter;
 
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;

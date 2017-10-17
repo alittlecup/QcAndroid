@@ -34,6 +34,7 @@
       android:layout_marginTop="30dp"/>
 
   <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_bill_business_type"
       android:layout_width="match_parent"
       android:layout_height="40dp"
       app:civ_showdivier="false"

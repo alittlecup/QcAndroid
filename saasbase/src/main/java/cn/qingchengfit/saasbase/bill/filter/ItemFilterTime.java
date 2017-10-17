@@ -1,4 +1,4 @@
-package cn.qingchengfit.pos.bill.filter;
+package cn.qingchengfit.saasbase.bill.filter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,7 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.pos.R;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.utils.DateUtils;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -93,9 +94,9 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
 
   class ItemFilterTimeVH extends FlexibleViewHolder {
 
-    @BindView(R.id.bill_filter_title) TextView billFilterTitle;
-    @BindView(R.id.tv_student_filter_time_start) TextView tvStudentFilterTimeStart;
-    @BindView(R.id.tv_student_filter_time_end) TextView tvStudentFilterTimeEnd;
+    @BindView(R2.id.bill_filter_title) TextView billFilterTitle;
+    @BindView(R2.id.tv_student_filter_time_start) TextView tvStudentFilterTimeStart;
+    @BindView(R2.id.tv_student_filter_time_end) TextView tvStudentFilterTimeEnd;
 
     public ItemFilterTimeVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
