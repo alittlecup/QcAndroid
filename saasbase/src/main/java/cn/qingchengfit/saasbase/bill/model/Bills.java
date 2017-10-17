@@ -1,4 +1,4 @@
-package cn.qingchengfit.pos.bill.model;
+package cn.qingchengfit.saasbase.bill.model;
 
 import java.util.List;
 

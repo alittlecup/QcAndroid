@@ -1,4 +1,4 @@
-package cn.qingchengfit.pos.bill;
+package cn.qingchengfit.saasbase.bill;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,8 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.pos.R;
-import cn.qingchengfit.pos.bill.model.Bill;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.bill.model.Bill;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -49,13 +50,13 @@ public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
 
   class ItemBillVH extends FlexibleViewHolder{
 
-    @BindView(R.id.tv_time) TextView tvTime;
-    @BindView(R.id.tv_operator) TextView tvOperator;
-    @BindView(R.id.img_bill) ImageView imgBill;
-    @BindView(R.id.tv_item_bill_name) TextView tvItemBillName;
-    @BindView(R.id.tv_item_bill_action) TextView tvItemBillAction;
-    @BindView(R.id.tv_item_bill_account) TextView tvItemBillAccount;
-    @BindView(R.id.tv_item_bill_status) TextView tvItemBillStatus;
+    @BindView(R2.id.tv_time) TextView tvTime;
+    @BindView(R2.id.tv_operator) TextView tvOperator;
+    @BindView(R2.id.img_bill) ImageView imgBill;
+    @BindView(R2.id.tv_item_bill_name) TextView tvItemBillName;
+    @BindView(R2.id.tv_item_bill_action) TextView tvItemBillAction;
+    @BindView(R2.id.tv_item_bill_account) TextView tvItemBillAccount;
+    @BindView(R2.id.tv_item_bill_status) TextView tvItemBillStatus;
 
     public ItemBillVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

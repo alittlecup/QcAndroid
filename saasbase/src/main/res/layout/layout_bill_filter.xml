@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ee1"
+    android:orientation="vertical"
+    android:paddingBottom="12dp"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    android:paddingBottom="12dp"
-    android:background="#ee1">
-  
+    >
+
   <android.support.v7.widget.RecyclerView
       android:id="@+id/recycler_bill_filter"
       android:layout_width="match_parent"
@@ -21,35 +22,34 @@
       android:layout_height="0dp"
       android:layout_weight="1"
       />
-  
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center_horizontal"
       >
-    
+
     <TextView
         android:id="@+id/btn_bill_filter_reset"
         android:layout_width="120dp"
         android:layout_height="45dp"
-        android:text="重置"
         android:background="@drawable/bg_rect_corner_primary"
         android:gravity="center"
-        android:textSize="15sp"
+        android:text="重置"
         android:textColor="@color/colorPrimary"
+        android:textSize="15sp"
         />
 
     <TextView
         android:id="@+id/btn_bill_filter_confirm"
         android:layout_width="120dp"
         android:layout_height="45dp"
-        android:text="重置"
+        android:layout_marginLeft="12dp"
         android:background="@drawable/btn_prime"
         android:gravity="center"
-        android:textSize="15sp"
+        android:text="@string/confirm"
         android:textColor="@color/white"
-        android:layout_marginLeft="12dp"
+        android:textSize="15sp"
         />
-    
   </LinearLayout>
-  </LinearLayout>
+</LinearLayout>

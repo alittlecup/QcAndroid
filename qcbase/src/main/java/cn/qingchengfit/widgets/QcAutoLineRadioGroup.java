@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import cn.qingchengfit.utils.MeasureUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * power by
@@ -43,6 +45,7 @@ public class QcAutoLineRadioGroup extends LinearLayout
   private int mVerticalSpacing;
   private CheckedChange checkedChange;
   public boolean isSingleSelected;
+  private OnCheckoutPositionListener onCheckoutPositionListener;
 
   public QcAutoLineRadioGroup(Context context) {
     super(context);
@@ -119,6 +122,10 @@ public class QcAutoLineRadioGroup extends LinearLayout
     }
   }
 
+  public void setOnCheckoutPositionListener(OnCheckoutPositionListener onCheckoutPositionListener) {
+    this.onCheckoutPositionListener = onCheckoutPositionListener;
+  }
+
   @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
     if (getChildCount() > 0) {
       if (isSingleSelected) {
@@ -130,7 +137,24 @@ public class QcAutoLineRadioGroup extends LinearLayout
         }
       }
     }
+    if (onCheckoutPositionListener != null){
+      onCheckoutPositionListener.onCheckPosition(getCheckedPosList());
+    }
     if (checkedChange != null) checkedChange.onCheckedChange();
+  }
+
+  //多选情况下获取选中的position
+  public List<Integer> getCheckedPosList(){
+    List<Integer> checkedList = new ArrayList<>();
+    if (getChildCount() > 0){
+      for (int i = 0; i < getChildCount(); i++) {
+        View v = getChildAt(i);
+        if (v instanceof QcCheckable && ((QcCheckable) v).isChecked()) {
+          checkedList.add(i);
+        }
+      }
+    }
+    return checkedList;
   }
 
   /**
@@ -183,4 +207,9 @@ public class QcAutoLineRadioGroup extends LinearLayout
   public interface CheckedChange {
     void onCheckedChange();
   }
+
+  public interface OnCheckoutPositionListener{
+    void onCheckPosition(List<Integer> checkedList);
+  }
+
 }

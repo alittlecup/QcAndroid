@@ -58,14 +58,14 @@
       </intent-filter>
     </activity>
 
-    <activity android:name=".main.MainActivity">
+    <activity android:name=".login.LoginActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
 
-    <activity android:name=".bill.BillActivity">
+    <activity android:name="cn.qingchengfit.saasbase.bill.BillActivity">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
 
@@ -78,6 +78,8 @@
             />
       </intent-filter>
     </activity>
+
+    <activity android:name=".main.MainActivity"/>
 
   </application>
 
