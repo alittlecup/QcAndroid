@@ -54,7 +54,7 @@ public class AddCardtplStandardPresenter extends BasePresenter {
     try {
       this.ob.days = Integer.parseInt(days);
     } catch (Exception e) {
-      this.ob.days = -1;
+      this.ob.days = 0;
     }
   }
 

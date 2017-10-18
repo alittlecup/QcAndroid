@@ -173,9 +173,6 @@ public interface PosApi {
   @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse<PayBusinessResponse>> qcCreateRealcard(@Path("id") String staffid,
       @Body CardBuyBody body, @QueryMap HashMap<String, Object> params);
 
-  //获取销售 卖卡  包含销售和教练
-  @GET("/api/staffs/{staff_id}/sellers/") rx.Observable<QcDataResponse<SalerListWrap>> qcGetSalers(@Path("staff_id") String staff_id,
-      @QueryMap HashMap<String, Object> params);
 
   /**
    * 新增会员

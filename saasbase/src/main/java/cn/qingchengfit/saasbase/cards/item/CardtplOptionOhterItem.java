@@ -10,6 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.utils.CompatUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -34,6 +35,11 @@ public class CardtplOptionOhterItem
   public void bindViewHolder(FlexibleAdapter adapter, CardtplOptionOhterVH holder, int position,
       List payloads) {
     holder.chosen.setVisibility(adapter.isSelected(position)?View.VISIBLE:View.GONE);
+    int colorPrimary = CompatUtils.getColor(holder.title.getContext(), R.color.text_color_gray);
+    holder.realIncome.setTextColor(colorPrimary);
+    holder.validDate.setTextColor(colorPrimary);
+    holder.title.setTextColor(colorPrimary);
+    holder.chargeLayout.setBackgroundResource(R.drawable.bg_rect_corner_primary);
   }
 
   @Override public boolean equals(Object o) {

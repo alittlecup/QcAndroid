@@ -105,6 +105,9 @@ public class BaseActivity extends AppCompatActivity {
   boolean hasFrag = false;
   @Override protected void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
+    if (intent != null && intent.getData() != null)
+      LogUtil.d("router",intent.getData().toString());
+
     if (preHandle(intent)) return;
     FragmentTransaction tr = getSupportFragmentManager().beginTransaction();
     if (hasFrag)

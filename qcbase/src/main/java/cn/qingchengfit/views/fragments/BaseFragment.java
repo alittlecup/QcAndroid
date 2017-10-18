@@ -394,6 +394,19 @@ public abstract class BaseFragment extends Fragment
   /**
    * 跳转当前模块
    */
+  protected void routeTo(String model,String path, Bundle bd) {
+    String uri = model+path;
+    if (!uri.startsWith("/")) uri = "/" + uri;
+    if (getActivity() instanceof BaseActivity) {
+      routeTo(AppUtils.getRouterUri(getContext(),uri), bd);
+    }
+  }
+
+  /**
+   * 跳转到其他模块
+   * @param uri
+   * @param bd
+   */
   protected void routeTo(String uri, Bundle bd) {
     if (!uri.startsWith("/")) uri = "/" + uri;
     if (getActivity() instanceof BaseActivity) {
@@ -443,7 +456,8 @@ public abstract class BaseFragment extends Fragment
   }
 
   @Override public void popBack() {
-    getFragmentManager().popBackStackImmediate();
+    if (!getFragmentManager().popBackStackImmediate())
+      getActivity().finish();
   }
 
   @Override public void onShowError(@StringRes int e) {

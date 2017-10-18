@@ -44,7 +44,7 @@
       </intent-filter>
     </activity>
 
-    <activity android:name="cn.qingchengfit.saasbase.staff.StaffActivity"
+    <activity android:name=".staff.PosStaffActivity"
               android:taskAffinity="com.rongcapital.pos"
         >
       <intent-filter>
@@ -100,6 +100,19 @@
 
         <data
             android:host="bill"
+            android:scheme="qcpos"
+            />
+      </intent-filter>
+    </activity>
+    <activity android:name="cn.qingchengfit.saasbase.common.views.SaasCommonActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="common"
             android:scheme="qcpos"
             />
       </intent-filter>

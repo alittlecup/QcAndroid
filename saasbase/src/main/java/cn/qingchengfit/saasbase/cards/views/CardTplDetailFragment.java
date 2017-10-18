@@ -141,7 +141,11 @@ import javax.inject.Inject;
           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (position == 0) {//编辑
               presenter.editCardTpl();
-              routeTo("/cardtpl/edit/", null);
+              Bundle bd = new Bundle();
+              bd.putString("title","修改会员开种类名称");
+              bd.putString("hint",presenter.getCardName());
+              bd.putString("content",presenter.getCardName());
+              routeTo("common","/input/", bd);
             } else if (position == 1) {
               if (presenter.isCardTplEnable()) {
                 alertDisableCardtpl();

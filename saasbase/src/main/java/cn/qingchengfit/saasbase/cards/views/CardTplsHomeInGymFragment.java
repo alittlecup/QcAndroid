@@ -161,6 +161,9 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
    * 获取后端数据完成
    */
   @Override public void onDoneCardtplList() {
+    if (viewpager.getCurrentItem() == 0){
+      cardCount.setText(presenter.getCardTplByType(0).size()+"");
+    }
     int i = 0;
     for (CardTplListFragment fragment : fragmentList) {
       fragment.setCardtpls(presenter.getCardTplByType(i));

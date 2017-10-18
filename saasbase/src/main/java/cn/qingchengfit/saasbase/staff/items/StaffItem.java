@@ -15,10 +15,11 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFilterable;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> {
+public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implements IFilterable{
 
   Staff staff;
 
@@ -45,11 +46,27 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> {
     holder.itemStudentName.setText(staff.getUsername());
     holder.itemStudentPhonenum.setText(staff.getPhone());
     holder.itemStudentGender.setImageResource(staff.gender == 0 ?R.drawable.ic_gender_signal_male:R.drawable.ic_gender_signal_female);
-    holder.iconRight.setVisibility(View.GONE);
   }
 
+
+
   @Override public boolean equals(Object o) {
-    return false;
+
+    if (o instanceof StaffItem){
+      Staff tmp = ((StaffItem) o).getStaff();
+      if (tmp == null || tmp.id == null)
+        return false;
+      return tmp.id.equalsIgnoreCase(staff.getId());
+    }else return false;
+
+  }
+
+  @Override public boolean filter(String constraint) {
+    if (staff == null || staff.phone == null || staff.username == null)
+      return false;
+    else {
+      return staff.username.contains(constraint) || staff.phone.contains(constraint);
+    }
   }
 
   public class StaffVH extends FlexibleViewHolder {

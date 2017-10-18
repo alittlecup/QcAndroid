@@ -1,11 +1,22 @@
 package cn.qingchengfit.saasbase.staff.views;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.staff.di.StaffSelectData;
+import cn.qingchengfit.saasbase.staff.items.StaffItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import com.anbillon.flabellum.annotations.Leaf;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -30,10 +41,29 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/10/18.
  */
-@Leaf(module = "staff", path = "/saler/list/")
-public class SalersListFragment extends BaseStaffListFragment {
+@Leaf(module = "staff", path = "/saler/list/") public class SalersListFragment
+  extends BaseStaffListFragment {
 
   @Inject IStaffModel staffModel;
+  @Inject StaffSelectData staffSelectData;
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    Bundle savedInstanceState) {
+    staffSelectData.staff = null;
+    return super.onCreateView(inflater, container, savedInstanceState);
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbar.getMenu().clear();
+    toolbar.inflateMenu(R.menu.menu_add);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        routeTo("/add/", null);
+        return true;
+      }
+    });
+  }
 
   @Override void initData() {
     RxRegiste(staffModel.getSalers()
@@ -56,7 +86,12 @@ public class SalersListFragment extends BaseStaffListFragment {
   }
 
   @Override public boolean onItemClick(int position) {
-    routeTo("/saler/detail/",null);
+    IFlexible iFlexible = commonFlexAdapter.getItem(position);
+    if (iFlexible instanceof StaffItem) {
+      staffSelectData.staff = ((StaffItem) iFlexible).getStaff();
+      routeTo("/detail/", null);
+    }
+
     return true;
   }
 }

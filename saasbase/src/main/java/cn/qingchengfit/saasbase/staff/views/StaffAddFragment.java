@@ -1,12 +1,11 @@
-package cn.qingchengfit.saasbase.common.views;
+package cn.qingchengfit.saasbase.staff.views;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import cn.qingchengfit.RxBus;
-import cn.qingchengfit.events.EventTxT;
-import cn.qingchengfit.views.fragments.CommonInputTextFragment;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import com.anbillon.flabellum.annotations.Leaf;
-import com.anbillon.flabellum.annotations.Need;
 
 /**
  * power by
@@ -26,30 +25,18 @@ import com.anbillon.flabellum.annotations.Need;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/10/18.
  */
-@Leaf(module = "common", path = "/input/") public class CommonInputFragment
-  extends CommonInputTextFragment {
-  @Need private String title;
-  @Need private String hint;
-  @Need private String content;
+@Leaf(module = "staff",path = "/add/")
+public class StaffAddFragment extends StaffDetailFragment {
 
-  public static CommonInputFragment newInstance(String hint, String content, String title) {
-    Bundle args = new Bundle();
-    args.putString("t", title);
-    args.putString("c", content);
-    args.putString("h", hint);
-    CommonInputFragment fragment = new CommonInputFragment();
-    fragment.setArguments(args);
-    return fragment;
+
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    @Nullable Bundle savedInstanceState) {
+    View v = super.onCreateView(inflater, container, savedInstanceState);
+    btnDel.setVisibility(View.GONE);
+    return v;
   }
 
-  @Override public void onBtnClicked() {
-    if (TextUtils.isEmpty(et.getText())) {
-      onShowError("请填写修改内容");
-      return;
-    }
-    RxBus.getBus().post(new EventTxT.Builder().txt(et.getText().toString().trim()).build());
-    popBack();
-  }
 }

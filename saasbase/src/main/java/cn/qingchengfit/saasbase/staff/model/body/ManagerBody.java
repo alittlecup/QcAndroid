@@ -1,5 +1,9 @@
 package cn.qingchengfit.saasbase.staff.model.body;
 
+import android.support.annotation.StringRes;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.utils.CmStringUtils;
+
 /**
  * power by
  * <p>
@@ -23,8 +27,23 @@ public class ManagerBody {
     private String position_id;
     private String area_code;
 
+
     public ManagerBody() {
     }
+
+
+    @StringRes
+    public int checkDataInPos(){
+        if (CmStringUtils.isEmpty(username))
+            return R.string.e_student_username;
+        if (CmStringUtils.isEmpty(position_id))
+            return R.string.e_staff_position;
+        return 0;
+    }
+
+
+
+
 
     private ManagerBody(Builder builder) {
         setId(builder.id);

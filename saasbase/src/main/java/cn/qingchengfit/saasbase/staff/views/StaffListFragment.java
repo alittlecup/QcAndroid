@@ -119,10 +119,10 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     recyclerview.setAdapter(adatper);
     adatper.setListener(new OnRecycleItemClickListener() {
       @Override public void onItemClick(View v, int pos) {
-        getFragmentManager().beginTransaction()
-            .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(datas.get(pos), staffId))
-            .addToBackStack(null)
-            .commit();
+        //getFragmentManager().beginTransaction()
+        //    .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(datas.get(pos), staffId))
+        //    .addToBackStack(null)
+        //    .commit();
       }
     });
     presenter.querSelfInfo(staffId);
@@ -215,10 +215,10 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
       return;
     }
 
-    getFragmentManager().beginTransaction()
-        .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(null, staffId))
-        .addToBackStack(null)
-        .commit();
+    //getFragmentManager().beginTransaction()
+    //    .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(null, staffId))
+    //    .addToBackStack(null)
+    //    .commit();
   }
 
   @Override public String getFragmentName() {

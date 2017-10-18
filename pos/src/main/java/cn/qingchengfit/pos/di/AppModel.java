@@ -7,10 +7,12 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.pos.PosApp;
 import cn.qingchengfit.pos.models.CardModel;
+import cn.qingchengfit.pos.models.PosDbModel;
 import cn.qingchengfit.pos.models.StaffModel;
 import cn.qingchengfit.pos.models.StudentModel;
 import cn.qingchengfit.pos.routers.CardRouters;
 import cn.qingchengfit.pos.routers.PosRouterCenter;
+import cn.qingchengfit.pos.routers.StaffRouters;
 import cn.qingchengfit.pos.routers.exchangeImpl;
 import cn.qingchengfit.pos.routers.settingImpl;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
@@ -25,17 +27,15 @@ import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseSchedul
 import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
 import cn.qingchengfit.saasbase.course.batch.network.response.SingleBatchWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.routers.Icard;
-import cn.qingchengfit.saasbase.routers.Istaff;
 import cn.qingchengfit.saasbase.routers.Istudent;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.billImpl;
 import cn.qingchengfit.saasbase.routers.commonImpl;
 import cn.qingchengfit.saasbase.routers.courseImpl;
-import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.studentImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import dagger.Module;
@@ -79,7 +79,7 @@ public class AppModel {
   }
 
   @Provides SaasbaseRouterCenter providerRouterCenter(){
-    return new SaasbaseRouterCenter(new billImpl(),new CardRouters(),new commonImpl(),new courseImpl(),new staffImpl(),new studentImpl());
+    return new SaasbaseRouterCenter(new billImpl(),new CardRouters(),new commonImpl(),new courseImpl(),new StaffRouters(),new studentImpl());
   }
   @Provides PosRouterCenter providerPosRouterCenter(){
     return new PosRouterCenter(new exchangeImpl(),new settingImpl());
@@ -110,18 +110,15 @@ public class AppModel {
   @Provides ICardModel providerCardModel() {
     return new CardModel(qcrestRepository,gymWrapper,loginStatus);
   }
-  @Provides Istaff prividerStaffRouter(){
-    return new staffImpl();
-  }
 
-  @Provides Icard providerICards(){
-    return new CardRouters();
-  }
 
-  //@Provides Ibill providerIBill(){return new billImpl();}
 
   @Provides IStaffModel providerStaffModel(){
     return new StaffModel(qcrestRepository,gymWrapper,loginStatus);
+  }
+
+  @Provides QcDbManager providerDb(){
+    return new PosDbModel();
   }
 
 

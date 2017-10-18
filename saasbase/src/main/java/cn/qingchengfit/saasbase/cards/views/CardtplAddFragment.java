@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.DrawableUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import javax.inject.Inject;
 
@@ -42,6 +44,7 @@ import javax.inject.Inject;
 @Leaf(module = "card",path = "/cardtpl/add/")
 public class CardtplAddFragment extends CardTplDetailFragment {
   @Inject BindCardModel.SelectedData selectedData;
+  @Inject GymWrapper gymWrapper;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -92,9 +95,18 @@ public class CardtplAddFragment extends CardTplDetailFragment {
             comonAdapter.addItem(0,new CardtplOptionItem(CardBusinessUtils.optionBody2Option(optionBody),selectedData.cardcategory));
           }
         });
+    initCardTpl();
     return view;
   }
 
+  /**
+   * 填写一些基础信息
+   */
+  private void initCardTpl(){
+    tvCardTplType.setText(CardBusinessUtils.getCardTypeCategoryStrHead(selectedData.cardcategory,getContext()));
+    tvGymName.setText(gymWrapper.name());
+    cardview.setBackground(DrawableUtils.generateBg(8,CardBusinessUtils.getDefaultCardbgColor(selectedData.cardcategory)));
+  }
 
 
 }

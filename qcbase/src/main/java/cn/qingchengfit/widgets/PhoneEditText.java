@@ -24,6 +24,7 @@ public class PhoneEditText extends LinearLayout implements View.OnClickListener,
     private TextView mDistrict;
     private DialogList mDialog;
     private boolean showIcon = true;
+    private boolean onlyMainland = false;
     //0: china
     //1: china taiwan
     private int mDistrictInt = 0;
@@ -72,6 +73,7 @@ public class PhoneEditText extends LinearLayout implements View.OnClickListener,
         showIcon = a.getBoolean(R.styleable.PhoneEditText_phone_show_icon, true);
         noNull = a.getBoolean(R.styleable.PhoneEditText_phone_nonull,false);
         hintStr = a.getString(R.styleable.PhoneEditText_phone_hint);
+        onlyMainland = a.getBoolean(R.styleable.PhoneEditText_phone_only_mainland,false);
         a.recycle();
 
         if (isInEditMode()) {
@@ -91,16 +93,24 @@ public class PhoneEditText extends LinearLayout implements View.OnClickListener,
             mPhoneNum.setHint(hintStr);
         noNullTv = (TextView) findViewById(R.id.nonull_tv);
         noNullTv.setVisibility(noNull?VISIBLE:GONE);
-        findViewById(R.id.img_down).setOnClickListener(this);
-        mDistrict.setOnClickListener(this);
-        mLeftIcon.setVisibility(showIcon ? VISIBLE : GONE);
-        mPhoneNum.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override public void onFocusChange(View v, boolean hasFocus) {
-                if (onEditFocusListener != null) {
-                    onEditFocusListener.onFocusChange(hasFocus);
+
+        if (onlyMainland){
+            mLeftIcon.setVisibility(GONE);
+            mDistrict.setText("手机号");
+            findViewById(R.id.img_down).setVisibility(GONE);
+            findViewById(R.id.img_divier).setVisibility(GONE);
+        }else {
+            findViewById(R.id.img_down).setOnClickListener(this);
+            mDistrict.setOnClickListener(this);
+            mLeftIcon.setVisibility(showIcon ? VISIBLE : GONE);
+            mPhoneNum.setOnFocusChangeListener(new OnFocusChangeListener() {
+                @Override public void onFocusChange(View v, boolean hasFocus) {
+                    if (onEditFocusListener != null) {
+                        onEditFocusListener.onFocusChange(hasFocus);
+                    }
                 }
-            }
-        });
+            });
+        }
 
     }
 

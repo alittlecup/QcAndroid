@@ -2,15 +2,21 @@ package cn.qingchengfit.saasbase.staff.presenter;
 
 import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.base.StaffPosition;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.staff.model.QcResponsePostions;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.staff.di.StaffSelectData;
+import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
+import cn.qingchengfit.subscribes.NetSubscribe;
+import java.util.List;
 import javax.inject.Inject;
-import rx.functions.Action1;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -27,89 +33,120 @@ import rx.functions.Action1;
  */
 public class StaffDetailPresenter extends BasePresenter {
 
-    @Inject LoginStatus loginStatus;
-    @Inject GymWrapper gymWrapper;
-    private StaffDetailView view;
-    private CoachUseCase useCase;
+  @Inject LoginStatus loginStatus;
+  @Inject IStaffModel staffModel;
+  @Inject StaffSelectData staffSelectData;
+  private ManagerBody body;
+  private MVPView view;
 
-    @Inject public StaffDetailPresenter(CoachUseCase useCase) {
-        this.useCase = useCase;
-    }
+  @Inject public StaffDetailPresenter() {
+  }
 
-    @Override public void onStart() {
-        super.onStart();
-    }
+  @Override public void onStart() {
+    super.onStart();
+  }
 
-    @Override public void onStop() {
-        super.onStop();
-    }
+  @Override public void onStop() {
+    super.onStop();
+  }
 
-    @Override public void onPause() {
-        super.onPause();
-    }
+  @Override public void onPause() {
+    super.onPause();
+  }
 
-    @Override public void attachView(PView v) {
-        view = (StaffDetailView) v;
-    }
+  @Override public void attachView(PView v) {
+    view = (MVPView) v;
+    if (staffSelectData.staff != null)
+      view.onStaff(staffSelectData.staff);
+  }
 
-    @Override public void attachIncomingIntent(Intent intent) {
-        super.attachIncomingIntent(intent);
-    }
+  @Override public void attachIncomingIntent(Intent intent) {
+    super.attachIncomingIntent(intent);
+  }
 
-    @Override public void onCreate() {
-        super.onCreate();
-    }
+  @Override public void onCreate() {
+    super.onCreate();
+  }
 
-    @Override public void unattachView() {
-        super.unattachView();
-        view = null;
-    }
+  @Override public void unattachView() {
+    super.unattachView();
+    view = null;
+  }
 
-    public void onFixStaff(String staffId, ManagerBody body) {
-        RxRegiste(useCase.updateManager(staffId, gymWrapper.id(), gymWrapper.model(), body, new Action1<QcResponse>() {
-            @Override public void call(QcResponse qcResponse) {
-                if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onFixSuccess();
-                } else {
-                    view.onFailed(qcResponse.getMsg());
-                }
+  public void editStaff() {
+    int ret = body.checkDataInPos();
+    if (ret > 0) {
+      view.showAlert(ret);
+    } else {
+      RxRegiste(staffModel.editStaff(staffSelectData.staff.id ,body)
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse>() {
+          @Override public void onNext(QcDataResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              view.onShowError("修改成功！");
+              view.popBack();
+            } else {
+              view.onShowError(qcResponse.getMsg());
             }
+          }
         }));
     }
+  }
 
-    public void onAddStaff(String staffId, ManagerBody body) {
-        RxRegiste(useCase.createManager(staffId, gymWrapper.id(), gymWrapper.model(), body, new Action1<QcResponse>() {
-            @Override public void call(QcResponse qcResponse) {
-                if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onAddSuccess();
-                } else {
-                    view.onFailed(qcResponse.getMsg());
-                }
+  public void addStaff() {
+    int ret = body.checkDataInPos();
+    if (ret > 0) {
+      view.showAlert(ret);
+    } else {
+      RxRegiste(staffModel.addStaff(body)
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse>() {
+          @Override public void onNext(QcDataResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              view.onShowError("添加成功！");
+              view.popBack();
+            } else {
+              view.onShowError(qcResponse.getMsg());
             }
+          }
         }));
     }
+  }
 
-    public void onDelStaff(String staffId, String id) {
-        RxRegiste(useCase.delManager(staffId, gymWrapper.id(), gymWrapper.model(), id, new Action1<QcResponse>() {
-            @Override public void call(QcResponse qcResponse) {
-                if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onDelSuccess();
-                } else {
-                    view.onFailed(qcResponse.getMsg());
-                }
-            }
-        }));
-    }
+  public void delStaff() {
+    RxRegiste(staffModel.delStaff(staffSelectData.staff.id)
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            view.onShowError("添加成功！");
+            view.popBack();
+          } else {
+            view.onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
+  }
 
-    public void queryPostions(String staffId) {
-        RxRegiste(useCase.queryPostions(staffId, gymWrapper.id(), gymWrapper.model(), new Action1<QcResponsePostions>() {
-            @Override public void call(QcResponsePostions qcResponsePostions) {
-                if (qcResponsePostions.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onPositions(qcResponsePostions.data.positions);
-                } else {
-                    view.onFailed(qcResponsePostions.getMsg());
-                }
-            }
-        }));
-    }
+  public void queryPostions(String staffId) {
+
+  }
+
+  public interface MVPView extends CView {
+    void onFixSuccess();
+
+    void onAddSuccess();
+
+    void onDelSuccess();
+    void onStaff(Staff staff);
+    void onFailed(String s);
+
+    void onPositions(List<StaffPosition> positions);
+  }
 }

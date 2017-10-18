@@ -4,9 +4,10 @@ import cn.qingchengfit.pos.di.AppModel;
 import cn.qingchengfit.pos.di.BindExchangeActivity;
 import cn.qingchengfit.pos.di.BindLoginActivity;
 import cn.qingchengfit.pos.di.BindPosCardActivity;
+import cn.qingchengfit.pos.di.BindPosStaffActivity;
 import cn.qingchengfit.pos.di.BindSettingActivity;
 import cn.qingchengfit.saasbase.di.BindBillActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
+import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
 import cn.qingchengfit.saasbase.di.BindStudentActivity;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
@@ -34,8 +35,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
  */
 @Component(modules = { AppModel.class,
     AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-  BindPosCardActivity.class, BindStaffActivity.class, BindBillActivity.class, BindLoginActivity.class,
-  BindExchangeActivity.class, BindSettingActivity.class
+  BindPosCardActivity.class,  BindBillActivity.class, BindLoginActivity.class,
+  BindExchangeActivity.class, BindSettingActivity.class, BindSaasCommonActivity.class,
+  BindPosStaffActivity.class
      //BindLoginActivity.class,BindStaffActivity.class, BindPosCardActivity.class,BindBillActivity.class,
 })
 public interface PosAppComponent {
