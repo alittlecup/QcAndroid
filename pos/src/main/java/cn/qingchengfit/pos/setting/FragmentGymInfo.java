@@ -11,11 +11,12 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import com.anbillon.flabellum.annotations.Leaf;
 
 /**
  * Created by fb on 2017/10/13.
  */
-
+@Leaf(module = "setting",path = "/gym/")
 public class FragmentGymInfo extends BaseFragment {
 
   @BindView(R.id.tv_setting_gym_detail_name) TextView tvSettingGymDetailName;

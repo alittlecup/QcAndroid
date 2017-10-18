@@ -1,5 +1,13 @@
 package cn.qingchengfit.saasbase.staff.views;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
@@ -35,14 +43,31 @@ import java.util.List;
 
 public abstract class BaseStaffListFragment extends BaseListFragment implements
     FlexibleAdapter.OnItemClickListener{
-
+  protected Toolbar toolbar;
+  protected TextView toolbarTitle;
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    Bundle savedInstanceState) {
+    View view = super.onCreateView(inflater, container ,savedInstanceState);
+    LinearLayout root = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container,null);
+    root.addView(view,1);
+    toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView)root.findViewById(R.id.toolbar_title);
+    initToolbar(toolbar);
+    return root;
+  }
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     initData();
   }
 
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText(getTitle());
+  }
+
   abstract void initData();
+  abstract String getTitle();
 
   protected NetSubscribe<QcDataResponse<SalerListWrap>> response = new NetSubscribe<QcDataResponse<SalerListWrap>>() {
     @Override public void onNext(QcDataResponse<SalerListWrap> staffListWrapQcDataResponse) {

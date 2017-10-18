@@ -32,6 +32,7 @@ import rx.schedulers.Schedulers;
  */
 @Leaf(module = "staff", path = "/saler/list/")
 public class SalersListFragment extends BaseStaffListFragment {
+
   @Inject IStaffModel staffModel;
 
   @Override void initData() {
@@ -48,6 +49,10 @@ public class SalersListFragment extends BaseStaffListFragment {
           }
         }
       }));
+  }
+
+  @Override String getTitle() {
+    return "销售";
   }
 
   @Override public boolean onItemClick(int position) {

@@ -27,7 +27,7 @@ import rx.subscriptions.CompositeSubscription;
 public class BasePresenter implements Presenter {
 
 
-    CompositeSubscription sps = new CompositeSubscription();
+    CompositeSubscription sps ;
     private List<Pair<String, Observable>> observables = new ArrayList<>();
 
     @Override public void onStart() {
@@ -43,7 +43,10 @@ public class BasePresenter implements Presenter {
     }
 
     @Override public void attachView(PView v) {
+    }
 
+    @Override public void onNewSps() {
+        sps = new CompositeSubscription();
     }
 
     @Override public void attachIncomingIntent(Intent intent) {

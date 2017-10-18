@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -72,7 +73,14 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
-
+    toolbar.inflateMenu(R.menu.menu_setting);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        routeTo(AppUtils.getRouterUri(getContext(),"/setting/home/"),null);
+        return true;
+      }
+    });
+    toolbarTitle.setText("场馆名称？");
   }
 
   @Override public String getFragmentName() {
@@ -94,9 +102,10 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
           routeTo(AppUtils.getRouterUri(getContext(), "/bill/home/list/"), null);
           break;
         case R.drawable.vd_btn_home_sell:
-          routeTo(AppUtils.getRouterUri(getContext(), "/staff/seller/list/"), null);
+          routeTo(AppUtils.getRouterUri(getContext(), "/staff/saler/list/"), null);
           break;
         case R.drawable.vd_btn_home_logout:
+          routeTo(AppUtils.getRouterUri(getContext(), "/exchange/home/"), null);
           break;
       }
     }

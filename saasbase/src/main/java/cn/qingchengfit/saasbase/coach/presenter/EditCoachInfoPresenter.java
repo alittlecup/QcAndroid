@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.coach.presenter;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -25,7 +26,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/4/20 2016.
  */
-public class EditCoachInfoPresenter implements Presenter {
+public class EditCoachInfoPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private CoachUseCase usecase;
@@ -62,6 +63,7 @@ public class EditCoachInfoPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (edSp != null) edSp.unsubscribe();
         if (delSp != null) delSp.unsubscribe();

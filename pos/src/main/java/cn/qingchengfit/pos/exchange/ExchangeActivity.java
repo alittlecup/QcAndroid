@@ -1,16 +1,7 @@
-package cn.qingchengfit.pos;
+package cn.qingchengfit.pos.exchange;
 
-import cn.qingchengfit.pos.di.AppModel;
-import cn.qingchengfit.pos.di.BindExchangeActivity;
-import cn.qingchengfit.pos.di.BindLoginActivity;
-import cn.qingchengfit.pos.di.BindPosCardActivity;
-import cn.qingchengfit.pos.di.BindSettingActivity;
-import cn.qingchengfit.saasbase.di.BindBillActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
-import dagger.android.support.AndroidSupportInjectionModule;
+import cn.qingchengfit.pos.PosBaseActivity;
+import com.anbillon.flabellum.annotations.Trunk;
 
 /**
  * power by
@@ -30,14 +21,13 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/18.
  */
-@Component(modules = { AppModel.class,
-    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-  BindPosCardActivity.class, BindStaffActivity.class, BindBillActivity.class, BindLoginActivity.class,
-  BindExchangeActivity.class, BindSettingActivity.class
-     //BindLoginActivity.class,BindStaffActivity.class, BindPosCardActivity.class,BindBillActivity.class,
+@Trunk(fragments = {
+  FragmentExchange.class
 })
-public interface PosAppComponent {
-  void inject(PosApp app);
+public class ExchangeActivity extends PosBaseActivity {
+  @Override public String getModuleName() {
+    return "exchange";
+  }
 }
