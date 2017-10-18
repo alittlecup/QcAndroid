@@ -13,11 +13,12 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import com.anbillon.flabellum.annotations.Leaf;
 
 /**
  * Created by fb on 2017/10/13.
  */
-
+@Leaf(module = "setting",path = "/home/")
 public class FragmentSetting extends BaseFragment {
 
   @BindView(R.id.img_setting_gym) ImageView imgSettingGym;

@@ -10,6 +10,9 @@ import cn.qingchengfit.pos.models.CardModel;
 import cn.qingchengfit.pos.models.StaffModel;
 import cn.qingchengfit.pos.models.StudentModel;
 import cn.qingchengfit.pos.routers.CardRouters;
+import cn.qingchengfit.pos.routers.PosRouterCenter;
+import cn.qingchengfit.pos.routers.exchangeImpl;
+import cn.qingchengfit.pos.routers.settingImpl;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
@@ -78,10 +81,9 @@ public class AppModel {
   @Provides SaasbaseRouterCenter providerRouterCenter(){
     return new SaasbaseRouterCenter(new billImpl(),new CardRouters(),new commonImpl(),new courseImpl(),new staffImpl(),new studentImpl());
   }
-
-  //@Provides PosRouterCenter providerPosRouter(){
-  //  return new PosRouterCenter(new billImpl());
-  //}
+  @Provides PosRouterCenter providerPosRouterCenter(){
+    return new PosRouterCenter(new exchangeImpl(),new settingImpl());
+  }
 
   @Provides PosApp provideApplicationContext() {
     return app;

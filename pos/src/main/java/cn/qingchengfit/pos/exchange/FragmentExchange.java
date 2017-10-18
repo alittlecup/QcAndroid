@@ -15,11 +15,12 @@ import butterknife.OnClick;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TipTextDialogFragment;
+import com.anbillon.flabellum.annotations.Leaf;
 
 /**
  * Created by fb on 2017/10/17.
  */
-
+@Leaf(module = "exchange",path = "/home/")
 public class FragmentExchange extends BaseFragment {
 
   @BindView(R.id.toolbar) Toolbar toolbar;

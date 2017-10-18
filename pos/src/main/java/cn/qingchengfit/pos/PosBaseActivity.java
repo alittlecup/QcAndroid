@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.pos.routers.PosRouterCenter;
 import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -33,7 +34,7 @@ import javax.inject.Inject;
 
 public class PosBaseActivity extends BaseActivity implements HasSupportFragmentInjector {
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-  //@Inject PosRouterCenter routerCenter;
+  @Inject PosRouterCenter routerCenter;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -42,8 +43,7 @@ public class PosBaseActivity extends BaseActivity implements HasSupportFragmentI
   }
 
   @Override protected Fragment getRouterFragment(Intent intent) {
-    return new Fragment();
-    //return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
+    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
   }
 
 

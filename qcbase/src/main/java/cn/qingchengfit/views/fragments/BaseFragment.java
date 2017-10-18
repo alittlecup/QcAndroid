@@ -125,6 +125,7 @@ public abstract class BaseFragment extends Fragment
 
   protected void delegatePresenter(Presenter presenter, PView pView) {
     PresenterDelegate delegate = new PresenterDelegate(presenter);
+    delegate.onNewSps();
     delegate.attachView(pView);
     delegates.add(delegate);
 

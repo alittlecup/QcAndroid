@@ -64,6 +64,32 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+    <activity android:name=".setting.SettingActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="setting"
+            android:scheme="qcpos"
+            />
+      </intent-filter>
+    </activity>
+    <activity android:name=".exchange.ExchangeActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="exchange"
+            android:scheme="qcpos"
+            />
+      </intent-filter>
+    </activity>
 
     <activity android:name="cn.qingchengfit.saasbase.bill.BillActivity">
       <intent-filter>
