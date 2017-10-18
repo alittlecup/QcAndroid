@@ -1,9 +1,9 @@
 package cn.qingchengfit.pos;
 
 import cn.qingchengfit.pos.di.AppModel;
-import cn.qingchengfit.pos.di.BindBillActivity;
 import cn.qingchengfit.pos.di.BindLoginActivity;
 import cn.qingchengfit.pos.di.BindPosCardActivity;
+import cn.qingchengfit.saasbase.di.BindBillActivity;
 import cn.qingchengfit.saasbase.di.BindStaffActivity;
 import cn.qingchengfit.saasbase.di.BindStudentActivity;
 import dagger.Component;

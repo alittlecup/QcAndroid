@@ -1,14 +1,14 @@
-package cn.qingchengfit.pos;
+package cn.qingchengfit.saasbase.staff.views;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import cn.qingchengfit.views.activity.BaseActivity;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.staff.model.IStaffModel;
+import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import cn.qingchengfit.subscribes.NetSubscribe;
+import com.anbillon.flabellum.annotations.Leaf;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -28,26 +28,30 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/17.
+ * Created by Paper on 2017/10/18.
  */
+@Leaf(module = "staff", path = "/saler/list/")
+public class SalersListFragment extends BaseStaffListFragment {
+  @Inject IStaffModel staffModel;
 
-public class PosBaseActivity extends BaseActivity implements HasSupportFragmentInjector {
-  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-  //@Inject PosRouterCenter routerCenter;
-
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_base_frag);
-    onNewIntent(getIntent());
+  @Override void initData() {
+    RxRegiste(staffModel.getSalers()
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<SalerListWrap>>() {
+        @Override public void onNext(QcDataResponse<SalerListWrap> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            onGetData(qcResponse.data.users);
+          } else {
+            onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 
-  @Override protected Fragment getRouterFragment(Intent intent) {
-    return new Fragment();
-    //return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
-  }
-
-
-  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-    return dispatchingFragmentInjector;
+  @Override public boolean onItemClick(int position) {
+    routeTo("/saler/detail/",null);
+    return true;
   }
 }
