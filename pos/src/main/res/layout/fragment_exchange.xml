@@ -201,6 +201,7 @@
   </LinearLayout>
   
   <TextView
+      android:id="@+id/btn_exchange"
       android:layout_width="match_parent"
       android:layout_height="45dp"
       android:text="交班"

@@ -11,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 
 /**
  * Created by fb on 2017/10/17.
@@ -38,6 +40,13 @@ public class FragmentExchange extends BaseFragment {
     View view = inflater.inflate(R.layout.fragment_exchange, container, false);
     unbinder = ButterKnife.bind(this, view);
     return view;
+  }
+
+  @OnClick(R.id.btn_exchange)
+  public void onExchange(){
+    TipTextDialogFragment.newInstance(getResources().getString(R.string.tips_exchange),
+        getResources().getString(R.string.confirm),
+        getResources().getString(R.string.exchange_confirm)).show(getFragmentManager(), null);
   }
 
   @Override public void onDestroyView() {

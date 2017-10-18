@@ -16,5 +16,9 @@
   <string name="login_resend_msg">%ds</string>
   <string name="tips_login_failed">登录失败</string>
   <string name="tips_phone_not_correct">请输入合法的手机号</string>
+
+  <!--交班-->
+  <string name="tips_exchange">交班后将自动登出！</string>
+  <string name="exchange_confirm">确认交班？</string>
   
 </resources>
