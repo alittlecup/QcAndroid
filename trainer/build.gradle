@@ -148,7 +148,7 @@ dependencies {
   compile project(path: ':recruit')
   compile 'org.glassfish:javax.annotation:10.0-b28'
   //  compile 'cn.qingchegfit.recruit:recruit:latest.integration'
-  compile 'cn.qingchegfit.widgets:weekview:latest.integration'
+  compile 'cn.qingchegfit.widgets:weekview:1.1@aar'
 
   compile fileTree(include: ['*.jar'], dir: 'libs')
   compile files('libs/wup-1.0.0-SNAPSHOT.jar')

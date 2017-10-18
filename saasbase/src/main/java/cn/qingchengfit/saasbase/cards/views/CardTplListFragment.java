@@ -60,7 +60,11 @@ public class CardTplListFragment extends BaseListFragment {
     }
   }
 
-
+  public int getItemCount(){
+    if (commonFlexAdapter != null)
+      return commonFlexAdapter.getItemCount();
+    else return 0;
+  }
   protected CardTplItem generateItem(CardTpl cardTpl){
     return new CardTplItem(cardTpl);
   }

@@ -1,11 +1,14 @@
-package cn.qingchengfit.utils;
+package cn.qingchengfit.pos;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import cn.qingchengfit.widgets.R;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import cn.qingchengfit.views.activity.BaseActivity;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -25,18 +28,26 @@ import cn.qingchengfit.widgets.R;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/25.
+ * Created by Paper on 2017/10/17.
  */
 
-public class DrawableUtils {
-  public  static Drawable generateBg(float radius, int[] colors){
-    GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,colors);
-    gradientDrawable.setCornerRadius(radius);
-    return gradientDrawable;
+public class PosBaseActivity extends BaseActivity implements HasSupportFragmentInjector {
+  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+  //@Inject PosRouterCenter routerCenter;
+
+  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_base_frag);
+    onNewIntent(getIntent());
   }
-  public  static Drawable generateCardStatusBg(int color,Context context){
-    Drawable d  =ContextCompat.getDrawable(context, R.drawable.bg_card_stauts).mutate();
-    DrawableCompat.setTint(d,color);
-    return d;
+
+  @Override protected Fragment getRouterFragment(Intent intent) {
+    return new Fragment();
+    //return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
+  }
+
+
+  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+    return dispatchingFragmentInjector;
   }
 }

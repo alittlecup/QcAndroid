@@ -1,6 +1,5 @@
 package cn.qingchengfit.saasbase.student;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.v4.app.Fragment;
@@ -12,11 +11,11 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.routers.Istudent;
-import cn.qingchengfit.saasbase.routers.RouterCenter;
+import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
 import cn.qingchengfit.views.FragCallBack;
-import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 import dagger.android.DispatchingAndroidInjector;
@@ -41,7 +40,7 @@ import rx.functions.Action1;
     ChooseAndSearchStudentFragment.class,
 
 })
-public class StudentActivity extends BaseActivity
+public class StudentActivity extends SaasContainerActivity
     implements FragCallBack, HasSupportFragmentInjector {
 
   //@BindView(R2.id.student_frag) FrameLayout studentFrag;
@@ -49,14 +48,10 @@ public class StudentActivity extends BaseActivity
   @Inject QcRestRepository restRepository;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
-  @Inject RouterCenter routerCenter;
+  @Inject SaasbaseRouterCenter routerCenter;
   @Inject Istudent istudent;
 
 
-
-  @Override protected Fragment getRouterFragment(Intent intent) {
-    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
-  }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -67,7 +62,6 @@ public class StudentActivity extends BaseActivity
   }
 
   private void initView() {
-    routerCenter.registe(istudent);
 
     //routerCenter.getFragment(Uri.parse("xx"), ;
 

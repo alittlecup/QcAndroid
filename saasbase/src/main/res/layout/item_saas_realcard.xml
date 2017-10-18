@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:padding="6dp"
+    android:paddingTop="6dp"
     >
 
   <RelativeLayout
@@ -52,15 +52,20 @@
   </RelativeLayout>
   <View
       android:layout_width="match_parent"
-      android:layout_height="10dp"
+      android:layout_height="15dp"
       android:background="@drawable/card_bottom_shadow"
       android:layout_gravity="bottom"
       />
-  <cn.qingchengfit.widgets.ConnerTag
+  <TextView
       android:id="@+id/img_stutus"
-      android:layout_width="35dp"
-      android:layout_height="35dp"
+      style="@style/QcTextStyleStandardDark"
+      android:textColor="@color/white"
+      android:layout_width="wrap_content"
+      android:layout_height="25dp"
+      tools:text="(已停卡)"
+      android:gravity="center"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
       android:layout_gravity="end"
-
       />
 </FrameLayout>

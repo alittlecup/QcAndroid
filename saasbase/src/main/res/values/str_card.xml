@@ -8,7 +8,7 @@
   <string name="title_cardtpl_types">会员卡种类</string>
 
 
-
+  <string name="card_total_count_d" formatted="false">会员卡总数：%d</string>
 
 
   <!--会员卡种类详情-->

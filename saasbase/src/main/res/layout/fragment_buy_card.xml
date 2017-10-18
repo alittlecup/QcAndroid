@@ -19,38 +19,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/bg_grey_dark"
-          android:minHeight="250dp"
-          android:orientation="vertical"
-          android:padding="@dimen/activity_horizontal_margin"
-          >
-
-        <include layout="@layout/item_card_type"/>
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            />
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:lines="1"
-            tools:text="限制：无"
-            />
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:lines="1"
-            tools:text="限制：无"
-            />
-      </LinearLayout>
+      <include layout="@layout/item_card_detail"/>
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -83,6 +52,7 @@
               android:layout_width="match_parent"
               android:layout_height="@dimen/qc_item_height"
               app:civ_lable="充值金额"
+              app:civ_inputnum="true"
               />
           <cn.qingchengfit.widgets.CommonInputView
               android:id="@+id/civ_real_money"
@@ -160,6 +130,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_lable="会员卡备注"
+            app:civ_showright="false"
+            app:civ_hint="@string/please_input"
             />
       </LinearLayout>
 
@@ -177,6 +149,7 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           android:orientation="horizontal"
+          android:background="@color/white"
           >
 
         <TextView

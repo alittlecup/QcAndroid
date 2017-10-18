@@ -1,9 +1,11 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -19,7 +21,7 @@ import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.Card;
-import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
+import cn.qingchengfit.saasbase.cards.item.CardTplOptionForBuy;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardChargePresenter;
@@ -59,7 +61,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/9/30.
  */
 @Leaf(module = "card", path = "/charge/") public class CardChargeFragment extends BaseFragment
-    implements FlexibleAdapter.OnItemClickListener, CardChargePresenter.MVPView {
+  implements FlexibleAdapter.OnItemClickListener, CardChargePresenter.MVPView {
 
   @BindView(R2.id.rv) RecyclerView rv;
   @BindView(R2.id.civ_charge_money) CommonInputView civChargeMoney;
@@ -72,10 +74,10 @@ import javax.inject.Inject;
   @BindView(R2.id.civ_mark) CommonInputView civMark;
   @BindView(R2.id.tv_money_label) TextView tvMoneyLabel;
   @BindView(R2.id.tv_pay_money) TextView tvPayMoney;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.btn_pay) Button btnPay;
-
   @Need Card card;
-
 
   public static CardChargeFragment newInstance(Card card) {
     Bundle args = new Bundle();
@@ -94,23 +96,24 @@ import javax.inject.Inject;
   @Inject CardChargePresenter presenter;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.frag_card_order_content, container, false);
     unbinder = ButterKnife.bind(this, view);
+    initToolbar(toolbar);
     delegatePresenter(presenter, this);
     presenter.setmCard(card);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
     GridLayoutManager manager =
-        new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_item_count));
+      new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_item_count));
     manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
       @Override public int getSpanSize(int position) {
         return 1;
       }
     });
     rv.addItemDecoration(new FlexibleItemDecoration(getContext()).withOffset(6)
-        .withBottomEdge(true)
-        .withRightEdge(true));
+      .withBottomEdge(true)
+      .withRightEdge(true));
     rv.setLayoutManager(manager);
     rv.setAdapter(commonFlexAdapter);
     civRealMoney.addTextWatcher(new TextWatcher() {
@@ -127,6 +130,11 @@ import javax.inject.Inject;
       }
     });
     return view;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("充值");
   }
 
   @Override protected void onFinishAnimation() {
@@ -149,7 +157,6 @@ import javax.inject.Inject;
     super.onDestroyView();
   }
 
-
   @OnClick(R2.id.civ_saler) public void onCivSalerClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/staff/choose/saler/"), null);
   }
@@ -166,14 +173,14 @@ import javax.inject.Inject;
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"), null);
   }
 
-  @OnClick(R2.id.btn_pay) public void clickPayMoney(){
+  @OnClick(R2.id.btn_pay) public void clickPayMoney() {
     presenter.chargeCard();
   }
 
   @Override public void onGetOptions(List<CardTplOption> options) {
     List<AbstractFlexibleItem> items = new ArrayList<>();
     for (CardTplOption option : options) {
-      items.add(new CardtplOptionItem(option,card.getType()));
+      items.add(new CardTplOptionForBuy(option, card.getType()));
     }
     // TODO: 2017/9/30 判断权限
     items.add(new CardtplOptionOhterItem());
@@ -187,7 +194,7 @@ import javax.inject.Inject;
   }
 
   @Override public void setMoneyPay(String m) {
-    tvPayMoney.setText(getString(R.string.pay_money,m));
+    tvPayMoney.setText(getString(R.string.pay_money, m));
   }
 
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {

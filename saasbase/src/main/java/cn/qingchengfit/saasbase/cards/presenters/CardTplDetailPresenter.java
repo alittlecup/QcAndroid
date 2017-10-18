@@ -82,7 +82,7 @@ public class CardTplDetailPresenter extends BasePresenter {
       return;
     }
     if (hasPermission(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
-      //saasRouter.routerTo("/cardtpl/edit/?id=" + cardTpl.getId());
+
     }
   }
 
@@ -136,9 +136,9 @@ public class CardTplDetailPresenter extends BasePresenter {
     //  view.onShowError(R.string.alert_edit_cardtype_link_manage);
     //  return false;
     //}
-    boolean ret = serPermisAction.check(p);
-    if (!ret) view.onShowError(R.string.alert_permission_forbid);
-    return ret;
+    //boolean ret = serPermisAction.check(p);
+    //if (!ret) view.onShowError(R.string.alert_permission_forbid);
+    return true;
   }
 
 

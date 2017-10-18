@@ -21,12 +21,13 @@ import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
-import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
+import cn.qingchengfit.saasbase.cards.item.CardTplOptionForBuy;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -60,7 +61,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/9/26.
  */
 @Leaf(module = "card", path = "/pay/") public class CardBuyFragment extends BaseFragment
-    implements FlexibleAdapter.OnItemClickListener, CardBuyPresenter.MVPView {
+  implements FlexibleAdapter.OnItemClickListener, CardBuyPresenter.MVPView {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
@@ -84,6 +85,7 @@ import javax.inject.Inject;
   @BindView(R2.id.civ_charge_money) CommonInputView civChargeMoney;
   @BindView(R2.id.civ_real_money) CommonInputView civRealMoney;
   @BindView(R2.id.lo_input_money) LinearLayout loInputMoney;
+  @BindView(R2.id.tv_card_append) TextView tvCardAppend;
 
   @Inject public CardBuyPresenter presenter;
   @Need CardTpl cardTpl;
@@ -106,14 +108,15 @@ import javax.inject.Inject;
   private CommonFlexAdapter commonFlexAdapter;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_buy_card, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     presenter.setmCardTplId(cardTpl.getId());
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
-    GridLayoutManager manager = new GridLayoutManager(getContext(),getResources().getInteger(R.integer.grid_item_count));
+    GridLayoutManager manager =
+      new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_item_count));
     manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
       @Override public int getSpanSize(int position) {
         return 1;
@@ -172,7 +175,7 @@ import javax.inject.Inject;
     commonFlexAdapter.clear();
     //List<AbstractFlexibleItem> items = new ArrayList<>();
     for (CardTplOption option : options) {
-      commonFlexAdapter.addItem(new CardtplOptionItem(option,cardTpl.type));
+      commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type));
     }
     // TODO: 2017/9/30 判断权限
     commonFlexAdapter.addItem(new CardtplOptionOhterItem());
@@ -182,9 +185,11 @@ import javax.inject.Inject;
   @Override public void onGetCardTpl(CardTpl cardTpl) {
     tvCardtplName.setText(cardTpl.getName());
     tvCardId.setText(cardTpl.getId());
-    tvCardTplType.setText(
-        CardBusinessUtils.getCardTypeCategoryStr(cardTpl.type, getContext()).substring(0, 1));
+    tvCardTplType.setText(CardBusinessUtils.getCardTypeCategoryStrHead(cardTpl.type, getContext()));
     tvGymName.setText(cardTpl.getShopNames());
+    cardview.setBackground(
+      DrawableUtils.generateBg(16, CardBusinessUtils.getDefaultCardbgColor(cardTpl.type)));
+    tvCardAppend.setText(cardTpl.getLimit());
   }
 
   @OnClick(R2.id.civ_bind_menbers) public void onCivBindMenbersClicked() {
@@ -207,9 +212,8 @@ import javax.inject.Inject;
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"), null);
   }
 
-
   @Override public void showInputMoney(boolean show) {
-    loInputMoney.setVisibility(show?View.VISIBLE:View.GONE);
+    loInputMoney.setVisibility(show ? View.VISIBLE : View.GONE);
   }
 
   @Override public void bindStudent(String student) {
@@ -218,6 +222,10 @@ import javax.inject.Inject;
 
   @Override public void bindSaler(String saler) {
     civSaler.setContent(saler);
+  }
+
+  @Override public void remark(boolean remark) {
+    civMark.setHint(remark?"已填写":getString(R.string.please_input));
   }
 
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {

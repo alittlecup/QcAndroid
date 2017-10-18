@@ -1,11 +1,9 @@
 package cn.qingchengfit.pos.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.pos.R;
-import cn.qingchengfit.saasbase.routers.RouterCenter;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.anbillon.flabellum.annotations.Trunk;
 import dagger.android.AndroidInjector;
@@ -18,10 +16,8 @@ import javax.inject.Inject;
  */
 
 @Trunk(fragments = {LoginFragment.class})
-public class LoginActivity extends BaseActivity implements HasSupportFragmentInjector{
-
+public class LoginActivity extends BaseActivity implements HasSupportFragmentInjector {
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-  @Inject RouterCenter routerCenter;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -33,9 +29,6 @@ public class LoginActivity extends BaseActivity implements HasSupportFragmentInj
         .commit();
   }
 
-  @Override protected Fragment getRouterFragment(Intent intent) {
-    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
-  }
 
   @Override public String getModuleName() {
     return "login";
@@ -43,10 +36,5 @@ public class LoginActivity extends BaseActivity implements HasSupportFragmentInj
 
   @Override public AndroidInjector<Fragment> supportFragmentInjector() {
     return dispatchingFragmentInjector;
-  }
-
-  @Override protected boolean preHandle(Intent intent) {
-    //return super.preHandle(intent);
-    return false;
   }
 }

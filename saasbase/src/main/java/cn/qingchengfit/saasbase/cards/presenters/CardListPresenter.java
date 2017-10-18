@@ -52,21 +52,29 @@ public class CardListPresenter extends BasePresenter {
 
     queryAllCards();
   }
-
+  int curPage =1, totalPage =1;
   public void queryAllCards() {
-    RxRegiste(cardModel.qcGetAllCard(ListUtils.mapRemoveNull(p))
+    if (curPage <= totalPage) {
+      p.put("page", curPage);
+      RxRegiste(cardModel.qcGetAllCard(ListUtils.mapRemoveNull(p))
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new NetSubscribe<QcDataResponse<CardListWrap>>() {
           @Override public void onNext(QcDataResponse<CardListWrap> qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onCardList(qcResponse.data.cards);
+              view.onCardList(qcResponse.data.cards, qcResponse.data.current_page);
+              curPage++;
+              totalPage = qcResponse.data.pages;
+
+              view.onCardCount(qcResponse.data.total_count);
             } else {
               view.onShowError(qcResponse.getMsg());
             }
           }
         }));
+    }
+    else view.onCardList(null,curPage);
   }
 
   @Override public void attachView(PView v) {
@@ -78,7 +86,18 @@ public class CardListPresenter extends BasePresenter {
     view = null;
   }
 
+  public void initpage() {
+    curPage=1;totalPage =1;
+  }
+
+  public void queryKeyworkd(String query) {
+    initpage();
+    p.put("q",query);
+    queryAllCards();
+  }
+
   public interface MVPView extends CView {
-    void onCardList(List<Card> cards);
+    void onCardList(List<Card> cards,int page);
+    void onCardCount(int count);
   }
 }

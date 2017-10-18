@@ -1,12 +1,15 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.items.ActionDescItem;
 import cn.qingchengfit.saasbase.R;
@@ -52,6 +55,9 @@ import javax.inject.Inject;
   @Need
   String cardid;
 
+  Toolbar toolbar;
+  TextView toolbarTitle;
+
   public static CardDetailFragment newInstance(String cardid) {
     Bundle args = new Bundle();
     args.putString("id", cardid);
@@ -73,6 +79,9 @@ import javax.inject.Inject;
     View v = super.onCreateView(inflater, container, savedInstanceState);
     LinearLayout parent = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container,container,false);
     parent.addView(v,1);
+    toolbar = (Toolbar) parent.findViewById(R.id.toolbar);
+    toolbarTitle =(TextView) parent.findViewById(R.id.toolbar_title);
+    initToolbar(toolbar);
     delegatePresenter(presenter,this);
     presenter.setCardId(cardid);
     RxBusAdd(EventRecycleClick.class)
@@ -86,6 +95,11 @@ import javax.inject.Inject;
           }
         });
     return parent;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("会员卡详情");
   }
 
   @Override protected void onFinishAnimation() {
