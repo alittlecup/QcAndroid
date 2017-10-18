@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -111,6 +112,7 @@ import javax.inject.Inject;
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_buy_card, container, false);
     unbinder = ButterKnife.bind(this, view);
+    initToolbar(toolbar);
     delegatePresenter(presenter, this);
     presenter.setmCardTplId(cardTpl.getId());
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
@@ -138,6 +140,11 @@ import javax.inject.Inject;
       }
     });
     return view;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("购卡详情");
   }
 
   @Override protected void onFinishAnimation() {

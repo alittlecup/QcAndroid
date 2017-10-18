@@ -4,8 +4,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.pos.net.PosApi;
+import cn.qingchengfit.pos.net.StaffApi;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
+import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import rx.Observable;
 
@@ -35,16 +36,32 @@ public class StaffModel implements IStaffModel {
   QcRestRepository repository;
   GymWrapper gymWrapper;
   LoginStatus loginStatus;
-  PosApi posApi;
+  StaffApi staffApi;
 
   public StaffModel(QcRestRepository repository, GymWrapper gymWrapper, LoginStatus loginStatus) {
     this.repository = repository;
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    posApi = repository.createGetApi(PosApi.class);
+    staffApi = repository.createGetApi(StaffApi.class);
   }
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {
-    return posApi.qcGetSalers(loginStatus.staff_id(), gymWrapper.getParams());
+    return staffApi.qcGetSalers(loginStatus.staff_id(), gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse<SalerListWrap>> getStaffList(String id) {
+    return staffApi.getStaffs(loginStatus.staff_id(),gymWrapper.getParams(),"");
+  }
+
+  @Override public Observable<QcDataResponse> addStaff(ManagerBody body) {
+    return staffApi.addManager(loginStatus.staff_id(),gymWrapper.getParams(),body);
+  }
+
+  @Override public Observable<QcDataResponse> delStaff(String id) {
+    return staffApi.delManager(loginStatus.staff_id(),id,gymWrapper.getParams());
+  }
+
+  @Override public Observable<QcDataResponse> editStaff(String id, ManagerBody body) {
+    return staffApi.updateManager(loginStatus.staff_id(),id,gymWrapper.getParams(),body);
   }
 }

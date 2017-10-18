@@ -44,6 +44,12 @@ public class CardTplDetailPresenter extends BasePresenter {
       return cardTpl.getCardTypeInt();
     else return 0;
   }
+  public String getCardName(){
+    if (cardTpl != null)
+      return cardTpl.getName();
+    else return "";
+  }
+
   public boolean isCardTplEnable() {
     if (cardTpl != null) {
       return cardTpl.is_enable;

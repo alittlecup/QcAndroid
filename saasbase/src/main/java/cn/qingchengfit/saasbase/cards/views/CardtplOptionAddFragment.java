@@ -97,7 +97,11 @@ import javax.inject.Inject;
     toolbar.getMenu().add("添加").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        presenter.setLimitDay(civValidDay.getContent());
+        //是否开启有效期 未开启直接置位0
+        if (elValidDay.isExpanded())
+          presenter.setLimitDay(civValidDay.getContent());
+        else presenter.setLimitDay("0");
+
         presenter.setChargeAndReal(civRealMoney.getContent(), civChargeMoney.getContent());
         presenter.addOption();
         return false;

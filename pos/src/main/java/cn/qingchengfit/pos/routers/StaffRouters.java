@@ -1,12 +1,9 @@
-package cn.qingchengfit.saasbase.common.views;
+package cn.qingchengfit.pos.routers;
 
-import android.os.Bundle;
-import android.text.TextUtils;
-import cn.qingchengfit.RxBus;
-import cn.qingchengfit.events.EventTxT;
-import cn.qingchengfit.views.fragments.CommonInputTextFragment;
-import com.anbillon.flabellum.annotations.Leaf;
-import com.anbillon.flabellum.annotations.Need;
+import android.support.v4.app.Fragment;
+import cn.qingchengfit.pos.staff.PosStaffAddFragment;
+import cn.qingchengfit.pos.staff.PosStaffDetailFragment;
+import cn.qingchengfit.saasbase.routers.staffImpl;
 
 /**
  * power by
@@ -26,30 +23,15 @@ import com.anbillon.flabellum.annotations.Need;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/10/18.
  */
-@Leaf(module = "common", path = "/input/") public class CommonInputFragment
-  extends CommonInputTextFragment {
-  @Need private String title;
-  @Need private String hint;
-  @Need private String content;
 
-  public static CommonInputFragment newInstance(String hint, String content, String title) {
-    Bundle args = new Bundle();
-    args.putString("t", title);
-    args.putString("c", content);
-    args.putString("h", hint);
-    CommonInputFragment fragment = new CommonInputFragment();
-    fragment.setArguments(args);
-    return fragment;
+public class StaffRouters extends staffImpl {
+  @Override public Fragment toStaffDetailFragment() {
+    return new PosStaffDetailFragment();
   }
 
-  @Override public void onBtnClicked() {
-    if (TextUtils.isEmpty(et.getText())) {
-      onShowError("请填写修改内容");
-      return;
-    }
-    RxBus.getBus().post(new EventTxT.Builder().txt(et.getText().toString().trim()).build());
-    popBack();
+  @Override public Fragment toStaffAddFragment() {
+    return new PosStaffAddFragment();
   }
 }

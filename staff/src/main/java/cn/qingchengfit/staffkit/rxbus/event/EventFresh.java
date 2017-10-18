@@ -21,4 +21,5 @@ package cn.qingchengfit.staffkit.rxbus.event;
  * Created by Paper on 16/9/14.
  */
 public class EventFresh {
+
 }

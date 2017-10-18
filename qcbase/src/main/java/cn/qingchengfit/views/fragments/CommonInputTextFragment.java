@@ -42,7 +42,7 @@ public class CommonInputTextFragment extends BaseFragment {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.et) EditText et;
+  @BindView(R2.id.et) protected EditText et;
   private String title;
   private String hint;
   private String content;

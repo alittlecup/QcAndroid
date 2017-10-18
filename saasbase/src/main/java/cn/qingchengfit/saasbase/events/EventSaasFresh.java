@@ -24,4 +24,5 @@ package cn.qingchengfit.saasbase.events;
 public class EventSaasFresh {
   public class StudentList{}
   public class CardList{}
+  public class StaffList{}
 }

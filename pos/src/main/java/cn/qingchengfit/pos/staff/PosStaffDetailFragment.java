@@ -1,12 +1,13 @@
-package cn.qingchengfit.saasbase.common.views;
+package cn.qingchengfit.pos.staff;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import cn.qingchengfit.RxBus;
-import cn.qingchengfit.events.EventTxT;
-import cn.qingchengfit.views.fragments.CommonInputTextFragment;
-import com.anbillon.flabellum.annotations.Leaf;
-import com.anbillon.flabellum.annotations.Need;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
 
 /**
  * power by
@@ -26,30 +27,23 @@ import com.anbillon.flabellum.annotations.Need;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/10/18.
  */
-@Leaf(module = "common", path = "/input/") public class CommonInputFragment
-  extends CommonInputTextFragment {
-  @Need private String title;
-  @Need private String hint;
-  @Need private String content;
 
-  public static CommonInputFragment newInstance(String hint, String content, String title) {
-    Bundle args = new Bundle();
-    args.putString("t", title);
-    args.putString("c", content);
-    args.putString("h", hint);
-    CommonInputFragment fragment = new CommonInputFragment();
-    fragment.setArguments(args);
-    return fragment;
+public class PosStaffDetailFragment extends StaffDetailFragment {
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    @Nullable Bundle savedInstanceState) {
+    View v = super.onCreateView(inflater, container, savedInstanceState);
+
+    headerLayout.setVisibility(View.GONE);
+    btnAdd.setVisibility(View.GONE);
+    return v;
   }
 
-  @Override public void onBtnClicked() {
-    if (TextUtils.isEmpty(et.getText())) {
-      onShowError("请填写修改内容");
-      return;
-    }
-    RxBus.getBus().post(new EventTxT.Builder().txt(et.getText().toString().trim()).build());
-    popBack();
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("销售");
+
   }
 }

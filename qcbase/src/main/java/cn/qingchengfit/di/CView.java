@@ -23,8 +23,8 @@ import android.support.annotation.StringRes;
  * Created by Paper on 16/8/24.
  */
 public interface CView extends PView {
-    void onShowError(String e);
-    void onShowError(@StringRes int e);
+  void onShowError(String e);
+  void onShowError(@StringRes int e);
 
   void showAlert(String s);
 

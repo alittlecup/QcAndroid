@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.staff.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,7 @@ import java.util.List;
  */
 
 public abstract class BaseStaffListFragment extends BaseListFragment implements
-    FlexibleAdapter.OnItemClickListener{
+    FlexibleAdapter.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener{
   protected Toolbar toolbar;
   protected TextView toolbarTitle;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +55,7 @@ public abstract class BaseStaffListFragment extends BaseListFragment implements
     toolbar = (Toolbar)root.findViewById(R.id.toolbar);
     toolbarTitle = (TextView)root.findViewById(R.id.toolbar_title);
     initToolbar(toolbar);
+    initListener(this);
     return root;
   }
 
@@ -66,6 +69,14 @@ public abstract class BaseStaffListFragment extends BaseListFragment implements
     toolbarTitle.setText(getTitle());
   }
 
+  @Override protected void addDivider() {
+    rv.addItemDecoration(new FlexibleItemDecoration(getContext())
+      .withDivider(R.drawable.divider_grey_left_margin)
+      .withOffset(1)
+      .withBottomEdge(true)
+    );
+  }
+
   abstract void initData();
   abstract String getTitle();
 
@@ -76,11 +87,16 @@ public abstract class BaseStaffListFragment extends BaseListFragment implements
   };
 
   protected void onGetData(List<Staff> staffs){
+    stopRefresh();
     List<AbstractFlexibleItem> ret = new ArrayList<>();
     for (Staff staff : staffs) {
       ret.add(generateItem(staff));
     }
     setDatas(ret,1);
+  }
+
+  @Override public void onRefresh() {
+    initData();
   }
 
   protected StaffItem generateItem(Staff staff){

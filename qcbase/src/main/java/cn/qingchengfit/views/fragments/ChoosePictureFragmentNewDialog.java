@@ -85,7 +85,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
   public ChoosePicResult getResult() {
     return mResult;
   }
-
+  @Deprecated
   public void setResult(ChoosePicResult mResult) {
     this.mResult = mResult;
   }

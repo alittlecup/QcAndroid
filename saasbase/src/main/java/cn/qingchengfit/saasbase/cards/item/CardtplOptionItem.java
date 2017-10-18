@@ -60,7 +60,7 @@ public class CardtplOptionItem
       holder.realIncome.setText("（储值"+option.charge + unitStr+"）");
       holder.realIncome.setVisibility(View.VISIBLE);
     }
-    if (option.days == 0) {
+    if (option.days <= 0) {
       holder.validDate.setVisibility(View.GONE);
     } else {
       holder.validDate.setVisibility(View.VISIBLE);

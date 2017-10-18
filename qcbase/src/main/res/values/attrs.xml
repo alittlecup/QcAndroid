@@ -21,6 +21,7 @@
     <attr format="boolean" name="phone_show_icon"/>
     <attr format="boolean" name="phone_nonull"/>
     <attr format="string" name="phone_hint"/>
+    <attr format="boolean" name="phone_only_mainland"/>
   </declare-styleable>
 
 

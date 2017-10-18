@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.pos.R;
-import cn.qingchengfit.pos.models.StudentModel;
+import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -48,7 +48,7 @@ public class PosStudentAddFragment extends BaseFragment {
   @BindView(R.id.civ_gender) CommonInputView civGender;
   @BindView(R.id.civ_phone) CommonInputView civPhone;
 
-  @Inject StudentModel studentModel;
+  @Inject IStudentModel studentModel;
 
   private AddStdudentBody body = new AddStdudentBody();
 
