@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.pos.PosBaseActivity;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.saasbase.bill.FragmentBillHome;
 import com.anbillon.flabellum.annotations.Trunk;
 import dagger.android.support.HasSupportFragmentInjector;
 
