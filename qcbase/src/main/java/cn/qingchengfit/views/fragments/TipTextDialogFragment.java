@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
@@ -27,13 +28,14 @@ public class TipTextDialogFragment extends DialogFragment {
   @BindView(R2.id.text_tips_top) TextView textTipsTop;
   @BindView(R2.id.text_tips) TextView textTips;
   @BindView(R2.id.text_button_click) TextView textButtonClick;
+  private OnConfirmListener onConfirmListener;
 
-  public static TipDialogFragment newInstance(String textTips, String buttonText, String topTips) {
+  public static TipTextDialogFragment newInstance(String textTips, String buttonText, String topTips) {
     Bundle args = new Bundle();
     args.putString("tips", textTips);
     args.putString("button", buttonText);
     args.putString("topTips", topTips);
-    TipDialogFragment fragment = new TipDialogFragment();
+    TipTextDialogFragment fragment = new TipTextDialogFragment();
     fragment.setArguments(args);
     return fragment;
   }
@@ -45,6 +47,17 @@ public class TipTextDialogFragment extends DialogFragment {
     unbinder = ButterKnife.bind(this, view);
     initView();
     return view;
+  }
+
+  public void setOnConfirmListener(OnConfirmListener onConfirmListener) {
+    this.onConfirmListener = onConfirmListener;
+  }
+
+  @OnClick(R2.id.text_button_click)
+  public void onConfirm(){
+    if (onConfirmListener != null){
+      onConfirmListener.onConfirm();
+    }
   }
 
   @Override public void onStart() {
@@ -80,5 +93,9 @@ public class TipTextDialogFragment extends DialogFragment {
   @Override public void onDestroyView() {
     super.onDestroyView();
     unbinder.unbind();
+  }
+
+  public interface OnConfirmListener{
+    void onConfirm();
   }
 }

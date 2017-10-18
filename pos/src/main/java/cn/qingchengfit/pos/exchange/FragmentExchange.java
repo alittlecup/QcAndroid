@@ -45,9 +45,15 @@ public class FragmentExchange extends BaseFragment {
 
   @OnClick(R.id.btn_exchange)
   public void onExchange(){
-    TipTextDialogFragment.newInstance(getResources().getString(R.string.tips_exchange),
+    TipTextDialogFragment dialogFragment = TipTextDialogFragment.newInstance(getResources().getString(R.string.tips_exchange),
         getResources().getString(R.string.confirm),
-        getResources().getString(R.string.exchange_confirm)).show(getFragmentManager(), null);
+        getResources().getString(R.string.exchange_confirm));
+    dialogFragment.setOnConfirmListener(new TipTextDialogFragment.OnConfirmListener() {
+      @Override public void onConfirm() {
+
+      }
+    });
+    dialogFragment.show(getFragmentManager(), null );
   }
 
   @Override public void onDestroyView() {
