@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.staff;
 
 import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
+import cn.qingchengfit.saasbase.staff.views.SalersListFragment;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
@@ -26,7 +27,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/9/29.
  */
 @Trunk(fragments = {
-    ChooseSalerFragment.class, ChooseAndSearchStudentFragment.class
+    ChooseSalerFragment.class, ChooseAndSearchStudentFragment.class, SalersListFragment.class
 })
 public class StaffActivity extends SaasContainerActivity  {
 
