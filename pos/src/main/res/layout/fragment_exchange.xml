@@ -20,7 +20,8 @@
         android:id="@+id/img_exchange_head"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        tools:src="@drawable/ic_default_head_nogender"
+        tools:src="@drawable/ic_default_header"
+        android:padding="4dp"
         android:scaleType="centerCrop"
         android:background="@drawable/bg_oval_dot"
         />
@@ -81,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="开始时间"
-        style="@style/QcTextStyleLargeDark"
+        style="@style/QcTextStyleStandardDark"
         />
 
     <android.support.v4.widget.Space
@@ -95,7 +96,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="2017-08-10 10:08:20"
-        style="@style/QcTextStyleLargeWarm"
+        style="@style/QcTextStyleStandardDark"
+        android:textColor="@color/text_warm"
         />
   </LinearLayout>
 
@@ -114,8 +116,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="开始时间"
-        style="@style/QcTextStyleLargeDark"
+        android:text="结束时间"
+        style="@style/QcTextStyleStandardDark"
         />
 
     <android.support.v4.widget.Space
@@ -129,7 +131,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="2017-08-10 10:08:20"
-        style="@style/QcTextStyleLargeWarm"
+        style="@style/QcTextStyleStandardDark"
+        android:textColor="@color/text_warm"
         />
   </LinearLayout>
 
@@ -148,7 +151,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="共交易"
-        style="@style/QcTextStyleLargeDark"
+        style="@style/QcTextStyleStandardDark"
         />
 
     <android.support.v4.widget.Space
@@ -162,7 +165,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="4笔"
-        style="@style/QcTextStyleLargeWarm"
+        style="@style/QcTextStyleStandardDark"
+        android:textColor="@color/text_warm"
         />
   </LinearLayout>
 
@@ -182,7 +186,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="实收"
-        style="@style/QcTextStyleLargeDark"
+        style="@style/QcTextStyleStandardDark"
         />
 
     <android.support.v4.widget.Space
@@ -196,7 +200,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="11111.4$"
-        style="@style/QcTextStyleLargeWarm"
+        style="@style/QcTextStyleStandardDark"
+        android:textColor="@color/text_warm"
         />
   </LinearLayout>
   

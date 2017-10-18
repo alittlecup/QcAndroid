@@ -7,6 +7,8 @@
   <string name="name">姓名</string>
   <string name="gender">性别</string>
   <string name="phone">手机号</string>
+  <string name="input">请填写</string>
+  <string name="select_gender">选择性别</string>
 
   <!--登录-->
   <string name="login_title">健身房专用POS机</string>

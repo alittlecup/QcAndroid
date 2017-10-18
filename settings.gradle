@@ -2,5 +2,5 @@ include ':qcbase', ':saasbase', ':pos',
 //    ':trainer',
     ':atest',
     ':recruit',
-    ':staff',
+//    ':staff',
     ':qcim', ':sdk'
