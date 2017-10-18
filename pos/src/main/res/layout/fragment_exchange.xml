@@ -201,10 +201,12 @@
   </LinearLayout>
   
   <TextView
+      android:id="@+id/btn_exchange"
       android:layout_width="match_parent"
       android:layout_height="45dp"
       android:text="交班"
       android:background="@drawable/btn_prime"
+      android:layout_marginTop="15dp"
       android:layout_marginLeft="15dp"
       android:layout_marginRight="15dp"
       android:gravity="center"

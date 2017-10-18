@@ -45,7 +45,6 @@ dependencies {
   })
   compile 'com.android.support:multidex:1.0.1'
   compile 'com.anbillon.flabellum:flabellum:0.1'
-  compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:latest.integration"
   annotationProcessor "com.anbillon.flabellum:dagger2:latest.integration"
   testCompile 'junit:junit:4.12'
