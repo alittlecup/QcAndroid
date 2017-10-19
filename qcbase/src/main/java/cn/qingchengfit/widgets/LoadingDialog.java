@@ -10,7 +10,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.utils.MeasureUtils;
 
 /**
  * power by
@@ -52,9 +51,6 @@ public class LoadingDialog extends Dialog {
         if(window != null){
             window.getDecorView().setPadding(0, 0, 0, 0);
             WindowManager.LayoutParams lp = window.getAttributes();
-            lp.width = MeasureUtils.dpToPx(150f, getContext().getResources());
-            lp.height = MeasureUtils.dpToPx(130f, getContext().getResources());
-            window.setAttributes(lp);
             imgLoading.startAnimation(rotate);
             super.show();
         }

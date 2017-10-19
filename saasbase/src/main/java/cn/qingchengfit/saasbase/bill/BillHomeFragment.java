@@ -25,7 +25,7 @@ import com.anbillon.flabellum.annotations.Leaf;
  */
 
 //账单页面
-@Leaf(module = "bill", path = "/home/list/") public class FragmentBillHome extends BaseFragment implements
+@Leaf(module = "bill", path = "/home/list/") public class BillHomeFragment extends BaseFragment implements
     DrawerLayout.DrawerListener {
 
   @BindView(R2.id.tv_bill_total_amount) TextView tvBillTotalAmount;
