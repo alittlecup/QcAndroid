@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     >
@@ -51,10 +52,60 @@
         app:drawableTop="@drawable/vd_btn_home_charge"
         />
   </LinearLayout>
-  <android.support.v7.widget.RecyclerView
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <android.support.v7.widget.RecyclerView
+        android:background="@color/white"
       android:id="@+id/rv"
       android:paddingTop="@dimen/activity_vertical_margin"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:overScrollMode="never"
       />
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:id="@+id/layout_notification"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_rect_corner_halftrans_black"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:translationY="100dp"
+        >
+      <TextView
+          android:text="支付请求"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          style="@style/QcTextStyleLargeDark"
+          android:textColor="@color/white"
+          />
+      <TextView
+          android:id="@+id/tv_noti_count"
+          tools:text="11"
+          android:gravity="center"
+          android:textSize="@dimen/txt_12sp"
+          android:textColor="@color/white"
+          android:background="@drawable/red_dot"
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          />
+      <android.support.v4.widget.Space
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          />
+      <Button
+          android:id="@+id/btn_to_pay"
+          android:text="去支付"
+          android:layout_width="75dp"
+          android:layout_height="35dp"
+          />
+    </LinearLayout>
+  </FrameLayout>
+
 </LinearLayout>

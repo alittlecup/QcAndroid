@@ -1,4 +1,7 @@
-package cn.qingchengfit.saasbase.events;
+package cn.qingchengfit.saasbase.student.views;
+
+import cn.qingchengfit.views.fragments.BaseFragment;
+import com.anbillon.flabellum.annotations.Leaf;
 
 /**
  * power by
@@ -18,11 +21,8 @@ package cn.qingchengfit.saasbase.events;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/10/19.
  */
-
-public class EventSaasFresh {
-  public static class StudentList{}
-  public static class CardList{}
-  public static class StaffList{}
+@Leaf(module = "student",path = "/add/")
+public class StudentAddFragment extends BaseFragment {
 }

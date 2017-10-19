@@ -122,6 +122,7 @@
             style="@style/QcCivInputStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_inputnum="true"
             app:civ_lable="实体卡号"
             />
         <cn.qingchengfit.widgets.CommonInputView

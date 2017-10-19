@@ -22,6 +22,8 @@
         android:layout_height="@dimen/qc_item_height"
         android:background="@drawable/bg_common_search"
         android:hint="会员姓名、手机号"
+        android:paddingLeft="@dimen/little"
+        android:paddingStart="@dimen/little"
         app:drawableStart="@drawable/vd_search_grey_14dp"
         android:drawablePadding="@dimen/little"
         android:textSize="@dimen/txt_14sp"

@@ -132,7 +132,7 @@ import javax.inject.Inject;
       }
 
       @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-        tvPayMoney.setText(s.toString());
+        setPayMoney(s.toString());
       }
 
       @Override public void afterTextChanged(Editable s) {
@@ -216,7 +216,11 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.civ_mark) public void onCivMarkClicked() {
-    routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"), null);
+    Bundle bd = new Bundle();
+    bd.putString("content",presenter.getRemarks());
+    bd.putString("hint",presenter.getRemarks());
+    bd.putString("title","会员卡备注");
+    routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"), bd);
   }
 
   @Override public void showInputMoney(boolean show) {
@@ -237,6 +241,10 @@ import javax.inject.Inject;
 
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {
 
+  }
+
+  @Override public void setPayMoney(String s) {
+    tvPayMoney.setText(s);
   }
 
   @Override public String realCardNum() {

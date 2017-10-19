@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.events;
+package cn.qingchengfit.saasbase.bill.beans;
 
 /**
  * power by
@@ -18,11 +18,9 @@ package cn.qingchengfit.saasbase.events;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/10/9.
  */
 
-public class EventSaasFresh {
-  public static class StudentList{}
-  public static class CardList{}
-  public static class StaffList{}
+public class PayRequest {
+
 }

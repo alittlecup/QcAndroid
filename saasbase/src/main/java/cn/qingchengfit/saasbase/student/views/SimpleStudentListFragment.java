@@ -3,9 +3,11 @@ package cn.qingchengfit.saasbase.student.views;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -52,7 +54,7 @@ public class SimpleStudentListFragment extends BaseFragment
   private int orderType = 0;//默认顺序为 注册时间排序
   private List<QcStudentBean> qcStudentBeens = new ArrayList<>();
   private CommonNoDataItem commonNoDataItem;
-
+  private List<IFlexible> mDatas = new ArrayList<>();
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -61,12 +63,17 @@ public class SimpleStudentListFragment extends BaseFragment
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    FrameLayout frameLayout = new FrameLayout(getContext());
     RecyclerView recyclerView = new RecyclerView(getContext());
     recyclerView.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-    commonFlexAdapter.setStickyHeaders(true).setStickyHeaderElevation(1).setDisplayHeadersAtStartUp(true);
+    commonFlexAdapter
+      .setStickyHeaders(true)
+      .setStickyHeaderElevation(1)
+      .setDisplayHeadersAtStartUp(true);
     recyclerView.setAdapter(commonFlexAdapter);
     commonNoDataItem = new CommonNoDataItem(getNoDataIconRes(),getNoDataStr());
-    return recyclerView;
+    frameLayout.addView(recyclerView);
+    return frameLayout;
   }
 
   @Override public boolean isBlockTouch() {
@@ -98,39 +105,42 @@ public class SimpleStudentListFragment extends BaseFragment
     if (commonFlexAdapter != null) {
       if (orderType == 0) {
         for (QcStudentBean qcStudentBeen : qcStudentBeens) {
-          if (qcStudentBeen.head() != null && !AlphabetLessView.Alphabet.contains(qcStudentBeen.head())){
+          if (qcStudentBeen.head() != null &&( !AlphabetLessView.Alphabet.contains(qcStudentBeen.head())
+            || TextUtils.isEmpty(qcStudentBeen.head()))){
             qcStudentBeen.setHead("~");
           }
         }
         Collections.sort(qcStudentBeens, new StudentCompareByAlphabet());//按字母排序
+        mDatas.clear();
         if (qcStudentBeens.size() > 0){
           String head = qcStudentBeens.get(0).head();
-          commonFlexAdapter.addItem(new StickerDateItem(head.toUpperCase()));
+          mDatas.add(new StickerDateItem(head.toUpperCase()));
           for (QcStudentBean qcStudentBeen : qcStudentBeens) {
             if (!qcStudentBeen.head().equalsIgnoreCase(head)){
-              commonFlexAdapter.addItem(new StickerDateItem(qcStudentBeen.head().toUpperCase()));
+              mDatas.add(new StickerDateItem(qcStudentBeen.head().toUpperCase()));
               head = qcStudentBeen.head();
             }
-            commonFlexAdapter.addItem(instanceItem(qcStudentBeen));
+            mDatas.add(instanceItem(qcStudentBeen));
           }
         }else {
-          commonFlexAdapter.addItem(new CommonNoDataItem(R.drawable.vd_img_empty_universe,"暂无会员"));
+          mDatas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe,"暂无会员"));
         }
       } else {//按注册时间排序
         Collections.sort(qcStudentBeens, new StudentCompareJoinAt());
         if (qcStudentBeens.size() > 0){
           for (QcStudentBean qcStudentBeen : qcStudentBeens) {
-            commonFlexAdapter.addItem(instanceItem(qcStudentBeen));
+            mDatas.add(instanceItem(qcStudentBeen));
           }
         }else {
-          commonFlexAdapter.addItem(commonNoDataItem);
+          mDatas.add(commonNoDataItem);
         }
       }
+      commonFlexAdapter.updateDataSet(mDatas);
     }
   }
   public void filter(String s){
     commonFlexAdapter.setSearchText(s);
-    commonFlexAdapter.filterItems(commonFlexAdapter.getMainItems());
+    commonFlexAdapter.filterItems(mDatas);
   }
 
   protected IFlexible instanceItem(QcStudentBean qcStudentBean){

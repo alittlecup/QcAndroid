@@ -30,7 +30,7 @@
             />
       </intent-filter>
     </activity>
-    <activity android:name="cn.qingchengfit.saasbase.student.StudentActivity"
+    <activity android:name=".student.PosStudentActivity"
               android:taskAffinity="com.rongcapital.pos"
         >
       <intent-filter>
@@ -113,6 +113,19 @@
 
         <data
             android:host="common"
+            android:scheme="qcpos"
+            />
+      </intent-filter>
+    </activity>
+    <activity android:name=".cash.CashierDeskActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="desk"
             android:scheme="qcpos"
             />
       </intent-filter>

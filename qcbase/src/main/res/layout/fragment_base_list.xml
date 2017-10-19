@@ -13,5 +13,6 @@
       android:layout_height="match_parent"
       android:clipToPadding="false"
       android:paddingBottom="40dp"
+      android:overScrollMode="never"
       />
 </android.support.v4.widget.SwipeRefreshLayout>

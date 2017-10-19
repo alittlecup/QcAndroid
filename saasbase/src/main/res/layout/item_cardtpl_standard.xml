@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="105dp"
+    android:layout_height="105dp"
     >
 
   <LinearLayout
@@ -24,8 +24,9 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@drawable/color_balck_primary"
         tools:text="1200元"
+        android:textStyle="bold"
         />
 
     <TextView
@@ -34,8 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:ellipsize="marquee"
-        android:singleLine="true"
-        android:textColor="@color/colorPrimary"
+        android:lines="1"
+        android:textColor="@drawable/color_grey_primary"
         tools:text="(售价1200元)"
         />
 
@@ -44,8 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="@color/colorPrimary"
-        android:textSize="11sp"
+        android:textColor="@drawable/color_grey_primary"
+        android:textSize="@dimen/txt_11sp"
         tools:text="有效期:300天"
         />
 
@@ -54,8 +55,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="@color/colorPrimary"
-        android:textSize="11sp"
+        android:textColor="@drawable/color_grey_primary"
+        android:textSize="@dimen/txt_11sp"
         tools:text="适用于"
         />
 

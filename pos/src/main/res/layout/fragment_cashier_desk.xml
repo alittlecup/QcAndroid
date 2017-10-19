@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/bg_grey_dark"
+      android:gravity="right|end"
+      android:orientation="vertical"
+      android:padding="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="金额"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin"
+        />
+
+    <TextView
+        android:id="@+id/tv_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="￥0.00"
+        tools:text="￥10000000.00"
+        android:lines="1"
+        android:maxLength="13"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <TextView
+        android:id="@+id/tv_cmd_line"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:textSize="33sp"
+        android:gravity="center_vertical"
+        android:layout_gravity="right|end"
+        android:ellipsize="start"
+        android:lines="1"
+        />
+  </LinearLayout>
+
+  <GridLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:columnCount="4"
+      android:rowCount="4"
+      android:useDefaultMargins="false"
+      android:background="@color/bg_grey"
+      >
+
+    <TextView
+        android:id="@+id/btn_7"
+        android:layout_column="0"
+        android:layout_row="0"
+        android:text="7"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <TextView
+        android:id="@+id/btn_8"
+        android:layout_column="1"
+        android:layout_row="0"
+        android:text="8"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <TextView
+        android:id="@+id/btn_9"
+        android:layout_column="2"
+        android:layout_row="0"
+        android:text="9"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_column="3"
+        android:layout_row="0"
+        android:scaleType="center"
+        app:srcCompat="@drawable/vd_backspace_black_24dp"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <TextView
+        android:id="@+id/btn_4"
+        android:layout_column="0"
+        android:layout_row="1"
+        android:text="4"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <TextView
+        android:id="@+id/btn_5"
+        android:layout_column="1"
+        android:layout_row="1"
+        android:text="5"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <TextView
+        android:id="@+id/btn_6"
+        android:layout_column="2"
+        android:layout_row="1"
+        android:text="6"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <TextView
+        android:id="@+id/btn_1"
+        android:layout_column="0"
+        android:layout_row="2"
+        android:text="1"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <TextView
+        android:id="@+id/btn_2"
+        android:layout_column="1"
+        android:layout_row="2"
+        android:text="2"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <TextView
+        android:id="@+id/btn_3"
+        android:layout_column="2"
+        android:layout_row="2"
+        android:text="3"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <TextView
+        android:id="@+id/btn_0"
+        android:layout_column="0"
+        android:layout_row="3"
+        android:text="0"
+        style="@style/CarculaterBtnStyle"
+        />
+    <TextView
+        android:id="@+id/btn_clear"
+        android:layout_column="3"
+        android:layout_row="1"
+        android:textSize="18sp"
+        android:text="清空"
+        style="@style/CarculaterBtnStyle"
+        />
+    <ImageView
+        android:id="@+id/btn_add"
+        android:layout_column="1"
+        android:layout_row="3"
+        android:layout_columnSpan="2"
+        android:scaleType="center"
+        app:srcCompat="@drawable/vd_add_black_24dp"
+        style="@style/CarculaterBtnStyle"
+        />
+
+    <TextView
+        android:id="@+id/btn_pay"
+        android:layout_column="3"
+        android:layout_row="2"
+        android:layout_rowSpan="2"
+        android:scaleType="center"
+        android:text="收\n款"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        style="@style/CarculaterBtnStyle"
+        />
+  </GridLayout>
+</LinearLayout>

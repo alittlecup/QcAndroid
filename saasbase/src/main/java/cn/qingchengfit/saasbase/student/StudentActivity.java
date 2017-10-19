@@ -1,26 +1,14 @@
 package cn.qingchengfit.saasbase.student;
 
-import android.os.Bundle;
 import android.support.annotation.MenuRes;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import butterknife.ButterKnife;
-import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarBean;
-import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasContainerActivity;
-import cn.qingchengfit.saasbase.routers.Istudent;
-import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.anbillon.flabellum.annotations.Trunk;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
-import javax.inject.Inject;
 import rx.functions.Action1;
 
 /**
@@ -38,28 +26,29 @@ import rx.functions.Action1;
  */
 @Trunk(fragments = {
     ChooseAndSearchStudentFragment.class,
-
 })
 public class StudentActivity extends SaasContainerActivity
-    implements FragCallBack, HasSupportFragmentInjector {
+    implements FragCallBack {
 
   //@BindView(R2.id.student_frag) FrameLayout studentFrag;
-  @Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
-  @Inject QcRestRepository restRepository;
-  @Inject LoginStatus loginStatus;
-  @Inject GymWrapper gymWrapper;
-  @Inject SaasbaseRouterCenter routerCenter;
-  @Inject Istudent istudent;
+  //@Inject DispatchingAndroidInjector<Fragment> fragmentInjector;
+  //@Inject QcRestRepository restRepository;
+  //@Inject LoginStatus loginStatus;
+  //@Inject GymWrapper gymWrapper;
+  //@Inject SaasbaseRouterCenter routerCenter;
+  //
 
-
-
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_base_frag);
-    ButterKnife.bind(this);
-    initView();
-    onNewIntent(getIntent());
+  @Override public String getModuleName() {
+    return "student";
   }
+
+  //@Override protected void onCreate(Bundle savedInstanceState) {
+  //  super.onCreate(savedInstanceState);
+  //  setContentView(R.layout.activity_base_frag);
+  //  ButterKnife.bind(this);
+  //  initView();
+  //  onNewIntent(getIntent());
+  //}
 
   private void initView() {
 
@@ -110,9 +99,9 @@ public class StudentActivity extends SaasContainerActivity
 
   }
 
-  @Override public int getFragId() {
-    return R.id.web_frag_layout;
-  }
+  //@Override public int getFragId() {
+  //  return R.id.web_frag_layout;
+  //}
 
   @Override public void setToolbar(String title, boolean showRight, View.OnClickListener titleClick,
       @MenuRes int menu, Toolbar.OnMenuItemClickListener listener) {
@@ -134,7 +123,5 @@ public class StudentActivity extends SaasContainerActivity
 
   }
 
-  @Override public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
-    return fragmentInjector;
-  }
+
 }

@@ -57,14 +57,16 @@ public class CardBuyPresenter extends BasePresenter {
 
   }
 
-
-
-
+  /**
+   * 选择规格时的逻辑
+   */
   public void selectOption(int pos){
     if ( pos < mOptions.size()){
-      //已有规格
+      //已有规格 展示价格
        mChosenOption = mOptions.get(pos);
       view.showInputMoney(false);
+      view.setPayMoney(mChosenOption.price);
+
     }else {
       //其他规格
       view.showInputMoney(true);
@@ -213,6 +215,7 @@ public class CardBuyPresenter extends BasePresenter {
     void bindStudent(String student);
     void bindSaler(String saler);
     void remark(boolean remark);
+    void setPayMoney(String x);
     /**
      * 下单完成后返回的数据
      */

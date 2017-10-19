@@ -1,7 +1,8 @@
-package cn.qingchengfit.pos.pay;
+package cn.qingchengfit.pos.routers;
 
-import cn.qingchengfit.pos.R;
-import cn.qingchengfit.views.fragments.BaseListFragment;
+import android.support.v4.app.Fragment;
+import cn.qingchengfit.pos.student.PosStudentAddFragment;
+import cn.qingchengfit.saasbase.routers.studentImpl;
 
 /**
  * power by
@@ -21,21 +22,11 @@ import cn.qingchengfit.views.fragments.BaseListFragment;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/9.
+ * Created by Paper on 2017/10/19.
  */
-public class PayRequestListFragment extends BaseListFragment {
 
-
-
-  @Override public String getFragmentName() {
-    return PayRequestListFragment.class.getName();
-  }
-
-  @Override public int getNoDataIconRes() {
-    return R.drawable.vd_img_empty_universe;
-  }
-
-  @Override public String getNoDataStr() {
-    return "";
+public class StudentRouters extends studentImpl {
+  @Override public Fragment toStudentAddFragment() {
+    return new PosStudentAddFragment();
   }
 }

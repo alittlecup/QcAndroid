@@ -1,4 +1,8 @@
-package cn.qingchengfit.saasbase.events;
+package cn.qingchengfit.saasbase.bill.view;
+
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.views.fragments.BaseListFragment;
+import com.anbillon.flabellum.annotations.Leaf;
 
 /**
  * power by
@@ -18,11 +22,22 @@ package cn.qingchengfit.saasbase.events;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/10/9.
  */
+@Leaf(module = "bill",path = "/pay/request/list/")
+public class PayRequestListFragment extends BaseListFragment {
 
-public class EventSaasFresh {
-  public static class StudentList{}
-  public static class CardList{}
-  public static class StaffList{}
+
+
+  @Override public String getFragmentName() {
+    return PayRequestListFragment.class.getName();
+  }
+
+  @Override public int getNoDataIconRes() {
+    return R.drawable.vd_img_empty_universe;
+  }
+
+  @Override public String getNoDataStr() {
+    return "";
+  }
 }

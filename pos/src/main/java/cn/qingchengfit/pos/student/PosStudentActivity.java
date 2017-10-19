@@ -1,4 +1,8 @@
-package cn.qingchengfit.saasbase.events;
+package cn.qingchengfit.pos.student;
+
+import cn.qingchengfit.saasbase.student.StudentActivity;
+import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
+import com.anbillon.flabellum.annotations.Trunk;
 
 /**
  * power by
@@ -18,11 +22,10 @@ package cn.qingchengfit.saasbase.events;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/10/19.
  */
-
-public class EventSaasFresh {
-  public static class StudentList{}
-  public static class CardList{}
-  public static class StaffList{}
+@Trunk(fragments =  {
+  PosStudentAddFragment.class, ChooseAndSearchStudentFragment.class,
+})
+public class PosStudentActivity  extends StudentActivity{
 }

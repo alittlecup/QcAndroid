@@ -36,11 +36,11 @@ public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
     private int positionOld = -1;
   private ArrayMap<String, Object> Tags = new ArrayMap<>();
     public CommonFlexAdapter(@NonNull List items) {
-        super(items);
+        super(items,null,true);
     }
 
     public CommonFlexAdapter(@NonNull List items, @Nullable Object listeners) {
-        super(items, listeners);
+        super(items, listeners,true);
     }
 
   public void setTag(String key, Object value) {

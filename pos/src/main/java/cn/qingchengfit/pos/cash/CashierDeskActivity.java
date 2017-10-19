@@ -1,4 +1,7 @@
-package cn.qingchengfit.saasbase.events;
+package cn.qingchengfit.pos.cash;
+
+import cn.qingchengfit.pos.PosBaseActivity;
+import com.anbillon.flabellum.annotations.Trunk;
 
 /**
  * power by
@@ -18,11 +21,10 @@ package cn.qingchengfit.saasbase.events;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/10/19.
  */
-
-public class EventSaasFresh {
-  public static class StudentList{}
-  public static class CardList{}
-  public static class StaffList{}
+@Trunk(fragments = {
+  CashierDeskFragment.class
+})
+public class CashierDeskActivity extends PosBaseActivity {
 }

@@ -1,4 +1,11 @@
-package cn.qingchengfit.pos.pay.beans;
+package cn.qingchengfit.saasbase.bill;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
  * power by
@@ -18,9 +25,17 @@ package cn.qingchengfit.pos.pay.beans;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/9.
+ * Created by Paper on 2017/10/19.
  */
+public class BillDetailFragment extends BaseFragment {
 
-public class PayRequest {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_bill_detail, container, false);
+    return view;
+  }
 
+  @Override public String getFragmentName() {
+    return BillDetailFragment.class.getName();
+  }
 }

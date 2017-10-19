@@ -60,7 +60,7 @@ public class CardModel implements ICardModel {
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(String type, String isEnable) {
     return repository.createGetApi(PosApi.class)
-        .qcGetCardTpls(loginStatus.staff_id(), gymWrapper.getParams(), null, "1");
+        .qcGetCardTpls(loginStatus.staff_id(), gymWrapper.getParams(), null, isEnable);
   }
 
   @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission() {

@@ -39,7 +39,6 @@ public class CardtplOptionOhterItem
     holder.realIncome.setTextColor(colorPrimary);
     holder.validDate.setTextColor(colorPrimary);
     holder.title.setTextColor(colorPrimary);
-    holder.chargeLayout.setBackgroundResource(R.drawable.bg_rect_corner_primary);
   }
 
   @Override public boolean equals(Object o) {

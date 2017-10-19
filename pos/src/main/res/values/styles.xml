@@ -32,7 +32,16 @@
     <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
     <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
     <item name="android:windowTranslucentStatus">true</item>
-
   </style>
-
+  <style name="CarculaterBtnStyle">
+    <item name="android:layout_rowWeight">1</item>
+    <item name="android:layout_columnWeight">1</item>
+    <item name="android:layout_gravity">fill_vertical|fill_horizontal</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textSize">30sp</item>
+    <item name="android:textColor">@color/text_dark</item>
+    <item name="android:background">@drawable/bg_click</item>
+    <item name="android:layout_marginEnd">1dp</item>
+    <item name="android:layout_marginBottom">1dp</item>
+  </style>
 </resources>

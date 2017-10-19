@@ -2,13 +2,14 @@ package cn.qingchengfit.saasbase.bill;
 
 
 import cn.qingchengfit.saasbase.SaasContainerActivity;
+import cn.qingchengfit.saasbase.bill.view.PayRequestListFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
  * Created by fb on 2017/10/13.
  */
 
-@Trunk(fragments = { FragmentBillHome.class, }) public class BillActivity extends
+@Trunk(fragments = { FragmentBillHome.class, PayRequestListFragment.class }) public class BillActivity extends
   SaasContainerActivity {
 
   //@Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;

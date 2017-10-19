@@ -30,6 +30,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_lable="@string/phone"
+      app:civ_inputnum="true"
       app:civ_showdivier="false"
       />
   <include layout="@layout/divider_grey"/>

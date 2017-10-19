@@ -44,11 +44,17 @@
   <FrameLayout
       android:id="@+id/frag_id"
       android:layout_width="match_parent"
-      android:layout_height="300dp"
+      android:layout_height="0dp"
       />
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/rv"
+  <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      />
+      >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+  </FrameLayout>
+
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -31,6 +32,7 @@ import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.PhoneEditText;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -168,7 +170,14 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailPres
     //}
   }
 
-
+  @OnClick(R2.id.civ_gender) public void clickGender(){
+    new DialogList(getContext()).list(getResources().getStringArray(R.array.gender_list), new AdapterView.OnItemClickListener() {
+      @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        presenter.setGender(position);
+        civGender.setContent(getResources().getStringArray(R.array.gender_list)[position]);
+      }
+    }).show();
+  }
 
   @OnClick(R2.id.header_layout) public void onHeaderLayoutClicked() {
     ChoosePictureFragmentNewDialog.newInstance(true).show(getChildFragmentManager(),"");
