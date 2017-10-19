@@ -28,7 +28,6 @@ public class FragmentExchange extends BaseFragment {
   @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
   @BindView(R.id.img_exchange_head) ImageView imgExchangeHead;
   @BindView(R.id.tv_exchange_name) TextView tvExchangeName;
-  @BindView(R.id.tv_exchange_position) TextView tvExchangePosition;
   @BindView(R.id.tv_exchange_now_position) TextView tvExchangeNowPosition;
   @BindView(R.id.tv_exchange_start) TextView tvExchangeStart;
   @BindView(R.id.tv_exchange_end) TextView tvExchangeEnd;
@@ -45,9 +44,14 @@ public class FragmentExchange extends BaseFragment {
 
   @OnClick(R.id.btn_exchange)
   public void onExchange(){
-    TipTextDialogFragment.newInstance(getResources().getString(R.string.tips_exchange),
+    TipTextDialogFragment dialogFragment = TipTextDialogFragment.newInstance(getResources().getString(R.string.tips_exchange),
         getResources().getString(R.string.confirm),
-        getResources().getString(R.string.exchange_confirm)).show(getFragmentManager(), null);
+        getResources().getString(R.string.exchange_confirm));
+    dialogFragment.setOnConfirmListener(new TipTextDialogFragment.OnConfirmListener() {
+      @Override public void onConfirm() {
+      }
+    });
+    dialogFragment.show(getFragmentManager(), null );
   }
 
   @Override public void onDestroyView() {

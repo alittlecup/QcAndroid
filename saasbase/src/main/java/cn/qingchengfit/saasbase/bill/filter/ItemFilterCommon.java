@@ -24,6 +24,7 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
 
   private List<Content> contents;
   private OnCheckedSelectListener onCheckedSelectListener;
+  private String result;
 
   public ItemFilterCommon(List<Content> contents, OnCheckedSelectListener onCheckedSelectListener) {
     this.contents = contents;
@@ -71,6 +72,11 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
     public ItemFilterVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
+      billFilterCommon.setOnCheckoutPositionListener(new QcAutoLineRadioGroup.OnCheckoutPositionListener() {
+        @Override public void onCheckPosition(List<Integer> checkedList) {
+
+        }
+      });
     }
   }
 

@@ -7,6 +7,8 @@
     android:orientation="vertical"
     >
 
+  <include layout="@layout/common_simple_toolbar"/>
+
   <LinearLayout
       android:id="@+id/layout_setting_gym"
       android:layout_width="match_parent"
@@ -56,6 +58,7 @@
       app:civ_content_color="@color/text_warm"
       app:civ_lable="@string/bill_pos_no"
       app:civ_text_color="@color/black"
+      app:civ_clickable="true"
       />
 
   <LinearLayout
@@ -125,6 +128,7 @@
       app:civ_showright="true"
       app:civ_content="4"
       app:civ_content_color="@color/text_warm"
+      app:civ_clickable="true"
       />
 
 </LinearLayout>

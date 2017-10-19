@@ -58,7 +58,7 @@
       </intent-filter>
     </activity>
 
-    <activity android:name=".login.LoginActivity">
+    <activity android:name=".SplashActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
@@ -119,6 +119,7 @@
     </activity>
 
     <activity android:name=".main.MainActivity"/>
+    <activity android:name=".login.LoginActivity"/>
 
   </application>
 

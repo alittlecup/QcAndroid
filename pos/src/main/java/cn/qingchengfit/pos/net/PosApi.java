@@ -1,7 +1,9 @@
 package cn.qingchengfit.pos.net;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.pos.login.model.Gym;
+import cn.qingchengfit.pos.cashier.model.CashierWrapper;
+import cn.qingchengfit.pos.login.model.GetCodeBody;
+import cn.qingchengfit.pos.login.model.GymResponse;
 import cn.qingchengfit.pos.login.model.Login;
 import cn.qingchengfit.pos.login.model.LoginBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
@@ -156,14 +158,14 @@ public interface PosApi {
   /**
    * 根据设备IMEI号查询场馆相关信息
    */
-  @GET("/api/rongshu/gym/") rx.Observable<QcDataResponse<Gym>> qcGetGym(
+  @GET("/api/rongshu/gym/") rx.Observable<QcDataResponse<GymResponse>> qcGetGym(
       @QueryMap HashMap<String, Object> params);
 
   /**
    * 获取验证码
    */
-  @POST("/api/rongshu/gym/") Observable<QcDataResponse> qcGetCode(
-      @QueryMap HashMap<String, Object> params);
+  @POST("/api/rongshu/cashier/send/") Observable<QcDataResponse> qcGetCode(
+      @Body GetCodeBody body);
 
   //充值扣费
   @POST("/api/staffs/{staff_id}/cards/{card_id}/charge/") rx.Observable<QcDataResponse<PayBusinessResponse>> qcCardCharge(@Path("staff_id") String staff_id,
@@ -180,4 +182,28 @@ public interface PosApi {
   @POST("/api/staffs/{id}/users/") rx.Observable<QcDataResponse> qcCreateStudent(
       @Path("id") String id, @QueryMap HashMap<String, Object> params,
       @Body AddStdudentBody body);
+
+  /**
+   * 新增收银员
+   */
+  @POST("/api/rongshu/cashier/") rx.Observable<QcDataResponse> qcAddCashier(
+      @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 删除收银员
+   */
+  @DELETE("/api/rongshu/cashier/{cashier_id}/") rx.Observable<QcDataResponse> qcDeleteCashier(
+      @Path("cashier_id") String cashierId, @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 修改收银员
+   */
+  @PUT("/api/rongshu/cashier/{cashier_id}/") rx.Observable<QcDataResponse> qcModifyCashier(
+      @Path("cashier_id") String cashierId, @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 获取收银员
+   */
+  @GET("/api/rongshu/cashier/") rx.Observable<QcDataResponse<CashierWrapper>> qcGetCashier();
+
 }

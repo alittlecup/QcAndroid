@@ -1,6 +1,5 @@
 package cn.qingchengfit.pos.di;
 
-import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -68,7 +67,7 @@ import rx.Observable;
 public class AppModel {
   private PosApp app;
   private QcRestRepository qcrestRepository;
-  private GymWrapper gymWrapper;
+  private PosGymWrapper gymWrapper;
   private LoginStatus loginStatus;
 
   private AppModel(Builder builder) {
@@ -97,7 +96,7 @@ public class AppModel {
     return loginStatus;
   }
 
-  @Provides GymWrapper provideGym() {
+  @Provides PosGymWrapper provideGym() {
     return gymWrapper;
   }
 
@@ -207,7 +206,7 @@ public class AppModel {
   public static final class Builder {
     private PosApp app;
     private QcRestRepository qcrestRepository;
-    private GymWrapper gymWrapper;
+    private PosGymWrapper gymWrapper;
     private LoginStatus loginStatus;
 
     public Builder() {
@@ -223,7 +222,7 @@ public class AppModel {
       return this;
     }
 
-    public Builder gymWrapper(GymWrapper val) {
+    public Builder gymWrapper(PosGymWrapper val) {
       gymWrapper = val;
       return this;
     }

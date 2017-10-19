@@ -35,9 +35,10 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implement
     return R.layout.item_student;
   }
 
-  @Override public StaffVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
+  @Override public StaffVH createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater,
       ViewGroup parent) {
-    return new StaffVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    StaffVH holder = new StaffVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    return holder;
   }
 
   @Override
@@ -79,7 +80,7 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implement
     @BindView(R2.id.item_student_phonenum) TextView itemStudentPhonenum;
     @BindView(R2.id.item_student_gymname) TextView itemStudentGymname;
     @BindView(R2.id.icon_right) ImageView iconRight;
-    public StaffVH(View view, FlexibleAdapter adapter) {
+    public StaffVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
     }

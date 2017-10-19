@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_add_cashier_name"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:layout_marginTop="14dp"
+      app:civ_lable="@string/name"
+      app:civ_text_color="@color/black"
+      app:civ_hint="@string/input"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_add_cashier_gender"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      app:civ_lable="@string/gender"
+      app:civ_text_color="@color/black"
+      app:civ_hint="@string/select_gender"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_add_cashier_phone"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      app:civ_lable="@string/phone"
+      app:civ_text_color="@color/black"
+      app:civ_hint="@string/input"
+      />
+
+  <TextView
+      android:id="@+id/btn_add_cashier"
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:text="@string/confirm"
+      android:background="@drawable/btn_prime"
+      android:layout_marginTop="15dp"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"
+      android:gravity="center"
+      style="@style/QcTextStyleLargeDark"
+      android:textColor="@color/white"
+      />
+
+</LinearLayout>

@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.pos.R;
-import cn.qingchengfit.pos.login.model.Gym;
+import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.login.model.LoginBody;
 import cn.qingchengfit.pos.login.presenter.LoginPresenter;
 import cn.qingchengfit.pos.main.MainActivity;
@@ -42,6 +42,7 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   private TextView tvGetCode;
   private InternalHandler handler;
   @Inject LoginPresenter presenter;
+  @Inject PosGymWrapper gymWrapper;
 
 
   @Nullable @Override
@@ -52,7 +53,7 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
     unbinder = ButterKnife.bind(this, view);
     tvGetCode = (TextView) view.findViewById(R.id.btn_get_code);
     handler = new InternalHandler(getContext());
-    presenter.qcGetGym("");   //TODO IMEI
+    tvLoginGymName.setText(gymWrapper.brand_name() + gymWrapper.name());
     return view;
   }
 
@@ -68,8 +69,10 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   @OnClick(R.id.login_btn)
   public void onLogin(){
     if (!TextUtils.isEmpty(editLoginPhone.getText())) {
-      presenter.qcLogin(new LoginBody(editLoginPhone.getText().toString(),
-          editLoginAuthCode.getText().toString(), "+86"));
+      presenter.qcLogin(new LoginBody.Builder().phone(editLoginPhone.getText().toString())
+          .code(editLoginAuthCode.getText().toString())
+          .area_code("+86")
+          .gym_id(gymWrapper.id()).build());
       Intent intent = new Intent(getActivity(), MainActivity.class);
       getContext().startActivity(intent);
     }else{
@@ -79,10 +82,6 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-  }
-
-  @Override public void onGetGym(Gym gym) {
-    tvLoginGymName.setText(gym.brand_name + gym.name);
   }
 
   @Override public void onSuccess() {

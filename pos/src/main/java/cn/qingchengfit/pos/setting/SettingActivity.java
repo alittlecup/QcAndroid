@@ -24,7 +24,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/10/18.
  */
 @Trunk(fragments = {
-  FragmentSetting.class,FragmentGymInfo.class
+  FragmentSetting.class,FragmentGymInfo.class, AddCashierFragment.class,
 })
 public class SettingActivity extends PosBaseActivity {
 
