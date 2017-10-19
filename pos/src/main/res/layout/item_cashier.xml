@@ -41,9 +41,10 @@
       />
   
   <ImageView
+      android:id="@+id/img_cashier_gender"
       android:layout_width="12dp"
       android:layout_height="12dp"
-      android:src="@drawable/ic_gender_signal_female"
+      tools:src="@drawable/ic_gender_signal_female"
       android:layout_toRightOf="@id/tv_cashier_name"
       android:layout_alignTop="@id/tv_cashier_name"
       android:layout_marginTop="3dp"

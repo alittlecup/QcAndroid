@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     >
 
+  <include layout="@layout/common_simple_toolbar"/>
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="80dp"
@@ -32,6 +34,7 @@
         />
 
     <ImageView
+        android:id="@+id/img_staff_head"
         android:layout_width="50dp"
         android:layout_height="50dp"
         tools:src="@drawable/ic_default_head_nogender"
@@ -65,6 +68,20 @@
       app:civ_lable="@string/phone"
       app:civ_text_color="@color/black"
       app:civ_content_color="@color/text_warm"
+      />
+
+  <TextView
+      android:id="@+id/btn_delete_cashier"
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:text="@string/delete"
+      android:background="@drawable/btn_qc_rect_round_coner_black"
+      android:layout_marginTop="15dp"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"
+      android:gravity="center"
+      style="@style/QcTextStyleLargeDark"
+      android:textColor="@color/red"
       />
 
 </LinearLayout>

@@ -17,7 +17,7 @@ import com.anbillon.flabellum.annotations.Leaf;
  * Created by fb on 2017/10/13.
  */
 @Leaf(module = "setting",path = "/gym/")
-public class FragmentGymInfo extends BaseFragment {
+public class GymInfoFragment extends BaseFragment {
 
   @BindView(R.id.tv_setting_gym_detail_name) TextView tvSettingGymDetailName;
   @BindView(R.id.input_setting_gym_detail_name) CommonInputView inputSettingGymDetailName;

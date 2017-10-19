@@ -8,6 +8,7 @@
   <!--通用-->
   <string name="confirm">确定</string>
   <string name="reset">重置</string>
+  <string name="delete">删除</string>
 
   <!--菜单相关-->
   <string name="edit">编辑</string>

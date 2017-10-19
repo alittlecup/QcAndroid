@@ -145,6 +145,7 @@ public abstract class BaseListFragment extends BaseFragment {
       if (commonFlexAdapter.getItemCount() == 0 && commonNoDataItem != null) {
         addEmptyPage();
       }
+      commonFlexAdapter.notifyDataSetChanged();
     }
   }
 

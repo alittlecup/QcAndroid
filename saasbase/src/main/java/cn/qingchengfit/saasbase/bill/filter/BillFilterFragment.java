@@ -15,7 +15,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
-import cn.qingchengfit.saasbase.bill.filter.model.Content;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -31,7 +30,7 @@ import javax.inject.Inject;
 
 //侧滑筛选栏
 public class BillFilterFragment extends BaseFragment
-    implements FlexibleAdapter.OnItemClickListener, ItemFilterCommon.OnCheckedSelectListener {
+    implements FlexibleAdapter.OnItemClickListener {
 
   @BindView(R2.id.btn_bill_filter_reset) TextView btnBillFilterReset;
   @BindView(R2.id.btn_bill_filter_confirm) TextView btnBillFilterConfirm;
@@ -90,7 +89,4 @@ public class BillFilterFragment extends BaseFragment
     return false;
   }
 
-  @Override public void onCheckedContent(List<Content> contentList) {
-
-  }
 }

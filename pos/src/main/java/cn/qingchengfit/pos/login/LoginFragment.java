@@ -73,8 +73,6 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
           .code(editLoginAuthCode.getText().toString())
           .area_code("+86")
           .gym_id(gymWrapper.id()).build());
-      Intent intent = new Intent(getActivity(), MainActivity.class);
-      getContext().startActivity(intent);
     }else{
       DialogUtils.showAlert(getContext(), getResources().getString(R.string.tips_phone_not_correct));
     }
