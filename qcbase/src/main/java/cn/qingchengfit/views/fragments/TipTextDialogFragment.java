@@ -55,6 +55,7 @@ public class TipTextDialogFragment extends DialogFragment {
 
   @OnClick(R2.id.text_button_click)
   public void onConfirm(){
+    dismiss();
     if (onConfirmListener != null){
       onConfirmListener.onConfirm();
     }
@@ -76,7 +77,7 @@ public class TipTextDialogFragment extends DialogFragment {
         getArguments().getString("tips"))) {
       textTips.setText(getArguments().getString("tips"));
     }
-    if (getArguments().containsKey("topTips") && TextUtils.isEmpty(
+    if (getArguments().containsKey("topTips") && !TextUtils.isEmpty(
         getArguments().getString("topTips"))) {
       textTipsTop.setText(getArguments().getString("topTips"));
     }
@@ -92,7 +93,6 @@ public class TipTextDialogFragment extends DialogFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
   }
 
   public interface OnConfirmListener{

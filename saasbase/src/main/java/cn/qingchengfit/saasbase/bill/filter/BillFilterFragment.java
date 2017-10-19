@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
@@ -27,7 +30,7 @@ import javax.inject.Inject;
  */
 
 //侧滑筛选栏
-public class FragmentBillFilter extends BaseFragment
+public class BillFilterFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener, ItemFilterCommon.OnCheckedSelectListener {
 
   @BindView(R2.id.btn_bill_filter_reset) TextView btnBillFilterReset;
@@ -35,6 +38,7 @@ public class FragmentBillFilter extends BaseFragment
   Unbinder unbinder;
   @Inject BillFilterPresenter presenter;
   @BindView(R2.id.recycler_bill_filter) RecyclerView recyclerBillFilter;
+  @BindView(R2.id.filter_layout) LinearLayout filterLayout;
   private CommonFlexAdapter adapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
 
@@ -43,13 +47,18 @@ public class FragmentBillFilter extends BaseFragment
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.layout_bill_filter, container, false);
     unbinder = ButterKnife.bind(this, view);
+    filterLayout.setOnTouchListener(new View.OnTouchListener() {
+      @Override public boolean onTouch(View v, MotionEvent event) {
+        return false;
+      }
+    });
     initView();
     return view;
   }
 
-  private void dispatchItem(List<FilterModel> filters){
-    for (FilterModel filter : filters){
-      switch (filter.key){
+  private void dispatchItem(List<FilterModel> filters) {
+    for (FilterModel filter : filters) {
+      switch (filter.key) {
 
       }
     }
@@ -59,6 +68,18 @@ public class FragmentBillFilter extends BaseFragment
   private void initView() {
     adapter = new CommonFlexAdapter(itemList, this);
     recyclerBillFilter.setAdapter(adapter);
+  }
+
+  @OnClick(R2.id.btn_bill_filter_confirm)
+  public void onConfirm(){
+    for (int i = 0; i < adapter.getItemCount(); i++) {
+
+    }
+  }
+
+  @OnClick(R2.id.btn_bill_filter_reset)
+  public void onReset(){
+
   }
 
   @Override public void onDestroyView() {

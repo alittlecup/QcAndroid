@@ -1,20 +1,19 @@
 package cn.qingchengfit.pos.login.model;
 
 /**
- * Created by fb on 2017/10/10.
+ * Created by fb on 2017/10/19.
  */
 
-public class LoginBody {
-
+public class GetCodeBody {
   public String phone;
-  public String code;
   public String area_code;
   public String gym_id;
+  public String code;
 
-  public LoginBody(Builder builder) {
+  public GetCodeBody(Builder builder) {
     this.phone = builder.phone;
-    this.code = builder.code;
     this.area_code = builder.area_code;
+    this.code = builder.code;
     this.gym_id = builder.gym_id;
   }
 
@@ -23,9 +22,6 @@ public class LoginBody {
     private String code;
     private String area_code;
     private String gym_id;
-
-    public Builder() {
-    }
 
     public Builder phone(String val) {
       phone = val;
@@ -47,10 +43,9 @@ public class LoginBody {
       return this;
     }
 
-    public LoginBody build() {
-      return new LoginBody(this);
+    public GetCodeBody build() {
+      return new GetCodeBody(this);
     }
-
   }
 
 }

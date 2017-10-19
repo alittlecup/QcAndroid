@@ -74,4 +74,6 @@
 
   <dimen name="grid_expected_size">120dp</dimen>
 
+  <dimen name="dimen_common_input_60dp">60dp</dimen>
+
 </resources>

@@ -4,6 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.FrameLayout;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.android.AndroidInjector;
@@ -35,17 +40,23 @@ import javax.inject.Inject;
 public class SaasContainerActivity extends BaseActivity implements HasSupportFragmentInjector {
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
   @Inject SaasbaseRouterCenter routerCenter;
+  @BindView(R2.id.web_frag_layout) FrameLayout webFragLayout;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_base_frag);
+    ButterKnife.bind(this);
+    webFragLayout.setOnTouchListener(new View.OnTouchListener() {
+      @Override public boolean onTouch(View v, MotionEvent event) {
+        return false;
+      }
+    });
     onNewIntent(getIntent());
   }
 
   @Override protected Fragment getRouterFragment(Intent intent) {
     return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
   }
-
 
   @Override public AndroidInjector<Fragment> supportFragmentInjector() {
     return dispatchingFragmentInjector;

@@ -6,13 +6,13 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.Constants;
-import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.pos.di.AppModel;
+import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -72,7 +72,7 @@ public class PosApp extends Application implements HasActivityInjector, HasSuppo
     LogUtil.e("session:" + PreferenceUtils.getPrefString(this, "session_id", ""));
     PosAppComponent component = DaggerPosAppComponent.builder()
         .appModel(new AppModel.Builder()
-            .gymWrapper(new GymWrapper.Builder().brand(new Brand("1"))
+            .gymWrapper(new PosGymWrapper.Builder().brand(new Brand("1"))
                 .coachService(coachService)
                 .build())
             .loginStatus(new LoginStatus.Builder().userId("7060")

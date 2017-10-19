@@ -1,6 +1,6 @@
 include ':qcbase', ':saasbase', ':pos',
 //    ':trainer',
-    ':atest',
+//    ':atest',
     ':recruit',
 //    ':staff',
     ':qcim', ':sdk'

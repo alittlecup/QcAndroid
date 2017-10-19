@@ -33,21 +33,8 @@
         tools:text="杨楠啊 (1888888888)"
         android:layout_toRightOf="@id/img_exchange_head"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         style="@style/QcTextStyleLargeDark"
-        android:textColor="@color/white"
-        />
-
-    <TextView
-        android:id="@+id/tv_exchange_position"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="收银员"
-        android:layout_toRightOf="@id/img_exchange_head"
-        android:layout_below="@id/tv_exchange_name"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="6dp"
-        style="@style/QcTextStyleMediumDark"
         android:textColor="@color/white"
         />
 
@@ -55,14 +42,18 @@
         android:id="@+id/tv_exchange_now_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="当前职位"
-        android:background="@drawable/bg_empty_cornor_button"
-        android:layout_toRightOf="@id/tv_exchange_position"
+        android:text="@string/exchange_now_cashier"
+        android:background="@drawable/bg_cornor_71dp"
+        android:layout_toRightOf="@id/img_exchange_head"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:layout_below="@id/tv_exchange_name"
         android:textSize="11sp"
         android:textColor="@color/black"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         />
 
   </RelativeLayout>
