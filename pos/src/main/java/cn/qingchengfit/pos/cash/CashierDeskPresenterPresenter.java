@@ -6,9 +6,9 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.saasbase.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.inject.Inject;
 
 public class CashierDeskPresenterPresenter extends BasePresenter {
@@ -64,7 +64,7 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
 
   private void showView(){
     view.showTotal(getTotal() + current);
-    view.showCurrent(cmdLine+ (current == 0?"":StringUtils.getFloatDot2(current)));
+    view.showCurrent(cmdLine+ (current == 0?"":formatFloat2Dot(current)));
   }
 
   private float getTotal(){
@@ -77,17 +77,23 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
     return ret;
   }
 
+  private String formatFloat2Dot(float f){
+    return String.format(Locale.CHINA, "%.2f", f);
+  }
+
   private String getCmd(){
     StringBuilder ss = new StringBuilder();
     if (history != null){
       for (int i = 0; i < history.size(); i++) {
-        ss.append(StringUtils.getFloatDot2(history.get(i)));
+        ss.append(formatFloat2Dot(history.get(i)));
         if (i < history.size() -1)
           ss.append("+");
       }
     }
     return ss.toString();
   }
+
+
 
 
   @Override public void attachView(PView v) {
