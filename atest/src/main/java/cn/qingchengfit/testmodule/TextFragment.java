@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.items.TextItem;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import eu.davidea.flexibleadapter.items.IHeader;
 import java.util.ArrayList;
 
 /**
@@ -66,6 +68,7 @@ public class TextFragment extends BaseFragment {
     linearLayoutManager = new LinearLayoutManager(getContext());
     rv.setLayoutManager(linearLayoutManager);
     rv.setAdapter(commonFlexAdapter);
+    commonFlexAdapter.setDisplayHeadersAtStartUp(true).setStickyHeaders(true).setDisplayHeadersAtStartUp(true).showAllHeaders();
     if (savedInstanceState != null) {
       linearLayoutManager.scrollToPosition(savedInstanceState.getInt("pos", 0));
     }
@@ -81,7 +84,12 @@ public class TextFragment extends BaseFragment {
     super.onFinishAnimation();
     stuff(nestedFragmentFragment);
     for (int i = 0; i < 20; i++) {
-      commonFlexAdapter.addItem(new TextItem("xx" + i, R.style.QcTextStyleLargeDark));
+      IHeader header = null;
+      if (i %5 == 0) {
+        header = new StickerDateItem("aa"+i);
+        //commonFlexAdapter.addItem(header);
+      }
+      commonFlexAdapter.addItem(new TextItem("xx" + i, R.style.QcTextStyleLargeDark,header));
     }
   }
 

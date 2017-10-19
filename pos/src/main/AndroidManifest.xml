@@ -30,7 +30,7 @@
             />
       </intent-filter>
     </activity>
-    <activity android:name="cn.qingchengfit.saasbase.student.StudentActivity"
+    <activity android:name=".student.PosStudentActivity"
               android:taskAffinity="com.rongcapital.pos"
         >
       <intent-filter>

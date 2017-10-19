@@ -13,7 +13,6 @@ import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
-import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -76,26 +75,17 @@ public class CardtplOptionItem
 
     if (adapter.isSelected(position) ) {
       holder.chosen.setVisibility( View.VISIBLE);
-      int colorPrimary = CompatUtils.getColor(holder.title.getContext(), R.color.colorPrimary);
-      holder.supportType.setTextColor(colorPrimary);
-      holder.realIncome.setTextColor(colorPrimary);
-      holder.validDate.setTextColor(colorPrimary);
-      holder.title.setTextColor(colorPrimary);
-      holder.chargeLayout.setBackgroundResource(R.drawable.bg_rect_corner_primary);
+      holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_primary);
     } else {
       holder.chosen.setVisibility(View.GONE);
-      int colorgrey = CompatUtils.getColor(holder.title.getContext(), R.color.text_grey);
-      holder.supportType.setTextColor(colorgrey);
-      holder.realIncome.setTextColor(colorgrey);
-      holder.validDate.setTextColor(colorgrey);
-      holder.title.setTextColor(colorgrey);
-      holder.chargeLayout.setBackgroundResource(R.drawable.shape_bg_rect_grey_corner4);
+      holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_grey);
     }
 
     holder.tagOnlyStaff.setVisibility(option.for_staff ? View.VISIBLE : View.GONE);
-
-
-
+    holder.supportType.setPressed(adapter.isSelected(position));
+    holder.realIncome.setPressed(adapter.isSelected(position));
+    holder.validDate.setPressed(adapter.isSelected(position));
+    holder.title.setPressed(adapter.isSelected(position));
 
     if (adapter instanceof CommonFlexAdapter && ((CommonFlexAdapter) adapter).getStatus() == 1) {
 

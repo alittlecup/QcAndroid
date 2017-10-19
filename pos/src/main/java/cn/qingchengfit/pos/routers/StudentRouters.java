@@ -1,4 +1,8 @@
-package cn.qingchengfit.saasbase.events;
+package cn.qingchengfit.pos.routers;
+
+import android.support.v4.app.Fragment;
+import cn.qingchengfit.pos.student.PosStudentAddFragment;
+import cn.qingchengfit.saasbase.routers.studentImpl;
 
 /**
  * power by
@@ -18,11 +22,11 @@ package cn.qingchengfit.saasbase.events;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/10/19.
  */
 
-public class EventSaasFresh {
-  public static class StudentList{}
-  public static class CardList{}
-  public static class StaffList{}
+public class StudentRouters extends studentImpl {
+  @Override public Fragment toStudentAddFragment() {
+    return new PosStudentAddFragment();
+  }
 }

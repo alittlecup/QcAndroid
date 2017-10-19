@@ -8,9 +8,9 @@ import cn.qingchengfit.pos.di.BindPosCardActivity;
 import cn.qingchengfit.pos.di.BindSettingActivity;
 import cn.qingchengfit.saasbase.di.BindBillActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
-import cn.qingchengfit.saasbase.di.BindStaffActivity;
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
 import dagger.Binds;
+import cn.qingchengfit.pos.di.BindPosStaffActivity;
+import cn.qingchengfit.pos.di.BindPosStudentActivity;
 import dagger.Component;
 import dagger.Module;
 import dagger.Subcomponent;
@@ -41,10 +41,10 @@ import dagger.multibindings.IntoMap;
  * Created by Paper on 2017/9/25.
  */
 @Component(modules = { AppModel.class,
-    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindStudentActivity.class,
-  BindPosCardActivity.class, BindStaffActivity.class, BindBillActivity.class, BindLoginActivity.class,
-  BindExchangeActivity.class, BindSettingActivity.class, PosAppComponent.SplashModule.class,
-    BindSaasCommonActivity.class,
+    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindPosStudentActivity.class,
+  BindPosCardActivity.class,  BindBillActivity.class, BindLoginActivity.class,
+  BindExchangeActivity.class, BindSettingActivity.class, BindSaasCommonActivity.class,
+  BindPosStaffActivity.class, PosAppComponent.SplashModule.class,
 })
 public interface PosAppComponent {
   void inject(PosApp app);

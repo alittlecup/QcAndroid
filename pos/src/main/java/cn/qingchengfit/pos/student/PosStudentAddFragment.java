@@ -12,13 +12,20 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
+import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -53,9 +60,10 @@ public class PosStudentAddFragment extends BaseFragment {
   private AddStdudentBody body = new AddStdudentBody();
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_pos_student_add, container, false);
     unbinder = ButterKnife.bind(this, view);
+    initToolbar(toolbar);
     return view;
   }
 
@@ -79,22 +87,36 @@ public class PosStudentAddFragment extends BaseFragment {
     body.username = civName.getContent();
     body.phone = civPhone.getContent();
     int info = body.checkInPos();
-    if (info >0)
+    if (info > 0) {
       showAlert(info);
-    else
-      studentModel.addStudent(body);
+    } else {
+      RxRegiste(studentModel.addStudent(body)
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse>() {
+          @Override public void onNext(QcDataResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              onShowError("");
+              RxBus.getBus().post(new EventSaasFresh.StudentList());
+            } else {
+              onShowError(qcResponse.getMsg());
+            }
+          }
+        }));
+    }
   }
 
   @Override public String getFragmentName() {
     return PosStudentAddFragment.class.getName();
   }
 
-
   @OnClick(R.id.civ_gender) public void onViewClicked() {
-    new DialogList(getContext()).list(new String[] { "男", "女" }, new AdapterView.OnItemClickListener() {
-      @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        body.gender = position;
-      }
-    }).show();
+    new DialogList(getContext()).list(new String[] { "男", "女" },
+      new AdapterView.OnItemClickListener() {
+        @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+          body.gender = position;
+        }
+      }).show();
   }
 }

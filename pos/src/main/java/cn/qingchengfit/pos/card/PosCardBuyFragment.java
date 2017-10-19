@@ -69,6 +69,8 @@ public class PosCardBuyFragment extends CardBuyFragment {
       args.putString("tableId", "11台");                 // 台位
       args.putString("funCode", "10");                 // 支付功能码
       args.putString("bizAndOrder", bizAndOrder);
+      args.putString("customerNo", "7178000623LD7V840");
+      args.putString("phoneNo", "15123358198");
       intent.putExtra("data", args);
       intent.setAction(ACTION_PAY);
       startActivityForResult(intent, 100);

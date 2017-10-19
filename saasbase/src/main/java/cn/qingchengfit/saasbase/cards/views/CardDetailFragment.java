@@ -84,6 +84,7 @@ import javax.inject.Inject;
     initToolbar(toolbar);
     delegatePresenter(presenter,this);
     presenter.setCardId(cardid);
+    initListener(this);
     RxBusAdd(EventRecycleClick.class)
         .subscribe(new BusSubscribe<EventRecycleClick>() {
           @Override public void onNext(EventRecycleClick eventRecycleClick) {

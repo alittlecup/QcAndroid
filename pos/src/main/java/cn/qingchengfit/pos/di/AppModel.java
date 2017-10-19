@@ -12,6 +12,7 @@ import cn.qingchengfit.pos.models.StudentModel;
 import cn.qingchengfit.pos.routers.CardRouters;
 import cn.qingchengfit.pos.routers.PosRouterCenter;
 import cn.qingchengfit.pos.routers.StaffRouters;
+import cn.qingchengfit.pos.routers.StudentRouters;
 import cn.qingchengfit.pos.routers.exchangeImpl;
 import cn.qingchengfit.pos.routers.settingImpl;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
@@ -30,12 +31,10 @@ import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.routers.Istudent;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.billImpl;
 import cn.qingchengfit.saasbase.routers.commonImpl;
 import cn.qingchengfit.saasbase.routers.courseImpl;
-import cn.qingchengfit.saasbase.routers.studentImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import dagger.Module;
 import dagger.Provides;
@@ -78,7 +77,7 @@ public class AppModel {
   }
 
   @Provides SaasbaseRouterCenter providerRouterCenter(){
-    return new SaasbaseRouterCenter(new billImpl(),new CardRouters(),new commonImpl(),new courseImpl(),new StaffRouters(),new studentImpl());
+    return new SaasbaseRouterCenter(new billImpl(),new CardRouters(),new commonImpl(),new courseImpl(),new StaffRouters(),new StudentRouters());
   }
   @Provides PosRouterCenter providerPosRouterCenter(){
     return new PosRouterCenter(new settingImpl(),new exchangeImpl());
@@ -98,10 +97,6 @@ public class AppModel {
 
   @Provides PosGymWrapper provideGym() {
     return gymWrapper;
-  }
-
-  @Provides Istudent provideStudent(){
-    return new studentImpl();
   }
 
   @Provides IStudentModel providerStudentModel(){return  new StudentModel(qcrestRepository,gymWrapper,loginStatus);}

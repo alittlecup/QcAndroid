@@ -24,7 +24,6 @@ import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.student.presenters.ChooseAndSearchPresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
-import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CompatEditView;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -79,8 +78,8 @@ import rx.functions.Action1;
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
-    RxBusAdd(EventSaasFresh.CardList.class).subscribe(new BusSubscribe<EventSaasFresh.CardList>() {
-      @Override public void onNext(EventSaasFresh.CardList cardList) {
+    RxBusAdd(EventSaasFresh.StaffList.class).subscribe(new BusSubscribe<EventSaasFresh.StaffList>() {
+      @Override public void onNext(EventSaasFresh.StaffList cardList) {
            onRefresh();
       }
     });
@@ -140,7 +139,7 @@ import rx.functions.Action1;
    * 新增会员
    */
   @OnClick(R2.id.btn_add_student) public void onBtnAddStudentClicked() {
-    routeTo(AppUtils.getRouterUri(getContext(), "/student/add/"), null);
+    routeTo("/add/", null);
   }
 
   @Override public void onStudentList(List<QcStudentBean> stus) {

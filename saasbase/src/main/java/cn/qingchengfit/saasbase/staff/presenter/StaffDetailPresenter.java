@@ -36,7 +36,7 @@ public class StaffDetailPresenter extends BasePresenter {
   @Inject LoginStatus loginStatus;
   @Inject IStaffModel staffModel;
   @Inject StaffSelectData staffSelectData;
-  private ManagerBody body;
+  private ManagerBody body = new ManagerBody();
   private MVPView view;
 
   @Inject public StaffDetailPresenter() {
@@ -58,6 +58,10 @@ public class StaffDetailPresenter extends BasePresenter {
     view = (MVPView) v;
     if (staffSelectData.staff != null)
       view.onStaff(staffSelectData.staff);
+  }
+
+  public void setGender(int g){
+    body.setGender(g);
   }
 
   @Override public void attachIncomingIntent(Intent intent) {
