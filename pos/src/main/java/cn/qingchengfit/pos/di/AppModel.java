@@ -81,7 +81,7 @@ public class AppModel {
     return new SaasbaseRouterCenter(new billImpl(),new CardRouters(),new commonImpl(),new courseImpl(),new StaffRouters(),new studentImpl());
   }
   @Provides PosRouterCenter providerPosRouterCenter(){
-    return new PosRouterCenter(new exchangeImpl(),new settingImpl());
+    return new PosRouterCenter(new settingImpl(),new exchangeImpl());
   }
 
   @Provides PosApp provideApplicationContext() {

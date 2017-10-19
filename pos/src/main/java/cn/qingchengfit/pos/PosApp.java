@@ -45,10 +45,12 @@ import javax.inject.Inject;
 public class PosApp extends Application implements HasActivityInjector, HasSupportFragmentInjector {
   @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+  public static Context context;
   @Override public void onCreate() {
     super.onCreate();
     ToastUtils.init(this);
     initInjcet();
+    context = this;
   }
 
   @Override protected void attachBaseContext(Context base) {
@@ -65,7 +67,7 @@ public class PosApp extends Application implements HasActivityInjector, HasSuppo
     ToastUtils.init(this);
     Staff staff = new Staff("纸团", "15123358198", "", 1);
     staff.setId("3288");
-    PreferenceUtils.setPrefString(this, "session_id", "30kj9b0jyy5edj4mhxt0d8jj4cricxgr");
+    //PreferenceUtils.setPrefString(this, "session_id", "30kj9b0jyy5edj4mhxt0d8jj4cricxgr");
     CoachService coachService = new CoachService();
     coachService.setId("8670");
     coachService.setModel("staff_gym");

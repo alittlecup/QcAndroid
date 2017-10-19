@@ -25,6 +25,7 @@
       app:civ_lable="@string/gender"
       app:civ_text_color="@color/black"
       app:civ_hint="@string/select_gender"
+      app:civ_clickable="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView

@@ -3,13 +3,14 @@ package cn.qingchengfit.pos.setting.presenter;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.cashier.model.Cashier;
+import cn.qingchengfit.pos.cashier.model.CashierBody;
 import cn.qingchengfit.pos.cashier.model.CashierWrapper;
+import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.net.PosApi;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class CashierPresenter extends BasePresenter {
 
   private MVPView view;
   @Inject QcRestRepository qcRestRepository;
-  @Inject GymWrapper gymWrapper;
+  @Inject PosGymWrapper gymWrapper;
 
   @Inject public CashierPresenter() {
   }
@@ -68,7 +69,11 @@ public class CashierPresenter extends BasePresenter {
     params.put("gender", gender);
     params.put("gym_id", gymWrapper.id());
     RxRegiste(qcRestRepository.createPostApi(PosApi.class)
-        .qcAddCashier(params)
+        .qcAddCashier(new CashierBody.Builder().username(username)
+            .phone(phone)
+            .gender(gender)
+            .gym_id(gymWrapper.id())
+            .build())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -103,12 +108,9 @@ public class CashierPresenter extends BasePresenter {
   }
 
   public void onModifyCashier(String cashierId, String username, String phone, int gender) {
-    HashMap<String, Object> params = new HashMap<>();
-    params.put("username", username);
-    params.put("phone", phone);
-    params.put("gender", gender);
     RxRegiste(qcRestRepository.createPostApi(PosApi.class)
-        .qcModifyCashier(cashierId, params)
+        .qcModifyCashier(cashierId,
+            new CashierBody.Builder().username(username).phone(phone).gender(gender).build())
         .onBackpressureBuffer()
         .subscribe(new Action1<QcDataResponse>() {
           @Override public void call(QcDataResponse qcDataResponse) {

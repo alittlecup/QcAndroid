@@ -8,6 +8,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.pos.cashier.model.Cashier;
+import cn.qingchengfit.utils.CircleImgWrapper;
+import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -19,6 +22,12 @@ import java.util.List;
 
 public class ItemCashier extends AbstractFlexibleItem<ItemCashier.ItemCashierVH> {
 
+  Cashier cashier;
+
+  public ItemCashier(Cashier cashier) {
+    this.cashier = cashier;
+  }
+
   @Override public ItemCashierVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
       ViewGroup parent) {
     return new ItemCashierVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
@@ -26,7 +35,18 @@ public class ItemCashier extends AbstractFlexibleItem<ItemCashier.ItemCashierVH>
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemCashierVH holder, int position,
       List payloads) {
+    Glide.with(holder.itemView.getContext())
+        .load(cashier.avatar)
+        .asBitmap()
+        .into(new CircleImgWrapper(holder.imgCashierHead, holder.itemView.getContext()));
+    holder.tvCashierName.setText(cashier.username);
+    holder.tvCashierPhone.setText(cashier.phone);
+    holder.imgCashierGender.setImageResource(cashier.gender == 0 ? R.drawable.ic_gender_signal_male
+        : R.drawable.ic_gender_signal_female);
+  }
 
+  public Cashier getData(){
+    return cashier;
   }
 
   @Override public boolean equals(Object o) {
@@ -42,6 +62,7 @@ public class ItemCashier extends AbstractFlexibleItem<ItemCashier.ItemCashierVH>
     @BindView(R.id.img_cashier_head) ImageView imgCashierHead;
     @BindView(R.id.tv_cashier_name) TextView tvCashierName;
     @BindView(R.id.tv_cashier_phone) TextView tvCashierPhone;
+    @BindView(R.id.img_cashier_gender) ImageView imgCashierGender;
 
     public ItemCashierVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

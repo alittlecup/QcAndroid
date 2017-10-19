@@ -2,6 +2,7 @@ package cn.qingchengfit.pos;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.SuperUser;
 import cn.qingchengfit.model.base.Brand;
@@ -14,7 +15,9 @@ import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.login.LoginActivity;
 import cn.qingchengfit.pos.login.model.GymResponse;
 import cn.qingchengfit.pos.login.presenter.LoginPresenter;
+import cn.qingchengfit.pos.main.MainActivity;
 import cn.qingchengfit.pos.net.PosApi;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -25,6 +28,8 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
+import static cn.qingchengfit.pos.PosApp.context;
 
 /**
  * Created by fb on 2017/10/18.
@@ -87,7 +92,12 @@ public class SplashActivity extends BaseActivity{
   }
 
   private void goMain() {
-    Intent toMain = new Intent(SplashActivity.this, LoginActivity.class);
+    Intent toMain;
+    if (TextUtils.isEmpty(PreferenceUtils.getPrefString(context, "qingcheng.session", ""))) {
+      toMain = new Intent(SplashActivity.this, LoginActivity.class);
+    }else{
+      toMain = new Intent(SplashActivity.this, MainActivity.class);
+    }
     toMain.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TOP);
     startActivity(toMain);
     overridePendingTransition(0, 0);

@@ -22,31 +22,26 @@ import java.util.List;
 
 public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.ItemFilterVH> {
 
-  private List<Content> contents;
-  private OnCheckedSelectListener onCheckedSelectListener;
-  private String result;
+  private List<Content> contents = new ArrayList<>();
+  public List<Integer> resultList = new ArrayList<>();
 
-  public ItemFilterCommon(List<Content> contents, OnCheckedSelectListener onCheckedSelectListener) {
+  public ItemFilterCommon(List<Content> contents) {
     this.contents = contents;
-    this.onCheckedSelectListener = onCheckedSelectListener;
   }
 
 
   @Override public ItemFilterVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
       ViewGroup parent) {
     ItemFilterVH holder = new ItemFilterVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
-    holder.billFilterCommon.setOnCheckoutPositionListener(new QcAutoLineRadioGroup.OnCheckoutPositionListener() {
-      @Override public void onCheckPosition(List<Integer> checkedList) {
-        if (onCheckedSelectListener != null){
-          List<Content> selectContent = new ArrayList<>();
-          for (int i : checkedList) {
-            selectContent.add(contents.get(i));
-          }
-          onCheckedSelectListener.onCheckedContent(selectContent);
-        }
-      }
-    });
     return holder;
+  }
+
+  public List<Content> getCheckedContent(){
+    List<Content> tempList = new ArrayList<>();
+    for (int position : resultList) {
+      tempList.add(contents.get(position));
+    }
+    return tempList;
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemFilterVH holder, int position,
@@ -74,14 +69,12 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
       ButterKnife.bind(this, view);
       billFilterCommon.setOnCheckoutPositionListener(new QcAutoLineRadioGroup.OnCheckoutPositionListener() {
         @Override public void onCheckPosition(List<Integer> checkedList) {
-
+          if (checkedList.size() >= 0){
+            resultList.clear();
+            resultList.addAll(checkedList);
+          }
         }
       });
     }
   }
-
-  public interface OnCheckedSelectListener{
-    void onCheckedContent(List<Content> contentList);
-  }
-
 }

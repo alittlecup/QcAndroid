@@ -7,12 +7,14 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.pos.PosApp;
 import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.login.model.GetCodeBody;
 import cn.qingchengfit.pos.login.model.Login;
 import cn.qingchengfit.pos.login.model.LoginBody;
 import cn.qingchengfit.pos.net.PosApi;
-import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.utils.PreferenceUtils;
 import java.util.HashMap;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -70,26 +72,13 @@ public class LoginPresenter extends BasePresenter {
           @Override public void call(QcDataResponse<Login> qcResponLogin) {
             if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
               view.onSuccess();
-              //PreferenceUtils.setPrefString(App.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);
-              //PreferenceUtils.setPrefString(App.context, Configs.PREFER_PHONE, loginBody.phone);
-              //PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_ID, qcResponLogin.data.staff.getId());
-              //
-              //App.staffId = qcResponLogin.data.staff.getId();
-              //PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, qcResponLogin.data.staff.getUsername());
-              //PreferenceUtils.setPrefString(App.context, Configs.PREFER_USER_ID, qcResponLogin.getData().user.getId());
-              //studentAction.delAllStudent();
-              //mLoginView.onShowLogining();
-              //getService(qcResponLogin);
+              PreferenceUtils.setPrefString(PosApp.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);
+              PreferenceUtils.setPrefString(PosApp.context, "session_id", qcResponLogin.data.session_id);
             } else {
               view.onFailed(qcResponLogin.msg);
             }
           }
-        }, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-            //mLoginView.cancelLogin();
-            ToastUtils.show("系统维护中...请稍后再试");
-          }
-        }));
+        }, new NetWorkThrowable()));
   }
 
   public interface MVPView extends CView {

@@ -1,6 +1,7 @@
 package cn.qingchengfit.pos.setting;
 
 import cn.qingchengfit.pos.PosBaseActivity;
+import cn.qingchengfit.pos.cashier.CashierListFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -24,7 +25,8 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/10/18.
  */
 @Trunk(fragments = {
-  FragmentSetting.class,FragmentGymInfo.class, AddCashierFragment.class,
+    SettingFragment.class, GymInfoFragment.class, AddCashierFragment.class,
+    CashierListFragment.class, StaffInfoFragment.class,
 })
 public class SettingActivity extends PosBaseActivity {
 

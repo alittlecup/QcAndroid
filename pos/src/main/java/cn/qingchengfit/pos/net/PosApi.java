@@ -1,6 +1,7 @@
 package cn.qingchengfit.pos.net;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.pos.cashier.model.CashierBody;
 import cn.qingchengfit.pos.cashier.model.CashierWrapper;
 import cn.qingchengfit.pos.login.model.GetCodeBody;
 import cn.qingchengfit.pos.login.model.GymResponse;
@@ -16,7 +17,6 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
-import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import java.util.HashMap;
@@ -187,7 +187,7 @@ public interface PosApi {
    * 新增收银员
    */
   @POST("/api/rongshu/cashier/") rx.Observable<QcDataResponse> qcAddCashier(
-      @QueryMap HashMap<String, Object> params);
+      @Body CashierBody body);
 
   /**
    * 删除收银员
@@ -199,7 +199,7 @@ public interface PosApi {
    * 修改收银员
    */
   @PUT("/api/rongshu/cashier/{cashier_id}/") rx.Observable<QcDataResponse> qcModifyCashier(
-      @Path("cashier_id") String cashierId, @QueryMap HashMap<String, Object> params);
+      @Path("cashier_id") String cashierId, @Body CashierBody body);
 
   /**
    * 获取收银员

@@ -25,7 +25,7 @@ import javax.inject.Inject;
  * Created by fb on 2017/10/13.
  */
 @Leaf(module = "setting",path = "/home/")
-public class FragmentSetting extends BaseFragment implements CashierPresenter.MVPView{
+public class SettingFragment extends BaseFragment implements CashierPresenter.MVPView{
 
   @BindView(R.id.img_setting_gym) ImageView imgSettingGym;
   @BindView(R.id.tv_setting_gym_name) TextView tvSettingGymName;
@@ -51,7 +51,7 @@ public class FragmentSetting extends BaseFragment implements CashierPresenter.MV
   @OnClick(R.id.input_cashier)
   public void onCashier(){
      //TODO 收银员列表页面
-    routeTo(AppUtils.getRouterUri(getContext(), "/setting/cashier/add/"), null);
+    routeTo(AppUtils.getRouterUri(getContext(), "/setting/cashier/list/"), null);
   }
 
   @Override public void onDestroyView() {

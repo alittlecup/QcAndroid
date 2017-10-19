@@ -23,4 +23,7 @@
   <string name="tips_exchange">交班后将自动登出！</string>
   <string name="exchange_confirm">确认交班？</string>
   <string name="exchange_now_cashier">当前收银员</string>
+
+  <!--收银员-->
+  <string name="tips_confirm_delete_cashier">确定删除收银员？</string>
 </resources>
