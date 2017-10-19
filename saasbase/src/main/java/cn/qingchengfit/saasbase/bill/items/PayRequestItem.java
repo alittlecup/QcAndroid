@@ -1,4 +1,4 @@
-package cn.qingchengfit.pos.pay.items;
+package cn.qingchengfit.saasbase.bill.items;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,8 +7,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.pos.R;
-import cn.qingchengfit.pos.pay.beans.PayRequest;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.bill.beans.PayRequest;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -41,16 +42,16 @@ public class PayRequestItem extends AbstractFlexibleItem<PayRequestItem.PayReque
   }
 
   public class PayRequestVH extends FlexibleViewHolder {
-    @BindView(R.id.tv_order_no) TextView tvOrderNo;
-    @BindView(R.id.tv_status) TextView tvStatus;
-    @BindView(R.id.tv_type_and_cardtpl) TextView tvTypeAndCardtpl;
-    @BindView(R.id.tv_pay_money) TextView tvPayMoney;
-    @BindView(R.id.tv_charge_money) TextView tvChargeMoney;
-    @BindView(R.id.tv_valid_day) TextView tvValidDay;
-    @BindView(R.id.tv_time) TextView tvTime;
-    @BindView(R.id.tv_staff) TextView tvStaff;
-    @BindView(R.id.btn_cancel) Button btnCancel;
-    @BindView(R.id.btn_pay) Button btnPay;
+    @BindView(R2.id.tv_order_no) TextView tvOrderNo;
+    @BindView(R2.id.tv_status) TextView tvStatus;
+    @BindView(R2.id.tv_type_and_cardtpl) TextView tvTypeAndCardtpl;
+    @BindView(R2.id.tv_pay_money) TextView tvPayMoney;
+    @BindView(R2.id.tv_charge_money) TextView tvChargeMoney;
+    @BindView(R2.id.tv_valid_day) TextView tvValidDay;
+    @BindView(R2.id.tv_time) TextView tvTime;
+    @BindView(R2.id.tv_staff) TextView tvStaff;
+    @BindView(R2.id.btn_cancel) Button btnCancel;
+    @BindView(R2.id.btn_pay) Button btnPay;
     public PayRequestVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);

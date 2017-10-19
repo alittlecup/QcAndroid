@@ -2,6 +2,7 @@ package cn.qingchengfit.pos.main;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,12 +20,14 @@ import butterknife.OnClick;
 import cn.qingchengfit.items.ImageActionItem;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * power by
@@ -48,10 +54,13 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
   @BindView(R.id.rv) RecyclerView rv;
+  @BindView(R.id.tv_noti_count) TextView tvNotiCount;
+  @BindView(R.id.btn_to_pay) Button btnToPay;
+  @BindView(R.id.layout_notification) LinearLayout layoutNotification;
   private CommonFlexAdapter flexAdapter;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_main, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
@@ -76,11 +85,22 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
     toolbar.inflateMenu(R.menu.menu_setting);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        routeTo(AppUtils.getRouterUri(getContext(),"/setting/home/"),null);
+        routeTo(AppUtils.getRouterUri(getContext(), "/setting/home/"), null);
         return true;
       }
     });
     toolbarTitle.setText("场馆名称？");
+    toolbarTitle.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        showNoti(Math.abs(new Random(System.currentTimeMillis()).nextInt()) % 2);
+      }
+    });
+  }
+
+  public void showNoti(int count) {
+    ViewCompat.animate(layoutNotification).translationY(count > 0 ?0f: MeasureUtils.dpToPx(100f,getResources()))
+      .setDuration(100L).setInterpolator(new DecelerateInterpolator()).start();
+    tvNotiCount.setText(Integer.toString(count));
   }
 
   @Override public String getFragmentName() {
@@ -116,7 +136,7 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
    * 直接收银
    */
   @OnClick(R.id.btn_cash) public void onBtnCashClicked() {
-
+    routeTo("desk","/home/",null);
   }
 
   /**
@@ -131,5 +151,9 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
    */
   @OnClick(R.id.btn_charge_card) public void onBtnChargeCardClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/card/list/home/"), null);
+  }
+
+  @OnClick(R.id.btn_to_pay) public void onViewClicked() {
+    routeTo("bill","/pay/request/list/",null);
   }
 }

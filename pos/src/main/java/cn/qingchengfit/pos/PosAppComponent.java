@@ -2,6 +2,7 @@ package cn.qingchengfit.pos;
 
 import android.app.Activity;
 import cn.qingchengfit.pos.di.AppModel;
+import cn.qingchengfit.pos.di.BindCashierDeskActivity;
 import cn.qingchengfit.pos.di.BindExchangeActivity;
 import cn.qingchengfit.pos.di.BindLoginActivity;
 import cn.qingchengfit.pos.di.BindPosCardActivity;
@@ -44,7 +45,7 @@ import dagger.multibindings.IntoMap;
     AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindPosStudentActivity.class,
   BindPosCardActivity.class,  BindBillActivity.class, BindLoginActivity.class,
   BindExchangeActivity.class, BindSettingActivity.class, BindSaasCommonActivity.class,
-  BindPosStaffActivity.class, PosAppComponent.SplashModule.class,
+  BindPosStaffActivity.class, PosAppComponent.SplashModule.class, BindCashierDeskActivity.class
 })
 public interface PosAppComponent {
   void inject(PosApp app);

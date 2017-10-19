@@ -1,4 +1,4 @@
-package cn.qingchengfit.pos.pay.beans;
+package cn.qingchengfit.saasbase.bill.beans;
 
 /**
  * power by
