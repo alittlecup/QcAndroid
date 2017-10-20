@@ -14,10 +14,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
+import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -73,7 +76,11 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
     View view = inflater.inflate(R.layout.fragment_setting_staff, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
-    Glide.with(getContext()).load(cashier.avatar).into(imgStaffHead);
+    Glide.with(getContext())
+        .load(cashier.avatar)
+        .asBitmap()
+        .placeholder(R.drawable.ic_default_head_nogender)
+        .into(new CircleImgWrapper(imgStaffHead, getContext()));
     inputSettingStaffDetailName.setContent(cashier.username);
     inputSettingStaffGender.setContent(cashier.gender == 1 ? "女" : "男");
     inputSettingStaffPhone.setContent(cashier.phone);
@@ -140,6 +147,8 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
 
   @Override public void onDeleteSuccess() {
     ToastUtils.show("删除成功");
+    RxBus.getBus().post(new RefreshCashierEvent());
+    getActivity().onBackPressed();
   }
 
   @Override public void onModifySuccess() {

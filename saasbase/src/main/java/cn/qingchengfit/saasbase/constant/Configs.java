@@ -25,6 +25,7 @@ public class Configs {
     public static final String URL_QC_TRAIN = "mobile/staff/training/";
     public static final String SEPARATOR = "、";
     public static final String PREFER_SESSION = "qingcheng.session";
+    public static final String PREFER_SESSION_ID = "session_id";
     public static final String PREFER_PHONE = "qingcheng.phone";
     public static final String PREFER_WORK_NAME = "qingcheng.work.name";
     public static final String PREFER_WORK_ID = "qingcheng.work.id";

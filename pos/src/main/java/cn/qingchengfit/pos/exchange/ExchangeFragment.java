@@ -1,5 +1,6 @@
 package cn.qingchengfit.pos.exchange;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.pos.login.LoginActivity;
+import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -21,7 +25,7 @@ import com.anbillon.flabellum.annotations.Leaf;
  * Created by fb on 2017/10/17.
  */
 @Leaf(module = "exchange",path = "/home/")
-public class FragmentExchange extends BaseFragment {
+public class ExchangeFragment extends BaseFragment {
 
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
@@ -39,7 +43,14 @@ public class FragmentExchange extends BaseFragment {
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_exchange, container, false);
     unbinder = ButterKnife.bind(this, view);
+    setToolbar(toolbar);
     return view;
+  }
+
+  private void setToolbar(Toolbar toolbar){
+    initToolbar(toolbar);
+    toolbarTitle.setText("交班");
+
   }
 
   @OnClick(R.id.btn_exchange)
@@ -49,6 +60,12 @@ public class FragmentExchange extends BaseFragment {
         getResources().getString(R.string.exchange_confirm));
     dialogFragment.setOnConfirmListener(new TipTextDialogFragment.OnConfirmListener() {
       @Override public void onConfirm() {
+        PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION, "");
+        PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION_ID, "");
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        getContext().startActivity(intent);
+        getActivity().finish();
       }
     });
     dialogFragment.show(getFragmentManager(), null );

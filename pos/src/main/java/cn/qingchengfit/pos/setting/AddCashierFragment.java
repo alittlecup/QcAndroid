@@ -52,7 +52,13 @@ public class AddCashierFragment extends BaseFragment implements CashierPresenter
     View view = inflater.inflate(R.layout.fragment_add_crashier, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(cashierPresenter, this);
+    setToolbar(toolbar);
     return view;
+  }
+
+  private void setToolbar(Toolbar toolbar){
+    initToolbar(toolbar);
+    toolbarTitle.setText("添加收银员");
   }
 
   @OnClick(R.id.input_add_cashier_gender)

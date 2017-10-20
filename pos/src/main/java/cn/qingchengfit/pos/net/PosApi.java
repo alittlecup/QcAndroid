@@ -23,6 +23,7 @@ import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -192,8 +193,9 @@ public interface PosApi {
   /**
    * 删除收银员
    */
-  @DELETE("/api/rongshu/cashier/{cashier_id}/") rx.Observable<QcDataResponse> qcDeleteCashier(
-      @Path("cashier_id") String cashierId, @QueryMap HashMap<String, Object> params);
+  @HTTP(method = "DELETE", path = "/api/rongshu/cashier/{cashier_id}/", hasBody = true)
+  rx.Observable<QcDataResponse> qcDeleteCashier(
+      @Path("cashier_id") String cashierId, @Body HashMap<String, Object> params);
 
   /**
    * 修改收银员
@@ -204,6 +206,6 @@ public interface PosApi {
   /**
    * 获取收银员
    */
-  @GET("/api/rongshu/cashier/") rx.Observable<QcDataResponse<CashierWrapper>> qcGetCashier();
+  @GET("/api/rongshu/cashier/") rx.Observable<QcDataResponse<CashierWrapper>> qcGetCashier(@QueryMap HashMap<String, Object> params);
 
 }

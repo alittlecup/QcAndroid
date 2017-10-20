@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -25,8 +27,8 @@ import com.anbillon.flabellum.annotations.Leaf;
  */
 
 //账单页面
-@Leaf(module = "bill", path = "/home/list/") public class FragmentBillHome extends BaseFragment implements
-    DrawerLayout.DrawerListener {
+@Leaf(module = "bill", path = "/home/list/") public class BillHomeFragment extends BaseFragment
+    implements DrawerLayout.DrawerListener {
 
   @BindView(R2.id.tv_bill_total_amount) TextView tvBillTotalAmount;
   @BindView(R2.id.tv_bill_withdraw) TextView tvBillWithdraw;
@@ -40,6 +42,7 @@ import com.anbillon.flabellum.annotations.Leaf;
   @BindView(R2.id.tv_filter) TextView tvFilter;
   @BindView(R2.id.frag_bill_filter) FrameLayout fragBillFilter;
   @BindView(R2.id.drawer_filter) DrawerLayout drawerFilter;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -49,7 +52,19 @@ import com.anbillon.flabellum.annotations.Leaf;
     getChildFragmentManager().beginTransaction()
         .replace(R.id.frag_bill_filter, new BillFilterFragment())
         .commit();
+    setToolbar(toolbar);
     return view;
+  }
+
+  private void setToolbar(Toolbar toolbar){
+    initToolbar(toolbar);
+    toolbar.inflateMenu(R.menu.menu_cash);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        //TODO 扫码
+        return false;
+      }
+    });
   }
 
   @Override public boolean isBlockTouch() {

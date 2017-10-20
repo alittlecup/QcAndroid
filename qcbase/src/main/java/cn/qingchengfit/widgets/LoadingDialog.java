@@ -52,8 +52,9 @@ public class LoadingDialog extends Dialog {
         if(window != null){
             window.getDecorView().setPadding(0, 0, 0, 0);
             WindowManager.LayoutParams lp = window.getAttributes();
-            lp.width = MeasureUtils.dpToPx(150f, getContext().getResources());
-            lp.height = MeasureUtils.dpToPx(130f, getContext().getResources());
+            lp.width = MeasureUtils.dpToPx(90f, getContext().getResources());
+            lp.height = MeasureUtils.dpToPx(90f, getContext().getResources());
+            window.setBackgroundDrawableResource(R.drawable.bg_input_loading_cornor);
             window.setAttributes(lp);
             imgLoading.startAnimation(rotate);
             super.show();

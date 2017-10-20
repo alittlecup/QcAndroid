@@ -1,7 +1,6 @@
 package cn.qingchengfit.pos.login.model;
 
-import cn.qingchengfit.model.base.Personage;
-import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.pos.cashier.model.Cashier;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -19,6 +18,5 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Login {
     @SerializedName("session_id") public String session_id;
-    @SerializedName("staff") public Staff staff;
-    @SerializedName("user") public Personage user;
+    public Cashier cashier;
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.setting.ItemCashier;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
@@ -21,6 +22,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 /**
  * Created by fb on 2017/10/19.
@@ -46,8 +48,17 @@ import javax.inject.Inject;
     delegatePresenter(presenter, this);
     setToolbar(toolbar);
     initListener(this);
+    initBus();
     presenter.qcGetCashier();
     return root;
+  }
+
+  private void initBus(){
+    RxBusAdd(RefreshCashierEvent.class).onBackpressureLatest().subscribe(new Action1<RefreshCashierEvent>() {
+      @Override public void call(RefreshCashierEvent refreshCashierEvent) {
+        presenter.qcGetCashier();
+      }
+    });
   }
 
   private void setToolbar(Toolbar toolbar) {

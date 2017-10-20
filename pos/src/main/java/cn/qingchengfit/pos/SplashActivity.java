@@ -79,6 +79,7 @@ public class SplashActivity extends BaseActivity{
               CoachService coachService = new CoachService();
               coachService.setId(gymQcDataResponse.data.gym.id);
               coachService.setName(gymQcDataResponse.data.gym.name);
+              coachService.setPhoto(gymQcDataResponse.data.gym.photo);
               gymWrapper.setCoachService(coachService);
               gymWrapper.setBrand(new Brand.Builder().name(gymQcDataResponse.data.gym.brand_name).build());
               gymWrapper.setSuperuser(new SuperUser(gymQcDataResponse.data.gym.superuser.username,

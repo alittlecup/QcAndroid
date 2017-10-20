@@ -22,4 +22,9 @@
     <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
 
   </style>
+
+  <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+    <item name="actionMenuTextColor">@color/colorPrimary</item>
+  </style>
+
 </resources>
