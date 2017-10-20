@@ -19,6 +19,14 @@ public class PayRequestItem extends AbstractFlexibleItem<PayRequestItem.PayReque
 
   PayRequest payRequest;
 
+  public PayRequest getPayRequest() {
+    return payRequest;
+  }
+
+  public void setPayRequest(PayRequest payRequest) {
+    this.payRequest = payRequest;
+  }
+
   public PayRequestItem(PayRequest payRequest) {
     this.payRequest = payRequest;
   }

@@ -62,11 +62,14 @@ public class CommonInputView extends RelativeLayout {
     private CharSequence str_content;
   private float labelWidth;
     @DrawableRes private int rightDrawable;
+
+
+
     public CommonInputView(Context context) {
         super(context);
         showDivier = true;
         inflate(context, R.layout.layout_commoninput, this);
-        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_dark);
+        textColor = CompatUtils.getColor(getContext(), R.color.text_dark);
         onFinishInflate();
     }
     public CommonInputView(Context context, boolean isNum, String content) {
@@ -74,7 +77,7 @@ public class CommonInputView extends RelativeLayout {
         str_content = content;
         showDivier = true;
         this.setIsNum(isNum);
-        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_dark);
+        textColor = CompatUtils.getColor(getContext(), R.color.text_dark);
 
         inflate(context, R.layout.layout_commoninput, this);
         onFinishInflate();
@@ -86,7 +89,7 @@ public class CommonInputView extends RelativeLayout {
         showDivier = true;
         this.canBeNull = canBeNull;
         this.setIsNum(isNum);
-        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_dark);
+        textColor = CompatUtils.getColor(getContext(), R.color.text_dark);
 
         inflate(context, R.layout.layout_commoninput, this);
         onFinishInflate();
@@ -102,7 +105,9 @@ public class CommonInputView extends RelativeLayout {
         init(context, attrs);
     }
 
-    public boolean isNum() {
+
+
+  public boolean isNum() {
         return isNum;
     }
 
@@ -371,7 +376,8 @@ public class CommonInputView extends RelativeLayout {
         }
     }
 
-    //public class SavedState extends BaseSavedState {
+
+  //public class SavedState extends BaseSavedState {
     //    public final Creator<CommonInputView.SavedState> CREATOR = new Creator<CommonInputView.SavedState>() {
     //        @Override public CommonInputView.SavedState createFromParcel(Parcel in) {
     //            return new CommonInputView.SavedState(in);

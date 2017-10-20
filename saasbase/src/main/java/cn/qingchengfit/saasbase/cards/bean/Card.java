@@ -1,10 +1,12 @@
 package cn.qingchengfit.saasbase.cards.bean;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.saasbase.R;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,6 +173,17 @@ public class Card implements Parcelable {
                 } else {
                     ret = TextUtils.concat(ret, users.get(i).getUsername()).toString();
                 }
+            }
+        }
+        return ret;
+    }
+    public String getFirstUserStr(Context context) {
+        String ret = "";
+        if (users != null && users.size() > 0) {
+            if (users.get(0) != null && users.get(0).getUsername() != null)
+                ret = ret.concat(users.get(0).getUsername());
+            if (users.size() > 1){
+                ret = ret.concat(context.getString(R.string.etc_d_people,users.size()));
             }
         }
         return ret;

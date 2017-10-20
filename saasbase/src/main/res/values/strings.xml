@@ -4,7 +4,7 @@
 
   <string name="oem_tag">@string/oem</string>
   <string name="oem">staff-test</string>
-
+  <string name="etc_d_people">等%d人</string>
   <!--通用-->
   <string name="confirm">确定</string>
   <string name="reset">重置</string>
@@ -76,5 +76,16 @@
   <string name="bill_setting_gym_detail_logo">场馆Logo</string>
   <string name="bill_setting_gym_detail_name">场馆名称</string>
   <string name="bill_setting_gym_detail_no">商户编号</string>
+
+
+
+
+
+
+  <string name="pay_wx">微信</string>
+  <string name="pay_wx_scan">微信扫码</string>
+  <string name="pay_ali">支付宝</string>
+  <string name="pay_ali_scan">支付宝扫码</string>
+  <string name="pay_card">银行卡</string>
 
 </resources>

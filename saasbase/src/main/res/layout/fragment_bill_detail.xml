@@ -1,47 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_bill"
-    android:gravity="center_horizontal"
-    android:layout_marginTop="15dp"
+    android:orientation="vertical"
     >
 
-  <TextView
-      android:id="@+id/tv_bill_amount"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="@color/black"
-      android:textSize="36sp"
-      tools:text="¥100.00"
-      android:paddingTop="10dp"
-      />
+  <include layout="@layout/common_simple_toolbar"/>
 
-  <TextView
-      android:id="@+id/tv_bill_type"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      tools:text="交易成功(待结算)"
-      style="@style/QcTextStyleLargeDark"
-      />
-  <View
+  <android.support.v4.widget.NestedScrollView
       android:layout_width="match_parent"
-      android:layout_height="2dp"
-      android:background="@drawable/dotted_line"
-      android:layout_marginTop="30dp"/>
+      android:layout_height="wrap_content"
+      >
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/input_bill_business_type"
-      android:layout_width="match_parent"
-      android:layout_height="40dp"
-      app:civ_showdivier="false"
-      app:civ_lable="交易类形"
-      app:civ_text_color="@color/black"
-      app:civ_content="会员卡充值"
-      />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="15dp"
+          android:background="@drawable/bg_bill"
+          android:gravity="center_horizontal"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/tv_bill_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="36sp"
+            tools:text="¥100.00"
+            />
+
+        <TextView
+            android:id="@+id/tv_bill_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="交易成功(待结算)"
+            style="@style/QcTextStyleLargeDark"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/dotted_line"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_common"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/dotted_line"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_extra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            />
+
+        <View
+            android:id="@+id/divider_remarks"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/dotted_line"
+            />
+
+        <TextView
+            android:id="@+id/tv_remarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30dp"
+            tools:text="@string/app_name"
+            style="@style/QcTextStyleStandardGrey"
+            />
+
+      </LinearLayout>
+
+      <Button
+          android:id="@+id/btn_print"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="打印凭条"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          style="@style/QcBtnGreyRectCorner"
+          />
 
 
+
+      <Button
+          android:id="@+id/btn_remarks"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="账单备注"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+          style="@style/QcBtnGreyRectCorner"
+          />
+
+
+
+      <Button
+          android:id="@+id/btn_card"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="查看会员卡"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          android:visibility="gone"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+          style="@style/QcBtnPrimery"
+          />
+
+    </LinearLayout>
+
+
+  </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
+

@@ -29,8 +29,9 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/10/9.
+ *
  */
-
+@Deprecated
 public class PosPayDialog extends PayDialog {
 
   private static final String ACTION_PAY = "com.rongcapital.pay";
