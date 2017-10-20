@@ -9,7 +9,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by fb on 2017/10/13.
  */
 
-@Trunk(fragments = { FragmentBillHome.class, PayRequestListFragment.class }) public class BillActivity extends
+@Trunk(fragments = { BillHomeFragment.class, PayRequestListFragment.class }) public class BillActivity extends
   SaasContainerActivity {
 
   //@Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;

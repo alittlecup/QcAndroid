@@ -1,5 +1,6 @@
 package cn.qingchengfit.pos.exchange;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.pos.login.LoginActivity;
+import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -49,6 +53,11 @@ public class FragmentExchange extends BaseFragment {
         getResources().getString(R.string.exchange_confirm));
     dialogFragment.setOnConfirmListener(new TipTextDialogFragment.OnConfirmListener() {
       @Override public void onConfirm() {
+        PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION, "");
+        PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION_ID, "");
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        getContext().startActivity(intent);
+        getActivity().finish();
       }
     });
     dialogFragment.show(getFragmentManager(), null );

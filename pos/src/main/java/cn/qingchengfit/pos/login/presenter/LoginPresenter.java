@@ -73,7 +73,7 @@ public class LoginPresenter extends BasePresenter {
             if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
               view.onSuccess();
               PreferenceUtils.setPrefString(PosApp.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);
-              PreferenceUtils.setPrefString(PosApp.context, "session_id", qcResponLogin.data.session_id);
+              PreferenceUtils.setPrefString(PosApp.context, Configs.PREFER_SESSION_ID, qcResponLogin.data.session_id);
             } else {
               view.onFailed(qcResponLogin.msg);
             }
