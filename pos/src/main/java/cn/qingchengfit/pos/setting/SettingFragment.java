@@ -12,6 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.di.PosGymWrapper;
@@ -41,6 +42,7 @@ import javax.inject.Inject;
   @BindView(R.id.input_cashier) CommonInputView inputCashier;
   @Inject CashierPresenter presenter;
   @Inject PosGymWrapper gymWrapper;
+  @Inject LoginStatus loginStatus;
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
@@ -64,6 +66,15 @@ import javax.inject.Inject;
         .into(new CircleImgWrapper(imgSettingGym, getContext()));
 
     tvSettingGymName.setText(gymWrapper.brand_name() + gymWrapper.name());
+
+    Glide.with(getContext())
+        .load(loginStatus.getLoginUser().getAvatar())
+        .asBitmap()
+        .placeholder(R.drawable.ic_default_head_nogender)
+        .into(new CircleImgWrapper(imgSettingStaff, getContext()));
+
+    tvSettingStaffName.setText(loginStatus.getLoginUser().username);
+    tvSettingStaffPosition.setText("收银员");
   }
 
   private void setToolbar(Toolbar toolbar) {
@@ -73,8 +84,20 @@ import javax.inject.Inject;
 
   @OnClick(R.id.layout_setting_gym)
   public void onGymDetail(){
-    //TODO 场馆详情
     routeTo(AppUtils.getRouterUri(getContext(), "/setting/gym/detail/"), null);
+  }
+
+  @OnClick(R.id.layout_setting_staff)
+  public void onStaffDetail(){
+    Bundle b = new Bundle();
+    Cashier cashier = new Cashier();
+    cashier.id = loginStatus.getLoginUser().getId();
+    cashier.username = loginStatus.getLoginUser().username;
+    cashier.avatar = loginStatus.getLoginUser().avatar;
+    cashier.gender = loginStatus.getLoginUser().gender;
+    cashier.phone = loginStatus.getLoginUser().phone;
+    b.putParcelable("cashier", cashier);
+    routeTo(AppUtils.getRouterUri(getContext(), "setting/cashier/detail/"), b);
   }
 
   @OnClick(R.id.input_cashier) public void onCashier() {

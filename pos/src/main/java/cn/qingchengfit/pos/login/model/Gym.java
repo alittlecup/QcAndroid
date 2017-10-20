@@ -12,6 +12,7 @@ public class Gym implements Parcelable{
 
   public String id;
   public String name;
+  public String photo;
   public String brand_name;
   public SuperUser superuser;
 
@@ -22,6 +23,7 @@ public class Gym implements Parcelable{
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(this.id);
     dest.writeString(this.name);
+    dest.writeString(this.photo);
     dest.writeString(this.brand_name);
     dest.writeParcelable(this.superuser, flags);
   }
@@ -32,6 +34,7 @@ public class Gym implements Parcelable{
   protected Gym(Parcel in) {
     this.id = in.readString();
     this.name = in.readString();
+    this.photo = in.readString();
     this.brand_name = in.readString();
     this.superuser = in.readParcelable(SuperUser.class.getClassLoader());
   }

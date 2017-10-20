@@ -3,6 +3,8 @@ package cn.qingchengfit.pos.login.presenter;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -29,6 +31,7 @@ public class LoginPresenter extends BasePresenter {
 
   @Inject QcRestRepository qcRestRepository;
   @Inject PosGymWrapper gymWrapper;
+  @Inject LoginStatus loginStatus;
   private MVPView view;
 
   @Inject public LoginPresenter() {
@@ -72,6 +75,13 @@ public class LoginPresenter extends BasePresenter {
           @Override public void call(QcDataResponse<Login> qcResponLogin) {
             if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
               view.onSuccess();
+              Staff staff = new Staff();
+              staff.setId(qcResponLogin.data.cashier.id);
+              staff.setUsername(qcResponLogin.data.cashier.username);
+              staff.setAvatar(qcResponLogin.data.cashier.avatar);
+              staff.setPhone(qcResponLogin.data.cashier.phone);
+              staff.setGender(qcResponLogin.data.cashier.gender);
+              loginStatus.setLoginUser(staff);
               PreferenceUtils.setPrefString(PosApp.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);
               PreferenceUtils.setPrefString(PosApp.context, Configs.PREFER_SESSION_ID, qcResponLogin.data.session_id);
             } else {
