@@ -1,4 +1,6 @@
-package cn.qingchengfit.saasbase;
+package cn.qingchengfit.saasbase.bill.view;
+
+import com.anbillon.flabellum.annotations.Leaf;
 
 /**
  * power by
@@ -18,26 +20,11 @@ package cn.qingchengfit.saasbase;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/27.
+ * Created by Paper on 2017/10/20.
  */
-
-public class SaasConstant {
-  public static final int CATEGORY_VALUE = 1;    //储值卡
-  public static final int CATEGORY_TIMES = 2;    //次卡
-  public static final int CATEGORY_DATE = 3;    //期限卡
-
-
-  public static final String PAY_TYPE_WX= "WEIXIN";
-  public static final String PAY_TYPE_WX_SCAN= "WEIXIN_QR_CODE";
-  public static final String PAY_TYPE_ALIPAY= "ALIPAY";
-  public static final String PAY_TYPE_ALIPAY_SCAN= "ALIPAY_QR_CODE";
-  public static final String PAY_TYPE_CARD= "CARD";
-
-  //平台: "WEB", "MEMBER", "POS", "APP"
-  public static final String PAY_PLATFORM_WEB= "WEB";
-  public static final String PAY_PLATFORM_APP= "APP";
-  public static final String PAY_PLATFORM_MEMBER= "MEMBER";
-  public static final String PAY_PLATFORM_POS= "POS";
-
-
+@Leaf(module = "bill",path = "/pay/done/")
+public class BillDetailForDoneFragment extends BillDetailFragment {
+  @Override protected void queryDetail() {
+    presenter.rollBill();
+  }
 }

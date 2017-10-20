@@ -1,4 +1,8 @@
-package cn.qingchengfit.saasbase;
+package cn.qingchengfit.saasbase.bill.network;
+
+import cn.qingchengfit.network.response.QcListData;
+import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
+import java.util.List;
 
 /**
  * power by
@@ -18,26 +22,9 @@ package cn.qingchengfit.saasbase;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/27.
+ * Created by Paper on 2017/10/20.
  */
 
-public class SaasConstant {
-  public static final int CATEGORY_VALUE = 1;    //储值卡
-  public static final int CATEGORY_TIMES = 2;    //次卡
-  public static final int CATEGORY_DATE = 3;    //期限卡
-
-
-  public static final String PAY_TYPE_WX= "WEIXIN";
-  public static final String PAY_TYPE_WX_SCAN= "WEIXIN_QR_CODE";
-  public static final String PAY_TYPE_ALIPAY= "ALIPAY";
-  public static final String PAY_TYPE_ALIPAY_SCAN= "ALIPAY_QR_CODE";
-  public static final String PAY_TYPE_CARD= "CARD";
-
-  //平台: "WEB", "MEMBER", "POS", "APP"
-  public static final String PAY_PLATFORM_WEB= "WEB";
-  public static final String PAY_PLATFORM_APP= "APP";
-  public static final String PAY_PLATFORM_MEMBER= "MEMBER";
-  public static final String PAY_PLATFORM_POS= "POS";
-
-
+public class BusinessOrderListWrap extends QcListData{
+  public List<BusinessBill> orders;
 }

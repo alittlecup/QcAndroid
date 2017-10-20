@@ -17,6 +17,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.items.ImageActionItem;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.utils.AppUtils;
@@ -28,6 +29,7 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -57,7 +59,9 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
   @BindView(R.id.tv_noti_count) TextView tvNotiCount;
   @BindView(R.id.btn_to_pay) Button btnToPay;
   @BindView(R.id.layout_notification) LinearLayout layoutNotification;
+  @Inject GymWrapper gymWrapper;
   private CommonFlexAdapter flexAdapter;
+
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -89,7 +93,7 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
         return true;
       }
     });
-    toolbarTitle.setText("场馆名称？");
+    toolbarTitle.setText(gymWrapper.name());
     toolbarTitle.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         showNoti(Math.abs(new Random(System.currentTimeMillis()).nextInt()) % 2);

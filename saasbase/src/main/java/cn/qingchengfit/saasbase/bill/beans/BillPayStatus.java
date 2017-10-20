@@ -1,11 +1,4 @@
-package cn.qingchengfit.saasbase.bill;
-
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.views.fragments.BaseFragment;
+package cn.qingchengfit.saasbase.bill.beans;
 
 /**
  * power by
@@ -25,17 +18,9 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/19.
+ * Created by Paper on 2017/10/20.
  */
-public class BillDetailFragment extends BaseFragment {
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_bill_detail, container, false);
-    return view;
-  }
-
-  @Override public String getFragmentName() {
-    return BillDetailFragment.class.getName();
-  }
+public class BillPayStatus {
+  public boolean success;
 }
