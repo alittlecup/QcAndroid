@@ -45,7 +45,7 @@ public class CashierPresenter extends BasePresenter {
 
   public void qcGetCashier() {
     RxRegiste(qcRestRepository.createGetApi(PosApi.class)
-        .qcGetCashier()
+        .qcGetCashier(gymWrapper.getParams())
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

@@ -14,7 +14,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
@@ -145,6 +147,8 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
 
   @Override public void onDeleteSuccess() {
     ToastUtils.show("删除成功");
+    RxBus.getBus().post(new RefreshCashierEvent());
+    getActivity().onBackPressed();
   }
 
   @Override public void onModifySuccess() {

@@ -206,6 +206,6 @@ public interface PosApi {
   /**
    * 获取收银员
    */
-  @GET("/api/rongshu/cashier/") rx.Observable<QcDataResponse<CashierWrapper>> qcGetCashier();
+  @GET("/api/rongshu/cashier/") rx.Observable<QcDataResponse<CashierWrapper>> qcGetCashier(@QueryMap HashMap<String, Object> params);
 
 }
