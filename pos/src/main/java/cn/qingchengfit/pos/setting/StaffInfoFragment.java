@@ -77,6 +77,7 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
     Glide.with(getContext())
         .load(cashier.avatar)
         .asBitmap()
+        .placeholder(R.drawable.ic_default_head_nogender)
         .into(new CircleImgWrapper(imgStaffHead, getContext()));
     inputSettingStaffDetailName.setContent(cashier.username);
     inputSettingStaffGender.setContent(cashier.gender == 1 ? "女" : "男");
