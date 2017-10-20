@@ -18,6 +18,7 @@ import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
+import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -73,7 +74,10 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
     View view = inflater.inflate(R.layout.fragment_setting_staff, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
-    Glide.with(getContext()).load(cashier.avatar).into(imgStaffHead);
+    Glide.with(getContext())
+        .load(cashier.avatar)
+        .asBitmap()
+        .into(new CircleImgWrapper(imgStaffHead, getContext()));
     inputSettingStaffDetailName.setContent(cashier.username);
     inputSettingStaffGender.setContent(cashier.gender == 1 ? "女" : "男");
     inputSettingStaffPhone.setContent(cashier.phone);

@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     >
 
+  <include layout="@layout/common_simple_toolbar"/>
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="80dp"
@@ -32,6 +34,7 @@
         />
 
     <ImageView
+        android:id="@+id/img_gym_detail_head"
         android:layout_width="50dp"
         android:layout_height="50dp"
         tools:src="@drawable/ic_default_head_nogender"
@@ -48,15 +51,7 @@
       app:civ_content_color="@color/text_warm"
       app:civ_showright="true"
       android:layout_marginTop="16dp"
-      />
-
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/input_setting_gym_detail_no"
-      android:layout_width="match_parent"
-      android:layout_height="60dp"
-      app:civ_lable="@string/bill_setting_gym_detail_no"
-      app:civ_text_color="@color/black"
-      app:civ_content_color="@color/text_warm"
+      app:civ_clickable="true"
       />
 
 </LinearLayout>

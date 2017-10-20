@@ -112,6 +112,8 @@ public class CashierPresenter extends BasePresenter {
         .qcModifyCashier(cashierId,
             new CashierBody.Builder().username(username).phone(phone).gender(gender).build())
         .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse>() {
           @Override public void call(QcDataResponse qcDataResponse) {
             if (ResponseConstant.checkSuccess(qcDataResponse)) {

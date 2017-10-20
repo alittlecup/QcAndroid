@@ -50,17 +50,6 @@
 
   <include layout="@layout/divider_grey"/>
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/input_setting_pos_no"
-      android:layout_width="match_parent"
-      android:layout_height="60dp"
-      app:civ_content="0000000000"
-      app:civ_content_color="@color/text_warm"
-      app:civ_lable="@string/bill_pos_no"
-      app:civ_text_color="@color/black"
-      app:civ_clickable="true"
-      />
-
   <LinearLayout
       android:id="@+id/layout_setting_staff"
       android:layout_width="match_parent"

@@ -24,7 +24,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/10/18.
  */
 @Trunk(fragments = {
-  FragmentExchange.class
+  ExchangeFragment.class
 })
 public class ExchangeActivity extends PosBaseActivity {
   @Override public String getModuleName() {

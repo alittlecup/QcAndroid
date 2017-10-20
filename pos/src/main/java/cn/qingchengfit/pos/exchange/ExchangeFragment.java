@@ -25,7 +25,7 @@ import com.anbillon.flabellum.annotations.Leaf;
  * Created by fb on 2017/10/17.
  */
 @Leaf(module = "exchange",path = "/home/")
-public class FragmentExchange extends BaseFragment {
+public class ExchangeFragment extends BaseFragment {
 
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
@@ -43,7 +43,14 @@ public class FragmentExchange extends BaseFragment {
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_exchange, container, false);
     unbinder = ButterKnife.bind(this, view);
+    setToolbar(toolbar);
     return view;
+  }
+
+  private void setToolbar(Toolbar toolbar){
+    initToolbar(toolbar);
+    toolbarTitle.setText("交班");
+
   }
 
   @OnClick(R.id.btn_exchange)
@@ -56,6 +63,7 @@ public class FragmentExchange extends BaseFragment {
         PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION, "");
         PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION_ID, "");
         Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         getContext().startActivity(intent);
         getActivity().finish();
       }
