@@ -1,10 +1,12 @@
 package cn.qingchengfit.pos.di;
 
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.pos.PosApp;
+import cn.qingchengfit.pos.models.BillModel;
 import cn.qingchengfit.pos.models.CardModel;
 import cn.qingchengfit.pos.models.PosDbModel;
 import cn.qingchengfit.pos.models.StaffModel;
@@ -29,6 +31,7 @@ import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateD
 import cn.qingchengfit.saasbase.course.batch.network.response.SingleBatchWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saasbase.repository.IBillModel;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
@@ -67,7 +70,7 @@ import rx.Observable;
 public class AppModel {
   private PosApp app;
   private QcRestRepository qcrestRepository;
-  private PosGymWrapper gymWrapper;
+  private GymWrapper gymWrapper;
   private LoginStatus loginStatus;
 
   private AppModel(Builder builder) {
@@ -96,7 +99,7 @@ public class AppModel {
     return loginStatus;
   }
 
-  @Provides PosGymWrapper provideGym() {
+  @Provides GymWrapper provideGym() {
     return gymWrapper;
   }
 
@@ -106,7 +109,9 @@ public class AppModel {
     return new CardModel(qcrestRepository,gymWrapper,loginStatus);
   }
 
-
+  @Provides IBillModel provideBillModel(){
+    return new BillModel();
+  }
 
   @Provides IStaffModel providerStaffModel(){
     return new StaffModel(qcrestRepository,gymWrapper,loginStatus);

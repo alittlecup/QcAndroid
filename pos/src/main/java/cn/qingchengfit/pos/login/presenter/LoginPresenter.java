@@ -3,6 +3,7 @@ package cn.qingchengfit.pos.login.presenter;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
@@ -10,7 +11,6 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.PosApp;
-import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.login.model.GetCodeBody;
 import cn.qingchengfit.pos.login.model.Login;
 import cn.qingchengfit.pos.login.model.LoginBody;
@@ -30,7 +30,7 @@ import rx.schedulers.Schedulers;
 public class LoginPresenter extends BasePresenter {
 
   @Inject QcRestRepository qcRestRepository;
-  @Inject PosGymWrapper gymWrapper;
+  @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
   private MVPView view;
 

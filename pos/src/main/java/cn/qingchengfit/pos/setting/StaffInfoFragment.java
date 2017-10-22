@@ -15,10 +15,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
 import cn.qingchengfit.pos.cashier.model.Cashier;
-import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DialogUtils;
@@ -52,7 +52,7 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
   @BindView(R.id.btn_delete_cashier) TextView btnDeleteCashier;
   @BindView(R.id.img_staff_head) ImageView imgStaffHead;
   @Inject CashierPresenter presenter;
-  @Inject PosGymWrapper gymWrapper;
+  @Inject GymWrapper gymWrapper;
   @Need Cashier cashier;
 
   public static StaffInfoFragment newInstance(Cashier cashier) {

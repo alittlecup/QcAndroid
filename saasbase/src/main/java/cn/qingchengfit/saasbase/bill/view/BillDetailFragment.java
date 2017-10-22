@@ -63,7 +63,7 @@ import javax.inject.Inject;
   @BindView(R2.id.rv_extra) RecyclerView rvExtra;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindArray(R2.array.order_type) String[] arrayOrderType;
+  @BindArray(R2.array.bill_type) String[] arrayOrderType;
   @BindView(R2.id.btn_print) Button btnPrint;
   @BindView(R2.id.btn_remarks) Button btnRemarks;
   @BindView(R2.id.btn_card) Button btnCard;
@@ -156,7 +156,7 @@ import javax.inject.Inject;
       BillScheduleOrder scheduleOrder = order.extra.schedule_order;
       if (scheduleOrder != null) {
         extraAdapter.addItem(
-          new BillKvCommonItem("课程", scheduleOrder.teacher_name + " " + scheduleOrder.course_name);
+          new BillKvCommonItem("课程", scheduleOrder.teacher_name + " " + scheduleOrder.course_name));
         extraAdapter.addItem(new BillKvCommonItem("",
           DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(scheduleOrder.start))));
         String u = "";

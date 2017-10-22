@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import butterknife.ButterKnife;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.SuperUser;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
@@ -11,7 +12,6 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.login.LoginActivity;
 import cn.qingchengfit.pos.login.model.GymResponse;
 import cn.qingchengfit.pos.login.presenter.LoginPresenter;
@@ -38,7 +38,7 @@ import static cn.qingchengfit.pos.PosApp.context;
 public class SplashActivity extends BaseActivity{
 
   @Inject QcRestRepository restRepository;
-  @Inject PosGymWrapper gymWrapper;
+  @Inject GymWrapper gymWrapper;
   @Inject LoginPresenter presenter;
   private Subscription sb;
 
