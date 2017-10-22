@@ -1,6 +1,12 @@
-package cn.qingchengfit.saasbase.bill.view;
+package cn.qingchengfit.pos.models;
 
-import com.anbillon.flabellum.annotations.Leaf;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
+import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
+import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
+import cn.qingchengfit.saasbase.repository.IBillModel;
+import java.util.HashMap;
+import rx.Observable;
 
 /**
  * power by
@@ -20,14 +26,26 @@ import com.anbillon.flabellum.annotations.Leaf;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/20.
+ * Created by Paper on 2017/10/22.
  */
-@Leaf(module = "bill",path = "/pay/done/")
-public class BillDetailForDoneFragment extends BillDetailFragment {
-  @Override protected void queryDetail() {
-    presenter.rollBill();
+
+public class BillModel implements IBillModel {
+  @Override public Observable<QcDataResponse<PayRequestListWrap>> getPayRequestList(int page) {
+    return null;
   }
 
+  @Override public Observable<QcDataResponse<BusinessOrderWrap>> getBusinessOrderDetail(
+    String businessOrderId) {
+    return null;
+  }
 
+  @Override public Observable<QcDataResponse<BusinessOrderWrap>> getBusinessOrderList(
+    HashMap<String, Object> params) {
+    return null;
+  }
 
+  @Override
+  public Observable<QcDataResponse<BillPayStatus>> queryBillStatus(String businessOrderId) {
+    return null;
+  }
 }

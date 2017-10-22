@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.pos.R;
-import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -27,7 +27,7 @@ import javax.inject.Inject;
 
   @BindView(R.id.tv_setting_gym_detail_name) TextView tvSettingGymDetailName;
   @BindView(R.id.input_setting_gym_detail_name) CommonInputView inputSettingGymDetailName;
-  @Inject PosGymWrapper gymWrapper;
+  @Inject GymWrapper gymWrapper;
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
   @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;

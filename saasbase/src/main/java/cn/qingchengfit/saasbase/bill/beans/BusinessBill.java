@@ -31,7 +31,7 @@ public class BusinessBill {
   //"order_no": "", //青橙流水号
   public String order_no;
   //"trade_flow": "xxxx", //融数流水号
-  public String trade_flow;
+  public String trade_flow_id;
   public String pay_time;
   public String created_at;
   public User created_by;

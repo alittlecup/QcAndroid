@@ -16,8 +16,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.pos.R;
-import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.login.model.LoginBody;
 import cn.qingchengfit.pos.login.presenter.LoginPresenter;
 import cn.qingchengfit.pos.main.MainActivity;
@@ -42,7 +42,7 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   private TextView tvGetCode;
   private InternalHandler handler;
   @Inject LoginPresenter presenter;
-  @Inject PosGymWrapper gymWrapper;
+  @Inject GymWrapper gymWrapper;
 
 
   @Nullable @Override

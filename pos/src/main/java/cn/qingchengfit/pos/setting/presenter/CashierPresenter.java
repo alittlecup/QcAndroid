@@ -3,6 +3,7 @@ package cn.qingchengfit.pos.setting.presenter;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -10,7 +11,6 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.cashier.model.CashierBody;
 import cn.qingchengfit.pos.cashier.model.CashierWrapper;
-import cn.qingchengfit.pos.di.PosGymWrapper;
 import cn.qingchengfit.pos.net.PosApi;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +27,7 @@ public class CashierPresenter extends BasePresenter {
 
   private MVPView view;
   @Inject QcRestRepository qcRestRepository;
-  @Inject PosGymWrapper gymWrapper;
+  @Inject GymWrapper gymWrapper;
 
   @Inject public CashierPresenter() {
   }

@@ -3,6 +3,7 @@ package cn.qingchengfit.pos.card;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import cn.qingchengfit.pos.RongPay;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
@@ -40,7 +41,9 @@ public class PosCardBuyFragment extends CardBuyFragment {
   }
 
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {
-    pay();
+    //// TODO: 2017/10/22 测试支付一分钱
+    new RongPay.Builder()
+      .amount(1).build().pay(getContext());
   }
 
   private static final String ACTION_PAY = "com.rongcapital.pay";
