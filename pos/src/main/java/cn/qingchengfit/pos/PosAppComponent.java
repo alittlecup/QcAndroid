@@ -53,13 +53,14 @@ public interface PosAppComponent {
   void inject(PosApp app);
 
   @Subcomponent() public interface SplashSubcomponent extends AndroidInjector<SplashActivity> {
-      @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SplashActivity> {
-      }
+    @Subcomponent.Builder public abstract class Builder
+        extends AndroidInjector.Builder<SplashActivity> {
+    }
   }
+
   @Module(subcomponents = SplashSubcomponent.class) abstract class SplashModule {
-      @Binds @IntoMap @ActivityKey(SplashActivity.class)
-      abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(SplashSubcomponent.Builder builder);
+    @Binds @IntoMap @ActivityKey(SplashActivity.class)
+    abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
+        SplashSubcomponent.Builder builder);
   }
-
-
 }

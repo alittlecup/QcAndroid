@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.bill.model;
+package cn.qingchengfit.saasbase.bill.beans;
 
 /**
  * Created by fb on 2017/10/13.

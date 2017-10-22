@@ -2,6 +2,7 @@ package cn.qingchengfit.pos.cashier;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,7 +33,8 @@ import rx.functions.Action1;
 
 @Leaf(module = "setting", path = "/cashier/list/") public class CashierListFragment
     extends BaseListFragment
-    implements CashierPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
+    implements CashierPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
+    SwipeRefreshLayout.OnRefreshListener {
 
   private Toolbar toolbar;
   private TextView toolbarTitle;
@@ -53,6 +55,10 @@ import rx.functions.Action1;
     initBus();
     presenter.qcGetCashier();
     return root;
+  }
+
+  private void initView(){
+
   }
 
   private void initBus(){
@@ -116,5 +122,9 @@ import rx.functions.Action1;
         new StaffInfoParams().cashier(((ItemCashier) itemList.get(position)).getData()).build());
     }
     return false;
+  }
+
+  @Override public void onRefresh() {
+    presenter.qcGetCashier();
   }
 }

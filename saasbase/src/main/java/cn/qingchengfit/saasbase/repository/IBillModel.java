@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.repository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.bill.beans.BillLock;
 import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
+import cn.qingchengfit.saasbase.bill.beans.BillTotal;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
 import java.util.HashMap;
@@ -48,5 +49,11 @@ public interface IBillModel {
    */
   @DELETE("/api/rongshu/tasks/{task_id}/to/payment/")
   Observable<QcDataResponse> cancelPayRequest(@Path("task_id") String task_id);
+
+   /** 获取账单总计
+   * @param businessOrderId
+   * @return
+   */
+  Observable<QcDataResponse<BillTotal>> queryBillTotal(String businessOrderId);
 
 }
