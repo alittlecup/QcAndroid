@@ -29,7 +29,6 @@ import cn.qingchengfit.saasbase.course.course.items.CourseItem;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
-import cn.qingchengfit.saasbase.routers.CourseUri;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -142,7 +141,7 @@ public class CourseListFragment extends BaseFragment
   }
 
   @OnClick(R2.id.add_course_btn) public void onViewClicked() {
-    saasRouter.routerTo(mIsPrivate ? CourseUri.COURSE_TYPE_GROUP_ADD:CourseUri.COURSE_TYPE_PRIVATE_ADD);
+    //saasRouter.routerTo(mIsPrivate ? CourseUri.COURSE_TYPE_GROUP_ADD:CourseUri.COURSE_TYPE_PRIVATE_ADD);
   }
 
   @Override public void onRefresh() {

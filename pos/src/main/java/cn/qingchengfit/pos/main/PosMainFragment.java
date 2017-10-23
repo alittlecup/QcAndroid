@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -22,6 +23,7 @@ import cn.qingchengfit.items.ImageActionItem;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -58,10 +60,10 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
   @BindView(R.id.rv) RecyclerView rv;
   @BindView(R.id.tv_noti_count) TextView tvNotiCount;
   @BindView(R.id.btn_to_pay) Button btnToPay;
+  @BindView(R.id.img_title_left) ImageView imgLeft;
   @BindView(R.id.layout_notification) LinearLayout layoutNotification;
   @Inject GymWrapper gymWrapper;
   private CommonFlexAdapter flexAdapter;
-
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
       }
     });
     toolbarTitle.setText(gymWrapper.name());
+    PhotoUtils.smallCircle(imgLeft, gymWrapper.getCoachService().getPhoto());
     toolbarTitle.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         showNoti(Math.abs(new Random(System.currentTimeMillis()).nextInt()) % 2);
@@ -102,8 +105,11 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
   }
 
   public void showNoti(int count) {
-    ViewCompat.animate(layoutNotification).translationY(count > 0 ?0f: MeasureUtils.dpToPx(100f,getResources()))
-      .setDuration(100L).setInterpolator(new DecelerateInterpolator()).start();
+    ViewCompat.animate(layoutNotification)
+      .translationY(count > 0 ? 0f : MeasureUtils.dpToPx(100f, getResources()))
+      .setDuration(100L)
+      .setInterpolator(new DecelerateInterpolator())
+      .start();
     tvNotiCount.setText(Integer.toString(count));
   }
 
@@ -140,7 +146,7 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
    * 直接收银
    */
   @OnClick(R.id.btn_cash) public void onBtnCashClicked() {
-    routeTo("desk","/home/",null);
+    routeTo("desk", "/home/", null);
   }
 
   /**
@@ -158,6 +164,6 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
   }
 
   @OnClick(R.id.btn_to_pay) public void onViewClicked() {
-    routeTo("bill","/pay/request/list/",null);
+    routeTo("bill", "/pay/request/list/", null);
   }
 }

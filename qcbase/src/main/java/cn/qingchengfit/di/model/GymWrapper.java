@@ -33,6 +33,7 @@ public class GymWrapper {
   private CoachService coachService;
   private Brand brand;
   private SuperUser superuser;
+  private String custumNo;  //pos机的客户号
   private boolean noService;
   private boolean isOutOfDate;
   private boolean isSingleMode;
@@ -45,6 +46,14 @@ public class GymWrapper {
   public GymWrapper(Builder builder) {
     coachService = builder.coachService;
     brand = builder.brand;
+  }
+
+  public String getCustumNo() {
+    return custumNo;
+  }
+
+  public void setCustumNo(String custumNo) {
+    this.custumNo = custumNo;
   }
 
   public boolean isNoService() {
@@ -89,6 +98,15 @@ public class GymWrapper {
   public String id() {
     if (coachService != null) {
       return coachService.id();
+    } else {
+      return "";
+    }
+  }
+
+
+  public String getGymId(){
+    if (coachService != null) {
+      return coachService.gym_id();
     } else {
       return "";
     }

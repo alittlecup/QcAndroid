@@ -46,7 +46,7 @@ public class StaffModel implements IStaffModel {
   }
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {
-    return staffApi.qcGetSalers(loginStatus.staff_id(), gymWrapper.getParams());
+    return staffApi.qcGetSalers(gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getStaffList(String id) {
@@ -54,14 +54,14 @@ public class StaffModel implements IStaffModel {
   }
 
   @Override public Observable<QcDataResponse> addStaff(ManagerBody body) {
-    return staffApi.addManager(loginStatus.staff_id(),gymWrapper.getParams(),body);
+    return staffApi.addManager(gymWrapper.getParams(),body);
   }
 
   @Override public Observable<QcDataResponse> delStaff(String id) {
-    return staffApi.delManager(loginStatus.staff_id(),id,gymWrapper.getParams());
+    return staffApi.delManager(id,gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse> editStaff(String id, ManagerBody body) {
-    return staffApi.updateManager(loginStatus.staff_id(),id,gymWrapper.getParams(),body);
+    return staffApi.updateManager(id,gymWrapper.getParams(),body);
   }
 }

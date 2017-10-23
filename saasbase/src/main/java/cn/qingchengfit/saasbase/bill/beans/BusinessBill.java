@@ -24,6 +24,7 @@ import cn.qingchengfit.saasbase.cards.bean.Card;
  * Created by Paper on 2017/10/20.
  */
 public class BusinessBill {
+  public String id;//
   //"order_type:" 1/2/.., //交易类型 1：购买会员卡 2. 充值会员卡 3.活动报名 4.课程预约 5.退款 6.提现
   public int type; //
   //"pay_type": 1/2/3..., //支付方式: "WEIXIN", "WEIXIN_QR_CODE", "ALIPAY", "ALIPAY_QR_CODE", "CARD"

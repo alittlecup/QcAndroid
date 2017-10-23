@@ -9,24 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import cn.qingchengfit.events.EventRecycleClick;
-import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.bill.beans.PayRequest;
 import cn.qingchengfit.saasbase.bill.items.PayRequestItem;
-import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
+import cn.qingchengfit.saasbase.bill.presenter.PayRequestListPresenter;
+import cn.qingchengfit.saasbase.events.EventPayRequest;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
-import cn.qingchengfit.saasbase.repository.IBillModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
-import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -49,11 +46,13 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2017/10/9.
  */
 @Leaf(module = "bill", path = "/pay/request/list/") public class PayRequestListFragment
-  extends BaseListFragment implements SwipeRefreshLayout.OnRefreshListener,FlexibleAdapter.EndlessScrollListener {
+  extends BaseListFragment implements
+  SwipeRefreshLayout.OnRefreshListener,FlexibleAdapter.EndlessScrollListener,PayRequestListPresenter.MVPView {
   protected Toolbar toolbar;
   protected TextView toolbarTitle;
-  protected int totalPage = 1;
-  @Inject IBillModel billModel;
+
+
+  @Inject PayRequestListPresenter presenter;
 
   @Override public View onCreateView(LayoutInflater inflater, final ViewGroup container,
     Bundle savedInstanceState) {
@@ -63,30 +62,31 @@ import rx.schedulers.Schedulers;
     toolbar = (Toolbar) root.findViewById(R.id.toolbar);
     toolbarTitle = (TextView) root.findViewById(R.id.toolbar_title);
     root.addView(v, 1);
+    delegatePresenter(presenter,this);
     initToolbar(toolbar);
     initListener(this);
-    RxBusAdd(EventRecycleClick.class).observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<EventRecycleClick>() {
-        @Override public void onNext(EventRecycleClick eventRecycleClick) {
-          //点击去支付
-          IFlexible iFlexible = commonFlexAdapter.getItem(eventRecycleClick.postion);
-          if (iFlexible instanceof PayRequestItem) {
-            onPay(((PayRequestItem) iFlexible).getPayRequest());
-          }
-        }
-      });
     RxBusAdd(EventSaasFresh.PayRequestList.class).observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<EventSaasFresh.PayRequestList>() {
         @Override public void onNext(EventSaasFresh.PayRequestList payRequestList) {
           onRefresh();
         }
       });
+
+    RxBusAdd(EventPayRequest.class)
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventPayRequest>() {
+        @Override public void onNext(EventPayRequest eventPayRequest) {
+          if (eventPayRequest.type == 0){
+            presenter.pay(eventPayRequest.payRequest);
+          }else {
+            presenter.cancelTask(eventPayRequest.payRequest.task_no);
+          }
+        }
+      });
     return root;
   }
 
-  protected void onPay(PayRequest payRequest){
-
-  }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -98,7 +98,11 @@ import rx.schedulers.Schedulers;
     onLoadMore(0,0);
   }
 
-
+  protected void onPayDone(String orderNo){
+    // TODO: 2017/10/23 需要传参业务id
+    Bundle bd = new Bundle();
+    routeTo("/pay/done/",bd);
+  }
 
 
   @Override public String getFragmentName() {
@@ -118,25 +122,33 @@ import rx.schedulers.Schedulers;
   }
 
   @Override public void onLoadMore(int lastPosition, int currentPage) {
-    if (currentPage < totalPage) {
-      RxRegiste(billModel.getPayRequestList(currentPage+1)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<PayRequestListWrap>>() {
-          @Override public void onNext(QcDataResponse<PayRequestListWrap> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              // TODO: 2017/10/20
-              //
-              commonFlexAdapter.onLoadMoreComplete(null,500);
-              totalPage = qcResponse.data.pages;
-            } else {
-              onShowError(qcResponse.getMsg());
-            }
-          }
-        }));
+    if (currentPage < presenter.getTotalPage()) {
+      presenter.loadMoreData(currentPage+1);
     }else {
       commonFlexAdapter.onLoadMoreComplete(null,500);
+    }
+  }
+
+  @Override public void onGetData(List<PayRequest> datas, int page) {
+    commonFlexAdapter.onLoadMoreComplete(datas,500);
+  }
+
+  /**
+   * 具体支付实现在各个App不同
+   */
+  @Override public void onPay(PayRequest payRequest) {
+
+  }
+
+  @Override public void onRemoveTaskNo(String taskNo) {
+    for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
+      IFlexible item = commonFlexAdapter.getItem(i);
+      if (item instanceof PayRequestItem){
+        if (((PayRequestItem) item).getPayRequest().task_no.equalsIgnoreCase(taskNo)){
+          commonFlexAdapter.removeItem(i);
+          break;
+        }
+      }
     }
   }
 }

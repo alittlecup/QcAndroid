@@ -60,7 +60,7 @@ public class CardModel implements ICardModel {
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(String type, String isEnable) {
     return repository.createGetApi(PosApi.class)
-        .qcGetCardTpls(loginStatus.staff_id(), gymWrapper.getParams(), null, isEnable);
+        .qcGetCardTpls(gymWrapper.getGymId(), gymWrapper.getParams(), null, isEnable);
   }
 
   @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission() {
@@ -70,44 +70,44 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(String cardid) {
     return repository.createGetApi(PosApi.class)
-        .qcGetCardTplsDetail(loginStatus.staff_id(), cardid, gymWrapper.getParams());
+        .qcGetCardTplsDetail(gymWrapper.getGymId(), cardid, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse<CardTplOptionListWrap>> qcGetOptions(String cardtps_id) {
     return repository.createGetApi(PosApi.class)
-        .qcGetOptions(loginStatus.staff_id(), cardtps_id, gymWrapper.getParams());
+        .qcGetOptions(gymWrapper.getGymId(), cardtps_id, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardFilterTpls(boolean is_active) {
     return repository.createGetApi(PosApi.class)
-        .qcGetCardFilterCondition(loginStatus.staff_id(), gymWrapper.getParams());
+        .qcGetCardFilterCondition(gymWrapper.getGymId(), gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<CardWrap>> qcGetCardDetail(String card_id) {
-    return posApi.qcGetCardDetail(loginStatus.staff_id(), card_id, gymWrapper.getParams());
+    return posApi.qcGetCardDetail(gymWrapper.getGymId(), card_id, gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse> qcCreateCardtpl(@Body CardtplBody body) {
-    return posApi.qcCreateCardtpl(loginStatus.staff_id(), body, gymWrapper.getParams());
+    return posApi.qcCreateCardtpl(gymWrapper.getGymId(), body, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse> qcUpdateCardtpl(@Path("card_tpl_id") String card_tpl_id,
       @Body CardtplBody body) {
-    return posApi.qcUpdateCardtpl(loginStatus.staff_id(), card_tpl_id, body,
+    return posApi.qcUpdateCardtpl(gymWrapper.getGymId(), card_tpl_id, body,
         gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse> qcDelCardtpl(@Path("card_tpl_id") String card_tpl_id) {
-    return posApi.qcDelCardtpl(loginStatus.staff_id(), card_tpl_id, gymWrapper.getParams());
+    return posApi.qcDelCardtpl(gymWrapper.getGymId(), card_tpl_id, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse> qcResumeCardtpl(@Path("card_tpl_id") String card_tpl_id) {
-    return posApi.qcResumeCardtpl(loginStatus.staff_id(), card_tpl_id, gymWrapper.getParams());
+    return posApi.qcResumeCardtpl(gymWrapper.getGymId(), card_tpl_id, gymWrapper.getParams());
   }
 
   @Override
@@ -117,33 +117,33 @@ public class CardModel implements ICardModel {
 
   @Override
   public Observable<QcDataResponse> qcDelCardStandard(@Path("option_id") String option_id) {
-    return posApi.qcDelCardtplOption(loginStatus.staff_id(), option_id, gymWrapper.getParams());
+    return posApi.qcDelCardtplOption(gymWrapper.getGymId(), option_id, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse> qcUpdateCardStandard(@Path("option_id") String option_id,
       @Body OptionBody body) {
-    return posApi.qcUpdateCardtplOption(loginStatus.staff_id(),option_id,gymWrapper.getParams(),body);
+    return posApi.qcUpdateCardtplOption(gymWrapper.getGymId(),option_id,gymWrapper.getParams(),body);
   }
 
   @Override
   public Observable<QcDataResponse> qcCreateStandard(@Path("card_tpl_id") String card_tpl_id,
       @Body OptionBody body) {
-    return posApi.qcCreateCardtplOption(loginStatus.staff_id(),card_tpl_id,gymWrapper.getParams(),body);
+    return posApi.qcCreateCardtplOption(gymWrapper.getGymId(),card_tpl_id,gymWrapper.getParams(),body);
   }
 
   @Override public Observable<QcDataResponse<PayBusinessResponse>> qcChargeCard(ChargeBody chargeBody) {
-    return posApi.qcCardCharge(loginStatus.staff_id(),chargeBody.getCard_id(),gymWrapper.getParams(),chargeBody);
+    return posApi.qcCardCharge(gymWrapper.getGymId(),chargeBody.getCard_id(),gymWrapper.getParams(),chargeBody);
   }
 
   @Override public Observable<QcDataResponse<PayBusinessResponse>> buyCard(@Body CardBuyBody body) {
-    return posApi.qcCreateRealcard(loginStatus.staff_id(),body,gymWrapper.getParams());
+    return posApi.qcCreateRealcard(gymWrapper.getGymId(),body,gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse<CardListWrap>> qcGetAllCard(HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
-    return repository.createGetApi(PosApi.class).getAllCards(loginStatus.staff_id(), params);
+    return repository.createGetApi(PosApi.class).getAllCards(gymWrapper.getGymId(), params);
   }
 
   @Override public Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard() {

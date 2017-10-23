@@ -1,11 +1,17 @@
 package cn.qingchengfit.pos.models;
 
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.pos.net.BillApi;
+import cn.qingchengfit.saasbase.bill.beans.BillLock;
 import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
 import cn.qingchengfit.saasbase.repository.IBillModel;
 import java.util.HashMap;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -30,13 +36,28 @@ import rx.Observable;
  */
 
 public class BillModel implements IBillModel {
+
+  QcRestRepository repository;
+  GymWrapper gymWrapper;
+  LoginStatus loginStatus;
+  BillApi billApi;
+
+  public BillModel(QcRestRepository repository, GymWrapper gymWrapper, LoginStatus loginStatus) {
+    this.repository = repository;
+    this.gymWrapper = gymWrapper;
+    this.loginStatus = loginStatus;
+    billApi = repository.createGetApi(BillApi.class);
+  }
+
   @Override public Observable<QcDataResponse<PayRequestListWrap>> getPayRequestList(int page) {
-    return null;
+    HashMap<String, Object> prams = gymWrapper.getParams();
+    prams.put("page", page);
+    return billApi.getPayRequsetList(gymWrapper.getGymId(),prams);
   }
 
   @Override public Observable<QcDataResponse<BusinessOrderWrap>> getBusinessOrderDetail(
     String businessOrderId) {
-    return null;
+    return billApi.getBillDetail(gymWrapper.getGymId() ,businessOrderId, gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<BusinessOrderWrap>> getBusinessOrderList(
@@ -46,6 +67,15 @@ public class BillModel implements IBillModel {
 
   @Override
   public Observable<QcDataResponse<BillPayStatus>> queryBillStatus(String businessOrderId) {
-    return null;
+    return billApi.getBillStatus(businessOrderId, gymWrapper.getParams());
+  }
+
+  @Override
+  public Observable<QcDataResponse<BillLock>> lockPayRequest(@Path("task_id") String task_id) {
+    return billApi.lockPayRequest(task_id);
+  }
+
+  @Override public Observable<QcDataResponse> cancelPayRequest(@Path("task_id") String task_id) {
+    return billApi.cancelPayRequest(task_id);
   }
 }
