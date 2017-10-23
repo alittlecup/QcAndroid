@@ -19,7 +19,6 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasRouter;
-import cn.qingchengfit.saasbase.routers.CourseUri;
 import cn.qingchengfit.saasbase.routers.GymManageUri;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -198,9 +197,10 @@ public class BatchDetailCommonFragment extends BaseFragment {
    * 更改课程
    */
   @OnClick(R2.id.course_layout) public void onCourseLayoutClicked() {
-    if (course.is_private)
-      saasRouter.choose( CourseUri.COURSE_TYPE_GROUP_LIST);
-    else saasRouter.choose(GymManageUri.TRAINER_LIST);
+    //路由 // TODO: 2017/10/23
+    //if (course.is_private)
+    //  saasRouter.choose( CourseUri.COURSE_TYPE_GROUP_LIST);
+    //else saasRouter.choose(GymManageUri.TRAINER_LIST);
   }
 
   /**
@@ -209,9 +209,10 @@ public class BatchDetailCommonFragment extends BaseFragment {
   @OnClick(R2.id.coach) public void onCoachClicked() {
     if (AppUtils.getCurApp(getContext()) == 0)
       return;
-    if (course.is_private)
-      saasRouter.choose( CourseUri.COURSE_TYPE_PRIVATE_LIST);
-    else saasRouter.choose(GymManageUri.TRAINER_LIST);
+    // TODO: 2017/10/23 路由
+    //if (course.is_private)
+    //  saasRouter.choose( CourseUri.COURSE_TYPE_PRIVATE_LIST);
+    //else saasRouter.choose(GymManageUri.TRAINER_LIST);
   }
 
   /**
@@ -249,14 +250,14 @@ public class BatchDetailCommonFragment extends BaseFragment {
    * 在线支付
    */
   @OnClick(R2.id.pay_online) public void onPayOnlineClicked() {
-    saasRouter.choose(CourseUri.PAY_ONLINE);
+    //saasRouter.choose(CourseUri.PAY_ONLINE);
   }
 
   /**
    * 卡支付设置
    */
   @OnClick(R2.id.pay_card) public void onPayCardClicked() {
-    saasRouter.choose(CourseUri.PAY_CARDS);
+    //saasRouter.choose(CourseUri.PAY_CARDS);
   }
 
   @Override public boolean isBlockTouch() {

@@ -57,24 +57,9 @@ public interface StaffApi {
   rx.Observable<QcResponsePostions> qcGetPermissionPostions(@Path("id") String staff_id,
     @QueryMap HashMap<String, Object> params, @Query("key") String permission);
 
-  /**
-   * 新增工作人员
-   */
-  @POST("/api/staffs/{id}/users/") rx.Observable<QcDataResponse> addManager(@Path("id") String id,
-    @QueryMap HashMap<String, Object> params, @Body ManagerBody body);
 
-  /**
-   *  更新工作人员
-   */
-  @PUT("/api/staffs/{id}/users/{mid}/") rx.Observable<QcDataResponse> updateManager(
-    @Path("id") String id, @Path("mid") String cid, @QueryMap HashMap<String, Object> params
-    , @Body ManagerBody body);
 
-  /**
-   * 删除工作人员
-   */
-  @DELETE("/api/staffs/{id}/managers/{mid}/") rx.Observable<QcDataResponse> delManager(
-    @Path("id") String id, @Path("mid") String cid,@QueryMap HashMap<String, Object> params);
+
 
   /**
    * 更改超级管理员
@@ -85,7 +70,27 @@ public interface StaffApi {
 
 
   //获取销售 卖卡  包含销售和教练
-  @GET("/api/staffs/{staff_id}/sellers/") rx.Observable<QcDataResponse<SalerListWrap>> qcGetSalers(@Path("staff_id") String staff_id,
+  @GET("/api/rongshu/seller/") rx.Observable<QcDataResponse<SalerListWrap>> qcGetSalers(
     @QueryMap HashMap<String, Object> params);
+  /**
+   * 新增工作人员
+   */
+  @POST("/api/rongshu/seller/") rx.Observable<QcDataResponse> addManager(
+    @QueryMap HashMap<String, Object> params, @Body ManagerBody body);
+
+  /**
+   * 删除工作人员
+   */
+  @DELETE("/api/rongshu/seller/{mid}/") rx.Observable<QcDataResponse> delManager(
+     @Path("mid") String cid,@QueryMap HashMap<String, Object> params);
+
+  /**
+   *  更新工作人员
+   */
+  @PUT("/api/rongshu/seller/{mid}/") rx.Observable<QcDataResponse> updateManager(
+     @Path("mid") String cid, @QueryMap HashMap<String, Object> params
+    , @Body ManagerBody body);
+
+
 }
 

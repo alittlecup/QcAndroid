@@ -1,8 +1,11 @@
-package cn.qingchengfit.saasbase.staff.network.response;
+package cn.qingchengfit.pos.bill;
 
-import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.network.response.QcListData;
-import java.util.List;
+import cn.qingchengfit.saasbase.bill.BillActivity;
+import cn.qingchengfit.saasbase.bill.BillHomeFragment;
+import cn.qingchengfit.saasbase.bill.view.BillDetailForDoneFragment;
+import cn.qingchengfit.saasbase.bill.view.BillDetailFragment;
+import cn.qingchengfit.saasbase.bill.view.PayRequestListFragment;
+import com.anbillon.flabellum.annotations.Trunk;
 
 /**
  * power by
@@ -22,9 +25,11 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/10.
+ * Created by Paper on 2017/10/23.
  */
-
-public class SalerListWrap extends QcListData {
-  public List<Staff> sellers;
+@Trunk(fragments = {
+  BillHomeFragment.class, PayRequestListFragment.class, BillDetailFragment.class,
+  BillDetailForDoneFragment.class
+})
+public class PosBillActivity extends BillActivity {
 }

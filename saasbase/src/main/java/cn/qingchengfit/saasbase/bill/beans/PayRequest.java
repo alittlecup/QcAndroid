@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.bill.beans;
 
+import cn.qingchengfit.model.base.User;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -22,5 +24,15 @@ package cn.qingchengfit.saasbase.bill.beans;
  */
 
 public class PayRequest {
+  public String id;
+  public String task_no;
+  public String order_no;
+  public int type;
+  public String title;
+  public String content;
+  public float price;
+  public User created_by;
+  public String created_at;
+
 
 }

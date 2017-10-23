@@ -110,7 +110,7 @@ public class AppModel {
   }
 
   @Provides IBillModel provideBillModel(){
-    return new BillModel();
+    return new BillModel(qcrestRepository,gymWrapper,loginStatus);
   }
 
   @Provides IStaffModel providerStaffModel(){

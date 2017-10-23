@@ -10,11 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.staff.items.StaffItem;
-import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
-import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -81,11 +78,6 @@ public abstract class BaseStaffListFragment extends BaseListFragment implements
   abstract void initData();
   abstract String getTitle();
 
-  protected NetSubscribe<QcDataResponse<SalerListWrap>> response = new NetSubscribe<QcDataResponse<SalerListWrap>>() {
-    @Override public void onNext(QcDataResponse<SalerListWrap> staffListWrapQcDataResponse) {
-      onGetData(staffListWrapQcDataResponse.data.users);
-    }
-  };
 
   protected void onGetData(List<Staff> staffs){
     stopRefresh();

@@ -78,7 +78,7 @@ import rx.schedulers.Schedulers;
           @Override public void onNext(QcDataResponse<SalerListWrap> qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
               commonFlexAdapter.clear();
-              for (Staff user : qcResponse.data.users) {
+              for (Staff user : qcResponse.data.sellers) {
                 commonFlexAdapter.addItem(new StaffItem(user));
               }
             } else {

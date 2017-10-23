@@ -1,8 +1,4 @@
-package cn.qingchengfit.saasbase.staff.network.response;
-
-import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.network.response.QcListData;
-import java.util.List;
+package cn.qingchengfit.saasbase.bill.beans;
 
 /**
  * power by
@@ -22,9 +18,10 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/10.
+ * Created by Paper on 2017/10/23.
+ *
+ * 锁单 并生成支付号
  */
-
-public class SalerListWrap extends QcListData {
-  public List<Staff> sellers;
+public class BillLock {
+  public String order_no;
 }

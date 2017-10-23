@@ -73,7 +73,7 @@ import rx.schedulers.Schedulers;
       .subscribe(new NetSubscribe<QcDataResponse<SalerListWrap>>() {
         @Override public void onNext(QcDataResponse<SalerListWrap> qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
-            onGetData(qcResponse.data.users);
+            onGetData(qcResponse.data.sellers);
           } else {
             onShowError(qcResponse.getMsg());
           }

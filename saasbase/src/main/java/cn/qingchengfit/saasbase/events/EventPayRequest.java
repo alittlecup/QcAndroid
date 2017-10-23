@@ -1,6 +1,6 @@
-package cn.qingchengfit.saasbase.routers;
+package cn.qingchengfit.saasbase.events;
 
-import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.saasbase.bill.beans.PayRequest;
 
 /**
  * power by
@@ -20,10 +20,15 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/14.
+ * Created by Paper on 2017/10/23.
  */
 
-public interface ICourseRouter {
-  BaseFragment cardTplsHomeInGymFragment();
-  BaseFragment toCardTplDetail(String cardtplid);
+public class EventPayRequest {
+  public int type = 0; // 0是支付  1 是取消
+  public PayRequest payRequest;
+
+  public EventPayRequest(int type, PayRequest payRequest) {
+    this.type = type;
+    this.payRequest = payRequest;
+  }
 }
