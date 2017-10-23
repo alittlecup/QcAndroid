@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.bill;
+package cn.qingchengfit.saasbase.bill.items;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
-import cn.qingchengfit.saasbase.bill.model.Bill;
+import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -22,9 +22,9 @@ import java.util.List;
 
 public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
 
-  public Bill bill;
+  public BusinessBill bill;
 
-  public ItemBill(Bill bill) {
+  public ItemBill(BusinessBill bill) {
     this.bill = bill;
   }
 
@@ -35,10 +35,24 @@ public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemBillVH holder, int position,
       List payloads) {
-    holder.tvTime.setText(DateUtils.formatDateToServer(bill.created_at));
-    holder.tvOperator.setText(bill.created_by.name);
+    holder.tvTime.setText(DateUtils.formatDateToServer(bill.pay_time));
+    holder.tvOperator.setText(holder.itemView.getContext()
+        .getResources()
+        .getString(R.string.bill_operator, bill.created_by.username));
+    holder.tvItemBillName.setText(holder.itemView.getContext()
+        .getResources()
+        .getString(R.string.bill_detail_item, bill.getPayType(holder.itemView.getContext(), bill.pay_type),
+            bill.bank_no));
 
+    holder.tvItemBillAction.setText(holder.itemView.getContext()
+        .getResources()
+        .getString(R.string.bill_detail_item_trade_type, bill.getTradeType(bill.type)));
+
+    holder.tvItemBillAccount.setText(bill.getPrice(bill.price, bill.type));
+
+    holder.tvItemBillStatus.setText(bill.getStatus(holder.itemView.getContext(), bill.status, bill.type));
   }
+
 
   @Override public boolean equals(Object o) {
     return false;

@@ -4,12 +4,14 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.bill.beans.BillLock;
 import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
 import cn.qingchengfit.saasbase.bill.beans.BillTotal;
+import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
 import java.util.HashMap;
 import retrofit2.http.DELETE;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import java.util.List;
 import rx.Observable;
 
 /**
@@ -55,5 +57,12 @@ public interface IBillModel {
    * @return
    */
   Observable<QcDataResponse<BillTotal>> queryBillTotal(String businessOrderId);
+
+  /**
+   * 获取账单列表
+   * @param gym_id
+   * @return
+   */
+  Observable<QcDataResponse<List<BusinessBill>>> queryBillList(String gym_id);
 
 }

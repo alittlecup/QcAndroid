@@ -57,10 +57,6 @@ import rx.functions.Action1;
     return root;
   }
 
-  private void initView(){
-
-  }
-
   private void initBus(){
     RxBusAdd(RefreshCashierEvent.class).onBackpressureLatest().subscribe(new Action1<RefreshCashierEvent>() {
       @Override public void call(RefreshCashierEvent refreshCashierEvent) {

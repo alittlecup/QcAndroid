@@ -1,6 +1,8 @@
 package cn.qingchengfit.saasbase.bill.beans;
 
+import android.content.Context;
 import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 
 /**
@@ -51,4 +53,73 @@ public class BusinessBill {
     public Card card;
     public BillScheduleOrder schedule_order;
   }
+
+  public String getPrice(float price, int type){
+    switch (type){
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+        return "+"  + price;
+      case 5:
+      case 6:
+        return "-"  + price;
+    }
+    return "";
+  }
+
+  public String getTradeType(int type){
+    switch (type){
+      case 1:
+        return "购买会员卡";
+      case 2:
+        return "充值会员卡";
+      case 3:
+        return "活动报名";
+      case 4:
+        return "课程预约";
+      case 5:
+        return "退款";
+      case 6:
+        return "提现";
+    }
+    return "";
+  }
+
+  public String getPayType(Context context, String payType){
+    switch (payType){
+      case "1":
+        return context.getResources().getString(R.string.pay_wx_success);
+      case "2":
+        return context.getResources().getString(R.string.pay_wx_scan_success);
+      case "3":
+        return context.getResources().getString(R.string.pay_ali_success);
+      case "4":
+        return context.getResources().getString(R.string.pay_ali_scan_success);
+      case "5":
+        return context.getResources().getString(R.string.pay_card_success);
+    }
+    return "";
+  }
+
+  public String getStatus(Context context, int status, int type){
+    switch (status){
+      case 1:
+        return context.getResources().getString(R.string.bill_settlement);
+      case 2:
+        return context.getResources().getString(R.string.bill_already_settlement);
+      case 3:
+        return type == 5 ? context.getResources().getString(R.string.bill_withdraw)
+            : context.getResources().getString(R.string.bill_back_cash);
+      case 4:
+        return type == 5 ? context.getResources().getString(R.string.bill_withdraw_failed)
+            : context.getResources().getString(R.string.bill_cash_failed);
+      case 5:
+        return type == 5 ? context.getResources().getString(R.string.bill_withdraw_already)
+            : context.getResources().getString(R.string.bll_back_already);
+    }
+
+    return "";
+  }
+
 }

@@ -177,6 +177,13 @@ public class AppUtils {
   }
 
   /**
+   * 根据性别返回默认头像
+   */
+  public static int getHeaderDrawable(int gender){
+    return  gender == 1 ? R.drawable.ic_default_staff_women_head : R.drawable.ic_default_staff_man_head;
+  }
+
+  /**
    * 判断手机号码是否合法
    * @param telNum
    * @return

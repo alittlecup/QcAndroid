@@ -3,10 +3,12 @@ package cn.qingchengfit.pos.net;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.bill.beans.BillLock;
 import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
+import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderListWrap;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
 import java.util.HashMap;
+import java.util.List;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -39,9 +41,6 @@ public interface BillApi {
   @GET("/api/rongshu/gyms/{gym_id}/bills/{billid}/")
   Observable<QcDataResponse<BusinessOrderWrap>> getBillDetail(@Path("gym_id") String gymid, @Path("billid") String billId,@QueryMap HashMap<String,Object> params);
 
-  @GET("/api/rongshu/gyms/{gym_id}/bills/")
-  Observable<QcDataResponse<BusinessOrderListWrap>> getBillList(@Path("gym_id") String gymid);
-
   @GET("/api/rongshu/payments/{billid}/status/")
   Observable<QcDataResponse<BillPayStatus>> getBillStatus(@Path("billid") String billId,@QueryMap HashMap<String,Object> params);
 
@@ -63,5 +62,17 @@ public interface BillApi {
   @DELETE("/api/rongshu/tasks/{task_id}/to/payment/")
   Observable<QcDataResponse> cancelPayRequest(@Path("task_id") String task_id);
 
+  /**
+   * 账单列表
+   */
+  @GET("/api/rongshu/gyms/{gym_id}/bills/")
+  rx.Observable<QcDataResponse<List<BusinessBill>>> getBillList(@Path("gym_id") String gym_id);
+
+  /**
+   * 账单统计
+   */
+
+  @GET("/api/rongshu/gyms/{gym_id}/bills/")
+  rx.Observable<QcDataResponse<List<BusinessBill>>> getBillToTal(@Path("gym_id") String gym_id);
 
 }

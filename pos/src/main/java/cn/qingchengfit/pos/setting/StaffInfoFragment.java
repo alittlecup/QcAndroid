@@ -16,11 +16,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -55,6 +57,7 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
   @Inject CashierPresenter presenter;
   @Inject GymWrapper gymWrapper;
   @Need public Cashier cashier;
+  @Inject LoginStatus loginStatus;
 
   public static StaffInfoFragment newInstance(Cashier cashier) {
     Bundle args = new Bundle();
@@ -81,7 +84,7 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
     Glide.with(getContext())
         .load(cashier.avatar)
         .asBitmap()
-        .placeholder(R.drawable.ic_default_head_nogender)
+        .placeholder(AppUtils.getHeaderDrawable(loginStatus.getLoginUser().gender))
         .into(new CircleImgWrapper(imgStaffHead, getContext()));
     inputSettingStaffDetailName.setContent(cashier.username);
     inputSettingStaffGender.setContent(cashier.gender == 1 ? "女" : "男");

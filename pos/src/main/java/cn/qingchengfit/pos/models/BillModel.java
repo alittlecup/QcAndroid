@@ -7,10 +7,13 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.net.BillApi;
 import cn.qingchengfit.saasbase.bill.beans.BillLock;
 import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
+import cn.qingchengfit.saasbase.bill.beans.BillTotal;
+import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
 import cn.qingchengfit.saasbase.repository.IBillModel;
 import java.util.HashMap;
+import java.util.List;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -77,5 +80,13 @@ public class BillModel implements IBillModel {
 
   @Override public Observable<QcDataResponse> cancelPayRequest(@Path("task_id") String task_id) {
     return billApi.cancelPayRequest(task_id);
+  }
+
+  @Override public Observable<QcDataResponse<BillTotal>> queryBillTotal(String businessOrderId) {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<List<BusinessBill>>> queryBillList(String gym_id) {
+    return null;
   }
 }

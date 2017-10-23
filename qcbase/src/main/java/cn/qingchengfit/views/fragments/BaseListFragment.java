@@ -110,7 +110,9 @@ public abstract class BaseListFragment extends BaseFragment {
 
   protected void addDivider() {
     rv.addItemDecoration(
-        new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)
+        //new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)
+        //    .withBottomEdge(true));
+        new FlexibleItemDecoration(getContext()).withDefaultDivider()
             .withBottomEdge(true));
   }
 

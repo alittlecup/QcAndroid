@@ -34,6 +34,7 @@ import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
+import cn.qingchengfit.saasbase.routers.ICourseRouter;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
@@ -159,6 +160,30 @@ import rx.Observable;
       return null;
     }
   };}
+
+  @Provides IStaffModel provideStaffApi(){
+    return new IStaffModel() {
+      @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {
+        return null;
+      }
+
+      @Override public Observable<QcDataResponse<SalerListWrap>> getStaffList(String id) {
+        return null;
+      }
+
+      @Override public Observable<QcDataResponse> addStaff(ManagerBody body) {
+        return null;
+      }
+
+      @Override public Observable<QcDataResponse> delStaff(String id) {
+        return null;
+      }
+
+      @Override public Observable<QcDataResponse> editStaff(String id, ManagerBody body) {
+        return null;
+      }
+    };
+  }
 
   @Provides ICourseModel provideCourseApi(){
     return new ICourseModel() {
