@@ -83,6 +83,7 @@
   <string name="bill_detail_item" formatted="false">%s - 尾号(%s)</string>
   <string name="bill_detail_item_trade_type" formatted="false">%s (POS)</string>
   <string name="bill_count_indeed" formatted="false">- : %f  +: %f</string>
+  <string name="bill_no_data">本月无数据</string>
 
   <!--支付-->
   <string name="pay_wx">微信</string>

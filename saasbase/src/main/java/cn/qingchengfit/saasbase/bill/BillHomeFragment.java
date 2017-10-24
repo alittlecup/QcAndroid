@@ -45,8 +45,6 @@ import javax.inject.Inject;
   @BindView(R2.id.tv_bill_withdraw) TextView tvBillWithdraw;
   @BindView(R2.id.tv_bill_can_withdraw) TextView tvBillCanWithdraw;
   @BindView(R2.id.tv_bill_settlement) TextView tvBillSettlement;
-  @BindView(R2.id.tv_bill_time) TextView tvBillTime;
-  @BindView(R2.id.tv_bill_income) TextView tvBillIncome;
   @BindView(R2.id.recycler_bill) RecyclerView recyclerBill;
   @BindView(R2.id.container) LinearLayout filterContainer;
   @BindView(R2.id.tv_filter) TextView tvFilter;
@@ -134,12 +132,17 @@ import javax.inject.Inject;
     }
 
     BillSummary billSummary = presenter.getSummary(billList);
-    tvBillIncome.setText(
-        getResources().getString(R.string.bill_count_indeed, billSummary.reduce, billSummary.sum));
 
     for (BusinessBill bill : billList){
       itemList.add(new ItemBill(bill));
     }
     adapter.notifyDataSetChanged();
   }
+
+  private void dispatchItem(List<BusinessBill> bills){
+    for (BusinessBill bill : bills){
+      //TODO 对月份的分组处理
+    }
+  }
+
 }

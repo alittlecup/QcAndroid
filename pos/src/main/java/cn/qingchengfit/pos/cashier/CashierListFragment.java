@@ -20,6 +20,7 @@ import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -55,6 +56,15 @@ import rx.functions.Action1;
     initBus();
     presenter.qcGetCashier();
     return root;
+  }
+
+  @Override protected void addDivider() {
+    rv.setBackgroundResource(R.color.white);
+    rv.addItemDecoration(new FlexibleItemDecoration(getContext())
+        .withDivider(R.drawable.divider_grey_left_margin)
+        .withOffset(1)
+        .withBottomEdge(true)
+    );
   }
 
   private void initBus(){

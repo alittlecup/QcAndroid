@@ -3,8 +3,8 @@ package cn.qingchengfit.pos.net;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.bill.beans.BillLock;
 import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
+import cn.qingchengfit.saasbase.bill.beans.BillTotal;
 import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
-import cn.qingchengfit.saasbase.bill.network.BusinessOrderListWrap;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
 import java.util.HashMap;
@@ -69,10 +69,10 @@ public interface BillApi {
   rx.Observable<QcDataResponse<List<BusinessBill>>> getBillList(@Path("gym_id") String gym_id);
 
   /**
-   * 账单统计
+   * 账单统计 //TODO 未给出
    */
 
   @GET("/api/rongshu/gyms/{gym_id}/bills/")
-  rx.Observable<QcDataResponse<List<BusinessBill>>> getBillToTal(@Path("gym_id") String gym_id);
+  rx.Observable<QcDataResponse<BillTotal>> getBillToTal(@Path("gym_id") String gym_id);
 
 }

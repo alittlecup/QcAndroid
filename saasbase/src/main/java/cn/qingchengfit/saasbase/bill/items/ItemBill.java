@@ -39,17 +39,15 @@ public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
     holder.tvOperator.setText(holder.itemView.getContext()
         .getResources()
         .getString(R.string.bill_operator, bill.created_by.username));
+
     holder.tvItemBillName.setText(holder.itemView.getContext()
         .getResources()
         .getString(R.string.bill_detail_item, bill.getPayType(holder.itemView.getContext(), bill.pay_type),
             bill.bank_no));
-
     holder.tvItemBillAction.setText(holder.itemView.getContext()
         .getResources()
         .getString(R.string.bill_detail_item_trade_type, bill.getTradeType(bill.type)));
-
     holder.tvItemBillAccount.setText(bill.getPrice(bill.price, bill.type));
-
     holder.tvItemBillStatus.setText(bill.getStatus(holder.itemView.getContext(), bill.status, bill.type));
   }
 

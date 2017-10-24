@@ -83,10 +83,10 @@ public class BillModel implements IBillModel {
   }
 
   @Override public Observable<QcDataResponse<BillTotal>> queryBillTotal(String businessOrderId) {
-    return null;
+    return billApi.getBillToTal(businessOrderId);
   }
 
   @Override public Observable<QcDataResponse<List<BusinessBill>>> queryBillList(String gym_id) {
-    return null;
+    return billApi.getBillList(gym_id);
   }
 }
