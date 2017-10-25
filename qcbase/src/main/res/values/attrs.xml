@@ -162,4 +162,13 @@
     <attr format="boolean" name="qc_single"/>
   </declare-styleable>
 
+  <declare-styleable name="LayoutSwitcher">
+    <attr format="string" name="sw_lable"/>
+    <attr format="reference" name="sw_layout"/>
+    <attr format="boolean" name="sw_showdivier"/>
+    <attr format="boolean" name="sw_open"/>
+    <attr format="integer" name="sw_text_color"/>
+    <attr format="integer" name="sw_background"/>
+  </declare-styleable>
+
 </resources>
