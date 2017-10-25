@@ -137,6 +137,7 @@
     <activity android:name="cn.qingchengfit.design.TextActivity"/>
     <activity android:name="cn.qingchengfit.design.EmptyActivity"/>
     <activity android:name="cn.qingchengfit.design.ButtonActivity"/>
+    <activity android:name="cn.qingchengfit.design.CommonInputActivity"/>
   </application>
 
 </manifest>

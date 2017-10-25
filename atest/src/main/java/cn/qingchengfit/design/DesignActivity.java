@@ -19,6 +19,7 @@ public class DesignActivity extends AppCompatActivity {
   private Button btnText;
   private Button btnEmpty;
   private Button btnWidget;
+  private Button btnCell;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -27,6 +28,7 @@ public class DesignActivity extends AppCompatActivity {
     btnText = (Button) findViewById(R.id.btn_text);
     btnEmpty = (Button) findViewById(R.id.btn_empty);
     btnWidget = (Button) findViewById(R.id.btn_widget);
+    btnCell = (Button) findViewById(R.id.btn_cell);
     btnText.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         start(TextActivity.class);
@@ -45,6 +47,11 @@ public class DesignActivity extends AppCompatActivity {
     btnWidget.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         start(ButtonActivity.class);
+      }
+    });
+    btnCell.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        start(CommonInputActivity.class);
       }
     });
   }

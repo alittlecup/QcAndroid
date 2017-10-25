@@ -11,10 +11,12 @@
       android:text="带箭头  可点击"
       android:gravity="center_vertical"
       android:paddingLeft="15dp"
-      android:textSize="15dp"
+      android:textSize="12dp"
       />
 
+  <include layout="@layout/divider_grey"/>
   <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_click_test"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height_new"
       app:civ_clickable="true"
@@ -22,5 +24,52 @@
       app:civ_lable="意见反馈"
       app:civ_text_color="@color/qc_text_black"
       />
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height_new"
+      android:text="右侧带箭头、文字"
+      android:gravity="center_vertical"
+      android:paddingLeft="15dp"
+      android:textSize="12dp"
+      />
+
+  <include layout="@layout/divider_grey"/>
+  <cn.qingchengfit.widgets.CommonInputView
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height_new"
+      app:civ_clickable="true"
+      app:civ_showright="true"
+      app:civ_lable="签到通知"
+      app:civ_text_color="@color/qc_text_black"
+      app:civ_content="3家场馆已开启"
+      app:civ_content_color="@color/qc_text_grey"
+      />
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height_new"
+      android:text="左侧带icon，右侧带箭头、文字"
+      android:gravity="center_vertical"
+      android:paddingLeft="15dp"
+      android:textSize="12dp"
+      />
+
+  <include layout="@layout/divider_grey"/>
+  <cn.qingchengfit.widgets.CommonInputView
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height_new"
+      app:civ_clickable="true"
+      app:civ_showright="true"
+      app:civ_lable="检查更新"
+      app:civ_text_color="@color/qc_text_black"
+      app:civ_content="V1.2"
+      app:civ_content_color="@color/qc_text_grey"
+      app:civ_is_show_left="true"
+      app:civ_left_icon="@drawable/vd_recruit_jobintro_age"
+      />
+  <include layout="@layout/divider_grey"/>
 
 </LinearLayout>
