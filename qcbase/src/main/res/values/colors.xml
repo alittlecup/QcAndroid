@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#00c8d1</color>
-  <color name="colorPrimaryDark">#016368</color>
-  <color name="colorPrimaryDisable">@color/colorPrimaryDark</color>
+  <color name="colorPrimary">#00CED8</color>
+  <color name="colorPrimaryDark">#00B8C1</color>
+  <color name="colorPrimaryDisable">#99EBEF</color>
+
+  <color name="danger_red_normal">#EA6161</color>
+  <color name="danger_red_pressed">#D25757</color>
+  <color name="danger_red_disable">#F6BFBF</color>
+  
+  <color name="success_green">#58B87A</color>
 
   <color name="colorSetBg">#838B86</color>
-  <color name="divider_white">#e5e5e5</color>
+  <color name="divider_white">#E5E5E5</color>
   <color name="divider_grey">#dddddd</color>
   <color name="text_black">#333333</color>
   <color name="text_light">#ccc</color>

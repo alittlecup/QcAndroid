@@ -131,6 +131,12 @@
         android:windowSoftInputMode="adjustResize"
         />
 
+    <activity android:name="cn.qingchengfit.design.DesignActivity"/>
+
+    <activity android:name="cn.qingchengfit.design.ColorActivity"/>
+    <activity android:name="cn.qingchengfit.design.TextActivity"/>
+    <activity android:name="cn.qingchengfit.design.EmptyActivity"/>
+    <activity android:name="cn.qingchengfit.design.ButtonActivity"/>
   </application>
 
 </manifest>

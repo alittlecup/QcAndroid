@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="cn.qingchengfit.testmodule.MainActivity"
     >
 
   <Button
-      android:id="@+id/btn_to_recruit"
+      android:id="@+id/btn_color"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Recruit"
+      android:text="Color 颜色"
       />
 
   <Button
-      android:id="@+id/btn_to_test"
+      android:id="@+id/btn_text"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="TEST"
+      android:text="文字"
       />
 
   <Button
-      android:id="@+id/btn_design"
+      android:id="@+id/btn_widget"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="DESIGH"
+      android:text="组件"
+      />
+
+  <Button
+      android:id="@+id/btn_empty"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="空页面"
       />
 
 </LinearLayout>

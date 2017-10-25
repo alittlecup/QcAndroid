@@ -83,4 +83,6 @@
 
   <string name="title_welcome_trial">欢迎试用高级版</string>
 
+  <!--空页面-->
+  <string name="text_empty_title">暂无数据</string>
 </resources>
