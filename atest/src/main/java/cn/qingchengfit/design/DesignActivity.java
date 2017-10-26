@@ -3,6 +3,7 @@ package cn.qingchengfit.design;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ public class DesignActivity extends BaseActivity {
   private Button btnWidget;
   private Button btnCell;
   private Button btnBottom;
+  private Button btnChooseItem;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public class DesignActivity extends BaseActivity {
     btnWidget = (Button) findViewById(R.id.btn_widget);
     btnCell = (Button) findViewById(R.id.btn_cell);
     btnBottom = (Button) findViewById(R.id.btn_bottom);
+    btnChooseItem = (Button)findViewById(R.id.btn_choose);
     btnText.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         start(TextActivity.class);
@@ -80,6 +83,11 @@ public class DesignActivity extends BaseActivity {
         start(AlertActivity.class);
       }
     });
+    btnChooseItem.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        start(ItemActivity.class);
+      }
+    });
   }
 
   private void initToolbar() {
@@ -88,6 +96,11 @@ public class DesignActivity extends BaseActivity {
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
+        new Handler().postDelayed(new Runnable() {
+          @Override public void run() {
+            RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_HIDE_DIALOG));
+          }
+        }, 3000);
         return false;
       }
     });

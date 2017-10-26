@@ -60,10 +60,6 @@ public class PosApp extends Application implements HasActivityInjector, HasSuppo
 
   public void initInjcet() {
     LoginStatus.Builder lb = new LoginStatus.Builder();
-    //String staffid = PreferenceUtils.getPrefString(this, Configs.PREFER_WORK_ID, "");
-    //String staffname = PreferenceUtils.getPrefString(this, Configs.PREFER_WORK_NAME, "");
-    //String session = PreferenceUtils.getPrefString(this, Configs.PREFER_SESSION, "");
-    //String user_id = PreferenceUtils.getPrefString(this, Configs.PREFER_USER_ID, "");
     ToastUtils.init(this);
     Staff staff = new Staff("纸团", "15123358198", "", 1);
     staff.setId("3288");
