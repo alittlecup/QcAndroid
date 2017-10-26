@@ -35,6 +35,7 @@ public class DesignActivity extends BaseActivity {
   private Button btnCell;
   private Button btnBottom;
   private Button btnChooseItem;
+  private Button btnSearch;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -48,6 +49,7 @@ public class DesignActivity extends BaseActivity {
     btnCell = (Button) findViewById(R.id.btn_cell);
     btnBottom = (Button) findViewById(R.id.btn_bottom);
     btnChooseItem = (Button)findViewById(R.id.btn_choose);
+    btnSearch = (Button) findViewById(R.id.btn_search);
     btnText.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         start(TextActivity.class);

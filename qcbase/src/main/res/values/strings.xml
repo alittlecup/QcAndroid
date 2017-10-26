@@ -16,6 +16,7 @@
   <string name="please_input">请填写</string>
   <string name="gender_male">男</string>
   <string name="gender_female">女</string>
+  <string name="action_search">搜索</string>
 
   <string name="cm_edit">编辑</string>
   <string name="start">开始</string>
