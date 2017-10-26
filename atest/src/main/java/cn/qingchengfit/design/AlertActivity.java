@@ -35,7 +35,7 @@ public class AlertActivity extends BaseActivity {
 
     btnDialog2.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        TipDialogFragment.newInstance("操作成功", "z知道了", R.drawable.vd_default_jobfair)
+        TipDialogFragment.newInstance("操作成功", "知道了", R.drawable.vd_default_jobfair)
             .show(getSupportFragmentManager(), null);
       }
     });
