@@ -1,6 +1,5 @@
 package cn.qingchengfit.saasbase.cards.views;
 
-import android.os.Bundle;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -34,10 +33,7 @@ public class ChooseCardTplForBuyCardFragment extends CardTplsHomeInGymFragment {
   @Override public boolean onItemClick(int i) {
     IFlexible item =fragmentList.get(viewpager.getCurrentItem()).getItem(i);
     if (item instanceof CardTplItem){
-      //RxBus.getBus().post(((CardTplItem) item).getCardTpl());
-      Bundle bundle = new Bundle(1);
-      bundle.putParcelable("cardTpl",((CardTplItem) item).getCardTpl());
-      routeTo("/pay/",bundle);
+      routeTo("/pay/",new CardBuyParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
     }
     return true;
   }

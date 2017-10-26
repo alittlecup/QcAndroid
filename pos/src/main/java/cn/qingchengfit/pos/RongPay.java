@@ -60,15 +60,15 @@ public class RongPay {
       Bundle args = new Bundle();
       args.putString("merOrderId", merOrderId);              // 客户订单号
       args.putInt("payType", payType);                    // 指定收款方式（默认0，微信支付 10， 银商支付30）
-      args.putLong("amount", 1);                          // 收款金额 单位分
+      args.putLong("amount", amount);                          // 收款金额 单位分
       args.putString("title", title);                   // 订单标题
       args.putString("operator", operator);                // 操作员
       args.putString("packageName", context.getPackageName());    // applicationId 应用标示
-      //args.putString("tableId", "11台");                 // 台位
-      //args.putString("funCode", "10");                 // 支付功能码
+      args.putString("tableId", "11");                 // 台位
+      args.putString("funCode", "10");                 // 支付功能码
       args.putString("bizAndOrder", bizAndOrder);
       args.putString("customerNo", customerNo);
-      args.putString("phoneNo", phoneNo);
+      //args.putString("phoneNo", phoneNo);
       intent.putExtra("data", args);
       intent.setAction(ACTION_PAY);
       return intent;

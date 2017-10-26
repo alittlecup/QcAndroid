@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
@@ -19,6 +18,7 @@ import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DrawableUtils;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import javax.inject.Inject;
 
 /**
@@ -43,8 +43,8 @@ import javax.inject.Inject;
  */
 @Leaf(module = "card",path = "/cardtpl/add/")
 public class CardtplAddFragment extends CardTplDetailFragment {
-  @Inject BindCardModel.SelectedData selectedData;
   @Inject GymWrapper gymWrapper;
+  @Need int cardCategory = 1;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -53,6 +53,7 @@ public class CardtplAddFragment extends CardTplDetailFragment {
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    presenter.setCardCate(cardCategory);
     civInputCardname.setVisibility(View.VISIBLE);
     civInputCardname.addTextWatcher(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -71,12 +72,12 @@ public class CardtplAddFragment extends CardTplDetailFragment {
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("新增会员卡价格");
+    toolbarTitle.setText("新增会员卡种类");
     toolbar.getMenu().clear();
     toolbar.getMenu().add("保存").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        // TODO: 2017/10/16 新建卡种类
+        presenter.createCardTpl();
         return true;
       }
     });
@@ -92,7 +93,7 @@ public class CardtplAddFragment extends CardTplDetailFragment {
     RxBusAdd(OptionBody.class)
         .subscribe(new BusSubscribe<OptionBody>() {
           @Override public void onNext(OptionBody optionBody) {
-            comonAdapter.addItem(0,new CardtplOptionItem(CardBusinessUtils.optionBody2Option(optionBody),selectedData.cardcategory));
+            comonAdapter.addItem(0,new CardtplOptionItem(CardBusinessUtils.optionBody2Option(optionBody),cardCategory));
           }
         });
     initCardTpl();
@@ -103,9 +104,9 @@ public class CardtplAddFragment extends CardTplDetailFragment {
    * 填写一些基础信息
    */
   private void initCardTpl(){
-    tvCardTplType.setText(CardBusinessUtils.getCardTypeCategoryStrHead(selectedData.cardcategory,getContext()));
+    tvCardTplType.setText(CardBusinessUtils.getCardTypeCategoryStrHead(cardCategory,getContext()));
     tvGymName.setText(gymWrapper.name());
-    cardview.setBackground(DrawableUtils.generateBg(8,CardBusinessUtils.getDefaultCardbgColor(selectedData.cardcategory)));
+    cardview.setBackground(DrawableUtils.generateBg(8,CardBusinessUtils.getDefaultCardbgColor(cardCategory)));
   }
 
 

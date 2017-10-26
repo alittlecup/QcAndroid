@@ -1,13 +1,18 @@
 package cn.qingchengfit.pos.card;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.Nullable;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.pos.RongPay;
+import cn.qingchengfit.saasbase.bill.view.BillDetailParams;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.utils.LogUtil;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -31,7 +36,8 @@ import cn.qingchengfit.utils.LogUtil;
  */
 
 public class PosCardBuyFragment extends CardBuyFragment {
-
+  @Inject GymWrapper gymWrapper;
+  @Inject LoginStatus loginStatus;
   public static PosCardBuyFragment newInstance(CardTpl cardTpl) {
     Bundle args = new Bundle();
     args.putParcelable("tpl", cardTpl);
@@ -40,87 +46,51 @@ public class PosCardBuyFragment extends CardBuyFragment {
     return fragment;
   }
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+  }
+
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {
-    //// TODO: 2017/10/22 测试支付一分钱
-    new RongPay.Builder()
-      .amount(1).build().pay(getContext());
+    Intent toBuy = new RongPay.Builder()
+      .amount(payBusinessResponse.order_amount)
+      .title(payBusinessResponse.order_title)
+      .merOrderId(payBusinessResponse.order_no)
+      .customerNo(gymWrapper.getCustumNo())
+      .operator(loginStatus.staff_name())
+      .build().pay(getContext());
+    startActivityForResult(toBuy,100);
   }
 
-  private static final String ACTION_PAY = "com.rongcapital.pay";
-  private static final String ACTION_PRINT = "com.rongcapital.print";
-  public void pay() {
-    int payType = 0;
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK){
+      if (requestCode == 100){
 
-    String bizAndOrder = "10";
-    //if (sp.getSelectedItemPosition() == 0) {
-    //  bizAndOrder ="10";
-    //} else if (sp.getSelectedItemPosition() == 1) {
-    //  bizAndOrder = "20";
-    //}
+        if (data.getBundleExtra("data") == null) {
+        } else {
+          Bundle args = data.getBundleExtra("data");
+          Long amount = args.getLong("amount", -1);
+          String merorderId = args.getString("merOrderId");
+          String payStatus = args.getString("payStatus");
+          String title = args.getString("title");
+          String operator = args.getString("operator");
+          String packageName = args.getString("packageName");
+          int payType = args.getInt("payType", 0);
+          String tradeFlowId = args.getString("tradeFlowId");                // 交易流水号
+          String dealTime = args.getString("dealTime");               // 交易时间
+          LogUtil.d("PosPay","amount:" + amount + "|merorderId:" + merorderId + "|title:" + title + "|operator:" +
+            operator + "|packageName:" + packageName + "|payType:" + payType
+            + "|tradeFlowId:" + tradeFlowId + "|dealTime:" + dealTime + "|payStatus:" + payStatus);
+          onPayDone(merorderId);
+        }
 
-
-    //LogUtil.i("TAG", string1 + "\t" + string2 + "\t" + string3 + "\t" + string4 + "\t");
-    try {
-      Intent intent = new Intent();
-      Bundle args = new Bundle();
-      args.putString("merOrderId", System.currentTimeMillis()+"");              // 客户订单号
-      args.putInt("payType", payType);                    // 指定收款方式（默认0，微信支付 10， 银商支付30）
-      args.putLong("amount", 1);                          // 收款金额 单位分
-      args.putString("title", "收钱标题");                   // 订单标题
-      args.putString("operator", "操作员");                // 操作员
-      args.putString("packageName", getContext().getPackageName());    // applicationId 应用标示
-      args.putString("tableId", "11台");                 // 台位
-      args.putString("funCode", "10");                 // 支付功能码
-      args.putString("bizAndOrder", bizAndOrder);
-      args.putString("customerNo", "7178000623LD7V840");
-      args.putString("phoneNo", "15123358198");
-      intent.putExtra("data", args);
-      intent.setAction(ACTION_PAY);
-      startActivityForResult(intent, 100);
-    } catch (Exception e) {
-      LogUtil.e("TAG", e.getMessage());
+      }
+    }else {
+      onShowError("支付取消");
     }
   }
 
-  public void print() {
-    String msg = getPrintFormatMsg("测试打印");
-    try {
-      Intent intent = new Intent();
-      Bundle args = new Bundle();
-      args.putString("msg", msg);   // 打印内容规范 请参考《全民付收银台线下插件商户销售单据打印规范》
-      args.putString("packageName", getContext().getPackageName());  // 应用包名
-      intent.putExtra("data", args);
-      intent.setAction(ACTION_PRINT);  // 操作类型
-      startActivity(intent);
-    } catch (Exception e) {
-      Log.e("TAG", e.getMessage());
-    }
-  }
-
-
-
-  private String getPrintFormatMsg(String orderId) {
-    String text =
-        "!hz l\n" +
-            "!asc l\n" +
-            "!gray 6\n" +
-            "!yspace 4\n" +
-            "*text c 菜单\n" +
-            "*line\n" +
-            "!hz s\n" +
-            "!asc s\n" +
-            "!gray 2\n" +
-            "*text c 消费名称：" + "xxxxx" + "\n" +
-            "*text c" + " 订单号：" + orderId + "\n" +
-            "*text c" + " 支付方式：" + "1111" + "\n" +
-            "*text c" + " 支付时间：" + "11111" + "\n" +
-            "*text c" + " 交易类型：消费" + "\n" +
-            "*text c" + " 交易金额：" + "1111.11" + "元" + "\n" +
-            "*text c" + " 本人确认以上交易" + "\n" +
-            "*line\n" +
-            "*text c" + " 持卡人签名\n" +
-            "*text c" + "\n" +
-            "*line\n";
-    return text;
+  protected void onPayDone(String orderNo){
+    routeTo("/pay/done/",new BillDetailParams().orderNo(orderNo).build());
   }
 }

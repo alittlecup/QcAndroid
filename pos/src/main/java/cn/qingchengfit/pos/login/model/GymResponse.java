@@ -7,5 +7,5 @@ package cn.qingchengfit.pos.login.model;
 public class GymResponse {
 
   public Gym gym;
-
+  public String customer_no;
 }

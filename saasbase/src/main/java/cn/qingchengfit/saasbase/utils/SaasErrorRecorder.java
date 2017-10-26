@@ -1,7 +1,10 @@
-package cn.qingchengfit.saasbase.bill.beans;
+package cn.qingchengfit.saasbase.utils;
 
-import cn.qingchengfit.model.base.User;
-import cn.qingchengfit.saasbase.cards.bean.Card;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.utils.CrashUtils;
+import cn.qingchengfit.utils.LogUtil;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -21,34 +24,27 @@ import cn.qingchengfit.saasbase.cards.bean.Card;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/20.
+ * Created by Paper on 2017/10/25.
  */
-public class BusinessBill {
-  public String id;//
-  //"order_type:" 1/2/.., //交易类型 1：购买会员卡 2. 充值会员卡 3.活动报名 4.课程预约 5.退款 6.提现
-  public int type; //
-  //"pay_type": 1/2/3..., //支付方式: "WEIXIN", "WEIXIN_QR_CODE", "ALIPAY", "ALIPAY_QR_CODE", "CARD"
-  public String pay_type;
-  //"order_no": "", //青橙业务订单ID
-  public String order_no;
-  //"trade_flow": "xxxx", //融数流水号
-  public String trade_flow_id;
-  public String pay_time;
-  public String created_at;
-  public User created_by;
-  // "origin": //平台: "WEB", "MEMBER", "POS", "APP"
-  public String origin;
-  public String bank_no;
-  public String bank_logo;
-  public String bank_username;
 
-  public String remarks;
-  public Extra extra;         //根据业务订单变
+public class SaasErrorRecorder {
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
 
-  public int status;           // // 状态 1：待结算，2：已结算，3：处理中, 4：处理失败, 5.处理完成
-  public float price;          //
-  public class Extra {
-    public Card card;
-    public BillScheduleOrder schedule_order;
+  @Inject
+  public SaasErrorRecorder() {
+  }
+
+  public void e(String e){
+    // TODO: 2017/10/25 给后台发送错误日志
+    try {
+      LogUtil.e("用户："+loginStatus.getLoginUser().getUsername()+loginStatus.getLoginUser().phone+
+        "\n 场馆："+gymWrapper.getBrand().getName()+"--"+gymWrapper.getCoachService().getName()+"--"+gymWrapper.getBrand().getCname()+
+      "\n gymid:"+gymWrapper.getCoachService().gym_id+"   id:"+gymWrapper.getCoachService().id+
+      "\n"+e);
+    }catch (Exception err){
+      CrashUtils.sendCrash(err);
+    }
+
   }
 }

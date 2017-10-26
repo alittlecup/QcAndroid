@@ -4,15 +4,20 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.support.v4.view.OnApplyWindowInsetsListener;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.WindowInsetsCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -24,6 +29,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.FrameLayout;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.CView;
@@ -34,6 +40,7 @@ import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -94,6 +101,10 @@ public abstract class BaseFragment extends Fragment
       Bundle savedInstanceState) {
   }
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+  }
+
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
@@ -104,6 +115,12 @@ public abstract class BaseFragment extends Fragment
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
     super.onViewCreated(view, savedInstanceState);
+    ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
+      @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
+      @Override public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
+        return insets.consumeSystemWindowInsets();
+      }
+    });
     view.setOnTouchListener(new View.OnTouchListener() {
       @Override public boolean onTouch(View v, MotionEvent event) {
         return isBlockTouch();
@@ -162,6 +179,13 @@ public abstract class BaseFragment extends Fragment
         getActivity().onBackPressed();
       }
     });
+    if (toolbar.getParent() instanceof FrameLayout && isfitSystemPadding()) {
+      ((FrameLayout) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    }
+  }
+
+  protected boolean isfitSystemPadding(){
+    return true;
   }
 
   public void showLoading() {
@@ -400,7 +424,7 @@ public abstract class BaseFragment extends Fragment
         }
       }
       if (bd != null) {
-        to.putExtra("b", bd);
+        to.putExtras(bd);
       }
       startActivity(to);
     } catch (Exception e) {

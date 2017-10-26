@@ -43,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_lable="充值金额"
+            app:civ_inputnum="true"
             />
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/civ_real_money"

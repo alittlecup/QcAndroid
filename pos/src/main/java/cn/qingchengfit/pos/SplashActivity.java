@@ -78,9 +78,11 @@ public class SplashActivity extends BaseActivity{
               //TODO 注入GymWrapper信息
               CoachService coachService = new CoachService();
               coachService.setId(gymQcDataResponse.data.gym.id);
+              coachService.setGym_id(gymQcDataResponse.data.gym.id);
               coachService.setName(gymQcDataResponse.data.gym.name);
               coachService.setPhoto(gymQcDataResponse.data.gym.photo);
               gymWrapper.setCoachService(coachService);
+              gymWrapper.setCustumNo(gymQcDataResponse.data.customer_no);
               gymWrapper.setBrand(new Brand.Builder().name(gymQcDataResponse.data.gym.brand_name).build());
               gymWrapper.setSuperuser(new SuperUser(gymQcDataResponse.data.gym.superuser.username,
                   gymQcDataResponse.data.gym.superuser.phone));

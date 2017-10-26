@@ -1,5 +1,6 @@
 package cn.qingchengfit.pos.routers;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.pos.staff.PosStaffAddFragment;
 import cn.qingchengfit.pos.staff.PosStaffDetailFragment;
@@ -27,11 +28,12 @@ import cn.qingchengfit.saasbase.routers.staffImpl;
  */
 
 public class StaffRouters extends staffImpl {
-  @Override public Fragment toStaffDetailFragment() {
+
+  @Override public Fragment toStaffDetailFragment(Bundle args) {
     return new PosStaffDetailFragment();
   }
 
-  @Override public Fragment toStaffAddFragment() {
+  @Override public Fragment toStaffAddFragment(Bundle args) {
     return new PosStaffAddFragment();
   }
 }

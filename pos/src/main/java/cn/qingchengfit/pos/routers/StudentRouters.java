@@ -1,5 +1,6 @@
 package cn.qingchengfit.pos.routers;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.pos.student.PosStudentAddFragment;
 import cn.qingchengfit.saasbase.routers.studentImpl;
@@ -26,7 +27,7 @@ import cn.qingchengfit.saasbase.routers.studentImpl;
  */
 
 public class StudentRouters extends studentImpl {
-  @Override public Fragment toStudentAddFragment() {
+  @Override public Fragment toStudentAddFragment(Bundle args) {
     return new PosStudentAddFragment();
   }
 }

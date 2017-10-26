@@ -21,15 +21,16 @@ import butterknife.OnClick;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardTplOptionForBuy;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
+import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DrawableUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
@@ -61,7 +62,7 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/26.
  */
-@Leaf(module = "card", path = "/pay/") public class CardBuyFragment extends BaseFragment
+@Leaf(module = "card", path = "/pay/") public class CardBuyFragment extends SaasBaseFragment
   implements FlexibleAdapter.OnItemClickListener, CardBuyPresenter.MVPView {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -89,21 +90,11 @@ import javax.inject.Inject;
   @BindView(R2.id.tv_card_append) TextView tvCardAppend;
 
   @Inject public CardBuyPresenter presenter;
-  @Need CardTpl cardTpl;
+  @Need public CardTpl cardTpl;
 
-  public static CardBuyFragment newInstance(CardTpl cardTpl) {
-    Bundle args = new Bundle();
-    args.putParcelable("tpl", cardTpl);
-    CardBuyFragment fragment = new CardBuyFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      cardTpl = getArguments().getParcelable("tpl");
-    }
   }
 
   private CommonFlexAdapter commonFlexAdapter;
@@ -115,6 +106,7 @@ import javax.inject.Inject;
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     presenter.setmCardTplId(cardTpl.getId());
+    presenter.setCardCate(cardTpl.getType());
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
     GridLayoutManager manager =
@@ -216,11 +208,12 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.civ_mark) public void onCivMarkClicked() {
-    Bundle bd = new Bundle();
-    bd.putString("content",presenter.getRemarks());
-    bd.putString("hint",presenter.getRemarks());
-    bd.putString("title","会员卡备注");
-    routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"), bd);
+    routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
+      new CommonInputParams()
+        .title("会员卡备注")
+        .content(presenter.getRemarks())
+        .hint(presenter.getRemarks())
+      .build());
   }
 
   @Override public void showInputMoney(boolean show) {

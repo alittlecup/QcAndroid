@@ -8,6 +8,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.pos.PosApp;
 import cn.qingchengfit.pos.models.BillModel;
 import cn.qingchengfit.pos.models.CardModel;
+import cn.qingchengfit.pos.models.PermissionModel;
 import cn.qingchengfit.pos.models.PosDbModel;
 import cn.qingchengfit.pos.models.StaffModel;
 import cn.qingchengfit.pos.models.StudentModel;
@@ -34,6 +35,7 @@ import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.IBillModel;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.billImpl;
@@ -115,6 +117,10 @@ public class AppModel {
 
   @Provides IStaffModel providerStaffModel(){
     return new StaffModel(qcrestRepository,gymWrapper,loginStatus);
+  }
+
+  @Provides IPermissionModel providerPermission(){
+    return new PermissionModel();
   }
 
   @Provides QcDbManager providerDb(){

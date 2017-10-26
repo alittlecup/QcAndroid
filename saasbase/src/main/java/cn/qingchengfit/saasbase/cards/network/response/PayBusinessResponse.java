@@ -22,4 +22,8 @@ package cn.qingchengfit.saasbase.cards.network.response;
  */
 
 public class PayBusinessResponse {
+  public String order_no;
+  public long order_amount;
+  public String order_title;
+
 }

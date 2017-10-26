@@ -36,7 +36,7 @@ import com.anbillon.flabellum.annotations.Need;
 @Leaf(module = "card",path = "/cardtpl/option/")
 public class CardTplOptionFragment extends CardtplOptionAddFragment {
 
-  @Need CardTplOption cardTplOption;
+  @Need public CardTplOption cardTplOption;
 
   public static CardTplOptionFragment newInstance(CardTplOption option) {
     Bundle args = new Bundle();
@@ -56,7 +56,6 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    CardTplOption cardTplOption = getArguments().getParcelable("option");
     if (cardTplOption != null && !CmStringUtils.isEmpty(cardTplOption.id)) {
       presenter.setOptionId(cardTplOption.id);
     }
@@ -81,6 +80,11 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
    * 展示会员卡价格详情
    */
   public void onDetail(CardTplOption option){
+    if (option == null){
+      errorRecorder.e("卡价格为空");
+      return;
+    }
+
     civChargeMoney.setContent(option.charge);
     civRealMoney.setContent(option.price);
     elValidDay.setExpanded(option.limit_days);

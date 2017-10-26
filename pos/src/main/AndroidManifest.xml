@@ -131,6 +131,21 @@
       </intent-filter>
     </activity>
 
+    <activity android:name="cn.qingchengfit.saasbase.qrcode.views.QRActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="scan"
+            android:scheme="qcpos"
+            android:pathPattern="^toweb"
+            />
+      </intent-filter>
+    </activity>
+
     <activity android:name=".main.MainActivity"/>
     <activity android:name=".login.LoginActivity"/>
 

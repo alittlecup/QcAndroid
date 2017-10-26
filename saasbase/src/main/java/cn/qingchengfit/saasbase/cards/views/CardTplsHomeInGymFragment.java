@@ -117,7 +117,7 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
           @Override
           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             presenter.createCardCate(position+1);
-            routeTo("/cardtpl/add/",null);
+            routeTo("/cardtpl/add/",new CardtplAddParams().build());
           }
         }).show();
         return true;
@@ -180,7 +180,9 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
     IFlexible item =fragmentList.get(viewpager.getCurrentItem()).getItem(i);
     if (item instanceof CardTplItem){
       presenter.chooseOneCardTpl(((CardTplItem) item).getCardTpl());
-      routeTo("/cardtpl/detail/",null);
+      routeTo("/cardtpl/detail/",new CardTplDetailParams()
+        .cardTpl(((CardTplItem) item).getCardTpl())
+        .build());
     }
     return true;
   }

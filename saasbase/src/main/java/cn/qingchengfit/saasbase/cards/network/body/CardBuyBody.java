@@ -29,7 +29,7 @@ public class CardBuyBody implements Parcelable {
   }
 
   public String price;
-  public int charge_type; //支付类型
+  public Integer charge_type = 7; //支付类型
   public String card_no;
   public String account; //储值卡充值
   public String seller_id;
@@ -51,7 +51,7 @@ public class CardBuyBody implements Parcelable {
     if (CmStringUtils.isEmpty(seller_id)) return R.string.e_card_saler_cannot_empty;
     if (check_valid && (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to)))
       return R.string.e_card_start_or_end_cannot_empty;
-    switch (charge_type) {
+    switch (type) {
       case 1:
         if (CmStringUtils.isEmpty(account))
           return R.string.e_card_charge_money_cannot_empty;
@@ -64,6 +64,8 @@ public class CardBuyBody implements Parcelable {
         if (CmStringUtils.isEmpty(start) || CmStringUtils.isEmpty(end))
           return R.string.e_card_charge_period_cannot_empty;
         break;
+      default:
+        return R.string.e_card_buy_cate;
     }
     return 0;
   }

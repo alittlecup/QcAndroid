@@ -15,8 +15,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.presenters.AddCardtplStandardPresenter;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -43,7 +43,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/8/23.
  */
 @Leaf(module = "card", path = "/cardtpl/option/add/") public class CardtplOptionAddFragment
-    extends BaseFragment implements AddCardtplStandardPresenter.MVPView{
+    extends SaasBaseFragment implements AddCardtplStandardPresenter.MVPView{
 
   @Inject AddCardtplStandardPresenter presenter;
   @BindView(R2.id.toolbar) Toolbar toolbar;

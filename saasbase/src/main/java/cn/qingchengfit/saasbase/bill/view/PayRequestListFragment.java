@@ -99,9 +99,7 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   protected void onPayDone(String orderNo){
-    // TODO: 2017/10/23 需要传参业务id
-    Bundle bd = new Bundle();
-    routeTo("/pay/done/",bd);
+    routeTo("/pay/done/",new BillDetailParams().orderNo(orderNo).build());
   }
 
 

@@ -1,7 +1,9 @@
 package cn.qingchengfit.pos.models;
 
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.net.PosApi;
@@ -90,6 +92,11 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse> qcCreateCardtpl(@Body CardtplBody body) {
+    int retCode = body.checkInPos();
+    if (retCode > 0) {
+      RxBus.getBus().post(new EventNetWorkError(retCode));
+      return Observable.just(new QcDataResponse());
+    }
     return posApi.qcCreateCardtpl(gymWrapper.getGymId(), body, gymWrapper.getParams());
   }
 

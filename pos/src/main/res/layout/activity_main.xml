@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="cn.qingchengfit.pos.main.MainActivity"
     android:id="@+id/frag_main"
-    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
     >
 
 </FrameLayout>

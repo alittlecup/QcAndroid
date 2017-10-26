@@ -9,11 +9,13 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICardModel;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.subscribes.NetSubscribe;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -22,9 +24,10 @@ import rx.schedulers.Schedulers;
 
 public class CardTplDetailPresenter extends BasePresenter {
   @Inject ICardModel cardModel;
-  @Inject BindCardModel.SelectedData selectedData;
-  SerPermisAction serPermisAction;
-  CardTpl cardTpl;
+  @Inject IPermissionModel permissionModel;
+  CardTpl cardTpl; //卡种类详情
+  private int cardCate; //新增卡种类是记录卡类型
+
   private MVPView view;
 
   @Inject CardTplDetailPresenter() {
@@ -34,20 +37,28 @@ public class CardTplDetailPresenter extends BasePresenter {
     this.cardTpl = cardTpl;
   }
 
-  public String getCardtplId(){
-    if (cardTpl != null){
+  public String getCardtplId() {
+    if (cardTpl != null) {
       return cardTpl.getId();
-    }else return "";
+    } else {
+      return "";
+    }
   }
-  public int getCardCate(){
-    if (cardTpl != null)
+
+  public int getCardCate() {
+    if (cardTpl != null) {
       return cardTpl.getCardTypeInt();
-    else return 0;
+    } else {
+      return cardCate;
+    }
   }
-  public String getCardName(){
-    if (cardTpl != null)
+
+  public String getCardName() {
+    if (cardTpl != null) {
       return cardTpl.getName();
-    else return "";
+    } else {
+      return "";
+    }
   }
 
   public boolean isCardTplEnable() {
@@ -58,25 +69,41 @@ public class CardTplDetailPresenter extends BasePresenter {
     }
   }
 
-  public void queryCardtpl() {
-    RxRegiste(cardModel.qcGetCardTplsDetail(selectedData.cardtplId)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcDataResponse<CardTplWrapper>>() {
-          @Override public void call(QcDataResponse<CardTplWrapper> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              cardTpl = qcResponse.data.card_tpl;
-              view.onGetCardTypeInfo(qcResponse.data.card_tpl);
-            } else {
-              view.onShowError(qcResponse.getMsg());
-            }
-          }
-        }, new NetWorkThrowable()));
+  public void setCardCate(int cardCate) {
+    this.cardCate = cardCate;
   }
 
-  public void queryCardtplOption(){
+  public void queryCardtpl() {
+    RxRegiste(cardModel.qcGetCardTplsDetail(cardTpl.getId())
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Action1<QcDataResponse<CardTplWrapper>>() {
+        @Override public void call(QcDataResponse<CardTplWrapper> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            cardTpl = qcResponse.data.card_tpl;
+            view.onGetCardTypeInfo(qcResponse.data.card_tpl);
+          } else {
+            view.onShowError(qcResponse.getMsg());
+          }
+        }
+      }, new NetWorkThrowable()));
+  }
 
+  public void queryCardtplOption() {
+    RxRegiste(cardModel.qcGetOptions(cardTpl.id)
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<CardTplOptionListWrap>>() {
+        @Override public void onNext(QcDataResponse<CardTplOptionListWrap> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            view.onGetStandards(qcResponse.data.options);
+          } else {
+            view.onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 
   /**
@@ -93,24 +120,50 @@ public class CardTplDetailPresenter extends BasePresenter {
   }
 
   /**
+   * 新建会员卡种类
+   */
+  public void createCardTpl() {
+    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
+      CardtplBody body = new CardtplBody.Builder().type(cardCate)
+        .name(view.getCardName())
+        .options(view.getCardTplOptions())
+        .build();
+      cardModel.qcCreateCardtpl(body)
+          .onBackpressureLatest()
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(new NetSubscribe<QcDataResponse>() {
+                @Override public void onNext(QcDataResponse qcResponse) {
+                  if (ResponseConstant.checkSuccess(qcResponse)) {
+                    view.onShowError("创建成功");
+                    view.popBack();
+                  } else {
+                    view.onShowError(qcResponse.getMsg());
+                  }
+                }
+              });
+    } else {
+      view.showAlert(R.string.sorry_for_no_permission);
+    }
+  }
+
+  /**
    * 停用会员卡种类
    */
   public void disable() {
     cardModel.qcDelCardtpl(cardTpl.id)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcDataResponse>() {
-          @Override public void call(QcDataResponse qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onDelSucceess();
-            } else {
-              view.onShowError(qcResponse.getMsg());
-            }
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Action1<QcDataResponse>() {
+        @Override public void call(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            view.onDelSucceess();
+          } else {
+            view.onShowError(qcResponse.getMsg());
           }
-        }, new NetWorkThrowable());
-
-
+        }
+      }, new NetWorkThrowable());
   }
 
   /**
@@ -118,20 +171,18 @@ public class CardTplDetailPresenter extends BasePresenter {
    */
   public void enable() {
     cardModel.qcResumeCardtpl(cardTpl.id)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcDataResponse>() {
-          @Override public void call(QcDataResponse qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onResumeOk();
-            } else {
-              view.onShowError(qcResponse.getMsg());
-            }
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Action1<QcDataResponse>() {
+        @Override public void call(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            view.onResumeOk();
+          } else {
+            view.onShowError(qcResponse.getMsg());
           }
-        }, new NetWorkThrowable());
-
-
+        }
+      }, new NetWorkThrowable());
   }
 
   /**
@@ -147,8 +198,6 @@ public class CardTplDetailPresenter extends BasePresenter {
     return true;
   }
 
-
-
   @Override public void attachView(PView v) {
     view = (MVPView) v;
   }
@@ -161,11 +210,18 @@ public class CardTplDetailPresenter extends BasePresenter {
   public interface MVPView extends CView {
 
     void onGetCardTypeInfo(CardTpl card_tpl);
+
     void onGetStandards(List<CardTplOption> options);
 
-
     void onDelSucceess();
+
     void onResumeOk();
 
+    /**
+     * 新增会员卡种类时获取 会员卡种的名字和规格
+     */
+    String getCardName();
+
+    List<CardTplOption> getCardTplOptions();
   }
 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,6 +58,7 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
 
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
   @BindView(R.id.rv) RecyclerView rv;
   @BindView(R.id.tv_noti_count) TextView tvNotiCount;
   @BindView(R.id.btn_to_pay) Button btnToPay;
@@ -69,6 +71,7 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_main, container, false);
     unbinder = ButterKnife.bind(this, view);
+
     initToolbar(toolbar);
     List<ImageActionItem> datas = new ArrayList<>();
     datas.add(new ImageActionItem(R.drawable.vd_btn_home_card, "会员卡种类管理"));
@@ -95,6 +98,7 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
         return true;
       }
     });
+    toolbarLayout.setPadding(0,MeasureUtils.getStatusBarHeight(getContext()),0,0);
     toolbarTitle.setText(gymWrapper.name());
     PhotoUtils.smallCircle(imgLeft, gymWrapper.getCoachService().getPhoto());
     toolbarTitle.setOnClickListener(new View.OnClickListener() {

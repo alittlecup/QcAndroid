@@ -1,7 +1,9 @@
 package cn.qingchengfit.saasbase.qrcode.views;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +23,7 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.repository.PostApi;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -62,16 +65,30 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     @BindView(R2.id.toolbar_title) TextView toolbarTitile;
     @BindView(R2.id.done) LinearLayout done;
     @BindView(R2.id.layout_next) LinearLayout layoutNext;
+    @BindView(R2.id.root) LinearLayout root;
     @BindView(R2.id.root_view) RelativeLayout rootView;
     private Subscription sp;
     private AlertDialogWrapper dialog;
+
+    /**
+     * @param module Web相应模块的后缀
+     */
+    public static void start(Context context,String module) {
+        Intent starter = new Intent(context, QRActivity.class);
+        starter.putExtra(LINK_URL,module);
+        context.startActivity(starter);
+    }
+
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
         ButterKnife.bind(this);
-
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+        View v = new View(this);
+        v.setBackgroundResource(R.color.toolbar);
+        root.addView(v,0,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+          MeasureUtils.getStatusBarHeight(this)));
+        toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 finish();

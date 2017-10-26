@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
@@ -27,13 +28,13 @@ import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -62,7 +63,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/8/23.
  */
 @Leaf(module = "card", path = "/cardtpl/detail/") public class CardTplDetailFragment
-  extends BaseFragment
+  extends SaasBaseFragment
   implements CardTplDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
@@ -78,7 +79,7 @@ import javax.inject.Inject;
   @BindView(R2.id.civ_input_card_name) protected CommonInputView civInputCardname;
 
   @Inject CardTplDetailPresenter presenter;
-
+  @Need public CardTpl cardTpl;
   CommonFlexAdapter comonAdapter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +92,7 @@ import javax.inject.Inject;
     View view = inflater.inflate(R.layout.fragment_cardtpl_detail, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
+    presenter.setCardTpl(cardTpl);
     initToolbar(toolbar);
     GridLayoutManager layoutManager =
       new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_item_count));
@@ -222,6 +224,21 @@ import javax.inject.Inject;
     ToastUtils.show("已恢复");
   }
 
+  @Override public String getCardName() {
+    return civInputCardname.getContent().trim();
+  }
+
+  @Override public List<CardTplOption> getCardTplOptions() {
+    List<CardTplOption> options = new ArrayList<>();
+    for (int i = 0; i < comonAdapter.getItemCount(); i++) {
+      IFlexible iFlexible = comonAdapter.getItem(i);
+      if (iFlexible instanceof CardtplOptionItem) {
+        options.add(((CardtplOptionItem) iFlexible).getOption());
+      }
+    }
+    return options;
+  }
+
   @Override public void onDestroyView() {
     super.onDestroyView();
   }
@@ -232,8 +249,7 @@ import javax.inject.Inject;
 
     if (item instanceof CardtplOptionItem) {
       //会员卡价格修改
-      bd.putParcelable("cardTplOption", ((CardtplOptionItem) item).getOption());
-      routeTo("/cardtpl/option/", bd);
+      routeTo("/cardtpl/option/", new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build());
     } else if (item instanceof AddCardtplStantardItem) {
       //新增会员卡价格
       bd.putString("cardtplid", presenter.getCardtplId());

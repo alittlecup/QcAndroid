@@ -48,7 +48,9 @@ public class CardBuyPresenter extends BasePresenter {
   public String getmCardTplId() {
     return mCardTplId;
   }
-
+  public void setCardCate(int cate){
+    cardBuyBody.setType(cate);
+  }
   public void setmCardTplId(String mCardTplId) {
     this.mCardTplId = mCardTplId;
   }
@@ -180,20 +182,19 @@ public class CardBuyPresenter extends BasePresenter {
     }
     cardBuyBody.is_auto_start = view.autoOpen();
     
-    //RxRegiste(cardModel.buyCard(cardBuyBody)
-    //    .onBackpressureLatest()
-    //    .subscribeOn(Schedulers.io())
-    //    .observeOn(AndroidSchedulers.mainThread())
-    //    .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponse>>() {
-    //      @Override public void onNext(QcDataResponse<PayBusinessResponse> qcResponse) {
-    //        if (ResponseConstant.checkSuccess(qcResponse)) {
-    //          view.onBusinessOrder(qcResponse.data);
-    //        } else {
-    //          view.onShowError(qcResponse.getMsg());
-    //        }
-    //      }
-    //    }));
-    view.onBusinessOrder(new PayBusinessResponse());
+    RxRegiste(cardModel.buyCard(cardBuyBody)
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponse>>() {
+          @Override public void onNext(QcDataResponse<PayBusinessResponse> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              view.onBusinessOrder(qcResponse.data);
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }));
   }
 
 

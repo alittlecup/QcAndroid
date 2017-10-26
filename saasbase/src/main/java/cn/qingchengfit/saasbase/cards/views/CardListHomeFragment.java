@@ -215,9 +215,9 @@ import javax.inject.Inject;
   @Override public boolean onItemClick(int position) {
     IFlexible iFlexible = cardListFragment.getItem(position);
     if (iFlexible instanceof CardItem) {
-      Bundle b = new Bundle();
-      b.putString("cardid", ((CardItem) iFlexible).getRealCard().getId());
-      routeTo("/detail/", b);
+      routeTo("/detail/", new CardDetailParams()
+        .cardid(((CardItem) iFlexible).getRealCard().getId())
+        .build());
     }
     return true;
   }

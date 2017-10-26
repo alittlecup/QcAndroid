@@ -25,6 +25,7 @@ import cn.qingchengfit.saasbase.cards.item.CardTplOptionForBuy;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardChargePresenter;
+import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -77,7 +78,7 @@ import javax.inject.Inject;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.btn_pay) Button btnPay;
-  @Need Card card;
+  @Need public Card card;
 
   public static CardChargeFragment newInstance(Card card) {
     Bundle args = new Bundle();
@@ -170,7 +171,9 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.civ_mark) public void onCivMarkClicked() {
-    routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"), null);
+    routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"), new CommonInputParams()
+      .title("续卡备注")
+      .build());
   }
 
   @OnClick(R2.id.btn_pay) public void clickPayMoney() {

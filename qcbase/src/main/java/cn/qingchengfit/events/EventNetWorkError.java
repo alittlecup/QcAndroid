@@ -1,5 +1,7 @@
 package cn.qingchengfit.events;
 
+import android.support.annotation.StringRes;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -22,4 +24,13 @@ package cn.qingchengfit.events;
  */
 
 public class EventNetWorkError {
+  @StringRes
+  public int errCode = -1;
+
+  public EventNetWorkError() {
+  }
+
+  public EventNetWorkError(int errCode) {
+    this.errCode = errCode;
+  }
 }

@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.bill.beans.BillScheduleOrder;
 import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.saasbase.bill.items.BillKvCommonItem;
@@ -26,9 +27,9 @@ import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import javax.inject.Inject;
 
@@ -52,7 +53,7 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/10/19.
  */
-@Leaf(module = "bill", path = "/detail/") public class BillDetailFragment extends BaseFragment
+@Leaf(module = "bill", path = "/detail/") public class BillDetailFragment extends SaasBaseFragment
   implements BillDetailPresenterPresenter.MVPView {
 
   @BindView(R2.id.tv_bill_amount) TextView tvBillAmount;
@@ -70,6 +71,7 @@ import javax.inject.Inject;
   private CommonFlexAdapter commonAdapter;
   private CommonFlexAdapter extraAdapter;
 
+  @Need public String orderNo;
   @Inject BillDetailPresenterPresenter presenter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +84,8 @@ import javax.inject.Inject;
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_bill_detail, container, false);
     unbinder = ButterKnife.bind(this, view);
+    delegatePresenter(presenter,this);
+    presenter.setBillId(orderNo);
     initToolbar(toolbar);
     initView();
     queryDetail();
