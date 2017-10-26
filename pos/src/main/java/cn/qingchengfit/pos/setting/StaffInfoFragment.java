@@ -20,6 +20,7 @@ import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
+import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -53,7 +54,7 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
   @BindView(R.id.img_staff_head) ImageView imgStaffHead;
   @Inject CashierPresenter presenter;
   @Inject GymWrapper gymWrapper;
-  @Need Cashier cashier;
+  @Need public Cashier cashier;
 
   public static StaffInfoFragment newInstance(Cashier cashier) {
     Bundle args = new Bundle();
@@ -68,6 +69,7 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
     if (getArguments() != null) {
      cashier = getArguments().getParcelable("cashier");
     }
+    SaasbaseParamsInjector.inject(this);
   }
 
   @Nullable @Override

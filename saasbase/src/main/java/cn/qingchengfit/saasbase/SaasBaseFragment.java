@@ -1,7 +1,11 @@
 package cn.qingchengfit.saasbase;
 
-import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.saasbase.utils.SaasErrorRecorder;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -21,11 +25,14 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/8/22.
+ * Created by Paper on 2017/10/24.
  */
 
-public interface ISaasRouter {
+public class SaasBaseFragment extends BaseFragment {
+  @Inject protected SaasErrorRecorder errorRecorder;
 
-  CardTplsHomeInGymFragment cardTplsHomeInGymFragment();
-  BaseFragment toCardTplDetail(String cardtplid);
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    SaasbaseParamsInjector.inject(this);
+  }
 }
