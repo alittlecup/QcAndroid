@@ -141,6 +141,7 @@
     <activity android:name="cn.qingchengfit.design.BottomActivity"/>
     <activity android:name="cn.qingchengfit.design.AlertActivity"/>
     <activity android:name="cn.qingchengfit.design.ItemActivity"/>
+    <activity android:name="cn.qingchengfit.design.SearchActivity"/>
   </application>
 
 </manifest>

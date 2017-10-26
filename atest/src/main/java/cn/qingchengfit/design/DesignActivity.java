@@ -90,6 +90,11 @@ public class DesignActivity extends BaseActivity {
         start(ItemActivity.class);
       }
     });
+    btnSearch.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        start(SearchActivity.class);
+      }
+    });
   }
 
   private void initToolbar() {

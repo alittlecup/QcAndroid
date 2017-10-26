@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -28,6 +29,15 @@ public class SearchFragment extends BaseFragment {
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_search, container, false);
     unbinder = ButterKnife.bind(this, view);
+    initToolbar(toolbar);
+    toolbarTitle.setText("搜索");
+    toolbar.inflateMenu(R.menu.menu_search);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        initSearch(item, toolbarTitle);
+        return false;
+      }
+    });
     return view;
   }
 
