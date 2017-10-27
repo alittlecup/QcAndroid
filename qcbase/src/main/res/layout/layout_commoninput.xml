@@ -17,16 +17,6 @@
       android:paddingRight="@dimen/activity_horizontal_margin"
       >
 
-    <ImageView
-        android:id="@+id/common_input_icon_left"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        tools:src="@drawable/vd_gender_female"
-        android:layout_centerVertical="true"
-        android:visibility="gone"
-        tools:visibility="visible"
-        />
-
     <TextView
         android:id="@+id/commoninput_lable"
         android:layout_width="wrap_content"
@@ -39,8 +29,6 @@
         android:minWidth="75dp"
         tools:text="@string/test_long"
         style="@style/QcTextStyleStandardDark"
-        android:layout_toRightOf="@id/common_input_icon_left"
-        android:layout_marginLeft="10dp"
         />
 
     <ImageView

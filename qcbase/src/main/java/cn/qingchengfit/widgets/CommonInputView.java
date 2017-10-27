@@ -47,7 +47,6 @@ public class CommonInputView extends RelativeLayout {
   private EditText edit;
   private String str_label;
   private ImageView rightview;
-  private ImageView leftIconView;
   private int textColor = 0x9b9b9b;
 
   private String str_hint;
@@ -58,7 +57,7 @@ public class CommonInputView extends RelativeLayout {
   private boolean showDivier;
   private boolean showRight;
   private boolean enable;
-  private boolean isShowLeftIcon;
+  @DrawableRes
   private int leftDrawable;
   private String strUnit;
   private int contentColor;
@@ -136,7 +135,6 @@ public class CommonInputView extends RelativeLayout {
         CompatUtils.getColor(getContext(), R.color.text_black));
     strUnit = ta.getString(R.styleable.CommonInputView_civ_unit);
     labelWidth = ta.getDimension(R.styleable.CommonInputView_civ_label_width, -1);
-    isShowLeftIcon = ta.getBoolean(R.styleable.CommonInputView_civ_is_show_left, false);
     leftDrawable = ta.getResourceId(R.styleable.CommonInputView_civ_left_icon, 0);
     ta.recycle();
   }
@@ -170,10 +168,9 @@ public class CommonInputView extends RelativeLayout {
     View divider = findViewById(R.id.commoninput_divider);
     rightview = (ImageView) findViewById(R.id.commoninput_righticon);
     disableView = findViewById(R.id.disable);
-    leftIconView = (ImageView) findViewById(R.id.common_input_icon_left);
-    leftIconView.setVisibility(isShowLeftIcon ? VISIBLE : GONE);
-    if (isShowLeftIcon){
-      leftIconView.setImageResource(leftDrawable);
+    if (leftDrawable != 0){
+      label.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, 0, 0, 0);
+      label.setCompoundDrawablePadding(MeasureUtils.dpToPx(10f, getResources()));
     }
     if (!TextUtils.isEmpty(strUnit)) {
       str_label = TextUtils.concat(str_label, "（", strUnit, "）").toString().trim();
