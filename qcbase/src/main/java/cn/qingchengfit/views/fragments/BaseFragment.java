@@ -347,6 +347,7 @@ public abstract class BaseFragment extends Fragment
     }
   }
 
+  // 初始化搜索
   public void initSearch(MenuItem searchItem, final TextView tvToolbar) {
     SearchManager searchManager =
         (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
