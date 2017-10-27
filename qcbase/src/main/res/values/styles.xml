@@ -310,8 +310,32 @@
   </style>
 
   <style name="animate_dialog">
-
     <item name="android:windowEnterAnimation">@anim/slide_bottom_in</item>
     <item name="android:windowExitAnimation">@anim/slide_bottom_out</item>
   </style>
+
+  <style name="QcBtnPrimary">
+    <item name="android:background">@drawable/btn_prime</item>
+    <item name="android:height">45dp</item>
+    <item name="android:maxWidth">345dp</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:textSize">17sp</item>
+  </style>
+
+  <style name="QcBtnPrimaryFrame">
+    <item name="android:background">@drawable/btn_primary_frame</item>
+    <item name="android:height">45dp</item>
+    <item name="android:maxWidth">345dp</item>
+    <item name="android:textColor">@color/btn_text_primary_color</item>
+    <item name="android:textSize">17sp</item>
+  </style>
+
+  <style name="QcBtnPrimaryDanger">
+    <item name="android:background">@drawable/btn_border_top_bottom</item>
+    <item name="android:height">45dp</item>
+    <item name="android:maxWidth">345dp</item>
+    <item name="android:textColor">@color/btn_text_danger_color</item>
+    <item name="android:textSize">17sp</item>
+  </style>
+
 </resources>

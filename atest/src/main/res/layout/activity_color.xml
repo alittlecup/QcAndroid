@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="colorPrimary"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:text="colorPrimaryDark"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimaryDisable"
+        android:gravity="center"
+        android:text="colorPrimaryDisable"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/toolbar"
+        android:gravity="center"
+        android:text="theme_black"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/danger_red_normal"
+        android:text="danger_red_normal"
+        android:gravity="center"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/danger_red_pressed"
+        android:text="danger_red_pressed"
+        android:gravity="center"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/danger_red_disable"
+        android:text="danger_red_disable"
+        android:gravity="center"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/success_green"
+        android:text="success_green"
+        android:gravity="center"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="text_dark"
+        android:gravity="center"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="text_warm"
+        android:gravity="center"
+        style="@style/QcTextStyleLargeWarm"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="text_grey"
+        android:gravity="center"
+        style="@style/QcTextStyleMediumGrey"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/bg_grey"
+        android:text="bg_grey"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/divider_grey"
+        android:text="divider_grey"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/divider_white"
+        android:text="divider_white"
+        android:gravity="center"
+        />
+
+  </LinearLayout>
+</ScrollView>

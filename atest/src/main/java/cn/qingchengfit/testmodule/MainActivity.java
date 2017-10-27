@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import cn.qingchengfit.design.DesignActivity;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -44,6 +45,11 @@ public class MainActivity extends BaseActivity implements LoginProcessor.OnLogin
         findViewById(R.id.btn_to_test).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, TestActivity.class));
+            }
+        });
+        findViewById(R.id.btn_design).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DesignActivity.class));
             }
         });
     }

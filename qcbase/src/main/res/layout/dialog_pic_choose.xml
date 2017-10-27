@@ -9,20 +9,23 @@
   <TextView
       android:id="@+id/choosepic_camera"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
+      android:layout_height="@dimen/qc_item_height_new"
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:text="拍照"
       style="@style/Qc.TextCommonBlack"
+      android:gravity="center"
       />
 
-  <TextView
+  <include layout="@layout/divider_grey"/>
 
+  <TextView
       android:id="@+id/choosepic_galley"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
+      android:layout_height="@dimen/qc_item_height_new"
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:text="从相册选择"
       style="@style/Qc.TextCommonBlack"
+      android:gravity="center"
       />
 
 </LinearLayout>

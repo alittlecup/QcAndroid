@@ -34,7 +34,9 @@ import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
-import cn.qingchengfit.saasbase.routers.ICourseRouter;
+import cn.qingchengfit.saasbase.staff.model.IStaffModel;
+import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
+import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
@@ -42,7 +44,6 @@ import cn.qingchengfit.staffkit.repository.SaasRouterImpl;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import dagger.Module;
 import dagger.Provides;
 import java.util.HashMap;
@@ -137,18 +138,27 @@ import rx.Observable;
     return new SaasRouterImpl();
   }
 
+  @Provides IStaffModel providerStaffModel(){return new IStaffModel() {
+    @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {
+      return null;
+    }
 
-  @Provides ICourseRouter providerCourseRouter(){
-    return new ICourseRouter() {
-      @Override public BaseFragment cardTplsHomeInGymFragment() {
-        return null;
-      }
+    @Override public Observable<QcDataResponse<SalerListWrap>> getStaffList(String id) {
+      return null;
+    }
 
-      @Override public BaseFragment toCardTplDetail(String cardtplid) {
-        return null;
-      }
-    };
-  }
+    @Override public Observable<QcDataResponse> addStaff(ManagerBody body) {
+      return null;
+    }
+
+    @Override public Observable<QcDataResponse> delStaff(String id) {
+      return null;
+    }
+
+    @Override public Observable<QcDataResponse> editStaff(String id, ManagerBody body) {
+      return null;
+    }
+  };}
 
   @Provides ICourseModel provideCourseApi(){
     return new ICourseModel() {

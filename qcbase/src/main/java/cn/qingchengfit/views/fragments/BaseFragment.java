@@ -1,5 +1,6 @@
 package cn.qingchengfit.views.fragments;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,13 +11,19 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.CView;
@@ -41,6 +48,8 @@ import java.util.List;
 import java.util.UUID;
 import rx.Observable;
 import rx.Subscription;
+
+import static android.view.View.GONE;
 
 /**
  * power by
@@ -336,6 +345,44 @@ public abstract class BaseFragment extends Fragment
           .addToBackStack(tag)
           .commit();
     }
+  }
+
+  // 初始化搜索
+  public void initSearch(MenuItem searchItem, final TextView tvToolbar) {
+    SearchManager searchManager =
+        (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
+    SearchView mSearchView;
+    mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+    MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+      @Override public boolean onMenuItemActionExpand(MenuItem item) {
+        tvToolbar.setVisibility(GONE);
+        return true;
+      }
+
+      @Override public boolean onMenuItemActionCollapse(MenuItem item) {
+        tvToolbar.setVisibility(View.VISIBLE);
+        return true;
+      }
+    });
+    mSearchView.setInputType(InputType.TYPE_TEXT_VARIATION_FILTER);
+    mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_FULLSCREEN);
+    mSearchView.setQueryHint(getString(R.string.action_search));
+    //mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getContext().getComponentName()));
+    mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      @Override public boolean onQueryTextSubmit(String query) {
+        return false;
+      }
+
+      @Override public boolean onQueryTextChange(String newText) {
+        onTextSearch(newText);
+        return false;
+      }
+    });
+  }
+
+  //每个搜索的不同实现，复写这个方法
+  public void onTextSearch(String text) {
+
   }
 
   /**
