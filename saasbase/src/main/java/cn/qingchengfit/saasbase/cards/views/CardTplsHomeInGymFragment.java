@@ -19,13 +19,17 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTypeListPresenter;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -76,6 +80,17 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
     for (int i = 0; i < 4; i++) {
       fragmentList.add(new CardTplListFragment());
     }
+    RxBus.getBus().register(EventSaasFresh.CardTplList.class)
+      .compose(this.<EventSaasFresh.CardTplList>bindToLifecycle())
+      .buffer(doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<List<EventSaasFresh.CardTplList>>() {
+        @Override public void onNext(List<EventSaasFresh.CardTplList> cardTplLists) {
+          if (cardTplLists != null && cardTplLists.size() >0 ){
+            onRefresh();
+          }
+        }
+      });
+
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,6 +120,7 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
 
       }
     });
+    //childCount =0;//把子view加载置位 开启每次退回此页会刷新数据
     return view;
   }
 
@@ -116,8 +132,7 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
         new DialogList(getContext()).list(getResources().getStringArray(R.array.cardtype_category), new AdapterView.OnItemClickListener() {
           @Override
           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            presenter.createCardCate(position+1);
-            routeTo("/cardtpl/add/",new CardtplAddParams().build());
+            routeTo("/cardtpl/add/",new CardtplAddParams().cardCategory(position+1).build());
           }
         }).show();
         return true;

@@ -7,7 +7,6 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
@@ -20,10 +19,10 @@ public class AddCardtplStandardPresenter extends BasePresenter {
 
   @Inject GymWrapper gymWrapper;
   @Inject ICardModel cardModel;
-  @Inject BindCardModel.SelectedData selectedData;
   private MVPView view;
   private OptionBody ob = new OptionBody();
   private String optionId;
+  private String tplId;
 
   @Inject public AddCardtplStandardPresenter() {
   }
@@ -37,14 +36,12 @@ public class AddCardtplStandardPresenter extends BasePresenter {
   }
 
   public String getCardtplId() {
-    return selectedData.cardtplId;
+    return tplId;
   }
 
-
-  public int getCardtplType() {
-    return selectedData.cardcategory;
+  public void setTplId(String tplId) {
+    this.tplId = tplId;
   }
-
 
   public void setLimit(boolean limit) {
     this.ob.limit_days = limit;
@@ -104,11 +101,11 @@ public class AddCardtplStandardPresenter extends BasePresenter {
    * 如果是新开卡，保存在本地
    */
   public void addOption() {
-    if (CmStringUtils.isEmpty(selectedData.cardtplId)){
+    if (CmStringUtils.isEmpty(tplId)){
       RxBus.getBus().post(ob);
       view.onSaveOk();
     }else
-      RxRegiste(cardModel.qcCreateStandard(selectedData.cardtplId, ob)
+      RxRegiste(cardModel.qcCreateStandard(tplId, ob)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -140,7 +137,7 @@ public class AddCardtplStandardPresenter extends BasePresenter {
   }
 
   public void saveOption() {
-    if (CmStringUtils.isEmpty(selectedData.cardtplId)){
+    if (CmStringUtils.isEmpty(tplId)){
       RxBus.getBus().post(ob);
       view.onSaveOk();
     }else

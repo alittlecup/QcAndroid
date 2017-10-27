@@ -7,9 +7,6 @@ import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.pos.di.AppModel;
 import cn.qingchengfit.pos.di.PosGymWrapper;
@@ -61,20 +58,18 @@ public class PosApp extends Application implements HasActivityInjector, HasSuppo
   public void initInjcet() {
     LoginStatus.Builder lb = new LoginStatus.Builder();
     ToastUtils.init(this);
-    Staff staff = new Staff("纸团", "15123358198", "", 1);
-    staff.setId("3288");
-    //PreferenceUtils.setPrefString(this, "session_id", "30kj9b0jyy5edj4mhxt0d8jj4cricxgr");
-    CoachService coachService = new CoachService();
-    coachService.setId("8670");
-    coachService.setModel("staff_gym");
+    //Staff staff = new Staff("纸团", "15123358198", "", 1);
+    //staff.setId("3288");
+    ////PreferenceUtils.setPrefString(this, "session_id", "30kj9b0jyy5edj4mhxt0d8jj4cricxgr");
+    //CoachService coachService = new CoachService();
+    //coachService.setId("8670");
+    //coachService.setModel("staff_gym");
     LogUtil.e("session:" + PreferenceUtils.getPrefString(this, "session_id", ""));
     PosAppComponent component = DaggerPosAppComponent.builder()
         .appModel(new AppModel.Builder()
-            .gymWrapper(new PosGymWrapper.Builder().brand(new Brand("1"))
-                .coachService(coachService)
+            .gymWrapper(new PosGymWrapper.Builder()
                 .build())
-            .loginStatus(new LoginStatus.Builder().userId("7060")
-                .loginUser(staff).session("30kj9b0jyy5edj4mhxt0d8jj4cricxgr")
+            .loginStatus(new LoginStatus.Builder()
                 .build())
             .qcrestRepository(new QcRestRepository(this, Constants.ServerDebug,"pos"))
             .build())

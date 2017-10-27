@@ -18,9 +18,9 @@ import cn.qingchengfit.saasbase.cards.item.CardActionsItem;
 import cn.qingchengfit.saasbase.cards.item.CardDetailItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -144,7 +144,9 @@ import javax.inject.Inject;
     if (item instanceof ActionDescItem) {
       switch (((ActionDescItem) item).getAction()) {
         case 1://绑定会员
-          routeTo(AppUtils.getRouterUri(getContext(),"/student/choose/student/"),new BundleBuilder().adds("ids",(ArrayList<String>)presenter.getmCard().getUserIds()).build());
+          routeTo(AppUtils.getRouterUri(getContext(),"/student/choose/student/"),new ChooseAndSearchStudentParams()
+            .studentIdList((ArrayList<String>) presenter.getmCard().getUserIds())
+            .build());
           break;
         case 2://适用场馆
           break;

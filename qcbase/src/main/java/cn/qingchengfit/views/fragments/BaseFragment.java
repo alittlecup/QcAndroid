@@ -48,6 +48,8 @@ import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.R;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
+import com.trello.rxlifecycle.android.FragmentEvent;
+import com.trello.rxlifecycle.components.support.RxFragment;
 import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,6 +57,8 @@ import java.util.List;
 import java.util.UUID;
 import rx.Observable;
 import rx.Subscription;
+import rx.functions.Func0;
+import rx.functions.Func1;
 
 import static android.view.View.GONE;
 
@@ -71,8 +75,8 @@ import static android.view.View.GONE;
  * <p>
  * Created by Paper on 15/9/22 2015.
  */
-public abstract class BaseFragment extends Fragment
-    implements BaseActivity.FragmentBackPress, CView {
+public abstract class BaseFragment extends RxFragment
+  implements BaseActivity.FragmentBackPress, CView {
 
   public FragCallBack mCallbackActivity;
   public Unbinder unbinder;
@@ -87,18 +91,20 @@ public abstract class BaseFragment extends Fragment
   List<Subscription> sps = new ArrayList<>();
   private List<PresenterDelegate> delegates = new ArrayList<>();
   private List<Pair<String, Observable>> observables = new ArrayList<>();
-  private FragmentManager.FragmentLifecycleCallbacks childrenCB =
-      new FragmentManager.FragmentLifecycleCallbacks() {
+  private List<Pair<String, Observable>> observablesAllLife = new ArrayList<>();
 
-        @Override public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v,
-            Bundle savedInstanceState) {
-          super.onFragmentViewCreated(fm, f, v, savedInstanceState);
-          onChildViewCreated(fm, f, v, savedInstanceState);
-        }
-      };
+  private FragmentManager.FragmentLifecycleCallbacks childrenCB =
+    new FragmentManager.FragmentLifecycleCallbacks() {
+
+      @Override public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v,
+        Bundle savedInstanceState) {
+        super.onFragmentViewCreated(fm, f, v, savedInstanceState);
+        onChildViewCreated(fm, f, v, savedInstanceState);
+      }
+    };
 
   protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,7 +113,7 @@ public abstract class BaseFragment extends Fragment
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+    @Nullable Bundle savedInstanceState) {
     getChildFragmentManager().registerFragmentLifecycleCallbacks(childrenCB, false);
     return super.onCreateView(inflater, container, savedInstanceState);
   }
@@ -116,8 +122,8 @@ public abstract class BaseFragment extends Fragment
 
     super.onViewCreated(view, savedInstanceState);
     ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
-      @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
-      @Override public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
+      @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH) @Override
+      public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
         return insets.consumeSystemWindowInsets();
       }
     });
@@ -180,11 +186,12 @@ public abstract class BaseFragment extends Fragment
       }
     });
     if (toolbar.getParent() instanceof FrameLayout && isfitSystemPadding()) {
-      ((FrameLayout) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+      ((FrameLayout) toolbar.getParent()).setPadding(0,
+        MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
     }
   }
 
-  protected boolean isfitSystemPadding(){
+  protected boolean isfitSystemPadding() {
     return true;
   }
 
@@ -291,6 +298,13 @@ public abstract class BaseFragment extends Fragment
     if (unbinder != null) unbinder.unbind();
   }
 
+  @Override public void onDestroy() {
+    for (int i = 0; i < observablesAllLife.size(); i++) {
+      RxBus.getBus().unregister(observablesAllLife.get(i).first, observablesAllLife.get(i).second);
+    }
+    super.onDestroy();
+  }
+
   public void unattachView() {
     for (int i = 0; i < sps.size(); i++) {
       sps.get(i).unsubscribe();
@@ -312,6 +326,12 @@ public abstract class BaseFragment extends Fragment
   public <T> Observable<T> RxBusAdd(@NonNull Class<T> clazz) {
     Observable ob = RxBus.getBus().register(clazz);
     observables.add(new Pair<String, Observable>(clazz.getName(), ob));
+    return ob;
+  }
+
+  public <T> Observable<T> RxBusAddAllLife(@NonNull Class<T> clazz) {
+    Observable ob = RxBus.getBus().register(clazz);
+    observablesAllLife.add(new Pair<String, Observable>(clazz.getName(), ob));
     return ob;
   }
 
@@ -353,21 +373,21 @@ public abstract class BaseFragment extends Fragment
       getChildFragmentManager().beginTransaction().show(fragment1).commitAllowingStateLoss();
     } else {
       getChildFragmentManager().beginTransaction()
-          .setCustomAnimations(resIn, resOut)
-          .replace(res, fragment)
-          .commitAllowingStateLoss();
+        .setCustomAnimations(resIn, resOut)
+        .replace(res, fragment)
+        .commitAllowingStateLoss();
     }
   }
 
   protected void routeTo(Fragment fragment, String tag) {
     if (getActivity() instanceof BaseActivity) {
       getActivity().getSupportFragmentManager()
-          .beginTransaction()
-          .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
-              R.anim.slide_right_out)
-          .replace(((BaseActivity) getActivity()).getFragId(), fragment)
-          .addToBackStack(tag)
-          .commit();
+        .beginTransaction()
+        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
+          R.anim.slide_right_out)
+        .replace(((BaseActivity) getActivity()).getFragId(), fragment)
+        .addToBackStack(tag)
+        .commit();
     }
   }
 
@@ -413,11 +433,15 @@ public abstract class BaseFragment extends Fragment
    * 根据uri 跳转
    */
   protected void routeTo(Uri uri, Bundle bd) {
+    routeTo(uri, bd, false);
+  }
+
+  protected void routeTo(Uri uri, Bundle bd, boolean newActivity) {
     try {
       Intent to = new Intent(Intent.ACTION_VIEW, uri);
       if (getActivity() instanceof BaseActivity) {
         if (((BaseActivity) getActivity()).getModuleName().equalsIgnoreCase(uri.getHost())
-            && !uri.getPath().startsWith("/choose") && !uri.getPath().endsWith("add/")) {
+          && !uri.getPath().startsWith("/choose")) {
           to.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         } else {
           to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -443,14 +467,14 @@ public abstract class BaseFragment extends Fragment
    * @param civ 接受结果的civ
    */
   protected void choosTime(final TimePopupWindow.Type type, int start, int end, Date inputDate,
-      final CommonInputView civ) {
+    final CommonInputView civ) {
     if (getActivity() instanceof BaseActivity) {
       ((BaseActivity) getActivity()).chooseTime(type, start, end, inputDate,
-          new TimeDialogWindow.OnTimeSelectListener() {
-            @Override public void onTimeSelect(Date date) {
-              civ.setContent(DateUtils.date2TimePicker(date, type));
-            }
-          });
+        new TimeDialogWindow.OnTimeSelectListener() {
+          @Override public void onTimeSelect(Date date) {
+            civ.setContent(DateUtils.date2TimePicker(date, type));
+          }
+        });
     }
   }
 
@@ -465,44 +489,58 @@ public abstract class BaseFragment extends Fragment
   /**
    * 跳转当前模块
    */
-  protected void routeTo(String model,String path, Bundle bd) {
-    String uri = model+path;
+  protected void routeTo(String model, String path, Bundle bd) {
+    String uri = model + path;
     if (!uri.startsWith("/")) uri = "/" + uri;
     if (getActivity() instanceof BaseActivity) {
-      routeTo(AppUtils.getRouterUri(getContext(),uri), bd);
+      routeTo(AppUtils.getRouterUri(getContext(), uri), bd);
     }
   }
 
   /**
    * 跳转到其他模块
-   * @param uri
-   * @param bd
    */
   protected void routeTo(String uri, Bundle bd) {
+    routeTo(uri, bd, false);
+  }
+
+  protected void routeTo(String uri, Bundle bd, boolean b) {
     if (!uri.startsWith("/")) uri = "/" + uri;
     if (getActivity() instanceof BaseActivity) {
       routeTo(Uri.parse(AppUtils.getCurAppSchema(getContext())
-          + "://"
-          + ((BaseActivity) getActivity()).getModuleName()
-          + uri), bd);
+        + "://"
+        + ((BaseActivity) getActivity()).getModuleName()
+        + uri), bd, b);
     }
   }
 
   protected void rmAndTo(Fragment rm, Fragment fragment, String tag) {
     if (getActivity() instanceof BaseActivity) {
       getActivity().getSupportFragmentManager()
-          .beginTransaction()
-          .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
-              R.anim.slide_right_out)
-          .remove(rm)
-          .replace(((BaseActivity) getActivity()).getFragId(), fragment)
-          .addToBackStack(tag)
-          .commitAllowingStateLoss();
+        .beginTransaction()
+        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
+          R.anim.slide_right_out)
+        .remove(rm)
+        .replace(((BaseActivity) getActivity()).getFragId(), fragment)
+        .addToBackStack(tag)
+        .commitAllowingStateLoss();
     }
   }
 
   protected void routeTo(Fragment fragment) {
     routeTo(fragment, null);
+  }
+
+  public Func0<Observable<?>> doWhen(final FragmentEvent fragmentEventDo){
+    return new Func0<Observable<?>>() {
+      @Override public Observable<?> call() {
+        return BaseFragment.this.lifecycle().filter(new Func1<FragmentEvent, Boolean>() {
+          @Override public Boolean call(FragmentEvent fragmentEvent) {
+            return fragmentEvent.equals(fragmentEventDo);
+          }
+        });
+      }
+    };
   }
 
   /**
@@ -527,8 +565,7 @@ public abstract class BaseFragment extends Fragment
   }
 
   @Override public void popBack() {
-    if (!getFragmentManager().popBackStackImmediate())
-      getActivity().finish();
+    if (!getFragmentManager().popBackStackImmediate()) getActivity().finish();
   }
 
   @Override public void onShowError(@StringRes int e) {

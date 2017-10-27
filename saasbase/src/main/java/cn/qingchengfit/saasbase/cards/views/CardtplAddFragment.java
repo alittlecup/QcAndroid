@@ -10,16 +10,20 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
-import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DrawableUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.trello.rxlifecycle.android.FragmentEvent;
+import java.util.List;
+import java.util.UUID;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -44,11 +48,28 @@ import javax.inject.Inject;
 @Leaf(module = "card",path = "/cardtpl/add/")
 public class CardtplAddFragment extends CardTplDetailFragment {
   @Inject GymWrapper gymWrapper;
-  @Need int cardCategory = 1;
+  @Need Integer cardCategory = 1;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     comonAdapter.addItem(new AddCardtplStantardItem());
+    RxBus.getBus().register(OptionBody.class)
+      .compose(this.<OptionBody>bindToLifecycle())
+      .buffer(doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new Action1<List<OptionBody>>() {
+        @Override public void call(List<OptionBody> optionBodies) {
+          if (optionBodies.size() > 0) {
+            OptionBody optionBody = optionBodies.get(0);
+            CardtplOptionItem item = new CardtplOptionItem(CardBusinessUtils.optionBody2Option(optionBody),cardCategory);
+                if (comonAdapter.contains(item)){
+                  comonAdapter.updateItem(item,1);
+                }else
+                  item.getOption().id = UUID.randomUUID().toString();
+                comonAdapter.addItem(0,item);
+          }
+        }
+      });
+
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -87,15 +108,9 @@ public class CardtplAddFragment extends CardTplDetailFragment {
 
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  @Override public View onCreateView(LayoutInflater inflater, final ViewGroup container,
       Bundle savedInstanceState) {
     View view =  super.onCreateView(inflater, container, savedInstanceState);
-    RxBusAdd(OptionBody.class)
-        .subscribe(new BusSubscribe<OptionBody>() {
-          @Override public void onNext(OptionBody optionBody) {
-            comonAdapter.addItem(0,new CardtplOptionItem(CardBusinessUtils.optionBody2Option(optionBody),cardCategory));
-          }
-        });
     initCardTpl();
     return view;
   }

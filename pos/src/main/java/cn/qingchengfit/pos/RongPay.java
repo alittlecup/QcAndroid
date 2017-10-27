@@ -3,8 +3,10 @@ package cn.qingchengfit.pos;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.util.Log;
 import cn.qingchengfit.utils.LogUtil;
+import java.util.List;
 
 /**
  * power by
@@ -102,12 +104,12 @@ public class RongPay {
         "!asc l\n" +
         "!gray 6\n" +
         "!yspace 4\n" +
-        "*text c 菜单\n" +
+        "*text c 账单 \n" +
         "*line\n" +
         "!hz s\n" +
         "!asc s\n" +
         "!gray 2\n" +
-        "*text c 消费名称：" + "xxxxx" + "\n" +
+        "*text c 消费名称：" + title + "\n" +
         "*text c" + " 订单号：" + orderId + "\n" +
         "*text c" + " 支付方式：" + "1111" + "\n" +
         "*text c" + " 支付时间：" + "11111" + "\n" +
@@ -119,6 +121,25 @@ public class RongPay {
         "*text c" + "\n" +
         "*line\n";
     return text;
+  }
+
+  private String getPrintArray(List<Pair<String,String>> datas){
+    StringBuffer sb = new StringBuffer(
+      "!hz l\n" +
+        "!asc l\n" +
+        "!gray 6\n" +
+        "!yspace 4\n" +
+        "*text c 账单 \n" +
+        "*line\n" +
+        "!hz s\n" +
+        "!asc s\n" +
+        "!gray 2\n"
+    );
+    for (Pair<String, String> data : datas) {
+      sb.append("*text c").append(data.first).append("\t")
+        .append(data.second).append("\n");
+    }
+    return sb.toString();
   }
 
 

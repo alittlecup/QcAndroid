@@ -120,7 +120,7 @@ public interface PosApi {
       @Body OptionBody body);
 
   @POST("/api/rongshu/gym/{id}/cardtpls/{card_tpl_id}/options/")
-  rx.Observable<QcDataResponse> qcCreateCardtplOption(@Path("staff_id") String staffid,
+  rx.Observable<QcDataResponse> qcCreateCardtplOption(@Path("id") String staffid,
       @Path("card_tpl_id") String card_tpl_id, @QueryMap HashMap<String, Object> params,
       @Body OptionBody body);
 
@@ -132,7 +132,7 @@ public interface PosApi {
       @QueryMap HashMap<String, Object> params);
 
   @PUT("/api/rongshu/gym/{id}/cardtpls/{card_tpl_id}/")
-  rx.Observable<QcDataResponse> qcUpdateCardtpl(@Path("staff_id") String staffid,
+  rx.Observable<QcDataResponse> qcUpdateCardtpl(@Path("id") String staffid,
       @Path("card_tpl_id") String card_tpl_id, @Body CardtplBody body,
       @QueryMap HashMap<String, Object> params);
 
@@ -140,14 +140,14 @@ public interface PosApi {
    * 停用会员卡种类
    */
   @DELETE("/api/rongshu/gym/{id}/cardtpls/{card_tpl_id}/")
-  rx.Observable<QcDataResponse> qcDelCardtpl(@Path("staff_id") String staffid,
+  rx.Observable<QcDataResponse> qcDelCardtpl(@Path("id") String staffid,
       @Path("card_tpl_id") String card_tpl_id, @QueryMap HashMap<String, Object> params);
 
   /**
    * 恢复会员卡种类
    */
   @POST("/api/rongshu/gym/{id}/cardtpls/{card_tpl_id}/recovery/")
-  rx.Observable<QcDataResponse> qcResumeCardtpl(@Path("staff_id") String staffid,
+  rx.Observable<QcDataResponse> qcResumeCardtpl(@Path("id") String staffid,
       @Path("card_tpl_id") String card_tpl_id, @QueryMap HashMap<String, Object> params);
 
   /**

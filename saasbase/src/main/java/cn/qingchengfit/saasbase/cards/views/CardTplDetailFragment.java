@@ -144,7 +144,7 @@ import javax.inject.Inject;
             if (position == 0) {//编辑
               presenter.editCardTpl();
               Bundle bd = new Bundle();
-              bd.putString("title","修改会员开种类名称");
+              bd.putString("title","修改会员卡种类名称");
               bd.putString("hint",presenter.getCardName());
               bd.putString("content",presenter.getCardName());
               routeTo("common","/input/", bd);
@@ -249,12 +249,13 @@ import javax.inject.Inject;
 
     if (item instanceof CardtplOptionItem) {
       //会员卡价格修改
-      routeTo("/cardtpl/option/", new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build());
+      routeTo("/cardtpl/option/", new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build(),true);
     } else if (item instanceof AddCardtplStantardItem) {
       //新增会员卡价格
-      bd.putString("cardtplid", presenter.getCardtplId());
-      bd.putInt("type", presenter.getCardCate());
-      routeTo("/cardtpl/option/add/", bd);
+      routeTo("/cardtpl/option/add/", new CardtplOptionAddParams()
+        .cardTplId(presenter.getCardtplId())
+        .cardCate(presenter.getCardCate())
+        .build());
     }
     return true;
   }

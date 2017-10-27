@@ -20,15 +20,17 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.student.presenters.ChooseAndSearchPresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CompatEditView;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -56,7 +58,7 @@ import rx.functions.Action1;
  */
 
 @Leaf(module = "student", path = "/choose/student/") public class ChooseAndSearchStudentFragment
-    extends BaseFragment
+    extends SaasBaseFragment
     implements ChooseAndSearchPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener {
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
@@ -65,7 +67,7 @@ import rx.functions.Action1;
 
   private ChooseStudentListFragment chooseStudentListFragment;
   @Inject ChooseAndSearchPresenter presenter;
-
+  @Need public ArrayList<String> studentIdList;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     chooseStudentListFragment = new ChooseStudentListFragment();
@@ -145,7 +147,11 @@ import rx.functions.Action1;
   @Override public void onStudentList(List<QcStudentBean> stus) {
     if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
       chooseStudentListFragment.setData(stus);
+      if (studentIdList != null){
+        chooseStudentListFragment.selectStudent(studentIdList);
+      }
     }
+
   }
 
   @Override public void onRefresh() {
