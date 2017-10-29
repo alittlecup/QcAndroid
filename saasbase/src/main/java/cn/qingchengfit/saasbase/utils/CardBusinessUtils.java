@@ -103,6 +103,7 @@ public class CardBusinessUtils {
     o.charge     = body.charge;
     o.for_staff  = body.for_staff;
     o.price      = body.price;
+    o.id         = body.id;
     return o;
   }
 

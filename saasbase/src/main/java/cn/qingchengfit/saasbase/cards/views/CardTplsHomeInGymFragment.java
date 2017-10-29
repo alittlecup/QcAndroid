@@ -82,12 +82,10 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
     }
     RxBus.getBus().register(EventSaasFresh.CardTplList.class)
       .compose(this.<EventSaasFresh.CardTplList>bindToLifecycle())
-      .buffer(doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new BusSubscribe<List<EventSaasFresh.CardTplList>>() {
-        @Override public void onNext(List<EventSaasFresh.CardTplList> cardTplLists) {
-          if (cardTplLists != null && cardTplLists.size() >0 ){
-            onRefresh();
-          }
+      .compose(this.<EventSaasFresh.CardTplList>doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<EventSaasFresh.CardTplList>() {
+        @Override public void onNext(EventSaasFresh.CardTplList cardTplList) {
+          onRefresh();
         }
       });
 

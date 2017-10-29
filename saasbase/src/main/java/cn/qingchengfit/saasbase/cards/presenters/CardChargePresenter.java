@@ -3,14 +3,18 @@ package cn.qingchengfit.saasbase.cards.presenters;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
+import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.CardTplOption;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
+import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.repository.ICardModel;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.ArrayList;
@@ -24,7 +28,7 @@ public class CardChargePresenter extends BasePresenter {
 
   @Inject ICardModel cardModel;
   private Card mCard;
-  private ChargeBody chargeBody = new ChargeBody();
+  public ChargeBody chargeBody = new ChargeBody();
   private CardTplOption mChosenOption;
   //private
   private List<CardTplOption> mOptions = new ArrayList<>();
@@ -43,18 +47,44 @@ public class CardChargePresenter extends BasePresenter {
   }
 
   private void initBus() {
-    //销售
-    //RxBusAdd()
-    //备注
-    //RxBusAdd();
+    RxBusAdd(Staff.class)
+      .onBackpressureLatest()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<Staff>() {
+        @Override public void onNext(Staff staff) {
+          view.bindSaler(staff.getUsername());
+          chargeBody.setSeller_id(staff.id);
+        }
+      });
+
+    //备注信息
+    RxBusAdd(EventTxT.class)
+      .onBackpressureLatest()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventTxT>() {
+        @Override public void onNext(EventTxT eventTxT) {
+          view.remark(!eventTxT.txt.isEmpty());
+          chargeBody.setRemarks(eventTxT.txt);
+        }
+      });
+
+    //学员 选择某个学员
+    RxBusAdd(EventSelectedStudent.class)
+      .onBackpressureLatest()
+      .subscribe(new BusSubscribe<EventSelectedStudent>() {
+        @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
+          view.bindStudent(eventSelectedStudent.getNameStr());
+          chargeBody.setSeller_id(eventSelectedStudent.getIdStr());
+        }
+      });
   }
 
   public void selectOption(int pos) {
-    view.showInputMoney(pos >= mOptions.size());
+    view.showInputMoney(pos >= mOptions.size(),mCard.getType() == 3);
     if (pos < mOptions.size()) {
       //选择了规格
       mChosenOption = mOptions.get(pos);
-      view.setMoneyPay(mChosenOption.price);
+      view.setPayMoney(mChosenOption.price);
     } else {
       //选择其他
       mChosenOption = null;
@@ -134,11 +164,18 @@ public class CardChargePresenter extends BasePresenter {
     view = null;
   }
 
+  public void setSellerId(String sellerId) {
+    this.chargeBody.setSeller_id(sellerId);
+  }
+
   public interface MVPView extends CView {
     void onGetOptions(List<CardTplOption> options);
 
-    void showInputMoney(boolean show);
-    void setMoneyPay(String m);
+    void showInputMoney(boolean show,boolean isTimeCard);
+    void bindStudent(String student);
+    void bindSaler(String saler);
+    void remark(boolean remark);
+    void setPayMoney(String x);
     /**
      * 下单完成后返回的数据
      */

@@ -25,6 +25,7 @@ public class OptionBody {
   public String id;
   public String charge;
   public String price;
+  public String card_tpl_id;
   public boolean for_staff;
   public int days;
   public String description;

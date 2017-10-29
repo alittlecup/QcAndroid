@@ -100,6 +100,10 @@ public class CardtplOptionItem
     }else return false;
   }
 
+  @Override public int hashCode() {
+    return option.id.hashCode();
+  }
+
   public class CardtplStandardVH extends FlexibleViewHolder {
     @BindView(R2.id.title) TextView title;
     @BindView(R2.id.real_income) TextView realIncome;

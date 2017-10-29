@@ -91,12 +91,10 @@ import javax.inject.Inject;
     comonAdapter = new CommonFlexAdapter(new ArrayList(), this);
     RxBus.getBus().register(EventSaasFresh.CardList.class)
       .compose(this.<EventSaasFresh.CardList>bindToLifecycle())
-      .buffer(doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new BusSubscribe<List<EventSaasFresh.CardList>>() {
-        @Override public void onNext(List<EventSaasFresh.CardList> cardLists) {
-          if (cardLists != null && cardLists.size() > 0){
-            onRefresh();
-          }
+      .compose(this.<EventSaasFresh.CardList>doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<EventSaasFresh.CardList>() {
+        @Override public void onNext(EventSaasFresh.CardList cardList) {
+          onRefresh();
         }
       });
   }
@@ -120,6 +118,7 @@ import javax.inject.Inject;
       .withBottomEdge(true)
       .withRightEdge(true));
     recycleview.setAdapter(comonAdapter);
+    onRefresh();
     return view;
   }
 
@@ -135,10 +134,7 @@ import javax.inject.Inject;
     });
   }
 
-  @Override protected void onFinishAnimation() {
-    super.onFinishAnimation();
-    onRefresh();
-  }
+
 
   public void onRefresh(){
     presenter.queryCardtpl();
@@ -201,8 +197,6 @@ import javax.inject.Inject;
    * 获取会员卡基本信息
    */
   @Override public void onGetCardTypeInfo(CardTpl card_tpl) {
-    // TODO: 2017/10/16 详情
-    //cardname.setText(card_tpl.getName());
     tvCardId.setText("ID:" + card_tpl.getId());
     tvCardtplName.setText(card_tpl.getName());
     tvCardTplType.setText(
@@ -266,7 +260,7 @@ import javax.inject.Inject;
 
     if (item instanceof CardtplOptionItem) {
       //会员卡价格修改
-      routeTo("/cardtpl/option/", new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build(),true);
+      routeTo("/cardtpl/option/", new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build());
     } else if (item instanceof AddCardtplStantardItem) {
       //新增会员卡价格
       routeTo("/cardtpl/option/add/", new CardtplOptionAddParams()

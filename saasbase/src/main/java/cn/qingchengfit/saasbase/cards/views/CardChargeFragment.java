@@ -91,6 +91,49 @@ import javax.inject.Inject;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     card = getArguments().getParcelable("card");
+    initBackBus();
+  }
+
+  private void initBackBus() {
+    //RxBusAdd(Staff.class)
+    //  .compose(this.<Staff>bindToLifecycle())
+    //  .buffer(doWhen(FragmentEvent.CREATE_VIEW))
+    //  .compose(this.<Staff>list2One())
+    //  .onBackpressureLatest()
+    //  .observeOn(AndroidSchedulers.mainThread())
+    //  .subscribe(new BusSubscribe<Staff>() {
+    //    @Override public void onNext(Staff staff) {
+    //      bindSaler(staff.getUsername());
+    //      presenter.setSellerId(staff.id);
+    //    }
+    //  });
+    //
+    ////备注信息
+    //RxBusAdd(EventTxT.class)
+    //  .compose(this.<EventTxT>bindToLifecycle())
+    //  .buffer(doWhen(FragmentEvent.CREATE_VIEW))
+    //  .compose(this.<EventTxT>list2One())
+    //  .onBackpressureLatest()
+    //  .observeOn(AndroidSchedulers.mainThread())
+    //  .subscribe(new BusSubscribe<EventTxT>() {
+    //    @Override public void onNext(EventTxT eventTxT) {
+    //      presenter.chargeBody.setRemarks(eventTxT.txt);
+    //      remark(TextUtils.isEmpty(eventTxT.txt));
+    //    }
+    //  });
+    //
+    ////学员 选择某个学员
+    //RxBusAdd(EventSelectedStudent.class)
+    //  .onBackpressureLatest()
+    //  .compose(this.<EventSelectedStudent>bindToLifecycle())
+    //  .buffer(doWhen(FragmentEvent.CREATE_VIEW))
+    //  .compose(this.<EventSelectedStudent>list2One())
+    //  .subscribe(new BusSubscribe<EventSelectedStudent>() {
+    //    @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
+    //      bindStudent(eventSelectedStudent.getNameStr());
+    //      presenter.chargeBody.setSeller_id(eventSelectedStudent.getIdStr());
+    //    }
+    //  });
   }
 
   private CommonFlexAdapter commonFlexAdapter;
@@ -123,7 +166,7 @@ import javax.inject.Inject;
       }
 
       @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-        setMoneyPay(s.toString());
+        setPayMoney(s.toString());
       }
 
       @Override public void afterTextChanged(Editable s) {
@@ -192,13 +235,26 @@ import javax.inject.Inject;
     onItemClick(0);
   }
 
-  @Override public void showInputMoney(boolean show) {
+
+  @Override public void showInputMoney(boolean show ,boolean isTimecard) {
     loInputMoney.setVisibility(show ? View.VISIBLE : View.GONE);
   }
 
-  @Override public void setMoneyPay(String m) {
+  @Override public void setPayMoney(String m) {
     tvPayMoney.setText(getString(R.string.pay_money, m));
   }
+
+  @Override public void bindStudent(String student) {
+  }
+
+  @Override public void bindSaler(String saler) {
+    civSaler.setContent(saler);
+  }
+
+  @Override public void remark(boolean remark) {
+    civMark.setContent(remark?"已设置":"未设置");
+  }
+
 
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {
 

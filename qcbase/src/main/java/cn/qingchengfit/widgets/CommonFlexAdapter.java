@@ -33,15 +33,16 @@ import java.util.List;
 public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
   private int status = 0;
 
-    private int positionOld = -1;
+  private int positionOld = -1;
   private ArrayMap<String, Object> Tags = new ArrayMap<>();
-    public CommonFlexAdapter(@NonNull List items) {
-        super(items,null,true);
-    }
 
-    public CommonFlexAdapter(@NonNull List items, @Nullable Object listeners) {
-        super(items, listeners,true);
-    }
+  public CommonFlexAdapter(@NonNull List items) {
+    super(items, null, true);
+  }
+
+  public CommonFlexAdapter(@NonNull List items, @Nullable Object listeners) {
+    super(items, listeners, true);
+  }
 
   public void setTag(String key, Object value) {
     Tags.put(key, value);
@@ -51,23 +52,30 @@ public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
     return Tags.get(key);
   }
 
-    @Override
-    public List<Animator> getAnimators(View itemView, int position, boolean isSelected) {
-        List<Animator> animators = new ArrayList<Animator>();
+  @Override public List<Animator> getAnimators(View itemView, int position, boolean isSelected) {
+    List<Animator> animators = new ArrayList<Animator>();
 
+    if (position != positionOld) positionOld = position;
 
-        if (position != positionOld)
-            positionOld = position;
-
-        return animators;
-    }
+    return animators;
+  }
 
   @Override public boolean hasNewSearchText(String newText) {
     //return super.hasNewSearchText(newText);
     return true;
   }
 
-  public List getMainItems(){
+  public int index(T t) {
+    if (t == null) {
+      return -1;
+    }
+    for (int i = 0; i < getItemCount(); i++) {
+      if (getItem(i).equals(t)) return i;
+    }
+    return -1;
+  }
+
+  public List getMainItems() {
     List ret = new ArrayList();
     for (int i = 0; i < getItemCount(); i++) {
       ret.add(getItem(i));
@@ -81,5 +89,5 @@ public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
 
   public void setStatus(int status) {
     this.status = status;
-    }
+  }
 }

@@ -7,6 +7,7 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.event.EventCardTplOption;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
@@ -102,9 +103,10 @@ public class AddCardtplStandardPresenter extends BasePresenter {
    */
   public void addOption() {
     if (CmStringUtils.isEmpty(tplId)){
-      RxBus.getBus().post(ob);
+      RxBus.getBus().post(new EventCardTplOption(ob,0));
       view.onSaveOk();
     }else
+      ob.card_tpl_id = tplId;
       RxRegiste(cardModel.qcCreateStandard(tplId, ob)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
@@ -121,7 +123,12 @@ public class AddCardtplStandardPresenter extends BasePresenter {
   }
 
   public void delOption() {
-    RxRegiste(cardModel.qcDelCardStandard(optionId)
+    if (CmStringUtils.isEmpty(tplId)){
+      ob.id = optionId;
+      RxBus.getBus().post(new EventCardTplOption(ob,-1));
+      view.onDelOk();
+    }else
+      RxRegiste(cardModel.qcDelCardStandard(optionId)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -138,9 +145,11 @@ public class AddCardtplStandardPresenter extends BasePresenter {
 
   public void saveOption() {
     if (CmStringUtils.isEmpty(tplId)){
-      RxBus.getBus().post(ob);
+      ob.id = optionId;
+      RxBus.getBus().post(new EventCardTplOption(ob,0));
       view.onSaveOk();
     }else
+      ob.id = null;
       RxRegiste(cardModel.qcUpdateCardStandard(optionId, ob)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())

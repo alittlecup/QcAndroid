@@ -1,15 +1,6 @@
-package cn.qingchengfit.pos;
+package cn.qingchengfit.saasbase.cards.event;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import cn.qingchengfit.pos.routers.PosRouterCenter;
-import cn.qingchengfit.views.activity.BaseActivity;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
-import javax.inject.Inject;
+import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 
 /**
  * power by
@@ -29,25 +20,15 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/17.
+ * Created by Paper on 2017/10/29.
  */
 
-public class PosBaseActivity extends BaseActivity implements HasSupportFragmentInjector {
-  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
-  @Inject PosRouterCenter routerCenter;
+public class EventCardTplOption {
+  public OptionBody body;
+  public int action;//0 是添加或者修改，-1是删除
 
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_base_frag);
-    onNewIntent(getIntent());
-  }
-
-  @Override protected Fragment getRouterFragment(Intent intent) {
-    return routerCenter.getFragment(intent.getData(), intent.getExtras());
-  }
-
-
-  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-    return dispatchingFragmentInjector;
+  public EventCardTplOption(OptionBody body, int action) {
+    this.body = body;
+    this.action = action;
   }
 }

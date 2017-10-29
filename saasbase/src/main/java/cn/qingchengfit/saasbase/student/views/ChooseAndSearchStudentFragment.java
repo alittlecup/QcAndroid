@@ -24,6 +24,7 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.student.presenters.ChooseAndSearchPresenter;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.widgets.CompatEditView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -75,10 +76,10 @@ import rx.functions.Action1;
     RxBus.getBus()
       .register(EventSaasFresh.StudentList.class)
       .compose(this.<EventSaasFresh.StudentList>bindToLifecycle())
-      .buffer(doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new Action1<List<EventSaasFresh.StudentList>>() {
-        @Override public void call(List<EventSaasFresh.StudentList> studentLists) {
-          if (studentLists != null && studentLists.size() > 0) onRefresh();
+      .compose(this.<EventSaasFresh.StudentList>doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<EventSaasFresh.StudentList>() {
+        @Override public void onNext(EventSaasFresh.StudentList studentList) {
+          onRefresh();
         }
       });
   }

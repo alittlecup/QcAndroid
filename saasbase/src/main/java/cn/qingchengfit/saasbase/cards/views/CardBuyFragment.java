@@ -116,6 +116,7 @@ import javax.inject.Inject;
         return 1;
       }
     });
+    rv.setNestedScrollingEnabled(false);
     rv.setLayoutManager(manager);
     rv.setAdapter(commonFlexAdapter);
     civRealMoney.addTextWatcher(new TextWatcher() {
