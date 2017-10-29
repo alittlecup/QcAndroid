@@ -110,7 +110,7 @@ public class CardBusinessUtils {
   public static String supportChargeAndCreate(boolean charge,boolean create){
     List<String> ret = new ArrayList<>();
     if (charge) ret.add("充值");
-    if (charge) ret.add("购卡");
+    if (create) ret.add("购卡");
     return CmStringUtils.List2StrChinese(ret);
   }
 

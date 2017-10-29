@@ -12,6 +12,7 @@ import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
@@ -122,10 +123,10 @@ public class CardChargePresenter extends BasePresenter {
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponse>>() {
-          @Override public void onNext(QcDataResponse<PayBusinessResponse> qcResponse) {
+        .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponseWrap>>() {
+          @Override public void onNext(QcDataResponse<PayBusinessResponseWrap> qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onBusinessOrder(qcResponse.data);
+              view.onBusinessOrder(qcResponse.data.order);
             } else {
               view.onShowError(qcResponse.getMsg());
             }

@@ -16,7 +16,7 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
-import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import java.util.HashMap;
@@ -169,11 +169,11 @@ public interface PosApi {
       @Body GetCodeBody body);
 
   //充值扣费
-  @POST("/api/rongshu/gym/{gym_id}/cards/{card_id}/charge/") rx.Observable<QcDataResponse<PayBusinessResponse>> qcCardCharge(@Path("gym_id") String gym_id,
+  @POST("/api/rongshu/gym/{gym_id}/cards/{card_id}/charge/") rx.Observable<QcDataResponse<PayBusinessResponseWrap>> qcCardCharge(@Path("gym_id") String gym_id,
       @Path("card_id") String cardid,@QueryMap HashMap<String, Object> params , @Body ChargeBody body);
 
   //购卡
-  @POST("/api/rongshu/gym/{id}/cards/create/") rx.Observable<QcDataResponse<PayBusinessResponse>> qcCreateRealcard(@Path("id") String staffid,
+  @POST("/api/rongshu/gym/{id}/cards/create/") rx.Observable<QcDataResponse<PayBusinessResponseWrap>> qcCreateRealcard(@Path("id") String staffid,
       @Body CardBuyBody body, @QueryMap HashMap<String, Object> params);
 
 
