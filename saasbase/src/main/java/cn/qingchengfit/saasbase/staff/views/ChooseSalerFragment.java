@@ -61,6 +61,7 @@ import rx.schedulers.Schedulers;
     root.addView(view,1);
     toolbar = (Toolbar)root.findViewById(R.id.toolbar);
     toolbarTitle = (TextView)root.findViewById(R.id.toolbar_title);
+    initToolbar(toolbar);
     return root;
   }
 

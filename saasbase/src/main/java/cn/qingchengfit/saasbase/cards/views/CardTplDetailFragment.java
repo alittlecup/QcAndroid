@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
@@ -24,7 +25,9 @@ import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTplDetailPresenter;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -35,6 +38,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -85,6 +89,16 @@ import javax.inject.Inject;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     comonAdapter = new CommonFlexAdapter(new ArrayList(), this);
+    RxBus.getBus().register(EventSaasFresh.CardList.class)
+      .compose(this.<EventSaasFresh.CardList>bindToLifecycle())
+      .buffer(doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<List<EventSaasFresh.CardList>>() {
+        @Override public void onNext(List<EventSaasFresh.CardList> cardLists) {
+          if (cardLists != null && cardLists.size() > 0){
+            onRefresh();
+          }
+        }
+      });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,6 +137,10 @@ import javax.inject.Inject;
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
+    onRefresh();
+  }
+
+  public void onRefresh(){
     presenter.queryCardtpl();
     presenter.queryCardtplOption();
   }
@@ -245,7 +263,6 @@ import javax.inject.Inject;
 
   @Override public boolean onItemClick(int i) {
     IFlexible item = comonAdapter.getItem(i);
-    Bundle bd = new Bundle();
 
     if (item instanceof CardtplOptionItem) {
       //会员卡价格修改

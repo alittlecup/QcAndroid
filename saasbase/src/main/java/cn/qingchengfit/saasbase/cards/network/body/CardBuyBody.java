@@ -49,6 +49,7 @@ public class CardBuyBody implements Parcelable {
   public int checkData() {
     if (CmStringUtils.isEmpty(price)) return R.string.e_card_realpay_cannot_empty;
     if (CmStringUtils.isEmpty(seller_id)) return R.string.e_card_saler_cannot_empty;
+    if (CmStringUtils.isEmpty(card_tpl_id)) return R.string.e_cardtpl_empty;
     if (check_valid && (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to)))
       return R.string.e_card_start_or_end_cannot_empty;
     switch (type) {
@@ -109,6 +110,17 @@ public class CardBuyBody implements Parcelable {
     app_id = builder.app_id;
   }
 
+  public void setCard_tpl_id(String card_tpl_id) {
+    this.card_tpl_id = card_tpl_id;
+  }
+
+  public void setUser_ids(String user_ids) {
+    this.user_ids = user_ids;
+  }
+
+  public void setIs_auto_start(boolean is_auto_start) {
+    this.is_auto_start = is_auto_start;
+  }
 
   public String getCard_no() {
     return card_no;

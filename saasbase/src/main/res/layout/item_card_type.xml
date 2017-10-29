@@ -63,4 +63,15 @@
       android:layout_alignParentEnd="true"
       tools:text="FREESTYLE"
       />
+  <TextView
+      android:id="@+id/img_stutus"
+      style="@style/QcTextStyleStandardDark"
+      android:textColor="@color/white"
+      android:layout_width="wrap_content"
+      android:layout_height="25dp"
+      tools:text="(已停卡)"
+      android:layout_alignParentRight="true"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:layout_gravity="end"
+      />
 </RelativeLayout>

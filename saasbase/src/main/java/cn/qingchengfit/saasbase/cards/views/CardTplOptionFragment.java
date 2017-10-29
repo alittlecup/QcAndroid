@@ -63,6 +63,7 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
     toolbarTitle.setText("编辑会员卡价格");
     toolbar.getMenu().clear();
     toolbar.getMenu().add("保存").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);

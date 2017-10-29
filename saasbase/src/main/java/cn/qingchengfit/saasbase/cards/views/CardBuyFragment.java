@@ -216,8 +216,10 @@ import javax.inject.Inject;
       .build());
   }
 
-  @Override public void showInputMoney(boolean show) {
+  @Override public void showInputMoney(boolean show, boolean isTimecard) {
     loInputMoney.setVisibility(show ? View.VISIBLE : View.GONE);
+    if (show && isTimecard)
+      elNeedValid.hideHeader();
   }
 
   @Override public void bindStudent(String student) {

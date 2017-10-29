@@ -32,6 +32,7 @@ public class CardBuyPresenter extends BasePresenter {
   @Inject ICardModel cardModel;
 
   private String mCardTplId;
+  private int cardCate;
   private List<CardTplOption> mOptions  = new ArrayList<>();
   /**
    * 选中的支付价格
@@ -50,6 +51,7 @@ public class CardBuyPresenter extends BasePresenter {
   }
   public void setCardCate(int cate){
     cardBuyBody.setType(cate);
+    cardCate = cate;
   }
   public void setmCardTplId(String mCardTplId) {
     this.mCardTplId = mCardTplId;
@@ -66,12 +68,12 @@ public class CardBuyPresenter extends BasePresenter {
     if ( pos < mOptions.size()){
       //已有规格 展示价格
        mChosenOption = mOptions.get(pos);
-      view.showInputMoney(false);
+      view.showInputMoney(false,cardCate ==3);
       view.setPayMoney(mChosenOption.price);
 
     }else {
       //其他规格
-      view.showInputMoney(true);
+      view.showInputMoney(true, cardCate ==3);
     }
   }
 
@@ -157,6 +159,7 @@ public class CardBuyPresenter extends BasePresenter {
    * 真 购卡操作，先检查数据，交给后端处理
    */
   public void buyCard(){
+    cardBuyBody.setCard_tpl_id(mCardTplId);
     if (mChosenOption == null){
       cardBuyBody.setPrice(view.realMoney());
       cardBuyBody.setBuyAccount(view.chargeMoney(),view.startDay(),view.endDay());
@@ -212,7 +215,12 @@ public class CardBuyPresenter extends BasePresenter {
   public interface MVPView extends CView {
     void onGetOptions(List<CardTplOption> options);
     void onGetCardTpl(CardTpl cardTpl);
-    void showInputMoney(boolean show);
+
+    /**
+     * @param show 是否选中其他
+     * @param isTimeCard 是否是期限卡
+     */
+    void showInputMoney(boolean show,boolean isTimeCard);
     void bindStudent(String student);
     void bindSaler(String saler);
     void remark(boolean remark);

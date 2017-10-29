@@ -31,8 +31,7 @@ public class CardListPresenter extends BasePresenter {
     initpage();
     if (cardtplType != 0) {
       p.put("card_tpl_type", cardtplType);
-    }else
-    if (!TextUtils.isEmpty(cardtpl)) {
+    }else if (!TextUtils.isEmpty(cardtpl)) {
       p.put("card_tpl_id", cardtpl);
       p.remove("card_tpl_type");
     }
@@ -42,12 +41,16 @@ public class CardListPresenter extends BasePresenter {
       p.put("is_expired", "0");
     } else if (cardstatus == 2) {//请假
       p.put("is_locked", "1");
-    } else if (cardstatus == 3) {//停卡
+    } else if (cardstatus == 4) {//停卡
       p.put("is_active", "0");
       p.put("is_locked", "0");
       p.put("is_expired", "0");
-    } else if (cardstatus == 4) {
+    } else if (cardstatus == 3) {//过期
       p.put("is_expired", "1");
+    }else {
+      p.put("is_active", null);
+      p.put("is_locked", null);
+      p.put("is_expired", null);
     }
 
     queryAllCards();

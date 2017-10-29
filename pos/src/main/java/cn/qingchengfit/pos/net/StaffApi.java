@@ -5,6 +5,7 @@ import cn.qingchengfit.saasbase.staff.model.QcResponsePostions;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -37,6 +38,13 @@ import retrofit2.http.QueryMap;
  */
 
 public interface StaffApi {
+  /**
+   * 获取当前用户信息
+   */
+  @GET("/api/info/current/user/")
+  rx.Observable<QcDataResponse<UserWrap>> getCurrentUser();
+
+
   /**
    * 工作人员列表
    */

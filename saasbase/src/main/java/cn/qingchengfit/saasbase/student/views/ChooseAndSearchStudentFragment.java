@@ -24,12 +24,12 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.student.presenters.ChooseAndSearchPresenter;
-import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.widgets.CompatEditView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -58,8 +58,8 @@ import rx.functions.Action1;
  */
 
 @Leaf(module = "student", path = "/choose/student/") public class ChooseAndSearchStudentFragment
-    extends SaasBaseFragment
-    implements ChooseAndSearchPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener {
+  extends SaasBaseFragment
+  implements ChooseAndSearchPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener {
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -68,40 +68,44 @@ import rx.functions.Action1;
   private ChooseStudentListFragment chooseStudentListFragment;
   @Inject ChooseAndSearchPresenter presenter;
   @Need public ArrayList<String> studentIdList;
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     chooseStudentListFragment = new ChooseStudentListFragment();
+    RxBus.getBus()
+      .register(EventSaasFresh.StudentList.class)
+      .compose(this.<EventSaasFresh.StudentList>bindToLifecycle())
+      .buffer(doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new Action1<List<EventSaasFresh.StudentList>>() {
+        @Override public void call(List<EventSaasFresh.StudentList> studentLists) {
+          if (studentLists != null && studentLists.size() > 0) onRefresh();
+        }
+      });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_student_choose, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
-    RxBusAdd(EventSaasFresh.StaffList.class).subscribe(new BusSubscribe<EventSaasFresh.StaffList>() {
-      @Override public void onNext(EventSaasFresh.StaffList cardList) {
-           onRefresh();
-      }
-    });
+    RxTextView.afterTextChangeEvents(etSearch)
+      .throttleLast(1000, TimeUnit.MILLISECONDS)
+      .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
+        @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
+          if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
+            chooseStudentListFragment.filter(etSearch.getText().toString());
+          }
+        }
+      });
     return view;
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     if (f instanceof ChooseStudentListFragment) {
       onRefresh();
-      //搜索变化
-      RxTextView.afterTextChangeEvents(etSearch)
-          .throttleLast(1000, TimeUnit.MILLISECONDS)
-          .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
-            @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
-              if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
-                chooseStudentListFragment.filter(etSearch.getText().toString());
-              }
-            }
-          });
     }
   }
 
@@ -122,7 +126,7 @@ import rx.functions.Action1;
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         RxBus.getBus()
-            .post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent()));
+          .post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent()));
         getActivity().onBackPressed();
         return false;
       }
@@ -147,11 +151,10 @@ import rx.functions.Action1;
   @Override public void onStudentList(List<QcStudentBean> stus) {
     if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
       chooseStudentListFragment.setData(stus);
-      if (studentIdList != null){
+      if (studentIdList != null) {
         chooseStudentListFragment.selectStudent(studentIdList);
       }
     }
-
   }
 
   @Override public void onRefresh() {

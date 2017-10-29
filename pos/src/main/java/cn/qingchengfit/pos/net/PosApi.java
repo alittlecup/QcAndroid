@@ -111,11 +111,11 @@ public interface PosApi {
    * 卡规格操作
    */
   @DELETE("/api/rongshu/gym/{id}/options/{option_id}/")
-  rx.Observable<QcDataResponse> qcDelCardtplOption(@Path("staff_id") String staffid,
+  rx.Observable<QcDataResponse> qcDelCardtplOption(@Path("id") String staffid,
       @Path("option_id") String option_id, @QueryMap HashMap<String, Object> params);
 
   @PUT("/api/rongshu/gym/{id}/options/{option_id}/")
-  rx.Observable<QcDataResponse> qcUpdateCardtplOption(@Path("staff_id") String staffid,
+  rx.Observable<QcDataResponse> qcUpdateCardtplOption(@Path("id") String staffid,
       @Path("option_id") String option_id, @QueryMap HashMap<String, Object> params,
       @Body OptionBody body);
 

@@ -17,6 +17,7 @@ import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardActionsItem;
 import cn.qingchengfit.saasbase.cards.item.CardDetailItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
+import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.subscribes.BusSubscribe;
@@ -124,11 +125,13 @@ import javax.inject.Inject;
     items.add(new ActionDescItem.Builder().action(2)
         .icon(R.drawable.vd_card_gyms)
         .title("适用场馆")
+        .clickable(false)
         .desc(card.getSupportGyms())
         .build());
     items.add(new ActionDescItem.Builder().action(3)
         .icon(R.drawable.vd_card_bills)
         .title("消费记录")
+        .clickable(false)
         .desc("todo")
         .build());
     items.add(new ActionDescItem.Builder().action(4)
@@ -156,6 +159,11 @@ import javax.inject.Inject;
           break;
 
         case 4://实体卡号
+          routeTo("common","/input/",new CommonInputParams()
+            .title("修改实体卡号")
+            .hint(presenter.getmCard().getCard_no())
+            .content(presenter.getmCard().getCard_no())
+            .build());
           break;
       }
     }
