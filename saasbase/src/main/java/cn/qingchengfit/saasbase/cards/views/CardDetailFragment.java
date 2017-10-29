@@ -17,9 +17,11 @@ import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardActionsItem;
 import cn.qingchengfit.saasbase.cards.item.CardDetailItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
+import cn.qingchengfit.saasbase.common.views.CommonInputParams;
+import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.BundleBuilder;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -53,23 +55,14 @@ import javax.inject.Inject;
 @Leaf(module = "card", path = "/detail/") public class CardDetailFragment extends BaseListFragment
     implements CardDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener {
   @Need
-  String cardid;
+  public String cardid;
 
   Toolbar toolbar;
   TextView toolbarTitle;
 
-  public static CardDetailFragment newInstance(String cardid) {
-    Bundle args = new Bundle();
-    args.putString("id", cardid);
-    CardDetailFragment fragment = new CardDetailFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments() != null)
-      cardid = getArguments().getString("id");
+    SaasbaseParamsInjector.inject(this);
   }
 
   @Inject CardDetailPresenter presenter;
@@ -125,22 +118,24 @@ import javax.inject.Inject;
     items.add(new CardDetailItem(card));
     items.add(new CardActionsItem(card));
     items.add(new ActionDescItem.Builder().action(1)
-        .action(R.drawable.vd_add_batch)
+        .icon(R.drawable.vd_card_member)
         .title("绑定会员")
         .desc(card.getBundleUsers())
         .build());
     items.add(new ActionDescItem.Builder().action(2)
-        .action(R.drawable.vd_add_batch)
+        .icon(R.drawable.vd_card_gyms)
         .title("适用场馆")
+        .clickable(false)
         .desc(card.getSupportGyms())
         .build());
     items.add(new ActionDescItem.Builder().action(3)
-        .action(R.drawable.vd_add_batch)
+        .icon(R.drawable.vd_card_bills)
         .title("消费记录")
+        .clickable(false)
         .desc("todo")
         .build());
     items.add(new ActionDescItem.Builder().action(4)
-        .action(R.drawable.vd_add_batch)
+        .icon(R.drawable.vd_card_no)
         .title("实体卡号")
         .desc(card.getId())
         .build());
@@ -152,7 +147,9 @@ import javax.inject.Inject;
     if (item instanceof ActionDescItem) {
       switch (((ActionDescItem) item).getAction()) {
         case 1://绑定会员
-          routeTo(AppUtils.getRouterUri(getContext(),"/student/choose/student/"),new BundleBuilder().adds("ids",(ArrayList<String>)presenter.getmCard().getUserIds()).build());
+          routeTo(AppUtils.getRouterUri(getContext(),"/student/choose/student/"),new ChooseAndSearchStudentParams()
+            .studentIdList((ArrayList<String>) presenter.getmCard().getUserIds())
+            .build());
           break;
         case 2://适用场馆
           break;
@@ -162,6 +159,11 @@ import javax.inject.Inject;
           break;
 
         case 4://实体卡号
+          routeTo("common","/input/",new CommonInputParams()
+            .title("修改实体卡号")
+            .hint(presenter.getmCard().getCard_no())
+            .content(presenter.getmCard().getCard_no())
+            .build());
           break;
       }
     }

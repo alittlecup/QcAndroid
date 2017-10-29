@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.utils.MeasureUtils;
 
 /**
@@ -43,7 +42,7 @@ public class LoadingDialog extends Dialog {
                 }
             }
         });
-        imgLoading = ButterKnife.findById(this, R.id.img_input_loading);
+        imgLoading = findViewById( R.id.img_input_loading);
         rotate = AnimationUtils.loadAnimation(context, R.anim.loading_rotate);
     }
 

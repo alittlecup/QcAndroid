@@ -35,7 +35,7 @@ import java.util.List;
 
 public class ChooseStudentListFragment extends SimpleStudentListFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
     commonFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
     return v;
@@ -53,17 +53,31 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
     return new ChosenStudentItem(qcStudentBean);
   }
 
-  public List<QcStudentBean> getSelectedStudent(){
+  public List<QcStudentBean> getSelectedStudent() {
     List<QcStudentBean> ret = new ArrayList<>();
     for (Integer i : commonFlexAdapter.getSelectedPositions()) {
-      if (commonFlexAdapter.getItem(i) instanceof StudentItem)
-        ret.add(((StudentItem)commonFlexAdapter.getItem(i)).getQcStudentBean());
+      if (commonFlexAdapter.getItem(i) instanceof StudentItem) {
+        ret.add(((StudentItem) commonFlexAdapter.getItem(i)).getQcStudentBean());
+      }
     }
     return ret;
   }
-  public int getSelectedCount(){
+
+  public int getSelectedCount() {
     return commonFlexAdapter.getSelectedItemCount();
   }
 
-
+  public void selectStudent(ArrayList<String> studentIdList) {
+    if (studentIdList != null) {
+      for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
+        IFlexible item = commonFlexAdapter.getItem(i);
+        if (item instanceof ChosenStudentItem) {
+          if (studentIdList.contains(((ChosenStudentItem) item).getId())) {
+            commonFlexAdapter.toggleSelection(i);
+            commonFlexAdapter.notifyDataSetChanged();
+          }
+        }
+      }
+    }
+  }
 }

@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.staff.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2017/10/10.
  */
 @Leaf(module = "staff", path = "/choose/saler/") public class ChooseSalerFragment
-    extends BaseListFragment implements FlexibleAdapter.OnItemClickListener{
+    extends BaseListFragment implements FlexibleAdapter.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener{
 
   @Inject IStaffModel staffModel;
   protected Toolbar toolbar;
@@ -60,6 +61,7 @@ import rx.schedulers.Schedulers;
     root.addView(view,1);
     toolbar = (Toolbar)root.findViewById(R.id.toolbar);
     toolbarTitle = (TextView)root.findViewById(R.id.toolbar_title);
+    initToolbar(toolbar);
     return root;
   }
 
@@ -70,22 +72,9 @@ import rx.schedulers.Schedulers;
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    RxRegiste(staffModel.getSalers()
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<SalerListWrap>>() {
-          @Override public void onNext(QcDataResponse<SalerListWrap> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              commonFlexAdapter.clear();
-              for (Staff user : qcResponse.data.sellers) {
-                commonFlexAdapter.addItem(new StaffItem(user));
-              }
-            } else {
-              onShowError(qcResponse.getMsg());
-            }
-          }
-        }));
+    if (srl != null)
+      srl.setRefreshing(true);
+    onRefresh();
   }
 
 
@@ -108,5 +97,26 @@ import rx.schedulers.Schedulers;
     }
     getActivity().finish();
     return true;
+  }
+
+  @Override public void onRefresh() {
+
+    RxRegiste(staffModel.getSalers()
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<SalerListWrap>>() {
+        @Override public void onNext(QcDataResponse<SalerListWrap> qcResponse) {
+          stopRefresh();
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            commonFlexAdapter.clear();
+            for (Staff user : qcResponse.data.sellers) {
+              commonFlexAdapter.addItem(new StaffItem(user));
+            }
+          } else {
+            onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 }

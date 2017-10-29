@@ -39,6 +39,13 @@ public class CardtplOptionOhterItem
     holder.realIncome.setTextColor(colorPrimary);
     holder.validDate.setTextColor(colorPrimary);
     holder.title.setTextColor(colorPrimary);
+    if (adapter.isSelected(position) ) {
+      holder.chosen.setVisibility( View.VISIBLE);
+      holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_primary);
+    } else {
+      holder.chosen.setVisibility(View.GONE);
+      holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_grey);
+    }
   }
 
   @Override public boolean equals(Object o) {

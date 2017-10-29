@@ -29,7 +29,7 @@ public class BusinessBill {
   public int type; //
   //"pay_type": 1/2/3..., //支付方式: "WEIXIN", "WEIXIN_QR_CODE", "ALIPAY", "ALIPAY_QR_CODE", "CARD"
   public String pay_type;
-  //"order_no": "", //青橙流水号
+  //"order_no": "", //青橙业务订单ID
   public String order_no;
   //"trade_flow": "xxxx", //融数流水号
   public String trade_flow_id;

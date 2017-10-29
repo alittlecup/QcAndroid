@@ -1,15 +1,16 @@
 apply plugin: 'com.android.application'
+apply plugin: "com.squareup.sqldelight"
 
 def libs = rootProject.ext.libraries;
-def config = rootProject.ext.configuration;
+def cfg = rootProject.ext.configuration;
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.3"
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
 
   defaultConfig {
     applicationId "cn.qingchengfit.pos"
     minSdkVersion 21
-    targetSdkVersion 25
+    targetSdkVersion 26
     versionCode 1
     versionName "1.0"
     multiDexEnabled true
@@ -33,18 +34,19 @@ configurations.all {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile project(path: ':saasbase')
-  compile "com.jakewharton:butterknife:${libs.butterknife}"
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation project(path: ':saasbase')
+  implementation "com.jakewharton:butterknife:${libs.butterknife}"
   annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  compile "org.glassfish:javax.annotation:${libs.javax_annotation}"
-  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+  implementation "org.glassfish:javax.annotation:${libs.javax_annotation}"
+  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile 'com.android.support:multidex:1.0.1'
+  implementation 'com.android.support:multidex:1.0.2'
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
-  testCompile 'junit:junit:4.12'
+  testImplementation 'junit:junit:4.12'
+
 }

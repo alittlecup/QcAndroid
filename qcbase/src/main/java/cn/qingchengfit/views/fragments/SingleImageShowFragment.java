@@ -3,13 +3,11 @@ package cn.qingchengfit.views.fragments;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,8 +45,10 @@ import uk.co.senab.photoview.PhotoView;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/3/16.
+ *
+ *
  */
-
+@Deprecated
 public class SingleImageShowFragment extends BottomSheetDialogFragment {
   @BindView(R2.id.photo_view) PhotoView photoView;
   @BindView(R2.id.btn_download) Button btnDownload;
@@ -93,15 +92,15 @@ public class SingleImageShowFragment extends BottomSheetDialogFragment {
   }
 
   @Override public void setupDialog(Dialog dialog, int style) {
-    super.setupDialog(dialog, style);
-    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-      @Override public void onShow(DialogInterface dialog) {
-        BottomSheetDialog d = (BottomSheetDialog) dialog;
-        FrameLayout bottomSheet =
-            (FrameLayout) d.findViewById(android.support.design.R.id.design_bottom_sheet);
-        BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED);
-      }
-    });
+    //super.setupDialog(dialog, style);
+    //dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+    //  @Override public void onShow(DialogInterface dialog) {
+    //    BottomSheetDialog d = (BottomSheetDialog) dialog;
+    //    FrameLayout bottomSheet =
+    //        (FrameLayout) d.findViewById(android.support.design.R.id.design_bottom_sheet);
+    //    BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED);
+    //  }
+    //});
   }
 
   @Override public void onDestroyView() {

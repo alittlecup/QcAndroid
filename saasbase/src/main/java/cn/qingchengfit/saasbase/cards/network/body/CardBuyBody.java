@@ -29,7 +29,7 @@ public class CardBuyBody implements Parcelable {
   }
 
   public String price;
-  public int charge_type; //支付类型
+  public Integer charge_type = 7; //支付类型
   public String card_no;
   public String account; //储值卡充值
   public String seller_id;
@@ -49,9 +49,10 @@ public class CardBuyBody implements Parcelable {
   public int checkData() {
     if (CmStringUtils.isEmpty(price)) return R.string.e_card_realpay_cannot_empty;
     if (CmStringUtils.isEmpty(seller_id)) return R.string.e_card_saler_cannot_empty;
+    if (CmStringUtils.isEmpty(card_tpl_id)) return R.string.e_cardtpl_empty;
     if (check_valid && (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to)))
       return R.string.e_card_start_or_end_cannot_empty;
-    switch (charge_type) {
+    switch (type) {
       case 1:
         if (CmStringUtils.isEmpty(account))
           return R.string.e_card_charge_money_cannot_empty;
@@ -64,6 +65,8 @@ public class CardBuyBody implements Parcelable {
         if (CmStringUtils.isEmpty(start) || CmStringUtils.isEmpty(end))
           return R.string.e_card_charge_period_cannot_empty;
         break;
+      default:
+        return R.string.e_card_buy_cate;
     }
     return 0;
   }
@@ -107,6 +110,17 @@ public class CardBuyBody implements Parcelable {
     app_id = builder.app_id;
   }
 
+  public void setCard_tpl_id(String card_tpl_id) {
+    this.card_tpl_id = card_tpl_id;
+  }
+
+  public void setUser_ids(String user_ids) {
+    this.user_ids = user_ids;
+  }
+
+  public void setIs_auto_start(boolean is_auto_start) {
+    this.is_auto_start = is_auto_start;
+  }
 
   public String getCard_no() {
     return card_no;

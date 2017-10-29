@@ -8,6 +8,7 @@ import cn.qingchengfit.pos.net.StaffApi;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import rx.Observable;
 
 /**
@@ -43,6 +44,10 @@ public class StaffModel implements IStaffModel {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
     staffApi = repository.createGetApi(StaffApi.class);
+  }
+
+  @Override public Observable<QcDataResponse<UserWrap>> getCurUser() {
+    return staffApi.getCurrentUser();
   }
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {

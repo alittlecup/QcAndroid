@@ -1,7 +1,4 @@
-package cn.qingchengfit.saasbase;
-
-import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
-import cn.qingchengfit.views.fragments.BaseFragment;
+package cn.qingchengfit.saasbase.repository;
 
 /**
  * power by
@@ -21,11 +18,13 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/8/22.
+ * Created by Paper on 2017/10/25.
  */
 
-public interface ISaasRouter {
-
-  CardTplsHomeInGymFragment cardTplsHomeInGymFragment();
-  BaseFragment toCardTplDetail(String cardtplid);
+public interface IPermissionModel {
+  /**
+   * @param permission 权限名称，根据权限名称判断，具体的实现和 环境 根据业务处理，在App project中实现
+   * @return
+   */
+  boolean check(String permission);
 }

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import cn.qingchengfit.Constants;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.utils.CmStringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -263,7 +265,18 @@ public class Card implements Parcelable {
     }
 
     public String getBundleUsers() {
-        return bundleUsers;
+        if (CmStringUtils.isEmpty(bundleUsers)){
+            StringBuilder sb = new StringBuilder();
+            if (users != null){
+                for (int i = 0; i < users.size(); i++) {
+                    sb.append(users.get(i).getUsername());
+                    if (i < users.size()-1)
+                        sb.append(Constants.SEPARATE_CN);
+                }
+            }
+            return sb.toString();
+        }else
+            return bundleUsers;
     }
 
     public void setBundleUsers(String bundleUsers) {

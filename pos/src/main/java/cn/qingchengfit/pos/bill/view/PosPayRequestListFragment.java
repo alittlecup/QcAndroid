@@ -36,11 +36,10 @@ public class PosPayRequestListFragment extends PayRequestListFragment {
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
   @Override public void onPay(PayRequest payRequest) {
-    float amonut = payRequest.price * 100;
     RongPay rp = new RongPay.Builder()
-      .amount((int) amonut)
+      .amount(payRequest.price)
       .customerNo(gymWrapper.getCustumNo())
-      .merOrderId("payRequest.order_no")
+      .merOrderId(payRequest.order_no)
       .operator(loginStatus.staff_name())
       //.phoneNo(gymWrapper.get)
       .title(payRequest.title)

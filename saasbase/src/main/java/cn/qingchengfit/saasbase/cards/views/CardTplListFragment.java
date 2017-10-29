@@ -5,8 +5,6 @@ import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
-import eu.davidea.flexibleadapter.items.IFlexible;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,13 +48,14 @@ public class CardTplListFragment extends BaseListFragment {
   public void setCardtpls(List<CardTpl> list){
     stopRefresh();
     if (commonFlexAdapter != null) {
-      List<IFlexible> datas = new ArrayList<>();
+      datas.clear();
       if (list != null) {
         for (CardTpl cardTpl : list) {
           datas.add(generateItem(cardTpl));
         }
       }
-      commonFlexAdapter.updateDataSet(datas,true);
+      commonFlexAdapter.notifyDataSetChanged();
+      //commonFlexAdapter.(datas,false);
     }
   }
 

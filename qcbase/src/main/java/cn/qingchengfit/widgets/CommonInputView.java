@@ -127,12 +127,12 @@ public class CommonInputView extends RelativeLayout {
     showDivier = ta.getBoolean(R.styleable.CommonInputView_civ_showdivier, true);
     showRight = ta.getBoolean(R.styleable.CommonInputView_civ_showright, false);
     rightDrawable =
-        ta.getResourceId(R.styleable.CommonInputView_civ_right_icon, R.drawable.ic_arrow_right);
+      ta.getResourceId(R.styleable.CommonInputView_civ_right_icon, R.drawable.ic_arrow_right);
     maxLength = ta.getResourceId(R.styleable.CommonInputView_civ_max_length, 100);
     textColor = ta.getColor(R.styleable.CommonInputView_civ_text_color,
-        CompatUtils.getColor(getContext(), R.color.text_grey));
+      CompatUtils.getColor(getContext(), R.color.text_grey));
     contentColor = ta.getColor(R.styleable.CommonInputView_civ_content_color,
-        CompatUtils.getColor(getContext(), R.color.text_black));
+      CompatUtils.getColor(getContext(), R.color.text_black));
     strUnit = ta.getString(R.styleable.CommonInputView_civ_unit);
     labelWidth = ta.getDimension(R.styleable.CommonInputView_civ_label_width, -1);
     leftDrawable = ta.getResourceId(R.styleable.CommonInputView_civ_left_icon, 0);
@@ -161,6 +161,24 @@ public class CommonInputView extends RelativeLayout {
     disableView.setVisibility(enable ? GONE : VISIBLE);
   }
 
+  public void setUnit(String u) {
+    this.strUnit = u;
+    String str_label_unit = str_label;
+    if (!TextUtils.isEmpty(strUnit)) {
+      str_label_unit = TextUtils.concat(str_label, "（", strUnit, "）").toString().trim();
+    }
+    if (!canBeNull) {
+      label.setText(str_label_unit);
+    } else {
+      SpannableString s = new SpannableString(str_label_unit + " *");
+      int l = s.length();
+      s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red)), l - 1, l,
+        Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+      label.setText(s);
+    }
+    invalidate();
+  }
+
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
     label = (TextView) findViewById(R.id.commoninput_lable);
@@ -172,16 +190,17 @@ public class CommonInputView extends RelativeLayout {
       label.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, 0, 0, 0);
       label.setCompoundDrawablePadding(MeasureUtils.dpToPx(10f, getResources()));
     }
+    String str_label_unit = str_label;
     if (!TextUtils.isEmpty(strUnit)) {
-      str_label = TextUtils.concat(str_label, "（", strUnit, "）").toString().trim();
+      str_label_unit = TextUtils.concat(str_label, "（", strUnit, "）").toString().trim();
     }
     if (!canBeNull) {
-      label.setText(str_label);
+      label.setText(str_label_unit);
     } else {
-      SpannableString s = new SpannableString(str_label + " *");
+      SpannableString s = new SpannableString(str_label_unit + " *");
       int l = s.length();
       s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red)), l - 1, l,
-          Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
       label.setText(s);
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -216,11 +235,11 @@ public class CommonInputView extends RelativeLayout {
     if (showRight) {
       rightview.setVisibility(VISIBLE);
       edit.setPadding(edit.getPaddingLeft(), edit.getPaddingTop(),
-          MeasureUtils.dpToPx(20f, getResources()), edit.getPaddingBottom());
+        MeasureUtils.dpToPx(20f, getResources()), edit.getPaddingBottom());
     } else {
       rightview.setVisibility(GONE);
       edit.setPadding(edit.getPaddingLeft(), edit.getPaddingTop(),
-          MeasureUtils.dpToPx(0f, getResources()), edit.getPaddingBottom());
+        MeasureUtils.dpToPx(0f, getResources()), edit.getPaddingBottom());
     }
     if (isNum) {
       edit.setInputType(InputType.TYPE_CLASS_PHONE);
@@ -270,7 +289,7 @@ public class CommonInputView extends RelativeLayout {
       SpannableString sj = new SpannableString(s + " *");
       int l = sj.length();
       sj.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red)), l - 1, l,
-          Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
       label.setText(sj);
     }
   }
@@ -350,19 +369,19 @@ public class CommonInputView extends RelativeLayout {
 
   static class SavedState extends BaseSavedState {
     public static final ClassLoaderCreator<SavedState> CREATOR =
-        new ClassLoaderCreator<SavedState>() {
-          @Override public SavedState createFromParcel(Parcel source, ClassLoader loader) {
-            return new SavedState(source, loader);
-          }
+      new ClassLoaderCreator<SavedState>() {
+        @Override public SavedState createFromParcel(Parcel source, ClassLoader loader) {
+          return new SavedState(source, loader);
+        }
 
-          @Override public SavedState createFromParcel(Parcel source) {
-            return createFromParcel(null);
-          }
+        @Override public SavedState createFromParcel(Parcel source) {
+          return createFromParcel(null);
+        }
 
-          public SavedState[] newArray(int size) {
-            return new SavedState[size];
-          }
-        };
+        public SavedState[] newArray(int size) {
+          return new SavedState[size];
+        }
+      };
     SparseArray childrenStates;
 
     SavedState(Parcelable superState) {

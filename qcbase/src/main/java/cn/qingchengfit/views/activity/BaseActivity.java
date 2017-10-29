@@ -91,6 +91,13 @@ public class BaseActivity extends AppCompatActivity {
     obNetError = RxBus.getBus().register(EventNetWorkError.class);
     obNetError.subscribe(new Action1<EventNetWorkError>() {
       @Override public void call(EventNetWorkError eventNetWorkError) {
+        if (eventNetWorkError.errCode > 0){
+          try {
+            showAlert(eventNetWorkError.errCode);
+          }catch (Exception e){
+            CrashUtils.sendCrash(e);
+          }
+        }
         hideLoading();
         hideLoadingTransparent();
       }

@@ -52,7 +52,7 @@ public class ActionDescItem extends AbstractFlexibleItem<ActionDescItem.ActionDe
     holder.imgAction.setImageResource(icon);
     holder.title.setText(title);
     holder.desc.setText(desc);
-    //holder.imgRight.setVisibility(clickable?View.VISIBLE:View.GONE);
+    holder.imgRight.setVisibility(clickable?View.VISIBLE:View.GONE);
   }
 
   @Override public boolean equals(Object o) {
@@ -65,7 +65,7 @@ public class ActionDescItem extends AbstractFlexibleItem<ActionDescItem.ActionDe
     @BindView(R2.id.img_action)   ImageView imgAction;
     @BindView(R2.id.title)        TextView title;
     @BindView(R2.id.tv_desc)      TextView desc;
-    //@BindView(R2.id.img_right)      ImageView imgRight;
+    @BindView(R2.id.img_right)      ImageView imgRight;
     public ActionDescVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);

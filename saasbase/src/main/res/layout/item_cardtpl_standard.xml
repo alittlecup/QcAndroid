@@ -10,7 +10,7 @@
   <LinearLayout
       android:id="@+id/charge_layout"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="105dp"
       android:background="@drawable/bg_rect_corner_primary"
       android:gravity="center"
       android:minHeight="94dp"

@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.views.activity.BaseActivity;
+import cn.qingchengfit.widgets.R2;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -55,7 +56,7 @@ public class SaasContainerActivity extends BaseActivity implements HasSupportFra
   }
 
   @Override protected Fragment getRouterFragment(Intent intent) {
-    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
+    return routerCenter.getFragment(intent.getData(), intent.getExtras());
   }
 
   @Override public AndroidInjector<Fragment> supportFragmentInjector() {

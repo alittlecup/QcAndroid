@@ -13,12 +13,14 @@ import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.setting.ItemCashier;
+import cn.qingchengfit.pos.setting.StaffInfoParams;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -108,9 +110,11 @@ import rx.functions.Action1;
   }
 
   @Override public boolean onItemClick(int position) {
-    Bundle b = new Bundle();
-    b.putParcelable("cashier", ((ItemCashier)itemList.get(position)).getData());
-    routeTo(AppUtils.getRouterUri(getContext(), "setting/cashier/detail/"), b);
+    IFlexible item = itemList.get(position);
+    if (item instanceof  ItemCashier) {
+      routeTo(AppUtils.getRouterUri(getContext(), "setting/cashier/detail/"),
+        new StaffInfoParams().cashier(((ItemCashier) itemList.get(position)).getData()).build());
+    }
     return false;
   }
 }

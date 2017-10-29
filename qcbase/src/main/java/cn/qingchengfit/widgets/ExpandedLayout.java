@@ -95,6 +95,7 @@ public class ExpandedLayout extends LinearLayout {
             }
         }
     };
+    private View view;
 
     public ExpandedLayout(Context context) {
         super(context);
@@ -135,7 +136,7 @@ public class ExpandedLayout extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        View view = inflate(getContext(), R.layout.layout_expandedlayout, null);
+         view = inflate(getContext(), R.layout.layout_expandedlayout, null);
         mTvLable = (TextView) view.findViewById(R.id.label);
         mSwitcher = (SwitchCompat) view.findViewById(R.id.switcher);
         leftImage = (ImageView)view.findViewById(R.id.left_icon);
@@ -199,6 +200,13 @@ public class ExpandedLayout extends LinearLayout {
     public void setExpanded(boolean expanded) {
         isExpanded = expanded;
         mSwitcher.setChecked(expanded);
+    }
+
+    public void hideHeader(){
+        if (view != null){
+            view.setVisibility(GONE);
+        }
+        mSwitcher.setChecked(true);
     }
 
     public void setLabel(String s){

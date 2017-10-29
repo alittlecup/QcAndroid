@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.staff.model;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 
 /**
  * power by
@@ -26,6 +27,7 @@ import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
  */
 
 public interface IStaffModel {
+  rx.Observable<QcDataResponse<UserWrap>> getCurUser();
   //获取所有销售人员
   rx.Observable<QcDataResponse<SalerListWrap>> getSalers();
 

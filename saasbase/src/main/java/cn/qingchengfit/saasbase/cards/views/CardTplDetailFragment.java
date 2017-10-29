@@ -16,24 +16,29 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTplDetailPresenter;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -62,7 +67,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/8/23.
  */
 @Leaf(module = "card", path = "/cardtpl/detail/") public class CardTplDetailFragment
-  extends BaseFragment
+  extends SaasBaseFragment
   implements CardTplDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
@@ -78,12 +83,22 @@ import javax.inject.Inject;
   @BindView(R2.id.civ_input_card_name) protected CommonInputView civInputCardname;
 
   @Inject CardTplDetailPresenter presenter;
-
+  @Need public CardTpl cardTpl;
   CommonFlexAdapter comonAdapter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     comonAdapter = new CommonFlexAdapter(new ArrayList(), this);
+    RxBus.getBus().register(EventSaasFresh.CardList.class)
+      .compose(this.<EventSaasFresh.CardList>bindToLifecycle())
+      .buffer(doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<List<EventSaasFresh.CardList>>() {
+        @Override public void onNext(List<EventSaasFresh.CardList> cardLists) {
+          if (cardLists != null && cardLists.size() > 0){
+            onRefresh();
+          }
+        }
+      });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,6 +106,7 @@ import javax.inject.Inject;
     View view = inflater.inflate(R.layout.fragment_cardtpl_detail, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
+    presenter.setCardTpl(cardTpl);
     initToolbar(toolbar);
     GridLayoutManager layoutManager =
       new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_item_count));
@@ -121,6 +137,10 @@ import javax.inject.Inject;
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
+    onRefresh();
+  }
+
+  public void onRefresh(){
     presenter.queryCardtpl();
     presenter.queryCardtplOption();
   }
@@ -142,7 +162,7 @@ import javax.inject.Inject;
             if (position == 0) {//编辑
               presenter.editCardTpl();
               Bundle bd = new Bundle();
-              bd.putString("title","修改会员开种类名称");
+              bd.putString("title","修改会员卡种类名称");
               bd.putString("hint",presenter.getCardName());
               bd.putString("content",presenter.getCardName());
               routeTo("common","/input/", bd);
@@ -222,23 +242,37 @@ import javax.inject.Inject;
     ToastUtils.show("已恢复");
   }
 
+  @Override public String getCardName() {
+    return civInputCardname.getContent().trim();
+  }
+
+  @Override public List<CardTplOption> getCardTplOptions() {
+    List<CardTplOption> options = new ArrayList<>();
+    for (int i = 0; i < comonAdapter.getItemCount(); i++) {
+      IFlexible iFlexible = comonAdapter.getItem(i);
+      if (iFlexible instanceof CardtplOptionItem) {
+        options.add(((CardtplOptionItem) iFlexible).getOption());
+      }
+    }
+    return options;
+  }
+
   @Override public void onDestroyView() {
     super.onDestroyView();
   }
 
   @Override public boolean onItemClick(int i) {
     IFlexible item = comonAdapter.getItem(i);
-    Bundle bd = new Bundle();
 
     if (item instanceof CardtplOptionItem) {
       //会员卡价格修改
-      bd.putParcelable("cardTplOption", ((CardtplOptionItem) item).getOption());
-      routeTo("/cardtpl/option/", bd);
+      routeTo("/cardtpl/option/", new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build(),true);
     } else if (item instanceof AddCardtplStantardItem) {
       //新增会员卡价格
-      bd.putString("cardtplid", presenter.getCardtplId());
-      bd.putInt("type", presenter.getCardCate());
-      routeTo("/cardtpl/option/add/", bd);
+      routeTo("/cardtpl/option/add/", new CardtplOptionAddParams()
+        .cardTplId(presenter.getCardtplId())
+        .cardCate(presenter.getCardCate())
+        .build());
     }
     return true;
   }

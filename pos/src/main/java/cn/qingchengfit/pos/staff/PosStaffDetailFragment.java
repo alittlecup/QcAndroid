@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
 
 /**
@@ -44,6 +45,9 @@ public class PosStaffDetailFragment extends StaffDetailFragment {
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("销售");
+  }
 
+  @Override public void onBtnDelClicked() {
+    QRActivity.start(getContext(),"/manage/staff/");
   }
 }

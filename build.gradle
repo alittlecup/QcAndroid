@@ -2,10 +2,10 @@
 
 ext {
   configuration = [package             : "cn.qingchengfit.staffkit",
-                   buildToolsVersion   : "25.0.3",
-                   compileVersion      : 25,
+                   buildToolsVersion   : "26.0.2",
+                   compileVersion      : 26,
                    minSdk              : 15,
-                   targetSdk           : 24,
+                   targetSdk           : 26,
                    version_code        : 90, //缝10必更
                    version_name        : "0.90",
                    trainer_version_code: 160,
@@ -13,42 +13,43 @@ ext {
 
   ]
 
-  libraries = [supportVersion  : "25.3.1",
+  libraries = [supportVersion  : "26.1.0",
                dagger          : "2.11",
                rxjava          : "1.1.6",
                rxandroid       : "1.2.1",
                retrofit        : "2.3.0",
                rxbind          : "0.4.0",
                okhttp          : "3.8.1",
-               butterknife     : "8.8.1",
+               butterknife     : "9.0.0-SNAPSHOT",
                javax_annotation: "10.0-b28",
                glide           : "3.7.0",
                fragmentArg     : "3.0.2",
                tinkerpatch     : "1.1.3",
                tinker          : "1.7.7",
-                flabellum      : "0.2.5",
+                flabellum      : "0.2.12",
   ]
   bakPath = "tinkeroutput/"
   chat_version = "0.7.0"
 }
+
 buildscript {
   repositories {
+    maven { url "https://maven.google.com" }
     jcenter()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     mavenCentral()
-    maven() {
-      url uri('./repo')
-    }
+
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.3.3'
-    classpath 'me.tatarka:gradle-retrolambda:3.3.1'
+    classpath 'com.android.tools.build:gradle:3.0.0'
+//    classpath 'me.tatarka:gradle-retrolambda:3.5.0'
     classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
-    classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    classpath("com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:1.1.3") {
-      changing = true
-    }
+    classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
+//    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+//    classpath("com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:1.1.3") {
+//      changing = true
+//    }
 //    classpath 'com.antfortune.freeline:gradle:0.8.7'
   }
 }
@@ -59,12 +60,9 @@ allprojects {
     maven {
       url 'http://43.241.209.158:15004/repository/maven-releases/'
     }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 
-//    maven() {
-//      url "http://maven.aliyun.com/nexus/content/groups/public/"
-//    }
     maven { url "https://jitpack.io" }
-
     repositories{
       flatDir{
         dirs '../repo'
@@ -80,8 +78,5 @@ allprojects {
     maven {
       url "https://s3.amazonaws.com/repo.commonsware.com"
     }
-    //    maven() {
-    //      url uri('./repo')
-    //    }
   }
 }

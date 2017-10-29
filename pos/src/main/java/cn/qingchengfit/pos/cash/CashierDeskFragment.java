@@ -1,5 +1,7 @@
 package cn.qingchengfit.pos.cash;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -16,8 +18,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.pos.RongPay;
+import cn.qingchengfit.saasbase.bill.view.BillDetailParams;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import javax.inject.Inject;
@@ -66,6 +74,8 @@ import javax.inject.Inject;
   @BindView(R.id.tv_cmd_line) TextView tvCmdLine;
 
   @Inject CashierDeskPresenterPresenter presenter;
+  @Inject LoginStatus loginStatus;
+  @Inject GymWrapper gymWrapper;
 
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -144,6 +154,53 @@ import javax.inject.Inject;
   @OnClick(R.id.btn_pay) public void onBtnPayClicked() {
 
   }
+
+  @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {
+    Intent toBuy = new RongPay.Builder()
+      .amount(payBusinessResponse.order_amount)
+      .title(payBusinessResponse.order_title)
+      .merOrderId(payBusinessResponse.order_no)
+      .customerNo(gymWrapper.getCustumNo())
+      .operator(loginStatus.staff_name())
+      .build().pay(getContext());
+    startActivityForResult(toBuy,100);
+  }
+
+
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK){
+      if (requestCode == 100){
+
+        if (data.getBundleExtra("data") == null) {
+        } else {
+          Bundle args = data.getBundleExtra("data");
+          Long amount = args.getLong("amount", -1);
+          String merorderId = args.getString("merOrderId");
+          String payStatus = args.getString("payStatus");
+          String title = args.getString("title");
+          String operator = args.getString("operator");
+          String packageName = args.getString("packageName");
+          int payType = args.getInt("payType", 0);
+          String tradeFlowId = args.getString("tradeFlowId");                // 交易流水号
+          String dealTime = args.getString("dealTime");               // 交易时间
+          LogUtil.d("PosPay","amount:" + amount + "|merorderId:" + merorderId + "|title:" + title + "|operator:" +
+            operator + "|packageName:" + packageName + "|payType:" + payType
+            + "|tradeFlowId:" + tradeFlowId + "|dealTime:" + dealTime + "|payStatus:" + payStatus);
+          onPayDone(merorderId);
+        }
+
+      }
+    }else {
+      onShowError("支付取消");
+    }
+  }
+
+  protected void onPayDone(String orderNo){
+    routeTo("/pay/done/",new BillDetailParams().orderNo(orderNo).build());
+  }
+
+
 
   @Override public void showTotal(float f) {
     tvTotal.setText(getString(R.string.pay_money, StringUtils.getFloatDot2(f)));

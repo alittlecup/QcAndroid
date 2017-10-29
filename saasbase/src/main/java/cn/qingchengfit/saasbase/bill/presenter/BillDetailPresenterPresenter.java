@@ -29,6 +29,22 @@ public class BillDetailPresenterPresenter extends BasePresenter {
   private BusinessBill bill;
   private String billId;
 
+  public BusinessBill getBill() {
+    return bill;
+  }
+
+  public void setBill(BusinessBill bill) {
+    this.bill = bill;
+  }
+
+  public String getBillId() {
+    return billId;
+  }
+
+  public void setBillId(String billId) {
+    this.billId = billId;
+  }
+
   @Inject public BillDetailPresenterPresenter() {
   }
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="e_card_realpay_cannot_empty">xx</string>
-  <string name="e_card_charge_money_cannot_empty">xx</string>
-  <string name="e_card_charge_times_cannot_empty">xx</string>
-  <string name="e_card_charge_period_cannot_empty">xx</string>
-  <string name="e_card_start_or_end_cannot_empty">xx</string>
-  <string name="e_card_saler_cannot_empty">xx</string>
+  <string name="e_card_realpay_cannot_empty">实收金额错误</string>
+  <string name="e_card_charge_money_cannot_empty">会员卡充值金额错误</string>
+  <string name="e_card_charge_times_cannot_empty">会员卡充值次数错误</string>
+  <string name="e_card_charge_period_cannot_empty">会员卡充值天数错误</string>
+  <string name="e_card_start_or_end_cannot_empty">会员卡有效期错误</string>
+  <string name="e_card_saler_cannot_empty">销售不能为空</string>
 
 
 
@@ -13,4 +13,6 @@
   <string name="e_username">请填写姓名</string>
   <string name="e_phone">请填写正确的手机号</string>
   <string name="e_staff_position">请选择职位</string>
+  <string name="e_card_name_empty">卡种类名称不能为空</string>
+  <string name="e_card_buy_cate">卡类型错误</string>
 </resources>

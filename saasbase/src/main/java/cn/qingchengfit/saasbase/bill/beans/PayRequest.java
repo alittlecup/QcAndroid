@@ -30,7 +30,7 @@ public class PayRequest {
   public int type;
   public String title;
   public String content;
-  public float price;
+  public long price;
   public User created_by;
   public String created_at;
 

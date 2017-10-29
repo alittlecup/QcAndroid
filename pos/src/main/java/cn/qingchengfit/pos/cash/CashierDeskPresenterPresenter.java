@@ -6,6 +6,7 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -108,5 +109,6 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
   public interface MVPView extends CView {
     void showTotal(float f);
     void showCurrent(String s);
+    void onBusinessOrder(PayBusinessResponse payBusinessResponse);
   }
 }

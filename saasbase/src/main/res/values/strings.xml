@@ -87,5 +87,6 @@
   <string name="pay_ali">支付宝</string>
   <string name="pay_ali_scan">支付宝扫码</string>
   <string name="pay_card">银行卡</string>
+  <string name="e_cardtpl_empty">找不到会员卡种类</string>
 
 </resources>

@@ -1,11 +1,10 @@
 package cn.qingchengfit.pos.routers;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.pos.card.PosCardBuyFragment;
 import cn.qingchengfit.pos.card.PosCardChargeFragment;
 import cn.qingchengfit.pos.card.PosCardListHomeFragment;
-import cn.qingchengfit.saasbase.cards.bean.Card;
-import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.routers.cardImpl;
 
 /**
@@ -30,15 +29,22 @@ import cn.qingchengfit.saasbase.routers.cardImpl;
  */
 
 public class CardRouters extends cardImpl {
-  @Override public Fragment toCardChargeFragment(Card card) {
-    return PosCardChargeFragment.newInstance(card);
+  @Override public Fragment toCardChargeFragment(Bundle args) {
+    PosCardChargeFragment fragment = new PosCardChargeFragment();
+    fragment.setArguments(args);
+    return fragment;
   }
 
-  @Override public Fragment toCardBuyFragment(CardTpl cardTpl) {
-    return PosCardBuyFragment.newInstance(cardTpl);
+  @Override public Fragment toCardBuyFragment(Bundle args) {
+    PosCardBuyFragment fragment = new PosCardBuyFragment();
+    fragment.setArguments(args);
+    return fragment;
   }
 
-  @Override public Fragment toCardListHomeFragment() {
-    return new PosCardListHomeFragment();
+  @Override public Fragment toCardListHomeFragment(Bundle args) {
+    PosCardListHomeFragment fragment = new PosCardListHomeFragment();
+    fragment.setArguments(args);
+    return fragment;
   }
+
 }

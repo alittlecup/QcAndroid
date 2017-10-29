@@ -15,11 +15,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.presenters.AddCardtplStandardPresenter;
-import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import javax.inject.Inject;
 
 /**
@@ -43,7 +45,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/8/23.
  */
 @Leaf(module = "card", path = "/cardtpl/option/add/") public class CardtplOptionAddFragment
-    extends BaseFragment implements AddCardtplStandardPresenter.MVPView{
+    extends SaasBaseFragment implements AddCardtplStandardPresenter.MVPView{
 
   @Inject AddCardtplStandardPresenter presenter;
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -57,17 +59,24 @@ import javax.inject.Inject;
   @BindView(R2.id.el_use_charge) ExpandedLayout elUseCharge;
   @BindView(R2.id.el_only_staff) ExpandedLayout elOnlyStaff;
 
+  @Need public String cardTplId;
+  @Need public Integer cardCate;
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cardtpl_option_add, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
+    presenter.setTplId(cardTplId);
     initToolbar(toolbar);
     initView();
     return view;
   }
 
   public void initView() {
+    civChargeMoney.setUnit(CardBusinessUtils.getCardTypeCategoryUnit(cardCate,getContext()));
+    //期限卡不需要设置有效期
+    elValidDay.setVisibility(cardCate == 3?View.GONE:View.VISIBLE);
     elUseCharge.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         presenter.setCanCharge(isChecked);

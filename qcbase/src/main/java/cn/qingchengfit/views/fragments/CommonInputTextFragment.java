@@ -41,11 +41,11 @@ import cn.qingchengfit.widgets.R2;
 public class CommonInputTextFragment extends BaseFragment {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R2.id.toolbar_title) protected TextView toolbarTitle;
   @BindView(R2.id.et) protected EditText et;
-  private String title;
-  private String hint;
-  private String content;
+  public String title;
+  public String hint;
+  public String content;
 
   public static CommonInputTextFragment newInstance(String title, String content, String hint) {
     Bundle args = new Bundle();

@@ -31,6 +31,7 @@ public class NetWorkThrowable implements Action1<Throwable> {
       if (s == null) {
         s = "";
       }
+      throwable.printStackTrace();
       LogUtil.e("NetWorkThrowable", s);
       ToastUtils.show(s);
       //RxBus.getBus().post();
