@@ -3,10 +3,7 @@ package cn.qingchengfit.pos;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.util.Pair;
-import android.util.Log;
 import cn.qingchengfit.utils.LogUtil;
-import java.util.List;
 
 /**
  * power by
@@ -31,7 +28,6 @@ import java.util.List;
 
 public class RongPay {
   private static final String ACTION_PAY = "com.rongcapital.pay";
-  private static final String ACTION_PRINT = "com.rongcapital.print";
 
   private String merOrderId;
   private String title;
@@ -81,69 +77,6 @@ public class RongPay {
 
   }
 
-  public Intent print(Context context) {
-    String msg = getPrintFormatMsg("测试打印");
-    try {
-      Intent intent = new Intent();
-      Bundle args = new Bundle();
-      args.putString("msg", msg);   // 打印内容规范 请参考《全民付收银台线下插件商户销售单据打印规范》
-      args.putString("packageName", context.getPackageName());  // 应用包名
-      intent.putExtra("data", args);
-      intent.setAction(ACTION_PRINT);  // 操作类型
-      return intent;
-    } catch (Exception e) {
-      Log.e("TAG", e.getMessage());
-      return new Intent();
-    }
-  }
-
-
-  private String getPrintFormatMsg(String orderId) {
-    String text =
-      "!hz l\n" +
-        "!asc l\n" +
-        "!gray 6\n" +
-        "!yspace 4\n" +
-        "*text c 账单 \n" +
-        "*line\n" +
-        "!hz s\n" +
-        "!asc s\n" +
-        "!gray 2\n" +
-        "*text c 消费名称：" + title + "\n" +
-        "*text c" + " 订单号：" + orderId + "\n" +
-        "*text c" + " 支付方式：" + "1111" + "\n" +
-        "*text c" + " 支付时间：" + "11111" + "\n" +
-        "*text c" + " 交易类型：消费" + "\n" +
-        "*text c" + " 交易金额：" + "1111.11" + "元" + "\n" +
-        "*text c" + " 本人确认以上交易" + "\n" +
-        "*line\n" +
-        "*text c" + " 持卡人签名\n" +
-        "*text c" + "\n" +
-        "*line\n";
-    return text;
-  }
-
-  private String getPrintArray(List<Pair<String,String>> datas){
-    StringBuffer sb = new StringBuffer(
-      "!hz l\n" +
-        "!asc l\n" +
-        "!gray 6\n" +
-        "!yspace 4\n" +
-        "*text c 账单 \n" +
-        "*line\n" +
-        "!hz s\n" +
-        "!asc s\n" +
-        "!gray 2\n"
-    );
-    for (Pair<String, String> data : datas) {
-      sb.append("*text c").append(data.first).append("\t")
-        .append(data.second).append("\n");
-    }
-    return sb.toString();
-  }
-
-
-
   public static final class Builder {
     private String merOrderId;
     private String title;
@@ -154,6 +87,7 @@ public class RongPay {
 
     public Builder() {
     }
+
 
     public Builder merOrderId(String val) {
       merOrderId = val;

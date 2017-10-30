@@ -25,6 +25,8 @@ import cn.qingchengfit.utils.CmStringUtils;
  */
 
 public class BillKvCommonItem  extends CommonKVItem{
+
+
   public BillKvCommonItem(String key, String value) {
     super(key, value);
     if (CmStringUtils.isEmpty(value)) {

@@ -1,6 +1,9 @@
-package cn.qingchengfit.saasbase.cards.network.response;
+package cn.qingchengfit.pos.bill.view;
 
-import com.google.gson.annotations.SerializedName;
+import cn.qingchengfit.pos.RongPrinter;
+import cn.qingchengfit.saasbase.bill.items.BillKvCommonItem;
+import cn.qingchengfit.saasbase.bill.view.BillDetailFragment;
+import eu.davidea.flexibleadapter.items.IFlexible;
 
 /**
  * power by
@@ -20,14 +23,30 @@ import com.google.gson.annotations.SerializedName;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/12.
+ * Created by Paper on 2017/10/29.
  */
 
-public class PayBusinessResponse {
-  public String order_no;
-  @SerializedName("amount")
-  public long order_amount;
-  @SerializedName("title")
-  public String order_title;
+public class PosBillDetailFragment extends BillDetailFragment {
+  @Override public void onBtnPrintClicked() {
+    RongPrinter.Builder printB = new RongPrinter.Builder();
+    for (int i = 0; i < commonAdapter.getItemCount(); i++) {
+      IFlexible item = commonAdapter.getItem(i);
+      if (item instanceof BillKvCommonItem){
+        printB.first(((BillKvCommonItem) item).getKey(),((BillKvCommonItem) item).getValue());
+      }
+    }
+    for (int i = 0; i < extraAdapter.getItemCount(); i++) {
+      IFlexible item = extraAdapter.getItem(i);
+      if (item instanceof BillKvCommonItem){
+        printB.secoud(((BillKvCommonItem) item).getKey(),((BillKvCommonItem) item).getValue());
+      }
+    }
+    try {
+      startActivity(printB.build().print(getContext()));
+    }catch (Exception e){
+      showAlert("打印错误，请检查POS机状态");
+    }
+
+  }
 
 }

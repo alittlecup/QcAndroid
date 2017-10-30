@@ -38,6 +38,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -92,7 +93,6 @@ import javax.inject.Inject;
   @Inject public CardBuyPresenter presenter;
   @Need public CardTpl cardTpl;
 
-
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
   }
@@ -117,6 +117,11 @@ import javax.inject.Inject;
       }
     });
     rv.setNestedScrollingEnabled(false);
+    rv.addItemDecoration(new FlexibleItemDecoration(getContext())
+      .withOffset(6)
+      .withRightEdge(true)
+      .withBottomEdge(true)
+    );
     rv.setLayoutManager(manager);
     rv.setAdapter(commonFlexAdapter);
     civRealMoney.addTextWatcher(new TextWatcher() {
@@ -210,17 +215,16 @@ import javax.inject.Inject;
 
   @OnClick(R2.id.civ_mark) public void onCivMarkClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-      new CommonInputParams()
-        .title("会员卡备注")
+      new CommonInputParams().title("会员卡备注")
         .content(presenter.getRemarks())
         .hint(presenter.getRemarks())
-      .build());
+        .build());
   }
 
   @Override public void showInputMoney(boolean show, boolean isTimecard) {
     loInputMoney.setVisibility(show ? View.VISIBLE : View.GONE);
-    if (show && isTimecard)
-      elNeedValid.hideHeader();
+    if (show && isTimecard) elNeedValid.hideHeader();
+    civChargeMoney.setVisibility(isTimecard ? View.GONE : View.VISIBLE);
   }
 
   @Override public void bindStudent(String student) {
@@ -232,7 +236,7 @@ import javax.inject.Inject;
   }
 
   @Override public void remark(boolean remark) {
-    civMark.setHint(remark?"已填写":getString(R.string.please_input));
+    civMark.setHint(remark ? "已填写" : getString(R.string.please_input));
   }
 
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {

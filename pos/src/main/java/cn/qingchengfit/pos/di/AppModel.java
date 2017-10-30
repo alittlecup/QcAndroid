@@ -12,6 +12,7 @@ import cn.qingchengfit.pos.models.PermissionModel;
 import cn.qingchengfit.pos.models.PosDbModel;
 import cn.qingchengfit.pos.models.StaffModel;
 import cn.qingchengfit.pos.models.StudentModel;
+import cn.qingchengfit.pos.routers.BillRouters;
 import cn.qingchengfit.pos.routers.CardRouters;
 import cn.qingchengfit.pos.routers.PosRouterCenter;
 import cn.qingchengfit.pos.routers.StaffRouters;
@@ -38,7 +39,6 @@ import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
-import cn.qingchengfit.saasbase.routers.billImpl;
 import cn.qingchengfit.saasbase.routers.commonImpl;
 import cn.qingchengfit.saasbase.routers.courseImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
@@ -83,7 +83,7 @@ public class AppModel {
   }
 
   @Provides SaasbaseRouterCenter providerRouterCenter(){
-    return new SaasbaseRouterCenter(new billImpl(),new CardRouters(),new commonImpl(),new courseImpl(),new StaffRouters(),new StudentRouters());
+    return new SaasbaseRouterCenter(new BillRouters(),new CardRouters(),new commonImpl(),new courseImpl(),new StaffRouters(),new StudentRouters());
   }
   @Provides PosRouterCenter providerPosRouterCenter(){
     return new PosRouterCenter(new deskImpl(),new settingImpl(),new exchangeImpl());

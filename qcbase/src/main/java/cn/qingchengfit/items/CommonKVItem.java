@@ -20,6 +20,21 @@ public class CommonKVItem extends AbstractFlexibleItem<CommonKVItem.CommonKVVH> 
 
   protected String key, value;
 
+  public String getKey() {
+    return key;
+  }
+
+  public void setKey(String key) {
+    this.key = key;
+  }
+
+  public String getValue() {
+    return value;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
+  }
 
   public CommonKVItem(String key, String value) {
     this.key = key;

@@ -91,6 +91,6 @@ public class PosCardBuyFragment extends CardBuyFragment {
   }
 
   protected void onPayDone(String orderNo){
-    routeTo("/pay/done/",new BillDetailParams().orderNo(orderNo).build());
+    routeTo("bill","/pay/done/",new BillDetailParams().orderNo(orderNo).build());
   }
 }

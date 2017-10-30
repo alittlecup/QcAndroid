@@ -74,6 +74,7 @@ public class CardBuyPresenter extends BasePresenter {
 
     }else {
       //其他规格
+      mChosenOption = null;
       view.showInputMoney(true, cardCate ==3);
     }
   }

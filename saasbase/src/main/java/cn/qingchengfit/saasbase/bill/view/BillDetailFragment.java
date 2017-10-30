@@ -68,11 +68,11 @@ import javax.inject.Inject;
   @BindView(R2.id.btn_print) Button btnPrint;
   @BindView(R2.id.btn_remarks) Button btnRemarks;
   @BindView(R2.id.btn_card) Button btnCard;
-  private CommonFlexAdapter commonAdapter;
-  private CommonFlexAdapter extraAdapter;
+  protected CommonFlexAdapter commonAdapter;
+  protected CommonFlexAdapter extraAdapter;
 
   @Need public String orderNo;
-  @Inject BillDetailPresenterPresenter presenter;
+  @Inject public BillDetailPresenterPresenter presenter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -88,13 +88,17 @@ import javax.inject.Inject;
     presenter.setBillId(orderNo);
     initToolbar(toolbar);
     initView();
-    queryDetail();
     return view;
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("账单详情");
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    queryDetail();
   }
 
   void initView() {

@@ -1,9 +1,9 @@
 package cn.qingchengfit.pos.bill;
 
+import cn.qingchengfit.pos.bill.view.PosBillDetailFragment;
+import cn.qingchengfit.pos.bill.view.PosBillDetialForDoneFragment;
 import cn.qingchengfit.saasbase.bill.BillActivity;
 import cn.qingchengfit.saasbase.bill.BillHomeFragment;
-import cn.qingchengfit.saasbase.bill.view.BillDetailForDoneFragment;
-import cn.qingchengfit.saasbase.bill.view.BillDetailFragment;
 import cn.qingchengfit.saasbase.bill.view.PayRequestListFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
@@ -28,8 +28,8 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/10/23.
  */
 @Trunk(fragments = {
-  BillHomeFragment.class, PayRequestListFragment.class, BillDetailFragment.class,
-  BillDetailForDoneFragment.class
+  BillHomeFragment.class, PayRequestListFragment.class, PosBillDetailFragment.class,
+  PosBillDetialForDoneFragment.class
 })
 public class PosBillActivity extends BillActivity {
 }

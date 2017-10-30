@@ -91,7 +91,7 @@
       </intent-filter>
     </activity>
 
-    <activity android:name="cn.qingchengfit.saasbase.bill.BillActivity">
+    <activity android:name=".bill.PosBillActivity">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
 
