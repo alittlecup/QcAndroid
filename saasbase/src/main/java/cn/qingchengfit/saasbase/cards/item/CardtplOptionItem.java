@@ -52,7 +52,7 @@ public class CardtplOptionItem
   public void bindViewHolder(FlexibleAdapter adapter, CardtplStandardVH holder, int position,
       List payloads) {
     String unitStr = CardBusinessUtils.getCardTypeCategoryUnit(cardtplType,holder.title.getContext());
-    holder.title.setText("售价"+option.price + unitStr);
+    holder.title.setText("售价"+option.price + "元");
     if (TextUtils.isEmpty(option.charge)) {
       holder.realIncome.setVisibility(View.GONE);
     } else {
@@ -98,6 +98,10 @@ public class CardtplOptionItem
     if (o instanceof CardtplOptionItem){
       return ((CardtplOptionItem) o).option.id.equalsIgnoreCase(option.id);
     }else return false;
+  }
+
+  @Override public int hashCode() {
+    return option.id.hashCode();
   }
 
   public class CardtplStandardVH extends FlexibleViewHolder {

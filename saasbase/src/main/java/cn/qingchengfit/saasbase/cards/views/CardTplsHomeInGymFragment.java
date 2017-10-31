@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.cards.views;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -57,10 +58,10 @@ import javax.inject.Inject;
  * Created by Paper on 2017/8/14.
  */
 
-@Leaf(module = "card",path = "/cardtpl/list/" )
-public class CardTplsHomeInGymFragment extends BaseFragment implements
-    CardTypeListPresenter.MVPView,SwipeRefreshLayout.OnRefreshListener,
-    FlexibleAdapter.OnItemClickListener{
+@Leaf(module = "card", path = "/cardtpl/list/") public class CardTplsHomeInGymFragment
+  extends BaseFragment
+  implements CardTypeListPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener,
+  FlexibleAdapter.OnItemClickListener {
 
   @BindView(R2.id.tab) TabLayout tab;
   @BindView(R2.id.viewpager) ViewPager viewpager;
@@ -77,28 +78,32 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    for (int i = 0; i < 4; i++) {
-      fragmentList.add(new CardTplListFragment());
+    if (fragmentList.size() == 0) {
+      for (int i = 0; i < 4; i++) {
+        fragmentList.add(new CardTplListFragment());
+      }
     }
-    RxBus.getBus().register(EventSaasFresh.CardTplList.class)
+    RxBus.getBus()
+      .register(EventSaasFresh.CardTplList.class)
       .compose(this.<EventSaasFresh.CardTplList>bindToLifecycle())
-      .buffer(doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new BusSubscribe<List<EventSaasFresh.CardTplList>>() {
-        @Override public void onNext(List<EventSaasFresh.CardTplList> cardTplLists) {
-          if (cardTplLists != null && cardTplLists.size() >0 ){
-            onRefresh();
-          }
+      .compose(this.<EventSaasFresh.CardTplList>doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<EventSaasFresh.CardTplList>() {
+        @Override public void onNext(EventSaasFresh.CardTplList cardTplList) {
+          onRefresh();
         }
       });
+  }
 
+  @Override public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cardtype_home, container, false);
-    super.onCreateView(inflater,container,savedInstanceState);
+    super.onCreateView(inflater, container, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
-    delegatePresenter(presenter,this);
+    delegatePresenter(presenter, this);
     initToolbar(toolbar);
     toolbarTitle.setText(R.string.title_cardtpl_types);
     pageAdapter = new CardViewpagerAdapter(getChildFragmentManager());
@@ -113,7 +118,7 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
 
       //页面变化
       @Override public void onPageSelected(int position) {
-        cardCount.setText(fragmentList.get(position).getItemCount()+"");
+        cardCount.setText(fragmentList.get(position).getItemCount() + "");
       }
 
       @Override public void onPageScrollStateChanged(int state) {
@@ -129,24 +134,24 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
     toolbar.inflateMenu(R.menu.menu_add);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        new DialogList(getContext()).list(getResources().getStringArray(R.array.cardtype_category), new AdapterView.OnItemClickListener() {
-          @Override
-          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            routeTo("/cardtpl/add/",new CardtplAddParams().cardCategory(position+1).build());
-          }
-        }).show();
+        new DialogList(getContext()).list(getResources().getStringArray(R.array.cardtype_category),
+          new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+              routeTo("/cardtpl/add/", new CardtplAddParams().cardCategory(position + 1).build());
+            }
+          }).show();
         return true;
       }
     });
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
-    if (f instanceof CardTplListFragment){
+    if (f instanceof CardTplListFragment) {
       childCount++;
-      if (childCount == 4)
-        onRefresh();
+      if (childCount == 4) onRefresh();
     }
   }
 
@@ -158,26 +163,22 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
     return CardTplsHomeInGymFragment.class.getName();
   }
 
-
-  @OnClick({ R2.id.card_disable,R2.id.card_disable_status})
-  public void onClickCardDisable(){
-    final String[] status =  getResources().getStringArray(R.array.cardtype_disable_stauts);
-    DialogList.builder(getContext())
-        .list(status, new AdapterView.OnItemClickListener() {
-          @Override
-          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            cardDisable.setText(status[position]);
-            presenter.setEnable(position == 0);
-          }
-        }).show();
+  @OnClick({ R2.id.card_disable, R2.id.card_disable_status }) public void onClickCardDisable() {
+    final String[] status = getResources().getStringArray(R.array.cardtype_disable_stauts);
+    DialogList.builder(getContext()).list(status, new AdapterView.OnItemClickListener() {
+      @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        cardDisable.setText(status[position]);
+        presenter.setEnable(position == 0);
+      }
+    }).show();
   }
 
   /**
    * 获取后端数据完成
    */
   @Override public void onDoneCardtplList() {
-    if (viewpager.getCurrentItem() == 0){
-      cardCount.setText(presenter.getCardTplByType(0).size()+"");
+    if (viewpager.getCurrentItem() == 0) {
+      cardCount.setText(presenter.getCardTplByType(0).size() + "");
     }
     int i = 0;
     for (CardTplListFragment fragment : fragmentList) {
@@ -192,12 +193,11 @@ public class CardTplsHomeInGymFragment extends BaseFragment implements
   }
 
   @Override public boolean onItemClick(int i) {
-    IFlexible item =fragmentList.get(viewpager.getCurrentItem()).getItem(i);
-    if (item instanceof CardTplItem){
+    IFlexible item = fragmentList.get(viewpager.getCurrentItem()).getItem(i);
+    if (item instanceof CardTplItem) {
       presenter.chooseOneCardTpl(((CardTplItem) item).getCardTpl());
-      routeTo("/cardtpl/detail/",new CardTplDetailParams()
-        .cardTpl(((CardTplItem) item).getCardTpl())
-        .build());
+      routeTo("/cardtpl/detail/",
+        new CardTplDetailParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
     }
     return true;
   }

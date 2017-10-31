@@ -103,13 +103,14 @@ public class CardBusinessUtils {
     o.charge     = body.charge;
     o.for_staff  = body.for_staff;
     o.price      = body.price;
+    o.id         = body.id;
     return o;
   }
 
   public static String supportChargeAndCreate(boolean charge,boolean create){
     List<String> ret = new ArrayList<>();
     if (charge) ret.add("充值");
-    if (charge) ret.add("购卡");
+    if (create) ret.add("购卡");
     return CmStringUtils.List2StrChinese(ret);
   }
 

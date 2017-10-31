@@ -58,6 +58,8 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
     super.onFinishAnimation();
     if (cardTplOption != null && !CmStringUtils.isEmpty(cardTplOption.id)) {
       presenter.setOptionId(cardTplOption.id);
+      if (cardTplOption.card_tpl != null)
+        presenter.setTplId(cardTplOption.card_tpl.getId());
     }
     onDetail(cardTplOption);
   }

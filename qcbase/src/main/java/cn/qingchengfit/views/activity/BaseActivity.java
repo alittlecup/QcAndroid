@@ -69,6 +69,7 @@ public class BaseActivity extends AppCompatActivity {
         LogUtil.d("router",f.getClass().getName());
     }
   };
+  private Observable<NetWorkDialogEvent> obLoading;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     try {
@@ -112,6 +113,7 @@ public class BaseActivity extends AppCompatActivity {
   boolean hasFrag = false;
   @Override protected void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
+    setIntent(intent);
     if (intent != null && intent.getData() != null)
       LogUtil.d("router",intent.getData().toString());
 
@@ -155,13 +157,14 @@ public class BaseActivity extends AppCompatActivity {
 
   @Override protected void onPause() {
     super.onPause();
+    RxBus.getBus().unregister(NetWorkDialogEvent.class.getName(),obLoading);
     MobclickAgent.onPause(this);
     checkLoading();
   }
 
   private void initBus(){
-    RxBus.getBus().register(NetWorkDialogEvent.class)
-        .onBackpressureLatest()
+    obLoading = RxBus.getBus().register(NetWorkDialogEvent.class);
+       obLoading.onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<NetWorkDialogEvent>() {
       @Override public void call(NetWorkDialogEvent netWorkDialogEvent) {

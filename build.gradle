@@ -2,8 +2,8 @@
 
 ext {
   configuration = [package             : "cn.qingchengfit.staffkit",
-                   buildToolsVersion   : "26.0.2",
-                   compileVersion      : 26,
+                   buildToolsVersion   : "27.0.0",
+                   compileVersion      : 27,
                    minSdk              : 15,
                    targetSdk           : 26,
                    version_code        : 90, //缝10必更
@@ -13,7 +13,7 @@ ext {
 
   ]
 
-  libraries = [supportVersion  : "26.1.0",
+  libraries = [supportVersion  : "27.0.0",
                dagger          : "2.11",
                rxjava          : "1.1.6",
                rxandroid       : "1.2.1",

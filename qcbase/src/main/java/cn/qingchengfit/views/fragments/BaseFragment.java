@@ -14,10 +14,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.support.v4.view.OnApplyWindowInsetsListener;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.WindowInsetsCompat;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -28,8 +28,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.CView;
@@ -77,7 +77,7 @@ import static android.view.View.GONE;
  */
 public abstract class BaseFragment extends RxFragment
   implements BaseActivity.FragmentBackPress, CView {
-
+  @Deprecated
   public FragCallBack mCallbackActivity;
   public Unbinder unbinder;
   // 标志位，标志已经初始化完成
@@ -121,6 +121,7 @@ public abstract class BaseFragment extends RxFragment
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
     super.onViewCreated(view, savedInstanceState);
+    //使fitsystem生效
     ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
       @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH) @Override
       public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
@@ -134,9 +135,13 @@ public abstract class BaseFragment extends RxFragment
     });
   }
 
+  /**
+   * 是否拦截Fragment底层View的Touch事件
+   */
   public boolean isBlockTouch() {
     return true;
   }
+
 
   @Override public void onAttach(Context context) {
     try {
@@ -160,7 +165,6 @@ public abstract class BaseFragment extends RxFragment
     delegate.onNewSps();
     delegate.attachView(pView);
     delegates.add(delegate);
-
     if (getActivity() instanceof BaseActivity) {
       ((BaseActivity) getActivity()).setBackPress(this);
     }
@@ -315,7 +319,7 @@ public abstract class BaseFragment extends RxFragment
   }
 
   public String getFragmentName() {
-    return "fragment";
+    return "base_fragment";
   }
 
   public Subscription RxRegiste(Subscription subscription) {
@@ -329,11 +333,6 @@ public abstract class BaseFragment extends RxFragment
     return ob;
   }
 
-  public <T> Observable<T> RxBusAddAllLife(@NonNull Class<T> clazz) {
-    Observable ob = RxBus.getBus().register(clazz);
-    observablesAllLife.add(new Pair<String, Observable>(clazz.getName(), ob));
-    return ob;
-  }
 
   protected void stuff(Fragment fragment) {
     String tag = UUID.randomUUID().toString();
@@ -394,20 +393,21 @@ public abstract class BaseFragment extends RxFragment
   // 初始化搜索
   public void initSearch(MenuItem searchItem, final TextView tvToolbar) {
     SearchManager searchManager =
-        (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
+      (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
     SearchView mSearchView;
     mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-    MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
-      @Override public boolean onMenuItemActionExpand(MenuItem item) {
-        tvToolbar.setVisibility(GONE);
-        return true;
-      }
+    MenuItemCompat.setOnActionExpandListener(searchItem,
+      new MenuItemCompat.OnActionExpandListener() {
+        @Override public boolean onMenuItemActionExpand(MenuItem item) {
+          tvToolbar.setVisibility(GONE);
+          return true;
+        }
 
-      @Override public boolean onMenuItemActionCollapse(MenuItem item) {
-        tvToolbar.setVisibility(View.VISIBLE);
-        return true;
-      }
-    });
+        @Override public boolean onMenuItemActionCollapse(MenuItem item) {
+          tvToolbar.setVisibility(View.VISIBLE);
+          return true;
+        }
+      });
     mSearchView.setInputType(InputType.TYPE_TEXT_VARIATION_FILTER);
     mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_FULLSCREEN);
     mSearchView.setQueryHint(getString(R.string.action_search));
@@ -531,12 +531,28 @@ public abstract class BaseFragment extends RxFragment
     routeTo(fragment, null);
   }
 
-  public Func0<Observable<?>> doWhen(final FragmentEvent fragmentEventDo){
-    return new Func0<Observable<?>>() {
-      @Override public Observable<?> call() {
-        return BaseFragment.this.lifecycle().filter(new Func1<FragmentEvent, Boolean>() {
-          @Override public Boolean call(FragmentEvent fragmentEvent) {
-            return fragmentEvent.equals(fragmentEventDo);
+  public final <T> Observable.Transformer<T, T> doWhen(final FragmentEvent fragmentEventDo) {
+    return new Observable.Transformer<T, T>() {
+      @Override public Observable<T> call(Observable<T> tObservable) {
+        return tObservable.buffer(new Func0<Observable<?>>() {
+          @Override public Observable<?> call() {
+            return BaseFragment.this.lifecycle().filter(new Func1<FragmentEvent, Boolean>() {
+              @Override public Boolean call(FragmentEvent fragmentEvent) {
+                return fragmentEvent.equals(fragmentEventDo);
+              }
+            });
+          }
+        }).flatMap(new Func1<List<T>, Observable<T>>() {
+          @Override public Observable<T> call(List<T> ts) {
+            if (ts != null && ts.size() > 0) {
+              return Observable.just(ts.get(0));
+            } else {
+              return Observable.just(null);
+            }
+          }
+        }).filter(new Func1<T, Boolean>() {
+          @Override public Boolean call(T t) {
+            return t != null;
           }
         });
       }

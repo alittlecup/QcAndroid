@@ -28,6 +28,7 @@ import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DrawableUtils;
@@ -38,6 +39,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -92,7 +94,6 @@ import javax.inject.Inject;
   @Inject public CardBuyPresenter presenter;
   @Need public CardTpl cardTpl;
 
-
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
   }
@@ -116,6 +117,10 @@ import javax.inject.Inject;
         return 1;
       }
     });
+    rv.setNestedScrollingEnabled(false);
+    rv.addItemDecoration(new FlexibleItemDecoration(getContext()).withOffset(6)
+      .withRightEdge(true)
+      .withBottomEdge(true));
     rv.setLayoutManager(manager);
     rv.setAdapter(commonFlexAdapter);
     civRealMoney.addTextWatcher(new TextWatcher() {
@@ -172,9 +177,8 @@ import javax.inject.Inject;
 
   @Override public void onGetOptions(List<CardTplOption> options) {
     commonFlexAdapter.clear();
-    //List<AbstractFlexibleItem> items = new ArrayList<>();
     for (CardTplOption option : options) {
-      commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type));
+        commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type));
     }
     // TODO: 2017/9/30 判断权限
     commonFlexAdapter.addItem(new CardtplOptionOhterItem());
@@ -209,17 +213,35 @@ import javax.inject.Inject;
 
   @OnClick(R2.id.civ_mark) public void onCivMarkClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-      new CommonInputParams()
-        .title("会员卡备注")
+      new CommonInputParams().title("会员卡备注")
         .content(presenter.getRemarks())
         .hint(presenter.getRemarks())
-      .build());
+        .build());
   }
 
-  @Override public void showInputMoney(boolean show, boolean isTimecard) {
-    loInputMoney.setVisibility(show ? View.VISIBLE : View.GONE);
-    if (show && isTimecard)
+  @Override public void showInputMoney(boolean other, int cardCate, boolean validDay) {
+    if (cardCate == Configs.CATEGORY_DATE) {//期限卡
+      loInputMoney.setVisibility(View.VISIBLE);
       elNeedValid.hideHeader();
+      civEndTime.setVisibility(other ? View.VISIBLE : View.GONE);
+      civChargeMoney.setVisibility(View.GONE);
+      civRealMoney.setVisibility(View.GONE);
+      elNeedValid.resizeContent((int)getResources().getDimension(R.dimen.qc_item_height)*(other?3:2)+1);
+    } else {//储值卡 或者次卡
+      if (!other && validDay) {
+        loInputMoney.setVisibility(View.VISIBLE);
+        elNeedValid.hideHeader();
+        civEndTime.setVisibility(View.GONE);
+        civChargeMoney.setVisibility(View.GONE);
+        civRealMoney.setVisibility(View.GONE);
+        elNeedValid.resizeContent((int)getResources().getDimension(R.dimen.qc_item_height)*2+1);
+      } else {
+        loInputMoney.setVisibility(other ? View.VISIBLE : View.GONE);
+        civChargeMoney.setVisibility(View.VISIBLE);
+        civChargeMoney.setUnit(CardBusinessUtils.getCardTypeCategoryUnit(cardCate,getContext()));
+        civRealMoney.setVisibility(View.VISIBLE);
+      }
+    }
   }
 
   @Override public void bindStudent(String student) {
@@ -231,7 +253,7 @@ import javax.inject.Inject;
   }
 
   @Override public void remark(boolean remark) {
-    civMark.setHint(remark?"已填写":getString(R.string.please_input));
+    civMark.setHint(remark ? "已填写" : getString(R.string.please_input));
   }
 
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {

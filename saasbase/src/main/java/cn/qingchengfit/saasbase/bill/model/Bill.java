@@ -3,7 +3,7 @@ package cn.qingchengfit.saasbase.bill.model;
 /**
  * Created by fb on 2017/10/13.
  */
-
+@Deprecated
 public class Bill {
 
   public int status;

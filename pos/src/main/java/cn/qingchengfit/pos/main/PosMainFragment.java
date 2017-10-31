@@ -2,7 +2,6 @@ package cn.qingchengfit.pos.main;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -31,7 +29,6 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import javax.inject.Inject;
 
 /**
@@ -66,7 +63,7 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
   @BindView(R.id.layout_notification) LinearLayout layoutNotification;
   @Inject GymWrapper gymWrapper;
   private CommonFlexAdapter flexAdapter;
-
+  private int notiCount = 0;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_main, container, false);
@@ -100,20 +97,12 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
     toolbarLayout.setPadding(0,MeasureUtils.getStatusBarHeight(getContext()),0,0);
     toolbarTitle.setText(gymWrapper.name());
     PhotoUtils.smallCircle(imgLeft, gymWrapper.getCoachService().getPhoto());
-    toolbarTitle.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        showNoti(Math.abs(new Random(System.currentTimeMillis()).nextInt()) % 2);
-      }
-    });
   }
 
   public void showNoti(int count) {
-    ViewCompat.animate(layoutNotification)
-      .translationY(count > 0 ? 0f : MeasureUtils.dpToPx(100f, getResources()))
-      .setDuration(100L)
-      .setInterpolator(new DecelerateInterpolator())
-      .start();
-    tvNotiCount.setText(Integer.toString(count));
+    notiCount++;
+    tvNotiCount.setVisibility(View.VISIBLE);
+    tvNotiCount.setText(Integer.toString(notiCount));
   }
 
   @Override public String getFragmentName() {
@@ -167,6 +156,8 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
   }
 
   @OnClick(R.id.btn_to_pay) public void onViewClicked() {
+    notiCount = 0;
+    tvNotiCount.setVisibility(View.GONE);
     routeTo("bill", "/pay/request/list/", null);
   }
 }

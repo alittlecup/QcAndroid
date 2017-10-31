@@ -123,6 +123,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             rvn:rn_drawable="@drawable/no_dayoff"
+            android:overScrollMode="never"
             />
 
         <LinearLayout

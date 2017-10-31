@@ -12,18 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.saasbase.cards.event.EventCardTplOption;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DrawableUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.trello.rxlifecycle.android.FragmentEvent;
-import java.util.List;
 import java.util.UUID;
 import javax.inject.Inject;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -53,22 +53,28 @@ public class CardtplAddFragment extends CardTplDetailFragment {
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     comonAdapter.addItem(new AddCardtplStantardItem());
-    RxBus.getBus().register(OptionBody.class)
-      .compose(this.<OptionBody>bindToLifecycle())
-      .buffer(doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new Action1<List<OptionBody>>() {
-        @Override public void call(List<OptionBody> optionBodies) {
-          if (optionBodies.size() > 0) {
-            OptionBody optionBody = optionBodies.get(0);
-            CardtplOptionItem item = new CardtplOptionItem(CardBusinessUtils.optionBody2Option(optionBody),cardCategory);
-                if (comonAdapter.contains(item)){
-                  comonAdapter.updateItem(item,1);
-                }else
-                  item.getOption().id = UUID.randomUUID().toString();
-                comonAdapter.addItem(0,item);
+    RxBus.getBus().register(EventCardTplOption.class)
+      .compose(this.<EventCardTplOption>bindToLifecycle())
+      .compose(this.<EventCardTplOption>doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<EventCardTplOption>() {
+        @Override public void onNext(EventCardTplOption event) {
+          OptionBody optionBody = event.body;
+          CardtplOptionItem item = new CardtplOptionItem(CardBusinessUtils.optionBody2Option(optionBody),cardCategory);
+          if (comonAdapter.contains(item)){
+            if (event.action < 0){//删除
+              comonAdapter.removeItem(comonAdapter.index(item));
+            }else
+              comonAdapter.updateItem(item,1);
+          }else {
+            item.getOption().id = UUID.randomUUID().toString();
+            comonAdapter.addItem(0,item);
           }
         }
       });
+
+  }
+
+  @Override public void onRefresh() {
 
   }
 

@@ -1,7 +1,11 @@
 package cn.qingchengfit.saasbase.bill.items;
 
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import cn.qingchengfit.items.CommonKVItem;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.MeasureUtils;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 
 /**
  * power by
@@ -25,6 +29,8 @@ import cn.qingchengfit.utils.CmStringUtils;
  */
 
 public class BillKvCommonItem  extends CommonKVItem{
+
+
   public BillKvCommonItem(String key, String value) {
     super(key, value);
     if (CmStringUtils.isEmpty(value)) {
@@ -32,5 +38,11 @@ public class BillKvCommonItem  extends CommonKVItem{
     }
   }
 
-
+  @Override public CommonKVVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
+    ViewGroup parent) {
+    CommonKVVH vh =  super.createViewHolder(adapter, inflater, parent);
+    vh.itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+      MeasureUtils.dpToPx(30f,vh.itemView.getContext().getResources())));
+    return vh;
+  }
 }

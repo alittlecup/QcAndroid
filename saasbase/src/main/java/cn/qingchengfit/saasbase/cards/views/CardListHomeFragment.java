@@ -20,16 +20,20 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardListPresenter;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.List;
@@ -77,6 +81,15 @@ import javax.inject.Inject;
     cardListFragment = new CardListFragment();
     cardListFragment.initListener(this);
     filterFragment = new CardListFilterFragment();
+    RxBus.getBus()
+      .register(EventSaasFresh.CardList.class)
+      .compose(this.<EventSaasFresh.CardList>bindToLifecycle())
+      .compose(this.<EventSaasFresh.CardList>doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<EventSaasFresh.CardList>() {
+        @Override public void onNext(EventSaasFresh.CardList cardList) {
+         onRefresh();
+        }
+      });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,7 +99,16 @@ import javax.inject.Inject;
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
-
+    stuff(cardListFragment);
+    filterFragment.setListener(new CardListFilterFragment.CardlistFilterListener() {
+      @Override public void onFilterResult(CardTpl cardTpl, int status) {
+        filterTpl.setChecked(false);
+        filterStatus.setChecked(false);
+        presenter.setFilter(cardTpl.type, null, status);
+      }
+    });
+    stuff(R.id.frag_card_filter, filterFragment);
+    hideChild(filterFragment);
     return view;
   }
 
@@ -129,17 +151,7 @@ import javax.inject.Inject;
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    stuff(cardListFragment);
-    filterFragment.setListener(new CardListFilterFragment.CardlistFilterListener() {
-      @Override public void onFilterResult(CardTpl cardTpl, int status) {
-        filterTpl.setChecked(false);
-        filterStatus.setChecked(false);
-        presenter.setFilter(cardTpl.type, null, status);
-      }
-    });
-    stuff(R.id.frag_card_filter, filterFragment);
-    hideChild(filterFragment);
-
+    onRefresh();
   }
 
   @Override public int getLayoutRes() {
@@ -150,7 +162,7 @@ import javax.inject.Inject;
     Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof CardListFragment) {
-      onRefresh();
+
     }
   }
 

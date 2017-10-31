@@ -8,4 +8,5 @@ public class GymResponse {
 
   public Gym gym;
   public String customer_no;
+  public String socket_channel_id;
 }

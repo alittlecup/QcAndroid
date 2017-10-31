@@ -26,6 +26,8 @@ import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardChargePresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
+import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -91,6 +93,10 @@ import javax.inject.Inject;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     card = getArguments().getParcelable("card");
+    initBackBus();
+  }
+
+  private void initBackBus() {
   }
 
   private CommonFlexAdapter commonFlexAdapter;
@@ -123,7 +129,7 @@ import javax.inject.Inject;
       }
 
       @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-        setMoneyPay(s.toString());
+        setPayMoney(s.toString());
       }
 
       @Override public void afterTextChanged(Editable s) {
@@ -171,9 +177,8 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.civ_mark) public void onCivMarkClicked() {
-    routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"), new CommonInputParams()
-      .title("续卡备注")
-      .build());
+    routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
+      new CommonInputParams().title("续卡备注").build());
   }
 
   @OnClick(R2.id.btn_pay) public void clickPayMoney() {
@@ -192,12 +197,46 @@ import javax.inject.Inject;
     onItemClick(0);
   }
 
-  @Override public void showInputMoney(boolean show) {
-    loInputMoney.setVisibility(show ? View.VISIBLE : View.GONE);
+  @Override public void showInputMoney(boolean other, int cardCate, boolean hasValid) {
+    if (cardCate == Configs.CATEGORY_DATE) {//期限卡
+      loInputMoney.setVisibility(View.VISIBLE);
+      elNeedValid.hideHeader();
+      civEndTime.setVisibility(other ? View.VISIBLE : View.GONE);
+      civChargeMoney.setVisibility(View.GONE);
+      civRealMoney.setVisibility(View.GONE);
+      elNeedValid.resizeContent(
+        (int) getResources().getDimension(R.dimen.qc_item_height) * (other ? 2 : 1) + 1);
+    } else {//储值卡 或者次卡
+      if (!other && hasValid) {
+        loInputMoney.setVisibility(View.VISIBLE);
+        elNeedValid.hideHeader();
+        civEndTime.setVisibility(View.GONE);
+        civChargeMoney.setVisibility(View.GONE);
+        civRealMoney.setVisibility(View.GONE);
+        elNeedValid.resizeContent(
+          (int) getResources().getDimension(R.dimen.qc_item_height)  + 1);
+      } else {
+        loInputMoney.setVisibility(other ? View.VISIBLE : View.GONE);
+        civChargeMoney.setVisibility(View.VISIBLE);
+        civChargeMoney.setUnit(CardBusinessUtils.getCardTypeCategoryUnit(cardCate, getContext()));
+        civRealMoney.setVisibility(View.VISIBLE);
+      }
+    }
   }
 
-  @Override public void setMoneyPay(String m) {
+  @Override public void setPayMoney(String m) {
     tvPayMoney.setText(getString(R.string.pay_money, m));
+  }
+
+  @Override public void bindStudent(String student) {
+  }
+
+  @Override public void bindSaler(String saler) {
+    civSaler.setContent(saler);
+  }
+
+  @Override public void remark(boolean remark) {
+    civMark.setContent(remark ? "已设置" : "未设置");
   }
 
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {

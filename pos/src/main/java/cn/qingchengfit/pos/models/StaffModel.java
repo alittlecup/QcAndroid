@@ -47,8 +47,8 @@ public class StaffModel implements IStaffModel {
     staffApi = repository.createGetApi(StaffApi.class);
   }
 
-  @Override public Observable<QcDataResponse<UserWrap>> getCurUser(HashMap<String, Object> params) {
-    return staffApi.getCurrentUser(params);
+  @Override public Observable<QcDataResponse<UserWrap>> getCurUser() {
+    return staffApi.getCurrentUser(gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {

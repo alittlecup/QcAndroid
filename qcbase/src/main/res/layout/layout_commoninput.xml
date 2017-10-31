@@ -65,6 +65,7 @@
         android:lines="1"
         android:maxWidth="200dp"
         android:minWidth="90dp"
+        android:overScrollMode="always"
         style="@style/Qc.EditTextStyle"
         />
 

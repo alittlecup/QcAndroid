@@ -10,7 +10,7 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
-import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -121,12 +121,12 @@ public interface ICardModel {
   /**
    * 充卡
    */
-  rx.Observable<QcDataResponse<PayBusinessResponse>> qcChargeCard(ChargeBody chargeBody);
+  rx.Observable<QcDataResponse<PayBusinessResponseWrap>> qcChargeCard(ChargeBody chargeBody);
 
   /**
    * 购卡操作
    */
-  @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse<PayBusinessResponse>> buyCard(
+  @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse<PayBusinessResponseWrap>> buyCard(
       @Body CardBuyBody body);
 
   /**
@@ -144,5 +144,8 @@ public interface ICardModel {
    */
   rx.Observable<QcDataResponse<StudentListWrapper>> qcGetBindStudent(String cardid);
 
-
+  /**
+   * 修改卡信息
+   */
+  rx.Observable<QcDataResponse> editCardInfo(String cardid,HashMap<String,Object> p);
 }

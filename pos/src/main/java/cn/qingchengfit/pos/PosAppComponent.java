@@ -6,6 +6,7 @@ import cn.qingchengfit.pos.di.BindCashierDeskActivity;
 import cn.qingchengfit.pos.di.BindExchangeActivity;
 import cn.qingchengfit.pos.di.BindLoginActivity;
 import cn.qingchengfit.pos.di.BindMainActivity;
+import cn.qingchengfit.pos.di.BindPosBillActivity;
 import cn.qingchengfit.pos.di.BindPosCardActivity;
 import cn.qingchengfit.pos.di.BindPosStaffActivity;
 import cn.qingchengfit.pos.di.BindPosStudentActivity;
@@ -43,14 +44,17 @@ import dagger.multibindings.IntoMap;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/25.
  */
-@Component(modules = {
-    AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class,
-    BindMainActivity.class, BindPosStudentActivity.class, BindPosCardActivity.class,
-    BindBillActivity.class, BindLoginActivity.class, BindExchangeActivity.class,
-    BindSettingActivity.class, BindSaasCommonActivity.class, BindPosStaffActivity.class,
-    PosAppComponent.SplashModule.class, BindCashierDeskActivity.class,
-    PosAppComponent.QRModule.class,
-}) public interface PosAppComponent {
+
+@Component(modules = { AppModel.class,
+    AndroidInjectionModule.class, AndroidSupportInjectionModule.class, BindMainActivity.class,
+  BindPosStudentActivity.class,
+  BindPosCardActivity.class,  BindPosBillActivity.class, BindLoginActivity.class,
+  BindExchangeActivity.class, BindSettingActivity.class, BindSaasCommonActivity.class,
+  BindPosStaffActivity.class, PosAppComponent.SplashModule.class, BindCashierDeskActivity.class,
+  cn.qingchengfit.pos.PosAppComponent.QRModule.class, cn.qingchengfit.pos.PosAppComponent.SplashModule.class
+
+})
+public interface PosAppComponent {
   void inject(PosApp app);
 
   @Subcomponent() public interface SplashSubcomponent extends AndroidInjector<SplashActivity> {

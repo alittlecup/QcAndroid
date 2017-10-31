@@ -1,6 +1,6 @@
-package cn.qingchengfit.saasbase.cards.network.response;
+package cn.qingchengfit.saasbase.cards.event;
 
-import com.google.gson.annotations.SerializedName;
+import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 
 /**
  * power by
@@ -20,14 +20,15 @@ import com.google.gson.annotations.SerializedName;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/12.
+ * Created by Paper on 2017/10/29.
  */
 
-public class PayBusinessResponse {
-  public String order_no;
-  @SerializedName("amount")
-  public long order_amount;
-  @SerializedName("title")
-  public String order_title;
+public class EventCardTplOption {
+  public OptionBody body;
+  public int action;//0 是添加或者修改，-1是删除
 
+  public EventCardTplOption(OptionBody body, int action) {
+    this.body = body;
+    this.action = action;
+  }
 }

@@ -68,11 +68,12 @@ import javax.inject.Inject;
   @BindView(R2.id.btn_print) Button btnPrint;
   @BindView(R2.id.btn_remarks) Button btnRemarks;
   @BindView(R2.id.btn_card) Button btnCard;
-  private CommonFlexAdapter commonAdapter;
-  private CommonFlexAdapter extraAdapter;
+  @BindView(R2.id.divider_extra) View dividerExtra;
+  protected CommonFlexAdapter commonAdapter;
+  protected CommonFlexAdapter extraAdapter;
 
   @Need public String orderNo;
-  @Inject BillDetailPresenterPresenter presenter;
+  @Inject public BillDetailPresenterPresenter presenter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -88,13 +89,17 @@ import javax.inject.Inject;
     presenter.setBillId(orderNo);
     initToolbar(toolbar);
     initView();
-    queryDetail();
     return view;
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("账单详情");
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    queryDetail();
   }
 
   void initView() {
@@ -139,7 +144,7 @@ import javax.inject.Inject;
       Card card = order.extra.card;
       if (card != null) {
         btnCard.setVisibility(View.VISIBLE);
-
+        dividerExtra.setVisibility(View.VISIBLE);
         extraAdapter.addItem(
           new BillKvCommonItem("会员卡", card.getName() + "(" + card.getId() + ")"));
         extraAdapter.addItem(new BillKvCommonItem("当前余额", CardBusinessUtils.getCardBlance(card)));
@@ -166,7 +171,7 @@ import javax.inject.Inject;
         String u = "";
         if (scheduleOrder.users != null && scheduleOrder.users.size() > 0) {
           u = u.concat(scheduleOrder.users.get(0).getUsername());
-          if (scheduleOrder.users.size() > 1) u.concat("(" + scheduleOrder.users.size() + "）");
+          if (scheduleOrder.users.size() > 1) u = u.concat("(" + scheduleOrder.users.size() + "）");
         }
         extraAdapter.addItem(new BillKvCommonItem("预约会员", u));
         extraAdapter.addItem(new BillKvCommonItem("金额", scheduleOrder.price + "元"));

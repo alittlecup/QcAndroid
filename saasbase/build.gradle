@@ -12,7 +12,7 @@ android {
 
   defaultConfig {
     minSdkVersion 16
-    targetSdkVersion 25
+    targetSdkVersion 27
     versionCode 1
     versionName "1.0"
     vectorDrawables.useSupportLibrary true
@@ -32,7 +32,6 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
-  buildToolsVersion '26.0.2'
 }
 
 dependencies {
@@ -42,11 +41,8 @@ dependencies {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
   testImplementation 'junit:junit:4.12'
+  testImplementation "org.mockito:mockito-core:2.11.0"
   annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
-//  implementation "com.jakewharton:butterknife:${libs.butterknife}"
-//  implementation "com.google.dagger:dagger:${libs.dagger}"
-//  implementation "com.google.dagger:dagger-android:${libs.dagger}"
-//  implementation "com.google.dagger:dagger-android-support:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
   api "com.anbillon.flabellum:flabellum:${libs.flabellum}"

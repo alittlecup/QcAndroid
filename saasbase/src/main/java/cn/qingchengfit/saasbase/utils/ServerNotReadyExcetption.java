@@ -1,6 +1,4 @@
-package cn.qingchengfit.saasbase.cards.network.response;
-
-import com.google.gson.annotations.SerializedName;
+package cn.qingchengfit.saasbase.utils;
 
 /**
  * power by
@@ -20,14 +18,9 @@ import com.google.gson.annotations.SerializedName;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/12.
+ * Created by Paper on 2017/10/29.
  */
 
-public class PayBusinessResponse {
-  public String order_no;
-  @SerializedName("amount")
-  public long order_amount;
-  @SerializedName("title")
-  public String order_title;
+public class ServerNotReadyExcetption extends RuntimeException {
 
 }

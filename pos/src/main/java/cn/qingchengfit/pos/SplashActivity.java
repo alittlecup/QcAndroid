@@ -21,7 +21,7 @@ import cn.qingchengfit.pos.net.PosApi;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import cn.qingchengfit.subscribes.NetSubscribe;
-import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -33,13 +33,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-import static cn.qingchengfit.pos.PosApp.context;
-
 /**
  * Created by fb on 2017/10/18.
  */
 
-public class SplashActivity extends BaseActivity{
+public class SplashActivity extends BaseActivity {
 
   @Inject QcRestRepository restRepository;
   @Inject GymWrapper gymWrapper;
@@ -59,70 +57,80 @@ public class SplashActivity extends BaseActivity{
     ButterKnife.bind(this);
     ToastUtils.init(getApplicationContext());
     MobclickAgent.setDebugMode(BuildConfig.DEBUG);
-
   }
 
   @Override protected void onDestroy() {
     super.onDestroy();
-    if (!sb.isUnsubscribed())
-      sb.unsubscribe();
+    if (!sb.isUnsubscribed()) sb.unsubscribe();
   }
 
   @Override protected void onStart() {
     super.onStart();
     HashMap<String, Object> params = new HashMap<>();
-    params.put("imei","123456");
+    params.put("imei", "123456");
     sb = restRepository.createPostApi(PosApi.class)
-        .qcGetGym(params)
-        .onBackpressureBuffer()
-        .subscribeOn(Schedulers.io())
-        .flatMap(new Func1<QcDataResponse<GymResponse>, Observable<QcDataResponse<UserWrap>>>() {
-          @Override
-          public Observable<QcDataResponse<UserWrap>> call(final QcDataResponse<GymResponse> gymQcDataResponse) {
-            if (gymQcDataResponse.getStatus() == ResponseConstant.SUCCESS){
-              // 注入GymWrapper信息
-              CoachService coachService = new CoachService();
-              coachService.setId(gymQcDataResponse.data.gym.id);
-              coachService.setGym_id(gymQcDataResponse.data.gym.id);
-              coachService.setName(gymQcDataResponse.data.gym.name);
-              coachService.setPhoto(gymQcDataResponse.data.gym.photo);
-              gymWrapper.setCoachService(coachService);
-              gymWrapper.setCustumNo(gymQcDataResponse.data.customer_no);
-              gymWrapper.setBrand(new Brand.Builder().name(gymQcDataResponse.data.gym.brand_name).build());
-              gymWrapper.setSuperuser(new SuperUser(gymQcDataResponse.data.gym.superuser.username,
-                gymQcDataResponse.data.gym.superuser.phone));
-
-            }else{
-              SplashActivity.this.runOnUiThread(new Runnable() {
-                @Override public void run() {
-                  showAlert(gymQcDataResponse.getStatus()+":"+gymQcDataResponse.getMsg());
+      .qcGetGym(params)
+      .onBackpressureBuffer()
+      .subscribeOn(Schedulers.io())
+      .flatMap(new Func1<QcDataResponse<GymResponse>, Observable<Boolean>>() {
+        @Override
+        public Observable<Boolean> call(final QcDataResponse<GymResponse> gymQcDataResponse) {
+          if (gymQcDataResponse.getStatus() == ResponseConstant.SUCCESS) {
+            // 注入GymWrapper信息
+            CoachService coachService = new CoachService();
+            coachService.setId(gymQcDataResponse.data.gym.id);
+            coachService.setGym_id(gymQcDataResponse.data.gym.id);
+            coachService.setName(gymQcDataResponse.data.gym.name);
+            coachService.setPhoto(gymQcDataResponse.data.gym.photo);
+            gymWrapper.setCoachService(coachService);
+            gymWrapper.setCustumNo(gymQcDataResponse.data.customer_no);
+            gymWrapper.setSocket_channel_id(gymQcDataResponse.data.socket_channel_id);
+            gymWrapper.setBrand(
+              new Brand.Builder().name(gymQcDataResponse.data.gym.brand_name).build());
+            gymWrapper.setSuperuser(new SuperUser(gymQcDataResponse.data.gym.superuser.username,
+              gymQcDataResponse.data.gym.superuser.phone));
+          } else {
+            SplashActivity.this.runOnUiThread(new Runnable() {
+              @Override public void run() {
+                showAlert(gymQcDataResponse.getStatus() + ":" + gymQcDataResponse.getMsg());
+              }
+            });
+          }
+          if (TextUtils.isEmpty(QcRestRepository.getSession(SplashActivity.this))) {
+            return Observable.just(true);
+          } else {
+            return staffModel.getCurUser()
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .flatMap(new Func1<QcDataResponse<UserWrap>, Observable<Boolean>>() {
+                @Override
+                public Observable<Boolean> call(QcDataResponse<UserWrap> userWrapQcDataResponse) {
+                  if (ResponseConstant.checkSuccess(userWrapQcDataResponse)) {
+                    loginStatus.setLoginUser(new Staff(userWrapQcDataResponse.getData().user));
+                    return Observable.just(true);
+                  } else {
+                    showAlert(
+                      userWrapQcDataResponse.getStatus() + ":" + userWrapQcDataResponse.getMsg());
+                    return Observable.just(false);
+                  }
                 }
               });
-            }
-            HashMap<String, Object> params = new HashMap<>();
-            params.put("gym_id", gymQcDataResponse.data.gym.id);
-            return staffModel.getCurUser(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-          }
-        })
-      .subscribe(new NetSubscribe<QcDataResponse<UserWrap>>() {
-        @Override public void onNext(QcDataResponse<UserWrap> userWrapQcDataResponse) {
-          if (ResponseConstant.checkSuccess(userWrapQcDataResponse)) {
-            loginStatus.setLoginUser(new Staff(userWrapQcDataResponse.getData().user));
-            goMain();
-          }else {
-            showAlert(userWrapQcDataResponse.getStatus()+":"+userWrapQcDataResponse.getMsg());
           }
         }
+      })
+      .subscribe(new NetSubscribe<Boolean>() {
+        @Override public void onNext(Boolean isgo) {
+          if (isgo) goMain();
+          else LogUtil.e("splash error");
+        }
       });
-
-
   }
 
   private void goMain() {
     Intent toMain;
-    if (TextUtils.isEmpty(PreferenceUtils.getPrefString(context, "qingcheng.session", ""))) {
+    if (TextUtils.isEmpty(QcRestRepository.getSession(this))) {
       toMain = new Intent(SplashActivity.this, LoginActivity.class);
-    }else{
+    } else {
       toMain = new Intent(SplashActivity.this, MainActivity.class);
     }
     toMain.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -131,5 +139,4 @@ public class SplashActivity extends BaseActivity{
     SplashActivity.this.finish();
     overridePendingTransition(0, 0);
   }
-
 }

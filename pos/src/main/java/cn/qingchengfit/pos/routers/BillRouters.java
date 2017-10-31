@@ -1,6 +1,10 @@
-package cn.qingchengfit.saasbase.cards.network.response;
+package cn.qingchengfit.pos.routers;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import cn.qingchengfit.pos.bill.view.PosBillDetailFragment;
+import cn.qingchengfit.pos.bill.view.PosBillDetialForDoneFragment;
+import cn.qingchengfit.saasbase.routers.billImpl;
 
 /**
  * power by
@@ -20,14 +24,19 @@ import com.google.gson.annotations.SerializedName;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/12.
+ * Created by Paper on 2017/10/29.
  */
 
-public class PayBusinessResponse {
-  public String order_no;
-  @SerializedName("amount")
-  public long order_amount;
-  @SerializedName("title")
-  public String order_title;
+public class BillRouters extends billImpl {
+  @Override public Fragment toBillDetailFragment(Bundle args) {
+    PosBillDetailFragment fragment = new PosBillDetailFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
 
+  @Override public Fragment toBillDetailForDoneFragment(Bundle args) {
+    PosBillDetialForDoneFragment fragment = new PosBillDetialForDoneFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
 }

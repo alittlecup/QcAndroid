@@ -14,11 +14,11 @@ import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
-import cn.qingchengfit.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -33,7 +33,7 @@ public class CardBuyPresenter extends BasePresenter {
 
   private String mCardTplId;
   private int cardCate;
-  private List<CardTplOption> mOptions  = new ArrayList<>();
+  private List<CardTplOption> mOptions = new ArrayList<>();
   /**
    * 选中的支付价格
    */
@@ -43,16 +43,19 @@ public class CardBuyPresenter extends BasePresenter {
    */
   private CardBuyBody cardBuyBody = new CardBuyBody();
 
-  public String getRemarks(){
+  public String getRemarks() {
     return cardBuyBody.remarks;
   }
+
   public String getmCardTplId() {
     return mCardTplId;
   }
-  public void setCardCate(int cate){
+
+  public void setCardCate(int cate) {
     cardBuyBody.setType(cate);
     cardCate = cate;
   }
+
   public void setmCardTplId(String mCardTplId) {
     this.mCardTplId = mCardTplId;
   }
@@ -64,36 +67,34 @@ public class CardBuyPresenter extends BasePresenter {
   /**
    * 选择规格时的逻辑
    */
-  public void selectOption(int pos){
-    if ( pos < mOptions.size()){
+  public void selectOption(int pos) {
+    if (pos < mOptions.size()) {
       //已有规格 展示价格
-       mChosenOption = mOptions.get(pos);
-      view.showInputMoney(false,cardCate ==3);
+      mChosenOption = mOptions.get(pos);
+      view.showInputMoney(false, cardCate, mChosenOption.limit_days);
       view.setPayMoney(mChosenOption.price);
-
-    }else {
+    } else {
       //其他规格
-      view.showInputMoney(true, cardCate ==3);
+      mChosenOption = null;
+      view.showInputMoney(true, cardCate, false);
     }
   }
 
   /**
    * 初始化 监听选择
    */
-  public void initBus(){
-    RxBusAdd(Staff.class)
-        .onBackpressureLatest()
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new BusSubscribe<Staff>() {
-          @Override public void onNext(Staff staff) {
-            view.bindSaler(staff.getUsername());
-            cardBuyBody.setSeller_id(staff.id);
-          }
-        });
+  public void initBus() {
+    RxBusAdd(Staff.class).onBackpressureLatest()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<Staff>() {
+        @Override public void onNext(Staff staff) {
+          view.bindSaler(staff.getUsername());
+          cardBuyBody.setSeller_id(staff.id);
+        }
+      });
 
     //备注信息
-    RxBusAdd(EventTxT.class)
-      .onBackpressureLatest()
+    RxBusAdd(EventTxT.class).onBackpressureLatest()
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<EventTxT>() {
         @Override public void onNext(EventTxT eventTxT) {
@@ -103,35 +104,32 @@ public class CardBuyPresenter extends BasePresenter {
       });
 
     //学员 选择某个学员
-    RxBusAdd(EventSelectedStudent.class)
-        .onBackpressureLatest()
-        .subscribe(new BusSubscribe<EventSelectedStudent>() {
-          @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
-            view.bindStudent(eventSelectedStudent.getNameStr());
-            cardBuyBody.user_ids = eventSelectedStudent.getIdStr();
-          }
-        });
+    RxBusAdd(EventSelectedStudent.class).onBackpressureLatest()
+      .subscribe(new BusSubscribe<EventSelectedStudent>() {
+        @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
+          view.bindStudent(eventSelectedStudent.getNameStr());
+          cardBuyBody.user_ids = eventSelectedStudent.getIdStr();
+        }
+      });
   }
-
-
 
   /**
    * 获取卡种类详情
    */
   public void getCardTplDetail() {
     RxRegiste(cardModel.qcGetCardTplsDetail(mCardTplId)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<CardTplWrapper>>() {
-          @Override public void onNext(QcDataResponse<CardTplWrapper> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onGetCardTpl(qcResponse.data.card_tpl);
-            } else {
-              view.onShowError(qcResponse.getMsg());
-            }
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<CardTplWrapper>>() {
+        @Override public void onNext(QcDataResponse<CardTplWrapper> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            view.onGetCardTpl(qcResponse.data.card_tpl);
+          } else {
+            view.onShowError(qcResponse.getMsg());
           }
-        }));
+        }
+      }));
   }
 
   /**
@@ -139,44 +137,47 @@ public class CardBuyPresenter extends BasePresenter {
    */
   public void queryOption() {
     RxRegiste(cardModel.qcGetOptions(mCardTplId)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<CardTplOptionListWrap>>() {
-          @Override public void onNext(QcDataResponse<CardTplOptionListWrap> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              mOptions.clear();
-              mOptions.addAll(qcResponse.data.options);
-              view.onGetOptions(qcResponse.data.options);
-            } else {
-              view.onShowError(qcResponse.getMsg());
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<CardTplOptionListWrap>>() {
+        @Override public void onNext(QcDataResponse<CardTplOptionListWrap> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            mOptions.clear();
+            for (CardTplOption option : qcResponse.data.options) {
+              if (option.can_create)
+                mOptions.add(option);
             }
+            view.onGetOptions(qcResponse.data.options);
+          } else {
+            view.onShowError(qcResponse.getMsg());
           }
-        }));
+        }
+      }));
   }
 
   /**
    * 真 购卡操作，先检查数据，交给后端处理
    */
-  public void buyCard(){
+  public void buyCard() {
     cardBuyBody.setCard_tpl_id(mCardTplId);
-    if (mChosenOption == null){
+    if (mChosenOption == null) {
       cardBuyBody.setPrice(view.realMoney());
-      cardBuyBody.setBuyAccount(view.chargeMoney(),view.startDay(),view.endDay());
-    }else {
-      cardBuyBody.setPrice(mChosenOption.price);
-      cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), DateUtils.addDay(view.startDay(),mChosenOption.days));
-    }
-
-    /*
+      cardBuyBody.setBuyAccount(view.chargeMoney(), view.startDay(), view.endDay(), null);
+      /*
      * 非期限卡可以设置有效期
      */
-    if (cardBuyBody.getType() != 3) {
-      cardBuyBody.setCheck_valid(view.openValidDay());
-      if (cardBuyBody.isCheck_valid()) {
-        cardBuyBody.setValid_from(view.startDay());
-        cardBuyBody.setValid_to(view.endDay());
+      if (cardBuyBody.getType() != 3) {
+        cardBuyBody.setCheck_valid(view.openValidDay());
+        if (cardBuyBody.isCheck_valid()) {
+          cardBuyBody.setValid_from(view.startDay());
+          cardBuyBody.setValid_to(view.endDay());
+        }
       }
+    } else {
+      cardBuyBody.setPrice(mChosenOption.price);
+      cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(),
+        mChosenOption);
     }
 
     if (cardBuyBody.checkData() > 0) {
@@ -184,23 +185,21 @@ public class CardBuyPresenter extends BasePresenter {
       return;
     }
     cardBuyBody.is_auto_start = view.autoOpen();
-    
+
     RxRegiste(cardModel.buyCard(cardBuyBody)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponse>>() {
-          @Override public void onNext(QcDataResponse<PayBusinessResponse> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onBusinessOrder(qcResponse.data);
-            } else {
-              view.onShowError(qcResponse.getMsg());
-            }
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponseWrap>>() {
+        @Override public void onNext(QcDataResponse<PayBusinessResponseWrap> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            view.onBusinessOrder(qcResponse.data.order);
+          } else {
+            view.onShowError(qcResponse.getMsg());
           }
-        }));
+        }
+      }));
   }
-
-
 
   @Override public void attachView(PView v) {
     view = (MVPView) v;
@@ -214,36 +213,46 @@ public class CardBuyPresenter extends BasePresenter {
 
   public interface MVPView extends CView {
     void onGetOptions(List<CardTplOption> options);
+
     void onGetCardTpl(CardTpl cardTpl);
 
     /**
-     * @param show 是否选中其他
-     * @param isTimeCard 是否是期限卡
+     * @param other 是否选中其他
+     * @param cardCate 是否是期限卡
      */
-    void showInputMoney(boolean show,boolean isTimeCard);
+    void showInputMoney(boolean other, int cardCate, boolean hasValid);
+
     void bindStudent(String student);
+
     void bindSaler(String saler);
+
     void remark(boolean remark);
+
     void setPayMoney(String x);
+
     /**
      * 下单完成后返回的数据
      */
     void onBusinessOrder(PayBusinessResponse payBusinessResponse);
+
     /**
      * @return 实体卡号
      */
     String realCardNum();
+
     String realMoney();
+
     String chargeMoney();
+
     /**
      * 是否设置有效期
      */
     boolean openValidDay();
+
     String startDay(); //开始日期
+
     String endDay();   //结束日期
+
     boolean autoOpen();//自动开卡
-
-
-
   }
 }

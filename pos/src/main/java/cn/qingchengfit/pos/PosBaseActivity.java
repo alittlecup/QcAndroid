@@ -43,7 +43,7 @@ public class PosBaseActivity extends BaseActivity implements HasSupportFragmentI
   }
 
   @Override protected Fragment getRouterFragment(Intent intent) {
-    return routerCenter.getFragment(intent.getData(), intent.getBundleExtra("b"));
+    return routerCenter.getFragment(intent.getData(), intent.getExtras());
   }
 
 

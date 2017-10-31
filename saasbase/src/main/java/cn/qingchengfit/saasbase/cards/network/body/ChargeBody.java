@@ -2,8 +2,10 @@ package cn.qingchengfit.saasbase.cards.network.body;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.DateUtils;
 
 /**
  * power by
@@ -19,15 +21,6 @@ import cn.qingchengfit.utils.CmStringUtils;
  * Created by Paper on 16/4/27 2016.
  */
 public class ChargeBody implements Parcelable {
-  public static final Creator<ChargeBody> CREATOR = new Creator<ChargeBody>() {
-    @Override public ChargeBody createFromParcel(Parcel source) {
-      return new ChargeBody(source);
-    }
-
-    @Override public ChargeBody[] newArray(int size) {
-      return new ChargeBody[size];
-    }
-  };
   String price;
   int charge_type; //支付类型
   String shop_id;
@@ -42,7 +35,7 @@ public class ChargeBody implements Parcelable {
   String valid_to;
   String option_id;
   String remarks;
-  String type;
+  int type;
   String card_id;
 
   String id;
@@ -70,13 +63,23 @@ public class ChargeBody implements Parcelable {
     return 0;
   }
 
-  public void setChargeAccount(int cardtype,String account ,String start,String end){
-    switch (cardtype){
+  public void setBuyAccount(String account ,String start,String end,CardTplOption cto){
+    switch (type){
       case 1:
         this.account = account;
+        if (cto != null && cto.limit_days){
+          this.check_valid = true;
+          this.valid_from = start;
+          this.valid_to = DateUtils.addDay(start,cto.days);
+        }
         break;
       case 2:
         this.times = account;
+        if (cto != null && cto.limit_days){
+          this.check_valid = true;
+          this.valid_from = start;
+          this.valid_to = DateUtils.addDay(start,cto.days);
+        }
         break;
       case 3:
         this.start = start;
@@ -86,28 +89,8 @@ public class ChargeBody implements Parcelable {
   }
 
 
-  public ChargeBody() {
-  }
 
-  protected ChargeBody(Parcel in) {
-    this.price = in.readString();
-    this.charge_type = in.readInt();
-    this.shop_id = in.readString();
-    this.card_no = in.readString();
-    this.account = in.readString();
-    this.seller_id = in.readString();
-    this.times = in.readString();
-    this.start = in.readString();
-    this.end = in.readString();
-    this.check_valid = in.readByte() != 0;
-    this.valid_from = in.readString();
-    this.valid_to = in.readString();
-    this.option_id = in.readString();
-    this.remarks = in.readString();
-    this.type = in.readString();
-    this.card_id = in.readString();
-    this.id = in.readString();
-    this.model = in.readString();
+  public ChargeBody() {
   }
 
   private ChargeBody(Builder builder) {
@@ -188,11 +171,11 @@ public class ChargeBody implements Parcelable {
     this.charge_type = charge_type;
   }
 
-  public String getType() {
+  public int getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(int type) {
     this.type = type;
   }
 
@@ -268,31 +251,6 @@ public class ChargeBody implements Parcelable {
     this.remarks = remarks;
   }
 
-  @Override public int describeContents() {
-    return 0;
-  }
-
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(this.price);
-    dest.writeInt(this.charge_type);
-    dest.writeString(this.shop_id);
-    dest.writeString(this.card_no);
-    dest.writeString(this.account);
-    dest.writeString(this.seller_id);
-    dest.writeString(this.times);
-    dest.writeString(this.start);
-    dest.writeString(this.end);
-    dest.writeByte(this.check_valid ? (byte) 1 : (byte) 0);
-    dest.writeString(this.valid_from);
-    dest.writeString(this.valid_to);
-    dest.writeString(this.option_id);
-    dest.writeString(this.remarks);
-    dest.writeString(this.type);
-    dest.writeString(this.card_id);
-    dest.writeString(this.id);
-    dest.writeString(this.model);
-  }
-
   public static final class Builder {
     private String price;
     private int charge_type;
@@ -308,7 +266,7 @@ public class ChargeBody implements Parcelable {
     private String valid_to;
     private String option_id;
     private String remarks;
-    private String type;
+    private int type;
     private String card_id;
     private String id;
     private String model;
@@ -386,7 +344,7 @@ public class ChargeBody implements Parcelable {
       return this;
     }
 
-    public Builder type(String val) {
+    public Builder type(int val) {
       type = val;
       return this;
     }
@@ -410,4 +368,60 @@ public class ChargeBody implements Parcelable {
       return new ChargeBody(this);
     }
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.price);
+    dest.writeInt(this.charge_type);
+    dest.writeString(this.shop_id);
+    dest.writeString(this.card_no);
+    dest.writeString(this.account);
+    dest.writeString(this.seller_id);
+    dest.writeString(this.times);
+    dest.writeString(this.start);
+    dest.writeString(this.end);
+    dest.writeByte(this.check_valid ? (byte) 1 : (byte) 0);
+    dest.writeString(this.valid_from);
+    dest.writeString(this.valid_to);
+    dest.writeString(this.option_id);
+    dest.writeString(this.remarks);
+    dest.writeInt(this.type);
+    dest.writeString(this.card_id);
+    dest.writeString(this.id);
+    dest.writeString(this.model);
+  }
+
+  protected ChargeBody(Parcel in) {
+    this.price = in.readString();
+    this.charge_type = in.readInt();
+    this.shop_id = in.readString();
+    this.card_no = in.readString();
+    this.account = in.readString();
+    this.seller_id = in.readString();
+    this.times = in.readString();
+    this.start = in.readString();
+    this.end = in.readString();
+    this.check_valid = in.readByte() != 0;
+    this.valid_from = in.readString();
+    this.valid_to = in.readString();
+    this.option_id = in.readString();
+    this.remarks = in.readString();
+    this.type = in.readInt();
+    this.card_id = in.readString();
+    this.id = in.readString();
+    this.model = in.readString();
+  }
+
+  public static final Creator<ChargeBody> CREATOR = new Creator<ChargeBody>() {
+    @Override public ChargeBody createFromParcel(Parcel source) {
+      return new ChargeBody(source);
+    }
+
+    @Override public ChargeBody[] newArray(int size) {
+      return new ChargeBody[size];
+    }
+  };
 }

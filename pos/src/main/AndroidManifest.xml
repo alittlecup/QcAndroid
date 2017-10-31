@@ -12,6 +12,7 @@
       android:supportsRtl="true"
       android:theme="@style/QcAppTheme"
       android:taskAffinity="com.rongcapital.pos"
+      android:screenOrientation="portrait"
       >
     <activity
         android:name=".card.PosCardActivity"
@@ -91,7 +92,7 @@
       </intent-filter>
     </activity>
 
-    <activity android:name="cn.qingchengfit.saasbase.bill.BillActivity">
+    <activity android:name=".bill.PosBillActivity">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
 
@@ -148,6 +149,7 @@
 
     <activity android:name=".main.MainActivity"/>
     <activity android:name=".login.LoginActivity"/>
+
 
   </application>
 

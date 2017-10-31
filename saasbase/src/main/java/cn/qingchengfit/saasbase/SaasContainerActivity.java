@@ -62,4 +62,5 @@ public class SaasContainerActivity extends BaseActivity implements HasSupportFra
   @Override public AndroidInjector<Fragment> supportFragmentInjector() {
     return dispatchingFragmentInjector;
   }
+
 }

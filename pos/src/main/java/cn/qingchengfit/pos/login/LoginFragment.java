@@ -85,6 +85,7 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   @Override public void onSuccess() {
     Intent intent = new Intent(getActivity(), MainActivity.class);
     getContext().startActivity(intent);
+    getActivity().finish();
   }
 
   @Override public void onFailed(String s) {

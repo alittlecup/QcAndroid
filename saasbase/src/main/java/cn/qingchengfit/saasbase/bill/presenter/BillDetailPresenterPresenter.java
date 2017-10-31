@@ -1,9 +1,11 @@
 package cn.qingchengfit.saasbase.bill.presenter;
 
 import android.support.annotation.StringRes;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
+import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
@@ -12,6 +14,7 @@ import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
 import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.repository.IBillModel;
+import cn.qingchengfit.saasbase.utils.ServerNotReadyExcetption;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -55,33 +58,45 @@ public class BillDetailPresenterPresenter extends BasePresenter {
       return null;
     }
   }
-
+  int errorTime = 0;
   public void rollBill(){
+    RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
     sp = RxRegiste(billModel.queryBillStatus(billId)
       .subscribeOn(Schedulers.computation())
-      .repeatWhen(new Func1<Observable<? extends Void>, Observable<?>>() {
-        @Override public Observable<?> call(Observable<? extends Void> observable) {
-          return observable.delay(3, TimeUnit.SECONDS);
-        }
-      })
-      .takeUntil(new Func1<QcDataResponse<BillPayStatus>, Boolean>() {
-        @Override public Boolean call(QcDataResponse<BillPayStatus> billPayStatusQcDataResponse) {
-          return billPayStatusQcDataResponse.data.success;
-        }
-      })
       .flatMap(
         new Func1<QcDataResponse<BillPayStatus>, Observable<QcDataResponse<BusinessOrderWrap>>>() {
           @Override public Observable<QcDataResponse<BusinessOrderWrap>> call(
             QcDataResponse<BillPayStatus> billPayStatusQcDataResponse) {
+            if (!billPayStatusQcDataResponse.data.success) {
+              throw new ServerNotReadyExcetption();
+            }
             return billModel.getBusinessOrderDetail(billId)
               .subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread());
           }
         })
+      .retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
+        @Override public Observable<?> call(final Observable<? extends Throwable> observable) {
+          return observable.delay(3, TimeUnit.SECONDS).flatMap(new Func1<Throwable, Observable<? extends Throwable>>() {
+            @Override public Observable<? extends Throwable> call(Throwable throwable) {
+              if (throwable instanceof ServerNotReadyExcetption){
+                return Observable.just(null);
+              }else {
+                if (errorTime < 5) {
+                  errorTime++;
+                  return Observable.just(null);
+                }else {
+                  return Observable.error(throwable);
+                }
+              }
+            }
+          });
+        }
+      })
       .subscribe(reSult));
   }
 
-  public void queryBill() {
+  public void queryBill()  {
     RxRegiste(billModel.getBusinessOrderDetail(billId)
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
@@ -92,12 +107,19 @@ public class BillDetailPresenterPresenter extends BasePresenter {
   NetSubscribe<QcDataResponse<BusinessOrderWrap>> reSult = new NetSubscribe<QcDataResponse<BusinessOrderWrap>>() {
     @Override
     public void onNext(QcDataResponse<BusinessOrderWrap> qcResponse) {
+      RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_HIDE_DIALOG));
       if (ResponseConstant.checkSuccess(qcResponse)) {
         if (sp != null && !sp.isUnsubscribed()) sp.unsubscribe();
         view.onOrderDetail(qcResponse.data.bill);
       } else {
         view.onShowError(qcResponse.getMsg());
       }
+    }
+
+    @Override public void onError(Throwable e) {
+      super.onError(e);
+      if (view != null)
+        view.showAlert(e.getMessage());
     }
   };
 
