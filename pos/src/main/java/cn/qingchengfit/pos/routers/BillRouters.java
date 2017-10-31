@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.pos.bill.view.PosBillDetailFragment;
 import cn.qingchengfit.pos.bill.view.PosBillDetialForDoneFragment;
+import cn.qingchengfit.pos.bill.view.PosPayRequestListFragment;
 import cn.qingchengfit.saasbase.routers.billImpl;
 
 /**
@@ -36,6 +37,12 @@ public class BillRouters extends billImpl {
 
   @Override public Fragment toBillDetailForDoneFragment(Bundle args) {
     PosBillDetialForDoneFragment fragment = new PosBillDetialForDoneFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override public Fragment toPayRequestListFragment(Bundle args) {
+    PosPayRequestListFragment fragment = new PosPayRequestListFragment();
     fragment.setArguments(args);
     return fragment;
   }

@@ -66,8 +66,8 @@ import org.json.JSONObject;
             if (msgtype.equalsIgnoreCase("posTask")){
               if (posMainFragment != null && posMainFragment.isAdded()) {
                 posMainFragment.showNoti(1);
-              }
-            }
+              }else LogUtil.e("posMain Error!");
+            }else LogUtil.e("ws","push data:"+obj.toString());
           }catch (Exception e){
             CrashUtils.sendCrash(e);
           }

@@ -26,7 +26,7 @@
         style="@style/QcTextStyleMediumGrey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="待支付"
+        android:text="待支付"
         />
   </LinearLayout>
   <include layout="@layout/divider_grey"/>

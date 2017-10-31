@@ -20,7 +20,9 @@ import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -46,7 +48,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/10/9.
  */
-@Leaf(module = "bill", path = "/pay/request/list/") public class PayRequestListFragment
+@Leaf(module = "bill", path = "/pay/request/list/") public abstract class PayRequestListFragment
   extends BaseListFragment implements
   SwipeRefreshLayout.OnRefreshListener,FlexibleAdapter.EndlessScrollListener,PayRequestListPresenter.MVPView {
   protected Toolbar toolbar;
@@ -104,9 +106,6 @@ import rx.android.schedulers.AndroidSchedulers;
     onLoadMore(0,0);
   }
 
-  protected void onPayDone(String orderNo){
-    routeTo("/pay/done/",new BillDetailParams().orderNo(orderNo).build());
-  }
 
 
   @Override public String getFragmentName() {
@@ -135,19 +134,24 @@ import rx.android.schedulers.AndroidSchedulers;
 
   @Override public void onGetData(List<PayRequest> datas, int page) {
     stopRefresh();
-    if (page ==1 && (datas == null || datas.size() == 0)){
+    if (page == 1 && (datas == null || datas.size() == 0)) {
       commonFlexAdapter.clear();
-      commonFlexAdapter.addItem(new CommonNoDataItem(getNoDataIconRes(),getNoDataStr()));
-    }else
-      commonFlexAdapter.onLoadMoreComplete(datas,500);
+      commonFlexAdapter.addItem(new CommonNoDataItem(getNoDataIconRes(), getNoDataStr()));
+    } else {
+      List<AbstractFlexibleItem> items = new ArrayList<>();
+      for (PayRequest data : datas) {
+        items.add(new PayRequestItem(data));
+      }
+      commonFlexAdapter.onLoadMoreComplete(items,500);
+    }
+    if (datas == null)
+      commonFlexAdapter.onLoadMoreComplete(null,500);
   }
 
   /**
    * 具体支付实现在各个App不同
    */
-  @Override public void onPay(PayRequest payRequest) {
-
-  }
+  @Override public abstract void onPay(PayRequest payRequest);
 
   @Override public void onRemoveTaskNo(String taskNo) {
     for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {

@@ -24,6 +24,7 @@ import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.saasbase.bill.items.BillKvCommonItem;
 import cn.qingchengfit.saasbase.bill.presenter.BillDetailPresenterPresenter;
 import cn.qingchengfit.saasbase.cards.bean.Card;
+import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -113,6 +114,10 @@ import javax.inject.Inject;
     presenter.queryBill();
   }
 
+  /**
+   * 账单常规信息
+   * @param order 账单
+   */
   public void onOrderDetail(BusinessBill order) {
     tvBillAmount.setText(getString(R.string.pay_money, StringUtils.getFloatDot2(order.price)));
     tvBillStatus.setText(getResources().getStringArray(R.array.bill_status)[order.status + 1]);
@@ -136,6 +141,9 @@ import javax.inject.Inject;
     tvRemarks.setText("备注" + order.remarks);
   }
 
+  /**
+   * 其他信息
+   */
   void commonOrder(BusinessBill order) {
 
     extraAdapter.clear();
@@ -201,8 +209,6 @@ import javax.inject.Inject;
       showAlert("没有会员卡信息");
       return;
     }
-    Bundle bd = new Bundle();
-    bd.putString("cardid",presenter.getCardId());
-    routeTo("card","/detail/",bd);
+    routeTo("card","/detail/",new CardDetailParams().cardid(presenter.getCardId()).build());
   }
 }

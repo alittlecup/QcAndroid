@@ -100,9 +100,14 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
   }
 
   public void showNoti(int count) {
-    notiCount++;
-    tvNotiCount.setVisibility(View.VISIBLE);
-    tvNotiCount.setText(Integer.toString(notiCount));
+    getActivity().runOnUiThread(new Runnable() {
+      @Override public void run() {
+        notiCount++;
+        tvNotiCount.setVisibility(View.VISIBLE);
+        tvNotiCount.setText(Integer.toString(notiCount));
+      }
+    });
+
   }
 
   @Override public String getFragmentName() {

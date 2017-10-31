@@ -26,5 +26,5 @@ import java.util.List;
  */
 
 public class PayRequestListWrap extends QcListData {
-  public List<PayRequest> datas;
+  public List<PayRequest> tasks;
 }
