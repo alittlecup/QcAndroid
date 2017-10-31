@@ -58,6 +58,7 @@ public class Staff extends Personage implements Parcelable {
         this.avatar = personage.avatar;
         this.username = personage.username;
         this.gender = personage.gender;
+        this.phone = personage.phone;
     }
 
     public static Staff formatFromUser(User user, String coachId) {

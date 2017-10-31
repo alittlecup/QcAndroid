@@ -63,7 +63,7 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
         if (startTimeDialogWindow.isShowing()) {
           startTimeDialogWindow.hide();
         } else {
-          startTimeDialogWindow.show();
+          startTimeDialogWindow.showAtLocation(null, 0, 0, 0, new Date());
         }
       }
     });
@@ -72,7 +72,7 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
         if (endTimeDialogWindow.isShowing()) {
           endTimeDialogWindow.hide();
         } else {
-          endTimeDialogWindow.show();
+          endTimeDialogWindow.showAtLocation(null, 0, 0, 0, new Date());
         }
       }
     });

@@ -30,6 +30,7 @@ import cn.qingchengfit.saasbase.bill.items.ItemDataEmpty;
 import cn.qingchengfit.saasbase.bill.items.ItemMoreFooter;
 import cn.qingchengfit.saasbase.bill.presenter.BillSummary;
 import cn.qingchengfit.saasbase.bill.presenter.BillTotalPresenter;
+import cn.qingchengfit.saasbase.bill.view.BillDetailParams;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -271,10 +272,7 @@ import rx.functions.Action1;
   @Override public boolean onItemClick(int position) {
     if (adapter.getItem(position) instanceof ItemBill) {
       BusinessBill bill = ((ItemBill) adapter.getItem(position)).getBill();
-      Bundle b = new Bundle();
-      b.putParcelable("bill", bill);
-      // TODO 跳转账单详情
-      routeTo(AppUtils.getRouterUri(getContext(), "/bill/detail/"), b);
+      routeTo(AppUtils.getRouterUri(getContext(), "/bill/detail/"), new BillDetailParams().orderNo(bill.order_no).build());
     }
     return false;
   }
