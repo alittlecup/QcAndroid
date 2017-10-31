@@ -28,7 +28,6 @@ public class ItemBillAccount extends AbstractFlexibleItem<ItemBillAccount.ItemBi
     this.time = time;
     this.expenses = expenses;
     this.income = income;
-
   }
 
   @Override public boolean equals(Object o) {
@@ -46,7 +45,10 @@ public class ItemBillAccount extends AbstractFlexibleItem<ItemBillAccount.ItemBi
       List payloads) {
     holder.tvBillTime.setText(DateUtils.getYYMMfromServer(time));
     holder.tvBillIncome.setText(
-        holder.itemView.getResources().getString(R.string.bill_count_indeed, expenses, income));
+        holder.itemView.getResources().getString(R.string.bill_count_indeed,income));
+
+    holder.tvBillReduce.setText(
+        holder.itemView.getResources().getString(R.string.bill_count_reduce,expenses));
   }
 
   @Override public int getLayoutRes() {
@@ -57,6 +59,7 @@ public class ItemBillAccount extends AbstractFlexibleItem<ItemBillAccount.ItemBi
 
     @BindView(R2.id.tv_bill_time) TextView tvBillTime;
     @BindView(R2.id.tv_bill_income) TextView tvBillIncome;
+    @BindView(R2.id.tv_bill_reduce) TextView tvBillReduce;
 
     public ItemBillAccountVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
