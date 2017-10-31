@@ -42,7 +42,7 @@ public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
       List payloads) {
 
     holder.imgBill.setImageResource(bill.getTradeDrawable(bill.pay_type));
-    holder.tvTime.setText(DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(bill.pay_time)));
+    holder.tvTime.setText(DateUtils.Date2MMDDHHmm(DateUtils.formatDateFromServer(bill.pay_time)));
     holder.tvOperator.setText(holder.itemView.getContext()
         .getResources()
         .getString(R.string.bill_operator, bill.created_by.username));
