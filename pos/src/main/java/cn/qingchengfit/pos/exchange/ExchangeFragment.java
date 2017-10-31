@@ -13,13 +13,28 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.pos.exchange.beans.ExchangeWrapper;
 import cn.qingchengfit.pos.login.LoginActivity;
+import cn.qingchengfit.pos.net.PosApi;
 import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.utils.CircleImgWrapper;
+import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.bumptech.glide.Glide;
+import javax.inject.Inject;
+import rx.Subscription;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by fb on 2017/10/17.
@@ -37,6 +52,10 @@ public class ExchangeFragment extends BaseFragment {
   @BindView(R.id.tv_exchange_end) TextView tvExchangeEnd;
   @BindView(R.id.tv_exchange_business) TextView tvExchangeBusiness;
   @BindView(R.id.tv_exchange_money) TextView tvExchangeMoney;
+  private Subscription sb;
+  @Inject GymWrapper gymWrapper;
+  @Inject QcRestRepository restRepository;
+  @Inject LoginStatus loginStatus;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -44,6 +63,7 @@ public class ExchangeFragment extends BaseFragment {
     View view = inflater.inflate(R.layout.fragment_exchange, container, false);
     unbinder = ButterKnife.bind(this, view);
     setToolbar(toolbar);
+    setData();
     return view;
   }
 
@@ -51,6 +71,35 @@ public class ExchangeFragment extends BaseFragment {
     initToolbar(toolbar);
     toolbarTitle.setText("交班");
 
+  }
+
+  private void setData(){
+    Glide.with(getContext())
+        .load(loginStatus.getLoginUser().avatar)
+        .asBitmap()
+        .placeholder(loginStatus.getLoginUser().gender == 1 ? R.drawable.ic_default_staff_women_head
+            : R.drawable.ic_default_staff_man_head)
+        .into(new CircleImgWrapper(imgExchangeHead, getContext()));
+    tvExchangeName.setText(getResources().getString(R.string.exchange_staff_info,
+        loginStatus.getLoginUser().getUsername(), loginStatus.getLoginUser().phone));
+
+    sb = restRepository.createPostApi(PosApi.class)
+        .qcGetExchange(gymWrapper.id())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .subscribe(new Action1<QcDataResponse<ExchangeWrapper>>() {
+          @Override
+          public void call(QcDataResponse<ExchangeWrapper> exchangeWrapperQcDataResponse) {
+            if (ResponseConstant.checkSuccess(exchangeWrapperQcDataResponse)){
+              tvExchangeStart.setText(DateUtils.formatToMMFromServer(exchangeWrapperQcDataResponse.data.exchange.start));
+              tvExchangeEnd.setText(DateUtils.formatToMMFromServer(exchangeWrapperQcDataResponse.data.exchange.end));
+              tvExchangeBusiness.setText(String.valueOf(exchangeWrapperQcDataResponse.data.exchange.bills_numbers));
+              tvExchangeMoney.setText(exchangeWrapperQcDataResponse.data.exchange.bills_price / 100 + "元");
+            }else{
+              onShowError(exchangeWrapperQcDataResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable());
   }
 
   @OnClick(R.id.btn_exchange)

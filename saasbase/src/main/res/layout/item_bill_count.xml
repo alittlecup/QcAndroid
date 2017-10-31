@@ -29,7 +29,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="5dp"
-      tools:text="- : -1000;  + : 50000"
+      tools:text="➖ : -1000;  + : 50000"
       style="@style/QcTextStyleMediumWarm"
       />
 

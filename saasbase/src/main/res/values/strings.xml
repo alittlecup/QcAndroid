@@ -108,5 +108,8 @@
   <string name="back_cash_way_qq">QQ钱包原路返回</string>
   <string name="back_cash_way_card" formatted="false">银行卡== %s (%s）</string>
 
+  <!--交班-->
+  <string formatted="false" name="exchange_staff_info">%s  (%s)</string>
+
 </resources>
 
