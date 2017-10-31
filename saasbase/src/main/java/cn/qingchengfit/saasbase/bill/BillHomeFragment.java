@@ -177,10 +177,10 @@ import rx.functions.Action1;
 
   @Override public void onGetTotal(BillTotal billTotal) {
     tvBillTotalAmount.setText(
-        String.valueOf(billTotal.withdraw_sum + billTotal.can_withdraw_sum + billTotal.frozen_sum));
-    tvBillWithdraw.setText(String.valueOf(billTotal.can_withdraw_sum));
-    tvBillCanWithdraw.setText(String.valueOf(billTotal.withdraw_sum));
-    tvBillSettlement.setText(String.valueOf(billTotal.frozen_sum));
+        String.format("%.2f", (billTotal.withdraw_sum + billTotal.can_withdraw_sum + billTotal.frozen_sum) / 100));
+    tvBillWithdraw.setText(String.format("%.2f",billTotal.can_withdraw_sum / 100));
+    tvBillCanWithdraw.setText(String.format("%.2f", billTotal.withdraw_sum / 100));
+    tvBillSettlement.setText(String.format("%.2f", billTotal.frozen_sum / 100));
   }
 
   @Override public void onGetBillList(List<BusinessBill> billList) {
@@ -251,7 +251,7 @@ import rx.functions.Action1;
 
     BillSummary summary = presenter.getSummary(map.get(time));
     itemList.add(new ItemBillAccount(DateUtils.getYYMMfromServer(map.get(time).get(0).created_at),
-        summary.sum, summary.reduce));
+        summary.sum / 100, summary.reduce / 100));
 
     for (BusinessBill bill : map.get(time)) {
       itemList.add(new ItemBill(bill));

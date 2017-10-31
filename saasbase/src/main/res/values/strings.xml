@@ -81,7 +81,7 @@
   <string name="bill_setting_gym_detail_name">场馆名称</string>
   <string name="bill_setting_gym_detail_no">商户编号</string>
   <string formatted="false" name="bill_detail_item">%s - 尾号(%s)</string>
-  <string formatted="false" name="bill_detail_item_trade_type" >%s (POS)</string>
+  <string formatted="false" name="bill_detail_item_trade_type" >%s (%s)</string>
   <string name="bill_count_indeed" formatted="false">%.2f</string>
   <string name="bill_count_reduce" formatted="false">%.2f</string>
   <string name="bill_no_data">本月无数据</string>
