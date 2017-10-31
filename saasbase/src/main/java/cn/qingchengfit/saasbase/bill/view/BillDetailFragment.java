@@ -171,7 +171,7 @@ import javax.inject.Inject;
         String u = "";
         if (scheduleOrder.users != null && scheduleOrder.users.size() > 0) {
           u = u.concat(scheduleOrder.users.get(0).getUsername());
-          if (scheduleOrder.users.size() > 1) u.concat("(" + scheduleOrder.users.size() + "）");
+          if (scheduleOrder.users.size() > 1) u = u.concat("(" + scheduleOrder.users.size() + "）");
         }
         extraAdapter.addItem(new BillKvCommonItem("预约会员", u));
         extraAdapter.addItem(new BillKvCommonItem("金额", scheduleOrder.price + "元"));

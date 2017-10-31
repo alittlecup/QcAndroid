@@ -11,7 +11,7 @@ android {
 
   defaultConfig {
     minSdkVersion 16
-    targetSdkVersion 25
+    targetSdkVersion 26
     versionCode 1
     versionName "1.0"
     vectorDrawables.useSupportLibrary = true
@@ -29,7 +29,6 @@ android {
       proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
     }
   }
-  buildToolsVersion '26.0.2'
 }
 
 configurations.all {

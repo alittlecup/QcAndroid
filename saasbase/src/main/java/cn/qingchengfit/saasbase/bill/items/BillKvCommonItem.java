@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.items.CommonKVItem;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 
 /**
@@ -41,7 +42,7 @@ public class BillKvCommonItem  extends CommonKVItem{
     ViewGroup parent) {
     CommonKVVH vh =  super.createViewHolder(adapter, inflater, parent);
     vh.itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-      ViewGroup.LayoutParams.WRAP_CONTENT));
+      MeasureUtils.dpToPx(30f,vh.itemView.getContext().getResources())));
     return vh;
   }
 }
