@@ -95,10 +95,10 @@ public class BusinessBill implements Parcelable{
       case 2:
       case 3:
       case 4:
-        return "+"  + price;
+        return "+"  + price / 100 ;
       case 5:
       case 6:
-        return "-"  + price;
+        return "-"  + price / 100;
     }
     return "";
   }
