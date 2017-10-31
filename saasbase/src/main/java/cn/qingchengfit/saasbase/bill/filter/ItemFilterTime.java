@@ -8,6 +8,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.utils.DateUtils;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -24,11 +25,11 @@ import java.util.List;
 //筛选栏中的时间筛选块
 public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilterTimeVH> {
 
-  private String timeTitle;
+  private FilterModel filterModel;
   private OnTimeChooseListener onTimeChooseListener;
 
-  public ItemFilterTime(String timeTitle, OnTimeChooseListener onTimeChooseListener) {
-    this.timeTitle = timeTitle;
+  public ItemFilterTime(FilterModel filterModel, OnTimeChooseListener onTimeChooseListener) {
+    this.filterModel = filterModel;
     this.onTimeChooseListener = onTimeChooseListener;
   }
 
@@ -43,7 +44,7 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
       @Override public void onTimeSelect(Date date) {
         holder.tvStudentFilterTimeStart.setText(DateUtils.Date2YYYYMMDD(date));
         if (onTimeChooseListener != null) {
-          onTimeChooseListener.onTimeStart(DateUtils.Date2YYYYMMDD(date));
+          onTimeChooseListener.onTimeStart(DateUtils.Date2YYYYMMDD(date), filterModel.key);
         }
       }
     });
@@ -53,7 +54,7 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
       @Override public void onTimeSelect(Date date) {
         holder.tvStudentFilterTimeEnd.setText(DateUtils.Date2YYYYMMDD(date));
         if (onTimeChooseListener != null) {
-          onTimeChooseListener.onTimeEnd(DateUtils.Date2YYYYMMDD(date));
+          onTimeChooseListener.onTimeEnd(DateUtils.Date2YYYYMMDD(date), filterModel.key);
         }
       }
     });
@@ -81,7 +82,7 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, ItemFilterTimeVH holder, int position,
       List payloads) {
-    holder.billFilterTitle.setText(timeTitle);
+    holder.billFilterTitle.setText(filterModel.name);
   }
 
   @Override public boolean equals(Object o) {
@@ -105,8 +106,8 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
   }
 
   public interface OnTimeChooseListener {
-    void onTimeStart(String start);
+    void onTimeStart(String start, String key);
 
-    void onTimeEnd(String end);
+    void onTimeEnd(String end, String key);
   }
 }

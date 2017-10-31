@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasConstant;
 import cn.qingchengfit.saasbase.bill.beans.BusinessBill;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -33,20 +34,43 @@ public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
     return new ItemBillVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
   }
 
+  public BusinessBill getBill() {
+    return bill;
+  }
+
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemBillVH holder, int position,
       List payloads) {
-    holder.tvTime.setText(DateUtils.formatDateToServer(bill.pay_time));
+
+    holder.imgBill.setImageResource(bill.getTradeDrawable(bill.pay_type));
+    holder.tvTime.setText(DateUtils.getYYYYMMDDfromServer(bill.pay_time));
     holder.tvOperator.setText(holder.itemView.getContext()
         .getResources()
         .getString(R.string.bill_operator, bill.created_by.username));
 
-    holder.tvItemBillName.setText(holder.itemView.getContext()
-        .getResources()
-        .getString(R.string.bill_detail_item, bill.getPayType(holder.itemView.getContext(), bill.pay_type),
-            bill.bank_no));
-    holder.tvItemBillAction.setText(holder.itemView.getContext()
-        .getResources()
-        .getString(R.string.bill_detail_item_trade_type, bill.getTradeType(bill.type)));
+    //交易类型
+    if (bill.bank_no.length() > 0) {
+      holder.tvItemBillName.setText(holder.itemView.getContext()
+          .getResources()
+          .getString(R.string.bill_detail_item, holder.itemView.getContext()
+              .getString(bill.getPayType(bill.type, bill.pay_type)),
+                  bill.bank_no.substring(bill.bank_no.length() - 4, bill.bank_no.length())));
+    }else{
+      holder.tvItemBillName.setText(
+          holder.itemView.getContext().getString(bill.getPayType(bill.type, bill.pay_type)));
+    }
+
+    //交易行为
+    if (bill.type == 6 && bill.pay_type.equals(SaasConstant.PAY_TYPE_UNIONPAY)){
+      holder.tvItemBillAction.setText(holder.itemView.getContext()
+          .getResources()
+          .getString(R.string.back_cash_way_card, bill.bank_name,
+              bill.bank_no.substring(bill.bank_no.length() - 4, bill.bank_no.length())));
+    }else {
+      holder.tvItemBillAction.setText(holder.itemView.getContext()
+          .getResources()
+          .getString(R.string.bill_detail_item_trade_type,
+              bill.getTradeType(holder.itemView.getContext(), bill.type, bill.pay_type)));
+    }
     holder.tvItemBillAccount.setText(bill.getPrice(bill.price, bill.type));
     holder.tvItemBillStatus.setText(bill.getStatus(holder.itemView.getContext(), bill.status, bill.type));
   }

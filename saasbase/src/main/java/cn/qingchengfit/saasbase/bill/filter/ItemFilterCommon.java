@@ -3,11 +3,15 @@ package cn.qingchengfit.saasbase.bill.filter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.bill.filter.model.Content;
+import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.widgets.CheckBoxButton;
 import cn.qingchengfit.widgets.QcAutoLineRadioGroup;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -22,34 +26,54 @@ import java.util.List;
 
 public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.ItemFilterVH> {
 
-  private List<Content> contents = new ArrayList<>();
-  public List<Integer> resultList = new ArrayList<>();
+  private FilterModel filterModel;
+  private QcAutoLineRadioGroup radioGroup;
+  private boolean isReset;
 
-  public ItemFilterCommon(List<Content> contents) {
-    this.contents = contents;
+  public ItemFilterCommon(FilterModel filterModel) {
+    this.filterModel = filterModel;
   }
-
 
   @Override public ItemFilterVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
       ViewGroup parent) {
-    ItemFilterVH holder = new ItemFilterVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    ItemFilterVH holder =
+        new ItemFilterVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     return holder;
   }
 
-  public List<Content> getCheckedContent(){
+  public FilterModel getData() {
+    return filterModel;
+  }
+
+  public List<Content> getCheckedContent() {
     List<Content> tempList = new ArrayList<>();
-    for (int position : resultList) {
-      tempList.add(contents.get(position));
+    for (int position : radioGroup.getCheckedPosList()) {
+      tempList.add(filterModel.content.get(position));
     }
     return tempList;
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemFilterVH holder, int position,
       List payloads) {
-    for (Content content : contents){
-      CheckBoxButton button = new CheckBoxButton(holder.itemView.getContext());
-      button.setContent(content.name);
+    if (adapter.isSelected(position)){
+      holder.billFilterCommon.clearCheck();
+      adapter.removeSelection(position);
+      return;
     }
+    holder.billFilterTitle.setText(filterModel.name);
+    for (Content content : filterModel.content) {
+      ViewGroup.LayoutParams params =
+          new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+              MeasureUtils.dpToPx(40f, holder.itemView.getResources()), 1);
+
+      CheckBoxButton button = (CheckBoxButton) LayoutInflater.from(holder.itemView.getContext())
+          .inflate(cn.qingchengfit.widgets.R.layout.layout_radiogroup_checkbox, null);
+      button.setContent(content.name);
+
+      button.setLayoutParams(params);
+      holder.billFilterCommon.addChild(button);
+    }
+    this.radioGroup = holder.billFilterCommon;
   }
 
   @Override public boolean equals(Object o) {
@@ -63,18 +87,12 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
   class ItemFilterVH extends FlexibleViewHolder {
 
     @BindView(R2.id.bill_filter_common) QcAutoLineRadioGroup billFilterCommon;
+    @BindView(R2.id.bill_filter_title) TextView billFilterTitle;
 
-    public ItemFilterVH(View view, FlexibleAdapter adapter) {
+    public ItemFilterVH(View view, final FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
-      billFilterCommon.setOnCheckoutPositionListener(new QcAutoLineRadioGroup.OnCheckoutPositionListener() {
-        @Override public void onCheckPosition(List<Integer> checkedList) {
-          if (checkedList.size() >= 0){
-            resultList.clear();
-            resultList.addAll(checkedList);
-          }
-        }
-      });
+      billFilterCommon.setSingleSelected(false);
     }
   }
 }

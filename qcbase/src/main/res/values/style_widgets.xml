@@ -60,6 +60,14 @@
     <item name="ft_text_size">13sp</item>
   </style>
 
+  <style name="QcFilterRadio">
+    <item name="ft_vc_drawable_on">@drawable/bg_rect_corner_primary</item>
+    <item name="ft_vc_drawable_off">@drawable/shape_bg_rect_grey_corner4</item>
+    <item name="ft_color_on">@color/colorPrimary</item>
+    <item name="ft_color_off">@color/qc_text_black</item>
+    <item name="ft_text_size">13sp</item>
+  </style>
+
   <style name="TagGroup.Qc" parent="@style/TagGroup">
     <item name="atg_borderColor">?colorPrimary</item>
     <item name="atg_textSize">@dimen/txt_stanrdant</item>

@@ -9,6 +9,7 @@ import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import java.util.HashMap;
 import rx.Observable;
 
 /**
@@ -46,8 +47,8 @@ public class StaffModel implements IStaffModel {
     staffApi = repository.createGetApi(StaffApi.class);
   }
 
-  @Override public Observable<QcDataResponse<UserWrap>> getCurUser() {
-    return staffApi.getCurrentUser();
+  @Override public Observable<QcDataResponse<UserWrap>> getCurUser(HashMap<String, Object> params) {
+    return staffApi.getCurrentUser(params);
   }
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {

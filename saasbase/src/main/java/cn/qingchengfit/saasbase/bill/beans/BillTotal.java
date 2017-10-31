@@ -5,7 +5,7 @@ package cn.qingchengfit.saasbase.bill.beans;
  */
 
 public class BillTotal {
-  public float balance;
-  public float cash;
-  public float frozen_cash;
+  public float withdraw_sum;
+  public float can_withdraw_sum;
+  public float frozen_sum;
 }

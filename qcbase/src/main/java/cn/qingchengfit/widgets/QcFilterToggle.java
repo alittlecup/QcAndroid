@@ -80,8 +80,10 @@ public class QcFilterToggle extends CompoundButton implements QcCheckable {
         mChecked = a.getBoolean(R.styleable.QcFilterToggle_ft_checked,false);
         textSize = a.getDimension(R.styleable.QcFilterToggle_ft_text_size,getResources().getDimension(R.dimen.common_font));
         a.recycle();
-        DrawableCompat.setTint(buttonDrawableOn,colorOn);
-        DrawableCompat.setTint(buttonDrawableOff,colorOff);
+        if (buttonDrawableOn != null)
+          DrawableCompat.setTint(buttonDrawableOn,colorOn);
+        if (buttonDrawableOff != null)
+          DrawableCompat.setTint(buttonDrawableOff,colorOff);
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextSize(textSize);
         if (TextUtils.isEmpty(textOn))
@@ -91,6 +93,14 @@ public class QcFilterToggle extends CompoundButton implements QcCheckable {
         setClickable(true);
 
     }
+
+  public void setButtonDrawableOn(Drawable buttonDrawableOn) {
+    this.buttonDrawableOn = buttonDrawableOn;
+  }
+
+  public void setButtonDrawableOff(Drawable buttonDrawableOff) {
+    this.buttonDrawableOff = buttonDrawableOff;
+  }
 
   public void setStyle(@StyleRes int resId) {
     final TypedArray a = getContext().obtainStyledAttributes(resId, R.styleable.QcFilterToggle);
@@ -127,7 +137,7 @@ public class QcFilterToggle extends CompoundButton implements QcCheckable {
           buttonDrawableOn == null ? 0 : buttonDrawableOn.getIntrinsicWidth())) {
         int ind = (int) ((getWidth()
             - MeasureUtils.dpToPx(20f, getResources())
-            - buttonDrawableOn.getIntrinsicWidth()) / textLenth * txt.length());
+            - (buttonDrawableOn == null ? 0 : buttonDrawableOn.getIntrinsicWidth())) / textLenth * txt.length());
         txt = txt.substring(0, ind).concat("…");
       }
       textLenth = mTextPaint.measureText(txt);

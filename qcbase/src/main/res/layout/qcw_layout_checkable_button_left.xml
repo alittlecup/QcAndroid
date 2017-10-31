@@ -10,6 +10,7 @@
       android:background="#0000"
       android:gravity="center"
       android:visibility="gone"
+      tools:visibility="visible"
       />
 
   <TextView
@@ -20,6 +21,8 @@
       android:background="#0000"
       android:gravity="center"
       android:visibility="visible"
+      android:maxLines="1"
+      android:layout_marginLeft="2dp"
       tools:text="test"
       />
 </merge>

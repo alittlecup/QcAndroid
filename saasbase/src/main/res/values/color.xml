@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="bg_red">#1aea6161</color>
+  <color name="toolbar">#3a3a3a</color>
 
   <!--账单-->
   <color name="bill_head_background">#3a3a3a</color>

@@ -80,9 +80,9 @@
   <string name="bill_setting_gym_detail_logo">场馆Logo</string>
   <string name="bill_setting_gym_detail_name">场馆名称</string>
   <string name="bill_setting_gym_detail_no">商户编号</string>
-  <string name="bill_detail_item" formatted="false">%s - 尾号(%s)</string>
-  <string name="bill_detail_item_trade_type" formatted="false">%s (POS)</string>
-  <string name="bill_count_indeed" formatted="false">- : %f  +: %f</string>
+  <string formatted="false" name="bill_detail_item">%s - 尾号(%s)</string>
+  <string formatted="false" name="bill_detail_item_trade_type" >%s (POS)</string>
+  <string name="bill_count_indeed" formatted="false">- : %.2f  +: %.2f</string>
   <string name="bill_no_data">本月无数据</string>
 
   <!--支付-->
@@ -96,8 +96,17 @@
   <string name="pay_ali_success">支付宝支付</string>
   <string name="pay_ali_scan_success">支付宝支付</string>
   <string name="pay_card_success">银行卡收款</string>
+  <string name="pay_qq_success">QQ钱包</string>
+  <string name="pay_union_success">银联支付</string>
+  <string name="pay_other_success">其他支付</string>
+  <string name="pay_withdraw">提现</string>
+  <string name="pay_back_cash">退款</string>
 
   <string name="e_cardtpl_empty">找不到会员卡种类</string>
+  <string name="back_cash_way_weixin">微信支付原路返回</string>
+  <string name="back_cash_way_ali">支付宝原路返回</string>
+  <string name="back_cash_way_qq">QQ钱包原路返回</string>
+  <string name="back_cash_way_card">银行卡== %s (%s）</string>
 
 </resources>
 

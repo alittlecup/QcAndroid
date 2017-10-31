@@ -28,16 +28,15 @@ public class SaasConstant {
 
 
   public static final String PAY_TYPE_WX= "WEIXIN";
-  public static final String PAY_TYPE_WX_SCAN= "WEIXIN_QR_CODE";
   public static final String PAY_TYPE_ALIPAY= "ALIPAY";
-  public static final String PAY_TYPE_ALIPAY_SCAN= "ALIPAY_QR_CODE";
-  public static final String PAY_TYPE_CARD= "CARD";
+  public static final String PAY_TYPE_UNIONPAY= "UNIONPAY";
+  public static final String PAY_TYPE_QQPAY = "QQPAY";
+
 
   //平台: "WEB", "MEMBER", "POS", "APP"
   public static final String PAY_PLATFORM_WEB= "WEB";
   public static final String PAY_PLATFORM_APP= "APP";
   public static final String PAY_PLATFORM_MEMBER= "MEMBER";
   public static final String PAY_PLATFORM_POS= "POS";
-
-
+  
 }

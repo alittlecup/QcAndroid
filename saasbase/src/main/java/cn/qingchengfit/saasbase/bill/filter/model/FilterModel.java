@@ -10,6 +10,7 @@ public class FilterModel {
 
   public String name;
   public String key;
+  public int type;
   public List<Content> content;
 
 }

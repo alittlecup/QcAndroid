@@ -91,6 +91,7 @@ public class SplashActivity extends BaseActivity{
               gymWrapper.setBrand(new Brand.Builder().name(gymQcDataResponse.data.gym.brand_name).build());
               gymWrapper.setSuperuser(new SuperUser(gymQcDataResponse.data.gym.superuser.username,
                 gymQcDataResponse.data.gym.superuser.phone));
+
             }else{
               SplashActivity.this.runOnUiThread(new Runnable() {
                 @Override public void run() {
@@ -98,7 +99,9 @@ public class SplashActivity extends BaseActivity{
                 }
               });
             }
-            return staffModel.getCurUser().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("gym_id", gymQcDataResponse.data.gym.id);
+            return staffModel.getCurUser(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
           }
         })
       .subscribe(new NetSubscribe<QcDataResponse<UserWrap>>() {

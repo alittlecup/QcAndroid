@@ -1,0 +1,66 @@
+package cn.qingchengfit.saasbase.bill.items;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.utils.DateUtils;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
+
+/**
+ * Created by fb on 2017/10/29.
+ */
+
+public class ItemBillAccount extends AbstractFlexibleItem<ItemBillAccount.ItemBillAccountVH> {
+
+  String time;
+  float expenses;
+  float income;
+
+  public ItemBillAccount(String time, float expenses, float income) {
+    this.time = time;
+    this.expenses = expenses;
+    this.income = income;
+
+  }
+
+  @Override public boolean equals(Object o) {
+    return false;
+  }
+
+  @Override
+  public ItemBillAccountVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
+      ViewGroup parent) {
+    return new ItemBillAccountVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  }
+
+  @Override
+  public void bindViewHolder(FlexibleAdapter adapter, ItemBillAccountVH holder, int position,
+      List payloads) {
+    holder.tvBillTime.setText(DateUtils.getYYMMfromServer(time));
+    holder.tvBillIncome.setText(
+        holder.itemView.getResources().getString(R.string.bill_count_indeed, expenses, income));
+  }
+
+  @Override public int getLayoutRes() {
+    return R.layout.item_bill_count;
+  }
+
+  class ItemBillAccountVH extends FlexibleViewHolder {
+
+    @BindView(R2.id.tv_bill_time) TextView tvBillTime;
+    @BindView(R2.id.tv_bill_income) TextView tvBillIncome;
+
+    public ItemBillAccountVH(View view, FlexibleAdapter adapter) {
+      super(view, adapter);
+      ButterKnife.bind(this, view);
+    }
+  }
+}
