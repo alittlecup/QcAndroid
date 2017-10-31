@@ -42,7 +42,7 @@ public interface StaffApi {
    * 获取当前用户信息
    */
   @GET("/api/info/current/user/")
-  rx.Observable<QcDataResponse<UserWrap>> getCurrentUser();
+  rx.Observable<QcDataResponse<UserWrap>> getCurrentUser(@QueryMap HashMap<String, Object> params);
 
 
   /**

@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
@@ -31,7 +31,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/3/5 2016.
  */
-public class ChooseGymPresenter implements Presenter {
+public class ChooseGymPresenter extends BasePresenter {
     @Inject GymUseCase useCase;
     @Inject SerPermisAction serPermisAction;
     private Subscription gymListSp;
@@ -72,6 +72,7 @@ public class ChooseGymPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         if (gymListSp != null) gymListSp.unsubscribe();
         this.view = null;
     }

@@ -83,30 +83,81 @@ public class QcAutoLineRadioGroup extends LinearLayout
   }
 
   @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    //int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+    //int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+    //measureChildren(widthMeasureSpec, heightMeasureSpec);
+    //setMeasuredDimension(widthSize, heightSize);
+    int heightMode = MeasureSpec.getMode(heightMeasureSpec);
     int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-    measureChildren(widthMeasureSpec, heightMeasureSpec);
-    setMeasuredDimension(widthSize, heightSize);
+    int width = MeasureSpec.getSize(widthMeasureSpec) + 30;
+
+    int height ;
+    if (heightMode == MeasureSpec.EXACTLY) {
+      height = heightSize;
+    } else {
+      int childCount = getChildCount();
+      if(childCount<=0){
+        height = 0;
+      }else{
+        int row = 1;
+        int widthSpace = width;
+        for(int i = 0;i<childCount; i++){
+          View view = getChildAt(i);
+          int childW = view.getMeasuredWidth();
+          if(widthSpace >= childW ){
+            widthSpace -= childW;
+          }else{
+            row ++;
+            widthSpace = width-childW;
+          }
+          widthSpace -= mHorizontalSpacing;
+        }
+        int childH = getChildAt(0).getMeasuredHeight();
+        height = (childH * row) + mVerticalSpacing * (row-1);
+
+      }
+    }
+
+    setMeasuredDimension(width, height);
   }
 
   @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
-    int mTotalHeight = 0;
-    int mTotalWidth = 0;
-    int mTempHeight = 0;
-    int childCount = getChildCount();
-    for (int i = 0; i < childCount; i++) {
+    //int mTotalHeight = 0;
+    //int mTotalWidth = 0;
+    //int mTempHeight = 0;
+    //int childCount = getChildCount();
+    //for (int i = 0; i < childCount; i++) {
+    //  View childView = getChildAt(i);
+    //  int measureHeight = childView.getMeasuredHeight();
+    //  int measuredWidth = childView.getMeasuredWidth();
+    //  mTempHeight = (measureHeight > mTempHeight) ? measureHeight : mTempHeight;
+    //  if ((measuredWidth + mTotalWidth + mHorizontalSpacing) > mScreenWidth) {
+    //    mTotalWidth = 0;
+    //    mTotalHeight += (mTempHeight + mVerticalSpacing);
+    //    mTempHeight = 0;
+    //  }
+    //  childView.layout(mTotalWidth + mHorizontalSpacing, mTotalHeight,
+    //      measuredWidth + mTotalWidth + mHorizontalSpacing, mTotalHeight + measureHeight);
+    //  mTotalWidth += (measuredWidth + mHorizontalSpacing);
+    //}
+    int row = 0;
+    int right = 0;
+    int botom;
+    for (int i = 0; i < getChildCount(); i++) {
       View childView = getChildAt(i);
-      int measureHeight = childView.getMeasuredHeight();
-      int measuredWidth = childView.getMeasuredWidth();
-      mTempHeight = (measureHeight > mTempHeight) ? measureHeight : mTempHeight;
-      if ((measuredWidth + mTotalWidth + mHorizontalSpacing) > mScreenWidth) {
-        mTotalWidth = 0;
-        mTotalHeight += (mTempHeight + mVerticalSpacing);
-        mTempHeight = 0;
+      int childW = childView.getMeasuredWidth();
+      int childH = childView.getMeasuredHeight();
+      right += childW;
+      botom = row * (childH + mVerticalSpacing) + childH;
+      if (right > (r - mHorizontalSpacing)) {
+        row++;
+        right = childW;
+        botom = row * (childH + mVerticalSpacing) + childH;
       }
-      childView.layout(mTotalWidth + mHorizontalSpacing, mTotalHeight,
-          measuredWidth + mTotalWidth + mHorizontalSpacing, mTotalHeight + measureHeight);
-      mTotalWidth += (measuredWidth + mHorizontalSpacing);
+      childView.layout(right - childW, botom - childH, right, botom);
+
+      right += mHorizontalSpacing;
     }
   }
 
@@ -126,6 +177,10 @@ public class QcAutoLineRadioGroup extends LinearLayout
     this.onCheckoutPositionListener = onCheckoutPositionListener;
   }
 
+  public void setSingleSelected(boolean singleSelected) {
+    isSingleSelected = singleSelected;
+  }
+
   @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
     if (getChildCount() > 0) {
       if (isSingleSelected) {
@@ -137,10 +192,11 @@ public class QcAutoLineRadioGroup extends LinearLayout
         }
       }
     }
+    if (checkedChange != null) checkedChange.onCheckedChange();
+
     if (onCheckoutPositionListener != null){
       onCheckoutPositionListener.onCheckPosition(getCheckedPosList());
     }
-    if (checkedChange != null) checkedChange.onCheckedChange();
   }
 
   //多选情况下获取选中的position
@@ -155,6 +211,13 @@ public class QcAutoLineRadioGroup extends LinearLayout
       }
     }
     return checkedList;
+  }
+
+  public void addChild(View btn){
+    if (btn instanceof QcCheckable){
+      ((QcCheckable) btn).addCheckedChangeListener(this);
+    }
+    addView(btn);
   }
 
   /**

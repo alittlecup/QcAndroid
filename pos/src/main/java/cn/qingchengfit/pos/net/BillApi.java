@@ -3,7 +3,9 @@ package cn.qingchengfit.pos.net;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.bill.beans.BillLock;
 import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
-import cn.qingchengfit.saasbase.bill.network.BusinessOrderListWrap;
+import cn.qingchengfit.saasbase.bill.beans.BillTotalWrapper;
+import cn.qingchengfit.saasbase.bill.beans.BillWrapper;
+import cn.qingchengfit.saasbase.bill.filter.model.FilterWrapper;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
 import java.util.HashMap;
@@ -37,19 +39,19 @@ import rx.Observable;
 
 public interface BillApi {
   @GET("/api/rongshu/gyms/{gym_id}/bills/{billid}/")
-  Observable<QcDataResponse<BusinessOrderWrap>> getBillDetail(@Path("gym_id") String gymid, @Path("billid") String billId,@QueryMap HashMap<String,Object> params);
-
-  @GET("/api/rongshu/gyms/{gym_id}/bills/")
-  Observable<QcDataResponse<BusinessOrderListWrap>> getBillList(@Path("gym_id") String gymid);
+  Observable<QcDataResponse<BusinessOrderWrap>> getBillDetail(@Path("gym_id") String gymid,
+      @Path("billid") String billId, @QueryMap HashMap<String, Object> params);
 
   @GET("/api/rongshu/payments/{billid}/status/")
-  Observable<QcDataResponse<BillPayStatus>> getBillStatus(@Path("billid") String billId,@QueryMap HashMap<String,Object> params);
+  Observable<QcDataResponse<BillPayStatus>> getBillStatus(@Path("billid") String billId,
+      @QueryMap HashMap<String, Object> params);
 
   /**
    * Pay request list
    */
   @GET("/api/rongshu/gyms/{gym_id}/payment/tasks/")
-  Observable<QcDataResponse<PayRequestListWrap>> getPayRequsetList(@Path("gym_id") String gymid,@QueryMap HashMap<String,Object> params);
+  Observable<QcDataResponse<PayRequestListWrap>> getPayRequsetList(@Path("gym_id") String gymid,
+      @QueryMap HashMap<String, Object> params);
 
   /**
    * 锁定账单
@@ -60,8 +62,27 @@ public interface BillApi {
   /**
    * 取消订单
    */
-  @DELETE("/api/rongshu/tasks/{task_id}/to/payment/")
-  Observable<QcDataResponse> cancelPayRequest(@Path("task_id") String task_id);
+  @DELETE("/api/rongshu/tasks/{task_id}/to/payment/") Observable<QcDataResponse> cancelPayRequest(
+      @Path("task_id") String task_id);
 
+  /**
+   * 账单列表
+   */
+  @GET("/api/rongshu/gyms/{gym_id}/bills/") rx.Observable<QcDataResponse<BillWrapper>> getBillList(
+      @Path("gym_id") String gym_id, @QueryMap HashMap<String, Object> params);
 
+  /**
+   * 账单统计 //TODO 未给出
+   */
+
+  @GET("/api/rongshu/gyms/{gym_id}/bills/statistics/") rx.Observable<QcDataResponse<BillTotalWrapper>> getBillToTal(
+      @Path("gym_id") String gym_id);
+
+  /**
+   *  筛选
+   * @param gymid
+   * @return
+   */
+  @GET("api/rongshu/gyms/{gym_id}/bills/filters/")
+  Observable<QcDataResponse<FilterWrapper>> getBillFilterList(@Path("gym_id") String gymid);
 }

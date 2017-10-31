@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
-
+    android:paddingBottom="19dp"
     >
 
   <TextView
@@ -25,7 +25,6 @@
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="16dp"
       android:layout_marginTop="10dp"
       android:gravity="left|center_vertical"
       android:orientation="horizontal"

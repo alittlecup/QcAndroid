@@ -66,7 +66,8 @@
         android:id="@+id/img_setting_staff"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        tools:src="@drawable/vector_student_management_follow"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/ic_default_staff_man_head"
         />
 
     <LinearLayout
@@ -115,7 +116,7 @@
       app:civ_lable="@string/bill_setting_cashier"
       app:civ_text_color="@color/black"
       app:civ_showright="true"
-      app:civ_content="4"
+      app:civ_content="..."
       app:civ_content_color="@color/text_warm"
       app:civ_clickable="true"
       />

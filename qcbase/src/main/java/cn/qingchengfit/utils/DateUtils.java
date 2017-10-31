@@ -263,6 +263,11 @@ public class DateUtils {
     return c.getTime();
   }
 
+  public static int getYear(){
+    Calendar c = Calendar.getInstance();
+    return c.get(Calendar.YEAR);
+  }
+
   /**
    * 以YYMMDD的格式增加天数
    */

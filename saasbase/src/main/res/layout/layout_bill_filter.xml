@@ -5,20 +5,16 @@
     android:id="@+id/filter_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ee1"
     android:orientation="vertical"
     android:paddingBottom="12dp"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
+    android:background="@color/white"
+    android:paddingTop="27dp"
     >
 
   <android.support.v7.widget.RecyclerView
       android:id="@+id/recycler_bill_filter"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      />
-
-  <android.support.v4.widget.Space
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
@@ -28,6 +24,8 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center_horizontal"
+      android:layout_below="@id/recycler_bill_filter"
+      android:layout_alignParentBottom="true"
       >
 
     <TextView

@@ -71,7 +71,6 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_main, container, false);
     unbinder = ButterKnife.bind(this, view);
-
     initToolbar(toolbar);
     List<ImageActionItem> datas = new ArrayList<>();
     datas.add(new ImageActionItem(R.drawable.vd_btn_home_card, "会员卡种类管理"));

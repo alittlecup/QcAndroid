@@ -70,7 +70,7 @@ import javax.inject.Inject;
     Glide.with(getContext())
         .load(loginStatus.getLoginUser().getAvatar())
         .asBitmap()
-        .placeholder(R.drawable.ic_default_head_nogender)
+        .placeholder(AppUtils.getHeaderDrawable(loginStatus.getLoginUser().gender))
         .into(new CircleImgWrapper(imgSettingStaff, getContext()));
 
     tvSettingStaffName.setText(loginStatus.getLoginUser().username);

@@ -3,12 +3,16 @@ package cn.qingchengfit.saasbase.repository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.bill.beans.BillLock;
 import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
+import cn.qingchengfit.saasbase.bill.beans.BillTotalWrapper;
+import cn.qingchengfit.saasbase.bill.beans.BillWrapper;
+import cn.qingchengfit.saasbase.bill.filter.model.FilterWrapper;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
 import java.util.HashMap;
 import retrofit2.http.DELETE;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -48,5 +52,25 @@ public interface IBillModel {
    */
   @DELETE("/api/rongshu/tasks/{task_id}/to/payment/")
   Observable<QcDataResponse> cancelPayRequest(@Path("task_id") String task_id);
+
+   /** 获取账单总计
+   * @param businessOrderId
+   * @return
+   */
+  Observable<QcDataResponse<BillTotalWrapper>> queryBillTotal(String businessOrderId);
+
+  /**
+   * 获取账单列表
+   * @param gym_id
+   * @return
+   */
+  Observable<QcDataResponse<BillWrapper>> queryBillList(String gym_id,
+      @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 筛选列表
+   * @return
+   */
+  Observable<QcDataResponse<FilterWrapper>> getBillFilterList(String gymId);
 
 }

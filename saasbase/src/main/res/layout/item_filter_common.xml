@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cn.qingchengfit.widgets.QcAutoLineRadioGroup
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bill_filter_common"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:gravity="left|center_vertical"
-    android:orientation="horizontal"
-    tools:visibility="visible"
-    />
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:layout_marginBottom="19dp"
+    >
+
+  <TextView
+      android:id="@+id/bill_filter_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:gravity="center_vertical|left"
+      tools:text="注册时间"
+      android:textColor="@color/qc_text_black"
+      android:textSize="14sp"
+      />
+
+  <cn.qingchengfit.widgets.QcAutoLineRadioGroup
+      android:id="@+id/bill_filter_common"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      />
+
+</LinearLayout>

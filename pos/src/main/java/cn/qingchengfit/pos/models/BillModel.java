@@ -7,6 +7,9 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.net.BillApi;
 import cn.qingchengfit.saasbase.bill.beans.BillLock;
 import cn.qingchengfit.saasbase.bill.beans.BillPayStatus;
+import cn.qingchengfit.saasbase.bill.beans.BillTotalWrapper;
+import cn.qingchengfit.saasbase.bill.beans.BillWrapper;
+import cn.qingchengfit.saasbase.bill.filter.model.FilterWrapper;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
 import cn.qingchengfit.saasbase.repository.IBillModel;
@@ -77,5 +80,17 @@ public class BillModel implements IBillModel {
 
   @Override public Observable<QcDataResponse> cancelPayRequest(@Path("task_id") String task_id) {
     return billApi.cancelPayRequest(task_id);
+  }
+
+  @Override public Observable<QcDataResponse<BillTotalWrapper>> queryBillTotal(String businessOrderId) {
+    return billApi.getBillToTal(businessOrderId);
+  }
+
+  @Override public Observable<QcDataResponse<BillWrapper>> queryBillList(String gym_id, HashMap<String, Object> params) {
+    return billApi.getBillList(gym_id, params);
+  }
+
+  @Override public Observable<QcDataResponse<FilterWrapper>> getBillFilterList(String gym_id) {
+    return billApi.getBillFilterList(gym_id);
   }
 }

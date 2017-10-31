@@ -105,15 +105,15 @@ public class BillDetailPresenterPresenter extends BasePresenter {
     switch (s) {
       case SaasConstant.PAY_TYPE_WX:
         return R.string.pay_wx;
-      case SaasConstant.PAY_TYPE_WX_SCAN:
-        return R.string.pay_wx_scan;
+      case SaasConstant.PAY_TYPE_QQPAY:
+        return R.string.pay_qq_success;
       case SaasConstant.PAY_TYPE_ALIPAY:
         return R.string.pay_ali;
-      case SaasConstant.PAY_TYPE_ALIPAY_SCAN:
-        return R.string.pay_ali_scan;
+      case SaasConstant.PAY_TYPE_UNIONPAY:
+        return R.string.pay_union_success;
       //case SaasConstant.PAY_TYPE_CARD:
       default:
-        return R.string.pay_card;
+        return R.string.pay_other_success;
     }
   }
 
