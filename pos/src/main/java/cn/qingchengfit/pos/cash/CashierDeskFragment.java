@@ -152,7 +152,7 @@ import javax.inject.Inject;
   }
 
   @OnClick(R.id.btn_pay) public void onBtnPayClicked() {
-
+    presenter.pay();
   }
 
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {
@@ -189,7 +189,6 @@ import javax.inject.Inject;
             + "|tradeFlowId:" + tradeFlowId + "|dealTime:" + dealTime + "|payStatus:" + payStatus);
           onPayDone(merorderId);
         }
-
       }
     }else {
       onShowError("支付取消");

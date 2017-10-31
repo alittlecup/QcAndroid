@@ -12,6 +12,7 @@ import cn.qingchengfit.saasbase.bill.beans.BillWrapper;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterWrapper;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import cn.qingchengfit.saasbase.repository.IBillModel;
 import java.util.HashMap;
 import retrofit2.http.Path;
@@ -52,8 +53,14 @@ public class BillModel implements IBillModel {
     billApi = repository.createGetApi(BillApi.class);
   }
 
+  @Override public Observable<QcDataResponse<PayBusinessResponseWrap>> directPay(long amount) {
+    HashMap<String,Object> body = new HashMap<>();
+    body.put("order_amount",amount);
+    return billApi.directPay(gymWrapper.getGymId(),body);
+  }
+
   @Override public Observable<QcDataResponse<PayRequestListWrap>> getPayRequestList(int page) {
-    HashMap<String, Object> prams = gymWrapper.getParams();
+    HashMap<String, Object> prams = new HashMap<>();
     prams.put("page", page);
     return billApi.getPayRequsetList(gymWrapper.getGymId(),prams);
   }

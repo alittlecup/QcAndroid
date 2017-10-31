@@ -27,6 +27,7 @@
     <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
     <item name="buttonStyle">@style/Qc.CommonBtn</item>
     <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
+    <item name="android:windowSoftInputMode">adjustPan</item>
     <item name="editTextStyle">@style/Qc.EditTextStyle</item>
     <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
     <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>

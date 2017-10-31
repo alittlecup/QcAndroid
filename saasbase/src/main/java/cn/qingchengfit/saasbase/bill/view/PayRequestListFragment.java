@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.bill.beans.PayRequest;
 import cn.qingchengfit.saasbase.bill.items.PayRequestItem;
@@ -87,6 +88,11 @@ import rx.android.schedulers.AndroidSchedulers;
     return root;
   }
 
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    srl.setRefreshing(true);
+    onRefresh();
+  }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -128,7 +134,12 @@ import rx.android.schedulers.AndroidSchedulers;
   }
 
   @Override public void onGetData(List<PayRequest> datas, int page) {
-    commonFlexAdapter.onLoadMoreComplete(datas,500);
+    stopRefresh();
+    if (page ==1 && (datas == null || datas.size() == 0)){
+      commonFlexAdapter.clear();
+      commonFlexAdapter.addItem(new CommonNoDataItem(getNoDataIconRes(),getNoDataStr()));
+    }else
+      commonFlexAdapter.onLoadMoreComplete(datas,500);
   }
 
   /**

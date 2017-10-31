@@ -37,6 +37,7 @@ public class GymWrapper {
   private boolean noService;
   private boolean isOutOfDate;
   private boolean isSingleMode;
+  private String socket_channel_id;
 
   @Inject
   public GymWrapper(){
@@ -74,6 +75,14 @@ public class GymWrapper {
 
   public boolean inBrand() {
     return coachService == null || TextUtils.isEmpty(coachService.getId());
+  }
+
+  public String getSocket_channel_id() {
+    return socket_channel_id;
+  }
+
+  public void setSocket_channel_id(String socket_channel_id) {
+    this.socket_channel_id = socket_channel_id;
   }
 
   public boolean isPro() {

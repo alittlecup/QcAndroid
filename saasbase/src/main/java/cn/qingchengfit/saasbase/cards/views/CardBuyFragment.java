@@ -28,6 +28,7 @@ import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DrawableUtils;
@@ -117,11 +118,9 @@ import javax.inject.Inject;
       }
     });
     rv.setNestedScrollingEnabled(false);
-    rv.addItemDecoration(new FlexibleItemDecoration(getContext())
-      .withOffset(6)
+    rv.addItemDecoration(new FlexibleItemDecoration(getContext()).withOffset(6)
       .withRightEdge(true)
-      .withBottomEdge(true)
-    );
+      .withBottomEdge(true));
     rv.setLayoutManager(manager);
     rv.setAdapter(commonFlexAdapter);
     civRealMoney.addTextWatcher(new TextWatcher() {
@@ -178,9 +177,9 @@ import javax.inject.Inject;
 
   @Override public void onGetOptions(List<CardTplOption> options) {
     commonFlexAdapter.clear();
-    //List<AbstractFlexibleItem> items = new ArrayList<>();
     for (CardTplOption option : options) {
-      commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type));
+      if (option.can_create)
+        commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type));
     }
     // TODO: 2017/9/30 判断权限
     commonFlexAdapter.addItem(new CardtplOptionOhterItem());
@@ -221,10 +220,29 @@ import javax.inject.Inject;
         .build());
   }
 
-  @Override public void showInputMoney(boolean show, boolean isTimecard) {
-    loInputMoney.setVisibility(show ? View.VISIBLE : View.GONE);
-    if (show && isTimecard) elNeedValid.hideHeader();
-    civChargeMoney.setVisibility(isTimecard ? View.GONE : View.VISIBLE);
+  @Override public void showInputMoney(boolean other, int cardCate, boolean validDay) {
+    if (cardCate == Configs.CATEGORY_DATE) {//期限卡
+      loInputMoney.setVisibility(View.VISIBLE);
+      elNeedValid.hideHeader();
+      civEndTime.setVisibility(other ? View.VISIBLE : View.GONE);
+      civChargeMoney.setVisibility(View.GONE);
+      civRealMoney.setVisibility(View.GONE);
+      elNeedValid.resizeContent((int)getResources().getDimension(R.dimen.qc_item_height)*(other?3:2)+1);
+    } else {//储值卡 或者次卡
+      if (!other && validDay) {
+        loInputMoney.setVisibility(View.VISIBLE);
+        elNeedValid.hideHeader();
+        civEndTime.setVisibility(View.GONE);
+        civChargeMoney.setVisibility(View.GONE);
+        civRealMoney.setVisibility(View.GONE);
+        elNeedValid.resizeContent((int)getResources().getDimension(R.dimen.qc_item_height)*2+1);
+      } else {
+        loInputMoney.setVisibility(other ? View.VISIBLE : View.GONE);
+        civChargeMoney.setVisibility(View.VISIBLE);
+        civChargeMoney.setUnit(CardBusinessUtils.getCardTypeCategoryUnit(cardCate,getContext()));
+        civRealMoney.setVisibility(View.VISIBLE);
+      }
+    }
   }
 
   @Override public void bindStudent(String student) {

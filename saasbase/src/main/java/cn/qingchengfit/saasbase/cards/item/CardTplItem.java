@@ -53,7 +53,11 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
     holder.tvCardtplName.setText(cardTpl.getName());
     holder.tvCardId.setText(cardTpl.getId());
     holder.tvGymName.setText(cardTpl.getShopNames());
+    holder.imgStatus.setVisibility(cardTpl.is_enable?View.GONE:View.VISIBLE);
+    holder.imgStatus.setText("已停卡");
+    holder.imgStatus.setBackground(DrawableUtils.generateCardStatusBg(R.color.red,holder.imgStatus.getContext()));
   }
+
 
   @Override public boolean equals(Object o) {
     if (o instanceof CardTplItem){
@@ -68,6 +72,7 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
     @BindView(R2.id.tv_gym_name) TextView tvGymName;
     @BindView(R2.id.tv_card_id) TextView tvCardId;
     @BindView(R2.id.cardview) RelativeLayout cardview;
+    @BindView(R2.id.img_stutus) TextView imgStatus;
     public CardTplVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);

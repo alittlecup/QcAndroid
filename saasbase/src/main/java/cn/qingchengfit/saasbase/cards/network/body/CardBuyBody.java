@@ -2,8 +2,10 @@ package cn.qingchengfit.saasbase.cards.network.body;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.DateUtils;
 
 /**
  * power by
@@ -71,13 +73,23 @@ public class CardBuyBody implements Parcelable {
     return 0;
   }
 
-  public void setBuyAccount(String account ,String start,String end){
+  public void setBuyAccount(String account ,String start,String end,CardTplOption cto){
     switch (type){
       case 1:
         this.account = account;
+        if (cto != null && cto.limit_days){
+          this.check_valid = true;
+          this.valid_from = start;
+          this.valid_to = DateUtils.addDay(start,cto.days);
+        }
         break;
       case 2:
         this.times = account;
+        if (cto != null && cto.limit_days){
+          this.check_valid = true;
+          this.valid_from = start;
+          this.valid_to = DateUtils.addDay(start,cto.days);
+        }
         break;
       case 3:
         this.start = start;

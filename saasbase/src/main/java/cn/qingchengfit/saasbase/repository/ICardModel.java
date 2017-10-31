@@ -144,5 +144,8 @@ public interface ICardModel {
    */
   rx.Observable<QcDataResponse<StudentListWrapper>> qcGetBindStudent(String cardid);
 
-
+  /**
+   * 修改卡信息
+   */
+  rx.Observable<QcDataResponse> editCardInfo(String cardid,HashMap<String,Object> p);
 }

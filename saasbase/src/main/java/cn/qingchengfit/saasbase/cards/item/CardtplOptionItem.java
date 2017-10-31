@@ -52,7 +52,7 @@ public class CardtplOptionItem
   public void bindViewHolder(FlexibleAdapter adapter, CardtplStandardVH holder, int position,
       List payloads) {
     String unitStr = CardBusinessUtils.getCardTypeCategoryUnit(cardtplType,holder.title.getContext());
-    holder.title.setText("售价"+option.price + unitStr);
+    holder.title.setText("售价"+option.price + "元");
     if (TextUtils.isEmpty(option.charge)) {
       holder.realIncome.setVisibility(View.GONE);
     } else {

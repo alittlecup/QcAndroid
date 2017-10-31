@@ -6,7 +6,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.pos.net.PosApi;
+import cn.qingchengfit.pos.net.CardApi;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
@@ -50,18 +50,18 @@ public class CardModel implements ICardModel {
   QcRestRepository repository;
   GymWrapper gymWrapper;
   LoginStatus loginStatus;
-  PosApi posApi;
+  CardApi posApi;
 
   public CardModel(QcRestRepository repository, GymWrapper gymWrapper, LoginStatus loginStatus) {
     this.repository = repository;
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    posApi = repository.createGetApi(PosApi.class);
+    posApi = repository.createGetApi(CardApi.class);
   }
 
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(String type, String isEnable) {
-    return repository.createGetApi(PosApi.class)
+    return posApi
         .qcGetCardTpls(gymWrapper.getGymId(), gymWrapper.getParams(), null, isEnable);
   }
 
@@ -71,19 +71,19 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse<CardTplWrapper>> qcGetCardTplsDetail(String cardid) {
-    return repository.createGetApi(PosApi.class)
+    return posApi
         .qcGetCardTplsDetail(gymWrapper.getGymId(), cardid, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse<CardTplOptionListWrap>> qcGetOptions(String cardtps_id) {
-    return repository.createGetApi(PosApi.class)
+    return posApi
         .qcGetOptions(gymWrapper.getGymId(), cardtps_id, gymWrapper.getParams());
   }
 
   @Override
   public Observable<QcDataResponse<CardTplListWrap>> qcGetCardFilterTpls(boolean is_active) {
-    return repository.createGetApi(PosApi.class)
+    return posApi
         .qcGetCardFilterCondition(gymWrapper.getGymId(), gymWrapper.getParams());
   }
 
@@ -150,7 +150,7 @@ public class CardModel implements ICardModel {
   @Override
   public Observable<QcDataResponse<CardListWrap>> qcGetAllCard(HashMap<String, Object> params) {
     params.putAll(gymWrapper.getParams());
-    return repository.createGetApi(PosApi.class).getAllCards(gymWrapper.getGymId(), params);
+    return posApi.getAllCards(gymWrapper.getGymId(), params);
   }
 
   @Override public Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard() {
@@ -159,5 +159,9 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse<StudentListWrapper>> qcGetBindStudent(String cardid) {
     return null;
+  }
+
+  @Override public Observable<QcDataResponse> editCardInfo(String cardid,HashMap<String,Object> p) {
+    return posApi.editCardInfo(gymWrapper.getGymId(),cardid ,p);
   }
 }

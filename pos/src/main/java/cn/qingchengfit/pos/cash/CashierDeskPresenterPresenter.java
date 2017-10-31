@@ -6,17 +6,25 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
+import cn.qingchengfit.saasbase.repository.IBillModel;
+import cn.qingchengfit.subscribes.NetSubscribe;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class CashierDeskPresenterPresenter extends BasePresenter {
   private MVPView view;
 
   @Inject GymWrapper gymWrapper;
-
+  @Inject IBillModel billModel;
   @Inject public CashierDeskPresenterPresenter() {
   }
 
@@ -42,6 +50,8 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
   public void pressBackSpace(){
     if (current != 0) {
       current = current / 10;
+      BigDecimal   b  =   new BigDecimal(current);
+      current = b.setScale(2,BigDecimal.ROUND_DOWN).floatValue();
       if (current < 0.01)
         current = 0;
     }
@@ -96,6 +106,22 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
 
 
 
+  public void pay() {
+    long amont = (long)((getTotal()+current)*100);
+    RxRegiste(billModel.directPay(amont)
+          .onBackpressureLatest()
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponseWrap>>() {
+                @Override public void onNext(QcDataResponse<PayBusinessResponseWrap> qcResponse) {
+                  if (ResponseConstant.checkSuccess(qcResponse)) {
+                    view.onBusinessOrder(qcResponse.data.order);
+                  } else {
+                    view.onShowError(qcResponse.getMsg());
+                  }
+                }
+              }));
+  }
 
   @Override public void attachView(PView v) {
     view = (MVPView) v;
@@ -105,6 +131,7 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
     super.unattachView();
     view = null;
   }
+
 
   public interface MVPView extends CView {
     void showTotal(float f);

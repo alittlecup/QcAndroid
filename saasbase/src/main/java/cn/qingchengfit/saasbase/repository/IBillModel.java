@@ -8,6 +8,7 @@ import cn.qingchengfit.saasbase.bill.beans.BillWrapper;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterWrapper;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import java.util.HashMap;
 import retrofit2.http.DELETE;
 import retrofit2.http.POST;
@@ -20,6 +21,12 @@ import rx.Observable;
  */
 
 public interface IBillModel {
+  /**
+   * 直接支付
+   * @param amount 单位（分）
+   */
+  Observable<QcDataResponse<PayBusinessResponseWrap>> directPay(long  amount);
+
   /**
    *  支付请求列表
    */

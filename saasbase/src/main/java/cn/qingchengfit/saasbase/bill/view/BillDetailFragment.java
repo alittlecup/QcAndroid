@@ -68,6 +68,7 @@ import javax.inject.Inject;
   @BindView(R2.id.btn_print) Button btnPrint;
   @BindView(R2.id.btn_remarks) Button btnRemarks;
   @BindView(R2.id.btn_card) Button btnCard;
+  @BindView(R2.id.divider_extra) View dividerExtra;
   protected CommonFlexAdapter commonAdapter;
   protected CommonFlexAdapter extraAdapter;
 
@@ -143,7 +144,7 @@ import javax.inject.Inject;
       Card card = order.extra.card;
       if (card != null) {
         btnCard.setVisibility(View.VISIBLE);
-
+        dividerExtra.setVisibility(View.VISIBLE);
         extraAdapter.addItem(
           new BillKvCommonItem("会员卡", card.getName() + "(" + card.getId() + ")"));
         extraAdapter.addItem(new BillKvCommonItem("当前余额", CardBusinessUtils.getCardBlance(card)));

@@ -33,7 +33,6 @@
             android:id="@+id/tv_bill_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
             android:textColor="@color/black"
             android:textSize="36sp"
             tools:text="¥100.00"
@@ -51,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginTop="10dp"
+            android:layerType="software"
             android:background="@drawable/dotted_line"
             />
 
@@ -62,9 +62,12 @@
             />
 
         <View
+            android:id="@+id/divider_extra"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginTop="10dp"
+            android:layerType="software"
+            android:visibility="gone"
             android:background="@drawable/dotted_line"
             />
 

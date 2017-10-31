@@ -3,6 +3,7 @@ package cn.qingchengfit.utils;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import cn.qingchengfit.widgets.R;
@@ -34,9 +35,11 @@ public class DrawableUtils {
     gradientDrawable.setCornerRadius(radius);
     return gradientDrawable;
   }
-  public  static Drawable generateCardStatusBg(int color,Context context){
-    Drawable d  =ContextCompat.getDrawable(context, R.drawable.bg_card_stauts).mutate();
-    DrawableCompat.setTint(d,color);
+  public  static Drawable generateCardStatusBg(@ColorRes int color,Context context){
+    Drawable d  = ContextCompat.getDrawable(context, R.drawable.bg_card_stauts).mutate();
+    //Drawable d = new ShapeDrawable();
+    DrawableCompat.setTint(d,ContextCompat.getColor(context, color));
+    //d.setColorFilter(color);
     return d;
   }
 }

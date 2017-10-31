@@ -84,6 +84,7 @@ public class SplashActivity extends BaseActivity {
             coachService.setPhoto(gymQcDataResponse.data.gym.photo);
             gymWrapper.setCoachService(coachService);
             gymWrapper.setCustumNo(gymQcDataResponse.data.customer_no);
+            gymWrapper.setSocket_channel_id(gymQcDataResponse.data.socket_channel_id);
             gymWrapper.setBrand(
               new Brand.Builder().name(gymQcDataResponse.data.gym.brand_name).build());
             gymWrapper.setSuperuser(new SuperUser(gymQcDataResponse.data.gym.superuser.username,
@@ -98,7 +99,7 @@ public class SplashActivity extends BaseActivity {
           if (TextUtils.isEmpty(QcRestRepository.getSession(SplashActivity.this))) {
             return Observable.just(true);
           } else {
-            return staffModel.getCurUser(gymWrapper.getGymId())
+            return staffModel.getCurUser()
               .subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
               .flatMap(new Func1<QcDataResponse<UserWrap>, Observable<Boolean>>() {

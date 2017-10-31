@@ -112,7 +112,10 @@ dependencies {
   api('com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+')
   api 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
   api 'com.airbnb.android:lottie:2.0.0'
-
+  api ('io.socket:socket.io-client:0.9.0') {
+    // excluding org.json which is provided by Android
+    exclude group: 'org.json', module: 'json'
+  }
   testImplementation 'junit:junit:4.12'
   androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'

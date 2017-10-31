@@ -63,6 +63,7 @@ import javax.inject.Inject;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     SaasbaseParamsInjector.inject(this);
+
   }
 
   @Inject CardDetailPresenter presenter;

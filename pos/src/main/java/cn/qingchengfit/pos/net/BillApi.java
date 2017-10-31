@@ -9,7 +9,9 @@ import cn.qingchengfit.saasbase.bill.filter.model.FilterWrapper;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderListWrap;
 import cn.qingchengfit.saasbase.bill.network.BusinessOrderWrap;
 import cn.qingchengfit.saasbase.bill.network.PayRequestListWrap;
+import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import java.util.HashMap;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -39,6 +41,11 @@ import rx.Observable;
  */
 
 public interface BillApi {
+
+  @POST("/payments/rongshu/gyms/{gym_id}/pos/")
+  Observable<QcDataResponse<PayBusinessResponseWrap>> directPay(@Path("gym_id") String gymid,@Body HashMap<String,Object> body);
+
+
   @GET("/api/rongshu/gyms/{gym_id}/bills/{order_no}/")
   Observable<QcDataResponse<BusinessOrderWrap>> getBillDetail(@Path("gym_id") String gymid,
     @Path("order_no") String order_no, @QueryMap HashMap<String, Object> params);

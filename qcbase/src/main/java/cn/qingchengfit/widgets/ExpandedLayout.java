@@ -208,6 +208,13 @@ public class ExpandedLayout extends LinearLayout {
         }
         mSwitcher.setChecked(true);
     }
+    public void resizeContent(int height){
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        layoutParams.height = (int) height;
+        setLayoutParams(layoutParams);
+        invalidate();
+        requestLayout();
+    }
 
     public void setLabel(String s){
         mTvLable.setText(s);

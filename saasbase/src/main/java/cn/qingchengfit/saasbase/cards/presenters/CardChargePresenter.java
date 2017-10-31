@@ -17,7 +17,6 @@ import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
-import cn.qingchengfit.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -34,8 +33,6 @@ public class CardChargePresenter extends BasePresenter {
   //private
   private List<CardTplOption> mOptions = new ArrayList<>();
 
-
-
   @Inject public CardChargePresenter() {
   }
 
@@ -48,8 +45,7 @@ public class CardChargePresenter extends BasePresenter {
   }
 
   private void initBus() {
-    RxBusAdd(Staff.class)
-      .onBackpressureLatest()
+    RxBusAdd(Staff.class).onBackpressureLatest()
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<Staff>() {
         @Override public void onNext(Staff staff) {
@@ -59,8 +55,7 @@ public class CardChargePresenter extends BasePresenter {
       });
 
     //备注信息
-    RxBusAdd(EventTxT.class)
-      .onBackpressureLatest()
+    RxBusAdd(EventTxT.class).onBackpressureLatest()
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<EventTxT>() {
         @Override public void onNext(EventTxT eventTxT) {
@@ -70,8 +65,7 @@ public class CardChargePresenter extends BasePresenter {
       });
 
     //学员 选择某个学员
-    RxBusAdd(EventSelectedStudent.class)
-      .onBackpressureLatest()
+    RxBusAdd(EventSelectedStudent.class).onBackpressureLatest()
       .subscribe(new BusSubscribe<EventSelectedStudent>() {
         @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
           view.bindStudent(eventSelectedStudent.getNameStr());
@@ -81,14 +75,16 @@ public class CardChargePresenter extends BasePresenter {
   }
 
   public void selectOption(int pos) {
-    view.showInputMoney(pos >= mOptions.size(),mCard.getType() == 3);
+
     if (pos < mOptions.size()) {
       //选择了规格
       mChosenOption = mOptions.get(pos);
       view.setPayMoney(mChosenOption.price);
+      view.showInputMoney(false, mCard.getType(), mChosenOption.limit_days);
     } else {
       //选择其他
       mChosenOption = null;
+      view.showInputMoney(true, mCard.getType(), false);
     }
   }
 
@@ -96,23 +92,23 @@ public class CardChargePresenter extends BasePresenter {
    * 下单
    */
   public void chargeCard() {
-    if (mChosenOption == null){
+    chargeBody.setType(mCard.getType());
+    if (mChosenOption == null) {
       chargeBody.setPrice(view.realMoney());
-      chargeBody.setChargeAccount(mCard.getType(), view.chargeMoney(),view.startDay(),view.endDay());
-    }else {
-      chargeBody.setPrice(mChosenOption.price);
-      chargeBody.setChargeAccount(mCard.getType(),mChosenOption.charge,view.startDay(), DateUtils.addDay(view.startDay(),mChosenOption.days));
-    }
-
-    /*
+      chargeBody.setBuyAccount(view.chargeMoney(), view.startDay(), view.endDay(), null);
+          /*
      * 非期限卡可以设置有效期
      */
-    if (mCard.getType() != 3) {
-      chargeBody.setCheck_valid(view.openValidDay());
-      if (chargeBody.isCheck_valid()) {
-        chargeBody.setValid_from(view.startDay());
-        chargeBody.setValid_to(view.endDay());
+      if (mCard.getType() != 3) {
+        chargeBody.setCheck_valid(view.openValidDay());
+        if (chargeBody.isCheck_valid()) {
+          chargeBody.setValid_from(view.startDay());
+          chargeBody.setValid_to(view.endDay());
+        }
       }
+    } else {
+      chargeBody.setPrice(mChosenOption.price);
+      chargeBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
     }
 
     if (chargeBody.checkData() > 0) {
@@ -120,18 +116,18 @@ public class CardChargePresenter extends BasePresenter {
       return;
     }
     RxRegiste(cardModel.qcChargeCard(chargeBody)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponseWrap>>() {
-          @Override public void onNext(QcDataResponse<PayBusinessResponseWrap> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onBusinessOrder(qcResponse.data.order);
-            } else {
-              view.onShowError(qcResponse.getMsg());
-            }
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<PayBusinessResponseWrap>>() {
+        @Override public void onNext(QcDataResponse<PayBusinessResponseWrap> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            view.onBusinessOrder(qcResponse.data.order);
+          } else {
+            view.onShowError(qcResponse.getMsg());
           }
-        }));
+        }
+      }));
   }
 
   /**
@@ -139,20 +135,20 @@ public class CardChargePresenter extends BasePresenter {
    */
   public void queryOption() {
     RxRegiste(cardModel.qcGetOptions(mCard.getCard_tpl_id())
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<CardTplOptionListWrap>>() {
-          @Override public void onNext(QcDataResponse<CardTplOptionListWrap> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              mOptions.clear();
-              mOptions.addAll(qcResponse.data.options);
-              view.onGetOptions(mOptions);
-            } else {
-              view.onShowError(qcResponse.getMsg());
-            }
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<CardTplOptionListWrap>>() {
+        @Override public void onNext(QcDataResponse<CardTplOptionListWrap> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            mOptions.clear();
+            mOptions.addAll(qcResponse.data.options);
+            view.onGetOptions(mOptions);
+          } else {
+            view.onShowError(qcResponse.getMsg());
           }
-        }));
+        }
+      }));
   }
 
   @Override public void attachView(PView v) {
@@ -172,20 +168,29 @@ public class CardChargePresenter extends BasePresenter {
   public interface MVPView extends CView {
     void onGetOptions(List<CardTplOption> options);
 
-    void showInputMoney(boolean show,boolean isTimeCard);
+    void showInputMoney(boolean other, int cardCate, boolean hasValid);
+
     void bindStudent(String student);
+
     void bindSaler(String saler);
+
     void remark(boolean remark);
+
     void setPayMoney(String x);
+
     /**
      * 下单完成后返回的数据
      */
     void onBusinessOrder(PayBusinessResponse payBusinessResponse);
-    String chargeMoney();
-    String realMoney();
-    boolean openValidDay();
-    String startDay();
-    String endDay();
 
+    String chargeMoney();
+
+    String realMoney();
+
+    boolean openValidDay();
+
+    String startDay();
+
+    String endDay();
   }
 }

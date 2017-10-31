@@ -4,7 +4,6 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
-import java.util.HashMap;
 
 /**
  * power by
@@ -28,7 +27,7 @@ import java.util.HashMap;
  */
 
 public interface IStaffModel {
-  rx.Observable<QcDataResponse<UserWrap>> getCurUser(HashMap<String, Object> params);
+  rx.Observable<QcDataResponse<UserWrap>> getCurUser();
   //获取所有销售人员
   rx.Observable<QcDataResponse<SalerListWrap>> getSalers();
 
