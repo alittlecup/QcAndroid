@@ -4,6 +4,7 @@ import cn.qingchengfit.pos.bill.view.PosBillDetailFragment;
 import cn.qingchengfit.pos.bill.view.PosBillDetialForDoneFragment;
 import cn.qingchengfit.saasbase.bill.BillActivity;
 import cn.qingchengfit.saasbase.bill.BillHomeFragment;
+import cn.qingchengfit.saasbase.bill.filter.BillFilterFragment;
 import cn.qingchengfit.saasbase.bill.view.PayRequestListFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
@@ -29,7 +30,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  */
 @Trunk(fragments = {
   BillHomeFragment.class, PayRequestListFragment.class, PosBillDetailFragment.class,
-  PosBillDetialForDoneFragment.class
+  PosBillDetialForDoneFragment.class, BillFilterFragment.class
 })
 public class PosBillActivity extends BillActivity {
 }
