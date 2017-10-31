@@ -188,7 +188,7 @@ import javax.inject.Inject;
   @Override public void onGetOptions(List<CardTplOption> options) {
     List<AbstractFlexibleItem> items = new ArrayList<>();
     for (CardTplOption option : options) {
-      if (option.can_charge) items.add(new CardTplOptionForBuy(option, card.getType()));
+      items.add(new CardTplOptionForBuy(option, card.getType()));
     }
     // TODO: 2017/9/30 判断权限
     items.add(new CardtplOptionOhterItem());

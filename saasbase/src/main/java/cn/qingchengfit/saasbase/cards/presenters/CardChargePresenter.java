@@ -142,7 +142,10 @@ public class CardChargePresenter extends BasePresenter {
         @Override public void onNext(QcDataResponse<CardTplOptionListWrap> qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
             mOptions.clear();
-            mOptions.addAll(qcResponse.data.options);
+            for (CardTplOption option : qcResponse.data.options) {
+              if (option.can_charge)
+                mOptions.add(option);
+            }
             view.onGetOptions(mOptions);
           } else {
             view.onShowError(qcResponse.getMsg());

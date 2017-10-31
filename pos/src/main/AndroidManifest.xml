@@ -12,6 +12,7 @@
       android:supportsRtl="true"
       android:theme="@style/QcAppTheme"
       android:taskAffinity="com.rongcapital.pos"
+      android:screenOrientation="portrait"
       >
     <activity
         android:name=".card.PosCardActivity"
@@ -148,6 +149,7 @@
 
     <activity android:name=".main.MainActivity"/>
     <activity android:name=".login.LoginActivity"/>
+
 
   </application>
 

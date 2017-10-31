@@ -113,6 +113,7 @@ public class BaseActivity extends AppCompatActivity {
   boolean hasFrag = false;
   @Override protected void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
+    setIntent(intent);
     if (intent != null && intent.getData() != null)
       LogUtil.d("router",intent.getData().toString());
 

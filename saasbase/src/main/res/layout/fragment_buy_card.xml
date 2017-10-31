@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,6 +13,7 @@
   <android.support.v4.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:layout_below="@id/toolbar_layout"
       >
     <LinearLayout
         android:layout_width="match_parent"
@@ -150,45 +151,46 @@
           android:layout_width="match_parent"
           android:layout_height="30dp"
           />
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          android:orientation="horizontal"
-          android:background="@color/white"
-          >
 
-        <TextView
-            style="@style/QcTextStyleMediumDark"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:id="@+id/tv_money_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="充值金额："
-            />
-        <TextView
-            android:id="@+id/tv_pay_money"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/tv_money_label"
-            android:layout_toEndOf="@id/tv_money_label"
-            android:layout_toRightOf="@id/tv_money_label"
-            android:textColor="@color/red"
-            />
-        <Button
-            android:id="@+id/btn_pay"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:text="收 款"
-            android:textColor="@color/white"
-            android:background="@drawable/btn_prime_no_corner"
-            />
-      </RelativeLayout>
     </LinearLayout>
 
   </android.support.v4.widget.NestedScrollView>
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:orientation="horizontal"
+      android:background="@color/white"
+      android:layout_alignParentBottom="true"
+      >
 
-</LinearLayout>
+    <TextView
+        style="@style/QcTextStyleMediumDark"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:id="@+id/tv_money_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="支付金额："
+        />
+    <TextView
+        android:id="@+id/tv_pay_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tv_money_label"
+        android:layout_toEndOf="@id/tv_money_label"
+        android:layout_toRightOf="@id/tv_money_label"
+        android:textColor="@color/red"
+        />
+    <Button
+        android:id="@+id/btn_pay"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:text="收 款"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_prime_no_corner"
+        />
+  </RelativeLayout>
+</RelativeLayout>

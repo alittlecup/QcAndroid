@@ -144,7 +144,10 @@ public class CardBuyPresenter extends BasePresenter {
         @Override public void onNext(QcDataResponse<CardTplOptionListWrap> qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
             mOptions.clear();
-            mOptions.addAll(qcResponse.data.options);
+            for (CardTplOption option : qcResponse.data.options) {
+              if (option.can_create)
+                mOptions.add(option);
+            }
             view.onGetOptions(qcResponse.data.options);
           } else {
             view.onShowError(qcResponse.getMsg());

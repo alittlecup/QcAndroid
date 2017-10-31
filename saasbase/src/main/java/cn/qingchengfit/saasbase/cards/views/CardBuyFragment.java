@@ -178,7 +178,6 @@ import javax.inject.Inject;
   @Override public void onGetOptions(List<CardTplOption> options) {
     commonFlexAdapter.clear();
     for (CardTplOption option : options) {
-      if (option.can_create)
         commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type));
     }
     // TODO: 2017/9/30 判断权限
