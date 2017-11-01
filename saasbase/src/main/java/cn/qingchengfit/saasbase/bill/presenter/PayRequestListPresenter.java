@@ -38,7 +38,7 @@ public class PayRequestListPresenter extends BasePresenter {
       .subscribe(new NetSubscribe<QcDataResponse<PayRequestListWrap>>() {
         @Override public void onNext(QcDataResponse<PayRequestListWrap> qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
-            view.onGetData(qcResponse.data.datas, qcResponse.data.current_page);
+            view.onGetData(qcResponse.data.tasks, qcResponse.data.current_page);
             totalPage = qcResponse.data.pages;
           } else {
             view.onShowError(qcResponse.getMsg());
@@ -51,7 +51,7 @@ public class PayRequestListPresenter extends BasePresenter {
    * 判断是否有orderNO 有->直接支付  无->获取ID
    */
   public void pay(PayRequest payRequest) {
-    if (CmStringUtils.isEmpty(payRequest.order_no)) {
+    if (!CmStringUtils.isEmpty(payRequest.order_no)) {
       view.onPay(payRequest);
     } else {
       getBzlzId(payRequest.task_no, payRequest);

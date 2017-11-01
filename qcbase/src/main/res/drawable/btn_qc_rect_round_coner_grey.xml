@@ -6,7 +6,7 @@
         >
       <corners android:radius="2dp"/>
       <stroke android:color="@color/divider_grey" android:width="1dp"/>
-      <solid android:color="@color/halftrans_background"/>
+      <solid android:color="@color/white"/>
       <size android:height="26dp" android:width="51dp"/>
 
     </shape>
@@ -16,8 +16,8 @@
         android:shape="rectangle"
         >
       <corners android:radius="2dp"/>
-      <stroke android:color="@color/grey" android:width="1dp"/>
-      <solid android:color="@color/transparent"/>
+      <stroke android:color="@color/divider_grey" android:width="1dp"/>
+      <solid android:color="@color/divider_grey"/>
       <size android:height="26dp" android:width="51dp"/>
 
     </shape>

@@ -140,6 +140,7 @@ import javax.inject.Inject;
         .title("实体卡号")
         .desc(card.getId())
         .build());
+    clearItems();
     setDatas(items,1);
   }
 

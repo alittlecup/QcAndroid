@@ -52,7 +52,7 @@ public class PayRequestItem extends AbstractFlexibleItem<PayRequestItem.PayReque
     holder.tvTitle.setText(payRequest.title);
     holder.tvContent.setText(payRequest.content);
     holder.tvStatus.setText("");
-    holder.tvPayMoney.setText("￥"+CmStringUtils.getFloatDot2(payRequest.price));
+    holder.tvPayMoney.setText("￥"+CmStringUtils.getFloatDot2((float) payRequest.price/100));
     holder.tvStaff.setText("操作人: "+payRequest.created_by == null?"":payRequest.created_by.getUsername());
     holder.tvTime.setText(DateUtils.Date2MMDDHHmm(DateUtils.formatDateFromServer(payRequest.created_at)));
   }
