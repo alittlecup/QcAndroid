@@ -1,7 +1,7 @@
 package cn.qingchengfit.pos.net;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.staff.model.QcResponsePostions;
+import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
@@ -55,16 +55,16 @@ public interface StaffApi {
   /**
    * 职位列表
    */
-  @GET("/api/staffs/{id}/positions/") rx.Observable<QcResponsePostions> getPostions(
-    @Path("id") String staff_id, @QueryMap HashMap<String, Object> params);
+  @GET("/api/gyms/{id}/positions/") rx.Observable<QcDataResponse<PostionListWrap>> getPostions(
+    @Path("id") String gymid);
 
-  /**
-   * 无视权限的职位
-   */
-  @GET("/api/staffs/{id}/permissions/positions/")
-  rx.Observable<QcResponsePostions> qcGetPermissionPostions(@Path("id") String staff_id,
-    @QueryMap HashMap<String, Object> params, @Query("key") String permission);
-
+  ///**
+  // * 无视权限的职位
+  // */
+  //@GET("/api/staffs/{id}/permissions/positions/")
+  //rx.Observable<QcResponsePostions> qcGetPermissionPostions(@Path("id") String staff_id,
+  //  @QueryMap HashMap<String, Object> params, @Query("key") String permission);
+  //
 
 
 

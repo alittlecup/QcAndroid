@@ -8,9 +8,6 @@ import cn.qingchengfit.pos.login.model.GetCodeBody;
 import cn.qingchengfit.pos.login.model.GymResponse;
 import cn.qingchengfit.pos.login.model.Login;
 import cn.qingchengfit.pos.login.model.LoginBody;
-import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
-import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
-import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import java.util.HashMap;
@@ -20,7 +17,6 @@ import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 
@@ -48,7 +44,7 @@ import rx.Observable;
 public interface PosApi {
 
   //会员卡可绑定的会员列表
-  @GET("/api/rongshu/gym/{id}/users/?show_all=1")
+  @GET("/api/rongshu/gyms/{id}/users/?show_all=1")
   rx.Observable<QcDataResponse<StudentListWrapper>> qcGetCardBundldStudents(
       @Path("id") String id, @QueryMap HashMap<String, Object> params);
 
@@ -81,7 +77,7 @@ public interface PosApi {
   /**
    * 新增会员
    */
-  @POST("/api/rongshu/gym/{id}/users/") rx.Observable<QcDataResponse> qcCreateStudent(
+  @POST("/api/rongshu/gyms/{id}/users/") rx.Observable<QcDataResponse> qcCreateStudent(
       @Path("id") String id, @QueryMap HashMap<String, Object> params,
       @Body AddStdudentBody body);
 
@@ -112,7 +108,7 @@ public interface PosApi {
   /**
    * 交班
    */
-  @GET("/api/rongshu/gym/{gym_id}/exchange/") rx.Observable<QcDataResponse<ExchangeWrapper>> qcGetExchange(@Path("gym_id") String gym_id);
+  @GET("/api/rongshu/gyms/{gym_id}/exchange/") rx.Observable<QcDataResponse<ExchangeWrapper>> qcGetExchange(@Path("gym_id") String gym_id);
 
 
 }
