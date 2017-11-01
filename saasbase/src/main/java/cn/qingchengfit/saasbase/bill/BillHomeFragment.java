@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -38,7 +39,6 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -125,9 +125,10 @@ import rx.functions.Action1;
   private void initView() {
     adapter = new CommonFlexAdapter(itemList, this);
     recyclerBill.setLayoutManager(new LinearLayoutManager(getContext()));
-    recyclerBill.addItemDecoration(
-        new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)
-            .withBottomEdge(true));
+    //recyclerBill.addItemDecoration(
+    //    new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey)
+    //         
+    recyclerBill.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     recyclerBill.setAdapter(adapter);
   }
 

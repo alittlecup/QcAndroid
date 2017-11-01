@@ -3,7 +3,7 @@ package cn.qingchengfit.saasbase.repository;
 import cn.qingchengfit.network.response.QcResponToken;
 import cn.qingchengfit.saasbase.network.response.GymList;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
-import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
+import cn.qingchengfit.saasbase.staff.model.QcResponsePostions;
 import cn.qingchengfit.saasbase.staff.model.StaffShipResponse;
 import cn.qingchengfit.saasbase.staff.model.Staffs;
 import cn.qingchengfit.saasbase.staff.model.body.StaffResponse;
@@ -33,7 +33,7 @@ public interface GetApi {
       @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id, @Query("q") String keywork);
 
   //获取工作人员职位列表
-  @GET("/api/staffs/{id}/positions/") rx.Observable<PostionListWrap> qcGetPostions(@Path("id") String staff_id,
+  @GET("/api/staffs/{id}/positions/") rx.Observable<QcResponsePostions> qcGetPostions(@Path("id") String staff_id,
       @Query("id") String gym_id, @Query("model") String gym_model);
 
   //工作人员详情
