@@ -23,6 +23,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -96,6 +97,13 @@ import rx.android.schedulers.AndroidSchedulers;
         }
       });
     return root;
+  }
+
+  @Override protected void addDivider() {
+    rv.addItemDecoration(
+      new FlexibleItemDecoration(getContext())
+        .withOffset(10)
+        .withBottomEdge(true));
   }
 
   @Override protected void onFinishAnimation() {
