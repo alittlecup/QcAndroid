@@ -98,6 +98,12 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
     handler.sendEmptyMessage(0);
   }
 
+  @Override public void onGetCodeFailed(String s) {
+    TipTextDialogFragment.newInstance(s,
+        getResources().getString(R.string.dialog_confirm_login_failed),
+        getResources().getString(R.string.tips_get_code)).show(getFragmentManager(), null);
+  }
+
   private class InternalHandler extends Handler {
     WeakReference<Context> context;
     //use for send msg interval 60s

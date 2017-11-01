@@ -76,6 +76,9 @@ public class BillFilterFragment extends BaseFragment
         if (item.getCheckedContent().size() > 0) {
           map.put(key, "");
         }else{
+          if (map.containsKey(key)){
+            map.remove(key);
+          }
           continue;
         }
         for (int j = 0; j < item.getCheckedContent().size(); j++){
@@ -117,10 +120,10 @@ public class BillFilterFragment extends BaseFragment
   }
 
   @Override public void onTimeStart(String start, String key) {
-    map.put(key + "_gte", start);
+    map.put(key + "__gte", start + "T00:00:00");
   }
 
   @Override public void onTimeEnd(String end, String key) {
-    map.put(key + "_lte", end);
+    map.put(key + "__lte", end + "T00:00:00");
   }
 }

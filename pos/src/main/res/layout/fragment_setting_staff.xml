@@ -59,6 +59,7 @@
       app:civ_lable="@string/gender"
       app:civ_text_color="@color/black"
       app:civ_content_color="@color/text_warm"
+      app:civ_clickable="true"
       />
 
   <cn.qingchengfit.widgets.CommonInputView

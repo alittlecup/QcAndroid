@@ -70,7 +70,6 @@ public class ExchangeFragment extends BaseFragment {
   private void setToolbar(Toolbar toolbar){
     initToolbar(toolbar);
     toolbarTitle.setText("交班");
-
   }
 
   private void setData(){
@@ -89,13 +88,22 @@ public class ExchangeFragment extends BaseFragment {
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcDataResponse<ExchangeWrapper>>() {
           @Override
-          public void call(QcDataResponse<ExchangeWrapper> exchangeWrapperQcDataResponse) {
-            if (ResponseConstant.checkSuccess(exchangeWrapperQcDataResponse)){
-              tvExchangeStart.setText(DateUtils.formatToMMFromServer(exchangeWrapperQcDataResponse.data.exchange.start));
-              tvExchangeEnd.setText(DateUtils.formatToMMFromServer(exchangeWrapperQcDataResponse.data.exchange.end));
-              tvExchangeBusiness.setText(String.valueOf(exchangeWrapperQcDataResponse.data.exchange.bills_numbers));
-              tvExchangeMoney.setText(exchangeWrapperQcDataResponse.data.exchange.bills_price / 100 + "元");
-            }else{
+          public void call(final QcDataResponse<ExchangeWrapper> exchangeWrapperQcDataResponse) {
+            if (ResponseConstant.checkSuccess(exchangeWrapperQcDataResponse)) {
+              getActivity().runOnUiThread(new Runnable() {
+                @Override public void run() {
+
+                  tvExchangeStart.setText(DateUtils.replaceTFromServer(
+                      exchangeWrapperQcDataResponse.data.exchange.start));
+                  tvExchangeEnd.setText(DateUtils.replaceTFromServer(
+                      exchangeWrapperQcDataResponse.data.exchange.end));
+                  tvExchangeBusiness.setText(
+                      String.valueOf(exchangeWrapperQcDataResponse.data.exchange.bills_numbers));
+                  tvExchangeMoney.setText(
+                      exchangeWrapperQcDataResponse.data.exchange.bills_price / 100 + "元");
+                }
+              });
+            } else {
               onShowError(exchangeWrapperQcDataResponse.getMsg());
             }
           }

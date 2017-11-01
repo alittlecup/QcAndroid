@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.annotation.StyleRes;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -84,25 +85,31 @@ import java.util.List;
     onFinishInflate();
   }
 
+  @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+  }
+
+
   private void init(Context context, AttributeSet attrs, int defStyle) {
     mContext = context;
     TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CheckableButton);
 
     mTextColorSelect =
-        ta.getColor(R.styleable.CheckableButton_cb_text_select_color, mTextColorSelect);
+        ta.getColor(R.styleable.CheckableButton_cb_text_select_color, getResources().getColor(R.color.colorPrimary));
     mTextColorNormal =
-        ta.getColor(R.styleable.CheckableButton_cb_text_normal_color, mTextColorNormal);
+        ta.getColor(R.styleable.CheckableButton_cb_text_normal_color, getResources().getColor(R.color.qc_text_black));
 
     mTextSize = (int) ta.getDimension(R.styleable.CheckableButton_cb_text_size, mTextSize);
 
     mCheckboxIconSelect =
-        ta.getResourceId(R.styleable.CheckableButton_cb_hook_icon_select, R.drawable.checkbox_hook);
+        ta.getResourceId(R.styleable.CheckableButton_cb_hook_icon_select, R.drawable.selector_student_checkbtn_bg);
     mCheckboxIconNormal = ta.getResourceId(R.styleable.CheckableButton_cb_hook_icon_normal, 0);
 
     mBackgroundSelect = ta.getResourceId(R.styleable.CheckableButton_cb_background_select,
-        R.drawable.qcw_shape_bgcenter_green);
+        R.drawable.bg_rect_corner_primary);
     mBackgroundNormal = ta.getResourceId(R.styleable.CheckableButton_cb_background_normal,
-        R.drawable.qcw_shape_bgcenter_white);
+        R.drawable.shape_bg_rect_grey_corner4);
 
     mContent = ta.getString(R.styleable.CheckableButton_cb_text_content);
     //mHookIconLocation = ta.getString(R.styleable.CheckableButton_cb_hook_icon_location);
@@ -127,10 +134,11 @@ import java.util.List;
     content.setTextSize(mTextSize);
 
     checkBox.setChecked(isChecked);
+    checkBox.setVisibility(INVISIBLE);
     setOnClickListener(new OnClickListener() {
       @Override public void onClick(View view) {
         checkBox.toggle();
-        checkBox.setVisibility(checkBox.isChecked() ? View.VISIBLE : View.GONE);
+        checkBox.setVisibility(checkBox.isChecked() ? View.VISIBLE : View.INVISIBLE);
         setTextColorAndbackGround();
         if (onClickListener != null) {
           onClickListener.onClick(view);
@@ -146,6 +154,22 @@ import java.util.List;
       checkBox.setButtonDrawable(mCheckboxIconSelect);
     }
     setTextColorAndbackGround();
+  }
+
+  public void setStyle(@StyleRes int resId) {
+    final TypedArray a = getContext().obtainStyledAttributes(resId, R.styleable.CheckableButton);
+    mCheckboxIconSelect =
+        a.getResourceId(R.styleable.CheckableButton_cb_hook_icon_select, R.drawable.checkbox_hook);
+    mBackgroundSelect = a.getResourceId(R.styleable.CheckableButton_cb_background_select,
+        R.drawable.qcw_shape_bgcenter_green);
+    mBackgroundNormal = a.getResourceId(R.styleable.CheckableButton_cb_background_normal,
+        R.drawable.qcw_shape_bgcenter_white);
+    mTextColorSelect =
+        a.getColor(R.styleable.CheckableButton_cb_text_select_color, mTextColorSelect);
+    mTextColorNormal =
+        a.getColor(R.styleable.CheckableButton_cb_text_normal_color, mTextColorNormal);
+    onFinishInflate();
+    a.recycle();
   }
 
   public void setSelectDrawable(int selectDrawable){
@@ -176,7 +200,7 @@ import java.util.List;
 
   public void setChecked(boolean checked) {
     checkBox.setChecked(checked);
-    checkBox.setVisibility(checkBox.isChecked() ? View.VISIBLE : View.GONE);
+    checkBox.setVisibility(checkBox.isChecked() ? View.VISIBLE : View.INVISIBLE);
     setTextColorAndbackGround();
   }
 

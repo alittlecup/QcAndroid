@@ -46,6 +46,7 @@ public class QcAutoLineRadioGroup extends LinearLayout
   private CheckedChange checkedChange;
   public boolean isSingleSelected;
   private OnCheckoutPositionListener onCheckoutPositionListener;
+  private Context context;
 
   public QcAutoLineRadioGroup(Context context) {
     super(context);
@@ -75,6 +76,7 @@ public class QcAutoLineRadioGroup extends LinearLayout
 
   private void init(Context context, AttributeSet attrs) {
     TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.QcRadioGroup);
+    this.context = context;
     isSingleSelected = ta.getBoolean(R.styleable.QcRadioGroup_qc_single, true);
     DisplayMetrics dm = getResources().getDisplayMetrics();
     mScreenWidth = dm.widthPixels;
@@ -90,7 +92,7 @@ public class QcAutoLineRadioGroup extends LinearLayout
     //setMeasuredDimension(widthSize, heightSize);
     int heightMode = MeasureSpec.getMode(heightMeasureSpec);
     int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-    int width = MeasureSpec.getSize(widthMeasureSpec) + 30;
+    int width = MeasureSpec.getSize(widthMeasureSpec);
 
     int height ;
     if (heightMode == MeasureSpec.EXACTLY) {

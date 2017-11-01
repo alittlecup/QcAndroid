@@ -95,6 +95,7 @@ public class BusinessBill implements Parcelable{
       case 2:
       case 3:
       case 4:
+      case 7:
         return "+"  + price / 100 ;
       case 5:
       case 6:
@@ -137,10 +138,10 @@ public class BusinessBill implements Parcelable{
   }
 
   @StringRes public int getPayType(int type, String s) {
-    if (type == 5){
+    if (type == 6){
       return R.string.pay_withdraw;
     }
-    if (type == 6){
+    if (type == 5){
       return R.string.pay_back_cash;
     }
     switch (s) {
@@ -181,13 +182,13 @@ public class BusinessBill implements Parcelable{
       case 2:
         return context.getResources().getString(R.string.bill_already_settlement);
       case 3:
-        return type == 5 ? context.getResources().getString(R.string.bill_withdraw)
+        return type != 5 ? context.getResources().getString(R.string.bill_withdraw)
             : context.getResources().getString(R.string.bill_back_cash);
       case 4:
-        return type == 5 ? context.getResources().getString(R.string.bill_withdraw_failed)
+        return type != 5 ? context.getResources().getString(R.string.bill_withdraw_failed)
             : context.getResources().getString(R.string.bill_cash_failed);
       case 5:
-        return type == 5 ? context.getResources().getString(R.string.bill_withdraw_already)
+        return type != 5 ? context.getResources().getString(R.string.bill_withdraw_already)
             : context.getResources().getString(R.string.bll_back_already);
     }
 

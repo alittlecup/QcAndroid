@@ -21,12 +21,11 @@ import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
-import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.BottomListFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
@@ -44,7 +43,7 @@ import javax.inject.Inject;
  */
 
 @Leaf(module = "setting", path = "/cashier/detail/")
-public class StaffInfoFragment extends BaseFragment implements CashierPresenter.MVPView{
+public class StaffInfoFragment extends SaasBaseFragment implements CashierPresenter.MVPView{
 
   @BindView(R.id.tv_setting_staff_detail_name) TextView tvSettingStaffDetailName;
   @BindView(R.id.input_setting_staff_detail_name) CommonInputView inputSettingStaffDetailName;
@@ -59,21 +58,10 @@ public class StaffInfoFragment extends BaseFragment implements CashierPresenter.
   @Need public Cashier cashier;
   @Inject LoginStatus loginStatus;
 
-  public static StaffInfoFragment newInstance(Cashier cashier) {
-    Bundle args = new Bundle();
-    args.putParcelable("cashier", cashier);
-    StaffInfoFragment fragment = new StaffInfoFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-     cashier = getArguments().getParcelable("cashier");
-    }
-    SaasbaseParamsInjector.inject(this);
-  }
+  //@Override public void onCreate(@Nullable Bundle savedInstanceState) {
+  //  super.onCreate(savedInstanceState);
+  //  PosParamsInjector.inject(this);
+  //}
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
