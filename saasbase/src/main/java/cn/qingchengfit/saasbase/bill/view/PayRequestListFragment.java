@@ -17,7 +17,10 @@ import cn.qingchengfit.saasbase.bill.presenter.PayRequestListPresenter;
 import cn.qingchengfit.saasbase.events.EventPayRequest;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -48,7 +51,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/10/9.
  */
-@Leaf(module = "bill", path = "/pay/request/list/") public abstract class PayRequestListFragment
+@Leaf(module = "bill", path = "/pay/request/list/") public  class PayRequestListFragment
   extends BaseListFragment implements
   SwipeRefreshLayout.OnRefreshListener,FlexibleAdapter.EndlessScrollListener,PayRequestListPresenter.MVPView {
   protected Toolbar toolbar;
@@ -79,11 +82,16 @@ import rx.android.schedulers.AndroidSchedulers;
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<EventPayRequest>() {
-        @Override public void onNext(EventPayRequest eventPayRequest) {
+        @Override public void onNext(final EventPayRequest eventPayRequest) {
           if (eventPayRequest.type == 0){
             presenter.pay(eventPayRequest.payRequest);
           }else {
-            presenter.cancelTask(eventPayRequest.payRequest.task_no);
+            DialogUtils.instanceDelDialog(getContext(), "确定取消订单？", new MaterialDialog.SingleButtonCallback() {
+              @Override
+              public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                presenter.cancelTask(eventPayRequest.payRequest.task_no);
+              }
+            }).show();
           }
         }
       });
@@ -138,6 +146,8 @@ import rx.android.schedulers.AndroidSchedulers;
       commonFlexAdapter.clear();
       commonFlexAdapter.addItem(new CommonNoDataItem(getNoDataIconRes(), getNoDataStr()));
     } else {
+      if (page == 1)
+        commonFlexAdapter.clear();
       List<AbstractFlexibleItem> items = new ArrayList<>();
       for (PayRequest data : datas) {
         items.add(new PayRequestItem(data));
@@ -151,7 +161,7 @@ import rx.android.schedulers.AndroidSchedulers;
   /**
    * 具体支付实现在各个App不同
    */
-  @Override public abstract void onPay(PayRequest payRequest);
+  @Override public  void onPay(PayRequest payRequest){};
 
   @Override public void onRemoveTaskNo(String taskNo) {
     for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
