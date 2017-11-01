@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.utils.CircleImgWrapper;
+import cn.qingchengfit.utils.PhotoUtils;
 import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -36,7 +37,7 @@ public class ItemCashier extends AbstractFlexibleItem<ItemCashier.ItemCashierVH>
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemCashierVH holder, int position,
       List payloads) {
     Glide.with(holder.itemView.getContext())
-        .load(cashier.avatar)
+        .load(PhotoUtils.getSmall(cashier.avatar))
         .asBitmap()
         .into(new CircleImgWrapper(holder.imgCashierHead, holder.itemView.getContext()));
     holder.tvCashierName.setText(cashier.username);

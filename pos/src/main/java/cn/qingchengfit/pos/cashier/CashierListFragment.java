@@ -14,6 +14,7 @@ import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
 import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.setting.ItemCashier;
+import cn.qingchengfit.pos.setting.Self;
 import cn.qingchengfit.pos.setting.StaffInfoParams;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
 import cn.qingchengfit.utils.AppUtils;
@@ -125,7 +126,7 @@ import rx.functions.Action1;
     IFlexible item = itemList.get(position);
     if (item instanceof  ItemCashier) {
       routeTo(AppUtils.getRouterUri(getContext(), "setting/cashier/detail/"),
-        new StaffInfoParams().cashier(((ItemCashier) itemList.get(position)).getData()).build());
+        new StaffInfoParams().cashier(((ItemCashier) itemList.get(position)).getData()).self(new Self(false)).build());
     }
     return false;
   }

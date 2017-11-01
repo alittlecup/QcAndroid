@@ -96,7 +96,7 @@ import javax.inject.Inject;
     cashier.gender = loginStatus.getLoginUser().gender;
     cashier.phone = loginStatus.getLoginUser().phone;
     routeTo(AppUtils.getRouterUri(getContext(), "setting/cashier/detail/"),
-        new StaffInfoParams().cashier(cashier).build());
+        new StaffInfoParams().self(new Self(true)).cashier(cashier).build());
   }
 
   @OnClick(R.id.input_cashier) public void onCashier() {
