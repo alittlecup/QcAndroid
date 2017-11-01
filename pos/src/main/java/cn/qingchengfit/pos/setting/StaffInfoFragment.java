@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
+import static android.view.View.GONE;
+
 /**
  * Created by fb on 2017/10/13.
  */
@@ -55,13 +57,9 @@ public class StaffInfoFragment extends SaasBaseFragment implements CashierPresen
   @BindView(R.id.img_staff_head) ImageView imgStaffHead;
   @Inject CashierPresenter presenter;
   @Inject GymWrapper gymWrapper;
-  @Need public Cashier cashier;
   @Inject LoginStatus loginStatus;
-
-  //@Override public void onCreate(@Nullable Bundle savedInstanceState) {
-  //  super.onCreate(savedInstanceState);
-  //  PosParamsInjector.inject(this);
-  //}
+  @Need public Self self;
+  @Need public Cashier cashier;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -77,6 +75,9 @@ public class StaffInfoFragment extends SaasBaseFragment implements CashierPresen
     inputSettingStaffDetailName.setContent(cashier.username);
     inputSettingStaffGender.setContent(cashier.gender == 1 ? "女" : "男");
     inputSettingStaffPhone.setContent(cashier.phone);
+    if (self.isSelf){
+      btnDeleteCashier.setVisibility(GONE);
+    }
     setToolbar(toolbar);
     return view;
   }

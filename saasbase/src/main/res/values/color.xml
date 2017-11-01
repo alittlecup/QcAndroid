@@ -8,4 +8,5 @@
   <color name="bill_withdraw_color">#00ced8</color>
   <color name="bill_can_withdraw_color">#d88c00</color>
   <color name="bill_settlement">#d83600</color>
+  <color name="bill_divider">#464646</color>
 </resources>
