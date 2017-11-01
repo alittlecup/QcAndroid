@@ -1,8 +1,7 @@
 package cn.qingchengfit.saasbase.staff.model;
 
 import cn.qingchengfit.model.base.StaffPosition;
-import cn.qingchengfit.network.response.QcResponse;
-import com.google.gson.annotations.SerializedName;
+import cn.qingchengfit.network.response.QcListData;
 import java.util.List;
 
 /**
@@ -18,11 +17,6 @@ import java.util.List;
  * <p>
  * Created by Paper on 16/5/16 2016.
  */
-public class QcResponsePostions extends QcResponse {
-    @SerializedName("data") public Data data;
-
-    public class Data {
-
-        @SerializedName("positions") public List<StaffPosition> positions;
-    }
+public class PostionListWrap extends QcListData {
+    public List<StaffPosition> positions;
 }

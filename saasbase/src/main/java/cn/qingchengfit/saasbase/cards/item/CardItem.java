@@ -74,6 +74,7 @@ public class CardItem extends AbstractFlexibleItem<CardItem.CardVH> {
     }
     holder.bgCard.setBackground(DrawableUtils.generateBg(16,CardBusinessUtils.getDefaultCardbgColor(realCard.getType())));
     holder.realcardStudents.setText(realCard.getUsersStr());
+    holder.tvCardCate.setText(CardBusinessUtils.getCardTypeCategoryStrHead(realCard.getType(),holder.itemView.getContext()));
   }
 
   @Override public boolean equals(Object o) {
@@ -87,6 +88,7 @@ public class CardItem extends AbstractFlexibleItem<CardItem.CardVH> {
     @BindView(R2.id.realcard_name) TextView realcardName;
     @BindView(R2.id.realcard_students) TextView realcardStudents;
     @BindView(R2.id.realcard_balance) TextView realcardBalance;
+    @BindView(R2.id.tv_card_type) TextView tvCardCate;
     @BindView(R2.id.img_stutus) TextView imgStatus;
     @BindView(R2.id.bg_card) RelativeLayout bgCard;
 

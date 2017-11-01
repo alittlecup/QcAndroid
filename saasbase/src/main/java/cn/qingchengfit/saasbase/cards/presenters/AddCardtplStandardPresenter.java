@@ -102,10 +102,13 @@ public class AddCardtplStandardPresenter extends BasePresenter {
    * 如果是新开卡，保存在本地
    */
   public void addOption() {
+    if (ob.checkStaff() !=0)
+      view.showAlert(ob.checkPos());
     if (CmStringUtils.isEmpty(tplId)){
       RxBus.getBus().post(new EventCardTplOption(ob,0));
       view.onSaveOk();
     }else
+
       ob.card_tpl_id = tplId;
       RxRegiste(cardModel.qcCreateStandard(tplId, ob)
         .onBackpressureLatest()

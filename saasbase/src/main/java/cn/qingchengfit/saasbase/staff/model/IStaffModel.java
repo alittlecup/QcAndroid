@@ -40,7 +40,7 @@ public interface IStaffModel {
   rx.Observable<QcDataResponse> addStaff(ManagerBody body);
   rx.Observable<QcDataResponse> delStaff(String id);
   rx.Observable<QcDataResponse> editStaff(String id,ManagerBody body);
-
+  rx.Observable<QcDataResponse<PostionListWrap>> getPositions();
 
 
 

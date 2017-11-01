@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.CView;
@@ -285,5 +286,11 @@ public abstract class BaseDialogFragment extends DialogFragment implements CView
 
   @Override public void onShowError(@StringRes int e) {
     onShowError(getString(e));
+  }
+
+  @Override public void showSelectSheet(String title,List<String> strs,AdapterView.OnItemClickListener listener) {
+    if (getActivity() instanceof BaseActivity){
+      ((BaseActivity) getActivity()).showDialogList(title,strs,listener);
+    }
   }
 }

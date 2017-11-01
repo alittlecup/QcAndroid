@@ -15,4 +15,8 @@
   <string name="e_staff_position">请选择职位</string>
   <string name="e_card_name_empty">卡种类名称不能为空</string>
   <string name="e_card_buy_cate">卡类型错误</string>
+
+  <string name="e_option_account_error">充值填写错误</string>
+  <string name="e_option_price_error">实收金额填写错误</string>
+  <string name="e_empty_cardtpl">没有会员卡种类，请重试</string>
 </resources>

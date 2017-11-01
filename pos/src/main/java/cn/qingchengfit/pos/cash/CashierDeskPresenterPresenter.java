@@ -108,6 +108,10 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
 
   public void pay() {
     long amont = (long)((getTotal()+current)*100);
+    if (amont == 0){
+      view.showAlert("请输入金额");
+      return;
+    }
     RxRegiste(billModel.directPay(amont)
           .onBackpressureLatest()
               .subscribeOn(Schedulers.io())

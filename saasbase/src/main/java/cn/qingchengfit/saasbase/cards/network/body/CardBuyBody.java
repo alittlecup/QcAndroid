@@ -49,18 +49,18 @@ public class CardBuyBody implements Parcelable {
   public boolean is_auto_start;//是否自动开卡
 
   public int checkData() {
-    if (CmStringUtils.isEmpty(price)) return R.string.e_card_realpay_cannot_empty;
+    if (CmStringUtils.checkMoney(price)) return R.string.e_card_realpay_cannot_empty;
     if (CmStringUtils.isEmpty(seller_id)) return R.string.e_card_saler_cannot_empty;
     if (CmStringUtils.isEmpty(card_tpl_id)) return R.string.e_cardtpl_empty;
     if (check_valid && (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to)))
       return R.string.e_card_start_or_end_cannot_empty;
     switch (type) {
       case 1:
-        if (CmStringUtils.isEmpty(account))
+        if (!CmStringUtils.checkMoney(account))
           return R.string.e_card_charge_money_cannot_empty;
         break;
       case 2:
-        if (CmStringUtils.isEmpty(times))
+        if (CmStringUtils.checkMoney(times))
           return R.string.e_card_charge_times_cannot_empty;
         break;
       case 3:

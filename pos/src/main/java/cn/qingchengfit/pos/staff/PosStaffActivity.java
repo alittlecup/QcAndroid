@@ -2,7 +2,6 @@ package cn.qingchengfit.pos.staff;
 
 import cn.qingchengfit.pos.student.PosStudentAddFragment;
 import cn.qingchengfit.saasbase.staff.StaffActivity;
-import cn.qingchengfit.saasbase.staff.di.StaffModule;
 import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
 import cn.qingchengfit.saasbase.staff.views.SalersListFragment;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
@@ -34,7 +33,6 @@ import com.anbillon.flabellum.annotations.Trunk;
   PosStudentAddFragment.class,
   PosStaffDetailFragment.class,
   PosStaffAddFragment.class,
-  StaffModule.class
 })
 public class PosStaffActivity extends StaffActivity {
 }

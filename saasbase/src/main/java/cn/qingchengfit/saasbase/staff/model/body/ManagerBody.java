@@ -36,8 +36,8 @@ public class ManagerBody {
     public int checkDataInPos(){
         if (CmStringUtils.isEmpty(username))
             return R.string.e_student_username;
-        if (CmStringUtils.isEmpty(position_id))
-            return R.string.e_staff_position;
+        //if (CmStringUtils.isEmpty(position_id))
+        //    return R.string.e_staff_position;
         return 0;
     }
 

@@ -239,4 +239,16 @@ public class CmStringUtils {
     return String.format(Locale.CHINA, "%.0f", f);
   }
 
+  public static  boolean checkMoney(String money){
+    try {
+      Float amont = Float.parseFloat(money);
+      if (amont <= 0 || amont > 1000000000){
+        return false;
+      }
+    }catch (Exception e) {
+      return false;
+    }
+    return true;
+  }
+
 }

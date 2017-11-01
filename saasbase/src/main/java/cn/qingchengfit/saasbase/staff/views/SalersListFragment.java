@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.staff.di.StaffSelectData;
 import cn.qingchengfit.saasbase.staff.items.StaffItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
@@ -45,11 +44,9 @@ import rx.schedulers.Schedulers;
   extends BaseStaffListFragment {
 
   @Inject IStaffModel staffModel;
-  @Inject StaffSelectData staffSelectData;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
-    staffSelectData.staff = null;
     return super.onCreateView(inflater, container, savedInstanceState);
   }
 
@@ -88,8 +85,7 @@ import rx.schedulers.Schedulers;
   @Override public boolean onItemClick(int position) {
     IFlexible iFlexible = commonFlexAdapter.getItem(position);
     if (iFlexible instanceof StaffItem) {
-      staffSelectData.staff = ((StaffItem) iFlexible).getStaff();
-      routeTo("/detail/", null);
+      routeTo("/detail/", new StaffDetailParams().staff(((StaffItem) iFlexible).getStaff()).build());
     }
 
     return true;
