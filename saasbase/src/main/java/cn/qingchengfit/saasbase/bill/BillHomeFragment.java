@@ -127,7 +127,7 @@ import rx.functions.Action1;
     recyclerBill.setLayoutManager(new LinearLayoutManager(getContext()));
     //recyclerBill.addItemDecoration(
     //    new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey)
-    //         
+    //
     recyclerBill.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     recyclerBill.setAdapter(adapter);
   }

@@ -145,6 +145,9 @@ public class StaffInfoFragment extends SaasBaseFragment implements CashierPresen
   }
 
   @Override public void onModifySuccess() {
+    loginStatus.getLoginUser().setGender(inputSettingStaffGender.getContent().equals("男") ? 0 : 1);
+    loginStatus.getLoginUser().setUsername(inputSettingStaffDetailName.getContent());
+    loginStatus.getLoginUser().setPhone(inputSettingStaffPhone.getContent());
     ToastUtils.show("修改成功");
   }
 

@@ -106,7 +106,7 @@ public class SplashActivity extends BaseActivity {
                 @Override
                 public Observable<Boolean> call(QcDataResponse<UserWrap> userWrapQcDataResponse) {
                   if (ResponseConstant.checkSuccess(userWrapQcDataResponse)) {
-                    loginStatus.setLoginUser(new Staff(userWrapQcDataResponse.getData().user));
+                    loginStatus.setLoginUser(new Staff(userWrapQcDataResponse.getData().cashier));
                     return Observable.just(true);
                   } else {
                     showAlert(
