@@ -1,5 +1,10 @@
 package cn.qingchengfit.saasbase.cards.network.body;
 
+import android.support.annotation.StringRes;
+import cn.qingchengfit.network.IBodyCheckable;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.utils.CmStringUtils;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -21,7 +26,7 @@ package cn.qingchengfit.saasbase.cards.network.body;
  * Created by Paper on 2017/8/23.
  */
 
-public class OptionBody {
+public class OptionBody implements IBodyCheckable{
   public String id;
   public String charge;
   public String price;
@@ -32,4 +37,24 @@ public class OptionBody {
   public boolean can_charge;
   public boolean can_create;
   public boolean limit_days;
+
+  @StringRes
+  @Override public int checkStaff() {
+    if (!CmStringUtils.checkMoney(charge))
+      return R.string.e_option_account_error;
+    if (!CmStringUtils.checkMoney(price))
+      return R.string.e_option_price_error;
+    if (CmStringUtils.isEmpty(card_tpl_id)){
+      return R.string.e_empty_cardtpl;
+    }
+    return 0;
+  }
+
+  @Override public int checkPos() {
+    return checkStaff();
+  }
+
+  @Override public int checkTrainer() {
+    return checkStaff();
+  }
 }

@@ -119,11 +119,11 @@ import javax.inject.Inject;
    * @param order 账单
    */
   public void onOrderDetail(BusinessBill order) {
-    tvBillAmount.setText(getString(R.string.pay_money, StringUtils.getFloatDot2(order.price)));
-    tvBillStatus.setText(getResources().getStringArray(R.array.bill_status)[order.status + 1]);
+    tvBillAmount.setText(getString(R.string.pay_money, StringUtils.getFloatDot2((float) order.price/100)));//单位从分转换为元
+    tvBillStatus.setText(getResources().getStringArray(R.array.bill_status)[(order.status -1)%5]);
 
     commonAdapter.clear();
-    commonAdapter.addItem(new BillKvCommonItem("交易类型", arrayOrderType[order.type]));
+    commonAdapter.addItem(new BillKvCommonItem("交易类型", arrayOrderType[order.type%7]));
     commonAdapter.addItem(
       new BillKvCommonItem("收款方式", getString(presenter.getPayType(order.pay_type))));
     if (order.type < 5) commonAdapter.addItem(new BillKvCommonItem("流水号", order.order_no));
@@ -210,5 +210,7 @@ import javax.inject.Inject;
       return;
     }
     routeTo("card","/detail/",new CardDetailParams().cardid(presenter.getCardId()).build());
+    if (getActivity() != null)
+      getActivity().finish();
   }
 }

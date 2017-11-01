@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.Gravity;
+import android.widget.AdapterView;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -18,8 +19,10 @@ import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.LoadingDialog;
 import cn.qingchengfit.widgets.LoadingDialogTransParent;
 import cn.qingchengfit.widgets.R;
@@ -30,6 +33,7 @@ import com.bumptech.glide.manager.SupportRequestManagerFragment;
 import com.umeng.analytics.MobclickAgent;
 import dagger.android.AndroidInjection;
 import java.util.Date;
+import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -59,6 +63,7 @@ public class BaseActivity extends AppCompatActivity {
   @Inject GymWrapper gymWrapper;
   private LoadingDialog loadingDialog;
   private MaterialDialog mAlert;
+  private DialogList dialogList;
   private LoadingDialogTransParent loadingDialogTrans;
   private Observable<EventNetWorkError> obNetError;
   private FragmentBackPress backPress;
@@ -218,6 +223,20 @@ public class BaseActivity extends AppCompatActivity {
     mAlert.show();
   }
 
+  public void showDialogList(String title,List<String> strings, AdapterView.OnItemClickListener listener){
+    if (dialogList == null){
+      dialogList = new DialogList(this);
+    }
+    if (dialogList.isShowing())
+      dialogList.dismiss();
+    if (!CmStringUtils.isEmpty(title)){
+      dialogList.title(title);
+    }
+    dialogList.list(strings,listener);
+    dialogList.show();
+  }
+
+
   public void showLoadingTransparent() {
     if (loadingDialogTrans == null) loadingDialogTrans = new LoadingDialogTransParent(this);
     if (loadingDialogTrans.isShowing()) loadingDialogTrans.dismiss();
@@ -269,6 +288,7 @@ public class BaseActivity extends AppCompatActivity {
   public @IdRes int getFragId() {
     return 0;
   }
+
 
   public interface FragmentBackPress {
     boolean onFragmentBackPress();

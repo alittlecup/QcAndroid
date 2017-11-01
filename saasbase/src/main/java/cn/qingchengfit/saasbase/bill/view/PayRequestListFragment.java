@@ -89,7 +89,7 @@ import rx.android.schedulers.AndroidSchedulers;
             DialogUtils.instanceDelDialog(getContext(), "确定取消订单？", new MaterialDialog.SingleButtonCallback() {
               @Override
               public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                presenter.cancelTask(eventPayRequest.payRequest.task_no);
+                presenter.cancelTask(eventPayRequest.payRequest.id);
               }
             }).show();
           }

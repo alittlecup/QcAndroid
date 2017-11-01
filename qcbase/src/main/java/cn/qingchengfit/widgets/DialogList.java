@@ -35,6 +35,8 @@ public class DialogList extends Dialog {
 
     private LinearLayout view;
     private Context context;
+    private ListView listView;
+    private TextView textView;
 
     public DialogList(Context context) {
         super(context, R.style.ChoosePicDialogStyle);
@@ -57,7 +59,8 @@ public class DialogList extends Dialog {
     }
 
     public DialogList title(String title) {
-        TextView textView = new TextView(context, null, R.style.Qc_TextCommonGrey);
+        if (textView == null)
+            textView = new TextView(context, null, R.style.Qc_TextCommonGrey);
 //        textView.setTextAppearance(R.style.Qc_TextCommonBlack);
         textView.setTextColor(context.getResources().getColor(R.color.text_grey));
         textView.setTextSize(14);
@@ -65,12 +68,14 @@ public class DialogList extends Dialog {
         textView.setText(title);
         textView.setGravity(Gravity.CENTER_VERTICAL);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) context.getResources().getDimension(R.dimen.qc_item_height));
-        view.addView(textView, 0, params);
+        if (view.indexOfChild(textView) < 0 )
+            view.addView(textView, 0, params);
         return this;
     }
 
     public DialogList list(List<String> list, final AdapterView.OnItemClickListener listener) {
-        ListView listView = new ListView(context);
+        if (listView == null)
+            listView = new ListView(context);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.item_only_text, list);
         listView.setAdapter(adapter);
         listView.setDivider(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
@@ -88,12 +93,14 @@ public class DialogList extends Dialog {
             height = MeasureUtils.dpToPx(48f, context.getResources()) * 6;
         }
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
-        view.addView(listView, params);
+        if (view.indexOfChild(listView) < 0 )
+            view.addView(listView, params);
         return this;
     }
 
     public DialogList list(String[] list, final AdapterView.OnItemClickListener listener) {
-        ListView listView = new ListView(context);
+        if (listView == null)
+         listView = new ListView(context);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.item_only_text, list);
         listView.setAdapter(adapter);
         listView.setDivider(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
@@ -111,12 +118,14 @@ public class DialogList extends Dialog {
             height = MeasureUtils.dpToPx(48f, context.getResources()) * 6;
         }
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
-        view.addView(listView, params);
+        if (view.indexOfChild(listView) < 0 )
+            view.addView(listView, params);
         return this;
     }
 
     public DialogList list(int from, int to, final AdapterView.OnItemClickListener listener) {
-        ListView listView = new ListView(context);
+        if (listView == null)
+         listView = new ListView(context);
         List<String> datas = new ArrayList<>();
         for (int i = from; i < to + 1; i++) {
             datas.add(Integer.toString(i));
@@ -138,7 +147,8 @@ public class DialogList extends Dialog {
             height = MeasureUtils.dpToPx(48f, context.getResources()) * 6;
         }
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
-        view.addView(listView, params);
+        if (view.indexOfChild(listView) < 0 )
+            view.addView(listView, params);
         return this;
     }
 

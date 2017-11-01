@@ -136,6 +136,7 @@ public class CardModel implements ICardModel {
   @Override
   public Observable<QcDataResponse> qcCreateStandard(@Path("card_tpl_id") String card_tpl_id,
       @Body OptionBody body) {
+    
     return posApi.qcCreateCardtplOption(gymWrapper.getGymId(),card_tpl_id,gymWrapper.getParams(),body);
   }
 

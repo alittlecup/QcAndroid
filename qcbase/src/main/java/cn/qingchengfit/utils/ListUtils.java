@@ -82,4 +82,12 @@ public class ListUtils {
     return x;
   }
 
+  public static  List<String> ListObj2Str(List<? extends StringPropertyable> list){
+    List<String> ret = new ArrayList<>();
+    for (StringPropertyable stringPropertyable : list) {
+      ret.add(stringPropertyable.getStringProperty());
+    }
+    return ret;
+  }
+
 }

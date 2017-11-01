@@ -1,10 +1,4 @@
-package cn.qingchengfit.pos.routers;
-
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import cn.qingchengfit.pos.staff.PosStaffDetailFragment;
-import cn.qingchengfit.saasbase.routers.staffImpl;
-import cn.qingchengfit.saasbase.staff.views.StaffAddFragment;
+package cn.qingchengfit.network;
 
 /**
  * power by
@@ -24,20 +18,11 @@ import cn.qingchengfit.saasbase.staff.views.StaffAddFragment;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/18.
+ * Created by Paper on 2017/11/1.
  */
 
-public class StaffRouters extends staffImpl {
-
-  @Override public Fragment toStaffDetailFragment(Bundle args) {
-    PosStaffDetailFragment fragment = new PosStaffDetailFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
-  @Override public Fragment toStaffAddFragment(Bundle args) {
-    StaffAddFragment fragment = new StaffAddFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
+public interface IBodyCheckable {
+  int checkStaff();
+  int checkPos();
+  int checkTrainer();
 }

@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.Unbinder;
@@ -581,10 +582,21 @@ public abstract class BaseFragment extends RxFragment
   }
 
   @Override public void popBack() {
-    if (!getFragmentManager().popBackStackImmediate()) getActivity().finish();
+    if (getFragmentManager() != null) {
+      if (!getFragmentManager().popBackStackImmediate()) {
+        if (getActivity() != null)
+          getActivity().finish();
+      }
+    }
   }
 
   @Override public void onShowError(@StringRes int e) {
     onShowError(getString(e));
+  }
+
+  @Override public void showSelectSheet(String title,List<String> strs,AdapterView.OnItemClickListener listener) {
+    if (getActivity() instanceof BaseActivity){
+      ((BaseActivity) getActivity()).showDialogList(title,strs,listener);
+    }
   }
 }

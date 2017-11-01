@@ -2,6 +2,7 @@ package cn.qingchengfit.model.base;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.utils.StringPropertyable;
 
 /**
  * power by
@@ -17,7 +18,7 @@ import android.os.Parcelable;
  * <p/>
  * Created by Paper on 16/4/22 2016.
  */
-public class StaffPosition implements Parcelable {
+public class StaffPosition implements Parcelable,StringPropertyable {
 
     public static final Creator<StaffPosition> CREATOR = new Creator<StaffPosition>() {
         @Override public StaffPosition createFromParcel(Parcel source) {
@@ -62,5 +63,9 @@ public class StaffPosition implements Parcelable {
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
+    }
+
+    @Override public String getStringProperty() {
+        return name;
     }
 }

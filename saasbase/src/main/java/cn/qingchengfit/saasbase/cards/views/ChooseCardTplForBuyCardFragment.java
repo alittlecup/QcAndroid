@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -26,6 +28,11 @@ import eu.davidea.flexibleadapter.items.IFlexible;
  */
 @Leaf(module = "card" , path = "/choose/cardtpl/")
 public class ChooseCardTplForBuyCardFragment extends CardTplsHomeInGymFragment {
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("选择会员卡种类");
+  }
 
   /**
    *  点击事件发送消息

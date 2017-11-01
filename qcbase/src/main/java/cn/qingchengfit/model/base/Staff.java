@@ -29,10 +29,13 @@ public class Staff extends Personage implements Parcelable {
 
     public String gd_district_id;//地区id
     public District gd_district;//地区
-    public StaffPosition postion;//
+    public StaffPosition position;//
     public long count;// # 作为推荐人 已推荐人总数
     public String position_str;
     public String user_id;
+    public boolean is_staff;
+    public boolean is_coach;
+
 
     public Staff() {
     }
@@ -94,11 +97,11 @@ public class Staff extends Personage implements Parcelable {
     }
 
     public StaffPosition getPostion() {
-        return postion;
+        return position;
     }
 
     public void setPostion(StaffPosition postion) {
-        this.postion = postion;
+        this.position = postion;
     }
 
     public String getPosition_str() {
@@ -133,20 +136,24 @@ public class Staff extends Personage implements Parcelable {
         super.writeToParcel(dest, flags);
         dest.writeString(this.gd_district_id);
         dest.writeParcelable(this.gd_district, flags);
-        dest.writeParcelable(this.postion, flags);
+        dest.writeParcelable(this.position, flags);
         dest.writeLong(this.count);
         dest.writeString(this.position_str);
         dest.writeString(this.user_id);
+        dest.writeByte(this.is_staff ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.is_coach ? (byte) 1 : (byte) 0);
     }
 
     protected Staff(Parcel in) {
         super(in);
         this.gd_district_id = in.readString();
         this.gd_district = in.readParcelable(District.class.getClassLoader());
-        this.postion = in.readParcelable(StaffPosition.class.getClassLoader());
+        this.position = in.readParcelable(StaffPosition.class.getClassLoader());
         this.count = in.readLong();
         this.position_str = in.readString();
         this.user_id = in.readString();
+        this.is_staff = in.readByte() != 0;
+        this.is_coach = in.readByte() != 0;
     }
 
     public static final Creator<Staff> CREATOR = new Creator<Staff>() {

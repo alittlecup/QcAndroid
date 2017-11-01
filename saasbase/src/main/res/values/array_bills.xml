@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string-array name="bill_type">
+    <item >其他</item>
     <item >购买会员卡</item>
     <item >充值会员卡</item>
     <item >活动报名</item>

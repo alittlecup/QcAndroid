@@ -29,7 +29,7 @@ import java.util.List;
 public class CardtplBody {
   public String name;
   public String id;
-  public int type;
+  public Integer type;
   public String description;
   public boolean is_limit;
   //    public int count;

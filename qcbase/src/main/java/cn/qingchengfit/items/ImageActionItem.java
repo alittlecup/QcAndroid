@@ -1,10 +1,10 @@
 package cn.qingchengfit.items;
 
 import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +41,7 @@ public class ImageActionItem extends AbstractFlexibleItem<ImageActionItem.ImageA
   @Override public void bindViewHolder(FlexibleAdapter adapter, ImageActionVH holder, int position,
       List payloads) {
     holder.tv.setText(txt);
-    holder.tv.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(holder.itemView.getContext(),resDrawable),null,null);
+    holder.img.setImageResource(resDrawable);
   }
 
   @Override public boolean equals(Object o) {
@@ -50,6 +50,7 @@ public class ImageActionItem extends AbstractFlexibleItem<ImageActionItem.ImageA
 
   public class ImageActionVH extends FlexibleViewHolder {
     @BindView(R2.id.tv) TextView tv;
+    @BindView(R2.id.img) ImageView img;
 
     public ImageActionVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

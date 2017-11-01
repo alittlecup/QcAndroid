@@ -54,7 +54,7 @@ public class PayRequestListPresenter extends BasePresenter {
     if (!CmStringUtils.isEmpty(payRequest.order_no)) {
       view.onPay(payRequest);
     } else {
-      getBzlzId(payRequest.task_no, payRequest);
+      getBzlzId(payRequest.id, payRequest);
     }
   }
 

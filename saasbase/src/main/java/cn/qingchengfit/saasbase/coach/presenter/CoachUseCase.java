@@ -6,7 +6,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.repository.GetApi;
 import cn.qingchengfit.saasbase.repository.PostApi;
-import cn.qingchengfit.saasbase.staff.model.QcResponsePostions;
+import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.StaffShipResponse;
 import cn.qingchengfit.saasbase.staff.model.Staffs;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
@@ -134,7 +134,7 @@ public class CoachUseCase {
             });
     }
 
-    public Subscription queryPostions(String staffId, String gymid, String gymmodel, Action1<QcResponsePostions> action1) {
+    public Subscription queryPostions(String staffId, String gymid, String gymmodel, Action1<PostionListWrap> action1) {
         return restRepository.createGetApi(GetApi.class)
             .qcGetPostions(staffId, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())

@@ -1,6 +1,8 @@
 package cn.qingchengfit.di;
 
 import android.support.annotation.StringRes;
+import android.widget.AdapterView;
+import java.util.List;
 
 /**
  * power by
@@ -32,5 +34,6 @@ public interface CView extends PView {
 
   void showLoading();
   void hideLoading();
+  void showSelectSheet(String title,List<String> strs,AdapterView.OnItemClickListener listener);
   void popBack();
 }
