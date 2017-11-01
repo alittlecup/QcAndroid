@@ -57,9 +57,9 @@ public class LoginPresenter extends BasePresenter {
             if (qcDataResponse.getStatus() == ResponseConstant.SUCCESS){
               if (view != null){
                 view.onGetCodeSuccess();
-              }else{
-                view.onShowError(qcDataResponse.getMsg());
               }
+            }else{
+                view.onGetCodeFailed(qcDataResponse.getMsg());
             }
           }
         }, new NetWorkThrowable()));
@@ -98,5 +98,7 @@ public class LoginPresenter extends BasePresenter {
     void onFailed(String s);
 
     void onGetCodeSuccess();
+
+    void onGetCodeFailed(String s);
   }
 }

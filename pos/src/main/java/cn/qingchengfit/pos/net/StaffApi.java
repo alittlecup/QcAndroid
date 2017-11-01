@@ -1,7 +1,7 @@
 package cn.qingchengfit.pos.net;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
+import cn.qingchengfit.saasbase.staff.model.QcResponsePostions;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
@@ -55,7 +55,7 @@ public interface StaffApi {
   /**
    * 职位列表
    */
-  @GET("/api/gyms/{id}/positions/") rx.Observable<QcDataResponse<PostionListWrap>> getPostions(
+  @GET("/api/gyms/{id}/positions/") rx.Observable<QcDataResponse<QcResponsePostions>> getPostions(
     @Path("id") String gymid);
 
   ///**

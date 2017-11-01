@@ -24,5 +24,5 @@ import cn.qingchengfit.model.base.User;
  */
 
 public class UserWrap {
-  public User user;
+  public User cashier;
 }

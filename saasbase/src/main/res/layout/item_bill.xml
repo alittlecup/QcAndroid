@@ -7,6 +7,7 @@
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     android:paddingRight="14dp"
+    android:background="@drawable/bg_click"
     >
 
   <TextView

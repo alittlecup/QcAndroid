@@ -90,14 +90,13 @@ import javax.inject.Inject;
   @OnClick(R.id.layout_setting_staff)
   public void onStaffDetail(){
     Cashier cashier = new Cashier();
-    cashier.id = loginStatus.getLoginUser().getId();
+    cashier.id = loginStatus.getLoginUser().user_id;
     cashier.username = loginStatus.getLoginUser().username;
     cashier.avatar = loginStatus.getLoginUser().avatar;
     cashier.gender = loginStatus.getLoginUser().gender;
     cashier.phone = loginStatus.getLoginUser().phone;
-    routeTo(AppUtils.getRouterUri(getContext(), "setting/cashier/detail/"), new StaffInfoParams()
-      .cashier(cashier)
-      .build());
+    routeTo(AppUtils.getRouterUri(getContext(), "setting/cashier/detail/"),
+        new StaffInfoParams().cashier(cashier).build());
   }
 
   @OnClick(R.id.input_cashier) public void onCashier() {

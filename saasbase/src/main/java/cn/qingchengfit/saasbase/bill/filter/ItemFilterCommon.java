@@ -62,12 +62,11 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
     }
     holder.billFilterTitle.setText(filterModel.name);
     for (Content content : filterModel.content) {
-      ViewGroup.LayoutParams params =
-          new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-              MeasureUtils.dpToPx(40f, holder.itemView.getResources()), 1);
+      LinearLayout.LayoutParams params =
+          new LinearLayout.LayoutParams(MeasureUtils.dpToPx(100f, holder.itemView.getResources()),
+              MeasureUtils.dpToPx(40f, holder.itemView.getResources()));
 
-      CheckBoxButton button = (CheckBoxButton) LayoutInflater.from(holder.itemView.getContext())
-          .inflate(cn.qingchengfit.widgets.R.layout.layout_radiogroup_checkbox, null);
+      CheckBoxButton button = new CheckBoxButton(holder.itemView.getContext());
       button.setContent(content.name);
 
       button.setLayoutParams(params);
