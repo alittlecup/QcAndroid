@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -56,7 +57,8 @@ import rx.functions.Action1;
 //账单页面
 @Leaf(module = "bill", path = "/home/list/") public class BillHomeFragment extends BaseFragment
     implements DrawerLayout.DrawerListener, BillTotalPresenter.MVPView,
-    ItemMoreFooter.OnFooterClickListener, FlexibleAdapter.OnItemClickListener {
+    ItemMoreFooter.OnFooterClickListener, FlexibleAdapter.OnItemClickListener,
+    SwipeRefreshLayout.OnRefreshListener {
 
   @BindView(R2.id.tv_bill_total_amount) TextView tvBillTotalAmount;
   @BindView(R2.id.tv_bill_withdraw) TextView tvBillWithdraw;
@@ -71,6 +73,7 @@ import rx.functions.Action1;
   @Inject BillTotalPresenter presenter;
   @Inject GymWrapper gymWrapper;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R2.id.bill_swipe) SwipeRefreshLayout billSwipe;
   private CommonFlexAdapter adapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
 
@@ -116,7 +119,7 @@ import rx.functions.Action1;
             if (billFilterEvent.map.size() > 0) {
               presenter.qcGetBillListbyFilter(gymWrapper.id(), billFilterEvent.map);
             } else {
-              presenter.qcGetBillList(gymWrapper.id(), nowDate);
+              presenter.qcGetBillList(gymWrapper.id(), DateUtils.formatToServer(new Date()));
             }
           }
         });
@@ -130,6 +133,9 @@ import rx.functions.Action1;
             .withOffset(1)
             .withBottomEdge(true));
     recyclerBill.setAdapter(adapter);
+    if (billSwipe != null) {
+      billSwipe.setOnRefreshListener(this);
+    }
   }
 
   private void setToolbar(Toolbar toolbar) {
@@ -177,14 +183,16 @@ import rx.functions.Action1;
   }
 
   @Override public void onGetTotal(BillTotal billTotal) {
-    tvBillTotalAmount.setText(
-        String.format("%.2f", (billTotal.withdraw_sum + billTotal.can_withdraw_sum + billTotal.frozen_sum) / 100));
-    tvBillWithdraw.setText(String.format("%.2f",billTotal.can_withdraw_sum / 100));
+    if (billSwipe != null && billSwipe.isRefreshing()) billSwipe.setRefreshing(false);
+    tvBillTotalAmount.setText(String.format("%.2f",
+        (billTotal.withdraw_sum + billTotal.can_withdraw_sum + billTotal.frozen_sum) / 100));
+    tvBillWithdraw.setText(String.format("%.2f", billTotal.can_withdraw_sum / 100));
     tvBillCanWithdraw.setText(String.format("%.2f", billTotal.withdraw_sum / 100));
     tvBillSettlement.setText(String.format("%.2f", billTotal.frozen_sum / 100));
   }
 
   @Override public void onGetBillList(List<BusinessBill> billList) {
+    if (billSwipe != null) billSwipe.setRefreshing(false);
     if (!isLoadMore) {
       itemList.clear();
     }
@@ -273,8 +281,14 @@ import rx.functions.Action1;
   @Override public boolean onItemClick(int position) {
     if (adapter.getItem(position) instanceof ItemBill) {
       BusinessBill bill = ((ItemBill) adapter.getItem(position)).getBill();
-      routeTo(AppUtils.getRouterUri(getContext(), "/bill/detail/"), new BillDetailParams().orderNo(bill.order_no).build());
+      routeTo(AppUtils.getRouterUri(getContext(), "/bill/detail/"),
+          new BillDetailParams().orderNo(bill.order_no).build());
     }
     return false;
+  }
+
+  @Override public void onRefresh() {
+    presenter.qcGetBillList(gymWrapper.id(), DateUtils.formatToServer(new Date()));
+    presenter.qcGetBillTotal(gymWrapper.id());
   }
 }
