@@ -37,6 +37,8 @@ public interface IBillModel {
    */
   Observable<QcDataResponse<BusinessOrderWrap>> getBusinessOrderDetail(String businessOrderId);
 
+  Observable<QcDataResponse> editBusinessOrderMark(String businessOrderId,String mark);
+
   /**
    * 获取订单列表（筛选 ）
    */

@@ -52,8 +52,8 @@ public interface BillApi {
     @Path("order_no") String order_no, @QueryMap HashMap<String, Object> params);
 
   @PUT("/api/rongshu/gyms/{gym_id}/bills/{order_no}/")
-  Observable<QcDataResponse<BusinessOrderWrap>> editBillDetail(@Path("gym_id") String gymid,
-    @Path("order_no") String order_no, @QueryMap HashMap<String, Object> params);
+  Observable<QcDataResponse> editBillDetail(@Path("gym_id") String gymid,
+    @Path("order_no") String order_no, @Body HashMap<String, Object> params);
 
   @GET("/api/rongshu/gyms/{gym_id}/bills/")
   Observable<QcDataResponse<BusinessOrderListWrap>> getBillList(@Path("gym_id") String gymid);

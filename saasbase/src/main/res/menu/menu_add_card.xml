@@ -4,8 +4,7 @@
   <item
       android:id="@+id/action_add"
       android:orderInCategory="100"
-      android:title="新增会员卡种类"
-      android:icon="@drawable/ic_add_staff"
+      android:icon="@drawable/vd_add_cardtpl"
       app:showAsAction="always"
-      />
+      android:title=""/>
 </menu>

@@ -70,6 +70,12 @@ public class BillModel implements IBillModel {
     return billApi.getBillDetail(gymWrapper.getGymId() ,businessOrderId, gymWrapper.getParams());
   }
 
+  @Override public Observable<QcDataResponse> editBusinessOrderMark(String businessOrderId,String mark) {
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("remarks",mark);
+    return billApi.editBillDetail(gymWrapper.getGymId(),businessOrderId,params);
+  }
+
   @Override public Observable<QcDataResponse<BusinessOrderWrap>> getBusinessOrderList(
     HashMap<String, Object> params) {
     return null;

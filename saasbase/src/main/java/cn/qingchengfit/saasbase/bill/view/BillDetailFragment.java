@@ -25,6 +25,7 @@ import cn.qingchengfit.saasbase.bill.items.BillKvCommonItem;
 import cn.qingchengfit.saasbase.bill.presenter.BillDetailPresenterPresenter;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
+import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -138,7 +139,7 @@ import javax.inject.Inject;
     commonAdapter.addItem(new BillKvCommonItem("平台", order.origin));
     commonOrder(order);
     dividerRemark.setVisibility(order.extra == null ? View.GONE : View.VISIBLE);
-    tvRemarks.setText("备注" + order.remarks);
+    tvRemarks.setText("备注: " + order.remarks);
   }
 
   /**
@@ -202,6 +203,11 @@ import javax.inject.Inject;
 
   @OnClick(R2.id.btn_remarks) public void onBtnRemarksClicked() {
     //填写备注
+    routeTo("common","/input/",new CommonInputParams()
+      .title("填写备注")
+      .content(presenter.getBill() == null ?"":presenter.getBill().remarks)
+      .hint("填写账单备注")
+      .build());
   }
 
   @OnClick(R2.id.btn_card) public void onBtnCardClicked() {
