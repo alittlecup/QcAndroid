@@ -48,11 +48,11 @@ import javax.inject.Inject;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    RxBus.getBus().register(EventSaasFresh.class)
-      .compose(this.<EventSaasFresh>bindToLifecycle())
-      .compose(this.<EventSaasFresh>doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new BusSubscribe<EventSaasFresh>() {
-        @Override public void onNext(EventSaasFresh eventSaasFresh) {
+    RxBus.getBus().register(EventSaasFresh.StaffList.class)
+      .compose(this.<EventSaasFresh.StaffList>bindToLifecycle())
+      .compose(this.<EventSaasFresh.StaffList>doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<EventSaasFresh.StaffList>() {
+        @Override public void onNext(EventSaasFresh.StaffList eventSaasFresh) {
           onRefresh();
         }
       });

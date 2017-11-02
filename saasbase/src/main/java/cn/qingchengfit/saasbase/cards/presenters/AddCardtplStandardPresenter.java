@@ -104,8 +104,8 @@ public class AddCardtplStandardPresenter extends BasePresenter {
   public void addOption() {
 
     if (CmStringUtils.isEmpty(tplId)) {
-      if (CmStringUtils.isEmpty(ob.charge) || CmStringUtils.isEmpty(ob.price)) {
-        view.showAlert("请填写充值和实收");
+      if (!CmStringUtils.checkMoney(ob.charge) || !CmStringUtils.checkMoney(ob.price)) {
+        view.showAlert("请填写正确的充值和实收");
         return;
       }
       RxBus.getBus().post(new EventCardTplOption(ob, 0));

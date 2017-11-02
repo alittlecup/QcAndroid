@@ -107,7 +107,7 @@ import javax.inject.Inject;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("添加规格");
+    toolbarTitle.setText("添加价格");
     toolbar.getMenu().clear();
     toolbar.getMenu().add("添加").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
