@@ -17,11 +17,11 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.pos.R;
-import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
-import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DialogUtils;
@@ -58,8 +58,7 @@ public class StaffInfoFragment extends SaasBaseFragment implements CashierPresen
   @Inject CashierPresenter presenter;
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
-  @Need public Self self;
-  @Need public Cashier cashier;
+  @Need public Staff cashier;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -75,7 +74,10 @@ public class StaffInfoFragment extends SaasBaseFragment implements CashierPresen
     inputSettingStaffDetailName.setContent(cashier.username);
     inputSettingStaffGender.setContent(cashier.gender == 1 ? "女" : "男");
     inputSettingStaffPhone.setContent(cashier.phone);
-    if (self.isSelf){
+
+    if (loginStatus.getLoginUser().getPhone() != null &&
+      cashier != null
+    &&loginStatus.getLoginUser().getPhone().equalsIgnoreCase(cashier.phone)){
       btnDeleteCashier.setVisibility(GONE);
     }
     setToolbar(toolbar);
@@ -141,18 +143,19 @@ public class StaffInfoFragment extends SaasBaseFragment implements CashierPresen
 
   @Override public void onDeleteSuccess() {
     ToastUtils.show("删除成功");
-    RxBus.getBus().post(new RefreshCashierEvent());
+    RxBus.getBus().post(new EventSaasFresh.StaffList());
     getActivity().onBackPressed();
   }
 
   @Override public void onModifySuccess() {
-    loginStatus.getLoginUser().setGender(inputSettingStaffGender.getContent().equals("男") ? 0 : 1);
-    loginStatus.getLoginUser().setUsername(inputSettingStaffDetailName.getContent());
-    loginStatus.getLoginUser().setPhone(inputSettingStaffPhone.getContent());
+    //loginStatus.getLoginUser().setGender(inputSettingStaffGender.getContent().equals("男") ? 0 : 1);
+    //loginStatus.getLoginUser().setUsername(inputSettingStaffDetailName.getContent());
+    //loginStatus.getLoginUser().setPhone(inputSettingStaffPhone.getContent());
+    RxBus.getBus().post(new EventSaasFresh.StaffList());
     ToastUtils.show("修改成功");
   }
 
-  @Override public void onGetCashier(List<Cashier> cashierList) {
+  @Override public void onGetCashier(List<Staff> cashierList) {
 
   }
 }

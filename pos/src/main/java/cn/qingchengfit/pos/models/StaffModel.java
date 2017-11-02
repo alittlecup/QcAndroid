@@ -4,6 +4,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.pos.cashier.model.CashierWrap;
 import cn.qingchengfit.pos.net.StaffApi;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
@@ -11,6 +12,7 @@ import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * power by
@@ -48,7 +50,21 @@ public class StaffModel implements IStaffModel {
   }
 
   @Override public Observable<QcDataResponse<UserWrap>> getCurUser() {
-    return staffApi.getCurrentUser(gymWrapper.getParams());
+    return staffApi.getCurrentUser(gymWrapper.getParams()).flatMap(new Func1<QcDataResponse<CashierWrap>, Observable<QcDataResponse<UserWrap>>>() {
+      @Override public Observable<QcDataResponse<UserWrap>> call(
+        QcDataResponse<CashierWrap> rsp) {
+        QcDataResponse<UserWrap> response = new QcDataResponse<>();
+        response.setMsg(rsp.msg);
+        response.setStatus(rsp.status);
+        UserWrap userWrap = new UserWrap();
+        userWrap.staff_id = rsp.data.cashier.id;
+        userWrap.user = rsp.data.cashier.user;
+        response.setData(userWrap);
+        return Observable.just(response);
+      }
+
+
+    });
   }
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {

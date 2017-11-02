@@ -1,6 +1,4 @@
-package cn.qingchengfit.saasbase.staff.network.response;
-
-import cn.qingchengfit.model.base.User;
+package cn.qingchengfit.pos.cashier.model;
 
 /**
  * power by
@@ -20,11 +18,9 @@ import cn.qingchengfit.model.base.User;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/27.
+ * Created by Paper on 2017/11/2.
  */
 
-public class UserWrap {
-  public User user;
-  public String staff_id;
-
+public class CashierWrap {
+  public Cashier cashier;
 }

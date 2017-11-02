@@ -10,16 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.pos.R;
-import cn.qingchengfit.pos.cashier.event.RefreshCashierEvent;
-import cn.qingchengfit.pos.cashier.model.Cashier;
-import cn.qingchengfit.pos.setting.ItemCashier;
-import cn.qingchengfit.pos.setting.Self;
 import cn.qingchengfit.pos.setting.StaffInfoParams;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saasbase.staff.items.StaffItem;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -27,7 +30,6 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import rx.functions.Action1;
 
 /**
  * Created by fb on 2017/10/19.
@@ -41,7 +43,20 @@ import rx.functions.Action1;
   private Toolbar toolbar;
   private TextView toolbarTitle;
   @Inject CashierPresenter presenter;
+  @Inject LoginStatus loginStatus;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    RxBus.getBus().register(EventSaasFresh.class)
+      .compose(this.<EventSaasFresh>bindToLifecycle())
+      .compose(this.<EventSaasFresh>doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<EventSaasFresh>() {
+        @Override public void onNext(EventSaasFresh eventSaasFresh) {
+          onRefresh();
+        }
+      });
+  }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -54,9 +69,12 @@ import rx.functions.Action1;
     delegatePresenter(presenter, this);
     setToolbar(toolbar);
     initListener(this);
-    initBus();
-    presenter.qcGetCashier();
     return root;
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    presenter.qcGetCashier();
   }
 
   @Override protected void addDivider() {
@@ -68,13 +86,6 @@ import rx.functions.Action1;
     );
   }
 
-  private void initBus(){
-    RxBusAdd(RefreshCashierEvent.class).onBackpressureLatest().subscribe(new Action1<RefreshCashierEvent>() {
-      @Override public void call(RefreshCashierEvent refreshCashierEvent) {
-        presenter.qcGetCashier();
-      }
-    });
-  }
 
   private void setToolbar(Toolbar toolbar) {
     initToolbar(toolbar);
@@ -112,11 +123,11 @@ import rx.functions.Action1;
 
   }
 
-  @Override public void onGetCashier(List<Cashier> cashierList) {
+  @Override public void onGetCashier(List<Staff> cashierList) {
     if (cashierList.size() > 0) {
       itemList.clear();
-      for (Cashier cashier : cashierList) {
-        itemList.add(new ItemCashier(cashier));
+      for (Staff cashier : cashierList) {
+        itemList.add(new StaffItem(cashier));
       }
       setDatas(itemList, 1);
     }
@@ -124,9 +135,14 @@ import rx.functions.Action1;
 
   @Override public boolean onItemClick(int position) {
     IFlexible item = itemList.get(position);
-    if (item instanceof  ItemCashier) {
+    if (item instanceof  StaffItem) {
+      Staff staff = ((StaffItem) item).getStaff();
+      if (staff.is_superuser && !staff.id.equalsIgnoreCase(loginStatus.staff_id())){
+        showAlert("该收银员为超级管理员\n仅本人可以查看信息");
+        return true;
+      }
       routeTo(AppUtils.getRouterUri(getContext(), "setting/cashier/detail/"),
-        new StaffInfoParams().cashier(((ItemCashier) itemList.get(position)).getData()).self(new Self(false)).build());
+        new StaffInfoParams().cashier(staff).build());
     }
     return false;
   }
