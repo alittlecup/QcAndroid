@@ -10,6 +10,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -27,6 +28,8 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
 
   private FilterModel filterModel;
   private OnTimeChooseListener onTimeChooseListener;
+  private Date startDate;
+  private Date endDate;
 
   public ItemFilterTime(FilterModel filterModel, OnTimeChooseListener onTimeChooseListener) {
     this.filterModel = filterModel;
@@ -35,13 +38,19 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
 
   @Override
   public ItemFilterTimeVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
+      final ViewGroup parent) {
     final ItemFilterTimeVH holder =
         new ItemFilterTimeVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     final TimeDialogWindow startTimeDialogWindow =
         new TimeDialogWindow(parent.getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     startTimeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
+        startDate = date;
+        if (endDate != null){
+          if (endDate.before(date)){
+            DialogUtils.showAlert(parent.getContext(), "结束时间不得早于开始时间");
+          }
+        }
         holder.tvStudentFilterTimeStart.setText(DateUtils.Date2YYYYMMDD(date));
         if (onTimeChooseListener != null) {
           onTimeChooseListener.onTimeStart(DateUtils.Date2YYYYMMDD(date), filterModel.key);
@@ -52,6 +61,13 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
         new TimeDialogWindow(parent.getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     endTimeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
+        endDate = date;
+        if (startDate != null){
+          if (startDate.after(date)){
+            DialogUtils.showAlert(parent.getContext(), "结束时间不得早于开始时间");
+            return;
+          }
+        }
         holder.tvStudentFilterTimeEnd.setText(DateUtils.Date2YYYYMMDD(date));
         if (onTimeChooseListener != null) {
           onTimeChooseListener.onTimeEnd(DateUtils.Date2YYYYMMDD(date), filterModel.key);
@@ -82,6 +98,11 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, ItemFilterTimeVH holder, int position,
       List payloads) {
+    if (adapter.isSelected(position)){
+      holder.tvStudentFilterTimeEnd.setText("");
+      holder.tvStudentFilterTimeStart.setText("");
+      return;
+    }
     holder.billFilterTitle.setText(filterModel.name);
   }
 
