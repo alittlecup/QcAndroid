@@ -4,6 +4,7 @@ import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.pos.RongPay;
+import cn.qingchengfit.saasbase.bill.view.BillDetailParams;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.views.CardChargeFragment;
 import javax.inject.Inject;
@@ -34,15 +35,20 @@ public class PosCardChargeFragment extends CardChargeFragment {
   @Inject LoginStatus loginStatus;
 
   @Override public void onBusinessOrder(PayBusinessResponse payBusinessResponse) {
-    Intent toBuy = new RongPay.Builder()
-      .amount(payBusinessResponse.order_amount)
-      .title(payBusinessResponse.order_title)
-      .merOrderId(payBusinessResponse.order_no)
-      .customerNo(gymWrapper.getCustumNo())
-      .operator(loginStatus.staff_name())
-      .build().pay(getContext());
-    startActivityForResult(toBuy,100);  }
+    if (payBusinessResponse.order_amount > 0) {
 
+      Intent toBuy = new RongPay.Builder().amount(payBusinessResponse.order_amount)
+        .title(payBusinessResponse.order_title)
+        .merOrderId(payBusinessResponse.order_no)
+        .customerNo(gymWrapper.getCustumNo())
+        .operator(loginStatus.staff_name())
+        .build()
+        .pay(getContext());
+      startActivityForResult(toBuy, 100);
+    } else {
+      routeTo("bill", "/pay/done/", new BillDetailParams().orderNo(payBusinessResponse.order_no).build());
+    }
+  }
 
   //@Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
   //  super.onActivityResult(requestCode, resultCode, data);

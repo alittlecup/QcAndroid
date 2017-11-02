@@ -92,7 +92,10 @@ public class CardChargePresenter extends BasePresenter {
    * 下单
    */
   public void chargeCard() {
+    chargeBody.setCharge_type(4);
+    chargeBody.setCard_id(mCard.getId());
     chargeBody.setType(mCard.getType());
+    //chargeBody.setUser_ids(CmStringUtils.List2Str(mCard.getUserIds()));
     if (mChosenOption == null) {
       chargeBody.setPrice(view.realMoney());
       chargeBody.setBuyAccount(view.chargeMoney(), view.startDay(), view.endDay(), null);

@@ -51,7 +51,8 @@
             style="@style/QcCivInputStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
-            app:civ_lable="实收金额(元)"
+            app:civ_lable="实收金额"
+            app:civ_unit="元"
             app:civ_inputnum="true"
             />
 

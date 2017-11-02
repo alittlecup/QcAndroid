@@ -102,14 +102,20 @@ public class AddCardtplStandardPresenter extends BasePresenter {
    * 如果是新开卡，保存在本地
    */
   public void addOption() {
-    if (ob.checkStaff() !=0)
-      view.showAlert(ob.checkPos());
-    if (CmStringUtils.isEmpty(tplId)){
-      RxBus.getBus().post(new EventCardTplOption(ob,0));
-      view.onSaveOk();
-    }else
 
+    if (CmStringUtils.isEmpty(tplId)) {
+      if (CmStringUtils.isEmpty(ob.charge) || CmStringUtils.isEmpty(ob.price)) {
+        view.showAlert("请填写充值和实收");
+        return;
+      }
+      RxBus.getBus().post(new EventCardTplOption(ob, 0));
+      view.onSaveOk();
+    } else {
       ob.card_tpl_id = tplId;
+      if (ob.checkStaff() != 0) {
+        view.showAlert(ob.checkPos());
+        return;
+      }
       RxRegiste(cardModel.qcCreateStandard(tplId, ob)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
@@ -123,14 +129,15 @@ public class AddCardtplStandardPresenter extends BasePresenter {
             }
           }
         }));
+    }
   }
 
   public void delOption() {
-    if (CmStringUtils.isEmpty(tplId)){
+    if (CmStringUtils.isEmpty(tplId)) {
       ob.id = optionId;
-      RxBus.getBus().post(new EventCardTplOption(ob,-1));
+      RxBus.getBus().post(new EventCardTplOption(ob, -1));
       view.onDelOk();
-    }else
+    } else {
       RxRegiste(cardModel.qcDelCardStandard(optionId)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
@@ -144,28 +151,30 @@ public class AddCardtplStandardPresenter extends BasePresenter {
             }
           }
         }));
+    }
   }
 
   public void saveOption() {
-    if (CmStringUtils.isEmpty(tplId)){
+    if (CmStringUtils.isEmpty(tplId)) {
       ob.id = optionId;
-      RxBus.getBus().post(new EventCardTplOption(ob,0));
+      RxBus.getBus().post(new EventCardTplOption(ob, 0));
       view.onSaveOk();
-    }else
+    } else {
       ob.id = null;
-      RxRegiste(cardModel.qcUpdateCardStandard(optionId, ob)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse>() {
-          @Override public void onNext(QcDataResponse qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onSaveOk();
-            } else {
-              view.onShowError(qcResponse.getMsg());
-            }
+    }
+    RxRegiste(cardModel.qcUpdateCardStandard(optionId, ob)
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            view.onSaveOk();
+          } else {
+            view.onShowError(qcResponse.getMsg());
           }
-        }));
+        }
+      }));
   }
 
   public interface MVPView extends CView {
