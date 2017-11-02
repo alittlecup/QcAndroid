@@ -96,6 +96,7 @@ import rx.android.schedulers.AndroidSchedulers;
           }
         }
       });
+    root.setBackgroundResource(R.color.bg_grey);
     return root;
   }
 
@@ -103,7 +104,7 @@ import rx.android.schedulers.AndroidSchedulers;
     rv.addItemDecoration(
       new FlexibleItemDecoration(getContext())
         .withOffset(10)
-        .withBottomEdge(true));
+        .withTopEdge(true));
   }
 
   @Override protected void onFinishAnimation() {
@@ -175,7 +176,7 @@ import rx.android.schedulers.AndroidSchedulers;
     for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
       IFlexible item = commonFlexAdapter.getItem(i);
       if (item instanceof PayRequestItem){
-        if (((PayRequestItem) item).getPayRequest().task_no.equalsIgnoreCase(taskNo)){
+        if (((PayRequestItem) item).getPayRequest().id.equalsIgnoreCase(taskNo)){
           commonFlexAdapter.removeItem(i);
           break;
         }

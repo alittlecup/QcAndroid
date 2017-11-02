@@ -13,7 +13,6 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.OnApplyWindowInsetsListener;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.WindowInsetsCompat;
@@ -392,23 +391,25 @@ public abstract class BaseFragment extends RxFragment
   }
 
   // 初始化搜索
-  public void initSearch(MenuItem searchItem, final TextView tvToolbar) {
+  public void initSearch(MenuItem searchItem, final TextView tvToolbar,final Toolbar toolbar) {
     SearchManager searchManager =
       (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
     SearchView mSearchView;
-    mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-    MenuItemCompat.setOnActionExpandListener(searchItem,
-      new MenuItemCompat.OnActionExpandListener() {
-        @Override public boolean onMenuItemActionExpand(MenuItem item) {
-          tvToolbar.setVisibility(GONE);
-          return true;
-        }
 
-        @Override public boolean onMenuItemActionCollapse(MenuItem item) {
-          tvToolbar.setVisibility(View.VISIBLE);
-          return true;
-        }
-      });
+    mSearchView = (SearchView) searchItem.getActionView();
+    searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+      @Override public boolean onMenuItemActionExpand(MenuItem menuItem) {
+        tvToolbar.setVisibility(GONE);
+        toolbar.setNavigationIcon(null);
+        return true;
+      }
+
+      @Override public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+        tvToolbar.setVisibility(View.VISIBLE);
+        toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
+        return true;
+      }
+    });
     mSearchView.setInputType(InputType.TYPE_TEXT_VARIATION_FILTER);
     mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_FULLSCREEN);
     mSearchView.setQueryHint(getString(R.string.action_search));

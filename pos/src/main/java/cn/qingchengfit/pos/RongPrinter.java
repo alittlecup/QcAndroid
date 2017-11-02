@@ -33,11 +33,14 @@ import java.util.List;
 public class RongPrinter {
   private static final String ACTION_PRINT = "com.rongcapital.print";
   private List<Pair<String, String>> first, secoud;
-
+  private String title = "账单";
   private RongPrinter(Builder builder) {
     first = builder.first;
     secoud = builder.secoud;
+    title = builder.title;
   }
+
+
 
   public Intent print(Context context) {
     String msg = getBillDetail(first, secoud);
@@ -62,7 +65,7 @@ public class RongPrinter {
       + "!asc l\n"
       + "!gray 6\n"
       + "!yspace 4\n"
-      + "*text c 账单 \n"
+      + "*text c "+title+" \n"
       + "*line\n"
       + "!hz s\n"
       + "!asc s\n"
@@ -128,12 +131,16 @@ public class RongPrinter {
   public static final class Builder {
     private List<Pair<String, String>> first = new ArrayList<>();
     private List<Pair<String, String>> secoud = new ArrayList<>();
-
+    private String title;
     public Builder() {
     }
 
     public Builder first(String key, String value) {
       first.add(new Pair<String, String>(key, value));
+      return this;
+    }
+    public Builder title(String value) {
+      title = value;
       return this;
     }
 

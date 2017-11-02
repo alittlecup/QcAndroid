@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Pos</string>
+  <string name="app_name">健身房专用POS机</string>
 
   <!--通用-->
   <string name="dialog_confirm_login_failed">好，知道了！</string>

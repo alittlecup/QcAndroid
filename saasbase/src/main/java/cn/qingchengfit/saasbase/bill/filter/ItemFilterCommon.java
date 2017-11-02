@@ -16,6 +16,7 @@ import cn.qingchengfit.widgets.CheckBoxButton;
 import cn.qingchengfit.widgets.QcAutoLineRadioGroup;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,7 @@ import java.util.List;
 public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.ItemFilterVH> {
 
   private FilterModel filterModel;
-  private QcAutoLineRadioGroup radioGroup;
-  private boolean isReset;
+  private List<Integer> selectPosition = new ArrayList<>();
 
   public ItemFilterCommon(FilterModel filterModel) {
     this.filterModel = filterModel;
@@ -47,10 +47,18 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
 
   public List<Content> getCheckedContent() {
     List<Content> tempList = new ArrayList<>();
-    for (int position : radioGroup.getCheckedPosList()) {
+    for (int position : selectPosition) {
       tempList.add(filterModel.content.get(position));
     }
     return tempList;
+  }
+
+  public List<Integer> getSelectPosition() {
+    return selectPosition;
+  }
+
+  public void setSelectPosition(List<Integer> selectPosition) {
+    this.selectPosition = selectPosition;
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemFilterVH holder, int position,
@@ -72,7 +80,6 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
       button.setLayoutParams(params);
       holder.billFilterCommon.addChild(button);
     }
-    this.radioGroup = holder.billFilterCommon;
   }
 
   @Override public boolean equals(Object o) {
@@ -92,6 +99,14 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
       super(view, adapter);
       ButterKnife.bind(this, view);
       billFilterCommon.setSingleSelected(false);
+      billFilterCommon.setOnCheckoutPositionListener(new QcAutoLineRadioGroup.OnCheckoutPositionListener() {
+        @Override public void onCheckPosition(List<Integer> checkedList) {
+          IFlexible item = adapter.getItem(getAdapterPosition());
+          if (item instanceof ItemFilterCommon){
+            ((ItemFilterCommon) item).setSelectPosition(checkedList);
+          }
+        }
+      });
     }
   }
 }
