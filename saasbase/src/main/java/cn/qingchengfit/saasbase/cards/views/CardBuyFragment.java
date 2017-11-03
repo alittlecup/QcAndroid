@@ -29,6 +29,7 @@ import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DrawableUtils;
@@ -196,7 +197,8 @@ import javax.inject.Inject;
   }
 
   @OnClick(R2.id.civ_bind_menbers) public void onCivBindMenbersClicked() {
-    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"), null);
+    routeTo(AppUtils.getRouterUri(getContext(), "/student/choose/student/"),
+      new ChooseAndSearchStudentParams().studentIdList(presenter.getChoseStuIds()).build());
   }
 
   @OnClick(R2.id.civ_saler) public void onCivSalerClicked() {

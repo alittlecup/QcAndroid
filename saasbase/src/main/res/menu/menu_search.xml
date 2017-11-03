@@ -9,5 +9,6 @@
       android:title="@string/edit"
       app:actionViewClass="android.support.v7.widget.SearchView"
       app:showAsAction="always"
+      android:actionLayout="@layout/layout_action_search"
       />
 </menu>

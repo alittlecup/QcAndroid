@@ -85,6 +85,13 @@ public class ChargeBody implements Parcelable {
       case 3:
         this.start = start;
         this.end = end;
+        if (cto != null){
+          try {
+            this.end = DateUtils.addDay(start,(int)Float.parseFloat(cto.charge));
+          }catch (Exception e){
+
+          }
+        }
         break;
     }
   }

@@ -21,7 +21,6 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.R;
-import cn.qingchengfit.pos.RongPrinter;
 import cn.qingchengfit.pos.exchange.beans.ExchangeWrapper;
 import cn.qingchengfit.pos.login.LoginActivity;
 import cn.qingchengfit.pos.net.PosApi;
@@ -119,14 +118,14 @@ public class ExchangeFragment extends BaseFragment {
         getResources().getString(R.string.exchange_confirm));
     dialogFragment.setOnConfirmListener(new TipTextDialogFragment.OnConfirmListener() {
       @Override public void onConfirm() {
-
-        RongPrinter.Builder rongPrinter = new RongPrinter.Builder();
-        rongPrinter.title("交班单（"+loginStatus.getLoginUser().getUsername()+")");
-        rongPrinter.first("开始时间: ",tvExchangeStart.getText().toString());
-        rongPrinter.first("结束时间: ",tvExchangeEnd.getText().toString());
-        rongPrinter.first("共交易  : ",tvExchangeBusiness.getText().toString());
-        rongPrinter.first("实收    : ",tvExchangeMoney.getText().toString());
-        startActivityForResult(rongPrinter.build().print(getContext()),101);
+        logOut();
+        //RongPrinter.Builder rongPrinter = new RongPrinter.Builder();
+        //rongPrinter.title("交班单（"+loginStatus.getLoginUser().getUsername()+")");
+        //rongPrinter.first("开始时间: ",tvExchangeStart.getText().toString());
+        //rongPrinter.first("结束时间: ",tvExchangeEnd.getText().toString());
+        //rongPrinter.first("共交易  : ",tvExchangeBusiness.getText().toString());
+        //rongPrinter.first("实收    : ",tvExchangeMoney.getText().toString());
+        //startActivityForResult(rongPrinter.build().print(getContext()),101);
       }
     });
     dialogFragment.show(getFragmentManager(), null );

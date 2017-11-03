@@ -1,6 +1,5 @@
 package cn.qingchengfit.views.fragments;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,9 +15,9 @@ import android.support.v4.util.Pair;
 import android.support.v4.view.OnApplyWindowInsetsListener;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.WindowInsetsCompat;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -26,7 +25,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -45,6 +43,7 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.QcSearchView;
 import cn.qingchengfit.widgets.R;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -59,8 +58,6 @@ import rx.Observable;
 import rx.Subscription;
 import rx.functions.Func0;
 import rx.functions.Func1;
-
-import static android.view.View.GONE;
 
 /**
  * power by
@@ -392,38 +389,60 @@ public abstract class BaseFragment extends RxFragment
 
   // 初始化搜索
   public void initSearch(MenuItem searchItem, final TextView tvToolbar,final Toolbar toolbar) {
-    SearchManager searchManager =
-      (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
-    SearchView mSearchView;
+    QcSearchView qcSearchView = (QcSearchView) searchItem.getActionView();
+    qcSearchView.setHint("测试");
+    qcSearchView.setSearchTextChangeListener(new TextWatcher() {
+      @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-    mSearchView = (SearchView) searchItem.getActionView();
+      }
+
+      @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        onTextSearch(charSequence.toString());
+      }
+
+      @Override public void afterTextChanged(Editable editable) {
+
+      }
+    });
+    //SearchManager searchManager =
+    //  (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
+    //SearchView mSearchView;
+
+    //mSearchView = (SearchView) searchItem.getActionView();
+    //if (mSearchView != null) {
+    //  mSearchView.setSearchableInfo(
+    //    searchManager.getSearchableInfo(getActivity().getComponentName()));
+    //}
     searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
       @Override public boolean onMenuItemActionExpand(MenuItem menuItem) {
-        tvToolbar.setVisibility(GONE);
-        toolbar.setNavigationIcon(null);
+        tvToolbar.setVisibility(View.GONE);
+        //toolbar.setNavigationIcon(null);
         return true;
       }
 
       @Override public boolean onMenuItemActionCollapse(MenuItem menuItem) {
         tvToolbar.setVisibility(View.VISIBLE);
-        toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
+        //toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
         return true;
       }
     });
-    mSearchView.setInputType(InputType.TYPE_TEXT_VARIATION_FILTER);
-    mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_FULLSCREEN);
-    mSearchView.setQueryHint(getString(R.string.action_search));
-    //mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getContext().getComponentName()));
-    mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-      @Override public boolean onQueryTextSubmit(String query) {
-        return false;
-      }
-
-      @Override public boolean onQueryTextChange(String newText) {
-        onTextSearch(newText);
-        return false;
-      }
-    });
+    //mSearchView.setInputType(InputType.TYPE_TEXT_VARIATION_FILTER);
+    //mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_FULLSCREEN);
+    //mSearchView.setQueryHint(getString(R.string.action_search));
+    //mSearchView.setMaxWidth(MeasureUtils.getScreenWidth(getResources()));
+    ////mSearchView.setBackgroundResource(R.drawable.bg_searchview);
+    ////mSearchView.
+    ////mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getContext().getComponentName()));
+    //mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    //  @Override public boolean onQueryTextSubmit(String query) {
+    //    return false;
+    //  }
+    //
+    //  @Override public boolean onQueryTextChange(String newText) {
+    //    onTextSearch(newText);
+    //    return false;
+    //  }
+    //});
   }
 
   //每个搜索的不同实现，复写这个方法
