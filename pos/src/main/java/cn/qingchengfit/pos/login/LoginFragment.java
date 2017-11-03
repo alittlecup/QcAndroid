@@ -71,7 +71,6 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
             autoStr);
     editLoginPhone.setAdapter(adapter);
     editLoginPhone.setThreshold(2);
-    editLoginPhone.setDropDownHeight(300);
 
   }
 
