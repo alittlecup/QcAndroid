@@ -57,6 +57,8 @@
   <string name="pay_money" formatted="false">￥%s</string>
 
   <!--账单-->
+
+  <string name="other">其它</string>
   <string name="bill_head_total_amount">总金额(元)</string>
   <string name="bill_withdraw">提现中</string>
   <string name="bill_can_withdraw">可提现</string>

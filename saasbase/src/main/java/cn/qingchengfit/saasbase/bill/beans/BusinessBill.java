@@ -101,7 +101,7 @@ public class BusinessBill implements Parcelable{
       case 6:
         return "-"  + price / 100;
     }
-    return "";
+    return "0.00";
   }
 
   public String getTradeType(Context context, int type, String payType){
@@ -121,7 +121,7 @@ public class BusinessBill implements Parcelable{
       case 7:
         return "直接收银";
     }
-    return "";
+    return "其它";
   }
 
   @StringRes public int getBackCashTip(String pay_type){
@@ -192,7 +192,7 @@ public class BusinessBill implements Parcelable{
             : context.getResources().getString(R.string.bll_back_already);
     }
 
-    return "";
+    return context.getResources().getString(R.string.other);
   }
 
   @Override public int describeContents() {
