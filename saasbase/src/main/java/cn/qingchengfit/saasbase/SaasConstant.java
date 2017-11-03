@@ -38,5 +38,9 @@ public class SaasConstant {
   public static final String PAY_PLATFORM_APP= "APP";
   public static final String PAY_PLATFORM_MEMBER= "MEMBER";
   public static final String PAY_PLATFORM_POS= "POS";
+
+  //pos机登陆
+  public static final String LOGIN_ACCOUNT_PHONE = "ACCOUNT_PHONE";
+
   
 }
