@@ -589,6 +589,17 @@ public abstract class BaseFragment extends RxFragment
       }
     }
   }
+ @Override public void popBack(int count) {
+    if (getFragmentManager() != null) {
+      int stackCount = getFragmentManager().getBackStackEntryCount();
+      if (count <= stackCount){
+        getFragmentManager().popBackStackImmediate(getFragmentManager().getBackStackEntryAt(stackCount-count).getId(),1);
+      }else {
+        if (getActivity() !=null)
+          getActivity().finish();
+      }
+    }
+  }
 
   @Override public void onShowError(@StringRes int e) {
     onShowError(getString(e));

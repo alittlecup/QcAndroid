@@ -46,13 +46,12 @@ import rx.schedulers.Schedulers;
  * <p/>
  * Created by Paper on 16/5/4 2016.
  */
-public abstract class IBatchPresenter extends BasePresenter {
+public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPView> {
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject ICourseModel courseApi;
 
-  protected MVPView view;
 
   protected Staff mTeacher;
   protected BatchCourse mCourse;
@@ -134,10 +133,10 @@ public abstract class IBatchPresenter extends BasePresenter {
   }
 
   @Override public void attachView(PView v) {
+    super.attachView(v);
     if (!gymWrapper.isPro()) {
       body.is_free = true;
     }
-    view = (MVPView) v;
     RxBusAdd(BatchLoop.class).onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -160,14 +159,14 @@ public abstract class IBatchPresenter extends BasePresenter {
       cb.dateEnd = cmBean.dateEnd;
       cb.week.clear();
       cb.week.addAll(cmBean.week);
-      view.onLoppers(batchloopers);
+      mvpView.onLoppers(batchloopers);
       RxBus.getBus().post(new EventBatchLooperConfict(false));
     } else {
       if (BatchLoop.CheckCmBean(batchloopers, cmBean)) {
         //添加
         batchloopers.add(cmBean);
         body.time_repeats = BatchLoop.geTimeRepFromBean(batchloopers);
-        view.onLoppers(batchloopers);
+        mvpView.onLoppers(batchloopers);
         RxBus.getBus().post(new EventBatchLooperConfict(false));
       } else {
         RxBus.getBus().post(new EventBatchLooperConfict(true));
@@ -185,14 +184,13 @@ public abstract class IBatchPresenter extends BasePresenter {
 
   @Override public void unattachView() {
     super.unattachView();
-    view = null;
   }
 
   protected void buildBody() {
     // TODO: 2017/9/20
     //body.rules
-    body.is_free = !view.needPay();
-    body.max_users = view.suportMemberNum();
+    body.is_free = !mvpView.needPay();
+    body.max_users = mvpView.suportMemberNum();
   }
 
   /**
@@ -201,7 +199,7 @@ public abstract class IBatchPresenter extends BasePresenter {
   public void checkBatch() {
     buildBody();
     int ret = body.checkAddBatch();
-    if (ret > 0) view.onShowError(ret);
+    if (ret > 0) mvpView.onShowError(ret);
     RxRegiste(courseApi.qcCheckBatch(isPrivate, body)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
@@ -211,7 +209,7 @@ public abstract class IBatchPresenter extends BasePresenter {
             if (ResponseConstant.checkSuccess(qcResponse)) {
               arrangeBatch();
             } else {
-              view.showAlert(qcResponse.getMsg());
+              mvpView.showAlert(qcResponse.getMsg());
             }
           }
         }));
@@ -273,10 +271,10 @@ public abstract class IBatchPresenter extends BasePresenter {
                   }
                 }
               }
-              view.onLoppers(BatchLoop.getBeansFromTimeRep(mTimeRep));
-              view.onTemplete(qcResponse.data.is_free, rulePayOnline != null, qcResponse.data.max_users);
+              mvpView.onLoppers(BatchLoop.getBeansFromTimeRep(mTimeRep));
+              mvpView.onTemplete(qcResponse.data.is_free, rulePayOnline != null, qcResponse.data.max_users);
             } else {
-              view.onShowError(qcResponse.getMsg());
+              mvpView.onShowError(qcResponse.getMsg());
             }
           }
         }));

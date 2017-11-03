@@ -36,4 +36,9 @@ public interface CView extends PView {
   void hideLoading();
   void showSelectSheet(String title,List<String> strs,AdapterView.OnItemClickListener listener);
   void popBack();
+
+  /**
+   * @param count fragment回退数量，超过栈数量则直接关闭Activity
+   */
+  void popBack(int count);
 }
