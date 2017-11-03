@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,8 +23,10 @@ import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.login.model.LoginBody;
 import cn.qingchengfit.pos.login.presenter.LoginPresenter;
 import cn.qingchengfit.pos.main.MainActivity;
+import cn.qingchengfit.saasbase.SaasConstant;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 import java.lang.ref.WeakReference;
@@ -35,7 +39,7 @@ import javax.inject.Inject;
 public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPView {
 
   @BindView(R.id.tv_login_gym_name) TextView tvLoginGymName;
-  @BindView(R.id.edit_login_phone) EditText editLoginPhone;
+  @BindView(R.id.edit_login_phone) AutoCompleteTextView editLoginPhone;
   @BindView(R.id.edit_login_auth_code) EditText editLoginAuthCode;
   @BindView(R.id.login_btn) Button loginBtn;
   @BindView(R.id.btn_get_code) TextView btnGetCode;
@@ -43,7 +47,7 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   private InternalHandler handler;
   @Inject LoginPresenter presenter;
   @Inject GymWrapper gymWrapper;
-
+  private String[] autoStr;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -51,10 +55,35 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
     View view = inflater.inflate(R.layout.fragment_login, container, false);
     delegatePresenter(presenter, this);
     unbinder = ButterKnife.bind(this, view);
+    initAutoView();
     tvGetCode = (TextView) view.findViewById(R.id.btn_get_code);
     handler = new InternalHandler(getContext());
     tvLoginGymName.setText(gymWrapper.brand_name() + gymWrapper.name());
     return view;
+  }
+
+  private void initAutoView(){
+    String str = PreferenceUtils.getPrefString(getContext(), SaasConstant.LOGIN_ACCOUNT_PHONE, "");
+    autoStr = str.split(",");
+    ArrayAdapter<String> adapter =
+        new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,
+            autoStr);
+    editLoginPhone.setAdapter(adapter);
+    editLoginPhone.setThreshold(2);
+
+  }
+
+  private void saveHistory(String phone){
+    StringBuffer tempSb = new StringBuffer();
+    for (int i = 0; i < autoStr.length; i++ ){
+      if (i == 0){
+        tempSb.append(autoStr[i]);
+      }else{
+        tempSb.append("," + autoStr[i]);
+      }
+    }
+    tempSb.append("," + phone);
+    PreferenceUtils.setPrefString(getContext(), SaasConstant.LOGIN_ACCOUNT_PHONE, tempSb.toString());
   }
 
   @OnClick(R.id.btn_get_code)
@@ -83,6 +112,7 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   }
 
   @Override public void onSuccess() {
+    saveHistory(editLoginPhone.getText().toString());
     Intent intent = new Intent(getActivity(), MainActivity.class);
     getContext().startActivity(intent);
     getActivity().finish();
