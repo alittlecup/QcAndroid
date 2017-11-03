@@ -48,6 +48,7 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   @Inject LoginPresenter presenter;
   @Inject GymWrapper gymWrapper;
   private String[] autoStr;
+  private String editStr;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -63,8 +64,8 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   }
 
   private void initAutoView(){
-    String str = PreferenceUtils.getPrefString(getContext(), SaasConstant.LOGIN_ACCOUNT_PHONE, "");
-    autoStr = str.split(",");
+    editStr = PreferenceUtils.getPrefString(getContext(), SaasConstant.LOGIN_ACCOUNT_PHONE, "");
+    autoStr = editStr.split(",");
     ArrayAdapter<String> adapter =
         new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,
             autoStr);
@@ -74,16 +75,11 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
   }
 
   private void saveHistory(String phone){
-    StringBuffer tempSb = new StringBuffer();
-    for (int i = 0; i < autoStr.length; i++ ){
-      if (i == 0){
-        tempSb.append(autoStr[i]);
-      }else{
-        tempSb.append("," + autoStr[i]);
-      }
+    if (!editStr.contains("," + phone)) {
+      StringBuffer tempSb = new StringBuffer(editStr);
+      tempSb.append("," + phone);
+      PreferenceUtils.setPrefString(getContext(), SaasConstant.LOGIN_ACCOUNT_PHONE, tempSb.toString());
     }
-    tempSb.append("," + phone);
-    PreferenceUtils.setPrefString(getContext(), SaasConstant.LOGIN_ACCOUNT_PHONE, tempSb.toString());
   }
 
   @OnClick(R.id.btn_get_code)
@@ -97,7 +93,7 @@ public class LoginFragment extends BaseFragment implements  LoginPresenter.MVPVi
 
   @OnClick(R.id.login_btn)
   public void onLogin(){
-    if (!TextUtils.isEmpty(editLoginPhone.getText())) {
+    if (!TextUtils.isEmpty(editLoginPhone.getText()) && AppUtils.isMobiPhoneNum(editLoginPhone.getText().toString())) {
       presenter.qcLogin(new LoginBody.Builder().phone(editLoginPhone.getText().toString())
           .code(editLoginAuthCode.getText().toString())
           .area_code("+86")

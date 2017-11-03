@@ -9,7 +9,6 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:paddingTop="30dp"
-    style="@style/AppTheme"
     >
 
   <TextView
