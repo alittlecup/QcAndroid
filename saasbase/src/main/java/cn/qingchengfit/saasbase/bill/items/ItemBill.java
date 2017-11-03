@@ -71,6 +71,11 @@ public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
           .getString(R.string.bill_detail_item_trade_type,
               bill.getTradeType(holder.itemView.getContext(), bill.type, bill.pay_type), bill.origin));
     }
+    if (bill.status == 4){
+      holder.tvItemBillAccount.setTextColor(holder.itemView.getResources().getColor(R.color.text_grey));
+    }else{
+      holder.tvItemBillAccount.setTextColor(holder.itemView.getResources().getColor(R.color.text_dark));
+    }
     holder.tvItemBillAccount.setText(bill.getPrice(bill.price, bill.type));
     holder.tvItemBillStatus.setText(bill.getStatus(holder.itemView.getContext(), bill.status, bill.type));
   }
