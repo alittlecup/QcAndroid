@@ -36,7 +36,7 @@ public class AddBatchPresenter extends IBatchPresenter {
 
   @Override public void arrangeBatch() {
     int ret = body.checkAddBatch();
-    if (ret > 0) view.onShowError(ret);
+    if (ret > 0) mvpView.onShowError(ret);
     RxRegiste(courseApi.qcArrangeBatch(body)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
@@ -44,9 +44,9 @@ public class AddBatchPresenter extends IBatchPresenter {
         .subscribe(new NetSubscribe<QcResponse>() {
           @Override public void onNext(QcResponse qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onSuccess();
+              mvpView.onSuccess();
             } else {
-              view.onShowError(qcResponse.getMsg());
+              mvpView.onShowError(qcResponse.getMsg());
             }
           }
         }));

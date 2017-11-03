@@ -24,12 +24,12 @@ import rx.subscriptions.CompositeSubscription;
  * <p/>
  * Created by Paper on 16/5/13 2016.
  */
-public class BasePresenter implements Presenter {
+public class BasePresenter<V extends CView> implements Presenter {
 
 
     CompositeSubscription sps ;
     private List<Pair<String, Observable>> observables = new ArrayList<>();
-
+    protected V mvpView;
     @Override public void onStart() {
 
     }
@@ -43,6 +43,7 @@ public class BasePresenter implements Presenter {
     }
 
     @Override public void attachView(PView v) {
+       this.mvpView = (V)v;
     }
 
     @Override public void onNewSps() {
@@ -58,6 +59,7 @@ public class BasePresenter implements Presenter {
     }
 
     @CallSuper @Override public void unattachView() {
+        this.mvpView = null;
         sps.unsubscribe();
         for (int i = 0; i < observables.size(); i++) {
             RxBus.getBus().unregister(observables.get(i).first, observables.get(i).second);
