@@ -1,11 +1,11 @@
 package cn.qingchengfit.pos.net;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.pos.cashier.model.CashierWrap;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
-import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -42,7 +42,7 @@ public interface StaffApi {
    * 获取当前用户信息
    */
   @GET("/api/info/current/user/")
-  rx.Observable<QcDataResponse<UserWrap>> getCurrentUser(@QueryMap HashMap<String, Object> params);
+  rx.Observable<QcDataResponse<CashierWrap>> getCurrentUser(@QueryMap HashMap<String, Object> params);
 
 
   /**

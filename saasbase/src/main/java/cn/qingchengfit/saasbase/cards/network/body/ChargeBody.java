@@ -34,8 +34,9 @@ public class ChargeBody implements Parcelable {
   String valid_from;
   String valid_to;
   String option_id;
+  String user_ids;
   String remarks;
-  int type;
+  Integer type;
   String card_id;
 
   String id;
@@ -154,6 +155,13 @@ public class ChargeBody implements Parcelable {
     this.price = price;
   }
 
+  public String getUser_ids() {
+    return user_ids;
+  }
+
+  public void setUser_ids(String user_ids) {
+    this.user_ids = user_ids;
+  }
 
   public String getAccount() {
     return account;

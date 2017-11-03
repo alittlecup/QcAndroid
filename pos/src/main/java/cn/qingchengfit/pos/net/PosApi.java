@@ -2,7 +2,7 @@ package cn.qingchengfit.pos.net;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.cashier.model.CashierBody;
-import cn.qingchengfit.pos.cashier.model.CashierWrapper;
+import cn.qingchengfit.pos.cashier.model.CashierListWrapper;
 import cn.qingchengfit.pos.exchange.beans.ExchangeWrapper;
 import cn.qingchengfit.pos.login.model.GetCodeBody;
 import cn.qingchengfit.pos.login.model.GymResponse;
@@ -103,7 +103,7 @@ public interface PosApi {
   /**
    * 获取收银员
    */
-  @GET("/api/rongshu/cashier/") rx.Observable<QcDataResponse<CashierWrapper>> qcGetCashier(@QueryMap HashMap<String, Object> params);
+  @GET("/api/rongshu/cashier/") rx.Observable<QcDataResponse<CashierListWrapper>> qcGetCashier(@QueryMap HashMap<String, Object> params);
 
   /**
    * 交班

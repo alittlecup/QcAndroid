@@ -12,9 +12,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.pos.R;
-import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -91,6 +93,7 @@ public class AddCashierFragment extends BaseFragment implements CashierPresenter
   }
 
   @Override public void onAddSuccess() {
+    RxBus.getBus().post(new EventSaasFresh.StaffList());
     ToastUtils.show("添加成功");
     getActivity().onBackPressed();
   }
@@ -103,7 +106,7 @@ public class AddCashierFragment extends BaseFragment implements CashierPresenter
 
   }
 
-  @Override public void onGetCashier(List<Cashier> cashierList) {
+  @Override public void onGetCashier(List<Staff> cashierList) {
 
   }
 }

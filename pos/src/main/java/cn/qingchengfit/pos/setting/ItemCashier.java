@@ -37,12 +37,12 @@ public class ItemCashier extends AbstractFlexibleItem<ItemCashier.ItemCashierVH>
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemCashierVH holder, int position,
       List payloads) {
     Glide.with(holder.itemView.getContext())
-        .load(PhotoUtils.getSmall(cashier.avatar))
+        .load(PhotoUtils.getSmall(cashier.user.getAvatar()))
         .asBitmap()
         .into(new CircleImgWrapper(holder.imgCashierHead, holder.itemView.getContext()));
-    holder.tvCashierName.setText(cashier.username);
-    holder.tvCashierPhone.setText(cashier.phone);
-    holder.imgCashierGender.setImageResource(cashier.gender == 0 ? R.drawable.ic_gender_signal_male
+    holder.tvCashierName.setText(cashier.user.getUsername());
+    holder.tvCashierPhone.setText(cashier.user.getPhone());
+    holder.imgCashierGender.setImageResource(cashier.user.gender == 0 ? R.drawable.ic_gender_signal_male
         : R.drawable.ic_gender_signal_female);
   }
 

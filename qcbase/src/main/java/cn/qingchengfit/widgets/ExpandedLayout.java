@@ -202,11 +202,11 @@ public class ExpandedLayout extends LinearLayout {
         mSwitcher.setChecked(expanded);
     }
 
-    public void hideHeader(){
+    public void hideHeader(boolean hide){
         if (view != null){
-            view.setVisibility(GONE);
+            view.setVisibility(hide?GONE:VISIBLE);
         }
-        mSwitcher.setChecked(true);
+        mSwitcher.setChecked(hide);
     }
     public void resizeContent(int height){
         ViewGroup.LayoutParams layoutParams = getLayoutParams();

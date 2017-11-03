@@ -1,5 +1,9 @@
 package cn.qingchengfit.saasbase.cards.views;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
@@ -28,7 +32,16 @@ import java.util.List;
  * Created by Paper on 2017/8/14.
  */
 public class CardTplListFragment extends BaseListFragment {
-  
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    Bundle savedInstanceState) {
+    View view =  super.onCreateView(inflater, container, savedInstanceState);
+    if (view != null)
+      view.setBackgroundResource(R.color.transparent);
+    rv.setBackgroundResource(R.color.transparent);
+    return view;
+  }
+
   @Override public String getFragmentName() {
     return CardTplListFragment.class.getName();
   }

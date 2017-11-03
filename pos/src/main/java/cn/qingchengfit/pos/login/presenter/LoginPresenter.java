@@ -75,13 +75,10 @@ public class LoginPresenter extends BasePresenter {
           @Override public void call(QcDataResponse<Login> qcResponLogin) {
             if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
               view.onSuccess();
-              Staff staff = new Staff();
+              Staff staff = new Staff(qcResponLogin.data.cashier.user);
               staff.setId(qcResponLogin.data.cashier.id);
-              staff.setUsername(qcResponLogin.data.cashier.username);
-              staff.setAvatar(qcResponLogin.data.cashier.avatar);
-              staff.setPhone(qcResponLogin.data.cashier.phone);
-              staff.setGender(qcResponLogin.data.cashier.gender);
               loginStatus.setLoginUser(staff);
+              loginStatus.setUserId(qcResponLogin.data.cashier.user.id);
               PreferenceUtils.setPrefString(PosApp.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);
               PreferenceUtils.setPrefString(PosApp.context, Configs.PREFER_SESSION_ID, qcResponLogin.data.session_id);
             } else {

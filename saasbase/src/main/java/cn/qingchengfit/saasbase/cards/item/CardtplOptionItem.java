@@ -56,7 +56,7 @@ public class CardtplOptionItem
     if (TextUtils.isEmpty(option.charge)) {
       holder.realIncome.setVisibility(View.GONE);
     } else {
-      holder.realIncome.setText("（储值"+option.charge + unitStr+"）");
+      holder.realIncome.setText("(储值"+option.charge + unitStr+")");
       holder.realIncome.setVisibility(View.VISIBLE);
     }
     if (option.days <= 0) {

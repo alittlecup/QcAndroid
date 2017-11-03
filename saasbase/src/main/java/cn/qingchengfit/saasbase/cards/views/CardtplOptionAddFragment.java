@@ -99,6 +99,12 @@ import javax.inject.Inject;
     });
   }
 
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    elUseCharge.setExpanded(true);
+    elUseCreate.setExpanded(true);
+  }
+
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("添加规格");

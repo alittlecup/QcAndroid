@@ -242,7 +242,7 @@ public class CmStringUtils {
   public static  boolean checkMoney(String money){
     try {
       Float amont = Float.parseFloat(money);
-      if (amont <= 0 || amont > 1000000000){
+      if (amont < 0 || amont > 1000000000){
         return false;
       }
     }catch (Exception e) {

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
@@ -44,6 +46,7 @@ import rx.schedulers.Schedulers;
   extends BaseStaffListFragment {
 
   @Inject IStaffModel staffModel;
+  @Inject LoginStatus loginStatus;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -53,13 +56,21 @@ import rx.schedulers.Schedulers;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbar.getMenu().clear();
-    toolbar.inflateMenu(R.menu.menu_add);
+    toolbar.inflateMenu(R.menu.menu_search_and_add);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        routeTo("/add/", null);
+        if (item.getItemId() == R.id.action_add) {
+          routeTo("/add/", null);
+        }
         return true;
       }
     });
+    initSearch(toolbar.getMenu().findItem(R.id.action_search),toolbarTitle,toolbar);
+  }
+
+  @Override public void onTextSearch(String text) {
+    commonFlexAdapter.setSearchText(text);
+    commonFlexAdapter.filterItems(ret,500);
   }
 
   @Override void initData() {
@@ -85,6 +96,15 @@ import rx.schedulers.Schedulers;
   @Override public boolean onItemClick(int position) {
     IFlexible iFlexible = commonFlexAdapter.getItem(position);
     if (iFlexible instanceof StaffItem) {
+      Staff staff = ((StaffItem) iFlexible).getStaff();
+      try {
+        if (staff.is_superuser && staff.getPhone().equalsIgnoreCase(loginStatus.getLoginUser().getPhone())){
+          showAlert("该用户为超级管理员\n仅超级管理员本人可以查看");
+          return true;
+        }
+      }catch (Exception e){
+        return true;
+      }
       routeTo("/detail/", new StaffDetailParams().staff(((StaffItem) iFlexible).getStaff()).build());
     }
 

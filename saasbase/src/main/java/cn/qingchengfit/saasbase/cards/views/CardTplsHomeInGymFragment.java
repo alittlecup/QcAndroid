@@ -131,7 +131,7 @@ import javax.inject.Inject;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbar.inflateMenu(R.menu.menu_add);
+    toolbar.inflateMenu(R.menu.menu_add_card);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         new DialogList(getContext()).list(getResources().getStringArray(R.array.cardtype_category),

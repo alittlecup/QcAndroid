@@ -4,13 +4,13 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.pos.cashier.model.Cashier;
 import cn.qingchengfit.pos.cashier.model.CashierBody;
-import cn.qingchengfit.pos.cashier.model.CashierWrapper;
+import cn.qingchengfit.pos.cashier.model.CashierListWrapper;
 import cn.qingchengfit.pos.net.PosApi;
 import java.util.HashMap;
 import java.util.List;
@@ -49,8 +49,8 @@ public class CashierPresenter extends BasePresenter {
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcDataResponse<CashierWrapper>>() {
-          @Override public void call(QcDataResponse<CashierWrapper> cashierWrapperQcDataResponse) {
+        .subscribe(new Action1<QcDataResponse<CashierListWrapper>>() {
+          @Override public void call(QcDataResponse<CashierListWrapper> cashierWrapperQcDataResponse) {
             if (cashierWrapperQcDataResponse.getStatus() == ResponseConstant.SUCCESS) {
               if (view != null) {
                 view.onGetCashier(cashierWrapperQcDataResponse.data.cashiers);
@@ -132,6 +132,6 @@ public class CashierPresenter extends BasePresenter {
 
     void onModifySuccess();
 
-    void onGetCashier(List<Cashier> cashierList);
+    void onGetCashier(List<Staff> cashierList);
   }
 }

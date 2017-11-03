@@ -3,7 +3,9 @@
               android:orientation="vertical"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+    >
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="34dp"
@@ -57,9 +59,10 @@
   </LinearLayout>
   <TextView
       android:id="@+id/tv_content"
-      style="@style/QcTextStyleMediumDark"
+      style="@style/QcTextStyleMediumWarm"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:minHeight="50dp"
       tools:text="购卡|秦城专用"
       android:layout_marginTop="4dp"
       android:paddingLeft="@dimen/activity_horizontal_margin"

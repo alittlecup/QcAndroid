@@ -34,7 +34,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:ellipsize="end"
         android:lines="1"
         android:textColor="@drawable/color_grey_primary"
         tools:text="(售价1200元)"

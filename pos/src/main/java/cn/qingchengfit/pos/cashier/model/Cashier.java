@@ -2,6 +2,7 @@ package cn.qingchengfit.pos.cashier.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.User;
 
 /**
  * Created by fb on 2017/10/18.
@@ -10,10 +11,7 @@ import android.os.Parcelable;
 public class Cashier implements Parcelable{
 
   public String id;
-  public String avatar;
-  public String username;
-  public String phone;
-  public int gender;
+  public User user;
 
   @Override public int describeContents() {
     return 0;
@@ -21,10 +19,7 @@ public class Cashier implements Parcelable{
 
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(this.id);
-    dest.writeString(this.avatar);
-    dest.writeString(this.username);
-    dest.writeString(this.phone);
-    dest.writeInt(this.gender);
+    dest.writeParcelable(this.user, flags);
   }
 
   public Cashier() {
@@ -32,10 +27,7 @@ public class Cashier implements Parcelable{
 
   protected Cashier(Parcel in) {
     this.id = in.readString();
-    this.avatar = in.readString();
-    this.username = in.readString();
-    this.phone = in.readString();
-    this.gender = in.readInt();
+    this.user = in.readParcelable(User.class.getClassLoader());
   }
 
   public static final Creator<Cashier> CREATOR = new Creator<Cashier>() {

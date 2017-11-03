@@ -23,6 +23,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -95,7 +96,15 @@ import rx.android.schedulers.AndroidSchedulers;
           }
         }
       });
+    root.setBackgroundResource(R.color.bg_grey);
     return root;
+  }
+
+  @Override protected void addDivider() {
+    rv.addItemDecoration(
+      new FlexibleItemDecoration(getContext())
+        .withOffset(10)
+        .withTopEdge(true));
   }
 
   @Override protected void onFinishAnimation() {
@@ -167,7 +176,7 @@ import rx.android.schedulers.AndroidSchedulers;
     for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
       IFlexible item = commonFlexAdapter.getItem(i);
       if (item instanceof PayRequestItem){
-        if (((PayRequestItem) item).getPayRequest().task_no.equalsIgnoreCase(taskNo)){
+        if (((PayRequestItem) item).getPayRequest().id.equalsIgnoreCase(taskNo)){
           commonFlexAdapter.removeItem(i);
           break;
         }

@@ -200,26 +200,30 @@ import javax.inject.Inject;
   @Override public void showInputMoney(boolean other, int cardCate, boolean hasValid) {
     if (cardCate == Configs.CATEGORY_DATE) {//期限卡
       loInputMoney.setVisibility(View.VISIBLE);
-      elNeedValid.hideHeader();
+      elNeedValid.hideHeader(true);
       civEndTime.setVisibility(other ? View.VISIBLE : View.GONE);
       civChargeMoney.setVisibility(View.GONE);
       civRealMoney.setVisibility(View.GONE);
       elNeedValid.resizeContent(
         (int) getResources().getDimension(R.dimen.qc_item_height) * (other ? 2 : 1) + 1);
+      civRealMoney.setVisibility(other?View.VISIBLE:View.GONE);
     } else {//储值卡 或者次卡
       if (!other && hasValid) {
         loInputMoney.setVisibility(View.VISIBLE);
-        elNeedValid.hideHeader();
+        elNeedValid.hideHeader(true);
         civEndTime.setVisibility(View.GONE);
         civChargeMoney.setVisibility(View.GONE);
         civRealMoney.setVisibility(View.GONE);
         elNeedValid.resizeContent(
           (int) getResources().getDimension(R.dimen.qc_item_height)  + 1);
       } else {
+        elNeedValid.hideHeader(false);
+        civEndTime.setVisibility(View.VISIBLE);
         loInputMoney.setVisibility(other ? View.VISIBLE : View.GONE);
         civChargeMoney.setVisibility(View.VISIBLE);
         civChargeMoney.setUnit(CardBusinessUtils.getCardTypeCategoryUnit(cardCate, getContext()));
         civRealMoney.setVisibility(View.VISIBLE);
+        elNeedValid.resizeContent(ViewGroup.LayoutParams.WRAP_CONTENT);
       }
     }
   }
