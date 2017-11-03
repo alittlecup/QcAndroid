@@ -1,12 +1,11 @@
-package cn.qingchengfit.pos.routers;
+package cn.qingchengfit.pos.card;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import cn.qingchengfit.pos.card.PosCardBuyFragment;
-import cn.qingchengfit.pos.card.PosCardChargeFragment;
-import cn.qingchengfit.pos.card.PosCardListHomeFragment;
-import cn.qingchengfit.pos.card.PosCardTplDetailFragment;
-import cn.qingchengfit.saasbase.routers.cardImpl;
+import android.view.View;
+import android.widget.AdapterView;
+import cn.qingchengfit.saasbase.cards.views.CardTplDetailFragment;
+import cn.qingchengfit.saasbase.common.views.CommonInputParams;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * power by
@@ -26,31 +25,21 @@ import cn.qingchengfit.saasbase.routers.cardImpl;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/12.
+ * Created by Paper on 2017/11/3.
  */
 
-public class CardRouters extends cardImpl {
-  @Override public Fragment toCardChargeFragment(Bundle args) {
-    PosCardChargeFragment fragment = new PosCardChargeFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
-  @Override public Fragment toCardBuyFragment(Bundle args) {
-    PosCardBuyFragment fragment = new PosCardBuyFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
-  @Override public Fragment toCardListHomeFragment(Bundle args) {
-    PosCardListHomeFragment fragment = new PosCardListHomeFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
-  @Override public Fragment toCardTplDetailFragment(Bundle args) {
-    PosCardTplDetailFragment fragment = new PosCardTplDetailFragment();
-    fragment.setArguments(args);
-    return fragment;
+public class PosCardTplDetailFragment extends CardTplDetailFragment{
+  @Override protected void showBottomList() {
+    List<String> list  = new ArrayList<>();
+    list.add("编辑会员卡名称");
+    showSelectSheet(null, list, new AdapterView.OnItemClickListener() {
+      @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        routeTo("common","/input/", new CommonInputParams()
+          .content(presenter.getCardName())
+          .title("编辑会员卡种类名称")
+          .hint("填写会员卡种类名称")
+          .build());
+      }
+    });
   }
 }

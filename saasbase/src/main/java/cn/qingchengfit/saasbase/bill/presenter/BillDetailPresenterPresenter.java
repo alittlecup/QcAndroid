@@ -130,6 +130,7 @@ public class BillDetailPresenterPresenter extends BasePresenter {
         RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_HIDE_DIALOG));
         if (ResponseConstant.checkSuccess(qcResponse)) {
           if (sp != null && !sp.isUnsubscribed()) sp.unsubscribe();
+          bill = qcResponse.data.bill;
           view.onOrderDetail(qcResponse.data.bill);
         } else {
           view.onShowError(qcResponse.getMsg());

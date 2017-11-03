@@ -71,8 +71,8 @@ public class RongPrinter {
       + "!asc s\n"
       + "!gray 2\n");
     if (firstPard != null && firstPard.size() > 0) sb.append(getPrintArray(firstPard));
-    if (second != null && second.size() > 0) sb.append(getPrintArray(second));
-    return sb.append("*line\n*line\n*line\n*line\n*line\n").toString();
+    if (second != null && second.size() > 0) sb.append("*line\n").append(getPrintArray(second));
+    return sb.append("*feedline 5").toString();
   }
 
   private String getPrintFormatMsg(String orderId) {

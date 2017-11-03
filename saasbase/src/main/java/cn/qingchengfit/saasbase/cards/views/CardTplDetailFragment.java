@@ -25,6 +25,7 @@ import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTplDetailPresenter;
+import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
@@ -82,7 +83,7 @@ import javax.inject.Inject;
   @BindView(R2.id.tv_card_append) TextView tvCardAppend;
   @BindView(R2.id.civ_input_card_name) protected CommonInputView civInputCardname;
 
-  @Inject CardTplDetailPresenter presenter;
+  @Inject public CardTplDetailPresenter presenter;
   @Need public CardTpl cardTpl;
   CommonFlexAdapter comonAdapter;
 
@@ -156,12 +157,12 @@ import javax.inject.Inject;
           @Override
           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (position == 0) {//编辑
-              presenter.editCardTpl();
-              Bundle bd = new Bundle();
-              bd.putString("title","修改会员卡种类名称");
-              bd.putString("hint",presenter.getCardName());
-              bd.putString("content",presenter.getCardName());
-              routeTo("common","/input/", bd);
+              //presenter.editCardTpl();
+              routeTo("common","/input/", new CommonInputParams()
+                .content(presenter.getCardName())
+                .title("编辑会员卡种类名称")
+                .hint("填写会员卡种类名称")
+                .build());
             } else if (position == 1) {
               if (presenter.isCardTplEnable()) {
                 alertDisableCardtpl();

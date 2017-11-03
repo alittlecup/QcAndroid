@@ -1,23 +1,14 @@
 package cn.qingchengfit.pos.card;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import cn.qingchengfit.saasbase.bill.view.BillDetailParams;
 import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.CardActivity;
 import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
 import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
-import cn.qingchengfit.saasbase.cards.views.CardTplDetailFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplOptionFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
 import cn.qingchengfit.saasbase.cards.views.CardtplAddFragment;
 import cn.qingchengfit.saasbase.cards.views.CardtplOptionAddFragment;
 import cn.qingchengfit.saasbase.cards.views.ChooseCardTplForBuyCardFragment;
-import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.CrashUtils;
-import cn.qingchengfit.utils.LogUtil;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -41,7 +32,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/10/12.
  */
 @Trunk(fragments = {
-  CardTplsHomeInGymFragment.class, CardTplDetailFragment.class,
+  CardTplsHomeInGymFragment.class, PosCardTplDetailFragment.class,
   ChooseCardTplForBuyCardFragment.class, PosCardBuyFragment.class, PosCardListHomeFragment.class,
   CardFilterTplFragment.class, CardDetailFragment.class, CardtplOptionAddFragment.class,
   CardTplOptionFragment.class, PosCardChargeFragment.class, CardtplAddFragment.class,

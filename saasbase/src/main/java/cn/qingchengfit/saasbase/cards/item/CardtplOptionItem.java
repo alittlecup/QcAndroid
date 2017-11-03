@@ -95,13 +95,16 @@ public class CardtplOptionItem
   }
 
   @Override public boolean equals(Object o) {
-    if (o instanceof CardtplOptionItem){
+    if (o instanceof CardtplOptionItem && ((CardtplOptionItem) o).option.id != null && option.id
+       !=null){
       return ((CardtplOptionItem) o).option.id.equalsIgnoreCase(option.id);
     }else return false;
   }
 
   @Override public int hashCode() {
-    return option.id.hashCode();
+    if (option.id != null)
+      return option.id.hashCode();
+    return 0;
   }
 
   public class CardtplStandardVH extends FlexibleViewHolder {
