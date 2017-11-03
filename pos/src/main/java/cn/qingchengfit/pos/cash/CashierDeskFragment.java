@@ -161,7 +161,7 @@ import javax.inject.Inject;
       .operator(loginStatus.staff_name())
       .build().pay(getContext());
     if (getActivity() != null)
-      startActivityForResult(toBuy,100);
+      getActivity().startActivityForResult(toBuy,100);
   }
 
 
