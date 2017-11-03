@@ -101,7 +101,7 @@ public class BusinessBill implements Parcelable{
       case 6:
         return "-"  + price / 100;
     }
-    return "0.00";
+    return String.valueOf(price);
   }
 
   public String getTradeType(Context context, int type, String payType){
