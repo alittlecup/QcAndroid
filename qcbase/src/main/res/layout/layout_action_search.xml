@@ -17,8 +17,8 @@
     >
 
   <ImageView
-      android:layout_width="16dp"
-      android:layout_height="16dp"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
       app:srcCompat="@drawable/vd_search_grey_14dp"
       />
 
@@ -33,11 +33,12 @@
       android:layout_weight="1"
       android:layout_height="wrap_content"
       android:background="@color/transparent"
-      android:gravity="center"
+      android:gravity="center_vertical"
       android:hint="搜索职位/公司"
       android:minWidth="90dp"
       android:textColorHint="#bbbbbb"
       android:textSize="13sp"
+
       />
   <ImageView
       android:id="@+id/btn_close"

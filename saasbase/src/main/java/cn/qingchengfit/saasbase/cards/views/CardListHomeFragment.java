@@ -1,14 +1,11 @@
 package cn.qingchengfit.saasbase.cards.views;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -68,6 +65,7 @@ import javax.inject.Inject;
   @Inject CardListPresenter presenter;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R2.id.toolbar_layout) ViewGroup tl;
   @BindView(R2.id.tv_card_balance) CompatTextView tvCardBalance;
   @BindView(R2.id.btn_card_balance) FrameLayout btnCardBalance;
   @BindView(R2.id.btn_outport) FrameLayout btnOutport;
@@ -116,37 +114,48 @@ import javax.inject.Inject;
     super.initToolbar(toolbar);
     toolbarTitle.setText("会员卡");
     toolbar.inflateMenu(R.menu.menu_search);
-    SearchManager searchManager =
-      (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-    MenuItem searchMenuItem = toolbar.getMenu().getItem(0);
-    SearchView mSearchView = (SearchView) searchMenuItem.getActionView();
-    if (mSearchView != null) {
-      mSearchView.setSearchableInfo(
-        searchManager.getSearchableInfo(getActivity().getComponentName()));
-    }
-    mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
-      @Override public boolean onClose() {
-        toolbarTitle.setVisibility(View.VISIBLE);
-        presenter.queryKeyworkd(null);
-        return false;
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        showSearch(tl);
+        return true;
       }
     });
-    mSearchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-      @Override public void onFocusChange(View view, boolean b) {
-        if (b) toolbarTitle.setVisibility(View.GONE);
-      }
-    });
-    mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-      @Override public boolean onQueryTextSubmit(String query) {
-        presenter.queryKeyworkd(query);
-        return false;
-      }
+    initSearch(tl,"输入会员姓名或手机号搜索");
+    //SearchManager searchManager =
+    //  (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+    //MenuItem searchMenuItem = toolbar.getMenu().getItem(0);
+    //SearchView mSearchView = (SearchView) searchMenuItem.getActionView();
+    //if (mSearchView != null) {
+    //  mSearchView.setSearchableInfo(
+    //    searchManager.getSearchableInfo(getActivity().getComponentName()));
+    //}
+    //mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+    //  @Override public boolean onClose() {
+    //    toolbarTitle.setVisibility(View.VISIBLE);
+    //    presenter.queryKeyworkd(null);
+    //    return false;
+    //  }
+    //});
+    //mSearchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+    //  @Override public void onFocusChange(View view, boolean b) {
+    //    if (b) toolbarTitle.setVisibility(View.GONE);
+    //  }
+    //});
+    //mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    //  @Override public boolean onQueryTextSubmit(String query) {
+    //    presenter.queryKeyworkd(query);
+    //    return false;
+    //  }
+    //
+    //  @Override public boolean onQueryTextChange(String newText) {
+    //
+    //    return false;
+    //  }
+    //});
+  }
 
-      @Override public boolean onQueryTextChange(String newText) {
-
-        return false;
-      }
-    });
+  @Override public void onTextSearch(String text) {
+    presenter.queryKeyworkd(text);
   }
 
   @Override protected void onFinishAnimation() {

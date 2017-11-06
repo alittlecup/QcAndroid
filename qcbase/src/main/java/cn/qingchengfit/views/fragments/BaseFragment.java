@@ -16,24 +16,22 @@ import android.support.v4.view.OnApplyWindowInsetsListener;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.WindowInsetsCompat;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.PresenterDelegate;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -43,10 +41,12 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.CommonInputView;
-import cn.qingchengfit.widgets.QcSearchView;
 import cn.qingchengfit.widgets.R;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
+import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxFragment;
 import dagger.android.support.AndroidSupportInjection;
@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Func0;
@@ -386,33 +387,56 @@ public abstract class BaseFragment extends RxFragment
         .commit();
     }
   }
+  View searchRoot;
+  protected void showSearch(ViewGroup tvToolbarLayout){
+    if (searchRoot != null){
+      FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.MATCH_PARENT);
 
+      lp.setMargins(15,15,15,15);
+      searchRoot.setOnTouchListener(new View.OnTouchListener() {
+        @Override public boolean onTouch(View view, MotionEvent motionEvent) {
+          return true;
+        }
+      });
+      tvToolbarLayout.addView(searchRoot,lp);
+      searchRoot.requestFocus();
+    }
+  }
   // 初始化搜索
-  public void initSearch(MenuItem searchItem, final TextView tvToolbar,final Toolbar toolbar) {
-    QcSearchView qcSearchView = (QcSearchView) searchItem.getActionView();
-    qcSearchView.setHint("测试");
-    qcSearchView.setSearchTextChangeListener(new TextWatcher() {
-      @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+  public void initSearch(final ViewGroup tvToolbarLayout,String hint) {
+    searchRoot = LayoutInflater.from(getContext()).inflate(R.layout.layout_action_search,null);
+    final EditText searchEt = ((EditText)searchRoot.findViewById(R.id.et_search));
+    searchEt.setHint(hint);
+    RxTextView.afterTextChangeEvents(searchEt)
+      .throttleLast(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<TextViewAfterTextChangeEvent>() {
+        @Override public void onNext(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
+          onTextSearch(textViewAfterTextChangeEvent.editable().toString());
+        }
+      });
+    RxView.clicks(searchRoot.findViewById(R.id.btn_close))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          if (searchEt.getText().length() == 0 ){
+              tvToolbarLayout.removeView(searchRoot);
+              tvToolbarLayout.clearFocus();
+          }else {
+            searchEt.setText("");
+          }
+        }
+      });
+    /*
+    SearchManager searchManager =
+      (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
+    SearchView mSearchView;
 
-      }
-
-      @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        onTextSearch(charSequence.toString());
-      }
-
-      @Override public void afterTextChanged(Editable editable) {
-
-      }
-    });
-    //SearchManager searchManager =
-    //  (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
-    //SearchView mSearchView;
-
-    //mSearchView = (SearchView) searchItem.getActionView();
-    //if (mSearchView != null) {
-    //  mSearchView.setSearchableInfo(
-    //    searchManager.getSearchableInfo(getActivity().getComponentName()));
-    //}
+    mSearchView = (SearchView) searchItem.getActionView();
+    if (mSearchView != null) {
+      mSearchView.setSearchableInfo(
+        searchManager.getSearchableInfo(getActivity().getComponentName()));
+    }
     searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
       @Override public boolean onMenuItemActionExpand(MenuItem menuItem) {
         tvToolbar.setVisibility(View.GONE);
@@ -426,23 +450,24 @@ public abstract class BaseFragment extends RxFragment
         return true;
       }
     });
-    //mSearchView.setInputType(InputType.TYPE_TEXT_VARIATION_FILTER);
-    //mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_FULLSCREEN);
-    //mSearchView.setQueryHint(getString(R.string.action_search));
-    //mSearchView.setMaxWidth(MeasureUtils.getScreenWidth(getResources()));
-    ////mSearchView.setBackgroundResource(R.drawable.bg_searchview);
-    ////mSearchView.
-    ////mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getContext().getComponentName()));
-    //mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-    //  @Override public boolean onQueryTextSubmit(String query) {
-    //    return false;
-    //  }
-    //
-    //  @Override public boolean onQueryTextChange(String newText) {
-    //    onTextSearch(newText);
-    //    return false;
-    //  }
-    //});
+    mSearchView.setInputType(InputType.TYPE_TEXT_VARIATION_FILTER);
+    mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_FULLSCREEN);
+    mSearchView.setQueryHint(getString(R.string.action_search));
+    mSearchView.setMaxWidth(MeasureUtils.getScreenWidth(getResources()));
+    //mSearchView.setBackgroundResource(R.drawable.bg_searchview);
+    //mSearchView.
+    //mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getContext().getComponentName()));
+    mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      @Override public boolean onQueryTextSubmit(String query) {
+        return false;
+      }
+
+      @Override public boolean onQueryTextChange(String newText) {
+        onTextSearch(newText);
+        return false;
+      }
+    });
+    */
   }
 
   //每个搜索的不同实现，复写这个方法

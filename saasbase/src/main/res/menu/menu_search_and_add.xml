@@ -7,8 +7,8 @@
       android:icon="@drawable/ic_search_24dp"
       android:orderInCategory="100"
       android:title="@string/edit"
-      app:showAsAction="always|collapseActionView"
-      app:actionLayout="@layout/action_search_layout"/>
+      app:showAsAction="always"
+      />
   <item
       android:id="@+id/action_add"
       android:icon="@drawable/fab_add"
