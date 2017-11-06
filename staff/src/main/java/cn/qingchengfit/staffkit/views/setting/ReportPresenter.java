@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.setting;
 
 import android.content.Intent;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.mvpbase.CommonPView;
@@ -27,7 +27,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/2/22 2016.
  */
-public class ReportPresenter implements Presenter {
+public class ReportPresenter extends BasePresenter {
 
     private SettingUseCase useCase;
     private Subscription subcription;
@@ -62,6 +62,7 @@ public class ReportPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         if (subcription != null) subcription.unsubscribe();
     }
 

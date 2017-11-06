@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym.coach;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.Staffs;
@@ -26,7 +26,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/5/11 2016.
  */
-public class CoachListPresenter implements Presenter {
+public class CoachListPresenter extends BasePresenter {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -63,6 +63,7 @@ public class CoachListPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (sp != null) sp.unsubscribe();
     }

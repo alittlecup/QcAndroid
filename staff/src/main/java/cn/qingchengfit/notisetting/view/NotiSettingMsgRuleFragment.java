@@ -54,9 +54,9 @@ public class NotiSettingMsgRuleFragment extends VpFragment
       delegatePresenter(presenter, this);
     } else {
       view = inflater.inflate(R.layout.item_common_no_data, container, false);
-      ((ImageView) ButterKnife.findById(view, R.id.img)).setImageResource(
+      ((ImageView) view.findViewById(R.id.img)).setImageResource(
           R.drawable.vd_img_no_permission);
-      ((TextView) ButterKnife.findById(view, R.id.tv_title)).setText(R.string.no_read_permission);
+      ((TextView) view.findViewById(R.id.tv_title)).setText(R.string.no_read_permission);
     }
     return view;
   }

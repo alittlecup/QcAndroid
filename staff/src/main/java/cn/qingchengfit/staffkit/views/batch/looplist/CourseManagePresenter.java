@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.batch.looplist;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.DelBatchScheduleBody;
@@ -31,7 +31,7 @@ import rx.functions.Action1;
  * <p>
  * Created by Paper on 16/5/6 2016.
  */
-public class CourseManagePresenter implements Presenter {
+public class CourseManagePresenter extends BasePresenter {
 
     GymUseCase useCase;
     @Inject LoginStatus loginStatus;
@@ -69,6 +69,7 @@ public class CourseManagePresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (spQuery != null) spQuery.unsubscribe();
         if (spDel != null) spDel.unsubscribe();

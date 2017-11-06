@@ -7,6 +7,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -116,7 +117,16 @@ public class ChooseWardrobeActivity extends BaseActivity implements ChooseWardro
 
     }
 
+    @Override public void showSelectSheet(String title, List<String> strs,
+      AdapterView.OnItemClickListener listener) {
+
+    }
+
     @Override public void popBack() {
+
+    }
+
+    @Override public void popBack(int count) {
 
     }
 

@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.student.detail;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
@@ -27,7 +27,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/3/19 2016.
  */
-public class StudentsCardsPresenter implements Presenter {
+public class StudentsCardsPresenter extends BasePresenter {
 
     @Inject StudentUsecase usecase;
     @Inject LoginStatus loginStatus;
@@ -63,6 +63,7 @@ public class StudentsCardsPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
     }
 

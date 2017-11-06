@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.ArrangeBatchBody;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
@@ -32,7 +32,7 @@ import timber.log.Timber;
  * <p/>
  * Created by Paper on 16/2/29 2016.
  */
-public class BatchPresenter implements Presenter {
+public class BatchPresenter extends BasePresenter {
 
     @Inject InitUseCase initUseCase;
     GymUseCase useCase;
@@ -72,6 +72,7 @@ public class BatchPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         this.view = null;
         if (sp != null) sp.unsubscribe();
         if (spArrange != null) spArrange.unsubscribe();

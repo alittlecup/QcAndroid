@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym.cycle;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import javax.inject.Inject;
 
 /**
@@ -18,7 +18,7 @@ import javax.inject.Inject;
  * <p>
  * Created by Paper on 16/3/29 2016.
  */
-public class AddCyclePresenter implements Presenter {
+public class AddCyclePresenter extends BasePresenter {
 
     AddCycleView view;
 
@@ -51,6 +51,7 @@ public class AddCyclePresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
     }
 }

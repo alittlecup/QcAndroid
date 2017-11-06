@@ -106,12 +106,12 @@ public class SeekPositionHomeFragment extends JobsListFragment
     layoutFilter = (SwipeRefreshLayout) inflater.inflate(R.layout.layout_filter_container, null);
     layoutFilter.setOnRefreshListener(this);
     ((FrameLayout) layoutFilter.getChildAt(1)).addView(v, 0);
-    toolbar = ButterKnife.findById(view, R.id.toolbar);
-    toolbarTitile = ButterKnife.findById(view, R.id.toolbar_title);
-    searchEt = ButterKnife.findById(view, R.id.tb_searchview_et);
-    layoutSearch = ButterKnife.findById(view, R.id.searchview);
-    imgClear = ButterKnife.findById(view, R.id.tb_searchview_clear);
-    btnCancel = ButterKnife.findById(view, R.id.tb_searchview_cancle);
+    toolbar = view.findViewById(R.id.toolbar);
+    toolbarTitile = view.findViewById(R.id.toolbar_title);
+    searchEt = view.findViewById(R.id.tb_searchview_et);
+    layoutSearch = view.findViewById(R.id.searchview);
+    imgClear = view.findViewById(R.id.tb_searchview_clear);
+    btnCancel = view.findViewById(R.id.tb_searchview_cancle);
     view.addView(layoutFilter, 1);
     delegatePresenter(positionPresenter, this);
     initToolbar(toolbar);

@@ -1,9 +1,5 @@
 package cn.qingchengfit.staffkit.repository;
 
-import cn.qingchengfit.saasbase.ISaasRouter;
-import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
-import cn.qingchengfit.views.fragments.BaseFragment;
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -25,13 +21,13 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  * Created by Paper on 2017/9/8.
  */
 
-public class SaasRouterImpl implements ISaasRouter{
-
-  @Override public CardTplsHomeInGymFragment cardTplsHomeInGymFragment() {
-    return null;
-  }
-
-  @Override public BaseFragment toCardTplDetail(String cardtplid) {
-    return null;
-  }
-}
+//public class SaasRouterImpl implements ISaasRouter{
+//
+//  @Override public CardTplsHomeInGymFragment cardTplsHomeInGymFragment() {
+//    return null;
+//  }
+//
+//  @Override public BaseFragment toCardTplDetail(String cardtplid) {
+//    return null;
+//  }
+//}

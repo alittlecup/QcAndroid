@@ -38,7 +38,6 @@ import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.staffkit.views.EditTextActivityIntentBuilder;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
 import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
@@ -435,9 +434,9 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     }
 
     @OnClick(R.id.civ_remark) public void onRemarkClick() {
-        //
-        Intent toAddOrigin = new EditTextActivityIntentBuilder("填写备注").build(getActivity());
-        startActivityForResult(toAddOrigin, RESULT_ADD_REMARKS);
+        // TODO: 2017/11/6
+        //Intent toAddOrigin = new EditTextActivityIntentBuilder("填写备注").build(getActivity());
+        //startActivityForResult(toAddOrigin, RESULT_ADD_REMARKS);
     }
 
     /**

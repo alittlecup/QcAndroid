@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 
 /**
@@ -58,8 +57,8 @@ public class LargeInputView extends LinearLayout {
 
     @Override protected void onFinishInflate() {
         super.onFinishInflate();
-        title = ButterKnife.findById(this, R.id.title);
-        edit = ButterKnife.findById(this, R.id.edit);
+        title = findViewById(R.id.title);
+        edit = findViewById(R.id.edit);
         title.setText(label);
     }
 

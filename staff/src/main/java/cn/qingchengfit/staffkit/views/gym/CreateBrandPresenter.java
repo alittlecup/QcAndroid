@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -27,7 +27,7 @@ import rx.functions.Action1;
  * <p>
  * Created by Paper on 16/2/23 2016.
  */
-public class CreateBrandPresenter implements Presenter {
+public class CreateBrandPresenter extends BasePresenter {
 
     InitUseCase useCase;
     private Subscription spBrand;
@@ -62,6 +62,7 @@ public class CreateBrandPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         this.addBrandView = null;
         if (spBrand != null) spBrand.unsubscribe();
     }

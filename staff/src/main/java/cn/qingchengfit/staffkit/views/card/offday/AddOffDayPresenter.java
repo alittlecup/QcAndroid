@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.card.offday;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
@@ -27,7 +27,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/3/18 2016.
  */
-public class AddOffDayPresenter implements Presenter {
+public class AddOffDayPresenter extends BasePresenter {
 
     @Inject RealcardWrapper realCard;
     @Inject RealCardUsecase usecase;
@@ -64,6 +64,7 @@ public class AddOffDayPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (sp != null) sp.unsubscribe();
     }

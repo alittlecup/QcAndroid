@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -214,7 +215,16 @@ public class MutiChooseSalersActivity extends BaseActivity
         onShowError(getString(e));
     }
 
+    @Override public void showSelectSheet(String title, List<String> strs,
+      AdapterView.OnItemClickListener listener) {
+
+    }
+
     @Override public void popBack() {
+
+    }
+
+    @Override public void popBack(int count) {
 
     }
 

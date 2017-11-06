@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.card.spendrecord;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
@@ -31,7 +31,7 @@ import rx.functions.Action1;
  * <p>
  * Created by Paper on 16/4/29 2016.
  */
-public class SpendRecordListPresenter implements Presenter {
+public class SpendRecordListPresenter extends BasePresenter {
 
     @Inject RealCardUsecase usecase;
     @Inject LoginStatus loginStatus;
@@ -69,6 +69,7 @@ public class SpendRecordListPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (sp != null) sp.unsubscribe();
     }

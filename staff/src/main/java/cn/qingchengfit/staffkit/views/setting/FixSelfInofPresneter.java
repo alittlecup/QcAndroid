@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.setting;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.network.ResponseConstant;
@@ -27,7 +27,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/3/4 2016.
  */
-public class FixSelfInofPresneter implements Presenter {
+public class FixSelfInofPresneter extends BasePresenter {
 
     @Inject SettingUseCase useCase;
     private Subscription sp;
@@ -63,6 +63,7 @@ public class FixSelfInofPresneter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         commonPView = null;
         if (sp != null) sp.unsubscribe();
         if (spUpdate != null) spUpdate.unsubscribe();

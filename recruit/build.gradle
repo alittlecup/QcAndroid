@@ -38,28 +38,27 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
   //  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
-  compile project(path: ':qcbase')
-  compile project(path: ':qcim')
+  implementation project(path: ':qcbase')
+  api project(path: ':qcim')
 
 //  compile('cn.qingchegfit.chat:chat:latest.integration') {
 //    exclude group: 'com.upyun', module: 'java-sdk'
 //  }
-  compile "com.google.dagger:dagger:${libs.dagger}"
-  compile "com.google.dagger:dagger-android:${libs.dagger}"
-  compile "com.google.dagger:dagger-android-support:${libs.dagger}"
+//  compile "com.google.dagger:dagger:${libs.dagger}"
+//  compile "com.google.dagger:dagger-android:${libs.dagger}"
+//  compile "com.google.dagger:dagger-android-support:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  testCompile 'junit:junit:4.12'
+  testImplementation 'junit:junit:4.12'
 
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-  compile 'com.jakewharton:butterknife:8.6.0'
   annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
-  compile "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
+  implementation "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
 }
 
 

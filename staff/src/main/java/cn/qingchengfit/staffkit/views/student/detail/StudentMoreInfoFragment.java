@@ -31,7 +31,6 @@ import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
 import cn.qingchengfit.staffkit.views.TitleFragment;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
-import cn.qingchengfit.staffkit.views.student.ChooseOriginActivityIntentBuilder;
 import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
 import cn.qingchengfit.staffkit.views.student.bodytest.BodyTestListFragment;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
@@ -306,8 +305,9 @@ public class StudentMoreInfoFragment extends BaseFragment
   @OnClick(R.id.ll_student_source) public void sourceClick(View view) {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
-      startActivityForResult(new ChooseOriginActivityIntentBuilder().build(getContext()),
-          RESULT_ORIGIN);
+      // TODO: 2017/11/6
+      //startActivityForResult(new ChooseOriginActivityIntentBuilder().build(getContext()),
+      //    RESULT_ORIGIN);
     } else {
       showAlert(R.string.alert_permission_forbid);
     }

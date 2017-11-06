@@ -122,4 +122,9 @@
         />
 
   </FrameLayout>
+  <FrameLayout
+      android:id="@+id/web_frag_layout"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      />
 </RelativeLayout>

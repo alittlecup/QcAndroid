@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym.site;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.Space;
@@ -26,7 +26,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/5/10 2016.
  */
-public class SiteDetailPresenter implements Presenter {
+public class SiteDetailPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     private GymUseCase useCase;
@@ -62,6 +62,7 @@ public class SiteDetailPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (spDel != null) spDel.unsubscribe();
         if (spFix != null) spFix.unsubscribe();

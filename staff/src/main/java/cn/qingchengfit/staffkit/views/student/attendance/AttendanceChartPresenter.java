@@ -73,7 +73,7 @@ public class AttendanceChartPresenter extends BasePresenter {
                     @Override public void call(QcDataResponse<AttendanceCharDataBean> absentcesQcResponseData) {
                         if (ResponseConstant.checkSuccess(absentcesQcResponseData)) {
                             view.onAbsence(absentcesQcResponseData.data);
-                            pages = absentcesQcResponseData.pages;
+                            //pages = absentcesQcResponseData.;
                             curpage++;
                         } else {
                             view.onShowError(absentcesQcResponseData.getMsg());
