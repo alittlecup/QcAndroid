@@ -293,4 +293,8 @@ public abstract class BaseDialogFragment extends DialogFragment implements CView
       ((BaseActivity) getActivity()).showDialogList(title,strs,listener);
     }
   }
+
+  @Override public void popBack(int count) {
+    dismiss();
+  }
 }

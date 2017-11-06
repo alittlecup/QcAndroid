@@ -94,24 +94,7 @@ public class BaseActivity extends AppCompatActivity {
     } catch (Exception e) {
       CrashUtils.sendCrash(e);
     }
-    obNetError = RxBus.getBus().register(EventNetWorkError.class);
-    obNetError.subscribe(new Action1<EventNetWorkError>() {
-      @Override public void call(EventNetWorkError eventNetWorkError) {
-        if (eventNetWorkError.errCode > 0){
-          try {
-            showAlert(eventNetWorkError.errCode);
-          }catch (Exception e){
-            CrashUtils.sendCrash(e);
-          }
-        }
-        hideLoading();
-        hideLoadingTransparent();
-      }
-    }, new Action1<Throwable>() {
-      @Override public void call(Throwable throwable) {
-        LogUtil.e(throwable.getMessage());
-      }
-    });
+
     getSupportFragmentManager().registerFragmentLifecycleCallbacks(fcb,false);
   }
 
@@ -150,21 +133,32 @@ public class BaseActivity extends AppCompatActivity {
   @Override protected void onDestroy() {
     getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fcb);
 
-    RxBus.getBus().unregister(EventNetWorkError.class.getName(), obNetError);
+
     super.onDestroy();
   }
 
   @Override protected void onResume() {
     super.onResume();
-    initBus();
+
     MobclickAgent.onResume(this);
   }
 
   @Override protected void onPause() {
     super.onPause();
-    RxBus.getBus().unregister(NetWorkDialogEvent.class.getName(),obLoading);
+
     MobclickAgent.onPause(this);
     checkLoading();
+  }
+
+  @Override protected void onStart() {
+    super.onStart();
+    initBus();
+  }
+
+  @Override protected void onStop() {
+    super.onStop();
+    RxBus.getBus().unregister(NetWorkDialogEvent.class.getName(),obLoading);
+    RxBus.getBus().unregister(EventNetWorkError.class.getName(), obNetError);
   }
 
   private void initBus(){
@@ -184,6 +178,25 @@ public class BaseActivity extends AppCompatActivity {
     }, new Action1<Throwable>() {
       @Override public void call(Throwable throwable) {
         CrashUtils.sendCrash(throwable);
+      }
+    });
+
+    obNetError = RxBus.getBus().register(EventNetWorkError.class);
+    obNetError.subscribe(new Action1<EventNetWorkError>() {
+      @Override public void call(EventNetWorkError eventNetWorkError) {
+        if (eventNetWorkError.errCode > 0){
+          try {
+            showAlert(eventNetWorkError.errCode);
+          }catch (Exception e){
+            CrashUtils.sendCrash(e);
+          }
+        }
+        hideLoading();
+        hideLoadingTransparent();
+      }
+    }, new Action1<Throwable>() {
+      @Override public void call(Throwable throwable) {
+        LogUtil.e(throwable.getMessage());
       }
     });
   }
