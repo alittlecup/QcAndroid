@@ -208,7 +208,9 @@ public class PermissionServerUtils {
      * 签到更衣柜联动
      */
     public static final String CHECKIN_LOCKER_LINK = "checkin_locker_link";
+    public static final String CHECKIN_LOCKER_LINK_NEW = "checkin_link";
     public static final String CHECKIN_LOCKER_LINK_CAN_CHANGE = "checkin_locker_link_can_change";
+    public static final String CHECKIN_LOCKER_LINK_CAN_CHANGE_NEW = "checkin_link_can_change";
 
     /**
      * 签到大屏幕
