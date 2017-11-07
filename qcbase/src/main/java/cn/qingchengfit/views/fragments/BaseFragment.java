@@ -535,7 +535,7 @@ public abstract class BaseFragment extends RxFragment
   /**
    * 跳转当前模块
    */
-  protected void routeTo(String model, String path, Bundle bd) {
+  public void routeTo(String model, String path, Bundle bd) {
     String uri = model + path;
     if (!uri.startsWith("/")) uri = "/" + uri;
     if (getActivity() instanceof BaseActivity) {

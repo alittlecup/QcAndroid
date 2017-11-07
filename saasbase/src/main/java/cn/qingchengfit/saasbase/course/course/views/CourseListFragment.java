@@ -23,7 +23,6 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
-import cn.qingchengfit.saasbase.SaasRouter;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
@@ -31,6 +30,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -62,6 +62,7 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/2.
  */
+@Leaf(module = "course",path = "/list/")
 public class CourseListFragment extends BaseFragment
     implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -69,7 +70,6 @@ public class CourseListFragment extends BaseFragment
   @Inject LoginStatus loginStatus;
   @Inject SerPermisAction serPermisAction;
   @Inject ICourseModel courseApi;
-  @Inject SaasRouter saasRouter;
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;

@@ -16,8 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -45,14 +45,14 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/1/9.
  */
-public abstract class BatchListFragment extends BaseFragment
+public abstract class BatchListFragment extends SaasBaseFragment
     implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
   @BindView(R2.id.toolbar_title) protected TextView toolbarTitile;
   @BindView(R2.id.toolbar) protected Toolbar toolbar;
   protected CommonFlexAdapter commonFlexAdapter;
   @Inject SerPermisAction serPermisAction;
-  @BindView(R2.id.rv) RecyclerView rv;
+  @BindView(R2.id.rv_batch_list) RecyclerView rv;
   @BindView(R2.id.add_batch_btn) FloatingActionButton addBatchBtn;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public abstract class BatchListFragment extends BaseFragment
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_course_type_batch, container, false);
+    View view = inflater.inflate(R.layout.fragment_sass_course_type_batch, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     rv.setLayoutManager(new LinearLayoutManager(getContext()));

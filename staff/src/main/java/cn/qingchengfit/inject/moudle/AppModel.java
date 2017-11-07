@@ -22,6 +22,13 @@ import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
+import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
+import cn.qingchengfit.saasbase.routers.billImpl;
+import cn.qingchengfit.saasbase.routers.cardImpl;
+import cn.qingchengfit.saasbase.routers.commonImpl;
+import cn.qingchengfit.saasbase.routers.courseImpl;
+import cn.qingchengfit.saasbase.routers.staffImpl;
+import cn.qingchengfit.saasbase.routers.studentImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
@@ -151,6 +158,10 @@ import rx.Observable;
         return null;
       }
     };
+  }
+
+  @Provides SaasbaseRouterCenter provideRc(){
+    return new SaasbaseRouterCenter(new billImpl(),new cardImpl(),new commonImpl(),new courseImpl(),new staffImpl(),new studentImpl());
   }
 
   @Provides ICourseModel provideCourseApi(){

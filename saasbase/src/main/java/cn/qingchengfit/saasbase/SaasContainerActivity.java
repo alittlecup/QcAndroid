@@ -55,7 +55,7 @@ public class SaasContainerActivity extends BaseActivity implements HasSupportFra
     ButterKnife.bind(this);
     webFragLayout.setOnTouchListener(new View.OnTouchListener() {
       @Override public boolean onTouch(View v, MotionEvent event) {
-        return false;
+        return true;
       }
     });
     onNewIntent(getIntent());
