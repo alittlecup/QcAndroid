@@ -60,6 +60,14 @@ public class QcVipFragment extends WebFragment {
         }
     }
 
+    @Override public boolean canSwipeRefreshChildScrollUp() {
+        try {
+            return mWebviewWebView.getWebScrollY() > 0;
+        }catch (Exception e){
+            return true;
+        }
+    }
+
     @Override protected void onVisible() {
         super.onVisible();
       SensorsUtils.track("AND_discover_tab_click", null, getContext());
@@ -75,9 +83,9 @@ public class QcVipFragment extends WebFragment {
 
             @Override public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-              //if (mRefreshSwipeRefreshLayout != null) {
-              //    mRefreshSwipeRefreshLayout.setRefreshing(false);
-              //}
+              if (mRefreshSwipeRefreshLayout != null) {
+                  mRefreshSwipeRefreshLayout.setRefreshing(false);
+              }
                 onWebFinish();
             }
 
