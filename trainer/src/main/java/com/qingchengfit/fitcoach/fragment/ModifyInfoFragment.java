@@ -22,6 +22,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -247,7 +248,10 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
      * 确认修改
      */
     @OnClick(R.id.modifyinfo_comfirm) public void onComfirm() {
-
+        if (CmStringUtils.isEmpty(mofifyinfoName.getContent())){
+            ToastUtils.show("姓名不能为空");
+            return;
+        }
         mModifyCoachInfo.setWeixin(mofifyinfoWechat.getContent());
         mModifyCoachInfo.setShort_description(modifyinfoSignEt.getText().toString());
         mModifyCoachInfo.setUsername(mofifyinfoName.getContent().trim());
