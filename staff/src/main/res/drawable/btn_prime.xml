@@ -25,8 +25,8 @@
     <shape android:shape="rectangle"
         >
       <corners android:radius="2dp"/>
-      <solid android:color="@color/colorPrimaryDisable"/>
-      <stroke android:color="@color/colorPrimaryDisable" android:width="1dp"/>
+      <solid android:color="@color/warm_grey"/>
+      <stroke android:color="@color/warm_grey" android:width="1dp"/>
       <size android:height="50dp" android:width="30dp"/>
     </shape>
   </item>
