@@ -87,7 +87,9 @@ public class AttendanceRankPresenter extends BasePresenter {
                 .subscribe(new Action1<QcDataResponse<Attendances>>() {
                     @Override public void call(QcDataResponse<Attendances> qcResponse) {
                         if (ResponseConstant.checkSuccess(qcResponse)) {
-
+                            if (attendanceList != null && attendanceList.size() > 0){
+                                attendanceList.clear();
+                            }
                             attendanceList.addAll(qcResponse.getData().attendances);
                             pages = qcResponse.data.pages;
                             view.onAttendances(qcResponse.getData().attendances, 1, qcResponse.data.pages, qcResponse.data.total_count);
