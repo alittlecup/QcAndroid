@@ -71,6 +71,11 @@ public class FixNotifySettingFragment extends BaseDialogFragment implements FixN
         return view;
     }
 
+    @Override public void onDestroyView() {
+        fixNotifyPresenter.unattachView();
+        super.onDestroyView();
+    }
+
     private void getData() {
         fixNotifyPresenter.setOnGetBalanceNotifyListener(this);
         fixNotifyPresenter.queryBalanceNotify(App.staffId);

@@ -211,7 +211,7 @@
   </style>
 
   <style name="Qc.Datepicker.Btn" parent="Base.Widget.AppCompat.Button">
-    <item name="android:textColor">?colorPrimary</item>
+    <item name="android:textColor">@color/colorPrimary</item>
   </style>
 
   <style name="Qc.EditTextStyle" parent="Base.Widget.AppCompat.EditText">

@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.signin.config;
 
+import android.util.Pair;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -73,40 +74,44 @@ public class SigninConfigWradrobePresenter extends BasePresenter {
     }
 
     boolean checkPermission() {
-        return SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK_CAN_CHANGE);
+        return SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK_CAN_CHANGE)||
+          SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK_CAN_CHANGE_NEW);
     }
 
-    public void putCheckinWithLocker(String id, boolean value) {
+    //public void putCheckinWithLocker(String id, boolean value) {
+    //
+    //    ShopConfigBody.Config config = new ShopConfigBody.Config();
+    //    config.setId(id);
+    //    config.setValue(value ? "1" : "0");
+    //    List<ShopConfigBody.Config> configs = new ArrayList<>();
+    //    configs.add(config);
+    //    ShopConfigBody body = new ShopConfigBody();
+    //    body.setConfigs(configs);
+    //    Observable observable = restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
+    //    RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
+    //        @Override protected void _onNext(Object o) {
+    //            view.onCheckInConfigComplete();
+    //        }
+    //
+    //        @Override protected void _onError(String message) {
+    //            Timber.e(message);
+    //            view.onShowError(message);
+    //        }
+    //    }, ActivityLifeCycleEvent.PAUSE, lifecycleSubject));
+    //}
 
-        ShopConfigBody.Config config = new ShopConfigBody.Config();
-        config.setId(id);
-        config.setValue(value ? "1" : "0");
+    public void putCheckoutWithReturnLocker(List<Pair<String,Boolean>> fix) {
+        if (fix == null)
+            return;
         List<ShopConfigBody.Config> configs = new ArrayList<>();
-        configs.add(config);
+        for (Pair<String, Boolean> stringBooleanPair : fix) {
+            ShopConfigBody.Config config = new ShopConfigBody.Config();
+            config.setId(stringBooleanPair.first);
+            config.setValue(stringBooleanPair.second?"1":"0");
+            configs.add(config);
+        }
         ShopConfigBody body = new ShopConfigBody();
         body.setConfigs(configs);
-        Observable observable = restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
-        RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
-            @Override protected void _onNext(Object o) {
-                view.onCheckInConfigComplete();
-            }
-
-            @Override protected void _onError(String message) {
-                Timber.e(message);
-                view.onShowError(message);
-            }
-        }, ActivityLifeCycleEvent.PAUSE, lifecycleSubject));
-    }
-
-    public void putCheckoutWithReturnLocker(String id, final boolean value) {
-        ShopConfigBody.Config config = new ShopConfigBody.Config();
-        config.setId(id);
-        config.setValue(value ? "1" : "0");
-        List<ShopConfigBody.Config> configs = new ArrayList<>();
-        configs.add(config);
-        ShopConfigBody body = new ShopConfigBody();
-        body.setConfigs(configs);
-
         Observable observable = restRepository.postApi(Post_Api.class).qcShopConfigs(App.staffId, gymWrapper.getParams(), body);
         RxRegiste(HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe() {
             @Override protected void _onNext(Object o) {

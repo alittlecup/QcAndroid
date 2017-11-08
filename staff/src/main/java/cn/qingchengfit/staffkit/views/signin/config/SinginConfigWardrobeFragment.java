@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,11 +98,15 @@ public class SinginConfigWardrobeFragment extends BaseFragment implements Signin
                     onClickNopermiss();
                     return true;
                 }
+                List<Pair<String,Boolean>> fix = new ArrayList<>();
                 if (signInConfig != null && !signInConfig.isEmpty()) {
-                    presenter.putCheckinWithLocker(signInConfig.get(0).getId() + "", swtSigninConfigLocker.isOpen());
-                } else if (signOutConfig != null && !signOutConfig.isEmpty()) {
-                    presenter.putCheckoutWithReturnLocker(signOutConfig.get(0).getId() + "", swtSigninConfigLockerBack.isOpen());
+                    fix.add(new Pair<String, Boolean>(signInConfig.get(0).getId()+"",swtSigninConfigLocker.isOpen()));
                 }
+                if (signOutConfig != null && !signOutConfig.isEmpty()) {
+                    fix.add(new Pair<String, Boolean>(signOutConfig.get(0).getId()+"",swtSigninConfigLockerBack.isOpen()));
+                }
+                presenter.putCheckoutWithReturnLocker(fix);
+
                 return true;
             }
         });
@@ -143,14 +148,15 @@ public class SinginConfigWardrobeFragment extends BaseFragment implements Signin
     }
 
     @Override public void onCheckInConfigComplete() {
-        presenter.putCheckoutWithReturnLocker(signOutConfig.get(0).getId() + "", swtSigninConfigLockerBack.isOpen());
         ToastUtils.show("设置成功");
         hideLoading();
         getActivity().onBackPressed();
     }
 
     @Override public void onCheckOutConfigComplete() {
-
+        ToastUtils.show("设置成功");
+        hideLoading();
+        getActivity().onBackPressed();
     }
 
     @Override public void onShowError(String e) {

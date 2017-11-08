@@ -130,7 +130,9 @@ public class SigninConfigListFragment extends BaseFragment implements ModuleConf
                     .commit();
                 break;
             case R.id.layout_signin_wardrobe:
-                if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK)) {
+                if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK)
+                    && !SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK_NEW)
+                  ) {
                     showAlert(R.string.sorry_for_no_permission);
                     return;
                 }

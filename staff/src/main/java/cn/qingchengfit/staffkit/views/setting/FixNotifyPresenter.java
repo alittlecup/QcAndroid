@@ -51,8 +51,14 @@ public class FixNotifyPresenter extends BasePresenter {
                             onGetBalanceNotifyListener.onGetSuccess(responseData.data.balanceNotifies);
                         }
                     } else {
-                        if (onGetBalanceNotifyListener != null) onGetBalanceNotifyListener.onGetFailed(responseData.msg);
+                        if (onGetBalanceNotifyListener != null) {
+                            onGetBalanceNotifyListener.onGetFailed(responseData.msg);
+                        }
                     }
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
+
                 }
             }));
     }

@@ -9,8 +9,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.GestureDetector;
@@ -27,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventFreshUnloginAd;
@@ -105,9 +108,10 @@ public class WebFragment extends BaseFragment
   @BindView(R2.id.toobar_action) public TextView mToobarActionTextView;
   @BindView(R2.id.toolbar) public Toolbar mToolbar;
   @BindView(R2.id.toolbar_title) public TextView mTitle;
+  @BindView(R2.id.toolbar_close) public TextView mWebClose;
   @BindView(R2.id.webview) public WebView mWebviewWebView;
   public String mCurUrl;
-  //@BindView(R2.id.refresh) protected CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
+  @BindView(R2.id.refresh) protected CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
   @BindView(R2.id.layout_toolbar) protected RelativeLayout commonToolbar;
   @BindView(R2.id.refresh_network) Button mRefresh;
   @BindView(R2.id.no_newwork) LinearLayout mNoNetwork;
@@ -166,6 +170,12 @@ public class WebFragment extends BaseFragment
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_web, container, false);
     unbinder = ButterKnife.bind(this, view);
+    mRefreshSwipeRefreshLayout.setCanChildScrollUpCallback(this);
+    mRefreshSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override public void onRefresh() {
+        mWebviewWebView.reload();
+      }
+    });
     mRefresh.setEnabled(false);
     mRefresh.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -280,6 +290,7 @@ public class WebFragment extends BaseFragment
     return view;
   }
 
+
   private void initBus() {
     RxRegiste(RxBus.getBus()
         .register(EventShareFun.class)
@@ -296,6 +307,18 @@ public class WebFragment extends BaseFragment
             }
           }
         }));
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    mWebClose.setVisibility((getActivity() != null && getActivity() instanceof WebActivity)?View.VISIBLE:View.GONE);
+  }
+
+  @OnClick(R2.id.toolbar_close)
+  public void addCloseBtn(){
+    if (getActivity() != null &&getActivity() instanceof WebActivity) {
+      getActivity().finish();
+    }
   }
 
   public void onLoadedView() {
@@ -500,15 +523,18 @@ public class WebFragment extends BaseFragment
         } else {
           commonToolbar.setVisibility(View.VISIBLE);
         }
+        if (mRefreshSwipeRefreshLayout != null) {
+          mRefreshSwipeRefreshLayout.setRefreshing(true);
+        }
         LogUtil.e(" start url:" + url);
       }
 
       @Override public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         mCurUrl = url;
-        //if (mRefreshSwipeRefreshLayout != null) {
-        //  mRefreshSwipeRefreshLayout.setRefreshing(false);
-        //}
+        if (mRefreshSwipeRefreshLayout != null) {
+          mRefreshSwipeRefreshLayout.setRefreshing(false);
+        }
         onWebFinish();
       }
 
@@ -571,11 +597,7 @@ public class WebFragment extends BaseFragment
   }
 
   @Override public boolean canSwipeRefreshChildScrollUp() {
-    try {
-      return mWebviewWebView.getWebScrollY() > 0;
-    } catch (Exception e) {
-      return true;
-    }
+    return true;
   }
 
   @Override public boolean onDown(MotionEvent e) {

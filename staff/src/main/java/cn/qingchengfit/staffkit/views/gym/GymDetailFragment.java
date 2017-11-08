@@ -139,7 +139,7 @@ public class GymDetailFragment extends BaseFragment
     @Inject GymDetailPresenter gymDetailPresenter;
     @Inject RestRepository restRepository;
     @Inject GymWrapper gymWrapper;
-    @Inject GymMoreFragment gymMoreFragment;
+    //@Inject GymMoreFragment gymMoreFragment;
     @Inject SerPermisAction serPermisAction;
 
     private String mCopyUrl;
@@ -620,7 +620,7 @@ public class GymDetailFragment extends BaseFragment
                             .beginTransaction()
                             .addSharedElement(recycleview, "funcitonView")
                             .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
-                            .add(mCallbackActivity.getFragId(), gymMoreFragment)
+                            .add(mCallbackActivity.getFragId(), new GymMoreFragment())
                             .addToBackStack(null)
                             .commit();
                     } else {
