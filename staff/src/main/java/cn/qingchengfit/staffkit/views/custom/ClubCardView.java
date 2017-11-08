@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -138,12 +137,12 @@ public class ClubCardView extends RelativeLayout {
 
     @Override protected void onFinishInflate() {
         super.onFinishInflate();
-        switcher = ButterKnife.findById(this, R.id.switcher);
-        content = ButterKnife.findById(this, R.id.content);
-        showPayCard = ButterKnife.findById(this, R.id.show_card_pay);
-        mDivier = ButterKnife.findById(this, R.id.divider);
+        switcher = findViewById( R.id.switcher);
+        content = findViewById( R.id.content);
+        showPayCard = findViewById( R.id.show_card_pay);
+        mDivier = findViewById( R.id.divider);
         switcher.setChecked(isExpand);
-        cannotChange = ButterKnife.findById(this, R.id.cannot_change);
+        cannotChange = findViewById( R.id.cannot_change);
 
         switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -155,7 +154,7 @@ public class ClubCardView extends RelativeLayout {
                 }
             }
         });
-        tvLable = ButterKnife.findById(this, R.id.label);
+        tvLable = findViewById( R.id.label);
         tvLable.setText(lable);
         cannotChange.setVisibility(mCannotChange ? VISIBLE : GONE);
         cannotChange.setOnClickListener(new OnClickListener() {

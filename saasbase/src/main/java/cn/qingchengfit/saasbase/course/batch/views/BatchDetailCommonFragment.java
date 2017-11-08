@@ -18,8 +18,6 @@ import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
-import cn.qingchengfit.saasbase.SaasRouter;
-import cn.qingchengfit.saasbase.routers.GymManageUri;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -28,7 +26,6 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.ExpandedLayout;
-import javax.inject.Inject;
 
 /**
  * power by
@@ -67,7 +64,7 @@ public class BatchDetailCommonFragment extends BaseFragment {
   @BindView(R2.id.el_pay) ExpandedLayout elPay;
   @BindView(R2.id.el_multi_support) ExpandedLayout elMultiSupport;
 
-  @Inject SaasRouter saasRouter;
+  //@Inject SaasRouter saasRouter;
 
   private Course course;
   private Staff trainer;
@@ -219,7 +216,8 @@ public class BatchDetailCommonFragment extends BaseFragment {
    * 更改场地
    */
   @OnClick(R2.id.space) public void onSpaceClicked() {
-    saasRouter.choose(GymManageUri.SITE_LIST+"?muti="+(course.is_private?1:0));
+    //saasRouter.choose(GymManageUri.SITE_LIST+"?muti="+(course.is_private?1:0));
+
   }
 
   /**

@@ -97,8 +97,8 @@ public class PosStudentAddFragment extends BaseFragment {
         .subscribe(new NetSubscribe<QcDataResponse>() {
           @Override public void onNext(QcDataResponse qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              onShowError("");
               RxBus.getBus().post(new EventSaasFresh.StudentList());
+              popBack();
             } else {
               onShowError(qcResponse.getMsg());
             }

@@ -40,9 +40,6 @@ import com.tencent.TIMOfflinePushListener;
 import com.tencent.TIMOfflinePushNotification;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
 import com.tencent.smtt.sdk.QbSdk;
-import com.tencent.tinker.loader.app.ApplicationLike;
-import com.tinkerpatch.sdk.TinkerPatch;
-import com.tinkerpatch.sdk.loader.TinkerPatchApplicationLike;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -88,7 +85,7 @@ public class App extends MultiDexApplication
     @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
     @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
     private AppComponent appCompoent;
-    private ApplicationLike tinkerApplicationLike;
+    //private ApplicationLike tinkerApplicationLike;
 
     public AppComponent getAppCompoent() {
         return appCompoent;
@@ -97,16 +94,16 @@ public class App extends MultiDexApplication
     @Override public void onCreate() {
 
         super.onCreate();
-
-        tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
-        //开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
-        if (tinkerApplicationLike != null) {
-            TinkerPatch.init(tinkerApplicationLike)
-                .reflectPatchLibrary()
-                .setPatchRollbackOnScreenOff(true)
-                .setPatchRestartOnSrceenOff(true);
-            TinkerPatch.with().fetchPatchUpdate(true);
-        }
+        //
+        //tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
+        ////开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
+        //if (tinkerApplicationLike != null) {
+        //    TinkerPatch.init(tinkerApplicationLike)
+        //        .reflectPatchLibrary()
+        //        .setPatchRollbackOnScreenOff(true)
+        //        .setPatchRestartOnSrceenOff(true);
+        //    TinkerPatch.with().fetchPatchUpdate(true);
+        //}
 
         try {
             FIR.init(this);

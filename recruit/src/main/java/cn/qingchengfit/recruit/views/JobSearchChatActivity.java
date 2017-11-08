@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.item.RecruitPositionChooseItem;
@@ -111,7 +112,16 @@ public class JobSearchChatActivity extends ChatActivity
 
   }
 
+  @Override public void showSelectSheet(String title, List<String> strs,
+    AdapterView.OnItemClickListener listener) {
+
+  }
+
   @Override public void popBack() {
+
+  }
+
+  @Override public void popBack(int count) {
 
   }
 

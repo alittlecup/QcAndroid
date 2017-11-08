@@ -34,6 +34,7 @@ public class CardBuyPresenter extends BasePresenter {
   private String mCardTplId;
   private int cardCate;
   private List<CardTplOption> mOptions = new ArrayList<>();
+  private ArrayList<String> choseStuIds = new ArrayList<>();
   /**
    * 选中的支付价格
    */
@@ -54,6 +55,10 @@ public class CardBuyPresenter extends BasePresenter {
   public void setCardCate(int cate) {
     cardBuyBody.setType(cate);
     cardCate = cate;
+  }
+
+  public ArrayList<String> getChoseStuIds() {
+    return choseStuIds;
   }
 
   public void setmCardTplId(String mCardTplId) {
@@ -109,6 +114,7 @@ public class CardBuyPresenter extends BasePresenter {
         @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
           view.bindStudent(eventSelectedStudent.getNameStr());
           cardBuyBody.user_ids = eventSelectedStudent.getIdStr();
+          choseStuIds = eventSelectedStudent.getIDlist();
         }
       });
   }
@@ -148,7 +154,7 @@ public class CardBuyPresenter extends BasePresenter {
               if (option.can_create)
                 mOptions.add(option);
             }
-            view.onGetOptions(qcResponse.data.options);
+            view.onGetOptions(mOptions);
           } else {
             view.onShowError(qcResponse.getMsg());
           }

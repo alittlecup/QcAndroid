@@ -61,11 +61,13 @@ import rx.schedulers.Schedulers;
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
           routeTo("/add/", null);
+        }else if (item.getItemId() == R.id.action_search){
+          showSearch(toolbarRoot);
         }
         return true;
       }
     });
-    initSearch(toolbar.getMenu().findItem(R.id.action_search),toolbarTitle,toolbar);
+    initSearch(toolbarRoot,"输入销售姓名或者手机号来");
   }
 
   @Override public void onTextSearch(String text) {

@@ -104,8 +104,8 @@ public class AddCardtplStandardPresenter extends BasePresenter {
   public void addOption() {
 
     if (CmStringUtils.isEmpty(tplId)) {
-      if (CmStringUtils.isEmpty(ob.charge) || CmStringUtils.isEmpty(ob.price)) {
-        view.showAlert("请填写充值和实收");
+      if (!CmStringUtils.checkMoney(ob.charge) || !CmStringUtils.checkMoney(ob.price)) {
+        view.showAlert("请填写正确的充值和实收");
         return;
       }
       RxBus.getBus().post(new EventCardTplOption(ob, 0));
@@ -156,25 +156,34 @@ public class AddCardtplStandardPresenter extends BasePresenter {
 
   public void saveOption() {
     if (CmStringUtils.isEmpty(tplId)) {
+      if (!CmStringUtils.checkMoney(ob.charge) || !CmStringUtils.checkMoney(ob.price)) {
+        view.showAlert("请填写正确的充值和实收");
+        return;
+      }
       ob.id = optionId;
       RxBus.getBus().post(new EventCardTplOption(ob, 0));
       view.onSaveOk();
     } else {
+      if (ob.checkStaff() != 0) {
+        view.showAlert(ob.checkPos());
+        return;
+      }
       ob.id = null;
-    }
-    RxRegiste(cardModel.qcUpdateCardStandard(optionId, ob)
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new NetSubscribe<QcDataResponse>() {
-        @Override public void onNext(QcDataResponse qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            view.onSaveOk();
-          } else {
-            view.onShowError(qcResponse.getMsg());
+      RxRegiste(cardModel.qcUpdateCardStandard(optionId, ob)
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse>() {
+          @Override public void onNext(QcDataResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              view.onSaveOk();
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
           }
-        }
-      }));
+        }));
+    }
+
   }
 
   public interface MVPView extends CView {

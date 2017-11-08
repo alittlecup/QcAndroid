@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import cn.qingchengfit.pos.card.PosCardBuyFragment;
 import cn.qingchengfit.pos.card.PosCardChargeFragment;
 import cn.qingchengfit.pos.card.PosCardListHomeFragment;
+import cn.qingchengfit.pos.card.PosCardTplDetailFragment;
 import cn.qingchengfit.saasbase.routers.cardImpl;
 
 /**
@@ -47,4 +48,9 @@ public class CardRouters extends cardImpl {
     return fragment;
   }
 
+  @Override public Fragment toCardTplDetailFragment(Bundle args) {
+    PosCardTplDetailFragment fragment = new PosCardTplDetailFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
 }

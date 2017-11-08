@@ -44,7 +44,8 @@ public class PosCardChargeFragment extends CardChargeFragment {
         .operator(loginStatus.staff_name())
         .build()
         .pay(getContext());
-      startActivityForResult(toBuy, 100);
+      if (getActivity() != null)
+        getActivity().startActivityForResult(toBuy, 100);
     } else {
       routeTo("bill", "/pay/done/", new BillDetailParams().orderNo(payBusinessResponse.order_no).build());
     }

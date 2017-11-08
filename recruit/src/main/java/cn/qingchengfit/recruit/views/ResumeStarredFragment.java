@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
 
 /**
@@ -40,8 +39,8 @@ public class ResumeStarredFragment extends ResumeListFragment {
       Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
     View root = inflater.inflate(R.layout.layout_toolbar_container, container, false);
-    toolbar = ButterKnife.findById(root, R.id.toolbar);
-    toolbarTitle = ButterKnife.findById(root, R.id.toolbar_title);
+    toolbar = root.findViewById(R.id.toolbar);
+    toolbarTitle = root.findViewById( R.id.toolbar_title);
     if (root instanceof LinearLayout) {
       ((LinearLayout) root).addView(v, 1);
     }

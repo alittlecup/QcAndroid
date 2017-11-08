@@ -28,13 +28,12 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Action1;
-import se.emilsjolander.intentbuilder.IntentBuilder;
 
 /**
  * //Edited by paper comment @ 2017/3/6
  * //Created by yangming on 16/12/5.
  */
-@IntentBuilder public class ChooseOriginActivity extends BaseActivity implements FragCallBack, ChooseOriginPresenter.PresenterView {
+public class ChooseOriginActivity extends BaseActivity implements FragCallBack, ChooseOriginPresenter.PresenterView {
 
     public static final int RESULT_ADD_ORIGIN = 11;
 
@@ -53,7 +52,7 @@ import se.emilsjolander.intentbuilder.IntentBuilder;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ChooseOriginActivityIntentBuilder.inject(getIntent(), this);
+        //ChooseOriginActivityIntentBuilder.inject(getIntent(), this);
         setContentView(R.layout.activity_student_add_choose_origin);
         ButterKnife.bind(this);
         sourceFragment = new TopFilterSourceFragment();

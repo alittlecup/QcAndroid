@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.staff.presenter;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -11,6 +12,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StaffPosition;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
@@ -99,6 +101,7 @@ public class StaffDetailPresenter extends BasePresenter {
         .subscribe(new NetSubscribe<QcDataResponse>() {
           @Override public void onNext(QcDataResponse qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
+              RxBus.getBus().post(new EventSaasFresh.StaffList());
               view.onShowError("修改成功！");
               view.popBack();
             } else {
@@ -112,6 +115,7 @@ public class StaffDetailPresenter extends BasePresenter {
   public void addStaff() {
     body.setUsername(view.getName());
     body.setPhone(view.getPhone());
+    body.setArea_code("+86");
     int ret = body.checkDataInPos();
     if (ret > 0) {
       view.showAlert(ret);
@@ -169,7 +173,7 @@ public class StaffDetailPresenter extends BasePresenter {
   }
 
   public void choosePosition() {
-    if (staff.is_coach && !staff.is_staff ){
+    if (staff != null &&staff.is_coach && !staff.is_staff ){
       //只是教练的话 不能修改
       view.showAlert("教练身份无法被修改");
     }else {

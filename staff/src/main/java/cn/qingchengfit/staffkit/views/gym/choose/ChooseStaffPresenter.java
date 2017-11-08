@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym.choose;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.StaffShip;
 import cn.qingchengfit.model.responese.StaffShipResponse;
@@ -28,7 +28,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/1/29 2016.
  */
-public class ChooseStaffPresenter implements Presenter {
+public class ChooseStaffPresenter extends BasePresenter {
 
     private CoachUseCase coachUseCase;
     private CoachService coachService;
@@ -64,7 +64,7 @@ public class ChooseStaffPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
-
+        super.unattachView();
     }
 
     @SuppressWarnings("unused") public void getStaffs() {

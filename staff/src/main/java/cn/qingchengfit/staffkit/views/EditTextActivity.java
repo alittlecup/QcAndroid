@@ -19,8 +19,6 @@ import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import rx.functions.Action1;
-import se.emilsjolander.intentbuilder.Extra;
-import se.emilsjolander.intentbuilder.IntentBuilder;
 
 /**
  * //  ┏┓　　　┏┓
@@ -43,9 +41,9 @@ import se.emilsjolander.intentbuilder.IntentBuilder;
  * //
  * //Created by yangming on 16/12/5.
  */
-@IntentBuilder public class EditTextActivity extends BaseActivity implements FragCallBack {
+public class EditTextActivity extends BaseActivity implements FragCallBack {
 
-    @Extra String title;
+    String title;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
@@ -54,9 +52,11 @@ import se.emilsjolander.intentbuilder.IntentBuilder;
 
     @BindView(R.id.edit_text_content) EditText editTextContent;
 
+
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EditTextActivityIntentBuilder.inject(getIntent(), this);
+        title = getIntent().getStringExtra("title");
         setContentView(R.layout.activity_edit_text);
         ButterKnife.bind(this);
         initToolBar();

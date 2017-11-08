@@ -71,7 +71,7 @@ import javax.inject.Inject;
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_course_type_batch, container, false);
+        View view = inflater.inflate(R.layout.fragment_sass_course_type_batch, container, false);
         unbinder = ButterKnife.bind(this, view);
         initToolbar(toolbar);
         getChildFragmentManager().beginTransaction()

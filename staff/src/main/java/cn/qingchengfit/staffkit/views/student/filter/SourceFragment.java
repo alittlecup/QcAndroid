@@ -24,7 +24,7 @@ import cn.qingchengfit.inject.model.StaffWrapper;
 import cn.qingchengfit.model.responese.StudentSourceBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.staffkit.views.EditTextActivityIntentBuilder;
+import cn.qingchengfit.staffkit.views.EditTextActivity;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.utils.IntentUtils;
@@ -147,7 +147,10 @@ import javax.inject.Inject;
     }
 
     @OnClick(R.id.tv_add_new_origin) public void onAddNewOrigin() {
-        Intent toAddOrigin = new EditTextActivityIntentBuilder("添加新来源").build(getContext());
+
+        //Intent toAddOrigin = new EditTextActivityIntentBuilder("添加新来源").build(getContext());
+        Intent toAddOrigin = new Intent(getContext(), EditTextActivity.class);
+        toAddOrigin.putExtra("title","添加新来源");
         startActivityForResult(toAddOrigin, RESULT_ADD_ORIGIN);
     }
 

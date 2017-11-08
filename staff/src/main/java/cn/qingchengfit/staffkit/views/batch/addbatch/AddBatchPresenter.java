@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.batch.addbatch;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ArrangeBatchBody;
@@ -32,7 +32,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/5/4 2016.
  */
-public class AddBatchPresenter implements Presenter {
+public class AddBatchPresenter extends BasePresenter {
     GymUseCase gymUseCase;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -104,6 +104,7 @@ public class AddBatchPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (sp != null) sp.unsubscribe();
         if (spCheck != null) spCheck.unsubscribe();

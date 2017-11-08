@@ -2,8 +2,8 @@ package cn.qingchengfit.staffkit.views.student.edit;
 
 import android.content.Intent;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.ResponseConstant;
@@ -28,7 +28,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/4/20 2016.
  */
-public class EditStudentInfoPresenter implements Presenter {
+public class EditStudentInfoPresenter extends BasePresenter {
     @Inject StudentUsecase usecase;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;

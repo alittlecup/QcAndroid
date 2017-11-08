@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym.couse;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
@@ -22,7 +22,7 @@ import rx.Subscription;
  * Created by Paper on 16/5/11 2016.
  */
 
-@Deprecated public class CourseDetailPresenter implements Presenter {
+@Deprecated public class CourseDetailPresenter extends BasePresenter {
 
     private CourseDetailView view;
     private Subscription spDel, spFix;
@@ -59,6 +59,7 @@ import rx.Subscription;
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (spDel != null) spDel.unsubscribe();
         if (spFix != null) spFix.unsubscribe();

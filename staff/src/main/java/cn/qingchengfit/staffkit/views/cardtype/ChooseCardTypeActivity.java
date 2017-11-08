@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -102,7 +103,16 @@ public class ChooseCardTypeActivity extends BaseActivity implements CardTypeList
         ToastUtils.show(getString(e));
     }
 
+    @Override public void showSelectSheet(String title, List<String> strs,
+      AdapterView.OnItemClickListener listener) {
+
+    }
+
     @Override public void popBack() {
+
+    }
+
+    @Override public void popBack(int count) {
 
     }
 

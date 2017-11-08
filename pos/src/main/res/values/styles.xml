@@ -33,6 +33,7 @@
     <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
     <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
     <item name="android:windowTranslucentStatus">true</item>
+    <item name="android:searchViewStyle">@style/MySearchViewStyle</item>
   </style>
   <style name="CarculaterBtnStyle">
     <item name="android:layout_rowWeight">1</item>

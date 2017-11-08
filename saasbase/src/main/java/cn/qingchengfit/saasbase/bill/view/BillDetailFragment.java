@@ -58,9 +58,9 @@ import javax.inject.Inject;
 @Leaf(module = "bill", path = "/detail/") public class BillDetailFragment extends SaasBaseFragment
   implements BillDetailPresenterPresenter.MVPView {
 
-  @BindView(R2.id.tv_bill_amount) TextView tvBillAmount;
+  @BindView(R2.id.tv_bill_amount) public TextView tvBillAmount;
   @BindView(R2.id.tv_bill_status) TextView tvBillStatus;
-  @BindView(R2.id.tv_remarks) TextView tvRemarks;
+  @BindView(R2.id.tv_remarks) public TextView tvRemarks;
   @BindView(R2.id.divider_remarks) View dividerRemark;
   @BindView(R2.id.rv_common) RecyclerView rvCommon;
   @BindView(R2.id.rv_extra) RecyclerView rvExtra;
@@ -121,7 +121,7 @@ import javax.inject.Inject;
    */
   public void onOrderDetail(BusinessBill order) {
     tvBillAmount.setText(getString(R.string.pay_money, StringUtils.getFloatDot2((float) order.price/100)));//单位从分转换为元
-    tvBillStatus.setText(getResources().getStringArray(R.array.bill_status)[(order.status -1)%5]);
+    tvBillStatus.setText(getResources().getStringArray(R.array.bill_status)[(Math.abs(order.status -1))%5]);
 
     commonAdapter.clear();
     commonAdapter.addItem(new BillKvCommonItem("交易类型", arrayOrderType[order.type%7]));

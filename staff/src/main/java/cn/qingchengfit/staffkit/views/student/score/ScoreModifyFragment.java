@@ -18,7 +18,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.EditTextActivityIntentBuilder;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -180,8 +179,9 @@ public class ScoreModifyFragment extends BaseFragment implements ScoreModifyPres
     }
 
     @OnClick(R.id.civ_remark) public void onClick() {
-        Intent toAddOrigin = new EditTextActivityIntentBuilder("填写备注").build(getActivity());
-        startActivityForResult(toAddOrigin, RESULT_ADD_REMARKS);
+        // TODO: 2017/11/6
+        //Intent toAddOrigin = new EditTextActivityIntentBuilder("填写备注").build(getActivity());
+        //startActivityForResult(toAddOrigin, RESULT_ADD_REMARKS);
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

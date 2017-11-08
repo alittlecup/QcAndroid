@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.cardtype.standard;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.OptionBody;
@@ -26,7 +26,7 @@ import rx.functions.Action1;
  * <p>
  * Created by Paper on 16/3/28 2016.
  */
-public class EditCardStandardPresenter implements Presenter {
+public class EditCardStandardPresenter extends BasePresenter {
 
     CardStandardUsecase usecase;
     @Inject LoginStatus loginStatus;
@@ -64,6 +64,7 @@ public class EditCardStandardPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (spDel != null) spDel.unsubscribe();
         if (spEdit != null) spEdit.unsubscribe();

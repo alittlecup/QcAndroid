@@ -10,7 +10,6 @@ import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymFuntion;
-import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -377,7 +376,8 @@ public class GymFunctionFactory {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
-                fragment.startActivity(new Intent(fragment.getContext(), SaasContainerActivity.class));
+                fragment.routeTo("course","/batches/group/list/",null);
+                //fragment.startActivity(new Intent(fragment.getContext(), SaasContainerActivity.class));
                 return;
                 //break;
 

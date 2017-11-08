@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 
 /**
  * power by
@@ -17,7 +17,7 @@ import cn.qingchengfit.di.Presenter;
  * <p/>
  * Created by Paper on 16/1/28 2016.
  */
-public class WriteAddressPresenter implements Presenter {
+public class WriteAddressPresenter extends BasePresenter {
 
     //    SetGymPresenter setGymPresenter;
     //
@@ -51,7 +51,7 @@ public class WriteAddressPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
-
+        super.unattachView();
     }
 
     public void onDone(String content) {

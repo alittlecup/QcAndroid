@@ -44,6 +44,7 @@ public abstract class BaseStaffListFragment extends BaseListFragment implements
     FlexibleAdapter.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener{
   protected Toolbar toolbar;
   protected TextView toolbarTitle;
+  protected ViewGroup toolbarRoot;
   List<AbstractFlexibleItem> ret = new ArrayList<>();
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public abstract class BaseStaffListFragment extends BaseListFragment implements
     root.addView(view,1);
     toolbar = (Toolbar)root.findViewById(R.id.toolbar);
     toolbarTitle = (TextView)root.findViewById(R.id.toolbar_title);
+    toolbarRoot = root.findViewById(R.id.toolbar_layout);
     initToolbar(toolbar);
     initListener(this);
     return root;

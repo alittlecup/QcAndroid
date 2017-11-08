@@ -47,6 +47,15 @@ public class EventSelectedStudent {
     }else return "";
   }
 
+  public ArrayList<String> getIDlist() {
+    ArrayList<String> ret = new ArrayList<>();
+    if (students != null) {
+      for (QcStudentBean staff : students) {
+        ret.add(staff.id());
+      }
+    }
+    return ret;
+  }
   public String getNameStr(){
     if (students != null) {
       String ret = "";

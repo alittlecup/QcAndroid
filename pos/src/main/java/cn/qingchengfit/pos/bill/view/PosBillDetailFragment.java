@@ -1,9 +1,12 @@
 package cn.qingchengfit.pos.bill.view;
 
+import android.text.TextUtils;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.pos.RongPrinter;
 import cn.qingchengfit.saasbase.bill.items.BillKvCommonItem;
 import cn.qingchengfit.saasbase.bill.view.BillDetailFragment;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -27,8 +30,10 @@ import eu.davidea.flexibleadapter.items.IFlexible;
  */
 
 public class PosBillDetailFragment extends BillDetailFragment {
+  @Inject GymWrapper gymWrapper;
   @Override public void onBtnPrintClicked() {
     RongPrinter.Builder printB = new RongPrinter.Builder();
+    printB.title(gymWrapper.name()+"("+tvBillAmount.getText().toString()+")");
     for (int i = 0; i < commonAdapter.getItemCount(); i++) {
       IFlexible item = commonAdapter.getItem(i);
       if (item instanceof BillKvCommonItem){
@@ -41,6 +46,8 @@ public class PosBillDetailFragment extends BillDetailFragment {
         printB.secoud(((BillKvCommonItem) item).getKey(),((BillKvCommonItem) item).getValue());
       }
     }
+    if (!TextUtils.isEmpty(tvRemarks.getText()))
+      printB.secoud("",tvRemarks.getText().toString());
     try {
       startActivity(printB.build().print(getContext()));
     }catch (Exception e){

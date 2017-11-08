@@ -14,10 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.MeasureUtils;
-import cn.qingchengfit.widgets.LoadingPointerView;
 
 /**
  * power by
@@ -108,16 +106,16 @@ public class RecycleViewWithNoImg extends RelativeLayout implements CustomSwipeR
 
     @Override protected void onFinishInflate() {
         super.onFinishInflate();
-        recyclerView = ButterKnife.findById(this, R.id.no_recycleview);
-        imageView = ButterKnife.findById(this, R.id.img);
-        textView = ButterKnife.findById(this, R.id.hint);
-        nodata = ButterKnife.findById(this, R.id.nodata);
-        loadingLayout = ButterKnife.findById(this, R.id.loading_layout);
+        recyclerView = findViewById(R.id.no_recycleview);
+        imageView = findViewById(R.id.img);
+        textView = findViewById(R.id.hint);
+        nodata = findViewById(R.id.nodata);
+        loadingLayout = findViewById(R.id.loading_layout);
         recyclerView.setPadding(recyclerView.getPaddingLeft(), (int) padTop, recyclerView.getPaddingRight(), (int) padbottom);
-        swipeRefreshLayout = ButterKnife.findById(this, R.id.swipe);
+        swipeRefreshLayout = findViewById(R.id.swipe);
         textView.setText(hint);
         swipeRefreshLayout.setColorSchemeResources(colorRes);
-        imgLoading = ButterKnife.findById(this, R.id.img_recycler_loading);
+        imgLoading = findViewById(R.id.img_recycler_loading);
         rotate = AnimationUtils.loadAnimation(getContext(), R.anim.loading_rotate);
         imgLoading.startAnimation(rotate);
     }

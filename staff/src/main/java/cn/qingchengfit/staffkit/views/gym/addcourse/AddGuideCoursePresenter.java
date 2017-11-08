@@ -1,8 +1,8 @@
 package cn.qingchengfit.staffkit.views.gym.addcourse;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.CourseBody;
 import cn.qingchengfit.network.ResponseConstant;
@@ -24,7 +24,7 @@ import rx.functions.Action1;
  * <p>
  * Created by Paper on 16/3/28 2016.
  */
-public class AddGuideCoursePresenter implements Presenter {
+public class AddGuideCoursePresenter extends BasePresenter {
 
     AddGuideCourseView view;
     GymUseCase useCase;
@@ -60,6 +60,7 @@ public class AddGuideCoursePresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
     }
 

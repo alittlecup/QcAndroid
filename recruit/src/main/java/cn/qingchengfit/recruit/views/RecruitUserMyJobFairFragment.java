@@ -41,8 +41,8 @@ public class RecruitUserMyJobFairFragment extends JobFairListFragment {
     View view = super.onCreateView(inflater, container, savedInstanceState);
     LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container,null);
     linearLayout.addView(view,1);
-    toolbar = ButterKnife.findById(linearLayout,R.id.toolbar);
-    toolbarTitle = ButterKnife.findById(linearLayout,R.id.toolbar_title);
+    toolbar = view.findViewById(R.id.toolbar);
+    toolbarTitle = view.findViewById(R.id.toolbar_title);
     initToolbar(toolbar);
     return linearLayout;
   }

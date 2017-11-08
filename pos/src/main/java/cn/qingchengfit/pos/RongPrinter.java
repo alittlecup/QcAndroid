@@ -71,8 +71,8 @@ public class RongPrinter {
       + "!asc s\n"
       + "!gray 2\n");
     if (firstPard != null && firstPard.size() > 0) sb.append(getPrintArray(firstPard));
-    if (second != null && second.size() > 0) sb.append(getPrintArray(second));
-    return sb.toString();
+    if (second != null && second.size() > 0) sb.append("*line\n").append(getPrintArray(second));
+    return sb.append("*feedline 5").toString();
   }
 
   private String getPrintFormatMsg(String orderId) {
@@ -123,7 +123,7 @@ public class RongPrinter {
   private String getPrintArray(List<Pair<String, String>> datas) {
     StringBuffer sb = new StringBuffer();
     for (Pair<String, String> data : datas) {
-      sb.append("*text c ").append(data.first).append("\t").append(data.second).append("\n");
+      sb.append("*text l ").append(data.first).append("\t").append(data.second).append("\n");
     }
     return sb.toString();
   }

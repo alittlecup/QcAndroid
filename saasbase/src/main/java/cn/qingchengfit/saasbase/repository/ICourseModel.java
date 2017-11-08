@@ -41,10 +41,10 @@ import retrofit2.http.Path;
 public interface ICourseModel {
 
   //获取团课排课
-  rx.Observable<QcDataResponse<BatchCourseListWrap>> qcGetGroupCourse();
+  rx.Observable<QcDataResponse<BatchCourseListWrap>> qcGetGroupBatch();
 
   //获取私教排课
-  rx.Observable<QcDataResponse<BatchCoachListWrap>> qcGetPrivateCrourse();
+  rx.Observable<QcDataResponse<BatchCoachListWrap>> qcGetPrivateBatch();
 
   //获取健身房课程
   rx.Observable<QcDataResponse<CourseLisWrap>> qcGetCourses(boolean is_private);

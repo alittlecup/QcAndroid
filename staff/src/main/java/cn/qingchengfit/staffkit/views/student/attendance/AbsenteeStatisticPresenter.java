@@ -89,7 +89,7 @@ public class AbsenteeStatisticPresenter extends BasePresenter {
                         if (ResponseConstant.checkSuccess(qcResponse)) {
                             view.onAbsenteeList(qcResponse.getData().attendances);
                             curPage++;
-                            pages = qcResponse.pages;
+                            //pages = qcResponse.pages;todo
                         } else {
                             view.onShowError(qcResponse.getMsg());
                         }

@@ -22,6 +22,11 @@ package cn.qingchengfit.network.response;
  */
 
 public class QcDataResponse<T> extends QcResponse {
+    public QcDataResponse() {
+        status = 901;
+
+    }
+
     public T data;
     //public int total_count;
     //public int current_page;

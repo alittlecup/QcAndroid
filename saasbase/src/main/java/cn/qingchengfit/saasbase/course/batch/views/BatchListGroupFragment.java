@@ -11,11 +11,11 @@ import android.widget.AdapterView;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.SaasRouter;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListGroupPresenter;
 import cn.qingchengfit.widgets.DialogList;
+import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,15 +42,14 @@ import javax.inject.Inject;
  * Created by Paper on 2017/9/11.
  *
  *
- * 私教排课列表
+ * 团课
  *
  */
-
+@Leaf(module = "course",path = "/batches/group/list/")
 public class BatchListGroupFragment extends BatchListFragment
     implements BatchListGroupPresenter.MVPView{
 
   @Inject BatchListGroupPresenter privatePresenter;
-  @Inject SaasRouter saasRouter;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
