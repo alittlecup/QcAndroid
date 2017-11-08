@@ -111,7 +111,7 @@ public class RecruitMessageListFragment extends BaseFragment
     records.clear();
     records.addAll(recordList);
     for (int i = 0; i < recordList.size(); i++) {
-      map.put("qc_" + recordList.get(i).staff.id, i);
+      map.put(getString(R.string.chat_user_id_header, recordList.get(i).staff.id) , i);
     }
   }
 

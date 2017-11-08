@@ -79,6 +79,9 @@ public class QcVipFragment extends WebFragment {
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
               cn.qingchengfit.utils.LogUtil.e("url start:" + url);
+                if (mRefreshSwipeRefreshLayout != null) {
+                    mRefreshSwipeRefreshLayout.setRefreshing(true);
+                }
             }
 
             @Override public void onPageFinished(WebView view, String url) {

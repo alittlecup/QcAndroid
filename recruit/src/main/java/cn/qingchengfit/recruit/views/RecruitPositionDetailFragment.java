@@ -281,7 +281,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
     Gson gson = new Gson();
     String resumeStr = "{\"userAction\":1002, \"data\":" + gson.toJson(
         resumePresenter.dealResumeMessage(resumeHome)) + "}";
-    addConversationProcessor.sendResumeOrRecruit(("qc_") + job.created_by.id, resumeStr, "");
+    addConversationProcessor.sendResumeOrRecruit((getString(R.string.chat_user_id_header,job.created_by.id)), resumeStr, "");
     hideLoadingTrans();
     job.deliveried = true;
     btnSendResume.setText(job.deliveried ? "已投递" : "投递简历");
@@ -360,7 +360,6 @@ public class RecruitPositionDetailFragment extends BaseFragment
     //    new AddConversationProcessor(getContext().getApplicationContext());
     //Gson gson = new Gson();
     //String jobStr = "{userAction:1001, data:" + gson.toJson(presenter.getRecruitModel(job)) + "}";
-    //// TODO: 2017/6/20 正式环境要改  qctest -> qc
     //addConversationProcessor.addRecruitConversation("qc_" + job.created_by.id, "", jobStr);
     Uri data = Uri.parse("imchat://chatactivity");
     //Intent intent = new Intent(Intent.ACTION_VIEW, data);
@@ -374,8 +373,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
         resumePresenter.dealResumeMessage(resumeHome)) + "}";
     //intent.putExtra("id", (BuildConfig.DEBUG ? "qctest_" : "qc_") + job.created_by.id);
     //intent.putExtra("datas", jobStr);
-    //TODO 正式版更换 id   by fb
-    intent.putExtra(RecruitConstants.IDENTIFY, ("qc_") + job.created_by.id);
+    intent.putExtra(RecruitConstants.IDENTIFY, getString(R.string.chat_user_id_header, job.created_by.id));
     intent.putExtra(RecruitConstants.TEMP_CONVERSATION_TYPE, RecruitConstants.C2C);
     intent.putExtra(RecruitConstants.CHAT_JOB_RESUME, resumeStr);
     intent.putExtra(RecruitConstants.CHAT_JOB_ID, job.id);

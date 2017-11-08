@@ -216,6 +216,7 @@ public class MainMsgFragment extends BaseFragment
       toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
           presenter.clearNoti(null);
+          unReadNoti = 0;
           conversationFragment.setAllMessageRead();
           if (getActivity() instanceof Main2Activity) {
             ((Main2Activity) getActivity()).freshNotiCount(0);

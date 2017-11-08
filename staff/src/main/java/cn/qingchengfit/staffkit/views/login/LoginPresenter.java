@@ -18,6 +18,7 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
+import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
@@ -134,7 +135,7 @@ public class LoginPresenter extends BasePresenter {
     Constant.setBussId(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 609 : 604);
     Constant.setXiaomiPushAppkey("5651756859688");
     Constant.setHuaweiBussId(606);
-    Constant.setUsername("qctest_" + loginStatus.getUserId());
+    Constant.setUsername(mLoginView.getContext().getString(R.string.chat_user_id_header,loginStatus.getUserId()));
     Constant.setHost(Uri.parse(Configs.Server).getHost());
   }
 

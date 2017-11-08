@@ -17,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -524,15 +523,18 @@ public class WebFragment extends BaseFragment
         } else {
           commonToolbar.setVisibility(View.VISIBLE);
         }
+        if (mRefreshSwipeRefreshLayout != null) {
+          mRefreshSwipeRefreshLayout.setRefreshing(true);
+        }
         LogUtil.e(" start url:" + url);
       }
 
       @Override public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         mCurUrl = url;
-        //if (mRefreshSwipeRefreshLayout != null) {
-        //  mRefreshSwipeRefreshLayout.setRefreshing(false);
-        //}
+        if (mRefreshSwipeRefreshLayout != null) {
+          mRefreshSwipeRefreshLayout.setRefreshing(false);
+        }
         onWebFinish();
       }
 
