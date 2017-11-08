@@ -129,7 +129,6 @@ public class LoginPresenter extends BasePresenter {
     }
 
   private void initIM() {
-
       Constant.setAccountType(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 12162 : 12165);
       Constant.setSdkAppid(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 1400029014 : 1400029022);
       Constant.setXiaomiPushAppid("2882303761517568688");
