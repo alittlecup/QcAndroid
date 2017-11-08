@@ -74,7 +74,7 @@ public class RecruitMessageListFragment extends BaseFragment
     presenter.queryRecruitMsgList();
     recyclerRecruitMessageList.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerRecruitMessageList.addItemDecoration(new QcLeftRightDivider(getContext()));
-    converPresenter = new ConversationPresenter(this);
+    converPresenter = new ConversationPresenter(this, getContext());
     recyclerRecruitMessageList.setAdapter(adapter);
     initView();
     return view;
