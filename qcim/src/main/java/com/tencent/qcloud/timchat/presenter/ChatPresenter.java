@@ -122,7 +122,9 @@ public class ChatPresenter implements Observer {
     public void update(Observable observable, Object data) {
         if (observable instanceof MessageEvent){
             TIMMessage msg = (TIMMessage) data;
-            if (msg==null||msg.getConversation().getPeer().equals(conversation.getPeer())&&msg.getConversation().getType()==conversation.getType()){
+            if (msg == null
+                || msg.getConversation().getPeer().equals(conversation.getPeer())
+                && msg.getConversation().getType() == conversation.getType()) {
                 view.showMessage(msg);
                 //当前聊天界面已读上报，用于多终端登录时未读消息数同步
                 readMessages();

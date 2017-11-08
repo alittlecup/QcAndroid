@@ -12,16 +12,22 @@ import android.widget.Toast;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendFutureItem;
+import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMGroupCacheInfo;
+import com.tencent.TIMGroupDetailInfo;
+import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
+import com.tencent.TIMUserProfile;
+import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.chatmodel.Conversation;
 import com.tencent.qcloud.timchat.chatmodel.CustomMessage;
 import com.tencent.qcloud.timchat.chatmodel.MessageFactory;
 import com.tencent.qcloud.timchat.chatmodel.NomalConversation;
 import com.tencent.qcloud.timchat.chatutils.PushUtil;
+import com.tencent.qcloud.timchat.common.AppData;
 import com.tencent.qcloud.timchat.presenter.ConversationPresenter;
 import com.tencent.qcloud.timchat.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.timchat.presenter.GroupManagerPresenter;
@@ -32,6 +38,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,10 +58,13 @@ public class ConversationFragment extends Fragment
   private RecyclerView listView;
   private ConversationPresenter presenter;
   private GroupManagerPresenter groupManagerPresenter;
-  private List<String> groupList;
   private AddConversationProcessor addConversationProcessor;
   private FriendshipManagerPresenter friendshipManagerPresenter;
   private OnUnReadMessageListener onUnReadMessageListener;
+  private List<String> personalIds = new ArrayList<>();
+  private List<String> groupList = new ArrayList<>();
+  private HashMap<String, TIMUserProfile> profileMap = new HashMap<>();
+  private HashMap<String, TIMGroupDetailInfo> groupMap = new HashMap<>();
 
   public ConversationFragment() {
     // Required empty public constructor
@@ -70,8 +80,7 @@ public class ConversationFragment extends Fragment
       addConversationProcessor.setOnCreateConversation(this);
       friendshipManagerPresenter = new FriendshipManagerPresenter(this);
       groupManagerPresenter = new GroupManagerPresenter(this);
-      presenter = new ConversationPresenter(this);
-      presenter.getConversation();
+      presenter = new ConversationPresenter(this, getContext());
       listView.setLayoutManager(new LinearLayoutManager(getContext()));
       listView.setItemAnimator(new DefaultItemAnimator());
       listView.addItemDecoration(
@@ -80,6 +89,7 @@ public class ConversationFragment extends Fragment
       flexibleAdapter = new FlexibleAdapter(flexItemList, this);
       flexibleAdapter.addListener(this);
       listView.setAdapter(flexibleAdapter);
+      presenter.getConversation();
 
       registerForContextMenu(listView);
     }
@@ -102,21 +112,56 @@ public class ConversationFragment extends Fragment
    */
   @Override public void initView(List<TIMConversation> conversationList) {
     this.flexItemList.clear();
-    groupList = new ArrayList<>();
     for (TIMConversation item : conversationList) {
       if (item.getIdentifer().equals("新朋友")) {
         continue;
       }
       switch (item.getType()) {
         case C2C:
+          personalIds.add(item.getPeer());
+          break;
         case Group:
-          this.flexItemList.add(
-              new ConversationFlexItem(getContext(), new NomalConversation(item)));
           groupList.add(item.getPeer());
           break;
       }
     }
+    if (personalIds.size() > 0)
+      getPersonalAvatar(personalIds);
+    if (groupList.size() > 0)
+      getGroupAvatar(groupList);
     groupManagerPresenter.getGroupManageLastMessage();
+  }
+
+  private void getPersonalAvatar(List<String> list){
+    TIMFriendshipManager.getInstance()
+        .getUsersProfile(list, new TIMValueCallBack<List<TIMUserProfile>>() {
+          @Override public void onError(int i, String s) {
+          }
+
+          @Override public void onSuccess(List<TIMUserProfile> timUserProfiles) {
+            for (TIMUserProfile profile : timUserProfiles) {
+              AppData.putConversationAvatar(getContext(),profile.getIdentifier(), profile.getFaceUrl());
+              AppData.putConversationName(getContext(), profile.getIdentifier(), profile.getNickName());
+            }
+            flexibleAdapter.notifyDataSetChanged();
+          }
+        });
+  }
+
+  private void getGroupAvatar(List<String> list){
+    TIMGroupManager.getInstance()
+        .getGroupDetailInfo(list, new TIMValueCallBack<List<TIMGroupDetailInfo>>() {
+          @Override public void onError(int i, String s) {
+          }
+
+          @Override public void onSuccess(List<TIMGroupDetailInfo> timGroupDetailInfos) {
+            for (TIMGroupDetailInfo profile : timGroupDetailInfos) {
+              AppData.putConversationAvatar(getContext(),profile.getGroupId(), profile.getFaceUrl());
+              AppData.putConversationName(getContext(), profile.getGroupId(), profile.getGroupName());
+            }
+            flexibleAdapter.notifyDataSetChanged();
+          }
+        });
   }
 
   /**
