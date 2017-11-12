@@ -350,7 +350,7 @@ public class MainMsgFragment extends BaseFragment
       unReadNoti = 0;
       for (int i = 0; i < list.size(); i++) {
         NotificationMsg msg = list.get(i).notification != null ? list.get(i).notification : null;
-        if (list.get(i).unread > 0) unReadNoti++;
+        if (list.get(i).unread > 0 && msg !=null ) unReadNoti++;
         if (msg == null || (msg.getId() != null && notificationDeleted.contains(
             Long.toString(msg.getId())))) {
           //如果被删除 就不展示4

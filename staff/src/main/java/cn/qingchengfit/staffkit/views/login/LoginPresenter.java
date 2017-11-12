@@ -78,6 +78,9 @@ public class LoginPresenter extends BasePresenter {
     @Override public void onPause() {
 
     }
+    public void setContext(Context context){
+        mContext = context;
+    }
 
     @Override public void attachView(cn.qingchengfit.di.PView v) {
         mLoginView = (LoginView) v;

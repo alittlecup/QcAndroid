@@ -78,6 +78,7 @@ import com.tencent.TIMManager;
 import com.tencent.qcloud.sdk.Constant;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.common.AppData;
+import com.tencent.qcloud.timchat.ui.qcchat.LoginProcessor;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import im.fir.sdk.FIR;
 import im.fir.sdk.VersionCheckCallback;
@@ -90,6 +91,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import tencent.tls.platform.TLSErrInfo;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements FragCallBack {
@@ -148,6 +150,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     }
   };
   private Observable<EventSessionError> obLogOut;
+  private Observable<EventLoginChange> EventLoginChangeOb;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -165,9 +168,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     showPage(0);
     //聊天的初始化
 
-    if (Constant.ACCOUNT_TYPE == 0) {
       initIM();
-    }
 
     MyApplication myApplication = new MyApplication(getApplication());
     if (loginStatus.isLogined()) initBDPush();
@@ -234,6 +235,17 @@ public class MainActivity extends BaseActivity implements FragCallBack {
             onBgClick();
           }
         });
+    EventLoginChangeOb = RxBus.getBus().register(EventLoginChange.class);
+    EventLoginChangeOb.subscribe(new Action1<EventLoginChange>() {
+      @Override public void call(EventLoginChange eventLoginChange) {
+        initIM();
+      }
+    }, new Action1<Throwable>() {
+      @Override public void call(Throwable throwable) {
+
+      }
+    });
+
     tabview.setListener(new TabViewNoVp.TabSelectListener() {
       @Override public void onTabClick(int pos) {
         if (pos == 1) {
@@ -245,14 +257,32 @@ public class MainActivity extends BaseActivity implements FragCallBack {
   }
 
   private void initIM() {
-    Constant.setAccountType(BuildConfig.DEBUG ? 12162 : 12165);
-    Constant.setSdkAppid(BuildConfig.DEBUG ? 1400029014 : 1400029022);
-    Constant.setXiaomiPushAppid("2882303761517568688");
-    Constant.setBussId(BuildConfig.DEBUG ? 609 : 604);
-    Constant.setXiaomiPushAppkey("5651756859688");
-    Constant.setHuaweiBussId(606);
-    Constant.setUsername(getString(R.string.chat_user_id_header, loginStatus.getUserId()));
-    Constant.setHost(Uri.parse(Configs.Server).getHost());
+    if (loginStatus.isLogined() && Constant.ACCOUNT_TYPE == 0) {
+
+      Constant.setAccountType(BuildConfig.DEBUG ? 12162 : 12165);
+      Constant.setSdkAppid(BuildConfig.DEBUG ? 1400029014 : 1400029022);
+      Constant.setXiaomiPushAppid("2882303761517568688");
+      Constant.setBussId(BuildConfig.DEBUG ? 609 : 604);
+      Constant.setXiaomiPushAppkey("5651756859688");
+      Constant.setHuaweiBussId(606);
+      Constant.setUsername(getString(R.string.chat_user_id_header, loginStatus.getUserId()));
+      Constant.setHost(Uri.parse(Configs.Server).getHost());
+      try {
+        LoginProcessor loginProcessor = new LoginProcessor(getApplicationContext(),
+          getString(R.string.chat_user_id_header, loginStatus.getUserId()),
+          Uri.parse(Configs.Server).getHost(), new LoginProcessor.OnLoginListener() {
+          @Override public void onLoginSuccess() {
+
+          }
+
+          @Override public void onLoginFailed(TLSErrInfo errInfo) {
+
+          }
+        });
+        loginProcessor.sientInstall();
+      } catch (Exception e) {
+      }
+    }
   }
 
   private void showPage(int pos) {
@@ -548,6 +578,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     RxBus.getBus().unregister(EventBrandChange.class.getName(), brandChangeOb);
     RxBus.getBus().unregister(EventInitApp.class.getName(), mBackMainOb);
     RxBus.getBus().unregister(EventSessionError.class.getName(), obLogOut);
+    RxBus.getBus().unregister(EventLoginChange.class.getName(), EventLoginChangeOb);
     if (updateSp != null) updateSp.unsubscribe();
     if (sp != null) sp.unsubscribe();
     unregisterReceiver(receiver);
