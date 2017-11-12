@@ -28,6 +28,9 @@ public class StickerDateItem extends AbstractFlexibleItem<StickerDateItem.Sticke
   @Override public int getLayoutRes() {
     return R.layout.item_sticker_date;
   }
+  public String getDate(){
+    return date;
+  }
 
   @Override public StickerDateVH createViewHolder(View view, FlexibleAdapter adapter) {
     return new StickerDateVH(view, adapter);

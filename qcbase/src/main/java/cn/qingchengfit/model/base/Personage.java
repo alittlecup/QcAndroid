@@ -3,6 +3,7 @@ package cn.qingchengfit.model.base;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
+
 import cn.qingchengfit.widgets.R;
 
 /**
@@ -30,7 +31,7 @@ import cn.qingchengfit.widgets.R;
 
 public class Personage implements Parcelable {
 
-  public String tag;
+    public String tag;
     public String id;
     public String username;
     public String area_code;
@@ -40,7 +41,7 @@ public class Personage implements Parcelable {
     public int gender;// 0:man；1：woman
     public String head;
     public String brand_id;
-  public boolean is_superuser;
+    public boolean is_superuser;
 
     public Personage() {
     }
@@ -60,7 +61,7 @@ public class Personage implements Parcelable {
         this.gender = gender;
     }
 
-  public String getArea_code() {
+    public String getArea_code() {
         return area_code;
     }
 
@@ -140,64 +141,59 @@ public class Personage implements Parcelable {
         this.brand_id = brand_id;
     }
 
-    @Override public boolean equals(Object obj) {
-        if (obj instanceof Personage){
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Personage) {
             return ((Personage) obj).getId().equals(getId());
-        }else return false;
+        } else return false;
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return id.hashCode();
     }
 
-  @DrawableRes
-  public int getDefaultAvatar(){
-    if (gender == 0){
-      return R.drawable.default_student_male;
-    }else {
-      return R.drawable.default_student_female;
-    }
-  }
-
-  @Override public int describeContents() {
-    return 0;
-  }
-
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(this.tag);
-    dest.writeString(this.id);
-    dest.writeString(this.username);
-    dest.writeString(this.area_code);
-    dest.writeString(this.phone);
-    dest.writeString(this.avatar);
-    dest.writeString(this.checkin_avatar);
-    dest.writeInt(this.gender);
-    dest.writeString(this.head);
-    dest.writeString(this.brand_id);
-    dest.writeByte(this.is_superuser ? (byte) 1 : (byte) 0);
-  }
-
-  protected Personage(Parcel in) {
-    this.tag = in.readString();
-    this.id = in.readString();
-    this.username = in.readString();
-    this.area_code = in.readString();
-    this.phone = in.readString();
-    this.avatar = in.readString();
-    this.checkin_avatar = in.readString();
-    this.gender = in.readInt();
-    this.head = in.readString();
-    this.brand_id = in.readString();
-    this.is_superuser = in.readByte() != 0;
-  }
-
-  public static final Creator<Personage> CREATOR = new Creator<Personage>() {
-    @Override public Personage createFromParcel(Parcel source) {
-      return new Personage(source);
+    @DrawableRes
+    public int getDefaultAvatar() {
+        if (gender == 0) {
+            return R.drawable.default_student_male;
+        } else {
+            return R.drawable.default_student_female;
+        }
     }
 
-    @Override public Personage[] newArray(int size) {
-      return new Personage[size];
+    @Override
+    public int describeContents() {
+        return 0;
     }
-  };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.tag);
+        dest.writeString(this.id);
+        dest.writeString(this.username);
+        dest.writeString(this.area_code);
+        dest.writeString(this.phone);
+        dest.writeString(this.avatar);
+        dest.writeString(this.checkin_avatar);
+        dest.writeInt(this.gender);
+        dest.writeString(this.head);
+        dest.writeString(this.brand_id);
+        dest.writeByte(this.is_superuser ? (byte) 1 : (byte) 0);
+    }
+
+    protected Personage(Parcel in) {
+        this.tag = in.readString();
+        this.id = in.readString();
+        this.username = in.readString();
+        this.area_code = in.readString();
+        this.phone = in.readString();
+        this.avatar = in.readString();
+        this.checkin_avatar = in.readString();
+        this.gender = in.readInt();
+        this.head = in.readString();
+        this.brand_id = in.readString();
+        this.is_superuser = in.readByte() != 0;
+    }
+
 }
