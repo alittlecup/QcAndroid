@@ -129,14 +129,15 @@ public class LoginPresenter extends BasePresenter {
     }
 
   private void initIM() {
-    Constant.setAccountType(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 12162 : 12165);
-    Constant.setSdkAppid(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 1400029014 : 1400029022);
-    Constant.setXiaomiPushAppid("2882303761517568688");
-    Constant.setBussId(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 609 : 604);
-    Constant.setXiaomiPushAppkey("5651756859688");
-    Constant.setHuaweiBussId(606);
-    Constant.setUsername(mLoginView.getContext().getString(R.string.chat_user_id_header,loginStatus.getUserId()));
-    Constant.setHost(Uri.parse(Configs.Server).getHost());
+      Constant.setAccountType(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 12162 : 12165);
+      Constant.setSdkAppid(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 1400029014 : 1400029022);
+      Constant.setXiaomiPushAppid("2882303761517568688");
+      Constant.setBussId(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 609 : 604);
+      Constant.setXiaomiPushAppkey("5651756859688");
+      Constant.setHuaweiBussId(606);
+      Constant.setUsername(
+          mContext.getResources().getString(R.string.chat_user_id_header, loginStatus.getUserId()));
+      Constant.setHost(Uri.parse(Configs.Server).getHost());
   }
 
     public void getService(final QcDataResponse<Login> qcResponLogin) {

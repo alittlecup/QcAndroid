@@ -1,23 +1,15 @@
 package com.tencent.qcloud.timchat.ui.qcchat;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.tencent.TIMConversationType;
-import com.tencent.TIMFriendshipManager;
-import com.tencent.TIMGroupDetailInfo;
-import com.tencent.TIMGroupManager;
-import com.tencent.TIMUserProfile;
-import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.chatmodel.Conversation;
 import com.tencent.qcloud.timchat.chatmodel.NomalConversation;
@@ -25,13 +17,10 @@ import com.tencent.qcloud.timchat.chatutils.TimeUtil;
 import com.tencent.qcloud.timchat.common.AppData;
 import com.tencent.qcloud.timchat.widget.CircleImageView;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
 
 /**
  * Created by fb on 2017/3/17.
@@ -59,29 +48,6 @@ public class ConversationFlexItem extends AbstractFlexibleItem<ConversationFlexI
         return 0;
     }
 
-    private void getPersonalAvatar(final List<String> list, final ConversationViewHolder holder){
-        TIMFriendshipManager.getInstance().getUsersProfile(list, new TIMValueCallBack<List<TIMUserProfile>>() {
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onSuccess(List<TIMUserProfile> timUserProfiles) {
-                for (TIMUserProfile profile : timUserProfiles) {
-                    Glide.with(context)
-                            .load(PhotoUtils.getSmall(TextUtils.isEmpty(profile.getFaceUrl()) ?
-                                    AppData.defaultAvatar : profile.getFaceUrl()))
-                            .asBitmap()
-                            .into(holder.avator);
-                    faceUrl = profile.getFaceUrl();
-                    holder.tvName.setText(profile.getNickName());
-                    onChangeName(holder);
-                }
-            }
-        });
-    }
-
     public String getFaceUrl() {
         return faceUrl;
     }
@@ -90,38 +56,22 @@ public class ConversationFlexItem extends AbstractFlexibleItem<ConversationFlexI
 
     }
 
-    private void getGroupAvator(List<String> list, final ConversationViewHolder holder){
-        TIMGroupManager.getInstance().getGroupDetailInfo(list, new TIMValueCallBack<List<TIMGroupDetailInfo>>() {
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onSuccess(List<TIMGroupDetailInfo> timGroupDetailInfos) {
-                for (TIMGroupDetailInfo profile : timGroupDetailInfos) {
-                    Glide.with(context)
-                            .load(PhotoUtils.getSmall(TextUtils.isEmpty(profile.getFaceUrl()) ?
-                                    AppData.defaultGroupAvatar : profile.getFaceUrl()))
-                            .asBitmap()
-                            .into(holder.avator);
-                    holder.tvName.setText(profile.getGroupName());
-
-                }
-            }
-        });
-    }
-
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, final ConversationViewHolder holder, int position, final List payloads) {
-        List<String> list = new ArrayList<>();
-        list.add(conversation.getIdentify());
-        if (((NomalConversation)conversation).getType() == TIMConversationType.Group){
-            getGroupAvator(list, holder);
+        if (((NomalConversation)conversation).getType() == TIMConversationType.Group) {
+            faceUrl = TextUtils.isEmpty(
+                AppData.getConversationAvatar(context, conversation.getIdentify()))
+                ? AppData.defaultGroupAvatar : AppData.getConversationAvatar(context, conversation.getIdentify());
         }else{
-            getPersonalAvatar(list, holder);
+            faceUrl = TextUtils.isEmpty(
+                AppData.getConversationAvatar(context, conversation.getIdentify()))
+                ? AppData.defaultAvatar : AppData.getConversationAvatar(context, conversation.getIdentify());
         }
-
+        Glide.with(context)
+            .load(PhotoUtils.getSmall(faceUrl))
+            .asBitmap()
+            .into(holder.avator);
+        holder.tvName.setText(AppData.getConversationName(context, conversation.getIdentify()));
         holder.lastMessage.setText(conversation.getLastMessageSummary());
         holder.time.setText(TimeUtil.getNotifacationTimeStr(conversation.getLastMessageTime()));
         long unRead = conversation.getUnreadNum();
@@ -129,16 +79,6 @@ public class ConversationFlexItem extends AbstractFlexibleItem<ConversationFlexI
             holder.imageDot.setVisibility(View.GONE);
         } else {
             holder.imageDot.setVisibility(View.VISIBLE);
-            String unReadStr = String.valueOf(unRead);
-//            if (unRead < 10){
-//                holder.unread.setBackground(context.getResources().getDrawable(R.drawable.point1));
-//            }else{
-//                holder.unread.setBackground(context.getResources().getDrawable(R.drawable.point2));
-//                if (unRead > 99){
-//                    unReadStr = context.getResources().getString(R.string.time_more);
-//                }
-//            }
-//            holder.unread.setText(unReadStr);
         }
     }
 

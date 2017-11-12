@@ -1,5 +1,6 @@
 package cn.qingchengfit.views;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,7 +13,6 @@ import cn.qingchengfit.model.common.ShareBean;
 import cn.qingchengfit.model.common.ShareExtends;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
-import cn.qingchengfit.widgets.R;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +30,22 @@ public class ShareDialogWithExtendFragment extends ShareDialogFragment
   public static ShareDialogWithExtendFragment newInstance(ShareBean shareBean) {
     Bundle args = new Bundle();
     args.putParcelable("share", shareBean);
+    args.putString("title", shareBean.title);
+    args.putString("text", shareBean.desc);
+    args.putString("img", shareBean.imgUrl);
+    args.putString("url", shareBean.link);
+    ShareDialogWithExtendFragment fragment = new ShareDialogWithExtendFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  public static ShareDialogWithExtendFragment newInstance(ShareBean shareBean, Bitmap bitmap) {
+    Bundle args = new Bundle();
+    args.putParcelable("share", shareBean);
+    args.putString("title", shareBean.title);
+    args.putString("text", shareBean.desc);
+    args.putParcelable("bitmap", bitmap);
+    args.putString("url", shareBean.link);
     ShareDialogWithExtendFragment fragment = new ShareDialogWithExtendFragment();
     fragment.setArguments(args);
     return fragment;
