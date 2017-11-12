@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
+
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.student.items.ChosenStudentItem;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
@@ -33,7 +35,6 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/8/28.
  */
-
 public class ChooseStudentListFragment extends SimpleStudentListFragment {
   private ArrayList<String> studentIdList;
 

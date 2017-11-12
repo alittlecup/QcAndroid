@@ -56,18 +56,20 @@ public class SimpleStudentListFragment extends BaseFragment
   private int orderType = 0;//默认顺序为 注册时间排序
   private List<QcStudentBean> qcStudentBeens = new ArrayList<>();
   private CommonNoDataItem commonNoDataItem;
-  protected List<IFlexible> mDatas = new ArrayList<>();
+  private List<IFlexible> mDatas = new ArrayList<>();
+  public RecyclerView recyclerView;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     commonFlexAdapter = new CommonFlexAdapter(mDatas, this);
   }
-
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     FrameLayout frameLayout = new FrameLayout(getContext());
-    RecyclerView recyclerView = new RecyclerView(getContext());
-    recyclerView.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
+    recyclerView = new RecyclerView(getContext());
+    SmoothScrollLinearLayoutManager linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());
+
+    recyclerView.setLayoutManager(linearLayoutManager);
     commonFlexAdapter
       .setStickyHeaders(true)
       .setStickyHeaderElevation(1)
