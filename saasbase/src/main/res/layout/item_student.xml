@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,126 +8,116 @@
     android:minHeight="90dp"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    >
-  <CheckBox
-      android:id="@+id/cb"
-      android:layout_width="20dp"
-      android:layout_height="20dp"
-      android:layout_marginLeft="@dimen/activity_horizontal_margin"
-      android:layout_marginStart="@dimen/activity_horizontal_margin"
-      android:visibility="gone"
-      style="@style/Qc.CheckBox"
-      />
-  <RelativeLayout
-      android:id="@+id/item_student_header_loop"
-      android:layout_width="47dp"
-      android:layout_height="47dp"
-      android:layout_marginLeft="@dimen/activity_horizontal_margin"
-      >
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <CheckBox
+        android:id="@+id/cb"
+        style="@style/Qc.CheckBox2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/item_student_header_loop"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/item_student_header"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/item_student_header_loop"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_toRightOf="@id/item_student_header_loop"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_student_name"
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="陈驰元" />
+
+            <ImageView
+                android:id="@+id/item_student_gender"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_gender_signal_female" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1px"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/item_tv_student_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:textSize="11sp"
+                tools:text="新注册" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_phone_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机 :"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/item_student_phonenum"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="@dimen/min_font"
+                tools:text="15123358198" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_student_gymname"
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/min_font"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:visibility="gone"
+            tools:text="青橙工作室" />
+    </LinearLayout>
 
     <ImageView
-        android:id="@+id/item_student_header"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_centerInParent="true"
-        />
-  </RelativeLayout>
-
-  <LinearLayout
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_alignTop="@id/item_student_header_loop"
-      android:layout_marginLeft="@dimen/activity_horizontal_margin"
-      android:layout_toRightOf="@id/item_student_header_loop"
-      android:layout_weight="1"
-      android:orientation="vertical"
-      >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        >
-
-      <TextView
-          android:id="@+id/item_student_name"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          tools:text="陈驰元"
-          style="@style/Qc.TextCommonBlack"
-          />
-
-      <ImageView
-          android:id="@+id/item_student_gender"
-          android:layout_width="15dp"
-          android:layout_height="15dp"
-          android:layout_gravity="center_vertical"
-          android:layout_marginLeft="10dp"
-          android:scaleType="fitXY"
-          android:src="@drawable/ic_gender_signal_female"
-          />
-
-      <View
-          android:layout_width="wrap_content"
-          android:layout_height="1px"
-          android:layout_weight="1"
-          />
-
-      <TextView
-          android:id="@+id/item_tv_student_status"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginRight="8dp"
-          android:drawablePadding="4dp"
-          android:gravity="center"
-          android:textSize="11sp"
-          tools:text="新注册"
-          />
-    </LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/icon_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-      <TextView
-          android:layout_width="70dp"
-          android:layout_height="wrap_content"
-          android:text="手机 :"
-          android:visibility="gone"
-          />
-
-      <TextView
-          android:id="@+id/item_student_phonenum"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="2dp"
-          android:textSize="@dimen/min_font"
-          tools:text="15123358198"
-          style="@style/Qc.TextCommonGrey"
-          />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/item_student_gymname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/min_font"
-        android:visibility="gone"
-        tools:text="青橙工作室"
-        style="@style/Qc.TextCommonGrey"
-        />
-  </LinearLayout>
-
-  <ImageView
-      android:id="@+id/icon_right"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginRight="@dimen/activity_horizontal_margin"
-      android:src="@drawable/ic_arrow_right"
-      />
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_arrow_right" />
 </LinearLayout>

@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    >
-  
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/recycleview"
-      android:layout_width="match_parent"
-      android:overScrollMode="never"
-      android:layout_height="180dp"
-      />
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:clipToPadding="false" />
+
+    <cn.qingchengfit.saasbase.student.other.MyIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        app:ci_drawable="@drawable/splash_indicator_doc"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed" />
 
 
-  <include layout="@layout/divider_grey"/>
+    <include layout="@layout/divider_grey" />
 </LinearLayout>
