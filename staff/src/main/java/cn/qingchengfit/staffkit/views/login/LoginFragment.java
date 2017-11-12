@@ -75,6 +75,7 @@ public class LoginFragment extends BaseFragment
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     delegatePresenter(loginPresenter, this);
+    loginPresenter.setContext(getContext());
     if (BuildConfig.DEBUG) {
       final EditText et = new EditText(getContext());
       String ip = PreferenceUtils.getPrefString(getContext(), "debug_ip", Configs.Server);

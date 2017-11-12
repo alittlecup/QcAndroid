@@ -160,7 +160,7 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
   }
 
   @OnClick(R2.id.descripe) public void clickDesc() {
-    if (getActivity() != null && getActivity() instanceof BaseActivity) {
+    if (getActivity() != null && getActivity() instanceof BaseActivity && getFragmentManager() != null) {
       getFragmentManager().beginTransaction()
           .add(((BaseActivity) getActivity()).getFragId(),
               CommonInputTextFragment.newInstance("描述您的健身房", presenter.getGymDesc(), "请填写健身房描述"))
@@ -189,7 +189,7 @@ public class EditGymInfoFragment extends BaseFragment implements BaseGymInfoPres
   @Override public void onEditOk() {
     hideLoading();
     RxBus.getBus().post(new EventFreshGyms());
-    if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 1) {
+    if (getActivity() !=null && getActivity().getSupportFragmentManager().getBackStackEntryCount() > 1) {
       getActivity().getSupportFragmentManager().popBackStackImmediate();
     }else{
       getActivity().finish();

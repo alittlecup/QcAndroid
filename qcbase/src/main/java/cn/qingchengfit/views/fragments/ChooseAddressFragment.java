@@ -118,6 +118,10 @@ public class ChooseAddressFragment extends BaseFragment {
                     ToastUtils.showDefaultStyle("获取城市信息失败，请重试");
                     return true;
                 }
+                if (address.isEmpty()){
+                    ToastUtils.showDefaultStyle("请填写详细地址");
+                    return true;
+                }
 
                 RxBus.getBus()
                     .post(new EventAddress.Builder().city_code(Integer.parseInt(mCityCode))

@@ -295,7 +295,7 @@ public class CommonInputView extends RelativeLayout {
     }
 
     public boolean isEmpty() {
-        return TextUtils.isEmpty(edit.getText());
+        return TextUtils.isEmpty(edit.getText().toString().trim());
     }
 
     @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
