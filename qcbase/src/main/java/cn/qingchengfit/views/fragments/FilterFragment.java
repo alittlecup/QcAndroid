@@ -29,7 +29,7 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     @BindView(R2.id.recycle_popwindow_common) RecyclerView rlPopWindowCommon;
 
-    private CommonFlexAdapter commonFlexAdapter;
+    protected CommonFlexAdapter commonFlexAdapter;
     private OnSelectListener onSelectListener;
     private List<AbstractFlexibleItem> items = new ArrayList<>();
     private int maxHeight;
