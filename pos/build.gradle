@@ -21,6 +21,17 @@ android {
       }
     }
   }
+
+  signingConfigs {
+    release {
+      storeFile file("../qingcheng.keystore")
+      storePassword "Qingcheng2014"
+      keyAlias "Qingcheng"
+      keyPassword "Qingcheng2014"
+    }
+  }
+
+
   buildTypes {
     release {
       minifyEnabled false

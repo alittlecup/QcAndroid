@@ -102,7 +102,7 @@ import javax.inject.Inject;
       @Override public void onFilterResult(CardTpl cardTpl, int status) {
         filterTpl.setChecked(false);
         filterStatus.setChecked(false);
-        presenter.setFilter(cardTpl.type, null, status);
+        presenter.setFilter(cardTpl.type, cardTpl.getId(), status);
       }
     });
     stuff(R.id.frag_card_filter, filterFragment);
@@ -236,7 +236,7 @@ import javax.inject.Inject;
   @Override public boolean onItemClick(int position) {
     IFlexible iFlexible = cardListFragment.getItem(position);
     if (iFlexible instanceof CardItem) {
-      routeTo("/detail/", new CardDetailParams()
+      routeTo("/detail/", new cn.qingchengfit.saasbase.cards.views.CardDetailParams()
         .cardid(((CardItem) iFlexible).getRealCard().getId())
         .build());
     }
