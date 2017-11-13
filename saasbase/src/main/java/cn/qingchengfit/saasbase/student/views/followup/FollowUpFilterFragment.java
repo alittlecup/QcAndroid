@@ -89,17 +89,16 @@ public class FollowUpFilterFragment extends BaseFilterFragment {
 
         topDayFragment.setSelectAction(selectAction);
         dayFragment.setSelectAction(selectAction);
-        // REFACTOR: 2017/11/7 缺少销售头像的列表，这里注意要区分是哪个点击的，要控制文案的显示
 
         topSalerView=new FollowUpTopSalerView();
         topSalerView.setOnItemClick(staff -> {
-            model.topSalerName.set(staff.username);
+            model.topSalerName.set(staff==null?"销售":staff.username);
             topFilter.sale=staff;
             selectAction.call(1);
         });
         salersView=new FollowUpTopSalerView();
         salersView.setOnItemClick(staff -> {
-            model.salerName.set(staff.username);
+            model.salerName.set(staff==null?"销售":staff.username);
             filter.sale=staff;
             selectAction.call(0);
         });

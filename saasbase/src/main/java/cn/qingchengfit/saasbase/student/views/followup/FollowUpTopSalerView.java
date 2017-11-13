@@ -43,6 +43,7 @@ public class FollowUpTopSalerView extends BaseGirdListFragment implements
         staff.username = "全部";
         sellers.add(0, staff);
         setStaffs(sellers);
+        commonFlexAdapter.addSelection(0);
     }
 
     @Override
