@@ -66,6 +66,8 @@ public class CardBuyBody implements Parcelable {
       case 3:
         if (CmStringUtils.isEmpty(start) || CmStringUtils.isEmpty(end))
           return R.string.e_card_charge_period_cannot_empty;
+        if (DateUtils.formatDateFromYYYYMMDD(start).getTime() > DateUtils.formatDateFromYYYYMMDD(end).getTime())
+          return R.string.e_start_great_end;
         break;
       default:
         return R.string.e_card_buy_cate;

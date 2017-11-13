@@ -16,6 +16,7 @@ import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFilterable;
+import eu.davidea.flexibleadapter.utils.Utils;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implement
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, StaffVH holder, int position, List payloads) {
     PhotoUtils.smallCircle(holder.itemStudentHeader,staff.getAvatar());
-    holder.itemStudentName.setText(staff.getUsername());
-    holder.itemStudentPhonenum.setText(staff.getPhone());
+    Utils.highlightText(holder.itemStudentName,staff.getUsername(),adapter.getSearchText());
+    Utils.highlightText(holder.itemStudentPhonenum,staff.getPhone(),adapter.getSearchText());
     holder.itemStudentGender.setImageResource(staff.gender == 0 ?R.drawable.ic_gender_signal_male:R.drawable.ic_gender_signal_female);
   }
 

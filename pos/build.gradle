@@ -36,6 +36,16 @@ android {
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      manifestPlaceholders = [
+                              APP_PACKAGE       : "cn.qingchengfit.pos",
+      ]
+    }
+    debug {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      manifestPlaceholders = [
+                              APP_PACKAGE       : "cn.qingchengfit.pos",
+      ]
     }
   }
   compileOptions {

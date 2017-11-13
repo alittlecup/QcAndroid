@@ -4,6 +4,7 @@
   <string name="e_card_charge_money_cannot_empty">会员卡充值金额错误</string>
   <string name="e_card_charge_times_cannot_empty">会员卡充值次数错误</string>
   <string name="e_card_charge_period_cannot_empty">会员卡充值天数错误</string>
+  <string name="e_start_great_end">开始时间不能大于结束时间</string>
   <string name="e_card_start_or_end_cannot_empty">会员卡有效期错误</string>
   <string name="e_card_saler_cannot_empty">销售不能为空</string>
 
