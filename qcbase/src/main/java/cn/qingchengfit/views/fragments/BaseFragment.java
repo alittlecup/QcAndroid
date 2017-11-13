@@ -403,6 +403,7 @@ public abstract class BaseFragment extends RxFragment
       });
       tvToolbarLayout.addView(searchRoot,lp);
       searchRoot.requestFocus();
+      searchRoot.findViewById(R.id.et_search).requestFocus();
     }
   }
   // 初始化搜索

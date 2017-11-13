@@ -141,10 +141,14 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse<PayBusinessResponseWrap>> qcChargeCard(ChargeBody chargeBody) {
+    if (chargeBody.getSeller_id().equalsIgnoreCase("0"))
+      chargeBody.setSeller_id(null);
     return posApi.qcCardCharge(gymWrapper.getGymId(),chargeBody.getCard_id(),gymWrapper.getParams(),chargeBody);
   }
 
   @Override public Observable<QcDataResponse<PayBusinessResponseWrap>> buyCard(@Body CardBuyBody body) {
+    if (body.getSeller_id().equalsIgnoreCase("0"))
+      body.setSeller_id(null);
     return posApi.qcCreateRealcard(gymWrapper.getGymId(),body,gymWrapper.getParams());
   }
 
