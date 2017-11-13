@@ -72,7 +72,7 @@ public abstract class BaseStaffListFragment extends BaseListFragment implements
   @Override protected void addDivider() {
     rv.setBackgroundResource(R.color.white);
     rv.addItemDecoration(new FlexibleItemDecoration(getContext())
-      .withDivider(R.drawable.divider_grey_left_margin)
+      .withDivider(R.drawable.divider_grey_left_margin,R.layout.item_student)
       .withOffset(1)
       .withBottomEdge(true)
     );

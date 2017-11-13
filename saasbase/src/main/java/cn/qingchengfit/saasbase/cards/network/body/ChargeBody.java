@@ -45,58 +45,60 @@ public class ChargeBody implements Parcelable {
   public int checkData() {
     if (CmStringUtils.isEmpty(price)) return R.string.e_card_realpay_cannot_empty;
     if (CmStringUtils.isEmpty(seller_id)) return R.string.e_card_saler_cannot_empty;
-    if (check_valid && (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to)))
-      return R.string.e_card_start_or_end_cannot_empty;
+    if (check_valid) {
+      if (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to))
+        return R.string.e_card_start_or_end_cannot_empty;
+      if (!DateUtils.AlessOrEquelB(valid_from, valid_to)) return R.string.e_start_great_end;
+
+    }
     switch (charge_type) {
       case 1:
-        if (CmStringUtils.isEmpty(account))
-          return R.string.e_card_charge_money_cannot_empty;
+        if (CmStringUtils.isEmpty(account)) return R.string.e_card_charge_money_cannot_empty;
         break;
       case 2:
-        if (CmStringUtils.isEmpty(times))
-          return R.string.e_card_charge_times_cannot_empty;
+        if (CmStringUtils.isEmpty(times)) return R.string.e_card_charge_times_cannot_empty;
         break;
       case 3:
-        if (CmStringUtils.isEmpty(start) || CmStringUtils.isEmpty(end))
+        if (CmStringUtils.isEmpty(start) || CmStringUtils.isEmpty(end)) {
           return R.string.e_card_charge_period_cannot_empty;
+        }
+        if (!DateUtils.AlessOrEquelB(start, end)) return R.string.e_start_great_end;
         break;
     }
     return 0;
   }
 
-  public void setBuyAccount(String account ,String start,String end,CardTplOption cto){
-    switch (type){
+  public void setBuyAccount(String account, String start, String end, CardTplOption cto) {
+    switch (type) {
       case 1:
         this.account = account;
-        if (cto != null && cto.limit_days){
+        if (cto != null && cto.limit_days) {
           this.check_valid = true;
           this.valid_from = start;
-          this.valid_to = DateUtils.addDay(start,cto.days);
+          this.valid_to = DateUtils.addDay(start, cto.days);
         }
         break;
       case 2:
         this.times = account;
-        if (cto != null && cto.limit_days){
+        if (cto != null && cto.limit_days) {
           this.check_valid = true;
           this.valid_from = start;
-          this.valid_to = DateUtils.addDay(start,cto.days);
+          this.valid_to = DateUtils.addDay(start, cto.days);
         }
         break;
       case 3:
         this.start = start;
         this.end = end;
-        if (cto != null){
+        if (cto != null) {
           try {
-            this.end = DateUtils.addDay(start,(int)Float.parseFloat(cto.charge));
-          }catch (Exception e){
+            this.end = DateUtils.addDay(start, (int) Float.parseFloat(cto.charge));
+          } catch (Exception e) {
 
           }
         }
         break;
     }
   }
-
-
 
   public ChargeBody() {
   }
