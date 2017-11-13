@@ -31,7 +31,8 @@ public class CardListPresenter extends BasePresenter {
     initpage();
     if (cardtplType != 0) {
       p.put("card_tpl_type", cardtplType);
-    }else if (!TextUtils.isEmpty(cardtpl)) {
+    }
+    if (!TextUtils.isEmpty(cardtpl)) {
       p.put("card_tpl_id", cardtpl);
       p.remove("card_tpl_type");
     }

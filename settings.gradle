@@ -1,4 +1,5 @@
 include ':qcbase', ':saasbase',
+        ':atest',
     ':pos',
     ':recruit',
     ':qcim',
@@ -6,6 +7,5 @@ include ':qcbase', ':saasbase',
     ':staff'
 
 //    ':trainer',
-//    ':atest',
 //
 

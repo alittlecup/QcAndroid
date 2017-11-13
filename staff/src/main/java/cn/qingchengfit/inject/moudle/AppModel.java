@@ -166,11 +166,12 @@ import rx.Observable;
 
   @Provides ICourseModel provideCourseApi(){
     return new ICourseModel() {
-      @Override public Observable<QcDataResponse<BatchCourseListWrap>> qcGetGroupCourse() {
+
+      @Override public Observable<QcDataResponse<BatchCourseListWrap>> qcGetGroupBatch() {
         return null;
       }
 
-      @Override public Observable<QcDataResponse<BatchCoachListWrap>> qcGetPrivateCrourse() {
+      @Override public Observable<QcDataResponse<BatchCoachListWrap>> qcGetPrivateBatch() {
         return null;
       }
 

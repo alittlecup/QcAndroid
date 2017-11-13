@@ -56,7 +56,7 @@ public class TextFragment extends BaseFragment {
       @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_test, container, false);
     unbinder = ButterKnife.bind(this, v);
-    ButterKnife.findById(v, R.id.btn).setOnClickListener(new View.OnClickListener() {
+    v.findViewById( R.id.btn).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         getFragmentManager().beginTransaction()
             .setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out)

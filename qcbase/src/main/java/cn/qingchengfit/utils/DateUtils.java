@@ -125,7 +125,7 @@ public class DateUtils {
   public static String formatToMMFromServer(String s) {
     try {
       s = s.replace("T", " ");
-      return s.substring(0, s.length() - 1);
+      return s.substring(0, s.length());
     } catch (Exception e) {
       return "";
     }
