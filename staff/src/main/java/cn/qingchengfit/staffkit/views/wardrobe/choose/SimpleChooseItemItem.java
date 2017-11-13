@@ -33,8 +33,8 @@ public class SimpleChooseItemItem extends AbstractFlexibleItem<SimpleChooseItemI
         return R.layout.item_simple_text;
     }
 
-    @Override public SimpleChooseItemVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new SimpleChooseItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SimpleChooseItemVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new SimpleChooseItemVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, SimpleChooseItemVH holder, int position, List payloads) {

@@ -45,8 +45,8 @@ public class PositionHeaderItem extends AbstractHeaderItem<PositionHeaderItem.Po
         return R.layout.item_position_header;
     }
 
-    @Override public PositionHeaderVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new PositionHeaderVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public PositionHeaderVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new PositionHeaderVH(view, adapter);
     }
 
     protected boolean canRemoveSu(Personage personage) {

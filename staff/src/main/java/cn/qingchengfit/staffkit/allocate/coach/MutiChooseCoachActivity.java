@@ -100,7 +100,7 @@ public class MutiChooseCoachActivity extends BaseActivity
         }
 
         mFlexAdapter = new CommonFlexAdapter(mDatas, this);
-        mFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+        mFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
 
         mFlexAdapter.setAnimationOnScrolling(true)
             .setAnimationInitialDelay(50L)

@@ -116,7 +116,7 @@ import javax.inject.Inject;
 
     public void initView() {
         flexibleAdapter = new CommonFlexAdapter(items, this);
-        flexibleAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+        flexibleAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         rvReferrer.setLayoutManager(mLinearLayoutManager);
         rvReferrer.setHasFixedSize(true);

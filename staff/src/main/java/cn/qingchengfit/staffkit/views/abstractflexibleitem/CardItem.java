@@ -41,8 +41,8 @@ public class CardItem extends AbstractFlexibleItem<CardItem.CardVH> {
         return R.layout.item_realcard;
     }
 
-    @Override public CardVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new CardVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public CardVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new CardVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CardVH holder, int position, List payloads) {

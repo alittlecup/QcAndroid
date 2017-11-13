@@ -37,8 +37,8 @@ public class ChooseSalerItem extends AbstractFlexibleItem<ChooseSalerItem.Choose
         return R.layout.item_choose_saler;
     }
 
-    @Override public ChooseSalerVH createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        ChooseSalerVH chooseSalerVH = new ChooseSalerVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ChooseSalerVH createViewHolder(final View view, FlexibleAdapter adapter) {
+        ChooseSalerVH chooseSalerVH = new ChooseSalerVH(view, adapter);
         return chooseSalerVH;
     }
 

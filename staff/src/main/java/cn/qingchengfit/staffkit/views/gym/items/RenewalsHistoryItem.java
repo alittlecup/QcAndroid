@@ -29,8 +29,8 @@ public class RenewalsHistoryItem extends AbstractFlexibleItem<RenewalsHistoryIte
         return R.layout.item_renewals_history;
     }
 
-    @Override public RenewalsHistoryVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new RenewalsHistoryVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public RenewalsHistoryVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new RenewalsHistoryVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, RenewalsHistoryVH holder, int position, List payloads) {

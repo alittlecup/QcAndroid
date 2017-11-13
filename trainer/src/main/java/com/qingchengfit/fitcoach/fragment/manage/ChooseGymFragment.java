@@ -95,7 +95,7 @@ import rx.schedulers.Schedulers;
         mDatas.clear();
         //mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
         mAdapter = new CommonFlexAdapter(mDatas, this);
-        mAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+        mAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         recyclerview.setAdapter(mAdapter);

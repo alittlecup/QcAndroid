@@ -55,7 +55,7 @@ public class ChooseGymPopWin extends PopupWindow implements FlexibleAdapter.OnIt
         //recyclerView.getLayoutParams().height = MeasureUtils.dpToPx(197f,context.getResources());
         //recyclerView.getLayoutParams().width = MeasureUtils.dpToPx(210f,context.getResources());
         adapter = new CommonFlexAdapter(mDatas, this);
-        adapter.setMode(SelectableAdapter.MODE_SINGLE);
+        adapter.setMode(SelectableAdapter.Mode.SINGLE);
         //setBackgroundDrawable(ContextCompat.getDrawable(context,R.drawable.bubble_down));
         recyclerView.setAdapter(adapter);
         setContentView(recyclerView);

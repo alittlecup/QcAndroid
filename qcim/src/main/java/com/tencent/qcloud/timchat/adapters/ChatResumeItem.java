@@ -51,9 +51,8 @@ public class ChatResumeItem extends ChatItem<ChatResumeItem.ResumeVH> {
     return message;
   }
 
-  @Override public ResumeVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    ResumeVH holder = new ResumeVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeVH createViewHolder(View view, FlexibleAdapter adapter) {
+    ResumeVH holder = new ResumeVH(view, adapter);
     return holder;
   }
 

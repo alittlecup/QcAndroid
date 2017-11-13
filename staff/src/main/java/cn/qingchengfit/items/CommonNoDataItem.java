@@ -76,8 +76,8 @@
 //        return R.layout.item_common_no_data;
 //    }
 //
-//    @Override public CommonNodataVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-//        final CommonNodataVH vh = new CommonNodataVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+//    @Override public CommonNodataVH createViewHolder(View view, FlexibleAdapter adapter) {
+//        final CommonNodataVH vh = new CommonNodataVH(view, adapter);
 //        if (!StringUtils.isEmpty(btnStr)) {
 //            vh.btnEmptyPage.setOnClickListener(new View.OnClickListener() {
 //                @Override public void onClick(View view) {

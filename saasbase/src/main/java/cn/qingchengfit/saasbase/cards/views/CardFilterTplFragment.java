@@ -71,8 +71,8 @@ public class CardFilterTplFragment extends BaseFragment {
     unbinder = ButterKnife.bind(this, view);
     adapterLeft = new CommonFlexAdapter(new ArrayList(), leftClickListener);
     adapterRight = new CommonFlexAdapter(new ArrayList(), rightClickListener);
-    adapterLeft.setMode(SelectableAdapter.MODE_SINGLE);
-    adapterRight.setMode(SelectableAdapter.MODE_SINGLE);
+    adapterLeft.setMode(SelectableAdapter.Mode.SINGLE);
+    adapterRight.setMode(SelectableAdapter.Mode.SINGLE);
     rvLeft.setLayoutManager(new LinearLayoutManager(getContext()));
     rvRight.setLayoutManager(new LinearLayoutManager(getContext()));
     rvLeft.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_qc_base_line).withBottomEdge(true));

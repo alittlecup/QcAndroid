@@ -26,9 +26,8 @@ public class CardtplOptionOhterItem
   }
 
   @Override
-  public CardtplOptionOhterVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new CardtplOptionOhterVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  public CardtplOptionOhterVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new CardtplOptionOhterVH(view, adapter);
   }
 
   @Override

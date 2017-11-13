@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.saasbase.staff.views.StaffAddFragment;
+import cn.qingchengfit.subscribes.BusSubscribe;
+import com.jakewharton.rxbinding.view.RxMenuItem;
+import java.util.concurrent.TimeUnit;
 
 /**
  * power by
@@ -45,11 +48,13 @@ public class PosStaffAddFragment extends StaffAddFragment {
     toolbarTitle.setText("添加销售");
     toolbar.getMenu().clear();
     toolbar.getMenu().add("保存").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        presenter.addStaff();
-        return true;
-      }
-    });
+    RxMenuItem.clicks(toolbar.getMenu().getItem(0))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          presenter.addStaff();
+        }
+      });
+
   }
 }

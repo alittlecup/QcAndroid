@@ -24,8 +24,8 @@ public class AddCardStyleItem extends AbstractFlexibleItem<AddCardStyleItem.AddC
         return R.layout.item_card_add;
     }
 
-    @Override public AddCardStyleVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AddCardStyleVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public AddCardStyleVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AddCardStyleVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, AddCardStyleVH holder, int position, List payloads) {

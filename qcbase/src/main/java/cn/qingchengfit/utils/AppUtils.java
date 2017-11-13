@@ -1,7 +1,5 @@
 package cn.qingchengfit.utils;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
@@ -11,10 +9,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.telephony.PhoneNumberUtils;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -25,8 +21,6 @@ import java.io.File;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static android.content.Context.TELEPHONY_SERVICE;
 
 /**
  * power by
@@ -226,16 +220,5 @@ public class AppUtils {
     return false;
   }
 
-  public static String getIMEI(Context context) {
-    try {
-      if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE)
-        != PackageManager.PERMISSION_GRANTED) {
-        @SuppressLint("HardwareIds") String imei = ((TelephonyManager) context.getSystemService(TELEPHONY_SERVICE)).getDeviceId();
-        return imei;
-      }else return "";
-    }catch (Exception e){
 
-      return "";
-    }
-  }
 }

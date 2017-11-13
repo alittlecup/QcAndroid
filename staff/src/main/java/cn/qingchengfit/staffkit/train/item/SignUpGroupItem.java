@@ -44,8 +44,8 @@ public class SignUpGroupItem extends AbstractFlexibleItem<SignUpGroupItem.SignUp
         return R.layout.item_sign_up_group;
     }
 
-    @Override public SignUpGroupVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        SignUpGroupVH vh = new SignUpGroupVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SignUpGroupVH createViewHolder(View view, FlexibleAdapter adapter) {
+        SignUpGroupVH vh = new SignUpGroupVH(view, adapter);
         return vh;
     }
 

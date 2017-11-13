@@ -49,8 +49,8 @@ public class SystemMsgItem extends AbstractFlexibleItem<SystemMsgItem.SystemMsgV
         return R.layout.item_system_msg;
     }
 
-    @Override public SystemMsgVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new SystemMsgVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SystemMsgVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new SystemMsgVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, SystemMsgVH holder, int position, List payloads) {

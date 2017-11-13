@@ -68,7 +68,7 @@ public class ProfileSummaryItem extends AbstractFlexibleItem<ProfileSummaryItem.
     }
 
     @Override
-    public ProfileVh createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    public ProfileVh createViewHolder(View view, FlexibleAdapter adapter) {
         ProfileVh vh = new ProfileVh(inflater.inflate(R.layout.item_group_detail_grid, parent, false), adapter);
         if (isDelete){
             vh.imgDelete.setOnClickListener(this);

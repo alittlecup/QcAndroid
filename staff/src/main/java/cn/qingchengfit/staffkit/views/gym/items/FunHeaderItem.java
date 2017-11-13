@@ -25,8 +25,8 @@ public class FunHeaderItem extends AbstractHeaderItem<FunHeaderItem.FunHeaderVH>
         return R.layout.item_fun_header;
     }
 
-    @Override public FunHeaderVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new FunHeaderVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public FunHeaderVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new FunHeaderVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, FunHeaderVH holder, int position, List payloads) {

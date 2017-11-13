@@ -25,8 +25,8 @@
 //        return R.layout.item_choose;
 //    }
 //
-//    @Override public ChooseVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-//        return new ChooseVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+//    @Override public ChooseVH createViewHolder(View view, FlexibleAdapter adapter) {
+//        return new ChooseVH(view, adapter);
 //    }
 //
 //    @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseVH holder, int position, List payloads) {

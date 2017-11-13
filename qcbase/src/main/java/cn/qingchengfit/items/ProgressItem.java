@@ -1,9 +1,7 @@
 package cn.qingchengfit.items;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import butterknife.BindView;
@@ -52,9 +50,10 @@ public class ProgressItem extends AbstractFlexibleItem<ProgressItem.ProgressVH> 
         return R.layout.item_progress;
     }
 
-    @Override public ProgressVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ProgressVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ProgressVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ProgressVH(view,adapter);
     }
+
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ProgressVH holder, int position, List payloads) {
         holder.loadingPointerView.startAnimation(rotate);

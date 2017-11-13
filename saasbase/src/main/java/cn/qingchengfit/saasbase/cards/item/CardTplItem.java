@@ -2,9 +2,7 @@ package cn.qingchengfit.saasbase.cards.item;
 
 import android.animation.Animator;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -42,9 +40,8 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
     return R.layout.item_card_type;
   }
 
-  @Override public CardTplVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new CardTplVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public CardTplVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new CardTplVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CardTplVH holder, int position,

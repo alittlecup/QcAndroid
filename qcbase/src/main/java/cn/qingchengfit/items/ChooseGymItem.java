@@ -1,8 +1,6 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -61,9 +59,8 @@ public class ChooseGymItem extends AbstractFlexibleItem<ChooseGymItem.GymVH> {
     return R.layout.item_base_choose_gym;
   }
 
-  @Override public GymVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new GymVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public GymVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new GymVH(view,adapter);
   }
 
   @Override

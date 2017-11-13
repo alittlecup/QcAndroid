@@ -1,9 +1,7 @@
 package cn.qingchengfit.items;
 
 import android.support.annotation.DrawableRes;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -33,10 +31,10 @@ public class ImageActionItem extends AbstractFlexibleItem<ImageActionItem.ImageA
     return R.layout.item_image_action;
   }
 
-  @Override public ImageActionVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ImageActionVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ImageActionVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ImageActionVH(view,adapter);
   }
+
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ImageActionVH holder, int position,
       List payloads) {

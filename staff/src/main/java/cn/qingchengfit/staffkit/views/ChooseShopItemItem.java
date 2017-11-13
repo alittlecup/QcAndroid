@@ -29,8 +29,8 @@ public class ChooseShopItemItem extends AbstractFlexibleItem<ChooseShopItemItem.
         return R.layout.item_image_text_choose;
     }
 
-    @Override public ChooseShopItemVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ChooseShopItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ChooseShopItemVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ChooseShopItemVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseShopItemVH holder, int position, List payloads) {

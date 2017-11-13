@@ -24,9 +24,8 @@ public class NotiFooterItem extends AbstractFlexibleItem<NotiFooterItem.NotiFoot
     return R.layout.item_noti_footer;
   }
 
-  @Override public NotiFooterVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new NotiFooterVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public NotiFooterVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new NotiFooterVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, NotiFooterVH holder, int position,

@@ -1,8 +1,6 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,10 +24,10 @@ public class PrimaryBtnItem extends AbstractFlexibleItem<PrimaryBtnItem.PrimaryB
     return R.layout.item_primary_rect_stroke_btn;
   }
 
-  @Override public PrimaryBtnVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new PrimaryBtnVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public PrimaryBtnVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new PrimaryBtnVH(view,adapter);
   }
+
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, PrimaryBtnVH holder, int position,
       List payloads) {

@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.bill.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,16 +24,15 @@ public class ItemMoreFooter extends AbstractFlexibleItem<ItemMoreFooter.ItemMore
   }
 
   @Override public boolean equals(Object o) {
-    return false;
+    return o instanceof ItemMoreFooter;
   }
 
   @Override public int getLayoutRes() {
     return R.layout.item_more_footer;
   }
 
-  @Override public ItemMoreVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    ItemMoreVH holder = new ItemMoreVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ItemMoreVH createViewHolder(View view, FlexibleAdapter adapter) {
+    ItemMoreVH holder = new ItemMoreVH(view, adapter);
     holder.textLoadMore.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         if (onFooterClickListener != null){
@@ -45,6 +42,7 @@ public class ItemMoreFooter extends AbstractFlexibleItem<ItemMoreFooter.ItemMore
     });
     return holder;
   }
+
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemMoreVH holder, int position,
       List payloads) {

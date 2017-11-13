@@ -35,9 +35,8 @@ public class MyJobsItem extends AbstractFlexibleItem<MyJobsItem.MyJobsVH> {
     return R.layout.item_my_jobs;
   }
 
-  @Override public MyJobsVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new MyJobsVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public MyJobsVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new MyJobsVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, MyJobsVH holder, int position,

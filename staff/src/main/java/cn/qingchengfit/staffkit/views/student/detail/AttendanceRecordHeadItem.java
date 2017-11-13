@@ -32,8 +32,8 @@ public class AttendanceRecordHeadItem extends AbstractFlexibleItem<AttendanceRec
         return R.layout.item_attendece_record_head;
     }
 
-    @Override public AttendanceRecordHeadVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AttendanceRecordHeadVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public AttendanceRecordHeadVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AttendanceRecordHeadVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, AttendanceRecordHeadVH holder, int position, List payloads) {

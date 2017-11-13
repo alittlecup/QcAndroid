@@ -1,6 +1,6 @@
 package cn.qingchengfit.saasbase.bill.items;
 
-import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.items.CommonKVItem;
 import cn.qingchengfit.utils.CmStringUtils;
@@ -38,9 +38,8 @@ public class BillKvCommonItem  extends CommonKVItem{
     }
   }
 
-  @Override public CommonKVVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-    ViewGroup parent) {
-    CommonKVVH vh =  super.createViewHolder(adapter, inflater, parent);
+  @Override public CommonKVVH createViewHolder(View view,FlexibleAdapter adapter) {
+    CommonKVVH vh =  super.createViewHolder(view,adapter);
     vh.itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
       MeasureUtils.dpToPx(30f,vh.itemView.getContext().getResources())));
     return vh;

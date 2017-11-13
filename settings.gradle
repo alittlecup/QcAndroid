@@ -1,11 +1,11 @@
-include ':qcbase', ':saasbase',
+include ':saasbase',
 //        ':atest',
-    ':pos'
+    ':pos',
 //    ':recruit',
 //    ':qcim',
-//    ':sdk'
-//    ':staff'
-
+//    ':sdk',
+//    ':staff',
+':qcbase'
 //    ':trainer',
 //
 

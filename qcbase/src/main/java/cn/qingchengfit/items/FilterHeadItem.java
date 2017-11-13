@@ -1,7 +1,6 @@
 package cn.qingchengfit.items;
 
 import android.os.Build;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -63,10 +62,10 @@ public class FilterHeadItem extends AbstractFlexibleItem<FilterHeadItem.FilterHe
     return R.layout.item_horizon_qcradiogroup;
   }
 
-  @Override public FilterHeadVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new FilterHeadVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public FilterHeadVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new FilterHeadVH(view,adapter);
   }
+
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, FilterHeadVH holder, int position,
       List payloads) {

@@ -29,9 +29,8 @@ public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
     this.bill = bill;
   }
 
-  @Override public ItemBillVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ItemBillVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ItemBillVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ItemBillVH(view, adapter);
   }
 
   public BusinessBill getBill() {

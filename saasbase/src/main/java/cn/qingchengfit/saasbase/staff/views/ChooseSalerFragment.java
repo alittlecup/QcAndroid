@@ -17,11 +17,17 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.staff.items.StaffItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -52,6 +58,8 @@ import rx.schedulers.Schedulers;
   @Inject IStaffModel staffModel;
   protected Toolbar toolbar;
   protected TextView toolbarTitle;
+  protected ViewGroup toolbarLayout;
+  protected List<AbstractFlexibleItem> ret = new ArrayList<>();
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -61,6 +69,7 @@ import rx.schedulers.Schedulers;
     root.addView(view,1);
     toolbar = (Toolbar)root.findViewById(R.id.toolbar);
     toolbarTitle = (TextView)root.findViewById(R.id.toolbar_title);
+    toolbarLayout = root.findViewById(R.id.toolbar_layout);
     initToolbar(toolbar);
     return root;
   }
@@ -68,6 +77,15 @@ import rx.schedulers.Schedulers;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("选择业绩归属");
+    initSearch(toolbarLayout, "输入姓名或者手机号搜索");
+    toolbar.inflateMenu(R.menu.menu_search);
+    RxMenuItem.clicks(toolbar.getMenu().getItem(0))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          showSearch(toolbarLayout);
+        }
+      });
   }
 
   @Override protected void onFinishAnimation() {
@@ -75,6 +93,11 @@ import rx.schedulers.Schedulers;
     if (srl != null)
       srl.setRefreshing(true);
     onRefresh();
+  }
+
+  @Override public void onTextSearch(String text) {
+    commonFlexAdapter.setSearchText(text);
+    commonFlexAdapter.filterItems(ret, 500);
   }
 
 
@@ -109,10 +132,14 @@ import rx.schedulers.Schedulers;
         @Override public void onNext(QcDataResponse<SalerListWrap> qcResponse) {
           stopRefresh();
           if (ResponseConstant.checkSuccess(qcResponse)) {
-            commonFlexAdapter.clear();
+            ret.clear();
+            Staff no = new Staff("无销售","","",0);
+            no.setId("0");
+            ret.add(new StaffItem(no));
             for (Staff user : qcResponse.data.sellers) {
-              commonFlexAdapter.addItem(new StaffItem(user));
+              ret.add(new StaffItem(user));
             }
+            onTextSearch(commonFlexAdapter.getSearchText());
           } else {
             onShowError(qcResponse.getMsg());
           }

@@ -21,8 +21,10 @@ import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DrawableUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 /**
@@ -102,12 +104,13 @@ public class CardtplAddFragment extends CardTplDetailFragment {
     toolbarTitle.setText("新增会员卡种类");
     toolbar.getMenu().clear();
     toolbar.getMenu().add("保存").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        presenter.createCardTpl();
-        return true;
-      }
-    });
+    RxMenuItem.clicks(toolbar.getMenu().getItem(0))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          presenter.createCardTpl();
+        }
+      });
   }
 
   @Override protected void onFinishAnimation() {

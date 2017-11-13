@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.bill.filter;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -34,10 +32,9 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
     this.filterModel = filterModel;
   }
 
-  @Override public ItemFilterVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
+  @Override public ItemFilterVH createViewHolder(View view, FlexibleAdapter adapter) {
     ItemFilterVH holder =
-        new ItemFilterVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+        new ItemFilterVH(view, adapter);
     return holder;
   }
 

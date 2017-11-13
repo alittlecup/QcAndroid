@@ -27,8 +27,8 @@ public class PositionDescItem extends AbstractFlexibleItem<PositionDescItem.Posi
     return R.layout.item_position_desc;
   }
 
-  @Override public PositionDescVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new PositionDescVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public PositionDescVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new PositionDescVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, PositionDescVH holder, int position, List payloads) {

@@ -33,8 +33,8 @@ public class LockerHeaderItem extends AbstractFlexibleItem<LockerHeaderItem.Lock
         return R.layout.item_locker_header;
     }
 
-    @Override public LockerHeaderVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new LockerHeaderVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public LockerHeaderVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new LockerHeaderVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, LockerHeaderVH holder, int position, List payloads) {

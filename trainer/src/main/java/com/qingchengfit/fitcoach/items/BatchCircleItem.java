@@ -30,8 +30,8 @@ public class BatchCircleItem extends AbstractFlexibleItem<BatchCircleItem.BatchC
         return R.layout.item_batch_circle;
     }
 
-    @Override public BatchCircleVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new BatchCircleVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public BatchCircleVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new BatchCircleVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BatchCircleVH holder, int position, List payloads) {

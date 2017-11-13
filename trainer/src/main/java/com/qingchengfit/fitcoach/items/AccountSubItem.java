@@ -28,8 +28,8 @@ public class AccountSubItem extends AbstractFlexibleItem<AccountSubItem.AccountS
         return R.layout.item_account_sub;
     }
 
-    @Override public AccountSubVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AccountSubVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public AccountSubVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AccountSubVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, AccountSubVH holder, int position, List payloads) {

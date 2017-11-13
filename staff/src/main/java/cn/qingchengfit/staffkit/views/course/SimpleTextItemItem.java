@@ -37,8 +37,8 @@ public class SimpleTextItemItem extends AbstractFlexibleItem<SimpleTextItemItem.
         return R.layout.item_simple_text;
     }
 
-    @Override public SimpleTextItemVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new SimpleTextItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SimpleTextItemVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new SimpleTextItemVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, SimpleTextItemVH holder, int position, List payloads) {

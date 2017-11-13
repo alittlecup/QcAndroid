@@ -29,8 +29,8 @@ public class ManageWorkItem extends AbstractFlexibleItem<ManageWorkItem.ManageWo
         return R.layout.item_manage_work;
     }
 
-    @Override public ManageWorkVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ManageWorkVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ManageWorkVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ManageWorkVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ManageWorkVH holder, int position, List payloads) {

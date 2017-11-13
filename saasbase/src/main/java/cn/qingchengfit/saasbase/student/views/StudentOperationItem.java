@@ -34,8 +34,8 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
         return R.layout.item_student_operation;
     }
 
-    @Override public StudentOperationVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new StudentOperationVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public StudentOperationVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new StudentOperationVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, StudentOperationVH holder, int position, List payloads) {

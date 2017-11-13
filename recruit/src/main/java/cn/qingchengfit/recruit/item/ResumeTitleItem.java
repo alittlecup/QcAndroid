@@ -37,8 +37,8 @@ public class ResumeTitleItem extends AbstractHeaderItem<ResumeTitleItem.ResumeTi
     return R.layout.layout_resume_title;
   }
 
-  @Override public ResumeTitleVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new ResumeTitleVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeTitleVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeTitleVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeTitleVH holder, int position, List payloads) {

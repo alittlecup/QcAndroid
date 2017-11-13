@@ -30,9 +30,8 @@ public class CardActionsItem extends AbstractFlexibleItem<CardActionsItem.CardAc
     return R.layout.item_card_action;
   }
 
-  @Override public CardActionsVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new CardActionsVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public CardActionsVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new CardActionsVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CardActionsVH holder, int position,

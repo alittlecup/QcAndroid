@@ -55,7 +55,7 @@ public class AllCourseImageItem extends AbstractFlexibleItem implements ISection
         return R.layout.item_all_course_image_view;
     }
 
-    @Override public RecyclerView.ViewHolder createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    @Override public RecyclerView.ViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
         return new AllCourseImageItemHolder(inflater.inflate(R.layout.item_all_course_image_view, parent, false), adapter);
     }
 

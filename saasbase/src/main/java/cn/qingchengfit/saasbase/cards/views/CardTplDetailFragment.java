@@ -7,7 +7,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -39,12 +38,14 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 /**
@@ -77,6 +78,7 @@ import javax.inject.Inject;
   @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
   @BindView(R2.id.tv_gym_name) TextView tvGymName;
   @BindView(R2.id.tv_card_id) TextView tvCardId;
+  @BindView(R2.id.img_stutus) TextView cardStatus;
   @BindView(R2.id.cardview) RelativeLayout cardview;
   @BindView(R2.id.recycleview) RecyclerView recycleview;
   @BindView(R2.id.btn_del) TextView btnDel;
@@ -127,12 +129,13 @@ import javax.inject.Inject;
     super.initToolbar(toolbar);
     toolbarTitle.setText("会员卡种类详情");
     toolbar.inflateMenu(R.menu.menu_flow);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        showBottomList();
-        return false;
-      }
-    });
+    RxMenuItem.clicks(toolbar.getMenu().getItem(0))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          showBottomList();
+        }
+      });
   }
 
 
@@ -206,6 +209,9 @@ import javax.inject.Inject;
       DrawableUtils.generateBg(8, CardBusinessUtils.getDefaultCardbgColor(card_tpl.getType())));
     tvCardAppend.setText(card_tpl.getLimit());
     tvGymName.setText(card_tpl.getShopNames());
+    cardStatus.setVisibility(cardTpl.is_enable?View.GONE:View.VISIBLE);
+    cardStatus.setBackground(DrawableUtils.generateCardStatusBg(R.color.red,getContext()));
+
     //limit.setText(card_tpl.getLimit());
     //intro.setText(card_tpl.getDescription());
     //type.setText(CardBusinessUtils.getCardTypeCategoryStr(card_tpl.getType(), getContext()));
@@ -261,10 +267,10 @@ import javax.inject.Inject;
 
     if (item instanceof CardtplOptionItem) {
       //会员卡价格修改
-      routeTo("/cardtpl/option/", new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build());
+      routeTo("/cardtpl/option/", new cn.qingchengfit.saasbase.cards.views.CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build());
     } else if (item instanceof AddCardtplStantardItem) {
       //新增会员卡价格
-      routeTo("/cardtpl/option/add/", new CardtplOptionAddParams()
+      routeTo("/cardtpl/option/add/", new cn.qingchengfit.saasbase.cards.views.CardtplOptionAddParams()
         .cardTplId(presenter.getCardtplId())
         .cardCate(presenter.getCardCate())
         .build());

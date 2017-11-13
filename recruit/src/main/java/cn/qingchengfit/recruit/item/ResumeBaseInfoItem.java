@@ -32,8 +32,8 @@ public class ResumeBaseInfoItem extends AbstractFlexibleItem<ResumeBaseInfoItem.
     return R.layout.item_resume_base_info;
   }
 
-  @Override public ResumeBaseInfoVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new ResumeBaseInfoVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeBaseInfoVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeBaseInfoVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeBaseInfoVH holder, int position, List payloads) {

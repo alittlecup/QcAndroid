@@ -102,7 +102,7 @@ public class ResumeHandleFragment extends ResumeListFragment {
   public void setChooseMode(boolean canChoose) {
     commonFlexAdapter.setStatus(canChoose ? -1 : 0);
     commonFlexAdapter.clearSelection();
-    commonFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+    commonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
     commonFlexAdapter.notifyDataSetChanged();
   }
 

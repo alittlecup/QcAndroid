@@ -53,8 +53,8 @@ public class ChooseCoursePlanItem extends AbstractFlexibleItem<ChooseCoursePlanI
         return R.layout.item_course_plan;
     }
 
-    @Override public ChooseCoursePlanVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ChooseCoursePlanVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ChooseCoursePlanVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ChooseCoursePlanVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseCoursePlanVH holder, int position, List payloads) {

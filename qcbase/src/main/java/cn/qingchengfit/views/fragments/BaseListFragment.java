@@ -9,7 +9,7 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.items.CommonNoDataItem;
@@ -104,8 +104,8 @@ public abstract class BaseListFragment extends BaseFragment {
     commonFlexAdapter.setAnimationEntryStep(true)
         .setAnimationOnReverseScrolling(true)
     .setAnimationOnScrolling(true)
-    .setAnimationDuration(300)
-    .setAnimationInterpolator(new DecelerateInterpolator());
+    .setAnimationDuration(200)
+    .setAnimationInterpolator(new LinearInterpolator());
   }
 
   protected void addDivider() {
@@ -146,12 +146,11 @@ public abstract class BaseListFragment extends BaseFragment {
     stopRefresh();
     if (rv != null && commonFlexAdapter != null) {
       if (page == 1) clearItems();
-      for (AbstractFlexibleItem item : ds) {
-        commonFlexAdapter.addItem(item);
-      }
-      if (commonFlexAdapter.getItemCount() == 0 && commonNoDataItem != null) {
+      commonFlexAdapter.onLoadMoreComplete(ds, 500);
+      if ((ds == null || ds.size() == 0 )&& commonNoDataItem != null) {
         addEmptyPage();
       }
+
       commonFlexAdapter.notifyDataSetChanged();
     }
   }

@@ -42,9 +42,8 @@ public class RecruitManageItem extends AbstractFlexibleItem<RecruitManageItem.Re
   }
 
   @Override
-  public RecruitManageVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new RecruitManageVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  public RecruitManageVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new RecruitManageVH(view, adapter);
   }
 
   @Override

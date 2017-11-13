@@ -144,7 +144,7 @@ import static android.view.View.GONE;
         adapter = new CommonFlexAdapter(itemList, this);
         adapter.setDisplayHeadersAtStartUp(true);
         adapter.showAllHeaders().setNotifyChangeOfUnfilteredItems(false).setNotifyChangeOfUnfilteredItems(true);
-        adapter.setMode(SelectableAdapter.MODE_MULTI);
+        adapter.setMode(SelectableAdapter.Mode.MULTI);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         rvStudent.setLayoutManager(mLinearLayoutManager);
         rvStudent.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));

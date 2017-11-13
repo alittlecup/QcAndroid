@@ -47,10 +47,9 @@ public class HorizonImageShowItem
   }
 
   @Override
-  public ResumeIntentImgShowVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
+  public ResumeIntentImgShowVH createViewHolder(View view, FlexibleAdapter adapter) {
     ResumeIntentImgShowVH holder =
-        new ResumeIntentImgShowVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+        new ResumeIntentImgShowVH(view, adapter);
     if (holder.itemRv.getOnFlingListener() == null) {
       GravitySnapHelper helper = new GravitySnapHelper(Gravity.START);
       helper.attachToRecyclerView(holder.itemRv);

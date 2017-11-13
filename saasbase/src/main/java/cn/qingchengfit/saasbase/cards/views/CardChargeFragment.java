@@ -110,7 +110,7 @@ import javax.inject.Inject;
     delegatePresenter(presenter, this);
     presenter.setmCard(card);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
-    commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+    commonFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
     GridLayoutManager manager =
       new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_item_count));
     manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

@@ -19,9 +19,8 @@ public class ItemDataEmpty extends AbstractFlexibleItem<ItemDataEmpty.ItemEmptyV
     return false;
   }
 
-  @Override public ItemEmptyVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ItemEmptyVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ItemEmptyVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ItemEmptyVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemEmptyVH holder, int position,

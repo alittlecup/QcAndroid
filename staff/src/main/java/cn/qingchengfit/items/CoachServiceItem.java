@@ -68,8 +68,8 @@ public class CoachServiceItem extends AbstractFlexibleItem<CoachServiceItem.Coac
         return R.layout.item_gym;
     }
 
-    @Override public CoachServiceVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new CoachServiceVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public CoachServiceVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new CoachServiceVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CoachServiceVH holder, int position, List payloads) {

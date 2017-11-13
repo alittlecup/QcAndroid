@@ -109,7 +109,7 @@ public class SpaceListFragment extends BaseFragment implements FlexibleAdapter.O
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mCommonFlexAdapter = new CommonFlexAdapter(mData, this);
-        mCommonFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+        mCommonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
         recyclerview.setHasFixedSize(true);
         recyclerview.setAdapter(mCommonFlexAdapter);
         if (getActivity() instanceof FragActivity) {

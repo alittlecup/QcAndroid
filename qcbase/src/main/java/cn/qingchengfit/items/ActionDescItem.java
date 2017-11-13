@@ -1,9 +1,7 @@
 package cn.qingchengfit.items;
 
 import android.support.annotation.DrawableRes;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -42,9 +40,8 @@ public class ActionDescItem extends AbstractFlexibleItem<ActionDescItem.ActionDe
     return R.layout.item_action_desc;
   }
 
-  @Override public ActionDescVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ActionDescVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ActionDescVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ActionDescVH(view,adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ActionDescVH holder, int position,

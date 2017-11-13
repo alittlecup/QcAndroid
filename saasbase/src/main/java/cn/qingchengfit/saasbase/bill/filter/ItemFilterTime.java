@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.bill.filter;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,17 +35,16 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
   }
 
   @Override
-  public ItemFilterTimeVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      final ViewGroup parent) {
+  public ItemFilterTimeVH createViewHolder(View view,FlexibleAdapter adapter) {
     final ItemFilterTimeVH holder =
-        new ItemFilterTimeVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+        new ItemFilterTimeVH(view, adapter);
     final TimeDialogWindow startTimeDialogWindow =
-        new TimeDialogWindow(parent.getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        new TimeDialogWindow(view.getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     startTimeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
         if (endDate != null){
           if (endDate.before(date)){
-            DialogUtils.showAlert(parent.getContext(), "结束时间不得早于开始时间");
+            DialogUtils.showAlert(view.getContext(), "结束时间不得早于开始时间");
             return;
           }
         }
@@ -59,12 +56,12 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
       }
     });
     final TimeDialogWindow endTimeDialogWindow =
-        new TimeDialogWindow(parent.getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        new TimeDialogWindow(view.getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     endTimeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
         if (startDate != null){
           if (startDate.after(date)){
-            DialogUtils.showAlert(parent.getContext(), "结束时间不得早于开始时间");
+            DialogUtils.showAlert(view.getContext(), "结束时间不得早于开始时间");
             return;
           }
         }

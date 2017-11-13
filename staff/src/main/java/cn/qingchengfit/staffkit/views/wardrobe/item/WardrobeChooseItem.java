@@ -54,8 +54,8 @@ public class WardrobeChooseItem extends AbstractFlexibleItem<WardrobeChooseItem.
         return R.layout.item_wardrobe;
     }
 
-    @Override public WardrobeVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new WardrobeVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public WardrobeVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new WardrobeVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, WardrobeVH holder, int position, List payloads) {

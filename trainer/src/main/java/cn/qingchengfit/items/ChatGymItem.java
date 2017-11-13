@@ -39,8 +39,8 @@ public class ChatGymItem extends AbstractFlexibleItem<ChatGymItem.ChatGymVH> {
         return R.layout.item_chat_gym;
     }
 
-    @Override public ChatGymVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ChatGymVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ChatGymVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ChatGymVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChatGymVH holder, int position, List payloads) {

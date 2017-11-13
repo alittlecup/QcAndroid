@@ -25,9 +25,8 @@ public class TitleHintItem extends AbstractFlexibleItem<TitleHintItem.TitleHintV
     return R.layout.item_title_hint;
   }
 
-  @Override public TitleHintVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new TitleHintVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public TitleHintVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new TitleHintVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, TitleHintVH holder, int position,

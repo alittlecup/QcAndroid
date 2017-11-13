@@ -38,7 +38,7 @@
 //        return data;
 //    }
 //
-//    @Override public FilterCommonLinearVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+//    @Override public FilterCommonLinearVH createViewHolder(View view, FlexibleAdapter adapter) {
 //        FilterCommonLinearVH holder = new FilterCommonLinearVH(inflater.inflate(getLayoutRes(), null, false), adapter);
 //        return holder;
 //    }

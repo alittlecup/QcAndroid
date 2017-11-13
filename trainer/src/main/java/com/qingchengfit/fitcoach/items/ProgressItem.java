@@ -51,8 +51,8 @@ public class ProgressItem extends AbstractFlexibleItem<ProgressItem.ProgressVH> 
         return R.layout.item_progress;
     }
 
-    @Override public ProgressVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ProgressVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ProgressVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ProgressVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ProgressVH holder, int position, List payloads) {

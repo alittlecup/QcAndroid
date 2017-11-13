@@ -121,37 +121,7 @@ import javax.inject.Inject;
       }
     });
     initSearch(tl,"输入会员姓名或手机号搜索");
-    //SearchManager searchManager =
-    //  (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-    //MenuItem searchMenuItem = toolbar.getMenu().getItem(0);
-    //SearchView mSearchView = (SearchView) searchMenuItem.getActionView();
-    //if (mSearchView != null) {
-    //  mSearchView.setSearchableInfo(
-    //    searchManager.getSearchableInfo(getActivity().getComponentName()));
-    //}
-    //mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
-    //  @Override public boolean onClose() {
-    //    toolbarTitle.setVisibility(View.VISIBLE);
-    //    presenter.queryKeyworkd(null);
-    //    return false;
-    //  }
-    //});
-    //mSearchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-    //  @Override public void onFocusChange(View view, boolean b) {
-    //    if (b) toolbarTitle.setVisibility(View.GONE);
-    //  }
-    //});
-    //mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-    //  @Override public boolean onQueryTextSubmit(String query) {
-    //    presenter.queryKeyworkd(query);
-    //    return false;
-    //  }
-    //
-    //  @Override public boolean onQueryTextChange(String newText) {
-    //
-    //    return false;
-    //  }
-    //});
+
   }
 
   @Override public void onTextSearch(String text) {

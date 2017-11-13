@@ -55,7 +55,7 @@ public class FilterListFragment extends BaseListFragment implements
     //ViewGroup.LayoutParams p =  rv.getLayoutParams();
     //p.height = ViewGroup.LayoutParams.WRAP_CONTENT;
     //p.width = ViewGroup.LayoutParams.MATCH_PARENT;
-    commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+    commonFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
     //rv.setLayoutParams(p);
 
     initListener(this);

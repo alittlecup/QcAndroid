@@ -148,7 +148,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
 
     private void changeMode() {
         if (commonFlexAdapter.getMode() == SelectableAdapter.MODE_IDLE) {
-            commonFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+            commonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
             btnAdd.setVisibility(View.GONE);
             del.setVisibility(View.VISIBLE);
         } else {
@@ -208,7 +208,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
     }
 
     @Override public boolean onItemClick(int position) {
-        if (commonFlexAdapter.getMode() == SelectableAdapter.MODE_MULTI) {
+        if (commonFlexAdapter.getMode() == SelectableAdapter.Mode.MULTI) {
             if (datas.get(position) instanceof ImageItem) {
                 commonFlexAdapter.toggleSelection(position);
                 commonFlexAdapter.notifyItemChanged(position);

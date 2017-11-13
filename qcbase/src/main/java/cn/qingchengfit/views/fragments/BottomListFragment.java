@@ -15,13 +15,12 @@ import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
 import cn.qingchengfit.widgets.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
-
-import static eu.davidea.flexibleadapter.SelectableAdapter.MODE_SINGLE;
 
 /**
  * power by
@@ -56,7 +55,7 @@ public class BottomListFragment extends BottomSheetDialogFragment
   protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
   private int selectedPos = -1;
   private ArrayList<String> items = new ArrayList<>();
-  protected int mChooseMode = MODE_SINGLE;
+  protected int mChooseMode = SelectableAdapter.Mode.SINGLE;
   private String title;
   private ComfirmChooseListener listener;
 
@@ -120,7 +119,7 @@ public class BottomListFragment extends BottomSheetDialogFragment
   @Override public boolean onItemClick(int i) {
     mFlexibleAdapter.toggleSelection(i);
     mFlexibleAdapter.notifyItemChanged(i);
-    if (mChooseMode == MODE_SINGLE && listener != null) {
+    if (mChooseMode == SelectableAdapter.Mode.SINGLE && listener != null) {
       List<IFlexible> ret = new ArrayList<>();
       ret.add(mFlexibleAdapter.getItem(i));
       listener.onComfirmClick(ret, mFlexibleAdapter.getSelectedPositions());
@@ -145,7 +144,7 @@ public class BottomListFragment extends BottomSheetDialogFragment
     recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     recycleview.addItemDecoration(new QcLeftRightDivider(getContext(), 1, 0, 50, 0));
     if (getArguments().containsKey("chooseMode")) {
-      mChooseMode = getArguments().getInt("chooseMode", MODE_SINGLE);
+      mChooseMode = getArguments().getInt("chooseMode", SelectableAdapter.Mode.SINGLE);
     }
     if (getArguments().containsKey("items")){
       items = getArguments().getStringArrayList("items");
@@ -156,7 +155,7 @@ public class BottomListFragment extends BottomSheetDialogFragment
     if (selectedPos >= 0) mFlexibleAdapter.toggleSelection(selectedPos);
     recycleview.setAdapter(mFlexibleAdapter);
     tvtitle.setText(TextUtils.isEmpty(title) ? getTitle() : title);
-    btnComfirm.setVisibility(mChooseMode == MODE_SINGLE ? View.GONE : View.VISIBLE);
+    btnComfirm.setVisibility(mChooseMode == SelectableAdapter.Mode.SINGLE ? View.GONE : View.VISIBLE);
     btnClose.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         dismiss();

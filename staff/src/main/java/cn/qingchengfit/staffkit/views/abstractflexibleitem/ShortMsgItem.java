@@ -39,8 +39,8 @@ public class ShortMsgItem extends AbstractFlexibleItem<ShortMsgItem.ShortMsgVH> 
         return R.layout.item_short_msg;
     }
 
-    @Override public ShortMsgVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ShortMsgVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ShortMsgVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ShortMsgVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ShortMsgVH holder, int position, List payloads) {

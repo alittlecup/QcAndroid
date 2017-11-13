@@ -37,7 +37,7 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
-    commonFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+    commonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
     return v;
   }
 

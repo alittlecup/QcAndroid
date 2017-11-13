@@ -40,8 +40,8 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
         return R.layout.item_student_operation;
     }
 
-    @Override public StudentOperationVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        StudentOperationVH holder = new StudentOperationVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public StudentOperationVH createViewHolder(View view, FlexibleAdapter adapter) {
+        StudentOperationVH holder = new StudentOperationVH(view, adapter);
         this.width = parent.getWidth();
         holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(parent.getWidth() / 4, parent.getHeight() / 2));
         return holder;

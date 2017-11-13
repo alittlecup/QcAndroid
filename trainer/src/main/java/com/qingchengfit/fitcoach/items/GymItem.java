@@ -35,8 +35,8 @@ public class GymItem extends AbstractFlexibleItem<GymItem.GymVH> {
         return R.layout.item_gym;
     }
 
-    @Override public GymVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new GymVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public GymVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new GymVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, GymVH holder, int position, List payloads) {

@@ -16,8 +16,8 @@ public class UseStaffAppItem extends AbstractFlexibleItem<UseStaffAppItem.UseSta
         return R.layout.item_use_staff_app;
     }
 
-    @Override public UseStaffAppVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new UseStaffAppVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public UseStaffAppVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new UseStaffAppVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, UseStaffAppVH holder, int position, List payloads) {

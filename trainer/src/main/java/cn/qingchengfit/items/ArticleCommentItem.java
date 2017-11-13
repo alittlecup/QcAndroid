@@ -39,8 +39,8 @@ public class ArticleCommentItem extends AbstractFlexibleItem<ArticleCommentItem.
         return R.layout.item_comment;
     }
 
-    @Override public ArticleCommentVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ArticleCommentVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ArticleCommentVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ArticleCommentVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ArticleCommentVH holder, int position, List payloads) {

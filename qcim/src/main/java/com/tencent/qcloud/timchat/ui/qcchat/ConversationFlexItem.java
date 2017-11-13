@@ -143,7 +143,7 @@ public class ConversationFlexItem extends AbstractFlexibleItem<ConversationFlexI
     }
 
     @Override
-    public ConversationViewHolder createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    public ConversationViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
         ConversationViewHolder vh = new ConversationViewHolder(inflater.inflate(R.layout.item_conversation, parent, false), adapter);
         return vh;
     }

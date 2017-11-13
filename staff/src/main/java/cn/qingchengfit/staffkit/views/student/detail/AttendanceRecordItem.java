@@ -44,9 +44,8 @@ public class AttendanceRecordItem
   }
 
   @Override
-  public AttendanceRecordVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new AttendanceRecordVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  public AttendanceRecordVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new AttendanceRecordVH(view, adapter);
   }
 
   @Override

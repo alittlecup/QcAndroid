@@ -54,9 +54,8 @@ public class ChatTextItem extends ChatItem<ChatTextItem.ChatTextItemVH> {
     return false;
   }
 
-  @Override public ChatTextItemVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ChatTextItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ChatTextItemVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ChatTextItemVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ChatTextItemVH holder, int position,

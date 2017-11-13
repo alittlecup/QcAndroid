@@ -90,7 +90,7 @@ public class CourseImagesFragment extends BaseFragment
         initToolbar(toolbar);
         //init recycle
         mAdatper = new AllCourseImagesAdapter(mDatas, this);
-        mAdatper.setMode(SelectableAdapter.MODE_SINGLE);
+        mAdatper.setMode(SelectableAdapter.Mode.SINGLE);
         mAdatper.setDisplayHeadersAtStartUp(true);
 
         SmoothScrollGridLayoutManager layoutManager = new SmoothScrollGridLayoutManager(getContext(), 3);

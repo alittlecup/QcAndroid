@@ -85,8 +85,8 @@ public class SignUpFormPersonalItem extends AbstractFlexibleItem<SignUpFormPerso
         }
     }
 
-    @Override public PersonalVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new PersonalVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public PersonalVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new PersonalVH(view, adapter);
     }
 
     class PersonalVH extends FlexibleViewHolder {

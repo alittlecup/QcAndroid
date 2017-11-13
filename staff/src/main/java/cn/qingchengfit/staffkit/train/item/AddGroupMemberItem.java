@@ -83,8 +83,8 @@ public class AddGroupMemberItem extends AbstractFlexibleItem<AddGroupMemberItem.
         return R.layout.item_add_group_member;
     }
 
-    @Override public AddGroupMemberVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AddGroupMemberVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public AddGroupMemberVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AddGroupMemberVH(view, adapter);
     }
 
     class AddGroupMemberVH extends FlexibleViewHolder {

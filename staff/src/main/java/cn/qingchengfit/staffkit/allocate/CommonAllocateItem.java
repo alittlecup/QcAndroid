@@ -42,8 +42,8 @@ public class CommonAllocateItem extends AbstractFlexibleItem<CommonAllocateItem.
         return R.layout.item_allotsale_sale;
     }
 
-    @Override public AllocateVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AllocateVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public AllocateVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AllocateVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, AllocateVH holder, int position, List payloads) {

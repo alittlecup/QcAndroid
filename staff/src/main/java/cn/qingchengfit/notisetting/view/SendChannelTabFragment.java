@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-import static eu.davidea.flexibleadapter.SelectableAdapter.MODE_SINGLE;
+import static eu.davidea.flexibleadapter.SelectableAdapter.Mode.SINGLE;
 
 /**
  * power by

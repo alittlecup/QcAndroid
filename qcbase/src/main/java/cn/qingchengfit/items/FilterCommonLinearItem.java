@@ -1,9 +1,7 @@
 package cn.qingchengfit.items;
 
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +35,10 @@ public class FilterCommonLinearItem
     return R.layout.layout_linear_pop;
   }
 
+  @Override public FilterCommonLinearVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new FilterCommonLinearVH(view,adapter);
+  }
+
   @Override public boolean equals(Object o) {
     return false;
   }
@@ -45,11 +47,6 @@ public class FilterCommonLinearItem
     return data;
   }
 
-  @Override
-  public FilterCommonLinearVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-   return new FilterCommonLinearVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
-  }
 
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, FilterCommonLinearVH holder, int position,

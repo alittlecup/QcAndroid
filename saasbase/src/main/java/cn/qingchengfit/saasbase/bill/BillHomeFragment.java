@@ -83,6 +83,11 @@ import rx.functions.Action1;
   private String lastDate;
   private String beforeLastDate;
   public HashMap<String, Object> filterMap = new HashMap<>();
+  private ItemMoreFooter moreFooter;
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    moreFooter = new ItemMoreFooter(this);
+  }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -200,8 +205,8 @@ import rx.functions.Action1;
       itemList.clear();
     }
     dealMonth(billList);
+    adapter.updateDataSet(itemList);
     adapter.addScrollableFooter(new ItemMoreFooter(this));
-    adapter.notifyDataSetChanged();
   }
 
   @Override public void onGetBillListByFilter(List<BusinessBill> billList) {
@@ -216,7 +221,8 @@ import rx.functions.Action1;
     }
 
     dealFilterMonth(billList);
-    adapter.notifyDataSetChanged();
+    adapter.updateDataSet(itemList);
+    //adapter.notifyDataSetChanged();
   }
 
   private void dealFilterMonth(List<BusinessBill> billList) {

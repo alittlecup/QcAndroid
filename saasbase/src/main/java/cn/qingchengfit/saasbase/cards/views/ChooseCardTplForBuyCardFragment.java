@@ -40,7 +40,11 @@ public class ChooseCardTplForBuyCardFragment extends CardTplsHomeInGymFragment {
   @Override public boolean onItemClick(int i) {
     IFlexible item =fragmentList.get(viewpager.getCurrentItem()).getItem(i);
     if (item instanceof CardTplItem){
-      routeTo("/pay/",new CardBuyParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
+      if (((CardTplItem) item).getCardTpl().is_enable)
+        routeTo("/pay/",new cn.qingchengfit.saasbase.cards.views.CardBuyParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
+      else {
+        showAlert("已停用的会员卡种类不能用于购买会员卡");
+      }
     }
     return true;
   }

@@ -50,8 +50,8 @@ public class ChooseStudentItem extends AbstractFlexibleItem<ChooseStudentItem.Ch
         return R.layout.item_choose_student;
     }
 
-    @Override public ChooseStudentVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ChooseStudentVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ChooseStudentVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ChooseStudentVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseStudentVH holder, int position, List payloads) {

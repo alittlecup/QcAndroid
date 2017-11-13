@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -15,9 +14,12 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.staff.items.StaffItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -57,22 +59,26 @@ import rx.schedulers.Schedulers;
     super.initToolbar(toolbar);
     toolbar.getMenu().clear();
     toolbar.inflateMenu(R.menu.menu_search_and_add);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.action_add) {
+    RxMenuItem.clicks(toolbar.getMenu().findItem(R.id.action_add))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
           routeTo("/add/", null);
-        }else if (item.getItemId() == R.id.action_search){
+        }
+      });
+    RxMenuItem.clicks(toolbar.getMenu().findItem(R.id.action_search))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
           showSearch(toolbarRoot);
         }
-        return true;
-      }
-    });
-    initSearch(toolbarRoot,"输入销售姓名或者手机号来");
+      });
+    initSearch(toolbarRoot, "输入销售姓名或者手机号来");
   }
 
   @Override public void onTextSearch(String text) {
     commonFlexAdapter.setSearchText(text);
-    commonFlexAdapter.filterItems(ret,500);
+    commonFlexAdapter.filterItems(ret, 500);
   }
 
   @Override void initData() {
@@ -84,6 +90,9 @@ import rx.schedulers.Schedulers;
         @Override public void onNext(QcDataResponse<SalerListWrap> qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
             onGetData(qcResponse.data.sellers);
+            //if (!TextUtils.isEmpty(commonFlexAdapter.getSearchText())){
+            //  onTextSearch(commonFlexAdapter.getSearchText());
+            //}
           } else {
             onShowError(qcResponse.getMsg());
           }
@@ -100,14 +109,16 @@ import rx.schedulers.Schedulers;
     if (iFlexible instanceof StaffItem) {
       Staff staff = ((StaffItem) iFlexible).getStaff();
       try {
-        if (staff.is_superuser && staff.getPhone().equalsIgnoreCase(loginStatus.getLoginUser().getPhone())){
+        if (staff.is_superuser && !staff.getPhone()
+          .equalsIgnoreCase(loginStatus.getLoginUser().getPhone())) {
           showAlert("该用户为超级管理员\n仅超级管理员本人可以查看");
           return true;
         }
-      }catch (Exception e){
+      } catch (Exception e) {
         return true;
       }
-      routeTo("/detail/", new StaffDetailParams().staff(((StaffItem) iFlexible).getStaff()).build());
+      routeTo("/detail/", new cn.qingchengfit.saasbase.staff.views.StaffDetailParams().staff(
+        ((StaffItem) iFlexible).getStaff()).build());
     }
 
     return true;

@@ -74,7 +74,7 @@ public class ChooseStudentListFragment extends BaseFragment
         adapter = new CommonFlexAdapter(items, this);
         adapter.setDisplayHeadersAtStartUp(true);
         adapter.showAllHeaders().setNotifyChangeOfUnfilteredItems(false).setNotifyChangeOfUnfilteredItems(true);
-        adapter.setMode(SelectableAdapter.MODE_MULTI);
+        adapter.setMode(SelectableAdapter.Mode.MULTI);
         recyclerview.setAdapter(adapter);
         layoutAlphabet.setOnAlphabetChange(new AlphabetLessView.OnAlphabetChange() {
             @Override public void onChange(int i, String s, int rvpos) {

@@ -2,9 +2,7 @@ package cn.qingchengfit.items;
 
 import android.support.annotation.ColorRes;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,9 +34,10 @@ public class CmBottomListItem extends AbstractFlexibleItem<CmBottomListItem.CmBo
         return R.layout.item_cm_bottom_list;
     }
 
-    @Override public CmBottomListVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new CmBottomListVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public CmBottomListVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new CmBottomListVH(view,adapter);
     }
+
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CmBottomListVH holder, int position, List payloads) {
         holder.tv.setGravity(gravity);
