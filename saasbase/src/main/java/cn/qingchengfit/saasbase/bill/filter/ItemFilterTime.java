@@ -45,12 +45,13 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
         new TimeDialogWindow(parent.getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     startTimeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
-        startDate = date;
         if (endDate != null){
           if (endDate.before(date)){
             DialogUtils.showAlert(parent.getContext(), "结束时间不得早于开始时间");
+            return;
           }
         }
+        startDate = date;
         holder.tvStudentFilterTimeStart.setText(DateUtils.Date2YYYYMMDD(date));
         if (onTimeChooseListener != null) {
           onTimeChooseListener.onTimeStart(DateUtils.Date2YYYYMMDD(date), filterModel.key);
@@ -61,13 +62,13 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
         new TimeDialogWindow(parent.getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     endTimeDialogWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
-        endDate = date;
         if (startDate != null){
           if (startDate.after(date)){
             DialogUtils.showAlert(parent.getContext(), "结束时间不得早于开始时间");
             return;
           }
         }
+        endDate = date;
         holder.tvStudentFilterTimeEnd.setText(DateUtils.Date2YYYYMMDD(date));
         if (onTimeChooseListener != null) {
           onTimeChooseListener.onTimeEnd(DateUtils.Date2YYYYMMDD(date), filterModel.key);

@@ -17,6 +17,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -79,8 +80,10 @@ public class AddCashierFragment extends BaseFragment implements CashierPresenter
 
   @OnClick(R.id.btn_add_cashier)
   public void onConfirmExchange(){
-    if (TextUtils.isEmpty(inputAddCashierName.getContent()) || TextUtils.isEmpty(
-        inputAddCashierGender.getContent()) || TextUtils.isEmpty(inputAddCashierPhone.getContent())){
+    if (TextUtils.isEmpty(inputAddCashierName.getContent())
+        || TextUtils.isEmpty(inputAddCashierGender.getContent())
+        || TextUtils.isEmpty(inputAddCashierPhone.getContent())
+        || AppUtils.isMobiPhoneNum(inputAddCashierPhone.getContent())) {
       DialogUtils.showAlert(getContext(), "请完善信息");
       return;
     }

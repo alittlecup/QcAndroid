@@ -82,6 +82,7 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="14dp"
           tools:text="杨娜（1888888888）"
+          android:freezesText="false"
           style="@style/QcTextStyleLargeDark"
           />
 

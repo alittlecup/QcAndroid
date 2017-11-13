@@ -82,6 +82,7 @@ import rx.functions.Action1;
   private String nowDate;
   private String lastDate;
   private String beforeLastDate;
+  public HashMap<String, Object> filterMap = new HashMap<>();
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -116,6 +117,8 @@ import rx.functions.Action1;
         .subscribe(new Action1<BillFilterEvent>() {
           @Override public void call(BillFilterEvent billFilterEvent) {
             drawerFilter.closeDrawer(GravityCompat.END);
+            filterMap.clear();
+            filterMap.putAll(billFilterEvent.map);
             if (billFilterEvent.map.size() > 0) {
               presenter.qcGetBillListbyFilter(gymWrapper.id(), billFilterEvent.map);
             } else {
@@ -202,7 +205,7 @@ import rx.functions.Action1;
   }
 
   @Override public void onGetBillListByFilter(List<BusinessBill> billList) {
-
+    if (billSwipe != null) billSwipe.setRefreshing(false);
     if (itemList.size() > 0) {
       itemList.clear();
     }
@@ -288,7 +291,10 @@ import rx.functions.Action1;
   }
 
   @Override public void onRefresh() {
-    presenter.qcGetBillList(gymWrapper.id(), DateUtils.formatToServer(new Date()));
-    presenter.qcGetBillTotal(gymWrapper.id());
+    if (filterMap.size() > 0) {
+      presenter.qcGetBillListbyFilter(gymWrapper.id(), filterMap);
+    }else {
+      presenter.qcGetBillList(gymWrapper.id(), DateUtils.formatToServer(new Date()));
+    }
   }
 }

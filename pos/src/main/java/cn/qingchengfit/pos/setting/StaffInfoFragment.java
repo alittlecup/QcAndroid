@@ -148,11 +148,19 @@ public class StaffInfoFragment extends SaasBaseFragment implements CashierPresen
   }
 
   @Override public void onModifySuccess() {
-    //loginStatus.getLoginUser().setGender(inputSettingStaffGender.getContent().equals("男") ? 0 : 1);
-    //loginStatus.getLoginUser().setUsername(inputSettingStaffDetailName.getContent());
-    //loginStatus.getLoginUser().setPhone(inputSettingStaffPhone.getContent());
+    if (loginStatus.getLoginUser().getPhone() != null &&
+        cashier != null
+        &&loginStatus.getLoginUser().getPhone().equalsIgnoreCase(cashier.phone)){
+
+      Staff staff = new Staff(inputSettingStaffDetailName.getContent(),
+          inputSettingStaffPhone.getContent(), loginStatus.getLoginUser().avatar,
+      inputSettingStaffGender.getContent().equals("男") ? 0 : 1);
+      staff.setId(cashier.id);
+      loginStatus.setLoginUser(staff);
+      RxBus.getBus().post(new EventSaasFresh.LoginUserModify());
+    }
     RxBus.getBus().post(new EventSaasFresh.StaffList());
-    ToastUtils.show("修改成功");
+    getActivity().onBackPressed();
   }
 
   @Override public void onGetCashier(List<Staff> cashierList) {
