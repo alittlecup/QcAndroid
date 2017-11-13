@@ -127,13 +127,13 @@ public class StudentBusinessUtils {
     /**
      * 将折线图的原有数据转换为折线图需要的数据形式
      *
-     * @param bean      原有数据集
+     * @param date_counts      原有数据集
      * @param offSetDay 偏移的天数
      * @param lineColor 绘制线的颜色
      * @param fillColor 填充阴影颜色
      * @return
      */
-    public static LineData transformBean2Data(FollowUpDataStatistic.NewCreateUsersBean bean, int offSetDay, @ColorInt int lineColor, @ColorInt int fillColor) {
+    public static LineData transformBean2Data(List<FollowUpDataStatistic.DateCountsBean> date_counts, int offSetDay, @ColorInt int lineColor, @ColorInt int fillColor) {
         List<Pair<String, Integer>> datas = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -143,7 +143,7 @@ public class StudentBusinessUtils {
             calendar.add(Calendar.DATE, 1);
             String s = DateUtils.Date2YYYYMMDD(calendar.getTime());
             String mmdd = DateUtils.Date2MMDD(calendar.getTime());
-            for (FollowUpDataStatistic.DateCountsBean dateCountsBean : bean.date_counts) {
+            for (FollowUpDataStatistic.DateCountsBean dateCountsBean :date_counts) {
                 if (s.equals(dateCountsBean.date)) {
                     Integer integer = Integer.valueOf(dateCountsBean.count);
                     datas.add(new Pair<>(s, integer));
@@ -196,7 +196,7 @@ public class StudentBusinessUtils {
 //            set1.setFillDrawable(drawable);
 //        } else {
         // REFACTOR: 2017/11/6 这里drawableColor的设置
-        set1.setFillColor(lineColor);
+        set1.setFillColor(fillColor);
 //        }
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
@@ -218,13 +218,13 @@ public class StudentBusinessUtils {
     public static LineData transformBean2DataByType(FollowUpDataStatistic.NewCreateUsersBean bean, int offSetDay, int type) {
         switch (type) {
             case FollowUpHomeFragment.FollowUpStatus.NEW_CREATE_USERS:
-                return transformBean2Data(bean, offSetDay, Color.parseColor("#6eb8f1"), Color.parseColor("#aa6eb8f1"));
+                return transformBean2Data(bean.date_counts, offSetDay, Color.parseColor("#6eb8f1"), Color.parseColor("#aa6eb8f1"));
             case FollowUpHomeFragment.FollowUpStatus.NEW_FOLLOWING_USERS:
-                return transformBean2Data(bean, offSetDay, Color.parseColor("#f9944e"), Color.parseColor("#aaf9944e"));
+                return transformBean2Data(bean.date_counts, offSetDay, Color.parseColor("#f9944e"), Color.parseColor("#aaf9944e"));
             case FollowUpHomeFragment.FollowUpStatus.NEW_MEMBER_USERS:
-                return transformBean2Data(bean, offSetDay, Color.parseColor("#0db14b"), Color.parseColor("#aa0db14b"));
+                return transformBean2Data(bean.date_counts, offSetDay, Color.parseColor("#0db14b"), Color.parseColor("#aa0db14b"));
         }
-        return transformBean2Data(bean, offSetDay, Color.parseColor("#f9944e"), Color.parseColor("#aaf9944e"));
+        return transformBean2Data(bean.date_counts, offSetDay, Color.parseColor("#f9944e"), Color.parseColor("#aaf9944e"));
 
     }
 

@@ -9,6 +9,7 @@ import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
 import cn.qingchengfit.saasbase.student.other.ChooseCoachFragment;
 import cn.qingchengfit.saasbase.student.other.ChooseStaffFragment;
+import cn.qingchengfit.saasbase.student.utils.StudentCompareJoinAt;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
 import cn.qingchengfit.saasbase.student.views.allot.AllotCoachFragment;
 import cn.qingchengfit.saasbase.student.views.allot.AllotSellerFragment;
@@ -16,6 +17,7 @@ import cn.qingchengfit.saasbase.student.views.allot.CoachDetailFragment;
 import cn.qingchengfit.saasbase.student.views.allot.MultiAllotCoachFragment;
 import cn.qingchengfit.saasbase.student.views.allot.MultiAllotSalesFragment;
 import cn.qingchengfit.saasbase.student.views.allot.SaleDetailFragment;
+import cn.qingchengfit.saasbase.student.views.attendance.StudentAttendanceFragment;
 import cn.qingchengfit.saasbase.student.views.filtertime.FilterTimesFragment;
 import cn.qingchengfit.saasbase.student.views.followup.FollowUpFilterFragment;
 import cn.qingchengfit.saasbase.student.views.followup.FollowUpHomeFragment;
@@ -64,7 +66,8 @@ import rx.functions.Action1;
         FollowUpFilterFragment.class,
         FilterTimesFragment.class,
         FollowUpTopSalerView.class,
-        StudentTransferFragment.class
+        StudentTransferFragment.class,
+        StudentAttendanceFragment.class
 
 
 })

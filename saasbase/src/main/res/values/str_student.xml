@@ -57,6 +57,10 @@
     <string name="alert_choose_time_cannot_super">选择时间不可以超过%d天</string>
     <string name="qc_referrer_count">已推荐%s人</string>
 
+    <string name="label_absentee">缺勤统计</string>
+    <string name="not_sign_class_count">未签课统计</string>
+
+
 
 
 

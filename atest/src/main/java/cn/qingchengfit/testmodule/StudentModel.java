@@ -14,6 +14,7 @@ import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
 import cn.qingchengfit.saasbase.student.network.api.StudentApi;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
+import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
@@ -132,5 +133,10 @@ public class StudentModel implements IStudentModel {
     @Override
     public Observable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id, HashMap<String, Object> params) {
         return studentApi.qcGetTrackStudentsConver(staff_id, params);
+    }
+
+    @Override
+    public Observable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(String id, HashMap<String, Object> params) {
+        return studentApi.qcGetAttendanceChart(id, params);
     }
 }

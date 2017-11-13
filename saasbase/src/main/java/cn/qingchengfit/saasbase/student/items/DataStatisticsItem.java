@@ -51,7 +51,7 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
 
     public DataStatisticsItem(String title, FollowUpDataStatistic.NewCreateUsersBean bean,@ColorInt int lineColor,@ColorInt int fillColor) {
         this.bean=bean;
-        this.data = StudentBusinessUtils.transformBean2Data(bean,offSetDay,lineColor,fillColor);
+        this.data = StudentBusinessUtils.transformBean2Data(bean.date_counts,offSetDay,lineColor,fillColor);
         this.lineColor=lineColor;
         this.fillColor=fillColor;
         this.title = title;
@@ -71,7 +71,7 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
         this.fillColor = fillColor;
     }
     public void invalidate(){
-        this.data=StudentBusinessUtils.transformBean2Data(bean,offSetDay,lineColor,fillColor);
+        this.data=StudentBusinessUtils.transformBean2Data(bean.date_counts,offSetDay,lineColor,fillColor);
     }
 
     @Override

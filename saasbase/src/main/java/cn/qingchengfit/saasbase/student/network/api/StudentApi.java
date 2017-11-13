@@ -9,6 +9,7 @@ import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
+import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
@@ -177,6 +178,14 @@ public interface StudentApi {
     @GET("/api/staffs/{staff_id}/users/conver/stat/")
     Observable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(
             @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+
+    /**
+     *获取缺勤图表数据
+     */
+    @GET("/api/staffs/{id}/users/attendance/glance/")
+    Observable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(
+            @Path("id") String id, @QueryMap HashMap<String, Object> params);
 
 
 }
