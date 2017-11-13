@@ -7,7 +7,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -39,12 +38,14 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 /**
@@ -127,12 +128,13 @@ import javax.inject.Inject;
     super.initToolbar(toolbar);
     toolbarTitle.setText("会员卡种类详情");
     toolbar.inflateMenu(R.menu.menu_flow);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        showBottomList();
-        return false;
-      }
-    });
+    RxMenuItem.clicks(toolbar.getMenu().getItem(0))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          showBottomList();
+        }
+      });
   }
 
 
@@ -261,10 +263,10 @@ import javax.inject.Inject;
 
     if (item instanceof CardtplOptionItem) {
       //会员卡价格修改
-      routeTo("/cardtpl/option/", new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build());
+      routeTo("/cardtpl/option/", new cn.qingchengfit.saasbase.cards.views.CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build());
     } else if (item instanceof AddCardtplStantardItem) {
       //新增会员卡价格
-      routeTo("/cardtpl/option/add/", new CardtplOptionAddParams()
+      routeTo("/cardtpl/option/add/", new cn.qingchengfit.saasbase.cards.views.CardtplOptionAddParams()
         .cardTplId(presenter.getCardtplId())
         .cardCate(presenter.getCardCate())
         .build());

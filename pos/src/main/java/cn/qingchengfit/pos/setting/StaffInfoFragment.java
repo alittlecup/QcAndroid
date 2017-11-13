@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,6 +21,7 @@ import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DialogUtils;
@@ -33,9 +33,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bumptech.glide.Glide;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import static android.view.View.GONE;
@@ -88,17 +90,19 @@ public class StaffInfoFragment extends SaasBaseFragment implements CashierPresen
     initToolbar(toolbar);
     toolbarTitle.setText("收银员");
     toolbar.inflateMenu(R.menu.menu_save);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        if (check()){
-          DialogUtils.showAlert(getContext(), "请完善信息");
-        }else{
-          presenter.onModifyCashier(cashier.id, inputSettingStaffDetailName.getContent(),
+    RxMenuItem.clicks(toolbar.getMenu().getItem(0))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          if (check()){
+            DialogUtils.showAlert(getContext(), "请完善信息");
+          }else{
+            presenter.onModifyCashier(cashier.id, inputSettingStaffDetailName.getContent(),
               inputSettingStaffPhone.getContent(), inputSettingStaffGender.getContent().equals("男") ? 0 : 1);
+          }
         }
-        return false;
-      }
-    });
+      });
+
   }
 
   @OnClick(R.id.input_setting_staff_gender)

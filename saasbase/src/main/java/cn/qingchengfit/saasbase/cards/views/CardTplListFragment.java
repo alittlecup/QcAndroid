@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
@@ -67,14 +68,20 @@ public class CardTplListFragment extends BaseListFragment {
           datas.add(generateItem(cardTpl));
         }
       }
+      if (datas.size() == 0)
+        datas.add(commonNoDataItem);
       commonFlexAdapter.notifyDataSetChanged();
       //commonFlexAdapter.(datas,false);
     }
   }
 
   public int getItemCount(){
-    if (commonFlexAdapter != null)
-      return commonFlexAdapter.getItemCount();
+    if (commonFlexAdapter != null) {
+      if (commonFlexAdapter.getItemCount() == 1 && commonFlexAdapter.getItem(0) instanceof CommonNoDataItem)
+        return 0;
+      else
+        return commonFlexAdapter.getItemCount();
+    }
     else return 0;
   }
   protected CardTplItem generateItem(CardTpl cardTpl){
@@ -82,7 +89,7 @@ public class CardTplListFragment extends BaseListFragment {
   }
 
   @Override public int getNoDataIconRes() {
-    return R.drawable.vd_img_empty_universe;
+    return R.drawable.vd_card_empty;
   }
 
   @Override public String getNoDataStr() {

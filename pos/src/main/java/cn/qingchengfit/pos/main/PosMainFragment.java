@@ -6,7 +6,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,15 +19,18 @@ import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.items.ImageActionItem;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 /**
@@ -88,12 +90,14 @@ public class PosMainFragment extends BaseFragment implements FlexibleAdapter.OnI
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     toolbar.inflateMenu(R.menu.menu_setting);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        routeTo(AppUtils.getRouterUri(getContext(), "/setting/home/"), null);
-        return true;
-      }
-    });
+    RxMenuItem.clicks(toolbar.getMenu().getItem(0))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          routeTo(AppUtils.getRouterUri(getContext(), "/setting/home/"), null);
+        }
+      });
+
     toolbarLayout.setPadding(0,MeasureUtils.getStatusBarHeight(getContext()),0,0);
     toolbarTitle.setText(gymWrapper.name());
     PhotoUtils.smallCircle(imgLeft, gymWrapper.getCoachService().getPhoto());

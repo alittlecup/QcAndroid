@@ -138,7 +138,7 @@ import javax.inject.Inject;
           new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              routeTo("/cardtpl/add/", new CardtplAddParams().cardCategory(position + 1).build());
+              routeTo("/cardtpl/add/", new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(position + 1).build());
             }
           }).show();
         return true;
@@ -197,7 +197,7 @@ import javax.inject.Inject;
     if (item instanceof CardTplItem) {
       presenter.chooseOneCardTpl(((CardTplItem) item).getCardTpl());
       routeTo("/cardtpl/detail/",
-        new CardTplDetailParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
+        new cn.qingchengfit.saasbase.cards.views.CardTplDetailParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
     }
     return true;
   }

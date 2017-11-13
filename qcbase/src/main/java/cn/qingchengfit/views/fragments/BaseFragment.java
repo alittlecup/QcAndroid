@@ -245,8 +245,10 @@ public abstract class BaseFragment extends RxFragment
           }
 
           @Override public void onAnimationEnd(Animation animation) {
-            hasShown = true;
-            onFinishAnimation();
+            if (isVisible()) {
+              hasShown = true;
+              onFinishAnimation();
+            }
           }
 
           @Override public void onAnimationRepeat(Animation animation) {

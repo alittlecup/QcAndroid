@@ -84,6 +84,7 @@ public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH> imp
     public StudentVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
+      cb.setClickable(false);
     }
   }
 }
