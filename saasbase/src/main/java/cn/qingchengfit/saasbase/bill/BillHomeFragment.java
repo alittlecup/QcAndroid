@@ -215,10 +215,7 @@ import rx.functions.Action1;
       itemList.clear();
     }
 
-    if (adapter.getItem(adapter.getItemCount() - 1) instanceof ItemMoreFooter) {
-      adapter.removeItem(adapter.getItemCount() - 1);
-      adapter.notifyDataSetChanged();
-    }
+    adapter.removeAllScrollableFooters();
 
     dealFilterMonth(billList);
     adapter.updateDataSet(itemList);
@@ -279,8 +276,7 @@ import rx.functions.Action1;
   @Override public void onLoadMore() {
     isLoadMore = true;
     if (adapter.getItem(adapter.getItemCount() - 1) instanceof ItemMoreFooter) {
-      adapter.removeItem(adapter.getItemCount() - 1);
-      adapter.notifyDataSetChanged();
+      adapter.removeScrollableFooter(adapter.getItem(adapter.getItemCount() - 1));
     }
     calendar.add(Calendar.MONTH, -1);
     presenter.qcGetBillList(gymWrapper.id(), DateUtils.date2YYMMDDTHHMMSS(calendar.getTime()));
