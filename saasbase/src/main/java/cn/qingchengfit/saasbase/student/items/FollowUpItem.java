@@ -130,6 +130,7 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
                 }
                 break;
             case 4://会员转化
+                // REFACTOR: 2017/11/13 会员转换的item中销售的字段重复
                 StringBuilder sbStrans = new StringBuilder().append("销售：");
                 if (data.sellers != null && data.sellers.size() > 0) {
                     for (Staff staff : data.sellers) {
