@@ -44,8 +44,8 @@ public class AccountExpendItemItem extends AbstractFlexibleItem<AccountExpendIte
         return R.layout.layout_account_expend;
     }
 
-    @Override public AccountExpendItemVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AccountExpendItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public AccountExpendItemVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AccountExpendItemVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, AccountExpendItemVH holder, int position, List payloads) {

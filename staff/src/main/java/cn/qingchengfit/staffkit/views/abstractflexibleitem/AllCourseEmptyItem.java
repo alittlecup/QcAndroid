@@ -44,8 +44,8 @@ public class AllCourseEmptyItem extends AbstractFlexibleItem implements ISection
         return R.layout.item_course_photo_empty;
     }
 
-    @Override public RecyclerView.ViewHolder createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AllCourseEmpty(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public RecyclerView.ViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AllCourseEmpty(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, RecyclerView.ViewHolder holder, int position, List payloads) {

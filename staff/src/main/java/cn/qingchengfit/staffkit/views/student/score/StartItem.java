@@ -47,8 +47,8 @@ public class StartItem extends AbstractFlexibleItem<StartItem.StartVH> {
         return R.layout.item_student_score_start;
     }
 
-    @Override public StartVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new StartVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public StartVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new StartVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, StartVH holder, int position, List payloads) {

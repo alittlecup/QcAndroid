@@ -114,9 +114,9 @@ public class TopFilterSaleFragment extends BaseFragment
          * 在侧滑中全是单选
          */
         if (getParentFragment() != null && getParentFragment() instanceof StudentFilterFragment) {
-            mFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+            mFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         } else {
-            mFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+            mFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         }
 
         mFlexAdapter.setAnimationOnScrolling(true)

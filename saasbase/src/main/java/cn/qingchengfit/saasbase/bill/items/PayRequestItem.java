@@ -41,9 +41,8 @@ public class PayRequestItem extends AbstractFlexibleItem<PayRequestItem.PayReque
     return R.layout.item_pay_request;
   }
 
-  @Override public PayRequestVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new PayRequestVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public PayRequestVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new PayRequestVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, PayRequestVH holder, int position,

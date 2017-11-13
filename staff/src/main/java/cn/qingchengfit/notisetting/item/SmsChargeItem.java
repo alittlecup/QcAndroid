@@ -31,9 +31,8 @@ public class SmsChargeItem extends AbstractFlexibleItem<SmsChargeItem.ShopOrderV
     return R.layout.item_charge_sms_history;
   }
 
-  @Override public ShopOrderVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ShopOrderVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ShopOrderVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ShopOrderVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ShopOrderVH holder, int position,

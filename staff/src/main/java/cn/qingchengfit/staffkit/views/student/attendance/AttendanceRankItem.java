@@ -53,8 +53,8 @@ public class AttendanceRankItem extends AbstractFlexibleItem<AttendanceRankItem.
         return R.layout.item_attendance_rank;
     }
 
-    @Override public AttendanceRankVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AttendanceRankVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public AttendanceRankVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AttendanceRankVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, AttendanceRankVH holder, int position, List payloads) {

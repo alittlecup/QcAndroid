@@ -58,7 +58,7 @@ public class ReferrerItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
     }
 
     @Override
-    public MyBindingFelxibleViewHolder createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    public MyBindingFelxibleViewHolder createViewHolder(final View view, FlexibleAdapter adapter) {
         cn.qingchengfit.staffkit.databinding.ItemReferrerBinding binding = DataBindingUtil.inflate(inflater, getLayoutRes(), parent, false);
         MyBindingFelxibleViewHolder holder = new MyBindingFelxibleViewHolder(binding.getRoot(), adapter);
         holder.setBinding(binding);

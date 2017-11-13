@@ -44,8 +44,8 @@ public class SignUpAttendanceItem extends AbstractFlexibleItem<SignUpAttendanceI
         return R.layout.item_sign_up_attendance;
     }
 
-    @Override public SignUpAttendanceVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        SignUpAttendanceVH vh = new SignUpAttendanceVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SignUpAttendanceVH createViewHolder(View view, FlexibleAdapter adapter) {
+        SignUpAttendanceVH vh = new SignUpAttendanceVH(view, adapter);
         return vh;
     }
 

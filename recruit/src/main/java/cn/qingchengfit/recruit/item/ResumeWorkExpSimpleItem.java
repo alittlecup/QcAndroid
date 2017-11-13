@@ -39,8 +39,8 @@ public class ResumeWorkExpSimpleItem extends AbstractFlexibleItem<ResumeWorkExpS
     return R.layout.item_work_exp_simple;
   }
 
-  @Override public ResumeWorkExpVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    ResumeWorkExpVH vh = new ResumeWorkExpVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeWorkExpVH createViewHolder(View view, FlexibleAdapter adapter) {
+    ResumeWorkExpVH vh = new ResumeWorkExpVH(view, adapter);
     return vh;
   }
 

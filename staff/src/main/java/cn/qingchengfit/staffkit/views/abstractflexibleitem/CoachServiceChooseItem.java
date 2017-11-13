@@ -56,8 +56,8 @@
 //        return R.layout.item_gym;
 //    }
 //
-//    @Override public CoachServiceVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-//        CoachServiceVH vh = new CoachServiceVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+//    @Override public CoachServiceVH createViewHolder(View view, FlexibleAdapter adapter) {
+//        CoachServiceVH vh = new CoachServiceVH(view, adapter);
 //        return vh;
 //    }
 //

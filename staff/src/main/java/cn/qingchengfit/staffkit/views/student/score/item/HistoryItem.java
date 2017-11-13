@@ -29,8 +29,8 @@ public class HistoryItem extends AbstractFlexibleItem<HistoryItem.HistoryVH> {
         return R.layout.item_student_score_history;
     }
 
-    @Override public HistoryVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new HistoryVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public HistoryVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new HistoryVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, HistoryVH holder, int position, List payloads) {

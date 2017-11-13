@@ -65,8 +65,8 @@ public class SignUpGroupMemberItem extends AbstractFlexibleItem<SignUpGroupMembe
         return R.layout.item_group_member;
     }
 
-    @Override public SignUpGroupMemberVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        SignUpGroupMemberVH vh = new SignUpGroupMemberVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SignUpGroupMemberVH createViewHolder(View view, FlexibleAdapter adapter) {
+        SignUpGroupMemberVH vh = new SignUpGroupMemberVH(view, adapter);
         if (isOperation) {
             vh.itemDeleteMember.setVisibility(View.VISIBLE);
         } else {

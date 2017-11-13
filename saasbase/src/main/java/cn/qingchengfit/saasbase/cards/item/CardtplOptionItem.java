@@ -43,9 +43,8 @@ public class CardtplOptionItem
   }
 
   @Override
-  public CardtplStandardVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new CardtplStandardVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  public CardtplStandardVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new CardtplStandardVH(view, adapter);
   }
 
   @Override

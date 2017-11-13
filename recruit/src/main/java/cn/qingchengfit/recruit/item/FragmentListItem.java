@@ -31,9 +31,8 @@ public class FragmentListItem extends AbstractFlexibleItem<FragmentListItem.Resu
     return R.layout.item_resume_list;
   }
 
-  @Override public ResumeListVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ResumeListVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeListVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeListVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeListVH holder, int position,

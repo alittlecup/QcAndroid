@@ -91,7 +91,7 @@ public abstract class IBatchLoopFragment extends BaseFragment implements
       datas.add(new CmBottomListChosenItem(week,null));
     }
     commonFlexAdapter  = new CommonFlexAdapter(datas,this);
-    commonFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+    commonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
     rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     rv.setAdapter(commonFlexAdapter);
     initSelect();

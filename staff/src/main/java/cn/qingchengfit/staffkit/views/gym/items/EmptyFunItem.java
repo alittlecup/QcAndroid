@@ -19,8 +19,8 @@ public class EmptyFunItem extends AbstractFlexibleItem<EmptyFunItem.EmptyFunVH> 
         return R.layout.item_empty_fun;
     }
 
-    @Override public EmptyFunVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new EmptyFunVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public EmptyFunVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new EmptyFunVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, EmptyFunVH holder, int position, List payloads) {

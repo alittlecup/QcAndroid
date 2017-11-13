@@ -36,8 +36,8 @@ public class ImageChosenItem extends AbstractFlexibleItem<ImageChosenItem.ImageC
         return R.layout.item_image_chosen;
     }
 
-    @Override public ImageChosenVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ImageChosenVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ImageChosenVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ImageChosenVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ImageChosenVH holder, int position, List payloads) {

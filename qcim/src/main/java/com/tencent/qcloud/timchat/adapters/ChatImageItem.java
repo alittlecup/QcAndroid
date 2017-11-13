@@ -48,9 +48,8 @@ public class ChatImageItem extends ChatItem<ChatImageItem.ChatImageVH>
     this.context = context;
   }
 
-  @Override public ChatImageVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    ChatImageVH holder = new ChatImageVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ChatImageVH createViewHolder(View view, FlexibleAdapter adapter) {
+    ChatImageVH holder = new ChatImageVH(view, adapter);
     return holder;
   }
 

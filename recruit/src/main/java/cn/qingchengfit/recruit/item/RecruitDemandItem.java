@@ -28,8 +28,8 @@ public class RecruitDemandItem extends AbstractFlexibleItem<RecruitDemandItem.Re
     return R.layout.item_recruit_demand;
   }
 
-  @Override public RecruitDemandVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new RecruitDemandVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public RecruitDemandVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new RecruitDemandVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitDemandVH holder, int position, List payloads) {

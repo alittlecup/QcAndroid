@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.cards.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -34,9 +32,8 @@ public class CardDetailItem extends AbstractFlexibleItem<CardDetailItem.CardDeta
     return R.layout.item_card_detail;
   }
 
-  @Override public CardDetailVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-    ViewGroup parent) {
-    return new CardDetailVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public CardDetailVH createViewHolder(View view,FlexibleAdapter adapter) {
+    return new CardDetailVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CardDetailVH holder, int position,

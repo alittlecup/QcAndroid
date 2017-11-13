@@ -64,7 +64,7 @@ public abstract class PayDialog extends BottomSheetDialogFragment implements
     unbinder = ButterKnife.bind(this, view);
     rv.setLayoutManager(new LinearLayoutManager(getContext()));
     adapter = new CommonFlexAdapter(getItems(),this);
-    adapter.setMode(SelectableAdapter.MODE_SINGLE);
+    adapter.setMode(SelectableAdapter.Mode.SINGLE);
     rv.addItemDecoration(
         new FlexibleItemDecoration(getContext())
         .withDivider(R.drawable.divider_grey)

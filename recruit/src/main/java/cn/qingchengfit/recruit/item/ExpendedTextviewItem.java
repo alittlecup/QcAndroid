@@ -26,9 +26,8 @@ public class ExpendedTextviewItem
   }
 
   @Override
-  public item_expended_textviewVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new item_expended_textviewVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  public item_expended_textviewVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new item_expended_textviewVH(view, adapter);
   }
 
   @Override

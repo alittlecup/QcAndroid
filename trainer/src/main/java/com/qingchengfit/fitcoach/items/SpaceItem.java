@@ -31,8 +31,8 @@ public class SpaceItem extends AbstractFlexibleItem<SpaceItem.SpaceVH> {
         return R.layout.item_space;
     }
 
-    @Override public SpaceVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new SpaceVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SpaceVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new SpaceVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, SpaceVH holder, int position, List payloads) {

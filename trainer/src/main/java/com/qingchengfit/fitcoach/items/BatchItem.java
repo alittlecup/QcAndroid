@@ -37,8 +37,8 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
         return R.layout.item_batch;
     }
 
-    @Override public BatchVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new BatchVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public BatchVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new BatchVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BatchVH holder, int position, List payloads) {

@@ -18,9 +18,8 @@ public class AddCardtplStantardItem
   }
 
   @Override
-  public AddCardtplStantardVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new AddCardtplStantardVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  public AddCardtplStantardVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new AddCardtplStantardVH(view, adapter);
   }
 
   @Override

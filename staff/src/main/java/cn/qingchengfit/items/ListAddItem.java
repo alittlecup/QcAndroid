@@ -55,8 +55,8 @@ public class ListAddItem extends AbstractFlexibleItem<ListAddItem.ListAddVH> {
         return layout == 0 ? R.layout.item_add : layout;
     }
 
-    @Override public ListAddVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ListAddVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ListAddVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ListAddVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ListAddVH holder, int position, List payloads) {

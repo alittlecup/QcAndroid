@@ -26,8 +26,8 @@ public class DailyWorkItem extends AbstractFlexibleItem<DailyWorkItem.DailyWorkV
         return R.layout.item_daily_work;
     }
 
-    @Override public DailyWorkVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new DailyWorkVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public DailyWorkVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new DailyWorkVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, DailyWorkVH holder, int position, List payloads) {

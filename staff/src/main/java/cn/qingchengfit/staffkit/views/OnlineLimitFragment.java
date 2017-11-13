@@ -73,7 +73,7 @@ public class OnlineLimitFragment extends BottomSheetDialogFragment implements Fl
         mDatas.add(new ChooseItem("已接洽"));
         mDatas.add(new ChooseItem("会员"));
         mFlexAdapter = new CommonFlexAdapter(mDatas, this);
-        //        mFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+        //        mFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));

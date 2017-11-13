@@ -78,6 +78,7 @@ import javax.inject.Inject;
   @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
   @BindView(R2.id.tv_gym_name) TextView tvGymName;
   @BindView(R2.id.tv_card_id) TextView tvCardId;
+  @BindView(R2.id.img_stutus) TextView cardStatus;
   @BindView(R2.id.cardview) RelativeLayout cardview;
   @BindView(R2.id.recycleview) RecyclerView recycleview;
   @BindView(R2.id.btn_del) TextView btnDel;
@@ -208,6 +209,9 @@ import javax.inject.Inject;
       DrawableUtils.generateBg(8, CardBusinessUtils.getDefaultCardbgColor(card_tpl.getType())));
     tvCardAppend.setText(card_tpl.getLimit());
     tvGymName.setText(card_tpl.getShopNames());
+    cardStatus.setVisibility(cardTpl.is_enable?View.GONE:View.VISIBLE);
+    cardStatus.setBackground(DrawableUtils.generateCardStatusBg(R.color.red,getContext()));
+
     //limit.setText(card_tpl.getLimit());
     //intro.setText(card_tpl.getDescription());
     //type.setText(CardBusinessUtils.getCardTypeCategoryStr(card_tpl.getType(), getContext()));

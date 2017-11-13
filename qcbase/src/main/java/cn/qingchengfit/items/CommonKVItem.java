@@ -1,8 +1,6 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,10 +43,10 @@ public class CommonKVItem extends AbstractFlexibleItem<CommonKVItem.CommonKVVH> 
     return R.layout.item_common_kv;
   }
 
-  @Override public CommonKVVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-    ViewGroup parent) {
-    return new CommonKVVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public CommonKVVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new CommonKVVH(view,adapter);
   }
+
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CommonKVVH holder, int position,
     List payloads) {

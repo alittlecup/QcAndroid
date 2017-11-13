@@ -104,7 +104,7 @@ public class CourseImagesFragment extends BaseFragment
         //        mCallbackActivity.setToolbar("全部课程照片", false, null, 0, null);
         //init recycle
         mAdatper = new AllCourseImagesAdapter(mDatas, this);
-        mAdatper.setMode(SelectableAdapter.MODE_SINGLE);
+        mAdatper.setMode(SelectableAdapter.Mode.SINGLE);
         mAdatper.setDisplayHeadersAtStartUp(true);
 
         SmoothScrollGridLayoutManager layoutManager = new SmoothScrollGridLayoutManager(getContext(), 3);

@@ -50,8 +50,8 @@ public abstract class CommonAllocateDetailItem<T extends CommonAllocateDetailIte
         isAlphaBet = alphaBet;
     }
 
-    @Override public T createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return (T) new AllocateDetailVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public T createViewHolder(View view, FlexibleAdapter adapter) {
+        return (T) new AllocateDetailVH(view, adapter);
     }
 
     @Override public boolean filter(String constraint) {

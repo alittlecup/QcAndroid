@@ -41,8 +41,8 @@ public class ArticleReplyItem extends AbstractFlexibleItem<ArticleReplyItem.Arti
         return R.layout.item_article_reply;
     }
 
-    @Override public ArticleReplyVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ArticleReplyVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ArticleReplyVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ArticleReplyVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ArticleReplyVH holder, int position, List payloads) {

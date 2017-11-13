@@ -1,8 +1,6 @@
 package cn.qingchengfit.pos.setting;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -29,9 +27,8 @@ public class ItemCashier extends AbstractFlexibleItem<ItemCashier.ItemCashierVH>
     this.cashier = cashier;
   }
 
-  @Override public ItemCashierVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ItemCashierVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ItemCashierVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ItemCashierVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemCashierVH holder, int position,

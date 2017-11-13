@@ -39,8 +39,8 @@ public class JackTitleItem extends AbstractFlexibleItem<JackTitleItem.JacketTitl
         return false;
     }
 
-    @Override public JacketTitleVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new JacketTitleVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public JacketTitleVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new JacketTitleVH(view, adapter);
     }
 
     @Override public int getLayoutRes() {

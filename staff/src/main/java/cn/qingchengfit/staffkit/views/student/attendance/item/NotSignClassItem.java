@@ -36,9 +36,8 @@ public class NotSignClassItem extends AbstractFlexibleItem<NotSignClassItem.NotS
     return student;
   }
 
-  @Override public NotSignVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    NotSignVH holder = new NotSignVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public NotSignVH createViewHolder(View view, FlexibleAdapter adapter) {
+    NotSignVH holder = new NotSignVH(view, adapter);
     holder.btnContactHim.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (contactListener != null){

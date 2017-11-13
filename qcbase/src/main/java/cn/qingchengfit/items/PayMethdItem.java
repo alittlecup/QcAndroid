@@ -1,9 +1,7 @@
 package cn.qingchengfit.items;
 
 import android.support.annotation.DrawableRes;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -29,9 +27,8 @@ public class PayMethdItem extends AbstractFlexibleItem<PayMethdItem.PayMethdVH> 
     return R.layout.item_pay_method;
   }
 
-  @Override public PayMethdVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new PayMethdVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public PayMethdVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new PayMethdVH(view,adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, PayMethdVH holder, int position,

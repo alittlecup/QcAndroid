@@ -18,8 +18,8 @@ public class HideBatchItem extends AbstractFlexibleItem<HideBatchItem.HideBatchV
         return R.layout.item_hide_batch;
     }
 
-    @Override public HideBatchVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new HideBatchVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public HideBatchVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new HideBatchVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, HideBatchVH holder, int position, List payloads) {

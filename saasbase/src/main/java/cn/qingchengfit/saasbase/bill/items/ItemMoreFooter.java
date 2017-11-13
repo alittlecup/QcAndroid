@@ -33,9 +33,8 @@ public class ItemMoreFooter extends AbstractFlexibleItem<ItemMoreFooter.ItemMore
     return R.layout.item_more_footer;
   }
 
-  @Override public ItemMoreVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    ItemMoreVH holder = new ItemMoreVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ItemMoreVH createViewHolder(View view, FlexibleAdapter adapter) {
+    ItemMoreVH holder = new ItemMoreVH(view, adapter);
     holder.textLoadMore.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         if (onFooterClickListener != null){

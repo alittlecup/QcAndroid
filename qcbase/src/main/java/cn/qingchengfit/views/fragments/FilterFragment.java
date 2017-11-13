@@ -44,7 +44,7 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
         unbinder = ButterKnife.bind(this, view);
         rlPopWindowCommon.setLayoutManager(new LinearLayoutManager(getContext()));
         rlPopWindowCommon.setAdapter(commonFlexAdapter);
-        commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+        commonFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         commonFlexAdapter.addListener(this);
         return view;
     }

@@ -146,12 +146,11 @@ public abstract class BaseListFragment extends BaseFragment {
     stopRefresh();
     if (rv != null && commonFlexAdapter != null) {
       if (page == 1) clearItems();
-      for (AbstractFlexibleItem item : ds) {
-        commonFlexAdapter.addItem(item);
-      }
-      if (commonFlexAdapter.getItemCount() == 0 && commonNoDataItem != null) {
+      commonFlexAdapter.onLoadMoreComplete(ds, 500);
+      if ((ds == null || ds.size() == 0 )&& commonNoDataItem != null) {
         addEmptyPage();
       }
+
       commonFlexAdapter.notifyDataSetChanged();
     }
   }

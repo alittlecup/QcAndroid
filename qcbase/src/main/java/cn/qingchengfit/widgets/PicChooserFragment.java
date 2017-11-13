@@ -17,10 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.MeasureUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class PicChooserFragment extends Fragment implements FlexibleAdapter.OnIt
             }
         });
         mFlexAdapter = new CommonFlexAdapter(mDatas, this);
-        mFlexAdapter.setMode(mModeSingle ? SelectableAdapter.MODE_SINGLE : SelectableAdapter.MODE_MULTI);
+        mFlexAdapter.setMode(mModeSingle ? SelectableAdapter.Mode.SINGLE : SelectableAdapter.Mode.MULTI);
         mRecyclerView.setHasFixedSize(true);
         SmoothScrollGridLayoutManager manager = new SmoothScrollGridLayoutManager(getContext(), 3);
         mRecyclerView.setLayoutManager(manager);

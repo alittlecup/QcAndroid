@@ -44,9 +44,8 @@ public class ChatVoiceItem extends ChatItem<ChatVoiceItem.ChatVoiceVH>{
     this.context = context;
   }
 
-  @Override public ChatVoiceVH createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    ChatVoiceVH holder = new ChatVoiceVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ChatVoiceVH createViewHolder(final View view, FlexibleAdapter adapter) {
+    ChatVoiceVH holder = new ChatVoiceVH(view, adapter);
     if (voiceMessage.isSelf()) {
       holder.layoutLeftMessage.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View view) {

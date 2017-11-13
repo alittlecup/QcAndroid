@@ -45,10 +45,6 @@ public class CardListFragment extends BaseListFragment {
       new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_saas_realcard));
   }
 
-  @Override protected void setAnimation() {
-    super.setAnimation();
-  }
-
   public void setCardtpls(List<Card> list, int page) {
     stopRefresh();
     if (commonFlexAdapter != null) {

@@ -35,8 +35,8 @@ public class CoachStudentDetailItem extends CommonAllocateDetailItem<CoachStuden
         return R.layout.item_coach_student_detail;
     }
 
-    @Override public CoachStudentDetailVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new CoachStudentDetailVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public CoachStudentDetailVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new CoachStudentDetailVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CoachStudentDetailVH holder, int position, List payloads) {

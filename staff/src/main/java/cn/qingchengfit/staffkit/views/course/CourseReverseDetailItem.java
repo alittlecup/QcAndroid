@@ -43,8 +43,8 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
         return order;
     }
 
-    @Override public CourseReverseVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new CourseReverseVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public CourseReverseVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new CourseReverseVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CourseReverseVH holder, int position, List payloads) {

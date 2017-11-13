@@ -45,8 +45,8 @@ public class PayWardrobeItem extends AbstractFlexibleItem<PayWardrobeItem.PayWar
         return R.layout.item_pay_wardrobe;
     }
 
-    @Override public PayWardrobeVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new PayWardrobeVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public PayWardrobeVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new PayWardrobeVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, PayWardrobeVH holder, int position, List payloads) {

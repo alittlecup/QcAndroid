@@ -1,9 +1,7 @@
 package cn.qingchengfit.items;
 
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -35,9 +33,8 @@ public class CmBottomListChosenItem
     return R.layout.item_cm_bottom_list_choose;
   }
 
-  @Override public CmBottomListVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new CmBottomListVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public CmBottomListVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new CmBottomListVH(view,adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CmBottomListVH holder, int position,

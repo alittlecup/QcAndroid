@@ -26,8 +26,8 @@ public class LinearFunItem extends AbstractFlexibleItem<LinearFunItem.LinearFunV
         return R.layout.item_linear_function;
     }
 
-    @Override public LinearFunVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new LinearFunVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public LinearFunVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new LinearFunVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, LinearFunVH holder, int position, List payloads) {

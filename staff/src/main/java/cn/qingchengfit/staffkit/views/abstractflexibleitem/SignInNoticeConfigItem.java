@@ -33,8 +33,8 @@ public class SignInNoticeConfigItem extends AbstractFlexibleItem<SignInNoticeCon
         return R.layout.item_signin_config;
     }
 
-    @Override public ItemViewHolder createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ItemViewHolder(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ItemViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ItemViewHolder(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ItemViewHolder holder, int position, List payloads) {

@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.staff.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,7 +14,7 @@ import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFilterable;
-import eu.davidea.flexibleadapter.utils.Utils;
+import eu.davidea.flexibleadapter.utils.FlexibleUtils;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -36,17 +34,21 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implement
     return R.layout.item_student;
   }
 
-  @Override public StaffVH createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    StaffVH holder = new StaffVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public StaffVH createViewHolder(final View view, FlexibleAdapter adapter) {
+    StaffVH holder = new StaffVH(view, adapter);
     return holder;
   }
 
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, StaffVH holder, int position, List payloads) {
     PhotoUtils.smallCircle(holder.itemStudentHeader,staff.getAvatar());
-    Utils.highlightText(holder.itemStudentName,staff.getUsername(),adapter.getSearchText());
-    Utils.highlightText(holder.itemStudentPhonenum,staff.getPhone(),adapter.getSearchText());
+    if (adapter.hasSearchText()) {
+      FlexibleUtils.highlightWords(holder.itemStudentName, staff.getUsername(), adapter.getSearchText());
+      FlexibleUtils.highlightWords(holder.itemStudentPhonenum, staff.getPhone(), adapter.getSearchText());
+    }else {
+      holder.itemStudentName.setText(staff.getUsername());
+      holder.itemStudentPhonenum.setText(staff.getPhone());
+    }
     holder.itemStudentGender.setImageResource(staff.gender == 0 ?R.drawable.ic_gender_signal_male:R.drawable.ic_gender_signal_female);
   }
 

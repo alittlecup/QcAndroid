@@ -39,8 +39,8 @@ public class HintExpandItem extends AbstractFlexibleItem<HintExpandItem.HintExpa
         return R.layout.item_hint_expand;
     }
 
-    @Override public HintExpandVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new HintExpandVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public HintExpandVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new HintExpandVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, HintExpandVH holder, int position, List payloads) {

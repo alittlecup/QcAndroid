@@ -27,8 +27,8 @@ public class TotalCountFooterItem extends AbstractFlexibleItem<TotalCountFooterI
         return R.layout.item_total_count_footer;
     }
 
-    @Override public ItemViewHolder createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ItemViewHolder(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ItemViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ItemViewHolder(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ItemViewHolder holder, int position, List payloads) {

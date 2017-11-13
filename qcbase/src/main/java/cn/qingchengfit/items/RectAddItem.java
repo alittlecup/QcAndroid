@@ -1,8 +1,6 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -16,9 +14,10 @@ public class RectAddItem extends AbstractFlexibleItem<RectAddItem.RectAddVH> {
         return R.layout.item_rect_add;
     }
 
-    @Override public RectAddVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new RectAddVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public RectAddVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new RectAddVH(view,adapter);
     }
+
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, RectAddVH holder, int position, List payloads) {
     }

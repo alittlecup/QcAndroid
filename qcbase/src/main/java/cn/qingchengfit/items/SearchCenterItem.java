@@ -1,8 +1,6 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -30,10 +28,10 @@ public class SearchCenterItem extends AbstractFlexibleItem<SearchCenterItem.Sear
     return R.layout.layout_search_hint_center;
   }
 
-  @Override public SearchCenterVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new SearchCenterVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public SearchCenterVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new SearchCenterVH(view,adapter);
   }
+
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, SearchCenterVH holder, int position,
       List payloads) {

@@ -52,7 +52,7 @@ public class AllCourseImageHeaderItem extends AbstractHeaderItem {
         return R.layout.item_all_course_image_header;
     }
 
-    @Override public RecyclerView.ViewHolder createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    @Override public RecyclerView.ViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
         return new CourseImageHeaderHolder(inflater.inflate(R.layout.item_all_course_image_header, parent, false), adapter);
     }
 

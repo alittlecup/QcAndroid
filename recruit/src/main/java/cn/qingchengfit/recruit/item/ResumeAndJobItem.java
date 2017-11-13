@@ -50,9 +50,8 @@ public class ResumeAndJobItem extends AbstractFlexibleItem<ResumeAndJobItem.Resu
     return R.layout.item_resume_and_jobfair;
   }
 
-  @Override public ResumeAndJobVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ResumeAndJobVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeAndJobVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeAndJobVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeAndJobVH holder, int position,

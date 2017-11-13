@@ -36,9 +36,8 @@ public class BatchScheduleItem extends AbstractFlexibleItem<BatchScheduleItem.Ba
   }
 
   @Override
-  public BatchScheduleVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new BatchScheduleVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  public BatchScheduleVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new BatchScheduleVH(view, adapter);
   }
 
   @Override

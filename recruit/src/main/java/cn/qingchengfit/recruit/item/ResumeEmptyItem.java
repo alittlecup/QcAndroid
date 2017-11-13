@@ -32,8 +32,8 @@ public class ResumeEmptyItem extends AbstractFlexibleItem<ResumeEmptyItem.Resume
     return R.layout.item_resume_empty;
   }
 
-  @Override public ResumeEmptyVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new ResumeEmptyVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeEmptyVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeEmptyVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeEmptyVH holder, int position, List payloads) {

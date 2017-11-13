@@ -41,8 +41,8 @@ public class JacketAddItem extends AbstractFlexibleItem<JacketAddItem.JacketAddV
         return false;
     }
 
-    @Override public JacketAddVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new JacketAddVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public JacketAddVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new JacketAddVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, JacketAddVH holder, int position, List payloads) {

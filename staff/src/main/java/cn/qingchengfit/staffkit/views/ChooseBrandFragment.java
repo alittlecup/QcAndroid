@@ -83,7 +83,7 @@ public class ChooseBrandFragment extends BaseDialogFragment implements FlexibleA
         View view = inflater.inflate(R.layout.fragment_choose_brand, container, false);
         unbinder = ButterKnife.bind(this, view);
         mCommonFlexAdapter = new CommonFlexAdapter(mDatas, this);
-        mCommonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+        mCommonFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         rvBrand.setHasFixedSize(true);
         rvBrand.setNestedScrollingEnabled(false);
         rvBrand.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));

@@ -26,8 +26,8 @@ public class ResumeWebDescItem extends AbstractFlexibleItem<ResumeWebDescItem.Re
     return R.layout.item_resume_desc_detail;
   }
 
-  @Override public ResumeWebDescVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new ResumeWebDescVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeWebDescVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeWebDescVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeWebDescVH holder, int position, List payloads) {

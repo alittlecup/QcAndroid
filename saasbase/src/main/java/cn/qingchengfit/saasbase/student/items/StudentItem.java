@@ -44,9 +44,8 @@ public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH> imp
     return R.layout.item_student;
   }
 
-  @Override public StudentVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new StudentVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public StudentVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new StudentVH(view, adapter);
   }
   @Override public void bindViewHolder(FlexibleAdapter adapter, StudentVH holder, int position,
       List payloads) {

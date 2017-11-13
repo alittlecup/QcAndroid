@@ -57,8 +57,8 @@ public class JackManageItem extends AbstractFlexibleItem<JackManageItem.JackMana
         return R.layout.item_jacket_manage;
     }
 
-    @Override public JackManageVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new JackManageVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public JackManageVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new JackManageVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, JackManageVH holder, int position, List payloads) {

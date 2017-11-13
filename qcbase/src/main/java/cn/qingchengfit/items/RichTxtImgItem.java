@@ -1,9 +1,7 @@
 package cn.qingchengfit.items;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,9 +34,8 @@ public class RichTxtImgItem extends AbstractFlexibleItem<RichTxtImgItem.RichTxtI
     return R.layout.item_rich_img;
   }
 
-  @Override public RichTxtImgVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new RichTxtImgVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public RichTxtImgVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new RichTxtImgVH(view,adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, RichTxtImgVH holder, int position,

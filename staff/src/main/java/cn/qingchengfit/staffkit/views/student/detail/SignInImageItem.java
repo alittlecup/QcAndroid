@@ -57,8 +57,8 @@ public class SignInImageItem extends AbstractFlexibleItem<SignInImageItem.SignIn
         return R.layout.item_student_fix_img;
     }
 
-    @Override public SignInImageVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new SignInImageVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SignInImageVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new SignInImageVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, SignInImageVH holder, int position, List payloads) {

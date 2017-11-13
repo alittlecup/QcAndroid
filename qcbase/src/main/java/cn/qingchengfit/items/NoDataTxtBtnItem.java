@@ -1,8 +1,6 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -32,8 +30,8 @@ public class NoDataTxtBtnItem extends AbstractFlexibleItem<NoDataTxtBtnItem.NoDa
         return R.layout.item_no_data_text_btn;
     }
 
-    @Override public NoDataTxtBtnVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new NoDataTxtBtnVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public NoDataTxtBtnVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new NoDataTxtBtnVH(view,adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, NoDataTxtBtnVH holder, int position, List payloads) {

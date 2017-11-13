@@ -47,8 +47,8 @@ public class HintHighlightItem extends AbstractFlexibleItem<HintHighlightItem.Hi
         return R.layout.item_hint_hightlight;
     }
 
-    @Override public HintHighlightVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new HintHighlightVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public HintHighlightVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new HintHighlightVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, HintHighlightVH holder, int position, List payloads) {

@@ -1,10 +1,8 @@
 package cn.qingchengfit.widgets;
 
-import android.animation.Animator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
-import android.view.View;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -52,13 +50,13 @@ public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
     return Tags.get(key);
   }
 
-  @Override public List<Animator> getAnimators(View itemView, int position, boolean isSelected) {
-    List<Animator> animators = new ArrayList<Animator>();
-
-    if (position != positionOld) positionOld = position;
-
-    return animators;
-  }
+  //@Override public List<Animator> getAnimators(View itemView, int position, boolean isSelected) {
+  //  List<Animator> animators = new ArrayList<Animator>();
+  //
+  //  if (position != positionOld) positionOld = position;
+  //
+  //  return animators;
+  //}
 
   @Override public boolean hasNewSearchText(String newText) {
     //return super.hasNewSearchText(newText);

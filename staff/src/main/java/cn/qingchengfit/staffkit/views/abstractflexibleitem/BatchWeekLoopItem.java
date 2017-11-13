@@ -32,8 +32,8 @@ public class BatchWeekLoopItem extends AbstractFlexibleItem<BatchWeekLoopItem.Ba
         return R.layout.item_batch_week_loop;
     }
 
-    @Override public BatchWeekLoopVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new BatchWeekLoopVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public BatchWeekLoopVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new BatchWeekLoopVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BatchWeekLoopVH holder, int position, List payloads) {

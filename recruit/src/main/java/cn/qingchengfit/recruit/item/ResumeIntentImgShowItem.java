@@ -31,8 +31,8 @@ public class ResumeIntentImgShowItem extends AbstractFlexibleItem<ResumeIntentIm
     return R.layout.item_resume_imgs_show;
   }
 
-  @Override public ResumeIntentImgShowVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new ResumeIntentImgShowVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeIntentImgShowVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeIntentImgShowVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeIntentImgShowVH holder, int position, List payloads) {

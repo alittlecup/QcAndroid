@@ -25,8 +25,8 @@ public class AlphabetHeaderItem extends AbstractHeaderItem<AlphabetHeaderItem.Al
         return R.layout.item_fun_header;
     }
 
-    @Override public AlphabetHeaderVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AlphabetHeaderVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public AlphabetHeaderVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AlphabetHeaderVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, AlphabetHeaderVH holder, int position, List payloads) {

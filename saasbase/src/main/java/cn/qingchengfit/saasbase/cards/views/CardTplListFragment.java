@@ -62,6 +62,7 @@ public class CardTplListFragment extends BaseListFragment {
   public void setCardtpls(List<CardTpl> list){
     stopRefresh();
     if (commonFlexAdapter != null) {
+      commonFlexAdapter.clear();
       datas.clear();
       if (list != null) {
         for (CardTpl cardTpl : list) {
@@ -70,8 +71,8 @@ public class CardTplListFragment extends BaseListFragment {
       }
       if (datas.size() == 0)
         datas.add(commonNoDataItem);
-      commonFlexAdapter.notifyDataSetChanged();
-      //commonFlexAdapter.(datas,false);
+      //commonFlexAdapter.notifyDataSetChanged();
+      commonFlexAdapter.onLoadMoreComplete(datas,500);
     }
   }
 

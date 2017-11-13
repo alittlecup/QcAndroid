@@ -65,8 +65,8 @@ public class BatchPayCardHeaderItem extends AbstractHeaderItem<BatchPayCardHeade
         return R.layout.item_batch_pay_card_header;
     }
 
-    @Override public BatchPayCardHeaderVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new BatchPayCardHeaderVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public BatchPayCardHeaderVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new BatchPayCardHeaderVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BatchPayCardHeaderVH holder, int position, List payloads) {

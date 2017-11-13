@@ -35,9 +35,8 @@ public class ItemBillAccount extends AbstractFlexibleItem<ItemBillAccount.ItemBi
   }
 
   @Override
-  public ItemBillAccountVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ItemBillAccountVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  public ItemBillAccountVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ItemBillAccountVH(view, adapter);
   }
 
   @Override

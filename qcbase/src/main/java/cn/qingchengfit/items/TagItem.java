@@ -33,8 +33,8 @@ public class TagItem extends AbstractFlexibleItem<TagItem.TagVH> {
         return R.layout.item_tag;
     }
 
-    @Override public TagVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new TagVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public TagVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new TagVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, TagVH holder, int position, List payloads) {

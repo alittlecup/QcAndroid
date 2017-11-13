@@ -29,9 +29,8 @@ public class NotiSettingMsgDetailItem
   }
 
   @Override
-  public NotiSettingMsgDetailVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new NotiSettingMsgDetailVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  public NotiSettingMsgDetailVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new NotiSettingMsgDetailVH(view, adapter);
   }
 
   @Override

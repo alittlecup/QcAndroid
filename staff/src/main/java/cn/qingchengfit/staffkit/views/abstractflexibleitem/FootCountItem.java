@@ -23,8 +23,8 @@ public class FootCountItem extends AbstractFlexibleItem<FootCountItem.FootCountV
         return R.layout.item_foot_count;
     }
 
-    @Override public FootCountVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new FootCountVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public FootCountVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new FootCountVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, FootCountVH holder, int position, List payloads) {

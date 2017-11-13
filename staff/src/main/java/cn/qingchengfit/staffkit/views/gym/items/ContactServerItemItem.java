@@ -16,8 +16,8 @@ public class ContactServerItemItem extends AbstractFlexibleItem<ContactServerIte
         return R.layout.item_contact_qingcheng;
     }
 
-    @Override public ContactServerItemVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ContactServerItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ContactServerItemVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ContactServerItemVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ContactServerItemVH holder, int position, List payloads) {

@@ -26,8 +26,8 @@ public class Image140Item extends AbstractFlexibleItem<Image140Item.Image140VH> 
     return R.layout.item_resume_imgs_show_item;
   }
 
-  @Override public Image140VH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new Image140VH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public Image140VH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new Image140VH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, Image140VH holder, int position, List payloads) {

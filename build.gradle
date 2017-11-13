@@ -57,6 +57,7 @@ buildscript {
 
 allprojects {
   repositories {
+    jcenter()
     maven {
       url 'http://43.241.209.158:15004/repository/maven-releases/'
     }
@@ -69,7 +70,6 @@ allprojects {
       }
     }
 
-    jcenter()
 
     mavenCentral()
 
