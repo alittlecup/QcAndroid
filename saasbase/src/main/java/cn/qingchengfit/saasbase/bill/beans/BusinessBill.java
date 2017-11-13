@@ -87,21 +87,22 @@ public class BusinessBill implements Parcelable{
     };
   }
 
-
-
-  public String getPrice(float price, int type){
-    switch (type){
+  public String getPrice(float price, int type) {
+    String symbol = "";
+    switch (type) {
       case 1:
       case 2:
       case 3:
       case 4:
       case 7:
-        return "+"  + price / 100 ;
+        symbol = "+";
+        break;
       case 5:
       case 6:
-        return "-"  + price / 100;
+        symbol = "-";
+        break;
     }
-    return String.valueOf(price);
+    return symbol + String.format("%.2f", price / 100);
   }
 
   public String getTradeType(Context context, int type, String payType){

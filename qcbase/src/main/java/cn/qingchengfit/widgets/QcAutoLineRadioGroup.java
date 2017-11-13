@@ -259,6 +259,9 @@ public class QcAutoLineRadioGroup extends LinearLayout
         ((QcCheckable) v).setChecked(false);
       }
     }
+    if (onCheckoutPositionListener != null){
+      onCheckoutPositionListener.onCheckPosition(new ArrayList<Integer>());
+    }
   }
 
   public CheckedChange getCheckedChange() {
