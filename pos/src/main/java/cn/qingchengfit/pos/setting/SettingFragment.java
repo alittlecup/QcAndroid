@@ -90,7 +90,7 @@ import javax.inject.Inject;
   @OnClick(R.id.layout_setting_staff)
   public void onStaffDetail(){
     routeTo(AppUtils.getRouterUri(getContext(), "setting/cashier/detail/"),
-        new StaffInfoParams().cashier(loginStatus.getLoginUser()).build());
+        new cn.qingchengfit.pos.setting.StaffInfoParams().cashier(loginStatus.getLoginUser()).build());
   }
 
   @OnClick(R.id.input_cashier) public void onCashier() {
