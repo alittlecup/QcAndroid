@@ -116,7 +116,7 @@ public class BillFilterFragment extends BaseFragment
         itemList.add(new ItemFilterCommon(filter));
       }
     }
-    adapter.notifyDataSetChanged();
+    adapter.onLoadMoreComplete(itemList,500);
   }
 
   @Override public void onTimeStart(String start, String key) {
