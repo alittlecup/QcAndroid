@@ -33,8 +33,11 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.FilterFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import rx.functions.Action;
 import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.functions.Action2;
+import rx.functions.Action3;
 
 /**
  * power by
@@ -104,36 +107,24 @@ public class FilterTimesFragment extends SaasBaseFragment {
                 if (type == 0) {
                     switch (position) {
                         case 0:
-                            model.today.set("今日");
-                            filter.registerTimeStart = DateUtils.getStringToday();
-                            filter.registerTimeEnd = DateUtils.getStringToday();
+                            daySelect.call(DateUtils.getStringToday(),DateUtils.getStringToday(),"今日");
                             break;
                         case 1:
-                            filter.registerTimeEnd = DateUtils.getStringToday();
-                            filter.registerTimeStart = DateUtils.minusDay(new Date(), 6);
-                            model.today.set("最近7天");
+                            daySelect.call(DateUtils.minusDay(new Date(), 6),DateUtils.getStringToday(),"最近7天");
                             break;
                         case 2:
-                            model.today.set("最近30天");
-                            filter.registerTimeEnd = DateUtils.getStringToday();
-                            filter.registerTimeStart = DateUtils.minusDay(new Date(), 29);
+                            daySelect.call(DateUtils.minusDay(new Date(), 29),DateUtils.getStringToday(),"最近30天");
                             break;
                     }
-                    selectAction.call(0);
                 } else {
                     switch (position) {
                         case 0:
-                            topFilter.registerTimeEnd = DateUtils.getStringToday();
-                            topFilter.registerTimeStart = DateUtils.minusDay(new Date(), 6);
-                            model.topLatestDay.set("最近7天");
+                            daySelect.call(DateUtils.minusDay(new Date(), 6),DateUtils.getStringToday(),"最近7天");
                             break;
                         case 1:
-                            model.topLatestDay.set("最近30天");
-                            topFilter.registerTimeEnd = DateUtils.getStringToday();
-                            topFilter.registerTimeStart = DateUtils.minusDay(new Date(), 29);
+                            daySelect.call(DateUtils.minusDay(new Date(), 29),DateUtils.getStringToday(),"最近30天");
                             break;
                     }
-                    selectAction.call(1);
                 }
             }
         });
@@ -142,17 +133,8 @@ public class FilterTimesFragment extends SaasBaseFragment {
         filterCustomFragment.setOnBackFilterDataListener(new FilterCustomFragment.OnBackFilterDataListener() {
             @Override
             public void onSettingData(String start, String end) {
-                if (type == 0) {
-                    filter.registerTimeEnd = end;
-                    filter.registerTimeStart = start;
-                    selectAction.call(0);
-                }else{
-                    topFilter.registerTimeEnd = end;
-                    topFilter.registerTimeStart = start;
-                    selectAction.call(1);
-                }
+                daySelect.call(start, end, start+"至"+end);
             }
-
             @Override
             public void onBack() {
                 getChildFragmentManager().popBackStackImmediate();
@@ -192,11 +174,11 @@ public class FilterTimesFragment extends SaasBaseFragment {
         return FilterTimesFragment.class.getName();
     }
 
-    private Action1<Integer> selectAction;
 
-    public void setSelectAction(Action1<Integer> action) {
-        this.selectAction = action;
+
+    private Action3<String, String, String> daySelect;
+
+    public void setSelectDayAction(Action3<String, String, String> daySelected) {
+        this.daySelect = daySelected;
     }
-
-
 }

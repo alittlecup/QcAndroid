@@ -17,6 +17,7 @@ import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
+import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.network.body.StudentWithCoashListWrap;
 import rx.Observable;
 
@@ -126,5 +127,10 @@ public class StudentModel implements IStudentModel {
     @Override
     public Observable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(String staff_id, HashMap<String, Object> params) {
         return studentApi.qcGetTrackStudentsFilterSalers(staff_id, params);
+    }
+
+    @Override
+    public Observable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(String staff_id, HashMap<String, Object> params) {
+        return studentApi.qcGetTrackStudentsConver(staff_id, params);
     }
 }

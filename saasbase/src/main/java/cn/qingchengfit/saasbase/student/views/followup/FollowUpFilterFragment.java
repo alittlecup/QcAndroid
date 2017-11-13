@@ -84,29 +84,40 @@ public class FollowUpFilterFragment extends BaseFilterFragment {
             filter.gender = position == 0 ? null : String.valueOf(position - 1);
             selectAction.call(0);
         });
-        topDayFragment=FilterTimesFragment.getInstance(1,30);
-        dayFragment=FilterTimesFragment.getInstance(0,-1);
+        topDayFragment = FilterTimesFragment.getInstance(1, 30);
+        dayFragment = FilterTimesFragment.getInstance(0, -1);
 
-        topDayFragment.setSelectAction(selectAction);
-        dayFragment.setSelectAction(selectAction);
 
-        topSalerView=new FollowUpTopSalerView();
-        topSalerView.setOnItemClick(staff -> {
-            model.topSalerName.set(staff==null?"销售":staff.username);
-            topFilter.sale=staff;
+        topDayFragment.setSelectDayAction((start,end,title)->{
+            topFilter.registerTimeStart=start;
+            topFilter.registerTimeEnd=end;
+            model.topLatestDay.set(title);
             selectAction.call(1);
         });
-        salersView=new FollowUpTopSalerView();
-        salersView.setOnItemClick(staff -> {
-            model.salerName.set(staff==null?"销售":staff.username);
-            filter.sale=staff;
+        dayFragment.setSelectDayAction((start,end,title)->{
+            filter.registerTimeStart=start;
+            filter.registerTimeEnd=end;
+            model.today.set(title);
             selectAction.call(0);
         });
+        topSalerView = new FollowUpTopSalerView();
+        topSalerView.setOnItemClick(staff -> {
+            model.topSalerName.set(staff == null ? "销售" : staff.username);
+            topFilter.sale = staff;
+            selectAction.call(1);
+        });
+        salersView = new FollowUpTopSalerView();
+        salersView.setOnItemClick(staff -> {
+            model.salerName.set(staff == null ? "销售" : staff.username);
+            filter.sale = staff;
+            selectAction.call(0);
+        });
+
     }
 
     @Override
     protected String[] getTags() {
-        return new String[]{"salerList", "studentStatus", "today", "latestDay", "gender","topSalers"};
+        return new String[]{"salerList", "studentStatus", "today", "latestDay", "gender", "topSalers"};
     }
 
     @Override
@@ -121,7 +132,7 @@ public class FollowUpFilterFragment extends BaseFilterFragment {
             return topDayFragment;
         } else if (tag.equalsIgnoreCase(getTags()[4])) {
             return genderFragment;
-        }else if (tag.equalsIgnoreCase(getTags()[5])) {
+        } else if (tag.equalsIgnoreCase(getTags()[5])) {
             return topSalerView;
         }
         return new EmptyFragment();
@@ -132,8 +143,10 @@ public class FollowUpFilterFragment extends BaseFilterFragment {
     public void setDismissAction(Action0 action) {
         this.dimissAction = action;
     }
+
     private Action1<Integer> selectAction;
-    public void setSelectAction(Action1<Integer> action){
-        this.selectAction=action;
+
+    public void setSelectAction(Action1<Integer> action) {
+        this.selectAction = action;
     }
 }

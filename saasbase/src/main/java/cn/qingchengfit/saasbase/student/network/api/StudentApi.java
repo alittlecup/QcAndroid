@@ -12,6 +12,7 @@ import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
+import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.network.body.StudentWithCoashListWrap;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -159,12 +160,23 @@ public interface StudentApi {
     Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentMember(
             @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-   /**
-    * 具有名下会员的销售列表
-    * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
+    /**
+     * 具有名下会员的销售列表
+     * /api/staffs/:staff_id/filter/sellers/?brand_id=&shop_id= 或者 id=&model=
      */
     @GET("/api/staffs/{staff_id}/filter/sellers/?show_all=1")
     Observable<QcDataResponse<SalerListWrap>> qcGetTrackStudentsFilterSalers(
             @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+
+    /**
+     * 转换率
+     * /api/staffs/:staff_id/users/conver/stat/?brand_id=&shop_id= 或者 id=&model=
+     * GET参数:[start] [end] [seller_id(无销售seller_id=0)]
+     */
+    @GET("/api/staffs/{staff_id}/users/conver/stat/")
+    Observable<QcDataResponse<StudentTransferBean>> qcGetTrackStudentsConver(
+            @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
 
 }

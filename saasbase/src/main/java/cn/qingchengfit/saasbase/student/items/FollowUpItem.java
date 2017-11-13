@@ -136,7 +136,7 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
                         sbStrans.append(staff.getUsername()).append(" ");
                     }
                 }
-                sbStrans.append("\n注册时间：").append(DateUtils.getYYYYMMDDfromServer(data.getJoin_at()));
+                sbStrans.append("\n注册时间：").append(DateUtils.getYYYYMMDDfromServer(data.joined_at));
                 desc = sbStrans.toString();
                 break;
         }

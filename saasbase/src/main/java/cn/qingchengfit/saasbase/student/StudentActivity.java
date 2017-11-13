@@ -24,6 +24,7 @@ import cn.qingchengfit.saasbase.student.views.followup.FollowUpStatusTopFragment
 import cn.qingchengfit.saasbase.student.views.followup.FollowUpTopSalerView;
 import cn.qingchengfit.saasbase.student.views.home.StudentHomeFragment;
 import cn.qingchengfit.saasbase.student.views.home.StudentOperationFragment;
+import cn.qingchengfit.saasbase.student.views.transfer.StudentTransferFragment;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
@@ -62,7 +63,8 @@ import rx.functions.Action1;
         FollowUpStatusFragment.class,
         FollowUpFilterFragment.class,
         FilterTimesFragment.class,
-        FollowUpTopSalerView.class
+        FollowUpTopSalerView.class,
+        StudentTransferFragment.class
 
 
 })
