@@ -49,7 +49,7 @@ import java.util.List;
  * Created by Paper on 2017/8/11.
  */
 public class SimpleStudentListFragment extends BaseFragment
-    implements FlexibleAdapter.OnItemClickListener {
+    implements FlexibleAdapter.OnItemClickListener,FlexibleAdapter.OnUpdateListener {
 
   public static int ORDER_TYPE_REGIST = 0;//按注册顺序排序
   public static int ORDER_TYPE_ALPHABET = 1;//按字母表顺序排序
@@ -57,7 +57,7 @@ public class SimpleStudentListFragment extends BaseFragment
   private int orderType = 0;//默认顺序为 注册时间排序
   private List<QcStudentBean> qcStudentBeens = new ArrayList<>();
   private CommonNoDataItem commonNoDataItem;
-  private List<IFlexible> mDatas = new ArrayList<>();
+  protected List<IFlexible> mDatas = new ArrayList<>();
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -179,5 +179,9 @@ public class SimpleStudentListFragment extends BaseFragment
 
     }
     return true;
+  }
+
+  @Override public void onUpdateEmptyView(int size) {
+
   }
 }

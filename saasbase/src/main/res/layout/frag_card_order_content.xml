@@ -96,6 +96,7 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           app:civ_lable="业绩归属"
+          app:civ_hint="请选择销售"
           />
 
       <cn.qingchengfit.widgets.CommonInputView

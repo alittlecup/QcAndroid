@@ -228,7 +228,7 @@ import javax.inject.Inject;
       civEndTime.setVisibility(other ? View.VISIBLE : View.GONE);
       civChargeMoney.setVisibility(View.GONE);
       civRealMoney.setVisibility(View.GONE);
-      elNeedValid.resizeContent((int)getResources().getDimension(R.dimen.qc_item_height)*(other?3:2)+1);
+      elNeedValid.resizeContent((int)getResources().getDimension(R.dimen.qc_item_height)*(other?4:3)+1);
       civRealMoney.setVisibility(other?View.VISIBLE:View.GONE);
     } else {//储值卡 或者次卡
       if (!other && validDay) {
@@ -237,7 +237,7 @@ import javax.inject.Inject;
         civEndTime.setVisibility(View.GONE);
         civChargeMoney.setVisibility(View.GONE);
         civRealMoney.setVisibility(View.GONE);
-        elNeedValid.resizeContent((int)getResources().getDimension(R.dimen.qc_item_height)*2+1);
+        elNeedValid.resizeContent((int)getResources().getDimension(R.dimen.qc_item_height)*3+1);
       } else {
         elNeedValid.hideHeader(false);
         civEndTime.setVisibility(View.VISIBLE);

@@ -92,7 +92,6 @@ public class CardListPresenter extends BasePresenter {
 
   public void initpage() {
     curPage=1;totalPage =1;
-    p.clear();
   }
 
   public void queryKeyworkd(String query) {

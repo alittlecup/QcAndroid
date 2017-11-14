@@ -35,6 +35,8 @@ import java.util.List;
  */
 
 public class ChooseStudentListFragment extends SimpleStudentListFragment {
+  private ArrayList<String> studentIdList;
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
@@ -75,10 +77,11 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
         if (item instanceof ChosenStudentItem) {
           if (studentIdList.contains(((ChosenStudentItem) item).getId())) {
             commonFlexAdapter.toggleSelection(i);
-            commonFlexAdapter.notifyDataSetChanged();
+            commonFlexAdapter.notifyItemChanged(i);
           }
         }
       }
     }
   }
+
 }

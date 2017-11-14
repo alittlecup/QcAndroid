@@ -58,7 +58,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String MODULE_GIFT = "giftcard";
     public static final String MODULE_COMMODITY = "commodity/list";
     public static final String MODULE_PAY_CASH = "/pay/bills";
-    public static final String MODULE_MANAGE_STAFF = "/manage/staff/";
+    public static final String MODULE_MANAGE_STAFF = "/manage/staff";
 
     //    @BindView(R.id.qrdecoderview)
     QRCodeReaderView qrdecoderview;
