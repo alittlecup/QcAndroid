@@ -64,6 +64,7 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
             DialogUtils.showAlert(view.getContext(), "结束时间不得早于开始时间");
             return;
           }
+
         }
         endDate = date;
         holder.tvStudentFilterTimeEnd.setText(DateUtils.Date2YYYYMMDD(date));

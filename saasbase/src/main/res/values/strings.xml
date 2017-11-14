@@ -9,6 +9,8 @@
   <string name="confirm">确定</string>
   <string name="reset">重置</string>
   <string name="delete">删除</string>
+  <string name="dialog_sure">好，知道了!</string>
+  <string formatted="false" name="qr_code_2web">%sapp2web/?gym_id=%s\u0026module=%s</string>
 
   <!--菜单相关-->
   <string name="edit">编辑</string>

@@ -82,9 +82,12 @@ public class AddCashierFragment extends BaseFragment implements CashierPresenter
   public void onConfirmExchange(){
     if (TextUtils.isEmpty(inputAddCashierName.getContent())
         || TextUtils.isEmpty(inputAddCashierGender.getContent())
-        || TextUtils.isEmpty(inputAddCashierPhone.getContent())
-        || AppUtils.isMobiPhoneNum(inputAddCashierPhone.getContent())) {
+        || TextUtils.isEmpty(inputAddCashierPhone.getContent())) {
       DialogUtils.showAlert(getContext(), "请完善信息");
+      return;
+    }
+    if (!AppUtils.isMobiPhoneNum(inputAddCashierPhone.getContent())){
+      DialogUtils.showAlert(getContext(), "请填写正确手机号");
       return;
     }
     cashierPresenter.onAddCashier(inputAddCashierName.getContent(),

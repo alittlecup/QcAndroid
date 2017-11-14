@@ -83,9 +83,9 @@ public class BillTotalPresenter extends BasePresenter {
             if (ResponseConstant.checkSuccess(billWrapperQcDataResponse)){
               if (view != null){
                 view.onGetBillListByFilter(billWrapperQcDataResponse.data.bills);
-              }else{
-                view.onShowError(billWrapperQcDataResponse.getMsg());
               }
+            }else{
+                view.onFilterError(billWrapperQcDataResponse.getMsg());
             }
           }
         }, new NetWorkThrowable()));
@@ -120,6 +120,8 @@ public class BillTotalPresenter extends BasePresenter {
     void onGetBillList(List<BusinessBill> billList);
 
     void onGetBillListByFilter(List<BusinessBill> billList);
+
+    void onFilterError(String msg);
   }
 
 }

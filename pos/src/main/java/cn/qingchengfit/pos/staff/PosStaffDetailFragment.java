@@ -48,6 +48,6 @@ public class PosStaffDetailFragment extends StaffDetailFragment {
   }
 
   @Override public void onBtnDelClicked() {
-    QRActivity.start(getContext(),"/manage/staff/");
+    QRActivity.start(getContext(),QRActivity.MODULE_MANAGE_STAFF);
   }
 }
