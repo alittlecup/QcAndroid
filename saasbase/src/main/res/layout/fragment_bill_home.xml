@@ -198,12 +198,18 @@
           android:layout_height="match_parent"
           android:background="@color/bg_grey"
           >
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_bill"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            />
+          >
+          <android.support.v7.widget.RecyclerView
+              android:id="@+id/recycler_bill"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:overScrollMode="never"
+              />
+        </FrameLayout>
+
       </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>

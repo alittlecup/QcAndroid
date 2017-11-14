@@ -1,8 +1,6 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +21,10 @@ public class StickerDateItem extends AbstractFlexibleItem<StickerDateItem.Sticke
     this.date = date;
   }
 
+  public String getDate() {
+    return date;
+  }
+
   @Override public int getLayoutRes() {
     return R.layout.item_sticker_date;
   }
@@ -37,8 +39,8 @@ public class StickerDateItem extends AbstractFlexibleItem<StickerDateItem.Sticke
   }
 
   @Override public boolean equals(Object o) {
-    if (o instanceof String){
-      return ((String) o).equalsIgnoreCase(date);
+    if (o instanceof StickerDateItem){
+      return ((StickerDateItem) o).getDate().equalsIgnoreCase(date);
     }else return false;
 
   }

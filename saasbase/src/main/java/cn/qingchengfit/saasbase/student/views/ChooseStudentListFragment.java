@@ -9,6 +9,7 @@ import cn.qingchengfit.saasbase.student.items.ChosenStudentItem;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import eu.davidea.flexibleadapter.items.IHeader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
     return true;
   }
 
-  @Override protected IFlexible instanceItem(QcStudentBean qcStudentBean) {
-    return new ChosenStudentItem(qcStudentBean);
+  @Override protected IFlexible instanceItem(QcStudentBean qcStudentBean,IHeader iHeader) {
+    return new ChosenStudentItem(qcStudentBean,iHeader);
   }
 
   public List<QcStudentBean> getSelectedStudent() {

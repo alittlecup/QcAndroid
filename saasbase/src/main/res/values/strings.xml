@@ -108,6 +108,7 @@
   <string name="pay_back_cash">退款</string>
 
   <string name="e_cardtpl_empty">找不到会员卡种类</string>
+  <string name="e_member_empty">请选择绑定会员</string>
   <string name="back_cash_way_weixin">微信支付原路返回</string>
   <string name="back_cash_way_ali">支付宝原路返回</string>
   <string name="back_cash_way_qq">QQ钱包原路返回</string>

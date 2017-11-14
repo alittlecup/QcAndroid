@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.bill.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -11,6 +9,7 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IHeader;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -18,7 +17,8 @@ import java.util.List;
  * Created by fb on 2017/10/29.
  */
 
-public class ItemBillAccount extends AbstractFlexibleItem<ItemBillAccount.ItemBillAccountVH> {
+public class ItemBillAccount extends AbstractFlexibleItem<ItemBillAccount.ItemBillAccountVH> implements
+  IHeader<ItemBillAccount.ItemBillAccountVH>{
 
   String time;
   float expenses;
@@ -30,7 +30,14 @@ public class ItemBillAccount extends AbstractFlexibleItem<ItemBillAccount.ItemBi
     this.income = income;
   }
 
+  public String getTime() {
+    return time;
+  }
+
   @Override public boolean equals(Object o) {
+    if (o instanceof ItemBillAccount){
+      return time != null && ((ItemBillAccount) o).getTime().equalsIgnoreCase(this.time);
+    }
     return false;
   }
 
@@ -61,7 +68,7 @@ public class ItemBillAccount extends AbstractFlexibleItem<ItemBillAccount.ItemBi
     @BindView(R2.id.tv_bill_reduce) TextView tvBillReduce;
 
     public ItemBillAccountVH(View view, FlexibleAdapter adapter) {
-      super(view, adapter);
+      super(view, adapter,true);
       ButterKnife.bind(this, view);
     }
   }

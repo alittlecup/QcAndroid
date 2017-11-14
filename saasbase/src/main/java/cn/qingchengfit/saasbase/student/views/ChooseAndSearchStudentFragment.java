@@ -95,7 +95,7 @@ import rx.functions.Action1;
       .throttleLast(1000, TimeUnit.MILLISECONDS)
       .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
         @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
-          if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
+          if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded() && etSearch != null) {
             chooseStudentListFragment.filter(etSearch.getText().toString());
           }
         }

@@ -177,9 +177,7 @@ import javax.inject.Inject;
    * 获取后端数据完成
    */
   @Override public void onDoneCardtplList() {
-    if (viewpager.getCurrentItem() == 0) {
-      cardCount.setText(presenter.getCardTplByType(0).size() + "");
-    }
+    cardCount.setText(presenter.getCardTplByType(viewpager.getCurrentItem()).size() + "");
     int i = 0;
     for (CardTplListFragment fragment : fragmentList) {
       fragment.setCardtpls(presenter.getCardTplByType(i));

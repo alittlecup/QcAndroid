@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -19,8 +20,10 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.AlphabetLessView;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import eu.davidea.flexibleadapter.items.IHeader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -71,10 +74,19 @@ public class SimpleStudentListFragment extends BaseFragment
       .setStickyHeaderElevation(1)
       .setDisplayHeadersAtStartUp(true);
     recyclerView.setAdapter(commonFlexAdapter);
+    recyclerView.setItemAnimator(new FadeInUpItemAnimator());
+    recyclerView.setHasFixedSize(true);
+    recyclerView.addItemDecoration(new FlexibleItemDecoration(getContext())
+      .withDivider(R.drawable.divider_grey_left_margin,R.layout.item_student)
+      .withOffset(1)
+      .withBottomEdge(true)
+    );
+
     commonNoDataItem = new CommonNoDataItem(getNoDataIconRes(),getNoDataStr());
     frameLayout.addView(recyclerView);
     return frameLayout;
   }
+
 
   @Override public boolean isBlockTouch() {
     return false;
@@ -113,14 +125,16 @@ public class SimpleStudentListFragment extends BaseFragment
         Collections.sort(qcStudentBeens, new StudentCompareByAlphabet());//按字母排序
         mDatas.clear();
         if (qcStudentBeens.size() > 0){
-          String head = qcStudentBeens.get(0).head();
-          mDatas.add(new StickerDateItem(head.toUpperCase()));
+          String head = null;
+          //mDatas.add(sh);
+          StickerDateItem sh = null;
           for (QcStudentBean qcStudentBeen : qcStudentBeens) {
-            if (!qcStudentBeen.head().equalsIgnoreCase(head)){
-              mDatas.add(new StickerDateItem(qcStudentBeen.head().toUpperCase()));
+            if (head == null || !qcStudentBeen.head().equalsIgnoreCase(head)){
               head = qcStudentBeen.head();
+              sh = new StickerDateItem(head.toUpperCase());
+              mDatas.add(new StickerDateItem(qcStudentBeen.head().toUpperCase()));
             }
-            mDatas.add(instanceItem(qcStudentBeen));
+            mDatas.add(instanceItem(qcStudentBeen,null));
           }
         }else {
           mDatas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe,"暂无会员"));
@@ -129,13 +143,14 @@ public class SimpleStudentListFragment extends BaseFragment
         Collections.sort(qcStudentBeens, new StudentCompareJoinAt());
         if (qcStudentBeens.size() > 0){
           for (QcStudentBean qcStudentBeen : qcStudentBeens) {
-            mDatas.add(instanceItem(qcStudentBeen));
+            mDatas.add(instanceItem(qcStudentBeen,null));
           }
         }else {
           mDatas.add(commonNoDataItem);
         }
       }
-      commonFlexAdapter.updateDataSet(mDatas);
+
+      commonFlexAdapter.updateDataSet(mDatas,true);
     }
   }
   public void filter(String s){
@@ -143,8 +158,8 @@ public class SimpleStudentListFragment extends BaseFragment
     commonFlexAdapter.filterItems(mDatas);
   }
 
-  protected IFlexible instanceItem(QcStudentBean qcStudentBean){
-    return new StudentItem(qcStudentBean);
+  protected IFlexible instanceItem(QcStudentBean qcStudentBean,IHeader iHeader){
+    return new StudentItem(qcStudentBean,iHeader);
   }
 
   @Override public String getFragmentName() {

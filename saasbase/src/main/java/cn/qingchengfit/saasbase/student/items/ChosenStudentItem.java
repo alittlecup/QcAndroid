@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.student.items;
 import android.view.View;
 import cn.qingchengfit.model.base.QcStudentBean;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IHeader;
 import java.util.List;
 
 /**
@@ -27,6 +28,10 @@ import java.util.List;
  */
 
 public class ChosenStudentItem extends StudentItem {
+
+  public ChosenStudentItem(QcStudentBean qcStudentBean, IHeader head) {
+    super(qcStudentBean, head);
+  }
 
   public ChosenStudentItem(QcStudentBean qcStudentBean) {
     super(qcStudentBean);
