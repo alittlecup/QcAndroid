@@ -119,6 +119,7 @@
                     android:id="@+id/btn_attendence"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qc_item_height"
+                    android:onClick="@{()->fragment.toStudentRank()}"
                     android:background="@drawable/bg_click"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"

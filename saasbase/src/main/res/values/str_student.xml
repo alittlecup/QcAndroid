@@ -66,6 +66,15 @@
     <string formatted="false" name="absence_condition">缺勤%s-%s天</string>
     <string formatted="false" name="absence_account">%s的会员共计%d人</string>
 
+    <string name="unit_class">节</string>
+    <string name="lable_attendace">出勤</string>
+    <string name="label_checkin">签到</string>
+    <string name="course_type_group">团课</string>
+    <string name="attendance_private_course">私教</string>
+
+
+
+
 
 
 

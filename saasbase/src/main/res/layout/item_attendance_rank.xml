@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/tv_day_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="28"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/tv_action_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        tools:text="出勤"
+        />
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/label_unit_0"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="top"
+      android:layout_marginTop="14dp"
+      android:text="天"
+      android:textSize="8sp"
+      />
+
+  <ImageView
+      android:id="@+id/img_avatar"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_margin="10dp"
+      app:srcCompat="@drawable/default_manage_male"
+      />
+
+  <RelativeLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      >
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:maxWidth="120dp"
+        tools:text="@string/name"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:textSize="@dimen/min_font"
+        style="@style/Qc.TextCommonGrey"
+        />
+
+    <ImageView
+        android:id="@+id/ic_gender"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="18dp"
+        android:layout_toEndOf="@id/tv_name"
+        android:layout_toRightOf="@id/tv_name"
+        app:srcCompat="@drawable/ic_gender_signal_female"
+        />
+  </RelativeLayout>
+
+  <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginEnd="@dimen/little"
+      android:layout_marginStart="@dimen/little"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:background="@drawable/divider_line_vertial"
+      />
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/tv_day_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/qc_text_black"
+        android:textSize="14sp"
+        tools:text="28"
+        />
+
+    <TextView
+        android:id="@+id/tv_action_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        tools:text="出勤"
+        />
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/label_unit_1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="top"
+      android:layout_marginTop="14dp"
+      android:text="天"
+      android:textSize="8sp"
+      />
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_marginLeft="@dimen/little"
+      android:layout_marginStart="@dimen/little"
+      android:gravity="center"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/tv_day_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/qc_text_black"
+        android:textSize="14sp"
+        tools:text="28"
+        />
+
+    <TextView
+        android:id="@+id/tv_action_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        tools:text="出勤"
+        />
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/label_unit_2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="top"
+      android:layout_marginTop="14dp"
+      android:text="天"
+      android:textSize="8sp"
+      />
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_marginLeft="@dimen/little"
+      android:layout_marginStart="@dimen/little"
+      android:gravity="center"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/tv_day_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/qc_text_black"
+        android:textSize="14sp"
+        tools:text="28"
+        />
+
+    <TextView
+        android:id="@+id/tv_action_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        tools:text="出勤"
+        />
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/label_unit_3"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="top"
+      android:layout_marginTop="14dp"
+      android:text="天"
+      android:textSize="8sp"
+      />
+
+</LinearLayout>

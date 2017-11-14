@@ -106,4 +106,8 @@ public class StudentAttendanceFragment extends BaseFragment implements StudentAt
         Uri uri=Uri.parse("student://student/student/absentce");
         routeTo(uri,null);
     }
+    public void toStudentRank(){
+        Uri uri=Uri.parse("student://student/attendance/rank");
+        routeTo(uri,null);
+    }
 }

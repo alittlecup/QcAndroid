@@ -11,6 +11,7 @@ import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
+import cn.qingchengfit.saasbase.student.network.body.AttendanceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
@@ -202,6 +203,23 @@ public interface StudentApi {
     @GET("/api/staffs/{staff_id}/users/absence/")
     Observable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(@Path("staff_id") String id
             , @QueryMap HashMap<String, Object> params);
+
+
+    /**
+     * @param params 必传start, end，
+     * 可选排序字段 加 “-”说明是倒序
+     * order_by=
+     * days      -days
+     * group     -group
+     * private     -private
+     * checkin   -checkin
+     * @return "attendances": [{"checkin": 0,"group": 139,"user": {"username": "孙正其","gender": 0,"id": 2219,"avatar":
+     * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
+     * 142},
+     */
+    @GET("/api/staffs/{staff_id}/users/attendance/")
+    Observable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(
+            @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
 
 }

@@ -36,7 +36,7 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     protected CommonFlexAdapter commonFlexAdapter;
     private OnSelectListener onSelectListener;
-    private List<AbstractFlexibleItem> items = new ArrayList<>();
+    public List<AbstractFlexibleItem> items = new ArrayList<>();
     private int maxHeight;
 
     public void setOnSelectListener(OnSelectListener onSelectListener) {

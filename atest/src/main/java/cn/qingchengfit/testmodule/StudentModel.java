@@ -16,6 +16,7 @@ import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
+import cn.qingchengfit.saasbase.student.network.body.AttendanceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
@@ -144,5 +145,10 @@ public class StudentModel implements IStudentModel {
     @Override
     public Observable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(String id, HashMap<String, Object> params) {
         return studentApi.qcGetUsersAbsences(id, params);
+    }
+
+    @Override
+    public Observable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(String id, HashMap<String, Object> params) {
+        return studentApi.qcGetUsersAttendances(id, params);
     }
 }
