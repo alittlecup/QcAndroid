@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.animator.SlideInUpItemAnimator;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
@@ -48,6 +49,7 @@ public class CardTplListFragment extends BaseListFragment {
   }
 
   @Override protected void addDivider() {
+    rv.setItemAnimator(new SlideInUpItemAnimator());
     rv.addItemDecoration(new FlexibleItemDecoration(getContext())
         .addItemViewType(R.layout.item_card_type)
         .withOffset(15)
@@ -62,7 +64,6 @@ public class CardTplListFragment extends BaseListFragment {
   public void setCardtpls(List<CardTpl> list){
     stopRefresh();
     if (commonFlexAdapter != null) {
-      commonFlexAdapter.clear();
       datas.clear();
       if (list != null) {
         for (CardTpl cardTpl : list) {
@@ -71,8 +72,7 @@ public class CardTplListFragment extends BaseListFragment {
       }
       if (datas.size() == 0)
         datas.add(commonNoDataItem);
-      //commonFlexAdapter.notifyDataSetChanged();
-      commonFlexAdapter.onLoadMoreComplete(datas,500);
+      commonFlexAdapter.updateDataSet(datas,true);
     }
   }
 

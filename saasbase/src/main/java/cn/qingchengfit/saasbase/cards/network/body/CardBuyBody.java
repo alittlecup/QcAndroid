@@ -52,8 +52,12 @@ public class CardBuyBody implements Parcelable {
     if (!CmStringUtils.checkMoney(price)) return R.string.e_card_realpay_cannot_empty;
     if (CmStringUtils.isEmpty(seller_id)) return R.string.e_card_saler_cannot_empty;
     if (CmStringUtils.isEmpty(card_tpl_id)) return R.string.e_cardtpl_empty;
-    if (check_valid && (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to)))
-      return R.string.e_card_start_or_end_cannot_empty;
+    if (check_valid ){
+      if (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to))
+        return R.string.e_card_start_or_end_cannot_empty;
+      if (DateUtils.formatDateFromYYYYMMDD(valid_from).getTime() > DateUtils.formatDateFromYYYYMMDD(valid_to).getTime())
+        return R.string.e_start_great_end;
+    }
     switch (type) {
       case 1:
         if (!CmStringUtils.checkMoney(account))

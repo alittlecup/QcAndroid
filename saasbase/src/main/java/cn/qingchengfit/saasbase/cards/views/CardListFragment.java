@@ -45,6 +45,7 @@ public class CardListFragment extends BaseListFragment {
       new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_saas_realcard));
   }
 
+
   public void setCardtpls(List<Card> list, int page) {
     stopRefresh();
     if (commonFlexAdapter != null) {
@@ -54,8 +55,8 @@ public class CardListFragment extends BaseListFragment {
         for (Card cardTpl : list) {
           datas.add(generateItem(cardTpl));
         }
-        commonFlexAdapter.onLoadMoreComplete(datas, 500);
-      }else commonFlexAdapter.onLoadMoreComplete(null,500);
+        commonFlexAdapter.onLoadMoreComplete(datas,500);
+      }
     }
   }
 
