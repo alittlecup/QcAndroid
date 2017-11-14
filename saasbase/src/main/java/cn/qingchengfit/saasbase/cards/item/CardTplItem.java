@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.cards.item;
 
 import android.animation.Animator;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import cn.qingchengfit.utils.MeasureUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.helpers.AnimatorHelper;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.viewholders.AnimatedViewHolder;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -64,7 +66,7 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
   }
 
 
-  public class CardTplVH extends FlexibleViewHolder  {
+  public class CardTplVH extends FlexibleViewHolder implements AnimatedViewHolder {
     @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
     @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
     @BindView(R2.id.tv_gym_name) TextView tvGymName;
@@ -78,8 +80,34 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
 
     @Override public void scrollAnimators(@NonNull List<Animator> animators, int position,
         boolean isForward) {
-      AnimatorHelper.slideInFromBottomAnimator(animators,itemView,mAdapter.getRecyclerView());
+      if (isForward)
+        AnimatorHelper.slideInFromBottomAnimator(animators,itemView,mAdapter.getRecyclerView());
+      else AnimatorHelper.slideInFromTopAnimator(animators,itemView,mAdapter.getRecyclerView());
     }
 
+    @Override public boolean preAnimateAddImpl() {
+      //itemView.setTranslationY(500);
+      return false;
+    }
+
+    @Override public boolean preAnimateRemoveImpl() {
+      return false;
+    }
+
+    @Override public boolean animateAddImpl(ViewPropertyAnimatorListener listener, long addDuration,
+      int index) {
+      //ViewCompat.animate(itemView).setDuration(addDuration).translationY(-500)
+      //  .setInterpolator(new DecelerateInterpolator())
+      //  .setListener(listener)
+      //  .setStartDelay(index * 250L)
+      //  .start();
+      return false;
+    }
+
+    @Override
+    public boolean animateRemoveImpl(ViewPropertyAnimatorListener listener, long removeDuration,
+      int index) {
+      return false;
+    }
   }
 }

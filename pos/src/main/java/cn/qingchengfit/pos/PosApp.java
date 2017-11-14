@@ -60,6 +60,7 @@ public class PosApp extends Application implements HasActivityInjector, HasSuppo
     super.onCreate();
     ToastUtils.init(this);
     initInjcet();
+    initSensor();
     context = this;
   }
 
@@ -71,12 +72,6 @@ public class PosApp extends Application implements HasActivityInjector, HasSuppo
   public void initInjcet() {
     LoginStatus.Builder lb = new LoginStatus.Builder();
     ToastUtils.init(this);
-    //Staff staff = new Staff("纸团", "15123358198", "", 1);
-    //staff.setId("3288");
-    ////PreferenceUtils.setPrefString(this, "session_id", "30kj9b0jyy5edj4mhxt0d8jj4cricxgr");
-    //CoachService coachService = new CoachService();
-    //coachService.setId("8670");
-    //coachService.setModel("staff_gym");
     LogUtil.e("session:" + PreferenceUtils.getPrefString(this, "session_id", ""));
     PosAppComponent component = DaggerPosAppComponent.builder()
         .appModel(new AppModel.Builder()

@@ -43,7 +43,7 @@ public class ChargeBody implements Parcelable {
   String model;
 
   public int checkData() {
-    if (CmStringUtils.isEmpty(price)) return R.string.e_card_realpay_cannot_empty;
+    if (CmStringUtils.checkMoney(price)) return R.string.e_card_realpay_cannot_empty;
     if (CmStringUtils.isEmpty(seller_id)) return R.string.e_card_saler_cannot_empty;
     if (check_valid) {
       if (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to))
@@ -53,10 +53,10 @@ public class ChargeBody implements Parcelable {
     }
     switch (charge_type) {
       case 1:
-        if (CmStringUtils.isEmpty(account)) return R.string.e_card_charge_money_cannot_empty;
+        if (CmStringUtils.checkMoney(account)) return R.string.e_card_charge_money_cannot_empty;
         break;
       case 2:
-        if (CmStringUtils.isEmpty(times)) return R.string.e_card_charge_times_cannot_empty;
+        if (CmStringUtils.checkMoney(times)) return R.string.e_card_charge_times_cannot_empty;
         break;
       case 3:
         if (CmStringUtils.isEmpty(start) || CmStringUtils.isEmpty(end)) {

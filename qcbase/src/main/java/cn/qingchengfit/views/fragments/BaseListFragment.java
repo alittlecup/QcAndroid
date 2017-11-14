@@ -96,9 +96,9 @@ public abstract class BaseListFragment extends BaseFragment {
 
   protected void setAnimation() {
     commonFlexAdapter.setAnimationEntryStep(false)
-      .setAnimationOnReverseScrolling(false)
+      .setAnimationOnReverseScrolling(true)
       .setAnimationOnScrolling(true)
-      .setAnimationDuration(200L)
+      .setAnimationDuration(300L)
       .setAnimationInterpolator(new LinearInterpolator());
   }
 
