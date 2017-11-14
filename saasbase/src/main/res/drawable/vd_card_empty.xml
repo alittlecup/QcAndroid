@@ -1,27 +1,68 @@
 <vector android:height="24dp" android:viewportHeight="81.0"
     android:viewportWidth="80.0" android:width="24dp"
     xmlns:aapt="http://schemas.android.com/aapt" xmlns:android="http://schemas.android.com/apk/res/android">
+<<<<<<< 801e74fcd6f3741ffe3549d496c587793a08374d
     <path
         android:fillColor="#FF24BEB8"
         android:pathData="M9.28,25.67L52.09,25.67A8,8 0,0 1,60.09 33.67L60.09,50.34A8,8 0,0 1,52.09 58.34L9.28,58.34A8,8 0,0 1,1.28 50.34L1.28,33.67A8,8 0,0 1,9.28 25.67z">
     </path>
     <path android:fillAlpha="0.2" android:fillColor="#000"
+=======
+    <path  android:pathData="M9.28,25.67L52.09,25.67A8,8 0,0 1,60.09 33.67L60.09,50.34A8,8 0,0 1,52.09 58.34L9.28,58.34A8,8 0,0 1,1.28 50.34L1.28,33.67A8,8 0,0 1,9.28 25.67z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:endX="64.30686379376411"
+                android:endY="80.12066238540649"
+                android:startX="31.27857959200144"
+                android:startY="55.87788882879257" android:type="linear">
+                <item android:color="#FF24BEB8" android:offset="0.0"/>
+                <item android:color="#FF43E695" android:offset="1.0"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path android:fillAlpha=".2" android:fillColor="#000"
+>>>>>>> add stick header
          android:pathData="M12.59,39.14m-5.55,0a5.55,5.55 0,1 1,11.11 0a5.55,5.55 0,1 1,-11.11 0"/>
     <path android:fillAlpha="0.49" android:fillColor="#FFF"
 
         android:pathData="M35.36,32.72h18.95v3.27L35.36,35.99zM39.41,37.98h14.9v2.33L39.41,40.3zM31.28,48.64h23.03v2.74h-23.03z" android:strokeAlpha="0.49"/>
+<<<<<<< 801e74fcd6f3741ffe3549d496c587793a08374d
     <path
         android:fillColor="#FF4D90FE"
         android:pathData="M29.42,31.99L72.23,31.99A8,8 0,0 1,80.23 39.99L80.23,56.66A8,8 0,0 1,72.23 64.66L29.42,64.66A8,8 0,0 1,21.42 56.66L21.42,39.99A8,8 0,0 1,29.42 31.99z">
+=======
+    <path  android:pathData="M29.42,31.99L72.23,31.99A8,8 0,0 1,80.23 39.99L80.23,56.66A8,8 0,0 1,72.23 64.66L29.42,64.66A8,8 0,0 1,21.42 56.66L21.42,39.99A8,8 0,0 1,29.42 31.99z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:endX="104.31386714790344"
+                android:endY="92.63166547714233"
+                android:startX="70.08762143863677"
+                android:startY="67.50973928512573" android:type="linear">
+                <item android:color="#FF4D90FE" android:offset="0.0"/>
+                <item android:color="#FF54C2FA" android:offset="1.0"/>
+            </gradient>
+        </aapt:attr>
+>>>>>>> add stick header
     </path>
     <path android:fillAlpha=".2" android:fillColor="#000"
          android:pathData="M32.72,45.92m-5.55,0a5.55,5.55 0,1 1,11.11 0a5.55,5.55 0,1 1,-11.11 0"/>
     <path android:fillAlpha="0.49" android:fillColor="#FFF"
 
         android:pathData="M55.5,39.5h18.95v3.27L55.5,42.77zM59.54,44.76h14.9v2.33L59.54,47.09zM51.42,55.42h23.03v2.74h-23.03z" android:strokeAlpha="0.49"/>
+<<<<<<< 801e74fcd6f3741ffe3549d496c587793a08374d
     <path
         android:fillColor="#FFFF6098"
         android:pathData="M19.51,12.78L62.32,12.78A8,8 0,0 1,70.32 20.78L70.32,37.46A8,8 0,0 1,62.32 45.46L19.51,45.46A8,8 0,0 1,11.51 37.46L11.51,20.78A8,8 0,0 1,19.51 12.78z">
+=======
+    <path  android:pathData="M19.51,12.78L62.32,12.78A8,8 0,0 1,70.32 20.78L70.32,37.46A8,8 0,0 1,62.32 45.46L19.51,45.46A8,8 0,0 1,11.51 37.46L11.51,20.78A8,8 0,0 1,19.51 12.78z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:endX="84.44686350273133"
+                android:endY="54.22760515617371"
+                android:startX="50.220620013542174"
+                android:startY="29.097992854843138" android:type="linear">
+                <item android:color="#FFFF6098" android:offset="0.0"/>
+                <item android:color="#FFFFA467" android:offset="1.0"/>
+            </gradient>
+        </aapt:attr>
+>>>>>>> add stick header
     </path>
     <path android:fillAlpha=".2" android:fillColor="#000"
          android:pathData="M23.85,26.32m-5.55,0a5.55,5.55 0,1 1,11.11 0a5.55,5.55 0,1 1,-11.11 0"/>
