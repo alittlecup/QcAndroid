@@ -116,6 +116,6 @@ public class AttendanceStudentListFragment extends SaasBaseFragment implements A
         for (Absentce absentce : attendances) {
             items.add(new AttendanceStudentItem(absentce));
         }
-        commonFlexAdapter.notifyDataSetChanged();
+        commonFlexAdapter.updateDataSet(items);
     }
 }

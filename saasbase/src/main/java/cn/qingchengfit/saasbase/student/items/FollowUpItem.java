@@ -71,8 +71,8 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
     }
 
     @Override
-    public MyBindingFelxibleViewHolder createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater, final ViewGroup parent) {
-        ItemStudentFollowUpStateBinding binding = DataBindingUtil.inflate(inflater, getLayoutRes(), parent, false);
+    public MyBindingFelxibleViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
+        ItemStudentFollowUpStateBinding binding = DataBindingUtil.bind(view);
         MyBindingFelxibleViewHolder holder = new MyBindingFelxibleViewHolder(binding.getRoot(), adapter);
         holder.setBinding(binding);
         binding.tvStudentContactTa.setOnClickListener(new View.OnClickListener() {

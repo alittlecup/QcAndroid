@@ -133,7 +133,7 @@ public class StudentTransferFragment extends SaasBaseFragment implements Student
             for (QcStudentBeanWithFollow s : bean.users) {
                 datas.add(new FollowUpItem(this, s, 4));
             }
-            commonFlexAdapter.notifyDataSetChanged();
+            commonFlexAdapter.updateDataSet(datas);
         }
         binding.tvStudentListHint.setText(topDay.get() + "注册的会员");
 

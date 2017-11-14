@@ -28,6 +28,7 @@ import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.presenters.followup.FollowUpHomePresenter;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import cn.qingchengfit.saasbase.student.views.followup.FollowUpStatusParams;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 
 /**
@@ -89,7 +90,7 @@ public class FollowUpHomeFragment extends SaasBaseFragment implements FollowUpHo
                 getResources().getColor(R.color.follow_line_color), getResources().getColor(R.color.follow_fill_color)));
         datas.add(new DataStatisticsItem("新增会员", statistics.new_member_users,
                 getResources().getColor(R.color.student_line_color), getResources().getColor(R.color.student_fill_color)));
-        commonFlexAdapter.notifyDataSetChanged();
+        commonFlexAdapter.updateDataSet(datas);
     }
     @Override
     public boolean onItemClick(int position) {

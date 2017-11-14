@@ -48,7 +48,7 @@ public class BaseGirdListFragment extends BaseListFragment {
         rv.setItemViewCacheSize(4);
         srl.setEnabled(false);
         rv.setBackgroundColor(Color.WHITE);
-        commonFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+        commonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
     }
 
     @Override
@@ -56,8 +56,7 @@ public class BaseGirdListFragment extends BaseListFragment {
         commonFlexAdapter.setAnimationOnScrolling(true)
                 .setAnimationInitialDelay(50L)
                 .setAnimationInterpolator(new DecelerateInterpolator())
-                .setAnimationDelay(100L)
-                .setAnimationStartPosition(0);
+                .setAnimationDelay(100L);
 
     }
 
@@ -75,7 +74,7 @@ public class BaseGirdListFragment extends BaseListFragment {
                     datas.add(generateItem(item));
                 }
             }
-            commonFlexAdapter.notifyDataSetChanged();
+            commonFlexAdapter.updateDataSet(datas);
         }
     }
 

@@ -37,16 +37,19 @@ public class ChooseSalerItem extends AbstractFlexibleItem<ChooseSalerItem.Choose
         mSaler = saler;
     }
 
-    @Override public int getLayoutRes() {
+    @Override
+    public int getLayoutRes() {
         return R.layout.item_choose_saler;
     }
 
-    @Override public ChooseSalerVH createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        ChooseSalerVH chooseSalerVH = new ChooseSalerVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override
+    public ChooseSalerVH createViewHolder(View view, FlexibleAdapter adapter) {
+        ChooseSalerVH chooseSalerVH = new ChooseSalerVH(view, adapter);
         return chooseSalerVH;
     }
 
-    @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseSalerVH holder, final int position, List payloads) {
+    @Override
+    public void bindViewHolder(FlexibleAdapter adapter, ChooseSalerVH holder, final int position, List payloads) {
 
         if ("-1".equals(mSaler.id)) {// 全部
             int avatarRes;
@@ -56,9 +59,9 @@ public class ChooseSalerItem extends AbstractFlexibleItem<ChooseSalerItem.Choose
                 avatarRes = R.drawable.ic_all_normal;
             }
             Glide.with(holder.itemView.getContext())
-                .load(avatarRes)
-                .asBitmap()
-                .into(new CircleImgWrapper(holder.salerHeaderImg, holder.itemView.getContext()));
+                    .load(avatarRes)
+                    .asBitmap()
+                    .into(new CircleImgWrapper(holder.salerHeaderImg, holder.itemView.getContext()));
         } else if ("0".equals(mSaler.id)) { // 未分配销售
             int avatarRes;
             if (adapter.isSelected(position)) {
@@ -67,14 +70,14 @@ public class ChooseSalerItem extends AbstractFlexibleItem<ChooseSalerItem.Choose
                 avatarRes = R.drawable.ic_nosales_normal;
             }
             Glide.with(holder.itemView.getContext())
-                .load(avatarRes)
-                .asBitmap()
-                .into(new CircleImgWrapper(holder.salerHeaderImg, holder.itemView.getContext()));
+                    .load(avatarRes)
+                    .asBitmap()
+                    .into(new CircleImgWrapper(holder.salerHeaderImg, holder.itemView.getContext()));
         } else { // normal
             Glide.with(holder.itemView.getContext())
-                .load(PhotoUtils.getSmall(mSaler.avatar))
-                .asBitmap()
-                .into(new CircleImgWrapper(holder.salerHeaderImg, holder.itemView.getContext()));
+                    .load(PhotoUtils.getSmall(mSaler.avatar))
+                    .asBitmap()
+                    .into(new CircleImgWrapper(holder.salerHeaderImg, holder.itemView.getContext()));
         }
 
         holder.salerNameTv.setText(mSaler.username);
@@ -90,25 +93,31 @@ public class ChooseSalerItem extends AbstractFlexibleItem<ChooseSalerItem.Choose
         }
     }
 
-    @Override public boolean isSelectable() {
+    @Override
+    public boolean isSelectable() {
         return true;
     }
 
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         return false;
     }
 
     public class ChooseSalerVH extends FlexibleViewHolder {
-        @BindView(R2.id.saler_header_img) ImageView salerHeaderImg;
-        @BindView(R2.id.choose_img) ImageView chooseImg;
-        @BindView(R2.id.saler_name_tv) TextView salerNameTv;
+        @BindView(R2.id.saler_header_img)
+        ImageView salerHeaderImg;
+        @BindView(R2.id.choose_img)
+        ImageView chooseImg;
+        @BindView(R2.id.saler_name_tv)
+        TextView salerNameTv;
 
         public ChooseSalerVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);
         }
 
-        @Override public void toggleActivation() {
+        @Override
+        public void toggleActivation() {
             super.toggleActivation();
             //if (mAdapter.isSelected(getAdapterPosition())) {
             //    chooseImg.setVisibility(View.VISIBLE);

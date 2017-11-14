@@ -56,7 +56,7 @@ public class FollowUpTopSalerView extends BaseGirdListFragment implements
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+        commonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
         commonFlexAdapter.addListener(this);
 
     }

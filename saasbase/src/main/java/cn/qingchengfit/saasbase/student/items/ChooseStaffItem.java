@@ -53,8 +53,8 @@ public class ChooseStaffItem extends AbstractFlexibleItem<ChooseStaffItem.Choose
     }
 
     @Override
-    public ChooseStaffVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ChooseStaffVH(inflater.inflate(getLayoutRes(),parent,false),adapter);
+    public ChooseStaffVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ChooseStaffVH(view,adapter);
     }
 
     @Override

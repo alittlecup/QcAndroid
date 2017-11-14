@@ -44,23 +44,27 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
 
     String title;
     LineData data;
-    @ColorInt int lineColor;
-    @ColorInt int fillColor;
-    int offSetDay=30;
+    @ColorInt
+    int lineColor;
+    @ColorInt
+    int fillColor;
+    int offSetDay = 30;
     FollowUpDataStatistic.NewCreateUsersBean bean;
 
-    public DataStatisticsItem(String title, FollowUpDataStatistic.NewCreateUsersBean bean,@ColorInt int lineColor,@ColorInt int fillColor) {
-        this.bean=bean;
-        this.data = StudentBusinessUtils.transformBean2Data(bean.date_counts,offSetDay,lineColor,fillColor);
-        this.lineColor=lineColor;
-        this.fillColor=fillColor;
+    public DataStatisticsItem(String title, FollowUpDataStatistic.NewCreateUsersBean bean, @ColorInt int lineColor, @ColorInt int fillColor) {
+        this.bean = bean;
+        this.data = StudentBusinessUtils.transformBean2Data(bean.date_counts, offSetDay, lineColor, fillColor);
+        this.lineColor = lineColor;
+        this.fillColor = fillColor;
         this.title = title;
     }
-    public String getTitle(){
+
+    public String getTitle() {
         return title;
     }
-    public void setOffDay(int days){
-        this.offSetDay=days;
+
+    public void setOffDay(int days) {
+        this.offSetDay = days;
     }
 
     public void setLineColor(int lineColor) {
@@ -70,8 +74,9 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
     public void setFillColor(int fillColor) {
         this.fillColor = fillColor;
     }
-    public void invalidate(){
-        this.data=StudentBusinessUtils.transformBean2Data(bean.date_counts,offSetDay,lineColor,fillColor);
+
+    public void invalidate() {
+        this.data = StudentBusinessUtils.transformBean2Data(bean.date_counts, offSetDay, lineColor, fillColor);
     }
 
     @Override
@@ -80,8 +85,8 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
     }
 
     @Override
-    public DataStatisticsVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new DataStatisticsVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    public DataStatisticsVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new DataStatisticsVH(view, adapter);
     }
 
     @Override
@@ -96,7 +101,6 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
 
 
     }
-
 
 
     public class DataStatisticsVH extends FlexibleViewHolder {

@@ -2,6 +2,7 @@ package cn.qingchengfit.design;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +24,6 @@ import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TwoScrollPicker;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +114,7 @@ public class ItemActivity extends BaseActivity implements FlexibleAdapter.OnItem
     itemList.add(new FilterCommonLinearItem(dataList.get(0)));
     adapter = new CommonFlexAdapter(itemList, this);
     recyclerItem.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-    recyclerItem.addItemDecoration(new DividerItemDecoration(getApplicationContext()));
+    recyclerItem.addItemDecoration(new DividerItemDecoration(getApplicationContext(),DividerItemDecoration.VERTICAL));
     recyclerItem.setAdapter(adapter);
   }
 

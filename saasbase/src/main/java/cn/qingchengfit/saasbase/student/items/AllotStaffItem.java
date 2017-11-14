@@ -39,9 +39,15 @@ public class AllotStaffItem extends AbstractFlexibleItem<AllotStaffItem.Allocate
     }
 
     @Override
-    public AllocateVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AllocateVH(inflater.inflate(R.layout.item_allot,parent,false),adapter);
+    public int getLayoutRes() {
+        return R.layout.item_allot;
     }
+
+    @Override
+    public AllocateVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AllocateVH(view,adapter);
+    }
+
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, AllocateVH holder, int position, List payloads) {

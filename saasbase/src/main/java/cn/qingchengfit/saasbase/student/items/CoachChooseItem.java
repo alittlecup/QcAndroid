@@ -17,9 +17,8 @@ public class CoachChooseItem extends CoachDetailItem {
     public CoachChooseItem(QcStudentBean qcStudentBean) {
         super(qcStudentBean);
     }
-    @Override public StudentVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-                                                ViewGroup parent) {
-        StudentVH vh = super.createViewHolder(adapter, inflater, parent);
+    @Override public StudentVH createViewHolder(View view, FlexibleAdapter adapter) {
+        StudentVH vh = super.createViewHolder(view ,adapter);
         vh.cb.setVisibility(View.VISIBLE);
         return vh;
     }

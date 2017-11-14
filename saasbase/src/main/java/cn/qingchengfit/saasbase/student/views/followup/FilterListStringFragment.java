@@ -26,7 +26,8 @@ public class FilterListStringFragment extends FilterFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rlPopWindowCommon.addItemDecoration(
-                new FlexibleItemDecoration(getContext()).withDivider(cn.qingchengfit.widgets.R.drawable.divider_grey_left_margin)
+                new FlexibleItemDecoration(getContext())
+                        .withDivider(cn.qingchengfit.widgets.R.drawable.divider_grey_left_margin)
                         .withBottomEdge(true));
     }
 
