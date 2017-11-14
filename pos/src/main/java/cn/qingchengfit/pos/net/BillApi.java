@@ -88,7 +88,7 @@ public interface BillApi {
     @Path("gym_id") String gym_id, @QueryMap HashMap<String, Object> params);
 
   /**
-   * 账单统计 //TODO 未给出
+   * 账单统计
    */
 
   @GET("/api/rongshu/gyms/{gym_id}/bills/statistics/")

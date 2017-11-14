@@ -57,7 +57,6 @@ public interface PosApi {
   /**
    * 登录
    */
-  //TODO 后续需要改
   @POST("/api/rongshu/cashier/login/") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
 
   /**
