@@ -8,6 +8,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
+import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
@@ -207,12 +208,12 @@ public interface StudentApi {
 
     /**
      * @param params 必传start, end，
-     * 可选排序字段 加 “-”说明是倒序
-     * order_by=
-     * days      -days
-     * group     -group
-     * private     -private
-     * checkin   -checkin
+     *               可选排序字段 加 “-”说明是倒序
+     *               order_by=
+     *               days      -days
+     *               group     -group
+     *               private     -private
+     *               checkin   -checkin
      * @return "attendances": [{"checkin": 0,"group": 139,"user": {"username": "孙正其","gender": 0,"id": 2219,"avatar":
      * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
      * 142},
@@ -222,4 +223,10 @@ public interface StudentApi {
             @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
 
+    /**
+     * 获取未签课的学员
+     */
+    @GET("/api/staffs/{staff_id}/users/checkin/records/")
+    Observable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(
+            @Path("staff_id") String staffId, @QueryMap HashMap<String, Object> params);
 }

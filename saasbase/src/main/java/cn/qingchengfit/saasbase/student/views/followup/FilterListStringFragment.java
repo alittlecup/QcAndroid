@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qingchengfit.items.FilterCommonLinearItem;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.views.fragments.FilterFragment;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -27,7 +28,8 @@ public class FilterListStringFragment extends FilterFragment {
         super.onViewCreated(view, savedInstanceState);
         rlPopWindowCommon.addItemDecoration(
                 new FlexibleItemDecoration(getContext())
-                        .withDivider(cn.qingchengfit.widgets.R.drawable.divider_grey_left_margin)
+                        .withDivider(R.drawable.divider_grey_left_margin)
+                        .withOffset(1)
                         .withBottomEdge(true));
     }
 

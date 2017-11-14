@@ -27,7 +27,7 @@ public class AttendanceStudentListFilterFragment extends BaseFilterFragment {
 
     @Override
     public void dismiss() {
-        if(dismissAction!=null)dismissAction.call();
+        if (dismissAction != null) dismissAction.call();
     }
 
     private void initFragment() {
@@ -48,15 +48,20 @@ public class AttendanceStudentListFilterFragment extends BaseFilterFragment {
 
     @Override
     protected Fragment getFragmentByTag(String tag) {
-        if(tag.equalsIgnoreCase(getTags()[0]))return filterFragment;
+        if (tag.equalsIgnoreCase(getTags()[0])) return filterFragment;
         return new EmptyFragment();
     }
-    Action3<String,String,String> daySelect;
-    public void setDaySelectAction(Action3<String,String,String> action){
-        this.daySelect=action;
+
+    Action3<String, String, String> daySelect;
+
+    public void setDaySelectAction(Action3<String, String, String> action) {
+        this.daySelect = action;
     }
-    private Action0 dismissAction ;
-    public void setDismissAction(Action0 action){
-        this.dismissAction=action;
-    }}
+
+    private Action0 dismissAction;
+
+    public void setDismissAction(Action0 action) {
+        this.dismissAction = action;
+    }
+}
 

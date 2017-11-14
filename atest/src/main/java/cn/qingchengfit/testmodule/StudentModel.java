@@ -1,6 +1,7 @@
 package cn.qingchengfit.testmodule;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -11,6 +12,7 @@ import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
+import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.api.StudentApi;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
@@ -150,5 +152,10 @@ public class StudentModel implements IStudentModel {
     @Override
     public Observable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(String id, HashMap<String, Object> params) {
         return studentApi.qcGetUsersAttendances(id, params);
+    }
+
+    @Override
+    public Observable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId, HashMap<String, Object> params) {
+        return studentApi.qcGetNotSignStudent(staffId, params);
     }
 }

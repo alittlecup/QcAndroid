@@ -1,12 +1,14 @@
 package cn.qingchengfit.saasbase.repository;
 
 import java.util.HashMap;
+import java.util.List;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
+import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
@@ -218,16 +220,24 @@ public interface IStudentModel {
 
     /**
      * @param params 必传start, end，
-     * 可选排序字段 加 “-”说明是倒序
-     * order_by=
-     * days      -days
-     * group     -group
-     * private     -private
-     * checkin   -checkin
+     *               可选排序字段 加 “-”说明是倒序
+     *               order_by=
+     *               days      -days
+     *               group     -group
+     *               private     -private
+     *               checkin   -checkin
      * @return "attendances": [{"checkin": 0,"group": 139,"user": {"username": "孙正其","gender": 0,"id": 2219,"avatar":
      * "http://zoneke-img.b0.upaiyun.com/a15bec431224aa638a4b8eccb2e96955.jpg!120x120","phone": "18536668518"},"private_count": 8,"days":
      * 142},
      */
     Observable<QcDataResponse<AttendanceListWrap>> qcGetUsersAttendances(
-            String id,  HashMap<String, Object> params);
+            String id, HashMap<String, Object> params);
+
+
+    /**
+     * 获取未签课的学员
+     */
+    Observable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(
+            String staffId, HashMap<String, Object> params);
+
 }
