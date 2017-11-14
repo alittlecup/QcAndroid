@@ -7,6 +7,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
+import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
@@ -194,9 +195,22 @@ public interface IStudentModel {
             String staff_id, HashMap<String, Object> params);
 
     /**
-     *获取缺勤图表数据
+     * 获取缺勤图表数据
      */
-    @GET("/api/staffs/{id}/users/attendance/glance/")
     Observable<QcDataResponse<AttendanceCharDataBean>> qcGetAttendanceChart(
-            @Path("id") String id, @QueryMap HashMap<String, Object> params);
+            String id, HashMap<String, Object> params);
+
+
+    /**
+     * 缺勤列表
+     *
+     * @param params 缺勤<7： absence__lt=7，
+     *               7-30天：absence__gte=7&absence__lte=30,
+     *               缺勤>60天：absence__ge=60
+     * @return "attendances": [{"user": {"username": "俞小西","gender": 1,"id": 2131,"avatar":
+     * "http://zoneke-img.b0.upaiyun.com/9360bb9fb982a95c915edf44f611678f.jpeg!120x120","phone":
+     * "18611985427"},"absence": 390,"date_and_time": "2016-01-30 13:30-14:30","id": 5933,"title": "娜娜私教 杨娜娜"},]
+     */
+    Observable<QcDataResponse<AbsentceListWrap>> qcGetUsersAbsences(String id
+            , HashMap<String, Object> params);
 }

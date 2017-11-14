@@ -15,6 +15,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
+import cn.qingchengfit.saasbase.student.other.RxHelper;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import rx.android.schedulers.AndroidSchedulers;
@@ -49,9 +50,7 @@ public class StudentAttendancePresenter extends BasePresenter<StudentAttendanceP
         params.put("end", end);
         RxRegiste(studentModel
                 .qcGetAttendanceChart(staff_id, params)
-                .onBackpressureBuffer()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxHelper.schedulersTransformer())
                 .subscribe(absentcesQcResponseData -> {
                     if (ResponseConstant.checkSuccess(absentcesQcResponseData)) {
                         mvpView.onAbsence(absentcesQcResponseData.data);

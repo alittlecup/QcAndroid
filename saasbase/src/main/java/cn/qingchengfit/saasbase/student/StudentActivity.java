@@ -17,6 +17,7 @@ import cn.qingchengfit.saasbase.student.views.allot.CoachDetailFragment;
 import cn.qingchengfit.saasbase.student.views.allot.MultiAllotCoachFragment;
 import cn.qingchengfit.saasbase.student.views.allot.MultiAllotSalesFragment;
 import cn.qingchengfit.saasbase.student.views.allot.SaleDetailFragment;
+import cn.qingchengfit.saasbase.student.views.attendance.AttendanceStudentListFragment;
 import cn.qingchengfit.saasbase.student.views.attendance.StudentAttendanceFragment;
 import cn.qingchengfit.saasbase.student.views.filtertime.FilterTimesFragment;
 import cn.qingchengfit.saasbase.student.views.followup.FollowUpFilterFragment;
@@ -67,7 +68,8 @@ import rx.functions.Action1;
         FilterTimesFragment.class,
         FollowUpTopSalerView.class,
         StudentTransferFragment.class,
-        StudentAttendanceFragment.class
+        StudentAttendanceFragment.class,
+        AttendanceStudentListFragment.class
 
 
 })

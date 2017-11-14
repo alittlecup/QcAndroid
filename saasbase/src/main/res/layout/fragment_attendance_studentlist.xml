@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="toolbarModel"
+            type="cn.qingchengfit.model.others.ToolbarModel" />
+
+        <variable
+            name="fragment"
+            type="cn.qingchengfit.saasbase.student.views.attendance.AttendanceStudentListFragment" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/common_simple_toolbar"
+            bind:toolbarModel="@{toolbarModel}" />
+
+        <cn.qingchengfit.widgets.QcFilterToggle
+            android:id="@+id/top_day_toggle"
+            style="@style/QcFilterStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:onClick="@{fragment::onTopDayFilterClick}"
+            android:text="@{fragment.topFilterText}"
+            android:textColor="@color/qc_text_black"
+            android:textSize="13sp"
+            app:ft_text_off="缺勤7-30天"
+            app:ft_text_on="缺勤7-30天" />
+
+        <include layout="@layout/divider_grey" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tips_absence_account"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:textSize="12dp"
+                tools:text="缺勤7-30天的会员共计30人" />
+
+            <include
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                layout="@layout/divider_grey"
+                android:layout_below="@id/tips_absence_account" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider" />
+
+            <FrameLayout
+                android:id="@+id/frag_filter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

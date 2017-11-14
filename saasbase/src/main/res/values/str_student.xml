@@ -60,6 +60,12 @@
     <string name="label_absentee">缺勤统计</string>
     <string name="not_sign_class_count">未签课统计</string>
 
+    <string name="absence_three_seven">缺勤7-30天</string>
+    <string name="absence_thirty">缺勤30-60天</string>
+    <string name="absence_sixty">缺勤>60天</string>
+    <string formatted="false" name="absence_condition">缺勤%s-%s天</string>
+    <string formatted="false" name="absence_account">%s的会员共计%d人</string>
+
 
 
 

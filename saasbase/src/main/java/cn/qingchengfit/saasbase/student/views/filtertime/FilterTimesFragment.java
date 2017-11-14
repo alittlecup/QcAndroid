@@ -67,15 +67,7 @@ public class FilterTimesFragment extends SaasBaseFragment {
     int type = 0;
     int limitDay; // 限制自定义选择的范围
 
-    @Inject
-    FollowUpFilterModel model;
-    @Named("commonFilter")
-    @Inject
-    StudentFilter filter;
 
-    @Named("topFilter")
-    @Inject
-    StudentFilter topFilter;
 
     FilterListStringFragment dayFilterFragment;
     FilterCustomFragment filterCustomFragment;

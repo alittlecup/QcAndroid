@@ -87,6 +87,7 @@
                     android:id="@+id/btn_absentee"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qc_item_height"
+                    android:onClick="@{fragment::toStudentAbsentce}"
                     android:background="@drawable/bg_click"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"

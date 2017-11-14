@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.student.views.attendance;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -100,5 +101,9 @@ public class StudentAttendanceFragment extends BaseFragment implements StudentAt
     public void onAbsence(AttendanceCharDataBean statistic) {
         binding.lineChartDate.setData(StudentBusinessUtils.transformBean2Data(statistic.datas, offSetDay
                 , Color.parseColor("#FF8CB4B9"), Color.parseColor("#648CB4B9")));
+    }
+    public void toStudentAbsentce(View v){
+        Uri uri=Uri.parse("student://student/student/absentce");
+        routeTo(uri,null);
     }
 }
