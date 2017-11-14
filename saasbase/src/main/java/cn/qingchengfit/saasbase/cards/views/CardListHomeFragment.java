@@ -102,6 +102,7 @@ import javax.inject.Inject;
       @Override public void onFilterResult(CardTpl cardTpl, int status) {
         filterTpl.setChecked(false);
         filterStatus.setChecked(false);
+        cardListFragment.initLoadMore(100,CardListHomeFragment.this);
         presenter.setFilter(cardTpl.type, cardTpl.getId(), status);
       }
     });
