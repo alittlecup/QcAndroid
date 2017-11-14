@@ -129,12 +129,12 @@ import javax.inject.Inject;
         .clickable(false)
         .desc(card.getSupportGyms())
         .build());
-    items.add(new ActionDescItem.Builder().action(3)
-        .icon(R.drawable.vd_card_bills)
-        .title("消费记录")
-        .clickable(false)
-        .desc("todo")
-        .build());
+    //items.add(new ActionDescItem.Builder().action(3)
+    //    .icon(R.drawable.vd_card_bills)
+    //    .title("消费记录")
+    //    .clickable(false)
+    //    .desc("todo")
+    //    .build());
     items.add(new ActionDescItem.Builder().action(4)
         .icon(R.drawable.vd_card_no)
         .title("实体卡号")
