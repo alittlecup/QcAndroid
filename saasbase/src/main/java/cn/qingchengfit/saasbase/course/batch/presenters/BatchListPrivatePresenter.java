@@ -3,16 +3,12 @@ package cn.qingchengfit.saasbase.course.batch.presenters;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
-import cn.qingchengfit.saasbase.repository.ICourseModel;
-import java.util.List;
 import javax.inject.Inject;
 
 public class BatchListPrivatePresenter extends BasePresenter {
 
-  @Inject GymWrapper gymWrapper;
-  @Inject ICourseModel courseApi;
+  //@Inject GymWrapper gymWrapper;
+  //@Inject ICourseModel courseApi;
   private MVPView view;
 
   @Inject public BatchListPrivatePresenter() {
@@ -44,6 +40,6 @@ public class BatchListPrivatePresenter extends BasePresenter {
   }
 
   public interface MVPView extends CView {
-    void onList(List<BatchCoach> coaches);
+    //void onList(List<BatchCoach> coaches);
   }
 }
