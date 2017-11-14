@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.anbillon.flabellum.annotations.Trunk;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -17,6 +19,7 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import java.net.URISyntaxException;
 import javax.inject.Inject;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 @Trunk(fragments = {
@@ -24,6 +27,7 @@ import org.json.JSONObject;
 }) public class MainActivity extends BaseActivity implements HasSupportFragmentInjector {
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
   @Inject GymWrapper gymWrapper;
+  @Inject LoginStatus loginStatus;
   PosMainFragment posMainFragment;
   private Socket socket;
 
@@ -36,6 +40,23 @@ import org.json.JSONObject;
       .replace(R.id.frag_main, posMainFragment)
       .commit();
     initWs();
+    initSensor();
+  }
+
+
+  /**
+   * 初始化属性
+   */
+  private void initSensor() {
+    try {
+      JSONObject properties = SensorsDataAPI.sharedInstance(getApplicationContext()).getSuperProperties();
+      if (properties == null) properties = new JSONObject();
+      properties.put("qc_user_id", loginStatus.getUserId());
+      properties.put("qc_user_phone", loginStatus.getLoginUser().getPhone());
+      SensorsDataAPI.sharedInstance(getApplicationContext()).registerSuperProperties(properties);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override protected void onDestroy() {

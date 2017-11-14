@@ -4,6 +4,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
 import cn.qingchengfit.views.fragments.BaseListFragment;
+import eu.davidea.flexibleadapter.common.FlexibleItemAnimator;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -38,12 +39,14 @@ public class CardListFragment extends BaseListFragment {
 
 
   @Override protected void addDivider() {
+    rv.setItemAnimator(new FlexibleItemAnimator());
     rv.setBackgroundResource(R.color.transparent);
     if (srl != null) srl.setBackgroundResource(R.color.transparent);
     rv.setPadding(15, 0, 15, 0);
     rv.addItemDecoration(
       new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_saas_realcard));
   }
+
 
   public void setCardtpls(List<Card> list, int page) {
     stopRefresh();
@@ -54,8 +57,9 @@ public class CardListFragment extends BaseListFragment {
         for (Card cardTpl : list) {
           datas.add(generateItem(cardTpl));
         }
-        commonFlexAdapter.onLoadMoreComplete(datas, 500);
-      }else commonFlexAdapter.onLoadMoreComplete(null,500);
+        commonFlexAdapter.updateDataSet(datas,true);
+        //commonFlexAdapter.onLoadMoreComplete(datas, 500);
+      }
     }
   }
 

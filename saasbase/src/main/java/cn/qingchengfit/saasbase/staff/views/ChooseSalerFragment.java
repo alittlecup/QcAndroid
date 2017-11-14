@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.qingchengfit.Constants;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
@@ -133,7 +134,7 @@ import rx.schedulers.Schedulers;
           stopRefresh();
           if (ResponseConstant.checkSuccess(qcResponse)) {
             ret.clear();
-            Staff no = new Staff("无销售","","",0);
+            Staff no = new Staff("无销售","", Constants.AVATAR_COACH_MALE,0);
             no.setId("0");
             ret.add(new StaffItem(no));
             for (Staff user : qcResponse.data.sellers) {

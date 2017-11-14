@@ -64,7 +64,7 @@ public class CardTplItem extends AbstractFlexibleItem<CardTplItem.CardTplVH> {
   }
 
 
-  public class CardTplVH extends FlexibleViewHolder {
+  public class CardTplVH extends FlexibleViewHolder  {
     @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
     @BindView(R2.id.tv_cardtpl_name) TextView tvCardtplName;
     @BindView(R2.id.tv_gym_name) TextView tvGymName;

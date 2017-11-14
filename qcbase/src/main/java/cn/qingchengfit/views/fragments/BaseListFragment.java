@@ -5,7 +5,6 @@ import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +65,7 @@ public abstract class BaseListFragment extends BaseFragment {
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     View view = null;
     if (isChild) {
       view = inflater.inflate(R.layout.fragment_base_list_nosrl, container, false);
@@ -76,42 +75,37 @@ public abstract class BaseListFragment extends BaseFragment {
     super.onCreateView(inflater, container, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
     initView(savedInstanceState);
-    RecyclerView.ItemAnimator animator = rv.getItemAnimator();
-    if (animator instanceof SimpleItemAnimator) {
-      ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
-    }
     return view;
   }
 
   protected void initView(Bundle savedInstanceState) {
     linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());
-    if (savedInstanceState != null && savedInstanceState.containsKey("p")){
-      linearLayoutManager.scrollToPosition(savedInstanceState.getInt("p",0));
+    if (savedInstanceState != null && savedInstanceState.containsKey("p")) {
+      linearLayoutManager.scrollToPosition(savedInstanceState.getInt("p", 0));
     }
     rv.setLayoutManager(linearLayoutManager);
     setAnimation();
     addDivider();
     rv.setAdapter(commonFlexAdapter);
+    rv.setItemViewCacheSize(0);
     if (listeners != null) commonFlexAdapter.addListener(listeners);
     if (srl != null && listeners instanceof SwipeRefreshLayout.OnRefreshListener) {
       srl.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) listeners);
     }
-
   }
 
-
   protected void setAnimation() {
-    commonFlexAdapter.setAnimationEntryStep(true)
-        .setAnimationOnReverseScrolling(true)
-    .setAnimationOnScrolling(true)
-    .setAnimationDuration(200)
-    .setAnimationInterpolator(new LinearInterpolator());
+    commonFlexAdapter.setAnimationEntryStep(false)
+      .setAnimationOnReverseScrolling(false)
+      .setAnimationOnScrolling(true)
+      .setAnimationDuration(200L)
+      .setAnimationInterpolator(new LinearInterpolator());
   }
 
   protected void addDivider() {
     rv.addItemDecoration(
-        new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)
-            .withBottomEdge(true));
+      new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)
+        .withBottomEdge(true));
   }
 
   public void initLoadMore() {
@@ -119,9 +113,10 @@ public abstract class BaseListFragment extends BaseFragment {
       commonFlexAdapter.setEndlessProgressItem(progressItem);
     }
   }
-  public void initLoadMore(int count,FlexibleAdapter.EndlessScrollListener l) {
+
+  public void initLoadMore(int count, FlexibleAdapter.EndlessScrollListener l) {
     if (commonFlexAdapter != null) {
-      commonFlexAdapter.setEndlessScrollListener(l,progressItem);
+      commonFlexAdapter.setEndlessScrollListener(l, progressItem);
       commonFlexAdapter.setEndlessTargetCount(count);
     }
   }
@@ -142,12 +137,13 @@ public abstract class BaseListFragment extends BaseFragment {
   protected void clearItems() {
     commonFlexAdapter.clear();
   }
-  public void setDatas(List<? extends AbstractFlexibleItem> ds,@IntRange(from = 1) int page) {
+
+  public void setDatas(List<? extends AbstractFlexibleItem> ds, @IntRange(from = 1) int page) {
     stopRefresh();
     if (rv != null && commonFlexAdapter != null) {
       if (page == 1) clearItems();
       commonFlexAdapter.onLoadMoreComplete(ds, 500);
-      if ((ds == null || ds.size() == 0 )&& commonNoDataItem != null) {
+      if ((ds == null || ds.size() == 0) && commonNoDataItem != null) {
         addEmptyPage();
       }
 

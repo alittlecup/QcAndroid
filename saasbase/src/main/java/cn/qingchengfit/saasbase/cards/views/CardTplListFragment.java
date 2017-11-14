@@ -72,7 +72,8 @@ public class CardTplListFragment extends BaseListFragment {
       if (datas.size() == 0)
         datas.add(commonNoDataItem);
       //commonFlexAdapter.notifyDataSetChanged();
-      commonFlexAdapter.onLoadMoreComplete(datas,500);
+      //commonFlexAdapter.onLoadMoreComplete(datas,500);
+      commonFlexAdapter.updateDataSet(datas);
     }
   }
 
