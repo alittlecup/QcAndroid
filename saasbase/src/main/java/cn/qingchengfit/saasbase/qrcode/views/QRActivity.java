@@ -15,6 +15,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
@@ -57,6 +58,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String MODULE_GIFT = "giftcard";
     public static final String MODULE_COMMODITY = "commodity/list";
     public static final String MODULE_PAY_CASH = "/pay/bills";
+    public static final String MODULE_MANAGE_STAFF = "/manage/staff/";
 
     //    @BindView(R.id.qrdecoderview)
     QRCodeReaderView qrdecoderview;
@@ -70,13 +72,14 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     @BindView(R2.id.root_view) RelativeLayout rootView;
     private Subscription sp;
     private AlertDialogWrapper dialog;
+    @Inject GymWrapper gymWrapper;
 
     /**
      * @param module Web相应模块的后缀
      */
     public static void start(Context context,String module) {
         Intent starter = new Intent(context, QRActivity.class);
-        starter.putExtra(LINK_URL,module);
+        starter.putExtra(LINK_MODULE, module);
         context.startActivity(starter);
     }
 
@@ -137,7 +140,12 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     @Override public void onQRCodeRead(final String text, PointF[] points) {
         if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
         final String session = PreferenceUtils.getPrefString(this, Configs.PREFER_SESSION, "");
-        sp = restRepository.createPostApi(PostApi.class).qcScans(text, new ScanBody.Builder().url(getIntent().getStringExtra(LINK_URL)).session_id(session)
+        String url = "";
+        if (getIntent() != null) {
+            url = getBaseContext().getResources()
+                .getString(R.string.qr_code_2web, Configs.Server, gymWrapper.id(), getIntent().getStringExtra(LINK_MODULE));
+        }
+        sp = restRepository.createPostApi(PostApi.class).qcScans(text, new ScanBody.Builder().url(url).session_id(session)
             //                .module(getIntent().getStringExtra(LINK_MODULE))
             //                .brand_id(getIntent().getStringExtra("brand_id"))
             //                .shop_id(getIntent().getStringExtra("shop_id"))

@@ -36,6 +36,7 @@ import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -219,7 +220,12 @@ import rx.functions.Action1;
 
     dealFilterMonth(billList);
     adapter.updateDataSet(itemList);
-    //adapter.notifyDataSetChanged();
+  }
+
+  @Override public void onFilterError(String msg) {
+    TipTextDialogFragment.newInstance(msg,
+        getResources().getString(R.string.dialog_sure),
+        "筛选失败").show(getFragmentManager(), null);
   }
 
   private void dealFilterMonth(List<BusinessBill> billList) {
