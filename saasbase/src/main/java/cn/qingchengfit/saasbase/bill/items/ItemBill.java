@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.bill.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -47,7 +45,7 @@ public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
         .getString(R.string.bill_operator, bill.created_by.username));
 
     //交易类型
-    if (bill.bank_no.length() > 0) {
+    if (bill.bank_no.length() > 0 && bill.pay_type.equals(SaasConstant.PAY_TYPE_UNIONPAY)) {
       holder.tvItemBillName.setText(holder.itemView.getContext()
           .getResources()
           .getString(R.string.bill_detail_item, holder.itemView.getContext()
