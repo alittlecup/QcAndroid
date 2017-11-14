@@ -137,6 +137,7 @@
       />
 
   <TextView
+      android:id="@+id/tv_btn_login_question"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/login_have_some_question"
@@ -144,6 +145,9 @@
       android:layout_gravity="right"
       android:textColor="@color/white"
       android:layout_marginTop="20dp"
+      android:paddingLeft="6dp"
+      android:paddingTop="6dp"
+      android:paddingBottom="6dp"
       />
 
 </LinearLayout>

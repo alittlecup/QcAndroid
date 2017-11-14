@@ -25,6 +25,7 @@ import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.TipTextDialogFragment;
 import java.util.concurrent.TimeUnit;
@@ -110,6 +111,12 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.MVPVie
       DialogUtils.showAlert(getContext(),
         getResources().getString(R.string.tips_phone_not_correct));
     }
+  }
+
+  @OnClick(R.id.tv_btn_login_question)
+  public void onQuestion(){
+    //TODO 像老司机要链接
+    WebActivity.startWeb("", getContext());
   }
 
   @Override public void onDestroyView() {

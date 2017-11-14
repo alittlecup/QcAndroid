@@ -65,8 +65,8 @@ public class CardModel implements ICardModel {
         .qcGetCardTpls(gymWrapper.getGymId(), gymWrapper.getParams(), null, isEnable);
   }
 
+  @Deprecated
   @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission() {
-    // TODO: 2017/10/10
     return null;
   }
 
