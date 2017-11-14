@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
@@ -153,19 +154,7 @@ import rx.functions.Action1;
     if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
       chooseStudentListFragment.setData(stus);
       chooseStudentListFragment.selectStudent(studentIdList);
-
-
-      //if (studentIdList != null) {
-      //  RxRegiste(rx.Observable.just("")
-      //    .delay(1,TimeUnit.SECONDS)
-      //    .observeOn(AndroidSchedulers.mainThread())
-      //    .subscribe(new BusSubscribe<String>(){
-      //      @Override public void onNext(String s) {
-      //
-      //      }
-      //    })
-      //  );
-      //}
+      
     }
   }
 
