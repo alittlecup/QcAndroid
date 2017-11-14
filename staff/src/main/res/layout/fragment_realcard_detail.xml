@@ -41,9 +41,9 @@
           >
 
         <FrameLayout
+            android:id="@+id/frame_bg_card_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_realcard"
             android:layerType="software"
             >
 
@@ -51,7 +51,6 @@
               android:id="@+id/card_bg"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/bg_realcard"
               android:layerType="software"
               >
 
