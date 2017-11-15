@@ -53,7 +53,8 @@ public class BusinessBill implements Parcelable{
   public String remarks;
   public Extra extra;         //根据业务订单变
 
-  public int status;          // 状态 1：待结算，2：已结算，3：处理中, 4：处理失败, 5.处理完成
+  // 状态status 1：待结算，2：已结算，3：退款中, 4：退款失败, 5.已退款、6：提现中、7：提现失败、8：提现完成、9：退款完成
+  public int status;
   public float price;
   public class Extra implements Parcelable{
     public Card card;
