@@ -112,7 +112,9 @@ public class BillFilterFragment extends BaseFragment
     for (FilterModel filter : filters){
       if (filter.type == 2){
         itemList.add(new ItemFilterTime(filter, this));
-      }else {
+      }else if (filter.type == 3) {
+        //TODO 销售列表
+      }else{
         itemList.add(new ItemFilterCommon(filter));
       }
     }

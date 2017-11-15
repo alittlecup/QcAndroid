@@ -100,7 +100,7 @@ public class ExchangeFragment extends BaseFragment {
                   tvExchangeEnd.setText(DateUtils.replaceTFromServer(
                       exchangeWrapperQcDataResponse.data.exchange.end));
                   tvExchangeBusiness.setText(
-                      String.valueOf(exchangeWrapperQcDataResponse.data.exchange.bills_numbers));
+                      String.valueOf(exchangeWrapperQcDataResponse.data.exchange.bills_numbers) + "笔");
                   tvExchangeMoney.setText(
                       exchangeWrapperQcDataResponse.data.exchange.bills_price / 100 + "元");
                 }
