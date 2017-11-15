@@ -55,8 +55,11 @@ public class CardListFragment extends BaseListFragment {
         for (Card cardTpl : list) {
           datas.add(generateItem(cardTpl));
         }
+        if (page == 1 && datas.size() == 0)
+          datas.add(commonNoDataItem);
+
         commonFlexAdapter.onLoadMoreComplete(datas,500);
-      }
+      }else commonFlexAdapter.onLoadMoreComplete(null,500);
     }
   }
 
@@ -65,10 +68,10 @@ public class CardListFragment extends BaseListFragment {
   }
 
   @Override public int getNoDataIconRes() {
-    return R.drawable.vd_img_empty_universe;
+    return R.drawable.vd_card_empty;
   }
 
   @Override public String getNoDataStr() {
-    return "暂无会员卡种类";
+    return "暂无会员卡";
   }
 }

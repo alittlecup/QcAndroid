@@ -223,6 +223,7 @@ import javax.inject.Inject;
 
   @Override public void onCardCount(int count) {
     tvCardCount.setText(getString(R.string.card_total_count_d,count));
+    cardListFragment.initLoadMore(count,this);
   }
 
   @Override public void noMoreLoad(int newItemsSize) {
