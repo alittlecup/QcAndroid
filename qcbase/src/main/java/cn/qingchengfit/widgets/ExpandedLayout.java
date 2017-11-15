@@ -139,7 +139,7 @@ public class ExpandedLayout extends LinearLayout {
         if (leftDrawable != null)
             leftImage.setImageDrawable(leftDrawable);
 
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dpToPx(40f, getResources()));
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dpToPx(50f, getResources()));
         addView(view, 0, layoutParams);
         mContent = getChildAt(1);
 
