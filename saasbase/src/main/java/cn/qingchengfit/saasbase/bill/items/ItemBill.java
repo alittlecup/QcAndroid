@@ -74,7 +74,7 @@ public class ItemBill extends AbstractFlexibleItem<ItemBill.ItemBillVH> {
       holder.tvItemBillAccount.setTextColor(holder.itemView.getResources().getColor(R.color.text_dark));
     }
     holder.tvItemBillAccount.setText(bill.getPrice(bill.price, bill.type));
-    holder.tvItemBillStatus.setText(bill.getStatus(holder.itemView.getContext(), bill.status, bill.type));
+    holder.tvItemBillStatus.setText(bill.getStatus(holder.itemView.getContext(), bill.status));
   }
 
 
