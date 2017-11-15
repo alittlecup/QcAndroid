@@ -2,6 +2,7 @@ package cn.qingchengfit.pos.net;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.cashier.model.CashierWrap;
+import cn.qingchengfit.saasbase.staff.beans.response.SalerDataWrap;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
@@ -99,6 +100,9 @@ public interface StaffApi {
      @Path("mid") String cid, @QueryMap HashMap<String, Object> params
     , @Body ManagerBody body);
 
+  //todo 获取销售业绩
+  @GET("/api/rongshu/seller/") rx.Observable<QcDataResponse<SalerDataWrap>> qcGetSalerData(
+    @Path("seller_id") String sellid);
 
 }
 

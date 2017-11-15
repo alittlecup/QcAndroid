@@ -1,12 +1,7 @@
-package cn.qingchengfit.pos.staff;
+package cn.qingchengfit.saasbase.staff.beans.response;
 
-import cn.qingchengfit.pos.student.PosStudentAddFragment;
-import cn.qingchengfit.saasbase.staff.StaffActivity;
-import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
-import cn.qingchengfit.saasbase.staff.views.SalerDataFragment;
-import cn.qingchengfit.saasbase.staff.views.SalersListFragment;
-import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
-import com.anbillon.flabellum.annotations.Trunk;
+import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.saasbase.staff.beans.SalerData;
 
 /**
  * power by
@@ -26,15 +21,16 @@ import com.anbillon.flabellum.annotations.Trunk;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/11/15.
  */
-@Trunk(fragments = {
-    ChooseSalerFragment.class, SalersListFragment.class,
-  ChooseAndSearchStudentFragment.class,
-  PosStudentAddFragment.class,
-  PosStaffDetailFragment.class,
-  PosStaffAddFragment.class,
-  SalerDataFragment.class,
-})
-public class PosStaffActivity extends StaffActivity {
+
+public class SalerDataWrap {
+  public User user;
+  public Stat stat;
+
+  public class Stat{
+    public SalerData today;
+    public SalerData week;
+    public SalerData month;
+  }
 }

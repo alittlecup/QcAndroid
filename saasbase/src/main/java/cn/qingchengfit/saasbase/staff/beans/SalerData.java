@@ -1,12 +1,4 @@
-package cn.qingchengfit.pos.staff;
-
-import cn.qingchengfit.pos.student.PosStudentAddFragment;
-import cn.qingchengfit.saasbase.staff.StaffActivity;
-import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
-import cn.qingchengfit.saasbase.staff.views.SalerDataFragment;
-import cn.qingchengfit.saasbase.staff.views.SalersListFragment;
-import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
-import com.anbillon.flabellum.annotations.Trunk;
+package cn.qingchengfit.saasbase.staff.beans;
 
 /**
  * power by
@@ -26,15 +18,17 @@ import com.anbillon.flabellum.annotations.Trunk;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/16.
+ * Created by Paper on 2017/11/15.
  */
-@Trunk(fragments = {
-    ChooseSalerFragment.class, SalersListFragment.class,
-  ChooseAndSearchStudentFragment.class,
-  PosStudentAddFragment.class,
-  PosStaffDetailFragment.class,
-  PosStaffAddFragment.class,
-  SalerDataFragment.class,
-})
-public class PosStaffActivity extends StaffActivity {
+
+public class SalerData {
+  /*
+   *  "start": "xx",  # 日期结构
+   "end": "xxx",
+   "amount": 111,
+   */
+  public String start = "";
+  public String end = "";
+  public long amount;
+
 }

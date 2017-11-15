@@ -8,4 +8,10 @@
     <item>男</item>
     <item>女</item>
   </string-array>
+
+  <string-array name="analyz_during_list">
+    <item>日</item>
+    <item>周</item>
+    <item>月</item>
+  </string-array>
 </resources>

@@ -6,6 +6,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.cashier.model.CashierWrap;
 import cn.qingchengfit.pos.net.StaffApi;
+import cn.qingchengfit.saasbase.staff.beans.response.SalerDataWrap;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
@@ -89,5 +90,9 @@ public class StaffModel implements IStaffModel {
 
   @Override public Observable<QcDataResponse<PostionListWrap>> getPositions() {
     return staffApi.getPostions(gymWrapper.getGymId());
+  }
+
+  @Override public Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid) {
+    return staffApi.qcGetSalerData(staffid);
   }
 }

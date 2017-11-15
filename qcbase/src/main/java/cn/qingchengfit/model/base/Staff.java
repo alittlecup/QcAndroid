@@ -35,7 +35,7 @@ public class Staff extends Personage implements Parcelable {
     public String user_id;
     public boolean is_staff;
     public boolean is_coach;
-
+    public long amount;
 
     public Staff() {
     }
@@ -142,6 +142,7 @@ public class Staff extends Personage implements Parcelable {
         dest.writeString(this.user_id);
         dest.writeByte(this.is_staff ? (byte) 1 : (byte) 0);
         dest.writeByte(this.is_coach ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.amount);
     }
 
     protected Staff(Parcel in) {
@@ -154,6 +155,7 @@ public class Staff extends Personage implements Parcelable {
         this.user_id = in.readString();
         this.is_staff = in.readByte() != 0;
         this.is_coach = in.readByte() != 0;
+        this.amount = in.readLong();
     }
 
     public static final Creator<Staff> CREATOR = new Creator<Staff>() {

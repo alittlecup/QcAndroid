@@ -71,6 +71,21 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
   }
 
   public void selectStudent(ArrayList<String> studentIdList) {
+    this.studentIdList = studentIdList;
+    //if (studentIdList != null) {
+    //  for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
+    //    IFlexible item = commonFlexAdapter.getItem(i);
+    //    if (item instanceof ChosenStudentItem) {
+    //      if (studentIdList.contains(((ChosenStudentItem) item).getId())) {
+    //        commonFlexAdapter.toggleSelection(i);
+    //        commonFlexAdapter.notifyItemChanged(i);
+    //      }
+    //    }
+    //  }
+    //}
+  }
+
+  @Override public void onUpdateEmptyView(int size) {
     if (studentIdList != null) {
       for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
         IFlexible item = commonFlexAdapter.getItem(i);
@@ -83,5 +98,4 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
       }
     }
   }
-
 }
