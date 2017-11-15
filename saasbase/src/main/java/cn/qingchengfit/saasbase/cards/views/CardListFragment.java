@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
+import android.view.animation.DecelerateInterpolator;
+import cn.qingchengfit.animator.SlideInRightItemAnimator;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
@@ -35,31 +37,32 @@ public class CardListFragment extends BaseListFragment {
     return CardListFragment.class.getName();
   }
 
-
-
   @Override protected void addDivider() {
     rv.setBackgroundResource(R.color.transparent);
+    rv.setItemAnimator(new SlideInRightItemAnimator(new DecelerateInterpolator()));
     if (srl != null) srl.setBackgroundResource(R.color.transparent);
     rv.setPadding(15, 0, 15, 0);
     rv.addItemDecoration(
       new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_saas_realcard));
   }
 
-
   public void setCardtpls(List<Card> list, int page) {
     stopRefresh();
     if (commonFlexAdapter != null) {
-      if (page == 1) commonFlexAdapter.clear();
       List<IFlexible> datas = new ArrayList<>();
       if (list != null) {
         for (Card cardTpl : list) {
           datas.add(generateItem(cardTpl));
         }
-        if (page == 1 && datas.size() == 0)
-          datas.add(commonNoDataItem);
-
-        commonFlexAdapter.onLoadMoreComplete(datas,500);
-      }else commonFlexAdapter.onLoadMoreComplete(null,500);
+        if (page == 1) {
+          commonFlexAdapter.clear();
+          if (datas.size() == 0) datas.add(commonNoDataItem);
+          commonFlexAdapter.updateDataSet(datas, true);
+        }else
+          commonFlexAdapter.onLoadMoreComplete(datas, 500);
+      } else {
+        commonFlexAdapter.onLoadMoreComplete(null, 500);
+      }
     }
   }
 

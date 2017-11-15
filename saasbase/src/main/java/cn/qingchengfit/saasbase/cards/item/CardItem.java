@@ -49,7 +49,7 @@ public class CardItem extends AbstractFlexibleItem<CardItem.CardVH> {
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CardVH holder, int position, List payloads) {
-    holder.realcardName.setText(realCard.getName());
+    holder.realcardName.setText(realCard.getName()+"("+realCard.getId()+")");
     holder.realcardBalance.setText(CardBusinessUtils.getCardBlance(realCard));
 
     if (realCard.is_locked()) {
