@@ -92,6 +92,7 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
   @Inject RealCardDetailPresenter presenter;
   @Inject RealcardWrapper realCard;
   @BindView(R.id.frame_bg_card_detail) FrameLayout frameBgCardDetail;
+  @BindView(R.id.ll_card_protocol) RelativeLayout llCardProtocol;
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
