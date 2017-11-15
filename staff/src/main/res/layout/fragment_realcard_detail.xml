@@ -466,10 +466,10 @@
           android:id="@+id/ll_support_gym"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_marginTop="15dp"
           android:background="@color/white"
           android:paddingLeft="16dp"
           android:paddingRight="16dp"
-          android:layout_marginTop="15dp"
           >
 
         <ImageView
@@ -514,6 +514,7 @@
           android:id="@+id/ll_card_protocol"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_marginBottom="32dp"
           android:background="@color/white"
           android:paddingLeft="16dp"
           android:paddingRight="16dp"
@@ -550,7 +551,7 @@
             android:layout_toRightOf="@+id/image_card_protocol"
             android:maxLines="2"
             android:textSize="12dp"
-            tools:text="798店、阳光上冻店、中关村店、望京店、"
+            tools:text="已阅读第3版 (2017-09-08  08:00 宋一蓉版)"
             />
 
         <ImageView
@@ -562,7 +563,7 @@
             />
 
       </RelativeLayout>
-
+      <include layout="@layout/divider_grey"/>
     </LinearLayout>
   </FrameLayout>
 

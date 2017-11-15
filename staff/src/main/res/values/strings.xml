@@ -878,4 +878,9 @@
   <string formatted="false" name="text_not_sign_tip">%d天内未签课%d节以上的会员共计%d人</string>
   <string name="text_empty_title_not_sign">您的场馆未开启签课功能</string>
   <string name="text_empty_content_not_sign">请去团课/私教预约限制中开启</string>
+
+  <!--会员卡服务协议-->
+  <string name="card_protocol_switcher">会员卡服务条款</string>
+  <string name="card_protocol_content">会员卡服务条款内容</string>
+
 </resources>
