@@ -100,7 +100,8 @@ public class StaffDetailFragment extends SaasBaseFragment implements StaffDetail
     toolbar.getMenu().add("保存").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        presenter.editStaff();
+        if (phoneNum.checkPhoneNum())
+          presenter.editStaff();
         return true;
       }
     });
