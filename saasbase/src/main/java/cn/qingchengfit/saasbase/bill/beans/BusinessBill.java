@@ -139,6 +139,21 @@ public class BusinessBill implements Parcelable{
     }
   }
 
+  public String getOrigin(Context context, String origin) {
+    switch (origin){
+      case "WEB":
+        return context.getResources().getString(R.string.bill_pay_origin_web);
+      case "MEMBER":
+        return context.getResources().getString(R.string.bill_pay_origin_member);
+      case "POS":
+        return context.getResources().getString(R.string.bill_pay_origin_pos);
+      case "APP":
+        return context.getResources().getString(R.string.bill_pay_origin_app);
+
+    }
+    return "其它";
+  }
+
   @StringRes public int getPayType(int type, String s) {
     if (type == 6){
       return R.string.pay_withdraw;

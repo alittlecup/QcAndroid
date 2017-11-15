@@ -90,8 +90,13 @@
   <string name="bill_count_indeed" formatted="false">%.2f</string>
   <string name="bill_count_reduce" formatted="false">%.2f</string>
   <string name="bill_no_data">本月无数据</string>
+  <string name="bill_pay_origin_web">Web</string>
+  <string name="bill_pay_origin_app">App</string>
+  <string name="bill_pay_origin_pos">Pos机</string>
+  <string name="bill_pay_origin_member">会员端</string>
 
   <string formatted="false" name="bill_detail_success">交易成功(%s)</string>
+
 
   <!--支付-->
   <string name="pay_card">银联支付</string>
