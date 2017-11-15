@@ -132,6 +132,8 @@ import javax.inject.Inject;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbar.inflateMenu(R.menu.menu_add_card);
+    //toolbar.getMenu().clear();
+    //toolbar.getMenu().add("新增会员卡种类")
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         new DialogList(getContext()).list(getResources().getStringArray(R.array.cardtype_category),
@@ -177,9 +179,7 @@ import javax.inject.Inject;
    * 获取后端数据完成
    */
   @Override public void onDoneCardtplList() {
-    if (viewpager.getCurrentItem() == 0) {
-      cardCount.setText(presenter.getCardTplByType(0).size() + "");
-    }
+    cardCount.setText(presenter.getCardTplByType(viewpager.getCurrentItem()).size() + "");
     int i = 0;
     for (CardTplListFragment fragment : fragmentList) {
       fragment.setCardtpls(presenter.getCardTplByType(i));

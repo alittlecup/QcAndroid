@@ -20,7 +20,7 @@ import cn.qingchengfit.utils.DateUtils;
  * <p/>
  * Created by Paper on 16/4/27 2016.
  */
-public class CardBuyBody implements Parcelable {
+public class CardBuyBody implements Parcelable,Cloneable {
   /**
    * 卡类型
    */
@@ -52,6 +52,7 @@ public class CardBuyBody implements Parcelable {
     if (!CmStringUtils.checkMoney(price)) return R.string.e_card_realpay_cannot_empty;
     if (CmStringUtils.isEmpty(seller_id)) return R.string.e_card_saler_cannot_empty;
     if (CmStringUtils.isEmpty(card_tpl_id)) return R.string.e_cardtpl_empty;
+    if (CmStringUtils.isEmpty(user_ids)) return R.string.e_member_empty;
     if (check_valid ){
       if (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to))
         return R.string.e_card_start_or_end_cannot_empty;
@@ -77,6 +78,16 @@ public class CardBuyBody implements Parcelable {
         return R.string.e_card_buy_cate;
     }
     return 0;
+  }
+
+  @Override public Object clone() {
+    CardBuyBody stu = null;
+    try{
+      stu = (CardBuyBody)super.clone();
+    }catch(CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
+    return stu;
   }
 
   public void setBuyAccount(String account ,String start,String end,CardTplOption cto){

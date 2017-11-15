@@ -78,7 +78,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="支付请求"
+          android:text="收款请求"
           android:textColor="@color/white"
           style="@style/QcTextStyleLargeDark"
           />
@@ -102,7 +102,7 @@
           android:id="@+id/btn_to_pay"
           android:layout_width="75dp"
           android:layout_height="35dp"
-          android:text="去支付"
+          android:text="去收款"
           />
     </LinearLayout>
   </FrameLayout>

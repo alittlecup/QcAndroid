@@ -20,7 +20,7 @@ import cn.qingchengfit.utils.DateUtils;
  * <p/>
  * Created by Paper on 16/4/27 2016.
  */
-public class ChargeBody implements Parcelable {
+public class ChargeBody implements Parcelable, Cloneable {
   String price;
   int charge_type; //支付类型
   String shop_id;
@@ -43,20 +43,20 @@ public class ChargeBody implements Parcelable {
   String model;
 
   public int checkData() {
-    if (CmStringUtils.checkMoney(price)) return R.string.e_card_realpay_cannot_empty;
+    if (!CmStringUtils.checkMoney(price)) return R.string.e_card_realpay_cannot_empty;
     if (CmStringUtils.isEmpty(seller_id)) return R.string.e_card_saler_cannot_empty;
     if (check_valid) {
-      if (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to))
+      if (CmStringUtils.isEmpty(valid_from) || CmStringUtils.isEmpty(valid_to)) {
         return R.string.e_card_start_or_end_cannot_empty;
+      }
       if (!DateUtils.AlessOrEquelB(valid_from, valid_to)) return R.string.e_start_great_end;
-
     }
     switch (charge_type) {
       case 1:
-        if (CmStringUtils.checkMoney(account)) return R.string.e_card_charge_money_cannot_empty;
+        if (!CmStringUtils.checkMoney(account)) return R.string.e_card_charge_money_cannot_empty;
         break;
       case 2:
-        if (CmStringUtils.checkMoney(times)) return R.string.e_card_charge_times_cannot_empty;
+        if (!CmStringUtils.checkMoney(times)) return R.string.e_card_charge_times_cannot_empty;
         break;
       case 3:
         if (CmStringUtils.isEmpty(start) || CmStringUtils.isEmpty(end)) {
@@ -66,6 +66,16 @@ public class ChargeBody implements Parcelable {
         break;
     }
     return 0;
+  }
+
+  @Override public Object clone() {
+    ChargeBody body = null;
+    try {
+      body = (ChargeBody) super.clone();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return body;
   }
 
   public void setBuyAccount(String account, String start, String end, CardTplOption cto) {

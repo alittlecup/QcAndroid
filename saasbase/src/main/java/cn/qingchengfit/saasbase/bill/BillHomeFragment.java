@@ -136,6 +136,7 @@ import rx.functions.Action1;
 
   private void initView() {
     adapter = new CommonFlexAdapter(itemList, this);
+    adapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true).setStickyHeaderElevation(1);
     recyclerBill.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerBill.addItemDecoration(
         new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)

@@ -118,6 +118,7 @@ public abstract class BaseListFragment extends BaseFragment {
     if (commonFlexAdapter != null) {
       commonFlexAdapter.setEndlessScrollListener(l, progressItem);
       commonFlexAdapter.setEndlessTargetCount(count);
+      commonFlexAdapter.setEndlessPageSize(30);
     }
   }
 

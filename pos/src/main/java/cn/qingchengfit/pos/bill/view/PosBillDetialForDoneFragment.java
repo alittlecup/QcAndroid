@@ -30,6 +30,7 @@ public class PosBillDetialForDoneFragment extends BillDetailForDoneFragment {
 
   @Override public void onBtnPrintClicked() {
     RongPrinter.Builder printB = new RongPrinter.Builder();
+    printB.title(tvBillAmount.getText().toString());
     for (int i = 0; i < commonAdapter.getItemCount(); i++) {
       IFlexible item = commonAdapter.getItem(i);
       if (item instanceof BillKvCommonItem){

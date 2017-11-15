@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.student.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,13 +14,22 @@ import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFilterable;
+import eu.davidea.flexibleadapter.items.IHeader;
+import eu.davidea.flexibleadapter.items.ISectionable;
+import eu.davidea.flexibleadapter.utils.FlexibleUtils;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
 public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH> implements
-    IFilterable{
+    IFilterable,ISectionable<StudentItem.StudentVH,IHeader>{
 
   QcStudentBean qcStudentBean;
+  IHeader head;
+
+  public StudentItem(QcStudentBean qcStudentBean, IHeader head) {
+    this.qcStudentBean = qcStudentBean;
+    this.head = head;
+  }
 
   public StudentItem(QcStudentBean qcStudentBean) {
     this.qcStudentBean = qcStudentBean;
@@ -53,8 +60,13 @@ public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH> imp
     holder.itemStudentGender.setImageResource(
         ((qcStudentBean.gender() == null || qcStudentBean.gender() == 1)
             ? R.drawable.ic_gender_signal_female : R.drawable.ic_gender_signal_male));
-    holder.itemStudentName.setText(qcStudentBean.username());
-    holder.itemStudentPhonenum.setText(qcStudentBean.phone());
+    if (adapter.hasSearchText()){
+      FlexibleUtils.highlightWords(holder.itemStudentName,qcStudentBean.username(),adapter.getSearchText());
+      FlexibleUtils.highlightWords(holder.itemStudentPhonenum,qcStudentBean.phone(),adapter.getSearchText());
+    }else {
+      holder.itemStudentName.setText(qcStudentBean.username());
+      holder.itemStudentPhonenum.setText(qcStudentBean.phone());
+    }
     holder.itemTvStudentStatus.setText(holder.itemTvStudentStatus.getContext()
         .getResources()
         .getStringArray(R.array.student_status)[qcStudentBean.getStatus() % 3]);
@@ -70,6 +82,14 @@ public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH> imp
   @Override public boolean filter(String constraint) {
     return qcStudentBean != null &&(qcStudentBean.getUsername().toLowerCase().contains(constraint.toLowerCase()) ||
       qcStudentBean.getPhone().toLowerCase().contains(constraint));
+  }
+
+  @Override public IHeader getHeader() {
+    return head;
+  }
+
+  @Override public void setHeader(IHeader header) {
+    this.head = header;
   }
 
   public class StudentVH extends FlexibleViewHolder {

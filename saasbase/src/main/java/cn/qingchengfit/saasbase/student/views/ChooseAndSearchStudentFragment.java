@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
@@ -95,7 +96,7 @@ import rx.functions.Action1;
       .throttleLast(1000, TimeUnit.MILLISECONDS)
       .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
         @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
-          if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
+          if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded() && etSearch != null) {
             chooseStudentListFragment.filter(etSearch.getText().toString());
           }
         }
@@ -152,8 +153,18 @@ import rx.functions.Action1;
   @Override public void onStudentList(List<QcStudentBean> stus) {
     if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
       chooseStudentListFragment.setData(stus);
+
+
       if (studentIdList != null) {
-        chooseStudentListFragment.selectStudent(studentIdList);
+        RxRegiste(rx.Observable.just("")
+          .delay(1,TimeUnit.SECONDS)
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new BusSubscribe<String>(){
+            @Override public void onNext(String s) {
+              chooseStudentListFragment.selectStudent(studentIdList);
+            }
+          })
+        );
       }
     }
   }

@@ -73,7 +73,7 @@ public class RongPrinter {
     if (firstPard != null && firstPard.size() > 0) sb.append(getPrintArray(firstPard));
     if (second != null && second.size() > 0) sb.append("*line\n").append(getPrintArray(second));
     return sb
-      .append("*feedline 10\n").toString();
+      .append("*feedline 20\n").toString();
   }
 
   private String getPrintFormatMsg(String orderId) {

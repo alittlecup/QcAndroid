@@ -115,7 +115,7 @@ import rx.android.schedulers.AndroidSchedulers;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("支付请求");
+    toolbarTitle.setText("收款请求");
   }
 
   @Override public void onRefresh() {

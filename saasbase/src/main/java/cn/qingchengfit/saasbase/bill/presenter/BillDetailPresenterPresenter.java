@@ -164,6 +164,7 @@ public class BillDetailPresenterPresenter extends BasePresenter {
     RxBusAdd(EventTxT.class).subscribe(new BusSubscribe<EventTxT>() {
       @Override public void onNext(EventTxT eventTxT) {
         exitRemarks(eventTxT.txt);
+        view.setReMarks(eventTxT.txt);
       }
     });
   }
@@ -175,5 +176,7 @@ public class BillDetailPresenterPresenter extends BasePresenter {
 
   public interface MVPView extends CView {
     void onOrderDetail(BusinessBill order);
+    void setReMarks(String s);
+
   }
 }

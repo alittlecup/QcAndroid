@@ -29,6 +29,7 @@ public class CardListPresenter extends BasePresenter {
   public void setFilter(int cardtplType ,String cardtpl,int cardstatus){
 
     initpage();
+    p.clear();
     if (cardtplType != 0) {
       p.put("card_tpl_type", cardtplType);
     }
@@ -92,7 +93,6 @@ public class CardListPresenter extends BasePresenter {
 
   public void initpage() {
     curPage=1;totalPage =1;
-    p.clear();
   }
 
   public void queryKeyworkd(String query) {

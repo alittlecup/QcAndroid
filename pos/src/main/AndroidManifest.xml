@@ -33,9 +33,7 @@
   <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
 
-  <meta-data android:name="com.sensorsdata.analytics.android.ResourcePackageName"
-             android:value="${APP_PACKAGE}"
-      />
+
   <application
       android:name=".PosApp"
       android:allowBackup="true"
@@ -47,6 +45,12 @@
       android:taskAffinity="com.rongcapital.pos"
       android:screenOrientation="portrait"
       >
+    <meta-data android:name="com.sensorsdata.analytics.android.ResourcePackageName"
+               android:value="${APP_PACKAGE}"
+        />
+    <meta-data android:value="5a0a9906f29d983730000252" android:name="UMENG_APPKEY"/>
+    <meta-data android:value="QcPos" android:name="UMENG_CHANNEL"/>
+
     <activity
         android:name=".card.PosCardActivity"
         android:screenOrientation="portrait"

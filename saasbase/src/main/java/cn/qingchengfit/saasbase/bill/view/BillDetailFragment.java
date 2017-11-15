@@ -142,6 +142,10 @@ import javax.inject.Inject;
     tvRemarks.setText("备注: " + order.remarks);
   }
 
+  @Override public void setReMarks(String s) {
+    tvRemarks.setText("备注: " + s);
+  }
+
   /**
    * 其他信息
    */

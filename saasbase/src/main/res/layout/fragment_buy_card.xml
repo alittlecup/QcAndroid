@@ -107,6 +107,14 @@
                   android:background="@color/white"
                   app:el_label="自动开卡"
                   />
+              <TextView
+                  style="@style/TextTitleHint"
+                  android:paddingTop="@dimen/little"
+                  android:paddingBottom="@dimen/little"
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/qc_item_height"
+                  android:text="开启【自动开卡】功能后，会员可以在开始日期之前使用该会员卡，一旦开始使用，开始日期自动从当天开始计算"
+                  />
               <include layout="@layout/divider_grey_left_right"/>
             </LinearLayout>
           </cn.qingchengfit.widgets.ExpandedLayout>
@@ -117,6 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_lable="绑定会员"
+            app:civ_hint="请选择会员"
             />
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/civ_saler"
@@ -124,6 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_lable="业绩归属"
+            app:civ_hint="请选择销售"
             />
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/civ_real_card_num"

@@ -26,6 +26,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.event.EventAddStaffDone;
 import cn.qingchengfit.saasbase.staff.presenter.StaffDetailPresenter;
 import cn.qingchengfit.utils.CompatUtils;
@@ -189,8 +190,8 @@ public class StaffDetailFragment extends SaasBaseFragment implements StaffDetail
   }
 
   @OnClick(R2.id.go_to_web) public void onGoToWebClicked() {
-    //gymFunctionFactory.goQrScan(this, StaffConstant.PERMISSION_STAFF, null, null);
     //跳去扫码页面
+    QRActivity.start(getContext(),QRActivity.MODULE_MANAGE_STAFF);
   }
 
   @OnClick(R2.id.btn_del) public void onBtnDelClicked() {
