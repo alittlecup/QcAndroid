@@ -53,8 +53,8 @@ public class BusinessBill implements Parcelable{
   public String remarks;
   public Extra extra;         //根据业务订单变
 
-  public int status;           // // 状态 1：待结算，2：已结算，3：处理中, 4：处理失败, 5.处理完成
-  public float price;          //
+  public int status;          // 状态 1：待结算，2：已结算，3：处理中, 4：处理失败, 5.处理完成
+  public float price;
   public class Extra implements Parcelable{
     public Card card;
     public BillScheduleOrder schedule_order;
@@ -176,21 +176,26 @@ public class BusinessBill implements Parcelable{
     }
   }
 
-  public String getStatus(Context context, int status, int type){
+  public String getStatus(Context context, int status){
     switch (status){
       case 1:
         return context.getResources().getString(R.string.bill_settlement);
       case 2:
         return context.getResources().getString(R.string.bill_already_settlement);
       case 3:
-        return type != 5 ? context.getResources().getString(R.string.bill_withdraw)
-            : context.getResources().getString(R.string.bill_back_cash);
+        return context.getResources().getString(R.string.bill_back_cash);
       case 4:
-        return type != 5 ? context.getResources().getString(R.string.bill_withdraw_failed)
-            : context.getResources().getString(R.string.bill_cash_failed);
+        return context.getResources().getString(R.string.bill_cash_failed);
       case 5:
-        return type != 5 ? context.getResources().getString(R.string.bill_withdraw_already)
-            : context.getResources().getString(R.string.bll_back_already);
+        return context.getResources().getString(R.string.bll_back_already);
+      case 6:
+        return context.getResources().getString(R.string.bill_withdraw);
+      case 7:
+        return context.getResources().getString(R.string.bill_withdraw_failed);
+      case 8:
+        return context.getResources().getString(R.string.bill_withdraw_already);
+      case 9:
+        return context.getResources().getString(R.string.bill_back_cash_finish);
     }
 
     return context.getResources().getString(R.string.other);

@@ -120,8 +120,9 @@ import javax.inject.Inject;
    * @param order 账单
    */
   public void onOrderDetail(BusinessBill order) {
-    tvBillAmount.setText(getString(R.string.pay_money, StringUtils.getFloatDot2((float) order.price/100)));//单位从分转换为元
-    tvBillStatus.setText(getResources().getStringArray(R.array.bill_status)[(Math.abs(order.status -1))%5]);
+    tvBillAmount.setText(getString(R.string.pay_money, StringUtils.getFloatDot2((float) order.price / 100)));//单位从分转换为元
+    tvBillStatus.setText(order.status == 1 ? getResources().getString(R.string.bill_detail_success,
+        order.getStatus(getContext(), order.status)) : order.getStatus(getContext(), order.status));
 
     commonAdapter.clear();
     commonAdapter.addItem(new BillKvCommonItem("交易类型", arrayOrderType[order.type%7]));
