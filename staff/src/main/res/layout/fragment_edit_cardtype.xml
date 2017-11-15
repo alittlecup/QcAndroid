@@ -189,9 +189,11 @@
     <include layout="@layout/divider_grey_margin"/>
 
     <cn.qingchengfit.widgets.ExpandedLayout
+        android:id="@+id/switcher"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height_new"
+        android:layout_height="wrap_content"
         civ:el_label="设置限制条件"
+        android:background="@color/white"
         >
 
       <View
@@ -230,6 +232,8 @@
           tools:visibility="visible"
           />
 
+      <include layout="@layout/divider_grey"/>
+
       <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/limit_bug_count"
           android:layout_width="match_parent"
@@ -264,8 +268,9 @@
     <cn.qingchengfit.widgets.ExpandedLayout
         android:id="@+id/expand_card_protocol"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height_new"
+        android:layout_height="wrap_content"
         civ:el_label="@string/card_protocol_switcher"
+        android:background="@color/white"
         >
 
       <cn.qingchengfit.widgets.CommonInputView
