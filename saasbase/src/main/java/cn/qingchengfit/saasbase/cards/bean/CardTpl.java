@@ -293,7 +293,8 @@ public class CardTpl implements Parcelable {
       } else if (getMonth_times() != 0) {
         if (getPre_times() != 0) ss.append(",");
         ss.append("每月共计可上").append(getMonth_times()).append("节课");
-      } else if (getBuy_limit() != 0) {
+      }
+      if (getBuy_limit() != 0) {
         if ((ss.toString() != null && ss.toString().equalsIgnoreCase(""))) ss.append(",");
         ss.append("每个会员限购").append(getBuy_limit()).append("张");
       }

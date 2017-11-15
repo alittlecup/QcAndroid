@@ -54,8 +54,10 @@ public class PosStaffAddFragment extends StaffAddFragment {
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
-          if (CmStringUtils.isEmpty(position.getContent()))
+          if (CmStringUtils.isEmpty(position.getContent())) {
             showAlert(R.string.e_staff_position);
+            return;
+          }
           if (phoneNum.checkPhoneNum())
             presenter.addStaff();
         }

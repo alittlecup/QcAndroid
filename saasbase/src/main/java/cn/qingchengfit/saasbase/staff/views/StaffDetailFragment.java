@@ -123,13 +123,13 @@ public class StaffDetailFragment extends SaasBaseFragment implements StaffDetail
 
   @Override public void onFixSuccess() {
     hideLoading();
-    getActivity().onBackPressed();
+    popBack();
   }
 
   @Override public void onAddSuccess() {
     hideLoading();
     RxBus.getBus().post(new EventAddStaffDone());
-    getActivity().onBackPressed();
+    popBack();
   }
 
   @Override public void onDelSuccess() {
