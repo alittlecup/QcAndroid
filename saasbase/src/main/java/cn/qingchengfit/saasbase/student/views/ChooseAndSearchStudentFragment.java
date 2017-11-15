@@ -154,7 +154,7 @@ import rx.functions.Action1;
     if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
       chooseStudentListFragment.setData(stus);
       chooseStudentListFragment.selectStudent(studentIdList);
-      
+
     }
   }
 
