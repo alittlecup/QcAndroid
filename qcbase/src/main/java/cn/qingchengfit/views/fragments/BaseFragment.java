@@ -403,7 +403,8 @@ public abstract class BaseFragment extends RxFragment
       });
       tvToolbarLayout.addView(searchRoot,lp);
       searchRoot.requestFocus();
-      searchRoot.findViewById(R.id.et_search).requestFocus();
+      AppUtils.showKeyboard(getContext(),searchRoot.findViewById(R.id.et_search));
+      //searchRoot.findViewById(R.id.et_search).requestFocus();
     }
   }
   // 初始化搜索
@@ -425,6 +426,8 @@ public abstract class BaseFragment extends RxFragment
           if (searchEt.getText().length() == 0 ){
               tvToolbarLayout.removeView(searchRoot);
               tvToolbarLayout.clearFocus();
+              if (getActivity() != null)
+                AppUtils.hideKeyboard(getActivity());
           }else {
             searchEt.setText("");
           }

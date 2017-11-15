@@ -105,7 +105,7 @@ import javax.inject.Inject;
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
-    toolbarTitle.setText(R.string.title_cardtpl_types);
+
     pageAdapter = new CardViewpagerAdapter(getChildFragmentManager());
     viewpager.setAdapter(pageAdapter);
     tab.setupWithViewPager(viewpager);
@@ -131,6 +131,7 @@ import javax.inject.Inject;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
+    toolbarTitle.setText(R.string.title_cardtpl_types);
     toolbar.inflateMenu(R.menu.menu_add_card);
     //toolbar.getMenu().clear();
     //toolbar.getMenu().add("新增会员卡种类")
