@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -41,6 +40,7 @@ import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.ExpandedLayout;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -63,8 +63,8 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
 
     @BindView(R.id.type) CommonInputView type;
     @BindView(R.id.desc) CommonInputView desc;
-    @BindView(R.id.switch_name) TextView name;
-    @BindView(R.id.switcher) SwitchCompat switcher;
+    //@BindView(R.id.switch_name) TextView name;
+    @BindView(R.id.switcher) ExpandedLayout switcher;
     @BindView(R.id.pre_order_count) CommonInputView preOrderCount;
     @BindView(R.id.during_count) CommonInputView duringCount;
     @BindView(R.id.set_card_standard) CommonInputView setCardStandard;
@@ -74,7 +74,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
 
     @BindView(R.id.cardtpl_info_edit1) LinearLayout cardtplInfoEdit1;
     @BindView(R.id.cardtpl_info_show) LinearLayout cardtplInfoShow;
-    @BindView(R.id.cardtpl_info_edit2) LinearLayout cardtplInfoEdit2;
+    //@BindView(R.id.cardtpl_info_edit2) LinearLayout cardtplInfoEdit2;
     @BindView(R.id.show_name) TextView showName;
     @BindView(R.id.show_desc) TextView showDesc;
     @BindView(R.id.show_limit) TextView showLimit;
@@ -135,7 +135,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
             mCallbackActivity.setToolbar(getString(R.string.title_cardtype_add), false, null, R.menu.menu_save, menuListener);
         }
 
-        name.setText("设置限制条件");
+        //name.setText("设置限制条件");
         switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -151,7 +151,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
                 }
             }
         });
-        switcher.setChecked(false);
+        switcher.setExpanded(false);
         body.is_limit = false;
         onCardTpl(card_tpl);
 
@@ -202,7 +202,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
 
             if (SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE, card_tpl.getShopIds())) {
                 cardtplInfoEdit1.setVisibility(View.VISIBLE);
-                cardtplInfoEdit2.setVisibility(View.VISIBLE);
+                //cardtplInfoEdit2.setVisibility(View.VISIBLE);
                 cardtplInfoShow.setVisibility(View.GONE);
 
                 cardname.setContent(card_tpl.getName());
@@ -217,7 +217,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
                     body.is_limit = true;
                     body.pre_times = card_tpl.getPre_times();
                     body.buy_limit = card_tpl.getBuy_limit();
-                    switcher.setChecked(true);
+                    switcher.setExpanded(true);
                     preOrderCount.setContent(card_tpl.getPre_times() + "");
                     mCivLimitBugCount.setContent(card_tpl.getBuy_limit() == 0 ? getString(R.string.buy_card_no_limit)
                         : getString(R.string.card_count_unit, card_tpl.getBuy_limit()));
@@ -232,12 +232,12 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
                         body.day_times = card_tpl.getDay_times();
                     }
                 } else {
-                    switcher.setChecked(false);
+                    switcher.setExpanded(false);
                     body.is_limit = false;
                 }
             } else {
                 cardtplInfoEdit1.setVisibility(View.GONE);
-                cardtplInfoEdit2.setVisibility(View.GONE);
+                //cardtplInfoEdit2.setVisibility(View.GONE);
                 cardtplInfoShow.setVisibility(View.VISIBLE);
                 showName.setText(card_tpl.getName() == null ? "" : card_tpl.getName());
                 showDesc.setText(card_tpl.getDescription());
@@ -310,7 +310,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     }
 
     @OnClick({
-        R.id.type, R.id.desc, R.id.switcher_layout, R.id.pre_order_count, R.id.during_count, R.id.set_card_standard,
+        R.id.type, R.id.desc, R.id.pre_order_count, R.id.during_count, R.id.set_card_standard,
         R.id.support_gyms_layout, R.id.limit_bug_count
     }) public void onClick(View view) {
         switch (view.getId()) {
@@ -331,9 +331,6 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
                     }
                 });
                 list.show();
-                break;
-            case R.id.switcher_layout:
-                switcher.toggle();
                 break;
             case R.id.during_count:
                 ClassLimitBottomFragment.start(this, 3);
