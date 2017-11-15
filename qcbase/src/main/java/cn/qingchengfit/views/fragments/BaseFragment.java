@@ -403,16 +403,21 @@ public abstract class BaseFragment extends RxFragment
       });
       tvToolbarLayout.addView(searchRoot,lp);
       searchRoot.requestFocus();
-      searchRoot.findViewById(R.id.et_search).requestFocus();
+      AppUtils.showKeyboard(getContext(),searchRoot.findViewById(R.id.et_search));
+      //searchRoot.findViewById(R.id.et_search).requestFocus();
     }
   }
-  // 初始化搜索
   public void initSearch(final ViewGroup tvToolbarLayout,String hint) {
+    initSearch(tvToolbarLayout,hint,500);
+  }
+    // 初始化搜索
+  public void initSearch(final ViewGroup tvToolbarLayout,String hint,long intervalD) {
     searchRoot = LayoutInflater.from(getContext()).inflate(R.layout.layout_action_search,null);
     final EditText searchEt = ((EditText)searchRoot.findViewById(R.id.et_search));
     searchEt.setHint(hint);
     RxTextView.afterTextChangeEvents(searchEt)
-      .throttleLast(500, TimeUnit.MILLISECONDS)
+      .throttleLast(intervalD, TimeUnit.MILLISECONDS)
+      .skip(1)
       .subscribe(new BusSubscribe<TextViewAfterTextChangeEvent>() {
         @Override public void onNext(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
           onTextSearch(textViewAfterTextChangeEvent.editable().toString());
@@ -425,6 +430,8 @@ public abstract class BaseFragment extends RxFragment
           if (searchEt.getText().length() == 0 ){
               tvToolbarLayout.removeView(searchRoot);
               tvToolbarLayout.clearFocus();
+              if (getActivity() != null)
+                AppUtils.hideKeyboard(getActivity());
           }else {
             searchEt.setText("");
           }

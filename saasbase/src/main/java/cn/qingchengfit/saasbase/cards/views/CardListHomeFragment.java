@@ -97,17 +97,6 @@ import javax.inject.Inject;
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
-    stuff(cardListFragment);
-    filterFragment.setListener(new CardListFilterFragment.CardlistFilterListener() {
-      @Override public void onFilterResult(CardTpl cardTpl, int status) {
-        filterTpl.setChecked(false);
-        filterStatus.setChecked(false);
-        cardListFragment.initLoadMore(100,CardListHomeFragment.this);
-        presenter.setFilter(cardTpl.type, cardTpl.getId(), status);
-      }
-    });
-    stuff(R.id.frag_card_filter, filterFragment);
-    hideChild(filterFragment);
     return view;
   }
 
@@ -121,7 +110,7 @@ import javax.inject.Inject;
         return true;
       }
     });
-    initSearch(tl,"输入会员姓名或手机号搜索");
+    initSearch(tl,"输入会员姓名或手机号搜索",2000);
 
   }
 
@@ -131,6 +120,17 @@ import javax.inject.Inject;
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
+    filterFragment.setListener(new CardListFilterFragment.CardlistFilterListener() {
+      @Override public void onFilterResult(CardTpl cardTpl, int status) {
+        filterTpl.setChecked(false);
+        filterStatus.setChecked(false);
+        cardListFragment.initLoadMore(100,CardListHomeFragment.this);
+        presenter.setFilter(cardTpl.type, cardTpl.getId(), status);
+      }
+    });
+    stuff(cardListFragment);
+    stuff(R.id.frag_card_filter, filterFragment);
+    hideChild(filterFragment);
     onRefresh();
   }
 
@@ -223,6 +223,7 @@ import javax.inject.Inject;
 
   @Override public void onCardCount(int count) {
     tvCardCount.setText(getString(R.string.card_total_count_d,count));
+    cardListFragment.initLoadMore(count,this);
   }
 
   @Override public void noMoreLoad(int newItemsSize) {

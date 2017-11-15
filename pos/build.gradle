@@ -55,6 +55,25 @@ android {
 
 }
 
+afterEvaluate {
+  android.applicationVariants.all { variant ->
+    variant.assemble.doLast {
+      if (variant.buildType.name.contains('release')) {
+        variant.outputs.all {
+          output ->
+            def apkpath = output.outputFile as File
+            exec {
+              ignoreExitValue true
+              def rootFile = new File("output")
+              commandLine "sh", rootFile.absolutePath+"/../reinforce.sh", apkpath, rootFile.absolutePath+"/.."
+            }
+        }
+
+      }
+    }
+  }
+}
+
 configurations.all {
   resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
 }

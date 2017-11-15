@@ -80,6 +80,7 @@
           android:layout_height="@dimen/qc_item_height"
           app:civ_showright="false"
           app:civ_lable="@string/gender"
+          app:civ_content="@string/gender_male"
           />
 
       <cn.qingchengfit.widgets.PhoneEditText

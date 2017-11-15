@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.pos.R;
 import cn.qingchengfit.saasbase.staff.views.StaffAddFragment;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.CmStringUtils;
 import com.jakewharton.rxbinding.view.RxMenuItem;
 import java.util.concurrent.TimeUnit;
 
@@ -52,7 +54,12 @@ public class PosStaffAddFragment extends StaffAddFragment {
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
-          presenter.addStaff();
+          if (CmStringUtils.isEmpty(position.getContent())) {
+            showAlert(R.string.e_staff_position);
+            return;
+          }
+          if (phoneNum.checkPhoneNum())
+            presenter.addStaff();
         }
       });
 
