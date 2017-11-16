@@ -11,6 +11,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.staff.items.SalerItem;
 import cn.qingchengfit.saasbase.staff.items.StaffItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
@@ -100,6 +101,10 @@ import rx.schedulers.Schedulers;
       }));
   }
 
+  @Override protected StaffItem generateItem(Staff staff) {
+    return new SalerItem(staff);
+  }
+
   @Override String getTitle() {
     return "销售";
   }
@@ -117,10 +122,11 @@ import rx.schedulers.Schedulers;
       } catch (Exception e) {
         return true;
       }
-      routeTo("/detail/", new cn.qingchengfit.saasbase.staff.views.StaffDetailParams().staff(
+      routeTo("/saler/data/", new cn.qingchengfit.saasbase.staff.views.SalerDataParams().staff(
         ((StaffItem) iFlexible).getStaff()).build());
     }
 
     return true;
   }
+
 }

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -74,7 +73,7 @@ public class SimpleStudentListFragment extends BaseFragment
       .setStickyHeaderElevation(1)
       .setDisplayHeadersAtStartUp(true);
     recyclerView.setAdapter(commonFlexAdapter);
-    recyclerView.setItemAnimator(new FadeInUpItemAnimator());
+    //recyclerView.setItemAnimator(new FadeInUpItemAnimator());
     recyclerView.setHasFixedSize(true);
     recyclerView.addItemDecoration(new FlexibleItemDecoration(getContext())
       .withDivider(R.drawable.divider_grey_left_margin,R.layout.item_student)
@@ -150,7 +149,7 @@ public class SimpleStudentListFragment extends BaseFragment
         }
       }
 
-      commonFlexAdapter.updateDataSet(mDatas,true);
+      commonFlexAdapter.updateDataSet(mDatas,false);
     }
   }
   public void filter(String s){
