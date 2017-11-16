@@ -170,7 +170,8 @@ import javax.inject.Inject;
             DateUtils.getDuringFromServer(card.getValid_from(), card.getValid_to())));
         }
         extraAdapter.addItem(new BillKvCommonItem("绑定会员", card.getFirstUserStr(getContext())));
-        extraAdapter.addItem(new BillKvCommonItem("销售", order.seller.username));
+        if (!TextUtils.isEmpty(order.seller.username))
+          extraAdapter.addItem(new BillKvCommonItem("销售", order.seller.username));
       }
     } else if (order.type == 3) {
 

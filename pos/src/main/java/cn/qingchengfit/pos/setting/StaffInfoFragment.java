@@ -1,5 +1,6 @@
 package cn.qingchengfit.pos.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,13 +19,16 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.pos.R;
+import cn.qingchengfit.pos.login.LoginActivity;
 import cn.qingchengfit.pos.setting.presenter.CashierPresenter;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BottomListFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -39,8 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-
-import static android.view.View.GONE;
 
 /**
  * Created by fb on 2017/10/13.
@@ -80,7 +82,9 @@ public class StaffInfoFragment extends SaasBaseFragment implements CashierPresen
     if (loginStatus.getLoginUser().getPhone() != null &&
       cashier != null
     &&loginStatus.getLoginUser().getPhone().equalsIgnoreCase(cashier.phone)){
-      btnDeleteCashier.setVisibility(GONE);
+      btnDeleteCashier.setText("退出登录");
+    }else{
+      btnDeleteCashier.setText("删除");
     }
     setToolbar(toolbar);
     return view;
@@ -127,13 +131,38 @@ public class StaffInfoFragment extends SaasBaseFragment implements CashierPresen
 
   @OnClick(R.id.btn_delete_cashier)
   public void onDelete(){
-    DialogUtils.instanceDelDialog(getContext(), getResources().getString(R.string.tips_confirm_delete_cashier), new MaterialDialog.SingleButtonCallback() {
-      @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-        if (which == DialogAction.POSITIVE){
-          presenter.onDelete(cashier.id, gymWrapper.id());
-        }
-      }
-    }).show();
+    if (loginStatus.getLoginUser().getPhone() != null &&
+        cashier != null
+        &&loginStatus.getLoginUser().getPhone().equalsIgnoreCase(cashier.phone)) {
+      DialogUtils.instanceDelDialog(getContext(), getResources().getString(R.string.tips_confirm_logout),
+          new MaterialDialog.SingleButtonCallback() {
+            @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull
+                DialogAction which) {
+              if (which == DialogAction.POSITIVE) {
+                logOut();
+              }
+            }
+          }).show();
+    }else{
+      DialogUtils.instanceDelDialog(getContext(), getResources().getString(R.string.tips_confirm_delete_cashier),
+          new MaterialDialog.SingleButtonCallback() {
+            @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull
+                DialogAction which) {
+              if (which == DialogAction.POSITIVE) {
+                presenter.onDelete(cashier.id, gymWrapper.id());
+              }
+            }
+          }).show();
+    }
+  }
+
+  private void logOut(){
+    PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION, "");
+    PreferenceUtils.setPrefString(getContext(), Configs.PREFER_SESSION_ID, "");
+    Intent intent = new Intent(getActivity(), LoginActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+    getContext().startActivity(intent);
+    getActivity().finish();
   }
 
 
