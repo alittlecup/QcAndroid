@@ -66,8 +66,7 @@ public class BillFilterFragment extends BaseFragment
     recyclerBillFilter.setAdapter(adapter);
   }
 
-  @OnClick(R2.id.btn_bill_filter_confirm)
-  public void onConfirm(){
+  @OnClick(R2.id.btn_bill_filter_confirm) public void onConfirm() {
     String key = "";
     for (int i = 0; i < adapter.getItemCount(); i++) {
       if (adapter.getItem(i) instanceof ItemFilterCommon) {
@@ -75,24 +74,32 @@ public class BillFilterFragment extends BaseFragment
         key = item.getData().key;
         if (item.getCheckedContent().size() > 0) {
           map.put(key, "");
-        }else{
-          if (map.containsKey(key)){
+        } else {
+          if (map.containsKey(key)) {
             map.remove(key);
           }
           continue;
         }
-        for (int j = 0; j < item.getCheckedContent().size(); j++){
+        for (int j = 0; j < item.getCheckedContent().size(); j++) {
           map.put(key, (TextUtils.isEmpty(String.valueOf(map.get(key))) ? map.get(key)
               : (map.get(key) + ",")) + item.getCheckedContent().get(j).value);
+        }
+      } else if (adapter.getItem(i) instanceof ItemFilterList) {
+        ItemFilterList item = (ItemFilterList) adapter.getItem(i);
+        if (!TextUtils.isEmpty(item.getSelectedUser())) {
+          map.put(item.getFilterModel().key, item.getSelectedUser());
+        } else {
+          if (map.containsKey(item.getFilterModel().key)) {
+            map.remove(item.getFilterModel().key);
+          }
         }
       }
     }
     RxBus.getBus().post(new BillFilterEvent(map));
   }
 
-  @OnClick(R2.id.btn_bill_filter_reset)
-  public void onReset(){
-    for (int i = 0; i < adapter.getItemCount(); i++){
+  @OnClick(R2.id.btn_bill_filter_reset) public void onReset() {
+    for (int i = 0; i < adapter.getItemCount(); i++) {
       adapter.addSelection(i);
     }
     adapter.notifyDataSetChanged();
@@ -109,16 +116,20 @@ public class BillFilterFragment extends BaseFragment
   }
 
   @Override public void onGetFilter(List<FilterModel> filters) {
-    for (FilterModel filter : filters){
-      if (filter.type == 2){
+    if (itemList.size() > 0) {
+      itemList.clear();
+    }
+    for (FilterModel filter : filters) {
+      if (filter.type == 2) {
         itemList.add(new ItemFilterTime(filter, this));
-      }else if (filter.type == 3) {
+      } else if (filter.type == 3) {
         //TODO 销售列表
-      }else{
+        itemList.add(new ItemFilterList(filter));
+      } else {
         itemList.add(new ItemFilterCommon(filter));
       }
     }
-    adapter.onLoadMoreComplete(itemList,500);
+    adapter.updateDataSet(itemList);
   }
 
   @Override public void onTimeStart(String start, String key) {

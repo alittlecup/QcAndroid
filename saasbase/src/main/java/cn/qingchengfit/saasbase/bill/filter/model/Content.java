@@ -8,5 +8,6 @@ public class Content {
 
   public String name;
   public String value;
+  public UserExtra extra;
 
 }

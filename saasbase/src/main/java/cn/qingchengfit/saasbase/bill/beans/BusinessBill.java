@@ -43,6 +43,7 @@ public class BusinessBill implements Parcelable{
   public String pay_time;
   public String created_at;
   public User created_by;    //操作员
+  public User seller;       //销售
   // "origin": //平台: "WEB", "MEMBER", "POS", "APP"
   public String origin;
   public String bank_no;

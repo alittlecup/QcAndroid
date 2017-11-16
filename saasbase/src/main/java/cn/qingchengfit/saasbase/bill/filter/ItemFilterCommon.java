@@ -60,6 +60,7 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemFilterVH holder, int position,
       List payloads) {
+    holder.billFilterCommon.removeAllViews();
     if (adapter.isSelected(position)){
       holder.billFilterCommon.clearCheck();
       adapter.removeSelection(position);
