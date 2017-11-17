@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
@@ -31,6 +32,7 @@ import cn.qingchengfit.saasbase.staff.items.SalerDataItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -159,6 +161,11 @@ import rx.schedulers.Schedulers;
         });
   }
 
+  @OnClick(R2.id.tv_sale_bill)
+  public void onSaleToBill(){
+    routeTo(AppUtils.getRouterUri(getContext(), "/bill/home/list/"), null);
+  }
+
   private void onUserInfo(User staff) {
     PhotoUtils.smallCircle(itemStudentHeader, staff.getAvatar());
     itemStudentName.setText(staff.getUsername());
@@ -167,7 +174,7 @@ import rx.schedulers.Schedulers;
     itemStudentPhonenum.setText(staff.getPhone());
   }
 
-  void onData(List<SalerData> das) {
+  private void onData(List<SalerData> das) {
     if (itemList.size() > 0) {
       itemList.clear();
     }
