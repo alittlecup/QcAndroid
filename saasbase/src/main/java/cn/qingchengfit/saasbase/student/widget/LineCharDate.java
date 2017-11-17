@@ -37,6 +37,9 @@ public class LineCharDate extends LinearLayout {
     private TextView leftTextView;
     private TextView rightTextView;
 
+
+    private String markViewUnit;
+
     public LineCharDate(Context context) {
         super(context);
         initView(context);
@@ -116,9 +119,15 @@ public class LineCharDate extends LinearLayout {
         lineChart.setMarker(markerView);
     }
 
-    public void setMarkerViewUnit(String unit) {
-        ((MyMarkerView) lineChart.getMarker()).setStringUnit(unit);
+    public String getMarkViewUnit() {
+        return markViewUnit;
     }
+
+    public void setMarkViewUnit(String markViewUnit) {
+        this.markViewUnit = markViewUnit;
+        ((MyMarkerView) lineChart.getMarker()).setStringUnit(markViewUnit);
+    }
+
 
     public void setMarkViewTintColor(@ColorInt int color) {
         ((MyMarkerView) lineChart.getMarker()).setDrawableTintColor(color);

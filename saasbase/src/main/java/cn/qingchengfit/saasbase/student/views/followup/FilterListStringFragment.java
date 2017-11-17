@@ -47,4 +47,7 @@ public class FilterListStringFragment extends FilterFragment {
     public IFlexible getDataAtPosition(int position){
         return commonFlexAdapter.getItem(position);
     }
+    public void set(int position){
+        commonFlexAdapter.addSelection(position);
+    }
 }

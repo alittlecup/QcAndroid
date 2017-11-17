@@ -48,9 +48,8 @@ public class AttendanceRankItem extends AbstractFlexibleItem<AttendanceRankItem.
             R.color.pinkish_grey, R.color.warm_grey_2, R.color.greyish_brown
     };
 
-    public AttendanceRankItem(Attendance attendance, Context context) {
+    public AttendanceRankItem(Attendance attendance) {
         this.attendance = attendance;
-        this.context = context;
     }
 
     @Override
@@ -65,6 +64,9 @@ public class AttendanceRankItem extends AbstractFlexibleItem<AttendanceRankItem.
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, AttendanceRankVH holder, int position, List payloads) {
+        if(context==null){
+            this.context=holder.icGender.getContext();
+        }
         if (adapter instanceof CommonFlexAdapter) {
             int type = ((CommonFlexAdapter) adapter).getStatus();
             switch (type) {

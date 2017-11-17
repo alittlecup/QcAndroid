@@ -188,7 +188,7 @@ public class AttendanceRankFragment extends BaseFragment implements AttendanceRa
         items.clear();
         binding.tipsAbsenceAccount.setText(topDay.get()+ "出勤会员共" + pages + "人");
         for (Attendance attendance : attendances) {
-            items.add(new AttendanceRankItem(attendance, getContext()));
+            items.add(new AttendanceRankItem(attendance));
         }
         commonFlexAdapter.setTag("revert",revert.get());
         commonFlexAdapter.updateDataSet(items);

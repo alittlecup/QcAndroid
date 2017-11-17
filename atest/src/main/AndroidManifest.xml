@@ -131,7 +131,7 @@
         <!--android:windowSoftInputMode="adjustResize"-->
         <!--/>-->
 
-    <activity android:name="cn.qingchengfit.saasbase.student.StudentActivity"
+    <activity android:name="cn.qingchengfit.student.StudentActivity"
         android:launchMode="singleTask"
         >
       <intent-filter>

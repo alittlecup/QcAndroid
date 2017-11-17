@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import com.anbillon.flabellum.annotations.Leaf;
 
@@ -22,7 +21,6 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.databinding.FragmentAttendanceHomeBinding;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
-import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import cn.qingchengfit.saasbase.student.presenters.attendance.StudentAttendancePresenter;
 import cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -36,7 +34,7 @@ import rx.functions.Action0;
 @Leaf(module = "student", path = "/student/attendance")
 public class StudentAttendanceFragment extends BaseFragment implements StudentAttendancePresenter.MVPView {
     FragmentAttendanceHomeBinding binding;
-    AttendanceFilterFragment filterFragment;
+    AttendanceFilterView filterFragment;
     @Inject
     StudentAttendancePresenter presenter;
     @Inject
@@ -65,7 +63,6 @@ public class StudentAttendanceFragment extends BaseFragment implements StudentAt
         delegatePresenter(presenter, this);
         binding.setToolbarModel(new ToolbarModel("出勤统计"));
         initFragment();
-        binding.lineChartDate.setMarkerViewUnit("人次");
         loadData("", "");
         return binding.getRoot();
     }
@@ -75,14 +72,7 @@ public class StudentAttendanceFragment extends BaseFragment implements StudentAt
     }
 
     private void initFragment() {
-        filterFragment = new AttendanceFilterFragment();
-        filterFragment.setDismissAction(dismissAction);
-        filterFragment.setDaysCallback((offsetday, title) -> {
-            latestDay.set(title);
-            offSetDay=offsetday;
-            loadData(DateUtils.minusDay(new Date(), offsetday), DateUtils.getStringToday());
-            dismissAction.call();
-        });
+        filterFragment = new AttendanceFilterView();
         stuff(R.id.frag_filter, filterFragment);
     }
 
@@ -91,7 +81,7 @@ public class StudentAttendanceFragment extends BaseFragment implements StudentAt
             if (((QcFilterToggle) view).isChecked()) {
                 binding.fragFilter.setVisibility(View.VISIBLE);
                 filterFragment.showPage(0);
-            }else{
+            } else {
                 binding.fragFilter.setVisibility(View.GONE);
             }
         }
@@ -102,16 +92,19 @@ public class StudentAttendanceFragment extends BaseFragment implements StudentAt
         binding.lineChartDate.setData(StudentBusinessUtils.transformBean2Data(statistic.datas, offSetDay
                 , Color.parseColor("#FF8CB4B9"), Color.parseColor("#648CB4B9")));
     }
-    public void toStudentAbsentce(View v){
-        Uri uri=Uri.parse("student://student/student/absentce");
-        routeTo(uri,null);
+
+    public void toStudentAbsentce(View v) {
+        Uri uri = Uri.parse("student://student/student/absentce");
+        routeTo(uri, null);
     }
-    public void toStudentRank(){
-        Uri uri=Uri.parse("student://student/attendance/rank");
-        routeTo(uri,null);
+
+    public void toStudentRank() {
+        Uri uri = Uri.parse("student://student/attendance/rank");
+        routeTo(uri, null);
     }
-    public void toStudentNosign(){
-        Uri uri=Uri.parse("student://student/attendance/nosign");
-        routeTo(uri,null);
+
+    public void toStudentNosign() {
+        Uri uri = Uri.parse("student://student/attendance/nosign");
+        routeTo(uri, null);
     }
 }

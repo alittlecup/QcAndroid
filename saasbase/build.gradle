@@ -57,9 +57,11 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
   api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
     exclude group: 'com.google.googlejavaformat'
-  }  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
+  }
+  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
   implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+
 
 }
 

@@ -2,9 +2,10 @@
 <layout>
 
     <data>
+
         <variable
             name="toolbarModel"
-            type="cn.qingchengfit.model.others.ToolbarModel"/>
+            type="cn.qingchengfit.model.others.ToolbarModel" />
 
     </data>
 
@@ -23,10 +24,10 @@
             android:gravity="center_vertical"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Qc.toolbarStyle"
-            app:popupTheme="@style/ToolbarStyle.Overflow"
-            app:theme="@style/Qc.toolbarStyle"
             app:menu="@{toolbarModel.menu}"
             app:menuListener="@{toolbarModel.listener}"
+            app:popupTheme="@style/ToolbarStyle.Overflow"
+            app:theme="@style/Qc.toolbarStyle"
             app:titleTextAppearance="@style/ToolbarStyle"
             tools:paddingTop="15dp" />
 

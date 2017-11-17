@@ -4,7 +4,8 @@ import android.app.Activity;
 
 import javax.inject.Singleton;
 
-import cn.qingchengfit.saasbase.di.BindStudentActivity;
+import cn.qingchengfit.student.di.BindStudentActivity;
+import cn.qingchengfit.student.di.ViewModelModule;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -39,6 +40,7 @@ import dagger.multibindings.IntoMap;
 @Component(modules = {
         AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class,
         AppComponent.MainModule.class,
+        ViewModelModule.class,
         BindStudentActivity.class
 
         //AppComponent.RecruitModule.class,

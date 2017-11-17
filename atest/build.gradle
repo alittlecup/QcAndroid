@@ -23,6 +23,7 @@ android {
   }
   dexOptions {
     jumboMode true
+    javaMaxHeapSize "4g"
   }
 
 
@@ -33,6 +34,7 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+
 
 }
 
@@ -48,7 +50,7 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
 //  compile project(path: ':recruit')
   provided project(path: ':qcbase')
-  compile project(path: ':saasbase')
+  compile project(path: ':student')
 
   implementation 'com.android.support:multidex:1.0.2'
 

@@ -1,6 +1,8 @@
-package cn.qingchengfit.saasbase.student;
+package cn.qingchengfit.student;
 
+import android.content.Intent;
 import android.support.annotation.MenuRes;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -30,10 +32,18 @@ import cn.qingchengfit.saasbase.student.views.followup.FollowUpTopSalerView;
 import cn.qingchengfit.saasbase.student.views.home.StudentHomeFragment;
 import cn.qingchengfit.saasbase.student.views.home.StudentOperationFragment;
 import cn.qingchengfit.saasbase.student.views.transfer.StudentTransferFragment;
+import cn.qingchengfit.student.routers.StudentRouterCenter;
+import cn.qingchengfit.student.routers.studentImpl;
+import cn.qingchengfit.student.view.attendance.AttendanceStudentPage;
+import cn.qingchengfit.student.view.attendance.absent.AttendanceAbsentPage;
+import cn.qingchengfit.student.view.attendance.nosign.AttendanceNosignPage;
+import cn.qingchengfit.student.view.attendance.rank.AttendanceRankPage;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
 import com.anbillon.flabellum.annotations.Trunk;
+
+import javax.inject.Inject;
 
 import rx.functions.Action1;
 
@@ -73,16 +83,37 @@ import rx.functions.Action1;
         StudentAttendanceFragment.class,
         AttendanceStudentListFragment.class,
         AttendanceRankFragment.class,
-        AttendanceNoSignFragment.class
-
-
-
+        AttendanceNoSignFragment.class,
+        AttendanceStudentPage.class,
+        AttendanceAbsentPage.class,
+        AttendanceRankPage.class,
+        AttendanceNosignPage.class
 })
 public class StudentActivity extends SaasContainerActivity
         implements FragCallBack {
+
+
+    StudentRouterCenter routerCenter;
+
     @Override
     public String getModuleName() {
         return "student";
+    }
+
+    @Override
+    protected Fragment getRouterFragment(Intent intent) {
+        if (routerCenter == null) {
+            routerCenter = new StudentRouterCenter(new studentImpl());
+        }
+        if (intent.getData().getPath().equalsIgnoreCase("/attendance/page")
+                ||intent.getData().getPath().equalsIgnoreCase("/attendance/absent")
+                ||intent.getData().getPath().equalsIgnoreCase("/attendance/rank")
+                ||intent.getData().getPath().equalsIgnoreCase("/attendance/nosign")
+                ) {
+
+            return routerCenter.getFragment(intent.getData(), intent.getExtras());
+        }
+        return super.getRouterFragment(intent);
     }
 
     //@Override protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +201,6 @@ public class StudentActivity extends SaasContainerActivity
     //@Override public int getFragId() {
     //  return R.id.web_frag_layout;
     //}
-
 
 
 }

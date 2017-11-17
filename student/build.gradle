@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+
+def cfg = rootProject.ext.configuration
+def libs = rootProject.ext.libraries
+
+android {
+
+    compileSdkVersion cfg.compileVersion
+    buildToolsVersion cfg.buildToolsVersion
+    dataBinding {
+        enabled true
+    }
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                             packageName                   : 'cn.qingchengfit.student'
+                ]
+            }
+        }
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    api project(path: ':saasbase')
+
+    annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
+    annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+
+    annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+    annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+
+}

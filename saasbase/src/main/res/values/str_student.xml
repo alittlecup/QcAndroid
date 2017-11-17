@@ -53,6 +53,7 @@
     <string name="common_today">今日</string>
     <string name="last_7_days">最近7日</string>
     <string name="last_30_days">最近30天</string>
+    <string name="last_format_days">最近%d天</string>
 
     <string name="alert_choose_time_cannot_super">选择时间不可以超过%d天</string>
     <string name="qc_referrer_count">已推荐%s人</string>

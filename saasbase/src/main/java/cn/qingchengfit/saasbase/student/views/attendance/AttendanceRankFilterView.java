@@ -56,7 +56,7 @@ public class AttendanceRankFilterView extends BaseFilterFragment {
         dataList.add(new FilterSortBean("私教节数", false, false));
 
         for (FilterSortBean filterSortBean : dataList) {
-            sortList.add(new FilterSortItem(filterSortBean, (pos, revert) -> {
+            sortList.add(new FilterSortItem(filterSortBean, (pos ,revert) -> {
                 sortAction.call(pos, revert);
                 for(FilterSortBean bean:dataList){
                     bean.isLowToHigh=false;

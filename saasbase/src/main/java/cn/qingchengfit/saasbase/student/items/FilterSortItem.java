@@ -19,6 +19,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import rx.functions.Action2;
+import rx.functions.Action3;
 
 /**
  * Created by fb on 2017/3/7.

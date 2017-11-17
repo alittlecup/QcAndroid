@@ -38,12 +38,12 @@ public class AttendanceNosingTimeFilterFragment extends SaasBaseFragment {
     }
 
     protected void initCustomFragment() {
-        filterCustomFragment = FilterCustomFragment.newInstance("缺勤天数（天）");
-        filterCustomFragment.setSelectTime(false);
+        filterCustomFragment = FilterCustomFragment.newInstance("时间段");
+        filterCustomFragment.setSelectTime(true);
         filterCustomFragment.setOnBackFilterDataListener(new FilterCustomFragment.OnBackFilterDataListener() {
             @Override
             public void onSettingData(String start, String end) {
-                daySelect.call(start, end, "缺勤"+start + "-" + end+"天");
+                daySelect.call(start, end, start + "至" + end);
             }
 
             @Override

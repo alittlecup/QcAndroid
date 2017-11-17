@@ -1,35 +1,32 @@
-package cn.qingchengfit.saasbase.student.views.attendance;
+package cn.qingchengfit.student.view.attendance;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import cn.qingchengfit.items.FilterCommonLinearItem;
-import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saasbase.student.views.followup.FilterListStringFragment;
+import cn.qingchengfit.student.viewmodel.attendance.AttendanceStudentViewModel;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFilterFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;
-import cn.qingchengfit.views.fragments.FilterListFragment;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Action2;
 
 /**
  * Created by huangbaole on 2017/11/13.
  */
 
-public class AttendanceFilterFragment extends BaseFilterFragment {
+public class AttendanceFilterView extends BaseFilterFragment {
     FilterListStringFragment dayListFragment;
+    private AttendanceStudentViewModel mViewModel;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SaasbaseParamsInjector.inject(this);
+        mViewModel = ViewModelProviders.of(getParentFragment()).get(AttendanceStudentViewModel.class);
         initFragment();
     }
 
@@ -39,17 +36,13 @@ public class AttendanceFilterFragment extends BaseFilterFragment {
         String latest30 = "最近30天(" + DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), -29)) + "至" + DateUtils.Date2YYYYMMDD(new Date()) + ")";
         dayListFragment.setStrings(new String[]{latest7, latest30});
         dayListFragment.setOnSelectListener(position -> {
-            if (position == 0) {
-                daysCallback.call(6, "最近7天");
-            } else {
-                daysCallback.call(29, "最近30天");
-            }
+            mViewModel.getOffSetDay().setValue(position == 0 ? 6 : 29);
         });
     }
 
     @Override
     public void dismiss() {
-        if(dismissAction!=null)dismissAction.call();
+        mViewModel.qcFBChecked.set(false);
     }
 
     @Override
@@ -63,15 +56,5 @@ public class AttendanceFilterFragment extends BaseFilterFragment {
             return dayListFragment;
         }
         return new EmptyFragment();
-    }
-
-    private Action2<Integer, String> daysCallback;
-
-    public void setDaysCallback(Action2<Integer, String> action2) {
-        this.daysCallback = action2;
-    }
-    private Action0 dismissAction ;
-    public void setDismissAction(Action0 action){
-        this.dismissAction=action;
     }
 }

@@ -18,6 +18,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.views.followup.FollowUpHomeFragment;
 import cn.qingchengfit.utils.DateUtils;
@@ -227,5 +228,10 @@ public class StudentBusinessUtils {
         return transformBean2Data(bean.date_counts, offSetDay, Color.parseColor("#f9944e"), Color.parseColor("#aaf9944e"));
 
     }
+    public static LineData transformBean2DataByType(List<FollowUpDataStatistic.DateCountsBean> bean, int offSetDay) {
+        return transformBean2Data(bean, offSetDay, Color.parseColor("#FF8CB4B9"), Color.parseColor("#648CB4B9"));
+
+    }
+
 
 }

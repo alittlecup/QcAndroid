@@ -1,20 +1,19 @@
 package cn.qingchengfit.testmodule;
 
-import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import cn.qingchengfit.design.DesignActivity;
-import cn.qingchengfit.router.BaseRouter;
+
+import cn.qingchengfit.student.BindingAdapters;
 import cn.qingchengfit.views.activity.BaseActivity;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 public class MainActivity extends BaseActivity  {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BindingAdapters bindingAdapters=new BindingAdapters();
 //        new MyApplication(getApplication());
 //        Constant.setAccountType(BuildConfig.DEBUG ? 12162 : 12165);
 //        Constant.setSdkAppid(BuildConfig.DEBUG ? 1400029014 : 1400029022);
