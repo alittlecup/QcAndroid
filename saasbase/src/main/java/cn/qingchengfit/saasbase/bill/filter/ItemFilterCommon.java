@@ -60,13 +60,15 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ItemFilterVH holder, int position,
       List payloads) {
-    holder.billFilterCommon.removeAllViews();
     if (adapter.isSelected(position)){
       holder.billFilterCommon.clearCheck();
       adapter.removeSelection(position);
       return;
     }
     holder.billFilterTitle.setText(filterModel.name);
+    if (holder.billFilterCommon.getChildCount()  >= filterModel.content.size()){
+      return;
+    }
     for (Content content : filterModel.content) {
       LinearLayout.LayoutParams params =
           new LinearLayout.LayoutParams(MeasureUtils.dpToPx(100f, holder.itemView.getResources()),

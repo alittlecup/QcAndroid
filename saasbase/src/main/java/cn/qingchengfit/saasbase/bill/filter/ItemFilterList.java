@@ -52,8 +52,10 @@ public class ItemFilterList extends AbstractFlexibleItem<ItemFilterList.FilterLi
 
   //返回选中的销售
   public String getSelectedUser() {
-    return ((ItemFilterSale) flexAdapter.getItem(
-        flexAdapter.getSelectedPositions().get(0))).getUser().id;
+    if (flexAdapter.getSelectedPositions().size() > 0) {
+      return ((ItemFilterSale) flexAdapter.getItem(flexAdapter.getSelectedPositions().get(0))).getUser().id;
+    }
+    return "";
   }
 
   private void clearSelect(){

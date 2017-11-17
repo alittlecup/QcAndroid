@@ -12,6 +12,7 @@ import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import java.util.HashMap;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -92,7 +93,7 @@ public class StaffModel implements IStaffModel {
     return staffApi.getPostions(gymWrapper.getGymId());
   }
 
-  @Override public Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid) {
-    return staffApi.qcGetSalerData(staffid);
+  @Override public Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid, HashMap<String, Object> params) {
+    return staffApi.qcGetSalerData(staffid, params);
   }
 }

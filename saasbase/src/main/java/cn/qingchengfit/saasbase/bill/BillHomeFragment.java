@@ -100,7 +100,11 @@ import rx.functions.Action1;
         .replace(R.id.frag_bill_filter, new BillFilterFragment())
         .commit();
     setToolbar(toolbar);
+    //if (filterMap.size() > 0) {
+    //  presenter.qcGetBillListbyFilter(gymWrapper.id(), filterMap);
+    //}else {
     presenter.qcGetBillList(gymWrapper.id(), DateUtils.formatToServer(new Date()));
+    //}
     presenter.qcGetBillTotal(gymWrapper.id());
     calendar = Calendar.getInstance();
     setDateTimes();
@@ -196,8 +200,8 @@ import rx.functions.Action1;
     if (billSwipe != null && billSwipe.isRefreshing()) billSwipe.setRefreshing(false);
     tvBillTotalAmount.setText(String.format("%.2f",
         (billTotal.withdraw_sum + billTotal.can_withdraw_sum + billTotal.frozen_sum) / 100));
-    tvBillWithdraw.setText(String.format("%.2f", billTotal.can_withdraw_sum / 100));
-    tvBillCanWithdraw.setText(String.format("%.2f", billTotal.withdraw_sum / 100));
+    tvBillCanWithdraw.setText(String.format("%.2f", billTotal.can_withdraw_sum / 100));
+    tvBillWithdraw.setText(String.format("%.2f", billTotal.withdraw_sum / 100));
     tvBillSettlement.setText(String.format("%.2f", billTotal.frozen_sum / 100));
   }
 

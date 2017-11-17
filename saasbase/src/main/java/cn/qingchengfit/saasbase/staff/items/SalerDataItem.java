@@ -39,7 +39,7 @@ public class SalerDataItem extends AbstractFlexibleItem<SalerDataItem.SalerDataV
     holder.tvTimeTag.setText(holder.itemView.getContext().getResources().getStringArray(R.array.analyz_during_list)[position%3]);
     holder.tvTitle.setText(holder.itemView.getContext().getResources().getStringArray(R.array.saler_datas_duiring)[position%3]);
     holder.tvTime.setText(position == 0 ? DateUtils.getYYYYMMDDfromServer(salerData.start) : DateUtils.getDuringFromServer(salerData.start,salerData.end));
-    holder.tvMoney.setText(CmStringUtils.getMoneyStr((float)salerData.amount/100));
+    holder.tvMoney.setText(CmStringUtils.getMoneyStr((float)salerData.amount/100) + "元");
   }
 
   @Override public boolean equals(Object o) {

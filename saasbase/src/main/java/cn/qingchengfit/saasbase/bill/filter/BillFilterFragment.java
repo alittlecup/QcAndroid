@@ -20,6 +20,7 @@ import cn.qingchengfit.saasbase.bill.event.BillFilterEvent;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -45,6 +46,7 @@ public class BillFilterFragment extends BaseFragment
   private CommonFlexAdapter adapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
   HashMap<String, Object> map = new HashMap<>();
+  @Need HashMap<String, Object> alreadyMap = new HashMap<>();
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
