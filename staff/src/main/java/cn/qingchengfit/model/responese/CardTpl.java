@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import cn.qingchengfit.staffkit.usecase.bean.QcScheduleBean;
+import cn.qingchengfit.staffkit.views.cardtype.model.CardTplTerm;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,9 @@ public class CardTpl implements Parcelable {
     public String gymModel;
     public List<QcScheduleBean.Shop> shops;
     public List<CardTplOption> options;
+    public boolean is_open_service_term;
+    public boolean has_service_term;
+    public CardTplTerm card_tpl_service_term;
 
     public CardTpl() {
     }
