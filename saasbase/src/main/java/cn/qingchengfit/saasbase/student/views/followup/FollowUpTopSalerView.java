@@ -56,7 +56,7 @@ public class FollowUpTopSalerView extends BaseGirdListFragment implements
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        commonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
+        commonFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         commonFlexAdapter.addListener(this);
 
     }
@@ -76,15 +76,11 @@ public class FollowUpTopSalerView extends BaseGirdListFragment implements
         }
         commonFlexAdapter.notifyItemChanged(i);
         commonFlexAdapter.notifyItemChanged(tmp);
+        // REFACTOR: 2017/11/20 adapter选中效果有延迟
         if (commonFlexAdapter.getItem(i) instanceof ChooseSalerItem) {
             if (commonFlexAdapter.isSelected(i)) {
-//                if (getParentFragment() != null && getParentFragment() instanceof StudentFilterFragment) {
-//
-//                } else {
                 Staff saler = ((ChooseSalerItem) datas.get(i)).getSaler();
-                itemClick.call(saler.id.equals("-1")?null:saler);
-
-//                }
+                itemClick.call(saler.id.equals("-1") ? null : saler);
             }
         }
         return true;

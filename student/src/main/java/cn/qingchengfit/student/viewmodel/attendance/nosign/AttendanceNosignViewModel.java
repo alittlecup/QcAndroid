@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.viewmodel.attendance.nosign;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableBoolean;
@@ -55,6 +56,17 @@ public class AttendanceNosignViewModel extends FlexibleViewModel<List<StudentWIt
 
     private MutableLiveData<Integer> filterIndex = new MutableLiveData<>();
 
+    private MutableLiveData<Pair<String,String>> days=new MutableLiveData<>();
+    private MutableLiveData<Integer> count=new MutableLiveData<>();
+
+    public MutableLiveData<Pair<String, String>> getDays() {
+        return days;
+    }
+
+    public MutableLiveData<Integer> getCount() {
+        return count;
+    }
+
     private AttendanceNosignItemFactory factory;
 
     private DataHolder dataHolder;
@@ -66,6 +78,15 @@ public class AttendanceNosignViewModel extends FlexibleViewModel<List<StudentWIt
                 DateUtils.minusDay(new Date(), 6)
                 , DateUtils.getStringToday()
         ), 6);
+        identifier.addSource(days,days->{
+            dataHolder.setDays(days);
+            identifier.setValue(dataHolder);
+        });
+        identifier.addSource(count,count->{
+            dataHolder.setCount(count);
+            identifier.setValue(dataHolder);
+        });
+
     }
 
     public DataHolder getDataHolder() {

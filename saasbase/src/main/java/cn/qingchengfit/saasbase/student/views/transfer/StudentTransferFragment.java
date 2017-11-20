@@ -131,7 +131,7 @@ public class StudentTransferFragment extends SaasBaseFragment implements Student
             commonFlexAdapter.clear();
 
             for (QcStudentBeanWithFollow s : bean.users) {
-                datas.add(new FollowUpItem(this, s, 4));
+                datas.add(new FollowUpItem(s, 4));
             }
             commonFlexAdapter.updateDataSet(datas);
         }

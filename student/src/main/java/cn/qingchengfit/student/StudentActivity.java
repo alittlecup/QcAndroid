@@ -38,6 +38,8 @@ import cn.qingchengfit.student.view.attendance.AttendanceStudentPage;
 import cn.qingchengfit.student.view.attendance.absent.AttendanceAbsentPage;
 import cn.qingchengfit.student.view.attendance.nosign.AttendanceNosignPage;
 import cn.qingchengfit.student.view.attendance.rank.AttendanceRankPage;
+import cn.qingchengfit.student.view.transfer.TransferStudentPage;
+import cn.qingchengfit.student.view.transfer.TransferStudentView;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
@@ -87,7 +89,8 @@ import rx.functions.Action1;
         AttendanceStudentPage.class,
         AttendanceAbsentPage.class,
         AttendanceRankPage.class,
-        AttendanceNosignPage.class
+        AttendanceNosignPage.class,
+        TransferStudentPage.class
 })
 public class StudentActivity extends SaasContainerActivity
         implements FragCallBack {
@@ -109,6 +112,7 @@ public class StudentActivity extends SaasContainerActivity
                 ||intent.getData().getPath().equalsIgnoreCase("/attendance/absent")
                 ||intent.getData().getPath().equalsIgnoreCase("/attendance/rank")
                 ||intent.getData().getPath().equalsIgnoreCase("/attendance/nosign")
+                ||intent.getData().getPath().equalsIgnoreCase("/transfer/student")
                 ) {
 
             return routerCenter.getFragment(intent.getData(), intent.getExtras());

@@ -46,8 +46,7 @@ public class AttendanceNosignView extends BaseFilterFragment {
         timeFilterFragment.setSelectDayAction((start, end, title) -> {
             viewModel.topDayText.set(title);
             viewModel.filterVisible.set(false);
-            viewModel.getDataHolder().setDays(new Pair<>(start, end));
-            viewModel.loadSource(viewModel.getDataHolder());
+            viewModel.getDays().setValue(new Pair<>(start,end));
         });
 
         listStringFragment = new FilterListStringFragment();
@@ -57,8 +56,7 @@ public class AttendanceNosignView extends BaseFilterFragment {
         }
         listStringFragment.setStrings(strings);
         listStringFragment.setOnSelectListener(position -> {
-            viewModel.getDataHolder().setCount(position);
-            viewModel.loadSource(viewModel.getDataHolder());
+            viewModel.getCount().setValue(position);
             viewModel.topCount.set(position);
             viewModel.filterVisible.set(false);
         });

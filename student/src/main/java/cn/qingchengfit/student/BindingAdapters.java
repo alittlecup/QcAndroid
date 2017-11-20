@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.crypto.interfaces.PBEKey;
@@ -14,6 +15,7 @@ import javax.crypto.interfaces.PBEKey;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.saasbase.student.widget.LineCharDate;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import cn.qingchengfit.widgets.FunnelTwoView;
 import cn.qingchengfit.widgets.QcRadioGroup;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -96,4 +98,16 @@ public class BindingAdapters {
         if (clear) group.clearCheck();
     }
 
+    /**
+     * FunnelTwoView 设置数据
+     */
+    @BindingAdapter(value = "datas")
+    public static void setFunnelTwoViewDatas(FunnelTwoView view, List<Float> datas) {
+        if(datas!=null&&!datas.isEmpty()){
+            view.setData(datas);
+            view.animateY();
+
+        }
+
+    }
 }

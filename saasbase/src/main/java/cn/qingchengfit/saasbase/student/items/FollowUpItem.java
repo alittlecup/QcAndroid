@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
@@ -48,12 +50,10 @@ import eu.davidea.flexibleadapter.items.IFilterable;
  */
 public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHolder> implements IFilterable {
 
-    public Fragment fragment;
     public QcStudentBeanWithFollow data;
     public int status;
 
-    public FollowUpItem(Fragment fragment, QcStudentBeanWithFollow data, int status) {
-        this.fragment = fragment;
+    public FollowUpItem(QcStudentBeanWithFollow data, Integer status) {
         this.data = data;
         this.status = status;
     }

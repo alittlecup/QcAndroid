@@ -17,6 +17,7 @@ package cn.qingchengfit.student.common.flexble;
 
 import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.MainThread;
@@ -45,10 +46,10 @@ import cn.qingchengfit.student.base.BaseViewModel;
 public abstract class FlexibleViewModel<Source, AdapterItem, Identifier> extends BaseViewModel {
 
     protected LiveData<List<AdapterItem>> liveItems;
-    protected MutableLiveData<Identifier> identifier;
+    protected MediatorLiveData<Identifier> identifier;
 
     public FlexibleViewModel() {
-        identifier = new MutableLiveData<>();
+        identifier = new MediatorLiveData<>();
         liveItems = Transformations.switchMap(identifier, input -> Transformations.map(FlexibleViewModel.this.getSource(input)
                 , source -> {
             if (FlexibleViewModel.this.isSourceValid(source)) {

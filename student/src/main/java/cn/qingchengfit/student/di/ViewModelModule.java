@@ -9,6 +9,7 @@ import cn.qingchengfit.student.viewmodel.attendance.AttendanceStudentViewModel;
 import cn.qingchengfit.student.viewmodel.attendance.absent.AttendanceAbsentViewModel;
 import cn.qingchengfit.student.viewmodel.attendance.nosign.AttendanceNosignViewModel;
 import cn.qingchengfit.student.viewmodel.attendance.rank.AttendanceRankViewModel;
+import cn.qingchengfit.student.viewmodel.transfer.TransferStudentViewModel;
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
@@ -43,5 +44,10 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AttendanceNosignViewModel.class)
     abstract ViewModel bindAttendanceNosignViewModel(AttendanceNosignViewModel model);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TransferStudentViewModel.class)
+    abstract ViewModel bindTransferStudentViewModel(TransferStudentViewModel model);
 
 }

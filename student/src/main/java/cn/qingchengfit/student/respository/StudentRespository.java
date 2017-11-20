@@ -16,6 +16,7 @@ import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
+import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.other.RxHelper;
 import cn.qingchengfit.student.respository.remote.CustomSubscriber;
 import cn.qingchengfit.student.respository.remote.HttpCheckFunc;
@@ -31,6 +32,7 @@ public class StudentRespository {
     MutableLiveData<AbsentceListWrap> userAbsence = new MutableLiveData<>();
     MutableLiveData<AttendanceListWrap> attendanceResponse = new MutableLiveData<>();
     MutableLiveData<List<StudentWIthCount>> nosignStudents = new MutableLiveData<>();
+    MutableLiveData<StudentTransferBean> studentConver = new MutableLiveData<>();
 
     @Inject
     IStudentModel remoteService;
@@ -99,5 +101,19 @@ public class StudentRespository {
                     }
                 });
         return nosignStudents;
+    };
+
+    public LiveData<StudentTransferBean> qcGetTrackStudentsConver(String staff_id, HashMap<String, Object> params){
+            remoteService
+                    .qcGetTrackStudentsConver(staff_id, params)
+                    .compose(RxHelper.schedulersTransformer())
+                    .map(new HttpCheckFunc<>())
+                    .subscribe(new CustomSubscriber<StudentTransferBean>() {
+                        @Override
+                        public void onNext(StudentTransferBean bean) {
+                            studentConver.setValue(bean);
+                        }
+                    });
+        return studentConver;
     };
 }

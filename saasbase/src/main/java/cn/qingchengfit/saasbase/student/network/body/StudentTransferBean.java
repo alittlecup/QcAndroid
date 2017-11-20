@@ -9,8 +9,8 @@ import cn.qingchengfit.model.base.QcStudentBean;
  */
 
 public class StudentTransferBean {
-    public Float create_count;
-    public Float following_count;
-    public Float member_count;
+    public Float create_count = 0f;
+    public Float following_count = 0f;
+    public Float member_count = 0f;
     public List<QcStudentBeanWithFollow> users;
 }
