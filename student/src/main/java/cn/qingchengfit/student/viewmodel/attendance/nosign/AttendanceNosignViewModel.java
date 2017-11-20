@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.viewmodel.attendance.nosign;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
