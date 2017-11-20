@@ -57,7 +57,7 @@ public class CardBuyPresenter extends BasePresenter {
     cardCate = cate;
   }
 
-  public ArrayList<String> getChoseStuIds() {
+  public ArrayList<String>  getChoseStuIds() {
     return choseStuIds;
   }
 

@@ -25,6 +25,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -45,8 +46,34 @@ public class BillFilterFragment extends BaseFragment
   @BindView(R2.id.filter_layout) LinearLayout filterLayout;
   private CommonFlexAdapter adapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
-  HashMap<String, Object> map = new HashMap<>();
+  private HashMap<String, Object> map = new HashMap<>();
   @Need HashMap<String, Object> alreadyMap = new HashMap<>();
+  //@Inject
+  //FilterViewModel filterModel;
+
+  public static BillFilterFragment newInstance(HashMap<String, Object> map)  {
+     Bundle args = new Bundle();
+     args.putSerializable("filter", map);
+     BillFilterFragment fragment = new BillFilterFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    //filterModel = ViewModelProviders.of(this).get(FilterViewModel.class);
+    //final Observer<HashMap<String, Object>> filterObserver = new Observer<HashMap<String, Object>>() {
+    //  @Override public void onChanged(@Nullable HashMap<String, Object> stringObjectHashMap) {
+    //    map = stringObjectHashMap;
+    //  }
+    //};
+    //filterModel.getFitlerData().observe(this, filterObserver);
+
+    if (getArguments() != null){
+      map.clear();
+      map.putAll((HashMap<String, Object>)getArguments().getSerializable("filter"));
+    }
+  }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -98,6 +125,7 @@ public class BillFilterFragment extends BaseFragment
       }
     }
     RxBus.getBus().post(new BillFilterEvent(map));
+    //filterModel.getFitlerData().setValue(map);
   }
 
   @OnClick(R2.id.btn_bill_filter_reset) public void onReset() {
@@ -117,6 +145,32 @@ public class BillFilterFragment extends BaseFragment
     return false;
   }
 
+  private void refreshView(){
+    for (int i = 0; i < adapter.getItemCount(); i++ ){
+     if (adapter.getItem(i) instanceof ItemFilterTime){
+       String start = "", end = "";
+       if (map.containsKey(((ItemFilterTime)adapter.getItem(i)).getFilterModel().key + "__gte")){
+         start =
+             (String) map.get(((ItemFilterTime)adapter.getItem(i)).getFilterModel().key + "__gte");
+       }
+       if(map.containsKey(((ItemFilterTime)adapter.getItem(i)).getFilterModel().key + "__lte")){
+         end = (String) map.get(((ItemFilterTime)adapter.getItem(i)).getFilterModel().key + "__lte");
+       }
+       ((ItemFilterTime)adapter.getItem(i)).setInitTime(start, end);
+     }else if (adapter.getItem(i) instanceof ItemFilterList){
+       if (map.containsKey(((ItemFilterList)adapter.getItem(i)).getFilterModel().key)){
+         ((ItemFilterList) adapter.getItem(i)).setSelectedId(
+             (String) map.get(((ItemFilterList) adapter.getItem(i)).getFilterModel().key));
+       }
+     }else if (map.containsKey(((ItemFilterCommon)adapter.getItem(i)).getData().key)){
+         String[] str =
+             ((String) map.get(((ItemFilterCommon) adapter.getItem(i)).getData().key)).split(",");
+         List<String> list = Arrays.asList(str);
+         ((ItemFilterCommon) adapter.getItem(i)).setValueList(list);
+       }
+     }
+  }
+
   @Override public void onGetFilter(List<FilterModel> filters) {
     if (itemList.size() > 0) {
       itemList.clear();
@@ -125,13 +179,14 @@ public class BillFilterFragment extends BaseFragment
       if (filter.type == 2) {
         itemList.add(new ItemFilterTime(filter, this));
       } else if (filter.type == 3) {
-        //TODO 销售列表
         itemList.add(new ItemFilterList(filter));
       } else {
         itemList.add(new ItemFilterCommon(filter));
       }
     }
     adapter.updateDataSet(itemList);
+    if (map.size() > 0)
+      refreshView();
   }
 
   @Override public void onTimeStart(String start, String key) {

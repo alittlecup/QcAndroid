@@ -27,6 +27,7 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
 
   private FilterModel filterModel;
   private List<Integer> selectPosition = new ArrayList<>();
+  private List<String> valueList = new ArrayList<>();
 
   public ItemFilterCommon(FilterModel filterModel) {
     this.filterModel = filterModel;
@@ -54,6 +55,10 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
     return selectPosition;
   }
 
+  public void setValueList(List<String> valueList) {
+    this.valueList = valueList;
+  }
+
   public void setSelectPosition(List<Integer> selectPosition) {
     this.selectPosition = selectPosition;
   }
@@ -69,16 +74,29 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
     if (holder.billFilterCommon.getChildCount()  >= filterModel.content.size()){
       return;
     }
-    for (Content content : filterModel.content) {
+    boolean isEmpty = false;
+    for (int i = 0; i < filterModel.content.size(); i++) {
       LinearLayout.LayoutParams params =
           new LinearLayout.LayoutParams(MeasureUtils.dpToPx(100f, holder.itemView.getResources()),
               MeasureUtils.dpToPx(40f, holder.itemView.getResources()));
 
+      if (!isEmpty && valueList.size() > 0){
+        if (valueList.contains(filterModel.content.get(i).value)){
+          selectPosition.add(i);
+        }
+      }else{
+        isEmpty = true;
+      }
       CheckBoxButton button = new CheckBoxButton(holder.itemView.getContext());
-      button.setContent(content.name);
+      button.setContent(filterModel.content.get(i).name);
 
       button.setLayoutParams(params);
       holder.billFilterCommon.addChild(button);
+    }
+    if (selectPosition.size() > 0){
+      for (int p : selectPosition) {
+        holder.billFilterCommon.setCheckPos(p);
+      }
     }
   }
 
@@ -99,12 +117,10 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
       super(view, adapter);
       ButterKnife.bind(this, view);
       billFilterCommon.setSingleSelected(false);
-      billFilterCommon.setOnCheckoutPositionListener(new QcAutoLineRadioGroup.OnCheckoutPositionListener() {
-        @Override public void onCheckPosition(List<Integer> checkedList) {
-          IFlexible item = adapter.getItem(getAdapterPosition());
-          if (item instanceof ItemFilterCommon){
-            ((ItemFilterCommon) item).setSelectPosition(checkedList);
-          }
+      billFilterCommon.setOnCheckoutPositionListener(checkedList -> {
+        IFlexible item = adapter.getItem(getAdapterPosition());
+        if (item instanceof ItemFilterCommon){
+          ((ItemFilterCommon) item).setSelectPosition(checkedList);
         }
       });
     }

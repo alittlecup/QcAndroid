@@ -27,7 +27,8 @@ import cn.qingchengfit.utils.LogUtil;
  */
 
 public class RongPay {
-  private static final String ACTION_PAY = "com.rongcapital.pay";
+  //private static final String ACTION_PAY = "com.rongcapital.pay";         //开发环境
+  private static final String ACTION_PAY = "com.rswallet.jhpay";         //测试环境
 
   private String merOrderId;
   private String title;

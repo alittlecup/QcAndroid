@@ -30,12 +30,12 @@ import com.anbillon.flabellum.annotations.Leaf;
 @Leaf(module = "staff",path = "/add/")
 public class StaffAddFragment extends StaffDetailFragment {
 
-
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
     @Nullable Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
     btnDel.setVisibility(View.GONE);
+    btnAdd.setVisibility(View.GONE);
     return v;
   }
 

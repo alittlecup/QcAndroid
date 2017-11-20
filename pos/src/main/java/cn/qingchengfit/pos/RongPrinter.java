@@ -31,7 +31,8 @@ import java.util.List;
  */
 
 public class RongPrinter {
-  private static final String ACTION_PRINT = "com.rongcapital.print";
+  //private static final String ACTION_PRINT = "com.rongcapital.print";         // 开发环境
+  private static final String ACTION_PRINT = "com.rswallet.print";         // 测试环境
   private List<Pair<String, String>> first, secoud;
   private String title = "账单";
   private RongPrinter(Builder builder) {

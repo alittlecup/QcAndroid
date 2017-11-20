@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.bill.filter;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -28,10 +29,24 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
   private OnTimeChooseListener onTimeChooseListener;
   private Date startDate;
   private Date endDate;
+  private String start;
+  private String end;
 
   public ItemFilterTime(FilterModel filterModel, OnTimeChooseListener onTimeChooseListener) {
     this.filterModel = filterModel;
     this.onTimeChooseListener = onTimeChooseListener;
+  }
+
+  public FilterModel getFilterModel() {
+    if (filterModel == null){
+      return  new FilterModel();
+    }
+    return filterModel;
+  }
+
+  public void setInitTime(String start, String end){
+    this.start = start;
+    this.end = end;
   }
 
   @Override
@@ -101,6 +116,14 @@ public class ItemFilterTime extends AbstractFlexibleItem<ItemFilterTime.ItemFilt
       holder.tvStudentFilterTimeEnd.setText("");
       holder.tvStudentFilterTimeStart.setText("");
       return;
+    }
+    if (!TextUtils.isEmpty(start)){
+      holder.tvStudentFilterTimeStart.setText(start.substring(0,10));
+      start = "";
+    }
+    if (!TextUtils.isEmpty(end)){
+      holder.tvStudentFilterTimeEnd.setText(end.substring(0,10));
+      end = "";
     }
     holder.billFilterTitle.setText(filterModel.name);
   }

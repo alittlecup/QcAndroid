@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.bill.filter;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -29,6 +30,7 @@ public class ItemFilterList extends AbstractFlexibleItem<ItemFilterList.FilterLi
   private CommonFlexAdapter flexAdapter;
   private List<AbstractFlexibleItem> itemList = new ArrayList<>();
   private boolean isShowAll;
+  private String selectedId;
 
   public ItemFilterList(FilterModel filterModel) {
     this.filterModel = filterModel;
@@ -44,6 +46,26 @@ public class ItemFilterList extends AbstractFlexibleItem<ItemFilterList.FilterLi
         return false;
       }
     });
+  }
+
+  public void setSelectedId(String selectedId) {
+    if (TextUtils.isEmpty(selectedId)){
+      return;
+    }
+    this.selectedId = selectedId;
+  }
+
+  private void setInitList(){
+    for (int i = 0; i < flexAdapter.getItemCount(); i++) {
+      if (flexAdapter.getItem(i) instanceof ItemFilterSale){
+        ItemFilterSale item = (ItemFilterSale) flexAdapter.getItem(i);
+        if (item.getUser().id.equals(selectedId)){
+          flexAdapter.addSelection(i);
+          flexAdapter.notifyItemChanged(i);
+          break;
+        }
+      }
+    }
   }
 
   public FilterModel getFilterModel() {
@@ -119,6 +141,9 @@ public class ItemFilterList extends AbstractFlexibleItem<ItemFilterList.FilterLi
     holder.tvFilterShowAll.setCompoundDrawables(null,null,drawableR,null);
     flexAdapter.updateDataSet(itemList);
     holder.tvFilterShowAll.setTag(position);
+    if (!TextUtils.isEmpty(selectedId)){
+      setInitList();
+    }
   }
 
   class FilterListVH extends FlexibleViewHolder {
