@@ -209,7 +209,7 @@ public class FollowUpStatusFragment extends SaasBaseFragment implements FollowUp
         }
         List<AbstractFlexibleItem> newItems = new ArrayList<>();
         for (QcStudentBeanWithFollow student : studentList) {
-            newItems.add(new FollowUpItem(student, type));
+            newItems.add(new FollowUpItem( student, type));
         }
         flexibleAdapterToday.onLoadMoreComplete(newItems);
         flexibleAdapterToday.notifyDataSetChanged();

@@ -174,6 +174,13 @@ public interface IStudentModel {
     Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentFollow(
             String staff_id, HashMap<String, Object> params);
 
+
+
+    /**
+     * 新增查询
+     */
+    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
+            String staff_id,String type, HashMap<String, Object> params);
     /**
      * 新增学员
      */

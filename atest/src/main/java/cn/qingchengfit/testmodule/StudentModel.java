@@ -125,6 +125,11 @@ public class StudentModel implements IStudentModel {
     }
 
     @Override
+    public Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(String staff_id, String type, HashMap<String, Object> params) {
+        return studentApi.qcGetTrackStudents(staff_id, type, params);
+    }
+
+    @Override
     public Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentMember(String staff_id, HashMap<String, Object> params) {
         return studentApi.qcGetTrackStudentMember(staff_id, params);
     }

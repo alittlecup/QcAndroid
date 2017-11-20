@@ -149,6 +149,12 @@ public interface StudentApi {
     @GET("/api/staffs/{staff_id}/users/new/create/")
     Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentCreate(
             @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+    /**
+     * 新增
+     */
+    @GET("/api/staffs/{staff_id}/users/new/{type}/")
+    Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
+            @Path("staff_id") String staff_id, @Path("type") String type, @QueryMap HashMap<String, Object> params);
 
     /**
      * 新增跟进

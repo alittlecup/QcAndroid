@@ -20,7 +20,9 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
-                             packageName                   : 'cn.qingchengfit.student'
+                        fragmentArgsLib               : 'true',
+                        fragmentArgsSupportAnnotations: 'true',
+                        packageName                   : 'cn.qingchengfit.student'
                 ]
             }
         }

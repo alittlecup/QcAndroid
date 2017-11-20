@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="itemClickListener"
+            type="eu.davidea.flexibleadapter.FlexibleAdapter.OnItemClickListener"/>
         <variable
             name="toolbarModel"
             type="cn.qingchengfit.model.others.ToolbarModel" />
@@ -27,6 +29,7 @@
        <android.support.v7.widget.RecyclerView
            android:id="@+id/recyclerview"
            app:items="@{viewModel.items}"
+           app:itemClickListenter="@{itemClickListener}"
            android:layout_width="match_parent"
            android:layout_height="match_parent"/>
     </LinearLayout>

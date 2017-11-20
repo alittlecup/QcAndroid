@@ -225,7 +225,7 @@ public class StudentBusinessUtils {
             case FollowUpHomeFragment.FollowUpStatus.NEW_MEMBER_USERS:
                 return transformBean2Data(bean.date_counts, offSetDay, Color.parseColor("#0db14b"), Color.parseColor("#aa0db14b"));
         }
-        return transformBean2Data(bean.date_counts, offSetDay, Color.parseColor("#f9944e"), Color.parseColor("#aaf9944e"));
+        return null;
 
     }
     public static LineData transformBean2DataByType(List<FollowUpDataStatistic.DateCountsBean> bean, int offSetDay) {

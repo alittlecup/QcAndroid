@@ -193,6 +193,8 @@ public class StudentOperationFragment extends BaseFragment
             } else if (strId == R.string.qc_student_send_sms) {
 
             } else if (strId == R.string.qc_student_export) {
+                Uri uri=Uri.parse("student://student/follow/home");
+                routeTo(uri,null);
 
             } else if (strId == R.string.qc_student_birthday_notice) {
 

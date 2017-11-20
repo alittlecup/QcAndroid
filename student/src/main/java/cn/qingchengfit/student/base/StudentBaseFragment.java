@@ -13,6 +13,7 @@ import android.view.ViewParent;
 import javax.inject.Inject;
 
 import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.student.routers.StudentParamsInjector;
 import cn.qingchengfit.student.viewmodel.attendance.AttendanceStudentViewModel;
 
 /**
@@ -31,6 +32,7 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StudentParamsInjector.inject(this);
         initViewModel();
     }
 

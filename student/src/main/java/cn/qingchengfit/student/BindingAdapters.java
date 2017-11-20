@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.github.mikephil.charting.data.LineData;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +27,7 @@ import eu.davidea.flexibleadapter.items.IFlexible;
  */
 
 public class BindingAdapters {
-    /**
-     * 绑定toolbar属性
-     *
-     * @param toolbar
-     * @param menu
-     */
+
 
 
     /**
@@ -48,6 +45,11 @@ public class BindingAdapters {
     public static void setLineDataUnit(LineCharDate lineCharDate, String unit) {
         lineCharDate.setMarkViewUnit(unit);
     }
+    @BindingAdapter(value = "datas")
+    public static void setLineDataUnit(LineCharDate lineCharDate, LineData data) {
+        lineCharDate.setData(data);
+    }
+
 
     /**
      * recycler的数据集合
@@ -74,6 +76,13 @@ public class BindingAdapters {
         if (adapter != null && adapter instanceof CommonFlexAdapter) {
             ((CommonFlexAdapter) adapter).setStatus(pos);
             ((CommonFlexAdapter) adapter).setTag("revert", revert);
+        }
+    }
+    @BindingAdapter(value = {"itemClickListenter"})
+    public static void setAdapterTag(RecyclerView recyclerView, FlexibleAdapter.OnItemClickListener listener) {
+        RecyclerView.Adapter adapter = recyclerView.getAdapter();
+        if (adapter != null && adapter instanceof CommonFlexAdapter) {
+            ((CommonFlexAdapter) adapter).addListener(listener);
         }
     }
 
