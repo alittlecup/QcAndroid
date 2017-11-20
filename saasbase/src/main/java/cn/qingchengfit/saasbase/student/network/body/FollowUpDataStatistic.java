@@ -59,6 +59,7 @@ public class FollowUpDataStatistic {
         public int today_count;
         public int week_count;
         public int month_count;
+        public String title;
         public ArrayList<DateCountsBean> date_counts = new ArrayList<>();
 
         public NewCreateUsersBean() {
@@ -66,6 +67,7 @@ public class FollowUpDataStatistic {
 
         protected NewCreateUsersBean(Parcel in) {
             this.count = in.readString();
+            this.title = in.readString();
             this.today_count = in.readInt();
             this.week_count = in.readInt();
             this.month_count = in.readInt();
@@ -78,6 +80,7 @@ public class FollowUpDataStatistic {
 
         @Override public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(this.count);
+            dest.writeString(this.title);
             dest.writeInt(this.today_count);
             dest.writeInt(this.week_count);
             dest.writeInt(this.month_count);

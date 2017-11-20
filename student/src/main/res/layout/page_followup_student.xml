@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="toolbarModel"
+            type="cn.qingchengfit.model.others.ToolbarModel" />
+        <variable
+            name="viewModel"
+            type="cn.qingchengfit.student.viewmodel.followup.FollowUpStudentViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_grey"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/common_simple_toolbar"
+            bind:toolbarModel="@{toolbarModel}" />
+
+       <android.support.v7.widget.RecyclerView
+           android:id="@+id/recyclerview"
+           app:items="@{viewModel.items}"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"/>
+    </LinearLayout>
+</layout>

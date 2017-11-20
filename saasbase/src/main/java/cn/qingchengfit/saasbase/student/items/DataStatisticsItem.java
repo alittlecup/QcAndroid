@@ -43,19 +43,10 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
     }
 
     String title;
-    LineData data;
-    @ColorInt
-    int lineColor;
-    @ColorInt
-    int fillColor;
-    int offSetDay = 30;
     FollowUpDataStatistic.NewCreateUsersBean bean;
 
-    public DataStatisticsItem(String title, FollowUpDataStatistic.NewCreateUsersBean bean, @ColorInt int lineColor, @ColorInt int fillColor) {
+    public DataStatisticsItem(String title, FollowUpDataStatistic.NewCreateUsersBean bean) {
         this.bean = bean;
-        this.data = StudentBusinessUtils.transformBean2Data(bean.date_counts, offSetDay, lineColor, fillColor);
-        this.lineColor = lineColor;
-        this.fillColor = fillColor;
         this.title = title;
     }
 
@@ -63,21 +54,6 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
         return title;
     }
 
-    public void setOffDay(int days) {
-        this.offSetDay = days;
-    }
-
-    public void setLineColor(int lineColor) {
-        this.lineColor = lineColor;
-    }
-
-    public void setFillColor(int fillColor) {
-        this.fillColor = fillColor;
-    }
-
-    public void invalidate() {
-        this.data = StudentBusinessUtils.transformBean2Data(bean.date_counts, offSetDay, lineColor, fillColor);
-    }
 
     @Override
     public int getLayoutRes() {
@@ -96,8 +72,7 @@ public class DataStatisticsItem extends AbstractFlexibleItem<DataStatisticsItem.
         holder.tvDataToday.setText(String.valueOf(bean.today_count));
         holder.tvData7day.setText(String.valueOf(bean.week_count));
         holder.tvData30day.setText(String.valueOf(bean.month_count));
-
-        holder.lineChar.setData(data);
+        holder.lineChar.setData(StudentBusinessUtils.transformBean2DataByType(bean, 30, position));
 
 
     }

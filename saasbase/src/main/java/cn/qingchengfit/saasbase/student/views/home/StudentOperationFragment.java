@@ -181,7 +181,7 @@ public class StudentOperationFragment extends BaseFragment
                 Uri uri=Uri.parse("student://student/coach/list");
                 routeTo(uri,null);
             } else if (strId == R.string.qc_student_follow_up) {
-                Uri uri=Uri.parse("student://student/follow/home");
+                Uri uri=Uri.parse("student://student/followup/student");
                 routeTo(uri,null);
             } else if (strId == R.string.qc_student_follow_transfer) {
                 Uri uri=Uri.parse("student://student/transfer/student");

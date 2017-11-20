@@ -21,6 +21,8 @@ import cn.qingchengfit.saasbase.student.other.RxHelper;
 import cn.qingchengfit.student.respository.remote.CustomSubscriber;
 import cn.qingchengfit.student.respository.remote.HttpCheckFunc;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by huangbaole on 2017/11/17.
@@ -33,6 +35,7 @@ public class StudentRespository {
     MutableLiveData<AttendanceListWrap> attendanceResponse = new MutableLiveData<>();
     MutableLiveData<List<StudentWIthCount>> nosignStudents = new MutableLiveData<>();
     MutableLiveData<StudentTransferBean> studentConver = new MutableLiveData<>();
+    MutableLiveData<FollowUpDataStatistic> followUpDataStatisticMutableLiveData = new MutableLiveData<>();
 
     @Inject
     IStudentModel remoteService;
@@ -71,7 +74,6 @@ public class StudentRespository {
 
     }
 
-    ;
 
     public LiveData<AttendanceListWrap> qcGetUsersAttendances(String id, HashMap<String, Object> params) {
         remoteService
@@ -86,7 +88,7 @@ public class StudentRespository {
                 });
         return attendanceResponse;
 
-    };
+    }
 
 
     public LiveData<List<StudentWIthCount>> qcGetNotSignStudent(String staffId, HashMap<String, Object> params) {
@@ -101,19 +103,35 @@ public class StudentRespository {
                     }
                 });
         return nosignStudents;
-    };
+    }
 
-    public LiveData<StudentTransferBean> qcGetTrackStudentsConver(String staff_id, HashMap<String, Object> params){
-            remoteService
-                    .qcGetTrackStudentsConver(staff_id, params)
-                    .compose(RxHelper.schedulersTransformer())
-                    .map(new HttpCheckFunc<>())
-                    .subscribe(new CustomSubscriber<StudentTransferBean>() {
-                        @Override
-                        public void onNext(StudentTransferBean bean) {
-                            studentConver.setValue(bean);
-                        }
-                    });
+
+    public LiveData<StudentTransferBean> qcGetTrackStudentsConver(String staff_id, HashMap<String, Object> params) {
+        remoteService
+                .qcGetTrackStudentsConver(staff_id, params)
+                .compose(RxHelper.schedulersTransformer())
+                .map(new HttpCheckFunc<>())
+                .subscribe(new CustomSubscriber<StudentTransferBean>() {
+                    @Override
+                    public void onNext(StudentTransferBean bean) {
+                        studentConver.setValue(bean);
+                    }
+                });
         return studentConver;
-    };
+    }
+
+
+    public LiveData<FollowUpDataStatistic> qcGetTrackStudentsStatistics(String staff_id, HashMap<String, Object> params) {
+        remoteService
+                .qcGetTrackStudentsStatistics(staff_id, params)
+                .compose(RxHelper.schedulersTransformer())
+                .map(new HttpCheckFunc<>())
+                .subscribe(new CustomSubscriber<FollowUpDataStatistic>() {
+                    @Override
+                    public void onNext(FollowUpDataStatistic followUpDataStatistic) {
+                        followUpDataStatisticMutableLiveData.setValue(followUpDataStatistic);
+                    }
+                });
+        return followUpDataStatisticMutableLiveData;
+    }
 }

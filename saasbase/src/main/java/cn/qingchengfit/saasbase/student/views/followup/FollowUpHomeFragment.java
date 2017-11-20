@@ -84,12 +84,9 @@ public class FollowUpHomeFragment extends SaasBaseFragment implements FollowUpHo
     public void onFollowUpStatistics(FollowUpDataStatistic statistics) {
         hideLoadingTrans();
         datas.clear();
-        datas.add(new DataStatisticsItem("新增注册", statistics.new_create_users,
-                getResources().getColor(R.color.registe_line_color), getResources().getColor(R.color.registe_fill_color)));
-        datas.add(new DataStatisticsItem("新增跟进", statistics.new_following_users,
-                getResources().getColor(R.color.follow_line_color), getResources().getColor(R.color.follow_fill_color)));
-        datas.add(new DataStatisticsItem("新增会员", statistics.new_member_users,
-                getResources().getColor(R.color.student_line_color), getResources().getColor(R.color.student_fill_color)));
+        datas.add(new DataStatisticsItem("新增注册", statistics.new_create_users));
+        datas.add(new DataStatisticsItem("新增跟进", statistics.new_following_users));
+        datas.add(new DataStatisticsItem("新增会员", statistics.new_member_users));
         commonFlexAdapter.updateDataSet(datas);
     }
     @Override
