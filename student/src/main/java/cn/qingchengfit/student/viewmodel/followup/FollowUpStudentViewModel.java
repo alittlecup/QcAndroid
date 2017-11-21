@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.viewmodel.followup;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
@@ -32,7 +33,7 @@ import rx.schedulers.Schedulers;
  * Created by huangbaole on 2017/11/20.
  */
 
-public class FollowUpStudentViewModel extends FlexibleViewModel<List<Pair<FollowUpDataStatistic.NewCreateUsersBean, String>>, DataStatisticsItem, StudentFilter> {
+public class FollowUpStudentViewModel extends FlexibleViewModel<FollowUpDataStatistic, DataStatisticsItem, StudentFilter> {
 
     public ObservableField<List<DataStatisticsItem>> items = new ObservableField<>();
 
@@ -59,7 +60,7 @@ public class FollowUpStudentViewModel extends FlexibleViewModel<List<Pair<Follow
 
     @NonNull
     @Override
-    protected LiveData<List<Pair<FollowUpDataStatistic.NewCreateUsersBean, String>>> getSource(@NonNull StudentFilter filter) {
+    protected LiveData<FollowUpDataStatistic> getSource(@NonNull StudentFilter filter) {
         HashMap<String, Object> params = gymWrapper.getParams();
 
         if (!StringUtils.isEmpty(filter.registerTimeStart) && !StringUtils.isEmpty(filter.registerTimeEnd)) {
@@ -70,24 +71,32 @@ public class FollowUpStudentViewModel extends FlexibleViewModel<List<Pair<Follow
             params.put("seller_id", filter.sale.id);//无销售seller_id=0
         }
 
-        return Transformations.map(respository.qcGetTrackStudentsStatistics(loginStatus.staff_id(), params), input -> {
-            List<Pair<FollowUpDataStatistic.NewCreateUsersBean, String>> beans = new ArrayList<>();
-            beans.add(new Pair<>(input.new_create_users, "新增注册"));
-            beans.add(new Pair<>(input.new_following_users, "新增跟进"));
-            beans.add(new Pair<>(input.new_member_users, "新增会员"));
-            return beans;
-        });
+
+        return  respository.qcGetTrackStudentsStatistics(loginStatus.staff_id(), params);
+//        , input -> {
+//            List<Pair<FollowUpDataStatistic.NewCreateUsersBean, String>> beans = new ArrayList<>();
+//            beans.add(new Pair<>(input.new_create_users, "新增注册"));
+//            beans.add(new Pair<>(input.new_following_users, "新增跟进"));
+//            beans.add(new Pair<>(input.new_member_users, "新增会员"));
+//            return beans;
+//        });
+//    }
     }
 
     @Override
-    protected boolean isSourceValid(@Nullable List<Pair<FollowUpDataStatistic.NewCreateUsersBean, String>> dateCountsBeans) {
-        return dateCountsBeans != null && !dateCountsBeans.isEmpty();
+    protected boolean isSourceValid(@Nullable FollowUpDataStatistic followUpDataStatistic) {
+        return followUpDataStatistic != null;
     }
 
     @Override
-    protected List<DataStatisticsItem> map(@NonNull List<Pair<FollowUpDataStatistic.NewCreateUsersBean, String>> dateCountsBeans) {
-        return FlexibleItemProvider.with(new DataStatisticsItemFactory()).from(dateCountsBeans);
+    protected List<DataStatisticsItem> map(@NonNull FollowUpDataStatistic followUpDataStatistic) {
+        List<Pair<FollowUpDataStatistic.NewCreateUsersBean, String>> beans = new ArrayList<>();
+        beans.add(new Pair<>(followUpDataStatistic.new_create_users, "新增注册"));
+        beans.add(new Pair<>(followUpDataStatistic.new_following_users, "新增跟进"));
+        beans.add(new Pair<>(followUpDataStatistic.new_member_users, "新增会员"));
+        return FlexibleItemProvider.with(new DataStatisticsItemFactory()).from(beans);
     }
+
 
     static class DataStatisticsItemFactory
             implements FlexibleItemProvider.Factory<Pair<FollowUpDataStatistic.NewCreateUsersBean, String>, DataStatisticsItem> {

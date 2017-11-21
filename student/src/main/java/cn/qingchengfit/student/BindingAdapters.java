@@ -15,6 +15,7 @@ import java.util.List;
 import javax.crypto.interfaces.PBEKey;
 
 import cn.qingchengfit.items.CommonNoDataItem;
+import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.saasbase.student.widget.LineCharDate;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.FunnelTwoView;
@@ -22,12 +23,13 @@ import cn.qingchengfit.widgets.QcRadioGroup;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
+import static android.view.Gravity.CENTER;
+
 /**
  * Created by huangbaole on 2017/11/15.
  */
 
 public class BindingAdapters {
-
 
 
     /**
@@ -45,6 +47,7 @@ public class BindingAdapters {
     public static void setLineDataUnit(LineCharDate lineCharDate, String unit) {
         lineCharDate.setMarkViewUnit(unit);
     }
+
     @BindingAdapter(value = "datas")
     public static void setLineDataUnit(LineCharDate lineCharDate, LineData data) {
         lineCharDate.setData(data);
@@ -68,6 +71,12 @@ public class BindingAdapters {
             adapter = new CommonFlexAdapter(items);
             recyclerView.setAdapter(adapter);
         }
+        List mainItems = ((CommonFlexAdapter) adapter).getMainItems();
+        if(mainItems.isEmpty()){
+            mainItems.add(new SimpleTextItemItem("暂无数据", CENTER));
+            ((CommonFlexAdapter) adapter).updateDataSet(mainItems);
+
+        }
     }
 
     @BindingAdapter(value = {"revert", "status"})
@@ -78,6 +87,7 @@ public class BindingAdapters {
             ((CommonFlexAdapter) adapter).setTag("revert", revert);
         }
     }
+
     @BindingAdapter(value = {"itemClickListenter"})
     public static void setAdapterTag(RecyclerView recyclerView, FlexibleAdapter.OnItemClickListener listener) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
@@ -112,7 +122,7 @@ public class BindingAdapters {
      */
     @BindingAdapter(value = "datas")
     public static void setFunnelTwoViewDatas(FunnelTwoView view, List<Float> datas) {
-        if(datas!=null&&!datas.isEmpty()){
+        if (datas != null && !datas.isEmpty()) {
             view.setData(datas);
             view.animateY();
 

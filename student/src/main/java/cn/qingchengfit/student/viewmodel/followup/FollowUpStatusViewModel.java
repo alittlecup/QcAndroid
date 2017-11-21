@@ -194,6 +194,7 @@ public class FollowUpStatusViewModel extends FlexibleViewModel<StudentListWrappe
         }
 
         return respository.qcGetTrackStudentsStatistics(loginStatus.staff_id(), params);
+
     }
 
     public void onQcButtonFilterClick(boolean isChecked, int index) {
@@ -246,19 +247,17 @@ public class FollowUpStatusViewModel extends FlexibleViewModel<StudentListWrappe
 
     @Override
     protected boolean isSourceValid(@Nullable StudentListWrappeForFollow studentListWrappeForFollow) {
-        return studentListWrappeForFollow != null && studentListWrappeForFollow.users != null && !studentListWrappeForFollow.users.isEmpty();
+        return studentListWrappeForFollow != null && studentListWrappeForFollow.users != null;
     }
 
 
     @Override
     protected List<FollowUpItem> map(@NonNull StudentListWrappeForFollow studentListWrappeForFollow) {
-
         return FlexibleItemProvider.with(new FollowUpItemFactory(dataType)).from(studentListWrappeForFollow.users);
     }
 
 
-    static class FollowUpItemFactory
-            implements FlexibleItemProvider.Factory<QcStudentBeanWithFollow, FollowUpItem> {
+    static class FollowUpItemFactory implements FlexibleItemProvider.Factory<QcStudentBeanWithFollow, FollowUpItem> {
         private Integer type;
 
         public FollowUpItemFactory(Integer type) {

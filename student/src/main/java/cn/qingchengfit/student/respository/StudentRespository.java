@@ -26,18 +26,12 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
+ *
+ * 返回的LiveData要写成局部变量
  * Created by huangbaole on 2017/11/17.
  */
 @Singleton
 public class StudentRespository {
-
-    MutableLiveData<AttendanceCharDataBean> attendanceCharDate = new MutableLiveData<>();
-    MutableLiveData<AbsentceListWrap> userAbsence = new MutableLiveData<>();
-    MutableLiveData<AttendanceListWrap> attendanceResponse = new MutableLiveData<>();
-    MutableLiveData<List<StudentWIthCount>> nosignStudents = new MutableLiveData<>();
-    MutableLiveData<StudentTransferBean> studentConver = new MutableLiveData<>();
-    MutableLiveData<FollowUpDataStatistic> followUpDataStatisticMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<StudentListWrappeForFollow> followUpStatusStudents = new MutableLiveData<>();
 
     @Inject
     IStudentModel remoteService;
@@ -48,6 +42,8 @@ public class StudentRespository {
     }
 
     public LiveData<AttendanceCharDataBean> qcGetAttendanceChart(String id, HashMap<String, Object> params) {
+        MutableLiveData<AttendanceCharDataBean> attendanceCharDate = new MutableLiveData<>();
+
         remoteService
                 .qcGetAttendanceChart(id, params)
                 .compose(RxHelper.schedulersTransformer())
@@ -62,6 +58,8 @@ public class StudentRespository {
     }
 
     public LiveData<AbsentceListWrap> qcGetUsersAbsences(String id, HashMap<String, Object> params) {
+        MutableLiveData<AbsentceListWrap> userAbsence = new MutableLiveData<>();
+
         remoteService
                 .qcGetUsersAbsences(id, params)
                 .compose(RxHelper.schedulersTransformer())
@@ -78,6 +76,8 @@ public class StudentRespository {
 
 
     public LiveData<AttendanceListWrap> qcGetUsersAttendances(String id, HashMap<String, Object> params) {
+        MutableLiveData<AttendanceListWrap> attendanceResponse = new MutableLiveData<>();
+
         remoteService
                 .qcGetUsersAttendances(id, params)
                 .compose(RxHelper.schedulersTransformer())
@@ -94,6 +94,8 @@ public class StudentRespository {
 
 
     public LiveData<List<StudentWIthCount>> qcGetNotSignStudent(String staffId, HashMap<String, Object> params) {
+        MutableLiveData<List<StudentWIthCount>> nosignStudents = new MutableLiveData<>();
+
         remoteService
                 .qcGetNotSignStudent(staffId, params)
                 .compose(RxHelper.schedulersTransformer())
@@ -109,6 +111,8 @@ public class StudentRespository {
 
 
     public LiveData<StudentTransferBean> qcGetTrackStudentsConver(String staff_id, HashMap<String, Object> params) {
+        MutableLiveData<StudentTransferBean> studentConver = new MutableLiveData<>();
+
         remoteService
                 .qcGetTrackStudentsConver(staff_id, params)
                 .compose(RxHelper.schedulersTransformer())
@@ -124,6 +128,7 @@ public class StudentRespository {
 
 
     public LiveData<FollowUpDataStatistic> qcGetTrackStudentsStatistics(String staff_id, HashMap<String, Object> params) {
+        MutableLiveData<FollowUpDataStatistic> followUpDataStatisticMutableLiveData = new MutableLiveData<>();
         remoteService
                 .qcGetTrackStudentsStatistics(staff_id, params)
                 .compose(RxHelper.schedulersTransformer())
@@ -138,6 +143,8 @@ public class StudentRespository {
     }
 
     public LiveData<StudentListWrappeForFollow> qcGetTrackStudents(String staff_id, String type, HashMap<String, Object> params) {
+        MutableLiveData<StudentListWrappeForFollow> followUpStatusStudents = new MutableLiveData<>();
+
         remoteService
                 .qcGetTrackStudents(staff_id, type, params)
                 .compose(RxHelper.schedulersTransformer())
