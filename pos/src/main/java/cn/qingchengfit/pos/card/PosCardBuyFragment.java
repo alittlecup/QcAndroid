@@ -56,7 +56,7 @@ public class PosCardBuyFragment extends CardBuyFragment {
         .merOrderId(payBusinessResponse.order_no)
         .customerNo(gymWrapper.getCustumNo())
         .operator(getResources().getString(R.string.pay_to_operator, loginStatus.staff_name(),
-            loginStatus.getLoginUser().user_id))
+            loginStatus.getLoginUser().id))
         .build()
         .pay(getActivity());
       if (getActivity() != null) {

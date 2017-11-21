@@ -43,7 +43,7 @@ public class PosCardChargeFragment extends CardChargeFragment {
         .merOrderId(payBusinessResponse.order_no)
         .customerNo(gymWrapper.getCustumNo())
         .operator(getResources().getString(R.string.pay_to_operator, loginStatus.staff_name(),
-            loginStatus.getLoginUser().user_id))
+            loginStatus.getLoginUser().id))
         .build()
         .pay(getContext());
       if (getActivity() != null)
