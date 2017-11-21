@@ -158,7 +158,8 @@ import javax.inject.Inject;
       .title(payBusinessResponse.order_title)
       .merOrderId(payBusinessResponse.order_no)
       .customerNo(gymWrapper.getCustumNo())
-      .operator(loginStatus.staff_name())
+        .operator(getResources().getString(R.string.pay_to_operator, loginStatus.staff_name(),
+            loginStatus.getLoginUser().user_id))
       .build().pay(getContext());
     if (getActivity() != null)
       getActivity().startActivityForResult(toBuy,100);

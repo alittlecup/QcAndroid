@@ -28,4 +28,7 @@
   <!--收银员-->
   <string name="tips_confirm_delete_cashier">确定删除收银员？</string>
   <string name="tips_confirm_logout">确定退出登录?</string>
+
+  <!--支付参数-->
+  <string formatted="false" name="pay_to_operator">%s(%s)</string>
 </resources>
