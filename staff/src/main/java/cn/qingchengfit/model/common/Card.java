@@ -68,6 +68,7 @@ public class Card implements Parcelable {
     private String lock_end;
     //    @Ignore
     private List<QcScheduleBean.Shop> shops;
+    public CardProtocol card_tpl_service_term;
 
     public Card() {
     }
