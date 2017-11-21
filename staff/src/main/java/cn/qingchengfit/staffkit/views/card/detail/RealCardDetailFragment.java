@@ -23,6 +23,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.RealcardWrapper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.model.common.CardProtocol;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -37,6 +38,7 @@ import cn.qingchengfit.staffkit.views.card.charge.CardRefundFragment;
 import cn.qingchengfit.staffkit.views.card.charge.RealValueCardChargeFragment;
 import cn.qingchengfit.staffkit.views.card.offday.OffDayListFragment;
 import cn.qingchengfit.staffkit.views.card.spendrecord.SpendRecordFragment;
+import cn.qingchengfit.staffkit.views.cardtype.CardProtocolWebFragment;
 import cn.qingchengfit.staffkit.views.custom.DialogSheet;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
 import cn.qingchengfit.utils.CardBusinessUtils;
@@ -93,6 +95,9 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
   @Inject RealcardWrapper realCard;
   @BindView(R.id.frame_bg_card_detail) FrameLayout frameBgCardDetail;
   @BindView(R.id.ll_card_protocol) RelativeLayout llCardProtocol;
+  @BindView(R.id.text_card_protocol) TextView textCardProtocol;
+  @BindView(R.id.read_card_protocol_info) TextView readCardProtocolInfo;
+  private String protocolUrl;
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -302,6 +307,8 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
     } else {
       usagePeriod.setText("有效期:无");
     }
+
+    setProtocol(card.card_tpl_service_term);
     //this.card.setCardBackgroundColor(ColorUtils.parseColor(card.getColor(), 200).getColor());
     //CompatUtils.setBg(cardBg, ColorUtils.parseColor(card.getColor(), 200));
     frameBgCardDetail.setBackground(
@@ -368,6 +375,28 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
           balance.setText("已过期" + (-card.getTrial_days()) + "天");
         }
         break;
+    }
+  }
+
+  @OnClick(R.id.ll_card_protocol)
+  public void onOpenProtocol(){
+    if (!TextUtils.isEmpty(protocolUrl))
+      CardProtocolWebFragment.newInstance(protocolUrl);
+  }
+
+  private void setProtocol(CardProtocol cardProtocol) {
+    if (cardProtocol == null || cardProtocol.id == null) {
+      llCardProtocol.setVisibility(View.GONE);
+    } else {
+      protocolUrl = cardProtocol.content_link;
+      llCardProtocol.setVisibility(View.VISIBLE);
+      if (cardProtocol.is_read) {
+        readCardProtocolInfo.setText(getResources().getString(R.string.card_protocol_user_read_info,
+            cardProtocol.service_term_version,
+            cardProtocol.created_at.replace("T", " ") + cardProtocol.create_by.username));
+      } else {
+        readCardProtocolInfo.setText("未读");
+      }
     }
   }
 

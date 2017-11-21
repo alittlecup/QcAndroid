@@ -51,6 +51,9 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String MODULE_NOTICE = "notice";
     public static final String MODULE_GIFT = "giftcard";
     public static final String MODULE_COMMODITY = "commodity/list";
+    public static final String MODULE_MODIFY_CARD_PROTOCOL = "term/edit";
+    public static final String MODULE_ADD_CARD_PROTOCOL = "term/add";
+
 
     //    @BindView(R.id.qrdecoderview)
     QRCodeReaderView qrdecoderview;
@@ -118,9 +121,9 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
         if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
         final String session = PreferenceUtils.getPrefString(this, Configs.PREFER_SESSION, "");
         sp = restRepository.getPost_api().qcScans(text, new ScanBody.Builder().url(getIntent().getStringExtra(LINK_URL)).session_id(session)
-            //                .module(getIntent().getStringExtra(LINK_MODULE))
-            //                .brand_id(getIntent().getStringExtra("brand_id"))
-            //                .shop_id(getIntent().getStringExtra("shop_id"))
+                            //.module(getIntent().getStringExtra(LINK_MODULE))
+                            //.brand_id(getIntent().getStringExtra("brand_id"))
+                            //.shop_id(getIntent().getStringExtra("shop_id"))
             .build())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

@@ -42,6 +42,7 @@ public class ExpandedLayout extends LinearLayout {
     SwitchCompat mSwitcher;
     ImageView leftImage;
     Handler mHandler;
+    private LinearLayout layout;
     private boolean isExpanded;
     private String label;
     // The height of the content when collapsed
@@ -131,6 +132,7 @@ public class ExpandedLayout extends LinearLayout {
         super.onFinishInflate();
 
         View view = inflate(getContext(), R.layout.layout_expandedlayout, null);
+        layout = (LinearLayout) view.findViewById(R.id.layout_expand);
         mTvLable = (TextView) view.findViewById(R.id.label);
         mSwitcher = (SwitchCompat) view.findViewById(R.id.switcher);
         leftImage = (ImageView)view.findViewById(R.id.left_icon);
@@ -185,7 +187,16 @@ public class ExpandedLayout extends LinearLayout {
         }
     }
 
-
+    @Override public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (enabled) {
+            mSwitcher.setEnabled(true);
+            layout.setBackgroundColor(getResources().getColor(R.color.white));
+        }else{
+            mSwitcher.setEnabled(false);
+            layout.setBackgroundColor(getResources().getColor(R.color.bg_grey));
+        }
+    }
 
     public boolean isExpanded() {
         return isExpanded;

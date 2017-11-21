@@ -882,5 +882,7 @@
   <!--会员卡服务协议-->
   <string name="card_protocol_switcher">会员卡服务条款</string>
   <string name="card_protocol_content">会员卡服务条款内容</string>
+  <string formatted="false" name="card_protocol_user_read_info">已阅读第%d版(%s版)</string>
+  <string name="card_protocol_first_can_not">在电脑中编辑条款</string>
 
 </resources>

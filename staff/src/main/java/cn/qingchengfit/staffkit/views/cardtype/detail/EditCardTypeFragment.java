@@ -29,7 +29,9 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventLimitBuyCount;
+import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.bottom.BottomBuyLimitFragment;
+import cn.qingchengfit.staffkit.views.cardtype.ProtocolChangeWebFragment;
 import cn.qingchengfit.staffkit.views.cardtype.standard.CardStandardFragment;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
@@ -84,6 +86,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @BindView(R.id.expand_card_protocol) ExpandedLayout expandCardProtocol;
+  @BindView(R.id.input_card_protocol) CommonInputView inputCardProtocol;
   private CardTpl card_tpl;
   private int mType = 0;//0 是新建 1 是修改
   private CardtplBody body = new CardtplBody();
@@ -133,15 +136,9 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
           SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
               card_tpl.getShopIds()) ? R.menu.menu_save : 0, menuListener);
       type.setVisibility(View.GONE);
-      if (card_tpl.has_service_term){
-
-      }else{
-
-      }
     } else {
       mCallbackActivity.setToolbar(getString(R.string.title_cardtype_add), false, null,
           R.menu.menu_save, menuListener);
-      expandCardProtocol.setEnabled(false);
     }
 
     //name.setText("设置限制条件");
@@ -215,6 +212,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
         //cardtplInfoEdit2.setVisibility(View.VISIBLE);
         cardtplInfoShow.setVisibility(View.GONE);
 
+        setCardProtocol(card_tpl);
         cardname.setContent(card_tpl.getName());
         type.setContent(getResources().getStringArray(R.array.cardtype)[card_tpl.getType() - 1]);
         body.name = card_tpl.getName();
@@ -264,6 +262,38 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
         body.shops = gymWrapper.shop_id();
       }
     }
+  }
+
+  private void setCardProtocol(CardTpl card) {
+    if (card.has_service_term) {
+      inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_user_read_info));
+      if (card.is_open_service_term) {
+        expandCardProtocol.setExpanded(true);
+      } else {
+        expandCardProtocol.setExpanded(false);
+      }
+    }else{
+      inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_first_can_not));
+    }
+  }
+
+  @OnClick(R.id.input_card_protocol) public void onOpenProtocol() {
+    if (card_tpl != null ) {
+      ProtocolChangeWebFragment.newInstance(card_tpl.card_tpl_service_term.content_link,
+          new ProtocolChangeWebFragment.OnActionClickListener() {
+            @Override public void onAction(View v) {
+              //TODO 跳转修改协议
+              Intent intent = new Intent(getActivity(), QRActivity.class);
+              intent.putExtra(QRActivity.LINK_URL, QRActivity.MODULE_MODIFY_CARD_PROTOCOL);
+              getContext().startActivity(intent);
+            }
+          });
+    }else{
+      Intent intent = new Intent(getActivity(), QRActivity.class);
+      intent.putExtra(QRActivity.LINK_URL, QRActivity.MODULE_ADD_CARD_PROTOCOL);
+      getContext().startActivity(intent);
+    }
+
   }
 
   @Override public void onSuccessShops() {
@@ -385,6 +415,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   }
 
   public void onComfirm() {
+    body.is_open_service_term = expandCardProtocol.isExpanded();
     if (TextUtils.isEmpty(cardname.getContent())) {
       ToastUtils.show("请填写名称");
       return;
