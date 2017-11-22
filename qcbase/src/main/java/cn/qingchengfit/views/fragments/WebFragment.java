@@ -133,7 +133,6 @@ public class WebFragment extends BaseFragment
   private String oemTag;
 
   public static WebFragment newInstance(String url) {
-
     Bundle args = new Bundle();
     args.putString("url", url);
     WebFragment fragment = new WebFragment();
@@ -344,7 +343,7 @@ public class WebFragment extends BaseFragment
     }
   }
 
-  private void initWebSetting() {
+  public void initWebSetting() {
     WebStorage webStorage = WebStorage.getInstance();
     WebSettings webSetting = mWebviewWebView.getSettings();
     webSetting.setJavaScriptEnabled(true);

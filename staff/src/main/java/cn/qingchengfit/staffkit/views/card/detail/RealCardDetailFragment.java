@@ -38,7 +38,7 @@ import cn.qingchengfit.staffkit.views.card.charge.CardRefundFragment;
 import cn.qingchengfit.staffkit.views.card.charge.RealValueCardChargeFragment;
 import cn.qingchengfit.staffkit.views.card.offday.OffDayListFragment;
 import cn.qingchengfit.staffkit.views.card.spendrecord.SpendRecordFragment;
-import cn.qingchengfit.staffkit.views.cardtype.CardProtocolWebFragment;
+import cn.qingchengfit.staffkit.views.cardtype.CardProtocolActivity;
 import cn.qingchengfit.staffkit.views.custom.DialogSheet;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
 import cn.qingchengfit.utils.CardBusinessUtils;
@@ -98,6 +98,7 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
   @BindView(R.id.text_card_protocol) TextView textCardProtocol;
   @BindView(R.id.read_card_protocol_info) TextView readCardProtocolInfo;
   private String protocolUrl;
+  private String alreadyInfo;
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -380,8 +381,9 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
 
   @OnClick(R.id.ll_card_protocol)
   public void onOpenProtocol(){
-    if (!TextUtils.isEmpty(protocolUrl))
-      CardProtocolWebFragment.newInstance(protocolUrl);
+    if (!TextUtils.isEmpty(protocolUrl)){
+      CardProtocolActivity.startWeb(protocolUrl, getContext(), false, alreadyInfo);
+    }
   }
 
   private void setProtocol(CardProtocol cardProtocol) {
@@ -391,9 +393,10 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
       protocolUrl = cardProtocol.content_link;
       llCardProtocol.setVisibility(View.VISIBLE);
       if (cardProtocol.is_read) {
-        readCardProtocolInfo.setText(getResources().getString(R.string.card_protocol_user_read_info,
+        alreadyInfo = getResources().getString(R.string.card_protocol_user_read_info,
             cardProtocol.service_term_version,
-            cardProtocol.created_at.replace("T", " ") + cardProtocol.create_by.username));
+            cardProtocol.created_at.replace("T", " ") + " " + cardProtocol.created_by.username);
+        readCardProtocolInfo.setText(alreadyInfo);
       } else {
         readCardProtocolInfo.setText("未读");
       }

@@ -31,7 +31,7 @@ import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventLimitBuyCount;
 import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.bottom.BottomBuyLimitFragment;
-import cn.qingchengfit.staffkit.views.cardtype.ProtocolChangeWebFragment;
+import cn.qingchengfit.staffkit.views.cardtype.CardProtocolActivity;
 import cn.qingchengfit.staffkit.views.cardtype.standard.CardStandardFragment;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
@@ -157,12 +157,29 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
         }
       }
     });
+    expandCardProtocol.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked){
+          inputCardProtocol.setVisibility(View.VISIBLE);
+          if (mType != 0){
+            inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_content));
+          }else{
+            inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_first_can_not));
+          }
+        }else{
+          inputCardProtocol.setVisibility(View.GONE);
+        }
+      }
+    });
     switcher.setExpanded(false);
     body.is_limit = false;
     onCardTpl(card_tpl);
 
     if (!gymWrapper.inBrand()) {
+      expandCardProtocol.setVisibility(View.VISIBLE);
       supportGymsLayout.setVisibility(View.GONE);
+    }else{
+      expandCardProtocol.setVisibility(View.GONE);
     }
 
     view.setOnTouchListener(new View.OnTouchListener() {
@@ -265,29 +282,16 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   }
 
   private void setCardProtocol(CardTpl card) {
-    if (card.has_service_term) {
-      inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_user_read_info));
       if (card.is_open_service_term) {
         expandCardProtocol.setExpanded(true);
       } else {
         expandCardProtocol.setExpanded(false);
       }
-    }else{
-      inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_first_can_not));
-    }
   }
 
   @OnClick(R.id.input_card_protocol) public void onOpenProtocol() {
     if (card_tpl != null ) {
-      ProtocolChangeWebFragment.newInstance(card_tpl.card_tpl_service_term.content_link,
-          new ProtocolChangeWebFragment.OnActionClickListener() {
-            @Override public void onAction(View v) {
-              //TODO 跳转修改协议
-              Intent intent = new Intent(getActivity(), QRActivity.class);
-              intent.putExtra(QRActivity.LINK_URL, QRActivity.MODULE_MODIFY_CARD_PROTOCOL);
-              getContext().startActivity(intent);
-            }
-          });
+      CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true);
     }else{
       Intent intent = new Intent(getActivity(), QRActivity.class);
       intent.putExtra(QRActivity.LINK_URL, QRActivity.MODULE_ADD_CARD_PROTOCOL);

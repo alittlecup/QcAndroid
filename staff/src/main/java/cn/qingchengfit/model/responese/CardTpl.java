@@ -3,8 +3,8 @@ package cn.qingchengfit.model.responese;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import cn.qingchengfit.model.common.CardProtocol;
 import cn.qingchengfit.staffkit.usecase.bean.QcScheduleBean;
-import cn.qingchengfit.staffkit.views.cardtype.model.CardTplTerm;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +22,6 @@ import java.util.List;
  * Created by Paper on 16/2/23 2016.
  */
 public class CardTpl implements Parcelable {
-    public static final Creator<CardTpl> CREATOR = new Creator<CardTpl>() {
-        @Override public CardTpl createFromParcel(Parcel source) {
-            return new CardTpl(source);
-        }
-
-        @Override public CardTpl[] newArray(int size) {
-            return new CardTpl[size];
-        }
-    };
     public String name;
     public String type_name;
     public int type; //1 是储值卡 2次卡 3期限卡
@@ -54,7 +45,7 @@ public class CardTpl implements Parcelable {
     public List<CardTplOption> options;
     public boolean is_open_service_term;
     public boolean has_service_term;
-    public CardTplTerm card_tpl_service_term;
+    public CardProtocol card_tpl_service_term;
 
     public CardTpl() {
     }
@@ -65,38 +56,6 @@ public class CardTpl implements Parcelable {
         this.description = description;
         this.id = id;
         this.limit = limit;
-    }
-
-    protected CardTpl(Parcel in) {
-        this.name = in.readString();
-        this.type_name = in.readString();
-        this.type = in.readInt();
-        this.tpl_type = in.readInt();
-        this.description = in.readString();
-        this.costs = in.createStringArrayList();
-        this.isChoosen = in.readByte() != 0;
-        this.id = in.readString();
-        this.limit = in.readString();
-        this.color = in.readString();
-        this.is_limit = in.readByte() != 0;
-        this.month_times = in.readInt();
-        this.day_times = in.readInt();
-        this.week_times = in.readInt();
-        this.pre_times = in.readInt();
-        this.buy_limit = in.readInt();
-        this.is_enable = in.readByte() != 0;
-        this.gymid = in.readString();
-        this.gymModel = in.readString();
-        this.shops = in.createTypedArrayList(QcScheduleBean.Shop.CREATOR);
-        this.options = in.createTypedArrayList(CardTplOption.CREATOR);
-    }
-
-    @Override public boolean equals(Object o) {
-        return this.id.equalsIgnoreCase(((CardTpl) o).id);
-    }
-
-    @Override public int hashCode() {
-        return id.hashCode();
     }
 
     public int getCardTypeInt() {
@@ -286,5 +245,45 @@ public class CardTpl implements Parcelable {
         dest.writeString(this.gymModel);
         dest.writeTypedList(this.shops);
         dest.writeTypedList(this.options);
+        dest.writeByte(this.is_open_service_term ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.has_service_term ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.card_tpl_service_term, flags);
     }
+
+    protected CardTpl(Parcel in) {
+        this.name = in.readString();
+        this.type_name = in.readString();
+        this.type = in.readInt();
+        this.tpl_type = in.readInt();
+        this.description = in.readString();
+        this.costs = in.createStringArrayList();
+        this.isChoosen = in.readByte() != 0;
+        this.id = in.readString();
+        this.limit = in.readString();
+        this.color = in.readString();
+        this.is_limit = in.readByte() != 0;
+        this.month_times = in.readInt();
+        this.day_times = in.readInt();
+        this.week_times = in.readInt();
+        this.pre_times = in.readInt();
+        this.buy_limit = in.readInt();
+        this.is_enable = in.readByte() != 0;
+        this.gymid = in.readString();
+        this.gymModel = in.readString();
+        this.shops = in.createTypedArrayList(QcScheduleBean.Shop.CREATOR);
+        this.options = in.createTypedArrayList(CardTplOption.CREATOR);
+        this.is_open_service_term = in.readByte() != 0;
+        this.has_service_term = in.readByte() != 0;
+        this.card_tpl_service_term = in.readParcelable(CardProtocol.class.getClassLoader());
+    }
+
+    public static final Creator<CardTpl> CREATOR = new Creator<CardTpl>() {
+        @Override public CardTpl createFromParcel(Parcel source) {
+            return new CardTpl(source);
+        }
+
+        @Override public CardTpl[] newArray(int size) {
+            return new CardTpl[size];
+        }
+    };
 }

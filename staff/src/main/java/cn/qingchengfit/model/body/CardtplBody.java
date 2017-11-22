@@ -50,6 +50,7 @@ public class CardtplBody {
         b.month_times = this.month_times;
         b.shops = this.shops;
         b.buy_limit = this.buy_limit;
+        b.is_open_service_term = this.is_open_service_term;
         return b;
     }
 }
