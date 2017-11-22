@@ -7,6 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin"
+    android:background="@color/white"
     >
   <ImageView
       android:id="@+id/img_action"
@@ -34,6 +35,7 @@
       style="@style/QcTextStyleMediumGrey"
       android:layout_marginTop="@dimen/little"
       tools:text="随便"
+      android:textColor="@color/text_warm"
       />
 
   <ImageView

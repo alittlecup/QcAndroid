@@ -26,6 +26,7 @@ import cn.qingchengfit.views.fragments.BaseListFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -102,6 +103,14 @@ import javax.inject.Inject;
     onRefresh();
   }
 
+  @Override protected void addDivider() {
+    rv.addItemDecoration(
+        new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey)
+            .addItemViewType(R.layout.item_card_action, 20)
+            .addItemViewType(R.layout.item_action_desc,1)
+            .withBottomEdge(true));
+  }
+
   @Override public String getFragmentName() {
     return CardDetailFragment.class.getName();
   }
@@ -138,7 +147,7 @@ import javax.inject.Inject;
     items.add(new ActionDescItem.Builder().action(4)
         .icon(R.drawable.vd_card_no)
         .title("实体卡号")
-        .desc(card.getId())
+        .desc(card.getCard_no())
         .build());
     clearItems();
     setDatas(items,1);
