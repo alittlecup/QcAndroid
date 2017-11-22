@@ -152,6 +152,7 @@ public class ExpandedLayout extends LinearLayout {
         if (mContent != null) {
             android.view.ViewGroup.LayoutParams lp =
                 mContent.getLayoutParams();
+            mContentHeight = lp.height;
             lp.height = isExpanded ? mContentHeight : mCollapsedHeight;
             mContent.setLayoutParams(lp);
         }
@@ -170,8 +171,8 @@ public class ExpandedLayout extends LinearLayout {
 
         // First, measure how high content wants to be
         if (mContent != null) {
-            mContent.measure(widthMeasureSpec, MeasureSpec.UNSPECIFIED);
-            mContentHeight = mContent.getMeasuredHeight();
+            //mContent.measure(widthMeasureSpec, MeasureSpec.UNSPECIFIED);
+            //mContentHeight = mContent.getMeasuredHeight();
         }
         // Then let the usual thing happen
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -184,17 +185,6 @@ public class ExpandedLayout extends LinearLayout {
             leftImage.setImageResource(resInt);
             leftImage.getLayoutParams().width = width;
             leftImage.getLayoutParams().height = height;
-        }
-    }
-
-    @Override public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        if (enabled) {
-            mSwitcher.setEnabled(true);
-            layout.setBackgroundColor(getResources().getColor(R.color.white));
-        }else{
-            mSwitcher.setEnabled(false);
-            layout.setBackgroundColor(getResources().getColor(R.color.bg_grey));
         }
     }
 

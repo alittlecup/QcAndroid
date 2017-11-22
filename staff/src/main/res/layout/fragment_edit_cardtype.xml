@@ -247,10 +247,6 @@
           civ:civ_showright="true"
           tools:visibility="visible"
           />
-
-      <include layout="@layout/divider_grey"/>
-
-
       <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/set_card_standard"
           android:layout_width="match_parent"
@@ -273,15 +269,21 @@
         android:background="@color/white"
         >
 
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          >
       <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/input_card_protocol"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height_new"
+          android:layout_height="match_parent"
           civ:civ_lable="@string/card_protocol_content"
           civ:civ_content_color="@color/qc_text_black"
           civ:civ_clickable="true"
           civ:civ_showright="true"
           />
+
+      </LinearLayout>
 
     </cn.qingchengfit.widgets.ExpandedLayout>
     <!--<Button-->

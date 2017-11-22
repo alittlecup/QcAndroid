@@ -30,15 +30,13 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 public class WebActivity extends BaseActivity {
 
   public static final String TOOLBAR_THEME_BLACK = "toolbar_theme_black";
-
-  private WebFragment webfrag;
+  public WebFragment webfrag;
 
   public static void startWeb(String url, Context context) {
     Intent intent = new Intent(context, WebActivity.class);
     intent.putExtra("url", url);
     context.startActivity(intent);
   }
-
   public static void startWeb(String url, boolean banRefresh, Context context) {
     Intent intent = new Intent(context, WebActivity.class);
     intent.putExtra("url", url);
@@ -64,7 +62,6 @@ public class WebActivity extends BaseActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setContentView(R.layout.activity_base_web);
     ButterKnife.bind(this);
     String toUrl = getIntent().getStringExtra("url");

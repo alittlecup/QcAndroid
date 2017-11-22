@@ -25,7 +25,7 @@ import cn.qingchengfit.model.responese.ImageThreeTextBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
-import cn.qingchengfit.staffkit.views.cardtype.CardProtocolWebFragment;
+import cn.qingchengfit.staffkit.views.cardtype.CardProtocolActivity;
 import cn.qingchengfit.staffkit.views.custom.BottomPayDialog;
 import cn.qingchengfit.staffkit.views.custom.BottomPayDialogBuilder;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
@@ -143,7 +143,7 @@ public class CompletedBuyFragment extends BaseFragment implements CompletedBuyVi
 
   @OnClick(R.id.input_card_protocol)
   public void onOpenProtocol(){
-    CardProtocolWebFragment.newInstance(card_tpl.getCardTpl().card_tpl_service_term.content_link);
+    CardProtocolActivity.startWeb(card_tpl.getCardTpl().card_tpl_service_term.content_link, getContext(), false, "");
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
