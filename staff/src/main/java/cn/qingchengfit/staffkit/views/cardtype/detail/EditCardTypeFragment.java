@@ -162,7 +162,11 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
         if (isChecked){
           inputCardProtocol.setVisibility(View.VISIBLE);
           if (mType != 0){
-            inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_content));
+            if (card_tpl.has_service_term) {
+              inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_content));
+            }else{
+              inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_first_can_not));
+            }
           }else{
             inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_first_can_not));
           }
@@ -290,7 +294,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   }
 
   @OnClick(R.id.input_card_protocol) public void onOpenProtocol() {
-    if (card_tpl != null ) {
+    if (card_tpl != null && card_tpl.has_service_term) {
       CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true);
     }else{
       Intent intent = new Intent(getActivity(), QRActivity.class);
