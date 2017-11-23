@@ -1,7 +1,9 @@
 package cn.qingchengfit.staffkit.views;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,12 +15,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.body.ScanBody;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -58,7 +62,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     //    @BindView(R.id.qrdecoderview)
     QRCodeReaderView qrdecoderview;
 
-    @Inject RestRepository restRepository;
+    @Inject QcRestRepository restRepository;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.done) LinearLayout done;
@@ -66,13 +70,27 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     @BindView(R.id.root_view) RelativeLayout rootView;
     private Subscription sp;
     private AlertDialogWrapper dialog;
+    @Inject GymWrapper gymWrapper;
+
+    /**
+     * @param module Web相应模块的后缀
+     */
+    public static void start(Context context,String module) {
+        Intent starter = new Intent(context, QRActivity.class);
+        starter.putExtra(LINK_MODULE, module);
+        context.startActivity(starter);
+    }
+
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
         ButterKnife.bind(this);
-
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+        View v = new View(this);
+        v.setBackgroundResource(R.color.toolbar);
+        //rootView.addView(v,0,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        //    MeasureUtils.getStatusBarHeight(this)));
+        toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 finish();
@@ -120,41 +138,47 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     @Override public void onQRCodeRead(final String text, PointF[] points) {
         if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
         final String session = PreferenceUtils.getPrefString(this, Configs.PREFER_SESSION, "");
-        sp = restRepository.getPost_api().qcScans(text, new ScanBody.Builder().url(getIntent().getStringExtra(LINK_URL)).session_id(session)
-                            //.module(getIntent().getStringExtra(LINK_MODULE))
-                            //.brand_id(getIntent().getStringExtra("brand_id"))
-                            //.shop_id(getIntent().getStringExtra("shop_id"))
+        String url = "";
+        if (getIntent() != null) {
+            url = getBaseContext().getResources()
+                .getString(R.string.qr_code_2web, Configs.Server, gymWrapper.brand_id(),
+                    gymWrapper.shop_id(), getIntent().getStringExtra(LINK_MODULE));
+        }
+        sp = restRepository.createPostApi(Post_Api.class).qcScans(text, new ScanBody.Builder().url(url).session_id(session)
+            //                .module(getIntent().getStringExtra(LINK_MODULE))
+            //                .brand_id(getIntent().getStringExtra("brand_id"))
+            //                .shop_id(getIntent().getStringExtra("shop_id"))
             .build())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<QcResponse>() {
-            @Override public void onCompleted() {
+                @Override public void onCompleted() {
 
-            }
-
-            @Override public void onError(Throwable e) {
-
-            }
-
-            @Override public void onNext(QcResponse qcResponse) {
-                if (ResponseConstant.checkSuccess(qcResponse)) {
-                    done.setVisibility(View.VISIBLE);
-                    toolbarTitile.setText("扫码成功");
-                } else {
-                    new AlertDialogWrapper.Builder(QRActivity.this).setTitle(R.string.err_sacn_qrcode)
-                        .setPositiveButton(R.string.common_comfirm, new DialogInterface.OnClickListener() {
-                            @Override public void onClick(DialogInterface dialogInterface, int i) {
-                                if (qrdecoderview != null) {
-                                    qrdecoderview.getCameraManager().startPreview();
-                                    toolbarTitile.setText("扫码二维码");
-                                }
-                            }
-                        })
-                        .show();
                 }
-            }
-        });
+
+                @Override public void onError(Throwable e) {
+
+                }
+
+                @Override public void onNext(QcResponse qcResponse) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
+                        done.setVisibility(View.VISIBLE);
+                        toolbarTitile.setText("扫码成功");
+                    } else {
+                        new AlertDialogWrapper.Builder(QRActivity.this).setTitle(R.string.err_sacn_qrcode)
+                            .setPositiveButton(R.string.common_comfirm, new DialogInterface.OnClickListener() {
+                                @Override public void onClick(DialogInterface dialogInterface, int i) {
+                                    if (qrdecoderview != null) {
+                                        qrdecoderview.getCameraManager().startPreview();
+                                        toolbarTitile.setText("扫码二维码");
+                                    }
+                                }
+                            })
+                            .show();
+                    }
+                }
+            });
     }
 
     @Override public void cameraNotFound() {
