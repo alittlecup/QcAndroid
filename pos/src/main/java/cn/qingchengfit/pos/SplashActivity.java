@@ -122,7 +122,7 @@ public class SplashActivity extends BaseActivity {
             });
           }
           if (TextUtils.isEmpty(QcRestRepository.getSession(SplashActivity.this))) {
-            return Observable.just(true);
+            return Observable.just(false);
           } else {
             return staffModel.getCurUser()
               .subscribeOn(Schedulers.io())
