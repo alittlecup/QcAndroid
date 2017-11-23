@@ -18,6 +18,16 @@ public class CardProtocol implements Parcelable{
   public String read_time;
   public int service_term_version;
 
+  public static final Creator<CardProtocol> CREATOR = new Creator<CardProtocol>() {
+    @Override public CardProtocol createFromParcel(Parcel in) {
+      return new CardProtocol(in);
+    }
+
+    @Override public CardProtocol[] newArray(int size) {
+      return new CardProtocol[size];
+    }
+  };
+
   @Override public int describeContents() {
     return 0;
   }
@@ -45,13 +55,4 @@ public class CardProtocol implements Parcelable{
     this.service_term_version = in.readInt();
   }
 
-  public static final Creator<CardProtocol> CREATOR = new Creator<CardProtocol>() {
-    @Override public CardProtocol createFromParcel(Parcel source) {
-      return new CardProtocol(source);
-    }
-
-    @Override public CardProtocol[] newArray(int size) {
-      return new CardProtocol[size];
-    }
-  };
 }
