@@ -98,6 +98,8 @@
   <string formatted="false" name="bill_detail_success">交易成功(%s)</string>
 
 
+  <string formatted="false" name="bill_detail_success">交易成功(%s)</string>
+
   <!--支付-->
   <string name="pay_card">银联支付</string>
   <string name="pay_wx">微信</string>
