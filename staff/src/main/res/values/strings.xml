@@ -885,4 +885,6 @@
   <string formatted="false" name="card_protocol_user_read_info">已阅读第%d版(%s版)</string>
   <string name="card_protocol_first_can_not">在电脑中编辑条款</string>
 
+  <string formatted="false" name="qr_code_2web">%sapp2web/?brand_id=%s\u0026shop_id=%s\u0026module=%s</string>
+
 </resources>

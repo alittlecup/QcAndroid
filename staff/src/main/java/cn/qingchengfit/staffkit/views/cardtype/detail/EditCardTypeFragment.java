@@ -298,7 +298,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
       CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true);
     }else{
       Intent intent = new Intent(getActivity(), QRActivity.class);
-      intent.putExtra(QRActivity.LINK_URL, QRActivity.MODULE_ADD_CARD_PROTOCOL);
+      intent.putExtra(QRActivity.LINK_MODULE, QRActivity.MODULE_ADD_CARD_PROTOCOL);
       getContext().startActivity(intent);
     }
 
