@@ -3,6 +3,8 @@ package cn.qingchengfit.saasbase.student.network.body;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +16,8 @@ import cn.qingchengfit.model.base.Trainer;
  */
 
 public class AllotDataResponse implements Parcelable {
+    @SerializedName(value = "seller",alternate = {"coach"})
     private Staff seller;
-    private Trainer coach;
     private int count;
     private List<String> user = new ArrayList<>();
 
@@ -27,13 +29,6 @@ public class AllotDataResponse implements Parcelable {
         this.seller = seller;
     }
 
-    public Trainer getCoach() {
-        return coach;
-    }
-
-    public void setCoach(Trainer coach) {
-        this.coach = coach;
-    }
 
     public int getCount() {
         return count;
@@ -50,6 +45,7 @@ public class AllotDataResponse implements Parcelable {
     public void setUser(List<String> user) {
         this.user = user;
     }
+
     @Override
     public int describeContents() {
         return 0;
@@ -58,7 +54,6 @@ public class AllotDataResponse implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(this.seller, flags);
-        dest.writeParcelable(this.coach, flags);
         dest.writeInt(this.count);
         dest.writeStringList(this.user);
     }
@@ -68,7 +63,6 @@ public class AllotDataResponse implements Parcelable {
 
     protected AllotDataResponse(Parcel in) {
         this.seller = in.readParcelable(Staff.class.getClassLoader());
-        this.coach = in.readParcelable(Trainer.class.getClassLoader());
         this.count = in.readInt();
         this.user = in.createStringArrayList();
     }

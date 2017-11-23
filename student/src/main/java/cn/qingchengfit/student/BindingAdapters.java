@@ -1,11 +1,14 @@
 package cn.qingchengfit.student;
 
 import android.databinding.BindingAdapter;
+import android.databinding.BindingMethod;
+import android.databinding.BindingMethods;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.MenuRes;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import com.github.mikephil.charting.data.LineData;
 
@@ -17,9 +20,12 @@ import javax.crypto.interfaces.PBEKey;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.saasbase.student.widget.LineCharDate;
+import cn.qingchengfit.saasbase.student.widget.ModifiedFastScroller;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.FunnelTwoView;
 import cn.qingchengfit.widgets.QcRadioGroup;
+import cn.qingchengfit.widgets.QcToggleButton;
+import eu.davidea.fastscroller.FastScroller;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
@@ -28,7 +34,6 @@ import static android.view.Gravity.CENTER;
 /**
  * Created by huangbaole on 2017/11/15.
  */
-
 public class BindingAdapters {
 
 
@@ -72,7 +77,7 @@ public class BindingAdapters {
             recyclerView.setAdapter(adapter);
         }
         List mainItems = ((CommonFlexAdapter) adapter).getMainItems();
-        if(mainItems.isEmpty()){
+        if (mainItems.isEmpty()) {
             mainItems.add(new SimpleTextItemItem("暂无数据", CENTER));
             ((CommonFlexAdapter) adapter).updateDataSet(mainItems);
 
@@ -127,6 +132,21 @@ public class BindingAdapters {
             view.animateY();
 
         }
-
+    }
+//
+    /**
+     * QcToggleButton 设置选中
+     */
+    @BindingAdapter(value ={ "onCheckChangeListener","checked"},requireAll = false)
+    public static void setQcToggleButton(QcToggleButton view, CompoundButton.OnCheckedChangeListener listener,boolean isChecked) {
+        view.setOnCheckedChangeListener(listener);
+        view.setChecked(isChecked);
+    }
+    /**
+     * FastScroller 设置显示或隐藏
+     */
+    @BindingAdapter(value = "enable")
+    public static void setFastScrollerEnable(ModifiedFastScroller fastScroller, boolean enable){
+        fastScroller.setEnabled(enable);
     }
 }

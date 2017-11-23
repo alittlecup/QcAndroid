@@ -3,7 +3,6 @@ package cn.qingchengfit.student.view.followup;
 import android.arch.lifecycle.ViewModelProviders;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +14,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.student.views.followup.FollowUpStatusParams;
-import cn.qingchengfit.student.base.StudentBaseFragment;
+import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageFollowupStudentBinding;
-import cn.qingchengfit.student.view.followup.FollowUpStatusPageParmas;
 import cn.qingchengfit.student.viewmodel.followup.FollowUpStudentViewModel;
-import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.utils.Log;
 
 /**
  * Created by huangbaole on 2017/11/20.
@@ -58,7 +53,7 @@ public class FollowUpStudentPage extends StudentBaseFragment<PageFollowupStudent
     @Override
     public boolean onItemClick(int position) {
         Uri uri = Uri.parse("student://student/followup/status");
-        routeTo(uri, new FollowUpStatusPageParmas().title(mViewModel.getLiveItems().getValue().get(position).getTitle()).type(position).build());
+        routeTo(uri, new cn.qingchengfit.student.view.followup.FollowUpStatusPageParmas().title(mViewModel.getLiveItems().getValue().get(position).getTitle()).type(position).build());
         return false;
     }
 

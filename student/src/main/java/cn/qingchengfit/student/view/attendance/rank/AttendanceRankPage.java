@@ -3,7 +3,6 @@ package cn.qingchengfit.student.view.attendance.rank;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,9 @@ import com.anbillon.flabellum.annotations.Leaf;
 
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.base.StudentBaseFragment;
+import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAttendanceRankBinding;
 import cn.qingchengfit.student.viewmodel.attendance.rank.AttendanceRankViewModel;
-import cn.qingchengfit.widgets.CommonFlexAdapter;
 
 /**
  * Created by huangbaole on 2017/11/16.

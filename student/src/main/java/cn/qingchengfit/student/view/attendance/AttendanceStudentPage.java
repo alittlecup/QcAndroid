@@ -3,22 +3,15 @@ package cn.qingchengfit.student.view.attendance;
 import android.arch.lifecycle.ViewModelProviders;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import com.anbillon.flabellum.annotations.Leaf;
 
-import java.util.Date;
-
-import javax.inject.Inject;
-
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.base.StudentBaseFragment;
+import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAttendanceStudentBinding;
 import cn.qingchengfit.student.viewmodel.attendance.AttendanceStudentViewModel;
 

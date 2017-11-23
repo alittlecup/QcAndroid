@@ -1,4 +1,4 @@
-package cn.qingchengfit.student.base;
+package cn.qingchengfit.student;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -13,8 +13,7 @@ import android.view.ViewParent;
 import javax.inject.Inject;
 
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.student.routers.StudentParamsInjector;
-import cn.qingchengfit.student.viewmodel.attendance.AttendanceStudentViewModel;
+import cn.qingchengfit.student.base.BaseViewModel;
 
 /**
  * Created by huangbaole on 2017/11/15.
@@ -36,6 +35,10 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
         initViewModel();
     }
 
+    @Override
+    public boolean isBlockTouch() {
+        return false;
+    }
 
     @Nullable
     @Override

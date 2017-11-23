@@ -73,14 +73,6 @@ public class FollowUpStudentViewModel extends FlexibleViewModel<FollowUpDataStat
 
 
         return  respository.qcGetTrackStudentsStatistics(loginStatus.staff_id(), params);
-//        , input -> {
-//            List<Pair<FollowUpDataStatistic.NewCreateUsersBean, String>> beans = new ArrayList<>();
-//            beans.add(new Pair<>(input.new_create_users, "新增注册"));
-//            beans.add(new Pair<>(input.new_following_users, "新增跟进"));
-//            beans.add(new Pair<>(input.new_member_users, "新增会员"));
-//            return beans;
-//        });
-//    }
     }
 
     @Override

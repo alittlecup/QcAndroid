@@ -5,6 +5,9 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import cn.qingchengfit.student.common.mvvm.ViewModelFactory;
 import cn.qingchengfit.student.di.scope.ViewModelKey;
+import cn.qingchengfit.student.viewmodel.allot.AllotListViewModel;
+import cn.qingchengfit.student.viewmodel.allot.AllotMultiStaffViewModel;
+import cn.qingchengfit.student.viewmodel.allot.AllotStaffDetailViewModel;
 import cn.qingchengfit.student.viewmodel.attendance.AttendanceStudentViewModel;
 import cn.qingchengfit.student.viewmodel.attendance.absent.AttendanceAbsentViewModel;
 import cn.qingchengfit.student.viewmodel.attendance.nosign.AttendanceNosignViewModel;
@@ -61,5 +64,20 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FollowUpStatusViewModel.class)
     abstract ViewModel bindFollowUpStatusViewModel(FollowUpStatusViewModel model);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AllotListViewModel.class)
+    abstract ViewModel bindAllotListViewModel(AllotListViewModel model);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AllotStaffDetailViewModel.class)
+    abstract ViewModel bindAllotStaffDetailViewModel(AllotStaffDetailViewModel model);
+    @Binds
+    @IntoMap
+    @ViewModelKey(AllotMultiStaffViewModel.class)
+    abstract ViewModel bindAllotMultiStaffViewModel(AllotMultiStaffViewModel model);
+
 
 }

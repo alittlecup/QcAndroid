@@ -61,22 +61,32 @@ public class StudentModel implements IStudentModel {
 
     @Override
     public Observable<QcDataResponse<AllotDataResponseWrap>> qcGetCoachList(String staff_id, HashMap<String, Object> params) {
-        return studentApi.qcGetCoachList(staff_id,params);
+        return studentApi.qcGetCoachList(staff_id, params);
     }
 
     @Override
     public Observable<QcDataResponse<AllotDataResponseWrap>> qcGetAllotSalesPreView(String staff_id, HashMap<String, Object> params) {
-        return studentApi.qcGetAllotSalesPreView(staff_id,params);
+        return studentApi.qcGetAllotSalesPreView(staff_id, params);
+    }
+
+    @Override
+    public Observable<QcDataResponse<AllotDataResponseWrap>> qcGetStaffList(String staff_id, String type, HashMap<String, Object> params) {
+        return studentApi.qcGetStaffList(staff_id, type, params);
     }
 
     @Override
     public Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(String staff_id, HashMap<String, Object> params) {
-        return studentApi.qcGetAllotSaleOwenUsers(staff_id,params);
+        return studentApi.qcGetAllotSaleOwenUsers(staff_id, params);
+    }
+
+    @Override
+    public Observable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id, String type, HashMap<String, Object> params) {
+        return studentApi.qcGetAllotStaffMembers(staff_id, type, params);
     }
 
     @Override
     public Observable<QcDataResponse<StudentWithCoashListWrap>> qcGetCoachStudentDetail(String staff_id, HashMap<String, Object> params) {
-        return studentApi.qcGetCoachStudentDetail(staff_id,params);
+        return studentApi.qcGetCoachStudentDetail(staff_id, params);
     }
 
     @Override
@@ -96,7 +106,7 @@ public class StudentModel implements IStudentModel {
 
     @Override
     public Observable<QcResponse> qcAllocateCoach(String staff_id, HashMap<String, Object> body) {
-        return studentApi.qcAllocateCoach(staff_id,body);
+        return studentApi.qcAllocateCoach(staff_id, body);
     }
 
     @Override
@@ -110,13 +120,18 @@ public class StudentModel implements IStudentModel {
     }
 
     @Override
+    public Observable<QcResponse> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> body) {
+        return studentApi.qcRemoveStaff(staff_id, type, body);
+    }
+
+    @Override
     public Observable<QcDataResponse<FollowUpDataStatistic>> qcGetTrackStudentsStatistics(String staff_id, HashMap<String, Object> params) {
         return studentApi.qcGetTrackStudentsStatistics(staff_id, params);
     }
 
     @Override
     public Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentCreate(String staff_id, HashMap<String, Object> params) {
-        return studentApi.qcGetTrackStudentCreate(staff_id,params);
+        return studentApi.qcGetTrackStudentCreate(staff_id, params);
     }
 
     @Override

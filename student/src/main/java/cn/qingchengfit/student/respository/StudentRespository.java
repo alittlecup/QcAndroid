@@ -10,13 +10,16 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
+import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.other.RxHelper;
 import cn.qingchengfit.student.respository.remote.CustomSubscriber;
@@ -26,7 +29,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- *
  * 返回的LiveData要写成局部变量
  * Created by huangbaole on 2017/11/17.
  */
@@ -157,4 +159,50 @@ public class StudentRespository {
                 });
         return followUpStatusStudents;
     }
+
+    public LiveData<AllotDataResponseWrap> qcGetStaffList(String staff_id, String type, HashMap<String, Object> params) {
+        MutableLiveData<AllotDataResponseWrap> allotDataResponseWrapM = new MutableLiveData<>();
+        remoteService
+                .qcGetStaffList(staff_id, type, params)
+                .compose(RxHelper.schedulersTransformer())
+                .map(new HttpCheckFunc<>())
+                .subscribe(new CustomSubscriber<AllotDataResponseWrap>() {
+                    @Override
+                    public void onNext(AllotDataResponseWrap allotDataResponseWrap) {
+                        allotDataResponseWrapM.setValue(allotDataResponseWrap);
+                    }
+                });
+        return allotDataResponseWrapM;
+    }
+
+    public LiveData<StudentListWrapper> qcGetAllotStaffMembers(String staff_id, String type, HashMap<String, Object> params) {
+        MutableLiveData<StudentListWrapper> data = new MutableLiveData<>();
+        remoteService
+                .qcGetAllotStaffMembers(staff_id, type, params)
+                .compose(RxHelper.schedulersTransformer())
+                .map(new HttpCheckFunc<>())
+                .subscribe(new CustomSubscriber<StudentListWrapper>() {
+                    @Override
+                    public void onNext(StudentListWrapper allotDataResponseWrap) {
+                        data.setValue(allotDataResponseWrap);
+                    }
+                });
+        return data;
+    }
+
+    public LiveData<Boolean> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> params) {
+        MutableLiveData<Boolean> data = new MutableLiveData<>();
+        remoteService
+                .qcRemoveStaff(staff_id, type, params)
+                .compose(RxHelper.schedulersTransformer())
+                .map(qcResponse -> qcResponse.status == 200)
+                .subscribe(new CustomSubscriber<Boolean>() {
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        data.setValue(aBoolean);
+                    }
+                });
+        return data;
+    }
+
 }

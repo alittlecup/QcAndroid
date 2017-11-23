@@ -10,13 +10,9 @@ import android.view.ViewGroup;
 
 import com.anbillon.flabellum.annotations.Leaf;
 
-import javax.inject.Inject;
-
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.student.views.attendance.AttendanceStudentListFilterFragment;
 import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.base.StudentBaseFragment;
+import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAttendanceAbsentBinding;
 import cn.qingchengfit.student.viewmodel.attendance.absent.AttendanceAbsentViewModel;
 

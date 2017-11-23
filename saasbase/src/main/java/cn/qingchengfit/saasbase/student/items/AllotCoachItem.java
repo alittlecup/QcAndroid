@@ -48,15 +48,15 @@ public class AllotCoachItem extends AbstractFlexibleItem<AllotCoachItem.Allocate
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, AllocateVH holder, int position, List payloads) {
-        if (TextUtils.isEmpty(data.getCoach().username)) {
+        if (TextUtils.isEmpty(data.getSeller().username)) {
             holder.itemSalesHeader.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_nosales_normal));
         } else {
             Glide.with(holder.itemView.getContext())
-                    .load(PhotoUtils.getSmall(data.getCoach().avatar))
+                    .load(PhotoUtils.getSmall(data.getSeller().avatar))
                     .asBitmap()
                     .into(new CircleImgWrapper(holder.itemSalesHeader, holder.itemView.getContext()));
         }
-        holder.tvSaleName.setText(TextUtils.isEmpty(data.getCoach().username) ? "未分配" : data.getCoach().username);
+        holder.tvSaleName.setText(TextUtils.isEmpty(data.getSeller().username) ? "未分配" : data.getSeller().username);
         holder.tvSaleStucount.setText(holder.itemView.getContext().getString(R.string.qc_student_allot_student_count, String.valueOf(data.getCount())));
 
     }

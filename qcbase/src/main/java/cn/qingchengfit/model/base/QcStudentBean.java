@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.widgets.AlphabetView;
 
+import com.google.gson.annotations.SerializedName;
 import com.qingcheng.model.base.QcStudentBeanModel;
 import com.squareup.sqldelight.ColumnAdapter;
 import com.squareup.sqldelight.RowMapper;
@@ -74,6 +75,7 @@ public class QcStudentBean extends Personage
      * 3 # 非会员
      */
     public int status;//会员状态,--student
+    @SerializedName(value = "sellers", alternate = "coaches")
     public List<Staff> sellers;//所属销售--student
     public String joined_at;
     private String join_at;

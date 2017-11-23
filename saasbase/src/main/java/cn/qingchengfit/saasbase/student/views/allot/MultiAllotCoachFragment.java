@@ -24,6 +24,7 @@ import javax.inject.Inject;
 
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.Trainer;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
@@ -44,7 +45,7 @@ import rx.android.schedulers.AndroidSchedulers;
 @Leaf(module = "student", path = "/multi/coach")
 public class MultiAllotCoachFragment extends SaasBaseFragment implements SwipeRefreshLayout.OnRefreshListener, FlexibleAdapter.OnItemClickListener, CoashDetailPresenter.MVPView {
     @Need
-    Trainer trainer;
+    Staff trainer;
     @Need
     String title;
     @Inject
@@ -83,13 +84,14 @@ public class MultiAllotCoachFragment extends SaasBaseFragment implements SwipeRe
         studentRecyclerViewFragment.setSwipeRefreshLayoutEnable(false);
 
     }
+
     private void initView() {
         RxTextView.afterTextChangeEvents(binding.etSearch)
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(textViewAfterTextChangeEvent -> {
                     String filterKey = textViewAfterTextChangeEvent.editable().toString().trim();
-                    if(!TextUtils.isEmpty(filterKey)){
+                    if (!TextUtils.isEmpty(filterKey)) {
                         binding.imgSearchClear.setVisibility(View.VISIBLE);
                     }
                     studentRecyclerViewFragment.filter(filterKey);
@@ -193,7 +195,8 @@ public class MultiAllotCoachFragment extends SaasBaseFragment implements SwipeRe
                 .textContent(getString(R.string.choose_coach))
                 .build());
     }
-    public void onClearEditClick(View view){
+
+    public void onClearEditClick(View view) {
         binding.etSearch.setText("");
         binding.imgSearchClear.setVisibility(View.GONE);
     }

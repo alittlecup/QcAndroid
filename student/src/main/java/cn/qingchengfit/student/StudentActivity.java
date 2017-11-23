@@ -8,10 +8,8 @@ import android.view.View;
 
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.saasbase.SaasContainerActivity;
-import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
 import cn.qingchengfit.saasbase.student.other.ChooseCoachFragment;
 import cn.qingchengfit.saasbase.student.other.ChooseStaffFragment;
-import cn.qingchengfit.saasbase.student.utils.StudentCompareJoinAt;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
 import cn.qingchengfit.saasbase.student.views.allot.AllotCoachFragment;
 import cn.qingchengfit.saasbase.student.views.allot.AllotSellerFragment;
@@ -34,21 +32,20 @@ import cn.qingchengfit.saasbase.student.views.home.StudentOperationFragment;
 import cn.qingchengfit.saasbase.student.views.transfer.StudentTransferFragment;
 import cn.qingchengfit.student.routers.StudentRouterCenter;
 import cn.qingchengfit.student.routers.studentImpl;
+import cn.qingchengfit.student.view.allot.AllotStaffListPage;
+import cn.qingchengfit.student.view.allot.AllotMultiStaffPage;
+import cn.qingchengfit.student.view.allot.AllotStaffDetailPage;
 import cn.qingchengfit.student.view.attendance.AttendanceStudentPage;
 import cn.qingchengfit.student.view.attendance.absent.AttendanceAbsentPage;
 import cn.qingchengfit.student.view.attendance.nosign.AttendanceNosignPage;
 import cn.qingchengfit.student.view.attendance.rank.AttendanceRankPage;
 import cn.qingchengfit.student.view.followup.FollowUpStatusPage;
-import cn.qingchengfit.student.view.followup.FollowUpStatusTopView;
 import cn.qingchengfit.student.view.followup.FollowUpStudentPage;
 import cn.qingchengfit.student.view.transfer.TransferStudentPage;
-import cn.qingchengfit.student.view.transfer.TransferStudentView;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
 import com.anbillon.flabellum.annotations.Trunk;
-
-import javax.inject.Inject;
 
 import rx.functions.Action1;
 
@@ -95,7 +92,10 @@ import rx.functions.Action1;
         AttendanceNosignPage.class,
         TransferStudentPage.class,
         FollowUpStudentPage.class,
-        FollowUpStatusPage.class
+        FollowUpStatusPage.class,
+        AllotStaffListPage.class,
+        AllotStaffDetailPage.class,
+        AllotMultiStaffPage.class
 })
 public class StudentActivity extends SaasContainerActivity
         implements FragCallBack {
@@ -117,9 +117,11 @@ public class StudentActivity extends SaasContainerActivity
                 ||intent.getData().getPath().equalsIgnoreCase("/attendance/absent")
                 ||intent.getData().getPath().equalsIgnoreCase("/attendance/rank")
                 ||intent.getData().getPath().equalsIgnoreCase("/attendance/nosign")
-                ||intent.getData().getPath().equalsIgnoreCase("/transfer/student")
                 ||intent.getData().getPath().equalsIgnoreCase("/followup/student")
                 ||intent.getData().getPath().equalsIgnoreCase("/followup/status")
+                ||intent.getData().getPath().equalsIgnoreCase("/allot/student")
+                ||intent.getData().getPath().equalsIgnoreCase("/allotstaff/detail")
+                ||intent.getData().getPath().equalsIgnoreCase("/allotstaff/multi")
                 ) {
 
             return routerCenter.getFragment(intent.getData(), intent.getExtras());

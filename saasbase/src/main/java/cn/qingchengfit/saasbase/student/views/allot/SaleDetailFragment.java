@@ -64,8 +64,7 @@ public class SaleDetailFragment extends SaasBaseFragment implements SalesDetailP
 
     private void initToolbar() {
         boolean empty = TextUtils.isEmpty(staff.username);
-        ToolbarModel toolbarModel = new ToolbarModel(empty ? getString(R.string.qc_allotsale_sale_detail_notitle)
-                : getString(R.string.qc_allotsale_sale_detail_title, staff.username));
+        ToolbarModel toolbarModel = new ToolbarModel(empty ? getString(R.string.qc_allotsale_sale_detail_notitle) : getString(R.string.qc_allotsale_sale_detail_title, staff.username));
         toolbarModel.setMenu(empty ? R.menu.menu_multi_allot : R.menu.menu_multi_modify);
         toolbarModel.setListener(item->{
             Uri uri = Uri.parse("student://student/multi/sales");

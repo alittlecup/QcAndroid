@@ -3,7 +3,6 @@ package cn.qingchengfit.student.view.transfer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.base.StudentBaseFragment;
+import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageTransferStudentBinding;
 import cn.qingchengfit.student.viewmodel.transfer.TransferStudentViewModel;
 

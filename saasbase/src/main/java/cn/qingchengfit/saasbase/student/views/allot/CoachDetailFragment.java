@@ -18,6 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.Trainer;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
@@ -34,20 +35,21 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
  */
 @Leaf(module = "student", path = "/coach/detail")
 public class CoachDetailFragment extends SaasBaseFragment
-        implements SwipeRefreshLayout.OnRefreshListener, FlexibleAdapter.OnItemClickListener,CoashDetailPresenter.MVPView {
+        implements SwipeRefreshLayout.OnRefreshListener, FlexibleAdapter.OnItemClickListener, CoashDetailPresenter.MVPView {
     FragmentCoachDetailBinding binding;
 
     private StudentRecyclerViewFragment studentRecyclerViewFragment;
     @Need
-    Trainer trainer;
+    Staff trainer;
     @Inject
     CoashDetailPresenter presenter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_coach_detail, container, false);
-        delegatePresenter(presenter,this);
+        delegatePresenter(presenter, this);
         initFragment();
         initToolbar(binding.includeToolbar.toolbar);
         binding.setFilterModel(studentRecyclerViewFragment);
@@ -66,9 +68,9 @@ public class CoachDetailFragment extends SaasBaseFragment
         ToolbarModel toolbarModel = new ToolbarModel(empty ? getString(R.string.qc_allotsale_sale_detail_notitle)
                 : getString(R.string.qc_allotsale_sale_detail_title, trainer.username));
         toolbarModel.setMenu(empty ? R.menu.menu_multi_allot : R.menu.menu_multi_modify);
-        toolbarModel.setListener(item->{
+        toolbarModel.setListener(item -> {
             Uri uri = Uri.parse("student://student/multi/coach");
-            routeTo(uri, new MultiAllotCoachParams().title(item.getTitle().toString()).trainer(trainer).build());
+            routeTo(uri, new cn.qingchengfit.saasbase.student.views.allot.MultiAllotCoachParams().title(item.getTitle().toString()).trainer(trainer).build());
             return true;
         });
         binding.setToolbarModel(toolbarModel);
@@ -91,7 +93,7 @@ public class CoachDetailFragment extends SaasBaseFragment
     }
 
     private void loadData(String staffId, StudentFilter filter, String coachId) {
-        presenter.queryStudent(staffId,filter,coachId);
+        presenter.queryStudent(staffId, filter, coachId);
     }
 
     @Override

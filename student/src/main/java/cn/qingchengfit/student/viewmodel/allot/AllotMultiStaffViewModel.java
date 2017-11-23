@@ -1,0 +1,217 @@
+package cn.qingchengfit.student.viewmodel.allot;
+
+import android.arch.core.util.Function;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
+import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+
+import java.util.HashMap;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
+import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
+import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.student.items.StaffDetailItem;
+import cn.qingchengfit.student.respository.StudentRespository;
+import cn.qingchengfit.student.viewmodel.SortViewModel;
+import cn.qingchengfit.utils.LogUtil;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+
+/**
+ * Created by huangbaole on 2017/11/23.
+ */
+
+public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBean>, StaffDetailItem, StudentFilter> {
+
+    public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
+    public final ObservableBoolean isLoading = new ObservableBoolean(false);
+    public final ObservableBoolean bottomShowing = new ObservableBoolean(false);
+    public final ObservableBoolean hasName = new ObservableBoolean(false);
+    public final ObservableInt bottomTextCount = new ObservableInt(0);
+    public final ObservableBoolean selectAllChecked = new ObservableBoolean(false);
+
+    public MutableLiveData<Boolean> getIsDialogShow() {
+        return isDialogShow;
+    }
+
+    private final MutableLiveData<Boolean> isDialogShow = new MutableLiveData<>();
+
+    public MutableLiveData<String> getRouteTitle() {
+        return routeTitle;
+    }
+
+    private MutableLiveData<String> routeTitle = new MutableLiveData<>();
+
+    public MutableLiveData<List<String>> getLetters() {
+        return letters;
+    }
+
+    private MutableLiveData<String> ids = new MutableLiveData<>();
+
+    private final MutableLiveData<List<String>> letters = new MutableLiveData<>();
+
+    public MutableLiveData<Boolean> getSelectAll() {
+        return selectAll;
+    }
+
+    private final MutableLiveData<Boolean> selectAll = new MediatorLiveData<>();
+
+    public LiveData<Boolean> getIsRemoveSuccess() {
+        return isRemoveSuccess;
+    }
+
+    private LiveData<Boolean> isRemoveSuccess;
+
+    private SortViewModel sortViewModel;
+
+    public SortViewModel getSortViewModel() {
+        return sortViewModel;
+    }
+
+    @Inject
+    LoginStatus loginStatus;
+    @Inject
+    GymWrapper gymWrapper;
+    @Inject
+    StudentRespository respository;
+    public Integer type;
+    public String salerId;
+
+    public StudentFilter getStudentFilter() {
+        return studentFilter;
+    }
+
+    StudentFilter studentFilter;
+
+    public void setSalerId(String salerId) {
+        this.salerId = salerId;
+    }
+
+    @Inject
+    public AllotMultiStaffViewModel() {
+        studentFilter = new StudentFilter();
+        sortViewModel = new SortViewModel();
+        sortViewModel.setListener(new SortViewModel.onSortFinishListener() {
+            @Override
+            public void onLatestSortFinish(List<AbstractFlexibleItem> itemss) {
+                items.set(itemss);
+            }
+
+            @Override
+            public void onlettersSortFinish(List<AbstractFlexibleItem> itemss, List<String> letterss) {
+                items.set(itemss);
+                letters.setValue(letterss);
+            }
+        });
+
+        isRemoveSuccess = Transformations.switchMap(ids, this::removeStudents);
+
+    }
+
+    public void removeStudentIds(String ids) {
+        this.ids.setValue(ids);
+    }
+
+    @NonNull
+    @Override
+    protected LiveData<List<QcStudentBean>> getSource(@NonNull StudentFilter filter) {
+        HashMap<String, Object> params = gymWrapper.getParams();
+        if (!TextUtils.isEmpty(salerId)) {
+            params.put("seller_id", salerId);
+        }
+        params.put("show_all", 1);
+        if (!TextUtils.isEmpty(filter.status)) {
+            params.put("status", filter.status);
+        }
+        if (!TextUtils.isEmpty(filter.registerTimeStart) && !TextUtils.isEmpty(filter.registerTimeEnd)) {
+            params.put("start", filter.registerTimeStart);
+            params.put("end", filter.registerTimeEnd);
+        }
+        if (!TextUtils.isEmpty(filter.gender)) params.put("gender", filter.gender);
+
+        if (filter.referrerBean != null)
+            params.put("recommend_user_id", filter.referrerBean.id);
+
+        if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
+
+        String path = "";
+        switch (type) {
+            case 0:
+                path = "sellers";
+                break;
+            case 1:
+                path = "coaches";
+                break;
+        }
+        isLoading.set(true);
+        return Transformations.map(respository.qcGetAllotStaffMembers(loginStatus.staff_id(), path, params), intput -> intput.users);
+    }
+
+    private LiveData<Boolean> removeStudents(String ids) {
+        HashMap<String, Object> params = gymWrapper.getParams();
+        params.put("coach_id", salerId);
+        params.put("user_ids", ids);
+        String path = "";
+        switch (type) {
+            case 0:
+                path = "sellers";
+                break;
+            case 1:
+                path = "coaches";
+                break;
+        }
+        return respository.qcRemoveStaff(loginStatus.staff_id(), path, params);
+    }
+
+    @Override
+    protected boolean isSourceValid(@Nullable List<QcStudentBean> qcStudentBeans) {
+        return qcStudentBeans != null;
+    }
+
+    @Override
+    protected List<StaffDetailItem> map(@NonNull List<QcStudentBean> qcStudentBeans) {
+        return FlexibleItemProvider.with(new AllotStaffDetailViewModel.StaffDetailItemFactory(type)).from(qcStudentBeans);
+    }
+
+    /**
+     * 刷新数据
+     */
+    public void refresh() {
+        identifier.setValue(studentFilter);
+    }
+
+    /**
+     * 移除会员按钮点击
+     */
+    public void onRemoveBtnClick() {
+        isDialogShow.setValue(true);
+    }
+
+    /**
+     * 分配会员按钮点击
+     */
+    public void onAllotBtnClick(String text) {
+        routeTitle.setValue(text);
+    }
+
+    /**
+     * 全选按钮点击事件
+     */
+    public void onAllSelectClick(boolean isChecked) {
+        LogUtil.d(isChecked + "!!!!");
+        selectAll.setValue(isChecked);
+    }
+}

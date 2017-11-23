@@ -74,13 +74,14 @@ public class MultiAllotSalesFragment extends SaasBaseFragment implements
         binding.setFragment(this);
         return binding.getRoot();
     }
+
     private void initView() {
         RxTextView.afterTextChangeEvents(binding.etSearch)
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(textViewAfterTextChangeEvent -> {
                     String filterKey = textViewAfterTextChangeEvent.editable().toString().trim();
-                    if(!TextUtils.isEmpty(filterKey)){
+                    if (!TextUtils.isEmpty(filterKey)) {
                         binding.imgSearchClear.setVisibility(View.VISIBLE);
                     }
                     studentRecyclerViewFragment.filter(filterKey);
@@ -181,7 +182,7 @@ public class MultiAllotSalesFragment extends SaasBaseFragment implements
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         // 批量移除
-                        presenter.removeStudents(loginStatus.staff_id(),staff.id, studentRecyclerViewFragment.getSelectedItemIds());
+                        presenter.removeStudents(loginStatus.staff_id(), staff.id, studentRecyclerViewFragment.getSelectedItemIds());
                     }
                 })
                 .show();
@@ -199,7 +200,8 @@ public class MultiAllotSalesFragment extends SaasBaseFragment implements
                 .studentIds((new ArrayList<String>(studentRecyclerViewFragment.getSelectedItemIds())))
                 .build());
     }
-    public void onClearEditClick(View view){
+
+    public void onClearEditClick(View view) {
         binding.etSearch.setText("");
         binding.imgSearchClear.setVisibility(View.GONE);
 

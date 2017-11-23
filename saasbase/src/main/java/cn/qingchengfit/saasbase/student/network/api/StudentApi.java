@@ -55,6 +55,18 @@ public interface StudentApi {
     Observable<QcDataResponse<AllotDataResponseWrap>> qcGetCoachList(@Path("staff_id") String staff_id,
                                                                      @QueryMap HashMap<String, Object> params);
 
+
+    /**
+     * 获取教练分配或者销售分配列表
+     * type -coaches 教练
+     * - sellers 销售
+     */
+    @GET("api/v2/staffs/{staff_id}/{type}/preview/")
+    Observable<QcDataResponse<AllotDataResponseWrap>> qcGetStaffList(@Path("staff_id") String staff_id,
+                                                                     @Path("type") String type,
+                                                                     @QueryMap HashMap<String, Object> params);
+
+
     /**
      * 销售列表预览接口
      * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/preview/?brand_id=2&shop_id=1
@@ -70,6 +82,9 @@ public interface StudentApi {
      */
     @GET("/api/v2/staffs/{staff_id}/sellers/users/")
     Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(@Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+    @GET("/api/v2/staffs/{staff_id}/{type}/users/")
+    Observable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(@Path("staff_id") String staff_id, @Path("type") String type, @QueryMap HashMap<String, Object> params);
 
 
     @GET("/api/v2/staffs/{staff_id}/coaches/users/")
@@ -119,8 +134,13 @@ public interface StudentApi {
      * 移除教练
      */
     @POST("/api/v2/staffs/{staff_id}/coaches/users/remove/")
-    Observable<QcResponse> qcRemoveStudent(@Path("staff_id") String staff_id,
-                                           @Body HashMap<String, Object> body);
+    Observable<QcResponse> qcRemoveStudent(@Path("staff_id") String staff_id, @Body HashMap<String, Object> body);
+
+    /**
+     * 移除教练
+     */
+    @POST("/api/v2/staffs/{staff_id}/{type}/users/remove/")
+    Observable<QcResponse> qcRemoveStaff(@Path("staff_id") String staff_id, @Path("type") String type, @Body HashMap<String, Object> body);
 
     /**
      * 批量移除某个销售名下会员:
@@ -129,8 +149,7 @@ public interface StudentApi {
      * POST {"user_ids":"1,3,2", "seller_id":5}
      */
     @POST("/api/v2/staffs/{staff_id}/sellers/users/remove/")
-    Observable<QcResponse> qcDeleteStudents(@Path("staff_id") String staff_id,
-                                            @Body HashMap<String, Object> body);
+    Observable<QcResponse> qcDeleteStudents(@Path("staff_id") String staff_id, @Body HashMap<String, Object> body);
 
 
     /**
@@ -149,6 +168,7 @@ public interface StudentApi {
     @GET("/api/staffs/{staff_id}/users/new/create/")
     Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudentCreate(
             @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
     /**
      * 新增
      */

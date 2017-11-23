@@ -22,6 +22,7 @@ import cn.qingchengfit.saasbase.databinding.FragmentAllotListBinding;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.student.items.AllotCoachItem;
+import cn.qingchengfit.saasbase.student.items.AllotStaffItem;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponse;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import rx.android.schedulers.AndroidSchedulers;
@@ -67,7 +68,7 @@ public class AllotCoachFragment extends SaasBaseFragment implements SwipeRefresh
                         .doOnTerminate(this::onLoadFinish)
                         .subscribe(allotDataResponseWrapQcDataResponse -> {
                             if (allotDataResponseWrapQcDataResponse.status == 200) {
-                                onDataList(allotDataResponseWrapQcDataResponse.getData().coaches);
+                                onDataList(allotDataResponseWrapQcDataResponse.getData().sellers);
                             } else {
                                 onShowError(allotDataResponseWrapQcDataResponse.getMsg());
                             }
@@ -90,7 +91,7 @@ public class AllotCoachFragment extends SaasBaseFragment implements SwipeRefresh
     public boolean onItemClick(int i) {
         if(listFragment.getDatas().get(i) instanceof AllotCoachItem){
             Uri uri=Uri.parse("student://student/coach/detail");
-            routeTo(uri,new CoachDetailParams().trainer(((AllotCoachItem) listFragment.getDatas().get(i)).data.getCoach()).build());
+            routeTo(uri,new cn.qingchengfit.saasbase.student.views.allot.CoachDetailParams().trainer(((AllotCoachItem) listFragment.getDatas().get(i)).data.getSeller()).build());
         }
         return false;
     }

@@ -11,7 +11,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.base.StudentBaseFragment;
+import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAttendanceNosignBinding;
 import cn.qingchengfit.student.viewmodel.attendance.nosign.AttendanceNosignViewModel;
 import cn.qingchengfit.utils.DateUtils;

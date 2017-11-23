@@ -175,7 +175,7 @@ public class StudentOperationFragment extends BaseFragment
         if (mCommonFlexAdapter.getItem(position) instanceof StudentOperationItem) {
             int strId = ((StudentOperationItem) mCommonFlexAdapter.getItem(position)).getStrRes();
             if (strId == R.string.qc_student_allotsale) {
-                Uri uri=Uri.parse("student://student/sales/list");
+                Uri uri=Uri.parse("student://student/allot/student");
                 routeTo(uri,null);
             } else if (strId == R.string.qc_student_allot_coach) {
                 Uri uri=Uri.parse("student://student/coach/list");

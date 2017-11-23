@@ -90,12 +90,18 @@ public interface IStudentModel {
      */
     Observable<QcDataResponse<AllotDataResponseWrap>> qcGetAllotSalesPreView(String staff_id, HashMap<String, Object> params);
 
+    Observable<QcDataResponse<AllotDataResponseWrap>> qcGetStaffList(String staff_id, String type, HashMap<String, Object> params);
+
+
     /**
      * 销售名下会员列表接口(无销售的会员列表不需要传seller_id)
      * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/?brand_id=2&shop_id=2&seller_id=1
      * GET http://127.0.0.1:9000/api/v2/staffs/3281/sellers/users/?id=5370&model=staff_gym&seller_id=1
      */
     Observable<QcDataResponse<StudentListWrapper>> qcGetAllotSaleOwenUsers(String staff_id, HashMap<String, Object> params);
+
+    Observable<QcDataResponse<StudentListWrapper>> qcGetAllotStaffMembers(String staff_id, String type, HashMap<String, Object> params);
+
 
     /**
      * 教练名下会员列表接口(无销售的会员列表不需要传seller_id)
@@ -152,6 +158,11 @@ public interface IStudentModel {
     Observable<QcResponse> qcDeleteStudents(String staff_id,
                                             HashMap<String, Object> body);
 
+    /**
+     * 批量移除某个销售或者教练名下会员:
+     */
+    Observable<QcResponse> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> body);
+
 
     /**
      * 数据统计
@@ -175,12 +186,12 @@ public interface IStudentModel {
             String staff_id, HashMap<String, Object> params);
 
 
-
     /**
      * 新增查询
      */
     Observable<QcDataResponse<StudentListWrappeForFollow>> qcGetTrackStudents(
-            String staff_id,String type, HashMap<String, Object> params);
+            String staff_id, String type, HashMap<String, Object> params);
+
     /**
      * 新增学员
      */
