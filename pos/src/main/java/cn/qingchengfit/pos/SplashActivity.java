@@ -68,6 +68,10 @@ public class SplashActivity extends BaseActivity {
     if (!sb.isUnsubscribed()) sb.unsubscribe();
   }
 
+  @Override protected void onPause() {
+    super.onPause();
+  }
+
   @SuppressLint("MissingPermission") @Override protected void onStart() {
     super.onStart();
     sb = new RxPermissions(this).request(Manifest.permission.READ_PHONE_STATE)

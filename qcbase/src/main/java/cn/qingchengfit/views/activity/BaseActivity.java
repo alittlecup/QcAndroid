@@ -133,7 +133,7 @@ public class BaseActivity extends AppCompatActivity {
   @Override protected void onDestroy() {
     getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fcb);
     super.onDestroy();
-    checkAlert();
+    checkCloseAlert();
   }
 
   @Override protected void onResume() {
@@ -144,7 +144,6 @@ public class BaseActivity extends AppCompatActivity {
 
   @Override protected void onPause() {
     super.onPause();
-    checkAlert();
     MobclickAgent.onPause(this);
     checkLoading();
   }
@@ -156,7 +155,6 @@ public class BaseActivity extends AppCompatActivity {
 
   @Override protected void onStop() {
     super.onStop();
-    checkAlert();
     RxBus.getBus().unregister(NetWorkDialogEvent.class.getName(),obLoading);
     RxBus.getBus().unregister(EventNetWorkError.class.getName(), obNetError);
   }
@@ -225,7 +223,7 @@ public class BaseActivity extends AppCompatActivity {
     showAlert(getString(res));
   }
 
-  public void checkAlert(){if (mAlert != null && mAlert.isShowing()){
+  public void checkCloseAlert(){if (mAlert != null && mAlert.isShowing()){
     mAlert.dismiss();
   }
   }
