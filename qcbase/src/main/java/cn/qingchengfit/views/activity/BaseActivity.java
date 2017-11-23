@@ -132,9 +132,8 @@ public class BaseActivity extends AppCompatActivity {
 
   @Override protected void onDestroy() {
     getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fcb);
-
-
     super.onDestroy();
+    checkAlert();
   }
 
   @Override protected void onResume() {
@@ -145,7 +144,7 @@ public class BaseActivity extends AppCompatActivity {
 
   @Override protected void onPause() {
     super.onPause();
-
+    checkAlert();
     MobclickAgent.onPause(this);
     checkLoading();
   }
@@ -157,6 +156,7 @@ public class BaseActivity extends AppCompatActivity {
 
   @Override protected void onStop() {
     super.onStop();
+    checkAlert();
     RxBus.getBus().unregister(NetWorkDialogEvent.class.getName(),obLoading);
     RxBus.getBus().unregister(EventNetWorkError.class.getName(), obNetError);
   }
@@ -225,12 +225,18 @@ public class BaseActivity extends AppCompatActivity {
     showAlert(getString(res));
   }
 
+  public void checkAlert(){if (mAlert != null && mAlert.isShowing()){
+    mAlert.dismiss();
+  }
+  }
+
   public void showAlert(String res) {
-    if (mAlert == null) ;
-    mAlert = new MaterialDialog.Builder(this).positiveText("知道了")
-        .autoDismiss(true)
-        .canceledOnTouchOutside(true)
-        .build();
+    if (mAlert == null) {
+      mAlert = new MaterialDialog.Builder(this).positiveText("知道了")
+          .autoDismiss(true)
+          .canceledOnTouchOutside(true)
+          .build();
+    }
     if (mAlert.isShowing()) mAlert.dismiss();
     mAlert.setContent(res);
     mAlert.show();
