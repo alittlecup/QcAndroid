@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <view
+        android:id="@+id/fast_scroller_bar"
+        class="cn.qingchengfit.saasbase.student.widget.ModifiedFastScroller$SlideBar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@color/red"
+         />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/fast_scroller_bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:background="@drawable/modified_fast_scroller_bubble"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:textSize="38sp"
+            android:visibility="gone"
+            tools:text="A"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/fast_scroller_handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@null"
+            android:paddingLeft="6dp"
+            android:paddingStart="6dp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</merge>
