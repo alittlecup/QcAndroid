@@ -309,7 +309,7 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
       usagePeriod.setText("有效期:无");
     }
 
-    setProtocol(card.card_tpl_service_term);
+    setProtocol(card.card_tpl_service_term, card.is_open_service_term);
     //this.card.setCardBackgroundColor(ColorUtils.parseColor(card.getColor(), 200).getColor());
     //CompatUtils.setBg(cardBg, ColorUtils.parseColor(card.getColor(), 200));
     frameBgCardDetail.setBackground(
@@ -386,8 +386,8 @@ public class RealCardDetailFragment extends BaseFragment implements RealCardDeta
     }
   }
 
-  private void setProtocol(CardProtocol cardProtocol) {
-    if (cardProtocol == null || cardProtocol.id == null) {
+  private void setProtocol(CardProtocol cardProtocol, boolean isOpenCardProtocol) {
+    if (!isOpenCardProtocol) {
       llCardProtocol.setVisibility(View.GONE);
     } else {
       protocolUrl = cardProtocol.content_link;
