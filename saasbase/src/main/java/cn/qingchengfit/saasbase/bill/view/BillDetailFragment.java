@@ -120,8 +120,9 @@ import javax.inject.Inject;
    * @param order 账单
    */
   public void onOrderDetail(BusinessBill order) {
-    tvBillAmount.setText(getString(R.string.pay_money, StringUtils.getFloatDot2((float) order.price/100)));//单位从分转换为元
-    tvBillStatus.setText(getResources().getStringArray(R.array.bill_status)[(Math.abs(order.status -1))%5]);
+    tvBillAmount.setText(getString(R.string.pay_money, StringUtils.getFloatDot2((float) order.price / 100)));//单位从分转换为元
+    tvBillStatus.setText(order.status == 1 ? getResources().getString(R.string.bill_detail_success,
+        order.getStatus(getContext(), order.status)) : order.getStatus(getContext(), order.status));
 
     commonAdapter.clear();
     commonAdapter.addItem(new BillKvCommonItem("交易类型", arrayOrderType[order.type%7]));
@@ -136,7 +137,7 @@ import javax.inject.Inject;
       new BillKvCommonItem("交易时间", DateUtils.formatToMMFromServer(order.pay_time)));
     commonAdapter.addItem(
       new BillKvCommonItem("操作人", order.created_by == null ? "" : order.created_by.getUsername()));
-    commonAdapter.addItem(new BillKvCommonItem("平台", order.origin));
+    commonAdapter.addItem(new BillKvCommonItem("平台", order.getOrigin(getContext(), order.origin)));
     commonOrder(order);
     dividerRemark.setVisibility(order.extra == null ? View.GONE : View.VISIBLE);
     tvRemarks.setText("备注: " + order.remarks);
@@ -169,7 +170,8 @@ import javax.inject.Inject;
             DateUtils.getDuringFromServer(card.getValid_from(), card.getValid_to())));
         }
         extraAdapter.addItem(new BillKvCommonItem("绑定会员", card.getFirstUserStr(getContext())));
-
+        if (!TextUtils.isEmpty(order.seller.username))
+          extraAdapter.addItem(new BillKvCommonItem("销售", order.seller.username));
       }
     } else if (order.type == 3) {
 

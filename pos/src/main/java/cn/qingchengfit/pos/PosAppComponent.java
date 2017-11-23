@@ -11,7 +11,6 @@ import cn.qingchengfit.pos.di.BindPosCardActivity;
 import cn.qingchengfit.pos.di.BindPosStaffActivity;
 import cn.qingchengfit.pos.di.BindPosStudentActivity;
 import cn.qingchengfit.pos.di.BindSettingActivity;
-import cn.qingchengfit.saasbase.di.BindBillActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import dagger.Binds;

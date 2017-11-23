@@ -71,6 +71,7 @@
   <string name="bill_already_settlement">已结算</string>
   <string name="bill_withdraw_failed">提现失败</string>
   <string name="bill_cash_failed">退款失败</string>
+  <string name="bill_back_cash_finish">退款完成</string>
   <string name="bill_title">账单流水纪录(POS)</string>
   <string name="bill_filter">筛选</string>
   <string formatted="false" name="bill_total_crash">提现: %s</string>
@@ -89,6 +90,15 @@
   <string name="bill_count_indeed" formatted="false">%.2f</string>
   <string name="bill_count_reduce" formatted="false">%.2f</string>
   <string name="bill_no_data">本月无数据</string>
+  <string name="bill_pay_origin_web">Web</string>
+  <string name="bill_pay_origin_app">App</string>
+  <string name="bill_pay_origin_pos">Pos机</string>
+  <string name="bill_pay_origin_member">会员端</string>
+
+  <string formatted="false" name="bill_detail_success">交易成功(%s)</string>
+
+
+  <string formatted="false" name="bill_detail_success">交易成功(%s)</string>
 
   <!--支付-->
   <string name="pay_card">银联支付</string>

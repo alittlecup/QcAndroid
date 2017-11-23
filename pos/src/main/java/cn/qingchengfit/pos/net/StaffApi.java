@@ -101,8 +101,8 @@ public interface StaffApi {
     , @Body ManagerBody body);
 
   //todo 获取销售业绩
-  @GET("/api/rongshu/seller/") rx.Observable<QcDataResponse<SalerDataWrap>> qcGetSalerData(
-    @Path("seller_id") String sellid);
+  @GET("/api/rongshu/seller/{seller_id}") rx.Observable<QcDataResponse<SalerDataWrap>> qcGetSalerData(
+    @Path("seller_id") String sellid, @QueryMap HashMap<String, Object> params);
 
 }
 

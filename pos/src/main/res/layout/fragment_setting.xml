@@ -9,6 +9,18 @@
 
   <include layout="@layout/common_simple_toolbar"/>
 
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="16dp"
+      android:gravity="center_vertical"
+      android:text="当前场馆"
+      android:paddingTop="6dp"
+      android:paddingBottom="6dp"
+      android:background="@color/bg_grey"
+      style="@style/QcTextStyleMediumWarm"
+      />
+
   <LinearLayout
       android:id="@+id/layout_setting_gym"
       android:layout_width="match_parent"
@@ -50,11 +62,22 @@
 
   <include layout="@layout/divider_grey"/>
 
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="16dp"
+      android:gravity="center_vertical"
+      android:text="当前收银员"
+      android:paddingTop="6dp"
+      android:paddingBottom="6dp"
+      android:background="@color/bg_grey"
+      style="@style/QcTextStyleMediumWarm"
+      />
+
   <LinearLayout
       android:id="@+id/layout_setting_staff"
       android:layout_width="match_parent"
       android:layout_height="80dp"
-      android:layout_marginTop="16dp"
       android:background="@color/white"
       android:gravity="center_vertical"
       android:orientation="horizontal"
@@ -109,6 +132,18 @@
   </LinearLayout>
 
   <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="16dp"
+      android:gravity="center_vertical"
+      android:text="收银员管理"
+      android:paddingTop="6dp"
+      android:paddingBottom="6dp"
+      android:background="@color/bg_grey"
+      style="@style/QcTextStyleMediumWarm"
+      />
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/input_cashier"

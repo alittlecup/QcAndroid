@@ -85,9 +85,19 @@ import rx.functions.Action1;
   private String beforeLastDate;
   public HashMap<String, Object> filterMap = new HashMap<>();
   private ItemMoreFooter moreFooter;
+  //@Inject
+  //FilterViewModel filterModel;
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     moreFooter = new ItemMoreFooter(this);
+    //filterModel = ViewModelProviders.of(this).get(FilterViewModel.class);
+    //final Observer<HashMap<String, Object>> filterObserver = new Observer<HashMap<String, Object>>() {
+    //  @Override public void onChanged(@Nullable HashMap<String, Object> stringObjectHashMap) {
+    //    filterMap = stringObjectHashMap;
+    //  }
+    //};
+    //filterModel.getFitlerData().observe(this, filterObserver);
   }
 
   @Nullable @Override
@@ -96,11 +106,18 @@ import rx.functions.Action1;
     View view = inflater.inflate(R.layout.fragment_bill_home, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
-    getChildFragmentManager().beginTransaction()
-        .replace(R.id.frag_bill_filter, new BillFilterFragment())
-        .commit();
     setToolbar(toolbar);
-    presenter.qcGetBillList(gymWrapper.id(), DateUtils.formatToServer(new Date()));
+    if (filterMap.size() > 0) {
+      presenter.qcGetBillListbyFilter(gymWrapper.id(), filterMap);
+      getChildFragmentManager().beginTransaction()
+        .replace(R.id.frag_bill_filter, BillFilterFragment.newInstance(filterMap))
+        .commit();
+    } else {
+      presenter.qcGetBillList(gymWrapper.id(), DateUtils.formatToServer(new Date()));
+      getChildFragmentManager().beginTransaction()
+          .replace(R.id.frag_bill_filter, new BillFilterFragment())
+          .commit();
+    }
     presenter.qcGetBillTotal(gymWrapper.id());
     calendar = Calendar.getInstance();
     setDateTimes();
@@ -196,8 +213,8 @@ import rx.functions.Action1;
     if (billSwipe != null && billSwipe.isRefreshing()) billSwipe.setRefreshing(false);
     tvBillTotalAmount.setText(String.format("%.2f",
         (billTotal.withdraw_sum + billTotal.can_withdraw_sum + billTotal.frozen_sum) / 100));
-    tvBillWithdraw.setText(String.format("%.2f", billTotal.can_withdraw_sum / 100));
-    tvBillCanWithdraw.setText(String.format("%.2f", billTotal.withdraw_sum / 100));
+    tvBillCanWithdraw.setText(String.format("%.2f", billTotal.can_withdraw_sum / 100));
+    tvBillWithdraw.setText(String.format("%.2f", billTotal.withdraw_sum / 100));
     tvBillSettlement.setText(String.format("%.2f", billTotal.frozen_sum / 100));
   }
 

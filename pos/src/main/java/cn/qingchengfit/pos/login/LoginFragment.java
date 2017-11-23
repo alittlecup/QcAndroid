@@ -77,17 +77,11 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.MVPVie
 
 
   private void saveHistory(String phone) {
-    StringBuffer tempSb = new StringBuffer();
-    for (int i = 0; i < autoStr.length; i++) {
-      if (i == 0) {
-        tempSb.append(autoStr[i]);
-      } else {
-        tempSb.append("," + autoStr[i]);
-      }
+    if (!editStr.contains("," + phone)) {
+      StringBuffer tempSb = new StringBuffer(editStr);
+      tempSb.append("," + phone);
+      PreferenceUtils.setPrefString(getContext(), SaasConstant.LOGIN_ACCOUNT_PHONE, tempSb.toString());
     }
-    tempSb.append("," + phone);
-    PreferenceUtils.setPrefString(getContext(), SaasConstant.LOGIN_ACCOUNT_PHONE,
-      tempSb.toString());
   }
 
   @OnClick(R.id.btn_get_code) public void getCode() {

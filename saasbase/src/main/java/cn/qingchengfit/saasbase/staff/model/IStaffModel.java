@@ -5,6 +5,7 @@ import cn.qingchengfit.saasbase.staff.beans.response.SalerDataWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import java.util.HashMap;
 
 /**
  * power by
@@ -43,7 +44,7 @@ public interface IStaffModel {
   rx.Observable<QcDataResponse> editStaff(String id,ManagerBody body);
   rx.Observable<QcDataResponse<PostionListWrap>> getPositions();
 
-  rx.Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid);
+  rx.Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid, HashMap<String, Object> params);
 
 
 }

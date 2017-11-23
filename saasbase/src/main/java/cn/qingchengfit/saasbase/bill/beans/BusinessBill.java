@@ -43,6 +43,7 @@ public class BusinessBill implements Parcelable{
   public String pay_time;
   public String created_at;
   public User created_by;    //操作员
+  public User seller;       //销售
   // "origin": //平台: "WEB", "MEMBER", "POS", "APP"
   public String origin;
   public String bank_no;
@@ -53,8 +54,10 @@ public class BusinessBill implements Parcelable{
   public String remarks;
   public Extra extra;         //根据业务订单变
 
-  public int status;           // // 状态 1：待结算，2：已结算，3：处理中, 4：处理失败, 5.处理完成
-  public float price;          //
+  // 状态status 1：待结算，2：已结算，3：退款中, 4：退款失败, 5.已退款、6：提现中、7：提现失败、8：提现完成、9：退款完成
+  public int status;
+  
+  public float price;
   public class Extra implements Parcelable{
     public Card card;
     public BillScheduleOrder schedule_order;
@@ -138,6 +141,21 @@ public class BusinessBill implements Parcelable{
     }
   }
 
+  public String getOrigin(Context context, String origin) {
+    switch (origin){
+      case "WEB":
+        return context.getResources().getString(R.string.bill_pay_origin_web);
+      case "MEMBER":
+        return context.getResources().getString(R.string.bill_pay_origin_member);
+      case "POS":
+        return context.getResources().getString(R.string.bill_pay_origin_pos);
+      case "APP":
+        return context.getResources().getString(R.string.bill_pay_origin_app);
+
+    }
+    return "其它";
+  }
+
   @StringRes public int getPayType(int type, String s) {
     if (type == 6){
       return R.string.pay_withdraw;
@@ -176,21 +194,26 @@ public class BusinessBill implements Parcelable{
     }
   }
 
-  public String getStatus(Context context, int status, int type){
+  public String getStatus(Context context, int status){
     switch (status){
       case 1:
         return context.getResources().getString(R.string.bill_settlement);
       case 2:
         return context.getResources().getString(R.string.bill_already_settlement);
       case 3:
-        return type != 5 ? context.getResources().getString(R.string.bill_withdraw)
-            : context.getResources().getString(R.string.bill_back_cash);
+        return context.getResources().getString(R.string.bill_back_cash);
       case 4:
-        return type != 5 ? context.getResources().getString(R.string.bill_withdraw_failed)
-            : context.getResources().getString(R.string.bill_cash_failed);
+        return context.getResources().getString(R.string.bill_cash_failed);
       case 5:
-        return type != 5 ? context.getResources().getString(R.string.bill_withdraw_already)
-            : context.getResources().getString(R.string.bll_back_already);
+        return context.getResources().getString(R.string.bll_back_already);
+      case 6:
+        return context.getResources().getString(R.string.bill_withdraw);
+      case 7:
+        return context.getResources().getString(R.string.bill_withdraw_failed);
+      case 8:
+        return context.getResources().getString(R.string.bill_withdraw_already);
+      case 9:
+        return context.getResources().getString(R.string.bill_back_cash_finish);
     }
 
     return context.getResources().getString(R.string.other);

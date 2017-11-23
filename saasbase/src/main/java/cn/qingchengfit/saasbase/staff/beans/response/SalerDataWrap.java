@@ -25,7 +25,7 @@ import cn.qingchengfit.saasbase.staff.beans.SalerData;
  */
 
 public class SalerDataWrap {
-  public User user;
+  public User seller;
   public Stat stat;
 
   public class Stat{
