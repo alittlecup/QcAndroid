@@ -124,9 +124,10 @@ public class SplashActivity extends BaseActivity {
                 showAlert(gymQcDataResponse.getStatus() + ":" + gymQcDataResponse.getMsg());
               }
             });
+            return  Observable.just(false);
           }
           if (TextUtils.isEmpty(QcRestRepository.getSession(SplashActivity.this))) {
-            return Observable.just(false);
+            return Observable.just(true);
           } else {
             return staffModel.getCurUser()
               .subscribeOn(Schedulers.io())
