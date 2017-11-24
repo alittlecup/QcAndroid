@@ -275,7 +275,7 @@ public class CompletedBuyFragment extends BaseFragment implements CompletedBuyVi
 
     Intent toWeb = new Intent(getContext(), WebActivity.class);
     toWeb.putExtra("url", url);
-    startActivityForResult(toWeb, 404);
+    this.startActivityForResult(toWeb, 404);
     hideLoading();
   }
 
