@@ -226,6 +226,13 @@ public class PermissionServerUtils {
     public static final String MESSAGECHANNELS = "messagechannels";
     public static final String MESSAGESETTING_CAN_WRITE = "messagesetting_can_write";
 
+
+    //导入导出
+    public static final String STUDENT_EXPORT = "manage_members_export";
+    public static final String STUDENT_IMPORT = "manage_members_import";
+    public static final String CARD_EXPORT = "manage_cards_export";
+    public static final String CARD_IMPORT = "manage_cards_export";
+
     public static boolean checkServerPermission(HashMap<String, Boolean> permission, String key) {
         return permission.get(key);
     }

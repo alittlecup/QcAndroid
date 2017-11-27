@@ -32,6 +32,7 @@ import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import cn.qingchengfit.saasbase.coach.views.AddNewCoachFragment;
 import cn.qingchengfit.saasbase.coach.views.CoachDetailFragment;
 import cn.qingchengfit.saasbase.coach.views.CoachListFragment;
+import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
 import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
 import cn.qingchengfit.saasbase.staff.views.SuFragment;
@@ -357,7 +358,7 @@ import dagger.multibindings.IntoMap;
 @Component(modules = {
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
-  BindStaffCardActivity.class,
+  BindStaffCardActivity.class, BindImportExportActivity.class,
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,
     AppComponent.UnloginAdModule.class, AppComponent.HomeModule.class, AppComponent.QcVipModule.class,
     AppComponent.BaseStatementChartModule.class, AppComponent.YourFragmentModule.class, AppComponent.ChooseModule.class,

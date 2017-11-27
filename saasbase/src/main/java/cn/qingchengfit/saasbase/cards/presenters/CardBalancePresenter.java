@@ -6,7 +6,9 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.bean.BalanceDetail;
 import cn.qingchengfit.saasbase.cards.bean.Card;
+import cn.qingchengfit.saasbase.cards.network.response.BalanceConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
@@ -15,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class CardBalancePresenter extends BasePresenter<CardBalancePresenter.MVPView> {
@@ -22,6 +25,7 @@ public class CardBalancePresenter extends BasePresenter<CardBalancePresenter.MVP
   @Inject GymWrapper gymWrapper;
   @Inject ICardModel cardModel;
   private HashMap<String,Object> p = new HashMap<>();
+  private static final String QUERY_BANALCE_KEYS = "card_balance_remind_days,card_balance_remind_value,card_balance_remind_times";
 
   @Inject public CardBalancePresenter() {
   }
@@ -58,6 +62,8 @@ public class CardBalancePresenter extends BasePresenter<CardBalancePresenter.MVP
     queryAllCards();
   }
   int curPage =1, totalPage =1;
+
+  // TODO: 2017/11/27 这里应该把接口替换成余额不足卡
   public void queryAllCards() {
     if (curPage <= totalPage) {
       p.put("page", curPage);
@@ -83,6 +89,7 @@ public class CardBalancePresenter extends BasePresenter<CardBalancePresenter.MVP
   }
 
 
+
   public void initpage() {
     curPage=1;totalPage =1;
   }
@@ -94,8 +101,28 @@ public class CardBalancePresenter extends BasePresenter<CardBalancePresenter.MVP
   }
 
 
+  public void queryBalanceCondition() {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    RxRegiste(cardModel
+      .qcGetBalanceCondition(p , QUERY_BANALCE_KEYS)
+      .onBackpressureBuffer()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Action1<QcDataResponse<BalanceConfigs>>() {
+        @Override public void call(QcDataResponse<BalanceConfigs> balanceDetailQcResponseData) {
+          if (ResponseConstant.checkSuccess(balanceDetailQcResponseData)) {
+              mvpView.onGetBalance(balanceDetailQcResponseData.data.balances);
+          } else {
+
+          }
+        }
+      }));
+  }
+
+
   public interface MVPView extends CView {
     void onCardList(List<Card> cards,int page);
     void onCardCount(int count);
+    void onGetBalance(List<BalanceDetail> balanceDetails);
   }
 }

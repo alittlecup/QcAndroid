@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.Card;
@@ -25,6 +26,7 @@ import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardListPresenter;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -67,6 +69,7 @@ import rx.android.schedulers.AndroidSchedulers;
   CardListFragment cardListFragment;
   CardListFilterFragment filterFragment;
   @Inject CardListPresenter presenter;
+  @Inject IPermissionModel serPermisAction;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) ViewGroup tl;
@@ -179,7 +182,11 @@ import rx.android.schedulers.AndroidSchedulers;
    * 会员卡导出
    */
   @OnClick(R2.id.btn_outport) public void onBtnOutportClicked() {
-
+    if (!serPermisAction.check(PermissionServerUtils.CARD_EXPORT)) {
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
+    routeTo("export","/card/",null);
   }
 
   /**

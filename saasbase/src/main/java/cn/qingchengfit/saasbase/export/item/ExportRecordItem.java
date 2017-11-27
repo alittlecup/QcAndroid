@@ -1,20 +1,17 @@
-package cn.qingchengfit.staffkit.views.export.item;
+package cn.qingchengfit.saasbase.export.item;
 
 import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.export.model.ExportRecord;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.export.bean.ExportRecord;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
-
-/**
- * Created by fb on 2017/9/6.
- */
 
 public class ExportRecordItem extends AbstractFlexibleItem<ExportRecordItem.ExportRecordVH> {
 
@@ -30,7 +27,7 @@ public class ExportRecordItem extends AbstractFlexibleItem<ExportRecordItem.Expo
     this.listener = listener;
   }
 
-  public ExportRecord getData(){
+  public ExportRecord getData() {
     return exportRecord;
   }
 
@@ -46,8 +43,8 @@ public class ExportRecordItem extends AbstractFlexibleItem<ExportRecordItem.Expo
     ExportRecordVH holder = new ExportRecordVH(view, adapter);
     holder.tvExportDownload.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if(listener != null){
-          listener.onDownload((int)v.getTag());
+        if (listener != null) {
+          listener.onDownload((int) v.getTag());
         }
       }
     });
@@ -55,10 +52,10 @@ public class ExportRecordItem extends AbstractFlexibleItem<ExportRecordItem.Expo
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ExportRecordVH holder, int position,
-      List payloads) {
+    List payloads) {
     holder.tvExportTitle.setText(DateUtils.getFileNameFormServer(exportRecord.file_name));
     holder.tvExportInfo.setText(DateUtils.replaceTFromServer(exportRecord.created_at) + " " + exportRecord.created_by.username);
-    switch (exportRecord.status){
+    switch (exportRecord.status) {
       case EXOPRT_ING:
         holder.tvExportState.setVisibility(View.VISIBLE);
         holder.tvExportDownload.setVisibility(View.GONE);
@@ -76,10 +73,10 @@ public class ExportRecordItem extends AbstractFlexibleItem<ExportRecordItem.Expo
 
   class ExportRecordVH extends FlexibleViewHolder {
 
-    @BindView(R.id.tv_export_title) TextView tvExportTitle;
-    @BindView(R.id.tv_export_info) TextView tvExportInfo;
-    @BindView(R.id.tv_export_download) TextView tvExportDownload;
-    @BindView(R.id.tv_export_state) TextView tvExportState;
+    @BindView(R2.id.tv_export_title) TextView tvExportTitle;
+    @BindView(R2.id.tv_export_info) TextView tvExportInfo;
+    @BindView(R2.id.tv_export_download) TextView tvExportDownload;
+    @BindView(R2.id.tv_export_state) TextView tvExportState;
 
     public ExportRecordVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
@@ -87,8 +84,7 @@ public class ExportRecordItem extends AbstractFlexibleItem<ExportRecordItem.Expo
     }
   }
 
-  public interface OnButtonClickListener{
+  public interface OnButtonClickListener {
     void onDownload(int position);
   }
-
 }

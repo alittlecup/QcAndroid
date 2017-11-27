@@ -3,6 +3,7 @@ package cn.qingchengfit.inject.moudle;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.CardModel;
+import cn.qingchengfit.model.ExportModel;
 import cn.qingchengfit.model.SaasModelImpl;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -23,6 +24,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.saasbase.repository.IExportModel;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
@@ -30,6 +32,7 @@ import cn.qingchengfit.saasbase.routers.billImpl;
 import cn.qingchengfit.saasbase.routers.cardImpl;
 import cn.qingchengfit.saasbase.routers.commonImpl;
 import cn.qingchengfit.saasbase.routers.courseImpl;
+import cn.qingchengfit.saasbase.routers.exportImpl;
 import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.studentImpl;
 import cn.qingchengfit.saasbase.staff.beans.response.SalerDataWrap;
@@ -72,6 +75,8 @@ import rx.Observable;
   private QcRestRepository qcrestRepository;
   private QcDbManager qcDbManager;
   private ICardModel cardModel;
+  private IExportModel exportModel;
+  private SaasbaseRouterCenter saasbaseRouterCenter;
   public AppModel() {
   }
 
@@ -87,6 +92,8 @@ import rx.Observable;
     this.qcrestRepository = qcrestRepository;
     this.qcDbManager = qcDbManager;
     cardModel = new CardModel(qcrestRepository,gymWrapper,loginStatus);
+    exportModel = new ExportModel(qcrestRepository,gymWrapper,loginStatus);
+    this.saasbaseRouterCenter = new SaasbaseRouterCenter(new billImpl(),new cardImpl(),new commonImpl(),new courseImpl(),new exportImpl(),new staffImpl(),new studentImpl());
   }
 
   @Provides App provideApplicationContext() {
@@ -170,7 +177,7 @@ import rx.Observable;
   }
 
   @Provides SaasbaseRouterCenter provideRc(){
-    return new SaasbaseRouterCenter(new billImpl(),new cardImpl(),new commonImpl(),new courseImpl(),new staffImpl(),new studentImpl());
+    return saasbaseRouterCenter;
   }
 
   @Provides ICourseModel provideCourseApi(){
@@ -258,7 +265,7 @@ import rx.Observable;
   @Provides public ICardModel provideCardModel(){
     return cardModel;
   }
-
+  @Provides IExportModel provideExportModel(){return  exportModel;}
   @Provides public IPermissionModel providePermissModel(){
     return new IPermissionModel() {
       @Override public boolean check(String permission) {

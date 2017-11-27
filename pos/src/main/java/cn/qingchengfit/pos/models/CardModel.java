@@ -13,6 +13,7 @@ import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.response.BalanceConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
@@ -181,6 +182,11 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(
     HashMap<String, Object> params) {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<BalanceConfigs>> qcGetBalanceCondition(
+    HashMap<String, Object> params, String keys) {
     return null;
   }
 }

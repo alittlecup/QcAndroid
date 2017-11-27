@@ -150,4 +150,10 @@ public interface CardApi {
     @Path("staff_id") String staff_id, @Path("cardtps_id") String cardtps_id,
     @QueryMap HashMap<String, Object> params);
 
+
+  //余额条件
+  @GET("/api/v2/staffs/{id}/users/configs/") rx.Observable<QcDataResponse<cn.qingchengfit.saasbase.cards.network.response.BalanceConfigs>> qcGetBalanceCondition(
+    @Path("id") String staffId, @QueryMap HashMap<String, Object> params, @Query("keys") String permission);
+
+
 }

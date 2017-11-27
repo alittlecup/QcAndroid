@@ -12,6 +12,7 @@ import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.response.BalanceConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
@@ -46,7 +47,8 @@ public class CardModel implements ICardModel {
     return posApi.qcGetCardTpls(loginStatus.staff_id(), gymWrapper.getParams(), null, isEnable);
   }
 
-  @Deprecated @Override public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission() {
+  @Deprecated @Override
+  public Observable<QcDataResponse<CardTplListWrap>> qcGetCardTplsPermission() {
     return null;
   }
 
@@ -80,7 +82,8 @@ public class CardModel implements ICardModel {
   @Override
   public Observable<QcDataResponse> qcUpdateCardtpl(@Path("card_tpl_id") String card_tpl_id,
     @Body CardtplBody body) {
-    return posApi.qcUpdateCardtpl(loginStatus.staff_id(), card_tpl_id, body, gymWrapper.getParams());
+    return posApi.qcUpdateCardtpl(loginStatus.staff_id(), card_tpl_id, body,
+      gymWrapper.getParams());
   }
 
   @Override
@@ -118,16 +121,18 @@ public class CardModel implements ICardModel {
       body);
   }
 
-  @Override public Observable<QcDataResponse<PayBusinessResponseWrap>> qcChargeCard(ChargeBody ochargeBody) {
+  @Override
+  public Observable<QcDataResponse<PayBusinessResponseWrap>> qcChargeCard(ChargeBody ochargeBody) {
     ChargeBody chargeBody = (ChargeBody) ochargeBody.clone();
     if (chargeBody.getSeller_id().equalsIgnoreCase("0")) {
       chargeBody.setSeller_id(null);
     }
-    return posApi.qcCardCharge(loginStatus.staff_id(), chargeBody.getCard_id(), gymWrapper.getParams(),
-      chargeBody);
+    return posApi.qcCardCharge(loginStatus.staff_id(), chargeBody.getCard_id(),
+      gymWrapper.getParams(), chargeBody);
   }
 
-  @Override public Observable<QcDataResponse<PayBusinessResponseWrap>> buyCard(@Body CardBuyBody obody) {
+  @Override
+  public Observable<QcDataResponse<PayBusinessResponseWrap>> buyCard(@Body CardBuyBody obody) {
     CardBuyBody body = (CardBuyBody) obody.clone();
     if (body.getSeller_id().equalsIgnoreCase("0")) {
       body.setSeller_id(null);
@@ -149,7 +154,8 @@ public class CardModel implements ICardModel {
     return null;
   }
 
-  @Override public Observable<QcDataResponse> editCardInfo(String cardid, HashMap<String, Object> p) {
+  @Override
+  public Observable<QcDataResponse> editCardInfo(String cardid, HashMap<String, Object> p) {
     return posApi.editCardInfo(loginStatus.staff_id(), cardid, p);
   }
 
@@ -160,5 +166,11 @@ public class CardModel implements ICardModel {
   @Override public Observable<QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(
     HashMap<String, Object> params) {
     return null;
+  }
+
+  @Override public Observable<QcDataResponse<BalanceConfigs>> qcGetBalanceCondition(
+    HashMap<String, Object> params, String keys) {
+    params.putAll(gymWrapper.getParams());
+    return posApi.qcGetBalanceCondition(loginStatus.staff_id(), params, keys);
   }
 }
