@@ -32,6 +32,7 @@ import cn.qingchengfit.staffkit.rxbus.event.EventLimitBuyCount;
 import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.bottom.BottomBuyLimitFragment;
 import cn.qingchengfit.staffkit.views.cardtype.CardProtocolActivity;
+import cn.qingchengfit.staffkit.views.cardtype.OnBackEvent;
 import cn.qingchengfit.staffkit.views.cardtype.standard.CardStandardFragment;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
@@ -50,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -204,7 +206,23 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
       }
     });
 
+    initBus();
+
     return view;
+  }
+
+  private void initBus(){
+    RxBusAdd(OnBackEvent.class)
+        .observeOn(Schedulers.io())
+        .subscribe(new Action1<OnBackEvent>() {
+      @Override public void call(OnBackEvent onBackEvent) {
+        getActivity().runOnUiThread(new Runnable() {
+          @Override public void run() {
+            getActivity().finish();
+          }
+        });
+      }
+    });
   }
 
   @Override public void onDestroyView() {

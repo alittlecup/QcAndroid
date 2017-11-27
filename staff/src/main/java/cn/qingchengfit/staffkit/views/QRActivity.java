@@ -15,6 +15,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.body.ScanBody;
 import cn.qingchengfit.network.QcRestRepository;
@@ -23,6 +24,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.Post_Api;
+import cn.qingchengfit.staffkit.views.cardtype.OnBackEvent;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -173,6 +175,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
 
                 @Override public void onNext(QcResponse qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
+                        RxBus.getBus().post(new OnBackEvent());
                         done.setVisibility(View.VISIBLE);
                         toolbarTitile.setText("扫码成功");
                     } else {
