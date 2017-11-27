@@ -10,7 +10,10 @@ import cn.qingchengfit.model.body.ShopsBody;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.rest.RestRepository;
+import java.util.Iterator;
 import javax.inject.Inject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -105,6 +108,20 @@ public class EditCardTypePresenter extends BasePresenter {
                     }
                 }
             }));
+    }
+
+    public String dealParamsToWeb(String json){
+        String params = "";
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
+                String key = it.next();
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return params;
     }
 
     public void addCardInfo(String staffid, CardtplBody body) {
