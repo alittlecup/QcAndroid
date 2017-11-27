@@ -300,7 +300,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
 
   @OnClick(R.id.input_card_protocol) public void onOpenProtocol() {
     if (card_tpl != null && card_tpl.has_service_term) {
-      CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true);
+      CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true, card_tpl.id);
     }else{
       body.name = cardname.getContent();
       Intent intent = new Intent(getActivity(), QRActivity.class);
@@ -309,7 +309,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
       if (!TextUtils.isEmpty(json)) {
         try {
           intent.putExtra(QRActivity.LINK_MODULE,
-              QRActivity.MODULE_ADD_CARD_PROTOCOL + "?" + PARAMS_KEY + "=" + URLEncoder.encode(gson.toJson(body),"utf-8"));
+              QRActivity.MODULE_ADD_CARD_PROTOCOL + "?" + PARAMS_KEY + "=" + URLEncoder.encode(gson.toJson(body), "utf-8"));
         } catch (UnsupportedEncodingException e) {
           e.printStackTrace();
         }
@@ -326,7 +326,6 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     hideLoading();
     ToastUtils.show("修改场馆成功!");
   }
-
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {
