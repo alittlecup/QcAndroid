@@ -43,6 +43,9 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
+import com.google.gson.Gson;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -62,6 +65,8 @@ import rx.functions.Action1;
  * Created by Paper on 16/3/16 2016.
  */
 public class EditCardTypeFragment extends BaseFragment implements EditCardTypeView {
+
+  private final static String PARAMS_KEY = "card_tpl_data";
 
   @BindView(R.id.type) CommonInputView type;
   @BindView(R.id.desc) CommonInputView desc;
@@ -297,12 +302,25 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     if (card_tpl != null && card_tpl.has_service_term) {
       CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true);
     }else{
+      body.name = cardname.getContent();
       Intent intent = new Intent(getActivity(), QRActivity.class);
-      intent.putExtra(QRActivity.LINK_MODULE, QRActivity.MODULE_ADD_CARD_PROTOCOL);
+      Gson gson = new Gson();
+      String json = gson.toJson(body);
+      if (!TextUtils.isEmpty(json)) {
+        try {
+          intent.putExtra(QRActivity.LINK_MODULE,
+              QRActivity.MODULE_ADD_CARD_PROTOCOL + "?" + PARAMS_KEY + "=" + URLEncoder.encode(gson.toJson(body),"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+          e.printStackTrace();
+        }
+      } else {
+      }
       getContext().startActivity(intent);
     }
 
   }
+
+
 
   @Override public void onSuccessShops() {
     hideLoading();
