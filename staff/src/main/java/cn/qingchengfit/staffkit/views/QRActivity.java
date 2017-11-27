@@ -138,10 +138,12 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
         if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
         final String session = PreferenceUtils.getPrefString(this, Configs.PREFER_SESSION, "");
         String url = "";
-        if (getIntent() != null) {
+        if (getIntent() != null && getIntent().hasExtra(LINK_MODULE)) {
             url = getBaseContext().getResources()
                 .getString(R.string.qr_code_2web, Configs.Server, gymWrapper.brand_id(),
                     gymWrapper.shop_id(), getIntent().getStringExtra(LINK_MODULE));
+        }else if (getIntent() != null && getIntent().hasExtra(LINK_URL)){
+            url = getIntent().getStringExtra(LINK_URL);
         }
         sp = restRepository.createPostApi(Post_Api.class).qcScans(text, new ScanBody.Builder().url(url).session_id(session)
             //                .module(getIntent().getStringExtra(LINK_MODULE))
