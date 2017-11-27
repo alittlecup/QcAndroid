@@ -22,6 +22,7 @@ import cn.qingchengfit.notisetting.bean.NotiSettingMsgDetail;
 import cn.qingchengfit.notisetting.item.NotiSettingMsgDetailItem;
 import cn.qingchengfit.notisetting.presenter.NotiSettingSendListDetailPresenter;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -30,7 +31,7 @@ import cn.qingchengfit.widgets.QcFilterToggle;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import eu.davidea.flexibleadapter.utils.Utils;
+import eu.davidea.flexibleadapter.utils.FlexibleUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +73,7 @@ public class NotiSettingSendListDetailFragment extends BaseFragment
   @BindView(R.id.layout_total) RelativeLayout layoutTotal;
   @BindView(R.id.rv) RecyclerView rv;
   @BindView(R.id.frag_noti_list) FrameLayout fragNotiList;
-  int curM = 0, curY = 0;
+  int curM = 0, curY = 0, curD = 0;
   @Inject NotiSettingSendListDetailPresenter presenter;
   private NotiSettingFilterFragment filterFragment;
   private CommonFlexAdapter adapter;
@@ -134,9 +135,11 @@ public class NotiSettingSendListDetailFragment extends BaseFragment
         NotiSettingMsgDetail msg = list.get(i);
         int newY = DateUtils.getYear(DateUtils.formatDateFromServer(msg.created_at));
         int newM = DateUtils.getMonth(DateUtils.formatDateFromServer(msg.created_at));
-        if (newM != curM || newY != curY) {
+        int newD = DateUtils.getDayOfMonth(DateUtils.formatDateFromServer(msg.created_at));
+        if (newM != curM || newY != curY || newD != curD) {
           curY = newY;
           curM = newM;
+          curD = newD;
           curItems.add(new StickerDateItem(DateUtils.getYYYYMMDDfromServer(msg.created_at)));
         }
         curItems.add(generateItem(msg));
@@ -165,9 +168,12 @@ public class NotiSettingSendListDetailFragment extends BaseFragment
   }
 
   @Override public void onSendInfo(String a, String b, String c) {
-    Utils.highlightText(tvMsg, "短信" + a, a);
-    Utils.highlightText(tvWechat, "微信" + b, b);
-    Utils.highlightText(tvApp, "APP推送" + c, c);
+    if (!CmStringUtils.isEmpty(a))
+      FlexibleUtils.highlightWords(tvMsg, "短信" + a, a);
+    if (!CmStringUtils.isEmpty(b))
+      FlexibleUtils.highlightWords(tvWechat, "微信" + b, b);
+    if (!CmStringUtils.isEmpty(c))
+      FlexibleUtils.highlightWords(tvApp, "APP推送" + c, c);
   }
 
   @OnClick(R.id.qft_channel) public void onQftChannelClicked() {

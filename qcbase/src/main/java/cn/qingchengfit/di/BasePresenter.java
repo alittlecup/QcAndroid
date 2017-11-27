@@ -60,7 +60,8 @@ public class BasePresenter<V extends CView> implements Presenter {
 
     @CallSuper @Override public void unattachView() {
         this.mvpView = null;
-        sps.unsubscribe();
+        if (sps != null)
+            sps.unsubscribe();
         for (int i = 0; i < observables.size(); i++) {
             RxBus.getBus().unregister(observables.get(i).first, observables.get(i).second);
         }

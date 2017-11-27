@@ -122,10 +122,8 @@ public class GymDetailFragment extends BaseFragment
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
-    //@BindView(R.id.root_scroll) NestedScrollView rootScroll;
     @BindView(R.id.gym_layout) LinearLayout gymLayout;
     @BindView(R.id.toolbar_left) TextView toolbarLeft;
-    //@BindView(R.id.swipe_to_refresh) SwipeRefreshLayout swipeToRefresh;
     @BindView(R.id.layout_collapsed) AppBarLayout layoutCollapsed;
     @BindView(R.id.schedule_notification_count) TextView scheduleNotificationCount;
     @BindView(R.id.vp_charts) ViewPager vpCharts;
@@ -367,7 +365,7 @@ public class GymDetailFragment extends BaseFragment
         for (int i = 0; i < addcount; i++) {
             datas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE)));
         }
-        adapter.notifyDataSetChanged();
+        adapter.updateDataSet(datas);
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

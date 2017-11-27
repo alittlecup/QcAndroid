@@ -178,7 +178,7 @@ public class MutiChooseSalersActivity extends BaseActivity
                 .setAnimationInitialDelay(50L)
                 .setAnimationInterpolator(new DecelerateInterpolator())
                 .setAnimationDelay(100L)
-                .setAnimationStartPosition(0);
+            ;
 
             GridLayoutManager gridLayoutManager = new SmoothScrollGridLayoutManager(this, 4);
             gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

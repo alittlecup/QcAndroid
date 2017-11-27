@@ -66,12 +66,13 @@ public class NotiSettingHomeFragment extends BaseFragment {
     View view = inflater.inflate(R.layout.fragment_noti_setting_home, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
+    vp.setAdapter(adapter);
+    tablayout.setupWithViewPager(vp);
     return view;
   }
 
   @Override protected void onFinishAnimation() {
-    vp.setAdapter(adapter);
-    tablayout.setupWithViewPager(vp);
+
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {

@@ -29,7 +29,7 @@ import com.tencent.qcloud.timchat.viewfeatures.ConversationView;
 import com.tencent.qcloud.timchat.viewfeatures.FriendshipMessageView;
 import com.tencent.qcloud.timchat.viewfeatures.GroupManageMessageView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -75,7 +75,9 @@ public class ConversationFragment extends Fragment
       listView.setLayoutManager(new LinearLayoutManager(getContext()));
       listView.setItemAnimator(new DefaultItemAnimator());
       listView.addItemDecoration(
-          new DividerItemDecoration(getContext(), R.drawable.divider_card_list));
+          new FlexibleItemDecoration(getContext())
+            .withDefaultDivider(R.layout.item_conversation)
+            .withOffset(1).withBottomEdge(true));
       listView.setNestedScrollingEnabled(false);
       flexibleAdapter = new FlexibleAdapter(flexItemList, this);
       flexibleAdapter.addListener(this);

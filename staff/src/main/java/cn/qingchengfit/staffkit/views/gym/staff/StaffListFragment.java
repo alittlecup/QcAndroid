@@ -26,11 +26,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.StaffShip;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.adapter.StaffAdapter;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
@@ -170,7 +170,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
             if (requestCode == RESULT_FLOW) {
                 int pos = Integer.parseInt(IntentUtils.getIntentString(data));
                 if (pos == 0) {//权限设置
-                    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.POSITION_SETTING)) {
+                    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.POSITION_SETTING)) {
                         showAlert(R.string.sorry_for_no_permission);
                         return;
                     }

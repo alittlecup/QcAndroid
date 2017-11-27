@@ -37,6 +37,7 @@ import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
 import cn.qingchengfit.saasbase.staff.views.SuFragment;
 import cn.qingchengfit.saasbase.staff.views.SuIdendifyFragment;
 import cn.qingchengfit.saasbase.staff.views.SuNewFragment;
+import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
@@ -352,9 +353,11 @@ import dagger.multibindings.IntoMap;
  * Created by Paper on 16/1/20 2016.
  */
 //压制了 未使用 拼写检查 和public
-@SuppressWarnings({ "unused", "SpellCheckingInspection", "UnnecessaryInterfaceModifier" }) @Component(modules = {
+@SuppressWarnings({ "unused", "SpellCheckingInspection", "UnnecessaryInterfaceModifier" })
+@Component(modules = {
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
+  BindStaffCardActivity.class,
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,
     AppComponent.UnloginAdModule.class, AppComponent.HomeModule.class, AppComponent.QcVipModule.class,
     AppComponent.BaseStatementChartModule.class, AppComponent.YourFragmentModule.class, AppComponent.ChooseModule.class,

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+  <include layout="@layout/common_simple_toolbar"/>
+  <LinearLayout
+      android:id="@+id/ll_balance_condition"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:orientation="horizontal"
+      >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/text_filter_tips"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="15dp"
+          android:layout_marginTop="14dp"
+          android:text="@string/filter_card_tips"
+          android:textSize="11dp"
+          />
+
+      <TextView
+          android:id="@+id/text_filter_condition"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/text_filter_tips"
+          android:layout_marginLeft="15dp"
+          android:layout_marginTop="14dp"
+          android:textColor="@color/qc_text_black"
+          android:textSize="12dp"
+          tools:text="储值卡&#60;1000元，次卡&#60;500元，有效期&#60;150天"
+          />
+    </LinearLayout>
+
+
+    <include
+        layout="@layout/divider_grey_vertical"
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        />
+
+    <TextView
+        android:id="@+id/text_change_button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:minLines="2"
+        android:text="修改条件"
+        android:textColor="@color/qc_allotsale_green"
+        android:textSize="12dp"
+        />
+  </LinearLayout>
+  <cn.qingchengfit.widgets.QcRadioGroup
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@drawable/bg_click"
+      android:divider="@drawable/divider_linearlayout_horizon"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <cn.qingchengfit.widgets.QcFilterToggle
+        style="@style/QcFilterStyle"
+        android:id="@+id/filter_tpl"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:ft_text_on="会员卡种类"
+        />
+
+    <cn.qingchengfit.widgets.QcFilterToggle
+        style="@style/QcFilterStyle"
+        android:id="@+id/filter_status"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:ft_text_on="会员卡状态"
+        />
+  </cn.qingchengfit.widgets.QcRadioGroup>
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey_dark"
+      >
+    <TextView
+        style="@style/QcTextStyleXsGrey"
+        android:id="@+id/tv_card_count"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        tools:text="会员卡总数：100"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:freezesText="true"
+        />
+    <FrameLayout
+        android:id="@+id/frag_card_list"
+        android:layout_below="@id/tv_card_count"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        />
+
+    <FrameLayout
+        android:id="@+id/frag_card_filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+  </RelativeLayout>
+</LinearLayout>

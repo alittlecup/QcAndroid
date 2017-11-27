@@ -31,7 +31,7 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -81,7 +81,9 @@ import javax.inject.Inject;
         presenter.qcGetCourseReverse(sechduleId);
         adapter = new CommonFlexAdapter(itemList, this);
         recyclerReportDetail.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerReportDetail.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.divider_card_list, 5));
+            recyclerReportDetail.addItemDecoration(new FlexibleItemDecoration(getContext())
+          .withDivider(R.drawable.divider_horizon_left_44dp)
+          .withOffset(1).withBottomEdge(true));
         recyclerReportDetail.setAdapter(adapter);
         return view;
     }

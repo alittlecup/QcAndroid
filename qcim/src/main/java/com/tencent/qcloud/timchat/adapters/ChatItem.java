@@ -57,6 +57,7 @@ public class ChatItem<T extends ChatItem.ViewHolder> extends AbstractFlexibleIte
         return message;
     }
 
+
     @Override
     public T createViewHolder(final View view, FlexibleAdapter adapter) {
         T vh = (T) new ViewHolder(view, adapter);

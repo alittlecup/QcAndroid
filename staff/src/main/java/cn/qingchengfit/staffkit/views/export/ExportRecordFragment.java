@@ -8,18 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.export.item.ExportRecordItem;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecord;
 import cn.qingchengfit.staffkit.views.export.presenter.ImportExportPresenter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
-import cn.qingchengfit.widgets.QcLeftRightDivider;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -76,7 +73,7 @@ public class ExportRecordFragment extends BaseFragment implements ImportExportPr
     for (ExportRecord exportRecord : record){
       itemList.add(new ExportRecordItem(exportRecord, this));
     }
-    adapter.notifyDataSetChanged();
+    adapter.updateDataSet(itemList);
   }
 
   @Override public void onExportSuccess() {

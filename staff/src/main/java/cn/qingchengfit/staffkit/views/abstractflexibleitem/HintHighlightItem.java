@@ -1,9 +1,7 @@
 package cn.qingchengfit.staffkit.views.abstractflexibleitem;
 
 import android.support.annotation.DrawableRes;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -12,7 +10,7 @@ import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IHeader;
-import eu.davidea.flexibleadapter.utils.Utils;
+import eu.davidea.flexibleadapter.utils.FlexibleUtils;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -53,7 +51,7 @@ public class HintHighlightItem extends AbstractFlexibleItem<HintHighlightItem.Hi
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, HintHighlightVH holder, int position, List payloads) {
         holder.imgInfo.setImageResource(drawabele);
-        Utils.highlightText(holder.tvHint, hintStr, hightLightStr);
+        FlexibleUtils.highlightWords(holder.tvHint, hintStr, hightLightStr);
     }
 
     @Override public boolean equals(Object o) {

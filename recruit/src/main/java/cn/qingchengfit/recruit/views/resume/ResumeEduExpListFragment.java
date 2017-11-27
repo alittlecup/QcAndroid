@@ -24,7 +24,7 @@ import cn.qingchengfit.recruit.network.response.EduExpListWrap;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ public class ResumeEduExpListFragment extends BaseFragment
     initToolbar(toolbar);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-    rv.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.trans_h_15dp));
+    rv.addItemDecoration(new FlexibleItemDecoration(getContext()).withOffset(15).withBottomEdge(true));
     rv.setAdapter(commonFlexAdapter);
     return view;
   }

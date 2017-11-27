@@ -6,7 +6,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.pos.net.CardApi;
+import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
@@ -16,6 +18,7 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
+import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
@@ -170,5 +173,14 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse> editCardInfo(String cardid,HashMap<String,Object> p) {
     return posApi.editCardInfo(gymWrapper.getGymId(),cardid ,p);
+  }
+
+  @Override public Observable<QcResponse> qcChangeAutoNotify(CardBalanceNotifyBody body) {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(
+    HashMap<String, Object> params) {
+    return null;
   }
 }

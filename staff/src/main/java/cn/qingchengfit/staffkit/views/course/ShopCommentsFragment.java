@@ -97,8 +97,6 @@ public class ShopCommentsFragment extends BaseFragment
         adapter.setAnimationOnScrolling(true)
             .setAnimationInitialDelay(300L)
             .setAnimationInterpolator(new DecelerateInterpolator())
-            .setAnimationStartPosition(0)
-
         ;
         recyclerview.setAdapter(adapter);
     }

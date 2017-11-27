@@ -69,7 +69,7 @@ import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.text.SimpleDateFormat;
@@ -227,7 +227,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
         canNotClose.setVisibility(proGym ? View.GONE : View.VISIBLE);
         rvBatchLoop.setNestedScrollingEnabled(false);
         rvBatchLoop.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-        rvBatchLoop.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.divider_line_vertial));
+        rvBatchLoop.addItemDecoration(new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_line_vertial,R.layout.item_batch_week_loop).withOffset(1).withBottomEdge(true));
         batchLoopAdapter = new CommonFlexAdapter(mbatchLoopDatas, this);
         rvBatchLoop.setAdapter(batchLoopAdapter);
         presenter.queryData(mId);

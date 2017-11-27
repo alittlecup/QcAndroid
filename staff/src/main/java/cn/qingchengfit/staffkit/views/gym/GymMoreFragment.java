@@ -93,7 +93,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                getActivity().onBackPressed();
+                popBack();
             }
         });
         toolbarTitile.setText("全部功能");
@@ -190,7 +190,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
 
                 mDatas.clear();
                 FunHeaderItem workFuntion = new FunHeaderItem("工作台");
-
+                mDatas.add(workFuntion);
                 mDatas.add(
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_WORKSPACE_ORDER_LIST), workFuntion));
                 mDatas.add(
@@ -201,6 +201,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                     workFuntion));
 
                 FunHeaderItem serviceFuntion = new FunHeaderItem("健身服务");
+                mDatas.add(serviceFuntion);
                 mDatas.add(
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_SERVICE_GROUP), serviceFuntion));
                 mDatas.add(
@@ -211,7 +212,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_SERVICE_SHOP), serviceFuntion));
 
                 FunHeaderItem studentsFuntion = new FunHeaderItem("会员管理");
-
+                mDatas.add(studentsFuntion);
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_STUDENT), studentsFuntion));
                 mDatas.add(
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_STUDENT_CARDS), studentsFuntion));
@@ -220,7 +221,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.REPORT_EXPORT), studentsFuntion));
 
                 FunHeaderItem internalFuntion = new FunHeaderItem("员工管理");
-
+                mDatas.add(internalFuntion);
                 mDatas.add(
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_MANAGE_STAFF), internalFuntion));
                 mDatas.add(
@@ -229,7 +230,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), internalFuntion));
 
                 FunHeaderItem runFuntion = new FunHeaderItem("运营推广");
-
+                mDatas.add(runFuntion);
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_SCORE), runFuntion));
                 mDatas.add(
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_ACTIVITY), runFuntion));
@@ -244,7 +245,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), runFuntion));
 
                 FunHeaderItem financialFuntion = new FunHeaderItem("财务与报表");
-
+                mDatas.add(financialFuntion);
                 mDatas.add(
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_FINACE_ONLINE), financialFuntion));
                 mDatas.add(
@@ -261,7 +262,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), financialFuntion));
 
                 FunHeaderItem gymFuntion = new FunHeaderItem("场馆管理");
-
+                mDatas.add(gymFuntion);
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_GYM_INFO), gymFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_GYM_TIME), gymFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_GYM_SITE), gymFuntion));
@@ -310,12 +311,12 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     }
 
     private void notificationMyFuntion() {
-        int addcount = ((4 - (mFunsDatas.size()) % 4) % 4);
+        int addcount = ((4 - (mFunsDatas.size()-1) % 4) % 4);
         for (int i = 0; i < addcount; i++) {
             mFunsDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), mMyFuntions));
         }
         if (mFunsDatas.size() == 1) mFunsDatas.add(new EmptyFunItem());
-        mFunAdapter.notifyDataSetChanged();
+        mFunAdapter.updateDataSet(mFunsDatas);
     }
 
     private void notificationAllFuntion() {
@@ -385,6 +386,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     @Override public void onModule(List<String> modules) {
 
         mFunsDatas.clear();
+        mFunsDatas.add(mMyFuntions);
         if (modules != null) {
             for (int i = 0; i < modules.size(); i++) {
                 if (TextUtils.isEmpty(modules.get(i))) continue;

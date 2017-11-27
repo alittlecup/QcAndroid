@@ -1,9 +1,7 @@
 package cn.qingchengfit.items;
 
 import android.support.annotation.LayoutRes;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +46,7 @@ public class ListAddItem extends AbstractFlexibleItem<ListAddItem.ListAddVH> {
     }
 
     @Override public boolean equals(Object o) {
-        return false;
+        return o instanceof ListAddItem;
     }
 
     @Override public int getLayoutRes() {
@@ -62,6 +60,7 @@ public class ListAddItem extends AbstractFlexibleItem<ListAddItem.ListAddVH> {
     @Override public void bindViewHolder(FlexibleAdapter adapter, ListAddVH holder, int position, List payloads) {
         holder.addText.setText(text);
     }
+
 
     public class ListAddVH extends FlexibleViewHolder {
         @BindView(R.id.item_gym_name) TextView addText;

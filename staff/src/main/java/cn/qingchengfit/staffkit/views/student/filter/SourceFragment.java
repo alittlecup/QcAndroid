@@ -137,7 +137,7 @@ import javax.inject.Inject;
             divider.setVisibility(View.GONE);
         }
         flexibleAdapter = new CommonFlexAdapter(items, this);
-        flexibleAdapter.setMode(FlexibleAdapter.MODE_SINGLE);
+        flexibleAdapter.setMode(FlexibleAdapter.Mode.SINGLE);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         rvReferrer.setVisibility(View.VISIBLE);
         rvReferrer.setLayoutManager(new LinearLayoutManager(getContext()));

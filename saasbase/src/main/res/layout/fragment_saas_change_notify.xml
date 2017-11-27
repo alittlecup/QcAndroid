@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+  <include layout="@layout/common_simple_toolbar"/>
+  <include layout="@layout/divider_grey"/>
+
+  <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+      android:id="@+id/sw_store_notify"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginTop="12dp"
+      app:sw_lable="储值卡余额不足时提醒会员"
+      app:sw_showdivier="true"
+      app:sw_text_color="@color/qc_text_black"
+      />
+
+  <RelativeLayout
+      android:id="@+id/ll_store_condition"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:id="@+id/tips_store_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
+        android:text="储值卡余额少于（元）"
+        android:textColor="@color/qc_text_black"
+        android:textSize="14dp"
+        />
+
+    <EditText
+        android:id="@+id/text_store_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_alignParentRight="true"
+        android:digits="0123456789"
+        android:inputType="numberDecimal"
+
+        android:textSize="14dp"
+        tools:text="500"
+        />
+
+  </RelativeLayout>
+
+  <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+      android:id="@+id/sw_second_notify"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginTop="12dp"
+      app:sw_lable="次卡余额不足时提醒会员"
+      app:sw_showdivier="true"
+      app:sw_text_color="@color/qc_text_black"
+      />
+
+  <RelativeLayout
+      android:id="@+id/ll_second"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:id="@+id/tips_second_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
+        android:text="次卡余额少于（次）"
+        android:textColor="@color/qc_text_black"
+        android:textSize="14dp"
+        />
+
+    <EditText
+        android:id="@+id/text_second_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_alignParentRight="true"
+        android:digits="0123456789"
+        android:inputType="numberDecimal"
+
+        android:textSize="14dp"
+        tools:text="10"
+        />
+
+  </RelativeLayout>
+
+  <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+      android:id="@+id/sw_time_notify"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginTop="12dp"
+      app:sw_lable="会员卡有效期到期前提醒会员"
+      app:sw_showdivier="true"
+      app:sw_text_color="@color/qc_text_black"
+      />
+
+  <RelativeLayout
+      android:id="@+id/ll_time_condition"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:id="@+id/tips_time_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
+        android:text="会员卡有效期少于（天）"
+        android:textColor="@color/qc_text_black"
+        android:textSize="14dp"
+        />
+
+    <EditText
+        android:id="@+id/text_time_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_alignParentRight="true"
+        android:digits="0123456789"
+        android:inputType="numberDecimal"
+        android:textSize="14dp"
+        tools:text="15"
+        />
+
+  </RelativeLayout>
+
+</LinearLayout>

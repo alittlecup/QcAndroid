@@ -2,7 +2,6 @@ package cn.qingchengfit.staffkit.views.gym.items;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -38,7 +37,7 @@ public class GymFuntionItem extends AbstractFlexibleItem<GymFuntionItem.GymFunti
 
     public GymFuntionItem(GymFuntion gymFuntion, FunHeaderItem i) {
         mGymFuntion = gymFuntion;
-        this.mFunHeaderItem = i;
+        //this.mFunHeaderItem = i;
     }
 
     public GymFuntion getGymFuntion() {

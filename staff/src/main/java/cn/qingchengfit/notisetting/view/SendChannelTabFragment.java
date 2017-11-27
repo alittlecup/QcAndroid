@@ -24,13 +24,12 @@ import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.views.fragments.BottomListFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-
-import static eu.davidea.flexibleadapter.SelectableAdapter.Mode.SINGLE;
 
 /**
  * power by
@@ -123,7 +122,7 @@ public class SendChannelTabFragment extends VpFragment
       showAlert(R.string.alert_permission_forbid);
       return;
     }
-    bottomListFragment = BottomListFragment.newInstance("发送给会员的通知", MODE_SINGLE);
+    bottomListFragment = BottomListFragment.newInstance("发送给会员的通知", SelectableAdapter.Mode.SINGLE);
     bottomListFragment.loadData(getStudentBottomItems());
     bottomListFragment.setListener(new BottomListFragment.ComfirmChooseListener() {
       @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {
@@ -143,7 +142,7 @@ public class SendChannelTabFragment extends VpFragment
       showAlert(R.string.alert_permission_forbid);
       return;
     }
-    bottomListFragment = BottomListFragment.newInstance("发送给员工的通知", MODE_SINGLE);
+    bottomListFragment = BottomListFragment.newInstance("发送给员工的通知", SelectableAdapter.Mode.SINGLE);
     bottomListFragment.loadData(getStaffBottomItems());
     bottomListFragment.setListener(new BottomListFragment.ComfirmChooseListener() {
       @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {

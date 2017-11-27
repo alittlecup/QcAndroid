@@ -2,9 +2,7 @@ package cn.qingchengfit.staffkit.views.abstractflexibleitem;
 
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -15,7 +13,7 @@ import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.utils.StringUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import eu.davidea.flexibleadapter.utils.Utils;
+import eu.davidea.flexibleadapter.utils.FlexibleUtils;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -51,8 +49,8 @@ public class ShortMsgItem extends AbstractFlexibleItem<ShortMsgItem.ShortMsgVH> 
                 holder.tvTitle.setText(shortMsg.getShortTitle());
                 holder.tvContent.setText(shortMsg.getContent());
             } else {
-                Utils.highlightText(holder.tvTitle, shortMsg.getShortTitle(), f, Color.RED);
-                Utils.highlightText(holder.tvContent, shortMsg.getContent(), f, Color.RED);
+                FlexibleUtils.highlightWords(holder.tvTitle, shortMsg.getShortTitle(), f, Color.RED);
+                FlexibleUtils.highlightWords(holder.tvContent, shortMsg.getContent(), f, Color.RED);
             }
         }
 

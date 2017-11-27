@@ -123,7 +123,7 @@ public class TopFilterSaleFragment extends BaseFragment
             .setAnimationInitialDelay(50L)
             .setAnimationInterpolator(new DecelerateInterpolator())
             .setAnimationDelay(100L)
-            .setAnimationStartPosition(0);
+        ;
 
         GridLayoutManager gridLayoutManager = new SmoothScrollGridLayoutManager(getActivity(), 4);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

@@ -121,7 +121,7 @@ public class NotiSettingMsgChargeFragment extends BaseFragment
     adapter.notifyItemChanged(i);
     btnConfirm.setEnabled(adapter.getSelectedItemCount() > 0);
     String newCount = Integer.toString(presenter.getNewCount(i));
-    eu.davidea.flexibleadapter.utils.Utils.highlightText(tvCountAfterCharge,
+    eu.davidea.flexibleadapter.utils.FlexibleUtils.highlightWords(tvCountAfterCharge,
         "充值后剩余条数：" + newCount + "条", newCount);
     return true;
   }

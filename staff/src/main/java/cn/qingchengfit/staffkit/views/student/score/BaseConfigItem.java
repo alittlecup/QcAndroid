@@ -1,8 +1,7 @@
 package cn.qingchengfit.staffkit.views.student.score;
 
 import android.databinding.DataBindingUtil;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
+import android.view.View;
 import cn.qingchengfit.model.responese.StudentScoreBaseConfigBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.databinding.ItemStudentScoreBaseConfigBinding;
@@ -53,9 +52,9 @@ public class BaseConfigItem extends AbstractFlexibleItem<MyBindingFelxibleViewHo
     }
 
     @Override
-    public MyBindingFelxibleViewHolder createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater, final ViewGroup parent) {
-        ItemStudentScoreBaseConfigBinding binding = DataBindingUtil.inflate(inflater, getLayoutRes(), parent, false);
-        MyBindingFelxibleViewHolder holder = new MyBindingFelxibleViewHolder(binding.getRoot(), adapter);
+    public MyBindingFelxibleViewHolder createViewHolder(View view, final FlexibleAdapter adapter) {
+        ItemStudentScoreBaseConfigBinding binding = DataBindingUtil.bind(view);
+        MyBindingFelxibleViewHolder holder = new MyBindingFelxibleViewHolder(view, adapter);
         holder.setBinding(binding);
         return holder;
     }

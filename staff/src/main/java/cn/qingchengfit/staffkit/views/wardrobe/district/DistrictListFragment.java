@@ -134,7 +134,7 @@ public class DistrictListFragment extends BaseFragment implements FlexibleAdapte
                         gymWrapper.shop_id(), PermissionServerUtils.LOCKER_SETTING_CAN_CHANGE)));
             }
         }
-        mAdatper.notifyDataSetChanged();
+        mAdatper.updateDataSet(mData);
     }
 
     @Override public void onShowError(String e) {

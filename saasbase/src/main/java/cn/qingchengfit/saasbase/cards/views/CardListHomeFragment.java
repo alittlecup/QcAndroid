@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,11 +30,15 @@ import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -103,13 +107,27 @@ import javax.inject.Inject;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("会员卡");
-    toolbar.inflateMenu(R.menu.menu_search);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        showSearch(tl);
-        return true;
-      }
-    });
+    toolbar.inflateMenu(R.menu.menu_search_flow_searchview);
+    RxMenuItem.clicks(toolbar.getMenu().getItem(0))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          showSearch(tl);
+        }
+      });
+    RxMenuItem.clicks(toolbar.getMenu().getItem(1))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          showSelectSheet(null, Arrays.asList("会员卡种类管理"), new AdapterView.OnItemClickListener() {
+            @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+              routeTo("card","/cardtpl/list/",null);
+            }
+          });
+        }
+      });
     initSearch(tl,"输入会员姓名或手机号搜索",2000);
 
   }
@@ -154,7 +172,7 @@ import javax.inject.Inject;
    * 余额不足卡提醒
    */
   @OnClick(R2.id.btn_card_balance) public void onBtnCardBalanceClicked() {
-
+    routeTo("/balance/",null);
   }
 
   /**

@@ -3,9 +3,7 @@ package cn.qingchengfit.staffkit.views.student.followup;
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.Student;
 import cn.qingchengfit.staffkit.R;
@@ -66,9 +64,9 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
     }
 
     @Override
-    public MyBindingFelxibleViewHolder createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater, final ViewGroup parent) {
+    public MyBindingFelxibleViewHolder createViewHolder(View view,final FlexibleAdapter adapter) {
         cn.qingchengfit.staffkit.databinding.ItemStudentFollowUpStateBinding binding =
-            DataBindingUtil.inflate(inflater, getLayoutRes(), parent, false);
+            DataBindingUtil.bind(view);
         MyBindingFelxibleViewHolder holder = new MyBindingFelxibleViewHolder(binding.getRoot(), adapter);
         holder.setBinding(binding);
         binding.tvStudentContactTa.setOnClickListener(new View.OnClickListener() {

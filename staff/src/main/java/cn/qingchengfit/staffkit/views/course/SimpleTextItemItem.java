@@ -1,9 +1,7 @@
 package cn.qingchengfit.staffkit.views.course;
 
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +31,10 @@ public class SimpleTextItemItem extends AbstractFlexibleItem<SimpleTextItemItem.
         gravity = g;
     }
 
+    public String getText() {
+        return text;
+    }
+
     @Override public int getLayoutRes() {
         return R.layout.item_simple_text;
     }
@@ -48,7 +50,7 @@ public class SimpleTextItemItem extends AbstractFlexibleItem<SimpleTextItemItem.
     }
 
     @Override public boolean equals(Object o) {
-        return false;
+        return o instanceof SimpleTextItemItem && ((SimpleTextItemItem) o).getText().equalsIgnoreCase(text);
     }
 
     public class SimpleTextItemVH extends FlexibleViewHolder {

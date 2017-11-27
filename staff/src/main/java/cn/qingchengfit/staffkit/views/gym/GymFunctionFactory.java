@@ -15,7 +15,6 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.QRActivity;
-import cn.qingchengfit.staffkit.views.card.CardActivity;
 import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
 import cn.qingchengfit.staffkit.views.schedule.ScheduleActivity;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
@@ -423,8 +422,9 @@ public class GymFunctionFactory {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
-                Intent toCard = new Intent(fragment.getActivity(), CardActivity.class);
-                fragment.startActivity(toCard);
+                //Intent toCard = new Intent(fragment.getActivity(), CardActivity.class);
+                //fragment.startActivity(toCard);
+                fragment.routeTo("card","/list/home/",null);
                 return;
             case MODULE_STUDENT_BODY_TEST:
                 goQrScan(fragment, module, null, coachService);

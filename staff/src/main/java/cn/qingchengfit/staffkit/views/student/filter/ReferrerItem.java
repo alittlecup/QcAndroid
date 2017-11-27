@@ -2,9 +2,7 @@ package cn.qingchengfit.staffkit.views.student.filter;
 
 import android.databinding.DataBindingUtil;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.MyBindingFelxibleViewHolder;
@@ -59,8 +57,8 @@ public class ReferrerItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
 
     @Override
     public MyBindingFelxibleViewHolder createViewHolder(final View view, FlexibleAdapter adapter) {
-        cn.qingchengfit.staffkit.databinding.ItemReferrerBinding binding = DataBindingUtil.inflate(inflater, getLayoutRes(), parent, false);
-        MyBindingFelxibleViewHolder holder = new MyBindingFelxibleViewHolder(binding.getRoot(), adapter);
+        cn.qingchengfit.staffkit.databinding.ItemReferrerBinding binding = DataBindingUtil.bind(view);
+        MyBindingFelxibleViewHolder holder = new MyBindingFelxibleViewHolder(view, adapter);
         holder.setBinding(binding);
         return holder;
     }

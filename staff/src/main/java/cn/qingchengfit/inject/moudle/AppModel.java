@@ -2,6 +2,7 @@ package cn.qingchengfit.inject.moudle;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.CardModel;
 import cn.qingchengfit.model.SaasModelImpl;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -20,7 +21,9 @@ import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateD
 import cn.qingchengfit.saasbase.course.batch.network.response.SingleBatchWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.billImpl;
@@ -29,6 +32,7 @@ import cn.qingchengfit.saasbase.routers.commonImpl;
 import cn.qingchengfit.saasbase.routers.courseImpl;
 import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.studentImpl;
+import cn.qingchengfit.saasbase.staff.beans.response.SalerDataWrap;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
@@ -67,7 +71,7 @@ import rx.Observable;
   private BaseRouter router;
   private QcRestRepository qcrestRepository;
   private QcDbManager qcDbManager;
-
+  private ICardModel cardModel;
   public AppModel() {
   }
 
@@ -82,6 +86,7 @@ import rx.Observable;
     this.router = router;
     this.qcrestRepository = qcrestRepository;
     this.qcDbManager = qcDbManager;
+    cardModel = new CardModel(qcrestRepository,gymWrapper,loginStatus);
   }
 
   @Provides App provideApplicationContext() {
@@ -155,6 +160,10 @@ import rx.Observable;
       }
 
       @Override public Observable<QcDataResponse<PostionListWrap>> getPositions() {
+        return null;
+      }
+
+      @Override public Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid) {
         return null;
       }
     };
@@ -245,5 +254,20 @@ import rx.Observable;
       }
     };
   }
+
+  @Provides public ICardModel provideCardModel(){
+    return cardModel;
+  }
+
+  @Provides public IPermissionModel providePermissModel(){
+    return new IPermissionModel() {
+      @Override public boolean check(String permission) {
+        return true;
+      }
+    };
+  }
+
+
+
 
 }

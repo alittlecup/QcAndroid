@@ -50,6 +50,7 @@ public class SignInActivity extends BaseActivity implements FragCallBack, SignIn
 
         ButterKnife.bind(this);
         presenter.attachView(this);
+        presenter.onNewSps();
 
         presenter.getSignInConfig();
         presenter.getSigninUrl();

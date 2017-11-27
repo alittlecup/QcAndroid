@@ -7,6 +7,7 @@
   <string name="cardtype_date">期限类型</string>
   <string name="title_cardtpl_types">会员卡种类</string>
 
+  <string name="filter_card_tips">显示符合以下条件的会员卡</string>
 
   <string name="card_total_count_d" formatted="false">会员卡总数：%d</string>
 

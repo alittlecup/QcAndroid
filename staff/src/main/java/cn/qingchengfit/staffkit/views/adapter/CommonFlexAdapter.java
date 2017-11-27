@@ -1,15 +1,10 @@
 package cn.qingchengfit.staffkit.views.adapter;
 
-import android.animation.Animator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArrayMap;
-import android.view.View;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.ShopCommentItem;
-import cn.qingchengfit.staffkit.views.allotsales.choose.ChooseSalerItem;
-import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import java.util.ArrayList;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.List;
 
 /**
@@ -32,7 +27,7 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/1.
  */
-public class CommonFlexAdapter extends FlexibleAdapter {
+public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
     private int status = 0;
     private ArrayMap<String, Object> Tags = new ArrayMap<>();
 
@@ -54,23 +49,25 @@ public class CommonFlexAdapter extends FlexibleAdapter {
         return Tags.get(key);
     }
 
-    @Override public List<Animator> getAnimators(View itemView, int position, boolean isSelected) {
-        List<Animator> animators = new ArrayList<Animator>();
-        if (getItem(position) instanceof ShopCommentItem) {
-            if (position > positionOld) //inverted to have items animated up-side-down
-            {
-                addSlideInFromBottomAnimator(animators, itemView);
-            } else {
-                addSlideInFromTopAnimator(animators, itemView);
-            }
-        } else if (getItem(position) instanceof ChooseSalerItem || getItem(position) instanceof GymFuntionItem) {
-            //            if (position > positionOld)
-            addScaleInAnimator(animators, itemView, 0.5f);
-        }
-        if (position != positionOld) positionOld = position;
 
-        return animators;
-    }
+
+    //@Override public List<Animator> getAnimators(View itemView, int position, boolean isSelected) {
+    //    List<Animator> animators = new ArrayList<Animator>();
+    //    if (getItem(position) instanceof ShopCommentItem) {
+    //        if (position > positionOld) //inverted to have items animated up-side-down
+    //        {
+    //            addSlideInFromBottomAnimator(animators, itemView);
+    //        } else {
+    //            addSlideInFromTopAnimator(animators, itemView);
+    //        }
+    //    } else if (getItem(position) instanceof ChooseSalerItem || getItem(position) instanceof GymFuntionItem) {
+    //        //            if (position > positionOld)
+    //        addScaleInAnimator(animators, itemView, 0.5f);
+    //    }
+    //    if (position != positionOld) positionOld = position;
+    //
+    //    return animators;
+    //}
 
     @Override public boolean hasNewSearchText(String newText) {
         //return super.hasNewSearchText(newText);

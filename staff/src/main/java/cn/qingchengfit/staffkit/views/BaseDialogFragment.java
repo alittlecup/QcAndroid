@@ -69,6 +69,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     protected void delegatePresenter(Presenter presenter, PView pView) {
         delegate = new PresenterDelegate(presenter);
+        delegate.onNewSps();
         delegate.attachView(pView);
     }
 

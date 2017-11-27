@@ -1,9 +1,7 @@
 package cn.qingchengfit.staffkit.views.abstractflexibleitem;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +51,7 @@ public class AllCourseImageHeaderItem extends AbstractHeaderItem {
     }
 
     @Override public RecyclerView.ViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
-        return new CourseImageHeaderHolder(inflater.inflate(R.layout.item_all_course_image_header, parent, false), adapter);
+        return new CourseImageHeaderHolder(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, RecyclerView.ViewHolder holder, int position, List payloads) {

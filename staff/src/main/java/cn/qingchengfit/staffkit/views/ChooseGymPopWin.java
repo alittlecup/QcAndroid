@@ -12,7 +12,7 @@ import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.utils.MeasureUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -51,8 +51,10 @@ public class ChooseGymPopWin extends PopupWindow implements FlexibleAdapter.OnIt
         recyclerView.setBackgroundResource(R.drawable.bubble_down);
         recyclerView.setPadding(0, 0, 10, 0);
         recyclerView.setLayoutManager(new SmoothScrollLinearLayoutManager(context));
-        recyclerView.addItemDecoration(new DividerItemDecoration(context, R.drawable.divider_horizon_left_44dp, 1));
-        //recyclerView.getLayoutParams().height = MeasureUtils.dpToPx(197f,context.getResources());
+
+        recyclerView.addItemDecoration(new FlexibleItemDecoration(context)
+          .withDivider(R.drawable.divider_horizon_left_44dp)
+          .withOffset(1).withBottomEdge(true));        //recyclerView.getLayoutParams().height = MeasureUtils.dpToPx(197f,context.getResources());
         //recyclerView.getLayoutParams().width = MeasureUtils.dpToPx(210f,context.getResources());
         adapter = new CommonFlexAdapter(mDatas, this);
         adapter.setMode(SelectableAdapter.Mode.SINGLE);

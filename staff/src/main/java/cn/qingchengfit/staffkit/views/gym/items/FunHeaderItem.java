@@ -1,8 +1,6 @@
 package cn.qingchengfit.staffkit.views.gym.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +19,10 @@ public class FunHeaderItem extends AbstractHeaderItem<FunHeaderItem.FunHeaderVH>
         this.txt = txt;
     }
 
+    public String getTxt() {
+        return txt;
+    }
+
     @Override public int getLayoutRes() {
         return R.layout.item_fun_header;
     }
@@ -34,14 +36,14 @@ public class FunHeaderItem extends AbstractHeaderItem<FunHeaderItem.FunHeaderVH>
     }
 
     @Override public boolean equals(Object o) {
-        return false;
+        return o instanceof FunHeaderItem && ((FunHeaderItem) o).getTxt().equalsIgnoreCase(txt);
     }
 
     public class FunHeaderVH extends FlexibleViewHolder {
         @BindView(R.id.title) TextView title;
 
         public FunHeaderVH(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
+            super(view, adapter ,true);
             ButterKnife.bind(this, view);
         }
     }

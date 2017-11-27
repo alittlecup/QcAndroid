@@ -103,7 +103,7 @@ public class StudentsCardsFragment extends BaseFragment implements StudentsCards
         for (int i = 0; i < cards.size(); i++) {
             datas.add(new CardItem(cards.get(i)));
         }
-        adatper.notifyDataSetChanged();
+        adatper.updateDataSet(datas);
         recycleview.setNoData(datas.size() == 0);
     }
 

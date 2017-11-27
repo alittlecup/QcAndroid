@@ -1,16 +1,11 @@
 package com.tencent.qcloud.timchat.ui.qcchat;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendshipManager;
@@ -25,13 +20,11 @@ import com.tencent.qcloud.timchat.chatutils.TimeUtil;
 import com.tencent.qcloud.timchat.common.AppData;
 import com.tencent.qcloud.timchat.widget.CircleImageView;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by fb on 2017/3/17.
@@ -90,6 +83,11 @@ public class ConversationFlexItem extends AbstractFlexibleItem<ConversationFlexI
 
     }
 
+
+    @Override public int getLayoutRes() {
+        return R.layout.item_conversation;
+    }
+
     private void getGroupAvator(List<String> list, final ConversationViewHolder holder){
         TIMGroupManager.getInstance().getGroupDetailInfo(list, new TIMValueCallBack<List<TIMGroupDetailInfo>>() {
             @Override
@@ -144,7 +142,7 @@ public class ConversationFlexItem extends AbstractFlexibleItem<ConversationFlexI
 
     @Override
     public ConversationViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
-        ConversationViewHolder vh = new ConversationViewHolder(inflater.inflate(R.layout.item_conversation, parent, false), adapter);
+        ConversationViewHolder vh = new ConversationViewHolder(view, adapter);
         return vh;
     }
 

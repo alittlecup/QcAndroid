@@ -79,9 +79,6 @@ public class RenewalHistoryFragment extends BaseFragment
         if (getActivity() instanceof GymActivity) {
             recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
             recycleview.setRefreshble(false);
-            recycleview.addItemDecoration(
-                new eu.davidea.flexibleadapter.common.DividerItemDecoration(getContext(), R.drawable.divider_line_vertial, 10));
-            //            recycleview.addItemDecoration();
             mCommonFlexAdapter = new CommonFlexAdapter(mDatas, this);
             mCommonFlexAdapter.setEndlessScrollListener(this, new ProgressItem(getContext()));
             recycleview.setNodataHint("暂无续费记录");

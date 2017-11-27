@@ -22,7 +22,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.AlphabetLessView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFilterable;
 import java.util.ArrayList;
@@ -69,7 +69,9 @@ public class ChooseStudentListFragment extends BaseFragment
         unbinder = ButterKnife.bind(this, view);
         final LinearLayoutManager sm = new LinearLayoutManager(getContext());
         recyclerview.setLayoutManager(sm);
-        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.divider_horizon_left_44dp, 2));
+        recyclerview.addItemDecoration(new FlexibleItemDecoration(getContext())
+          .withDivider(R.drawable.divider_horizon_left_44dp,R.layout.item_choose_student)
+          .withOffset(1).withBottomEdge(true));
         recyclerview.setNestedScrollingEnabled(false);
         adapter = new CommonFlexAdapter(items, this);
         adapter.setDisplayHeadersAtStartUp(true);

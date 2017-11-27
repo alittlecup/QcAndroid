@@ -1,27 +1,32 @@
 package cn.qingchengfit.staffkit.views.card.cardlist;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.body.CardBalanceNotifyBody;
 import cn.qingchengfit.model.responese.NotifyIsOpen;
+import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.SwitcherLayout;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 /**
@@ -42,6 +47,9 @@ public class ChangeAutoNotifyFragment extends BaseFragment implements ChangeAuto
     @BindView(R.id.ll_store_condition) ViewGroup llStore;
     @BindView(R.id.ll_second) ViewGroup llSecond;
     @BindView(R.id.ll_time_condition) ViewGroup llTime;
+    @BindView(R2.id.toolbar) Toolbar toolbar;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+
     @Inject ChangeAutoNotifyPresenter changeAutoNotifyPresenter;
     private String storeValue;
     private String secondValue;
@@ -49,24 +57,30 @@ public class ChangeAutoNotifyFragment extends BaseFragment implements ChangeAuto
     private List<CardBalanceNotifyBody.ConfigsBean> configsBeanList = new ArrayList<>();
     private CardBalanceNotifyBody.ConfigsBean configsBean;
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //
-    }
+
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_change_notify, container, false);
+        View view = inflater.inflate(R.layout.fragment_saas_change_notify, container, false);
         unbinder = ButterKnife.bind(this, view);
-        mCallbackActivity.setToolbar("修改自动提醒设置", false, null, R.menu.menu_save, new Toolbar.OnMenuItemClickListener() {
-            @Override public boolean onMenuItemClick(MenuItem item) {
-                if (saveSetting()) changeAutoNotifyPresenter.putBalanceRemindCondition(configsBeanList);
-                return true;
-            }
-        });
+        initToolbar(toolbar);
         initData();
         initView();
         return view;
+    }
+
+    @Override public void initToolbar(@NonNull Toolbar toolbar) {
+        super.initToolbar(toolbar);
+        toolbarTitle.setText("修改自动提醒设置");
+        toolbar.inflateMenu(R.menu.menu_save);
+        RxMenuItem.clicks(toolbar.getMenu().getItem(0))
+          .throttleFirst(500, TimeUnit.MILLISECONDS)
+          .subscribe(new BusSubscribe<Void>() {
+              @Override public void onNext(Void aVoid) {
+                  if (saveSetting()) changeAutoNotifyPresenter.putBalanceRemindCondition(configsBeanList);
+
+
+          }});
     }
 
     private void initView() {

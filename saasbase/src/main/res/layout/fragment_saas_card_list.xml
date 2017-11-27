@@ -66,14 +66,14 @@
   <cn.qingchengfit.widgets.QcRadioGroup
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
-      android:background="@color/toolbar"
+      android:background="@drawable/bg_click"
       android:divider="@drawable/divider_linearlayout_horizon"
       android:orientation="horizontal"
       android:showDividers="middle"
       >
 
     <cn.qingchengfit.widgets.QcFilterToggle
-        style="@style/QcFilterStyle_Dark"
+        style="@style/QcFilterStyle"
         android:id="@+id/filter_tpl"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -82,7 +82,7 @@
         />
 
     <cn.qingchengfit.widgets.QcFilterToggle
-        style="@style/QcFilterStyle_Dark"
+        style="@style/QcFilterStyle"
         android:id="@+id/filter_status"
         android:layout_width="0dp"
         android:layout_height="match_parent"

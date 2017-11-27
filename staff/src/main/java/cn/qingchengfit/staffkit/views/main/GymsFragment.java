@@ -152,7 +152,7 @@ public class GymsFragment extends BaseFragment implements FlexibleAdapter.OnItem
             adapterDatas.add(new SimpleTextItemItem("该品牌下暂无场馆", Gravity.CENTER));
             adapterDatas.add(new ListAddItem("添加场馆"));
         }
-        mAdapter.notifyDataSetChanged();
+        mAdapter.updateDataSet(adapterDatas);
     }
 
     @Override public void onShowError(String e) {

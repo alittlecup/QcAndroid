@@ -1,8 +1,6 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -61,7 +59,9 @@ public class CoachServiceItem extends AbstractFlexibleItem<CoachServiceItem.Coac
     }
 
     @Override public boolean equals(Object o) {
-        return false;
+        if (o instanceof CoachServiceItem){
+            return ((CoachServiceItem) o).getCoachService().getId().equalsIgnoreCase(coachService.getId());
+        }else return false;
     }
 
     @Override public int getLayoutRes() {

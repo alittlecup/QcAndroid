@@ -46,6 +46,7 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,8 @@ import rx.schedulers.Schedulers;
  * 签到列表
  * Created by yangming on 16/8/25.
  */
-public class SignInListFragment extends BaseFragment implements SignInListPresenter.SignInListView {
+public class SignInListFragment extends BaseFragment implements SignInListPresenter.SignInListView,
+  FlexibleAdapter.OnUpdateListener{
 
     public final static int RESULT_LOCKER = 5;
     @BindView(R.id.ll_signin_qrcode) LinearLayout llSigninQrcode;
@@ -369,5 +371,9 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
     }
 
     @Override public void onShowError(@StringRes int e) {
+    }
+
+    @Override public void onUpdateEmptyView(int size) {
+            recycleview.setNoData(items.size() == 0);
     }
 }

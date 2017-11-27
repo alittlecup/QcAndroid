@@ -77,6 +77,7 @@ dependencies {
   api 'com.nineoldandroids:library:2.4.0'
   api 'com.github.chrisbanes:PhotoView:1.2.6'
   api 'eu.davidea:flexible-adapter:5.0.0-rc3'
+  api 'eu.davidea:flexible-adapter-databinding:1.0.0-b2'
   api 'com.github.bumptech.glide:glide:3.7.0'
   api 'com.squareup.sqlbrite:sqlbrite:1.1.1'
   api 'com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar'

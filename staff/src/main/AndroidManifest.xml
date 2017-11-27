@@ -855,9 +855,23 @@
             android:host="course"
             android:scheme="qcstaff"
             />
-
       </intent-filter>
+    </activity>
+    <activity
+        android:name=".card.StaffCardActivity"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
 
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="card"
+            android:scheme="qcstaff"
+            />
+      </intent-filter>
     </activity>
 
   </application>

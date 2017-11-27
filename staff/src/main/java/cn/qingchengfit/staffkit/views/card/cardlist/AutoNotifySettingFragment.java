@@ -43,7 +43,7 @@ public class AutoNotifySettingFragment extends BaseFragment implements ChangeAut
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_auto_notify, container, false);
+        View view = inflater.inflate(R.layout.fragment_saas_auto_notify, container, false);
         unbinder = ButterKnife.bind(this, view);
         changeAutoNotifyPresenter.setOnGetNotifySettingListener(this);
         changeAutoNotifyPresenter.getNotifySettingRequest();

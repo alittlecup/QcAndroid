@@ -17,7 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.items.FilterHeadItem;
@@ -316,8 +315,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
 
   }
 
-  @Override public void onStickyHeaderChange(int i) {
-  }
+
 
   /**
    * 展示筛选项
@@ -483,6 +481,10 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   }
 
   @Override public void onPermission(boolean has) {
+
+  }
+
+  @Override public void onStickyHeaderChange(int newPosition, int oldPosition) {
 
   }
 }

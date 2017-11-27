@@ -109,7 +109,7 @@ public class ChatChooseInGymFragment extends BaseFragment
         //清空数据
         RxBusAdd(EventFresh.class).subscribe(new Action1<EventFresh>() {
             @Override public void call(EventFresh eventFresh) {
-                adapter.notifyDataSetChanged();
+                adapter.clear();
                 checkbox.setChecked(false);
             }
         });

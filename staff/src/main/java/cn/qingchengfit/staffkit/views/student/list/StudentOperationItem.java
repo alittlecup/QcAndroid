@@ -3,10 +3,7 @@ package cn.qingchengfit.staffkit.views.student.list;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -42,8 +39,8 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
 
     @Override public StudentOperationVH createViewHolder(View view, FlexibleAdapter adapter) {
         StudentOperationVH holder = new StudentOperationVH(view, adapter);
-        this.width = parent.getWidth();
-        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(parent.getWidth() / 4, parent.getHeight() / 2));
+        this.width = view.getWidth();
+        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(view.getWidth() / 4, view.getHeight() / 2));
         return holder;
     }
 

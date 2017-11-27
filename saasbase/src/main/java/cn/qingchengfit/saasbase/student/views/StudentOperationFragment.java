@@ -77,7 +77,7 @@ public class StudentOperationFragment extends BaseFragment
                         false));
                 datas.add(new StudentOperationItem(R.drawable.vector_student_management_tag,
                     R.string.qc_student_vip, proGym, false));
-                if (mCommonFlexAdapter != null) mCommonFlexAdapter.notifyDataSetChanged();
+                if (mCommonFlexAdapter != null) mCommonFlexAdapter.updateDataSet(datas);
             }
         }));
 

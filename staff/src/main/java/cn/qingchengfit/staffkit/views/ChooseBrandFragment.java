@@ -167,8 +167,9 @@ public class ChooseBrandFragment extends BaseDialogFragment implements FlexibleA
                             }
                         }
                         mDatas.add(new ListAddItem(getString(R.string.create_brand)));
-                        mCommonFlexAdapter.toggleSelection(pos);
+                        mCommonFlexAdapter.updateDataSet(mDatas);
                         mCommonFlexAdapter.notifyDataSetChanged();
+                        mCommonFlexAdapter.toggleSelection(pos);
                     }
                 }
             }, new Action1<Throwable>() {
