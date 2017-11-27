@@ -8,6 +8,7 @@ import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.FilterCardBean;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.lang.annotation.Retention;
@@ -107,7 +108,7 @@ public class FilterHeadPresenter extends BasePresenter {
                         onFilterConditionListener.onLoadFinish();
                     }
                 }
-            }));
+            }, new NetWorkThrowable()));
     }
 
     public List<FilterCardBean> getParentList() {

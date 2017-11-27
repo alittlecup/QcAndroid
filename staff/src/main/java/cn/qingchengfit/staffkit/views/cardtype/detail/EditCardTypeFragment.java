@@ -300,7 +300,8 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
 
   @OnClick(R.id.input_card_protocol) public void onOpenProtocol() {
     if (card_tpl != null && card_tpl.has_service_term) {
-      CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true, card_tpl.id);
+      CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true,
+          "", card_tpl.id);
     }else{
       body.name = cardname.getContent();
       Intent intent = new Intent(getActivity(), QRActivity.class);
