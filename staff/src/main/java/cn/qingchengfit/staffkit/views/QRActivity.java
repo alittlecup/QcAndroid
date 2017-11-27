@@ -56,7 +56,9 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String MODULE_GIFT = "giftcard";
     public static final String MODULE_COMMODITY = "commodity/list";
     public static final String MODULE_MODIFY_CARD_PROTOCOL = "term/edit";
-    public static final String MODULE_ADD_CARD_PROTOCOL = "term/add";
+    public static final String MODULE_ADD_CARD_PROTOCOL_SINGLE = "term/add";
+    public static final String MODULE_ADD_CARD_PROTOCOL = "/card_tpl/add";
+    public static final String CARD_TPL_ID = "card_tpl_id";
 
 
     //    @BindView(R.id.qrdecoderview)
@@ -78,6 +80,13 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static void start(Context context,String module) {
         Intent starter = new Intent(context, QRActivity.class);
         starter.putExtra(LINK_MODULE, module);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context,String module, String tpl_id) {
+        Intent starter = new Intent(context, QRActivity.class);
+        starter.putExtra(LINK_MODULE, module);
+        starter.putExtra(CARD_TPL_ID, tpl_id);
         context.startActivity(starter);
     }
 

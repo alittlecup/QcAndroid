@@ -29,6 +29,15 @@ public class CardProtocolActivity extends WebActivity implements Serializable{
     context.startActivity(intent);
   }
 
+  public static void startWeb(String url, Context context, boolean isHaveModify, String content, String card_tpl_id) {
+    Intent intent = new Intent(context, CardProtocolActivity.class);
+    intent.putExtra("url", url);
+    intent.putExtra("isHave", isHaveModify);
+    intent.putExtra("content", content);
+    intent.putExtra("card_tpl_id", card_tpl_id);
+    context.startActivity(intent);
+  }
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     String toUrl = getIntent().getStringExtra("url");
@@ -38,7 +47,7 @@ public class CardProtocolActivity extends WebActivity implements Serializable{
       webfrag = CardProtocolWebFragment.newInstance(toUrl, R.menu.menu_edit, new CardProtocolWebFragment.OnMenuClickListener() {
         @Override public void onMenuClick() {
           Intent intent = new Intent(CardProtocolActivity.this, QRActivity.class);
-          intent.putExtra(QRActivity.LINK_MODULE, QRActivity.MODULE_MODIFY_CARD_PROTOCOL);
+          intent.putExtra(QRActivity.LINK_MODULE, getString(R.string.qr_code_2web_edit_card, getIntent().getStringExtra("card_tpl_id")));
           startActivity(intent);
         }
       });
