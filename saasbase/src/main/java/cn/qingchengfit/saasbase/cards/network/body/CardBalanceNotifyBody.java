@@ -15,14 +15,14 @@ public class CardBalanceNotifyBody {
     }
 
     public static class ConfigsBean {
-        private int id;
+        private String id;
         private int value;
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 

@@ -859,6 +859,7 @@
     </activity>
     <activity
         android:name=".card.StaffCardActivity"
+        android:theme="@style/QcAppTheme"
         android:screenOrientation="portrait"
         >
       <intent-filter>

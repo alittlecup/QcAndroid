@@ -6,8 +6,10 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.bean.BalanceDetail;
 import cn.qingchengfit.saasbase.cards.bean.Card;
+import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.network.response.BalanceConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
@@ -24,6 +26,9 @@ public class CardBalancePresenter extends BasePresenter<CardBalancePresenter.MVP
 
   @Inject GymWrapper gymWrapper;
   @Inject ICardModel cardModel;
+  public static final String QUERY_STORE_BALANCE = "card_balance_remind_value";
+  public static final String QUERY_SECOND_BALANCE = "card_balance_remind_times";
+  public static final String QUERY_DAYS_BALANCE = "card_balance_remind_days";
   private HashMap<String,Object> p = new HashMap<>();
   private static final String QUERY_BANALCE_KEYS = "card_balance_remind_days,card_balance_remind_value,card_balance_remind_times";
 
@@ -63,11 +68,10 @@ public class CardBalancePresenter extends BasePresenter<CardBalancePresenter.MVP
   }
   int curPage =1, totalPage =1;
 
-  // TODO: 2017/11/27 这里应该把接口替换成余额不足卡
   public void queryAllCards() {
     if (curPage <= totalPage) {
       p.put("page", curPage);
-      RxRegiste(cardModel.qcGetAllCard(ListUtils.mapRemoveNull(p))
+      RxRegiste(cardModel.qcGetBalanceCard(ListUtils.mapRemoveNull(p))
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -113,8 +117,31 @@ public class CardBalancePresenter extends BasePresenter<CardBalancePresenter.MVP
           if (ResponseConstant.checkSuccess(balanceDetailQcResponseData)) {
               mvpView.onGetBalance(balanceDetailQcResponseData.data.balances);
           } else {
-
+              mvpView.onShowError(balanceDetailQcResponseData.getMsg());
           }
+        }
+      }));
+  }
+
+  public void putBalanceRemindCondition(List<CardBalanceNotifyBody.ConfigsBean> configs) {
+    CardBalanceNotifyBody cardBalanceNotifyBody = new CardBalanceNotifyBody();
+    cardBalanceNotifyBody.setConfigs(configs);
+    RxRegiste(cardModel
+      .qcPostBalanceCondition(cardBalanceNotifyBody)
+      .onBackpressureBuffer()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Action1<QcResponse>() {
+        @Override public void call(QcResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            queryBalanceCondition();
+          } else {
+            mvpView.onShowError(qcResponse.getMsg());
+          }
+        }
+      }, new Action1<Throwable>() {
+        @Override public void call(Throwable throwable) {
+          mvpView.onShowError(throwable.getMessage());
         }
       }));
   }

@@ -6,7 +6,6 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
@@ -146,6 +145,12 @@ public class CardModel implements ICardModel {
     return posApi.getAllCards(loginStatus.staff_id(), params);
   }
 
+  @Override
+  public Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard(HashMap<String, Object> params) {
+    params.putAll(gymWrapper.getParams());
+    return posApi.qcGetBalanceCard(loginStatus.staff_id(),params);
+  }
+
   @Override public Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard() {
     return null;
   }
@@ -159,18 +164,23 @@ public class CardModel implements ICardModel {
     return posApi.editCardInfo(loginStatus.staff_id(), cardid, p);
   }
 
-  @Override public Observable<QcResponse> qcChangeAutoNotify(CardBalanceNotifyBody body) {
-    return null;
+  @Override public Observable<QcDataResponse> qcChangeAutoNotify(CardBalanceNotifyBody body) {
+    return posApi.qcChangeAutoNotify(loginStatus.staff_id(),gymWrapper.getParams(),body);
   }
 
   @Override public Observable<QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(
     HashMap<String, Object> params) {
-    return null;
+    params.putAll(gymWrapper.getParams());
+    return posApi.qcGetNotifySetting(loginStatus.staff_id(),params);
   }
 
   @Override public Observable<QcDataResponse<BalanceConfigs>> qcGetBalanceCondition(
     HashMap<String, Object> params, String keys) {
     params.putAll(gymWrapper.getParams());
     return posApi.qcGetBalanceCondition(loginStatus.staff_id(), params, keys);
+  }
+
+  @Override public Observable<QcDataResponse> qcPostBalanceCondition(CardBalanceNotifyBody body) {
+    return posApi.qcPostBalanceCondition(loginStatus.staff_id(),gymWrapper.getParams(),body);
   }
 }

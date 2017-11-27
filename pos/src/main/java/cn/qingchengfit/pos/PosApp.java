@@ -64,6 +64,7 @@ public class PosApp extends Application implements HasActivityInjector, HasSuppo
     context = this;
   }
 
+
   @Override protected void attachBaseContext(Context base) {
     super.attachBaseContext(base);
     MultiDex.install(this);

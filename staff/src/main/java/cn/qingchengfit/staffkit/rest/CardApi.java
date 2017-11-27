@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.rest;
 
 import cn.qingchengfit.model.body.ShopsBody;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
@@ -11,6 +12,7 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
+import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import java.util.HashMap;
@@ -57,7 +59,8 @@ public interface CardApi {
   @GET("/api/staffs/{id}/cards/all/?order_by=-id")
   rx.Observable<QcDataResponse<CardListWrap>> getAllCards(@Path("id") String staffid,
     @QueryMap HashMap<String, Object> params);
-
+  @GET("api/staffs/{id}/balance/cards/") rx.Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard(@Path("id") String staffid,
+    @QueryMap HashMap<String, Object> params);
   //获取筛选列表
   @GET("/api/staffs/{id}/filter/cardtpls/?show_all=1")
   rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardFilterCondition(@Path("id") String staff,
@@ -154,6 +157,17 @@ public interface CardApi {
   //余额条件
   @GET("/api/v2/staffs/{id}/users/configs/") rx.Observable<QcDataResponse<cn.qingchengfit.saasbase.cards.network.response.BalanceConfigs>> qcGetBalanceCondition(
     @Path("id") String staffId, @QueryMap HashMap<String, Object> params, @Query("keys") String permission);
+  //修改余额不足提醒规则
+  @PUT("api/v2/staffs/{staff_id}/users/configs/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcPostBalanceCondition(
+    @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body
+    CardBalanceNotifyBody body);
 
-
+  //获取自动提醒配置
+  @GET("api/staffs/{id}/shops/configs/")
+  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(@Path("id") String staffId,
+    @QueryMap HashMap<String, Object> params);
+  //修改自动提醒短信规则
+  @PUT("api/staffs/{staff_id}/shops/configs/") rx.Observable<QcDataResponse> qcChangeAutoNotify(
+    @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body
+    CardBalanceNotifyBody body);
 }

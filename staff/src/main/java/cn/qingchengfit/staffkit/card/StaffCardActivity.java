@@ -14,11 +14,13 @@ import cn.qingchengfit.saasbase.cards.views.CardTplOptionFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
 import cn.qingchengfit.saasbase.cards.views.CardtplAddFragment;
 import cn.qingchengfit.saasbase.cards.views.CardtplOptionAddFragment;
+import cn.qingchengfit.saasbase.cards.views.ChangeAutoNotifyFragment;
 import cn.qingchengfit.saasbase.cards.views.ChooseCardTplForBuyCardFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 @Trunk(fragments = {
   CardTplsHomeInGymFragment.class, CardTplDetailFragment.class, AutoNotifySettingFragment.class,CardBalanceFragment.class,
+  ChangeAutoNotifyFragment.class,
   ChooseCardTplForBuyCardFragment.class, CardBuyFragment.class, CardListHomeFragment.class,
   CardFilterTplFragment.class, CardDetailFragment.class, CardtplOptionAddFragment.class,
   CardTplOptionFragment.class, CardChargeFragment.class, CardtplAddFragment.class,

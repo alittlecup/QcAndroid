@@ -11,7 +11,7 @@
   <include layout="@layout/common_simple_toolbar"/>
   <include layout="@layout/divider_grey"/>
 
-  <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+  <cn.qingchengfit.widgets.SwitcherLayout
       android:id="@+id/sw_store_notify"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -53,7 +53,7 @@
 
   </RelativeLayout>
 
-  <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+  <cn.qingchengfit.widgets.SwitcherLayout
       android:id="@+id/sw_second_notify"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -95,7 +95,7 @@
 
   </RelativeLayout>
 
-  <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+  <cn.qingchengfit.widgets.SwitcherLayout
       android:id="@+id/sw_time_notify"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

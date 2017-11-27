@@ -33,6 +33,7 @@ import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.PresenterDelegate;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -181,7 +182,8 @@ public abstract class BaseFragment extends RxFragment
   }
 
   public void initToolbar(@NonNull Toolbar toolbar) {
-    toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
+    if (!CompatUtils.less21())
+      toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         getActivity().onBackPressed();

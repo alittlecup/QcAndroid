@@ -22,7 +22,6 @@
     <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
     <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
     <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
-
   </style>
 
   <style name="QcAppThemeForWeb" parent="Theme.AppCompat.Light.NoActionBar">
@@ -146,7 +145,6 @@
     <item name="android:height">38dp</item>
     <item name="android:paddingLeft">8dp</item>
     <item name="android:paddingRight">8dp</item>
-    <item name="android:elevation">0dp</item>
   </style>
 
   <style name="Qc.ScrollviewStyle" parent="android:Widget.ScrollView">

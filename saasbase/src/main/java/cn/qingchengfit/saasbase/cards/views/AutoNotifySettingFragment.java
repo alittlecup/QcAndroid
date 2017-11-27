@@ -16,7 +16,7 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.NotifyIsOpen;
 import cn.qingchengfit.saasbase.cards.presenters.ChangeAutoNotifyPresenter;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.List;
 import javax.inject.Inject;
@@ -34,7 +34,7 @@ public class AutoNotifySettingFragment extends SaasBaseFragment
   private boolean storeIsOpen;
 
   @Inject ChangeAutoNotifyPresenter changeAutoNotifyPresenter;
-  @Inject SerPermisAction serPermisAction;
+  @Inject IPermissionModel serPermisAction;
   private boolean secondIsOpen;
   private boolean timeIsOpen;
   private String storeValue;
@@ -50,6 +50,7 @@ public class AutoNotifySettingFragment extends SaasBaseFragment
     @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_auto_notify, container, false);
     unbinder = ButterKnife.bind(this, view);
+    delegatePresenter(changeAutoNotifyPresenter,this);
     changeAutoNotifyPresenter.setOnGetNotifySettingListener(this);
     changeAutoNotifyPresenter.getNotifySettingRequest();
     initView();
@@ -69,13 +70,8 @@ public class AutoNotifySettingFragment extends SaasBaseFragment
           showAlert(R.string.alert_permission_forbid);
           return;
         }
-
-        getFragmentManager().beginTransaction()
-          .replace(R.id.student_frag, new ChangeAutoNotifyFragment())
-          .addToBackStack(null)
-          .commit();
-      }
-    });
+        routeTo("/autonotify/edit/", null);
+      }});
   }
 
   @Override public void onGetSuccess(List<NotifyIsOpen> notifyIsOpens) {

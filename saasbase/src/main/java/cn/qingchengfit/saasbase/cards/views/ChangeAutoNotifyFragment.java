@@ -34,9 +34,9 @@ import javax.inject.Inject;
 @Leaf(module = "card",path = "/autonotify/edit/")
 public class ChangeAutoNotifyFragment extends BaseFragment implements ChangeAutoNotifyPresenter.OnGetNotifySettingListener {
 
-    private static int storeId, storeValueId;
-    private static int secondId, secondValueId;
-    private static int timeId, timeValueId;
+    private static String storeId, storeValueId;
+    private static String secondId, secondValueId;
+    private static String timeId, timeValueId;
     @BindView(R2.id.sw_store_notify) SwitcherLayout swStoreNotify;
     @BindView(R2.id.sw_second_notify) SwitcherLayout swSecondNotify;
     @BindView(R2.id.sw_time_notify) SwitcherLayout swTimeNotify;
@@ -65,6 +65,7 @@ public class ChangeAutoNotifyFragment extends BaseFragment implements ChangeAuto
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_saas_change_notify, container, false);
         unbinder = ButterKnife.bind(this, view);
+        delegatePresenter(changeAutoNotifyPresenter,this);
         initToolbar(toolbar);
         initData();
         initView();

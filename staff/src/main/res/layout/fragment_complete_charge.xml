@@ -187,7 +187,6 @@
           android:layout_marginTop="@dimen/activity_vertical_margin"
           app:civ_clickable="true"
           app:civ_content="查看"
-          app:civ_lable="@string/card_protocol_content"
           app:civ_showright="true"
           />
     </LinearLayout>

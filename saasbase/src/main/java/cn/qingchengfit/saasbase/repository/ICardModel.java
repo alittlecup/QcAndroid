@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.repository;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
@@ -138,6 +137,8 @@ public interface ICardModel {
    */
   //获取真实卡列表
   rx.Observable<QcDataResponse<CardListWrap>> qcGetAllCard(HashMap<String,Object> params);
+  //获取余额不足的会员卡
+  rx.Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard(HashMap<String,Object> params);
 
 
   //获取余额不足会员卡
@@ -153,7 +154,8 @@ public interface ICardModel {
    */
   rx.Observable<QcDataResponse> editCardInfo(String cardid,HashMap<String,Object> p);
 
-  rx.Observable<QcResponse> qcChangeAutoNotify(CardBalanceNotifyBody body);
+  rx.Observable<QcDataResponse> qcChangeAutoNotify(CardBalanceNotifyBody body);
   rx.Observable<QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(HashMap<String,Object> params);
   rx.Observable<QcDataResponse<BalanceConfigs>> qcGetBalanceCondition(HashMap<String,Object> params,String keys);
+  rx.Observable<QcDataResponse> qcPostBalanceCondition(CardBalanceNotifyBody body);
 }

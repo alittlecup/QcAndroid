@@ -6,7 +6,6 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.pos.net.CardApi;
 import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
@@ -164,6 +163,11 @@ public class CardModel implements ICardModel {
     return posApi.getAllCards(gymWrapper.getGymId(), params);
   }
 
+  @Override
+  public Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard(HashMap<String, Object> params) {
+    return null;
+  }
+
   @Override public Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard() {
     return null;
   }
@@ -176,7 +180,7 @@ public class CardModel implements ICardModel {
     return posApi.editCardInfo(gymWrapper.getGymId(),cardid ,p);
   }
 
-  @Override public Observable<QcResponse> qcChangeAutoNotify(CardBalanceNotifyBody body) {
+  @Override public Observable<QcDataResponse> qcChangeAutoNotify(CardBalanceNotifyBody body) {
     return null;
   }
 
@@ -187,6 +191,10 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse<BalanceConfigs>> qcGetBalanceCondition(
     HashMap<String, Object> params, String keys) {
+    return null;
+  }
+
+  @Override public Observable<QcDataResponse> qcPostBalanceCondition(CardBalanceNotifyBody body) {
     return null;
   }
 }

@@ -48,6 +48,7 @@ import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import dagger.Module;
 import dagger.Provides;
+import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -170,7 +171,8 @@ import rx.Observable;
         return null;
       }
 
-      @Override public Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid) {
+      @Override public Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid,
+        HashMap<String, Object> params) {
         return null;
       }
     };
