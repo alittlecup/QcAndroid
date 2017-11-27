@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.LiveDataReactiveStreams;
 import android.arch.lifecycle.MutableLiveData;
 
 import java.util.HashMap;
@@ -192,9 +193,10 @@ public class StudentRespository {
 
     public LiveData<Boolean> qcRemoveStaff(String staff_id, String type, HashMap<String, Object> params) {
         MutableLiveData<Boolean> data = new MutableLiveData<>();
-        remoteService
+        Observable<QcResponse> compose = remoteService
                 .qcRemoveStaff(staff_id, type, params)
-                .compose(RxHelper.schedulersTransformer())
+                .compose(RxHelper.schedulersTransformer());
+        compose
                 .map(qcResponse -> qcResponse.status == 200)
                 .subscribe(new CustomSubscriber<Boolean>() {
                     @Override

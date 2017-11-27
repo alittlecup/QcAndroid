@@ -37,36 +37,33 @@ import cn.qingchengfit.utils.DateUtils;
  * Created by huangbaole on 2017/11/17.
  */
 
-public class TransferStudentViewModel extends FlexibleViewModel<List<QcStudentBeanWithFollow>, FollowUpItem, TransferStudentViewModel.DataHolder> {
-    public ObservableField<List<FollowUpItem>> items = new ObservableField<>();
+public class TransferStudentViewModel extends
+        FlexibleViewModel<List<QcStudentBeanWithFollow>, FollowUpItem, TransferStudentViewModel.DataHolder> {
 
+    public ObservableField<List<FollowUpItem>> items = new ObservableField<>();
     public ObservableBoolean filterVisible = new ObservableBoolean(false);
     public ObservableBoolean appBarLayoutExpend = new ObservableBoolean(true);
     public ObservableField<String> staffName = new ObservableField<>("全部");
     public ObservableField<String> days = new ObservableField<>("最近7天");
-
     public ObservableField<List<Float>> funnelTwoViewDatas = new ObservableField<>(new ArrayList<>());
 
-    public MutableLiveData<Integer> getFilterIndex() {
-        return filterIndex;
-    }
 
+    private MutableLiveData<Staff> staff = new MutableLiveData<>();
     private MutableLiveData<Integer> filterIndex = new MutableLiveData<>();
-
     private MutableLiveData<Pair<String, String>> mutabkleDays = new MutableLiveData<>();
+
+
+    public MutableLiveData<Integer> getFilterIndex() {return filterIndex;}
+
+
 
     public MutableLiveData<Pair<String, String>> getMutabkleDays() {
         return mutabkleDays;
     }
-
     public MutableLiveData<Staff> getStaff() {
         return staff;
     }
-
-    private MutableLiveData<Staff> staff = new MutableLiveData<>();
-
     private DataHolder dataHolder;
-
     public DataHolder getDataHolder() {
         return dataHolder;
     }
@@ -84,6 +81,7 @@ public class TransferStudentViewModel extends FlexibleViewModel<List<QcStudentBe
     public TransferStudentViewModel() {
         dataHolder = new DataHolder(null,
                 new Pair<>(DateUtils.minusDay(new Date(), 6), DateUtils.getStringToday()));
+
         identifier.addSource(mutabkleDays, days -> {
             dataHolder.setDays(days);
             identifier.setValue(dataHolder);

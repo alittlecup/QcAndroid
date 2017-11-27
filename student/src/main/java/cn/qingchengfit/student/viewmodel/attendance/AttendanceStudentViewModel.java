@@ -1,13 +1,17 @@
 package cn.qingchengfit.student.viewmodel.attendance;
 
 import android.arch.core.util.Function;
+import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
+
+import com.anbillon.flabellum.annotations.Leaf;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +45,10 @@ public class AttendanceStudentViewModel extends BaseViewModel implements Lifecyc
 
     public final ObservableBoolean qcFBChecked = new ObservableBoolean(false);
 
-    private final MutableLiveData<Integer> offSetDay = new MutableLiveData<>();
+
+
+
+
 
     private final MutableLiveData<String> toUri = new MutableLiveData<>();
 
@@ -49,7 +56,6 @@ public class AttendanceStudentViewModel extends BaseViewModel implements Lifecyc
     private final MutableLiveData<Integer> filterIndex = new MutableLiveData<>();
 
 
-    private LiveData<AttendanceCharDataBean> response;
 
     @Inject
     IStudentModel studentModel;
@@ -62,6 +68,9 @@ public class AttendanceStudentViewModel extends BaseViewModel implements Lifecyc
     @Inject
     LoginStatus loginStatus;
 
+
+    private final MutableLiveData<Integer> offSetDay = new MutableLiveData<>();
+    private LiveData<AttendanceCharDataBean> response;
     @Inject
     public AttendanceStudentViewModel() {
         response = Transformations.switchMap(offSetDay, input -> loadData(input));

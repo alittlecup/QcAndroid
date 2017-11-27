@@ -22,7 +22,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     public ViewModelFactory(Map<Class<? extends ViewModel>, Provider<ViewModel>> creators) {
         this.creators = creators;
     }
-
     @NonNull
     @SuppressWarnings("unchecked")
     @Override

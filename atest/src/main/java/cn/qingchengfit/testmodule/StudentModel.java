@@ -51,6 +51,7 @@ public class StudentModel implements IStudentModel {
 
     @Override
     public Observable<QcDataResponse<StudentListWrapper>> qcGetCardBundldStudents(String id, HashMap<String, Object> params) {
+
         return studentApi.qcGetCardBundldStudents(id, params);
     }
 

@@ -18,17 +18,18 @@ import cn.qingchengfit.student.viewmodel.attendance.AttendanceStudentViewModel;
 /**
  * Created by huangbaole on 2017/11/15.
  */
-@Leaf(module = "student",path = "/attendance/page")
+@Leaf(module = "student", path = "/attendance/page")
 public class AttendanceStudentPage extends StudentBaseFragment<PageAttendanceStudentBinding, AttendanceStudentViewModel> {
 
     private AttendanceFilterView fitlerView;
 
 
-
-
     @Override
     protected void initViewModel() {
-        mViewModel = ViewModelProviders.of(this,factory).get(AttendanceStudentViewModel.class);
+
+        mViewModel = ViewModelProviders.of(this, factory).get(AttendanceStudentViewModel.class);
+
+
         mViewModel.getToUri().observe(this, uri -> {
             routeTo(Uri.parse(uri), null);
         });
@@ -36,12 +37,14 @@ public class AttendanceStudentPage extends StudentBaseFragment<PageAttendanceStu
             mViewModel.offDay.set(offsetDay);
             mViewModel.qcFBChecked.set(false);
         });
-        mViewModel.getFilterIndex().observe(this,index->{
+        mViewModel.getFilterIndex().observe(this, index -> {
             fitlerView.showPage(index);
         });
-        mViewModel.getResponse().observe(this,attendanceCharDataBean -> {
-                mViewModel.datas.set(attendanceCharDataBean.datas);
+
+        mViewModel.getResponse().observe(this, attendanceCharDataBean -> {
+            mViewModel.datas.set(attendanceCharDataBean.datas);
         });
+
     }
 
     @Override
@@ -53,7 +56,6 @@ public class AttendanceStudentPage extends StudentBaseFragment<PageAttendanceStu
         initView();
         return mBinding.getRoot();
     }
-
 
 
     private void initView() {

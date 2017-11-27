@@ -27,6 +27,7 @@ public class AttendanceAbsentPage extends StudentBaseFragment<PageAttendanceAbse
     @Override
     protected void initViewModel() {
         mViewModel = ViewModelProviders.of(this, factory).get(AttendanceAbsentViewModel.class);
+
         mViewModel.getLiveItems().observe(this, listitem -> {
             mViewModel.items.set(listitem);
         });
