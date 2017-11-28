@@ -19,33 +19,31 @@ import cn.qingchengfit.student.viewmodel.attendance.absent.AttendanceAbsentViewM
 /**
  * Created by huangbaole on 2017/11/16.
  */
-@Leaf(module = "student",path = "/attendance/absent")
+@Leaf(module = "student", path = "/attendance/absent")
 public class AttendanceAbsentPage extends StudentBaseFragment<PageAttendanceAbsentBinding, AttendanceAbsentViewModel> {
 
     private AttendanceAbsentView filterFragment;
 
     @Override
     protected void initViewModel() {
-        mViewModel = ViewModelProviders.of(this, factory).get(AttendanceAbsentViewModel.class);
-
         mViewModel.getLiveItems().observe(this, listitem -> {
             mViewModel.items.set(listitem);
         });
-        mViewModel.getFilterIndex().observe(this,index->{
+        mViewModel.getFilterIndex().observe(this, index -> {
             filterFragment.showPage(index);
         });
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public PageAttendanceAbsentBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = PageAttendanceAbsentBinding.inflate(inflater, container, false);
         mBinding.setToolbarModel(new ToolbarModel("缺勤统计"));
         initToolbar(mBinding.includeToolbar.toolbar);
         mBinding.setViewModel(mViewModel);
         initFragment();
-        mViewModel.loadSource(new Pair<>("7","30"));
+        mViewModel.loadSource(new Pair<>("7", "30"));
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        return mBinding.getRoot();
+        return mBinding;
     }
 
     private void initFragment() {

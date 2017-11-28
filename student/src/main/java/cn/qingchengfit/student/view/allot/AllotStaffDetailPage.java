@@ -33,12 +33,11 @@ public class AllotStaffDetailPage extends StudentBaseFragment<PageAllotStaffDeta
     @Need
     Staff staff;
     @Need
-    Integer type ;
+    Integer type;
     CommonFlexAdapter adapter;
 
     @Override
     protected void initViewModel() {
-        mViewModel = ViewModelProviders.of(this, factory).get(AllotStaffDetailViewModel.class);
         mViewModel.getLiveItems().observe(this, items -> {
             mViewModel.isLoading.set(false);
             mViewModel.items.set(new ArrayList<>(items));
@@ -52,7 +51,7 @@ public class AllotStaffDetailPage extends StudentBaseFragment<PageAllotStaffDeta
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public PageAllotStaffDetailBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = PageAllotStaffDetailBinding.inflate(inflater, container, false);
         initToolBar();
         mBinding.setViewModel(mViewModel);
@@ -71,7 +70,7 @@ public class AllotStaffDetailPage extends StudentBaseFragment<PageAllotStaffDeta
             }
             return position;
         });
-        return mBinding.getRoot();
+        return mBinding;
     }
 
 
@@ -89,7 +88,7 @@ public class AllotStaffDetailPage extends StudentBaseFragment<PageAllotStaffDeta
         toolbarModel.setMenu(empty ? cn.qingchengfit.saasbase.R.menu.menu_multi_allot : cn.qingchengfit.saasbase.R.menu.menu_multi_modify);
         toolbarModel.setListener(item -> {
             Uri uri = Uri.parse("student://student/allotstaff/multi");
-            routeTo(uri,new cn.qingchengfit.student.view.allot.AllotMultiStaffPageParmas()
+            routeTo(uri, new cn.qingchengfit.student.view.allot.AllotMultiStaffPageParmas()
                     .staff(staff)
                     .type(type)
                     .title(item.getTitle().toString()).build());

@@ -17,16 +17,15 @@ public class FollowUpStatusTopView extends StudentBaseFragment<ViewFollowupStatu
 
     @Override
     protected void initViewModel() {
-        mViewModel = ViewModelProviders.of(getParentFragment()).get(FollowUpStatusViewModel.class);
         mViewModel.getTopDatas().observe(this, datas -> {
             mViewModel.datas.set(datas);
         });
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public ViewFollowupStatusTopBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = ViewFollowupStatusTopBinding.inflate(inflater, container, false);
         mBinding.setViewModel(mViewModel);
-        return mBinding.getRoot();
+        return mBinding;
     }
 }

@@ -45,7 +45,6 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
 
     @Override
     protected void initViewModel() {
-        mViewModel = ViewModelProviders.of(this, factory).get(AllotMultiStaffViewModel.class);
         mViewModel.getLiveItems().observe(this, items -> {
             mViewModel.items.set(new ArrayList<>(items));
             mViewModel.isLoading.set(false);
@@ -75,7 +74,7 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public PageAllotMultiStaffBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = PageAllotMultiStaffBinding.inflate(inflater, container, false);
         mBinding.setViewModel(mViewModel);
         mBinding.includeFilter.setFilter(mViewModel.getSortViewModel());
@@ -83,7 +82,7 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
         initRecyclerView();
         mViewModel.loadSource(mViewModel.getStudentFilter());
         mBinding.setItemClickListener(this);
-        return mBinding.getRoot();
+        return mBinding;
     }
 
     private void initRecyclerView() {

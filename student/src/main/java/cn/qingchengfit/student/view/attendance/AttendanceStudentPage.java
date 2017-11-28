@@ -27,8 +27,6 @@ public class AttendanceStudentPage extends StudentBaseFragment<PageAttendanceStu
     @Override
     protected void initViewModel() {
 
-        mViewModel = ViewModelProviders.of(this, factory).get(AttendanceStudentViewModel.class);
-
 
         mViewModel.getToUri().observe(this, uri -> {
             routeTo(Uri.parse(uri), null);
@@ -48,13 +46,13 @@ public class AttendanceStudentPage extends StudentBaseFragment<PageAttendanceStu
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public PageAttendanceStudentBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = PageAttendanceStudentBinding.inflate(inflater, container, false);
         mBinding.setViewModel(mViewModel);
         mBinding.setToolbarModel(new ToolbarModel("出勤统计"));
         initToolbar(mBinding.includeToolbar.toolbar);
         initView();
-        return mBinding.getRoot();
+        return mBinding;
     }
 
 

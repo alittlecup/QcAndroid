@@ -26,7 +26,6 @@ public class TransferStudentPage extends StudentBaseFragment<PageTransferStudent
 
     @Override
     protected void initViewModel() {
-        mViewModel = ViewModelProviders.of(this, factory).get(TransferStudentViewModel.class);
         mViewModel.getLiveItems().observe(this, followUpItems -> {
             mViewModel.items.set(followUpItems);
         });
@@ -37,7 +36,7 @@ public class TransferStudentPage extends StudentBaseFragment<PageTransferStudent
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public PageTransferStudentBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = PageTransferStudentBinding.inflate(inflater, container, false);
         mBinding.setToolbarModel(new ToolbarModel("会员转化"));
         initToolbar(mBinding.includeToolbar.toolbar);
@@ -45,7 +44,7 @@ public class TransferStudentPage extends StudentBaseFragment<PageTransferStudent
         mBinding.setViewModel(mViewModel);
         mViewModel.loadSource(mViewModel.getDataHolder());
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        return mBinding.getRoot();
+        return mBinding;
     }
 
     private void initFragment() {

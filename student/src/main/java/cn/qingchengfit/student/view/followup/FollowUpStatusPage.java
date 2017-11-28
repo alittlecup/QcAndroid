@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.view.followup;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -36,7 +37,6 @@ public class FollowUpStatusPage extends StudentBaseFragment<PageFollowupStatusBi
 
     @Override
     protected void initViewModel() {
-        mViewModel= ViewModelProviders.of(this,factory).get(FollowUpStatusViewModel.class);
         mViewModel.dataType=type;
         mViewModel.getLiveItems().observe(this,items->{
             mViewModel.items.set(items);
@@ -47,7 +47,7 @@ public class FollowUpStatusPage extends StudentBaseFragment<PageFollowupStatusBi
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public PageFollowupStatusBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding=PageFollowupStatusBinding.inflate(inflater,container,false);
         mBinding.setToolbarModel(new ToolbarModel(title));
         initToolbar(mBinding.includeToolbar.toolbar);
@@ -55,7 +55,7 @@ public class FollowUpStatusPage extends StudentBaseFragment<PageFollowupStatusBi
         mBinding.recyclerViewToday.setLayoutManager(new LinearLayoutManager(getContext()));
         initView();
         initFragment();
-        return mBinding.getRoot();
+        return mBinding;
     }
 
     private void initFragment() {

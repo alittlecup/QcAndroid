@@ -27,7 +27,6 @@ public class AllotStaffListPage extends StudentBaseFragment<PageAllotlistBinding
 
     @Override
     protected void initViewModel() {
-        mViewModel = ViewModelProviders.of(this, factory).get(AllotListViewModel.class);
         mViewModel.type = type;
         mViewModel.getLiveItems().observe(this, items -> {
             mViewModel.isLoading.set(false);
@@ -37,14 +36,14 @@ public class AllotStaffListPage extends StudentBaseFragment<PageAllotlistBinding
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public PageAllotlistBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = PageAllotlistBinding.inflate(inflater, container, false);
         mBinding.setToolbarModel(new ToolbarModel(type == 0 ? "销售列表" : "教练列表"));
         mBinding.setViewModel(mViewModel);
         initToolbar(mBinding.includeToolbar.toolbar);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.setItemClickListener(this);
-        return mBinding.getRoot();
+        return mBinding;
     }
 
     @Override

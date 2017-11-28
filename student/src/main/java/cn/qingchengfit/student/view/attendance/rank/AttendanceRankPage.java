@@ -24,7 +24,6 @@ public class AttendanceRankPage extends StudentBaseFragment<PageAttendanceRankBi
 
     @Override
     protected void initViewModel() {
-        mViewModel = ViewModelProviders.of(this, factory).get(AttendanceRankViewModel.class);
         mViewModel.getLiveItems().observe(this, items -> {
             mViewModel.items.set(items);
         });
@@ -35,7 +34,7 @@ public class AttendanceRankPage extends StudentBaseFragment<PageAttendanceRankBi
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public PageAttendanceRankBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = PageAttendanceRankBinding.inflate(inflater, container, false);
         mBinding.setToolbarModel(new ToolbarModel("出勤统计"));
         mBinding.setViewModel(mViewModel);
@@ -43,7 +42,7 @@ public class AttendanceRankPage extends StudentBaseFragment<PageAttendanceRankBi
         initFragment();
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mViewModel.loadSource(mViewModel.getLoadData());
-        return mBinding.getRoot();
+        return mBinding;
     }
 
     private void initFragment() {

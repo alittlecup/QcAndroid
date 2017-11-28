@@ -1,7 +1,6 @@
 package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.LiveDataReactiveStreams;
 import android.arch.lifecycle.MutableLiveData;
 
 import java.util.HashMap;

@@ -1,5 +1,6 @@
 package cn.qingchengfit.student;
 
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.ViewDataBinding;
@@ -9,6 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import javax.inject.Inject;
 
@@ -22,7 +28,6 @@ import cn.qingchengfit.student.base.BaseViewModel;
 public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends BaseViewModel> extends SaasBaseFragment {
 
     public DB mBinding;
-    public View mRootView;
     public VM mViewModel;
 
     @Inject
@@ -31,6 +36,7 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mViewModel = ViewModelProviders.of(this, factory).get(getVMClass());
         initViewModel();
     }
 
@@ -42,11 +48,25 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = initView(inflater, container, savedInstanceState);
-        return mRootView;
+        mBinding = initDataBinding(inflater, container, savedInstanceState);
+        return mBinding.getRoot();
     }
 
     protected abstract void initViewModel();
-    public abstract View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+
+    public abstract DB initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+
+    private Class<VM> getVMClass() {
+        Type[] actualTypeArguments = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments();
+        if(actualTypeArguments.length==2){
+            return (Class<VM>) actualTypeArguments[1];
+        }
+        return (Class<VM>) BaseViewModel.class;
+    }
 
 }
+
+
+
+
+

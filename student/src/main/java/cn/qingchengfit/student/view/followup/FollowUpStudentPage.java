@@ -27,14 +27,13 @@ public class FollowUpStudentPage extends StudentBaseFragment<PageFollowupStudent
         implements FlexibleAdapter.OnItemClickListener {
     @Override
     protected void initViewModel() {
-        mViewModel = ViewModelProviders.of(this, factory).get(FollowUpStudentViewModel.class);
         mViewModel.getLiveItems().observe(this, items -> {
             mViewModel.items.set(items);
         });
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public PageFollowupStudentBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = PageFollowupStudentBinding.inflate(inflater, container, false);
         mBinding.setToolbarModel(new ToolbarModel("会员跟进"));
         mBinding.setViewModel(mViewModel);
@@ -42,13 +41,9 @@ public class FollowUpStudentPage extends StudentBaseFragment<PageFollowupStudent
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mViewModel.loadSource(mViewModel.getFilter());
         mBinding.setItemClickListener(this);
-        return mBinding.getRoot();
+        return mBinding;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     @Override
     public boolean onItemClick(int position) {

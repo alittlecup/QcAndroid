@@ -25,7 +25,6 @@ public class AttendanceNosignPage extends StudentBaseFragment<PageAttendanceNosi
 
     @Override
     protected void initViewModel() {
-        mViewModel= ViewModelProviders.of(this,factory).get(AttendanceNosignViewModel.class);
 
         mViewModel.getFilterIndex().observe(this,index->filterView.showPage(index));
 
@@ -40,7 +39,7 @@ public class AttendanceNosignPage extends StudentBaseFragment<PageAttendanceNosi
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public PageAttendanceNosignBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding=PageAttendanceNosignBinding.inflate(inflater,container,false);
         mBinding.setViewModel(mViewModel);
         mBinding.setToolbarModel(new ToolbarModel("未签课统计"));
@@ -48,7 +47,7 @@ public class AttendanceNosignPage extends StudentBaseFragment<PageAttendanceNosi
         initFragment();
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mViewModel.loadSource(mViewModel.getDataHolder());
-        return mBinding.getRoot();
+        return mBinding;
     }
 
     private void initFragment() {
