@@ -27,7 +27,9 @@ import cn.qingchengfit.staffkit.views.cardtype.detail.CardtypeDetailFragment;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.ColorUtils;
+import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -226,6 +228,8 @@ public class CardTypeListFragment extends BaseFragment implements CardTypeListVi
                 holder.type.setText("期限类型");
             }
             holder.cardDisable.setVisibility(card_tpl.is_enable ? View.GONE : View.VISIBLE);
+            holder.cardBg.setBackground(DrawableUtils.generateBg(16,
+                CardBusinessUtils.getDefaultCardbgColor(card_tpl.getType())));
         }
 
         @Override public int getItemCount() {

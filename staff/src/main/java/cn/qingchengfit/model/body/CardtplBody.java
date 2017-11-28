@@ -30,7 +30,7 @@ public class CardtplBody {
     public int buy_limit;
     public String shops;//支持场馆 ,隔开
     public List<CardTplOption> options;
-    public boolean is_open_service_term;
+    public Boolean is_open_service_term;
 
     public CardtplBody clone() {
         try {

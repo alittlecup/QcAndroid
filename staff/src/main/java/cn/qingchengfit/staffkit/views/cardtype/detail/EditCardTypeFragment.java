@@ -459,7 +459,9 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   }
 
   public void onComfirm() {
-    body.is_open_service_term = expandCardProtocol.isExpanded();
+    if (card_tpl.has_service_term) {
+      body.is_open_service_term = expandCardProtocol.isExpanded();
+    }
     if (TextUtils.isEmpty(cardname.getContent())) {
       ToastUtils.show("请填写名称");
       return;
