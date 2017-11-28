@@ -181,7 +181,7 @@ import javax.inject.Inject;
       if (scheduleOrder != null) {
         extraAdapter.addItem(
           new BillKvCommonItem("课程", scheduleOrder.teacher_name + " " + scheduleOrder.course_name));
-        extraAdapter.addItem(new BillKvCommonItem("",
+        extraAdapter.addItem(new BillKvCommonItem("开始时间",
           DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(scheduleOrder.start))));
         String u = "";
         if (scheduleOrder.users != null && scheduleOrder.users.size() > 0) {
