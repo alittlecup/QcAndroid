@@ -74,8 +74,8 @@ public class BottomBuyLimitFragment extends BaseDialogFragment {
             mLimitCountlist.add(getString(R.string.card_count_unit, i + 1));
         }
         ArrayWheelAdapter<String> mAdatper = new ArrayWheelAdapter<>(mLimitCountlist, 8);
-        mLimitCountWhellview.setAdapter(mAdatper);
         mLimitCountWhellview.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 15f);
+        mLimitCountWhellview.setAdapter(mAdatper);
         mLimitCountWhellview.setCurrentItem(getArguments().getInt("i", 0));
         return view;
     }
