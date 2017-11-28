@@ -30,7 +30,6 @@ public class CardProtocolWebFragment extends WebFragment {
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
   @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
   @BindView(R.id.tv_read_protocol) TextView tvReadProtocol;
-  @BindView(R.id.webview) WebView webview;
   @BindView(R.id.refresh_network) Button refreshNetwork;
   @BindView(R.id.no_newwork) LinearLayout noNewwork;
   @BindView(R.id.webview_root) LinearLayout webviewRoot;
@@ -78,15 +77,16 @@ public class CardProtocolWebFragment extends WebFragment {
     unbinder = ButterKnife.bind(this, view);
     setToolbar();
     tvReadProtocol = (TextView) view.findViewById(R.id.tv_read_protocol);
+    mWebviewWebView = (WebView) view.findViewById(R.id.webview);
     if (!TextUtils.isEmpty(content)) {
       tvReadProtocol.setVisibility(View.VISIBLE);
       tvReadProtocol.setText(content);
     } else {
       tvReadProtocol.setVisibility(View.GONE);
     }
-    //initWebSetting();
+    initWebSetting();
     //initWebClient();
-    webview.loadUrl(url);
+    mWebviewWebView.loadUrl(url);
     return view;
   }
 
