@@ -8,13 +8,18 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.WebFragment;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+import java.util.concurrent.TimeUnit;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import timber.log.Timber;
 
 public class QcVipFragment extends WebFragment {
@@ -52,7 +57,21 @@ public class QcVipFragment extends WebFragment {
             commonToolbar.setVisibility(View.VISIBLE);
             mTitle.setText(getString(R.string.home_tab_special));
             mToolbar.setNavigationIcon(null);
+            if (BuildConfig.DEBUG){
+              mToolbar.getMenu().add("刷新");
+              RxMenuItem.clicks(mToolbar.getMenu().getItem(0))
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Void>() {
+                  @Override public void call(Void aVoid) {
+                    mWebviewWebView.reload();
+                  }
+                }, new Action1<Throwable>() {
+                  @Override public void call(Throwable throwable) {
 
+                  }
+                });
+            }
             return view;
         } catch (Exception e) {
             Timber.e(e, "qcvip_fragment");
@@ -61,11 +80,12 @@ public class QcVipFragment extends WebFragment {
     }
 
     @Override public boolean canSwipeRefreshChildScrollUp() {
-        try {
-            return mWebviewWebView.getWebScrollY() > 0;
-        }catch (Exception e){
-            return true;
-        }
+      return false;
+        //try {
+        //    return mWebviewWebView.getWebScrollY() > 0;
+        //}catch (Exception e){
+        //    return true;
+        //}
     }
 
     @Override protected void onVisible() {
