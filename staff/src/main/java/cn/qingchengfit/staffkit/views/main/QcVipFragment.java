@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.staffkit.BuildConfig;
@@ -58,7 +59,7 @@ public class QcVipFragment extends WebFragment {
             mTitle.setText(getString(R.string.home_tab_special));
             mToolbar.setNavigationIcon(null);
             if (BuildConfig.DEBUG){
-              mToolbar.getMenu().add("刷新");
+              mToolbar.getMenu().add("刷新").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
               RxMenuItem.clicks(mToolbar.getMenu().getItem(0))
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -80,7 +81,7 @@ public class QcVipFragment extends WebFragment {
     }
 
     @Override public boolean canSwipeRefreshChildScrollUp() {
-      return false;
+      return true;
         //try {
         //    return mWebviewWebView.getWebScrollY() > 0;
         //}catch (Exception e){
