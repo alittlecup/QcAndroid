@@ -69,12 +69,12 @@ public class ClassLimitBottomFragment extends BaseDialogFragment {
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_class_limit, container, false);
         unbinder = ButterKnife.bind(this, view);
-        times.setAdapter(new NumericWheelAdapter(0, 100, 1));
         times.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 15f);
+        times.setAdapter(new NumericWheelAdapter(0, 100, 1));
         frequentAdatper =
-            new ArrayWheelAdapter<String>(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.class_frequent))), 6);
-        freqent.setAdapter(frequentAdatper);
+            new ArrayWheelAdapter<String>(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.class_frequent))), 20);
         freqent.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 15f);
+        freqent.setAdapter(frequentAdatper);
         return view;
     }
 
