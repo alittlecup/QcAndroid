@@ -588,7 +588,7 @@ public class WheelView extends View {
       return 0;
     }
 
-    int adapterLength = maxLength == 0 ? adapter.getMaximumLength() : maxLength + 1;
+    int adapterLength = adapter.getMaximumLength() != 0 ? adapter.getMaximumLength() : maxLength + 1;
     if (adapterLength > 0) {
       return adapterLength;
     }
