@@ -130,7 +130,7 @@ public class LoginFragment extends BaseFragment
       String ip = PreferenceUtils.getPrefString(getContext(), "debug_ip", Constants.ServerDebug);
       if (!TextUtils.isEmpty(ip)) {
         Constants.ServerDebug = ip;
-        et.setText("当前IP:" + ip);
+        et.setText(ip);
       }
       List<AbstractFlexibleItem> itemList = new ArrayList<>();
       final List<String> list = new ArrayList<>();
