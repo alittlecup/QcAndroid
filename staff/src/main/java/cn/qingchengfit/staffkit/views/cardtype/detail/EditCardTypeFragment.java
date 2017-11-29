@@ -44,9 +44,6 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
-import com.google.gson.Gson;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -68,7 +65,7 @@ import rx.schedulers.Schedulers;
  */
 public class EditCardTypeFragment extends BaseFragment implements EditCardTypeView {
 
-  private final static String PARAMS_KEY = "card_tpl_data";
+  private final static String PARAMS_KEY = "uuid=";
 
   @BindView(R.id.type) CommonInputView type;
   @BindView(R.id.desc) CommonInputView desc;
@@ -143,6 +140,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
           SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
               card_tpl.getShopIds()) ? R.menu.menu_save : 0, menuListener);
       type.setVisibility(View.GONE);
+
     } else {
       mCallbackActivity.setToolbar(getString(R.string.title_cardtype_add), false, null,
           R.menu.menu_save, menuListener);
@@ -172,10 +170,15 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
             if (card_tpl.has_service_term) {
               inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_content));
             }else{
-              inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_first_can_not));
+              inputCardProtocol.setVisibility(View.GONE);
+              Intent intent = new Intent(getActivity(), QRActivity.class);
+              intent.putExtra(QRActivity.LINK_MODULE, getResources().getString(R.string.qr_code_2web_add_card_term, card_tpl.id));
+              getContext().startActivity(intent);
             }
           }else{
-            inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_first_can_not));
+            body.name = cardname.getContent();
+            inputCardProtocol.setVisibility(View.GONE);
+            presenter.stashCardTplInfo(body);
           }
         }else{
           inputCardProtocol.setVisibility(View.GONE);
@@ -320,23 +323,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     if (card_tpl != null && card_tpl.has_service_term) {
       CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true,
           "", card_tpl.id);
-    }else{
-      body.name = cardname.getContent();
-      Intent intent = new Intent(getActivity(), QRActivity.class);
-      Gson gson = new Gson();
-      String json = gson.toJson(body);
-      if (!TextUtils.isEmpty(json)) {
-        try {
-          intent.putExtra(QRActivity.LINK_MODULE,
-              QRActivity.MODULE_ADD_CARD_PROTOCOL + "?" + PARAMS_KEY + "=" + URLEncoder.encode(gson.toJson(body), "utf-8"));
-        } catch (UnsupportedEncodingException e) {
-          e.printStackTrace();
-        }
-      } else {
-      }
-      getContext().startActivity(intent);
     }
-
   }
 
 
@@ -345,6 +332,13 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     hideLoading();
     ToastUtils.show("修改场馆成功!");
   }
+
+  @Override public void onStashSuccessed(String uuid) {
+    Intent intent = new Intent(getActivity(), QRActivity.class);
+    intent.putExtra(QRActivity.LINK_MODULE, QRActivity.MODULE_ADD_CARD_PROTOCOL + "?" + PARAMS_KEY + uuid);
+    getContext().startActivity(intent);
+  }
+
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {

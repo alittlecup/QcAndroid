@@ -47,7 +47,7 @@ public class CardProtocolActivity extends WebActivity implements Serializable{
       webfrag = CardProtocolWebFragment.newInstance(toUrl, R.menu.menu_edit, new CardProtocolWebFragment.OnMenuClickListener() {
         @Override public void onMenuClick() {
           Intent intent = new Intent(CardProtocolActivity.this, QRActivity.class);
-          intent.putExtra(QRActivity.LINK_MODULE, getString(R.string.qr_code_2web_edit_card, getIntent().getStringExtra("card_tpl_id")));
+          intent.putExtra(QRActivity.LINK_MODULE, getString(R.string.qr_code_2web_modify_card, getIntent().getStringExtra("card_tpl_id")));
           startActivity(intent);
         }
       });
