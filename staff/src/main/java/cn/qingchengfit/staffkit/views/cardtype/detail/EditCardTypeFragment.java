@@ -177,6 +177,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
             }
           }else{
             body.name = cardname.getContent();
+            body.is_open_service_term = expandCardProtocol.isExpanded();
             inputCardProtocol.setVisibility(View.GONE);
             presenter.stashCardTplInfo(body);
           }

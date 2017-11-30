@@ -888,5 +888,6 @@
   <string formatted="false" name="qr_code_2web">%sapp2web/?brand_id=%s\u0026shop_id=%s\u0026module=%s</string>
   <string formatted="false" name="qr_code_2web_add_card_term">/card_tpl/%s/term/add</string>
   <string formatted="false" name="qr_code_2web_modify_card">/card_tpl/%s/term/edit</string>
+  <string name="modify">修改</string>
 
 </resources>
