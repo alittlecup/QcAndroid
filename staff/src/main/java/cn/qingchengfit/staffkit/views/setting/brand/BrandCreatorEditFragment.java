@@ -87,6 +87,14 @@ public class BrandCreatorEditFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_edit_creator, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (brand != null) {
+            name.setLabel(brand.created_by.getUsername());
+            if (brand.created_by.getGender() == 1){
+                genderFemale.setChecked(true);
+            }else{
+                genderMale.setChecked(true);
+            }
+            phoneNum.setPhoneNum(brand.created_by.getPhone());
+
             mCallbackActivity.setToolbar("修改创建人", false, null, R.menu.menu_comfirm, new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
                     if (TextUtils.isEmpty(name.getContent())) {

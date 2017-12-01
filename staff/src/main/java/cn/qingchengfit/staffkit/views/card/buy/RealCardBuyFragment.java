@@ -331,6 +331,7 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
                     showAutoOpenCard(true);
                 } else {//规格无有效期
                     extraPeriod.setVisibility(View.GONE);
+                    showAutoOpenCard(false);
                 }
 
                 break;
@@ -350,6 +351,7 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
                     showAutoOpenCard(true);
                 } else {//规格无有效期
                     extraPeriod.setVisibility(View.GONE);
+                    showAutoOpenCard(false);
                 }
                 break;
             case Configs.CATEGORY_DATE:

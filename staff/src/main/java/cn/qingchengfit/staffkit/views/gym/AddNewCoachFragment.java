@@ -242,7 +242,7 @@ public class AddNewCoachFragment extends BaseDialogFragment {
                 if (isSuccess) {
                     Observable.create(new Observable.OnSubscribe<String>() {
                         @Override public void call(Subscriber<? super String> subscriber) {
-                            String upImg = UpYunClient.upLoadImg("header/", new File(filePath));
+                            String upImg = UpYunClient.upLoadImg("/header/", new File(filePath));
                             subscriber.onNext(upImg);
                         }
                     })
