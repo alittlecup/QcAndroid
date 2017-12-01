@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarBean;
@@ -22,7 +23,10 @@ import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.LinkedList;
 import javax.inject.Inject;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -48,6 +52,7 @@ public class CardTypeActivity extends BaseActivity implements FragCallBack {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    private Observable<OnBackEvent> sb;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +65,11 @@ public class CardTypeActivity extends BaseActivity implements FragCallBack {
             }
         });
         if (gymWrapper.inBrand()) {
-            getSupportFragmentManager().beginTransaction().replace(getFragId(), new BrandCardListFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(getFragId(), new BrandCardListFragment()).commitAllowingStateLoss();
         } else {
-            getSupportFragmentManager().beginTransaction().replace(getFragId(), new CardListFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(getFragId(), new CardListFragment()).commitAllowingStateLoss();
         }
+        initBus();
     }
 
     //private void initDI() {
@@ -77,6 +83,31 @@ public class CardTypeActivity extends BaseActivity implements FragCallBack {
     //            .build();
     //    component.inject(this);
     //}
+
+    @Override protected void onResumeFragments() {
+        super.onResumeFragments();
+
+    }
+
+    private void initBus(){
+        sb = RxBus.getBus().register(OnBackEvent.class);
+        sb.observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Action1<OnBackEvent>() {
+                @Override public void call(OnBackEvent onBackEvent) {
+                    onStateNotSaved();
+                    getSupportFragmentManager().popBackStack(null, 1);
+                    getSupportFragmentManager().beginTransaction()
+                        .replace(getFragId(), new CardListFragment())
+                        .commitAllowingStateLoss();
+                }
+            });
+    }
+
+    @Override protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getBus().unregister(OnBackEvent.class.getName(), sb);
+    }
 
     @Override public int getFragId() {
         return R.id.student_frag;
