@@ -28,7 +28,68 @@ public class CoursePlan implements Parcelable {
 
     private String name;
     private List<String> tags;
-    private String id;
+    private Long id;
+
+    private CoursePlan(Builder builder) {
+        setName(builder.name);
+        setTags(builder.tags);
+        setId(builder.id);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public CoursePlan() {
+    }
+
+    public static final class Builder {
+        private String name;
+        private List<String> tags;
+        private Long id;
+
+        public Builder() {
+        }
+
+        public Builder name(String val) {
+            name = val;
+            return this;
+        }
+
+        public Builder tags(List<String> val) {
+            tags = val;
+            return this;
+        }
+
+        public Builder id(Long val) {
+            id = val;
+            return this;
+        }
+
+        public CoursePlan build() {
+            return new CoursePlan(this);
+        }
+    }
 
     @Override public int describeContents() {
         return 0;
@@ -37,16 +98,13 @@ public class CoursePlan implements Parcelable {
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
         dest.writeStringList(this.tags);
-        dest.writeString(this.id);
-    }
-
-    public CoursePlan() {
+        dest.writeValue(this.id);
     }
 
     protected CoursePlan(Parcel in) {
         this.name = in.readString();
         this.tags = in.createStringArrayList();
-        this.id = in.readString();
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
     }
 
     public static final Creator<CoursePlan> CREATOR = new Creator<CoursePlan>() {

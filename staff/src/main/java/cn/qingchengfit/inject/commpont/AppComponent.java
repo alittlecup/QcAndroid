@@ -40,6 +40,7 @@ import cn.qingchengfit.saasbase.staff.views.SuIdendifyFragment;
 import cn.qingchengfit.saasbase.staff.views.SuNewFragment;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
+import cn.qingchengfit.staff.di.BindStaffStaffActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -358,7 +359,10 @@ import dagger.multibindings.IntoMap;
 @Component(modules = {
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
-  BindStaffCardActivity.class, BindImportExportActivity.class,
+    BindStaffCardActivity.class, BindImportExportActivity.class, BindStaffStaffActivity.class,
+
+
+
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,
     AppComponent.UnloginAdModule.class, AppComponent.HomeModule.class, AppComponent.QcVipModule.class,
     AppComponent.BaseStatementChartModule.class, AppComponent.YourFragmentModule.class, AppComponent.ChooseModule.class,
@@ -391,7 +395,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.WardrobeContinueHireModule.class, AppComponent.WardrobeReturnDialogModule.class, AppComponent.WardrobeReturnModule.class,
     AppComponent.DistrictListModule.class, AppComponent.WardrobeShortHireModule.class, AppComponent.MutiChooseStudentFragModule.class,
     AppComponent.DistrictAddModule.class, AppComponent.ChooseRegionModule.class, AppComponent.WardrobeMainModule.class,
-    AppComponent.WardrobePayBottomModule.class, AppComponent.CoachListModule.class, AppComponent.StaffListModule.class,
+    AppComponent.WardrobePayBottomModule.class,  AppComponent.StaffListModule.class,
     AppComponent.SuModule.class, AppComponent.SuIdendifyModule.class, AppComponent.SuNewModule.class, AppComponent.SiteListModule.class,
     AppComponent.SiteDetailModule.class, AppComponent.ChooseSiteModule.class, AppComponent.MutiChooseSiteModule.class,
     AppComponent.ScheduleModule.class, AppComponent.ScheduleListModule.class, AppComponent.SignInModule.class,
@@ -422,7 +426,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.WardrobeListFragmentModule.class, AppComponent.WardrobeDetailFragmentModule.class,
     AppComponent.CompletedBuyFragmentModule.class, AppComponent.RealCardBuyFragmentModule.class,
     AppComponent.FixRealcardNumFragmentModule.class, AppComponent.SpendRecordFragmentModule.class,
-    AppComponent.SignInCloseFragmentModule.class, AppComponent.StaffDetailFragmentModule.class,
+    AppComponent.SignInCloseFragmentModule.class,
     AppComponent.SignInManualFragmentModule.class, AppComponent.SignOutManualFragmentModule.class,
     AppComponent.ChooseMainFragmentModule.class, AppComponent.SearchResultFragmentModule.class,
     AppComponent.CourseImageViewFragmentModule.class, AppComponent.TopFilterSourceFragmentModule.class,

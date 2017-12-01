@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.course.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.utils.StringPropertyable;
 
 /**
  * power by
@@ -24,7 +25,7 @@ import android.os.Parcelable;
  * Created by Paper on 16/7/29.
  * 教练评论
  */
-public class TeacherImpression implements Parcelable, Cloneable {
+public class TeacherImpression implements Parcelable, Cloneable,StringPropertyable {
     public static final Creator<TeacherImpression> CREATOR = new Creator<TeacherImpression>() {
         @Override public TeacherImpression createFromParcel(Parcel source) {
             return new TeacherImpression(source);
@@ -52,5 +53,9 @@ public class TeacherImpression implements Parcelable, Cloneable {
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.comment);
         dest.writeInt(this.count);
+    }
+
+    @Override public String getStringProperty() {
+        return comment;
     }
 }

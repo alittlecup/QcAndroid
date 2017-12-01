@@ -32,23 +32,30 @@ import java.util.List;
 public class CourseType extends Course implements Cloneable {
 
 
-    private List<String> photos;
-    private int min_users;
-    private List<Trainer> teachers;
-    private List<Shop> shops;
-    private Float course_score;
-    private Float service_score;
-    private Float teacher_score;
-    private int capacity;// 单节可约人数
-    private String description;
-    private List<TeacherImpression> impressions;
-    private CoursePlan plan;
-    private int permission;//1 全部权限,2部分权限 3没有权限
-    private int schedule_count;
-    private String edit_url;
-    private boolean random_show_photos;
+    public List<String> photos;
+    public int min_users;
+    public List<Trainer> teachers;
+    public List<Shop> shops;
+    public Float course_score;
+    public Float service_score;
+    public Float teacher_score;
+    //public int capacity;// 单节可约人数
+    public String description;
+    public List<TeacherImpression> impressions;
+    public CoursePlan plan;
+    public int permission;//1 全部权限,2部分权限 3没有权限
+    public int schedule_count;
+    public String edit_url;
+    public boolean random_show_photos;
 
     public CourseType() {
+    }
+    public boolean isRandom_show_photos() {
+        return random_show_photos;
+    }
+
+    public void setRandom_show_photos(boolean random_show_photos) {
+        this.random_show_photos = random_show_photos;
     }
 
 
@@ -213,7 +220,6 @@ public class CourseType extends Course implements Cloneable {
         dest.writeValue(this.course_score);
         dest.writeValue(this.service_score);
         dest.writeValue(this.teacher_score);
-        dest.writeInt(this.capacity);
         dest.writeString(this.description);
         dest.writeTypedList(this.impressions);
         dest.writeParcelable(this.plan, flags);
@@ -232,7 +238,6 @@ public class CourseType extends Course implements Cloneable {
         this.course_score = (Float) in.readValue(Float.class.getClassLoader());
         this.service_score = (Float) in.readValue(Float.class.getClassLoader());
         this.teacher_score = (Float) in.readValue(Float.class.getClassLoader());
-        this.capacity = in.readInt();
         this.description = in.readString();
         this.impressions = in.createTypedArrayList(TeacherImpression.CREATOR);
         this.plan = in.readParcelable(CoursePlan.class.getClassLoader());

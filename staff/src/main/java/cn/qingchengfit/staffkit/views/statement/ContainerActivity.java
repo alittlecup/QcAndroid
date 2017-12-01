@@ -20,7 +20,6 @@ import cn.qingchengfit.article.ArticleReplyFragment;
 import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.notisetting.view.NotiSettingHomeFragment;
-import cn.qingchengfit.saasbase.coach.views.CoachListFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
 import cn.qingchengfit.staffkit.App;
@@ -116,7 +115,8 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 fragment = new SigninGlanceFragment();
                 break;
             case GymFunctionFactory.MODULE_MANAGE_COACH:
-                fragment = CoachListFragment.newInstance(App.staffId);
+                // TODO: 2017/12/ 教练模块
+                //fragment = cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment.newInstance(App.staffId);
                 break;
             case GymFunctionFactory.MODULE_MANAGE_STAFF:
                 fragment = StaffListFragment.newInstance(App.staffId);

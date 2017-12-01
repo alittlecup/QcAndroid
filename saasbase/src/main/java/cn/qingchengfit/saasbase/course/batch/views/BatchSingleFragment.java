@@ -52,7 +52,7 @@ public class BatchSingleFragment extends BaseFragment {
   @BindView(R2.id.btn_del) Button btnDel;
 
   @Inject BatchSinglePresenter presenter;
-  private BatchDetailCommonFragment batchBaseFragment;
+  private BatchDetailCommonView batchBaseFragment;
 
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class BatchSingleFragment extends BaseFragment {
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
       Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
-    if (f instanceof BatchDetailCommonFragment){
+    if (f instanceof BatchDetailCommonView){
 
     }
   }

@@ -46,5 +46,5 @@ public interface IStaffModel {
 
   rx.Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid, HashMap<String, Object> params);
 
-
+  rx.Observable<QcDataResponse<SalerListWrap>> getTrainers();
 }

@@ -26,5 +26,5 @@ import java.util.List;
  */
 
 public class BatchCoachListWrap extends QcListData {
-    public List<BatchCoach> coaches;
+  public List<BatchCoach> coaches;
 }

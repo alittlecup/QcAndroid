@@ -170,5 +170,15 @@
     <attr format="integer" name="sw_text_color"/>
     <attr format="integer" name="sw_background"/>
   </declare-styleable>
+  <declare-styleable name="CircleIndicator">
+    <attr format="dimension" name="ci_width"/>
+    <attr format="dimension" name="ci_height"/>
+    <attr format="dimension" name="ci_margin"/>
+    <attr format="reference" name="ci_animator"/>
+    <attr format="reference" name="ci_animator_reverse"/>
+    <attr format="reference" name="ci_drawable"/>
+    <attr format="reference" name="ci_drawable_unselected"/>
+    <attr format="integer" name="ci_count_less"/>
+  </declare-styleable>
 
 </resources>

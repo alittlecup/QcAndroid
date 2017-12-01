@@ -48,6 +48,7 @@ import javax.inject.Inject;
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class CourseListFragment extends BaseFragment implements TitleFragment, CourseListView {
 
     @BindView(R.id.course_count) TextView courseCount;
@@ -92,7 +93,7 @@ public class CourseListFragment extends BaseFragment implements TitleFragment, C
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_course_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_saas_course_list, container, false);
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(presenter, this);
         if ((mCourseType == Configs.TYPE_GROUP && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR)) || (

@@ -50,7 +50,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffVh> imp
     }
 
     @Override public StaffVh onCreateViewHolder(ViewGroup parent, int viewType) {
-        StaffVh vh = new StaffVh(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_student, parent, false));
+        StaffVh vh = new StaffVh(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_saas_staff, parent, false));
         vh.itemView.setOnClickListener(this);
         return vh;
     }

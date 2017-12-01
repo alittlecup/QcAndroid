@@ -52,7 +52,7 @@ public class EditBatchFragment extends BaseFragment {
 
   @Inject BatchEditPresenter presenter;
 
-  private BatchDetailCommonFragment batchBaseFragment;
+  private BatchDetailCommonView batchBaseFragment;
 
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -376,7 +376,6 @@ public class GymFunctionFactory {
                     return;
                 }
                 fragment.routeTo("course","/batches/group/list/",null);
-                //fragment.startActivity(new Intent(fragment.getContext(), SaasContainerActivity.class));
                 return;
                 //break;
 

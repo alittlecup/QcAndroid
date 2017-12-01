@@ -7,25 +7,14 @@ import cn.qingchengfit.model.ExportModel;
 import cn.qingchengfit.model.SaasModelImpl;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.staffkit.repository.CourseModel;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
-import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
-import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
-import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
-import cn.qingchengfit.saasbase.course.batch.network.response.BatchCoachListWrap;
-import cn.qingchengfit.saasbase.course.batch.network.response.BatchCourseListWrap;
-import cn.qingchengfit.saasbase.course.batch.network.response.BatchDetailWrap;
-import cn.qingchengfit.saasbase.course.batch.network.response.BatchSchedulesWrap;
-import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseScheduleDetail;
-import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
-import cn.qingchengfit.saasbase.course.batch.network.response.SingleBatchWrap;
-import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IExportModel;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.repository.SaasModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.billImpl;
@@ -35,12 +24,8 @@ import cn.qingchengfit.saasbase.routers.courseImpl;
 import cn.qingchengfit.saasbase.routers.exportImpl;
 import cn.qingchengfit.saasbase.routers.staffImpl;
 import cn.qingchengfit.saasbase.routers.studentImpl;
-import cn.qingchengfit.saasbase.staff.beans.response.SalerDataWrap;
-import cn.qingchengfit.saasbase.staff.model.IStaffModel;
-import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
-import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
-import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
-import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
@@ -48,9 +33,6 @@ import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import dagger.Module;
 import dagger.Provides;
-import java.util.HashMap;
-import retrofit2.http.Body;
-import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -77,6 +59,7 @@ import rx.Observable;
   private QcDbManager qcDbManager;
   private ICardModel cardModel;
   private IExportModel exportModel;
+  private ICourseModel courseModel;
   private SaasbaseRouterCenter saasbaseRouterCenter;
   public AppModel() {
   }
@@ -94,7 +77,8 @@ import rx.Observable;
     this.qcDbManager = qcDbManager;
     cardModel = new CardModel(qcrestRepository,gymWrapper,loginStatus);
     exportModel = new ExportModel(qcrestRepository,gymWrapper,loginStatus);
-    this.saasbaseRouterCenter = new SaasbaseRouterCenter(new billImpl(),new cardImpl(),new commonImpl(),new courseImpl(),new exportImpl(),new staffImpl(),new studentImpl());
+    courseModel = new CourseModel(qcrestRepository,gymWrapper,loginStatus);
+    this.saasbaseRouterCenter = new SaasbaseRouterCenter(new billImpl(),new cardImpl(),new staffImpl(),new commonImpl(),new courseImpl(),new exportImpl(),new studentImpl());
   }
 
   @Provides App provideApplicationContext() {
@@ -141,127 +125,13 @@ import rx.Observable;
     return new SaasModelImpl(qcrestRepository);
   }
 
-  @Provides IStaffModel providerStaff(){
-    return new IStaffModel() {
-      @Override public Observable<QcDataResponse<UserWrap>> getCurUser() {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<SalerListWrap>> getStaffList(String id) {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse> addStaff(ManagerBody body) {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse> delStaff(String id) {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse> editStaff(String id, ManagerBody body) {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<PostionListWrap>> getPositions() {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid,
-        HashMap<String, Object> params) {
-        return null;
-      }
-    };
-  }
 
   @Provides SaasbaseRouterCenter provideRc(){
     return saasbaseRouterCenter;
   }
 
   @Provides ICourseModel provideCourseApi(){
-    return new ICourseModel() {
-
-      @Override public Observable<QcDataResponse<BatchCourseListWrap>> qcGetGroupBatch() {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<BatchCoachListWrap>> qcGetPrivateBatch() {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<CourseLisWrap>> qcGetCourses(boolean is_private) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcDataResponse<CourseLisWrap>> qcGetCoursesPermission(boolean is_private) {
-        return null;
-      }
-
-      @Override public Observable<QcResponsePrivateDetail> qcGetPrivateCoaches(String coach_id) {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(
-          @Path("course_id") String course_id) {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<BatchDetailWrap>> qcGetBatchDetail(
-          @Path("batch_id") String batch_id) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcDataResponse<BatchSchedulesWrap>> qcGetbatchSchedules(String batch_id,
-          boolean isPrivate) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcDataResponse<ScheduleTemplete>> qcGetBatchTemplate(boolean isPrivate,
-          String teacher_id, String course_id) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcResponse> qcCheckBatch(boolean isPrivate, ArrangeBatchBody body) {
-        return null;
-      }
-
-      @Override public Observable<QcResponse> qcArrangeBatch(ArrangeBatchBody body) {
-        return null;
-      }
-
-      @Override public Observable<QcResponse> qcUpdateBatch(String batchid, ArrangeBatchBody body) {
-        return null;
-      }
-
-      @Override public Observable<QcResponse> qcDelBatchSchedule(boolean isPrivate,
-          @Body DelBatchScheduleBody body) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcDataResponse<SingleBatchWrap>> qcGetSingleBatch(boolean isPrivate,
-          String single_id) {
-        return null;
-      }
-
-      @Override public Observable<QcResponse> delBatch(String batch_id) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcResponse> qcUpdateBatchSchedule(boolean isPirvate, String scheduleid,
-          SingleBatchBody body) {
-        return null;
-      }
-    };
+    return courseModel;
   }
 
   @Provides public ICardModel provideCardModel(){
@@ -276,6 +146,17 @@ import rx.Observable;
     };
   }
 
+  @Provides IStudentModel provideStudent(){
+    return new IStudentModel() {
+      @Override public Observable<QcDataResponse<StudentListWrapper>> getAllStudentNoPermission() {
+        return null;
+      }
+
+      @Override public Observable<QcDataResponse> addStudent(AddStdudentBody body) {
+        return null;
+      }
+    };
+  }
 
 
 

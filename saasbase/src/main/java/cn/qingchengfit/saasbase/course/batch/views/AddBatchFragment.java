@@ -21,10 +21,11 @@ import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
-import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.saasbase.course.batch.items.BatchLoopItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.AddBatchPresenter;
@@ -33,13 +34,12 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -65,8 +65,8 @@ import javax.inject.Inject;
  * <p/>
  * Created by Paper on 16/5/4 2016.
  */
-@Leaf(module = "Course", path = "/batch/add/" )
-public class AddBatchFragment extends BaseFragment
+@Leaf(module = "course", path = "/batch/add/" )
+public class AddBatchFragment extends SaasBaseFragment
     implements IBatchPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
 
   @BindView(R2.id.add) TextView add;
@@ -130,30 +130,23 @@ public class AddBatchFragment extends BaseFragment
       return true;
     }
   };
-  private BatchDetailCommonFragment batchBaseFragment;
+  private BatchDetailCommonView batchBaseFragment;
   private MaterialDialog exitDialg;
 
   private DialogList openDialog;
   private CommonFlexAdapter commonFlexAdapter;
-  private Staff mTeacher;
-  private BatchCourse mCourse;
+  @Need public Staff mTeacher;
+  @Need public Course mCourse;
 
-  public static AddBatchFragment newInstance(Staff teacher, BatchCourse course) {
-    Bundle args = new Bundle();
-    args.putParcelable("teacher", teacher);
-    args.putParcelable("course", course);
-    AddBatchFragment fragment = new AddBatchFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
+
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      mTeacher = getArguments().getParcelable("teacher");
-      mCourse = getArguments().getParcelable("course");
-    }
-    batchBaseFragment = BatchDetailCommonFragment.newInstance(mCourse, mTeacher);
+    //if (getArguments() != null) {
+    //  mTeacher = getArguments().getParcelable("teacher");
+    //  mCourse = getArguments().getParcelable("course");
+    //}
+    batchBaseFragment = BatchDetailCommonView.newInstance(mCourse, mTeacher);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
   }
 
@@ -202,7 +195,7 @@ public class AddBatchFragment extends BaseFragment
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
       Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
-    if (f instanceof BatchDetailCommonFragment) {
+    if (f instanceof BatchDetailCommonView) {
       batchBaseFragment.openPay(presenter.isPro());
     }
   }
@@ -214,13 +207,9 @@ public class AddBatchFragment extends BaseFragment
   @Override public boolean onFragmentBackPress() {
     if (exitDialg == null) {
       exitDialg = DialogUtils.instanceDelDialog(getContext(),
-          presenter.isPrivate() ? "确定放弃本次排期？" : "确定放弃本次排课",
-          new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-              dialog.dismiss();
-              getFragmentManager().popBackStackImmediate();
-            }
+          presenter.isPrivate() ? "确定放弃本次排期？" : "确定放弃本次排课", (dialog, which) -> {
+            dialog.dismiss();
+            popBack();
           });
     }
     if (!exitDialg.isShowing()) exitDialg.show();
@@ -233,7 +222,7 @@ public class AddBatchFragment extends BaseFragment
 
   @Override public void onSuccess() {
     hideLoading();
-    getFragmentManager().popBackStackImmediate();
+    popBack();
   }
 
   @Override public void onTemplete(boolean isFree, boolean openOnline, int maxuer) {
@@ -357,6 +346,9 @@ public class AddBatchFragment extends BaseFragment
     openDialog.show();
   }
 
+  /**
+   * 选择开放时间
+   */
   public void chooseOpenTime() {
     if (chooseOpenTimeDialog == null) {
       chooseOpenTimeDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.ALL);
@@ -383,6 +375,9 @@ public class AddBatchFragment extends BaseFragment
     chooseOpenTimeDialog.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
   }
 
+  /**
+   * 提前x小时开放预约
+   */
   public void chooseAheadOfHour() {
     SimpleScrollPicker simpleScrollPicker = new SimpleScrollPicker(getContext());
     simpleScrollPicker.setLabel("小时");
@@ -396,6 +391,9 @@ public class AddBatchFragment extends BaseFragment
     simpleScrollPicker.show(0, 240, 4);
   }
 
+  /**
+   * 清除自动填充排期
+   */
   @OnClick(R2.id.tv_clear_auto_batch) public void clearBatch() {
     commonFlexAdapter.clear();
     tvBatchLoopHint.setText("课程周期");
@@ -405,10 +403,6 @@ public class AddBatchFragment extends BaseFragment
   @Override public boolean onItemClick(int position) {
     // TODO: 2017/9/15 跳去looper
     return true;
-  }
-
-  @Override public void onDestroyView() {
-    super.onDestroyView();
   }
 
   /**

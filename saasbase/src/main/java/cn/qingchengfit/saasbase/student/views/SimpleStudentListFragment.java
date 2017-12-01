@@ -76,7 +76,7 @@ public class SimpleStudentListFragment extends BaseFragment
     //recyclerView.setItemAnimator(new FadeInUpItemAnimator());
     recyclerView.setHasFixedSize(true);
     recyclerView.addItemDecoration(new FlexibleItemDecoration(getContext())
-      .withDivider(R.drawable.divider_grey_left_margin,R.layout.item_student)
+      .withDivider(R.drawable.divider_grey_left_margin,R.layout.item_saas_staff)
       .withOffset(1)
       .withBottomEdge(true)
     );

@@ -53,6 +53,20 @@ public class Space implements Parcelable {
         this.is_support_team = in.readByte() != 0;
     }
 
+    public String getSupportString(){
+
+        String support = "";
+        if (is_support_private() && is_support_team()) {
+            support = "支持私教和团课";
+        } else if (is_support_private()) {
+            support = "支持私教";
+        } else if (is_support_team()) {
+            support = "支持团课";
+        }
+        return support;
+    }
+
+
     public String getId() {
         return id;
     }

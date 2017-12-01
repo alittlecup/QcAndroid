@@ -3,6 +3,7 @@ package cn.qingchengfit.views.fragments;
 import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -54,6 +56,7 @@ public abstract class BaseListFragment extends BaseFragment {
   protected ProgressItem progressItem;
   protected SmoothScrollLinearLayoutManager linearLayoutManager;
   @Nullable @BindView(R2.id.srl) protected SwipeRefreshLayout srl;
+  @BindView(R2.id.fab) FloatingActionButton fab;
   protected List<AbstractFlexibleItem> datas = new ArrayList<>();
   private Object listeners;
 
@@ -79,6 +82,11 @@ public abstract class BaseListFragment extends BaseFragment {
   }
 
   protected void initView(Bundle savedInstanceState) {
+    if (getFbIcon() != 0){
+      fab.setVisibility(View.VISIBLE);
+      fab.setImageResource(getFbIcon());
+    }
+
     linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());
     if (savedInstanceState != null && savedInstanceState.containsKey("p")) {
       linearLayoutManager.scrollToPosition(savedInstanceState.getInt("p", 0));
@@ -139,7 +147,7 @@ public abstract class BaseListFragment extends BaseFragment {
     commonFlexAdapter.clear();
   }
 
-  public void setDatas(List<? extends AbstractFlexibleItem> ds, @IntRange(from = 1) int page) {
+  public void setDatas(List<? extends IFlexible> ds, @IntRange(from = 1) int page) {
     stopRefresh();
     if (rv != null && commonFlexAdapter != null) {
       if (page == 1) clearItems();
@@ -180,6 +188,8 @@ public abstract class BaseListFragment extends BaseFragment {
     commonFlexAdapter.removeItem(commonFlexAdapter.getGlobalPositionOf(progressItem));
   }
 
+  @OnClick(R2.id.fab) public void onClickFab(){};
+
   @Override public String getFragmentName() {
     return BaseListFragment.class.getName();
   }
@@ -189,6 +199,9 @@ public abstract class BaseListFragment extends BaseFragment {
   }
 
   public abstract int getNoDataIconRes();
+  public int getFbIcon(){
+    return 0;
+  }
 
   public abstract String getNoDataStr();
 }

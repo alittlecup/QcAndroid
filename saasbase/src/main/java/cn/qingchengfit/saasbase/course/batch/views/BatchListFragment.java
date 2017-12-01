@@ -14,12 +14,15 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
@@ -50,15 +53,26 @@ public abstract class BatchListFragment extends SaasBaseFragment
 
   @BindView(R2.id.toolbar_title) protected TextView toolbarTitile;
   @BindView(R2.id.toolbar) protected Toolbar toolbar;
-  protected CommonFlexAdapter commonFlexAdapter;
-  @Inject SerPermisAction serPermisAction;
   @BindView(R2.id.rv_batch_list) RecyclerView rv;
   @BindView(R2.id.add_batch_btn) FloatingActionButton addBatchBtn;
 
+  protected CommonFlexAdapter commonFlexAdapter;
+  @Inject IPermissionModel serPermisAction;
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    FragmentArgs.inject(this);
-    commonFlexAdapter = new CommonFlexAdapter(new ArrayList());
+    commonFlexAdapter = new CommonFlexAdapter(new ArrayList(),this);
+    RxBus.getBus().register(Course.class)
+      .compose(this.<Course>bindToLifecycle())
+      .compose(this.<Course>doWhen(FragmentEvent.CREATE_VIEW))
+      .subscribe(new BusSubscribe<Course>() {
+        @Override public void onNext(Course course) {
+          routeTo("/batch/add/",new cn.qingchengfit.saasbase.course.batch.views.AddBatchParams()
+            .mCourse(course)
+            .build()
+          );
+        }
+      });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +84,7 @@ public abstract class BatchListFragment extends SaasBaseFragment
     rv.addItemDecoration(new FlexibleItemDecoration(getContext())
         .withDefaultDivider()
         .withBottomEdge(true));
+    rv.setAdapter(commonFlexAdapter);
     return view;
   }
 
@@ -87,7 +102,4 @@ public abstract class BatchListFragment extends SaasBaseFragment
     return BatchListFragment.class.getName();
   }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-  }
 }

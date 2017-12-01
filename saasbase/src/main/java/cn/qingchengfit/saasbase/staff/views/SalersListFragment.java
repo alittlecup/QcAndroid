@@ -98,7 +98,7 @@ import rx.schedulers.Schedulers;
     commonFlexAdapter.filterItems(ret, 500);
   }
 
-  @Override void initData() {
+  @Override protected void initData() {
     RxRegiste(staffModel.getSalers()
       .onBackpressureLatest()
       .subscribeOn(Schedulers.io())
@@ -121,7 +121,7 @@ import rx.schedulers.Schedulers;
     return new SalerItem(staff);
   }
 
-  @Override String getTitle() {
+  @Override protected String getTitle() {
     return "销售";
   }
 

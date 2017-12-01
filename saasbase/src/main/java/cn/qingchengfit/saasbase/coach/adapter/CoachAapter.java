@@ -60,7 +60,7 @@ public class CoachAapter extends RecyclerView.Adapter<CoachAapter.CoachVh> imple
     }
 
     @Override public CoachVh onCreateViewHolder(ViewGroup parent, int viewType) {
-        CoachVh vh = new CoachVh(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_student, parent, false));
+        CoachVh vh = new CoachVh(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_saas_staff, parent, false));
         vh.itemView.setOnClickListener(this);
         return vh;
     }

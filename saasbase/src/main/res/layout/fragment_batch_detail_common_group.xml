@@ -148,31 +148,39 @@
         android:id="@+id/el_pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         app:el_label="需要支付"
         >
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/pay_online"
+      <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          android:visibility="gone"
-          app:civ_clickable="true"
-          app:civ_hint="未开启"
-          app:civ_lable="在线支付结算"
-          app:civ_showright="true"
-          app:civ_text_color="@color/text_black"
-          />
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/pay_online"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:visibility="gone"
+            app:civ_clickable="true"
+            app:civ_hint="未开启"
+            app:civ_lable="在线支付结算"
+            app:civ_showright="true"
+            app:civ_text_color="@color/text_black"
+            />
 
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/pay_card"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          android:visibility="gone"
-          app:civ_clickable="true"
-          app:civ_hint="未设置"
-          app:civ_lable="会员卡结算"
-          app:civ_showdivier="false"
-          app:civ_showright="true"
-          app:civ_text_color="@color/text_black"
-          />
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/pay_card"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:visibility="gone"
+            app:civ_clickable="true"
+            app:civ_hint="未设置"
+            app:civ_lable="会员卡结算"
+            app:civ_showdivier="false"
+            app:civ_showright="true"
+            app:civ_text_color="@color/text_black"
+            />
+      </LinearLayout>
+
     </cn.qingchengfit.widgets.ExpandedLayout>
 </LinearLayout>

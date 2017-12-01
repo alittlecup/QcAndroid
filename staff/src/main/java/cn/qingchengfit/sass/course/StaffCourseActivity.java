@@ -2,8 +2,13 @@ package cn.qingchengfit.sass.course;
 
 import cn.qingchengfit.saasbase.course.CourseActivity;
 import cn.qingchengfit.saasbase.course.batch.views.AddBatchFragment;
+import cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryGroupFragment;
+import cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListGroupFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListPrivateFragment;
+import cn.qingchengfit.saasbase.course.batch.views.IBatchListCategoryFragment;
+import cn.qingchengfit.saasbase.course.course.views.CourseChooseFragment;
+import cn.qingchengfit.saasbase.course.course.views.CourseListFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -27,7 +32,11 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/11/6.
  */
 @Trunk(fragments = {
-  BatchListPrivateFragment.class, BatchListGroupFragment.class, AddBatchFragment.class
+  BatchListPrivateFragment.class, BatchListGroupFragment.class, AddBatchFragment.class,
+  BatchListCategoryGroupFragment.class, BatchListCategoryPrivateFragment.class,
+  IBatchListCategoryFragment.class,
+
+  CourseChooseFragment.class, CourseListFragment.class
 })
 public class StaffCourseActivity extends CourseActivity {
 

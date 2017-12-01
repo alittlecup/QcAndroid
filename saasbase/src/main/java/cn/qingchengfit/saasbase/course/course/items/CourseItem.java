@@ -1,13 +1,11 @@
 package cn.qingchengfit.saasbase.course.course.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
@@ -45,6 +43,17 @@ public class CourseItem extends AbstractFlexibleItem<CourseItem.CourseVh> {
 
     public CourseItem(CourseType courseDetail) {
         this.courseDetail = courseDetail;
+    }
+
+    public Course getCourse(){
+        return new Course.Builder()
+          .capacity(courseDetail.capacity)
+          .id(courseDetail.id)
+          .is_private(courseDetail.is_private)
+          .length(courseDetail.length)
+          .name(courseDetail.name)
+          .photo(courseDetail.photo)
+          .build();
     }
 
     public boolean isEditable() {

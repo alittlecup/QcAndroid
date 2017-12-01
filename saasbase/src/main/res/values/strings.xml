@@ -23,7 +23,6 @@
   <string name="manager">工作人员</string>
   <string name="desperately_loading">玩儿命加载中…</string>
   <string name="name">姓名</string>
-  <string name="course_add_new_coach">添加新教练</string>
   <string name="down_trainer_app_hint">添加成功后，系统将自动短信通知教练下载［健身教练助手APP］</string>
   <string name="add_success">添加成功</string>
   <string name="alert_del_coach">是否确认删除该教练</string>

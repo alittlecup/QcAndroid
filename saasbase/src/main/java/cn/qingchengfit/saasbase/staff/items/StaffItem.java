@@ -31,7 +31,7 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implement
   }
 
   @Override public int getLayoutRes() {
-    return R.layout.item_student;
+    return R.layout.item_saas_staff;
   }
 
   @Override public StaffVH createViewHolder(final View view, FlexibleAdapter adapter) {

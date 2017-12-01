@@ -1,6 +1,5 @@
 package cn.qingchengfit.saasbase.course.batch.presenters;
 
-import android.content.Intent;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import cn.qingchengfit.Constants;
@@ -174,17 +173,6 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
     }
   }
 
-  @Override public void attachIncomingIntent(Intent intent) {
-
-  }
-
-  @Override public void onCreate() {
-
-  }
-
-  @Override public void unattachView() {
-    super.unattachView();
-  }
 
   protected void buildBody() {
     // TODO: 2017/9/20

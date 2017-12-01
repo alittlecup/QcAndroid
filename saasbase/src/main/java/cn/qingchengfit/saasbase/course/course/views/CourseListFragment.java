@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.course.course.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
@@ -23,14 +23,15 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
 import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -63,7 +64,7 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/8/2.
  */
 @Leaf(module = "course",path = "/list/")
-public class CourseListFragment extends BaseFragment
+public class CourseListFragment extends SaasBaseFragment
     implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
   @Inject GymWrapper gymWrapper;
@@ -76,29 +77,15 @@ public class CourseListFragment extends BaseFragment
   @BindView(R2.id.rv) RecyclerView rv;
   @BindView(R2.id.srl) SwipeRefreshLayout srl;
 
-  private CommonFlexAdapter mAdatper;
-  private boolean mIsPrivate;
+  protected CommonFlexAdapter commonFlexAdapter;
+  @Need public Boolean mIsPrivate = false;
 
 
-  public static CourseListFragment newInstance(boolean isPrivate) {
 
-    Bundle args = new Bundle();
-    args.putBoolean("isPrivate", isPrivate);
-    CourseListFragment fragment = new CourseListFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      mIsPrivate = getArguments().getBoolean("isPrivate");
-    }
-  }
 
   @Override public View onCreateView(final LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_course_list, container, false);
+    View view = inflater.inflate(R.layout.fragment_saas_course_list, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     if ((!mIsPrivate && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING)) || (
@@ -112,11 +99,12 @@ public class CourseListFragment extends BaseFragment
       return v;
     }
 
-    mAdatper = new CommonFlexAdapter(new ArrayList(), this);
+    commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
+    rv.setItemAnimator(new FadeInUpItemAnimator());
     rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     rv.addItemDecoration(
         new FlexibleItemDecoration(getContext()).withDefaultDivider().withBottomEdge(true));
-    rv.setAdapter(mAdatper);
+    rv.setAdapter(commonFlexAdapter);
     srl.setOnRefreshListener(this);
     onRefresh();
     return view;
@@ -136,6 +124,7 @@ public class CourseListFragment extends BaseFragment
     super.onDestroyView();
   }
 
+
   @Override public boolean onItemClick(int position) {
     return true;
   }
@@ -151,6 +140,7 @@ public class CourseListFragment extends BaseFragment
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<QcDataResponse<CourseLisWrap>>() {
           @Override public void call(QcDataResponse<CourseLisWrap> qcResponse) {
+            srl.setRefreshing(false);
             if (ResponseConstant.checkSuccess(qcResponse)) {
               if (qcResponse.data != null && qcResponse.data.courses != null) {
                 List<IFlexible> datas = new ArrayList<IFlexible>();
@@ -160,7 +150,7 @@ public class CourseListFragment extends BaseFragment
                 if (datas.size() == 0) {
                   datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程种类"));
                 }
-                mAdatper.updateDataSet(datas, true);
+                commonFlexAdapter.updateDataSet(datas,true);
               }
             } else {
               onShowError(qcResponse.getMsg());

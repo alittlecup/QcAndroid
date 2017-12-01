@@ -76,8 +76,7 @@ import rx.functions.Func1;
  */
 public abstract class BaseFragment extends RxFragment
   implements BaseActivity.FragmentBackPress, CView {
-  @Deprecated
-  public FragCallBack mCallbackActivity;
+  @Deprecated public FragCallBack mCallbackActivity;
   public Unbinder unbinder;
   // 标志位，标志已经初始化完成
   protected boolean isVisible;
@@ -141,7 +140,6 @@ public abstract class BaseFragment extends RxFragment
     return true;
   }
 
-
   @Override public void onAttach(Context context) {
     try {
       AndroidSupportInjection.inject(this);
@@ -182,8 +180,7 @@ public abstract class BaseFragment extends RxFragment
   }
 
   public void initToolbar(@NonNull Toolbar toolbar) {
-    if (!CompatUtils.less21())
-      toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
+    if (!CompatUtils.less21()) toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         getActivity().onBackPressed();
@@ -335,7 +332,6 @@ public abstract class BaseFragment extends RxFragment
     return ob;
   }
 
-
   protected void stuff(Fragment fragment) {
     String tag = UUID.randomUUID().toString();
     if (fragment instanceof BaseFragment) {
@@ -391,31 +387,36 @@ public abstract class BaseFragment extends RxFragment
         .commit();
     }
   }
-  View searchRoot;
-  protected void showSearch(ViewGroup tvToolbarLayout){
-    if (searchRoot != null){
-      FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.MATCH_PARENT);
 
-      lp.setMargins(15,15,15,15);
+  View searchRoot;
+
+  protected void showSearch(ViewGroup tvToolbarLayout) {
+    if (searchRoot != null) {
+      FrameLayout.LayoutParams lp =
+        new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+          ViewGroup.LayoutParams.MATCH_PARENT);
+
+      lp.setMargins(15, 15, 15, 15);
       searchRoot.setOnTouchListener(new View.OnTouchListener() {
         @Override public boolean onTouch(View view, MotionEvent motionEvent) {
           return true;
         }
       });
-      tvToolbarLayout.addView(searchRoot,lp);
+      tvToolbarLayout.addView(searchRoot, lp);
       searchRoot.requestFocus();
-      AppUtils.showKeyboard(getContext(),searchRoot.findViewById(R.id.et_search));
+      AppUtils.showKeyboard(getContext(), searchRoot.findViewById(R.id.et_search));
       //searchRoot.findViewById(R.id.et_search).requestFocus();
     }
   }
-  public void initSearch(final ViewGroup tvToolbarLayout,String hint) {
-    initSearch(tvToolbarLayout,hint,500);
+
+  public void initSearch(final ViewGroup tvToolbarLayout, String hint) {
+    initSearch(tvToolbarLayout, hint, 500);
   }
-    // 初始化搜索
-  public void initSearch(final ViewGroup tvToolbarLayout,String hint,long intervalD) {
-    searchRoot = LayoutInflater.from(getContext()).inflate(R.layout.layout_action_search,null);
-    final EditText searchEt = ((EditText)searchRoot.findViewById(R.id.et_search));
+
+  // 初始化搜索
+  public void initSearch(final ViewGroup tvToolbarLayout, String hint, long intervalD) {
+    searchRoot = LayoutInflater.from(getContext()).inflate(R.layout.layout_action_search, null);
+    final EditText searchEt = ((EditText) searchRoot.findViewById(R.id.et_search));
     searchEt.setHint(hint);
     RxTextView.afterTextChangeEvents(searchEt)
       .throttleLast(intervalD, TimeUnit.MILLISECONDS)
@@ -429,12 +430,11 @@ public abstract class BaseFragment extends RxFragment
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
-          if (searchEt.getText().length() == 0 ){
-              tvToolbarLayout.removeView(searchRoot);
-              tvToolbarLayout.clearFocus();
-              if (getActivity() != null)
-                AppUtils.hideKeyboard(getActivity());
-          }else {
+          if (searchEt.getText().length() == 0) {
+            tvToolbarLayout.removeView(searchRoot);
+            tvToolbarLayout.clearFocus();
+            if (getActivity() != null) AppUtils.hideKeyboard(getActivity());
+          } else {
             searchEt.setText("");
           }
         }
@@ -499,7 +499,8 @@ public abstract class BaseFragment extends RxFragment
       Intent to = new Intent(Intent.ACTION_VIEW, uri);
       if (getActivity() instanceof BaseActivity) {
         if (((BaseActivity) getActivity()).getModuleName().equalsIgnoreCase(uri.getHost())
-          && !uri.getPath().startsWith("/choose")) {
+          //&& !uri.getPath().startsWith("/choose")
+          ) {
           to.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         } else {
           to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -641,19 +642,19 @@ public abstract class BaseFragment extends RxFragment
   @Override public void popBack() {
     if (getFragmentManager() != null) {
       if (!getFragmentManager().popBackStackImmediate()) {
-        if (getActivity() != null)
-          getActivity().finish();
+        if (getActivity() != null) getActivity().finish();
       }
     }
   }
- @Override public void popBack(int count) {
+
+  @Override public void popBack(int count) {
     if (getFragmentManager() != null) {
       int stackCount = getFragmentManager().getBackStackEntryCount();
-      if (count <= stackCount){
-        getFragmentManager().popBackStackImmediate(getFragmentManager().getBackStackEntryAt(stackCount-count).getId(),1);
-      }else {
-        if (getActivity() !=null)
-          getActivity().finish();
+      if (count <= stackCount) {
+        getFragmentManager().popBackStackImmediate(
+          getFragmentManager().getBackStackEntryAt(stackCount - count).getId(), 1);
+      } else {
+        if (getActivity() != null) getActivity().finish();
       }
     }
   }
@@ -662,9 +663,10 @@ public abstract class BaseFragment extends RxFragment
     onShowError(getString(e));
   }
 
-  @Override public void showSelectSheet(String title,List<String> strs,AdapterView.OnItemClickListener listener) {
-    if (getActivity() instanceof BaseActivity){
-      ((BaseActivity) getActivity()).showDialogList(title,strs,listener);
+  @Override public void showSelectSheet(String title, List<String> strs,
+    AdapterView.OnItemClickListener listener) {
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).showDialogList(title, strs, listener);
     }
   }
 }

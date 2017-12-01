@@ -24,7 +24,7 @@ import android.os.Parcelable;
  * Created by Paper on 16/11/15.
  */
 
-public class Course implements Parcelable {
+public class Course implements Parcelable ,Cloneable{
   public String id;
     public String name;
     public int length;
@@ -35,7 +35,17 @@ public class Course implements Parcelable {
     public Course() {
     }
 
-    private Course(Builder builder) {
+  @Override public Object clone() {
+    Course stu = null;
+    try{
+      stu = (Course)super.clone();
+    }catch(CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
+    return stu;
+  }
+
+  private Course(Builder builder) {
         setId(builder.id);
         setName(builder.name);
         setLength(builder.length);
@@ -43,6 +53,16 @@ public class Course implements Parcelable {
         setPhoto(builder.photo);
         setCapacity(builder.capacity);
     }
+
+  public static final Creator<Course> CREATOR = new Creator<Course>() {
+    @Override public Course createFromParcel(Parcel in) {
+      return new Course(in);
+    }
+
+    @Override public Course[] newArray(int size) {
+      return new Course[size];
+    }
+  };
 
   public int getCapacity() {
         return capacity;
@@ -168,14 +188,4 @@ public class Course implements Parcelable {
     this.photo = in.readString();
     this.capacity = in.readInt();
   }
-
-  public static final Creator<Course> CREATOR = new Creator<Course>() {
-    @Override public Course createFromParcel(Parcel source) {
-      return new Course(source);
-    }
-
-    @Override public Course[] newArray(int size) {
-      return new Course[size];
-    }
-  };
 }

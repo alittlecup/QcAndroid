@@ -96,4 +96,8 @@ public class StaffModel implements IStaffModel {
   @Override public Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid, HashMap<String, Object> params) {
     return staffApi.qcGetSalerData(staffid, params);
   }
+
+  @Override public Observable<QcDataResponse<SalerListWrap>> getTrainers() {
+    return null;
+  }
 }

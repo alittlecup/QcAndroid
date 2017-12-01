@@ -3,15 +3,11 @@ package cn.qingchengfit.saasbase.coach.presenter;
 import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcResponse;
 import javax.inject.Inject;
 import rx.Subscription;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -29,13 +25,12 @@ import rx.functions.Action1;
 public class EditCoachInfoPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private CoachUseCase usecase;
     private CoachDetailView view;
     private Subscription edSp;
     private Subscription delSp;
 
-    @Inject public EditCoachInfoPresenter(CoachUseCase usecase) {
-        this.usecase = usecase;
+    @Inject public EditCoachInfoPresenter() {
+
     }
 
     @Override public void onStart() {
@@ -73,27 +68,27 @@ public class EditCoachInfoPresenter extends BasePresenter {
         Staff c = new Staff(coach.username, coach.phone, coach.avatar, coach.gender);
         c.area_code = coach.area_code;
 
-        edSp = usecase.fixCoach(staffId, gymWrapper.id(), gymWrapper.model(), coach.id, c, new Action1<QcResponse>() {
-            @Override public void call(QcResponse qcResponse) {
-                if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onFixSuccess();
-                } else {
-                    // ToastUtils.logHttp(qcResponse);
-                    view.onFailed();
-                }
-            }
-        });
+        //edSp = usecase.fixCoach(staffId, gymWrapper.id(), gymWrapper.model(), coach.id, c, new Action1<QcResponse>() {
+        //    @Override public void call(QcResponse qcResponse) {
+        //        if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
+        //            view.onFixSuccess();
+        //        } else {
+        //            // ToastUtils.logHttp(qcResponse);
+        //            view.onFailed();
+        //        }
+        //    }
+        //});
     }
 
     public void delCoach(String staffId, String id) {
-        delSp = usecase.delCoach(staffId, gymWrapper.id(), gymWrapper.model(), id, new Action1<QcResponse>() {
-            @Override public void call(QcResponse qcResponse) {
-                if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onDelSuccess();
-                } else {
-                    view.onFailed();
-                }
-            }
-        });
+        //delSp = usecase.delCoach(staffId, gymWrapper.id(), gymWrapper.model(), id, new Action1<QcResponse>() {
+        //    @Override public void call(QcResponse qcResponse) {
+        //        if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
+        //            view.onDelSuccess();
+        //        } else {
+        //            view.onFailed();
+        //        }
+        //    }
+        //});
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
  * <p>
  * Created by Paper on 16/5/6 2016.
  */
+@Deprecated
 public class CourseSchedules extends QcResponsePage {
 
     @SerializedName("schedules") public List<CourseSchedule> schedules;

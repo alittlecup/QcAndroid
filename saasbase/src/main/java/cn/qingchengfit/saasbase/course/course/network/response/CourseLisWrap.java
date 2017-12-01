@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.course.course.network.response;
 
+import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.network.response.QcListData;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import java.util.List;
 
@@ -24,6 +26,7 @@ import java.util.List;
  * Created by Paper on 2017/9/12.
  */
 
-public class CourseLisWrap {
+public class CourseLisWrap extends QcListData {
   public List<CourseType> courses;
+  public CoachService service;
 }

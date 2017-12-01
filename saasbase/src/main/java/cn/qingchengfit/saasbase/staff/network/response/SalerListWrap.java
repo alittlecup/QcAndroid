@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.staff.network.response;
 
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.response.QcListData;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
@@ -27,4 +28,7 @@ import java.util.List;
 
 public class SalerListWrap extends QcListData {
   public List<Staff> sellers;
+
+  @SerializedName("teachers")
+  public List<Staff> coaches;
 }

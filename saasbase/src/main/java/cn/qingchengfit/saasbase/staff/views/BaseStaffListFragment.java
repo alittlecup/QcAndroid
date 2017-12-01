@@ -40,19 +40,21 @@ import java.util.List;
  * Created by Paper on 2017/10/11.
  */
 
-public abstract class BaseStaffListFragment extends BaseListFragment implements
-    FlexibleAdapter.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener{
+public abstract class BaseStaffListFragment extends BaseListFragment
+  implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener,
+  FlexibleAdapter.OnUpdateListener {
   protected Toolbar toolbar;
   protected TextView toolbarTitle;
   protected ViewGroup toolbarRoot;
   List<AbstractFlexibleItem> ret = new ArrayList<>();
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
-    View view = super.onCreateView(inflater, container ,savedInstanceState);
-    LinearLayout root = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container,null);
-    root.addView(view,1);
-    toolbar = (Toolbar)root.findViewById(R.id.toolbar);
-    toolbarTitle = (TextView)root.findViewById(R.id.toolbar_title);
+    View view = super.onCreateView(inflater, container, savedInstanceState);
+    LinearLayout root = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container, null);
+    root.addView(view, 1);
+    toolbar = (Toolbar) root.findViewById(R.id.toolbar);
+    toolbarTitle = (TextView) root.findViewById(R.id.toolbar_title);
     toolbarRoot = root.findViewById(R.id.toolbar_layout);
     initToolbar(toolbar);
     initListener(this);
@@ -71,34 +73,31 @@ public abstract class BaseStaffListFragment extends BaseListFragment implements
 
   @Override protected void addDivider() {
     rv.setBackgroundResource(R.color.white);
-    rv.addItemDecoration(new FlexibleItemDecoration(getContext())
-      .withDivider(R.drawable.divider_grey_left_margin,R.layout.item_student)
-      .withOffset(1)
-      .withBottomEdge(true)
-    );
+    rv.addItemDecoration(
+      new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin,
+        R.layout.item_saas_staff).withOffset(1).withBottomEdge(true));
   }
 
-  abstract void initData();
-  abstract String getTitle();
+  protected abstract void initData();
 
+  protected abstract String getTitle();
 
-  protected void onGetData(List<Staff> staffs){
+  protected void onGetData(List<Staff> staffs) {
     stopRefresh();
     ret.clear();
     for (Staff staff : staffs) {
       ret.add(generateItem(staff));
     }
-    setDatas(ret,1);
+    setDatas(ret, 1);
   }
 
   @Override public void onRefresh() {
     initData();
   }
 
-  protected StaffItem generateItem(Staff staff){
+  protected StaffItem generateItem(Staff staff) {
     return new StaffItem(staff);
   }
-
 
   @Override public int getNoDataIconRes() {
     return R.drawable.vd_img_empty_universe;
@@ -106,5 +105,9 @@ public abstract class BaseStaffListFragment extends BaseListFragment implements
 
   @Override public String getNoDataStr() {
     return "";
+  }
+
+  @Override public void onUpdateEmptyView(int size) {
+
   }
 }

@@ -95,6 +95,7 @@
         android:name="APP_OEM"
         android:value="@string/oem_tag"
         />
+
     <provider
         android:name="android.support.v4.content.FileProvider"
         android:authorities="${file_provider}"
@@ -783,8 +784,10 @@
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
+
         <data
             android:host="cardtpl"
             android:scheme="qcstaff"
@@ -804,6 +807,7 @@
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
 
@@ -859,8 +863,8 @@
     </activity>
     <activity
         android:name=".card.StaffCardActivity"
-        android:theme="@style/QcAppTheme"
         android:screenOrientation="portrait"
+        android:theme="@style/QcAppTheme"
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
@@ -880,10 +884,29 @@
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
+
         <data
             android:host="export"
+            android:scheme="qcstaff"
+            />
+      </intent-filter>
+    </activity>
+
+    <activity
+        android:name=".staff.StaffStaffActivity"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="staff"
             android:scheme="qcstaff"
             />
       </intent-filter>
