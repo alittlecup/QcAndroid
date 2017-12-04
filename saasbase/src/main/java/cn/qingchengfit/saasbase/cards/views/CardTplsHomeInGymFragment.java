@@ -74,15 +74,11 @@ import javax.inject.Inject;
 
   int childCount = 0;
   protected List<CardTplListFragment> fragmentList = new ArrayList<>();
-  private CardViewpagerAdapter pageAdapter;
+  protected CardViewpagerAdapter pageAdapter;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (fragmentList.size() == 0) {
-      for (int i = 0; i < 4; i++) {
-        fragmentList.add(new CardTplListFragment());
-      }
-    }
+    initFragments();
     RxBus.getBus()
       .register(EventSaasFresh.CardTplList.class)
       .compose(this.<EventSaasFresh.CardTplList>bindToLifecycle())
@@ -94,6 +90,14 @@ import javax.inject.Inject;
       });
   }
 
+  void initFragments() {
+    if (fragmentList.size() == 0) {
+      for (int i = 0; i < 4; i++) {
+        fragmentList.add(new CardTplListFragment());
+      }
+    }
+  }
+
   @Override public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
   }
@@ -103,30 +107,36 @@ import javax.inject.Inject;
     View view = inflater.inflate(R.layout.fragment_cardtype_home, container, false);
     super.onCreateView(inflater, container, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
-    delegatePresenter(presenter, this);
+    delegatePresenter(getPresenter(), this);
     initToolbar(toolbar);
-
-    pageAdapter = new CardViewpagerAdapter(getChildFragmentManager());
-    viewpager.setAdapter(pageAdapter);
-    tab.setupWithViewPager(viewpager);
-    viewpager.setOffscreenPageLimit(4);
-    viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-      @Override
-      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-      }
-
-      //页面变化
-      @Override public void onPageSelected(int position) {
-        cardCount.setText(fragmentList.get(position).getItemCount() + "");
-      }
-
-      @Override public void onPageScrollStateChanged(int state) {
-
-      }
-    });
-    //childCount =0;//把子view加载置位 开启每次退回此页会刷新数据
+    initVp();
     return view;
+  }
+
+  public CardTypeListPresenter getPresenter() {
+    return presenter;
+  }
+
+  void initVp() {
+      pageAdapter = new CardViewpagerAdapter(getChildFragmentManager());
+      viewpager.setAdapter(pageAdapter);
+      tab.setupWithViewPager(viewpager);
+      viewpager.setOffscreenPageLimit(fragmentList.size());
+      viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        //页面变化
+        @Override public void onPageSelected(int position) {
+          cardCount.setText(fragmentList.get(position).getItemCount() + "");
+        }
+
+        @Override public void onPageScrollStateChanged(int state) {
+
+        }
+      });
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -141,7 +151,9 @@ import javax.inject.Inject;
           new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              routeTo("/cardtpl/add/", new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(position + 1).build());
+              routeTo("/cardtpl/add/",
+                new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(
+                  position + 1).build());
             }
           }).show();
         return true;
@@ -154,7 +166,7 @@ import javax.inject.Inject;
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof CardTplListFragment) {
       childCount++;
-      if (childCount == 4) onRefresh();
+      if (childCount == fragmentList.size()) onRefresh();
     }
   }
 
@@ -171,7 +183,7 @@ import javax.inject.Inject;
     DialogList.builder(getContext()).list(status, new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         cardDisable.setText(status[position]);
-        presenter.setEnable(position == 0);
+        getPresenter().setEnable(position == 0);
       }
     }).show();
   }
@@ -180,25 +192,26 @@ import javax.inject.Inject;
    * 获取后端数据完成
    */
   @Override public void onDoneCardtplList() {
-    cardCount.setText(presenter.getCardTplByType(viewpager.getCurrentItem()).size() + "");
+    cardCount.setText(getPresenter().getCardTplByType(viewpager.getCurrentItem()).size() + "");
     int i = 0;
     for (CardTplListFragment fragment : fragmentList) {
-      fragment.setCardtpls(presenter.getCardTplByType(i));
+      fragment.setCardtpls(getPresenter().getCardTplByType(i));
       fragment.initListener(this);
       i++;
     }
   }
 
   @Override public void onRefresh() {
-    presenter.queryCardtypeList();
+    getPresenter().queryCardtypeList();
   }
 
   @Override public boolean onItemClick(int i) {
     IFlexible item = fragmentList.get(viewpager.getCurrentItem()).getItem(i);
     if (item instanceof CardTplItem) {
-      presenter.chooseOneCardTpl(((CardTplItem) item).getCardTpl());
+      getPresenter().chooseOneCardTpl(((CardTplItem) item).getCardTpl());
       routeTo("/cardtpl/detail/",
-        new cn.qingchengfit.saasbase.cards.views.CardTplDetailParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
+        new cn.qingchengfit.saasbase.cards.views.CardTplDetailParams().cardTpl(
+          ((CardTplItem) item).getCardTpl()).build());
     }
     return true;
   }

@@ -27,7 +27,7 @@ public class CardTypeListPresenter extends BasePresenter {
   @Inject ICardModel cardModel;
   @Inject BindCardModel.SelectedData selectedData;
   private MVPView view;
-  private List<CardTpl> cardTpls = new ArrayList<>();
+  protected List<CardTpl> cardTpls = new ArrayList<>();
   private boolean enable = true;
 
   @Inject public CardTypeListPresenter() {

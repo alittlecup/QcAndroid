@@ -42,7 +42,6 @@ import cn.qingchengfit.staffkit.views.ChooseBrandFragment;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.adapter.ImageTextBean;
-import cn.qingchengfit.staffkit.views.cardtype.CardTypeActivity;
 import cn.qingchengfit.staffkit.views.charts.BaseStatementChartFragment;
 import cn.qingchengfit.staffkit.views.charts.BaseStatementChartFragmentBuilder;
 import cn.qingchengfit.staffkit.views.course.CourseActivity;
@@ -363,9 +362,9 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
             showAlert(R.string.alert_permission_forbid);
             return;
         }
-
-        Intent toCardType = new Intent(getActivity(), CardTypeActivity.class);
-        goActivity(toCardType);
+        routeTo("card","/brand/cardtpl/list/",null);
+        //Intent toCardType = new Intent(getActivity(), CardTypeActivity.class);
+        //goActivity(toCardType);
     }
 
     /**
