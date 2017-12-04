@@ -21,7 +21,7 @@ import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
-import cn.qingchengfit.staffkit.rest.CardApi;
+import cn.qingchengfit.staffkit.repository.CardApi;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.Path;

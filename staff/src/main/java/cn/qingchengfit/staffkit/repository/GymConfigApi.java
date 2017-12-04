@@ -1,5 +1,12 @@
 package cn.qingchengfit.staffkit.repository;
 
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
+import java.util.HashMap;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -21,5 +28,8 @@ package cn.qingchengfit.staffkit.repository;
  * Created by Paper on 2017/12/1.
  */
 
-public class GymConfigApi {
+public interface GymConfigApi {
+  //获取某个健身房的场地列表
+  @GET("/api/staffs/{id}/method/spaces/") rx.Observable<QcDataResponse<SpaceListWrap>> qcGetGymSitesPermisson(@Path("id") String id,
+    @QueryMap HashMap<String, Object> params);
 }

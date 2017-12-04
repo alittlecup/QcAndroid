@@ -17,6 +17,7 @@ import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.gymconfig.views.SiteSelectedParams;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -216,8 +217,10 @@ public class BatchDetailCommonView extends BaseFragment {
    * 更改场地
    */
   @OnClick(R2.id.space) public void onSpaceClicked() {
-    //saasRouter.choose(GymManageUri.SITE_LIST+"?muti="+(course.is_private?1:0));
-
+    routeTo("gym","/site/choose/",new SiteSelectedParams()
+      .isPrivate(course.is_private)
+      //.selectIds()
+      .build());
   }
 
   /**

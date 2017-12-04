@@ -106,6 +106,7 @@
         app:civ_hint="@string/please_choose"
         app:civ_showdivier="true"
         app:civ_showright="true"
+        app:civ_lable="@string/coach"
         style="@style/QcCivInputStyle"
         />
 
@@ -150,6 +151,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:el_label="需要支付"
+        app:el_expanded="true"
         >
       <LinearLayout
           android:layout_width="match_parent"
@@ -160,7 +162,6 @@
             android:id="@+id/pay_online"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
-            android:visibility="gone"
             app:civ_clickable="true"
             app:civ_hint="未开启"
             app:civ_lable="在线支付结算"
@@ -172,7 +173,6 @@
             android:id="@+id/pay_card"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
-            android:visibility="gone"
             app:civ_clickable="true"
             app:civ_hint="未设置"
             app:civ_lable="会员卡结算"

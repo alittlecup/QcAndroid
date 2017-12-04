@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.rest;
+package cn.qingchengfit.staffkit.repository;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.export.network.response.ExportRecordWrapper;

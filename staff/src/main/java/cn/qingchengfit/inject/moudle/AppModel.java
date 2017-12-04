@@ -7,6 +7,7 @@ import cn.qingchengfit.model.ExportModel;
 import cn.qingchengfit.model.SaasModelImpl;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.routers.gymImpl;
 import cn.qingchengfit.staffkit.repository.CourseModel;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
@@ -78,7 +79,7 @@ import rx.Observable;
     cardModel = new CardModel(qcrestRepository,gymWrapper,loginStatus);
     exportModel = new ExportModel(qcrestRepository,gymWrapper,loginStatus);
     courseModel = new CourseModel(qcrestRepository,gymWrapper,loginStatus);
-    this.saasbaseRouterCenter = new SaasbaseRouterCenter(new billImpl(),new cardImpl(),new staffImpl(),new commonImpl(),new courseImpl(),new exportImpl(),new studentImpl());
+    this.saasbaseRouterCenter = new SaasbaseRouterCenter(new billImpl(),new cardImpl(),new staffImpl(),new commonImpl(),new courseImpl(),new exportImpl(),new gymImpl(),new studentImpl());
   }
 
   @Provides App provideApplicationContext() {

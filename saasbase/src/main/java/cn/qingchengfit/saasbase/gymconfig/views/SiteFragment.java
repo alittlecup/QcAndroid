@@ -85,7 +85,7 @@ public class SiteFragment extends BaseListFragment
   }
 
   @Override public void onRefresh() {
-    RxRegiste(gymConfigModel.getSites(queryType)
+    RxRegiste(gymConfigModel.getSites()
       .onBackpressureLatest()
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
@@ -95,7 +95,8 @@ public class SiteFragment extends BaseListFragment
             List<IFlexible> datas = new ArrayList<>();
             if (qcResponse.data.spaces != null){
               for (Space space : qcResponse.data.spaces) {
-                datas.add(generateItem(space));
+                if (queryType <0 || (space.is_support_private() && queryType == 1)|| (space.is_support_team() && queryType == 0))
+                  datas.add(generateItem(space));
               }
             }
             setDatas(datas,1);

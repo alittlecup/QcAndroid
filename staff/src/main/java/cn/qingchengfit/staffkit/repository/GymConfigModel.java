@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.gym;
+package cn.qingchengfit.staffkit.repository;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -6,6 +6,8 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
 import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
+import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
+import java.util.HashMap;
 import rx.Observable;
 
 /**
@@ -33,15 +35,18 @@ public class GymConfigModel implements IGymConfigModel {
 
   GymWrapper gymWrapper;
   LoginStatus loginStatus;
-  
+  GymConfigApi api;
 
   public GymConfigModel(GymWrapper gymWrapper, LoginStatus loginStatus , QcRestRepository qcRestRepository) {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-
+    api = qcRestRepository.createGetApi(GymConfigApi.class);
   }
 
-  @Override public Observable<QcDataResponse<SpaceListWrap>> getSites(int type) {
-    return null;
+  @Override public Observable<QcDataResponse<SpaceListWrap>> getSites() {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("key", PermissionServerUtils.STUDIO_LIST);
+    params.put("method", "get");
+    return api.qcGetGymSitesPermisson(loginStatus.staff_id(),params);
   }
 }

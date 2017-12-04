@@ -8,7 +8,7 @@
 
   <include layout="@layout/common_simple_toolbar"/>
 
-  <include layout="@layout/item_student"/>
+  <include layout="@layout/item_saas_staff"/>
   <android.support.v4.widget.Space
       android:layout_width="match_parent"
       android:layout_height="@dimen/activity_vertical_margin"

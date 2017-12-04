@@ -27,6 +27,7 @@ import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.commonImpl;
 import cn.qingchengfit.saasbase.routers.courseImpl;
 import cn.qingchengfit.saasbase.routers.exportImpl;
+import cn.qingchengfit.saasbase.routers.gymImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import dagger.Module;
 import dagger.Provides;
@@ -66,7 +67,7 @@ public class AppModel {
   }
 
   @Provides SaasbaseRouterCenter providerRouterCenter(){
-    return new SaasbaseRouterCenter(new BillRouters(),new CardRouters(),new commonImpl(),new courseImpl(),new exportImpl(),new StaffRouters(),new StudentRouters());
+    return new SaasbaseRouterCenter(new BillRouters(),new CardRouters(),new StaffRouters(),new commonImpl(),new courseImpl(),new exportImpl(),new gymImpl(),new StudentRouters());
   }
   @Provides PosRouterCenter providerPosRouterCenter(){
     return new PosRouterCenter(new deskImpl(),new settingImpl(),new exchangeImpl());

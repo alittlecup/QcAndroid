@@ -38,6 +38,7 @@ import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
 import cn.qingchengfit.saasbase.staff.views.SuFragment;
 import cn.qingchengfit.saasbase.staff.views.SuIdendifyFragment;
 import cn.qingchengfit.saasbase.staff.views.SuNewFragment;
+import cn.qingchengfit.staff.di.BindGymConfigAcitivty;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
@@ -360,7 +361,7 @@ import dagger.multibindings.IntoMap;
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
     BindStaffCardActivity.class, BindImportExportActivity.class, BindStaffStaffActivity.class,
-
+  BindGymConfigAcitivty.class,
 
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,

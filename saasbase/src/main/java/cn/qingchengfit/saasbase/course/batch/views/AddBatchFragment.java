@@ -410,7 +410,7 @@ public class AddBatchFragment extends SaasBaseFragment
    */
   @OnClick(R2.id.add) public void addBatchLoop() {
     setBackPressNull();
-
+    routeTo("/batch/loop/add/",null);
   }
   //
   //// TODO: 2017/9/12 非高级版本

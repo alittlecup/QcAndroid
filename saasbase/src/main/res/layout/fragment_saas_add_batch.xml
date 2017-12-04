@@ -27,7 +27,7 @@
       <FrameLayout
           android:id="@+id/frag_course_info"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="wrap_content"
           />
 
       <include layout="@layout/divider_grey"/>

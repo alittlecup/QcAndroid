@@ -1,11 +1,10 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.utils.ListUtils;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import java.util.Calendar;
 
 /**
@@ -31,24 +30,10 @@ import java.util.Calendar;
 @Leaf(module = "Course",path = "/batch/loop/edit/")
 public class EditBatchLoopFragment extends IBatchLoopFragment {
 
-  private BatchLoop batchLoop;
+  @Need BatchLoop batchLoop;
+  @Need Boolean isPrivate;
 
-  public static EditBatchLoopFragment newInstance(boolean isPrivate,BatchLoop batchLoop) {
-    Bundle args = new Bundle();
-    args.putParcelable("batchloop",batchLoop);
-    args.putBoolean("p",isPrivate);
-    EditBatchLoopFragment fragment = new EditBatchLoopFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
 
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (getArguments() != null){
-      isPrivate = getArguments().getBoolean("p");
-      batchLoop = getArguments().getParcelable("batchloop");
-    }
-  }
 
   @Override void initSelect() {
     mStart = batchLoop.dateStart;
