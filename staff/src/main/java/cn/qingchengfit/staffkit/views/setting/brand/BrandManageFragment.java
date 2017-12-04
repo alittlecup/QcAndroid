@@ -76,7 +76,7 @@ public class BrandManageFragment extends BaseFragment implements BrandManageView
                     if (brand.isHas_add_permission()) {
                         getFragmentManager().beginTransaction()
                             .replace(mCallbackActivity.getFragId(), BrandDetailFragment.newInstance(brand))
-                            .addToBackStack(getFragmentName())
+                            //.addToBackStack(getFragmentName())
                             .commit();
                     } else {
                         //无权限
