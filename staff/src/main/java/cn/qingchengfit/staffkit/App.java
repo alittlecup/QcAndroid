@@ -135,7 +135,7 @@ public class App extends MultiDexApplication
         }
 
         initInjcet();
-        if (!BuildConfig.DEBUG) CrashHandler.getInstance().init(this);
+        CrashHandler.getInstance().init(this);
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
             @Override public void handleError(Throwable e) {
                 if (e != null) {
@@ -214,7 +214,8 @@ public class App extends MultiDexApplication
 
     public void finishActivity() {
         //杀死该应用进程
-        android.os.Process.killProcess(android.os.Process.myPid());
+        //android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
 
     @Override public DispatchingAndroidInjector<Activity> activityInjector() {
