@@ -41,10 +41,13 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.jakewharton.rxbinding.view.RxView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.functions.Action1;
 import timber.log.Timber;
 
 /**
@@ -156,29 +159,36 @@ public class CompletedBuyFragment extends BaseFragment implements CompletedBuyVi
     super.onDestroyView();
   }
 
-  @OnClick({ R.id.sale, R.id.mark, R.id.pay_method, R.id.comfirm }) public void onClick(View view) {
-    switch (view.getId()) {
-      case R.id.sale: //销售
-        presenter.getSalers();
-        //                SimpleChooseFragment.start(this, 1, "选择销售", new ArrayList<ImageThreeTextBean>());
-        break;
-      case R.id.mark:
-        WriteDescFragment.start(this, 2, "购卡备注", body == null ? "请填写备注信息" : body.remarks);
-        break;
-      case R.id.pay_method:
-        BottomPayDialog f = new BottomPayDialogBuilder(presenter.hasEditPermission()).build();
-        f.setTargetFragment(this, 3);
-        f.show(getFragmentManager(), "");
-        break;
-      case R.id.comfirm://发送信息,生成code
+  @OnClick({ R.id.sale, R.id.mark, R.id.pay_method, R.id.comfirm }) public void onClick(final View view) {
+
+        switch (view.getId()) {
+          case R.id.sale: //销售
+            presenter.getSalers();
+            //                SimpleChooseFragment.start(this, 1, "选择销售", new ArrayList<ImageThreeTextBean>());
+            break;
+          case R.id.mark:
+            WriteDescFragment.start(CompletedBuyFragment.this, 2, "购卡备注", body == null ? "请填写备注信息" : body.remarks);
+            break;
+          case R.id.pay_method:
+            BottomPayDialog f = new BottomPayDialogBuilder(presenter.hasEditPermission()).build();
+            f.setTargetFragment(CompletedBuyFragment.this, 3);
+            f.show(getFragmentManager(), "");
+            break;
+        }
+  }
+
+  //发送信息,生成code
+  @OnClick(R.id.comfirm) public void onConfirm(View view) {
+    RxView.clicks(view).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
+      @Override public void call(Void aVoid) {
         if (sale.isEmpty()) {
           ToastUtils.show("请选择销售");
           return;
         }
         showLoading();
         presenter.buyCard(body);
-        break;
-    }
+      }
+    });
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

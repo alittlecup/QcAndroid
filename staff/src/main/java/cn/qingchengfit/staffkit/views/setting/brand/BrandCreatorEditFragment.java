@@ -2,7 +2,6 @@ package cn.qingchengfit.staffkit.views.setting.brand;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.body.ChangeBrandCreatorBody;
 import cn.qingchengfit.network.ResponseConstant;
@@ -87,7 +87,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_edit_creator, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (brand != null) {
-            name.setLabel(brand.created_by.getUsername());
+            name.setContent(brand.created_by.getUsername());
             if (brand.created_by.getGender() == 1){
                 genderFemale.setChecked(true);
             }else{
@@ -103,13 +103,14 @@ public class BrandCreatorEditFragment extends BaseFragment {
                     }
                     if (phoneNum.checkPhoneNum() && checkcode.checkValid()) {
                         showLoading();
+                        final ChangeBrandCreatorBody brandCreatorBody = new ChangeBrandCreatorBody.Builder().username(name.getContent())
+                            .code(checkcode.getCode())
+                            .gender(courseTypeRg.getCheckedRadioButtonId() == R.id.gender_female ? 1 : 0)
+                            .phone(phoneNum.getPhoneNum())
+                            .area_code(phoneNum.getDistrictInt())
+                            .build();
                         RxRegiste(restRepository.getPost_api()
-                            .qcChangeBrandUser(brand.getId(), new ChangeBrandCreatorBody.Builder().username(name.getContent())
-                                .code(checkcode.getCode())
-                                .gender(courseTypeRg.getCheckedRadioButtonId() == R.id.gender_female ? 1 : 0)
-                                .phone(phoneNum.getPhoneNum())
-                                .area_code(phoneNum.getDistrictInt())
-                                .build())
+                            .qcChangeBrandUser(brand.getId(), brandCreatorBody)
                             .observeOn(AndroidSchedulers.mainThread())
                             .onBackpressureBuffer()
                             .subscribeOn(Schedulers.io())
@@ -118,8 +119,11 @@ public class BrandCreatorEditFragment extends BaseFragment {
                                     hideLoading();
                                     if (ResponseConstant.checkSuccess(qcResponse)) {
                                         ToastUtils.show("修改成功");
-                                        getFragmentManager().popBackStack(BrandManageFragment.TAG,
-                                            FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                        //getActivity().getSupportFragmentManager()
+                                        //    .popBackStack(BrandManageFragment.TAG,
+                                        //        FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                        getActivity().onBackPressed();
+                                        RxBus.getBus().post(new ChangeOwenerEvent(brandCreatorBody));
                                     } else {
                                         ToastUtils.show("修改失败");
                                     }
