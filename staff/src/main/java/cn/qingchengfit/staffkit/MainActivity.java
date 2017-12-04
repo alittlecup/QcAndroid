@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.MenuRes;
@@ -180,7 +181,11 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     mCloseOb = RxBus.getBus().register(RxCloseAppEvent.class);
     mCloseOb.subscribe(new Action1<RxCloseAppEvent>() {
       @Override public void call(RxCloseAppEvent rxCloseAppEvent) {
-        finish();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          finishAndRemoveTask ();
+        }else finishAffinity();
+        System.exit(0);
       }
     });
         /*
