@@ -102,7 +102,7 @@ public class RecruitRouter extends InnerRouter {
   }
 
   @Override public int getFragId() {
-    return R.id.frag_recruit;
+    return activity.getFragId();
   }
 
   /**
