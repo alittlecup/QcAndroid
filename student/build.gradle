@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+
 
 def cfg = rootProject.ext.configuration
 def libs = rootProject.ext.libraries
@@ -52,5 +54,11 @@ dependencies {
 
     annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
     annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+
+    annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
+
+
+    api "android.arch.lifecycle:reactivestreams:1.0.0"
+    api "io.reactivex:rxjava-reactive-streams:1.2.1"
 
 }

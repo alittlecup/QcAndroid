@@ -23,6 +23,7 @@ import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.items.StaffDetailItem;
 import cn.qingchengfit.student.respository.StudentRespository;
+import cn.qingchengfit.student.respository.StudentRespository;
 import cn.qingchengfit.student.viewmodel.SortViewModel;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 
@@ -69,18 +70,7 @@ public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentB
     public AllotStaffDetailViewModel() {
         filter = new StudentFilter();
         sortViewModel = new SortViewModel();
-        sortViewModel.setListener(new SortViewModel.onSortFinishListener() {
-            @Override
-            public void onLatestSortFinish(List<AbstractFlexibleItem> itemss) {
-                items.set(itemss);
-            }
-
-            @Override
-            public void onlettersSortFinish(List<AbstractFlexibleItem> itemss, List<String> letterss) {
-                items.set(itemss);
-                letters.setValue(letterss);
-            }
-        });
+        sortViewModel.setListener(itemss -> items.set(itemss));
     }
 
 

@@ -26,7 +26,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 public class FollowUpStudentPage extends StudentBaseFragment<PageFollowupStudentBinding, FollowUpStudentViewModel>
         implements FlexibleAdapter.OnItemClickListener {
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
         mViewModel.getLiveItems().observe(this, items -> {
             mViewModel.items.set(items);
         });

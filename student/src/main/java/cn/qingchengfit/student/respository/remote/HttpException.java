@@ -9,13 +9,16 @@ import java.lang.annotation.RetentionPolicy;
 
 public class HttpException extends RuntimeException {
     @Retention(RetentionPolicy.SOURCE)
-    public @interface ERRORACTION{
-        int DISMISS_TOAST=-1;
+    public @interface ERRORACTION {
+        int DISMISS_TOAST = -1;
     }
-    private @ERRORACTION int mAction=0;
-    public HttpException(String msg,@ERRORACTION int action){
+
+    private @ERRORACTION
+    int mAction = 0;
+
+    public HttpException(String msg, @ERRORACTION int action) {
         super(msg);
-        this.mAction=action;
+        this.mAction = action;
     }
 
     public int getmAction() {

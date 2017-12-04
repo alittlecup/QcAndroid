@@ -1,8 +1,6 @@
 package cn.qingchengfit.student.viewmodel.followup;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,8 +24,6 @@ import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.respository.StudentRespository;
 import cn.qingchengfit.utils.DateUtils;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by huangbaole on 2017/11/20.

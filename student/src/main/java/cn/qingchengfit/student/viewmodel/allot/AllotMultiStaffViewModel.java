@@ -1,6 +1,5 @@
 package cn.qingchengfit.student.viewmodel.allot;
 
-import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -12,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,11 +20,14 @@ import javax.inject.Inject;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.saasbase.student.items.CoachChooseItem;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
-import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.student.common.flexble.FlexibleFactory;
 import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.student.items.ChooseStaffItem;
 import cn.qingchengfit.student.items.StaffDetailItem;
+import cn.qingchengfit.student.respository.StudentRespository;
 import cn.qingchengfit.student.respository.StudentRespository;
 import cn.qingchengfit.student.viewmodel.SortViewModel;
 import cn.qingchengfit.utils.LogUtil;
@@ -34,7 +37,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
  * Created by huangbaole on 2017/11/23.
  */
 
-public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBean>, StaffDetailItem, StudentFilter> {
+public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBean>, ChooseStaffItem, StudentFilter> {
 
     public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
     public final ObservableBoolean isLoading = new ObservableBoolean(false);
@@ -81,6 +84,32 @@ public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBe
         return sortViewModel;
     }
 
+
+    public MutableLiveData<List<QcStudentBean>> getSelectedDatas() {
+        return selectedDatas;
+    }
+
+    public void setSelectedDatas(MutableLiveData<List<QcStudentBean>> selectedDatas) {
+        this.selectedDatas = selectedDatas;
+    }
+
+    private MutableLiveData<List<QcStudentBean>> selectedDatas = new MutableLiveData<>();
+
+
+    public MutableLiveData<Integer> getRemoveSelectPos() {
+        return removeSelectPos;
+    }
+
+    private MutableLiveData<Integer> removeSelectPos = new MutableLiveData<>();
+
+    public MutableLiveData<String> getEditAfterTextChange() {
+        return editAfterTextChange;
+    }
+
+    private MutableLiveData<String> editAfterTextChange=new MutableLiveData<>();
+
+
+
     @Inject
     LoginStatus loginStatus;
     @Inject
@@ -104,16 +133,11 @@ public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBe
     public AllotMultiStaffViewModel() {
         studentFilter = new StudentFilter();
         sortViewModel = new SortViewModel();
+        selectedDatas.setValue(new ArrayList<>());
         sortViewModel.setListener(new SortViewModel.onSortFinishListener() {
             @Override
-            public void onLatestSortFinish(List<AbstractFlexibleItem> itemss) {
+            public void onSortFinish(List<AbstractFlexibleItem> itemss) {
                 items.set(itemss);
-            }
-
-            @Override
-            public void onlettersSortFinish(List<AbstractFlexibleItem> itemss, List<String> letterss) {
-                items.set(itemss);
-                letters.setValue(letterss);
             }
         });
 
@@ -162,14 +186,15 @@ public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBe
 
     private LiveData<Boolean> removeStudents(String ids) {
         HashMap<String, Object> params = gymWrapper.getParams();
-        params.put("coach_id", salerId);
         params.put("user_ids", ids);
         String path = "";
         switch (type) {
             case 0:
                 path = "sellers";
+                params.put("seller_id", salerId);
                 break;
             case 1:
+                params.put("coach_id", salerId);
                 path = "coaches";
                 break;
         }
@@ -182,8 +207,8 @@ public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBe
     }
 
     @Override
-    protected List<StaffDetailItem> map(@NonNull List<QcStudentBean> qcStudentBeans) {
-        return FlexibleItemProvider.with(new AllotStaffDetailViewModel.StaffDetailItemFactory(type)).from(qcStudentBeans);
+    protected List<ChooseStaffItem> map(@NonNull List<QcStudentBean> qcStudentBeans) {
+        return FlexibleItemProvider.with(new ChooseStaffItemFactory(type)).from(qcStudentBeans);
     }
 
     /**
@@ -208,10 +233,35 @@ public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBe
     }
 
     /**
+     * 底部展示选中的按钮点击事件
+     */
+    public void onBottomShowSelected() {
+        routeTitle.setValue("showSelected");
+    }
+    /**
+     * 输入框输入监听
+     */
+    public void onEditTextChange(String text){
+        editAfterTextChange.setValue(text);
+    }
+    /**
      * 全选按钮点击事件
      */
     public void onAllSelectClick(boolean isChecked) {
-        LogUtil.d(isChecked + "!!!!");
         selectAll.setValue(isChecked);
+    }
+
+    static class ChooseStaffItemFactory implements FlexibleItemProvider.Factory<QcStudentBean, ChooseStaffItem> {
+        private Integer type;
+
+        public ChooseStaffItemFactory(Integer type) {
+            this.type = type;
+        }
+
+        @NonNull
+        @Override
+        public ChooseStaffItem create(QcStudentBean qcStudentBean) {
+            return FlexibleFactory.create(ChooseStaffItem.class, qcStudentBean, type);
+        }
     }
 }

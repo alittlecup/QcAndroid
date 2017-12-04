@@ -19,6 +19,7 @@ import cn.qingchengfit.student.common.flexble.FlexibleFactory;
 import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.respository.StudentRespository;
+import cn.qingchengfit.student.respository.StudentRespository;
 
 /**
  * Created by huangbaole on 2017/11/21.
@@ -35,7 +36,7 @@ public class AllotListViewModel extends FlexibleViewModel<List<AllotDataResponse
     GymWrapper gymWrapper;
     @Inject
     StudentRespository respository;
-    public Integer type = -1;
+    public Integer type ;
 
     @Inject
     public AllotListViewModel() {

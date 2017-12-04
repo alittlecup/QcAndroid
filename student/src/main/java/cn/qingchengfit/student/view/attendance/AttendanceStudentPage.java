@@ -25,7 +25,7 @@ public class AttendanceStudentPage extends StudentBaseFragment<PageAttendanceStu
 
 
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
 
 
         mViewModel.getToUri().observe(this, uri -> {

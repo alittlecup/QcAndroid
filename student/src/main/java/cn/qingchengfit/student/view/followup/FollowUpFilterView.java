@@ -32,7 +32,6 @@ public class FollowUpFilterView extends BaseFilterFragment {
     FilterTimesFragment dayFragment;
     FollowUpTopSalerView topSalerView;
     FollowUpTopSalerView salersView;
-
     FollowUpStatusViewModel mViewModel;
 
     @Override

@@ -1,8 +1,8 @@
 package cn.qingchengfit.student;
 
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -34,10 +32,15 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
     public ViewModelProvider.Factory factory;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = ViewModelProviders.of(this, factory).get(getVMClass());
-        initViewModel();
+        subscribeUI();
     }
 
     @Override
@@ -48,20 +51,32 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = initDataBinding(inflater, container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
+//        if (mBinding == null) {
+            mBinding = initDataBinding(inflater, null, savedInstanceState);
+//        }
+//        ViewGroup parent = (ViewGroup) mBinding.getRoot().getParent();
+//        if(parent!=null){
+//            parent.removeViewAt(0);
+//            parent.removeView(mBinding.getRoot());
+//        }
         return mBinding.getRoot();
     }
 
-    protected abstract void initViewModel();
+    protected abstract void subscribeUI();
 
     public abstract DB initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     private Class<VM> getVMClass() {
         Type[] actualTypeArguments = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments();
-        if(actualTypeArguments.length==2){
+        if (actualTypeArguments.length == 2) {
             return (Class<VM>) actualTypeArguments[1];
         }
         return (Class<VM>) BaseViewModel.class;
+    }
+
+    public StudentActivityViewModel getActivityViewModel() {
+        return ViewModelProviders.of(getActivity(), factory).get(StudentActivityViewModel.class);
     }
 
 }

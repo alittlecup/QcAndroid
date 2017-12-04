@@ -1,17 +1,12 @@
 package cn.qingchengfit.student.viewmodel.attendance;
 
-import android.arch.core.util.Function;
-import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.OnLifecycleEvent;
 import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
-
-import com.anbillon.flabellum.annotations.Leaf;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,14 +18,10 @@ import javax.inject.Inject;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.student.bean.Attendance;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
-import cn.qingchengfit.saasbase.student.other.RxHelper;
 import cn.qingchengfit.student.base.BaseViewModel;
 import cn.qingchengfit.student.respository.StudentRespository;
-import cn.qingchengfit.student.respository.remote.CustomSubscriber;
-import cn.qingchengfit.student.respository.remote.HttpCheckFunc;
 import cn.qingchengfit.utils.DateUtils;
 
 /**
@@ -69,11 +60,20 @@ public class AttendanceStudentViewModel extends BaseViewModel implements Lifecyc
     LoginStatus loginStatus;
 
 
+
+
     private final MutableLiveData<Integer> offSetDay = new MutableLiveData<>();
     private LiveData<AttendanceCharDataBean> response;
+
     @Inject
     public AttendanceStudentViewModel() {
         response = Transformations.switchMap(offSetDay, input -> loadData(input));
+    }
+    private LiveData<AttendanceCharDataBean> loadData(int offSetDay) {
+        HashMap<String, Object> params = gymWrapper.getParams();
+        params.put("start", DateUtils.minusDay(new Date(), offSetDay));
+        params.put("end", DateUtils.getStringToday());
+        return respository.qcGetAttendanceChart(loginStatus.staff_id(), params);
     }
 
     public MutableLiveData<String> getToUri() {
@@ -103,12 +103,7 @@ public class AttendanceStudentViewModel extends BaseViewModel implements Lifecyc
     }
 
 
-    private LiveData<AttendanceCharDataBean> loadData(int offSetDay) {
-        HashMap<String, Object> params = gymWrapper.getParams();
-        params.put("start", DateUtils.minusDay(new Date(), offSetDay));
-        params.put("end", DateUtils.getStringToday());
-        return respository.qcGetAttendanceChart(loginStatus.staff_id(), params);
-    }
+
 
     public LiveData<AttendanceCharDataBean> getResponse() {
         return response;
@@ -122,6 +117,5 @@ public class AttendanceStudentViewModel extends BaseViewModel implements Lifecyc
             qcFBChecked.set(false);
         }
     }
-
 
 }

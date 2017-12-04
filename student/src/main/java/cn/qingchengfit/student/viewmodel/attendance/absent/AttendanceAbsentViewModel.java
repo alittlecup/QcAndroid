@@ -1,6 +1,5 @@
 package cn.qingchengfit.student.viewmodel.attendance.absent;
 
-import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
@@ -18,18 +17,13 @@ import javax.inject.Inject;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.bean.Absentce;
 import cn.qingchengfit.saasbase.student.items.AttendanceStudentItem;
-import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
-import cn.qingchengfit.saasbase.student.other.RxHelper;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.student.common.flexble.FlexibleFactory;
 import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.respository.StudentRespository;
-import cn.qingchengfit.student.respository.remote.CustomSubscriber;
-import cn.qingchengfit.student.respository.remote.HttpCheckFunc;
 
 /**
  * Created by huangbaole on 2017/11/16.

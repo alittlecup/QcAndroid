@@ -2,15 +2,22 @@
 <layout>
 
     <data>
-        <import type="eu.davidea.flexibleadapter.items.AbstractFlexibleItem"/>
-        <import type="android.databinding.ObservableField"/>
-        <import type="java.util.List"/>
+
+        <import type="eu.davidea.flexibleadapter.items.AbstractFlexibleItem" />
+
+        <import type="android.databinding.ObservableField" />
+
+        <import type="java.util.List" />
+
+        <import type="android.support.v7.widget.AppCompatCheckedTextView" />
+
         <variable
             name="filter"
             type="cn.qingchengfit.student.viewmodel.SortViewModel" />
+
         <variable
             name="items"
-            type="List&lt;AbstractFlexibleItem&gt;"/>
+            type="List&lt;AbstractFlexibleItem&gt;" />
 
     </data>
 
@@ -22,21 +29,26 @@
         android:background="@color/white"
         android:orientation="horizontal">
 
-        <cn.qingchengfit.widgets.QcToggleButton
-            android:id="@+id/tv_sort_register"
+        <FrameLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            app:onCheckChangeListener="@{(view,checked)->filter.onLatestClick(items,checked)}"
-            android:orientation="horizontal"
-            android:checked="@{filter.latestChecked}"
-            android:textColor="@color/qc_theme_green"
-            app:qc_color_off="@color/qc_text_black"
-            app:qc_color_on="@color/qc_allotsale_green"
-            app:qc_text="最新注册"
-            app:qc_text_size="11sp"
-            app:qc_vc_drawable="@drawable/vector_list_order_normal" />
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <cn.qingchengfit.student.QcToggleButton
+                android:id="@+id/tv_sort_register"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="@{filter.latestChecked}"
+                android:gravity="center"
+                android:onClick="@{(view)->filter.onLatestClick(items,((AppCompatCheckedTextView)view).isChecked())}"
+                android:text="最新注册"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/qc_theme_green"
+                android:textSize="@dimen/min_font"
+                app:qc_color_off="@color/qc_text_black"
+                app:qc_color_on="@color/qc_allotsale_green"
+                app:qc_vc_drawable="@drawable/vector_list_order_normal" />
+        </FrameLayout>
 
         <include
             layout="@layout/divider_grey_vertical"
@@ -45,22 +57,30 @@
             android:layout_marginBottom="12dp"
             android:layout_marginTop="12dp" />
 
-        <cn.qingchengfit.widgets.QcToggleButton
-            android:id="@+id/tv_sort_alpha"
+
+        <FrameLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            app:onCheckChangeListener="@{(view,checked)->filter.onLetterClick(items,checked)}"
-            android:checked="@{filter.letterChecked}"
-            android:orientation="horizontal"
-            android:textColor="@color/qc_text_black"
-            android:textSize="@dimen/min_font"
-            app:qc_color_off="@color/qc_text_black"
-            app:qc_color_on="@color/qc_allotsale_green"
-            app:qc_text="字母排序"
-            app:qc_text_size="11sp"
-            app:qc_vc_drawable="@drawable/vector_list_order_normal" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <cn.qingchengfit.student.QcToggleButton
+                android:id="@+id/tv_sort_alpha"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="@{filter.letterChecked}"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:onClick="@{(view)->filter.onLetterClick(items,((AppCompatCheckedTextView)view).isChecked())}"
+                android:orientation="horizontal"
+                android:text="字母排序"
+                android:textColor="@color/qc_text_black"
+                android:textSize="@dimen/min_font"
+                app:qc_color_off="@color/qc_text_black"
+                app:qc_color_on="@color/qc_allotsale_green"
+                app:qc_vc_drawable="@drawable/vector_list_order_normal" />
+        </FrameLayout>
+
 
         <include
             layout="@layout/divider_grey_vertical"
@@ -69,19 +89,27 @@
             android:layout_marginBottom="12dp"
             android:layout_marginTop="12dp" />
 
-        <cn.qingchengfit.widgets.QcToggleButton
-            android:id="@+id/tv_sort_filter"
+        <FrameLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            app:onCheckChangeListener="@{(view,checked)->filter.onFilterClick(checked)}"
-            android:textColor="@color/qc_text_black"
-            android:checked="@{filter.filterChecked}"
-            app:qc_color_off="@color/qc_text_black"
-            app:qc_color_on="@color/qc_allotsale_green"
-            app:qc_text="筛选"
-            app:qc_text_size="11sp"
-            app:qc_vc_drawable="@drawable/vector_list_filter_normal" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <cn.qingchengfit.student.QcToggleButton
+                android:id="@+id/tv_sort_filter"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="match_parent"
+                android:checked="@{filter.filterChecked}"
+                android:gravity="center"
+                android:onClick="@{(view)->filter.onFilterClick(((AppCompatCheckedTextView)view).isChecked())}"
+                android:text="筛选"
+                android:textColor="@color/qc_text_black"
+                android:textSize="@dimen/min_font"
+                app:qc_color_off="@color/qc_text_black"
+                app:qc_color_on="@color/qc_allotsale_green"
+                app:qc_vc_drawable="@drawable/vector_list_filter_normal" />
+        </FrameLayout>
+
     </LinearLayout>
 </layout>

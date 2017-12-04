@@ -5,6 +5,9 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import cn.qingchengfit.student.common.mvvm.ViewModelFactory;
 import cn.qingchengfit.student.di.scope.ViewModelKey;
+import cn.qingchengfit.student.respository.StudentRespository;
+import cn.qingchengfit.student.respository.StudentRespositoryImpl;
+import cn.qingchengfit.student.viewmodel.allot.AllotChooseViewModel;
 import cn.qingchengfit.student.viewmodel.allot.AllotListViewModel;
 import cn.qingchengfit.student.viewmodel.allot.AllotMultiStaffViewModel;
 import cn.qingchengfit.student.viewmodel.allot.AllotStaffDetailViewModel;
@@ -29,6 +32,9 @@ public abstract class ViewModelModule {
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
+
+    @Binds
+    abstract StudentRespository bindStudentRespository(StudentRespositoryImpl studentRespository);
 
     @Binds
     @IntoMap
@@ -74,10 +80,17 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AllotStaffDetailViewModel.class)
     abstract ViewModel bindAllotStaffDetailViewModel(AllotStaffDetailViewModel model);
+
     @Binds
     @IntoMap
     @ViewModelKey(AllotMultiStaffViewModel.class)
     abstract ViewModel bindAllotMultiStaffViewModel(AllotMultiStaffViewModel model);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AllotChooseViewModel.class)
+    abstract ViewModel bindAllotChooseViewModel(AllotChooseViewModel model);
+
 
 
 }

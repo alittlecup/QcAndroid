@@ -1,6 +1,8 @@
 package cn.qingchengfit.student.view.allot;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.OnRebindCallback;
+import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,24 +32,19 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 @Leaf(module = "student", path = "/allotstaff/detail")
 public class AllotStaffDetailPage extends StudentBaseFragment<PageAllotStaffDetailBinding, AllotStaffDetailViewModel> {
 
-    @Need
-    Staff staff;
-    @Need
-    Integer type;
     CommonFlexAdapter adapter;
 
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
         mViewModel.getLiveItems().observe(this, items -> {
+            if(items==null||items.isEmpty())return;
             mViewModel.isLoading.set(false);
-            mViewModel.items.set(new ArrayList<>(items));
+            mViewModel.items.set(mViewModel.getSortViewModel().sortItems(items));
             mBinding.includeFilter.setItems(new ArrayList<>(items));
         });
-        mViewModel.getLetters().observe(this, letters -> {
-            mBinding.fastScroller.setLetters(letters.toArray(new String[letters.size()]));
-        });
-        mViewModel.type = type;
-        mViewModel.setSalerId(staff.id);
+
+        mViewModel.type = getActivityViewModel().getAllotType().getValue();
+        mViewModel.setSalerId(getActivityViewModel().getAllotStaff().getValue().id);
     }
 
     @Override
@@ -70,27 +67,26 @@ public class AllotStaffDetailPage extends StudentBaseFragment<PageAllotStaffDeta
             }
             return position;
         });
+        mBinding.addOnRebindCallback(new OnRebindCallback() {
+            @Override
+            public void onBound(ViewDataBinding binding) {
+                adapter = (CommonFlexAdapter) mBinding.recyclerview.getAdapter();
+                adapter.setFastScroller(mBinding.fastScroller);
+            }
+        });
         return mBinding;
     }
 
 
-    @Override
-    protected void onFinishAnimation() {
-        super.onFinishAnimation();
-        adapter = (CommonFlexAdapter) mBinding.recyclerview.getAdapter();
-        adapter.setFastScroller(mBinding.fastScroller);
-    }
 
 
     private void initToolBar() {
-        boolean empty = TextUtils.isEmpty(staff.id);
-        ToolbarModel toolbarModel = new ToolbarModel(empty ? getString(cn.qingchengfit.saasbase.R.string.qc_allotsale_sale_detail_notitle) : getString(cn.qingchengfit.saasbase.R.string.qc_allotsale_sale_detail_title, staff.username));
+        boolean empty = TextUtils.isEmpty(getActivityViewModel().getAllotStaff().getValue().id);
+        ToolbarModel toolbarModel = new ToolbarModel(empty ? getString(cn.qingchengfit.saasbase.R.string.qc_allotsale_sale_detail_notitle) : getString(cn.qingchengfit.saasbase.R.string.qc_allotsale_sale_detail_title, getActivityViewModel().getAllotStaff().getValue().username));
         toolbarModel.setMenu(empty ? cn.qingchengfit.saasbase.R.menu.menu_multi_allot : cn.qingchengfit.saasbase.R.menu.menu_multi_modify);
         toolbarModel.setListener(item -> {
             Uri uri = Uri.parse("student://student/allotstaff/multi");
             routeTo(uri, new cn.qingchengfit.student.view.allot.AllotMultiStaffPageParmas()
-                    .staff(staff)
-                    .type(type)
                     .title(item.getTitle().toString()).build());
             return true;
         });

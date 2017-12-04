@@ -25,7 +25,7 @@ public class TransferStudentPage extends StudentBaseFragment<PageTransferStudent
     private TransferStudentView filterView;
 
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
         mViewModel.getLiveItems().observe(this, followUpItems -> {
             mViewModel.items.set(followUpItems);
         });

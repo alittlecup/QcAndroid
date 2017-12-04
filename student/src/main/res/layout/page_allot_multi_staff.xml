@@ -80,10 +80,11 @@
                             android:background="@drawable/bg_rect_allotsale_search"
                             android:drawableLeft="@drawable/ic_allotsale_search"
                             android:drawablePadding="10dp"
+                            app:afterTextChanged="@{(str)->viewModel.onEditTextChange(str)}"
                             android:hint="@string/qc_allotsale_search_hint"
                             android:paddingLeft="10dp"
                             android:paddingStart="10dp"
-                            android:textSize="@dimen/min_font" />
+                            android:textSize="@dimen/min_font" />e
 
                         <ImageView
                             android:id="@+id/img_search_clear"
@@ -132,8 +133,8 @@
                             android:id="@+id/recyclerview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:itemClickListenter="@{itemClickListener}"
-                            app:items="@{viewModel.items}" />
+                            app:items="@{viewModel.items}"
+                            app:itemClickListenter="@{itemClickListener}"/>
 
                     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -164,13 +165,14 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/bg_grey"
                 android:orientation="horizontal"
-                app:visibleGone="@{viewModel.bottomShowing}">
+                app:visibleGone="@{viewModel.bottomTextCount>0}">
 
                 <LinearLayout
                     android:id="@+id/ll_show_select"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:onClick="@{()->viewModel.onBottomShowSelected()}"
                     android:orientation="horizontal">
 
                     <TextView

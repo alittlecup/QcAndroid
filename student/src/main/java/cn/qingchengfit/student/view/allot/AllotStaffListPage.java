@@ -12,6 +12,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.student.StudentActivityViewModel;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAllotlistBinding;
 import cn.qingchengfit.student.viewmodel.allot.AllotListViewModel;
@@ -23,10 +24,10 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 @Leaf(module = "student", path = "/allot/student")
 public class AllotStaffListPage extends StudentBaseFragment<PageAllotlistBinding, AllotListViewModel> implements FlexibleAdapter.OnItemClickListener {
     @Need
-    Integer type=0;
+    Integer type = 0;
 
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
         mViewModel.type = type;
         mViewModel.getLiveItems().observe(this, items -> {
             mViewModel.isLoading.set(false);
@@ -49,7 +50,10 @@ public class AllotStaffListPage extends StudentBaseFragment<PageAllotlistBinding
     @Override
     public boolean onItemClick(int position) {
         Uri uri = Uri.parse("student://student/allotstaff/detail");
-        routeTo(uri, new cn.qingchengfit.student.view.allot.AllotStaffDetailPageParmas().staff(mViewModel.getLiveItems().getValue().get(position).getData().getSeller()).type(type).build());
+        StudentActivityViewModel viewModel = getActivityViewModel();
+        viewModel.getAllotStaff().setValue(mViewModel.getLiveItems().getValue().get(position).getData().getSeller());
+        viewModel.getAllotType().setValue(type);
+        routeTo(uri, null);
         return false;
     }
 }

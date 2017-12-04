@@ -1,8 +1,13 @@
 package cn.qingchengfit.student.base;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.LiveDataReactiveStreams;
 import android.arch.lifecycle.ViewModel;
 
+import rx.Observable;
+import rx.RxReactiveStreams;
 import rx.Subscription;
+import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -18,6 +23,5 @@ import rx.subscriptions.CompositeSubscription;
  */
 
 public class BaseViewModel extends ViewModel {
-
 
 }

@@ -1,15 +1,12 @@
 package cn.qingchengfit.student.viewmodel.transfer;
 
-import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Pair;
 
 import java.util.ArrayList;
@@ -22,7 +19,6 @@ import javax.inject.Inject;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.items.FollowUpItem;
 import cn.qingchengfit.saasbase.student.network.body.QcStudentBeanWithFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;

@@ -36,7 +36,7 @@ public class FollowUpStatusPage extends StudentBaseFragment<PageFollowupStatusBi
 
 
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
         mViewModel.dataType=type;
         mViewModel.getLiveItems().observe(this,items->{
             mViewModel.items.set(items);

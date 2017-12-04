@@ -1,8 +1,12 @@
 package cn.qingchengfit.student.view.allot;
 
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.OnRebindCallback;
+import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,12 +18,16 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.qingchengfit.items.StickerDateItem;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saasbase.student.items.StudentItem;
 import cn.qingchengfit.saasbase.student.other.ChooseStaffParams;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAllotMultiStaffBinding;
@@ -34,25 +42,24 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
  * Created by huangbaole on 2017/11/23.
  */
 @Leaf(module = "student", path = "/allotstaff/multi")
-public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaffBinding, AllotMultiStaffViewModel> implements FlexibleAdapter.OnItemClickListener {
+public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaffBinding, AllotMultiStaffViewModel>
+        implements FlexibleAdapter.OnItemClickListener {
     @Need
     String title;
-    @Need
-    Staff staff;
-    @Need
-    Integer type;
+
     CommonFlexAdapter adapter;
 
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
         mViewModel.getLiveItems().observe(this, items -> {
-            mViewModel.items.set(new ArrayList<>(items));
+            if (items.isEmpty()) return;
+            mViewModel.items.set(mViewModel.getSortViewModel().sortItems(items));
             mViewModel.isLoading.set(false);
             mBinding.includeFilter.setItems(new ArrayList<>(items));
         });
-        mViewModel.getLetters().observe(this, letters -> {
-            mBinding.fastScroller.setLetters(letters.toArray(new String[letters.size()]));
-        });
+//        mViewModel.getLetters().observe(this, letters -> {
+//            mBinding.fastScroller.setLetters(letters.toArray(new String[letters.size()]));
+//        });
         mViewModel.getIsDialogShow().observe(this, showed -> {
             if (showed) showDialog();
         });
@@ -63,14 +70,26 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
         mViewModel.getSelectAll().observe(this, aBoolean -> {
             if (aBoolean) {
                 adapter.selectAll(new Integer[0]);
+                mViewModel.selectAllChecked.set(true);
             } else {
                 adapter.clearSelection();
+                mViewModel.selectAllChecked.set(false);
             }
+            adapter.notifyDataSetChanged();
+            mViewModel.bottomTextCount.set(adapter.getSelectedItemCount());
+        });
+        mViewModel.getEditAfterTextChange().observe(this,filter->{
+            adapter.setSearchText(filter);
+            adapter.filterItems();
+        });
+        mViewModel.getRemoveSelectPos().observe(this, pos -> {
+            Integer integer = adapter.getSelectedPositions().get(pos);
+            onItemClick(integer);
         });
 
         mViewModel.getRouteTitle().observe(this, this::routeTo);
-        mViewModel.setSalerId(staff.id);
-        mViewModel.type = type;
+        mViewModel.setSalerId(getActivityViewModel().getAllotStaff().getValue().id);
+        mViewModel.type = getActivityViewModel().getAllotType().getValue();
     }
 
     @Override
@@ -82,6 +101,14 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
         initRecyclerView();
         mViewModel.loadSource(mViewModel.getStudentFilter());
         mBinding.setItemClickListener(this);
+        mViewModel.hasName.set(!TextUtils.isEmpty(getActivityViewModel().getAllotStaff().getValue().username));
+        mBinding.addOnRebindCallback(new OnRebindCallback() {
+            @Override
+            public void onBound(ViewDataBinding binding) {
+                adapter= (CommonFlexAdapter) mBinding.recyclerview.getAdapter();
+                adapter.setFastScroller(mBinding.fastScroller);
+            }
+        });
         return mBinding;
     }
 
@@ -99,13 +126,9 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
             }
             return position;
         });
+
     }
 
-    @Override
-    protected void onFinishAnimation() {
-        super.onFinishAnimation();
-        adapter = (CommonFlexAdapter) mBinding.recyclerview.getAdapter();
-    }
 
     private void initToolBar() {
         ToolbarModel toolbarModel = new ToolbarModel(title);
@@ -120,16 +143,22 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
     @Override
     public boolean onItemClick(int position) {
         adapter.toggleSelection(position);
+        adapter.notifyItemChanged(position);
         mViewModel.bottomTextCount.set(adapter.getSelectedItemCount());
-        if (adapter.getSelectedItemCount() == adapter.getItemCount()) {
-            mViewModel.selectAllChecked.set(true);
-        }
-        return false;
+
+//        if (adapter.getSelectedItemCount() == adapter.getItemCount()) {
+//            mViewModel.selectAllChecked.set(true);
+//        }else{
+//            mViewModel.selectAllChecked.set(false);
+//        }
+
+        return true;
     }
+
 
     private void showDialog() {
         new MaterialDialog.Builder(getContext()).autoDismiss(true)
-                .content("确认将选中会员从" + staff.username + "名下移除?")
+                .content("确认将选中会员从" + getActivityViewModel().getAllotStaff().getValue().username + "名下移除?")
                 .positiveText(cn.qingchengfit.saasbase.R.string.common_comfirm)
                 .negativeText(cn.qingchengfit.saasbase.R.string.common_cancel)
                 .autoDismiss(true)
@@ -154,13 +183,32 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
 
     private void routeTo(String title) {
         ArrayList<String> ids = getSelectIds();
-        Uri uri = Uri.parse("");
-        routeTo(uri, new ChooseStaffParams()
-                .title(title)
-                .curId(staff.id)
-                .studentIds(ids)
-                .textContent(getString(cn.qingchengfit.saasbase.R.string.choose_coach))
-                .build());
+        if ("showSelected".equalsIgnoreCase(title)) {
+            mViewModel.getSelectedDatas().setValue(getSelectDataBeans());
+            AllotSaleShowSelectDialogView f = new AllotSaleShowSelectDialogView();
+            f.setTargetFragment(this, 0);
+            f.show(getFragmentManager(), "");
+            return;
+        }
+        switch (getActivityViewModel().getAllotType().getValue()) {
+            case 0:
+                Uri toSaler = Uri.parse("student://student/allot/choosesaler");
+                routeTo(toSaler, new cn.qingchengfit.student.view.allot.AllotChooseCoachPageParmas()
+                        .title(title)
+                        .studentIds(ids)
+                        .textContent(getString(cn.qingchengfit.saasbase.R.string.choose_saler) + "\n" + getString(cn.qingchengfit.saasbase.R.string.choose_saler_tips))
+                        .build());
+                break;
+            case 1:
+                Uri toCoach = Uri.parse("student://student/allot/choosecoach");
+                routeTo(toCoach, new cn.qingchengfit.student.view.allot.AllotChooseCoachPageParmas()
+                        .title(title)
+                        .studentIds(ids)
+                        .textContent(getString(cn.qingchengfit.saasbase.R.string.choose_coach))
+                        .build());
+                break;
+        }
+        mViewModel.getSelectAll().setValue(false);
     }
 
     private ArrayList<String> getSelectIds() {
@@ -169,5 +217,13 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
             ids.add(((StaffDetailItem) adapter.getItem(pos)).getId());
         }
         return ids;
+    }
+
+    public List<QcStudentBean> getSelectDataBeans() {
+        List<QcStudentBean> studenBeans = new ArrayList<>();
+        for (Integer pos : adapter.getSelectedPositions()) {
+            studenBeans.add(((StudentItem) adapter.getItem(pos)).getQcStudentBean());
+        }
+        return studenBeans;
     }
 }

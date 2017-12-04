@@ -24,7 +24,7 @@ public class AttendanceNosignPage extends StudentBaseFragment<PageAttendanceNosi
     private AttendanceNosignView filterView;
 
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
 
         mViewModel.getFilterIndex().observe(this,index->filterView.showPage(index));
 

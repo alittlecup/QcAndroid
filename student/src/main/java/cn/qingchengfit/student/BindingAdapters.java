@@ -7,12 +7,17 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.MenuRes;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 
 import com.github.mikephil.charting.data.LineData;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.crypto.interfaces.PBEKey;
@@ -28,6 +33,7 @@ import cn.qingchengfit.widgets.QcToggleButton;
 import eu.davidea.fastscroller.FastScroller;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import rx.functions.Action1;
 
 import static android.view.Gravity.CENTER;
 
@@ -58,6 +64,32 @@ public class BindingAdapters {
         lineCharDate.setData(data);
     }
 
+    @BindingAdapter(value = "afterTextChanged")
+    public static void afterTextChanged(EditText view, AfterTextChangeListener listener) {
+        view.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s != null && s.length() > 0) {
+                    listener.afterTextChange(s.toString());
+                }else{
+                    listener.afterTextChange("");
+                }
+            }
+        });
+    }
+    public interface AfterTextChangeListener {
+        void afterTextChange(String s);
+    }
 
     /**
      * recycler的数据集合
@@ -133,20 +165,36 @@ public class BindingAdapters {
 
         }
     }
-//
-    /**
-     * QcToggleButton 设置选中
-     */
-    @BindingAdapter(value ={ "onCheckChangeListener","checked"},requireAll = false)
-    public static void setQcToggleButton(QcToggleButton view, CompoundButton.OnCheckedChangeListener listener,boolean isChecked) {
-        view.setOnCheckedChangeListener(listener);
-        view.setChecked(isChecked);
-    }
+
     /**
      * FastScroller 设置显示或隐藏
      */
     @BindingAdapter(value = "enable")
-    public static void setFastScrollerEnable(ModifiedFastScroller fastScroller, boolean enable){
+    public static void setFastScrollerEnable(ModifiedFastScroller fastScroller, boolean enable) {
         fastScroller.setEnabled(enable);
+    }
+
+    @BindingAdapter({"android:onClick"})
+    public static void setOnClickListener(View view, View.OnClickListener clickListener) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Object tag = v.getTag(v.getId());
+                long latestTime = tag == null ? 0 : (long) tag;
+
+                long currentTime = Calendar.getInstance().getTimeInMillis();
+                if (currentTime - latestTime > 1000) {//过滤掉600毫秒内的连续点击
+                    v.setTag(v.getId(), currentTime);
+                    if (BuildConfig.DEBUG) {
+                        Log.d("TAG", "currentTime:" + (currentTime - latestTime));
+                    }
+                    clickListener.onClick(v);
+                } else {
+                    if (BuildConfig.DEBUG) {
+                        Log.d("TAG", "currentTime:" + (currentTime - latestTime));
+                    }
+                }
+            }
+        });
     }
 }

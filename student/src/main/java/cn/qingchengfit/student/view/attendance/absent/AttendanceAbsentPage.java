@@ -25,7 +25,7 @@ public class AttendanceAbsentPage extends StudentBaseFragment<PageAttendanceAbse
     private AttendanceAbsentView filterFragment;
 
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
         mViewModel.getLiveItems().observe(this, listitem -> {
             mViewModel.items.set(listitem);
         });

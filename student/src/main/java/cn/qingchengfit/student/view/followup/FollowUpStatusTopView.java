@@ -16,7 +16,7 @@ import cn.qingchengfit.student.viewmodel.followup.FollowUpStatusViewModel;
 public class FollowUpStatusTopView extends StudentBaseFragment<ViewFollowupStatusTopBinding, FollowUpStatusViewModel> {
 
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
         mViewModel.getTopDatas().observe(this, datas -> {
             mViewModel.datas.set(datas);
         });

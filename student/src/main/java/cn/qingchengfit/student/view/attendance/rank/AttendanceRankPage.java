@@ -23,7 +23,7 @@ public class AttendanceRankPage extends StudentBaseFragment<PageAttendanceRankBi
     private AttendanceRankView rankFilterView;
 
     @Override
-    protected void initViewModel() {
+    protected void subscribeUI() {
         mViewModel.getLiveItems().observe(this, items -> {
             mViewModel.items.set(items);
         });

@@ -18,17 +18,12 @@ import javax.inject.Inject;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.bean.Attendance;
 import cn.qingchengfit.saasbase.student.items.AttendanceRankItem;
-import cn.qingchengfit.saasbase.student.network.body.AttendanceListWrap;
-import cn.qingchengfit.saasbase.student.other.RxHelper;
 import cn.qingchengfit.student.common.flexble.FlexibleFactory;
 import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.respository.StudentRespository;
-import cn.qingchengfit.student.respository.remote.CustomSubscriber;
-import cn.qingchengfit.student.respository.remote.HttpCheckFunc;
 import cn.qingchengfit.student.view.attendance.rank.AttendanceRankLoadData;
 import cn.qingchengfit.utils.DateUtils;
 

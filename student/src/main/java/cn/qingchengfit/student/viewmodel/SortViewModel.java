@@ -1,6 +1,7 @@
 package cn.qingchengfit.student.viewmodel;
 
 import android.databinding.ObservableBoolean;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,13 +19,22 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 public class SortViewModel {
     // REFACTOR: 2017/11/23 按钮选中之后点击颜色变化
     public final ObservableBoolean latestChecked = new ObservableBoolean(true);
-    public final ObservableBoolean letterChecked = new ObservableBoolean(true);
+    public final ObservableBoolean letterChecked = new ObservableBoolean(false);
     public final ObservableBoolean filterChecked = new ObservableBoolean(false);
 
     public void onLatestClick(List items, boolean isChecked) {
         latestChecked.set(true);
         letterChecked.set(false);
-        if (!isChecked) return;
+        if (isChecked) return;
+        if (items == null || items.isEmpty()) return;
+        List<StaffDetailItem> value = sortLatest(items);
+        if (listener != null) {
+            listener.onSortFinish(new ArrayList<>(value));
+        }
+    }
+
+    @NonNull
+    private List<StaffDetailItem> sortLatest(List items) {
         List<StaffDetailItem> value = new ArrayList<>();
         for (Object item : items) {
             if (item instanceof StaffDetailItem) {
@@ -32,16 +42,23 @@ public class SortViewModel {
             }
         }
         Collections.sort(value, (r1, r2) -> r1.getQcStudentBean().joined_at.compareTo(r2.getQcStudentBean().joined_at));
-        if (listener != null) {
-            listener.onLatestSortFinish(new ArrayList<>(value));
-        }
+        return value;
     }
 
 
     public void onLetterClick(List items, boolean isChecked) {
         latestChecked.set(false);
         letterChecked.set(true);
-        if (!isChecked) return;
+        if (isChecked) return;
+        if (items == null || items.isEmpty()) return;
+        List<AbstractFlexibleItem> letterList = sortLetter(items);
+        if (listener != null) {
+            listener.onSortFinish(letterList);
+        }
+    }
+
+    @NonNull
+    private List<AbstractFlexibleItem> sortLetter(List items) {
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#";
         List<StaffDetailItem> value = new ArrayList<>();
         for (Object item : items) {
@@ -57,20 +74,24 @@ public class SortViewModel {
         }
         items.clear();
         String head = value.get(0).getQcStudentBean().head.toUpperCase();
-        List<String> letterList = new ArrayList<>();
         items.add(new StickerDateItem(head));
-        letterList.add(head);
         for (StaffDetailItem item : value) {
             if (!item.getQcStudentBean().head().equalsIgnoreCase(head)) {
                 head = item.getQcStudentBean().head().toUpperCase();
                 items.add(new StickerDateItem(head));
-                letterList.add(head);
             }
             items.add(item);
         }
-        if (listener != null) {
-            listener.onlettersSortFinish(new ArrayList<>(items), letterList);
+        return items;
+    }
+
+    public List<AbstractFlexibleItem> sortItems(List items) {
+        if (latestChecked.get()) {
+            return new ArrayList<>(sortLatest(items));
+        } else if (letterChecked.get()) {
+            return sortLetter(items);
         }
+        return new ArrayList<>();
     }
 
 
@@ -85,9 +106,8 @@ public class SortViewModel {
     }
 
     public interface onSortFinishListener {
-        void onLatestSortFinish(List<AbstractFlexibleItem> items);
+        void onSortFinish(List<AbstractFlexibleItem> items);
 
-        void onlettersSortFinish(List<AbstractFlexibleItem> items, List<String> letters);
     }
 
 }

@@ -1,9 +1,7 @@
 package cn.qingchengfit.student.viewmodel.attendance.nosign;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
@@ -26,7 +24,6 @@ import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.respository.StudentRespository;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.widgets.QcFilterToggle;
 
 /**
  * Created by huangbaole on 2017/11/17.

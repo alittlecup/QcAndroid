@@ -1,7 +1,11 @@
 package cn.qingchengfit.student;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.MenuRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -32,6 +36,8 @@ import cn.qingchengfit.saasbase.student.views.home.StudentOperationFragment;
 import cn.qingchengfit.saasbase.student.views.transfer.StudentTransferFragment;
 import cn.qingchengfit.student.routers.StudentRouterCenter;
 import cn.qingchengfit.student.routers.studentImpl;
+import cn.qingchengfit.student.view.allot.AllotChooseCoachPage;
+import cn.qingchengfit.student.view.allot.AllotChooseSalerPage;
 import cn.qingchengfit.student.view.allot.AllotStaffListPage;
 import cn.qingchengfit.student.view.allot.AllotMultiStaffPage;
 import cn.qingchengfit.student.view.allot.AllotStaffDetailPage;
@@ -46,6 +52,8 @@ import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
 import com.anbillon.flabellum.annotations.Trunk;
+
+import javax.inject.Inject;
 
 import rx.functions.Action1;
 
@@ -95,13 +103,20 @@ import rx.functions.Action1;
         FollowUpStatusPage.class,
         AllotStaffListPage.class,
         AllotStaffDetailPage.class,
-        AllotMultiStaffPage.class
+        AllotMultiStaffPage.class,
+        AllotChooseSalerPage.class,
+        AllotChooseCoachPage.class
 })
 public class StudentActivity extends SaasContainerActivity
         implements FragCallBack {
 
-
     StudentRouterCenter routerCenter;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StudentActivityViewModel activityViewModel = ViewModelProviders.of(this).get(StudentActivityViewModel.class);
+    }
 
     @Override
     public String getModuleName() {
@@ -114,14 +129,16 @@ public class StudentActivity extends SaasContainerActivity
             routerCenter = new StudentRouterCenter(new studentImpl());
         }
         if (intent.getData().getPath().equalsIgnoreCase("/attendance/page")
-                ||intent.getData().getPath().equalsIgnoreCase("/attendance/absent")
-                ||intent.getData().getPath().equalsIgnoreCase("/attendance/rank")
-                ||intent.getData().getPath().equalsIgnoreCase("/attendance/nosign")
-                ||intent.getData().getPath().equalsIgnoreCase("/followup/student")
-                ||intent.getData().getPath().equalsIgnoreCase("/followup/status")
-                ||intent.getData().getPath().equalsIgnoreCase("/allot/student")
-                ||intent.getData().getPath().equalsIgnoreCase("/allotstaff/detail")
-                ||intent.getData().getPath().equalsIgnoreCase("/allotstaff/multi")
+                || intent.getData().getPath().equalsIgnoreCase("/attendance/absent")
+                || intent.getData().getPath().equalsIgnoreCase("/attendance/rank")
+                || intent.getData().getPath().equalsIgnoreCase("/attendance/nosign")
+                || intent.getData().getPath().equalsIgnoreCase("/followup/student")
+                || intent.getData().getPath().equalsIgnoreCase("/followup/status")
+                || intent.getData().getPath().equalsIgnoreCase("/allot/student")
+                || intent.getData().getPath().equalsIgnoreCase("/allotstaff/detail")
+                || intent.getData().getPath().equalsIgnoreCase("/allot/choosesaler")
+                || intent.getData().getPath().equalsIgnoreCase("/allot/choosecoach")
+                || intent.getData().getPath().equalsIgnoreCase("/allotstaff/multi")
                 ) {
 
             return routerCenter.getFragment(intent.getData(), intent.getExtras());
