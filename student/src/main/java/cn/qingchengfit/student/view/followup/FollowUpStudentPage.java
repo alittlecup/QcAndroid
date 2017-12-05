@@ -48,7 +48,7 @@ public class FollowUpStudentPage extends StudentBaseFragment<PageFollowupStudent
     @Override
     public boolean onItemClick(int position) {
         Uri uri = Uri.parse("student://student/followup/status");
-        routeTo(uri, new cn.qingchengfit.student.view.followup.FollowUpStatusPageParmas().title(mViewModel.getLiveItems().getValue().get(position).getTitle()).type(position).build());
+        routeTo(uri, new cn.qingchengfit.student.view.followup.FollowUpStatusPageParams().title(mViewModel.getLiveItems().getValue().get(position).getTitle()).type(position).build());
         return false;
     }
 

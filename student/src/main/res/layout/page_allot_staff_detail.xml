@@ -107,6 +107,7 @@
                         app:enable="@{viewModel.getSortViewModel().letterChecked}"
                         app:fastScrollerAutoHideDelayInMillis="50"
                         app:fastScrollerAutoHideEnabled="false"
+                        android:visibility="invisible"
                         app:fastScrollerBubbleEnabled="true"
                         app:fastScrollerBubblePosition="center" />
                 </RelativeLayout>

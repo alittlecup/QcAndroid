@@ -197,9 +197,9 @@ public class FollowUpStatusViewModel extends FlexibleViewModel<StudentListWrappe
 
     public void onQcButtonFilterClick(boolean isChecked, int index) {
         if (isChecked) {
+            appBarLayoutExpanded.set(false);
             filterIndex.setValue(index);
             filterVisible.set(true);
-            appBarLayoutExpanded.set(false);
         } else {
             filterVisible.set(false);
         }

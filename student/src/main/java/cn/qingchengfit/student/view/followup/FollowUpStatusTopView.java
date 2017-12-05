@@ -2,30 +2,40 @@ package cn.qingchengfit.student.view.followup;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.ViewFollowupStatusTopBinding;
+import cn.qingchengfit.student.di.BindStudentActivity;
 import cn.qingchengfit.student.viewmodel.followup.FollowUpStatusViewModel;
 
 /**
  * Created by huangbaole on 2017/11/6.
  */
 
-public class FollowUpStatusTopView extends StudentBaseFragment<ViewFollowupStatusTopBinding, FollowUpStatusViewModel> {
+public class FollowUpStatusTopView extends SaasBaseFragment {
 
+    FollowUpStatusViewModel mViewModel;
+
+    ViewFollowupStatusTopBinding mBinding;
+
+    @Nullable
     @Override
-    protected void subscribeUI() {
-        mViewModel.getTopDatas().observe(this, datas -> {
-            mViewModel.datas.set(datas);
-        });
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        mBinding = ViewFollowupStatusTopBinding.inflate(inflater, container, false);
+        mBinding.setViewModel(mViewModel);
+        return mBinding.getRoot();
     }
 
     @Override
-    public ViewFollowupStatusTopBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding = ViewFollowupStatusTopBinding.inflate(inflater, container, false);
-        mBinding.setViewModel(mViewModel);
-        return mBinding;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel = ViewModelProviders.of(getParentFragment()).get(FollowUpStatusViewModel.class);
+        mViewModel.getTopDatas().observe(this, datas -> mViewModel.datas.set(datas));
     }
 }

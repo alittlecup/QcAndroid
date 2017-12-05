@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.student.base.BaseViewModel;
+import cn.qingchengfit.student.routers.StudentParamsInjector;
 
 /**
  * Created by huangbaole on 2017/11/15.
@@ -39,6 +40,7 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StudentParamsInjector.inject(this);
         mViewModel = ViewModelProviders.of(this, factory).get(getVMClass());
         subscribeUI();
     }
@@ -53,7 +55,7 @@ public abstract class StudentBaseFragment<DB extends ViewDataBinding, VM extends
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 //        if (mBinding == null) {
-            mBinding = initDataBinding(inflater, null, savedInstanceState);
+        mBinding = initDataBinding(inflater, null, savedInstanceState);
 //        }
 //        ViewGroup parent = (ViewGroup) mBinding.getRoot().getParent();
 //        if(parent!=null){

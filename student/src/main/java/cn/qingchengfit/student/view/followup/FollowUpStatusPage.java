@@ -27,9 +27,9 @@ import cn.qingchengfit.utils.MeasureUtils;
 public class FollowUpStatusPage extends StudentBaseFragment<PageFollowupStatusBinding,FollowUpStatusViewModel>  {
 
     @Need
-    String title="新增注册";
+    String title;
     @Need
-    Integer type=0;
+    Integer type;
 
     FollowUpFilterView followUpFilterView;
     FollowUpStatusTopView topView;

@@ -88,7 +88,7 @@ public class AllotStaffDetailPage extends StudentBaseFragment<PageAllotStaffDeta
         toolbarModel.setMenu(empty ? cn.qingchengfit.saasbase.R.menu.menu_multi_allot : cn.qingchengfit.saasbase.R.menu.menu_multi_modify);
         toolbarModel.setListener(item -> {
             Uri uri = Uri.parse("student://student/allotstaff/multi");
-            routeTo(uri, new cn.qingchengfit.student.view.allot.AllotMultiStaffPageParmas()
+            routeTo(uri, new cn.qingchengfit.student.view.allot.AllotMultiStaffPageParams()
                     .title(item.getTitle().toString()).build());
             return true;
         });

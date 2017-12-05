@@ -194,7 +194,7 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
         switch (getActivityViewModel().getAllotType().getValue()) {
             case 0:
                 Uri toSaler = Uri.parse("student://student/allot/choosesaler");
-                routeTo(toSaler, new cn.qingchengfit.student.view.allot.AllotChooseCoachPageParmas()
+                routeTo(toSaler, new cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams()
                         .title(title)
                         .studentIds(ids)
                         .textContent(getString(cn.qingchengfit.saasbase.R.string.choose_saler) + "\n" + getString(cn.qingchengfit.saasbase.R.string.choose_saler_tips))
@@ -202,7 +202,7 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
                 break;
             case 1:
                 Uri toCoach = Uri.parse("student://student/allot/choosecoach");
-                routeTo(toCoach, new cn.qingchengfit.student.view.allot.AllotChooseCoachPageParmas()
+                routeTo(toCoach, new cn.qingchengfit.student.view.allot.AllotChooseSalerPageParams()
                         .title(title)
                         .studentIds(ids)
                         .textContent(getString(cn.qingchengfit.saasbase.R.string.choose_coach))

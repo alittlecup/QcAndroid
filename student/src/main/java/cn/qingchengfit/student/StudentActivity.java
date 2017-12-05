@@ -1,6 +1,5 @@
 package cn.qingchengfit.student;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,8 +51,6 @@ import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
 import com.anbillon.flabellum.annotations.Trunk;
-
-import javax.inject.Inject;
 
 import rx.functions.Action1;
 
