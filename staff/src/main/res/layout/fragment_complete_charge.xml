@@ -16,7 +16,6 @@
   <android.support.v4.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginTop="?actionBarSize"
       >
 
 
@@ -180,6 +179,17 @@
           app:civ_lable="支付方式"
           app:civ_nonnull="true"
           app:civ_showdivier="false"
+          app:civ_showright="true"
+          />
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/input_card_protocol"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:civ_lable="@string/card_protocol_content"
+          app:civ_content_color="@color/text_warm"
+          app:civ_content="查看"
+          app:civ_clickable="true"
           app:civ_showright="true"
           />
     </LinearLayout>

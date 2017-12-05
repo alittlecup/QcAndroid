@@ -7,10 +7,18 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.CardtplBody;
 import cn.qingchengfit.model.body.ShopsBody;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.views.cardtype.UUIDModel;
+import java.util.Iterator;
 import javax.inject.Inject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -31,11 +39,10 @@ import rx.schedulers.Schedulers;
 public class EditCardTypePresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject RestRepository restRepository;
+    @Inject QcRestRepository restRepository;
     private EditCardTypeView view;
 
-    @Inject public EditCardTypePresenter(RestRepository restRepository) {
-        this.restRepository = restRepository;
+    @Inject public EditCardTypePresenter() {
     }
 
     @Override public void onStart() {
@@ -70,7 +77,7 @@ public class EditCardTypePresenter extends BasePresenter {
         CardtplBody body1 = body.clone();
         body1.id = null;
         body1.shops = null;
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.createPostApi(Post_Api.class)
             .qcUpdateCardtpl(staffid, body.id, body1, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -91,7 +98,7 @@ public class EditCardTypePresenter extends BasePresenter {
     }
 
     public void FixGyms(String staffid, String cardtplid, String shops) {
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.createPostApi(Post_Api.class)
             .qcFixGyms(staffid, cardtplid, new ShopsBody.Builder().shops(shops).build(), gymWrapper.getParams())
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
@@ -107,9 +114,40 @@ public class EditCardTypePresenter extends BasePresenter {
             }));
     }
 
+    public String dealParamsToWeb(String json){
+        String params = "";
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
+                String key = it.next();
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return params;
+    }
+
+    public void stashCardTplInfo(CardtplBody body){
+        RxRegiste(restRepository.createPostApi(Post_Api.class)
+            .qcStashNewCardTpl(loginStatus.staff_id(), body, gymWrapper.getParams())
+            .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Action1<QcDataResponse<UUIDModel>>() {
+                @Override public void call(QcDataResponse<UUIDModel> uuidModelQcDataResponse) {
+                    if (ResponseConstant.checkSuccess(uuidModelQcDataResponse)){
+                        view.onStashSuccessed(uuidModelQcDataResponse.data.uuid);
+                    }else {
+                        view.onEditFailed(uuidModelQcDataResponse.getMsg());
+                    }
+                }
+            }, new NetWorkThrowable()));
+    }
+
     public void addCardInfo(String staffid, CardtplBody body) {
 
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.createPostApi(Post_Api.class)
             .qcCreateCardtpl(staffid, body, gymWrapper.getParams())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

@@ -1,4 +1,4 @@
-package cn.qingchengfit;
+package cn.qingchengfit.events;
 
 /**
  * power by
@@ -18,20 +18,8 @@ package cn.qingchengfit;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/2/21.
+ * Created by Paper on 2017/12/4.
  */
 
-public class Constants {
-  public static final String SEPARATE = "、";
-  public static final String SEPARATOR = "、";
-  public static final String EXTRA_GYM_SERVICE = "qingcheng.gym.service";
-  public static final String EXTRA_GYM_SINGLE = "qingcheng.gym.single";
-  public static final String EXTRA_GYM_STATUS = "qingcheng.gym.status";
-  public static final String EXTRA_BRAND = "qingcheng.brand";
-
-  public static final String Server =
-      "http://cloud.qingchengfit.cn/";
-  public static String ServerDebug = "http://cloudtest.qingchengfit.cn/";
-  public static final String ServerMirror =
-      "http://cloudmirror.qingchengfit.cn/";
+public class EventCloseApp {
 }

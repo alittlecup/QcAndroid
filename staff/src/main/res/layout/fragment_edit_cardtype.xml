@@ -186,16 +186,15 @@
       <include layout="@layout/divider_grey"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/cardtpl_info_edit2"
+    <include layout="@layout/divider_grey_margin"/>
+
+    <cn.qingchengfit.widgets.ExpandedLayout
+        android:id="@+id/switcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        civ:el_label="设置限制条件"
+        android:background="@color/white"
         >
-
-      <include layout="@layout/divider_grey_margin"/>
-
-      <include layout="@layout/layout_switcher"/>
 
       <View
           android:layout_width="match_parent"
@@ -233,6 +232,8 @@
           tools:visibility="visible"
           />
 
+      <include layout="@layout/divider_grey"/>
+
       <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/limit_bug_count"
           android:layout_width="match_parent"
@@ -246,10 +247,6 @@
           civ:civ_showright="true"
           tools:visibility="visible"
           />
-
-      <include layout="@layout/divider_grey"/>
-
-
       <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/set_card_standard"
           android:layout_width="match_parent"
@@ -262,11 +259,33 @@
           civ:civ_showright="true"
           />
 
-      <include layout="@layout/divider_grey"/>
+    </cn.qingchengfit.widgets.ExpandedLayout>
 
-    </LinearLayout>
+    <cn.qingchengfit.widgets.ExpandedLayout
+        android:id="@+id/expand_card_protocol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        civ:el_label="@string/card_protocol_switcher"
+        android:background="@color/white"
+        >
 
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/input_card_protocol"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height_new"
+          civ:civ_lable="@string/card_protocol_content"
+          civ:civ_content_color="@color/qc_text_black"
+          civ:civ_clickable="true"
+          civ:civ_showright="true"
+          />
 
+      </LinearLayout>
+
+    </cn.qingchengfit.widgets.ExpandedLayout>
     <!--<Button-->
     <!--android:id="@+id/btn_completed"-->
     <!--android:layout_width="match_parent"-->

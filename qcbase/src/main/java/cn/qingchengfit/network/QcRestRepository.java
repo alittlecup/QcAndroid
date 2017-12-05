@@ -47,8 +47,8 @@ import retrofit2.http.GET;
 public class QcRestRepository {
 
   private final OkHttpClient client;
-  private final Retrofit getApiAdapter;
-  private final Retrofit postApiAdapter;
+  private Retrofit getApiAdapter;
+  private Retrofit postApiAdapter;
   private String host = "";
 
   public QcRestRepository(final Context context, final String host, final String appOemTag) {
@@ -108,6 +108,22 @@ public class QcRestRepository {
       }
     }).addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
 
+    Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
+
+    getApiAdapter = new Retrofit.Builder().baseUrl(host)
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .build();
+
+    postApiAdapter = new Retrofit.Builder().baseUrl(host)
+        .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .client(client)
+        .build();
+  }
+
+  public void changeHost(String host){
     Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization().create();
 
     getApiAdapter = new Retrofit.Builder().baseUrl(host)

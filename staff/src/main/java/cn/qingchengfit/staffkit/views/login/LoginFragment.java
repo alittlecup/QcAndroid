@@ -19,16 +19,17 @@ import android.widget.ToggleButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.Constants;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.SendMsgEvent;
 import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.bean.LoginBody;
+import cn.qingchengfit.staffkit.views.course.SimpleTextItemItem;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -36,9 +37,14 @@ import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.views.fragments.BottomListFragment;
 import cn.qingchengfit.widgets.PasswordView;
 import cn.qingchengfit.widgets.PhoneEditText;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -76,35 +82,7 @@ public class LoginFragment extends BaseFragment
     delegatePresenter(presenter, this);
     delegatePresenter(loginPresenter, this);
     loginPresenter.setContext(getContext());
-    if (BuildConfig.DEBUG) {
-      final EditText et = new EditText(getContext());
-      String ip = PreferenceUtils.getPrefString(getContext(), "debug_ip", Configs.Server);
-      if (!TextUtils.isEmpty(ip)) {
-        Configs.Server = ip;
-        et.setHint("当前IP:" + ip);
-      }
-      final Button btnChange = new Button(getContext());
-      btnChange.setText("切换Ip");
-      rootView.addView(et, 0, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-          MeasureUtils.dpToPx(50f, getResources())));
-      rootView.addView(btnChange, 1,
-          new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-              MeasureUtils.dpToPx(50f, getResources())));
-      mLoginBtn.setEnabled(false);
-      btnChange.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
-          if (getActivity().getApplication() instanceof App) {
-            if (!TextUtils.isEmpty(et.getText())) {
-              PreferenceUtils.setPrefString(getContext(), "debug_ip",
-                  "http://" + et.getText().toString().trim() + "/");
-              Configs.Server = "http://" + et.getText().toString().trim() + "/";
-              ((App) (getActivity().getApplication())).initInjcet();
-              ToastUtils.show("修改成功");
-            }
-          }
-        }
-      });
-    }
+    changeHost();
 
     view.setOnTouchListener(new View.OnTouchListener() {
       @Override public boolean onTouch(View v, MotionEvent event) {
@@ -144,6 +122,73 @@ public class LoginFragment extends BaseFragment
       }
     });
     return view;
+  }
+
+  private void changeHost(){
+    if (BuildConfig.DEBUG) {
+      final EditText et = new EditText(getContext());
+      String ip = PreferenceUtils.getPrefString(getContext(), "debug_ip", Constants.ServerDebug);
+      if (!TextUtils.isEmpty(ip)) {
+        Constants.ServerDebug = ip;
+        et.setText(ip);
+      }
+      List<AbstractFlexibleItem> itemList = new ArrayList<>();
+      final List<String> list = new ArrayList<>();
+      list.add("cloudtest.qingchengfit.cn");
+      list.add("cloudtest01.qingchengfit.cn");
+      list.add("c1.qingchengfit.cn");
+      list.add("c2.qingchengfit.cn");
+      list.add("自定义");
+      for (String str : list) {
+        itemList.add(new SimpleTextItemItem(str));
+      }
+      final BottomListFragment listFragment = BottomListFragment.newInstance("选择IP");
+      listFragment.loadData(itemList);
+      listFragment.setListener(new BottomListFragment.ComfirmChooseListener() {
+        @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {
+          if (selectedPos.get(0) == list.size() - 1){
+            et.setText("");
+            et.setHint("请输入host");
+          }else{
+            et.setText("http://" + list.get(selectedPos.get(0)) + "/");
+          }
+        }
+      });
+      et.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          if (!TextUtils.isEmpty(et.getText())) {
+            listFragment.show(getFragmentManager(), null);
+          }
+        }
+      });
+      final Button btnChange = new Button(getContext());
+      btnChange.setText("切换Ip");
+      rootView.addView(et, 0, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+          MeasureUtils.dpToPx(50f, getResources())));
+      rootView.addView(btnChange, 1,
+          new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+              MeasureUtils.dpToPx(50f, getResources())));
+      mLoginBtn.setEnabled(false);
+      btnChange.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          if (getActivity().getApplication() instanceof App) {
+            if (!TextUtils.isEmpty(et.getText())) {
+              if (!et.getText().toString().contains("http")) {
+                Constants.ServerDebug = "http://" + et.getText().toString().trim() + "/";
+                PreferenceUtils.setPrefString(getContext(), "debug_ip",
+                    "http://" + et.getText().toString().trim()  + "qingchengfit.cn" + "/");
+              }else{
+                Constants.ServerDebug = et.getText().toString().trim();
+                PreferenceUtils.setPrefString(getContext(), "debug_ip",
+                    et.getText().toString().trim());
+              }
+              restRepository.changeHost(Constants.ServerDebug);
+              ToastUtils.show("修改成功");
+            }
+          }
+        }
+      });
+    }
   }
 
   @OnClick(R.id.btn_agree_protocol) public void onAgree() {

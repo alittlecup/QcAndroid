@@ -38,4 +38,6 @@ public interface EditCardTypeView extends PView {
     void onCardTpl(CardTpl card_tpl);
 
     void onSuccessShops();
+
+    void onStashSuccessed(String uuid);
 }

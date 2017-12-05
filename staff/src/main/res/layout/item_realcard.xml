@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    >
+    android:layout_height="90dp">
 
   <android.support.v7.widget.CardView
 
@@ -23,9 +22,9 @@
       >
 
     <FrameLayout
+        android:id="@+id/frame_bg_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_realcard"
         android:layerType="software"
         >
       <!--<ImageView-->
@@ -108,6 +107,8 @@
         android:layout_width="match_parent"
         android:layout_height="7dp"
         android:background="@color/bg_grey"
+        android:visibility="visible"
+        tools:visibility="gone"
         />
   </LinearLayout>
 

@@ -66,6 +66,7 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private CourseBaseInfoEditFragment mEditBaseInfo;
+    private ArrayList<String> selectedIds = new ArrayList<>();
     private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
             if (mEditBaseInfo != null) {
@@ -157,7 +158,7 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
     }
 
     @OnClick(R.id.btn_suit_gyms) public void onClick() {
-        MutiChooseGymFragment.start(this, false, null,
+        MutiChooseGymFragment.start(this, false, selectedIds,
             getArguments().getBoolean("p") ? PermissionServerUtils.PRISETTING_CAN_WRITE : PermissionServerUtils.TEAMSETTING_CAN_WRITE,
             RESULT_GYMS);
     }
@@ -168,8 +169,12 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
             if (requestCode == RESULT_GYMS) {
                 String ids = "";
                 ArrayList<Shop> shops = data.getParcelableArrayListExtra(IntentUtils.RESULT);
+                if (selectedIds.size() > 0){
+                    selectedIds.clear();
+                }
                 if (shops != null) {
                     for (int i = 0; i < shops.size(); i++) {
+                        selectedIds.add(shops.get(i).id);
                         if (i < shops.size() - 1) {
                             ids = TextUtils.concat(ids, shops.get(i).id, ",").toString();
                         } else {

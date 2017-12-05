@@ -252,7 +252,7 @@ public class BrandDetailFragment extends BaseFragment {
     }
 
     @Override public String getFragmentName() {
-        return BrandDetailFragment.class.getName();
+        return BrandManageFragment.TAG;
     }
 
     @Override public void onDestroyView() {

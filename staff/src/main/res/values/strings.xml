@@ -181,7 +181,7 @@
   <string name="charge_day">充值(天)</string>
 
   <string name="alert_endtime_greater_starttime">结束时间不能早于开始时间</string>
-  <string name="alert_batch_greater_three_month">课程排期时间不能超过三个月</string>
+  <string name="alert_batch_greater_three_month">课程排期时间不能超过一年</string>
   <string name="choose_time">选择时间</string>
   <string name="choose_week">选择星期</string>
 
@@ -555,6 +555,7 @@
   <string name="err_sacn_qrcode">无法识别该二维码，请确认后再进行扫描。</string>
   <string name="open_link_in_computer">请在电脑浏览器中打开以下网址</string>
   <string name="scan_url">sao.qingchengfit.cn</string>
+  <string name="scan_url_test">saotest.qingchengfit.cn</string>
   <string name="realy_open_next">我已经打开，下一步</string>
   <string name="activity_list">活动营销</string>
   <string name="fix_password">修改密码</string>
@@ -878,4 +879,16 @@
   <string formatted="false" name="text_not_sign_tip">%d天内未签课%d节以上的会员共计%d人</string>
   <string name="text_empty_title_not_sign">您的场馆未开启签课功能</string>
   <string name="text_empty_content_not_sign">请去团课/私教预约限制中开启</string>
+
+  <!--会员卡服务协议-->
+  <string name="card_protocol_switcher">会员卡服务条款</string>
+  <string name="card_protocol_content">会员卡服务条款内容</string>
+  <string formatted="false" name="card_protocol_user_read_info">已阅读第%d版(%s版)</string>
+  <string name="card_protocol_first_can_not">在电脑中编辑条款</string>
+
+  <string formatted="false" name="qr_code_2web">%sapp2web/?brand_id=%s\u0026shop_id=%s\u0026module=%s</string>
+  <string formatted="false" name="qr_code_2web_add_card_term">/card_tpl/%s/term/add</string>
+  <string formatted="false" name="qr_code_2web_modify_card">/card_tpl/%s/term/edit</string>
+  <string name="modify">修改</string>
+
 </resources>
