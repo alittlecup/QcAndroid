@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.views;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,13 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.databinding.FragmentRecruitWriteGymDescBinding;
 import cn.qingchengfit.recruit.event.EventGymFacilities;
 import cn.qingchengfit.recruit.event.EventRichTextBack;
 import cn.qingchengfit.recruit.network.body.RecruitGymBody;
@@ -29,7 +27,6 @@ import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -60,20 +57,20 @@ import rx.functions.Action1;
 @FragmentWithArgs public class RecruitWriteGymIntroFragment extends BaseFragment
     implements RecruitGymPresenter.MVPView {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
+/*  @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.civ_gym_area) CommonInputView civGymArea;
   @BindView(R2.id.civ_gym_staff_count) CommonInputView civGymStaffCount;
   @BindView(R2.id.civ_gym_trainer_count) CommonInputView civGymTrainerCount;
   @BindView(R2.id.civ_gym_member_count) CommonInputView civGymMemberCount;
   @BindView(R2.id.civ_gym_equip) CommonInputView civGymEquip;
-  @BindView(R2.id.civ_gym_intro) CommonInputView civGymIntro;
+  @BindView(R2.id.civ_gym_intro) CommonInputView civGymIntro;*/
 
   @Inject RecruitGymPresenter gymPresenter;
   @Inject RecruitRouter router;
 
   @Arg Gym gym;
-
+  FragmentRecruitWriteGymDescBinding db;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -82,14 +79,16 @@ import rx.functions.Action1;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_recruit_write_gym_desc, container, false);
-    unbinder = ButterKnife.bind(this, view);
-    initToolbar(toolbar);
+    db = DataBindingUtil.inflate(inflater,R.layout.fragment_recruit_write_gym_desc, container, false);
+
+    initToolbar(db.layoutToolbar.findViewById(R.id.toolbar));
     delegatePresenter(gymPresenter, this);
     onDetail(gym);
     initBus();
     getFragmentManager().registerFragmentLifecycleCallbacks(cb,false);
-    return view;
+    db.civGymEquip.setOnClickListener(view -> onCivGymEquipClicked());
+    db.civGymIntro.setOnClickListener(view -> onCivGymIntroClicked());
+    return db.getRoot();
   }
 
   private FragmentManager.FragmentLifecycleCallbacks cb = new FragmentManager.FragmentLifecycleCallbacks() {
@@ -105,34 +104,34 @@ import rx.functions.Action1;
     RxBusAdd(EventGymFacilities.class).subscribe(new Action1<EventGymFacilities>() {
       @Override public void call(EventGymFacilities eventGymFacilities) {
         gym.facilities = eventGymFacilities.facilities;
-        civGymEquip.setContent(CmStringUtils.List2Str(gym.facilities));
+        db.civGymEquip.setContent(CmStringUtils.List2Str(gym.facilities));
       }
     });
     RxBusAdd(EventRichTextBack.class).subscribe(new Action1<EventRichTextBack>() {
       @Override public void call(EventRichTextBack eventRichTextBack) {
         gym.detail_description = eventRichTextBack.content;
-        civGymIntro.setContent(getString(R.string.detail_text));
+        db.civGymIntro.setContent(getString(R.string.detail_text));
       }
     });
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("场馆介绍");
+    ((TextView)db.layoutToolbar.findViewById(R.id.toolbar_title)).setText("场馆介绍");
     toolbar.inflateMenu(R.menu.menu_save);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
 
         RecruitGymBody.Builder body = new RecruitGymBody.Builder();
-        if (!civGymArea.isEmpty()) body.area(civGymArea.getContent());
-        if (!civGymMemberCount.isEmpty()) {
-          body.member_count(Integer.parseInt(civGymMemberCount.getContent()));
+        if (!db.civGymArea.isEmpty()) body.area(db.civGymArea.getContent());
+        if (!db.civGymMemberCount.isEmpty()) {
+          body.member_count(Integer.parseInt(db.civGymMemberCount.getContent()));
         }
-        if (!civGymStaffCount.isEmpty()) {
-          body.staff_count(Integer.parseInt(civGymStaffCount.getContent()));
+        if (!db.civGymStaffCount.isEmpty()) {
+          body.staff_count(Integer.parseInt(db.civGymStaffCount.getContent()));
         }
-        if (!civGymTrainerCount.isEmpty()) {
-          body.coach_count(Integer.parseInt(civGymTrainerCount.getContent()));
+        if (!db.civGymTrainerCount.isEmpty()) {
+          body.coach_count(Integer.parseInt(db.civGymTrainerCount.getContent()));
         }
         if (!TextUtils.isEmpty(gym.detail_description)) {
           body.detail_description(gym.detail_description);
@@ -163,14 +162,14 @@ import rx.functions.Action1;
   /**
    * 健身房设备
    */
-  @OnClick(R2.id.civ_gym_equip) public void onCivGymEquipClicked() {
+  public void onCivGymEquipClicked() {
     router.toGymEquip(ListUtils.list2array(gym.facilities));
   }
 
   /**
    * 详细介绍
    */
-  @OnClick(R2.id.civ_gym_intro) public void onCivGymIntroClicked() {
+  public void onCivGymIntroClicked() {
     router.toWriteGymDetailDesc(gym.detail_description, "详细介绍", "请填写场馆介绍");
   }
 
@@ -193,12 +192,12 @@ import rx.functions.Action1;
     } catch (Exception e) {
 
     }
-    civGymArea.setContent(CmStringUtils.getStringFromInt(areInt));
-    civGymMemberCount.setContent(CmStringUtils.getStringFromInt(gym.member_count));
-    civGymStaffCount.setContent(CmStringUtils.getStringFromInt(gym.staff_count));
-    civGymTrainerCount.setContent(CmStringUtils.getStringFromInt(gym.coach_count));
-    civGymEquip.setContent(CmStringUtils.List2Str(gym.facilities));
-    civGymIntro.setContent(TextUtils.isEmpty(gym.detail_description) ? "" : "详情");
+    db.civGymArea.setContent(CmStringUtils.getStringFromInt(areInt));
+    db.civGymMemberCount.setContent(CmStringUtils.getStringFromInt(gym.member_count));
+    db.civGymStaffCount.setContent(CmStringUtils.getStringFromInt(gym.staff_count));
+    db.civGymTrainerCount.setContent(CmStringUtils.getStringFromInt(gym.coach_count));
+    db.civGymEquip.setContent(CmStringUtils.List2Str(gym.facilities));
+    db.civGymIntro.setContent(TextUtils.isEmpty(gym.detail_description) ? "" : "详情");
   }
 
   @Override public boolean onFragmentBackPress() {

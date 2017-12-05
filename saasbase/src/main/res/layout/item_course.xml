@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="82dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:gravity="center_vertical"
     android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     >
 
   <ImageView
@@ -72,9 +75,9 @@
   </LinearLayout>
 
   <ImageView
-      android:layout_width="40dp"
-      android:layout_height="match_parent"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
       android:scaleType="centerInside"
-      android:src="@drawable/ic_arrow_right"
+      app:srcCompat="@drawable/vd_triangle_right_grey"
       />
 </LinearLayout>

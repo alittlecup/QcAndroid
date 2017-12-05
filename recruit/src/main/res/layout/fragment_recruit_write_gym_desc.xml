@@ -1,99 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_grey"
-    android:orientation="vertical"
-    >
-
-  <include layout="@layout/common_simple_toolbar"/>
-
-  <TextView
+<layout
+  >
+  <data/>
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      android:text="场馆规模"
-      style="@style/TextTitleHint"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
 
-      />
+    <include layout="@layout/common_simple_toolbar"
+        android:id="@+id/layout_toolbar"
+        />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_gym_area"
-      app:civ_clickable="false"
-      app:civ_content_color="@color/text_warm"
-      app:civ_hint="@string/please_input"
-      app:civ_inputnum="true"
-      app:civ_lable="场馆面积"
-      app:civ_showright="false"
-      app:civ_unit="m²"
-      style="@style/QcCivClickStyle"
-      />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:text="场馆规模"
+        style="@style/TextTitleHint"
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_gym_staff_count"
-      app:civ_clickable="false"
-      app:civ_content_color="@color/text_warm"
-      app:civ_hint="@string/please_input"
-      app:civ_inputnum="true"
-      app:civ_lable="员工数量"
-      app:civ_showright="false"
-      app:civ_unit="人"
-      style="@style/QcCivClickStyle"
-      />
+        />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_gym_trainer_count"
-      app:civ_clickable="false"
-      app:civ_content_color="@color/text_warm"
-      app:civ_hint="@string/please_input"
-      app:civ_inputnum="true"
-      app:civ_lable="教练数量"
-      app:civ_showright="false"
-      app:civ_unit="人"
-      style="@style/QcCivClickStyle"
-      />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_gym_area"
+        app:civ_clickable="false"
+        app:civ_content_color="@color/text_warm"
+        app:civ_hint="@string/please_input"
+        app:civ_inputnum="true"
+        app:civ_lable="场馆面积"
+        app:civ_showright="false"
+        app:civ_unit="m²"
+        style="@style/QcCivClickStyle"
+        />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_gym_member_count"
-      app:civ_clickable="false"
-      app:civ_content_color="@color/text_warm"
-      app:civ_hint="@string/please_input"
-      app:civ_inputnum="true"
-      app:civ_lable="会员数量"
-      app:civ_showright="false"
-      app:civ_unit="人"
-      style="@style/QcCivClickStyle"
-      />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_gym_staff_count"
+        app:civ_clickable="false"
+        app:civ_content_color="@color/text_warm"
+        app:civ_hint="@string/please_input"
+        app:civ_inputnum="true"
+        app:civ_lable="员工数量"
+        app:civ_showright="false"
+        app:civ_unit="人"
+        style="@style/QcCivClickStyle"
+        />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_gym_equip"
-      app:civ_content_color="@color/text_warm"
-      app:civ_hint="@string/please_input"
-      app:civ_lable="场馆设施"
-      app:civ_showdivier="false"
-      app:civ_showright="true"
-      style="@style/QcCivClickStyle"
-      />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_gym_trainer_count"
+        app:civ_clickable="false"
+        app:civ_content_color="@color/text_warm"
+        app:civ_hint="@string/please_input"
+        app:civ_inputnum="true"
+        app:civ_lable="教练数量"
+        app:civ_showright="false"
+        app:civ_unit="人"
+        style="@style/QcCivClickStyle"
+        />
 
-  <include layout="@layout/divider_grey"/>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_gym_member_count"
+        app:civ_clickable="false"
+        app:civ_content_color="@color/text_warm"
+        app:civ_hint="@string/please_input"
+        app:civ_inputnum="true"
+        app:civ_lable="会员数量"
+        app:civ_showright="false"
+        app:civ_unit="人"
+        style="@style/QcCivClickStyle"
+        />
 
-  <android.support.v4.widget.Space
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/activity_vertical_margin"
-      />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_gym_equip"
+        app:civ_content_color="@color/text_warm"
+        app:civ_hint="@string/please_input"
+        app:civ_lable="场馆设施"
+        app:civ_showdivier="false"
+        app:civ_showright="true"
+        style="@style/QcCivClickStyle"
+        />
 
-  <include layout="@layout/divider_grey"/>
+    <include layout="@layout/divider_grey"/>
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_gym_intro"
-      app:civ_clickable="true"
-      app:civ_content_color="@color/text_warm"
-      app:civ_hint="@string/please_input"
-      app:civ_lable="详细介绍"
-      app:civ_showright="true"
-      style="@style/QcCivClickStyle"
-      />
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin"
+        />
 
-  <include layout="@layout/divider_grey"/>
-</LinearLayout>
+    <include layout="@layout/divider_grey"/>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_gym_intro"
+        app:civ_clickable="true"
+        app:civ_content_color="@color/text_warm"
+        app:civ_hint="@string/please_input"
+        app:civ_lable="详细介绍"
+        app:civ_showright="true"
+        style="@style/QcCivClickStyle"
+        />
+
+    <include layout="@layout/divider_grey"/>
+  </LinearLayout>
+</layout>

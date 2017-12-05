@@ -26,6 +26,7 @@ import java.util.List;
  * Created by Paper on 16/5/5 2016.
  */
 public class BatchLoop implements Parcelable {
+    public String id;
     public boolean autoAdd = false;
     public ArrayList<Integer> week = new ArrayList<>();
     public Date dateStart;

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.item.JobFairHorizonItem;
 
@@ -41,8 +40,8 @@ public class RecruitUserMyJobFairFragment extends JobFairListFragment {
     View view = super.onCreateView(inflater, container, savedInstanceState);
     LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.layout_toolbar_container,null);
     linearLayout.addView(view,1);
-    toolbar = view.findViewById(R.id.toolbar);
-    toolbarTitle = view.findViewById(R.id.toolbar_title);
+    toolbar = linearLayout.findViewById(R.id.toolbar);
+    toolbarTitle = linearLayout.findViewById(R.id.toolbar_title);
     initToolbar(toolbar);
     return linearLayout;
   }

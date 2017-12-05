@@ -12,10 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
@@ -43,16 +40,19 @@ import javax.inject.Inject;
  */
 public class JobFairsAllFragment extends BaseFragment{
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.strip) TabLayout strip;
-  @BindView(R2.id.vp) ViewPager vp;
+  Toolbar toolbar;
+  TextView toolbarTitle;
+  TabLayout strip;
+  ViewPager vp;
   @Inject RecruitRouter router;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_jobfairs_all, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = view.findViewById(R.id.toolbar);
+    toolbarTitle = view.findViewById(R.id.toolbar_title);
+    strip = view.findViewById(R.id.strip);
+    vp = view.findViewById(R.id.vp);
     initToolbar(toolbar);
     vp.setAdapter(new JobFairsAllAdapter(getChildFragmentManager()));
     strip.setupWithViewPager(vp);

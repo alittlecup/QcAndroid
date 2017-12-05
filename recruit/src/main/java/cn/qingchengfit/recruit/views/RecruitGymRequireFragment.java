@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.views;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,13 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.databinding.FragmentRecruitPositionRequireBinding;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TwoScrollPicker;
 import java.util.ArrayList;
@@ -42,14 +39,16 @@ import java.util.Arrays;
  */
 public class RecruitGymRequireFragment extends BaseFragment {
 
-  @BindView(R2.id.civ_work_exp) CommonInputView civWorkExp;
-  @BindView(R2.id.civ_gender) CommonInputView civGender;
-  @BindView(R2.id.civ_age) CommonInputView civAge;
-  @BindView(R2.id.civ_education) CommonInputView civEducation;
-  @BindView(R2.id.civ_height) CommonInputView civHeight;
-  @BindView(R2.id.civ_weight) CommonInputView civWeight;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  //@BindView(R2.id.civ_work_exp) CommonInputView civWorkExp;
+  //@BindView(R2.id.civ_gender) CommonInputView civGender;
+  //@BindView(R2.id.civ_age) CommonInputView civAge;
+  //@BindView(R2.id.civ_education) CommonInputView civEducation;
+  //@BindView(R2.id.civ_height) CommonInputView civHeight;
+  //@BindView(R2.id.civ_weight) CommonInputView civWeight;
+  //@BindView(R2.id.toolbar) Toolbar toolbar;
+  //@BindView(R2.id.toolbar_title) TextView toolbarTitile;
+
+  FragmentRecruitPositionRequireBinding db;
 
   SimpleScrollPicker simpleScrollPicker;
   TwoScrollPicker twoScrollPicker;
@@ -61,15 +60,20 @@ public class RecruitGymRequireFragment extends BaseFragment {
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_recruit_position_require, container, false);
-    unbinder = ButterKnife.bind(this, view);
-    initToolbar(toolbar);
-    return view;
+    db = DataBindingUtil.inflate(inflater,R.layout.fragment_recruit_position_require, container, false);
+    initToolbar(db.layoutToolbar.findViewById(R.id.toolbar));
+    db.civAge.setOnClickListener(view -> onCivAgeClicked());
+    db.civEducation.setOnClickListener(view -> onCivEducationClicked());
+    db.civGender.setOnClickListener(view -> onCivGenderClicked());
+    db.civHeight.setOnClickListener(view -> onCivHeightClicked());
+    db.civWeight.setOnClickListener(view -> onCivWeightClicked());
+    db.civWorkExp.setOnClickListener(view -> onCivWorkExpClicked());
+    return db.getRoot();
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitile.setText("职位要求");
+    ((TextView)db.layoutToolbar.findViewById(R.id.toolbar_title)).setText("职位要求");
   }
 
   @Override public String getFragmentName() {
@@ -83,28 +87,28 @@ public class RecruitGymRequireFragment extends BaseFragment {
   /**
    * 工作经验
    */
-  @OnClick(R2.id.civ_work_exp) public void onCivWorkExpClicked() {
+  public void onCivWorkExpClicked() {
     String[] workexpStr = getContext().getResources().getStringArray(R.array.work_exp);
     final ArrayList<String> d = new ArrayList<>(Arrays.asList(workexpStr));
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        civWorkExp.setContent(d.get(left) + "-" + d.get(right));
+        db.civWorkExp.setContent(d.get(left) + "-" + d.get(right));
       }
     });
     twoScrollPicker.show(d, d, 0, 0);//// TODO: 2017/6/8 选择时当前的位置
   }
 
-  @OnClick(R2.id.civ_gender) public void onCivGenderClicked() {
+   public void onCivGenderClicked() {
     final ArrayList<String> d = new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.gender)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
-        civGender.setContent(d.get(pos));
+        db.civGender.setContent(d.get(pos));
       }
     });
     simpleScrollPicker.show(d, 0);
   }
 
-  @OnClick(R2.id.civ_age) public void onCivAgeClicked() {
+  public void onCivAgeClicked() {
     final ArrayList<String> d = new ArrayList<>();
     d.add("不限");
     for (int i = 0; i < 100; i++) {
@@ -112,23 +116,23 @@ public class RecruitGymRequireFragment extends BaseFragment {
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        civAge.setContent(d.get(left) + "-" + d.get(right));
+        db.civAge.setContent(d.get(left) + "-" + d.get(right));
       }
     });
     twoScrollPicker.show(d, d, 0, 0);
   }
 
-  @OnClick(R2.id.civ_education) public void onCivEducationClicked() {
+  public void onCivEducationClicked() {
     final ArrayList<String> d = new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.education_degree)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
-        civEducation.setContent(d.get(pos));
+        db.civEducation.setContent(d.get(pos));
       }
     });
     simpleScrollPicker.show(d, 0);
   }
 
-  @OnClick(R2.id.civ_height) public void onCivHeightClicked() {
+  public void onCivHeightClicked() {
     final ArrayList<String> d = new ArrayList<>();
     d.add("不限");
     for (int i = 0; i < 250; i++) {
@@ -136,13 +140,13 @@ public class RecruitGymRequireFragment extends BaseFragment {
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        civHeight.setContent(d.get(left) + "-" + d.get(right));
+        db.civHeight.setContent(d.get(left) + "-" + d.get(right));
       }
     });
     twoScrollPicker.show(d, d, 0, 0);
   }
 
-  @OnClick(R2.id.civ_weight) public void onCivWeightClicked() {
+  public void onCivWeightClicked() {
     final ArrayList<String> d = new ArrayList<>();
     d.add("不限");
     for (int i = 0; i < 250; i++) {
@@ -150,7 +154,7 @@ public class RecruitGymRequireFragment extends BaseFragment {
     }
     twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
       @Override public void onSelectItem(int left, int right) {
-        civWeight.setContent(d.get(left) + "-" + d.get(right));
+        db.civWeight.setContent(d.get(left) + "-" + d.get(right));
       }
     });
     twoScrollPicker.show(d, d, 0, 0);

@@ -5,11 +5,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.QcTagGroup;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -38,7 +35,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 @FragmentWithArgs public class RecruitGymEquipmentFragment extends BaseFragment {
 
   @Arg Gym gym;
-  @BindView(R2.id.flexlayout) QcTagGroup flexlayout;
+  QcTagGroup flexlayout;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -47,7 +44,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_gym_equipment, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    flexlayout = view.findViewById(R.id.flexlayout);
     if (gym.facilities != null) {
       flexlayout.setTags(gym.facilities);
     }

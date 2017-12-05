@@ -6,11 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.views.VpFragment;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -38,7 +35,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
  */
 @FragmentWithArgs public class RecruitGymDescFragment extends VpFragment {
   @Arg Gym gym;
-  @BindView(R2.id.tv_desc) TextView tvDesc;
+  TextView tvDesc;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -48,7 +45,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_recruit_gym_desc, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    tvDesc = view.findViewById(R.id.tv_desc);
     setDesc(gym);
     return view;
   }

@@ -158,7 +158,11 @@ public class JobfairDetailFragment extends BaseFragment
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
-    super.initToolbar(toolbar);
+    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        popBack();
+      }
+    });
     toolbarTitle.setText("招聘会详情");
     if (type == 0) {
       toolbar.inflateMenu(R.menu.menu_share);

@@ -83,5 +83,6 @@ public class AddBatchLoopFragment extends IBatchLoopFragment {
         cmBean.isCross = true;
     }
     RxBus.getBus().post(cmBean);
+    popBack();
   }
 }

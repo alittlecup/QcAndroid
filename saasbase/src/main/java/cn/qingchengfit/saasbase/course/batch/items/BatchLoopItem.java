@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.course.batch.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -28,6 +26,16 @@ public class BatchLoopItem extends AbstractFlexibleItem<BatchLoopItem.BatchLoopV
   public BatchLoopItem(BatchLoop batchLoop, boolean isPrivate) {
     this.batchLoop = batchLoop;
     this.isPrivate = isPrivate;
+  }
+
+  public void setBatchLoop(BatchLoop batchLoop) {
+    this.batchLoop = batchLoop;
+  }
+
+  public String getId(){
+    if (batchLoop != null && batchLoop.id != null){
+      return batchLoop.id;
+    }else return "";
   }
 
   @Override public int getLayoutRes() {
@@ -56,6 +64,9 @@ public class BatchLoopItem extends AbstractFlexibleItem<BatchLoopItem.BatchLoopV
   }
 
   @Override public boolean equals(Object o) {
+    if (o instanceof BatchLoopItem){
+      return getId().equalsIgnoreCase(((BatchLoopItem) o).getId());
+    }
     return false;
   }
 

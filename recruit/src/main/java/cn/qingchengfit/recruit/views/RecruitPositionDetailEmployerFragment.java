@@ -124,7 +124,7 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_seek_position_detail, container, false);
+    View view = inflater.inflate(R.layout.fragment_recruit_seek_position_detail, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     delegatePresenter(resumePresenter, this);

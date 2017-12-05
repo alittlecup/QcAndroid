@@ -2,6 +2,7 @@ package cn.qingchengfit.recruit.views;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -11,16 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.databinding.DialogSendResumeBinding;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import dagger.android.support.AndroidSupportInjection;
@@ -48,38 +44,34 @@ import javax.inject.Inject;
  */
 public class DialogSendResumeFragment extends DialogFragment {
 
-    @BindView(R2.id.tv_content) TextView tvContent;
-    @BindView(R2.id.btn_go_resume) TextView btnGoResume;
-    @BindView(R2.id.ck_never_noti) CheckBox ckNeverNoti;
-    @BindView(R2.id.btn_cancel) TextView btnCancel;
-    @BindView(R2.id.btn_sent) TextView btnSent;
-    @Inject RecruitRouter router;
-    Unbinder unbinder;
-    private int completedPersent = 0;
-    private OnSendResumeListener onSendResumeListener;
+  @Inject RecruitRouter router;
+  Unbinder unbinder;
+  private int completedPersent = 0;
+  private OnSendResumeListener onSendResumeListener;
+  DialogSendResumeBinding db;
 
-    public static DialogSendResumeFragment newCompletedSend(int persent, OnSendResumeListener listener) {
-        DialogSendResumeFragment d = new DialogSendResumeFragment();
-        d.completedPersent = persent;
-        d.setOnSendResumeListener(listener);
-        return d;
-    }
+  public static DialogSendResumeFragment newCompletedSend(int persent,
+    OnSendResumeListener listener) {
+    DialogSendResumeFragment d = new DialogSendResumeFragment();
+    d.completedPersent = persent;
+    d.setOnSendResumeListener(listener);
+    return d;
+  }
 
   public static boolean needShow(Context context) {
     return !PreferenceUtils.getPrefBoolean(context, "send_resume_hint", false);
   }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            DisplayMetrics dm = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-          dialog.getWindow()
-              .setLayout((int) (dm.widthPixels * 0.85), ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
+  @Override public void onStart() {
+    super.onStart();
+    Dialog dialog = getDialog();
+    if (dialog != null) {
+      DisplayMetrics dm = new DisplayMetrics();
+      getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+      dialog.getWindow()
+        .setLayout((int) (dm.widthPixels * 0.85), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
+  }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     try {
@@ -91,82 +83,64 @@ public class DialogSendResumeFragment extends DialogFragment {
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        View view = inflater.inflate(R.layout.dialog_send_resume, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        btnGoResume.setCompoundDrawablesWithIntrinsicBounds(0,0,btnGoResume.getMinimumWidth(),btnGoResume.getMinimumHeight());
-        btnGoResume.setCompoundDrawablesWithIntrinsicBounds(null, null,
-            ContextCompat.getDrawable(getContext(), R.drawable.vd_arrow_right_blue_11x5dp), null);
-        if (completedPersent > 80) {
-            ckNeverNoti.setVisibility(View.VISIBLE);
-            tvContent.setVisibility(View.GONE);
-            btnGoResume.setText("查看我的简历");
-        } else {
-            ckNeverNoti.setVisibility(View.GONE);
-            tvContent.setText(getString(R.string.please_to_complete_your_resume, completedPersent));
-            btnGoResume.setText("完善我的简历");
-        }
-      ckNeverNoti.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-          PreferenceUtils.setPrefBoolean(getContext(), "send_resume_hint", true);
-        }
-      });
-        return view;
+    Bundle savedInstanceState) {
+    getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+    db = DataBindingUtil.inflate(inflater, R.layout.dialog_send_resume, container, false);
+    db.btnGoResume.setCompoundDrawablesWithIntrinsicBounds(0, 0, db.btnGoResume.getMinimumWidth(),
+      db.btnGoResume.getMinimumHeight());
+    db.btnGoResume.setCompoundDrawablesWithIntrinsicBounds(null, null,
+      ContextCompat.getDrawable(getContext(), R.drawable.vd_arrow_right_blue_11x5dp), null);
+    if (completedPersent > 80) {
+      db.ckNeverNoti.setVisibility(View.VISIBLE);
+      db.tvContent.setVisibility(View.GONE);
+      db.btnGoResume.setText("查看我的简历");
+    } else {
+      db.ckNeverNoti.setVisibility(View.GONE);
+      db.tvContent.setText(getString(R.string.please_to_complete_your_resume, completedPersent));
+      db.btnGoResume.setText("完善我的简历");
     }
+    db.ckNeverNoti.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        PreferenceUtils.setPrefBoolean(getContext(), "send_resume_hint", true);
+      }
+    });
+    db.btnGoResume.setOnClickListener(view -> onBtnGoResumeClicked());
+    db.btnCancel.setOnClickListener(view -> onBtnCancelClicked());
+    db.btnSent.setOnClickListener(view -> onBtnSentClicked());
+    return db.getRoot();
+  }
 
-    public void setOnSendResumeListener(OnSendResumeListener onSendResumeListener) {
-        this.onSendResumeListener = onSendResumeListener;
+  public void setOnSendResumeListener(OnSendResumeListener onSendResumeListener) {
+    this.onSendResumeListener = onSendResumeListener;
+  }
+
+  /**
+   * 查看简历
+   */
+  public void onBtnGoResumeClicked() {
+    router.toMyResume();
+    dismiss();
+  }
+
+  /**
+   * 取消
+   */
+  public void onBtnCancelClicked() {
+    dismiss();
+  }
+
+  /**
+   * 发送简历
+   */
+  public void onBtnSentClicked() {
+    LogUtil.d(this.getClass(), "发送简历");
+    dismiss();
+    if (onSendResumeListener != null) {
+      onSendResumeListener.onSend();
     }
+  }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    //@NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
-    //    Dialog dialog = super.onCreateDialog(savedInstanceState);
-    //    dialog.setCanceledOnTouchOutside(true);
-    //    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    //    Window window = dialog.getWindow();
-    //    window.getDecorView().setPadding(0, 0, 0, 0);
-    //    WindowManager.LayoutParams wlp = window.getAttributes();
-    //    wlp.gravity = Gravity.CENTER;
-    //    wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-    //    wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-    //    window.setAttributes(wlp);
-    //    window.setWindowAnimations(R.style.ButtomDialogStyle);
-    //    return dialog;
-    //}
-
-    /**
-     * 查看简历
-     */
-    @OnClick(R2.id.btn_go_resume) public void onBtnGoResumeClicked() {
-      router.toMyResume();
-      dismiss();
-    }
-
-    /**
-     * 取消
-     */
-    @OnClick(R2.id.btn_cancel) public void onBtnCancelClicked() {
-        dismiss();
-    }
-
-    /**
-     * 发送简历
-     */
-    @OnClick(R2.id.btn_sent) public void onBtnSentClicked() {
-        LogUtil.d(this.getClass(), "发送简历");
-        dismiss();
-        if (onSendResumeListener != null){
-            onSendResumeListener.onSend();
-        }
-    }
-
-    public interface OnSendResumeListener{
-        void onSend();
-    }
+  public interface OnSendResumeListener {
+    void onSend();
+  }
 }

@@ -57,6 +57,7 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
     parent.addView(child,1);
     toolbar = parent.findViewById(R.id.toolbar);
     toolbarTitle = parent.findViewById(R.id.toolbar_title);
+    commonFlexAdapter.addListener(this);
     initToolbar(toolbar);
     return parent;
   }

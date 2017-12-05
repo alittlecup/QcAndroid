@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data>
+
+  </data>
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <include
+          layout="@layout/common_simple_toolbar"
+          android:id="@+id/layout_toolbar"
+          />
+
+      <android.support.v4.widget.NestedScrollView
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:clipToPadding="false"
+          android:orientation="vertical"
+          android:paddingBottom="30dp"
+          >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            >
+
+          <LinearLayout
+              android:id="@+id/layout_job_info"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/bg_grey"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:visibility="gone"
+              tools:visibility="visible"
+              >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="94dp"
+                android:background="@color/white"
+                android:divider="@drawable/divier_linear"
+                android:orientation="horizontal"
+                android:showDividers="middle"
+                >
+
+              <LinearLayout
+                  android:id="@+id/layout_diliverd"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1"
+                  android:gravity="center"
+                  android:orientation="vertical"
+                  >
+
+                <TextView
+                    android:id="@+id/tv_dilive_positive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:text="主动投递"
+                    style="@style/QcTextStyleSmallWarm"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_count_positive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_dark"
+                    android:textSize="30sp"
+                    tools:text="30"
+                    />
+              </LinearLayout>
+
+              <LinearLayout
+                  android:id="@+id/layout_invited"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1"
+                  android:gravity="center"
+                  android:orientation="vertical"
+                  >
+
+                <TextView
+                    android:id="@+id/tv_invited_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:text="我邀约的"
+                    style="@style/QcTextStyleSmallWarm"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_count_invited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_dark"
+                    android:textSize="30sp"
+                    tools:text="30"
+                    />
+              </LinearLayout>
+
+              <LinearLayout
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1"
+                  android:gravity="center"
+                  android:orientation="vertical"
+                  >
+
+                <TextView
+                    android:id="@+id/tv_vp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0人查看"
+                    style="@style/QcTextStyleSmallWarm"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0人收藏"
+                    style="@style/QcTextStyleSmallWarm"
+                    />
+              </LinearLayout>
+            </LinearLayout>
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="58dp"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              >
+
+            <TextView
+                android:id="@+id/tv_position_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                tools:text="瑜伽教练"
+                style="@style/QcTextStyleLargeDark"
+                />
+
+            <TextView
+                android:id="@+id/tv_salary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                tools:text="11K-15K"
+                style="@style/QcTextStyleLargeDark"
+                />
+          </LinearLayout>
+
+          <android.support.v7.widget.RecyclerView
+              android:id="@+id/rv_demands"
+              android:layout_width="match_parent"
+              android:layout_height="70dp"
+              android:background="@color/white"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              />
+
+          <cn.qingchengfit.widgets.QcTagGroup
+              android:id="@+id/rv_welfare"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              app:atg_borderColor="@color/orange"
+              app:atg_textColor="@color/orange"
+              app:atg_textSize="@dimen/txt_stanrdant"
+              />
+
+          <Space
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/activity_vertical_margin"
+              />
+
+          <include layout="@layout/divider_grey_left_right"/>
+
+          <LinearLayout
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/layout_gym_info"
+              android:layout_width="match_parent"
+              android:layout_height="104dp"
+              android:background="@drawable/bg_click"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              >
+
+            <ImageView
+                android:id="@+id/img_recruit_gym"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:scaleType="centerCrop"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="@dimen/activity_horizontal_margin"
+                android:layout_height="match_parent"
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+              <TextView
+                  android:id="@+id/tv_recruit_gym_name"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  tools:text="星健身798店"
+                  style="@style/QcTextStyleLargeDark"
+                  />
+
+              <android.support.v4.widget.Space
+                  android:layout_width="wrap_content"
+                  android:layout_height="2dp"
+                  />
+
+              <TextView
+                  android:id="@+id/tv_recruit_address"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  tools:text="星健身798店"
+                  style="@style/QcTextStyleMediumWarm"
+                  />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_right"
+                android:layout_width="14dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/vd_chevron_right_text_hint_7x12dp"
+                />
+          </LinearLayout>
+          <include layout="@layout/divider_grey"/>
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/activity_vertical_margin"
+              android:background="@color/bg_grey"
+              />
+
+          <include layout="@layout/divider_grey"/>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="53dp"
+              android:background="@color/white"
+              android:gravity="center"
+              >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="8dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/vd_position_desc_left"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="13dp"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="职位描述"
+                android:textColor="?colorPrimary"
+                style="@style/QcTextStyleStandardDark"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="13dp"
+                android:layout_height="wrap_content"
+                />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="8dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/vd_position_desc_right"
+                />
+          </LinearLayout>
+
+          <cn.qingchengfit.views.fragments.TouchyWebView
+              android:id="@+id/tv_position_desc"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              />
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="53dp"
+              android:background="@color/white"
+              android:gravity="center"
+              >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="8dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/vd_position_desc_left"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="13dp"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="任职要求"
+                android:textColor="?colorPrimary"
+                style="@style/QcTextStyleStandardDark"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="13dp"
+                android:layout_height="wrap_content"
+                />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="8dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/vd_position_desc_right"
+                />
+          </LinearLayout>
+
+          <cn.qingchengfit.views.fragments.TouchyWebView
+              android:id="@+id/tv_position_require"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              />
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="53dp"
+              android:background="@color/white"
+              android:gravity="center"
+              >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="8dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/vd_position_desc_left"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="13dp"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="场馆介绍"
+                android:textColor="?colorPrimary"
+                style="@style/QcTextStyleStandardDark"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="13dp"
+                android:layout_height="wrap_content"
+                />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="8dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/vd_position_desc_right"
+                />
+          </LinearLayout>
+
+          <FrameLayout
+              android:id="@+id/frag_gym_menber_info"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              />
+
+          <FrameLayout
+              android:id="@+id/frag_gym_equipment"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              />
+
+          <cn.qingchengfit.views.fragments.TouchyWebView
+              android:id="@+id/tv_gym_des"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              />
+          <include layout="@layout/divider_grey"/>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="104dp"
+              android:background="@drawable/bg_click"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              >
+
+            <ImageView
+                android:id="@+id/img_created_by"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerCrop"
+                />
+
+            <android.support.v4.widget.Space
+                android:layout_width="@dimen/activity_horizontal_margin"
+                android:layout_height="match_parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+              <TextView
+                  android:id="@+id/tv_created_by"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  tools:text="星健身798店"
+                  style="@style/QcTextStyleLargeDark"
+                  />
+
+              <android.support.v4.widget.Space
+                  android:layout_width="wrap_content"
+                  android:layout_height="2dp"
+                  />
+
+              <TextView
+                  android:id="@+id/tv_position_crated_at"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  tools:text="星健身798店"
+                  style="@style/QcTextStyleMediumWarm"
+                  />
+            </LinearLayout>
+          </LinearLayout>
+        </LinearLayout>
+      </android.support.v4.widget.NestedScrollView>
+
+      <include layout="@layout/divider_grey"/>
+
+      <LinearLayout
+          android:id="@+id/layout_employee_ctl"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:orientation="horizontal"
+          >
+
+        <LinearLayout
+            android:id="@+id/btn_starred"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+          <ImageView
+              android:id="@+id/img_stared"
+              android:layout_width="24dp"
+              android:layout_height="24dp"
+              app:srcCompat="@drawable/vd_recruit_job_star"
+              />
+
+          <TextView
+              android:id="@+id/tv_starred"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="收藏职位"
+              style="@style/QcTextStyleSmallGrey"
+              />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_contact_him"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/btn_blue"
+            android:text="与TA沟通"
+            android:textColor="@color/white"
+            />
+
+        <Button
+            android:id="@+id/btn_send_resume"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/btn_prime_no_corner"
+            android:text="投递简历"
+            android:textColor="@color/white"
+            />
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/layout_emloyer_ctl"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:orientation="horizontal"
+          android:visibility="gone"
+          >
+
+        <Button
+            android:id="@+id/btn_close_pos"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/bg_click"
+            android:text="关闭该职位"
+            style="@style/QcTextStyleLargeDark"
+            />
+
+        <Button
+            android:id="@+id/btn_edit_postion"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/btn_prime_no_corner"
+            android:text="编辑职位"
+            android:textColor="@color/white"
+            style="@style/QcTextStyleLargeDark"
+            />
+
+      </LinearLayout>
+    </LinearLayout>
+  </FrameLayout>
+</layout>

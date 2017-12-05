@@ -1,91 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="330dp"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:orientation="vertical"
-    >
-
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
-      android:text="确定投递简历？"
-      style="@style/QcTextStyleLargeDark"
-      android:layout_marginBottom="12dp"
-      />
-
-  <TextView
-      android:id="@+id/tv_content"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/activity_horizontal_margin"
-      android:gravity="center"
-      tools:text="您的简历完善度为38%，还不够完善，完善的简历机会更大哦～"
-      style="@style/QcTextStyleMediumWarm"
-      />
-
-  <TextView
-      android:id="@+id/btn_go_resume"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="完善我的简历"
-      android:textColor="#6eb8f1"
-      android:textSize="15sp"
-      android:layout_marginBottom="20dp"
-      />
-
-  <CheckBox
-      android:id="@+id/ck_never_noti"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="不再提示"
-      android:textColor="@color/text_warm"
-      android:visibility="gone"
-      tools:visibility="visible"
-      android:layout_marginBottom="32dp"
-      />
-
-  <android.support.v4.widget.Space
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      />
-
-  <include layout="@layout/divider_grey"/>
-
+<layout
+  >
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:divider="@drawable/divier_linear"
-      android:orientation="horizontal"
-      android:showDividers="middle"
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="330dp"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:orientation="vertical"
       >
 
     <TextView
-        android:id="@+id/btn_cancel"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/bg_click"
-        android:gravity="center"
-        android:text="取消"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="确定投递简历？"
         style="@style/QcTextStyleLargeDark"
+        android:layout_marginBottom="12dp"
         />
 
     <TextView
-        android:id="@+id/btn_sent"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/bg_click"
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:gravity="center"
-        android:text="投递简历"
-        android:textColor="@color/green"
-        style="@style/QcTextStyleLargeDark"
+        tools:text="您的简历完善度为38%，还不够完善，完善的简历机会更大哦～"
+        style="@style/QcTextStyleMediumWarm"
         />
+
+    <TextView
+        android:id="@+id/btn_go_resume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="完善我的简历"
+        android:textColor="#6eb8f1"
+        android:textSize="15sp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <CheckBox
+        android:id="@+id/ck_never_noti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="不再提示"
+        android:textColor="@color/text_warm"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginBottom="32dp"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:divider="@drawable/divier_linear"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        >
+
+      <TextView
+          android:id="@+id/btn_cancel"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_click"
+          android:gravity="center"
+          android:text="取消"
+          style="@style/QcTextStyleLargeDark"
+          />
+
+      <TextView
+          android:id="@+id/btn_sent"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_click"
+          android:gravity="center"
+          android:text="投递简历"
+          android:textColor="@color/green"
+          style="@style/QcTextStyleLargeDark"
+          />
+    </LinearLayout>
   </LinearLayout>
-</LinearLayout>
+</layout>

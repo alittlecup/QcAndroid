@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.model.base.Gym;
@@ -146,10 +147,10 @@ public class RecruitRouter extends InnerRouter {
    * 人才市场 人才浏览 或者叫 招聘版主页
    */
   public void resumeMarketHome() {
-    getFragmentManager().beginTransaction()
+    activity.getSupportFragmentManager().beginTransaction()
         .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
             R.anim.card_flip_left_in, R.anim.card_flip_left_out)
-        .replace(getFragId(), new ResumeMarketHomeFragment())
+        .replace(activity.getFragId(), new ResumeMarketHomeFragment())
         .commit();
   }
 
@@ -160,10 +161,10 @@ public class RecruitRouter extends InnerRouter {
   }
 
   public void jobsHome() {
-    getFragmentManager().beginTransaction()
+    activity.getSupportFragmentManager().beginTransaction()
         .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
             R.anim.card_flip_left_in, R.anim.card_flip_left_out)
-        .replace(getFragId(), new SeekPositionHomeFragment())
+        .replace(activity.getFragId(), new SeekPositionHomeFragment())
         .commit();
   }
 
@@ -205,6 +206,22 @@ public class RecruitRouter extends InnerRouter {
     } else {
       add(new WorkExpeEditFragmentBuilder(workExp.gym).workExp(workExp).build());
     }
+  }
+
+  @Override public void init(Fragment s) {
+    activity.init(s);
+  }
+
+  @Override public void add(Fragment s) {
+    activity.add(s);
+  }
+
+  @Override public void remove(Fragment fragment) {
+    activity.remove(fragment);
+  }
+
+  @Override public void addNoStack(Fragment s) {
+    activity.addNoStack(s);
   }
 
   public void listCertifaciton() {

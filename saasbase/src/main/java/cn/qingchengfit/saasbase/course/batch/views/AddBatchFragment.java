@@ -21,6 +21,7 @@ import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
@@ -30,6 +31,7 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.saasbase.course.batch.items.BatchLoopItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.AddBatchPresenter;
 import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -43,6 +45,7 @@ import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,6 +54,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -137,17 +141,29 @@ public class AddBatchFragment extends SaasBaseFragment
   private CommonFlexAdapter commonFlexAdapter;
   @Need public Staff mTeacher;
   @Need public Course mCourse;
-
+  private List<BatchLoop> batchLoops = new ArrayList<>();
 
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    //if (getArguments() != null) {
-    //  mTeacher = getArguments().getParcelable("teacher");
-    //  mCourse = getArguments().getParcelable("course");
-    //}
     batchBaseFragment = BatchDetailCommonView.newInstance(mCourse, mTeacher);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
+    RxBus.getBus().register(BatchLoop.class)
+      .compose(bindToLifecycle())
+      .compose(doWhen(FragmentEvent.CREATE_VIEW))
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<BatchLoop>() {
+        @Override public void onNext(BatchLoop batchLoop) {
+          BatchLoopItem item = new BatchLoopItem(batchLoop, presenter.isPrivate());
+          if (commonFlexAdapter.contains(item)){
+            int pos = commonFlexAdapter.index(item);
+            ((BatchLoopItem)commonFlexAdapter.getItem(pos)).setBatchLoop(batchLoop);
+            commonFlexAdapter.notifyItemChanged(pos);
+          }else {
+            commonFlexAdapter.addItem(item);
+          }
+        }
+      });
   }
 
   @Nullable @Override

@@ -89,31 +89,34 @@ public class FilterLeftRightFragment extends BaseFragment{
 
   public void setLeftItemList(List<String> datas) {
     if (datas.size() > 0) {
+      leftAdapter.clear();
       leftItemList.clear();
       for (String data : datas){
         leftItemList.add(new FilterCommonLinearItem(data, false));
       }
-      leftAdapter.notifyDataSetChanged();
+      leftAdapter.updateDataSet(leftItemList);
     }
   }
 
   public void setRightItemList(List<String> datas) {
     if (datas.size() > 0) {
+      rightAdapter.clear();
       rightItemList.clear();
       for (String data : datas){
         rightItemList.add(new FilterCommonLinearItem(data));
       }
-      rightAdapter.notifyDataSetChanged();
+      rightAdapter.updateDataSet(rightItemList);
     }
   }
 
   public void onChangedCity(List<CityBean> cityBeanList){
     if (cityBeanList.size() > 0) {
+      rightAdapter.clear();
       rightItemList.clear();
       for (CityBean cityBean : cityBeanList){
         rightItemList.add(new FilterCommonLinearItem(cityBean.name));
       }
-      rightAdapter.notifyDataSetChanged();
+      rightAdapter.updateDataSet(rightItemList);
     }
 
   }

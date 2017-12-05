@@ -1,20 +1,15 @@
 package cn.qingchengfit.recruit.views;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.databinding.LayoutDamenFilterBinding;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.widgets.AutoLineGroup;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 import java.util.HashMap;
@@ -25,16 +20,9 @@ import java.util.HashMap;
 
 public class FilterDamenFragment extends BaseFragment {
 
-  @BindView(R2.id.layout_work_demand) AutoLineGroup layoutWorkDemand;
-  @BindView(R2.id.tv_work_year_header) TextView workYearheader;
-  @BindView(R2.id.divider_work_exp) View dividerWorkExp;
-  @BindView(R2.id.alg_gender) AutoLineGroup algGender;
-  @BindView(R2.id.alg_edu) AutoLineGroup algEdu;
-  @BindView(R2.id.alg_age) AutoLineGroup algAge;
-  @BindView(R2.id.alg_height) AutoLineGroup algHeight;
-  @BindView(R2.id.filter_layout) LinearLayout filterLayout;
-  @BindView(R2.id.alg_weight) AutoLineGroup algWeight;
+
   private OnDemandsListener listener;
+  LayoutDamenFilterBinding db;
 
   public static FilterDamenFragment newInstanceResumeFilter() {
     Bundle args = new Bundle();
@@ -55,21 +43,22 @@ public class FilterDamenFragment extends BaseFragment {
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.layout_damen_filter, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    db = DataBindingUtil.inflate(inflater,R.layout.layout_damen_filter, container, false);
     if (getArguments() != null && getArguments().getInt("t") == 0) {
-      layoutWorkDemand.addChildren(getResources().getStringArray(R.array.filter_work_year));
+      db.layoutWorkDemand.addChildren(getResources().getStringArray(R.array.filter_work_year));
     } else {
-      layoutWorkDemand.setVisibility(View.GONE);
-      workYearheader.setVisibility(View.GONE);
-      dividerWorkExp.setVisibility(View.GONE);
+      db.layoutWorkDemand.setVisibility(View.GONE);
+      db.tvWorkYearHeader.setVisibility(View.GONE);
+      db.dividerWorkExp.setVisibility(View.GONE);
     }
-    algGender.addChildren(getResources().getStringArray(R.array.filter_gender));
-    algEdu.addChildren(getResources().getStringArray(R.array.filter_degree));
-    algAge.addChildren(getResources().getStringArray(R.array.filter_age));
-    algHeight.addChildren(getResources().getStringArray(R.array.filter_height));
-    algWeight.addChildren(getResources().getStringArray(R.array.filter_weight));
-    return view;
+    db.algGender.addChildren(getResources().getStringArray(R.array.filter_gender));
+    db.algEdu.addChildren(getResources().getStringArray(R.array.filter_degree));
+    db.algAge.addChildren(getResources().getStringArray(R.array.filter_age));
+    db.algHeight.addChildren(getResources().getStringArray(R.array.filter_height));
+    db.algWeight.addChildren(getResources().getStringArray(R.array.filter_weight));
+    db.tvStudentFilterConfirm.setOnClickListener(view -> onConfirm());
+    db.tvStudentFilterReset.setOnClickListener(view -> onReset());
+    return db.getRoot();
   }
 
   public void setFilterAnimation(final ViewGroup filterLayout, boolean isShow) {
@@ -101,26 +90,26 @@ public class FilterDamenFragment extends BaseFragment {
     valueAnimator.start();
   }
 
-  @OnClick({ R2.id.tv_student_filter_confirm }) public void onConfirm() {
+   public void onConfirm() {
     HashMap<String, Object> params = new HashMap<>();
-    params = RecruitBusinessUtils.getWrokExpParams(layoutWorkDemand.getCheckPos(), params);
-    params = RecruitBusinessUtils.getGenderParams(algGender.getCheckPos(), params);
-    params = RecruitBusinessUtils.getDegreeParams(algEdu.getCheckPos(), params);
-    params = RecruitBusinessUtils.getAgeParams(algAge.getCheckPos(), params);
-    params = RecruitBusinessUtils.getHeightParams(algHeight.getCheckPos(), params);
-    params = RecruitBusinessUtils.getWeightParams(algWeight.getCheckPos(), params);
+    params = RecruitBusinessUtils.getWrokExpParams(db.layoutWorkDemand.getCheckPos(), params);
+    params = RecruitBusinessUtils.getGenderParams(db.algGender.getCheckPos(), params);
+    params = RecruitBusinessUtils.getDegreeParams(db.algEdu.getCheckPos(), params);
+    params = RecruitBusinessUtils.getAgeParams(db.algAge.getCheckPos(), params);
+    params = RecruitBusinessUtils.getHeightParams(db.algHeight.getCheckPos(), params);
+    params = RecruitBusinessUtils.getWeightParams(db.algWeight.getCheckPos(), params);
     if (listener != null) {
       listener.onDemands(params);
     }
   }
 
-  @OnClick(R2.id.tv_student_filter_reset) public void onReset() {
-    layoutWorkDemand.clearAllCheck();
-    algAge.clearAllCheck();
-    algEdu.clearAllCheck();
-    algHeight.clearAllCheck();
-    algWeight.clearAllCheck();
-    algGender.clearAllCheck();
+   public void onReset() {
+    db.layoutWorkDemand.clearAllCheck();
+    db.algAge.clearAllCheck();
+    db.algEdu.clearAllCheck();
+    db.algHeight.clearAllCheck();
+    db.algWeight.clearAllCheck();
+    db.algGender.clearAllCheck();
     if (listener != null) {
       listener.onDemandsReset();
     }

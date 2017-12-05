@@ -1,31 +1,26 @@
 package cn.qingchengfit.recruit.views;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.databinding.FragmentRecruitGymDetailEmployerBinding;
 import cn.qingchengfit.recruit.event.EventFreshJobsList;
 import cn.qingchengfit.recruit.item.RecruitPositionInGymItem;
 import cn.qingchengfit.recruit.model.Job;
@@ -69,12 +64,6 @@ import rx.schedulers.Schedulers;
 public class RecruitGymDetailEmployerFragment extends BaseFragment
     implements RecruitGymDetailPresenter.MVPView {
 
-  @BindView(R2.id.img_gym) ImageView imgGym;
-  @BindView(R2.id.tv_gym_name) TextView tvGymName;
-  @BindView(R2.id.tv_address) TextView tvAddress;
-  @BindView(R2.id.img_right) ImageView imgRight;
-  @BindView(R2.id.recruit_gym_tab) TabLayout tab;
-  @BindView(R2.id.vp) ViewPager vp;
   ArrayList<Fragment> fragments = new ArrayList<>();
   RecruitPositionsInGymFragment hotFragment;
   RecruitPositionsInGymFragment closeFragment;
@@ -85,8 +74,10 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
   @Inject QcRestRepository qcRestRepository;
 
   Gym gym;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  //@BindView(R2.id.toolbar) Toolbar toolbar;
+  //@BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  //
+  FragmentRecruitGymDetailEmployerBinding db;
 
   private int initPage = -1;
 
@@ -126,14 +117,17 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_recruit_gym_detail_employer, container, false);
+    db  = DataBindingUtil.inflate(inflater,R.layout.fragment_recruit_gym_detail_employer, container, false);
     super.onCreateView(inflater, container, savedInstanceState);
-    unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
-    initToolbar(toolbar);
+    initToolbar(db.layoutToolbar.findViewById(R.id.toolbar));
 
     initBus();
-    return view;
+    db.layoutRecruitGymInfo.layoutGymInfo.setOnClickListener(view1 -> onLayoutGymInfoClicked());
+    db.layoutGymIntro.setOnClickListener(view1 -> onLayoutGymIntroClicked());
+    db.layoutPermission.setOnClickListener(view1 -> onLayoutPermissionClicked());
+    db.btnPublishNewPosition.setOnClickListener(view1 -> onViewClicked());
+    return db.getRoot();
   }
 
   private void initBus() {
@@ -147,8 +141,8 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    vp.setAdapter(new PositionTypesAdapter(getChildFragmentManager()));
-    tab.setupWithViewPager(vp);
+    db.vp.setAdapter(new PositionTypesAdapter(getChildFragmentManager()));
+    db.recruitGymTab.setupWithViewPager(db.vp);
     /*
      * 职位列表的点击事件
      */
@@ -171,17 +165,18 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
       }
     });
 
+
     onGym(gym);
     presenter.queryGymDetail(gym.id);
 
     if (initPage > 0 && initPage < fragments.size()) {
-      vp.setCurrentItem(initPage);
+      db.vp.setCurrentItem(initPage);
     }
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitile.setText("场馆招聘详情");
+    ((TextView)db.layoutToolbar.findViewById(R.id.toolbar_title)).setText("场馆招聘详情");
     toolbar.inflateMenu(R.menu.menu_preview);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
@@ -200,12 +195,12 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
   }
 
   public void onGym(Gym service) {
-    imgRight.setVisibility(View.VISIBLE);
+    db.layoutRecruitGymInfo.imgRight.setVisibility(View.VISIBLE);
     if (service == null) return;
     if (service.name == null) return;
-    PhotoUtils.small(imgGym, service.photo);
-    tvGymName.setText(service.name);
-    tvAddress.setText(service.getAddressStr());
+    PhotoUtils.small(db.layoutRecruitGymInfo.imgGym, service.photo);
+    db.layoutRecruitGymInfo.tvGymName.setText(service.name);
+    db.layoutRecruitGymInfo.tvAddress.setText(service.getAddressStr());
   }
 
   @Override public void onJobList(List<Job> jobs, int page, int totalCount) {
@@ -243,7 +238,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
   /**
    * 场馆介绍
    */
-  @OnClick(R2.id.layout_gym_intro) public void onLayoutGymIntroClicked() {
+  public void onLayoutGymIntroClicked() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
         .querySu(gym.id).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -265,7 +260,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
   /**
    * 场馆信息修改
    */
-  @OnClick(R2.id.layout_gym_info) public void onLayoutGymInfoClicked() {
+    public void onLayoutGymInfoClicked() {
     RxRegiste(qcRestRepository.createGetApi(GetApi.class)
         .querySu(gym.id).onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -288,14 +283,14 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
   /**
    * 权限设置
    */
-  @OnClick(R2.id.layout_permission) public void onLayoutPermissionClicked() {
+  public void onLayoutPermissionClicked() {
     presenter.queryPermission(gym.id);
   }
 
   /**
    * 发布新职位
    */
-  @OnClick(R2.id.btn_publish_new_position) public void onViewClicked() {
+   public void onViewClicked() {
     RxRegiste(qcRestRepository.createGetApi(cn.qingchengfit.recruit.network.GetApi.class)
         .queryOnepermission(gym.id, "job").onBackpressureBuffer().subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

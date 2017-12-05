@@ -1,59 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_grey"
-    android:orientation="vertical"
-    >
-
-  <include layout="@layout/common_simple_toolbar"/>
-
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_work_exp"
-      app:civ_lable="工作经验"
-      style="@style/QcCivClickStyle"
-      />
-
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_gender"
-      app:civ_lable="性别"
-      style="@style/QcCivClickStyle"
-      />
-
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_age"
-      app:civ_lable="年龄"
-      style="@style/QcCivClickStyle"
-      />
-
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_education"
-      app:civ_lable="学历"
-      style="@style/QcCivClickStyle"
-      />
-
-  <include layout="@layout/divider_grey"/>
-
-  <android.support.v4.widget.Space
+<layout
+  >
+  <data/>
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/activity_vertical_margin"
-      />
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
 
-  <include layout="@layout/divider_grey"/>
+    <include layout="@layout/common_simple_toolbar"
+        android:id="@+id/layout_toolbar"
+        />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_height"
-      app:civ_lable="身高"
-      style="@style/QcCivClickStyle"
-      />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_work_exp"
+        app:civ_lable="工作经验"
+        style="@style/QcCivClickStyle"
+        />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_weight"
-      app:civ_lable="体重"
-      style="@style/QcCivClickStyle"
-      />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_gender"
+        app:civ_lable="性别"
+        style="@style/QcCivClickStyle"
+        />
 
-  <include layout="@layout/divider_grey"/>
-</LinearLayout>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_age"
+        app:civ_lable="年龄"
+        style="@style/QcCivClickStyle"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_education"
+        app:civ_lable="学历"
+        style="@style/QcCivClickStyle"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_height"
+        app:civ_lable="身高"
+        style="@style/QcCivClickStyle"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_weight"
+        app:civ_lable="体重"
+        style="@style/QcCivClickStyle"
+        />
+
+    <include layout="@layout/divider_grey"/>
+  </LinearLayout>
+</layout>

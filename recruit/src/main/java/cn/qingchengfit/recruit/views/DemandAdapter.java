@@ -8,10 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,12 +57,13 @@ public class DemandAdapter extends RecyclerView.Adapter<DemandAdapter.DemandVH> 
   }
 
   public class DemandVH extends RecyclerView.ViewHolder {
-    @BindView(R2.id.img_recruit_demand) ImageView imgRecruitDemand;
-    @BindView(R2.id.tv_content) TextView tvContent;
+    ImageView imgRecruitDemand;
+    TextView tvContent;
 
     public DemandVH(View itemView) {
       super(itemView);
-      ButterKnife.bind(this, itemView);
+      imgRecruitDemand = itemView.findViewById(R.id.img_recruit_demand);
+      tvContent = itemView.findViewById(R.id.tv_content);
     }
   }
 }

@@ -1,82 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_grey"
-    android:orientation="vertical"
-    >
-
-  <include layout="@layout/common_simple_toolbar"/>
-
+  >
+  <data/>
   <LinearLayout
-      android:id="@+id/layout_starred_resume"
+
       android:layout_width="match_parent"
-      android:layout_height="54dp"
-      android:background="@drawable/bg_click"
-      android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:paddingLeft="@dimen/activity_horizontal_margin"
-      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
       >
 
-    <ImageView
-
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:srcCompat="@drawable/vd_recruit_applicant_starred"
+    <include layout="@layout/common_simple_toolbar"
+        android:id="@+id/layout_toolbar"
         />
 
-    <android.support.v4.widget.Space
-        android:layout_width="@dimen/activity_horizontal_margin"
-        android:layout_height="@dimen/activity_horizontal_margin"
-        />
+    <LinearLayout
+        android:id="@+id/layout_starred_resume"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="@drawable/bg_click"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+      <ImageView
+
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          app:srcCompat="@drawable/vd_recruit_applicant_starred"
+          />
+
+      <android.support.v4.widget.Space
+          android:layout_width="@dimen/activity_horizontal_margin"
+          android:layout_height="@dimen/activity_horizontal_margin"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="收藏的人才"
+          style="@style/QcTextStyleStandardDark"
+          />
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@drawable/vd_chevron_right_text_hint_7x12dp"
+          />
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_gyms"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="收藏的人才"
-        style="@style/QcTextStyleStandardDark"
         />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/vd_chevron_right_text_hint_7x12dp"
-        />
+    <include layout="@layout/divider_grey"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+      <Button
+          android:id="@+id/btn_publish_new_position"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="4dp"
+          android:layout_marginTop="4dp"
+          android:text="发布新职位"
+          android:textColor="@color/white"
+          style="@style/QcBtnNomal"
+          />
+    </FrameLayout>
   </LinearLayout>
 
-  <include layout="@layout/divider_grey"/>
-
-
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/rv_gyms"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      />
-
-  <include layout="@layout/divider_grey"/>
-
-  <FrameLayout
-      android:layout_width="match_parent"
-      android:layout_height="52dp"
-      android:background="@color/white"
-      android:paddingLeft="@dimen/activity_horizontal_margin"
-      android:paddingRight="@dimen/activity_horizontal_margin"
-      >
-
-    <Button
-        android:id="@+id/btn_publish_new_position"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
-        android:text="发布新职位"
-        android:textColor="@color/white"
-        style="@style/QcBtnNomal"
-        />
-  </FrameLayout>
-</LinearLayout>
+</layout>

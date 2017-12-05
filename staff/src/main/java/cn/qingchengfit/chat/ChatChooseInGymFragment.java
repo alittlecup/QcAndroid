@@ -150,7 +150,7 @@ public class ChatChooseInGymFragment extends BaseFragment
             }
             datas.add(item);
         }
-        adapter.notifyDataSetChanged();
+        adapter.updateDataSet(datas);
         for (int i = 0; i < adapter.getItemCount(); i++) {
             if (adapter.getItem(i) instanceof ChooseStaffItem) {
                 ChooseStaffItem item = (ChooseStaffItem) adapter.getItem(i);
@@ -159,7 +159,7 @@ public class ChatChooseInGymFragment extends BaseFragment
                 }
             }
         }
-        adapter.notifyDataSetChanged();
+        adapter.updateDataSet(datas);
     }
 
     @Override public String getFragmentName() {

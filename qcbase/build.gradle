@@ -123,6 +123,7 @@ dependencies {
     exclude group: 'org.json', module: 'json'
   }
   api 'com.hkm.taglib:tag:1.6.0'
+  api 'com.google.errorprone:error_prone_annotations:2.1.2'
   testImplementation 'junit:junit:4.12'
   androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
