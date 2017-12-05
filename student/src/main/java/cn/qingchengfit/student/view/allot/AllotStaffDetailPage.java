@@ -67,11 +67,13 @@ public class AllotStaffDetailPage extends StudentBaseFragment<PageAllotStaffDeta
             }
             return position;
         });
-        mBinding.addOnRebindCallback(new OnRebindCallback() {
+        mBinding.addOnRebindCallback(new OnRebindCallback<PageAllotStaffDetailBinding>() {
             @Override
-            public void onBound(ViewDataBinding binding) {
-                adapter = (CommonFlexAdapter) mBinding.recyclerview.getAdapter();
-                adapter.setFastScroller(mBinding.fastScroller);
+            public void onBound(PageAllotStaffDetailBinding binding) {
+                if(binding.recyclerview.getAdapter()!=adapter){
+                    adapter= (CommonFlexAdapter) binding.recyclerview.getAdapter();
+                    adapter.setFastScroller(binding.fastScroller);
+                }
             }
         });
         return mBinding;

@@ -61,19 +61,17 @@ public class AllotChooseSalerPage extends StudentBaseFragment<PageAllotChooseSal
 
     @Override
     public PageAllotChooseSalerBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mBinding == null) {
-            mBinding = PageAllotChooseSalerBinding.inflate(inflater, container, false);
-            initToolbar();
-            mBinding.setTextcontent(textContent);
-            initFragment();
-            if (belongStaffIds == null) {
-                belongStaffIds = new ArrayList<>();
-            }
-            if (curId != null) {
-                belongStaffIds.add(curId);
-            }
-            loadSource();
+        mBinding = PageAllotChooseSalerBinding.inflate(inflater, container, false);
+        initToolbar();
+        mBinding.setTextcontent(textContent);
+        initFragment();
+        if (belongStaffIds == null) {
+            belongStaffIds = new ArrayList<>();
         }
+        if (curId != null) {
+            belongStaffIds.add(curId);
+        }
+        loadSource();
 
         return mBinding;
     }

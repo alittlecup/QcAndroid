@@ -102,11 +102,13 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
         mViewModel.loadSource(mViewModel.getStudentFilter());
         mBinding.setItemClickListener(this);
         mViewModel.hasName.set(!TextUtils.isEmpty(getActivityViewModel().getAllotStaff().getValue().username));
-        mBinding.addOnRebindCallback(new OnRebindCallback() {
+        mBinding.addOnRebindCallback(new OnRebindCallback<PageAllotMultiStaffBinding>() {
             @Override
-            public void onBound(ViewDataBinding binding) {
-                adapter= (CommonFlexAdapter) mBinding.recyclerview.getAdapter();
-                adapter.setFastScroller(mBinding.fastScroller);
+            public void onBound(PageAllotMultiStaffBinding binding) {
+                if(binding.recyclerview.getAdapter()!=adapter){
+                    adapter= (CommonFlexAdapter) binding.recyclerview.getAdapter();
+                    adapter.setFastScroller(binding.fastScroller);
+                }
             }
         });
         return mBinding;
@@ -126,7 +128,6 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
             }
             return position;
         });
-
     }
 
 
