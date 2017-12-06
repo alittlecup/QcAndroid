@@ -24,7 +24,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 @Leaf(module = "student", path = "/allot/student")
 public class AllotStaffListPage extends StudentBaseFragment<PageAllotlistBinding, AllotListViewModel> implements FlexibleAdapter.OnItemClickListener {
     @Need
-    Integer type = 0;
+    Integer type ;
 
     @Override
     protected void subscribeUI() {

@@ -164,4 +164,9 @@ public class StudentRespositoryImpl implements StudentRespository {
         }));
     }
 
+    @Override
+    public LiveData<StudentListWrapper> qcGetAllStudents(String id, HashMap<String, Object> params) {
+        return toLiveData(remoteService.qcGetAllStudents(id, params));
+    }
+
 }

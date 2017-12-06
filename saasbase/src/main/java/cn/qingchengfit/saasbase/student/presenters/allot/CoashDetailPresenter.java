@@ -71,7 +71,7 @@ public class CoashDetailPresenter extends BasePresenter<CoashDetailPresenter.MVP
                 .doOnTerminate(()->mvpView.stopRefresh())
                 .map(users->{
                     List<QcStudentBean> beans=new ArrayList<>();
-                    for(QcStudentWithCoach bean:users.data.users){
+                    for(QcStudentBean bean:users.data.users){
                         beans.add(bean);
                     }
                     return beans;

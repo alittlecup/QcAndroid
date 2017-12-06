@@ -46,6 +46,7 @@ import cn.qingchengfit.student.view.attendance.nosign.AttendanceNosignPage;
 import cn.qingchengfit.student.view.attendance.rank.AttendanceRankPage;
 import cn.qingchengfit.student.view.followup.FollowUpStatusPage;
 import cn.qingchengfit.student.view.followup.FollowUpStudentPage;
+import cn.qingchengfit.student.view.home.StudentHomePage;
 import cn.qingchengfit.student.view.transfer.TransferStudentPage;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -102,7 +103,8 @@ import rx.functions.Action1;
         AllotStaffDetailPage.class,
         AllotMultiStaffPage.class,
         AllotChooseSalerPage.class,
-        AllotChooseCoachPage.class
+        AllotChooseCoachPage.class,
+        StudentHomePage.class
 })
 public class StudentActivity extends SaasContainerActivity
         implements FragCallBack {
@@ -136,6 +138,7 @@ public class StudentActivity extends SaasContainerActivity
                 || intent.getData().getPath().equalsIgnoreCase("/allot/choosesaler")
                 || intent.getData().getPath().equalsIgnoreCase("/allot/choosecoach")
                 || intent.getData().getPath().equalsIgnoreCase("/allotstaff/multi")
+                || intent.getData().getPath().equalsIgnoreCase("/home/student")
                 ) {
 
             return routerCenter.getFragment(intent.getData(), intent.getExtras());

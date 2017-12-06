@@ -6,6 +6,7 @@ import android.databinding.BindingMethods;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.MenuRes;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -108,6 +109,7 @@ public class BindingAdapters {
             adapter = new CommonFlexAdapter(items);
             recyclerView.setAdapter(adapter);
         }
+        ((SimpleItemAnimator)recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         List mainItems = ((CommonFlexAdapter) adapter).getMainItems();
         if (mainItems.isEmpty()) {
             mainItems.add(new SimpleTextItemItem("暂无数据", CENTER));

@@ -78,9 +78,7 @@ public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentB
     @Override
     protected LiveData<List<QcStudentBean>> getSource(@NonNull StudentFilter filter) {
         HashMap<String, Object> params = gymWrapper.getParams();
-        if (!TextUtils.isEmpty(salerId)) {
-            params.put("seller_id", salerId);
-        }
+
         params.put("show_all", 1);
         if (!TextUtils.isEmpty(filter.status)) {
             params.put("status", filter.status);
@@ -100,9 +98,16 @@ public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentB
         switch (type) {
             case 0:
                 path = "sellers";
+                if (!TextUtils.isEmpty(salerId)) {
+                    params.put("seller_id", salerId);
+                }
                 break;
             case 1:
                 path = "coaches";
+                if (!TextUtils.isEmpty(salerId)) {
+                    params.put("coach_id", salerId);
+                }
+                if (filter.sale != null) params.put("seller_id", filter.sale.getId());
                 break;
         }
         isLoading.set(true);

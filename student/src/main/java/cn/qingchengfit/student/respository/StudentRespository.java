@@ -69,4 +69,7 @@ public interface StudentRespository {
                                             String model);
 
     LiveData<Boolean> qcModifySellers(String staff_id, HashMap<String, Object> params, HashMap<String, Object> body);
+
+
+   LiveData<StudentListWrapper> qcGetAllStudents(String id, HashMap<String, Object> params);
 }

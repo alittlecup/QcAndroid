@@ -8,9 +8,11 @@ import java.util.Collections;
 import java.util.List;
 
 import cn.qingchengfit.items.StickerDateItem;
+import cn.qingchengfit.saasbase.student.items.StudentItem;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.student.items.StaffDetailItem;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import rx.functions.Action1;
 
 /**
  * Created by huangbaole on 2017/11/22.
@@ -27,22 +29,16 @@ public class SortViewModel {
         letterChecked.set(false);
         if (isChecked) return;
         if (items == null || items.isEmpty()) return;
-        List<StaffDetailItem> value = sortLatest(items);
+        List<StudentItem> value = sortLatest(items);
         if (listener != null) {
             listener.onSortFinish(new ArrayList<>(value));
         }
     }
 
     @NonNull
-    private List<StaffDetailItem> sortLatest(List items) {
-        List<StaffDetailItem> value = new ArrayList<>();
-        for (Object item : items) {
-            if (item instanceof StaffDetailItem) {
-                value.add((StaffDetailItem) item);
-            }
-        }
-        Collections.sort(value, (r1, r2) -> r1.getQcStudentBean().joined_at.compareTo(r2.getQcStudentBean().joined_at));
-        return value;
+    private <T extends StudentItem> List<T> sortLatest(List<T> items) {
+        Collections.sort(items, (r1, r2) -> r2.getQcStudentBean().joined_at.compareTo(r1.getQcStudentBean().joined_at));
+        return items;
     }
 
 
@@ -58,34 +54,29 @@ public class SortViewModel {
     }
 
     @NonNull
-    private List<AbstractFlexibleItem> sortLetter(List items) {
+    private <T extends StudentItem> List<AbstractFlexibleItem> sortLetter(List<T> items) {
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#";
-        List<StaffDetailItem> value = new ArrayList<>();
-        for (Object item : items) {
-            if (item instanceof StaffDetailItem) {
-                value.add((StaffDetailItem) item);
-            }
-        }
-        Collections.sort(value, (staffDetailItem, t1) -> staffDetailItem.getQcStudentBean().head.compareTo(t1.getQcStudentBean().head));
-        for (StaffDetailItem item : value) {
+
+        Collections.sort(items, (staffDetailItem, t1) -> staffDetailItem.getQcStudentBean().head.compareTo(t1.getQcStudentBean().head));
+        for (T item : items) {
             if (StringUtils.isEmpty(item.getQcStudentBean().head) || !letters.contains(item.getQcStudentBean().head())) {
                 item.getQcStudentBean().setHead("~");
             }
         }
-        items.clear();
-        String head = value.get(0).getQcStudentBean().head.toUpperCase();
-        items.add(new StickerDateItem(head));
-        for (StaffDetailItem item : value) {
+        List<AbstractFlexibleItem> values = new ArrayList<>();
+        String head = items.get(0).getQcStudentBean().head.toUpperCase();
+        values.add(new StickerDateItem(head));
+        for (T item : items) {
             if (!item.getQcStudentBean().head().equalsIgnoreCase(head)) {
                 head = item.getQcStudentBean().head().toUpperCase();
-                items.add(new StickerDateItem(head));
+                values.add(new StickerDateItem(head));
             }
-            items.add(item);
+            values.add(item);
         }
-        return items;
+        return values;
     }
 
-    public List<AbstractFlexibleItem> sortItems(List items) {
+    public <T extends StudentItem> List<AbstractFlexibleItem> sortItems(List<T> items) {
         if (latestChecked.get()) {
             return new ArrayList<>(sortLatest(items));
         } else if (letterChecked.get()) {

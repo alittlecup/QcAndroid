@@ -11,5 +11,5 @@ import cn.qingchengfit.saasbase.student.items.QcStudentWithCoach;
  */
 
 public class StudentWithCoashListWrap extends QcListData{
-    public List<QcStudentWithCoach> users;
+    public List<QcStudentBean> users;
 }
