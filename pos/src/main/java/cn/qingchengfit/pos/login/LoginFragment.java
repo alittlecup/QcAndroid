@@ -110,7 +110,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.MVPVie
   @OnClick(R.id.tv_btn_login_question)
   public void onQuestion(){
     //TODO 像老司机要链接
-    WebActivity.startWeb("", getContext());
+    WebActivity.startWeb("http://www.qingchengfit.cn", getContext());
   }
 
   @Override public void onDestroyView() {

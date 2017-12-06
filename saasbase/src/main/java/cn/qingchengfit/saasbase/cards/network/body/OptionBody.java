@@ -44,9 +44,12 @@ public class OptionBody implements IBodyCheckable{
       return R.string.e_option_account_error;
     if (!CmStringUtils.checkMoney(price))
       return R.string.e_option_price_error;
-    if (CmStringUtils.isEmpty(card_tpl_id)){
-      return R.string.e_empty_cardtpl;
+    if (limit_days && days <= 0){
+      return R.string.e_option_limit_day_less_one;
     }
+    //if (CmStringUtils.isEmpty(card_tpl_id)){
+    //  return R.string.e_empty_cardtpl;
+    //}
     return 0;
   }
 

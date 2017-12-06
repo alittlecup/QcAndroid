@@ -21,4 +21,5 @@
   <string name="e_option_account_error">充值填写错误</string>
   <string name="e_option_price_error">实收金额填写错误</string>
   <string name="e_empty_cardtpl">没有会员卡种类，请重试</string>
+  <string name="e_option_limit_day_less_one">有效期必须大于0</string>
 </resources>

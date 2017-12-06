@@ -164,7 +164,7 @@ public class AddCardtplStandardPresenter extends BasePresenter {
       RxBus.getBus().post(new EventCardTplOption(ob, 0));
       view.onSaveOk();
     } else {
-      if (ob.checkStaff() != 0) {
+      if (ob.checkPos() != 0) {
         view.showAlert(ob.checkPos());
         return;
       }

@@ -187,8 +187,8 @@ public abstract class BaseFragment extends RxFragment
         getActivity().onBackPressed();
       }
     });
-    if (toolbar.getParent() instanceof FrameLayout && isfitSystemPadding()) {
-      ((FrameLayout) toolbar.getParent()).setPadding(0,
+    if (toolbar.getParent() instanceof ViewGroup  && isfitSystemPadding()) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0,
         MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
     }
   }
