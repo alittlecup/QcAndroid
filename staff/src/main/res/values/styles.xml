@@ -274,16 +274,16 @@
   </style>
 
   <style name="ButtomDialogStyle" parent="android:Animation">
-    <item name="@android:windowEnterAnimation">@anim/slide_from_bottom</item>
+    <item name="android:windowEnterAnimation">@anim/slide_from_bottom</item>
     //进入时的动画
-    <item name="@android:windowExitAnimation">@anim/slide_out_bottom</item>
+    <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
     //退出时的动画
   </style>
 
   <style name="TopDialogStyle" parent="android:Animation">
-    <item name="@android:windowEnterAnimation">@anim/slide_top_in</item>
+    <item name="android:windowEnterAnimation">@anim/slide_top_in</item>
     //进入时的动画
-    <item name="@android:windowExitAnimation">@anim/slide_top_out</item>
+    <item name="android:windowExitAnimation">@anim/slide_top_out</item>
     //退出时的动画
   </style>
   <!-- 时间选择器popwidnow 显示消失动画 -->

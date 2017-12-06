@@ -38,6 +38,7 @@ public class ChooseStaffFragment extends SaasBaseFragment implements FlexibleAda
 
     FragmentWithToolbarBinding binding;
     BaseGirdListFragment gridListFragment;
+
     @Need
     String title;
     @Need
@@ -48,6 +49,7 @@ public class ChooseStaffFragment extends SaasBaseFragment implements FlexibleAda
     String curId;
     @Need
     String textContent;
+
     @Inject
     LoginStatus loginStatus;
     @Inject

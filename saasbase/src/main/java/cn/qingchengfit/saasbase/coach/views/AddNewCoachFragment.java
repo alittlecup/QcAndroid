@@ -247,6 +247,11 @@ public class AddNewCoachFragment extends BaseDialogFragment implements
         hideLoadingTrans();
     }
 
+    @Override
+    public void popBack(int count) {
+
+    }
+
     class TextChange implements TextWatcher {
 
         @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {

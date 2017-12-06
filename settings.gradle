@@ -1,11 +1,8 @@
-include ':saasbase',
-//        ':atest',
-    ':pos',
-//    ':recruit',
-//    ':qcim',
-//    ':sdk',
-//    ':staff',
-':qcbase'
+include ':qcbase', ':saasbase', ':student',
+//        ':pos',
 //    ':trainer',
-//
-
+    ':atest',
+//    ':recruit',
+    ':staff',
+//    ':qcim',
+        ':sdk'

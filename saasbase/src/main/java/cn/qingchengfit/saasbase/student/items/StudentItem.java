@@ -1,6 +1,8 @@
 package cn.qingchengfit.saasbase.student.items;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -103,10 +105,10 @@ public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH> imp
     @BindView(R2.id.item_student_gymname) public TextView itemStudentGymname;
     @BindView(R2.id.cb) public CheckBox cb;
 
-    public StudentVH(View view, FlexibleAdapter adapter) {
-      super(view, adapter);
-      ButterKnife.bind(this, view);
-      cb.setClickable(false);
+        public StudentVH(View view, FlexibleAdapter adapter) {
+            super(view, adapter);
+            ButterKnife.bind(this, view);
+            cb.setClickable(false);
+        }
     }
-  }
 }

@@ -54,7 +54,9 @@ dependencies {
     api "com.android.support:support-v4:${libs.supportVersion}"
     api "com.android.support:support-v13:${libs.supportVersion}"
     api "com.android.support:support-annotations:${libs.supportVersion}"
-    api "com.android.support:appcompat-v7:${libs.supportVersion}"
+    api("com.android.support:appcompat-v7:${libs.supportVersion}") {
+        exclude group: "android.arch.lifecycle", module: "runtime"
+    }
     api "com.android.support:cardview-v7:${libs.supportVersion}"
     api "com.android.support:design:${libs.supportVersion}"
     api "com.android.support:percent:${libs.supportVersion}"
@@ -127,9 +129,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    api("android.arch.lifecycle:extensions:1.0.0") {
-        exclude group: "android.arch.lifecycle", module: "runtime"
-    }
+    api "android.arch.lifecycle:extensions:1.0.0"
 }
 
 group "cn.qingchegfit.widgets"

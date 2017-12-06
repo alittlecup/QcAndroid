@@ -44,6 +44,9 @@
     <string name="qc_allotsale_add_stud_title">添加名下会员</string>
     <string name="qc_allotsale_modify_sale_title">修改销售</string>
     <string name="qc_allotsale_sale_detail_title">%s的名下会员</string>
+    <string name="qc_allotsale_select">已选择%d名会员</string>
+    <string name="qc_allotsale_clear_alert">确认清空当前选中的会员</string>
+
 
     <!--menu-->
     <string name="qc_menu_multi_modify"><Data>批量修改</Data></string>

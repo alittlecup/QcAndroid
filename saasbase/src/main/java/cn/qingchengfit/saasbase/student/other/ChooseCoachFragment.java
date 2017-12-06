@@ -69,7 +69,7 @@ public class ChooseCoachFragment extends SaasBaseFragment implements FlexibleAda
             belongStaffIds = new ArrayList<>();
         }
         if (curId != null) {
-            belongStaffIds.add(curId);
+                belongStaffIds.add(curId);
         }
         return binding.getRoot();
     }

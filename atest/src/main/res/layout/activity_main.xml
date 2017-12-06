@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="cn.qingchengfit.testmodule.MainActivity">
+<layout>
 
-    <Button
-        android:id="@+id/btn_to_recruit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recruit" />
+    <data>
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener"/>
+    </data>
 
-    <Button
-        android:id="@+id/btn_to_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TEST" />
-
-    <Button
-        android:id="@+id/btn_design"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DESIGH" />
-
-    <cn.qingchengfit.saasbase.student.widget.LineCharWithBottomDate
-        android:id="@+id/lineChart"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="@color/blue"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="12dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="cn.qingchengfit.testmodule.MainActivity">
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_to_recruit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{(view)->listener.onClick(view)}"
+            android:text="Recruit" />
+
+        <Button
+            android:id="@+id/btn_to_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TEST" />
+
+        <Button
+            android:id="@+id/btn_design"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DESIGH" />
+
+        <cn.qingchengfit.saasbase.student.widget.LineCharWithBottomDate
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/blue" />
+
+    </LinearLayout>
+</layout>
