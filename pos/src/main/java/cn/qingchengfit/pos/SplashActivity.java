@@ -142,9 +142,11 @@ public class SplashActivity extends BaseActivity {
                     staff.id = userWrapQcDataResponse.data.staff_id;
                     return Observable.just(true);
                   } else {
+                    if (userWrapQcDataResponse.error_code.equalsIgnoreCase("400001"))
+                      QcRestRepository.clearSession(SplashActivity.this);
                     showAlert(
                       userWrapQcDataResponse.getStatus() + ":" + userWrapQcDataResponse.getMsg());
-                    return Observable.just(false);
+                    return Observable.just(true);
                   }
                 }
               });
