@@ -48,6 +48,7 @@ public class EditBatchLoopFragment extends IBatchLoopFragment {
 
   @Override protected void confirm() {
     BatchLoop cmBean = new BatchLoop();
+    cmBean.id = batchLoop.id;
     cmBean.week = ListUtils.listAddNum(commonFlexAdapter.getSelectedPositions(),1);
     cmBean.dateStart = mStart;
     cmBean.dateEnd = mEnd;

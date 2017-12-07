@@ -17,7 +17,10 @@ import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
+import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.gymconfig.views.SiteSelectedParams;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -26,6 +29,9 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.ExpandedLayout;
+import java.util.ArrayList;
+import java.util.List;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -64,10 +70,10 @@ public class BatchDetailCommonView extends BaseFragment {
   @BindView(R2.id.el_pay) ExpandedLayout elPay;
   @BindView(R2.id.el_multi_support) ExpandedLayout elMultiSupport;
 
-  //@Inject SaasRouter saasRouter;
 
   private Course course;
   private Staff trainer;
+  private List<Rule> rulesPayCards = new ArrayList<>();
 
   public static BatchDetailCommonView newInstance(Course course, Staff trainer) {
     Bundle args = new Bundle();
@@ -97,6 +103,19 @@ public class BatchDetailCommonView extends BaseFragment {
     unbinder = ButterKnife.bind(this, view);
     setCourse(course);
     setTrainer(trainer);
+    RxBusAdd(EventBatchPayCard.class).onBackpressureDrop()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventBatchPayCard>() {
+        @Override public void onNext(EventBatchPayCard eventBatchPayCard) {
+          rulesPayCards.clear();
+          rulesPayCards.addAll(eventBatchPayCard.getRules());
+          if (eventBatchPayCard.getRules().size() > 0) {
+            payCard.setHint(getString(R.string.batch_can_pay_card_count, eventBatchPayCard.getCount()));
+          } else {
+            payCard.setHint(getString(R.string.common_un_setting));
+          }
+        }
+      });
     return view;
   }
 
@@ -217,8 +236,7 @@ public class BatchDetailCommonView extends BaseFragment {
    * 更改场地
    */
   @OnClick(R2.id.space) public void onSpaceClicked() {
-    routeTo("gym","/site/choose/",new SiteSelectedParams()
-      .isPrivate(course.is_private)
+    routeTo("gym", "/site/choose/", new SiteSelectedParams().isPrivate(course.is_private)
       //.selectIds()
       .build());
   }
@@ -255,6 +273,15 @@ public class BatchDetailCommonView extends BaseFragment {
    */
   @OnClick(R2.id.pay_card) public void onPayCardClicked() {
     //saasRouter.choose(CourseUri.PAY_CARDS);
+    routeTo("card", "/card/batch/chooose/",null);
+  }
+
+  public void onPayCardRules(int size) {
+    if (size > 0) {
+      payCard.setHint(getString(R.string.batch_can_pay_card_count, size));
+    } else {
+      payCard.setHint(getString(R.string.common_un_setting));
+    }
   }
 
   @Override public boolean isBlockTouch() {

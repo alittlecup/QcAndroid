@@ -81,7 +81,7 @@ import rx.functions.Action1;
       Bundle savedInstanceState) {
     db = DataBindingUtil.inflate(inflater,R.layout.fragment_recruit_write_gym_desc, container, false);
 
-    initToolbar(db.layoutToolbar.findViewById(R.id.toolbar));
+    initToolbar(db.layoutToolbar.toolbar);
     delegatePresenter(gymPresenter, this);
     onDetail(gym);
     initBus();
@@ -117,7 +117,7 @@ import rx.functions.Action1;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    ((TextView)db.layoutToolbar.findViewById(R.id.toolbar_title)).setText("场馆介绍");
+    ((TextView)db.layoutToolbar.toolbarTitle).setText("场馆介绍");
     toolbar.inflateMenu(R.menu.menu_save);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {

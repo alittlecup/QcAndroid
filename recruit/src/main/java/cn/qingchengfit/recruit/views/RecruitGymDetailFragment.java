@@ -3,10 +3,8 @@ package cn.qingchengfit.recruit.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,10 +15,12 @@ import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.RecruitRouter;
+import cn.qingchengfit.recruit.databinding.FragmentRecruitCompanyDetailBinding;
 import cn.qingchengfit.recruit.item.RecruitPositionInGymItem;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.presenter.RecruitGymDetailPresenter;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
@@ -64,8 +64,6 @@ public class RecruitGymDetailFragment extends BaseFragment
   Gym gym;
   List<Job> tempJob = new ArrayList<>();
   //private FragmentRecruitCompanyDetailBinding db;
-  ViewPager vp;
-  TabLayout recruitGymTab;
 
   public static RecruitGymDetailFragment newInstance(Gym co) {
     Bundle args = new Bundle();
@@ -84,21 +82,21 @@ public class RecruitGymDetailFragment extends BaseFragment
     fragments.add(descFragment);
     fragments.add(positionsFragment);
   }
-
+  FragmentRecruitCompanyDetailBinding db;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     //super.onCreateView(inflater,container,savedInstanceState);
-    View view = inflater.inflate(R.layout.fragment_recruit_company_detail,container,false);
+    db  = FragmentRecruitCompanyDetailBinding.inflate(inflater,container,false);
     //db = FragmentRecruitCompanyDetailBinding.bind(view);
     delegatePresenter(presenter, this);
-    initToolbar(view.findViewById(R.id.toolbar));
-    return view;
+    initToolbar(db.layoutToolbar.toolbar);
+    return db.getRoot();
   }
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
-    recruitGymTab.setupWithViewPager(vp);
+    db.vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
+    db.recruitGymTab.setupWithViewPager(db.vp);
     onGym(gym);
     presenter.queryGymDetail(gym.id);
   }
@@ -130,12 +128,12 @@ public class RecruitGymDetailFragment extends BaseFragment
   }
 
   public void onGym(Gym service) {
-    //layoutRecruitGymInfo.imgRight.setVisibility(View.GONE);
-    //if (service == null) return;
-    //PhotoUtils.small(layoutRecruitGymInfo.imgGym, service.photo);
-    //layoutRecruitGymInfo.tvGymName.setText(service.name);
-    //layoutRecruitGymInfo.tvAddress.setText(service.getAddressStr());
-    //if (descFragment != null && descFragment.isAdded()) descFragment.setDesc(service);
+    db.layoutRecruitGymInfo.imgRight.setVisibility(View.GONE);
+    if (service == null) return;
+    PhotoUtils.small(db.layoutRecruitGymInfo.imgGym, service.photo);
+    db.layoutRecruitGymInfo.tvGymName.setText(service.name);
+    db.layoutRecruitGymInfo.tvAddress.setText(service.getAddressStr());
+    if (descFragment != null && descFragment.isAdded()) descFragment.setDesc(service);
   }
 
   @Override public void onJobList(List<Job> jobs, int page, int totalCount) {

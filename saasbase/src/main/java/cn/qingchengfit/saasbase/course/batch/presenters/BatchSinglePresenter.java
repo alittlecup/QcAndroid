@@ -3,8 +3,6 @@ package cn.qingchengfit.saasbase.course.batch.presenters;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -41,13 +39,19 @@ import rx.schedulers.Schedulers;
 public class BatchSinglePresenter extends BasePresenter {
   private MVPView view;
 
-  @Inject LoginStatus loginStatus;
-  @Inject GymWrapper gymWrapper;
   @Inject ICourseModel courseApi;
 
   String scheduleId;
   BatchCourse batchCourse;
   Staff mTrainer;
+
+  public String getScheduleId() {
+    return scheduleId;
+  }
+
+  public void setScheduleId(String scheduleId) {
+    this.scheduleId = scheduleId;
+  }
 
   @Inject public BatchSinglePresenter() {
 

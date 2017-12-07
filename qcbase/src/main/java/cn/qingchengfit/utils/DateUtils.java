@@ -29,6 +29,7 @@ public class DateUtils {
   public static final Long HOUR_TIME = 60 * 60 * 1000L;
   public static final Long MINITE_TIME = 60 * 1000L;
   public static final Long SECOND_TIME = 1000L;
+  public static final String[] weeks = {"周一","周二","周三","周四","周五","周六","周日"};
 
   public static Date formatDateFromServer(String s) {
     try {
@@ -42,6 +43,12 @@ public class DateUtils {
     } catch (Exception e) {
       return new Date();
     }
+  }
+
+  public static String getChineseWeekStr( int x){
+    if (x <0 || x > 6){
+      return "";
+    }else return weeks[x];
   }
 
   public static String getDuring(Date start, Date end) {

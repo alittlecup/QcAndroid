@@ -3,13 +3,13 @@ package cn.qingchengfit.saasbase.course.batch.presenters;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchDetailWrap;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,11 +18,26 @@ import rx.schedulers.Schedulers;
 public class BatchEditPresenter extends BasePresenter {
   private MVPView view;
 
-  @Inject LoginStatus loginStatus;
-  @Inject GymWrapper gymWrapper;
   @Inject ICourseModel courseApi;
 
   String batchId;
+  boolean isPrivate;
+
+  public boolean isPrivate() {
+    return isPrivate;
+  }
+
+  public void setPrivate(boolean aPrivate) {
+    isPrivate = aPrivate;
+  }
+
+  public String getBatchId() {
+    return batchId;
+  }
+
+  public void setBatchId(String batchId) {
+    this.batchId = batchId;
+  }
 
   @Inject public BatchEditPresenter() {
 

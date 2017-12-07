@@ -9,6 +9,7 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ListUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import java.util.Calendar;
+import java.util.UUID;
 
 /**
  * power by
@@ -50,6 +51,7 @@ public class AddBatchLoopFragment extends IBatchLoopFragment {
     }
   }
 
+
   @Override void initSelect() {
     mStart = DateUtils.getDateFromHHmm("8:00");
     if (isPrivate){
@@ -68,6 +70,7 @@ public class AddBatchLoopFragment extends IBatchLoopFragment {
 
   @Override protected void confirm() {
     BatchLoop cmBean = new BatchLoop();
+    cmBean.id = UUID.randomUUID().toString();
     cmBean.week = ListUtils.listAddNum(commonFlexAdapter.getSelectedPositions(),1);
     cmBean.dateStart = mStart;
     cmBean.dateEnd = mEnd;

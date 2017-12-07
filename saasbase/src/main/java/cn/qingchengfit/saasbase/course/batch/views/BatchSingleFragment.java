@@ -2,8 +2,6 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +14,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchSinglePresenter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import javax.inject.Inject;
 
 /**
@@ -41,7 +42,8 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/22.
  */
-public class BatchSingleFragment extends BaseFragment {
+@Leaf(module = "course", path = "/batch/schedule/single/")
+public class BatchSingleFragment extends BaseFragment implements BatchSinglePresenter.MVPView{
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
@@ -52,11 +54,14 @@ public class BatchSingleFragment extends BaseFragment {
   @BindView(R2.id.btn_del) Button btnDel;
 
   @Inject BatchSinglePresenter presenter;
+
+  @Need String scheduleId;
   private BatchDetailCommonView batchBaseFragment;
 
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    presenter.setScheduleId(scheduleId);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,21 +69,12 @@ public class BatchSingleFragment extends BaseFragment {
     super.onCreateView(inflater,container,savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_saas_single_batch, container, false);
     unbinder = ButterKnife.bind(this, view);
-
     return view;
   }
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    stuff(batchBaseFragment);
-  }
-
-  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-      Bundle savedInstanceState) {
-    super.onChildViewCreated(fm, f, v, savedInstanceState);
-    if (f instanceof BatchDetailCommonView){
-
-    }
+    presenter.queryData();
   }
 
   @Override public String getFragmentName() {
@@ -87,7 +83,7 @@ public class BatchSingleFragment extends BaseFragment {
 
 
   @OnClick(R2.id.civ_date) public void onCivDateClicked() {
-
+    chooseTime(civDate);
   }
 
   /**
@@ -109,5 +105,16 @@ public class BatchSingleFragment extends BaseFragment {
    */
   @OnClick(R2.id.btn_del) public void onBtnDelClicked() {
     presenter.delSchedule();
+  }
+
+  @Override public void onDetail(BatchDetail batchDetail) {
+    if (batchBaseFragment == null)
+      batchBaseFragment = BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher);
+    else {
+      batchBaseFragment.setTrainer(batchDetail.teacher);
+      batchBaseFragment.setCourse(batchDetail.course);
+    }
+    if (!batchBaseFragment.isAdded())
+      stuff(R.id.frag_course_info,batchBaseFragment);
   }
 }

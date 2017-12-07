@@ -100,4 +100,8 @@
   <string name="course_add_week_time">+课程周期</string>
   <string name="course_choose_coach">选择教练</string>
   <string name="course_add_new_coach">添加新教练</string>
+
+
+  <string formatted="false" name="batch_can_pay_card_count">可用%d种卡结算</string>
+
 </resources>

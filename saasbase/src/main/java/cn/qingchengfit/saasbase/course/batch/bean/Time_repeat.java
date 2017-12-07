@@ -1,5 +1,9 @@
 package cn.qingchengfit.saasbase.course.batch.bean;
 
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.items.types.ICmLRTxt;
+import cn.qingchengfit.utils.DateUtils;
+
 /**
  * power by
  * <p/>
@@ -13,12 +17,17 @@ package cn.qingchengfit.saasbase.course.batch.bean;
  * <p/>
  * Created by Paper on 16/2/25 2016.
  */
-public class Time_repeat {
+public class Time_repeat implements ICmLRTxt{
     String id;
     String start;
     String end;
     boolean is_cross;
     int weekday;
+    boolean isPrivate;
+
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
 
     public boolean is_cross() {
         return is_cross;
@@ -26,6 +35,22 @@ public class Time_repeat {
 
     public void setIs_cross(boolean is_cross) {
         this.is_cross = is_cross;
+    }
+
+    @Override public String getLeftTxt() {
+        return DateUtils.getChineseWeekStr(weekday);
+    }
+
+    @Override public String getRightTxt() {
+        return start+"-"+ end;
+    }
+
+    @Override public int getLeftIcon() {
+        return 0;
+    }
+
+    @Override public int getRightIcon() {
+        return R.drawable.vd_filter_arrow_down;
     }
 
     public String getId() {

@@ -97,6 +97,9 @@ public class CardTypeListPresenter extends BasePresenter {
           }
         }, new NetWorkThrowable()));
   }
+  public void queryCardTypeNoNeedPermission(){
+    queryCardtypeList();//todo 切换成method接口
+  }
 
 
   public interface MVPView extends CView {

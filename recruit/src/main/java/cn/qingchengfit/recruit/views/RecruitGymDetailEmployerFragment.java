@@ -120,7 +120,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
     db  = DataBindingUtil.inflate(inflater,R.layout.fragment_recruit_gym_detail_employer, container, false);
     super.onCreateView(inflater, container, savedInstanceState);
     delegatePresenter(presenter, this);
-    initToolbar(db.layoutToolbar.findViewById(R.id.toolbar));
+    initToolbar(db.layoutToolbar.toolbar);
 
     initBus();
     db.layoutRecruitGymInfo.layoutGymInfo.setOnClickListener(view1 -> onLayoutGymInfoClicked());
@@ -176,7 +176,7 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    ((TextView)db.layoutToolbar.findViewById(R.id.toolbar_title)).setText("场馆招聘详情");
+    ((TextView)db.layoutToolbar.toolbarTitle).setText("场馆招聘详情");
     toolbar.inflateMenu(R.menu.menu_preview);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {

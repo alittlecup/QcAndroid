@@ -19,5 +19,7 @@
   <string name="alert_edit_cardtype_link_manage">该会员卡种类适用于多个场馆，请到[连锁运营]中进行编辑。</string>
   <string name="alert_edit_cardtype_forbid">此会员卡种类适用于多个场馆，需要具有所有适用场馆下修改会员卡种类权限的用户才能进行编辑。</string>
 
-
+  <string name="card_unit_value">(元/人)</string>
+  <string name="card_unit_times">(次/人)</string>
+  <string name="card_content_lable">1对%d单价</string>
 </resources>

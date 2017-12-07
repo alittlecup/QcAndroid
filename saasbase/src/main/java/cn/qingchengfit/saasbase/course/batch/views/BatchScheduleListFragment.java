@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,8 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -50,6 +53,7 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/22.
  */
+@Leaf(module = "course", path = "/batch/schedule/list/")
 public class BatchScheduleListFragment extends BaseFragment implements
     FlexibleAdapter.OnItemClickListener,BatchScheduleListPresenter.MVPView{
 
@@ -60,7 +64,14 @@ public class BatchScheduleListFragment extends BaseFragment implements
 
   @Inject BatchScheduleListPresenter presenter;
   CommonFlexAdapter adapter ;
+  @Need String batchId;
+  @Need Boolean isPrivate;
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    presenter.setBatchId(batchId);
+    presenter.setPrivate(isPrivate);
+  }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -111,8 +122,6 @@ public class BatchScheduleListFragment extends BaseFragment implements
         }
       });
     }
-
-
   }
 
 
@@ -129,6 +138,10 @@ public class BatchScheduleListFragment extends BaseFragment implements
       BatchLoop batchLoop = (BatchLoop) adapter.getItem(position);
       if (!DateUtils.isOutOfDate(batchLoop.dateStart)){
         //跳去单个排课页面
+        routeTo("/batch/schedule/single/",new cn.qingchengfit.saasbase.course.batch.views.BatchSingleParams()
+        .scheduleId(presenter.getBatchId())
+          .build()
+        );
       }
     }
     return true;

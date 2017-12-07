@@ -109,7 +109,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
         false);
     delegatePresenter(presenter, this);
     delegatePresenter(resumePresenter, this);
-    initToolbar(db.layoutToolbar.findViewById(R.id.toolbar));
+    initToolbar(db.layoutToolbar.toolbar);
     RxBusAdd(EventLoginChange.class).onBackpressureLatest()
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new Action1<EventLoginChange>() {
@@ -170,7 +170,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    ((TextView) db.layoutToolbar.findViewById(R.id.toolbar_title)).setText("职位详情");
+    ((TextView) db.layoutToolbar.toolbarTitle).setText("职位详情");
     toolbar.inflateMenu(R.menu.menu_share);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {

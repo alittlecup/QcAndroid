@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.course.batch.presenters;
 
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
-import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -15,14 +14,21 @@ import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class BatchScheduleListPresenter extends BasePresenter {
-  private MVPView view;
+public class BatchScheduleListPresenter extends BasePresenter<BatchScheduleListPresenter.MVPView> {
 
   @Inject GymWrapper gymWrapper;
   @Inject ICourseModel courseModel;
 
   private String batchId;
   private boolean isPrivate;
+
+  public String getBatchId() {
+    return batchId;
+  }
+
+  public void setBatchId(String batchId) {
+    this.batchId = batchId;
+  }
 
   public boolean isPrivate() {
     return isPrivate;
@@ -35,15 +41,6 @@ public class BatchScheduleListPresenter extends BasePresenter {
   @Inject public BatchScheduleListPresenter() {
   }
 
-  @Override public void attachView(PView v) {
-    view = (MVPView) v;
-  }
-
-  @Override public void unattachView() {
-    super.unattachView();
-    view = null;
-  }
-
   public void queryList() {
     RxRegiste(courseModel.qcGetbatchSchedules(batchId, isPrivate)
         .onBackpressureLatest()
@@ -52,9 +49,9 @@ public class BatchScheduleListPresenter extends BasePresenter {
         .subscribe(new NetSubscribe<QcDataResponse<BatchSchedulesWrap>>() {
           @Override public void onNext(QcDataResponse<BatchSchedulesWrap> qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              view.onList(isPrivate?qcResponse.data.timetables:qcResponse.data.schedules);
+              mvpView.onList(isPrivate?qcResponse.data.timetables:qcResponse.data.schedules);
             } else {
-              view.onShowError(qcResponse.getMsg());
+              mvpView.onShowError(qcResponse.getMsg());
             }
           }
         }));

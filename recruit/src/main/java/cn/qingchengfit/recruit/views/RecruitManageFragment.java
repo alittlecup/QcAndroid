@@ -94,7 +94,7 @@ public class RecruitManageFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     db = DataBindingUtil.inflate(inflater,R.layout.fragment_recruit_manage,container,false);
-    initToolbar(db.layoutToolbar.findViewById(R.id.toolbar));
+    initToolbar(db.layoutToolbar.toolbar);
     commonFlexAdapter = new CommonFlexAdapter(items, this);
     db.rvGyms.setLayoutManager(new LinearLayoutManager(getContext()));
     db.rvGyms.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -130,7 +130,7 @@ public class RecruitManageFragment extends BaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    ((TextView)db.layoutToolbar.findViewById(R.id.toolbar_title)).setText("招聘管理");
+    ((TextView)db.layoutToolbar.toolbarTitle).setText("招聘管理");
   }
 
   @Override protected void onFinishAnimation() {

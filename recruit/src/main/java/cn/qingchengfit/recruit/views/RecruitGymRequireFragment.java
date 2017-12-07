@@ -61,7 +61,7 @@ public class RecruitGymRequireFragment extends BaseFragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     db = DataBindingUtil.inflate(inflater,R.layout.fragment_recruit_position_require, container, false);
-    initToolbar(db.layoutToolbar.findViewById(R.id.toolbar));
+    initToolbar(db.layoutToolbar.toolbar);
     db.civAge.setOnClickListener(view -> onCivAgeClicked());
     db.civEducation.setOnClickListener(view -> onCivEducationClicked());
     db.civGender.setOnClickListener(view -> onCivGenderClicked());
@@ -73,7 +73,7 @@ public class RecruitGymRequireFragment extends BaseFragment {
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    ((TextView)db.layoutToolbar.findViewById(R.id.toolbar_title)).setText("职位要求");
+    ((TextView)db.layoutToolbar.toolbarTitle).setText("职位要求");
   }
 
   @Override public String getFragmentName() {
