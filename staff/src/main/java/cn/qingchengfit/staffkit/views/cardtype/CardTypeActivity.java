@@ -97,9 +97,15 @@ public class CardTypeActivity extends BaseActivity implements FragCallBack {
                 @Override public void call(OnBackEvent onBackEvent) {
                     onStateNotSaved();
                     getSupportFragmentManager().popBackStack(null, 1);
-                    getSupportFragmentManager().beginTransaction()
-                        .replace(getFragId(), new CardListFragment())
-                        .commitAllowingStateLoss();
+                    if(!gymWrapper.inBrand()) {
+                        getSupportFragmentManager().beginTransaction()
+                            .replace(getFragId(), new CardListFragment())
+                            .commitAllowingStateLoss();
+                    }else{
+                        getSupportFragmentManager().beginTransaction()
+                            .replace(getFragId(), new BrandCardListFragment())
+                            .commitAllowingStateLoss();
+                    }
                 }
             });
     }

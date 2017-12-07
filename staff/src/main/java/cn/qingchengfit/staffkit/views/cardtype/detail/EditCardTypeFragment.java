@@ -43,6 +43,8 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -89,6 +91,8 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   @Inject GymWrapper gymWrapper;
   @BindView(R.id.expand_card_protocol) ExpandedLayout expandCardProtocol;
   @BindView(R.id.input_card_protocol) CommonInputView inputCardProtocol;
+  @BindView(R.id.show_card_protocol) TextView showCardProtocol;
+  @BindView(R.id.card_protoccol) CommonInputView cardProtoccol;
   private CardTpl card_tpl;
   private int mType = 0;//0 是新建 1 是修改
   private CardtplBody body = new CardtplBody();
@@ -135,10 +139,8 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     presenter.attachView(this);
     if (mType != 0) {//
       mCallbackActivity.setToolbar(getString(R.string.title_cardtype_edit), false, null,
-          SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
-              card_tpl.getShopIds()) ? R.menu.menu_save : 0, menuListener);
+          R.menu.menu_save, menuListener);
       type.setVisibility(View.GONE);
-
     } else {
       mCallbackActivity.setToolbar(getString(R.string.title_cardtype_add), false, null,
           R.menu.menu_save, menuListener);
@@ -162,24 +164,36 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     });
     expandCardProtocol.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked){
+        if (isChecked) {
           inputCardProtocol.setVisibility(View.VISIBLE);
-          if (mType != 0){
+          if (mType != 0) {
             if (card_tpl.has_service_term) {
               inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_content));
-            }else{
+            } else {
               inputCardProtocol.setVisibility(View.GONE);
               Intent intent = new Intent(getActivity(), QRActivity.class);
-              intent.putExtra(QRActivity.LINK_MODULE, getResources().getString(R.string.qr_code_2web_add_card_term, card_tpl.id));
+              if (SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
+                  card_tpl.getShopIds())) {
+                if (!gymWrapper.inBrand()) {
+                  intent.putExtra(QRActivity.LINK_MODULE,
+                      getResources().getString(R.string.qr_code_2web_add_card_term, card_tpl.id));
+                } else {
+                  intent.putExtra(QRActivity.LINK_MODULE,
+                      getResources().getString(R.string.qr_code_2web_multi_card_add,
+                          gymWrapper.brand_id(), card_tpl.id));
+                }
+              }else{
+                showAlert(R.string.alert_edit_cardtype_no_permission);
+              }
               getContext().startActivity(intent);
             }
-          }else{
+          } else {
             body.name = cardname.getContent();
             body.is_open_service_term = expandCardProtocol.isExpanded();
             inputCardProtocol.setVisibility(View.GONE);
             presenter.stashCardTplInfo(body);
           }
-        }else{
+        } else {
           inputCardProtocol.setVisibility(View.GONE);
         }
       }
@@ -191,8 +205,9 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     if (!gymWrapper.inBrand()) {
       expandCardProtocol.setVisibility(View.VISIBLE);
       supportGymsLayout.setVisibility(View.GONE);
-    }else{
-      expandCardProtocol.setVisibility(View.GONE);
+    }
+    if (!gymWrapper.inBrand() || mType == 0) {
+      cardProtoccol.setVisibility(View.GONE);
     }
 
     view.setOnTouchListener(new View.OnTouchListener() {
@@ -208,10 +223,8 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
       }
     });
 
-
     return view;
   }
-
 
   @Override public void onDestroyView() {
     presenter.unattachView();
@@ -240,10 +253,12 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
 
       if (SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
           card_tpl.getShopIds())) {
+        switcher.setVisibility(View.VISIBLE);
+        expandCardProtocol.setVisibility(View.VISIBLE);
         cardtplInfoEdit1.setVisibility(View.VISIBLE);
         //cardtplInfoEdit2.setVisibility(View.VISIBLE);
         cardtplInfoShow.setVisibility(View.GONE);
-
+        cardProtoccol.setVisibility(View.GONE);
         setCardProtocol(card_tpl);
         cardname.setContent(card_tpl.getName());
         type.setContent(getResources().getStringArray(R.array.cardtype)[card_tpl.getType() - 1]);
@@ -277,12 +292,21 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
           body.is_limit = false;
         }
       } else {
+        switcher.setVisibility(View.GONE);
+        expandCardProtocol.setVisibility(View.GONE);
         cardtplInfoEdit1.setVisibility(View.GONE);
         //cardtplInfoEdit2.setVisibility(View.GONE);
         cardtplInfoShow.setVisibility(View.VISIBLE);
         showName.setText(card_tpl.getName() == null ? "" : card_tpl.getName());
-        showDesc.setText(card_tpl.getDescription());
-        showLimit.setText(card_tpl.getLimit());
+        showDesc.setText(card_tpl.getDescription().replace("简介:", ""));
+        showLimit.setText(card_tpl.getLimit().replace("限制:", ""));
+        showCardProtocol.setText(card_tpl.is_open_service_term ? "已开启" : "已关闭");
+        if(card_tpl.is_open_service_term){
+          cardProtoccol.setVisibility(View.VISIBLE);
+        }else{
+          cardProtoccol.setVisibility(View.GONE);
+        }
+        supportGyms.setVisibility(View.VISIBLE);
         supportGyms.setContent(card_tpl.getShopIds().size() + "家");
         if (!gymWrapper.inBrand()) {
           mCallbackActivity.setToolbar(getString(R.string.title_cardtype_edit), false, null, 0,
@@ -297,21 +321,19 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   }
 
   private void setCardProtocol(CardTpl card) {
-      if (card.is_open_service_term) {
-        expandCardProtocol.setExpanded(true);
-      } else {
-        expandCardProtocol.setExpanded(false);
-      }
-  }
-
-  @OnClick(R.id.input_card_protocol) public void onOpenProtocol() {
-    if (card_tpl != null && card_tpl.has_service_term) {
-      CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true,
-          "", card_tpl.id);
+    if (card.is_open_service_term) {
+      expandCardProtocol.setExpanded(true);
+    } else {
+      expandCardProtocol.setExpanded(false);
     }
   }
 
-
+  @OnClick({R.id.input_card_protocol, R.id.card_protoccol}) public void onOpenProtocol() {
+    if (card_tpl != null && card_tpl.has_service_term) {
+      CardProtocolActivity.startWeb(card_tpl.card_tpl_service_term.content_link, getContext(), true,
+          "", card_tpl);
+    }
+  }
 
   @Override public void onSuccessShops() {
     hideLoading();
@@ -320,7 +342,22 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
 
   @Override public void onStashSuccessed(String uuid) {
     Intent intent = new Intent(getActivity(), QRActivity.class);
-    intent.putExtra(QRActivity.LINK_MODULE, QRActivity.MODULE_ADD_CARD_PROTOCOL + "?" + PARAMS_KEY + uuid);
+    if (!gymWrapper.inBrand()) {
+      intent.putExtra(QRActivity.LINK_MODULE,
+          QRActivity.MODULE_ADD_CARD_PROTOCOL + "?" + PARAMS_KEY + uuid);
+    }else{
+      try {
+        intent.putExtra(QRActivity.LINK_MODULE, URLEncoder.encode(QRActivity.MULTI_CARD_TPL
+            + "?"
+            + "brand_id="
+            + gymWrapper.brand_id()
+            + "&"
+            + PARAMS_KEY
+            + uuid, "utf-8"));
+      } catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+      }
+    }
     getContext().startActivity(intent);
   }
 

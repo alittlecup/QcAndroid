@@ -263,7 +263,7 @@ public class CardtypeDetailFragment extends BaseFragment implements CardtypeDeta
                             break;
                         }
                     }
-                    if (!hasP) {
+                    if (!hasP && !gymWrapper.inBrand()) {
                         if (card_tpl.getShopIds().size() > 1) {
                             showAlert(R.string.alert_edit_cardtype_forbid);
                         } else {

@@ -13,8 +13,8 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.constant.Post_Api;
-import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.cardtype.UUIDModel;
+import java.util.HashMap;
 import java.util.Iterator;
 import javax.inject.Inject;
 import org.json.JSONException;
@@ -129,8 +129,14 @@ public class EditCardTypePresenter extends BasePresenter {
     }
 
     public void stashCardTplInfo(CardtplBody body){
+        HashMap<String, Object> map = new HashMap<>();
+        if (gymWrapper.inBrand()) {
+            map.put("brand_id", gymWrapper.brand_id());
+        }else{
+            map.putAll(gymWrapper.getParams());
+        }
         RxRegiste(restRepository.createPostApi(Post_Api.class)
-            .qcStashNewCardTpl(loginStatus.staff_id(), body, gymWrapper.getParams())
+            .qcStashNewCardTpl(loginStatus.staff_id(), body, map)
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
