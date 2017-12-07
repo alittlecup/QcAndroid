@@ -95,7 +95,8 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.MVPVie
   }
 
   @OnClick(R.id.login_btn) public void onLogin() {
-    if (!TextUtils.isEmpty(editLoginPhone.getText())) {
+    if (!TextUtils.isEmpty(editLoginPhone.getText()) && AppUtils.isMobiPhoneNum(
+        editLoginPhone.getText().toString())) {
       presenter.qcLogin(new LoginBody.Builder().phone(editLoginPhone.getText().toString())
         .code(editLoginAuthCode.getText().toString())
         .area_code("+86")
