@@ -102,7 +102,7 @@ public class ExchangeFragment extends BaseFragment {
                   tvExchangeBusiness.setText(
                       String.valueOf(exchangeWrapperQcDataResponse.data.exchange.bills_numbers) + "笔");
                   tvExchangeMoney.setText(
-                      exchangeWrapperQcDataResponse.data.exchange.bills_price / 100 + "元");
+                    exchangeWrapperQcDataResponse.data.exchange.getBillPriceYuan() + "元");
                 }
               });
             } else {
