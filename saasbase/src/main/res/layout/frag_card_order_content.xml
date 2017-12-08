@@ -43,7 +43,7 @@
             style="@style/QcCivInputStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
-            app:civ_lable="充值金额"
+            app:civ_lable="面额"
             app:civ_inputnum="true"
             />
         <cn.qingchengfit.widgets.CommonInputView
@@ -51,7 +51,7 @@
             style="@style/QcCivInputStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
-            app:civ_lable="实收金额"
+            app:civ_lable="价格"
             app:civ_unit="元"
             app:civ_inputnum="true"
             />
@@ -124,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:text="充值金额："
+        android:text="金额："
         />
     <TextView
         android:id="@+id/tv_pay_money"

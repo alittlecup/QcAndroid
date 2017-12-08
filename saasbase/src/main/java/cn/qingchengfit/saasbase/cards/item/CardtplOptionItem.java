@@ -1,9 +1,7 @@
 package cn.qingchengfit.saasbase.cards.item;
 
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,11 +49,11 @@ public class CardtplOptionItem
   public void bindViewHolder(FlexibleAdapter adapter, CardtplStandardVH holder, int position,
       List payloads) {
     String unitStr = CardBusinessUtils.getCardTypeCategoryUnit(cardtplType,holder.title.getContext());
-    holder.title.setText("售价"+option.price + "元");
+    holder.title.setText("价格"+option.price + "元");
     if (TextUtils.isEmpty(option.charge)) {
       holder.realIncome.setVisibility(View.GONE);
     } else {
-      holder.realIncome.setText("(储值"+option.charge + unitStr+")");
+      holder.realIncome.setText("(面额"+option.charge + unitStr+")");
       holder.realIncome.setVisibility(View.VISIBLE);
     }
     if (option.days <= 0) {

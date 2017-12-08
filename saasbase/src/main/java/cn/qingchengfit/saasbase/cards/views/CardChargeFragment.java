@@ -141,7 +141,7 @@ import javax.inject.Inject;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("充值");
+    toolbarTitle.setText("续卡");
   }
 
   @Override protected void onFinishAnimation() {

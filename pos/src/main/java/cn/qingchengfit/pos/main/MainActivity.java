@@ -72,7 +72,7 @@ import org.json.JSONObject;
     if (TextUtils.isEmpty(gymWrapper.getSocket_channel_id())) return;
     try {
       socket = IO.socket(
-        "http://pushertest.qingchengfit.cn/?channelId=" + gymWrapper.getSocket_channel_id());
+        "http://pusher02.qingchengfit.cn/?channelId=" + gymWrapper.getSocket_channel_id());
       socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
         @Override public void call(Object... args) {
           LogUtil.d("ws", "connect");

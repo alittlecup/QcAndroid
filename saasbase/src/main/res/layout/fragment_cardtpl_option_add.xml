@@ -13,7 +13,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_inputnum="true"
-      app:civ_lable="充值"
+      app:civ_lable="面额"
       app:civ_unit="次"
 
       />
@@ -23,7 +23,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_inputnum="true"
-      app:civ_lable="实收"
+      app:civ_lable="价格"
       app:civ_unit="元"
 
       />
