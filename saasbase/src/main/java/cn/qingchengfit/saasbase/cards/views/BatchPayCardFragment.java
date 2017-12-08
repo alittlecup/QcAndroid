@@ -28,6 +28,7 @@ import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -36,13 +37,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
-
+@Leaf(module = "card", path = "/card/batch/choose/")
 public class BatchPayCardFragment extends SaasBaseFragment implements CardTypeListPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
 
     @Need ArrayList<Rule> rules;
     @Need ArrayList<CardTplBatchShip> cardTplBatchShips;
     @Need int maxCount = 1;
-    @Need boolean isPrivate;
+    @Need boolean multiPrice;
 
     TextView toolbarTitile;
     Toolbar toolbar;
@@ -75,6 +76,9 @@ public class BatchPayCardFragment extends SaasBaseFragment implements CardTypeLi
         View view = inflater.inflate(R.layout.fragment_batch_pay_by_cards, container, false);
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(presenter, this);
+        toolbar = view.findViewById(R.id.toolbar);
+        toolbarTitile = view.findViewById(R.id.toolbar_title);
+        recyclerview = view.findViewById(R.id.recyclerview);
         initToolbar(toolbar);
         if (commonFlexAdapter == null) {
             commonFlexAdapter = new CommonFlexAdapter(mDatas, this);
@@ -124,7 +128,7 @@ public class BatchPayCardFragment extends SaasBaseFragment implements CardTypeLi
                     rules.add(rrr);
                 } else {
                     //非期限卡
-                    if (isPrivate) {//私教
+                    if (multiPrice) {//私教
                         List<Rule> rg = new ArrayList<>();
                         for (int j = 0; j < item.getSubItems().size(); j++) {
                             Rule rrr = new Rule();
@@ -193,7 +197,7 @@ public class BatchPayCardFragment extends SaasBaseFragment implements CardTypeLi
                 switch (cardTpl.getType()) {
                     case 1:
                     case 2:
-                        if (isPrivate) {
+                        if (multiPrice) {
                             BatchPayCardHeaderItem itemData = new BatchPayCardHeaderItem(cardTpl);
 
                             for (int j = 0; j < maxCount; j++) {
@@ -201,12 +205,12 @@ public class BatchPayCardFragment extends SaasBaseFragment implements CardTypeLi
                                 if (cardCost.containsKey(cardTpl.getId())) {
                                     try {
                                         String money = cardCost.get(cardTpl.getId()).get(j + 1);
-                                        itemData.addChild(new BatchPayCardItem(money, j, cardTpl, isPrivate));
+                                        itemData.addChild(new BatchPayCardItem(money, j, cardTpl, multiPrice));
                                     } catch (Exception e) {
 
                                     }
                                 } else {
-                                    itemData.addChild(new BatchPayCardItem("", j, cardTpl, isPrivate));
+                                    itemData.addChild(new BatchPayCardItem("", j, cardTpl, multiPrice));
                                 }
                             }
                             if (cardTplBatchShips != null
@@ -227,7 +231,7 @@ public class BatchPayCardFragment extends SaasBaseFragment implements CardTypeLi
                             if (cardCost.containsKey(cardTpl.getId())) {
                                 cost = cardCost.get(cardTpl.getId()).get(1);
                             }
-                            itemData.addChild(new BatchPayCardItem(cost, 0, cardTpl, isPrivate));
+                            itemData.addChild(new BatchPayCardItem(cost, 0, cardTpl, multiPrice));
 
                             if (cardTplBatchShips != null
                                 && cardTplBatchShips.contains(cardTpl)
@@ -244,7 +248,7 @@ public class BatchPayCardFragment extends SaasBaseFragment implements CardTypeLi
                     case 3:
                         BatchPayCardHeaderItem itemData = new BatchPayCardHeaderItem(cardTpl);
 
-                        itemData.addChild(new BatchPayCardItem("", 0, cardTpl, isPrivate));
+                        itemData.addChild(new BatchPayCardItem("", 0, cardTpl, multiPrice));
 
                         if (cardTplBatchShips != null
                             && cardTplBatchShips.contains(cardTpl)
@@ -265,7 +269,7 @@ public class BatchPayCardFragment extends SaasBaseFragment implements CardTypeLi
             if (mDatas.size() == 0) {
                 commonFlexAdapter.addItem(new CommonNoDataItem(R.drawable.vd_card_empty, "您没有可用的会员卡"));
             }
-            commonFlexAdapter.notifyDataSetChanged();
+            commonFlexAdapter.updateDataSet(mDatas);
 
             for (int i = 0; i < commonFlexAdapter.getHeaderItems().size(); i++) {
                 if (commonFlexAdapter.getHeaderItems().get(i) instanceof BatchPayCardHeaderItem) {

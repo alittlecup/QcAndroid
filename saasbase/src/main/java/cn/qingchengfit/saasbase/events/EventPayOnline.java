@@ -1,8 +1,6 @@
-package cn.qingchengfit.saasbase.gymconfig.event;
+package cn.qingchengfit.saasbase.events;
 
-import cn.qingchengfit.model.base.Space;
-import java.util.ArrayList;
-import java.util.List;
+import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 
 /**
  * power by
@@ -22,21 +20,21 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/12/1.
+ * Created by Paper on 2017/12/11.
  */
 
-public class EventSiteSelected {
-  List<Space> spaces = new ArrayList<>();
-
-  public void add(Space space) {
-    spaces.add(space);
+public class EventPayOnline {
+  public EventPayOnline(Rule rule) {
+    this.rule = rule;
   }
 
-  public void clear() {
-    spaces.clear();
+  private Rule rule;
+
+  public Rule getRule() {
+    return rule;
   }
 
-  public List<Space> getSpaces() {
-    return spaces;
+  public void setRule(Rule rule) {
+    this.rule = rule;
   }
 }

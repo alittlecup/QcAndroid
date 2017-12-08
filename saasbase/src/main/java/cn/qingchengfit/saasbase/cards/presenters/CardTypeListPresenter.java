@@ -3,9 +3,6 @@ package cn.qingchengfit.saasbase.cards.presenters;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -21,9 +18,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class CardTypeListPresenter extends BasePresenter {
-  @Inject GymWrapper gymWrapper;
-  @Inject QcRestRepository qcRestRepository;
-  @Inject LoginStatus loginStatus;
+
   @Inject ICardModel cardModel;
   @Inject BindCardModel.SelectedData selectedData;
   private MVPView view;

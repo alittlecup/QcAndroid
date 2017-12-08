@@ -154,7 +154,7 @@ public class CourseModel implements ICourseModel {
    */
   @Override public Observable<QcDataResponse> qcCheckBatch(boolean isPrivate,
     ArrangeBatchBody body) {
-    return api.qcCheckBatch(loginStatus.staff_id(), isPrivate ? "1" : "0", body,
+    return api.qcCheckBatch(loginStatus.staff_id(), isPrivate ? "private" : "group", body,
       gymWrapper.getParams());
   }
 

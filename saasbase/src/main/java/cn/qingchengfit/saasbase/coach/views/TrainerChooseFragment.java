@@ -42,6 +42,7 @@ public class TrainerChooseFragment extends CoachListFragment {
         .type(EventStaffWrap.TRAINER)
         .build());
     }
+    popBack();
     return true;
   }
 

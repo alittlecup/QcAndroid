@@ -13,22 +13,31 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Course;
+import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
+import cn.qingchengfit.saasbase.cards.views.BatchPayCardParams;
+import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
+import cn.qingchengfit.saasbase.coach.views.TrainerChooseParams;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
+import cn.qingchengfit.saasbase.events.EventPayOnline;
+import cn.qingchengfit.saasbase.gymconfig.event.EventSiteSelected;
 import cn.qingchengfit.saasbase.gymconfig.views.SiteSelectedParams;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.ExpandedLayout;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import java.util.ArrayList;
 import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
@@ -70,10 +79,11 @@ public class BatchDetailCommonView extends BaseFragment {
   @BindView(R2.id.el_pay) ExpandedLayout elPay;
   @BindView(R2.id.el_multi_support) ExpandedLayout elMultiSupport;
 
-
   private Course course;
   private Staff trainer;
-  private List<Rule> rulesPayCards = new ArrayList<>();
+  private ArrayList<Rule> rulesPayCards = new ArrayList<>();
+  private Rule payOnlineRule;
+  private List<Space> spaces = new ArrayList<>();
 
   public static BatchDetailCommonView newInstance(Course course, Staff trainer) {
     Bundle args = new Bundle();
@@ -94,6 +104,17 @@ public class BatchDetailCommonView extends BaseFragment {
         course.is_private = true;
       }
     }
+    RxBus.getBus()
+      .register(EventPayOnline.class)
+      .compose(bindToLifecycle())
+      .compose(doWhen(FragmentEvent.CREATE_VIEW))
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventPayOnline>() {
+        @Override public void onNext(EventPayOnline e) {
+          payOnlineRule = e.getRule();
+          openPayOnline(e.getRule() != null);
+        }
+      });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,13 +131,34 @@ public class BatchDetailCommonView extends BaseFragment {
           rulesPayCards.clear();
           rulesPayCards.addAll(eventBatchPayCard.getRules());
           if (eventBatchPayCard.getRules().size() > 0) {
-            payCard.setHint(getString(R.string.batch_can_pay_card_count, eventBatchPayCard.getCount()));
+            payCard.setContent(
+              getString(R.string.batch_can_pay_card_count, eventBatchPayCard.getCount()));
           } else {
-            payCard.setHint(getString(R.string.common_un_setting));
+            payCard.setContent(getString(R.string.common_un_setting));
           }
         }
       });
+    RxBusAdd(EventStaffWrap.class).onBackpressureDrop()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventStaffWrap>() {
+        @Override public void onNext(EventStaffWrap eventStaffWrap) {
+          setTrainer(eventStaffWrap.getStaff());
+        }
+      });
+    RxBusAdd(EventSiteSelected.class).onBackpressureDrop()
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventSiteSelected>() {
+        @Override public void onNext(EventSiteSelected eventSiteSelected) {
+          setSpace(eventSiteSelected.getSpaces());
+        }
+      });
+
     return view;
+  }
+
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    elPay.setExpanded(true);
   }
 
   /**
@@ -148,6 +190,7 @@ public class BatchDetailCommonView extends BaseFragment {
   public void setTrainer(Staff staff) {
     if (staff == null) return;
     if (coach == null) return;
+    this.trainer = staff;
     if (course.is_private) {
       PhotoUtils.smallCircle(img, staff.getAvatar());
       text1.setText(staff.getUsername());
@@ -162,6 +205,13 @@ public class BatchDetailCommonView extends BaseFragment {
     } else {
       return "";
     }
+  }
+
+  public void setSpace(List<Space> spaces) {
+    if (spaces == null) return;
+    this.spaces.clear();
+    this.spaces.addAll(spaces);
+    space.setContent(ListUtils.ListObj2StrCN(spaces));
   }
 
   /**
@@ -218,10 +268,7 @@ public class BatchDetailCommonView extends BaseFragment {
    * 更改课程
    */
   @OnClick(R2.id.course_layout) public void onCourseLayoutClicked() {
-    //路由 // TODO: 2017/10/23
-    //if (course.is_private)
-    //  saasRouter.choose( CourseUri.COURSE_TYPE_GROUP_LIST);
-    //else saasRouter.choose(GymManageUri.TRAINER_LIST);
+    routeTo("course", "/choose/", null);
   }
 
   /**
@@ -229,7 +276,8 @@ public class BatchDetailCommonView extends BaseFragment {
    */
   @OnClick(R2.id.coach) public void onCoachClicked() {
     if (AppUtils.getCurApp(getContext()) == 0) return;
-    routeTo("staff", "/trainer/choose/", null);
+    routeTo("staff", "/trainer/choose/",
+      new TrainerChooseParams().selectedId(trainer != null ? trainer.getId() : null).build());
   }
 
   /**
@@ -237,7 +285,7 @@ public class BatchDetailCommonView extends BaseFragment {
    */
   @OnClick(R2.id.space) public void onSpaceClicked() {
     routeTo("gym", "/site/choose/", new SiteSelectedParams().isPrivate(course.is_private)
-      //.selectIds()
+      .selectIds(ListUtils.getIdList(spaces))
       .build());
   }
 
@@ -262,18 +310,20 @@ public class BatchDetailCommonView extends BaseFragment {
   }
 
   /**
-   * 在线支付
+   * 在线支付 动态价格，私教需要1对多私教，团课需要开启动态价格
    */
   @OnClick(R2.id.pay_online) public void onPayOnlineClicked() {
-    //saasRouter.choose(CourseUri.PAY_ONLINE);
+    routeTo("/batch/pay/online/",
+      new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
+        .maxPeople(elMultiSupport.isExpanded() ? getOrderStudentCount() : 1)
+        .build());
   }
 
   /**
    * 卡支付设置
    */
   @OnClick(R2.id.pay_card) public void onPayCardClicked() {
-    //saasRouter.choose(CourseUri.PAY_CARDS);
-    routeTo("card", "/card/batch/chooose/",null);
+    routeTo("card", "/card/batch/choose/", new BatchPayCardParams().rules(rulesPayCards).build());
   }
 
   public void onPayCardRules(int size) {
@@ -282,6 +332,19 @@ public class BatchDetailCommonView extends BaseFragment {
     } else {
       payCard.setHint(getString(R.string.common_un_setting));
     }
+  }
+
+  public List<String> getSupportSpace() {
+    return ListUtils.getIdList(spaces);
+  }
+
+  public List<Rule> getRules() {
+    List<Rule> rules = new ArrayList<>();
+    if (payOnlineRule != null)
+      rules.add(payOnlineRule);
+    if (rulesPayCards.size() > 0)
+      rules.addAll(rulesPayCards);
+    return rules;
   }
 
   @Override public boolean isBlockTouch() {

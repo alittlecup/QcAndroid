@@ -57,12 +57,12 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
     parent.addView(child,1);
     toolbar = parent.findViewById(R.id.toolbar);
     toolbarTitle = parent.findViewById(R.id.toolbar_title);
-    commonFlexAdapter.addListener(this);
     initToolbar(toolbar);
     return parent;
   }
 
   @Override protected void addDivider() {
+    initListener(this);
     rv.addItemDecoration(new FlexibleItemDecoration(getContext())
       .addItemViewType(R.layout.item_saas_batch,15)
       .addItemViewType(R.layout.item_batch_category,1)
@@ -97,7 +97,10 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
     IFlexible item = commonFlexAdapter.getItem(i);
     if (item == null) return;
     if (item instanceof BatchCateItem){
-      routeTo("/batch/detail/",null);
+      routeTo("/batch/detail/",new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams()
+        .batchId(((BatchCateItem) item).getId())
+        .build()
+      );
     }
   }
 

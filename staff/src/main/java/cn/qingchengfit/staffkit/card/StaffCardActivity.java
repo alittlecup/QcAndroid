@@ -3,6 +3,7 @@ package cn.qingchengfit.staffkit.card;
 import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.CardActivity;
 import cn.qingchengfit.saasbase.cards.views.AutoNotifySettingFragment;
+import cn.qingchengfit.saasbase.cards.views.BatchPayCardFragment;
 import cn.qingchengfit.saasbase.cards.views.CardBalanceFragment;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.saasbase.cards.views.CardChargeFragment;
@@ -21,7 +22,7 @@ import com.anbillon.flabellum.annotations.Trunk;
 
 @Trunk(fragments = {
   CardTplsHomeInGymFragment.class, CardTplsInBrandFragment.class, CardTplDetailFragment.class, AutoNotifySettingFragment.class,CardBalanceFragment.class,
-  ChangeAutoNotifyFragment.class,
+  ChangeAutoNotifyFragment.class, BatchPayCardFragment.class,
   ChooseCardTplForBuyCardFragment.class, CardBuyFragment.class, CardListHomeFragment.class,
   CardFilterTplFragment.class, CardDetailFragment.class, CardtplOptionAddFragment.class,
   CardTplOptionFragment.class, CardChargeFragment.class, CardtplAddFragment.class,

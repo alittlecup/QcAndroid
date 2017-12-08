@@ -20,7 +20,7 @@ public class ArrangeBatchBody {
     public String to_date;
     public int max_users;
     public List<String> spaces;
-    public ArrayList<Rule> rules;
+    public ArrayList<Rule> rules = new ArrayList<>();
     public ArrayList<Time_repeat> time_repeats;
     public String batch_id;
     public boolean is_free = false;
@@ -28,13 +28,13 @@ public class ArrangeBatchBody {
 
 
     public int checkAddBatch(){
-        if (!CmStringUtils.isEmpty(teacher_id))
+        if (CmStringUtils.isEmpty(teacher_id))
             return R.string.err_no_trainer;
         if (!CmStringUtils.isID(course_id))
             return R.string.err_no_course;
-        if (!CmStringUtils.isEmpty(from_date))
+        if (CmStringUtils.isEmpty(from_date))
             return R.string.err_no_start_date;
-        if (!CmStringUtils.isEmpty(to_date))
+        if (CmStringUtils.isEmpty(to_date))
             return R.string.err_no_end_date;
         if (DateUtils.formatDateFromYYYYMMDD(from_date).getTime() >
             DateUtils.formatDateFromYYYYMMDD(to_date).getTime())

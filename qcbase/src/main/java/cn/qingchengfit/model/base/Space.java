@@ -2,6 +2,8 @@ package cn.qingchengfit.model.base;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.utils.IdPropertyable;
+import cn.qingchengfit.utils.StringPropertyable;
 
 /**
  * power by
@@ -17,7 +19,7 @@ import android.os.Parcelable;
  * <p/>
  * Created by Paper on 16/2/23 2016.
  */
-public class Space implements Parcelable {
+public class Space implements Parcelable,StringPropertyable, IdPropertyable {
     public static final Parcelable.Creator<Space> CREATOR = new Parcelable.Creator<Space>() {
         @Override public Space createFromParcel(Parcel source) {
             return new Space(source);
@@ -126,5 +128,9 @@ public class Space implements Parcelable {
         dest.writeString(this.id);
         dest.writeByte(is_support_private ? (byte) 1 : (byte) 0);
         dest.writeByte(is_support_team ? (byte) 1 : (byte) 0);
+    }
+
+    @Override public String getStringProperty() {
+        return getName();
     }
 }

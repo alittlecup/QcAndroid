@@ -17,8 +17,11 @@ import butterknife.OnClick;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
+import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchEditPresenter;
+import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
 import cn.qingchengfit.saasbase.items.CmLRTxtItem;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.DateUtils;
@@ -58,7 +61,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/9/22.
  */
 @Leaf(module = "course", path = "/batch/edit/")
-public class EditBatchFragment extends BaseFragment implements BatchEditPresenter.MVPView,
+public class EditBatchFragment extends BaseFragment implements IBatchPresenter.MVPView,
   FlexibleAdapter.OnItemClickListener{
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -121,6 +124,14 @@ public class EditBatchFragment extends BaseFragment implements BatchEditPresente
     presenter.delBatch();
   }
 
+  @Override public void onSuccess() {
+
+  }
+
+  @Override public void onTemplete(boolean isFree, boolean oepnOnlie, int maxuer) {
+
+  }
+
   @Override public void onBatchDetail(BatchDetail batchDetail) {
     if (batchBaseFragment == null)
       batchBaseFragment = BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher);
@@ -140,6 +151,53 @@ public class EditBatchFragment extends BaseFragment implements BatchEditPresente
     }
   }
 
+  @Override public void onLoppers(List<BatchLoop> loopers) {
+
+  }
+
+  @Override public void addBatchLooper(BatchLoop loop) {
+
+  }
+
+  @Override public String getCourseId() {
+    return batchBaseFragment.getCourseId();
+  }
+
+  @Override public String getTrainerId() {
+    return batchBaseFragment.getTrainerId();
+  }
+
+  @Override public boolean supportMutiMember() {
+    return batchBaseFragment.mutilSupportble();
+  }
+
+  @Override public String getStart() {
+    return null;
+  }
+
+  @Override public String getEnd() {
+    return null;
+  }
+
+  @Override public List<String> getSupportSpace() {
+    return batchBaseFragment.getSupportSpace();
+  }
+
+  @Override public List<BatchLoop> getBatchLoops() {
+    return null;
+  }
+
+  @Override public List<Rule> getRules() {
+    return batchBaseFragment.getRules();
+  }
+
+  @Override public int suportMemberNum() {
+    return batchBaseFragment.getOrderStudentCount();
+  }
+
+  @Override public boolean needPay() {
+    return batchBaseFragment.needPay();
+  }
 
   /**
    *

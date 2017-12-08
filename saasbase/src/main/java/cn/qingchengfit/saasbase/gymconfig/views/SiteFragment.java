@@ -63,6 +63,7 @@ public class SiteFragment extends BaseListFragment
   }
 
   @Override protected void addDivider() {
+    initListener(this);
     rv.addItemDecoration(
       new FlexibleItemDecoration(getContext()).withDefaultDivider().withBottomEdge(true));
   }

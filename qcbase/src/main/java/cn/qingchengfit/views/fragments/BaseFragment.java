@@ -119,6 +119,7 @@ public abstract class BaseFragment extends RxFragment
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
     super.onViewCreated(view, savedInstanceState);
+    setBackPress();
     //使fitsystem生效
     ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
       @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH) @Override

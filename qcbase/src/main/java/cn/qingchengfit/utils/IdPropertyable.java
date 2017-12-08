@@ -1,8 +1,4 @@
-package cn.qingchengfit.saasbase.gymconfig.event;
-
-import cn.qingchengfit.model.base.Space;
-import java.util.ArrayList;
-import java.util.List;
+package cn.qingchengfit.utils;
 
 /**
  * power by
@@ -22,21 +18,9 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/12/1.
+ * Created by Paper on 2017/11/1.
  */
 
-public class EventSiteSelected {
-  List<Space> spaces = new ArrayList<>();
-
-  public void add(Space space) {
-    spaces.add(space);
-  }
-
-  public void clear() {
-    spaces.clear();
-  }
-
-  public List<Space> getSpaces() {
-    return spaces;
-  }
+public interface IdPropertyable {
+  String getId();
 }

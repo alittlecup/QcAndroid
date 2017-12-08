@@ -32,6 +32,10 @@ public class BatchLoopItem extends AbstractFlexibleItem<BatchLoopItem.BatchLoopV
     this.batchLoop = batchLoop;
   }
 
+  public BatchLoop getBatchLoop() {
+    return batchLoop;
+  }
+
   public String getId(){
     if (batchLoop != null && batchLoop.id != null){
       return batchLoop.id;

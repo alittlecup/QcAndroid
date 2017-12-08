@@ -27,7 +27,9 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
+import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.items.BatchLoopItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.AddBatchPresenter;
 import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
@@ -47,6 +49,7 @@ import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,9 +72,8 @@ import rx.android.schedulers.AndroidSchedulers;
  * <p/>
  * Created by Paper on 16/5/4 2016.
  */
-@Leaf(module = "course", path = "/batch/add/" )
-public class AddBatchFragment extends SaasBaseFragment
-    implements IBatchPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
+@Leaf(module = "course", path = "/batch/add/") public class AddBatchFragment
+  extends SaasBaseFragment implements IBatchPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
 
   @BindView(R2.id.add) TextView add;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
@@ -96,7 +98,8 @@ public class AddBatchFragment extends SaasBaseFragment
 
   private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
     @Override public boolean onMenuItemClick(MenuItem item) {
-
+      presenter.buildBody();
+      presenter.checkBatch();
       //body.open_rule = presenter.getBatchOpenRule();
       //
       //if (body.max_users != Integer.valueOf(orderSutdentCount.getContent())
@@ -143,23 +146,23 @@ public class AddBatchFragment extends SaasBaseFragment
   @Need public Course mCourse;
   private List<BatchLoop> batchLoops = new ArrayList<>();
 
-
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     batchBaseFragment = BatchDetailCommonView.newInstance(mCourse, mTeacher);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
-    RxBus.getBus().register(BatchLoop.class)
+    RxBus.getBus()
+      .register(BatchLoop.class)
       .compose(bindToLifecycle())
       .compose(doWhen(FragmentEvent.CREATE_VIEW))
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<BatchLoop>() {
         @Override public void onNext(BatchLoop batchLoop) {
           BatchLoopItem item = new BatchLoopItem(batchLoop, presenter.isPrivate());
-          if (commonFlexAdapter.contains(item)){
+          if (commonFlexAdapter.contains(item)) {
             int pos = commonFlexAdapter.index(item);
-            ((BatchLoopItem)commonFlexAdapter.getItem(pos)).setBatchLoop(batchLoop);
+            ((BatchLoopItem) commonFlexAdapter.getItem(pos)).setBatchLoop(batchLoop);
             commonFlexAdapter.notifyItemChanged(pos);
-          }else {
+          } else {
             commonFlexAdapter.addItem(item);
           }
         }
@@ -168,7 +171,7 @@ public class AddBatchFragment extends SaasBaseFragment
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+    @Nullable Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_saas_add_batch, container, false);
     unbinder = ButterKnife.bind(this, view);
@@ -193,7 +196,7 @@ public class AddBatchFragment extends SaasBaseFragment
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitile.setText(
-        presenter.isPrivate() ? R.string.t_add_private_course : R.string.t_add_group_course);
+      presenter.isPrivate() ? R.string.t_add_private_course : R.string.t_add_group_course);
     toolbar.inflateMenu(R.menu.menu_compelete);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
@@ -209,7 +212,7 @@ public class AddBatchFragment extends SaasBaseFragment
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof BatchDetailCommonView) {
       batchBaseFragment.openPay(presenter.isPro());
@@ -223,10 +226,10 @@ public class AddBatchFragment extends SaasBaseFragment
   @Override public boolean onFragmentBackPress() {
     if (exitDialg == null) {
       exitDialg = DialogUtils.instanceDelDialog(getContext(),
-          presenter.isPrivate() ? "确定放弃本次排期？" : "确定放弃本次排课", (dialog, which) -> {
-            dialog.dismiss();
-            popBack();
-          });
+        presenter.isPrivate() ? "确定放弃本次排期？" : "确定放弃本次排课", (dialog, which) -> {
+          dialog.dismiss();
+          popBack();
+        });
     }
     if (!exitDialg.isShowing()) exitDialg.show();
     return true;
@@ -249,6 +252,10 @@ public class AddBatchFragment extends SaasBaseFragment
     ToastUtils.showS("已自动填充排期");
     tvBatchLoopHint.setText("课程周期 (已根据历史信息自动填充)");
     tvClearAutoBatch.setVisibility(View.VISIBLE);
+  }
+
+  @Override public void onBatchDetail(BatchDetail batchDetail) {
+
   }
 
   @Override public void onLoppers(List<BatchLoop> loopers) {
@@ -279,8 +286,33 @@ public class AddBatchFragment extends SaasBaseFragment
 
   @Override public boolean supportMutiMember() {
     return batchBaseFragment != null
-        && batchBaseFragment.isAdded()
-        && batchBaseFragment.mutilSupportble();
+      && batchBaseFragment.isAdded()
+      && batchBaseFragment.mutilSupportble();
+  }
+
+  @Override public String getStart() {
+    return starttime.getContent();
+  }
+
+  @Override public String getEnd() {
+    return endtime.getContent();
+  }
+
+  @Override public List<String> getSupportSpace() {
+    return batchBaseFragment.getSupportSpace();
+  }
+
+  @Override public List<BatchLoop> getBatchLoops() {
+    List<BatchLoop> batchLoops = new ArrayList<>();
+    for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
+      if (commonFlexAdapter.getItem(i) instanceof BatchLoopItem)
+      batchLoops.add(((BatchLoopItem) commonFlexAdapter.getItem(i)).getBatchLoop());
+    }
+    return batchLoops;
+  }
+
+  @Override public List<Rule> getRules() {
+    return batchBaseFragment.getRules();
   }
 
   @Override public int suportMemberNum() {
@@ -302,7 +334,7 @@ public class AddBatchFragment extends SaasBaseFragment
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
     pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
-        Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
+      Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
     pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
         starttime.setContent(DateUtils.Date2YYYYMMDD(date));
@@ -321,18 +353,18 @@ public class AddBatchFragment extends SaasBaseFragment
       pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
     pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
-        Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
+      Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
     pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
         if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()) {
           Toast.makeText(getContext(), R.string.alert_endtime_greater_starttime, Toast.LENGTH_SHORT)
-              .show();
+            .show();
           return;
         }
         if (date.getTime() - DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()
-            > 92 * DateUtils.DAY_TIME) {
+          > 92 * DateUtils.DAY_TIME) {
           Toast.makeText(getContext(), R.string.alert_batch_greater_three_month, Toast.LENGTH_SHORT)
-              .show();
+            .show();
           return;
         }
         endtime.setContent(DateUtils.Date2YYYYMMDD(date));
@@ -344,20 +376,20 @@ public class AddBatchFragment extends SaasBaseFragment
 
   @OnClick(R2.id.civ_to_open_time) public void onOpenTime() {
     if (openDialog == null) {
-      openDialog = DialogList.builder(getContext())
-          .list(arrayOpenTime, new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              if (position == 0) {
-                presenter.setOpenRuleType(1);
-                civOpenTime.setContent(arrayOpenTime[0]);
-              } else if (position == 1) {
-                chooseOpenTime();
-              } else {
-                chooseAheadOfHour();
-              }
+      openDialog =
+        DialogList.builder(getContext()).list(arrayOpenTime, new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (position == 0) {
+              presenter.setOpenRuleType(1);
+              civOpenTime.setContent(arrayOpenTime[0]);
+            } else if (position == 1) {
+              chooseOpenTime();
+            } else {
+              chooseAheadOfHour();
             }
-          });
+          }
+        });
     }
     openDialog.show();
   }
@@ -377,7 +409,7 @@ public class AddBatchFragment extends SaasBaseFragment
       });
     }
     chooseOpenTimeDialog.setRange(DateUtils.getYear(new Date()) - 1,
-        DateUtils.getYear(new Date()) + 1);
+      DateUtils.getYear(new Date()) + 1);
     Date d = new Date();
     if (!TextUtils.isEmpty(civOpenTime.getContent())) {
       try {
@@ -417,7 +449,15 @@ public class AddBatchFragment extends SaasBaseFragment
   }
 
   @Override public boolean onItemClick(int position) {
-    // TODO: 2017/9/15 跳去looper
+    IFlexible item = commonFlexAdapter.getItem(position);
+    if (item == null) return true;
+    if (item instanceof BatchLoopItem) {
+      routeTo("/batch/loop/add/",
+        new cn.qingchengfit.saasbase.course.batch.views.EditBatchLoopParams().batchLoop(
+          ((BatchLoopItem) item).getBatchLoop())
+          .isPrivate(mCourse == null || mCourse.is_private)
+          .build());
+    }
     return true;
   }
 
@@ -425,8 +465,7 @@ public class AddBatchFragment extends SaasBaseFragment
    * 添加课程周期
    */
   @OnClick(R2.id.add) public void addBatchLoop() {
-    setBackPressNull();
-    routeTo("/batch/loop/add/",null);
+    routeTo("/batch/loop/add/", null);
   }
   //
   //// TODO: 2017/9/12 非高级版本

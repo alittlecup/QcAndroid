@@ -103,5 +103,12 @@
 
 
   <string formatted="false" name="batch_can_pay_card_count">可用%d种卡结算</string>
+  <string name="student_limit_buy_count">每个会员限购张数</string>
+  <string name="buy_card_no_limit">不限张数</string>
+  <string name="card_count_unit">%d张</string>
+  <string name="alipay_grey">支付宝支付（暂不支持）</string>
+  <string name="online_pay_client">在线支付平台:</string>
+  <string name="wechat_pay">微信支付</string>
+  <string name="pay_online">在线支付</string>
 
 </resources>

@@ -127,7 +127,6 @@
       app:civ_clickable="true"
       app:civ_content="1"
       app:civ_lable="单节可预约人数"
-      app:civ_showdivier="false"
       app:civ_showright="true"
       style="@style/QcCivInputStyle"
       />
