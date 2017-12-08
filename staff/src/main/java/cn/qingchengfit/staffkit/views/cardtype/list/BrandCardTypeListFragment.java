@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.responese.CardTpl;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rxbus.event.RxCardTypeEvent;
@@ -35,7 +36,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
-import rx.Subscriber;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -115,16 +116,35 @@ public class BrandCardTypeListFragment extends BaseFragment implements CardTypeL
             setCardType(((BrandCardListFragment) getParentFragment()).getmCardtype());
         }
         mObCt = RxBusAdd(RxCardTypeEvent.class);
-        mObCt.subscribe(new Subscriber<RxCardTypeEvent>() {
-            @Override public void onCompleted() {
-
-            }
-
-            @Override public void onError(Throwable e) {
-
-            }
-
-            @Override public void onNext(RxCardTypeEvent rxCardTypeEvent) {
+        //mObCt.subscribe(new Subscriber<RxCardTypeEvent>() {
+        //    @Override public void onCompleted() {
+        //
+        //    }
+        //
+        //    @Override public void onError(Throwable e) {
+        //
+        //    }
+        //
+        //    @Override public void onNext(RxCardTypeEvent rxCardTypeEvent) {
+        //        cardtypeList.stopLoading();
+        //        datas.clear();
+        //        for (CardTpl card_tpl : rxCardTypeEvent.datas) {
+        //            if (mSupportType == CARDTYPE_ALL) {
+        //                datas.add(card_tpl);
+        //            } else if (mSupportType == CARDTYPE_MUTI) {
+        //                if (card_tpl.getShopIds() != null && card_tpl.getShopIds().size() > 1) datas.add(card_tpl);
+        //            } else if (mSupportType == CARDTYPE_SINGLE) {
+        //                if (card_tpl.getShopIds() != null && card_tpl.getShopIds().size() == 1) datas.add(card_tpl);
+        //            }
+        //        }
+        //
+        //        cardCount.setText(datas.size() + "");
+        //        setCardType(rxCardTypeEvent.cardtype);
+        //        adatper.notifyDataSetChanged();
+        //    }
+        //});
+        mObCt.subscribe(new Action1<RxCardTypeEvent>() {
+            @Override public void call(RxCardTypeEvent rxCardTypeEvent) {
                 cardtypeList.stopLoading();
                 datas.clear();
                 for (CardTpl card_tpl : rxCardTypeEvent.datas) {
@@ -141,7 +161,7 @@ public class BrandCardTypeListFragment extends BaseFragment implements CardTypeL
                 setCardType(rxCardTypeEvent.cardtype);
                 adatper.notifyDataSetChanged();
             }
-        });
+        }, new NetWorkThrowable());
 
         adatper.setListener(new OnRecycleItemClickListener() {
             @Override public void onItemClick(View v, int pos) {

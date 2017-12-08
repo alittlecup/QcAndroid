@@ -85,7 +85,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   @BindView(R.id.show_desc) TextView showDesc;
   @BindView(R.id.show_limit) TextView showLimit;
   @BindView(R.id.limit_bug_count) CommonInputView mCivLimitBugCount;
-  List<CoachService> mCoachServices;
+  private List<CoachService> mCoachServices;
   @Inject EditCardTypePresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
@@ -181,6 +181,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
                   intent.putExtra(QRActivity.LINK_MODULE,
                       getResources().getString(R.string.qr_code_2web_multi_card_add,
                           gymWrapper.brand_id(), card_tpl.id));
+
                 }
               }else{
                 showAlert(R.string.alert_edit_cardtype_no_permission);

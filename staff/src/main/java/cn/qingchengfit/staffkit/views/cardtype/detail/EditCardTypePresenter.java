@@ -70,6 +70,7 @@ public class EditCardTypePresenter extends BasePresenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
     }
 
