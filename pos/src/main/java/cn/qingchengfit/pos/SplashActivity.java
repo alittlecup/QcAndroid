@@ -24,7 +24,6 @@ import cn.qingchengfit.pos.net.PosApi;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import cn.qingchengfit.subscribes.NetSubscribe;
-import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -155,11 +154,11 @@ public class SplashActivity extends BaseActivity {
       })
       .subscribe(new NetSubscribe<Boolean>() {
         @Override public void onNext(Boolean isgo) {
-          if (isgo) {
+          //if (isgo) {
             goMain();
-          } else {
-            LogUtil.e("splash error");
-          }
+          //} else {
+          //  LogUtil.e("splash error");
+          //}
         }
       });
   }
