@@ -3,7 +3,6 @@ package cn.qingchengfit.pos.card;
 import android.content.Intent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.RongPay;
 import cn.qingchengfit.saasbase.bill.view.BillDetailParams;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
@@ -42,8 +41,8 @@ public class PosCardChargeFragment extends CardChargeFragment {
         .title(payBusinessResponse.order_title)
         .merOrderId(payBusinessResponse.order_no)
         .customerNo(gymWrapper.getCustumNo())
-        .operator(getResources().getString(R.string.pay_to_operator, loginStatus.staff_name(),
-            loginStatus.getLoginUser().id))
+        .operator(
+            loginStatus.staff_id())
         .build()
         .pay(getContext());
       if (getActivity() != null)

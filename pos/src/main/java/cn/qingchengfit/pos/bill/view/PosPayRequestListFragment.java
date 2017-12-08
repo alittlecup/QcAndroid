@@ -2,7 +2,6 @@ package cn.qingchengfit.pos.bill.view;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.pos.R;
 import cn.qingchengfit.pos.RongPay;
 import cn.qingchengfit.saasbase.bill.beans.PayRequest;
 import cn.qingchengfit.saasbase.bill.view.PayRequestListFragment;
@@ -37,8 +36,7 @@ public class PosPayRequestListFragment extends PayRequestListFragment {
       .amount(payRequest.price)
       .customerNo(gymWrapper.getCustumNo())
       .merOrderId(payRequest.order_no)
-      .operator(getResources().getString(R.string.pay_to_operator, loginStatus.staff_name(),
-          loginStatus.getLoginUser().user_id))
+      .operator(loginStatus.staff_id())
       .title(payRequest.title)
       .build();
     if (getActivity() != null)
