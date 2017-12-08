@@ -155,11 +155,11 @@ public class SplashActivity extends BaseActivity {
       })
       .subscribe(new NetSubscribe<Boolean>() {
         @Override public void onNext(Boolean isgo) {
-          if (isgo) {
+          //if (isgo) {
             goMain();
-          } else {
-            LogUtil.e("splash error");
-          }
+          //} else {
+          //  LogUtil.e("splash error");
+          //}
         }
       });
   }
