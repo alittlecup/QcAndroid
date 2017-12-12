@@ -67,7 +67,7 @@ public class CardProtocolActivity extends WebActivity{
           }else if (gymWrapper.inBrand() && SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
               cardTpl.getShopIds())){
             Intent intent = new Intent(CardProtocolActivity.this, QRActivity.class);
-            intent.putExtra(QRActivity.LINK_URL,
+            intent.putExtra(QRActivity.LINK_MODULE,
                 getResources().getString(R.string.qr_code_2web_multi_card_edit,
                     gymWrapper.brand_id(), cardTpl.id));
 

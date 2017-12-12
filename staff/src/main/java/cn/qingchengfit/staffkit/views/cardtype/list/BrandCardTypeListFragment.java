@@ -36,7 +36,9 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -115,7 +117,6 @@ public class BrandCardTypeListFragment extends BaseFragment implements CardTypeL
         if (getParentFragment() instanceof BrandCardListFragment) {
             setCardType(((BrandCardListFragment) getParentFragment()).getmCardtype());
         }
-        mObCt = RxBusAdd(RxCardTypeEvent.class);
         //mObCt.subscribe(new Subscriber<RxCardTypeEvent>() {
         //    @Override public void onCompleted() {
         //
@@ -143,7 +144,10 @@ public class BrandCardTypeListFragment extends BaseFragment implements CardTypeL
         //        adatper.notifyDataSetChanged();
         //    }
         //});
-        mObCt.subscribe(new Action1<RxCardTypeEvent>() {
+        RxBusAdd(RxCardTypeEvent.class)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<RxCardTypeEvent>() {
             @Override public void call(RxCardTypeEvent rxCardTypeEvent) {
                 cardtypeList.stopLoading();
                 datas.clear();

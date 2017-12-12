@@ -22,13 +22,14 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTpls;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
-import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.RxCardTypeEvent;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.cardtype.detail.EditCardTypeFragment;
@@ -58,7 +59,7 @@ import timber.log.Timber;
 public class BrandCardListFragment extends BaseFragment {
     @BindView(R.id.tab) TabLayout tab;
     @BindView(R.id.viewpager) ViewPager viewpager;
-    @Inject RestRepository restRepository;
+    @Inject QcRestRepository restRepository;
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
@@ -124,7 +125,7 @@ public class BrandCardListFragment extends BaseFragment {
     }
 
     public void refresh() {
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.createGetApi(Get_Api.class)
             .qcGetCardTpls(App.staffId, gymWrapper.getParams(), mCardtype == 0 ? null : Integer.toString(mCardtype),
                 mCardDisable == 0 ? "1" : "0")
             .observeOn(AndroidSchedulers.mainThread())
