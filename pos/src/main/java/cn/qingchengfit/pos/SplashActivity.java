@@ -23,7 +23,6 @@ import cn.qingchengfit.pos.main.MainActivity;
 import cn.qingchengfit.pos.net.PosApi;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
-import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -33,6 +32,7 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -80,7 +80,12 @@ public class SplashActivity extends BaseActivity {
             return Observable.just(
               ((TelephonyManager) getSystemService(TELEPHONY_SERVICE)).getDeviceId());
           } else {
-            showAlert("请打开查看设备状态权限");
+            SplashActivity.this.runOnUiThread(new Runnable() {
+              @Override public void run() {
+                showAlert("请打开查看设备状态权限");
+              }
+            });
+
             return null;
           }
         }
@@ -152,13 +157,13 @@ public class SplashActivity extends BaseActivity {
           }
         }
       })
-      .subscribe(new NetSubscribe<Boolean>() {
-        @Override public void onNext(Boolean isgo) {
-          //if (isgo) {
-            goMain();
-          //} else {
-          //  LogUtil.e("splash error");
-          //}
+      .subscribe(new Action1<Boolean>() {
+        @Override public void call(Boolean aBoolean) {
+          goMain();
+        }
+      }, new Action1<Throwable>() {
+        @Override public void call(Throwable throwable) {
+          showAlert(throwable.getMessage());
         }
       });
   }

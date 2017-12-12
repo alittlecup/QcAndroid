@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -228,5 +231,63 @@ public class ExpandedLayout extends LinearLayout {
             leftImage.setImageResource(R.color.transparent);
         }
         invalidate();
+    }
+
+    @Override public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        CommonInputView.SavedState ss = new CommonInputView.SavedState(superState);
+        ss.childrenStates = new SparseArray();
+        for (int i = 0; i < getChildCount(); i++) {
+            getChildAt(i).saveHierarchyState(ss.childrenStates);
+        }
+        return ss;
+    }
+
+    @Override public void onRestoreInstanceState(Parcelable state) {
+        CommonInputView.SavedState ss = (CommonInputView.SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        for (int i = 0; i < getChildCount(); i++) {
+            getChildAt(i).restoreHierarchyState(ss.childrenStates);
+        }
+    }
+
+    @Override protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
+        dispatchFreezeSelfOnly(container);
+    }
+
+    @Override protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
+        dispatchThawSelfOnly(container);
+    }
+
+    static class SavedState extends BaseSavedState {
+        public static final ClassLoaderCreator<ExpandedLayout.SavedState> CREATOR =
+          new ClassLoaderCreator<ExpandedLayout.SavedState>() {
+              @Override public ExpandedLayout.SavedState createFromParcel(Parcel source, ClassLoader loader) {
+                  return new ExpandedLayout.SavedState(source, loader);
+              }
+
+              @Override public ExpandedLayout.SavedState createFromParcel(Parcel source) {
+                  return createFromParcel(null);
+              }
+
+              public ExpandedLayout.SavedState[] newArray(int size) {
+                  return new ExpandedLayout.SavedState[size];
+              }
+          };
+        SparseArray childrenStates;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in, ClassLoader classLoader) {
+            super(in);
+            childrenStates = in.readSparseArray(classLoader);
+        }
+
+        @Override public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeSparseArray(childrenStates);
+        }
     }
 }
