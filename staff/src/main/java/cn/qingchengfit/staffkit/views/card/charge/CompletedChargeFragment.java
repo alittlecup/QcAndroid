@@ -276,6 +276,7 @@ public class CompletedChargeFragment extends BaseFragment implements CompletedCh
     ToastUtils.show("充值成功");
     //mCallbackActivity.cleanToolbar();
     //getFragmentManager().popBackStack(RealCardDetailFragment.class.getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    getFragmentManager().popBackStack(null, 1);
     getFragmentManager().beginTransaction()
         .replace(mCallbackActivity.getFragId(), new RealCardDetailFragment())
         .commitAllowingStateLoss();
