@@ -52,7 +52,7 @@ public class AllotStaffListPage extends StudentBaseFragment<PageAllotlistBinding
         Uri uri = Uri.parse("student://student/allotstaff/detail");
         StudentActivityViewModel viewModel = getActivityViewModel();
         viewModel.getAllotStaff().setValue(mViewModel.getLiveItems().getValue().get(position).getData().getSeller());
-        viewModel.getAllotType().setValue(type);
+        viewModel.setAllotType(type);
         routeTo(uri, null);
         return false;
     }

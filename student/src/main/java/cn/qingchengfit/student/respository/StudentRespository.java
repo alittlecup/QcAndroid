@@ -9,8 +9,11 @@ import java.util.List;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
+import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
+import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
@@ -71,5 +74,14 @@ public interface StudentRespository {
     LiveData<Boolean> qcModifySellers(String staff_id, HashMap<String, Object> params, HashMap<String, Object> body);
 
 
-   LiveData<StudentListWrapper> qcGetAllStudents(String id, HashMap<String, Object> params);
+    LiveData<StudentListWrapper> qcGetAllStudents(String id, HashMap<String, Object> params);
+
+    LiveData<List<FilterModel>> qcGetFilterModelFromLocal();
+
+    LiveData<SalerUserListWrap> qcGetTrackStudentsRecommends(String id, HashMap<String, Object> params);
+
+    LiveData<SourceBeans> qcGetTrackStudentsOrigins(String id, HashMap<String, Object> params);
+    LiveData<SalerListWrap> qcGetTrackStudentsFilterSalers(String id, HashMap<String, Object> params);
+
+
 }

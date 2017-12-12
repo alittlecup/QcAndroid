@@ -10,6 +10,7 @@ import java.util.List;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
 import cn.qingchengfit.saasbase.utils.StringUtils;
+import cn.qingchengfit.student.common.mvvm.ActionLiveEvent;
 import cn.qingchengfit.student.items.StaffDetailItem;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import rx.functions.Action1;
@@ -23,6 +24,12 @@ public class SortViewModel {
     public final ObservableBoolean latestChecked = new ObservableBoolean(true);
     public final ObservableBoolean letterChecked = new ObservableBoolean(false);
     public final ObservableBoolean filterChecked = new ObservableBoolean(false);
+
+    public ActionLiveEvent getFilterEvent() {
+        return filterEvent;
+    }
+
+    private final ActionLiveEvent filterEvent = new ActionLiveEvent();
 
     public void onLatestClick(List items, boolean isChecked) {
         latestChecked.set(true);
@@ -87,7 +94,8 @@ public class SortViewModel {
 
 
     public void onFilterClick(boolean isChecked) {
-        if (!isChecked) return;
+        if (isChecked) return;
+        filterEvent.call();
     }
 
     private onSortFinishListener listener;

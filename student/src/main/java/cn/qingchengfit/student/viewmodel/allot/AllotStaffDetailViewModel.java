@@ -11,6 +11,7 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -31,7 +32,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
  * Created by huangbaole on 2017/11/21.
  */
 
-public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentBean>, StaffDetailItem, StudentFilter> {
+public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentBean>, StaffDetailItem, Map<String, ?>> {
     public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
     public final ObservableBoolean isLoading = new ObservableBoolean(false);
     private MutableLiveData<List<String>> letters = new MutableLiveData<>();
@@ -46,7 +47,6 @@ public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentB
     LoginStatus loginStatus;
     @Inject
     StudentRespository respository;
-    StudentFilter filter;
 
     public void setSalerId(String salerId) {
         this.salerId = salerId;
@@ -60,15 +60,11 @@ public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentB
 
     private String salerId;
 
-    public StudentFilter getFilter() {
-        return filter;
-    }
 
     public Integer type;
 
     @Inject
     public AllotStaffDetailViewModel() {
-        filter = new StudentFilter();
         sortViewModel = new SortViewModel();
         sortViewModel.setListener(itemss -> items.set(itemss));
     }
@@ -76,24 +72,17 @@ public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentB
 
     @NonNull
     @Override
-    protected LiveData<List<QcStudentBean>> getSource(@NonNull StudentFilter filter) {
+    protected LiveData<List<QcStudentBean>> getSource(@NonNull Map<String, ?> map) {
         HashMap<String, Object> params = gymWrapper.getParams();
 
         params.put("show_all", 1);
-        if (!TextUtils.isEmpty(filter.status)) {
-            params.put("status", filter.status);
+        if (!map.isEmpty()) {
+            params.putAll(map);
+            if (params.containsKey("status_ids")) {
+                params.put("status", params.get("status_ids"));
+                params.remove("status_ids");
+            }
         }
-        if (!TextUtils.isEmpty(filter.registerTimeStart) && !TextUtils.isEmpty(filter.registerTimeEnd)) {
-            params.put("start", filter.registerTimeStart);
-            params.put("end", filter.registerTimeEnd);
-        }
-        if (!TextUtils.isEmpty(filter.gender)) params.put("gender", filter.gender);
-
-        if (filter.referrerBean != null)
-            params.put("recommend_user_id", filter.referrerBean.id);
-
-        if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
-
         String path = "";
         switch (type) {
             case 0:
@@ -107,11 +96,15 @@ public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentB
                 if (!TextUtils.isEmpty(salerId)) {
                     params.put("coach_id", salerId);
                 }
-                if (filter.sale != null) params.put("seller_id", filter.sale.getId());
                 break;
         }
         isLoading.set(true);
         return Transformations.map(respository.qcGetAllotStaffMembers(loginStatus.staff_id(), path, params), intput -> intput.users);
+    }
+
+    @Override
+    public void loadSource(@NonNull Map<String, ?> map) {
+        this.identifier.setValue(map);
     }
 
     @Override
@@ -125,7 +118,7 @@ public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentB
     }
 
     public void refresh() {
-        identifier.setValue(filter);
+        identifier.setValue(identifier.getValue());
     }
 
     static class StaffDetailItemFactory implements FlexibleItemProvider.Factory<QcStudentBean, StaffDetailItem> {

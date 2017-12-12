@@ -1,7 +1,11 @@
 package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 
 import java.util.HashMap;
@@ -12,9 +16,12 @@ import javax.inject.Singleton;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
+import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
+import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
@@ -25,7 +32,9 @@ import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.other.RxHelper;
+import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.student.LiveDataReactiveStreams;
+import cn.qingchengfit.student.respository.local.LocalRespository;
 import cn.qingchengfit.student.respository.remote.HttpException;
 import rx.Observable;
 import rx.RxReactiveStreams;
@@ -57,6 +66,9 @@ public class StudentRespositoryImpl implements StudentRespository {
 
     @Inject
     IStudentModel remoteService;
+
+    @Inject
+    LocalRespository localRespository;
 
 
     @Inject
@@ -168,5 +180,28 @@ public class StudentRespositoryImpl implements StudentRespository {
     public LiveData<StudentListWrapper> qcGetAllStudents(String id, HashMap<String, Object> params) {
         return toLiveData(remoteService.qcGetAllStudents(id, params));
     }
+
+    @Override
+    public LiveData<List<FilterModel>> qcGetFilterModelFromLocal() {
+        MutableLiveData<List<FilterModel>> filte = new MutableLiveData<>();
+        filte.setValue(localRespository.getAssetsFilterModels());
+        return filte;
+    }
+
+    @Override
+    public LiveData<SalerUserListWrap> qcGetTrackStudentsRecommends(String id, HashMap<String, Object> params) {
+        return toLiveData(remoteService.qcGetTrackStudentsRecommends(id, params));
+    }
+
+    @Override
+    public LiveData<SourceBeans> qcGetTrackStudentsOrigins(String id, HashMap<String, Object> params) {
+        return toLiveData(remoteService.qcGetTrackStudentsOrigins(id, params));
+    }
+
+    @Override
+    public LiveData<SalerListWrap> qcGetTrackStudentsFilterSalers(String id, HashMap<String, Object> params) {
+        return toLiveData(remoteService.qcGetTrackStudentsFilterSalers(id,params));
+    }
+
 
 }

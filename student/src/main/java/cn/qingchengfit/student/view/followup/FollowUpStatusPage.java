@@ -2,6 +2,7 @@ package cn.qingchengfit.student.view.followup;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,10 @@ import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageFollowupStatusBinding;
+import cn.qingchengfit.student.view.home.StudentFilterView;
+import cn.qingchengfit.student.viewmodel.followup.FollowUpFilterViewModel;
 import cn.qingchengfit.student.viewmodel.followup.FollowUpStatusViewModel;
+import cn.qingchengfit.student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.utils.MeasureUtils;
 
 
@@ -32,6 +36,8 @@ public class FollowUpStatusPage extends StudentBaseFragment<PageFollowupStatusBi
 
     FollowUpFilterView followUpFilterView;
     FollowUpStatusTopView topView;
+    private FollowUpFilterEndView filterView;
+    private FollowUpFilterViewModel filterViewModel;
 
 
     @Override
@@ -42,6 +48,19 @@ public class FollowUpStatusPage extends StudentBaseFragment<PageFollowupStatusBi
         });
         mViewModel.getFilterIndex().observe(this,integer -> {
             followUpFilterView.showPage(integer);
+        });
+        mViewModel.getFilterClick().observe(this, aVoid -> {
+            openDrawer();
+            filterViewModel = ViewModelProviders.of(filterView, factory).get(FollowUpFilterViewModel.class);
+            filterViewModel.getmFilterMap().observe(this, map -> {
+                if (map != null) {
+                    closeDrawer();
+                    // REFACTOR: 2017/12/11如何处理数据
+                    mViewModel.setFilterMap(map);
+
+                    filterViewModel.getmFilterMap().setValue(null);
+                }
+            });
         });
     }
 
@@ -57,11 +76,23 @@ public class FollowUpStatusPage extends StudentBaseFragment<PageFollowupStatusBi
         return mBinding;
     }
 
+
+    private void openDrawer() {
+        mBinding.drawer.openDrawer(GravityCompat.END);
+    }
+
+    private void closeDrawer() {
+        mBinding.drawer.closeDrawer(GravityCompat.END);
+    }
+
     private void initFragment() {
         followUpFilterView=new FollowUpFilterView();
         topView=new FollowUpStatusTopView();
         stuff(R.id.frag_chart, topView);
         stuff(R.id.frag_filter, followUpFilterView);
+
+        filterView = new FollowUpFilterEndView();
+        stuff(R.id.frame_student_filter, filterView);
 
     }
 

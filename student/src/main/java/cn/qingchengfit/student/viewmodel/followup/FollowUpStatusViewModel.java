@@ -14,21 +14,25 @@ import android.util.Pair;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.saasbase.student.items.FollowUpItem;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.QcStudentBeanWithFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
+import cn.qingchengfit.saasbase.student.network.body.StudentSourceBean;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.student.common.flexble.FlexibleFactory;
 import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.student.common.mvvm.ActionLiveEvent;
 import cn.qingchengfit.student.respository.StudentRespository;
 import cn.qingchengfit.utils.DateUtils;
 
@@ -52,6 +56,12 @@ public class FollowUpStatusViewModel extends FlexibleViewModel<StudentListWrappe
 
 
     private final MutableLiveData<Integer> filterIndex = new MutableLiveData<>();
+
+    public ActionLiveEvent getFilterClick() {
+        return filterClick;
+    }
+
+    private final ActionLiveEvent filterClick = new ActionLiveEvent();
 
     private final MutableLiveData<String> status = new MutableLiveData<>();
     private final MutableLiveData<String> genderM = new MutableLiveData<>();
@@ -206,7 +216,7 @@ public class FollowUpStatusViewModel extends FlexibleViewModel<StudentListWrappe
     }
 
     public void onRightFilterClick() {
-
+        filterClick.call();
     }
 
     @NonNull
@@ -221,6 +231,7 @@ public class FollowUpStatusViewModel extends FlexibleViewModel<StudentListWrappe
         if (filter.referrerBean != null) params.put("recommend_user_id", filter.referrerBean.id);
 
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
+
         if (filter.sale != null) params.put("seller_id", filter.sale.getId());
 
         if (!TextUtils.isEmpty(filter.registerTimeStart) && !TextUtils.isEmpty(filter.registerTimeEnd)) {
@@ -241,6 +252,45 @@ public class FollowUpStatusViewModel extends FlexibleViewModel<StudentListWrappe
                 break;
         }
         return respository.qcGetTrackStudents(loginStatus.staff_id(), type, params);
+    }
+
+    public void setFilterMap(Map<String, ?> map) {
+        if (map.isEmpty()) return;
+        for (String key : map.keySet()) {
+            switch (key) {
+                case "status_ids":
+                    filter.status = (String) map.get(key);
+                    break;
+                case "start":
+                    filter.registerTimeStart = (String) map.get(key);
+                    break;
+                case "gender":
+                    filter.gender = (String) map.get(key);
+                    break;
+                case "end":
+                    filter.registerTimeEnd = (String) map.get(key);
+                    break;
+                case "origin_id":
+                    if (filter.sourceBean == null) {
+                        filter.sourceBean = new StudentSourceBean();
+                    }
+                    filter.sourceBean.id = (String) map.get(key);
+                    break;
+                case "recommend_user_id":
+                    if (filter.referrerBean == null) {
+                        filter.referrerBean = new StudentReferrerBean();
+                    }
+                    filter.referrerBean.id = (String) map.get(key);
+                    break;
+                case "seller_id":
+                    if (filter.sale == null) {
+                        filter.sale = new Staff();
+                    }
+                    filter.sale.id = (String) map.get(key);
+                    break;
+            }
+        }
+        identifier.setValue(filter);
     }
 
     @Override

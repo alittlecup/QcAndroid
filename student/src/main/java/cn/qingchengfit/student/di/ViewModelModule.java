@@ -15,8 +15,10 @@ import cn.qingchengfit.student.viewmodel.attendance.AttendanceStudentViewModel;
 import cn.qingchengfit.student.viewmodel.attendance.absent.AttendanceAbsentViewModel;
 import cn.qingchengfit.student.viewmodel.attendance.nosign.AttendanceNosignViewModel;
 import cn.qingchengfit.student.viewmodel.attendance.rank.AttendanceRankViewModel;
+import cn.qingchengfit.student.viewmodel.followup.FollowUpFilterViewModel;
 import cn.qingchengfit.student.viewmodel.followup.FollowUpStatusViewModel;
 import cn.qingchengfit.student.viewmodel.followup.FollowUpStudentViewModel;
+import cn.qingchengfit.student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.student.viewmodel.home.StudentHomeViewModel;
 import cn.qingchengfit.student.viewmodel.transfer.TransferStudentViewModel;
 import dagger.Binds;
@@ -98,5 +100,15 @@ public abstract class ViewModelModule {
     @ViewModelKey(StudentHomeViewModel.class)
     abstract ViewModel bindStudentHomeViewModel(StudentHomeViewModel model);
 
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(StudentFilterViewModel.class)
+    abstract ViewModel bindStudentFilterViewModel(StudentFilterViewModel model);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FollowUpFilterViewModel.class)
+    abstract ViewModel bindFollowUpFilterViewModel(FollowUpFilterViewModel model);
 
 }

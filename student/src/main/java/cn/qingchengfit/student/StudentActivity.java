@@ -44,8 +44,11 @@ import cn.qingchengfit.student.view.attendance.AttendanceStudentPage;
 import cn.qingchengfit.student.view.attendance.absent.AttendanceAbsentPage;
 import cn.qingchengfit.student.view.attendance.nosign.AttendanceNosignPage;
 import cn.qingchengfit.student.view.attendance.rank.AttendanceRankPage;
+import cn.qingchengfit.student.view.followup.FollowUpFilterEndView;
+import cn.qingchengfit.student.view.followup.FollowUpFilterView;
 import cn.qingchengfit.student.view.followup.FollowUpStatusPage;
 import cn.qingchengfit.student.view.followup.FollowUpStudentPage;
+import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.view.home.StudentHomePage;
 import cn.qingchengfit.student.view.transfer.TransferStudentPage;
 import cn.qingchengfit.views.FragCallBack;
@@ -104,7 +107,9 @@ import rx.functions.Action1;
         AllotMultiStaffPage.class,
         AllotChooseSalerPage.class,
         AllotChooseCoachPage.class,
-        StudentHomePage.class
+        StudentHomePage.class,
+        StudentFilterView.class,
+        FollowUpFilterEndView.class
 })
 public class StudentActivity extends SaasContainerActivity
         implements FragCallBack {

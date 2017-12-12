@@ -33,6 +33,7 @@ import cn.qingchengfit.widgets.QcRadioGroup;
 import cn.qingchengfit.widgets.QcToggleButton;
 import eu.davidea.fastscroller.FastScroller;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import rx.functions.Action1;
 
@@ -82,12 +83,13 @@ public class BindingAdapters {
             public void afterTextChanged(Editable s) {
                 if (s != null && s.length() > 0) {
                     listener.afterTextChange(s.toString());
-                }else{
+                } else {
                     listener.afterTextChange("");
                 }
             }
         });
     }
+
     public interface AfterTextChangeListener {
         void afterTextChange(String s);
     }
@@ -109,7 +111,7 @@ public class BindingAdapters {
             adapter = new CommonFlexAdapter(items);
             recyclerView.setAdapter(adapter);
         }
-        ((SimpleItemAnimator)recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         List mainItems = ((CommonFlexAdapter) adapter).getMainItems();
         if (mainItems.isEmpty()) {
             mainItems.add(new SimpleTextItemItem("暂无数据", CENTER));
@@ -134,6 +136,7 @@ public class BindingAdapters {
             ((CommonFlexAdapter) adapter).addListener(listener);
         }
     }
+
 
     @BindingAdapter(value = {"emptyDrawable", "emptyTitle", "emptyMsg"})
     public static void setEmptyItem(RecyclerView recyclerView, Drawable emptyDrawable, String title, String msg) {

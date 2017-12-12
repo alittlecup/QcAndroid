@@ -10,6 +10,7 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -20,22 +21,24 @@ import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.DistrictEntity;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
+import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import cn.qingchengfit.student.common.flexble.FlexibleFactory;
 import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.respository.StudentRespository;
+import cn.qingchengfit.student.usercase.FilterUserCase;
 import cn.qingchengfit.student.viewmodel.SortViewModel;
 import cn.qingchengfit.utils.GymUtils;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import eu.davidea.viewholders.FlexibleViewHolder;
 
 /**
  * Created by huangbaole on 2017/12/5.
  */
 
-public class StudentHomeViewModel extends FlexibleViewModel<List<QcStudentBean>, StudentItem, StudentFilter> {
+public class StudentHomeViewModel extends FlexibleViewModel<List<QcStudentBean>, StudentItem, Map<String, ? extends Object>> {
     public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
     public final ObservableBoolean isLoading = new ObservableBoolean(false);
 
@@ -58,11 +61,15 @@ public class StudentHomeViewModel extends FlexibleViewModel<List<QcStudentBean>,
     String shopid;
 
     @Inject
+    FilterUserCase filterUserCase;
+
+    @Inject
     public StudentHomeViewModel(GymWrapper gymWrapper) {
         this.gymWrapper = gymWrapper;
         initData();
         sortViewModel = new SortViewModel();
         sortViewModel.setListener(items::set);
+
     }
 
     private void initData() {
@@ -95,23 +102,33 @@ public class StudentHomeViewModel extends FlexibleViewModel<List<QcStudentBean>,
 
     @NonNull
     @Override
-    protected LiveData<List<QcStudentBean>> getSource(@NonNull StudentFilter filter) {
+    protected LiveData<List<QcStudentBean>> getSource(@NonNull Map<String, ? extends Object> map) {
         isLoading.set(true);
         HashMap<String, Object> params = GymUtils.getParams(gymWrapper.getCoachService(), gymWrapper.getBrand(), shopid);
-        if (!TextUtils.isEmpty(filter.status)) {
-            params.put("status_ids", filter.status);
-        }
-        if (!TextUtils.isEmpty(filter.registerTimeStart) && !TextUtils.isEmpty(filter.registerTimeEnd)) {
-            params.put("start", filter.registerTimeStart);
-            params.put("end", filter.registerTimeEnd);
-        }
-        if (!TextUtils.isEmpty(filter.gender)) params.put("gender", filter.gender);
 
-        if (filter.referrerBean != null) params.put("recommend_user_id", filter.referrerBean.id);
+//        if (!TextUtils.isEmpty(filter.status)) {
+//            params.put("status_ids", filter.status);
+//        }
+//        if (!TextUtils.isEmpty(filter.registerTimeStart) && !TextUtils.isEmpty(filter.registerTimeEnd)) {
+//            params.put("start", filter.registerTimeStart);
+//            params.put("end", filter.registerTimeEnd);
+//        }
+//        if (!TextUtils.isEmpty(filter.gender)) params.put("gender", filter.gender);
+//
+//        if (filter.referrerBean != null) params.put("recommend_user_id", filter.referrerBean.id);
+//
+//        if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
+        if (!map.isEmpty()) {
+            params.putAll(map);
+        }
 
-        if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
 
         return Transformations.map(respository.qcGetAllStudents(loginStatus.staff_id(), params), input -> input.users);
+    }
+
+    @Override
+    public void loadSource(@NonNull Map<String, ?> stringMap) {
+        this.identifier.setValue(stringMap);
     }
 
     @Override
@@ -119,11 +136,16 @@ public class StudentHomeViewModel extends FlexibleViewModel<List<QcStudentBean>,
         return studentBeans != null && !studentBeans.isEmpty();
     }
 
+    public LiveData<List<FilterModel>> getTest() {
+        return filterUserCase.getFilterModel();
+
+    }
+
     /**
      * 刷新数据
      */
     public void refresh() {
-
+        this.identifier.setValue(identifier.getValue());
     }
 
     /**

@@ -7,6 +7,7 @@ import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.anbillon.flabellum.annotations.Need;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import cn.qingchengfit.items.StickerDateItem;
@@ -29,10 +31,13 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
 import cn.qingchengfit.saasbase.student.other.ChooseStaffParams;
+import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAllotMultiStaffBinding;
 import cn.qingchengfit.student.items.StaffDetailItem;
+import cn.qingchengfit.student.view.home.StudentFilterView;
 import cn.qingchengfit.student.viewmodel.allot.AllotMultiStaffViewModel;
+import cn.qingchengfit.student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -48,6 +53,8 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
     String title;
 
     CommonFlexAdapter adapter;
+    private StudentFilterViewModel filterViewModel;
+    private StudentFilterView filterView;
 
     @Override
     protected void subscribeUI() {
@@ -60,8 +67,8 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
 //        mViewModel.getLetters().observe(this, letters -> {
 //            mBinding.fastScroller.setLetters(letters.toArray(new String[letters.size()]));
 //        });
-        mViewModel.getIsDialogShow().observe(this, showed -> {
-            if (showed) showDialog();
+        mViewModel.getIsDialogShow().observe(this, aVoid -> {
+             showDialog();
         });
         mViewModel.getIsRemoveSuccess().observe(this, aBoolean -> {
             ToastUtils.show("移除成功");
@@ -78,7 +85,7 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
             adapter.notifyDataSetChanged();
             mViewModel.bottomTextCount.set(adapter.getSelectedItemCount());
         });
-        mViewModel.getEditAfterTextChange().observe(this,filter->{
+        mViewModel.getEditAfterTextChange().observe(this, filter -> {
             adapter.setSearchText(filter);
             adapter.filterItems();
         });
@@ -88,8 +95,30 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
         });
 
         mViewModel.getRouteTitle().observe(this, this::routeTo);
-        mViewModel.setSalerId(getActivityViewModel().getAllotStaff().getValue().id);
-        mViewModel.type = getActivityViewModel().getAllotType().getValue();
+        mViewModel.setSalerId(getActivityViewModel().getStaffId());
+        mViewModel.type = getActivityViewModel().getAllotType();
+
+        mViewModel.getSortViewModel().getFilterEvent().observe(this, aVoid -> {
+            openDrawer();
+            filterViewModel = ViewModelProviders.of(filterView, factory).get(StudentFilterViewModel.class);
+            filterViewModel.getmFilterMap().observe(this, map -> {
+                // REFACTOR: 2017/12/6 Map与Studentfilter的对决
+                if (map != null) {
+                    closeDrawer();
+                    mViewModel.loadSource(map);
+                    filterViewModel.getmFilterMap().setValue(null);
+                }
+            });
+        });
+
+    }
+
+    private void openDrawer() {
+        mBinding.drawer.openDrawer(GravityCompat.END);
+    }
+
+    private void closeDrawer() {
+        mBinding.drawer.closeDrawer(GravityCompat.END);
     }
 
     @Override
@@ -99,19 +128,25 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
         mBinding.includeFilter.setFilter(mViewModel.getSortViewModel());
         initToolBar();
         initRecyclerView();
-        mViewModel.loadSource(mViewModel.getStudentFilter());
+        initFragment();
+        mViewModel.loadSource(new HashMap<>());
         mBinding.setItemClickListener(this);
         mViewModel.hasName.set(!TextUtils.isEmpty(getActivityViewModel().getAllotStaff().getValue().username));
         mBinding.addOnRebindCallback(new OnRebindCallback<PageAllotMultiStaffBinding>() {
             @Override
             public void onBound(PageAllotMultiStaffBinding binding) {
-                if(binding.recyclerview.getAdapter()!=adapter){
-                    adapter= (CommonFlexAdapter) binding.recyclerview.getAdapter();
+                if (binding.recyclerview.getAdapter() != adapter) {
+                    adapter = (CommonFlexAdapter) binding.recyclerview.getAdapter();
                     adapter.setFastScroller(binding.fastScroller);
                 }
             }
         });
         return mBinding;
+    }
+
+    private void initFragment() {
+        filterView = new StudentFilterView();
+        stuff(R.id.frame_student_filter, filterView);
     }
 
     private void initRecyclerView() {
@@ -191,7 +226,7 @@ public class AllotMultiStaffPage extends StudentBaseFragment<PageAllotMultiStaff
             f.show(getFragmentManager(), "");
             return;
         }
-        switch (getActivityViewModel().getAllotType().getValue()) {
+        switch (getActivityViewModel().getAllotType()) {
             case 0:
                 Uri toSaler = Uri.parse("student://student/allot/choosesaler");
                 routeTo(toSaler, new cn.qingchengfit.student.view.allot.AllotChooseCoachPageParams()
