@@ -11,7 +11,6 @@ import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.views.activity.WebActivity;
-import java.io.Serializable;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -21,7 +20,7 @@ import rx.schedulers.Schedulers;
  * Created by fb on 2017/11/21.
  */
 
-public class CardProtocolActivity extends WebActivity implements Serializable{
+public class CardProtocolActivity extends WebActivity{
 
   @Inject GymWrapper gymWrapper;
 
@@ -55,7 +54,8 @@ public class CardProtocolActivity extends WebActivity implements Serializable{
     if (!getIntent().getBooleanExtra("isHave", false)) {
       webfrag = CardProtocolWebFragment.newInstance(toUrl, getIntent().getStringExtra("content"));
     }else{
-      webfrag = CardProtocolWebFragment.newInstance(toUrl, R.menu.menu_modify, new CardProtocolWebFragment.OnMenuClickListener() {
+      webfrag = CardProtocolWebFragment.newInstance(toUrl, R.menu.menu_modify);
+      ((CardProtocolWebFragment)webfrag).setOnMenuClickListener(new CardProtocolWebFragment.OnMenuClickListener() {
         @Override public void onMenuClick() {
           CardTpl cardTpl = getIntent().getParcelableExtra("card_tpl");
           if (!gymWrapper.inBrand() && SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
@@ -68,8 +68,8 @@ public class CardProtocolActivity extends WebActivity implements Serializable{
               cardTpl.getShopIds())){
             Intent intent = new Intent(CardProtocolActivity.this, QRActivity.class);
             intent.putExtra(QRActivity.LINK_URL,
-                    getResources().getString(R.string.qr_code_2web_multi_card_edit,
-                        gymWrapper.brand_id(), cardTpl.id));
+                getResources().getString(R.string.qr_code_2web_multi_card_edit,
+                    gymWrapper.brand_id(), cardTpl.id));
 
             startActivity(intent);
           }else{

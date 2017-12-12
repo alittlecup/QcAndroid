@@ -2,7 +2,6 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import cn.qingchengfit.article.ArticleCommentsListFragment;
 import cn.qingchengfit.article.ArticleReplyFragment;
 import cn.qingchengfit.chat.ChatChooseInGymFragment;
@@ -104,6 +103,7 @@ import cn.qingchengfit.staffkit.views.card.offday.AheadOffDayFragment;
 import cn.qingchengfit.staffkit.views.card.offday.OffDayListFragment;
 import cn.qingchengfit.staffkit.views.card.spendrecord.SpendRecordFragment;
 import cn.qingchengfit.staffkit.views.card.spendrecord.SpendRecordListFragment;
+import cn.qingchengfit.staffkit.views.cardtype.CardProtocolActivity;
 import cn.qingchengfit.staffkit.views.cardtype.CardTypeActivity;
 import cn.qingchengfit.staffkit.views.cardtype.ChooseCardTypeActivity;
 import cn.qingchengfit.staffkit.views.cardtype.detail.CardtypeDetailFragment;
@@ -546,6 +546,9 @@ import dagger.multibindings.IntoMap;
 
     //筛选，签课
     AppComponent.NotSignFilterFragmentModule.class, AppComponent.AttendanceNotSignFragmentModule.class,
+
+    //服务协议
+    AppComponent.CardProtocolModule.class,
 
 })
 
@@ -4217,6 +4220,15 @@ public interface AppComponent {
     @Module(subcomponents = AttendanceNotSignFragmentSubcomponent.class) abstract class AttendanceNotSignFragmentModule {
         @Binds @IntoMap @FragmentKey(AttendanceNotSignFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AttendanceNotSignFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface CardProtocolSubcomponent extends AndroidInjector<CardProtocolActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardProtocolActivity> {
+        }
+    }
+    @Module(subcomponents = CardProtocolSubcomponent.class) abstract class CardProtocolModule {
+        @Binds @IntoMap @ActivityKey(CardProtocolActivity.class)
+        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardProtocolSubcomponent.Builder builder);
     }
 
 }

@@ -18,7 +18,7 @@ import java.util.List;
  * <p/>
  * Created by Paper on 16/4/13 2016.
  */
-public class Brand implements Parcelable {
+public class Brand implements Parcelable{
     public static final Creator<Brand> CREATOR = new Creator<Brand>() {
         @Override public Brand createFromParcel(Parcel source) {
             return new Brand(source);

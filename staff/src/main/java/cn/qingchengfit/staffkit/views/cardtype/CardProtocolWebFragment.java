@@ -48,14 +48,17 @@ public class CardProtocolWebFragment extends WebFragment {
     return fragment;
   }
 
-  public static CardProtocolWebFragment newInstance(String url, @MenuRes int menuId, OnMenuClickListener callback) {
+  public static CardProtocolWebFragment newInstance(String url, @MenuRes int menuId) {
     Bundle args = new Bundle();
     args.putString("url", url);
     args.putInt("menu", menuId);
-    args.putSerializable("callback", callback);
     CardProtocolWebFragment fragment = new CardProtocolWebFragment();
     fragment.setArguments(args);
     return fragment;
+  }
+
+  public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {
+    this.onMenuClickListener = onMenuClickListener;
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,9 +66,8 @@ public class CardProtocolWebFragment extends WebFragment {
     if (getArguments() != null) {
       url = getArguments().getString("url");
       content = getArguments().getString("content");
-      if (getArguments().containsKey("callback")) {
+      if (getArguments().containsKey("menu")) {
         menuId = getArguments().getInt("menu");
-        onMenuClickListener = (OnMenuClickListener) getArguments().getSerializable("callback");
       }
     }
   }
