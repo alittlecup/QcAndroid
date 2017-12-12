@@ -56,7 +56,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
 
   public static final String SHARE_TYPE_ACTION = "action";
   public static final String SHARE_TYPE_INFO = "info";
-  @BindView(R2.id.layout_extends) public LinearLayout layoutExtends;
+  public LinearLayout layoutExtends;
 
   private IWXAPI api;
 
@@ -115,9 +115,9 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(getLayoutRes(), container, false);
-    unbinder = ButterKnife.bind(this, view);
     api = WXAPIFactory.createWXAPI(getActivity(), wechat_code, true);
     api.registerApp(wechat_code);
+    layoutExtends = (LinearLayout) view.findViewById(R.id.layout_extends);
     if (layoutExtends != null)
       layoutExtends.setVisibility(GONE);
     if (TextUtils.isEmpty(mUrl) && (!TextUtils.isEmpty(mImg) || mBitmap != null)) {
@@ -125,7 +125,21 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
     } else {
       isImg = false;
     }
-
+    view.findViewById(R.id.wechat_friend).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        clickFriend();
+      }
+    });
+    view.findViewById(R.id.wechat_circle).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        clickCircle();
+      }
+    });
+    view.findViewById(R.id.copy_link).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        clickCopy();
+      }
+    });
     return view;
   }
 
@@ -136,14 +150,13 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
   }
 
   public int getLayoutRes() {
     return R.layout.fragment_share;
   }
 
-  @OnClick(R2.id.wechat_friend) public void clickFriend() {
+  public void clickFriend() {
     Observable.create(new Observable.OnSubscribe<Boolean>() {
       @Override public void call(Subscriber<? super Boolean> subscriber) {
         sendToWx(true);
@@ -153,7 +166,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
     dismiss();
   }
 
-  @OnClick(R2.id.wechat_circle) public void clickCircle() {
+  public void clickCircle() {
     Observable.create(new Observable.OnSubscribe<Boolean>() {
       @Override public void call(Subscriber<? super Boolean> subscriber) {
         sendToWx(false);
@@ -163,7 +176,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
     dismiss();
   }
 
-  @OnClick(R2.id.copy_link) public void clickCopy() {
+  public void clickCopy() {
     ClipboardManager cmb =
         (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
     cmb.setPrimaryClip(ClipData.newPlainText("qingcheng", mUrl));

@@ -170,15 +170,8 @@ public class StudentHomeFragment extends BaseFragment {
 
                 orderPrivate.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
-                        boolean isP = false;
-                        for (int i = 0; i < studentBean.getStudentBean().getSupportIdList().size(); i++) {
-                            if (SerPermisAction.check(studentBean.getStudentBean().getSupportIdList().get(i),
-                                PermissionServerUtils.PRIVATE_ORDER_CAN_WRITE)) {
-                                isP = true;
-                                break;
-                            }
-                        }
-                        if (isP) {
+
+                        if (serPermisAction.check(PermissionServerUtils.PRIVATE_ORDER_CAN_WRITE)) {
                             WebActivity.startWeb(studentBaseInfoEvent.privateUrl, getContext());
                         } else {
                             showAlert(getString(R.string.alert_permission_forbid));
@@ -187,17 +180,7 @@ public class StudentHomeFragment extends BaseFragment {
                 });
                 orderGroup.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
-                        boolean isP = true;
-                        for (int i = 0; i < studentBean.getStudentBean().getSupportIdList().size(); i++) {
-                            if (SerPermisAction.check(studentBean.getStudentBean().getSupportIdList().get(i),
-                                PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
-                                isP = true;
-                                break;
-                            }else{
-                                isP = false;
-                            }
-                        }
-                        if (isP) {
+                        if (serPermisAction.check(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
                             WebActivity.startWeb(studentBaseInfoEvent.groupUrl, getContext());
                         } else {
                             showAlert(getString(R.string.alert_permission_forbid));
