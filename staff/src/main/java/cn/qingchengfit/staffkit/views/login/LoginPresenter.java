@@ -13,6 +13,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.Login;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -20,9 +21,9 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.usecase.LoginUsecase;
 import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
@@ -57,7 +58,7 @@ public class LoginPresenter extends BasePresenter {
     public static final String TAG = LoginPresenter.class.getSimpleName();
     @Inject GymWrapper gymWrapper;
     @Inject LoginStatus loginStatus;
-    @Inject RestRepository mRestRepository;
+    @Inject QcRestRepository mRestRepository;
     private LoginView mLoginView;
     private Context mContext;
     private LoginUsecase loginUsecase;
@@ -144,7 +145,7 @@ public class LoginPresenter extends BasePresenter {
   }
 
     public void getService(final QcDataResponse<Login> qcResponLogin) {
-        spGetSer = mRestRepository.getGet_api()
+        spGetSer = mRestRepository.createGetApi(Get_Api.class)
             .qcGetCoachService(App.staffId, null)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
