@@ -1,62 +1,67 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: "com.squareup.sqldelight"
-
+apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
 def libs = rootProject.ext.libraries;
 def cfg = rootProject.ext.configuration;
 
 android {
-  compileSdkVersion cfg.compileVersion
-  buildToolsVersion cfg.buildToolsVersion
-
-  defaultConfig {
-    minSdkVersion 16
-    targetSdkVersion 27
-    versionCode 1
-    versionName "1.0"
-    vectorDrawables.useSupportLibrary true
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments = [fragmentArgsLib               : 'true',
-                     fragmentArgsSupportAnnotations: 'true',
-                     packageName:'cn.qingchengfit.saasbase',
-        ]
-      }
+    compileSdkVersion cfg.compileVersion
+    buildToolsVersion cfg.buildToolsVersion
+    dataBinding {
+        enabled true
     }
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [fragmentArgsLib               : 'true',
+                             fragmentArgsSupportAnnotations: 'true',
+                             packageName                   : 'cn.qingchengfit.saasbase',
+                ]
+            }
+        }
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-  }
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
 
 }
 
 dependencies {
-  api project(path: ':qcbase')
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
-  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-    exclude group: 'com.android.support', module: 'support-annotations'
-  })
-  api ("android.arch.lifecycle:extensions:1.0.0"){
-    exclude group:'android.arch.lifecycle', module:'runtime'
-  }
-  testImplementation 'junit:junit:4.12'
-  testImplementation "org.mockito:mockito-core:2.11.0"
-  annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
-  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  api "com.anbillon.flabellum:flabellum:${libs.flabellum}"
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+    api project(path: ':qcbase')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:2.11.0"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+    annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+    api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
+        exclude group: 'com.google.googlejavaformat'
+    }
+    annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
+    annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+    api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    api ("android.arch.lifecycle:extensions:1.0.0"){
+      exclude group:'android.arch.lifecycle', module:'runtime'
+    }
 }
 
 
@@ -65,10 +70,10 @@ version '1.0'
 
 uploadArchives {
 
-  repositories {
-    mavenDeployer {
-      repository(url: uri('../../repo'))
-      pom.artifactId = 'sass'
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../../repo'))
+            pom.artifactId = 'sass'
+        }
     }
-  }
 }

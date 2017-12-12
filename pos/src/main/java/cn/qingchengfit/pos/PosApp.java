@@ -80,7 +80,7 @@ public class PosApp extends Application implements HasActivityInjector, HasSuppo
                 .build())
             .loginStatus(new LoginStatus.Builder()
                 .build())
-            .qcrestRepository(new QcRestRepository(this, Constants.ServerDebug,"pos"))
+            .qcrestRepository(new QcRestRepository(this,BuildConfig.DEBUG?Constants.ServerDebug: Constants.Server,"pos"))
             .build())
         .build();
     component.inject(this);

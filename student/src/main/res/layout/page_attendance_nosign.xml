@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="cn.qingchengfit.utils.DateUtils"/>
+        <import type="cn.qingchengfit.widgets.QcFilterToggle"/>
+        <variable
+            name="toolbarModel"
+            type="cn.qingchengfit.model.others.ToolbarModel" />
+
+        <variable
+            name="viewModel"
+            type="cn.qingchengfit.student.viewmodel.attendance.nosign.AttendanceNosignViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/common_simple_toolbar"
+            bind:toolbarModel="@{toolbarModel}" />
+
+        <cn.qingchengfit.widgets.QcRadioGroup
+            android:id="@+id/qc_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:clearCheck="@{!viewModel.filterVisible}"
+            android:orientation="horizontal">
+
+            <cn.qingchengfit.widgets.QcFilterToggle
+                android:id="@+id/top_day_toggle"
+                style="@style/QcFilterStyle"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:onClick="@{(view)->viewModel.onTopFilterClick(((QcFilterToggle)view).isChecked(),0)}"
+                android:textColor="@color/qc_text_black"
+                android:text="@{viewModel.topDayText}"
+                android:textSize="13sp"
+                app:ft_text_off="未签课7天内"
+                app:ft_text_on="未签课7天内" />
+
+            <cn.qingchengfit.widgets.QcFilterToggle
+                android:id="@+id/top_count_toggle"
+                style="@style/QcFilterStyle"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text='@{viewModel.topCount+"节以上"}'
+                android:onClick="@{(view)->viewModel.onTopFilterClick(((QcFilterToggle)view).isChecked(),1)}"
+                android:textColor="@color/qc_text_black"
+                android:textSize="13sp"
+                app:ft_text_off="5节以上"
+                app:ft_text_on="5节以上" />
+        </cn.qingchengfit.widgets.QcRadioGroup>
+
+        <include layout="@layout/divider_grey" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tips_absence_account"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:textSize="12dp"
+                android:text="@{viewModel.textDetail}"
+                tools:text="缺勤7-30天的会员共计30人" />
+
+            <include
+                android:id="@+id/divider"
+                layout="@layout/divider_grey"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_below="@id/tips_absence_account" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                app:items="@{viewModel.items}"
+                app:emptyTitle="@{@string/text_empty_title_not_sign}"
+                app:emptyMsg="@{@string/text_empty_content_not_sign}"
+                app:emptyDrawable="@{@drawable/vd_img_empty_universe}"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider" />
+
+            <FrameLayout
+                android:id="@+id/frag_filter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:visibleGone="@{viewModel.filterVisible}" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

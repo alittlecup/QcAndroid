@@ -86,7 +86,7 @@ import javax.inject.Inject;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("收银台");
+    toolbarTitle.setText("直接收银");
   }
 
   @Override public String getFragmentName() {

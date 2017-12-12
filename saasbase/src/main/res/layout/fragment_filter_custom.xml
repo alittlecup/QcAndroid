@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:id="@+id/modify_setting_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:textColor="@color/qc_text_black"
+        tools:text="缺勤天数(天)"
+        />
+
+    <EditText
+        android:id="@+id/edit_absence_start"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="34dp"
+        android:layout_toLeftOf="@+id/divide_hori"
+        android:background="@drawable/bg_rect_grey_corner"
+        android:gravity="center"
+        android:hint="30"
+        android:paddingBottom="7dp"
+        android:paddingTop="4dp"
+        />
+
+    <TextView
+        android:id="@+id/divide_hori"
+        android:layout_width="12dp"
+        android:layout_height="1dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_toLeftOf="@+id/edit_absence_end"
+        android:background="#999"
+        />
+
+    <EditText
+        android:id="@+id/edit_absence_end"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/bg_rect_grey_corner"
+        android:gravity="center"
+        android:hint="30"
+        android:paddingBottom="7dp"
+        android:paddingTop="4dp"
+        />
+
+  </RelativeLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:background="@drawable/bg_top_bottom_line_white"
+      android:orientation="horizontal"
+      android:padding="1px"
+      >
+
+    <TextView
+        android:id="@+id/tv_absence_filter_reset"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="返回"
+        android:textColor="@color/qc_text_black"
+        android:textSize="@dimen/common_font"
+        />
+
+    <include layout="@layout/divider_grey_vertical"/>
+
+    <TextView
+        android:id="@+id/tv_absence_filter_confirm"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/qc_theme_green"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/common_font"
+        />
+  </LinearLayout>
+
+</LinearLayout>

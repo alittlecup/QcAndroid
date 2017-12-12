@@ -26,5 +26,6 @@ import java.util.List;
  */
 
 public class CardListWrap extends QcListData {
+
   public List<Card> cards;
 }

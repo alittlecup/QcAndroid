@@ -73,7 +73,7 @@
         app:civ_content="V1.2"
         app:civ_content_color="@color/qc_text_grey"
         app:civ_lable="检查更新"
-        app:civ_left_icon="@drawable/vd_recruit_jobintro_age"
+        app:civ_left_icon="@drawable/vd_close_white_24dp"
         app:civ_showright="true"
         app:civ_text_color="@color/qc_text_black"
         />

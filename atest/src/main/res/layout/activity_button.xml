@@ -41,7 +41,7 @@
       app:elevation="4dp"
       app:fabSize="normal"
       app:rippleColor="@color/colorPrimary"
-      app:srcCompat="@drawable/vd_more_vert_white_24dp"
+      app:srcCompat="@drawable/vd_order_filter"
       />
 
   <Button

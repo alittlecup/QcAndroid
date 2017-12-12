@@ -82,30 +82,30 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name="cn.qingchengfit.recruit.views.RecruitActivity">
-    </activity>
+    <!--<activity android:name="cn.qingchengfit.recruit.views.RecruitActivity">-->
+    <!--</activity>-->
 
-    <activity android:name="cn.qingchengfit.recruit.views.organization.SearchActivity">
-    </activity>
+    <!--<activity android:name="cn.qingchengfit.recruit.views.organization.SearchActivity">-->
+    <!--</activity>-->
     <activity android:name=".TestActivity">
     </activity>
 
-    <activity
-        android:name="com.tencent.qcloud.timchat.ui.qcchat.ChatActivity"
-        android:launchMode="singleTask"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="adjustResize"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <category android:name="android.intent.category.DEFAULT"/>
+    <!--<activity-->
+        <!--android:name="com.tencent.qcloud.timchat.ui.qcchat.ChatActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="adjustResize"-->
+        <!--&gt;-->
+      <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW"/>-->
+        <!--<category android:name="android.intent.category.DEFAULT"/>-->
 
-        <data
-            android:host="chatactivity"
-            android:scheme="imchat"
-            />
-      </intent-filter>
-    </activity>
+        <!--<data-->
+            <!--android:host="chatactivity"-->
+            <!--android:scheme="imchat"-->
+            <!--/>-->
+      <!--</intent-filter>-->
+    <!--</activity>-->
     <activity
         android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
@@ -124,24 +124,39 @@
           />
     </provider>
 
-    <activity
-        android:name="cn.qingchengfit.recruit.views.JobSearchChatActivity"
+    <!--<activity-->
+        <!--android:name="cn.qingchengfit.recruit.views.JobSearchChatActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="adjustResize"-->
+        <!--/>-->
+
+    <activity android:name="cn.qingchengfit.student.StudentActivity"
         android:launchMode="singleTask"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="adjustResize"
-        />
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data
+            android:host="student"
+            android:scheme="student"
+            />
+      </intent-filter>
+    </activity>
 
-    <activity android:name="cn.qingchengfit.design.DesignActivity"/>
 
-    <activity android:name="cn.qingchengfit.design.ColorActivity"/>
-    <activity android:name="cn.qingchengfit.design.TextActivity"/>
-    <activity android:name="cn.qingchengfit.design.EmptyActivity"/>
-    <activity android:name="cn.qingchengfit.design.ButtonActivity"/>
-    <activity android:name="cn.qingchengfit.design.CommonInputActivity"/>
-    <activity android:name="cn.qingchengfit.design.BottomActivity"/>
-    <activity android:name="cn.qingchengfit.design.AlertActivity"/>
-    <activity android:name="cn.qingchengfit.design.ItemActivity"/>
-    <activity android:name="cn.qingchengfit.design.SearchActivity"/>
+    <!--<activity android:name="cn.qingchengfit.design.DesignActivity"/>-->
+
+    <!--<activity android:name="cn.qingchengfit.design.ColorActivity"/>-->
+    <!--<activity android:name="cn.qingchengfit.design.TextActivity"/>-->
+    <!--<activity android:name="cn.qingchengfit.design.EmptyActivity"/>-->
+    <!--<activity android:name="cn.qingchengfit.design.ButtonActivity"/>-->
+    <!--<activity android:name="cn.qingchengfit.design.CommonInputActivity"/>-->
+    <!--<activity android:name="cn.qingchengfit.design.BottomActivity"/>-->
+    <!--<activity android:name="cn.qingchengfit.design.AlertActivity"/>-->
+    <!--<activity android:name="cn.qingchengfit.design.ItemActivity"/>-->
+    <!--<activity android:name="cn.qingchengfit.design.SearchActivity"/>-->
   </application>
 
 </manifest>

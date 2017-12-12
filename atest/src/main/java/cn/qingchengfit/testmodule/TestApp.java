@@ -2,7 +2,10 @@ package cn.qingchengfit.testmodule;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Brand;
@@ -15,6 +18,7 @@ import cn.qingchengfit.utils.ToastUtils;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+
 import javax.inject.Inject;
 
 /**
@@ -39,35 +43,46 @@ import javax.inject.Inject;
  */
 
 public class TestApp extends Application implements HasActivityInjector, HasSupportFragmentInjector {
-    @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
-    @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
+    @Inject
+    DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
 
-    @Override public void onCreate() {
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    @Override
+    public void onCreate() {
         super.onCreate();
         ToastUtils.init(this);
-      Staff staff = new Staff("纸团", "15123358198", "", 1);
-      staff.setId("7060");
-      PreferenceUtils.setPrefString(this, "session_id", "zl7p9g3klrysp75aztoodw4kskgw7fpz");
+        Staff staff = new Staff("黄宝乐", "18510247443", "", 1);
+        staff.setId("7505");
+        PreferenceUtils.setPrefString(this, "session_id", "msqr15z8v6co8yhvk8hrnxrsp9qjji8b");
 
         LogUtil.e("session:" + PreferenceUtils.getPrefString(this, "session_id", ""));
         AppComponent component = DaggerAppComponent.builder()
-            .testModule(new TestModule.Builder().app(this)
-                .gymWrapper(new GymWrapper.Builder().brand(new Brand("1")).build())
-                .loginStatus(new LoginStatus.Builder().userId("7409")
-                    .loginUser(staff).session("zl7p9g3klrysp75aztoodw4kskgw7fpz")
-                    .build())
-                .router(new BaseRouter())
-                .restRepository(new QcRestRepository(this, "http://cloudtest.qingchengfit.cn/", "staff-test"))
-                .build())
-            .build();
+                .testModule(new TestModule.Builder().app(this)
+                        .gymWrapper(new GymWrapper.Builder().brand(new Brand("1")).build())
+                        .loginStatus(new LoginStatus.Builder().userId("7409")
+                                .loginUser(staff).session("msqr15z8v6co8yhvk8hrnxrsp9qjji8b")
+                                .build())
+                        .router(new BaseRouter())
+                        .restRepository(new QcRestRepository(this, "http://cloudtest.qingchengfit.cn/", "staff-test"))
+                        .build())
+                .build();
         component.inject(this);
     }
 
-    @Override public DispatchingAndroidInjector<Activity> activityInjector() {
+    @Override
+    public DispatchingAndroidInjector<Activity> activityInjector() {
         return dispatchingActivityInjector;
     }
 
-    @Override public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
+    @Override
+    public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
         return dispatchingFragmentInjector;
     }
 }

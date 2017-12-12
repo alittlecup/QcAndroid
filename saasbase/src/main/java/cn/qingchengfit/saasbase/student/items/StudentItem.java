@@ -1,9 +1,12 @@
 package cn.qingchengfit.saasbase.student.items;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -18,6 +21,7 @@ import eu.davidea.flexibleadapter.items.IHeader;
 import eu.davidea.flexibleadapter.items.ISectionable;
 import eu.davidea.flexibleadapter.utils.FlexibleUtils;
 import eu.davidea.viewholders.FlexibleViewHolder;
+
 import java.util.List;
 
 public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH> implements
@@ -98,12 +102,13 @@ public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH> imp
     @BindView(R2.id.item_student_gender) ImageView itemStudentGender;
     @BindView(R2.id.item_tv_student_status) TextView itemTvStudentStatus;
     @BindView(R2.id.item_student_phonenum) TextView itemStudentPhonenum;
-    @BindView(R2.id.item_student_gymname) TextView itemStudentGymname;
-    @BindView(R2.id.cb) CheckBox cb;
-    public StudentVH(View view, FlexibleAdapter adapter) {
-      super(view, adapter);
-      ButterKnife.bind(this, view);
-      cb.setClickable(false);
+    @BindView(R2.id.item_student_gymname) public TextView itemStudentGymname;
+    @BindView(R2.id.cb) public CheckBox cb;
+
+        public StudentVH(View view, FlexibleAdapter adapter) {
+            super(view, adapter);
+            ButterKnife.bind(this, view);
+            cb.setClickable(false);
+        }
     }
-  }
 }

@@ -1,46 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-  >
-  <data/>
-  <FrameLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      android:id="@+id/toolbar_layout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+<layout>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <data>
+
+        <variable
+            name="toolbarModel"
+            type="cn.qingchengfit.model.others.ToolbarModel" />
+
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/toolbar"
-        android:gravity="center_vertical"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Qc.toolbarStyle"
-        app:popupTheme="@style/ToolbarStyle.Overflow"
-        app:theme="@style/Qc.toolbarStyle"
-        app:titleTextAppearance="@style/ToolbarStyle"
-        tools:paddingTop="15dp"
-        />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/toolbar_title"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:lines="1"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        tools:text="我是标题"
-        style="@style/Qc.TextCommonBlack"
-        />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/toolbar"
+            android:gravity="center_vertical"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Qc.toolbarStyle"
+            app:menu="@{toolbarModel.menu}"
+            app:menuListener="@{toolbarModel.listener}"
+            app:popupTheme="@style/ToolbarStyle.Overflow"
+            app:theme="@style/Qc.toolbarStyle"
+            app:titleTextAppearance="@style/ToolbarStyle"
+            tools:paddingTop="15dp" />
 
-  </FrameLayout>
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:lines="1"
+            android:text="@{toolbarModel.title}"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:text="我是标题" />
+
+    </FrameLayout>
 
 </layout>
-
 
 
 

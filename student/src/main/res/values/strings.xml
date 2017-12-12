@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">student</string>
+    <string name="qc_allotsale_select">已选择%d名会员</string>
+    <string name="qc_allotsale_select_clear">清空选择</string>
+
+
+</resources>

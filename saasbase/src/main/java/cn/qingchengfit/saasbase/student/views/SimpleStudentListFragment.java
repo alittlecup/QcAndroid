@@ -60,7 +60,7 @@ public class SimpleStudentListFragment extends BaseFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    commonFlexAdapter = new CommonFlexAdapter(mDatas, this);
+    commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -149,7 +149,7 @@ public class SimpleStudentListFragment extends BaseFragment
         }
       }
 
-      commonFlexAdapter.updateDataSet(mDatas);
+      commonFlexAdapter.updateDataSet(mDatas,false);
     }
   }
   public void filter(String s){

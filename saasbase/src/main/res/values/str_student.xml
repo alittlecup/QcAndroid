@@ -1,13 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="qc_student_allotsale">销售分配</string>
-  <string name="qc_student_follow_up">会员跟进</string>
-  <string name="qc_student_follow_transfer">会员转化</string>
-  <string name="qc_student_birthday_notice">生日提醒</string>
-  <string name="qc_student_attendance">出勤统计</string>
-  <string name="qc_student_tab">会员标签</string>
-  <string name="qc_student_allot_coach">教练分配</string>
-  <string name="qc_student_sms">群发短信</string>
-  <string name="qc_student_vip">VIP会员</string>
-  <string name="qc_student_send_sms">群发短信</string>
+    <string name="qc_student_allotsale">销售分配</string>
+    <string name="qc_student_follow_up">会员跟进</string>
+    <string name="qc_student_follow_transfer">会员转化</string>
+    <string name="qc_student_birthday_notice">生日提醒</string>
+    <string name="qc_student_attendance">出勤统计</string>
+    <string name="qc_student_tab">会员标签</string>
+    <string name="qc_student_allot_coach">教练分配</string>
+    <string name="qc_student_sms">群发短信</string>
+    <string name="qc_student_vip">VIP会员</string>
+    <string name="qc_student_send_sms">群发短信</string>
+    <string name="qc_student_export">导入导出</string>
+
+    <string name="qc_allotsale_modify_sale">变更销售</string>
+    <string name="qc_allotsale_remove_stud">移除会员</string>
+
+    <string name="qc_student_saleids">销售：%s</string>
+    <string name="qc_allotsale_search_hint">搜索会员姓名/手机号</string>
+    <string name="qc_allotsale_checked">已选择</string>
+    <string name="choose_saler_tips">选择教练请使用[分配教练]功能，或将教练添加为工作人员</string>
+
+    <string name="alert_comfirm_allot">确认将所选会员分配到%s名下</string>
+    <string name="alert_comfirm_trans">确认将所选会员转移到%s名下</string>
+    <string name="alert_comfirm_change">"操作成功后，该会员不在任何销售名下，确认继续？"</string>
+    <string name="allot_saler">分配销售</string>
+    <string name="choose_saler">选择销售</string>
+    <string name="choose_coach">选择教练</string>
+
+    <string name="coach_choose_student">分配教练</string>
+    <string name="coach_change_student">变更教练</string>
+    <string name="coach_drop_student">移除</string>
+    <string name="qc_select_all">全选</string>
+
+    <string name="qc_student_coachids">教练：%s</string>
+
+    <string name="qc_student_allot_student_count">%s名会员</string>
+    <string name="qc_student_allot_student_count_2">名下会员(%d)</string>
+
+    <string name="qc_allotsale_sale_detail_add_stud">添加名下会员</string>
+    <string name="qc_allotsale_sale_detail_notitle">未分配</string>
+    <string name="qc_allotsale_multi_modify_title">批量修改</string>
+    <string name="qc_allotsale_multi_allot_title">批量分配</string>
+    <string name="qc_allotsale_add_stud_title">添加名下会员</string>
+    <string name="qc_allotsale_modify_sale_title">修改销售</string>
+    <string name="qc_allotsale_sale_detail_title">%s的名下会员</string>
+    <string name="qc_allotsale_select">已选择%d名会员</string>
+    <string name="qc_allotsale_clear_alert">确认清空当前选中的会员</string>
+
+
+    <!--menu-->
+    <string name="qc_menu_multi_modify"><Data>批量修改</Data></string>
+    <string name="qc_menu_multi_allot"><Data>批量分配</Data></string>
+
+
+    <string name="common_today">今日</string>
+    <string name="last_7_days">最近7日</string>
+    <string name="last_30_days">最近30天</string>
+    <string name="last_format_days">最近%d天</string>
+
+    <string name="alert_choose_time_cannot_super">选择时间不可以超过%d天</string>
+    <string name="qc_referrer_count">已推荐%s人</string>
+
+    <string name="label_absentee">缺勤统计</string>
+    <string name="not_sign_class_count">未签课统计</string>
+
+    <string name="absence_three_seven">缺勤7-30天</string>
+    <string name="absence_thirty">缺勤30-60天</string>
+    <string name="absence_sixty">缺勤>60天</string>
+    <string name="absence_condition" formatted="false">缺勤%s-%s天</string>
+    <string name="absence_account" formatted="false">%s的会员共计%d人</string>
+
+    <string name="unit_class">节</string>
+    <string name="lable_attendace">出勤</string>
+    <string name="label_checkin">签到</string>
+    <string name="course_type_group">团课</string>
+    <string name="attendance_private_course">私教</string>
+    <string name="btn_contact_him">联系TA</string>
+
+    <string name="text_empty_title_not_sign">您的场馆未开启签课功能</string>
+    <string name="text_empty_content_not_sign">请去团课/私教预约限制中开启</string>
+    <string formatted="false" name="text_not_sign_tip">%d天内未签课%d节以上的会员共计%d人</string>
+    <string name="transfer_student_sign_text">注册日期为%s的会员转化率</string>
+
+
+
 </resources>

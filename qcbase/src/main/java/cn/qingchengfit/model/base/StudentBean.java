@@ -3,6 +3,7 @@ package cn.qingchengfit.model.base;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,14 +21,17 @@ import java.util.List;
  * <p/>
  * Created by Paper on 15/10/15 2015.
  */
-@Deprecated public class StudentBean implements Parcelable {
+@Deprecated
+public class StudentBean implements Parcelable {
 
     public static final Creator<StudentBean> CREATOR = new Creator<StudentBean>() {
-        @Override public StudentBean createFromParcel(Parcel source) {
+        @Override
+        public StudentBean createFromParcel(Parcel source) {
             return new StudentBean(source);
         }
 
-        @Override public StudentBean[] newArray(int size) {
+        @Override
+        public StudentBean[] newArray(int size) {
             return new StudentBean[size];
         }
     };
@@ -80,7 +84,8 @@ import java.util.List;
         this.sellers = in.createTypedArrayList(Staff.CREATOR);
     }
 
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         return this.id.equalsIgnoreCase(((StudentBean) o).getId());
     }
 
@@ -236,11 +241,13 @@ import java.util.List;
         this.modeltype = modeltype;
     }
 
-    @Override public int describeContents() {
+    @Override
+    public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.username);
         dest.writeString(this.phone);
         dest.writeString(this.avatar);

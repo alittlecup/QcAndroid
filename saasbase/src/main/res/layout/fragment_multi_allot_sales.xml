@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="hasName"
+            type="Boolean" />
+        <variable
+            name="fragment"
+            type="cn.qingchengfit.saasbase.student.views.allot.MultiAllotSalesFragment"/>
+
+        <variable
+            name="toolbarModel"
+            type="cn.qingchengfit.model.others.ToolbarModel" />
+
+        <variable
+            name="filterModel"
+            type="cn.qingchengfit.saasbase.student.views.home.StudentRecyclerViewFragment" />
+    </data>
+
+    <cn.qingchengfit.saasbase.student.other.MyDrawerLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/include_toolbar"
+                layout="@layout/common_simple_toolbar"
+                bind:toolbarModel="@{toolbarModel}" />
+
+            <CheckBox
+                android:id="@+id/rb_select_all"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:button="@drawable/selector_qc_checkbox_2"
+                android:padding="6dp"
+                android:text="@string/qc_select_all"
+                android:textColor="@color/white"
+                android:visibility="visible" />
+
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/scroll_root"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:orientation="vertical">
+
+
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/myhome_appBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_grey"
+                    android:fitsSystemWindows="true"
+                    app:elevation="0dp">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="10dp"
+                        app:layout_scrollFlags="scroll|enterAlways">
+
+                        <EditText
+                            android:id="@+id/et_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/qc_allotsale_search_hight"
+                            android:background="@drawable/bg_rect_allotsale_search"
+                            android:drawablePadding="10dp"
+                            android:hint="@string/qc_allotsale_search_hint"
+                            android:paddingLeft="10dp"
+                            android:paddingStart="10dp"
+                            android:drawableLeft="@drawable/ic_allotsale_search"
+                            android:textSize="@dimen/min_font" />
+
+                        <ImageView
+                            android:id="@+id/img_search_clear"
+                            android:layout_width="@dimen/qc_allotsale_search_hight"
+                            android:layout_height="@dimen/qc_allotsale_search_hight"
+                            android:layout_alignEnd="@+id/et_search"
+                            android:layout_alignRight="@+id/et_search"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical|right"
+                            android:padding="9dp"
+                            android:onClick="@{fragment::onClearEditClick}"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/ic_cancel_grey_16dp" />
+
+                        <ImageView
+                            android:id="@+id/add_student"
+                            android:layout_width="40dp"
+                            android:layout_height="32dp"
+                            android:layout_alignParentRight="true"
+                            android:scaleType="center"
+                            android:src="@drawable/btn_add_orange"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/divider_grey" />
+
+                    <include
+                        layout="@layout/layout_fliter"
+                        bind:filterModel="@{filterModel}" />
+
+                    <include layout="@layout/divider_grey" />
+                </android.support.design.widget.AppBarLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+                <FrameLayout
+                        android:id="@+id/fragment_list_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </FrameLayout>
+
+                <include
+                    layout="@layout/dialog_alpha_tip"
+                    android:visibility="gone" />
+
+                <cn.qingchengfit.widgets.AlphabetView
+                    android:id="@+id/alphabetview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:paddingBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:visibility="@{filterModel.headCheck?View.VISIBLE:View.GONE}" />
+            </android.support.design.widget.CoordinatorLayout>
+
+            <include
+                android:id="@+id/ll_divider_bottom"
+                layout="@layout/divider_grey"
+                android:layout_width="match_parent"
+                android:layout_height="1px" />
+
+            <LinearLayout
+                android:id="@+id/ll_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/bg_grey"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/ll_show_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_allotsale_select_count"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:background="@drawable/circle_allotsale_green"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/min_font" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginStart="3dp"
+                        android:gravity="center"
+                        android:text="@string/qc_allotsale_checked"
+                        android:textColor="@color/qc_text_black"
+                        android:textSize="@dimen/min_font" />
+
+                    <ImageView
+                        android:id="@+id/img_down"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center"
+                        app:srcCompat="@drawable/ic_common_arrow_up" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_space"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#0000" />
+
+                <LinearLayout
+                    android:id="@+id/ll_modify_sale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/bg_rect_allot_green">
+
+                    <Button
+                        android:id="@+id/btn_modify_sale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:onClick="@{fragment::onAllotBtnClick}"
+                        android:text="@{hasName?@string/qc_allotsale_modify_sale:@string/allot_saler}"
+                        android:textColor="@color/qc_allotsale_green"
+                        android:textSize="@dimen/min_font" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_remove_stud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/bg_rect_allot_green"
+                    android:visibility="@{hasName?View.VISIBLE:View.GONE}">
+
+                    <Button
+                        android:id="@+id/btn_remove_stud"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:onClick="@{fragment::onRemoveBtnClick}"
+                        android:text="@string/qc_allotsale_remove_stud"
+                        android:textColor="@color/qc_allotsale_green"
+                        android:textSize="@dimen/min_font" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </cn.qingchengfit.saasbase.student.other.MyDrawerLayout>
+</layout>

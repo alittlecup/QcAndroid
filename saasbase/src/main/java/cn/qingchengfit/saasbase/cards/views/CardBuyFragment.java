@@ -142,7 +142,7 @@ import javax.inject.Inject;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("购卡详情");
+    toolbarTitle.setText("开卡详情");
   }
 
   @Override protected void onFinishAnimation() {

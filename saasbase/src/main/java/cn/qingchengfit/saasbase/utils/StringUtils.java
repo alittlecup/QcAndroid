@@ -1,10 +1,17 @@
 package cn.qingchengfit.saasbase.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.widget.TextView;
+
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saasbase.student.widget.CircleView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -277,4 +284,34 @@ public class StringUtils {
         }
         return ret;
     }
+    public static void studentStatusWithArrow(TextView view, int status) {
+        Drawable drawableArrow = ContextCompat.getDrawable(view.getContext(), R.drawable.ic_arrow_right);
+        drawableArrow.setBounds(0, 0, drawableArrow.getMinimumWidth(), drawableArrow.getMinimumHeight());
+        String statuStr = "";
+        Drawable drawable = null;
+        Resources resources=view.getContext().getResources();
+        switch (Integer.valueOf(status)) {
+            case 0:
+                statuStr = "新注册";
+                drawable = new CircleView(resources.getColor(R.color.qc_student_status_0));
+                break;
+            case 1:
+                statuStr = "已接洽";
+                drawable = new CircleView(resources.getColor(R.color.qc_student_status_1));
+                break;
+            case 2:
+                statuStr = "会员";
+                drawable = new CircleView(resources.getColor(R.color.qc_student_status_2));
+                break;
+            default:
+                statuStr = "未知";
+                drawable = new CircleView(resources.getColor(R.color.qc_student_status_0));
+                break;
+        }
+        view.setText(statuStr);
+        drawable.setBounds(0, 0, 26, 26);
+        view.setCompoundDrawablePadding(10);
+        view.setCompoundDrawables(drawable, null, drawableArrow, null);
+    }
+
 }

@@ -12,7 +12,6 @@ import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import cn.qingchengfit.saasbase.repository.IBillModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -28,19 +27,19 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
   @Inject public CashierDeskPresenterPresenter() {
   }
 
-  float total = 0;
-  float current = 0;
-  List<Float> history = new ArrayList<>();
+  long total = 0;
+  long current = 0;
+  List<Long> history = new ArrayList<>();
   String cmdLine = "";
   public void pressNum(@IntRange(from = 0,to = 9) int num){
-    current = current*10 + ((float) num/100);
+    current = current*10 + num;
     showView();
   }
 
   public void pressAdd(){
     if (current == 0)
       return;
-    float tmp = current;
+    long tmp = current;
     history.add(tmp);
     cmdLine = getCmd().concat("+");
     current = 0;
@@ -50,9 +49,9 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
   public void pressBackSpace(){
     if (current != 0) {
       current = current / 10;
-      BigDecimal   b  =   new BigDecimal(current);
-      current = b.setScale(2,BigDecimal.ROUND_DOWN).floatValue();
-      if (current < 0.01)
+      //BigDecimal   b  =   new BigDecimal(current);
+      //current = b.setScale(2,BigDecimal.ROUND_DOWN).floatValue();
+      if (current < 1)
         current = 0;
     }
     else {
@@ -74,12 +73,13 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
   }
 
   private void showView(){
-    view.showTotal(getTotal() + current);
-    view.showCurrent(cmdLine+ (current == 0?"":formatFloat2Dot(current)));
+    //float digital = new BigDecimal((getTotal() + current)/100f).setScale(2, RoundingMode.DOWN).floatValue();
+    view.showTotal((getTotal() + current)/100f);
+    view.showCurrent(cmdLine+ (current == 0?"":formatFloat2Dot(current/100f)));
   }
 
-  private float getTotal(){
-    float ret = 0;
+  private long getTotal(){
+    long ret = 0;
     if (history != null){
       for (int i = 0; i < history.size(); i++) {
         ret += history.get(i);
@@ -96,7 +96,7 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
     StringBuilder ss = new StringBuilder();
     if (history != null){
       for (int i = 0; i < history.size(); i++) {
-        ss.append(formatFloat2Dot(history.get(i)));
+        ss.append(formatFloat2Dot(history.get(i)/100f));
         if (i < history.size() -1)
           ss.append("+");
       }
@@ -107,7 +107,7 @@ public class CashierDeskPresenterPresenter extends BasePresenter {
 
 
   public void pay() {
-    long amont = (long)((getTotal()+current)*100);
+    long amont = getTotal()+current;
     if (amont == 0){
       view.showAlert("请输入金额");
       return;

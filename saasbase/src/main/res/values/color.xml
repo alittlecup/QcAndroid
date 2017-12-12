@@ -9,4 +9,17 @@
   <color name="bill_can_withdraw_color">#d88c00</color>
   <color name="bill_settlement">#d83600</color>
   <color name="bill_divider">#464646</color>
+
+
+  <!-- 折线图的折线和填充颜色-->
+  <color name="follow_line_color">#f9944e</color>
+  <color name="follow_fill_color">#aaf9944e</color>
+
+  <color name="student_line_color">#0db14b</color>
+  <color name="student_fill_color">#aa0db14b</color>
+
+  <color name="registe_line_color">#6eb8f1</color>
+  <color name="registe_fill_color">#aa6eb8f1</color>
+
+
 </resources>

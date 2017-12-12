@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="itemClickListener"
+            type="eu.davidea.flexibleadapter.FlexibleAdapter.OnItemClickListener" />
+
+        <variable
+            name="toolbarModel"
+            type="cn.qingchengfit.model.others.ToolbarModel" />
+
+        <variable
+            name="viewModel"
+            type="cn.qingchengfit.student.viewmodel.home.StudentHomeViewModel" />
+
+
+    </data>
+
+    <cn.qingchengfit.saasbase.student.other.MyDrawerLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/include_toolbar"
+                layout="@layout/common_simple_toolbar"
+                bind:toolbarModel="@{toolbarModel}" />
+
+
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/scroll_root"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:orientation="vertical">
+
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/myhome_appBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_grey"
+                    android:fitsSystemWindows="true"
+                    app:elevation="0dp">
+
+                    <FrameLayout
+                        android:id="@+id/frame_student_operation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_scrollFlags="scroll|enterAlways" />
+
+                    <include
+                        android:id="@+id/include_filter"
+                        layout="@layout/view_layout_filter" />
+
+                    <include layout="@layout/divider_grey" />
+                </android.support.design.widget.AppBarLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                    <android.support.v4.widget.SwipeRefreshLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:onRefreshListener="@{()->viewModel.refresh()}"
+                        app:refreshing="@{viewModel.isLoading}">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:items="@{viewModel.items}"
+                            app:itemClickListenter="@{itemClickListener}"
+                            />
+
+                    </android.support.v4.widget.SwipeRefreshLayout>
+
+                    <cn.qingchengfit.saasbase.student.widget.ModifiedFastScroller
+                        android:id="@+id/fast_scroller"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        app:enable="@{!viewModel.getSortViewModel().latestChecked}"
+                        app:fastScrollerAutoHideDelayInMillis="50"
+                        app:fastScrollerAutoHideEnabled="false"
+                        app:fastScrollerBubbleEnabled="true"
+                        app:fastScrollerBubblePosition="center"
+                        app:visibleGone="@{!viewModel.getSortViewModel().latestChecked}" />
+                </RelativeLayout>
+            </android.support.design.widget.CoordinatorLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_add_student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:onClick="@{()->viewModel.onFABClick()}"
+                android:scaleType="fitXY"
+                app:fabSize="normal"
+                app:srcCompat="@drawable/ic_add_staff" />
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_student_filter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="vertical" />
+    </cn.qingchengfit.saasbase.student.other.MyDrawerLayout>
+</layout>

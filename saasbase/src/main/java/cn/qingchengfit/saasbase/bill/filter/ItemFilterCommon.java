@@ -28,10 +28,17 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
   private FilterModel filterModel;
   private List<Integer> selectPosition = new ArrayList<>();
   private List<String> valueList = new ArrayList<>();
+  private Boolean isSingleSelected=false;
 
   public ItemFilterCommon(FilterModel filterModel) {
     this.filterModel = filterModel;
   }
+
+  public ItemFilterCommon(FilterModel filterModel,Boolean isSingleSelected) {
+    this.filterModel = filterModel;
+    this.isSingleSelected=isSingleSelected;
+  }
+
 
   @Override public ItemFilterVH createViewHolder(View view, FlexibleAdapter adapter) {
     ItemFilterVH holder =
@@ -70,6 +77,7 @@ public class ItemFilterCommon extends AbstractFlexibleItem<ItemFilterCommon.Item
       adapter.removeSelection(position);
       return;
     }
+    holder.billFilterCommon.setSingleSelected(isSingleSelected);
     holder.billFilterTitle.setText(filterModel.name);
     if (holder.billFilterCommon.getChildCount()  >= filterModel.content.size()){
       return;

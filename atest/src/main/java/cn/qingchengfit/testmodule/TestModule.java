@@ -1,12 +1,28 @@
 package cn.qingchengfit.testmodule;
 
 import android.app.Application;
+
+import java.util.HashMap;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saasbase.repository.IStudentModel;
+import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
+import cn.qingchengfit.saasbase.routers.studentImpl;
+import cn.qingchengfit.saasbase.student.bean.FollowUpFilterModel;
+import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
+import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import dagger.Module;
 import dagger.Provides;
+import rx.Observable;
 
 /**
  * power by
@@ -28,7 +44,8 @@ import dagger.Provides;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/5/31.
  */
-@Module public class TestModule {
+@Module
+public class TestModule {
     private LoginStatus loginStatus;
     private GymWrapper gymWrapper;
     private TestApp app;
@@ -43,25 +60,62 @@ import dagger.Provides;
         restRepository = builder.restRepository;
     }
 
-    @Provides public LoginStatus provideLoginStatus() {
+    @Provides
+    public LoginStatus provideLoginStatus() {
         return loginStatus;
     }
 
-    @Provides public GymWrapper provideGym() {
+    @Provides
+    public GymWrapper provideGym() {
         return gymWrapper;
     }
 
-    @Provides public Application provideApp() {
+    @Provides
+    public Application provideApp() {
         return app;
     }
 
-    @Provides public BaseRouter provideRouter() {
+    @Provides
+    public BaseRouter provideRouter() {
         return router;
     }
 
-    @Provides public QcRestRepository provideRepository() {
+    @Provides
+    public QcRestRepository provideRepository() {
         return restRepository;
     }
+
+    @Provides
+    SaasbaseRouterCenter providesSaasbaseRouterCenter() {
+        return new SaasbaseRouterCenter(null, null, null, null, null, new studentImpl());
+    }
+
+    @Singleton
+    @Provides
+    FollowUpFilterModel providesFollowUpFilterModel() {
+        return new FollowUpFilterModel();
+    }
+
+    @Named("commonFilter")
+    @Singleton
+    @Provides
+    StudentFilter providesStudentFilter() {
+        return new StudentFilter();
+    }
+
+
+    @Named("topFilter")
+    @Singleton
+    @Provides
+    StudentFilter providesTopStudentFilter() {
+        return new StudentFilter();
+    }
+
+    @Provides
+    public IStudentModel provideStudentModel(QcRestRepository restRepository) {
+        return new StudentModel(restRepository);
+    }
+
 
     public static final class Builder {
         private LoginStatus loginStatus;
@@ -102,8 +156,8 @@ import dagger.Provides;
             return new TestModule(this);
         }
     }
-    //@Provides
-    //public <T> Map<Class<? extends T>, Provider<AndroidInjector.Factory<? extends T>>> providerMap(){
-    //    return new HashMap<Class<? extends T>, Provider<AndroidInjector.Factory<? extends T>>>();
-    //}
+//@Provides
+//public <T> Map<Class<? extends T>, Provider<AndroidInjector.Factory<? extends T>>> providerMap(){
+//    return new HashMap<Class<? extends T>, Provider<AndroidInjector.Factory<? extends T>>>();
+//}
 }
