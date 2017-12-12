@@ -247,7 +247,7 @@ import rx.schedulers.Schedulers;
           body.min_salary = 100001;
           body.max_salary = 100001;
         } else {
-          if (left > right) {
+          if (left - 2 > right) {
             ToastUtils.show("请选择正确的薪水区间");
             return;
           }
