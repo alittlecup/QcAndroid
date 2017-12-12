@@ -9,23 +9,17 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.anbillon.flabellum.annotations.Leaf;
-
-import java.util.Date;
-
-import javax.inject.Inject;
-
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.databinding.FragmentAttendanceHomeBinding;
+import cn.qingchengfit.saasbase.databinding.FragmentSaasAttendanceHomeBinding;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.presenters.attendance.StudentAttendancePresenter;
 import cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils;
-import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.QcFilterToggle;
+import com.anbillon.flabellum.annotations.Leaf;
+import javax.inject.Inject;
 import rx.functions.Action0;
 
 /**
@@ -33,7 +27,7 @@ import rx.functions.Action0;
  */
 @Leaf(module = "student", path = "/student/attendance")
 public class StudentAttendanceFragment extends BaseFragment implements StudentAttendancePresenter.MVPView {
-    FragmentAttendanceHomeBinding binding;
+    FragmentSaasAttendanceHomeBinding binding;
     AttendanceFilterView filterFragment;
     @Inject
     StudentAttendancePresenter presenter;
@@ -57,7 +51,7 @@ public class StudentAttendanceFragment extends BaseFragment implements StudentAt
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_attendance_home, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_saas_attendance_home, container, false);
         binding.setFragment(this);
         initToolbar(binding.includeToolbar.toolbar);
         delegatePresenter(presenter, this);

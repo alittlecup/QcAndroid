@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.Student;
+import cn.qingchengfit.saasbase.databinding.ItemStudentFollowUpStateBinding;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.custom.MyBindingFelxibleViewHolder;
 import cn.qingchengfit.utils.DateUtils;
@@ -65,7 +66,7 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
 
     @Override
     public MyBindingFelxibleViewHolder createViewHolder(View view,final FlexibleAdapter adapter) {
-        cn.qingchengfit.staffkit.databinding.ItemStudentFollowUpStateBinding binding =
+        ItemStudentFollowUpStateBinding binding =
             DataBindingUtil.bind(view);
         MyBindingFelxibleViewHolder holder = new MyBindingFelxibleViewHolder(binding.getRoot(), adapter);
         holder.setBinding(binding);
@@ -79,8 +80,8 @@ public class FollowUpItem extends AbstractFlexibleItem<MyBindingFelxibleViewHold
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, MyBindingFelxibleViewHolder holder, int position, List payloads) {
         holder.itemView.setTag(data);
-        cn.qingchengfit.staffkit.databinding.ItemStudentFollowUpStateBinding binding =
-            (cn.qingchengfit.staffkit.databinding.ItemStudentFollowUpStateBinding) holder.getBinding();
+        ItemStudentFollowUpStateBinding binding =
+            (ItemStudentFollowUpStateBinding) holder.getBinding();
 
         Glide.with(holder.itemView.getContext())
             .load(data.avatar)

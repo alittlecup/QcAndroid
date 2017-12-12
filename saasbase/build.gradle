@@ -56,6 +56,7 @@ dependencies {
     api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
         exclude group: 'com.google.googlejavaformat'
     }
+    api 'com.hkm.taglib:tag:1.6.0'
     annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
     annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
     api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
