@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.OnRebindCallback;
 import android.databinding.ViewDataBinding;
+import android.graphics.LinearGradient;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,7 +21,6 @@ import java.util.HashMap;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
-import cn.qingchengfit.student.common.MyLinearLayoutManager;
 import cn.qingchengfit.student.databinding.ViewStudentFilterBinding;
 import cn.qingchengfit.student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -83,7 +83,7 @@ public class StudentFilterView extends StudentBaseFragment<ViewStudentFilterBind
     }
 
     private void initRecyclerView() {
-        mBinding.recyclerBillFilter.setLayoutManager(new MyLinearLayoutManager(getContext()));
+        mBinding.recyclerBillFilter.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerBillFilter.addItemDecoration(
                 new FlexibleItemDecoration(getContext()).withDivider(cn.qingchengfit.saasbase.R.drawable.divider_grey_left_margin)
                         .withBottomEdge(true));

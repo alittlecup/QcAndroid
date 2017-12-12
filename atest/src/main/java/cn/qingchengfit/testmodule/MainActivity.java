@@ -25,7 +25,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.observers.Observers;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +52,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.btn_to_recruit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                baseRouter.routerTo("recruit", MainActivity.this);
-                testObserble();
             }
         });
         findViewById(R.id.btn_to_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TestActivity.class));
-                Uri uri = Uri.parse("student://student/student/home");
+                Uri uri = Uri.parse("student://student/home/student");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
@@ -71,51 +68,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                startActivity(new Intent(MainActivity.this, DesignActivity.class));
             }
         });
-//        final Button button = findViewById(R.id.btn_design);
-//        rx.Observable<Long> interval = rx.Observable.interval(1000, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread());
-//        Publisher<Long> longPublisher = RxReactiveStreams.toPublisher(interval);
-//
-//
-//        rx.Observable<Long> longObservable = rx.Observable.interval(1000, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread());
-//        Publisher<Long> longPublisher1 = RxReactiveStreams.toPublisher(interval);
-//        LiveData<Long> longLiveData = LiveDataReactiveStreams.fromPublisher(longPublisher);
-//        longLiveData.observe(this, new Observer<Long>() {
-//            @Override
-//            public void onChanged(@Nullable Long aLong) {
-//                button.setText(aLong + "");
-//            }
-//        });
-
-        binding.setListener(this);
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        Log.d("TAG", "onClick: ");
-        testObserble();
-    }
-
-    private void testObserble() {
-//        rx.Observable<Integer> map = rx.Observable.from(new Integer[]{10, 3, 4, 2, 4, 6, 0})
-//                .map(new Func1<Integer, Integer>() {
-//                    @Override
-//                    public Integer call(Integer integer) {
-//                        return 300/integer;
-//                    }
-//                })
-//                .doOnError(new Action1<Throwable>() {
-//                    @Override
-//                    public void call(Throwable throwable) {
-//                        Log.d("TAG", "call: " + throwable.getMessage());
-//                    }
-//                });
-//        LiveData<Integer> integerLiveData = cn.qingchengfit.student.LiveDataReactiveStreams.fromPublisher(map);
-//        integerLiveData.observe(this, new Observer<Integer>() {
-//            @Override
-//            public void onChanged(@Nullable Integer integer) {
-//                Log.d("TAG", "onChanged: " + integer);
-//            }
-//        });
     }
 }
+

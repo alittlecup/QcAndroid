@@ -129,7 +129,7 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    api "android.arch.lifecycle:extensions:1.0.0"
+
 }
 
 group "cn.qingchegfit.widgets"

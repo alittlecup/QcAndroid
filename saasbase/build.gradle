@@ -42,27 +42,25 @@ android {
 }
 
 dependencies {
-  api project(path: ':qcbase')
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
-  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-    exclude group: 'com.android.support', module: 'support-annotations'
-  })
-  api ("android.arch.lifecycle:extensions:1.0.0"){
-    exclude group:'android.arch.lifecycle', module:'runtime'
-  }
-  testImplementation 'junit:junit:4.12'
-  testImplementation "org.mockito:mockito-core:2.11.0"
-  annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
-  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
-  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
-    exclude group: 'com.google.googlejavaformat'
-  }
-  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
-  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
-  implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
-
-
+    api project(path: ':qcbase')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:2.11.0"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+    annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+    api("com.anbillon.flabellum:flabellum:${libs.flabellum}") {
+        exclude group: 'com.google.googlejavaformat'
+    }
+    annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
+    annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+    api 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    api ("android.arch.lifecycle:extensions:1.0.0"){
+      exclude group:'android.arch.lifecycle', module:'runtime'
+    }
 }
 
 

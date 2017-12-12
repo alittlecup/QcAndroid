@@ -2,9 +2,7 @@
 <layout>
 
     <data>
-        <variable
-            name="listener"
-            type="android.view.View.OnClickListener"/>
+
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,7 +16,6 @@
             android:id="@+id/btn_to_recruit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{(view)->listener.onClick(view)}"
             android:text="Recruit" />
 
         <Button
@@ -33,14 +30,7 @@
             android:layout_height="wrap_content"
             android:text="DESIGH" />
 
-        <cn.qingchengfit.saasbase.student.widget.LineCharWithBottomDate
-            android:id="@+id/lineChart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/blue" />
+
 
     </LinearLayout>
 </layout>

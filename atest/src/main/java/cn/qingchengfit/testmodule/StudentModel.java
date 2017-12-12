@@ -12,6 +12,7 @@ import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
+import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.api.StudentApi;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
@@ -178,5 +179,15 @@ public class StudentModel implements IStudentModel {
     @Override
     public Observable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(String staffId, HashMap<String, Object> params) {
         return studentApi.qcGetNotSignStudent(staffId, params);
+    }
+
+    @Override
+    public Observable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(String staff_id, HashMap<String, Object> params) {
+        return studentApi.qcGetTrackStudentsRecommends(staff_id, params);
+    }
+
+    @Override
+    public Observable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(String staff_id, HashMap<String, Object> params) {
+        return studentApi.qcGetTrackStudentsOrigins(staff_id, params);
     }
 }

@@ -8,6 +8,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
+import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
@@ -255,4 +256,23 @@ public interface StudentApi {
     @GET("/api/staffs/{staff_id}/users/checkin/records/")
     Observable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(
             @Path("staff_id") String staffId, @QueryMap HashMap<String, Object> params);
+
+
+    /**
+     * 推荐人列表
+     * /api/staffs/:staff_id/users/recommends/?brand_id=&shop_id= 或者 id=&model=
+     */
+    @GET("/api/staffs/{staff_id}/users/recommends/?show_all=1")
+    Observable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(
+            @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+
+    /**
+     * 来源列表
+     * /api/v2/staffs/:staff_id/users/origins/?brand_id=&shop_id= 或者 id=&model=
+     */
+    @GET("/api/staffs/{staff_id}/filter/origins/?show_all=1")
+    Observable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(
+            @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
 }

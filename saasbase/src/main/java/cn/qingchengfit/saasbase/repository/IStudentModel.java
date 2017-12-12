@@ -5,9 +5,12 @@ import java.util.List;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saasbase.staff.model.Staffs;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
+import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
 import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
@@ -257,5 +260,19 @@ public interface IStudentModel {
      */
     Observable<QcDataResponse<List<StudentWIthCount>>> qcGetNotSignStudent(
             String staffId, HashMap<String, Object> params);
+
+
+    /**
+     * 推荐人列表
+     *
+     */
+    Observable<QcDataResponse<SalerUserListWrap>> qcGetTrackStudentsRecommends(String staff_id, HashMap<String, Object> params);
+
+
+    /**
+     * 来源列表
+     */
+    Observable<QcDataResponse<SourceBeans>> qcGetTrackStudentsOrigins(String staff_id, HashMap<String, Object> params);
+
 
 }

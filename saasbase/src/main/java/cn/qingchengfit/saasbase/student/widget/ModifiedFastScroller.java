@@ -63,6 +63,7 @@ public class ModifiedFastScroller extends FastScroller {
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
+        setVisibility(enabled ? VISIBLE : GONE);
         setIgnoreTouchesOutsideHandle(!enabled);
     }
 
@@ -71,7 +72,7 @@ public class ModifiedFastScroller extends FastScroller {
         int singleHeight = ((SlideBar) bar).getSingleHeight();
         int padding = (bar.getHeight() - singleHeight * letters.length) / 2;
 
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 float y = event.getY();
                 if (y < (bar.getTop() + padding) || y > (bar.getBottom() - padding)) {
