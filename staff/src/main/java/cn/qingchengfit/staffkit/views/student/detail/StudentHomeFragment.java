@@ -187,12 +187,14 @@ public class StudentHomeFragment extends BaseFragment {
                 });
                 orderGroup.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
-                        boolean isP = false;
+                        boolean isP = true;
                         for (int i = 0; i < studentBean.getStudentBean().getSupportIdList().size(); i++) {
                             if (SerPermisAction.check(studentBean.getStudentBean().getSupportIdList().get(i),
                                 PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
                                 isP = true;
                                 break;
+                            }else{
+                                isP = false;
                             }
                         }
                         if (isP) {

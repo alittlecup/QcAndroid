@@ -178,6 +178,7 @@ public class CompletedChargeFragment extends BaseFragment implements CompletedCh
         }
         //                chargeBody.setApp_id(getString(R.string.wechat_code));
         showLoading();
+        chargeBody.setOrigin(2);
         presenter.commitCharge(chargeBody,
             StringUtils.List2Str(realCard.getRealCard().getUserIds()));
         break;
