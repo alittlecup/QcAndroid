@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.qingchengfit.student.common.flexble;
+package cn.qingchengfit.saasbase.common.flexble;
 
-import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -26,7 +24,8 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import cn.qingchengfit.student.base.BaseViewModel;
+import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
+
 
 /**
  * Generic ViewModel for any Adapter which loads the source of type {@code Source} and

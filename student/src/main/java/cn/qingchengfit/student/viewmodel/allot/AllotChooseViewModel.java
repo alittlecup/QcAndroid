@@ -15,7 +15,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
 import cn.qingchengfit.saasbase.utils.StringUtils;
-import cn.qingchengfit.student.base.BaseViewModel;
+import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
 import cn.qingchengfit.student.respository.StudentRespository;
 
 /**

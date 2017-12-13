@@ -58,7 +58,6 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
 
 
-    api "android.arch.lifecycle:reactivestreams:1.0.0"
-    api "io.reactivex:rxjava-reactive-streams:1.2.1"
+
 
 }

@@ -1,4 +1,4 @@
-package cn.qingchengfit.student.viewmodel;
+package cn.qingchengfit.saasbase.common.mvvm;
 
 import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
@@ -10,10 +10,8 @@ import java.util.List;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
 import cn.qingchengfit.saasbase.utils.StringUtils;
-import cn.qingchengfit.student.common.mvvm.ActionLiveEvent;
-import cn.qingchengfit.student.items.StaffDetailItem;
+import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import rx.functions.Action1;
 
 /**
  * Created by huangbaole on 2017/11/22.

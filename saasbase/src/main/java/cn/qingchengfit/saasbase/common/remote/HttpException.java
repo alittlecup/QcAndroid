@@ -1,4 +1,4 @@
-package cn.qingchengfit.student.respository.remote;
+package cn.qingchengfit.saasbase.common.remote;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

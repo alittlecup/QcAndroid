@@ -1,41 +1,30 @@
-package cn.qingchengfit.student;
+package cn.qingchengfit.saasbase.common.mvvm;
 
 import android.databinding.BindingAdapter;
-import android.databinding.BindingMethod;
-import android.databinding.BindingMethods;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.MenuRes;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.github.mikephil.charting.data.LineData;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.crypto.interfaces.PBEKey;
-
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.SimpleTextItemItem;
+import cn.qingchengfit.saasbase.BuildConfig;
 import cn.qingchengfit.saasbase.student.widget.LineCharDate;
 import cn.qingchengfit.saasbase.student.widget.ModifiedFastScroller;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.FunnelTwoView;
 import cn.qingchengfit.widgets.QcRadioGroup;
-import cn.qingchengfit.widgets.QcToggleButton;
-import eu.davidea.fastscroller.FastScroller;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
-import rx.functions.Action1;
 
 import static android.view.Gravity.CENTER;
 

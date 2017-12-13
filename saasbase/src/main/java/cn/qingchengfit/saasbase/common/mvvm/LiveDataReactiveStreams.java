@@ -1,9 +1,8 @@
-package cn.qingchengfit.student;
+package cn.qingchengfit.saasbase.common.mvvm;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BaseTransientBottomBar;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
@@ -12,12 +11,10 @@ import org.reactivestreams.Subscription;
 import java.util.concurrent.atomic.AtomicReference;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.student.respository.remote.HttpException;
+import cn.qingchengfit.saasbase.common.remote.HttpException;
 import cn.qingchengfit.utils.ToastUtils;
 import rx.Observable;
 import rx.RxReactiveStreams;
-
-import static cn.qingchengfit.student.respository.remote.HttpException.ERRORACTION.DISMISS_TOAST;
 
 /**
  * Created by huangbaole on 2017/11/29.
@@ -102,7 +99,7 @@ public class LiveDataReactiveStreams {
                 mSubscriber.compareAndSet(this, null);
                 // REFACTOR: 2017/11/30 就事件总线吧
                 if (ex instanceof HttpException) {
-                    if (!(((HttpException) ex).getmAction() == DISMISS_TOAST)) {
+                    if (!(((HttpException) ex).getmAction() == HttpException.ERRORACTION.DISMISS_TOAST)) {
                         ToastUtils.show(ex.getMessage());
                     }
                 } else {
