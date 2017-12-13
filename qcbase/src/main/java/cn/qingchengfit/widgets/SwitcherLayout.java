@@ -41,18 +41,18 @@ public class SwitcherLayout extends LinearLayout {
 
     public SwitcherLayout(Context context) {
         super(context);
-        textColor = CompatUtils.getColor(context, R.color.text_grey);
+        textColor = CompatUtils.getColor(context, R.color.text_dark);
     }
 
     public SwitcherLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        textColor = CompatUtils.getColor(context, R.color.text_grey);
+        textColor = CompatUtils.getColor(context, R.color.text_dark);
         init(context, attrs);
     }
 
     public SwitcherLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        textColor = CompatUtils.getColor(context, R.color.text_grey);
+        textColor = CompatUtils.getColor(context, R.color.text_dark);
         init(context, attrs);
     }
 

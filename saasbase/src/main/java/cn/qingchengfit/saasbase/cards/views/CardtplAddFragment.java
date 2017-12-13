@@ -84,6 +84,9 @@ public class CardtplAddFragment extends CardTplDetailFragment {
     super.onViewCreated(view, savedInstanceState);
     presenter.setCardCate(cardCategory);
     civInputCardname.setVisibility(View.VISIBLE);
+    civInputCardDesc.setVisibility(View.VISIBLE);
+    expandSettingLimit.setVisibility(View.VISIBLE);
+    expandCardProtocol.setVisibility(View.VISIBLE);
     civInputCardname.addTextWatcher(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -114,7 +117,6 @@ public class CardtplAddFragment extends CardTplDetailFragment {
   }
 
   @Override protected void onFinishAnimation() {
-
   }
 
   @Override public View onCreateView(LayoutInflater inflater, final ViewGroup container,
