@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
@@ -53,6 +54,7 @@ public abstract class BatchListFragment extends SaasBaseFragment
 
   @BindView(R2.id.toolbar_title) protected TextView toolbarTitile;
   @BindView(R2.id.toolbar) protected Toolbar toolbar;
+  @BindView(R2.id.srl) protected SwipeRefreshLayout srl;
   @BindView(R2.id.rv_batch_list) RecyclerView rv;
   @BindView(R2.id.add_batch_btn) FloatingActionButton addBatchBtn;
 
@@ -85,6 +87,9 @@ public abstract class BatchListFragment extends SaasBaseFragment
         .withDefaultDivider()
         .withBottomEdge(true));
     rv.setAdapter(commonFlexAdapter);
+    rv.setItemAnimator(new FadeInUpItemAnimator());
+    srl.setRefreshing(true);
+    srl.setOnRefreshListener(this);
     return view;
   }
 

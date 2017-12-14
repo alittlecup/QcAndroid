@@ -2,6 +2,8 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -14,10 +16,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
+import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchEditPresenter;
@@ -26,7 +31,6 @@ import cn.qingchengfit.saasbase.items.CmLRTxtItem;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -34,6 +38,8 @@ import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePeriodChooser;
 import com.bigkoo.pickerview.TimePopupWindow;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
+import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,7 +67,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/9/22.
  */
 @Leaf(module = "course", path = "/batch/edit/")
-public class EditBatchFragment extends BaseFragment implements IBatchPresenter.MVPView,
+public class EditBatchFragment extends SaasBaseFragment implements IBatchPresenter.MVPView,
   FlexibleAdapter.OnItemClickListener{
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -75,7 +81,7 @@ public class EditBatchFragment extends BaseFragment implements IBatchPresenter.M
 
   @Inject BatchEditPresenter presenter;
   CommonFlexAdapter commonFlexAdapter;
-  @Need String batchId;
+  @Need public String batchId;
 
   private BatchDetailCommonView batchBaseFragment;
   private TimeDialogWindow timeWindow;
@@ -93,8 +99,19 @@ public class EditBatchFragment extends BaseFragment implements IBatchPresenter.M
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter,this);
     presenter.setBatchId(batchId);
-
+    initView();
     return view;
+  }
+
+  private void initView() {
+    recyclerview.addItemDecoration(new FlexibleItemDecoration(getContext())
+      //.withDivider(R.drawable.divider_grey_left_margin,R.layout.item_cm_lr_txt)
+      .withOffset(1).withBottomEdge(true)
+    );
+    recyclerview.setNestedScrollingEnabled(false);
+    recyclerview.setItemAnimator(new FadeInUpItemAnimator());
+    recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
+    recyclerview.setAdapter(commonFlexAdapter);
   }
 
   @Override protected void onFinishAnimation() {
@@ -106,6 +123,13 @@ public class EditBatchFragment extends BaseFragment implements IBatchPresenter.M
     return EditBatchFragment.class.getName();
   }
 
+  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+    Bundle savedInstanceState) {
+    super.onChildViewCreated(fm, f, v, savedInstanceState);
+    if (f instanceof BatchDetailCommonView){
+      inflateBatchInfo(presenter.getBatchDetail());
+    }
+  }
 
   /**
    * 查看所有排期批次
@@ -141,6 +165,8 @@ public class EditBatchFragment extends BaseFragment implements IBatchPresenter.M
     }
     if (!batchBaseFragment.isAdded())
       stuff(R.id.frag_course_info,batchBaseFragment);
+    else inflateBatchInfo(batchDetail);
+
     if (batchDetail.time_repeats != null){
       List<CmLRTxtItem> items = new ArrayList<>();
       for (Time_repeat time_repeat : batchDetail.time_repeats) {
@@ -149,6 +175,12 @@ public class EditBatchFragment extends BaseFragment implements IBatchPresenter.M
       }
       commonFlexAdapter.updateDataSet(items);
     }
+  }
+  private void inflateBatchInfo(BatchDetail batchDetail){
+    batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
+    batchBaseFragment.openPayOnline(!batchDetail.is_free);
+    batchBaseFragment.setSpace(batchDetail.spaces);
+    batchBaseFragment.setRules(batchDetail.rule, (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
   }
 
   @Override public void onLoppers(List<BatchLoop> loopers) {

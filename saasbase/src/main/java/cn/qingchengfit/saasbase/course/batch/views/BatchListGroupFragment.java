@@ -141,6 +141,7 @@ public class BatchListGroupFragment extends BatchListFragment
   }
 
   @Override public void onList(List<BatchCourse> course) {
+    srl.setRefreshing(false);
     if (course != null){
       List<AbstractFlexibleItem> data = new ArrayList<>();
       data.add(new StickerDateItem(course.size()+"节团课"));

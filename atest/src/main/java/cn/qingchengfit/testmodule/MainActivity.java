@@ -1,29 +1,12 @@
 package cn.qingchengfit.testmodule;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-
-
-import java.net.SocketException;
-import java.util.Observable;
-import java.util.concurrent.TimeUnit;
-
-import cn.qingchengfit.student.BindingAdapters;
 import cn.qingchengfit.testmodule.databinding.ActivityMainBinding;
 import cn.qingchengfit.views.activity.BaseActivity;
-import rx.RxReactiveStreams;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.observers.Observers;
 
 public class MainActivity extends BaseActivity {
 
@@ -52,6 +35,9 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.btn_to_recruit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Uri uri = Uri.parse("student://student/home/student");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
         findViewById(R.id.btn_to_test).setOnClickListener(new View.OnClickListener() {

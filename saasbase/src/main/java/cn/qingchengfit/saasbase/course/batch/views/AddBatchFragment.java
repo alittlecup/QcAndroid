@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -86,7 +85,7 @@ import rx.android.schedulers.AndroidSchedulers;
 
   @BindView(R2.id.tv_clear_auto_batch) TextView tvClearAutoBatch;
   @BindView(R2.id.civ_to_open_time) CommonInputView civOpenTime;
-  @BindArray(R2.array.order_open_time) String[] arrayOpenTime;
+  String[] arrayOpenTime;
 
   @Inject AddBatchPresenter presenter;
 
@@ -150,6 +149,7 @@ import rx.android.schedulers.AndroidSchedulers;
     super.onCreate(savedInstanceState);
     batchBaseFragment = BatchDetailCommonView.newInstance(mCourse, mTeacher);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
+    arrayOpenTime = getResources().getStringArray(R.array.order_open_time);
     RxBus.getBus()
       .register(BatchLoop.class)
       .compose(bindToLifecycle())

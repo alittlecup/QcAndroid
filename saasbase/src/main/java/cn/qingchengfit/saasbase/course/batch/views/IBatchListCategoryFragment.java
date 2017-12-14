@@ -7,13 +7,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.views.fragments.BaseListFragment;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import javax.inject.Inject;
@@ -39,7 +39,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/11/29.
  */
 public abstract class IBatchListCategoryFragment extends BaseListFragment implements
-  AdapterView.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener {
+  FlexibleAdapter.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener {
 
   @Inject ICourseModel courseModel;
 
@@ -60,6 +60,7 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
     initToolbar(toolbar);
     return parent;
   }
+
 
   @Override protected void addDivider() {
     initListener(this);
@@ -93,15 +94,15 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
     return null;
   }
 
-  @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-    IFlexible item = commonFlexAdapter.getItem(i);
-    if (item == null) return;
-    if (item instanceof BatchCateItem){
-      routeTo("/batch/detail/",new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams()
-        .batchId(((BatchCateItem) item).getId())
-        .build()
-      );
-    }
+  @Override public boolean onItemClick(int i) {
+      IFlexible item = commonFlexAdapter.getItem(i);
+      if (item == null) return true;
+      if (item instanceof BatchCateItem){
+        routeTo("/batch/edit/",new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams()
+          .batchId(((BatchCateItem) item).getId())
+          .build()
+        );
+      }
+    return true;
   }
-
 }

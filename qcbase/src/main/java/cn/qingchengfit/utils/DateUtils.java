@@ -62,6 +62,13 @@ public class DateUtils {
     }
     return start.substring(0, 10) + "至" + end.substring(0, 10);
   }
+ public static String getHHMMDuringFromServer(String start, String end ,boolean cross) {
+    if (TextUtils.isEmpty(start) || TextUtils.isEmpty(end)) {
+      LogUtil.e("getDuringFromServer: server date string error");
+      return "";
+    }
+    return start.substring(11, 16) + "至" +(cross?" 次日":"")+ end.substring(11, 16);
+  }
 
   public static String getYYMMfromServer(String s) {
     if (s.startsWith("3000")) {

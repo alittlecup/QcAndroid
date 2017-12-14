@@ -29,8 +29,9 @@ public class SingleBatch extends BatchDetail{
     public String batch_id;
     public String start;
     public String end;
+    public boolean is_cross;
     public List<Rule> rules;
     public List orders;
-    public List<Time_repeat> time_repeats;
+    //public List<Time_repeat> time_repeats;
 
 }

@@ -38,11 +38,11 @@ public class Time_repeat implements ICmLRTxt{
     }
 
     @Override public String getLeftTxt() {
-        return DateUtils.getChineseWeekStr(weekday);
+        return DateUtils.getChineseWeekStr(weekday-1);
     }
 
     @Override public String getRightTxt() {
-        return start+"-"+ end;
+        return isPrivate?(start+"-"+ end):start;
     }
 
     @Override public int getLeftIcon() {

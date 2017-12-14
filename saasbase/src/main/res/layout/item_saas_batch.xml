@@ -8,6 +8,8 @@
     android:layout_height="90dp"
     android:background="@drawable/bg_click"
     android:gravity="center_vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin"
     >
 
   <FrameLayout

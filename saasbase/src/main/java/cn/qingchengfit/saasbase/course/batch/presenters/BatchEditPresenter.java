@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.batch.presenters;
 
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchDetailWrap;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import javax.inject.Inject;
@@ -11,6 +12,7 @@ import rx.schedulers.Schedulers;
 public class BatchEditPresenter extends IBatchPresenter {
 
   String batchId;
+  BatchDetail batchDetail;
   boolean isPrivate;
 
   public boolean isPrivate() {
@@ -23,6 +25,10 @@ public class BatchEditPresenter extends IBatchPresenter {
 
   public String getBatchId() {
     return batchId;
+  }
+
+  public BatchDetail getBatchDetail() {
+    return batchDetail;
   }
 
   public void setBatchId(String batchId) {
@@ -41,6 +47,7 @@ public class BatchEditPresenter extends IBatchPresenter {
         .subscribe(new NetSubscribe<QcDataResponse<BatchDetailWrap>>() {
           @Override public void onNext(QcDataResponse<BatchDetailWrap> qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
+              batchDetail = qcResponse.data.batch;
               mvpView.onBatchDetail(qcResponse.data.batch);
             } else {
               mvpView.onShowError(qcResponse.getMsg());

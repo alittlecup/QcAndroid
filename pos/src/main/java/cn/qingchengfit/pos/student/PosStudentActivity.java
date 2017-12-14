@@ -1,6 +1,6 @@
 package cn.qingchengfit.pos.student;
 
-import cn.qingchengfit.saasbase.student.StudentActivity;
+import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
@@ -27,5 +27,8 @@ import com.anbillon.flabellum.annotations.Trunk;
 @Trunk(fragments =  {
   PosStudentAddFragment.class, ChooseAndSearchStudentFragment.class,
 })
-public class PosStudentActivity  extends StudentActivity{
+public class PosStudentActivity  extends SaasContainerActivity{
+  @Override public String getModuleName() {
+    return "student";
+  }
 }

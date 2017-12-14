@@ -13,12 +13,19 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       >
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_batch_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        />
+        >
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv_batch_list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:overScrollMode="never"
+          />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_batch_btn"
         android:layout_width="wrap_content"

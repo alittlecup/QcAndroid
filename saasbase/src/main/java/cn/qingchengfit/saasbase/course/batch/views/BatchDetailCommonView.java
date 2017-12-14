@@ -23,6 +23,7 @@ import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
 import cn.qingchengfit.saasbase.cards.views.BatchPayCardParams;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseParams;
+import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.events.EventPayOnline;
 import cn.qingchengfit.saasbase.gymconfig.event.EventSiteSelected;
@@ -84,6 +85,7 @@ public class BatchDetailCommonView extends BaseFragment {
   private ArrayList<Rule> rulesPayCards = new ArrayList<>();
   private Rule payOnlineRule;
   private List<Space> spaces = new ArrayList<>();
+  private ArrayList<CardTplBatchShip> cardtplships;
 
   public static BatchDetailCommonView newInstance(Course course, Staff trainer) {
     Bundle args = new Bundle();
@@ -128,14 +130,7 @@ public class BatchDetailCommonView extends BaseFragment {
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<EventBatchPayCard>() {
         @Override public void onNext(EventBatchPayCard eventBatchPayCard) {
-          rulesPayCards.clear();
-          rulesPayCards.addAll(eventBatchPayCard.getRules());
-          if (eventBatchPayCard.getRules().size() > 0) {
-            payCard.setContent(
-              getString(R.string.batch_can_pay_card_count, eventBatchPayCard.getCount()));
-          } else {
-            payCard.setContent(getString(R.string.common_un_setting));
-          }
+          setCardRule(eventBatchPayCard.getRules(), null);
         }
       });
     RxBusAdd(EventStaffWrap.class).onBackpressureDrop()
@@ -241,6 +236,30 @@ public class BatchDetailCommonView extends BaseFragment {
     }
   }
 
+  public void setRules(List<Rule> rules, ArrayList<CardTplBatchShip> ships) {
+    List<Rule> rules1 = new ArrayList<>();
+    for (Rule rule : rules){
+      if (rule.channel.equalsIgnoreCase("ONLINE")){
+        payOnlineRule = rule;
+      }else {
+        rules1.addAll(rules);
+      }
+    }
+    setCardRule(rules1,ships);
+
+  }
+
+  private void setCardRule(List<Rule> rules, ArrayList<CardTplBatchShip> ships) {
+    rulesPayCards.clear();
+    if (rules != null && rules.size() > 0) {
+      rulesPayCards.addAll(rules);
+      payCard.setContent(getString(R.string.batch_can_pay_card_count, rules.size()));
+    } else {
+      payCard.setContent(getString(R.string.common_un_setting));
+    }
+    if (ships != null) cardtplships = ships;
+  }
+
   /**
    * 获取课预约人数
    */
@@ -323,7 +342,11 @@ public class BatchDetailCommonView extends BaseFragment {
    * 卡支付设置
    */
   @OnClick(R2.id.pay_card) public void onPayCardClicked() {
-    routeTo("card", "/card/batch/choose/", new BatchPayCardParams().rules(rulesPayCards).build());
+    routeTo("card", "/card/batch/choose/", new BatchPayCardParams().rules(rulesPayCards)
+      .cardTplBatchShips(cardtplships)
+      .multiPrice(mutilSupportble())
+      .maxCount(getOrderStudentCount())
+      .build());
   }
 
   public void onPayCardRules(int size) {
@@ -340,10 +363,8 @@ public class BatchDetailCommonView extends BaseFragment {
 
   public List<Rule> getRules() {
     List<Rule> rules = new ArrayList<>();
-    if (payOnlineRule != null)
-      rules.add(payOnlineRule);
-    if (rulesPayCards.size() > 0)
-      rules.addAll(rulesPayCards);
+    if (payOnlineRule != null) rules.add(payOnlineRule);
+    if (rulesPayCards.size() > 0) rules.addAll(rulesPayCards);
     return rules;
   }
 

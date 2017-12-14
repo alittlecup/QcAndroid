@@ -31,7 +31,12 @@
           />
 
       <include layout="@layout/divider_grey"/>
-
+      <TextView
+          style="@style/TextTitleHint"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:text="课程排期"
+          />
       <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/civ_date"
           style="@style/QcCivClickStyle"

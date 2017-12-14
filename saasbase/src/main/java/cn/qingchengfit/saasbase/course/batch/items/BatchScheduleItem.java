@@ -2,9 +2,7 @@ package cn.qingchengfit.saasbase.course.batch.items;
 
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -29,6 +27,10 @@ public class BatchScheduleItem extends AbstractFlexibleItem<BatchScheduleItem.Ba
   public BatchScheduleItem(BatchSchedule batchSchedule,boolean is) {
     this.batchSchedule = batchSchedule;
     this.isPrivate = is;
+  }
+
+  public BatchSchedule getBatchSchedule() {
+    return batchSchedule;
   }
 
   @Override public int getLayoutRes() {

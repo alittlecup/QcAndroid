@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.course;
 
 import cn.qingchengfit.saasbase.SaasContainerActivity;
+import com.anbillon.flabellum.annotations.Trunk;
 
 /**
  * power by
@@ -22,7 +23,9 @@ import cn.qingchengfit.saasbase.SaasContainerActivity;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/11/6.
  */
+@Trunk(fragments = {
 
+})
 public class CourseActivity extends SaasContainerActivity {
   @Override public String getModuleName() {
     return "course";

@@ -41,8 +41,7 @@ import dagger.multibindings.IntoMap;
         AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class,
         AppComponent.MainModule.class,
         ViewModelModule.class,
-        BindStudentActivity.class
-
+        BindStudentActivity.class,
         //AppComponent.RecruitModule.class,
 })
 public interface AppComponent extends AndroidInjector<TestApp> {

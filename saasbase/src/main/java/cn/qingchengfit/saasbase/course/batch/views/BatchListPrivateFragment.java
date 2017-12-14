@@ -17,6 +17,7 @@ import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresente
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -43,17 +44,15 @@ import javax.inject.Inject;
  *
  *
  * 私教排课列表
- *
  */
-@Leaf(module = "course",path = "/batches/private/list/")
-public class BatchListPrivateFragment extends BatchListFragment
-    implements BatchListPrivatePresenter.MVPView{
+@Leaf(module = "course", path = "/batches/private/list/") public class BatchListPrivateFragment
+  extends BatchListFragment implements BatchListPrivatePresenter.MVPView {
 
   @Inject BatchListPrivatePresenter privatePresenter;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    delegatePresenter(privatePresenter,this);
+    Bundle savedInstanceState) {
+    delegatePresenter(privatePresenter, this);
     return super.onCreateView(inflater, container, savedInstanceState);
   }
 
@@ -64,11 +63,12 @@ public class BatchListPrivateFragment extends BatchListFragment
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         DialogList.builder(getContext())
-            .list(getResources().getStringArray(R.array.batch_list_private_flow), new AdapterView.OnItemClickListener() {
+          .list(getResources().getStringArray(R.array.batch_list_private_flow),
+            new AdapterView.OnItemClickListener() {
               @Override
               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO: 2017/9/11 跳转响应页面
-                switch (position){
+                switch (position) {
                   case 1://课程预约限制
                     break;
                   case 2://预约短信通知
@@ -79,7 +79,8 @@ public class BatchListPrivateFragment extends BatchListFragment
                     break;
                 }
               }
-            }).show();
+            })
+          .show();
         return true;
       }
     });
@@ -90,16 +91,21 @@ public class BatchListPrivateFragment extends BatchListFragment
   }
 
   @Override public boolean onItemClick(int position) {
-    if (commonFlexAdapter.getItem(position) instanceof BatchItem){
-      //saasRouter.routerTo(); 某种课程的排期列表 // TODO: 2017/9/11
+    IFlexible item = commonFlexAdapter.getItem(position);
+    if (item == null) return true;
+    if (item instanceof BatchItem) {
+      routeTo("/batch/cate/private/",
+        new cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateParams().trainer_id(
+          ((BatchItem) item).getBatchCoach().id).build());
     }
     return false;
   }
 
   @Override public void onList(List<BatchCoach> coaches) {
-    if (coaches != null){
+    srl.setRefreshing(false);
+    if (coaches != null) {
       List<AbstractFlexibleItem> data = new ArrayList<>();
-      data.add(new StickerDateItem(coaches.size()+"节私教"));
+      data.add(new StickerDateItem(coaches.size() + "节私教"));
       for (BatchCoach coach : coaches) {
         data.add(new BatchItem(coach));
       }

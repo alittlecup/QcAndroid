@@ -14,20 +14,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
-import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchSchedule;
 import cn.qingchengfit.saasbase.course.batch.items.BatchScheduleItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchScheduleListPresenter;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/9/22.
  */
 @Leaf(module = "course", path = "/batch/schedule/list/")
-public class BatchScheduleListFragment extends BaseFragment implements
+public class BatchScheduleListFragment extends SaasBaseFragment implements
     FlexibleAdapter.OnItemClickListener,BatchScheduleListPresenter.MVPView{
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -65,7 +66,7 @@ public class BatchScheduleListFragment extends BaseFragment implements
   @Inject BatchScheduleListPresenter presenter;
   CommonFlexAdapter adapter ;
   @Need String batchId;
-  @Need Boolean isPrivate;
+  @Need Boolean isPrivate = false;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -80,26 +81,32 @@ public class BatchScheduleListFragment extends BaseFragment implements
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     adapter = new CommonFlexAdapter(new ArrayList(), this);
+    rv.setItemAnimator(new FadeInUpItemAnimator());
     rv.setLayoutManager(new LinearLayoutManager(getContext()));
+    rv.addItemDecoration(new FlexibleItemDecoration(getContext())
+      .withOffset(1).withBottomEdge(true)
+    );
     rv.setAdapter(adapter);
+    presenter.queryList();
     return view;
   }
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    presenter.queryList();
+
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText(R.string.t_batch_schedule_list);
+    editable = true;
     toggleAction();
   }
 
-  boolean editable = true;
+  boolean editable = true;//是否item可以选中
   public void toggleAction(){
     editable = !editable;
-    if (editable) {
+    if (!editable) {
       toolbar.getMenu().clear();
       toolbar.getMenu().add("编辑").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
       toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -134,14 +141,23 @@ public class BatchScheduleListFragment extends BaseFragment implements
   }
 
   @Override public boolean onItemClick(int position) {
-    if (adapter.getItem(position) instanceof BatchLoop) {
-      BatchLoop batchLoop = (BatchLoop) adapter.getItem(position);
-      if (!DateUtils.isOutOfDate(batchLoop.dateStart)){
-        //跳去单个排课页面
-        routeTo("/batch/schedule/single/",new cn.qingchengfit.saasbase.course.batch.views.BatchSingleParams()
-        .scheduleId(presenter.getBatchId())
-          .build()
-        );
+    IFlexible item = adapter.getItem(position);
+    if (item == null) return true;
+    if (editable){
+      adapter.toggleSelection(position);
+      adapter.notifyItemChanged(position);
+    }else {
+      if (item instanceof BatchScheduleItem) {
+        BatchSchedule batchLoop = ((BatchScheduleItem) item).getBatchSchedule();
+        if (batchLoop == null) return true;
+        if (!DateUtils.isOutOfDate(DateUtils.formatDateFromServer(batchLoop.start))) {
+          //跳去单个排课页面
+          routeTo("/batch/schedule/single/",
+            new cn.qingchengfit.saasbase.course.batch.views.BatchSingleParams()
+              .scheduleId(presenter.getBatchId())
+              .isPrivate(isPrivate)
+              .build());
+        }
       }
     }
     return true;
@@ -158,7 +174,7 @@ public class BatchScheduleListFragment extends BaseFragment implements
         }
         datas.add(new BatchScheduleItem(batchSchedule,presenter.isPrivate()));
       }
-      adapter.updateDataSet(datas);
+      adapter.updateDataSet(datas ,true);
     }catch (Exception e){
       LogUtil.e(e.getMessage());
     }

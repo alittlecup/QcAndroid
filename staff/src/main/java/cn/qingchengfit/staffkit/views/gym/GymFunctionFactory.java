@@ -369,7 +369,8 @@ public class GymFunctionFactory {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
-                break;
+                fragment.routeTo("course","/batches/private/list/",null);
+                return;
             case MODULE_SERVICE_GROUP:
                 if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.TEAMARRANGE_CALENDAR)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);

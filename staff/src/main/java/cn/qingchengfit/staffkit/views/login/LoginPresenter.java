@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.BasePresenter;
-import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
@@ -125,7 +123,7 @@ public class LoginPresenter extends BasePresenter {
             }
         }, new Action1<Throwable>() {
             @Override public void call(Throwable throwable) {
-                mLoginView.cancelLogin();
+                //mLoginView.cancelLogin();
                 ToastUtils.show("系统维护中...请稍后再试");
             }
         });

@@ -2,8 +2,6 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
@@ -81,6 +79,4 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
       }));
   }
 
-  @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-  }
 }

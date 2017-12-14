@@ -130,7 +130,7 @@ public class CourseModel implements ICourseModel {
    */
   @Override public Observable<QcDataResponse<BatchSchedulesWrap>> qcGetbatchSchedules(
     String batch_id, boolean isPrivate) {
-    return api.qcGetbatchSchedules(loginStatus.staff_id(), batch_id, isPrivate ? "1" : "0",
+    return api.qcGetbatchSchedules(loginStatus.staff_id(), batch_id, isPrivate ? "timetables" : "schedules",
       gymWrapper.getParams());
   }
 
@@ -177,7 +177,7 @@ public class CourseModel implements ICourseModel {
    */
   @Override public Observable<QcDataResponse> qcDelBatchSchedule(boolean isPrivate,
     DelBatchScheduleBody body) {
-    return api.qcDelBatchSchedule(loginStatus.staff_id(), isPrivate ? "1" : "0", body,
+    return api.qcDelBatchSchedule(loginStatus.staff_id(), isPrivate ? "timetables" : "schedules", body,
       gymWrapper.getParams());
   }
 
@@ -189,7 +189,7 @@ public class CourseModel implements ICourseModel {
    */
   @Override public Observable<QcDataResponse<SingleBatchWrap>> qcGetSingleBatch(boolean isPrivate,
     String single_id) {
-    return api.qcGetSingleBatch(loginStatus.staff_id(), isPrivate ? "1" : "0", single_id,
+    return api.qcGetSingleBatch(loginStatus.staff_id(), isPrivate ? "timetables" : "schedules", single_id,
       gymWrapper.getParams());
   }
 
@@ -205,7 +205,7 @@ public class CourseModel implements ICourseModel {
    */
   @Override public Observable<QcDataResponse> qcUpdateBatchSchedule(boolean isPirvate,
     String scheduleid, SingleBatchBody body) {
-    return api.qcUpdateBatchSchedule(loginStatus.staff_id(), isPirvate ? "1" : "0", scheduleid,
+    return api.qcUpdateBatchSchedule(loginStatus.staff_id(), isPirvate ? "timetables" : "schedules", scheduleid,
       body, gymWrapper.getParams());
   }
 
