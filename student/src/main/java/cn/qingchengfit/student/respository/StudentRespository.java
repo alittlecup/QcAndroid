@@ -1,14 +1,10 @@
 package cn.qingchengfit.student.respository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.LiveDataReactiveStreams;
-import android.arch.lifecycle.MutableLiveData;
 
 import java.util.HashMap;
 import java.util.List;
 
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
@@ -23,11 +19,6 @@ import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
-import cn.qingchengfit.saasbase.student.other.RxHelper;
-import cn.qingchengfit.student.respository.remote.CustomSubscriber;
-import cn.qingchengfit.student.respository.remote.HttpCheckFunc;
-import rx.Observable;
-import rx.RxReactiveStreams;
 
 /**
  * Created by huangbaole on 2017/11/29.

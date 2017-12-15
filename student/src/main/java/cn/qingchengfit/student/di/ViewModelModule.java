@@ -3,8 +3,8 @@ package cn.qingchengfit.student.di;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import cn.qingchengfit.student.common.mvvm.ViewModelFactory;
-import cn.qingchengfit.student.di.scope.ViewModelKey;
+import cn.qingchengfit.saasbase.common.mvvm.ViewModelFactory;
+import cn.qingchengfit.saasbase.common.di.scope.ViewModelKey;
 import cn.qingchengfit.student.respository.StudentRespository;
 import cn.qingchengfit.student.respository.StudentRespositoryImpl;
 import cn.qingchengfit.student.viewmodel.allot.AllotChooseViewModel;

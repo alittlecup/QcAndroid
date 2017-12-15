@@ -67,6 +67,8 @@ dependencies {
     api ("android.arch.lifecycle:extensions:1.0.0"){
       exclude group:'android.arch.lifecycle', module:'runtime'
     }
+    api "android.arch.lifecycle:reactivestreams:1.0.0"
+    api "io.reactivex:rxjava-reactive-streams:1.2.1"
 }
 
 

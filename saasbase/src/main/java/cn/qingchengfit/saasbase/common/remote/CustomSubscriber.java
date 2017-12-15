@@ -1,4 +1,4 @@
-package cn.qingchengfit.student.respository.remote;
+package cn.qingchengfit.saasbase.common.remote;
 
 import cn.qingchengfit.utils.ToastUtils;
 import rx.Subscriber;

@@ -18,14 +18,12 @@ import javax.inject.Inject;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
-import cn.qingchengfit.student.common.flexble.FlexibleFactory;
-import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
-import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.saasbase.common.flexble.FlexibleFactory;
+import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
+import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.items.StaffDetailItem;
 import cn.qingchengfit.student.respository.StudentRespository;
-import cn.qingchengfit.student.respository.StudentRespository;
-import cn.qingchengfit.student.viewmodel.SortViewModel;
+import cn.qingchengfit.saasbase.common.mvvm.SortViewModel;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 
 /**

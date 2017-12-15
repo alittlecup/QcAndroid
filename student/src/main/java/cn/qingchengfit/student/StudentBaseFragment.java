@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -17,7 +16,7 @@ import java.lang.reflect.Type;
 import javax.inject.Inject;
 
 import cn.qingchengfit.saasbase.SaasBaseFragment;
-import cn.qingchengfit.student.base.BaseViewModel;
+import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
 import cn.qingchengfit.student.routers.StudentParamsInjector;
 
 /**

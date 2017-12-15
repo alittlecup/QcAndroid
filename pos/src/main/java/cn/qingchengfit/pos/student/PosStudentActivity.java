@@ -27,7 +27,7 @@ import com.anbillon.flabellum.annotations.Trunk;
 @Trunk(fragments =  {
   PosStudentAddFragment.class, ChooseAndSearchStudentFragment.class,
 })
-public class PosStudentActivity  extends SaasContainerActivity{
+public class PosStudentActivity extends SaasContainerActivity {
   @Override public String getModuleName() {
     return "student";
   }

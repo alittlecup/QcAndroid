@@ -1,4 +1,4 @@
-package cn.qingchengfit.student.di.scope;
+package cn.qingchengfit.saasbase.common.di.scope;
 
 import android.arch.lifecycle.ViewModel;
 

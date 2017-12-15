@@ -1,18 +1,12 @@
 package cn.qingchengfit.student.view.allot;
 
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,13 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.model.base.StudentBean;
-import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
-import cn.qingchengfit.saasbase.student.items.AllotStaffItem;
-import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.student.R;
-import cn.qingchengfit.student.common.flexble.FlexibleFactory;
-import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.student.databinding.ViewAllotMultiStaffBinding;
 import cn.qingchengfit.student.items.AllotMultiStaffItem;
 import cn.qingchengfit.student.viewmodel.allot.AllotMultiStaffViewModel;
