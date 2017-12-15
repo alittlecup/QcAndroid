@@ -133,15 +133,16 @@ dependencies {
   })
 }
 
-group "cn.qingchegfit.widgets"
-version "1.4"
-
+group 'cn.qingchengfit.widgets'
+version rootProject.ext.recruit_version
 uploadArchives{
   repositories {
     mavenDeployer {
-      repository(url: uri("../../repo"))
-      pom.artifactId = "widgets"
+      repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
+        authentication(userName: "admin", password: "admin123")
+      }
+      pom.groupId = 'cn.qingchengfit.widgets'
+      pom.artifactId = 'qcbase'
     }
   }
 }
-

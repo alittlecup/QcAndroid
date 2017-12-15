@@ -35,21 +35,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
-group 'cn.qingchegfit.chat'
+group 'cn.qingchengfit.chat'
 version rootProject.ext.chat_version
-uploadArchives{
+//uploadArchives{
 //    repositories {
 //        mavenDeployer {
-//            repository(url: uri('../../android-fitcoach/repo'))
-//            pom.artifactId = 'chat'
-//
+//            repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
+//                authentication(userName: "admin", password: "admin123")
+//            }
+//            pom.artifactId = 'sdk'
 //        }
 //    }
-    repositories {
-        mavenDeployer {
-            repository(url: uri('../../../../../repo'))
-            pom.artifactId = 'sdk'
-
-        }
-    }
-}
+//}

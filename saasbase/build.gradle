@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: "com.squareup.sqldelight"
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'maven'
 def libs = rootProject.ext.libraries;
 def cfg = rootProject.ext.configuration;
@@ -44,6 +44,10 @@ android {
 
 dependencies {
     api project(path: ':qcbase')
+//    api "cn.qingchengfit:qcbase:1.0.0"
+    api ('cn.qingchengfit.recruit:recruit:1.0.1', {
+        exclude group: 'cn.qingchengfit.widgets', module: 'qcbase'
+    })
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -66,7 +70,7 @@ dependencies {
 }
 
 
-group 'cn.qingchegfit.saas'
+group 'cn.qingchengfit.saas'
 version '1.0'
 
 uploadArchives {

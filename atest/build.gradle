@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.squareup.sqldelight'
-apply plugin: 'me.tatarka.retrolambda'
 def libs = rootProject.ext.libraries;
 def cfg = rootProject.ext.configuration;
 

@@ -29,7 +29,8 @@ ext {
                  flabellum       : "0.2.15",
     ]
     bakPath = "tinkeroutput/"
-    chat_version = "0.7.0"
+    chat_version = "1.0.0"
+    recruit_version = "1.0.1"
 }
 
 buildscript {
@@ -43,7 +44,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
+//        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
 //    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
