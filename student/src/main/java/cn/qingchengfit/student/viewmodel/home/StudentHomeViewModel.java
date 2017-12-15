@@ -6,7 +6,6 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,15 +21,13 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.DistrictEntity;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.bill.filter.model.FilterModel;
-import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
-import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
-import cn.qingchengfit.student.common.flexble.FlexibleFactory;
-import cn.qingchengfit.student.common.flexble.FlexibleItemProvider;
-import cn.qingchengfit.student.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.saasbase.common.flexble.FlexibleFactory;
+import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
+import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.student.respository.StudentRespository;
 import cn.qingchengfit.student.usercase.FilterUserCase;
-import cn.qingchengfit.student.viewmodel.SortViewModel;
+import cn.qingchengfit.saasbase.common.mvvm.SortViewModel;
 import cn.qingchengfit.utils.GymUtils;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 

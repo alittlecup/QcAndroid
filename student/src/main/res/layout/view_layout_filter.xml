@@ -13,7 +13,7 @@
 
         <variable
             name="filter"
-            type="cn.qingchengfit.student.viewmodel.SortViewModel" />
+            type="cn.qingchengfit.saasbase.common.mvvm.SortViewModel" />
 
         <variable
             name="items"

@@ -1,4 +1,4 @@
-package cn.qingchengfit.student.respository.remote;
+package cn.qingchengfit.saasbase.common.remote;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import rx.functions.Func1;

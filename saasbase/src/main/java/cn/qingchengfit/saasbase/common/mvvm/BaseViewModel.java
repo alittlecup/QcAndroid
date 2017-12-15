@@ -1,14 +1,7 @@
-package cn.qingchengfit.student.base;
+package cn.qingchengfit.saasbase.common.mvvm;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.LiveDataReactiveStreams;
 import android.arch.lifecycle.ViewModel;
 
-import rx.Observable;
-import rx.RxReactiveStreams;
-import rx.Subscription;
-import rx.functions.Action1;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * ViewModel 的基本类，用于添加和解除订阅

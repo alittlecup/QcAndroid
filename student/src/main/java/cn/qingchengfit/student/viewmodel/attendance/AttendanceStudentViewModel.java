@@ -20,7 +20,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
-import cn.qingchengfit.student.base.BaseViewModel;
+import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
 import cn.qingchengfit.student.respository.StudentRespository;
 import cn.qingchengfit.utils.DateUtils;
 

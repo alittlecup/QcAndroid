@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.qingchengfit.student.common.flexble;
+package cn.qingchengfit.saasbase.common.flexble;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
