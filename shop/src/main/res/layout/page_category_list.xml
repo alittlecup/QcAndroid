@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/add_product"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:drawablePadding="7dp"
+        style="@style/QcTextStyleLargeDark"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:drawableLeft="@drawable/product_add"
+        android:text="@string/add_category"
+        />
+
+  </LinearLayout>
+</layout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+  <data>
+  </data>
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="90dp"
+      android:background="@color/red"
+      >
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:src="@color/colorPrimary"
+        />
+    <TextView
+        android:id="@+id/product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/product_image"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@+id/product_image"
+        tools:text="玉米"
+        style="@style/QcTextStyleLargeDark"
+        />
+    <TextView
+        android:id="@+id/product_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/product_name"
+        android:layout_below="@+id/product_name"
+        tools:text="销量：20 权重：300 库存：100"
+        style="@style/QcTextStyleSmallGrey"
+        />
+    <TextView
+        android:id="@+id/product_add_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/product_name"
+        android:layout_below="@+id/product_detail"
+        android:layout_marginTop="8dp"
+        android:textSize="@dimen/txt_12sp"
+        tools:text="添加时间：2015-12-23 12:11:11"
+        style="@style/QcTextStyleSmallGrey"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="28dp"
+        tools:text="$ 10"
+        />
+
+  </RelativeLayout>
+</layout>

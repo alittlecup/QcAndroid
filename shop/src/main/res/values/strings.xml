@@ -1,0 +1,36 @@
+<resources>
+  <string name="app_name">shop</string>
+  <string name="shop">"商店"</string>
+  <string name="on_sale">出售中</string>
+  <string name="off_sale">已下架</string>
+  <string name="category_manage">分类管理</string>
+  <string name="inventory_manage">库存管理</string>
+
+  <!--common-->
+  <string name="sale_count">销量</string>
+  <string name="weight">权重</string>
+  <string name="category">分类</string>
+  <string name="inventory">库存</string>
+  <string name="total_count">总共</string>
+  <string name="category_default">常规</string>
+
+  <!--product-->
+  <string name="add_product_date">添加时间：%</string>
+  <string name="add_product_time">添加时间</string>
+  <string name="add_product">添加商品</string>
+  <string name="search_product">搜索店内商品</string>
+  <string name="product_empty_text">暂无出售中商品，赶快去添加吧～</string>
+
+
+  <!--category-->
+  <string name="update_category">修改分类</string>
+  <string name="add_category">新建分类</string>
+  <string name="delete_category">确定删除该分类？</string>
+  <string name="category_products">共%d件商品</string>
+
+  <!--inventory-->
+  <string name="all_inventory_list">查看总库存记录</string>
+
+
+
+</resources>

@@ -1,6 +1,8 @@
 package cn.qingchengfit.testmodule;
 
 import android.app.Activity;
+import cn.qingchengfit.shop.di.BindShopActivity;
+import com.example.huangbaole.shop.di.ShopViewModel;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -36,8 +38,8 @@ import javax.inject.Singleton;
 @Component(modules = {
         AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class,
         AppComponent.MainModule.class,
-        //ViewModelModule.class,
-        //BindStudentActivity.class,
+        ShopViewModel.class,
+        BindShopActivity.class,
         //AppComponent.RecruitModule.class,
 })
 public interface AppComponent extends AndroidInjector<TestApp> {
