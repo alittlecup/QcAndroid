@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
   <data>
+    <variable
+        name="viewModel"
+        type="com.example.huangbaole.shop.ui.home.categorylist.ShopCategoryListViewModel"/>
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:orientation="vertical"
@@ -20,6 +23,7 @@
         style="@style/QcTextStyleLargeDark"
         android:textColor="@color/colorPrimary"
         android:gravity="center"
+        android:onClick="@{view->viewModel.onAddButtonClick()}"
         android:drawableLeft="@drawable/product_add"
         android:text="@string/add_category"
         />

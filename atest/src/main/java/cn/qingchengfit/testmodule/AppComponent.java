@@ -2,6 +2,7 @@ package cn.qingchengfit.testmodule;
 
 import android.app.Activity;
 import cn.qingchengfit.shop.di.BindShopActivity;
+import com.example.huangbaole.shop.di.ShopModule;
 import com.example.huangbaole.shop.di.ShopViewModel;
 import dagger.Binds;
 import dagger.Component;
@@ -39,7 +40,7 @@ import javax.inject.Singleton;
         AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class,
         AppComponent.MainModule.class,
         ShopViewModel.class,
-        BindShopActivity.class,
+        BindShopActivity.class, ShopModule.class
         //AppComponent.RecruitModule.class,
 })
 public interface AppComponent extends AndroidInjector<TestApp> {

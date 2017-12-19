@@ -129,6 +129,8 @@
     <orderEntry type="library" name="com.android.support:support-compat-27.0.0" level="project" />
     <orderEntry type="library" name="com.google.android:flexbox-0.3.0-alpha3" level="project" />
     <orderEntry type="library" name="com.android.support:support-vector-drawable-27.0.0" level="project" />
+    <orderEntry type="library" name="com.squareup.retrofit2:adapter-rxjava2:2.3.0@jar" level="project" />
+    <orderEntry type="library" name="org.reactivestreams:reactive-streams:1.0.1@jar" level="project" />
     <orderEntry type="library" name="android.arch.lifecycle:reactivestreams-1.0.0" level="project" />
     <orderEntry type="library" name="com.tbruyelle.rxpermissions:rxpermissions-0.9.3" level="project" />
     <orderEntry type="library" name="cn.qingchengfit.recruit:recruit-1.0.1" level="project" />
@@ -137,6 +139,7 @@
     <orderEntry type="library" name="com.zhihu.android:matisse-0.5.0-alpha4" level="project" />
     <orderEntry type="library" name="me.gujun.android.taggroup:library-1.4" level="project" />
     <orderEntry type="library" name="com.dlazaro66.qrcodereaderview:qrcodereaderview-1.0.0" level="project" />
+    <orderEntry type="library" name="io.reactivex.rxjava2:rxjava:2.1.7@jar" level="project" />
     <orderEntry type="library" name="__local_aars__:/Users/huangbaole/work/QcAndroid/qcbase/libs/Bughd_android_sdk_v1.3.7.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="eu.davidea:flexible-adapter-5.0.0-rc3" level="project" />
     <orderEntry type="library" name="com.android.support:cardview-v7-27.0.0" level="project" />
@@ -151,7 +154,6 @@
     <orderEntry type="library" name="cn.qingchengfit.chat:sdk-1.0.0" level="project" />
     <orderEntry type="library" name="com.google.dagger:dagger-android-support-2.11" level="project" />
     <orderEntry type="library" name="com.airbnb.android:lottie-2.0.0" level="project" />
-    <orderEntry type="library" name="org.reactivestreams:reactive-streams:1.0.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-media-compat-27.0.0" level="project" />
     <orderEntry type="library" name="io.reactivex:rxjava:1.3.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-v4-27.0.0" level="project" />

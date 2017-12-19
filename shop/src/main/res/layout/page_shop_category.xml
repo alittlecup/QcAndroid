@@ -2,10 +2,58 @@
 <layout>
   <data>
   </data>
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:orientation="vertical"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
 
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/category_info"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginLeft="43dp"
+      android:layout_marginRight="43dp"
+      android:background="@drawable/bg_rect_allotsale_search"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/category_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="23dp"
+        android:layout_marginBottom="20dp"
+        android:text="修改分类"
+        style="@style/QcTextStyleLargeDark"
+        />
+    <EditText
+        android:id="@+id/category_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/bg_rect_allotsale_search"
+        android:textSize="@dimen/min_font"
+        />
+    <EditText
+        android:id="@+id/category_weight"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_rect_allotsale_search"
+        android:inputType="number"
+        android:textSize="@dimen/min_font"
+        />
+    <include
+        android:layout_marginTop="26dp"
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        layout="@layout/divider_grey"/>
+    <include
+        layout="@layout/view_bottom_two_button"
+        android:id="@+id/include_bottom"
+        />
   </LinearLayout>
+
 </layout>
