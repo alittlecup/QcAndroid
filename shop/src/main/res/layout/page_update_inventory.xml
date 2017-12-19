@@ -1,11 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
   <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:orientation="vertical"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/product_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_common_input_60dp"
+        android:layout_marginTop="12dp"
+        app:civ_clickable="false"
+        app:civ_hint="水"
+        app:civ_lable="@string/product"
+        app:civ_showright="false"
+        app:civ_text_color="@color/text_dark"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/good_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_common_input_60dp"
+        app:civ_clickable="true"
+        app:civ_hint="500ml"
+        app:civ_lable="@string/goods"
+        app:civ_showright="true"
+        app:civ_text_color="@color/text_dark"
+        />
+
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/offset_count"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_common_input_60dp"
+        android:layout_marginTop="14dp"
+        app:civ_clickable="true"
+        app:civ_hint="@string/add_inventory_count_input"
+        app:civ_lable="@string/add_inventory_count"
+        app:civ_right_icon="@color/transparent"
+        app:civ_showright="true"
+        app:civ_text_color="@color/text_dark"
+        >
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="15dp"
+          android:text="瓶"
+          android:textSize="14sp"
+          style="@style/QcTextStyleLargeDark"
+          />
+    </cn.qingchengfit.widgets.CommonInputView>
+
+    <TextView
+        android:id="@+id/product_good_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="9dp"
+        tools:text="当前库存：30   增加后库存：60"
+        />
+    <TextView
+        android:id="@+id/update_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/danger_red_normal"
+        android:layout_marginTop="2dp"
+        tools:text="当前库存不足扣除10"
+        />
+
 
   </LinearLayout>
 </layout>

@@ -1,11 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
   <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+
+    <variable
+        name="viewModel"
+        type="com.example.huangbaole.shop.ui.inventory.product.ProductInventoryViewModel"
+        />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:orientation="vertical"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+    <cn.qingchengfit.widgets.QcRadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@drawable/bg_top_bottom_line_white"
+        android:divider="@drawable/divier_linear"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:showDividers="middle"
+        >
+
+      <cn.qingchengfit.widgets.QcFilterToggle
+          android:id="@+id/qft_goods"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_click"
+          app:ft_text_off="@string/goods"
+          app:ft_text_on="@string/goods"
+          style="@style/QcFilterStyle"
+          />
+      <cn.qingchengfit.widgets.QcFilterToggle
+          android:id="@+id/qft_date"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_click"
+          app:ft_text_off="@string/date"
+          app:ft_text_on="@string/date"
+          style="@style/QcFilterStyle"
+          />
+    </cn.qingchengfit.widgets.QcRadioGroup>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:paddingLeft="11dp"
+            tools:text="总库存： 1232131231"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/divier_linear"
+            android:orientation="horizontal"
+            >
+          <TextView
+              android:id="@+id/add_inventory"
+              android:layout_width="0dp"
+              android:layout_height="50dp"
+              android:layout_gravity="center"
+              android:layout_weight="1"
+              android:drawableLeft="@drawable/product_add"
+              android:drawablePadding="7dp"
+              android:gravity="center"
+              android:onClick="@{()->viewModel.onAddInventoryClick()}"
+              android:text="@string/add_inventory"
+              android:textColor="@color/colorPrimary"
+              style="@style/QcTextStyleLargeDark"
+              />
+
+          <TextView
+              android:id="@+id/reduce_inventory"
+              android:layout_width="0dp"
+              android:layout_height="50dp"
+              android:layout_gravity="center"
+              android:layout_weight="1"
+              android:drawableLeft="@drawable/reduce_inventory"
+              android:drawablePadding="7dp"
+              android:gravity="center"
+              android:text="@string/reduce_inventory"
+              android:textColor="@color/danger_red_normal"
+              style="@style/QcTextStyleLargeDark"
+              />
+        </LinearLayout>
+      </LinearLayout>
+      <FrameLayout
+          android:id="@+id/frag_filter"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/halftrans_background"
+          android:visibility="gone"
+          />
+    </FrameLayout>
 
   </LinearLayout>
 </layout>

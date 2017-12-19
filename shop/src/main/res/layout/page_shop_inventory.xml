@@ -1,11 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
   <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+
+    <variable
+        name="viewModel"
+        type="com.example.huangbaole.shop.ui.inventory.ShopInventoryViewModel"
+        />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:orientation="vertical"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/include_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+    <cn.qingchengfit.widgets.QcRadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@drawable/bg_top_bottom_line_white"
+        android:divider="@drawable/divier_linear"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:showDividers="middle"
+        >
+      <cn.qingchengfit.widgets.QcFilterToggle
+          android:id="@+id/qft_product"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_click"
+          app:ft_text_off="@string/product"
+          app:ft_text_on="@string/product"
+          style="@style/QcFilterStyle"
+          />
+      <cn.qingchengfit.widgets.QcFilterToggle
+          android:id="@+id/qft_goods"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_click"
+          app:ft_text_off="@string/goods"
+          app:ft_text_on="@string/goods"
+          style="@style/QcFilterStyle"
+          />
+      <cn.qingchengfit.widgets.QcFilterToggle
+          android:id="@+id/qft_date"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_click"
+          app:ft_text_off="@string/date"
+          app:ft_text_on="@string/date"
+          style="@style/QcFilterStyle"
+          />
+    </cn.qingchengfit.widgets.QcRadioGroup>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:paddingLeft="11dp"
+            tools:text="总库存： 1232131231"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+      </LinearLayout>
+
+      <FrameLayout
+          android:id="@+id/frag_filter"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/halftrans_background"
+          android:visibility="gone"
+          />
+    </FrameLayout>
+
 
   </LinearLayout>
 </layout>

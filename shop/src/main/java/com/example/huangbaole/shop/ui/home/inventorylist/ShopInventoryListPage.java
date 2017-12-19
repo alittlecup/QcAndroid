@@ -1,5 +1,6 @@
 package com.example.huangbaole.shop.ui.home.inventorylist;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -13,13 +14,17 @@ import com.example.huangbaole.shop.databinding.PageInventoryListBinding;
 public class ShopInventoryListPage
     extends ShopBaseFragment<PageInventoryListBinding, ShopInventoryListViewModel> {
   @Override protected void subscribeUI() {
-
+    mViewModel.getShowAllRecord().observe(this,aVoid -> {
+      Uri uri=Uri.parse("shop://shop/product/inventory");
+      routeTo(uri,null);
+    });
   }
 
   @Override
   public PageInventoryListBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding=PageInventoryListBinding.inflate(inflater,container,false);
+    mBinding.setViewModel(mViewModel);
     return mBinding;
   }
 }

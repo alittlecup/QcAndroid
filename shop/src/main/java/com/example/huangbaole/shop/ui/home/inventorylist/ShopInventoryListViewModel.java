@@ -1,5 +1,6 @@
 package com.example.huangbaole.shop.ui.home.inventorylist;
 
+import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
 import com.example.huangbaole.shop.base.ShopBaseViewModel;
 import javax.inject.Inject;
 
@@ -8,6 +9,15 @@ import javax.inject.Inject;
  */
 
 public class ShopInventoryListViewModel extends ShopBaseViewModel {
+  public ActionLiveEvent getShowAllRecord() {
+    return showAllRecord;
+  }
+
+  private final ActionLiveEvent showAllRecord=new ActionLiveEvent();
   @Inject public ShopInventoryListViewModel() {
+  }
+
+  public void onAllInventoryListClick(){
+    showAllRecord.call();
   }
 }

@@ -8,6 +8,9 @@
 
   <!--common-->
   <string name="sale_count">销量</string>
+  <string name="date">日期</string>
+  <string name="product">商品</string>
+  <string name="goods">规格</string>
   <string name="weight">权重</string>
   <string name="category">分类</string>
   <string name="inventory">库存</string>
@@ -30,6 +33,12 @@
 
   <!--inventory-->
   <string name="all_inventory_list">查看总库存记录</string>
+  <string name="add_inventory">增加库存</string>
+  <string name="reduce_inventory">减少库存</string>
+  <string name="add_inventory_count">增加库存数</string>
+  <string name="reduce_inventory_count">减少库存数</string>
+  <string name="add_inventory_count_input">输入增加的库存数</string>
+  <string name="reduce_inventory_count_input">输入减少的库存数</string>
 
 
 

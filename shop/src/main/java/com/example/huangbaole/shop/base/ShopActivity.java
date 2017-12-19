@@ -12,12 +12,14 @@ import com.example.huangbaole.shop.ui.home.categorylist.ShopCategoryListPage;
 import com.example.huangbaole.shop.ui.home.inventorylist.ShopInventoryListPage;
 import com.example.huangbaole.shop.ui.home.productlist.ShopProductsListPage;
 import com.example.huangbaole.shop.ui.inventory.ShopInventoryPage;
+import com.example.huangbaole.shop.ui.inventory.product.ProductInventoryPage;
+import com.example.huangbaole.shop.ui.inventory.product.UpdateInventoryPage;
 import com.example.huangbaole.shop.ui.product.ShopProductPage;
 
 @Trunk(fragments = {
     ShopHomePage.class, ShopProductsListPage.class, ShopCategoryListPage.class,
     ShopInventoryListPage.class, ShopCategoryPage.class, ShopInventoryPage.class,
-    ShopProductPage.class
+    ShopProductPage.class,ProductInventoryPage.class, UpdateInventoryPage.class
 }) public class ShopActivity extends SaasContainerActivity {
   @Override public String getModuleName() {
     return "shop";

@@ -19,9 +19,7 @@ public class ShopProductsListPage extends ShopBaseFragment<PageProductListBindin
   public PageProductListBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding=PageProductListBinding.inflate(inflater,container,false);
-    mBinding.text.setOnClickListener(view->{
-      mBinding.text.toggle();
-    });
+
     return mBinding;
   }
 }

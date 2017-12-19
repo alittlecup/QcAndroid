@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
   <data>
+    <variable
+        name="viewModel"
+        type="com.example.huangbaole.shop.ui.home.inventorylist.ShopInventoryListViewModel"/>
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:orientation="vertical"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <TextView
+        android:id="@+id/all_inventory_record"
+        android:layout_width="match_parent"
+        android:layout_height="47.5dp"
+        android:gravity="center"
+        android:text="@string/all_inventory_list"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/txt_14sp"
+        android:onClick="@{()->viewModel.onAllInventoryListClick()}"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
   </LinearLayout>
 </layout>

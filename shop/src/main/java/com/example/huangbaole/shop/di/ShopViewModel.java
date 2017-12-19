@@ -10,6 +10,8 @@ import com.example.huangbaole.shop.ui.home.categorylist.ShopCategoryListViewMode
 import com.example.huangbaole.shop.ui.home.inventorylist.ShopInventoryListViewModel;
 import com.example.huangbaole.shop.ui.home.productlist.ShopProductsViewModel;
 import com.example.huangbaole.shop.ui.inventory.ShopInventoryViewModel;
+import com.example.huangbaole.shop.ui.inventory.product.ProductInventoryViewModel;
+import com.example.huangbaole.shop.ui.inventory.product.UpdateInventoryViewModel;
 import com.example.huangbaole.shop.ui.product.ShopProductViewModel;
 import dagger.Binds;
 import dagger.Module;
@@ -43,4 +45,10 @@ import dagger.multibindings.IntoMap;
 
   @Binds @IntoMap @ViewModelKey(ShopInventoryViewModel.class)
   abstract ViewModel bindShopInventoryViewModel(ShopInventoryViewModel shopHomeViewModel);
+
+  @Binds @IntoMap @ViewModelKey(ProductInventoryViewModel.class)
+  abstract ViewModel bindProductInventoryViewModel(ProductInventoryViewModel shopHomeViewModel);
+
+  @Binds @IntoMap @ViewModelKey(UpdateInventoryViewModel.class)
+  abstract ViewModel bindUpdateInventoryViewModel(UpdateInventoryViewModel shopHomeViewModel);
 }
