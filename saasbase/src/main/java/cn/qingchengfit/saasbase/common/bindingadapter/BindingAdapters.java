@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.common.mvvm;
+package cn.qingchengfit.saasbase.common.bindingadapter;
 
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
