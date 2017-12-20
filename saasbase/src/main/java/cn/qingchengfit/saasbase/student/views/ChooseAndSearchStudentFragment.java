@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
@@ -159,9 +158,12 @@ import rx.functions.Action1;
   }
 
   @Override public void onRefresh() {
-    presenter.getAllStudents();
+    getData();
   }
 
+  public void getData(){
+    presenter.getAllStudents();
+  }
 
   ///**
   // * 底部选择框

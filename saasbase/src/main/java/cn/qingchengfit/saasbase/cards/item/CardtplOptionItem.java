@@ -22,10 +22,21 @@ public class CardtplOptionItem
 
   CardTplOption option;
   int cardtplType;
+  private OnCustomCardOptionListener onCustomCardOptionListener;
 
   public CardtplOptionItem(CardTplOption option, int cardtplType) {
     this.option = option;
     this.cardtplType = cardtplType;
+  }
+
+  public CardtplOptionItem(CardTplOption option, int cardtplType, OnCustomCardOptionListener onCustomCardOptionListener) {
+    this.option = option;
+    this.cardtplType = cardtplType;
+    this.onCustomCardOptionListener = onCustomCardOptionListener;
+  }
+
+  public void setOnCustomCardOptionListener(OnCustomCardOptionListener onCustomCardOptionListener) {
+    this.onCustomCardOptionListener = onCustomCardOptionListener;
   }
 
   public CardTplOption getOption() {
@@ -71,10 +82,10 @@ public class CardtplOptionItem
     }
 
     if (adapter.isSelected(position) ) {
-      holder.chosen.setVisibility( View.VISIBLE);
+      holder.imgCardOption.setVisibility( View.VISIBLE);
       holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_primary);
     } else {
-      holder.chosen.setVisibility(View.GONE);
+      holder.imgCardOption.setVisibility(View.GONE);
       holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_grey);
     }
 
@@ -110,11 +121,23 @@ public class CardtplOptionItem
     @BindView(R2.id.valid_date) TextView validDate;
     @BindView(R2.id.support_type) TextView supportType;
     @BindView(R2.id.charge_layout) LinearLayout chargeLayout;
-    @BindView(R2.id.chosen) ImageView chosen;
+    @BindView(R2.id.img_custom_card_option) ImageView imgCardOption;
     @BindView(R2.id.tag_only_staff) ImageView tagOnlyStaff;
     public CardtplStandardVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
+      imgCardOption.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View view) {
+          if (onCustomCardOptionListener != null){
+            onCustomCardOptionListener.onCustomCard(getAdapterPosition());
+          }
+        }
+      });
     }
   }
+
+  public interface OnCustomCardOptionListener{
+    void onCustomCard(int position);
+  }
+
 }

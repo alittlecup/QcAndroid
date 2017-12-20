@@ -27,6 +27,7 @@ import java.util.List;
  */
 
 public class SalerListWrap extends QcListData {
+  @SerializedName("users")
   public List<Staff> sellers;
 
   @SerializedName("teachers")

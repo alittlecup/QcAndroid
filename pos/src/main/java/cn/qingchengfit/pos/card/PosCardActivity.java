@@ -4,6 +4,7 @@ import cn.qingchengfit.saasbase.cards.BindCardModel;
 import cn.qingchengfit.saasbase.cards.CardActivity;
 import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
 import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplListFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplOptionFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
 import cn.qingchengfit.saasbase.cards.views.CardtplAddFragment;
@@ -36,7 +37,7 @@ import com.anbillon.flabellum.annotations.Trunk;
   ChooseCardTplForBuyCardFragment.class, PosCardBuyFragment.class, PosCardListHomeFragment.class,
   CardFilterTplFragment.class, CardDetailFragment.class, CardtplOptionAddFragment.class,
   CardTplOptionFragment.class, PosCardChargeFragment.class, CardtplAddFragment.class,
-  BindCardModel.class
+  BindCardModel.class, CardTplListFragment.class,
 }) public class PosCardActivity extends CardActivity {
 
 

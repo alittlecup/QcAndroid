@@ -31,6 +31,93 @@ public class CardTplOption implements Parcelable {
     @SerializedName("card_tpl") public Card_tpl card_tpl;
     public boolean for_staff;
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    public void setCharge(String charge) {
+        this.charge = charge;
+    }
+
+    public void setCan_charge(boolean can_charge) {
+        this.can_charge = can_charge;
+    }
+
+    public void setLimit_days(boolean limit_days) {
+        this.limit_days = limit_days;
+    }
+
+    public void setCan_create(boolean can_create) {
+        this.can_create = can_create;
+    }
+
+    public void setCard_tpl(Card_tpl card_tpl) {
+        this.card_tpl = card_tpl;
+    }
+
+    public void setFor_staff(boolean for_staff) {
+        this.for_staff = for_staff;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public String getCharge() {
+        return charge;
+    }
+
+    public boolean isCan_charge() {
+        return can_charge;
+    }
+
+    public boolean isLimit_days() {
+        return limit_days;
+    }
+
+    public boolean isCan_create() {
+        return can_create;
+    }
+
+    public Card_tpl getCard_tpl() {
+        return card_tpl;
+    }
+
+    public boolean isFor_staff() {
+        return for_staff;
+    }
 
     public CardTplOption() {
     }

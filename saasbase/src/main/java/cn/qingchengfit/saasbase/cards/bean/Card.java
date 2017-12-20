@@ -13,15 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Card implements Parcelable {
-    public static final Creator<Card> CREATOR = new Creator<Card>() {
-        @Override public Card createFromParcel(Parcel source) {
-            return new Card(source);
-        }
-
-        @Override public Card[] newArray(int size) {
-            return new Card[size];
-        }
-    };
     public int system_id;
     private String type_name;
     private float balance;
@@ -55,43 +46,11 @@ public class Card implements Parcelable {
     private String lock_end;
     //    @Ignore
     private List<Shop> shops;
+    private String remarks;
+
+
 
     public Card() {
-    }
-
-    protected Card(Parcel in) {
-        this.system_id = in.readInt();
-        this.type_name = in.readString();
-        this.balance = in.readFloat();
-        this.users = in.createTypedArrayList(QcStudentBean.CREATOR);
-        this.card_tpl = in.readParcelable(CardTpl.class.getClassLoader());
-        this.bundleUsers = in.readString();
-        this.description = in.readString();
-        this.name = in.readString();
-        this.check_valid = in.readByte() != 0;
-        this.valid_from = in.readString();
-        this.valid_to = in.readString();
-        this.type = in.readInt();
-        this.brand_id = in.readString();
-        this.is_locked = in.readByte() != 0;
-        this.is_active = in.readByte() != 0;
-        this.supportIds = in.readString();
-        this.id = in.readString();
-        this.color = in.readString();
-        this.card_tpl_id = in.readString();
-        this.total_cost = in.readFloat();
-        this.price = in.readFloat();
-        this.card_no = in.readString();
-        this.start = in.readString();
-        this.end = in.readString();
-        this.total_account = in.readFloat();
-        this.total_times = in.readFloat();
-        this.is_auto_start = in.readByte() != 0;
-        this.expired = in.readByte() != 0;
-        this.trial_days = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.lock_start = in.readString();
-        this.lock_end = in.readString();
-        this.shops = in.createTypedArrayList(Shop.CREATOR);
     }
 
     public boolean isExpired() {
@@ -164,6 +123,14 @@ public class Card implements Parcelable {
 
     public void setCard_no(String card_no) {
         this.card_no = card_no;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getRemarks() {
+        return remarks;
     }
 
     public String getUsersStr() {
@@ -464,5 +431,52 @@ public class Card implements Parcelable {
         dest.writeString(this.lock_start);
         dest.writeString(this.lock_end);
         dest.writeTypedList(this.shops);
+        dest.writeString(this.remarks);
     }
+
+    protected Card(Parcel in) {
+        this.system_id = in.readInt();
+        this.type_name = in.readString();
+        this.balance = in.readFloat();
+        this.users = in.createTypedArrayList(QcStudentBean.CREATOR);
+        this.card_tpl = in.readParcelable(CardTpl.class.getClassLoader());
+        this.bundleUsers = in.readString();
+        this.description = in.readString();
+        this.name = in.readString();
+        this.check_valid = in.readByte() != 0;
+        this.valid_from = in.readString();
+        this.valid_to = in.readString();
+        this.type = in.readInt();
+        this.brand_id = in.readString();
+        this.is_locked = in.readByte() != 0;
+        this.is_active = in.readByte() != 0;
+        this.supportIds = in.readString();
+        this.id = in.readString();
+        this.color = in.readString();
+        this.card_tpl_id = in.readString();
+        this.total_cost = in.readFloat();
+        this.price = in.readFloat();
+        this.card_no = in.readString();
+        this.start = in.readString();
+        this.end = in.readString();
+        this.total_account = in.readFloat();
+        this.total_times = in.readFloat();
+        this.is_auto_start = in.readByte() != 0;
+        this.expired = in.readByte() != 0;
+        this.trial_days = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.lock_start = in.readString();
+        this.lock_end = in.readString();
+        this.shops = in.createTypedArrayList(Shop.CREATOR);
+        this.remarks = in.readString();
+    }
+
+    public static final Creator<Card> CREATOR = new Creator<Card>() {
+        @Override public Card createFromParcel(Parcel source) {
+            return new Card(source);
+        }
+
+        @Override public Card[] newArray(int size) {
+            return new Card[size];
+        }
+    };
 }

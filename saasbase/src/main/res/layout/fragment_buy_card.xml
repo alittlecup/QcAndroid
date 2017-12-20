@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/bg_grey"
+    android:orientation="vertical"
     >
 
   <include layout="@layout/common_simple_toolbar"/>
@@ -14,8 +14,8 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_below="@id/toolbar_layout"
-      android:paddingBottom="60dp"
       android:clipToPadding="false"
+      android:paddingBottom="60dp"
       >
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,24 +26,45 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="选择购卡价格"
           android:padding="@dimen/activity_horizontal_margin"
+          android:text="选择购卡价格"
           />
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/rv"
+
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:paddingLeft="@dimen/activity_horizontal_margin"
-          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:background="@color/white"
+          android:orientation="vertical"
+          android:padding="15dp"
+          >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:overScrollMode="never"
+            />
 
-          android:overScrollMode="never"
-          />
+        <TextView
+            android:id="@+id/tv_card_validate_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="续卡后面额共计："
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="7dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
+
+      </LinearLayout>
+
       <LinearLayout
           xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:app="http://schemas.android.com/apk/res-auto"
-          android:orientation="vertical"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
+          android:orientation="vertical"
+          android:paddingBottom="36dp"
           >
 
         <LinearLayout
@@ -52,106 +73,140 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
+
+          <LinearLayout
+              android:id="@+id/layout_validate"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_grey"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp"
+                android:paddingLeft="14dp"
+                android:paddingTop="8dp"
+                android:text="有效期"
+                style="@style/QcTextStyleSmallWarm"
+                />
+
+            <cn.qingchengfit.widgets.CommonInputView
+                android:id="@+id/civ_start_time"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                app:civ_lable="开始日期"
+                style="@style/QcCivClickStyle"
+                />
+
+            <cn.qingchengfit.widgets.CommonInputView
+                android:id="@+id/civ_end_time"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                app:civ_lable="结束日期"
+                app:civ_showright="false"
+                app:civ_clickable="true"
+                android:clickable="false"
+                style="@style/QcCivClickStyle"
+                />
+
+            <cn.qingchengfit.widgets.ExpandedLayout
+                android:id="@+id/el_auto_open"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:background="@color/white"
+                app:el_label="提前激活"
+                app:el_left_icon="@drawable/vd_auto_card_what"
+                />
+
+          </LinearLayout>
           <cn.qingchengfit.widgets.CommonInputView
-              android:id="@+id/civ_charge_money"
-              style="@style/QcCivInputStyle"
+              android:id="@+id/civ_pay_method"
               android:layout_width="match_parent"
               android:layout_height="@dimen/qc_item_height"
-              app:civ_lable="面额"
-              app:civ_inputnum="true"
-              />
-          <cn.qingchengfit.widgets.CommonInputView
-              android:id="@+id/civ_real_money"
-              style="@style/QcCivInputStyle"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/qc_item_height"
-              app:civ_lable="价格"
-              app:civ_unit="元"
-              app:civ_inputnum="true"
+              android:layout_marginTop="@dimen/activity_vertical_margin"
+              app:civ_clickable="true"
+              app:civ_content="微信扫码支付"
+              app:civ_lable="支付方式"
+              app:civ_nonnull="true"
+              app:civ_showdivier="false"
+              app:civ_showright="true"
               />
 
           <android.support.v4.widget.Space
               android:layout_width="match_parent"
               android:layout_height="@dimen/activity_vertical_margin"
               />
-          <cn.qingchengfit.widgets.ExpandedLayout
-              android:id="@+id/el_need_valid"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              app:el_label="设置有效期"
-              android:background="@color/white"
-              >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-              <cn.qingchengfit.widgets.CommonInputView
-                  android:id="@+id/civ_start_time"
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/qc_item_height"
-                  app:civ_lable="开始日期"
-                  style="@style/QcCivClickStyle"
-                  />
-              <cn.qingchengfit.widgets.CommonInputView
-                  android:id="@+id/civ_end_time"
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/qc_item_height"
-                  app:civ_lable="结束日期"
-                  style="@style/QcCivClickStyle"
-                  />
-              <cn.qingchengfit.widgets.ExpandedLayout
-                  android:id="@+id/el_auto_open"
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/qc_item_height"
-                  android:background="@color/white"
-                  app:el_label="自动开卡"
-                  />
-              <TextView
-                  style="@style/TextTitleHint"
-                  android:paddingTop="@dimen/little"
-                  android:paddingBottom="@dimen/little"
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/qc_item_height"
-                  android:text="开启【自动开卡】功能后，会员可以在开始日期之前使用该会员卡，一旦开始使用，开始日期自动从当天开始计算"
-                  />
-              <include layout="@layout/divider_grey_left_right"/>
-            </LinearLayout>
-          </cn.qingchengfit.widgets.ExpandedLayout>
+
+          <!--<LinearLayout-->
+          <!--android:layout_width="match_parent"-->
+          <!--android:layout_height="wrap_content"-->
+          <!--android:orientation="vertical"-->
+          <!--&gt;-->
+
+          <!--<TextView-->
+          <!--style="@style/TextTitleHint"-->
+          <!--android:paddingTop="@dimen/little"-->
+          <!--android:paddingBottom="@dimen/little"-->
+          <!--android:layout_width="match_parent"-->
+          <!--android:layout_height="@dimen/qc_item_height"-->
+          <!--android:text="开启【自动开卡】功能后，会员可以在开始日期之前使用该会员卡，一旦开始使用，开始日期自动从当天开始计算"-->
+          <!--/>-->
+          <!--<include layout="@layout/divider_grey_left_right"/>-->
+          <!--</LinearLayout>-->
+
         </LinearLayout>
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/civ_bind_menbers"
-            style="@style/QcCivClickStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
-            app:civ_lable="绑定会员"
             app:civ_hint="请选择会员"
-            />
-        <cn.qingchengfit.widgets.CommonInputView
-            android:id="@+id/civ_saler"
+            app:civ_lable="绑定会员"
             style="@style/QcCivClickStyle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qc_item_height"
-            app:civ_lable="业绩归属"
-            app:civ_hint="请选择销售"
             />
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/civ_real_card_num"
-            style="@style/QcCivInputStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
             app:civ_inputnum="true"
             app:civ_lable="实体卡号"
+            app:civ_showright="true"
+            style="@style/QcCivInputStyle"
             />
         <cn.qingchengfit.widgets.CommonInputView
             android:id="@+id/civ_mark"
-            style="@style/QcCivClickStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_hint="@string/please_input"
             app:civ_lable="会员卡备注"
             app:civ_showright="false"
-            app:civ_hint="@string/please_input"
+            style="@style/QcCivClickStyle"
             />
+
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/civ_saler"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_marginTop="12dp"
+            app:civ_hint="请选择销售"
+            app:civ_lable="业绩归属"
+            style="@style/QcCivClickStyle"
+            />
+
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/card_protocol"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height_new"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            app:civ_clickable="true"
+            app:civ_content="查看"
+            app:civ_lable="《会员卡服务条款》"
+            app:civ_showright="true"
+            />
+
       </LinearLayout>
 
       <FrameLayout
@@ -171,20 +226,20 @@
   <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
-      android:orientation="horizontal"
-      android:background="@color/white"
       android:layout_alignParentBottom="true"
+      android:background="@color/white"
+      android:orientation="horizontal"
       >
 
     <TextView
-        style="@style/QcTextStyleMediumDark"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:id="@+id/tv_money_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:text="金额："
+        style="@style/QcTextStyleMediumDark"
         />
     <TextView
         android:id="@+id/tv_pay_money"
@@ -197,13 +252,13 @@
         />
     <Button
         android:id="@+id/btn_pay"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_width="100dp"
         android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_prime_no_corner"
         android:text="收 款"
         android:textColor="@color/white"
-        android:background="@drawable/btn_prime_no_corner"
         />
     <include layout="@layout/divider_grey"/>
   </RelativeLayout>

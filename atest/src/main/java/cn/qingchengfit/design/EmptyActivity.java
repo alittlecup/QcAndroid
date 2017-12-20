@@ -22,6 +22,7 @@ public class EmptyActivity extends BaseActivity {
     setContentView(R.layout.activity_empty);
     ButterKnife.bind(this);
     getSupportFragmentManager().beginTransaction()
+        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
         .replace(R.id.frag_empty, EmptyFragment.newInstance("空页面", "暂无数据", "空页面文案"))
         .commit();
   }

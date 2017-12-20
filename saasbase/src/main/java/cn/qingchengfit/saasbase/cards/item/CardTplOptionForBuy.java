@@ -27,8 +27,13 @@ import java.util.List;
  */
 
 public class CardTplOptionForBuy extends CardtplOptionItem {
+
   public CardTplOptionForBuy(CardTplOption option, int cardtplType) {
     super(option, cardtplType);
+  }
+
+  public CardTplOptionForBuy(CardTplOption option, int cardtplType, OnCustomCardOptionListener onCustomCardOptionListener) {
+    super(option, cardtplType, onCustomCardOptionListener);
   }
 
   @Override

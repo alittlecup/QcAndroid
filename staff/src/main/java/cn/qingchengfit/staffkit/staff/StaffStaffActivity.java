@@ -6,7 +6,6 @@ import cn.qingchengfit.saasbase.staff.StaffActivity;
 import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
 import cn.qingchengfit.saasbase.staff.views.SalersListFragment;
 import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
-import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -30,9 +29,8 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/12/1.
  */
 @Trunk(fragments = {
-  StaffStaffModule.class,
-  ChooseSalerFragment.class, ChooseAndSearchStudentFragment.class, SalersListFragment.class,
-  TrainerChooseFragment.class, CoachListFragment.class, StaffDetailFragment.class,
+  ChooseSalerFragment.class, SalersListFragment.class,
+  TrainerChooseFragment.class, CoachListFragment.class, StaffDetailFragment.class
 })
 public class StaffStaffActivity extends StaffActivity {
 }

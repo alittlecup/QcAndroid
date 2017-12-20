@@ -540,6 +540,13 @@ public abstract class BaseFragment extends RxFragment
     }
   }
 
+  protected void choosTime(final TimePopupWindow.Type type, int start, int end, Date inputDate,
+      final CommonInputView civ, TimeDialogWindow.OnTimeSelectListener listener) {
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).chooseTime(type, start, end, inputDate, listener);
+    }
+  }
+
   protected void chooseTime(final CommonInputView civ) {
     choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY, 0, 0, new Date(), civ);
   }

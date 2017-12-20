@@ -29,10 +29,12 @@ import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
+import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
 import cn.qingchengfit.saasbase.coach.views.AddNewCoachFragment;
 import cn.qingchengfit.saasbase.coach.views.CoachDetailFragment;
 import cn.qingchengfit.saasbase.coach.views.CoachListFragment;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
+import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
 import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
 import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
 import cn.qingchengfit.saasbase.staff.views.SuFragment;
@@ -42,6 +44,7 @@ import cn.qingchengfit.staff.di.BindGymConfigAcitivty;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
+import cn.qingchengfit.staff.di.BindStaffStudentActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -165,7 +168,6 @@ import cn.qingchengfit.staffkit.views.gym.QuitGymFragment;
 import cn.qingchengfit.staffkit.views.gym.RenewalHistoryFragment;
 import cn.qingchengfit.staffkit.views.gym.SetGymFragment;
 import cn.qingchengfit.staffkit.views.gym.WriteAddressFragment;
-import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
 import cn.qingchengfit.staffkit.views.gym.coach.ChooseTrainerFragment;
 import cn.qingchengfit.staffkit.views.gym.cycle.AddCycleFragment;
 import cn.qingchengfit.staffkit.views.gym.gym_web.HomePageQrCodeFragment;
@@ -360,7 +362,7 @@ import dagger.multibindings.IntoMap;
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
     BindStaffCardActivity.class, BindImportExportActivity.class, BindStaffStaffActivity.class,
-  BindGymConfigAcitivty.class,
+    BindGymConfigAcitivty.class, BindStaffStudentActivity.class, BindSaasCommonActivity.class,
 
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,

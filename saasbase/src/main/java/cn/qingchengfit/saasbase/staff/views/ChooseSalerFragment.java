@@ -126,7 +126,7 @@ import rx.schedulers.Schedulers;
   @Override public void onRefresh() {
 
     RxRegiste(staffModel.getSalers()
-      .onBackpressureLatest()
+      .onBackpressureBuffer()
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new NetSubscribe<QcDataResponse<SalerListWrap>>() {

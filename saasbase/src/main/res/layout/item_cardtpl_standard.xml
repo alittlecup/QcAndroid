@@ -4,19 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="100dp"
-    android:layout_height="105dp"
+    android:layout_height="90dp"
+    android:gravity="center"
     >
 
   <LinearLayout
       android:id="@+id/charge_layout"
       android:layout_width="match_parent"
-      android:layout_height="105dp"
+      android:layout_height="90dp"
       android:background="@drawable/bg_rect_corner_primary"
       android:gravity="center"
-      android:minHeight="94dp"
+      android:minHeight="90dp"
       android:orientation="vertical"
-      android:paddingBottom="@dimen/activity_vertical_margin"
-      android:paddingTop="@dimen/activity_vertical_margin"
+      android:paddingBottom="6dp"
+      android:paddingTop="6dp"
       >
 
     <TextView
@@ -61,13 +62,12 @@
   </LinearLayout>
 
   <ImageView
-      android:id="@+id/chosen"
+      android:id="@+id/img_custom_card_option"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignRight="@id/charge_layout"
       android:layout_alignTop="@id/charge_layout"
-      app:srcCompat="@drawable/vd_chosen_hook"
-      tools:src="@drawable/vd_chosen_hook"
+      app:srcCompat="@drawable/vd_custom_card_option"
       />
 
   <ImageView

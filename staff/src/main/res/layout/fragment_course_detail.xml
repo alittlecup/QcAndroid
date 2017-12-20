@@ -114,9 +114,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_gravity="center"
-                android:drawableLeft="@drawable/ic_edit"
+                android:drawableLeft="@drawable/vd_custom_card_option"
                 android:drawablePadding="8dp"
-                android:drawableStart="@drawable/ic_edit"
+                android:drawableStart="@drawable/vd_custom_card_option"
                 android:text="编辑基本信息"
 
                 />
@@ -404,7 +404,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/ic_edit"
+                android:drawableLeft="@drawable/vd_custom_card_option"
                 android:drawablePadding="8dp"
                 android:paddingLeft="@dimen/activity_vertical_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"

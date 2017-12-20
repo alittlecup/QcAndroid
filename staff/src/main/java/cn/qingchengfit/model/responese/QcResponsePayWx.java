@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by peggy on 16/5/29.
  */
 
-public class QcResponsePayWx extends QcResponse {
+public class QcResponsePayWx extends QcResponse{
     @SerializedName("data") public Data data;
 
     public class Data {

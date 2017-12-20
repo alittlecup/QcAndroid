@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.cards.network.response;
 
+import cn.qingchengfit.network.response.QcAnyResponse;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -21,6 +23,6 @@ package cn.qingchengfit.saasbase.cards.network.response;
  * Created by Paper on 2017/10/29.
  */
 
-public class PayBusinessResponseWrap {
+public class PayBusinessResponseWrap extends QcAnyResponse {
   public PayBusinessResponse order;
 }

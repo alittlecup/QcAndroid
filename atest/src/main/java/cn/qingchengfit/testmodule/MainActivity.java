@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import cn.qingchengfit.design.DesignActivity;
 import cn.qingchengfit.testmodule.databinding.ActivityMainBinding;
 import cn.qingchengfit.views.activity.BaseActivity;
 
@@ -51,7 +52,7 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.btn_design).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this, DesignActivity.class));
+                startActivity(new Intent(MainActivity.this, DesignActivity.class));
             }
         });
     }

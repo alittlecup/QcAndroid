@@ -32,6 +32,21 @@
     <item >期限类型</item>
   </string-array>
 
+  <array name="pay_method">
+    <item>@string/wechat_scan</item>
+    <item>@string/wechat_pay</item>
+    <item>@string/cash_pay</item>
+    <item>@string/credit_pay</item>
+    <item>@string/transit_pay</item>
+    <item>@string/other</item>
+  </array>
+
+  <array name="class_frequent">
+    <item>@string/everyday</item>
+    <item>@string/everyweek</item>
+    <item>@string/everymonth</item>
+  </array>
+
   <string-array name="card_filter_status">
     <item >默认</item>
     <item >正常</item>

@@ -27,6 +27,7 @@
       android:layout_marginLeft="27dp"
       android:layout_marginStart="27dp"
       android:layout_marginTop="27dp"
+      android:freezesText="true"
       />
   <TextView
       android:id="@+id/tv_cardtpl_name"
@@ -40,6 +41,7 @@
       android:textSize="19sp"
       android:maxWidth="200dp"
       tools:text="FREESTYLE"
+      android:freezesText="true"
       />
   <TextView
       android:id="@+id/tv_gym_name"
@@ -51,7 +53,9 @@
       android:layout_alignParentRight="true"
       android:layout_alignParentEnd="true"
       android:textColor="@color/white"
+      android:maxWidth="200dp"
       tools:text="FREESTYLE"
+      android:freezesText="true"
       />
   <TextView
       android:id="@+id/tv_card_id"
@@ -63,7 +67,7 @@
       android:layout_alignParentBottom="true"
       android:layout_alignParentEnd="true"
       tools:text="FREESTYLE"
-
+      android:freezesText="true"
       />
   <TextView
       android:id="@+id/img_stutus"
@@ -79,5 +83,6 @@
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:layout_gravity="end"
       tools:visibility="gone"
+      android:freezesText="true"
       />
 </RelativeLayout>

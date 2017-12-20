@@ -13,8 +13,9 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
-import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
+import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
+import com.google.gson.JsonObject;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -59,8 +60,10 @@ public interface CardApi {
   @GET("/api/staffs/{id}/cards/all/?order_by=-id")
   rx.Observable<QcDataResponse<CardListWrap>> getAllCards(@Path("id") String staffid,
     @QueryMap HashMap<String, Object> params);
+
   @GET("api/staffs/{id}/balance/cards/") rx.Observable<QcDataResponse<CardListWrap>> qcGetBalanceCard(@Path("id") String staffid,
     @QueryMap HashMap<String, Object> params);
+
   //获取筛选列表
   @GET("/api/staffs/{id}/filter/cardtpls/?show_all=1")
   rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardFilterCondition(@Path("id") String staff,
@@ -103,7 +106,7 @@ public interface CardApi {
    * 卡类型 todo 这里应有新接口 带着卡规格一起
    */
   @POST("/api/staffs/{staff_id}/cardtpls/")
-  rx.Observable<QcDataResponse> qcCreateCardtpl(@Path("gym_id") String staffid,
+  rx.Observable<QcDataResponse> qcCreateCardtpl(@Path("staff_id") String staffid,
     @Body CardtplBody body, @QueryMap HashMap<String, Object> params);
 
   @PUT("/api/staffs/{staff_id}/cardtpls/{card_tpl_id}/")
@@ -129,11 +132,11 @@ public interface CardApi {
     @Path("cardtpl_id") String card_tpl, @Body ShopsBody body, @QueryMap HashMap<String, Object> params);
 
   //充值扣费
-  @POST("/api/staffs/{staff_id}/cards/{card_id}/charge/") rx.Observable<QcDataResponse<PayBusinessResponseWrap>> qcCardCharge(@Path("staff_id") String staff_id,
+  @POST("/api/staffs/{staff_id}/cards/{card_id}/charge/") rx.Observable<QcDataResponse<JsonObject>> qcCardCharge(@Path("staff_id") String staff_id,
     @Path("card_id") String cardid,@QueryMap HashMap<String, Object> params , @Body ChargeBody body);
 
   //购卡
-  @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse<PayBusinessResponseWrap>> qcCreateRealcard(@Path("id") String staffid,
+  @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse<JsonObject>> qcCreateRealcard(@Path("id") String staffid,
     @Body CardBuyBody body, @QueryMap HashMap<String, Object> params);
 
   //工作人员 卡类型
@@ -170,4 +173,8 @@ public interface CardApi {
   @PUT("api/staffs/{staff_id}/shops/configs/") rx.Observable<QcDataResponse> qcChangeAutoNotify(
     @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body
     CardBalanceNotifyBody body);
+
+  @GET("/api/staffs/{id}/shops/") rx.Observable<QcDataResponse<Shops>> qcGetBrandShops(@Path("id") String id,
+      @Query("brand_id") String brand_id);
+
 }
