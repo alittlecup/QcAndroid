@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,6 +70,7 @@ public class RegisteFragment extends BaseFragment implements LoginView {
     View view = inflater.inflate(R.layout.fragment_registe, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(loginPresenter, this);
+    loginPresenter.setContext(getContext());
     registeBtn.setEnabled(false);
     registeGender.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {

@@ -21,12 +21,12 @@ import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Router;
+import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.utils.CompatUtils;
@@ -63,7 +63,6 @@ public class SigninConfigListFragment extends BaseFragment implements ModuleConf
     @Inject GymWrapper gymWrapper;
     @Inject RestRepositoryV2 restRepository;
     @Inject ModuleConfigsPresenter presenter;
-    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.tv_signin_type_setted) TextView tvSigninTypeSetted;
     @BindView(R.id.btn_how_to_use) TextView btnHowToUse;
     @BindView(R.id.layout_signin_type) LinearLayout layoutSigninType;
@@ -120,7 +119,7 @@ public class SigninConfigListFragment extends BaseFragment implements ModuleConf
     @OnClick({ R.id.layout_signin_type, R.id.layout_signin_wardrobe, R.id.layout_signin_screen }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_signin_type:
-                if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_HELP)) {
+                if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_HELP)) {
                     showAlert(R.string.sorry_for_no_permission);
                     return;
                 }
@@ -131,7 +130,9 @@ public class SigninConfigListFragment extends BaseFragment implements ModuleConf
                     .commit();
                 break;
             case R.id.layout_signin_wardrobe:
-                if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK)) {
+                if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK)
+                    && !SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK_NEW)
+                  ) {
                     showAlert(R.string.sorry_for_no_permission);
                     return;
                 }
@@ -142,7 +143,7 @@ public class SigninConfigListFragment extends BaseFragment implements ModuleConf
                     .commit();
                 break;
             case R.id.layout_signin_screen:
-                if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SCREEN)) {
+                if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SCREEN)) {
                     showAlert(R.string.sorry_for_no_permission);
                     return;
                 }

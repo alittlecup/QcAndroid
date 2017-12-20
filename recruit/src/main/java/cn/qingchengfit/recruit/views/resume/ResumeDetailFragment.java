@@ -166,7 +166,7 @@ import javax.inject.Inject;
       return;
     }
     String resumeStr = "{\"userAction\":1004, \"data\":" + gson.toJson(resumeModel) + "}";
-    intent.putExtra(RecruitConstants.IDENTIFY, ("qc_") + userId);
+    intent.putExtra(RecruitConstants.IDENTIFY, getString(R.string.chat_user_id_header,userId));
     intent.putExtra(RecruitConstants.TEMP_CONVERSATION_TYPE, RecruitConstants.C2C);
     intent.putExtra(RecruitConstants.CHAT_JOB_RESUME, resumeStr);
     intent.putExtra(JobSearchChatActivity.INVITE_RESUME_ID, resumeId);
@@ -292,7 +292,7 @@ import javax.inject.Inject;
           String recruit = "{\"userAction\":1003, \"data\":"
               + gson.toJson(jobPresenter.getRecruitModel(job))
               + "}";
-          addConversationProcessor.sendResumeOrRecruit(("qc_") + userId, "", recruit);
+          addConversationProcessor.sendResumeOrRecruit(getString(R.string.chat_user_id_header, userId), "", recruit);
         }
       }
     }

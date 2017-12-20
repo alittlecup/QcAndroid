@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.qingcheng.model.base.CoachServiceModel;
 import com.squareup.sqldelight.ColumnAdapter;
 import com.squareup.sqldelight.RowMapper;
+import java.io.Serializable;
 
 /**
  * power by
@@ -24,7 +25,7 @@ import com.squareup.sqldelight.RowMapper;
  * Created by Paper on 15/12/28 2015.
  */
 
-public class CoachService implements Parcelable, CoachServiceModel {
+public class CoachService implements Parcelable, CoachServiceModel{
   public static final ColumnAdapter<DistrictEntity, String> gd_districtAdapter =
       new ColumnAdapter<DistrictEntity, String>() {
         Gson gson = new Gson();

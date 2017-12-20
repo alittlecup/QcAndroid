@@ -17,17 +17,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.model.responese.CardTpl;
+import cn.qingchengfit.model.responese.CardTpls;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
+import cn.qingchengfit.staffkit.rxbus.event.RxCardTypeEvent;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.cardtype.detail.EditCardTypeFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * power by
@@ -45,11 +59,11 @@ import javax.inject.Inject;
 public class BrandCardListFragment extends BaseFragment {
     @BindView(R.id.tab) TabLayout tab;
     @BindView(R.id.viewpager) ViewPager viewpager;
-    @Inject RestRepository restRepository;
+    @Inject QcRestRepository restRepository;
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject SerPermisAction serPermisAction;
+
     private String mChooseShopId, mChooseShopName;//, mId, mModel;
     private CardViewpagerAdapter adapter;
     private int mCardtype = 0;
@@ -81,14 +95,14 @@ public class BrandCardListFragment extends BaseFragment {
                 }
             }, R.menu.menu_add, new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
-                    if (serPermisAction.checkNoOne(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
+                    if (SerPermisAction.checkNoOne(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
                         showAlert(R.string.alert_permission_forbid);
                         return true;
                     }
                     getFragmentManager().beginTransaction()
                         .replace(mCallbackActivity.getFragId(), EditCardTypeFragment.newInstance(0))
                         .addToBackStack(null)
-                        .commit();
+                        .commitAllowingStateLoss();
                     return true;
                 }
             });
@@ -111,68 +125,68 @@ public class BrandCardListFragment extends BaseFragment {
     }
 
     public void refresh() {
-        //RxRegiste(restRepository.getGet_api()
-        //    .qcGetCardTpls(App.staffId, gymWrapper.getParams(), mCardtype == 0 ? null : Integer.toString(mCardtype),
-        //        mCardDisable == 0 ? "1" : "0")
-        //    .observeOn(AndroidSchedulers.mainThread())
-        //    .onBackpressureBuffer()
-        //    .subscribeOn(Schedulers.io())
-        //    .subscribe(new Subscriber<QcDataResponse<CardTpls>>() {
-        //        @Override public void onCompleted() {
-        //
-        //        }
-        //
-        //        @Override public void onError(Throwable e) {
-        //
-        //        }
-        //
-        //        @Override public void onNext(QcDataResponse<CardTpls> qcResponseCardTpls) {
-        //            if (qcResponseCardTpls.getStatus() == ResponseConstant.SUCCESS) {
-        //                List<CardTpl> card_tpls = new ArrayList<>();
-        //                for (CardTpl card_tpl : qcResponseCardTpls.data.card_tpls) {
-        //                    if (type == 0 || card_tpl.getType() == type) {
-        //                        if (card_tpl.is_limit()) {
-        //                            StringBuffer ss = new StringBuffer();
-        //                            if (card_tpl.getPre_times() != 0) {
-        //                                ss.append("限制: 可提前预约");
-        //                                ss.append(card_tpl.getPre_times());
-        //                                ss.append("节课");
-        //                            }
-        //                            if (card_tpl.getDay_times() != 0) {
-        //                                if (card_tpl.getPre_times() != 0) ss.append(",");
-        //                                ss.append("每天共计可上").append(card_tpl.getDay_times()).append("节课");
-        //                            } else if (card_tpl.getWeek_times() != 0) {
-        //                                if (card_tpl.getPre_times() != 0) ss.append(",");
-        //                                ss.append("每周共计可上").append(card_tpl.getWeek_times()).append("节课");
-        //                            } else if (card_tpl.getMonth_times() != 0) {
-        //                                if (card_tpl.getPre_times() != 0) ss.append(",");
-        //                                ss.append("每月共计可上").append(card_tpl.getMonth_times()).append("节课");
-        //                            }
-        //                            if (TextUtils.isEmpty(ss.toString())) {
-        //                                card_tpl.setLimit("限制: 无");
-        //                            } else {
-        //                                card_tpl.setLimit(ss.toString());
-        //                            }
-        //                        } else {
-        //                            card_tpl.setLimit("限制: 无");
-        //                        }
-        //                        if (TextUtils.isEmpty(card_tpl.getDescription())) {
-        //                            card_tpl.setDescription("简介: 无");
-        //                        } else {
-        //                            card_tpl.setDescription(TextUtils.concat("简介: ", card_tpl.getDescription()).toString());
-        //                        }
-        //                        if (TextUtils.isEmpty(mChooseShopId) || (!TextUtils.isEmpty(mChooseShopId) && card_tpl.getShopIds()
-        //                            .contains(mChooseShopId))) {
-        //                            card_tpls.add(card_tpl);
-        //                        }
-        //                    }
-        //                }
-        //                RxBus.getBus().post(new RxCardTypeEvent(card_tpls, mCardtype));
-        //            } else {
-        //                Timber.e(qcResponseCardTpls.getMsg());
-        //            }
-        //        }
-        //    }));
+        RxRegiste(restRepository.createGetApi(Get_Api.class)
+            .qcGetCardTpls(App.staffId, gymWrapper.getParams(), mCardtype == 0 ? null : Integer.toString(mCardtype),
+                mCardDisable == 0 ? "1" : "0")
+            .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer()
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Subscriber<QcDataResponse<CardTpls>>() {
+                @Override public void onCompleted() {
+
+                }
+
+                @Override public void onError(Throwable e) {
+
+                }
+
+                @Override public void onNext(QcDataResponse<CardTpls> qcResponseCardTpls) {
+                    if (qcResponseCardTpls.getStatus() == ResponseConstant.SUCCESS) {
+                        List<CardTpl> card_tpls = new ArrayList<>();
+                        for (CardTpl card_tpl : qcResponseCardTpls.data.card_tpls) {
+                            if (type == 0 || card_tpl.getType() == type) {
+                                if (card_tpl.is_limit()) {
+                                    StringBuffer ss = new StringBuffer();
+                                    if (card_tpl.getPre_times() != 0) {
+                                        ss.append("限制: 可提前预约");
+                                        ss.append(card_tpl.getPre_times());
+                                        ss.append("节课");
+                                    }
+                                    if (card_tpl.getDay_times() != 0) {
+                                        if (card_tpl.getPre_times() != 0) ss.append(",");
+                                        ss.append("每天共计可上").append(card_tpl.getDay_times()).append("节课");
+                                    } else if (card_tpl.getWeek_times() != 0) {
+                                        if (card_tpl.getPre_times() != 0) ss.append(",");
+                                        ss.append("每周共计可上").append(card_tpl.getWeek_times()).append("节课");
+                                    } else if (card_tpl.getMonth_times() != 0) {
+                                        if (card_tpl.getPre_times() != 0) ss.append(",");
+                                        ss.append("每月共计可上").append(card_tpl.getMonth_times()).append("节课");
+                                    }
+                                    if (TextUtils.isEmpty(ss.toString())) {
+                                        card_tpl.setLimit("限制: 无");
+                                    } else {
+                                        card_tpl.setLimit(ss.toString());
+                                    }
+                                } else {
+                                    card_tpl.setLimit("限制: 无");
+                                }
+                                if (TextUtils.isEmpty(card_tpl.getDescription())) {
+                                    card_tpl.setDescription("简介: 无");
+                                } else {
+                                    card_tpl.setDescription(TextUtils.concat("简介: ", card_tpl.getDescription()).toString());
+                                }
+                                if (TextUtils.isEmpty(mChooseShopId) || (!TextUtils.isEmpty(mChooseShopId) && card_tpl.getShopIds()
+                                    .contains(mChooseShopId))) {
+                                    card_tpls.add(card_tpl);
+                                }
+                            }
+                        }
+                        RxBus.getBus().post(new RxCardTypeEvent(card_tpls, mCardtype));
+                    } else {
+                        Timber.e(qcResponseCardTpls.getMsg());
+                    }
+                }
+            }));
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -192,7 +206,7 @@ public class BrandCardListFragment extends BaseFragment {
                             getFragmentManager().beginTransaction()
                                 .replace(mCallbackActivity.getFragId(), EditCardTypeFragment.newInstance(0))
                                 .addToBackStack(null)
-                                .commit();
+                                .commitAllowingStateLoss();
                             return true;
                         }
                     });

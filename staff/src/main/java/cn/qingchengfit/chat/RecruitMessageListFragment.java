@@ -74,7 +74,7 @@ public class RecruitMessageListFragment extends BaseFragment
     presenter.queryRecruitMsgList();
     recyclerRecruitMessageList.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerRecruitMessageList.addItemDecoration(new QcLeftRightDivider(getContext()));
-    converPresenter = new ConversationPresenter(this);
+    converPresenter = new ConversationPresenter(this, getContext());
     recyclerRecruitMessageList.setAdapter(adapter);
     initView();
     return view;
@@ -111,7 +111,7 @@ public class RecruitMessageListFragment extends BaseFragment
     records.clear();
     records.addAll(recordList);
     for (int i = 0; i < recordList.size(); i++) {
-      map.put("qc_" + recordList.get(i).staff.id, i);
+      map.put(getString(R.string.chat_user_id_header, recordList.get(i).staff.id) , i);
     }
   }
 

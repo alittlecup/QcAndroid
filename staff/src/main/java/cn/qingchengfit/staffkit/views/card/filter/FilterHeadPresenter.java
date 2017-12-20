@@ -7,6 +7,8 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.FilterCardBean;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.lang.annotation.Retention;
@@ -86,24 +88,27 @@ public class FilterHeadPresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<CardTpls>>() {
                 @Override public void call(QcDataResponse<CardTpls> cardTplsQcResponseData) {
-                    for (CardTpl card_tpl : cardTplsQcResponseData.data.card_tpls) {
-                        switch (card_tpl.type) {
-                            case 1:
-                                cardStoreList.add(card_tpl);
-                                break;
-                            case 2:
-                                cardSecondList.add(card_tpl);
-                                break;
-                            case 3:
-                                cardTimeList.add(card_tpl);
-                                break;
+                    if (ResponseConstant.checkSuccess(cardTplsQcResponseData) && cardTplsQcResponseData.data !=null) {
+
+                        for (CardTpl card_tpl : cardTplsQcResponseData.data.card_tpls) {
+                            switch (card_tpl.type) {
+                                case 1:
+                                    cardStoreList.add(card_tpl);
+                                    break;
+                                case 2:
+                                    cardSecondList.add(card_tpl);
+                                    break;
+                                case 3:
+                                    cardTimeList.add(card_tpl);
+                                    break;
+                            }
                         }
+                        handleParentData();
+                        handleChildData();
+                        onFilterConditionListener.onLoadFinish();
                     }
-                    handleParentData();
-                    handleChildData();
-                    onFilterConditionListener.onLoadFinish();
                 }
-            }));
+            }, new NetWorkThrowable()));
     }
 
     public List<FilterCardBean> getParentList() {

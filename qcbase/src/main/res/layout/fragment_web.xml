@@ -56,15 +56,27 @@
         android:textSize="18sp"
         style="@style/Qc.TextCommonBlack"
         />
+    <TextView
+        style="@style/QcTextStyleMediumGrey"
+        android:id="@+id/toolbar_close"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:maxLines="1"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+
+        android:text="关闭"
+        android:textColor="@color/white"
+        />
   </RelativeLayout>
 
-  <!--<cn.qingchengfit.widgets.CustomSwipeRefreshLayout-->
-  <!--android:id="@+id/refresh"-->
-  <!--android:layout_width="match_parent"-->
-  <!--android:layout_height="match_parent"-->
-  <!--android:layout_below="@id/layout_toolbar"-->
-  <!--android:fitsSystemWindows="true"-->
-  <!--&gt;-->
+  <cn.qingchengfit.widgets.CustomSwipeRefreshLayout
+  android:id="@+id/refresh"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_below="@id/layout_toolbar"
+  >
 
   <com.tencent.smtt.sdk.WebView
       android:id="@+id/webview"
@@ -77,7 +89,7 @@
 
   </com.tencent.smtt.sdk.WebView>
 
-  <!--</cn.qingchengfit.widgets.CustomSwipeRefreshLayout>-->
+  </cn.qingchengfit.widgets.CustomSwipeRefreshLayout>
 
   <LinearLayout
       android:id="@+id/no_newwork"

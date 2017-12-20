@@ -1,7 +1,9 @@
 package cn.qingchengfit.staffkit.views;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,12 +15,17 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.body.ScanBody;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.Post_Api;
+import cn.qingchengfit.staffkit.views.cardtype.OnBackEvent;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -34,131 +41,174 @@ import rx.schedulers.Schedulers;
 
 public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCodeReadListener {
 
-    public static final String LINK_URL = "com.qingcheng.qr.linkurl";
-    public static final String LINK_MODULE = "com.qingcheng.qr.module";
-    public static final String MODULE_SETTING = "studio/setting";
-    //    public static final String MODULE_SETTING = "studio/setting";
-    public static final String MODULE_MSG = "messagesetting";
-    public static final String MODULE_PERMISSION = "permissionsetting";
-    public static final String MODULE_MSG_SETTING = "messagesetting";
-    public static final String MODULE_BODYTEST = "measureSetting";
-    public static final String MODULE_COURSE_PLAN = "planssetting";
-    public static final String MODULE_BILL = "pay/bills";
-    public static final String MODULE_PAY_ONLINE = "pay/setting";
-    public static final String MODULE_ACTIVITY = "activity/setting";
-    public static final String MODULE_ALI = "koubei";
-    public static final String MODULE_AD = "mobile/advertisement/setting";
-    public static final String MODULE_NOTICE = "notice";
-    public static final String MODULE_GIFT = "giftcard";
-    public static final String MODULE_COMMODITY = "commodity/list";
+  public static final String LINK_URL = "com.qingcheng.qr.linkurl";
+  public static final String LINK_MODULE = "com.qingcheng.qr.module";
+  public static final String MODULE_SETTING = "studio/setting";
+  //    public static final String MODULE_SETTING = "studio/setting";
+  public static final String MODULE_MSG = "messagesetting";
+  public static final String MODULE_PERMISSION = "permissionsetting";
+  public static final String MODULE_MSG_SETTING = "messagesetting";
+  public static final String MODULE_BODYTEST = "measureSetting";
+  public static final String MODULE_COURSE_PLAN = "planssetting";
+  public static final String MODULE_BILL = "pay/bills";
+  public static final String MODULE_PAY_ONLINE = "pay/setting";
+  public static final String MODULE_ACTIVITY = "activity/setting";
+  public static final String MODULE_ALI = "koubei";
+  public static final String MODULE_AD = "mobile/advertisement/setting";
+  public static final String MODULE_NOTICE = "notice";
+  public static final String MODULE_GIFT = "giftcard";
+  public static final String MODULE_COMMODITY = "commodity/list";
+  public static final String MODULE_MODIFY_CARD_PROTOCOL = "term/edit";
+  public static final String MODULE_ADD_CARD_PROTOCOL_SINGLE = "term/add";
+  public static final String MODULE_ADD_CARD_PROTOCOL = "/card_tpl/add";
+  public static final String CARD_TPL_ID = "card_tpl_id";
+  public static final String MULTI_CARD_TPL = "card-templates/add";
 
-    //    @BindView(R.id.qrdecoderview)
-    QRCodeReaderView qrdecoderview;
+  //    @BindView(R.id.qrdecoderview)
+  QRCodeReaderView qrdecoderview;
 
-    @Inject RestRepository restRepository;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitile;
-    @BindView(R.id.done) LinearLayout done;
-    @BindView(R.id.layout_next) LinearLayout layoutNext;
-    @BindView(R.id.root_view) RelativeLayout rootView;
-    private Subscription sp;
-    private AlertDialogWrapper dialog;
+  @Inject QcRestRepository restRepository;
+  @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.toolbar_title) TextView toolbarTitile;
+  @BindView(R.id.done) LinearLayout done;
+  @BindView(R.id.layout_next) LinearLayout layoutNext;
+  @BindView(R.id.root_view) RelativeLayout rootView;
+  @BindView(R.id.tv_qr_code_url) TextView tvQrCodeUrl;
+  private Subscription sp;
+  private AlertDialogWrapper dialog;
+  @Inject GymWrapper gymWrapper;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr);
-        ButterKnife.bind(this);
+  /**
+   * @param module Web相应模块的后缀
+   */
+  public static void start(Context context, String module) {
+    Intent starter = new Intent(context, QRActivity.class);
+    starter.putExtra(LINK_MODULE, module);
+    context.startActivity(starter);
+  }
 
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                finish();
-            }
-        });
-        toolbarTitile.setText("在电脑中使用该功能");
-        //        qrdecoderview.setOnQRCodeReadListener(this);
-    }
+  public static void start(Context context, String module, String tpl_id) {
+    Intent starter = new Intent(context, QRActivity.class);
+    starter.putExtra(LINK_MODULE, module);
+    starter.putExtra(CARD_TPL_ID, tpl_id);
+    context.startActivity(starter);
+  }
 
-    @OnClick(R.id.btn_next) public void onClickNext() {
-        new RxPermissions(this).request(Manifest.permission.CAMERA).subscribe(new Action1<Boolean>() {
-            @Override public void call(Boolean aBoolean) {
-                if (aBoolean) {
-                    layoutNext.setVisibility(View.GONE);
-                    qrdecoderview = new QRCodeReaderView(QRActivity.this);
-                    rootView.addView(qrdecoderview, 0,
-                        new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    qrdecoderview.setOnQRCodeReadListener(QRActivity.this);
-                    qrdecoderview.getCameraManager().startPreview();
-                    toolbarTitile.setText("扫码二维码");
-                } else {
-                    ToastUtils.show("请打开摄像头权限");
-                }
-            }
-        });
-    }
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_qr);
+    ButterKnife.bind(this);
+    View v = new View(this);
+    v.setBackgroundResource(R.color.toolbar);
+    //rootView.addView(v,0,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+    //    MeasureUtils.getStatusBarHeight(this)));
+    toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
+    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        finish();
+      }
+    });
+    toolbarTitile.setText("在电脑中使用该功能");
+    tvQrCodeUrl.setText(BuildConfig.DEBUG ? getResources().getString(R.string.scan_url_test)
+        : getResources().getString(R.string.scan_url));
+    //        qrdecoderview.setOnQRCodeReadListener(this);
+  }
 
-    @Override protected void onResume() {
-        super.onResume();
-        if (done.getVisibility() == View.GONE && layoutNext.getVisibility() == View.GONE && qrdecoderview != null) {
-            qrdecoderview.getCameraManager().startPreview();
+  @OnClick(R.id.btn_next) public void onClickNext() {
+    new RxPermissions(this).request(Manifest.permission.CAMERA).subscribe(new Action1<Boolean>() {
+      @Override public void call(Boolean aBoolean) {
+        if (aBoolean) {
+          layoutNext.setVisibility(View.GONE);
+          qrdecoderview = new QRCodeReaderView(QRActivity.this);
+          rootView.addView(qrdecoderview, 0,
+              new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                  ViewGroup.LayoutParams.MATCH_PARENT));
+          qrdecoderview.setOnQRCodeReadListener(QRActivity.this);
+          qrdecoderview.getCameraManager().startPreview();
+          toolbarTitile.setText("扫码二维码");
+        } else {
+          ToastUtils.show("请打开摄像头权限");
         }
+      }
+    });
+  }
+
+  @Override protected void onResume() {
+    super.onResume();
+    if (done.getVisibility() == View.GONE
+        && layoutNext.getVisibility() == View.GONE
+        && qrdecoderview != null) {
+      qrdecoderview.getCameraManager().startPreview();
+    }
+  }
+
+  @Override protected void onPause() {
+    super.onPause();
+    if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
+  }
+
+  @Override protected void onDestroy() {
+    if (sp != null) sp.unsubscribe();
+    super.onDestroy();
+  }
+
+  @Override public void onQRCodeRead(final String text, PointF[] points) {
+    if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
+    final String session = PreferenceUtils.getPrefString(this, Configs.PREFER_SESSION, "");
+    String url = "";
+    if (getIntent() != null && getIntent().hasExtra(LINK_MODULE)) {
+      url = getBaseContext().getResources()
+          .getString(R.string.qr_code_2web, Configs.Server, gymWrapper.brand_id(),
+              gymWrapper.shop_id(), getIntent().getStringExtra(LINK_MODULE));
+    } else if (getIntent() != null && getIntent().hasExtra(LINK_URL)) {
+      url = getIntent().getStringExtra(LINK_URL);
     }
 
-    @Override protected void onPause() {
-        super.onPause();
-        if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
-    }
-
-    @Override protected void onDestroy() {
-        if (sp != null) sp.unsubscribe();
-        super.onDestroy();
-    }
-
-    @Override public void onQRCodeRead(final String text, PointF[] points) {
-        if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
-        final String session = PreferenceUtils.getPrefString(this, Configs.PREFER_SESSION, "");
-        sp = restRepository.getPost_api().qcScans(text, new ScanBody.Builder().url(getIntent().getStringExtra(LINK_URL)).session_id(session)
+    sp = restRepository.createPostApi(Post_Api.class)
+        .qcScans(text, new ScanBody.Builder().url(url).session_id(session)
             //                .module(getIntent().getStringExtra(LINK_MODULE))
             //                .brand_id(getIntent().getStringExtra("brand_id"))
             //                .shop_id(getIntent().getStringExtra("shop_id"))
             .build())
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Subscriber<QcResponse>() {
-            @Override public void onCompleted() {
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Subscriber<QcResponse>() {
+          @Override public void onCompleted() {
 
+          }
+
+          @Override public void onError(Throwable e) {
+
+          }
+
+          @Override public void onNext(QcResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              RxBus.getBus().post(new OnBackEvent());
+              done.setVisibility(View.VISIBLE);
+              toolbarTitile.setText("扫码成功");
+            } else {
+              new AlertDialogWrapper.Builder(QRActivity.this).setTitle(R.string.err_sacn_qrcode)
+                  .setPositiveButton(R.string.common_comfirm,
+                      new DialogInterface.OnClickListener() {
+                        @Override public void onClick(DialogInterface dialogInterface, int i) {
+                          if (qrdecoderview != null) {
+                            qrdecoderview.getCameraManager().startPreview();
+                            toolbarTitile.setText("扫码二维码");
+                          }
+                        }
+                      })
+                  .show();
             }
-
-            @Override public void onError(Throwable e) {
-
-            }
-
-            @Override public void onNext(QcResponse qcResponse) {
-                if (ResponseConstant.checkSuccess(qcResponse)) {
-                    done.setVisibility(View.VISIBLE);
-                    toolbarTitile.setText("扫码成功");
-                } else {
-                    new AlertDialogWrapper.Builder(QRActivity.this).setTitle(R.string.err_sacn_qrcode)
-                        .setPositiveButton(R.string.common_comfirm, new DialogInterface.OnClickListener() {
-                            @Override public void onClick(DialogInterface dialogInterface, int i) {
-                                if (qrdecoderview != null) {
-                                    qrdecoderview.getCameraManager().startPreview();
-                                    toolbarTitile.setText("扫码二维码");
-                                }
-                            }
-                        })
-                        .show();
-                }
-            }
+          }
         });
-    }
+  }
 
-    @Override public void cameraNotFound() {
+  @Override public void cameraNotFound() {
 
-    }
+  }
 
-    @Override public void QRCodeNotFoundOnCamImage() {
+  @Override public void QRCodeNotFoundOnCamImage() {
 
-    }
+  }
 }

@@ -7,7 +7,7 @@
   <color name="danger_red_normal">#EA6161</color>
   <color name="danger_red_pressed">#D25757</color>
   <color name="danger_red_disable">#F6BFBF</color>
-  
+
   <color name="success_green">#58B87A</color>
 
   <color name="colorSetBg">#838B86</color>
@@ -68,7 +68,7 @@
 
   <color name="grey_student_info">#777777</color>
 
-  <color name="bg_orange">#33f9944e</color>
+
   <color name="reddish_orange">#f9601e</color>
   <color name="orange_yellow">#fc9e00</color>
   <color name="golden_yellow">#fbc822</color>
@@ -96,7 +96,6 @@
   <color name="white_two">#f4f4f4</color>
   <color name="shamrock_green">#0db14b</color>
   <color name="black">#000000</color>
-  <color name="black_a_20">#33000000</color>
 
   <!-- Fonts -->
   <color name="month_title">@color/text_black</color>
@@ -116,8 +115,6 @@
   <color name="private_color">#7986cb</color>
   <color name="colorPrimarytrans">#110db14b</color>
   <color name="text_link">#6EB8F1</color>
-
-  <color name="pos_login_bg">#242424</color>
 
 
 </resources>

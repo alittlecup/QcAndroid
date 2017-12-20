@@ -3,8 +3,6 @@ package com.tencent.qcloud.timchat.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
-
 import com.tencent.qcloud.timchat.chatmodel.GroupInfo;
 import com.tencent.qcloud.timchat.chatmodel.UserInfo;
 import com.tencent.qcloud.timchat.event.MessageEvent;
@@ -38,6 +36,32 @@ public class AppData {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putString(Configs.VALUE_AVATAR, avatar);
         applyCompat(editor);
+    }
+
+    //传入会话列表头像
+    public static void putConversationAvatar(Context context, String key, String avatar){
+        SharedPreferences.Editor editor =
+            context.getSharedPreferences(Configs.PREFRENCE_CONVERSATION_AVATAR, 0).edit();
+        editor.putString(key, avatar);
+        applyCompat(editor);
+    }
+
+    public static String getConversationAvatar(Context context, String key){
+        return context.getSharedPreferences(Configs.PREFRENCE_CONVERSATION_AVATAR, 0)
+            .getString(key, "");
+    }
+
+    //传入会话列表名称
+    public static void putConversationName(Context context, String key, String avatar){
+        SharedPreferences.Editor editor =
+            context.getSharedPreferences(Configs.PREFRENCE_CONVERSATION_NAME, 0).edit();
+        editor.putString(key, avatar);
+        applyCompat(editor);
+    }
+
+    public static String getConversationName(Context context, String key){
+        return context.getSharedPreferences(Configs.PREFRENCE_CONVERSATION_NAME, 0)
+            .getString(key, "");
     }
 
     //TODO 返回默认头像

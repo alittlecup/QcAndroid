@@ -139,14 +139,14 @@ public class ResumeHome extends Resume implements Parcelable {
 
   public boolean checkResumeCompleted(){
     return
-        CmStringUtils.isEmpty(username)
-        && CmStringUtils.isEmpty(birthday)
-        && CmStringUtils.isEmpty(avatar)
-        && height == 0
-        && weight == 0
+        !CmStringUtils.isEmpty(username)
+        && !CmStringUtils.isEmpty(birthday)
+        && !CmStringUtils.isEmpty(avatar)
+        && height != 0
+        && weight != 0
         && gd_district != null
         && work_year != -1
-        && CmStringUtils.isEmpty(brief_description)
+        && !CmStringUtils.isEmpty(brief_description)
         && min_salary != null
         && max_salary != null
         && exp_jobs != null && exp_jobs.size() > 0

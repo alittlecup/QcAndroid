@@ -32,6 +32,7 @@ import cn.qingchengfit.staffkit.views.adapter.MutiImageTwoTextAdapter;
 import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.StringUtils;
@@ -161,6 +162,10 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
                         if (b.showRight) {
                             pos.add(mShops.get(i));
                         }
+                    }
+                    if (pos.size() <= 0){
+                        DialogUtils.showAlert(getContext(), "至少选择一家场馆");
+                        return true;
                     }
                     Intent result = new Intent();
                     result.putParcelableArrayListExtra(IntentUtils.RESULT, pos);

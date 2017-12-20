@@ -87,6 +87,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_edit_creator, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (brand != null) {
+
             mCallbackActivity.setToolbar("修改创建人", false, null, R.menu.menu_comfirm, new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
                     if (TextUtils.isEmpty(name.getContent())) {
@@ -110,8 +111,9 @@ public class BrandCreatorEditFragment extends BaseFragment {
                                     hideLoading();
                                     if (ResponseConstant.checkSuccess(qcResponse)) {
                                         ToastUtils.show("修改成功");
-                                        getFragmentManager().popBackStack(BrandManageFragment.TAG,
-                                            FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                        getActivity().getSupportFragmentManager()
+                                            .popBackStack(BrandManageFragment.TAG,
+                                                FragmentManager.POP_BACK_STACK_INCLUSIVE);
                                     } else {
                                         ToastUtils.show("修改失败");
                                     }

@@ -13,15 +13,17 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.Login;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.App;
+import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
+import cn.qingchengfit.staffkit.constant.Get_Api;
+import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
-import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
 import cn.qingchengfit.staffkit.usecase.LoginUsecase;
 import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
@@ -56,9 +58,7 @@ public class LoginPresenter extends BasePresenter {
     public static final String TAG = LoginPresenter.class.getSimpleName();
     @Inject GymWrapper gymWrapper;
     @Inject LoginStatus loginStatus;
-    @Inject RestRepository mRestRepository;
-    @Inject QcDbManager qcDbManager;
-    @Inject StudentAction studentAction;
+    @Inject QcRestRepository mRestRepository;
     private LoginView mLoginView;
     private Context mContext;
     private LoginUsecase loginUsecase;
@@ -78,6 +78,9 @@ public class LoginPresenter extends BasePresenter {
 
     @Override public void onPause() {
 
+    }
+    public void setContext(Context context){
+        mContext = context;
     }
 
     @Override public void attachView(cn.qingchengfit.di.PView v) {
@@ -114,7 +117,7 @@ public class LoginPresenter extends BasePresenter {
                     App.staffId = qcResponLogin.data.staff.getId();
                     PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, qcResponLogin.data.staff.getUsername());
                     PreferenceUtils.setPrefString(App.context, Configs.PREFER_USER_ID, qcResponLogin.getData().user.getId());
-                    studentAction.delAllStudent();
+                    StudentAction.newInstance().delAllStudent();
                     mLoginView.onShowLogining();
                     getService(qcResponLogin);
                 } else {
@@ -123,25 +126,26 @@ public class LoginPresenter extends BasePresenter {
             }
         }, new Action1<Throwable>() {
             @Override public void call(Throwable throwable) {
-                //mLoginView.cancelLogin();
+                mLoginView.cancelLogin();
                 ToastUtils.show("系统维护中...请稍后再试");
             }
         });
     }
 
   private void initIM() {
-    Constant.setAccountType(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 12162 : 12165);
-    Constant.setSdkAppid(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 1400029014 : 1400029022);
-    Constant.setXiaomiPushAppid("2882303761517568688");
-    Constant.setBussId(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 609 : 604);
-    Constant.setXiaomiPushAppkey("5651756859688");
-    Constant.setHuaweiBussId(606);
-    Constant.setUsername("qctest_" + loginStatus.getUserId());
-    Constant.setHost(Uri.parse(Configs.Server).getHost());
+      Constant.setAccountType(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 12162 : 12165);
+      Constant.setSdkAppid(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 1400029014 : 1400029022);
+      Constant.setXiaomiPushAppid("2882303761517568688");
+      Constant.setBussId(cn.qingchengfit.widgets.BuildConfig.DEBUG ? 609 : 604);
+      Constant.setXiaomiPushAppkey("5651756859688");
+      Constant.setHuaweiBussId(606);
+      Constant.setUsername(
+          mContext.getResources().getString(R.string.chat_user_id_header, loginStatus.getUserId()));
+      Constant.setHost(Uri.parse(Configs.Server).getHost());
   }
 
     public void getService(final QcDataResponse<Login> qcResponLogin) {
-        spGetSer = mRestRepository.getGet_api()
+        spGetSer = mRestRepository.createGetApi(Get_Api.class)
             .qcGetCoachService(App.staffId, null)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -157,7 +161,7 @@ public class LoginPresenter extends BasePresenter {
                         loginStatus.setUserId(qcResponLogin.data.user.getId());
 
                         List<CoachService> services = gymListQcResponseData.getData().services;
-                        qcDbManager.writeGyms(services);
+                        QCDbManager.writeGyms(services);
                         if (services == null || services.size() == 0) {
                             gymWrapper.setNoService(true);
                         } else if (services.size() == 1) {
