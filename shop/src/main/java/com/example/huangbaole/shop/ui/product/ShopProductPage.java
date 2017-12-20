@@ -20,6 +20,11 @@ public class ShopProductPage extends ShopBaseFragment<PageShopProductBinding,Sho
   public PageShopProductBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     mBinding=PageShopProductBinding.inflate(inflater,container,false);
-    return null;
+    initViewPager();
+    return mBinding;
+  }
+
+  private void initViewPager() {
+    
   }
 }

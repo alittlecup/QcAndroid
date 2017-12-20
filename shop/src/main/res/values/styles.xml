@@ -5,4 +5,13 @@
     <!-- Customize your theme here. -->
   </style>
 
+  <style name="QcSwitchLayout" >
+    <item name="app:sw_text_color">#333</item>
+    <item name="app:sw_open">false</item>
+    <item name="app:sw_showdivier">true</item>
+    <item name="android:layout_height">@dimen/dimen_common_input_60dp</item>
+    <item name="android:layout_width">match_parent</item>
+
+  </style>
+
 </resources>

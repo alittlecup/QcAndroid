@@ -1,5 +1,6 @@
 package com.example.huangbaole.shop.ui.home.productlist;
 
+import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
 import com.example.huangbaole.shop.base.ShopBaseViewModel;
 import javax.inject.Inject;
 
@@ -8,7 +9,15 @@ import javax.inject.Inject;
  */
 
 public class ShopProductsViewModel extends ShopBaseViewModel {
+  public ActionLiveEvent getProductEvent() {
+    return productEvent;
+  }
 
+  private final ActionLiveEvent productEvent=new ActionLiveEvent();
   @Inject
   public ShopProductsViewModel(){}
+
+  public void onAddProductCall(){
+    productEvent.call();
+  }
 }

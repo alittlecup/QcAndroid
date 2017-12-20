@@ -9,6 +9,8 @@ import javax.inject.Inject;
 
 public class ShopProductViewModel extends ShopBaseViewModel {
 
+
   @Inject public ShopProductViewModel() {
   }
+
 }

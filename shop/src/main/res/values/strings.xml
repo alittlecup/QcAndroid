@@ -16,6 +16,8 @@
   <string name="inventory">库存</string>
   <string name="total_count">总共</string>
   <string name="category_default">常规</string>
+  <string name="back_shop_home">回到首页</string>
+  <string name="continue_add">继续添加</string>
 
   <!--product-->
   <string name="add_product_date">添加时间：%</string>
@@ -23,6 +25,42 @@
   <string name="add_product">添加商品</string>
   <string name="search_product">搜索店内商品</string>
   <string name="product_empty_text">暂无出售中商品，赶快去添加吧～</string>
+  <string name="input_product_name">请填写商品名称</string>
+  <string name="input_product_unit">请填写商品单位</string>
+  <string name="input_product_price">请填写商品价格</string>
+  <string name="input_product_inventory">请填写商品库存</string>
+  <string name="input_product_category">请填写商品型号</string>
+  <string name="product_desc">商品描述</string>
+  <string name="category_to">分类至</string>
+  <string name="not_category">未分类</string>
+  <string name="input_product_weight">请填写商品权重</string>
+
+  <string name="product_pay_channal">支付方式</string>
+  <string name="product_pay_online">线上支付</string>
+  <string name="product_pay_offline">线下支付</string>
+  <string name="product_pay_card">会员卡支付</string>
+
+
+  <string name="product_pay_card_prices">会员卡支付价格</string>
+  <string name="product_pay_online_prices">在线支付价格</string>
+  <string name="product_pay_offline_prices">线下支付价格</string>
+
+
+
+  <string name="product_name">商品名称</string>
+  <string name="product_unit">单位</string>
+  <string name="product_onsale">商品上架成功！</string>
+  <string name="product_onsave">商品保存成功！</string>
+  <string name="product_offsale_status">商品当前状态为[已下架]</string>
+  <string name="product_onsave_status">商品当前状态为[出售中]</string>
+  <string name="product_only_save">仅保存</string>
+  <string name="product_save_sale">保存并上架</string>
+  <!--//TODO 修改命名-->
+  <string name="product_deliver_channal">交货方式</string>
+  <string name="deliver_onsale">馆内购买</string>
+  <string name="deliver_by_self">自取</string>
+  <string name="deliver_send">配送</string>
+
 
 
   <!--category-->

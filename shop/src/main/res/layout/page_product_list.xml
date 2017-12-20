@@ -7,6 +7,9 @@
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+    <variable
+        name="viewModel"
+        type="com.example.huangbaole.shop.ui.home.productlist.ShopProductsViewModel"/>
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
@@ -82,6 +85,7 @@
         style="@style/QcTextStyleLargeDark"
         android:textColor="@color/colorPrimary"
         android:gravity="center"
+        android:onClick="@{()->viewModel.onAddProductCall()}"
         android:drawableLeft="@drawable/product_add"
         android:text="@string/add_product"
         />

@@ -1,11 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
   <data>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
   </data>
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:orientation="vertical"
+  <ScrollView
+      xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/red"
+        android:orientation="vertical"
+        >
+      <include
+          layout="@layout/common_simple_toolbar"
+          android:id="@+id/include_toolbar"
+          bind:toolbarModel="@{toolbarModel}"
+          />
+      <!--<com.tmall.ultraviewpager.UltraViewPager-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="190dp"-->
+      <!--android:background="@color/colorPrimary"-->
+      <!--/>-->
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="190dp"
+          android:background="@color/colorPrimary"
+          />
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/product_name"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          android:background="@color/colorPrimary"
+          app:civ_hint="@string/input_product_name"
+          app:civ_lable="@string/product_name"
+          style="@style/QcCivInputStyle"
+          />
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/product_unit"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          android:background="@color/colorPrimary"
+          app:civ_hint="@string/input_product_unit"
+          app:civ_lable="@string/product_unit"
+          style="@style/QcCivInputStyle"
+          />
 
-  </LinearLayout>
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/product_pay_way"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          android:layout_marginTop="14dp"
+          android:background="@color/colorPrimary"
+          app:civ_lable="@string/product_pay_channal"
+          style="@style/QcCivClickStyle"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/product_desc"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          android:layout_marginTop="14dp"
+          android:background="@color/colorPrimary"
+          app:civ_hint=""
+          app:civ_lable="@string/product_desc"
+          style="@style/QcCivClickStyle"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/product_cetefory"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          android:background="@color/colorPrimary"
+          app:civ_hint="@string/not_category"
+          app:civ_lable="@string/category_to"
+          style="@style/QcCivClickStyle"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/product_weight"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          android:background="@color/colorPrimary"
+          app:civ_hint="@string/input_product_weight"
+          app:civ_lable="@string/weight"
+          style="@style/QcCivInputStyle"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/product_deliver"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          android:layout_marginTop="14dp"
+          android:background="@color/colorPrimary"
+          app:civ_hint=""
+          app:civ_lable="@string/product_deliver_channal"
+          style="@style/QcCivClickStyle"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:layout_marginTop="26dp"
+          android:layout_marginBottom="37dp"
+          android:orientation="horizontal"
+          >
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/product_only_save"
+            style="@style/QcBtnPrimaryFrame"
+            />
+        <Space
+            android:layout_width="15dp"
+            android:layout_height="1dp"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/product_save_sale"
+            style="@style/QcBtnPrimary"
+            />
+
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
 </layout>
