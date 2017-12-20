@@ -3,7 +3,6 @@ package cn.qingchengfit.saasbase.repository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
-import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchCoachListWrap;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchCourseListWrap;
@@ -94,7 +93,7 @@ public interface ICourseModel {
 
   //删除排期 多条schedule
   rx.Observable<QcDataResponse> qcDelBatchSchedule(boolean isPrivate,
-    @Body DelBatchScheduleBody body);
+     String ids);
 
   /**
    * 获取某一条排期的详情

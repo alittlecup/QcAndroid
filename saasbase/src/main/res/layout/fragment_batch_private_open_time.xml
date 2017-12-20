@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+  >
+  <data />
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <include layout="@layout/common_simple_toolbar"/>
+    <cn.qingchengfit.widgets.CommonInputView
+        style="@style/QcCivClickStyle"
+        android:id="@+id/civ_start_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="@string/start_time"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        style="@style/QcCivClickStyle"
+        android:id="@+id/civ_end_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="@string/end_time"
+        />
+    <cn.qingchengfit.widgets.CommonInputView
+        style="@style/QcCivClickStyle"
+        android:id="@+id/civ_interval_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="@string/course_order_interval"
+        />
+
+  </LinearLayout>
+
+</layout>

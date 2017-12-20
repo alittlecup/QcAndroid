@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
-import eu.davidea.flexibleadapter.items.IFlexible;
 import javax.inject.Inject;
 
 /**
@@ -94,15 +92,5 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
     return null;
   }
 
-  @Override public boolean onItemClick(int i) {
-      IFlexible item = commonFlexAdapter.getItem(i);
-      if (item == null) return true;
-      if (item instanceof BatchCateItem){
-        routeTo("/batch/edit/",new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams()
-          .batchId(((BatchCateItem) item).getId())
-          .build()
-        );
-      }
-    return true;
-  }
+
 }

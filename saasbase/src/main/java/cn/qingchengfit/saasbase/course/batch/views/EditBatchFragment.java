@@ -25,12 +25,14 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
+import cn.qingchengfit.saasbase.course.batch.items.CmLRTxt90Item;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchEditPresenter;
 import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
 import cn.qingchengfit.saasbase.items.CmLRTxtItem;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -82,6 +84,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   @Inject BatchEditPresenter presenter;
   CommonFlexAdapter commonFlexAdapter;
   @Need public String batchId;
+  @Need public Boolean isPrvite = false;
 
   private BatchDetailCommonView batchBaseFragment;
   private TimeDialogWindow timeWindow;
@@ -99,7 +102,15 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter,this);
     presenter.setBatchId(batchId);
+    presenter.setPrivate(isPrvite);
     initView();
+    RxBusAdd(Time_repeat.class)
+      .onBackpressureDrop()
+      .subscribe(new BusSubscribe<Time_repeat>() {
+        @Override public void onNext(Time_repeat time_repeat) {
+          commonFlexAdapter.updateItem(new CmLRTxt90Item(time_repeat));
+        }
+      });
     return view;
   }
 
@@ -137,6 +148,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   @OnClick(R2.id.btn_all_schedule) public void onBtnAllScheduleClicked() {
     routeTo("/batch/schedule/list/",new cn.qingchengfit.saasbase.course.batch.views.BatchScheduleListParams()
       .batchId(presenter.getBatchId())
+      .isPrivate(presenter.isPrivate())
       .build());
   }
 
@@ -145,7 +157,10 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
    * 删除当前批次
    */
   @OnClick(R2.id.btn_del) public void onBtnDelClicked() {
-    presenter.delBatch();
+    DialogUtils.instanceDelDialog(getContext(), "是否确认删除当前排课？", (dialog, which) -> {
+      presenter.delBatch();
+    }).show();
+
   }
 
   @Override public void onSuccess() {
@@ -168,18 +183,26 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     else inflateBatchInfo(batchDetail);
 
     if (batchDetail.time_repeats != null){
-      List<CmLRTxtItem> items = new ArrayList<>();
+      List<IFlexible> items = new ArrayList<>();
       for (Time_repeat time_repeat : batchDetail.time_repeats) {
-        time_repeat.setPrivate(batchDetail.course.is_private);
-        items.add(new CmLRTxtItem(time_repeat));
+        time_repeat.setPrivate(presenter.isPrivate());
+        items.add(generateRepeatItem(time_repeat));
       }
       commonFlexAdapter.updateDataSet(items);
     }
   }
+
+  private IFlexible generateRepeatItem(Time_repeat tr){
+    if (presenter.isPrivate()){
+      return new CmLRTxt90Item(tr);
+    }else
+      return new CmLRTxtItem(tr);
+  }
+
   private void inflateBatchInfo(BatchDetail batchDetail){
     batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
     batchBaseFragment.openPayOnline(!batchDetail.is_free);
-    batchBaseFragment.setSpace(batchDetail.spaces);
+    batchBaseFragment.setSpace(batchDetail.getSpaces());
     batchBaseFragment.setRules(batchDetail.rule, (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
   }
 
@@ -223,6 +246,17 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     return batchBaseFragment.getRules();
   }
 
+  @Override public ArrayList<Time_repeat> getTimeRepeats() {
+    ArrayList<Time_repeat> tp = new ArrayList<>();
+    for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
+      IFlexible item = commonFlexAdapter.getItem(i);
+      if (item instanceof CmLRTxtItem ){
+        tp.add(((Time_repeat)((CmLRTxtItem) item).getData()));
+      }
+    }
+    return tp;
+  }
+
   @Override public int suportMemberNum() {
     return batchBaseFragment.getOrderStudentCount();
   }
@@ -241,17 +275,16 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     if (item instanceof CmLRTxtItem){
       //根据课程类型 弹窗-修改时间
       if (!presenter.isPrivate()) {
+        //团课
         if (timeWindow == null) {
           timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
         }
-        timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
-          @Override public void onTimeSelect(Date date) {
-            if (((CmLRTxtItem) item).getData() instanceof Time_repeat) {
-              Time_repeat tr = (Time_repeat) ((CmLRTxtItem) item).getData();
-              tr.setStart(DateUtils.getTimeHHMM(date));
-              ((CmLRTxtItem) item).setCmLRTxt(tr);
-              commonFlexAdapter.notifyItemChanged(position);
-            }
+        timeWindow.setOnTimeSelectListener(date -> {
+          if (((CmLRTxtItem) item).getData() instanceof Time_repeat) {
+            Time_repeat tr = (Time_repeat) ((CmLRTxtItem) item).getData();
+            tr.setStart(DateUtils.getTimeHHMM(date));
+            ((CmLRTxtItem) item).setCmLRTxt(tr);
+            commonFlexAdapter.notifyItemChanged(position);
           }
         });
         Date d = new Date();
@@ -261,33 +294,8 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
         }
         timeWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
       } else {
-        if (timeDialogWindow == null) {
-          timeDialogWindow =
-            new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
-        }
-        timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
-          @Override public void onTimeSelect(Date start, Date end) {
-            if (start.getTime() >= end.getTime()) {
-              ToastUtils.showDefaultStyle("开始时间不能小于结束时间");
-              return;
-            }
-            if (((CmLRTxtItem) item).getData() instanceof Time_repeat) {
-              Time_repeat tr = (Time_repeat) ((CmLRTxtItem) item).getData();
-              tr.setStart(DateUtils.getTimeHHMM(start));
-              tr.setEnd(DateUtils.getTimeHHMM(end));
-              commonFlexAdapter.notifyItemChanged(position);
-            }
-          }
-        });
-        Date s = new Date();
-        Date e = new Date();
-        if (((CmLRTxtItem) item).getData() instanceof Time_repeat) {
-          Time_repeat tr = (Time_repeat) ((CmLRTxtItem) item).getData();
-          s = DateUtils.getDateFromHHmm(tr.getStart());
-          e = DateUtils.getDateFromHHmm(tr.getEnd());
-        }
-        timeDialogWindow.setTime(s, e);
-        timeDialogWindow.showAtLocation();
+        //私教
+        EditPrivateOpenTimeFragment.newInstance((Time_repeat) ((CmLRTxtItem) item).getData()).show(getChildFragmentManager(),EditPrivateOpenTimeFragment.class.getSimpleName());
       }
     }
     return true;

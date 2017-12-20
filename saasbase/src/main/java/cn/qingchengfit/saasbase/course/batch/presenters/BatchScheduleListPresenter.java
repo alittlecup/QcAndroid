@@ -43,27 +43,41 @@ public class BatchScheduleListPresenter extends BasePresenter<BatchScheduleListP
 
   public void queryList() {
     RxRegiste(courseModel.qcGetbatchSchedules(batchId, isPrivate)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new NetSubscribe<QcDataResponse<BatchSchedulesWrap>>() {
-          @Override public void onNext(QcDataResponse<BatchSchedulesWrap> qcResponse) {
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              mvpView.onList(isPrivate?qcResponse.data.timetables:qcResponse.data.schedules);
-            } else {
-              mvpView.onShowError(qcResponse.getMsg());
-            }
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<BatchSchedulesWrap>>() {
+        @Override public void onNext(QcDataResponse<BatchSchedulesWrap> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            mvpView.onList(isPrivate ? qcResponse.data.timetables : qcResponse.data.schedules);
+          } else {
+            mvpView.onShowError(qcResponse.getMsg());
           }
-        }));
+        }
+      }));
   }
 
-  public void del(){
+  public void del() {
+    RxRegiste(courseModel.qcDelBatchSchedule(isPrivate, mvpView.getDelIds())
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+          } else {
+            mvpView.onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
 
   }
-
 
   public interface MVPView extends CView {
     void onList(List<BatchSchedule> list);
+
     void onSuccess();
+    String getDelIds();
+
   }
 }

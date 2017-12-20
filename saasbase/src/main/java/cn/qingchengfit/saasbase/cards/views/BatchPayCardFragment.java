@@ -77,7 +77,7 @@ import javax.inject.Inject;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_batch_pay_by_cards, container, false);
+    View view = inflater.inflate(R.layout.fragment_saas_batch_pay_by_cards, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     toolbar = view.findViewById(R.id.toolbar);
@@ -93,7 +93,7 @@ import javax.inject.Inject;
     }
     recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     recyclerview.setAdapter(commonFlexAdapter);
-
+    onRefresh();
     return view;
   }
 
@@ -181,6 +181,8 @@ import javax.inject.Inject;
 
   public void onGetData(List<CardTpl> card_tpls) {
     srl.setRefreshing(false);
+    mDatas.clear();
+    commonFlexAdapter.clear();
     if (card_tpls != null) {
       if (cardTplBatchShips != null) {
         for (int i = 0; i < cardTplBatchShips.size(); i++) {

@@ -20,13 +20,11 @@ import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
-import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -40,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -126,11 +123,21 @@ public class CourseListFragment extends SaasBaseFragment
 
 
   @Override public boolean onItemClick(int position) {
+    IFlexible iFlexible = commonFlexAdapter.getItem(position);
+    if (iFlexible == null) return true;
+    if (iFlexible instanceof CourseItem){
+
+      routeTo("/detail/",new CourseDetailParams()
+        .mCourseDetail(((CourseItem) iFlexible).courseDetail)
+        .build());
+    }
+
+
     return true;
   }
 
   @OnClick(R2.id.add_course_btn) public void onViewClicked() {
-    //saasRouter.routerTo(mIsPrivate ? CourseUri.COURSE_TYPE_GROUP_ADD:CourseUri.COURSE_TYPE_PRIVATE_ADD);
+    //routeTo("");
   }
 
   @Override public void onRefresh() {
@@ -138,23 +145,21 @@ public class CourseListFragment extends SaasBaseFragment
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<QcDataResponse<CourseLisWrap>>() {
-          @Override public void call(QcDataResponse<CourseLisWrap> qcResponse) {
-            srl.setRefreshing(false);
-            if (ResponseConstant.checkSuccess(qcResponse)) {
-              if (qcResponse.data != null && qcResponse.data.courses != null) {
-                List<IFlexible> datas = new ArrayList<IFlexible>();
-                for (CourseType course : qcResponse.data.courses) {
-                  datas.add(new CourseItem(course));
-                }
-                if (datas.size() == 0) {
-                  datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程种类"));
-                }
-                commonFlexAdapter.updateDataSet(datas,true);
+        .subscribe(qcResponse -> {
+          srl.setRefreshing(false);
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            if (qcResponse.data != null && qcResponse.data.courses != null) {
+              List<IFlexible> datas = new ArrayList<IFlexible>();
+              for (CourseType course : qcResponse.data.courses) {
+                datas.add(new CourseItem(course));
               }
-            } else {
-              onShowError(qcResponse.getMsg());
+              if (datas.size() == 0) {
+                datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程种类"));
+              }
+              commonFlexAdapter.updateDataSet(datas,true);
             }
+          } else {
+            onShowError(qcResponse.getMsg());
           }
         }, new NetWorkThrowable()));
   }

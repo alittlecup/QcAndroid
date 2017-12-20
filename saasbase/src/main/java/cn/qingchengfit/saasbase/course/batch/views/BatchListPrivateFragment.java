@@ -10,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.items.TitleHintItem;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresenter;
+import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -67,16 +70,40 @@ import javax.inject.Inject;
             new AdapterView.OnItemClickListener() {
               @Override
               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: 2017/9/11 跳转响应页面
                 switch (position) {
-                  case 1://课程预约限制
-                    break;
-                  case 2://预约短信通知
-                    break;
-                  case 3://课件
-                    break;
-                  default://课程种类
-                    break;
+                    case 1://课程预约限制
+                      /**
+                       * 预约限制 {@link OrderLimitFragment}
+                       */
+                      if (!serPermisAction.check(PermissionServerUtils.TEAM_COURSE_LIMIT)) {
+                        showAlert(R.string.sorry_for_no_permission);
+                        return;
+                      }
+                      routeTo("gym","/orderlimit/",null);
+                      break;
+                    case 2://预约短信通知
+                      /**
+                       * 短信通知{@link MsgNotiFragment}
+                       */
+                      if (!serPermisAction.check(PermissionServerUtils.TEAM_COURSE_MSG_SETTING)) {
+                        showAlert(R.string.sorry_for_no_permission);
+                        return;
+                      }
+                      routeTo("gym","/msgnoti/",null);
+                      break;
+                    case 3://课件
+                      /**
+                       * 课件
+                       */
+                      if (!serPermisAction.check(PermissionServerUtils.PLANSSETTING)) {
+                        showAlert(R.string.sorry_for_no_permission);
+                        return;
+                      }
+                      QRActivity.start(getContext(), QRActivity.PLANS_SETTING_GROUP );
+                      break;
+                    default://课程种类
+                      routeTo("/list/",new CourseListParams().mIsPrivate(true).build());
+                      break;
                 }
               }
             })
@@ -87,6 +114,7 @@ import javax.inject.Inject;
   }
 
   @Override public void onRefresh() {
+    srl.setRefreshing(true);
     privatePresenter.getBatchList();
   }
 
@@ -110,6 +138,7 @@ import javax.inject.Inject;
         data.add(new BatchItem(coach));
       }
       data.add(new TitleHintItem("如何添加团课排期"));
+      commonFlexAdapter.updateDataSet(data, true);
     }
   }
 }

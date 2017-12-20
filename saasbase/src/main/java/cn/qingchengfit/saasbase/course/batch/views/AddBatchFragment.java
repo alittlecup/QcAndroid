@@ -29,6 +29,7 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
+import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
 import cn.qingchengfit.saasbase.course.batch.items.BatchLoopItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.AddBatchPresenter;
 import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
@@ -99,40 +100,6 @@ import rx.android.schedulers.AndroidSchedulers;
     @Override public boolean onMenuItemClick(MenuItem item) {
       presenter.buildBody();
       presenter.checkBatch();
-      //body.open_rule = presenter.getBatchOpenRule();
-      //
-      //if (body.max_users != Integer.valueOf(orderSutdentCount.getContent())
-      //    && !isChangeCardPay
-      //    && cardRules != null
-      //    && cardRules.size() > 0) {
-      //  showAlert("会员卡结算未填写完整");
-      //  return true;
-      //}
-      //body.max_users = Integer.valueOf(orderSutdentCount.getContent());
-      //body.is_free = !swNeedPay.isChecked();
-      //
-      //try {
-      //  body.max_users = Integer.parseInt(orderSutdentCount.getContent());
-      //} catch (Exception e) {
-      //  body.max_users = 8;
-      //}
-      //if (!body.is_free) {
-      //  if (body.rules == null) body.rules = new ArrayList<>();
-      //  body.rules.clear();
-      //  body.rules.addAll(cardRules);
-      //  if (rulePayOnline != null) {
-      //    rulePayOnline.to_number = body.max_users + 1;
-      //    body.rules.add(rulePayOnline);
-      //  }
-      //}
-      //body.from_date = starttime.getContent();
-      //body.to_date = endtime.getContent();
-      //body.time_repeats = BatchLoop.geTimeRepFromBean(datas);
-      //if (body.time_repeats == null || body.time_repeats.size() == 0) {
-      //  ToastUtils.show("请添加课程周期");
-      //  return true;
-      //}
-
       return true;
     }
   };
@@ -313,6 +280,10 @@ import rx.android.schedulers.AndroidSchedulers;
 
   @Override public List<Rule> getRules() {
     return batchBaseFragment.getRules();
+  }
+
+  @Override public ArrayList<Time_repeat> getTimeRepeats() {
+    return null;
   }
 
   @Override public int suportMemberNum() {

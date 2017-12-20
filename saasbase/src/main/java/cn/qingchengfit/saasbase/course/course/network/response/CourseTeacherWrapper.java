@@ -2,7 +2,7 @@ package cn.qingchengfit.saasbase.course.course.network.response;
 
 import cn.qingchengfit.saasbase.course.course.bean.CourseTeacher;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
-import cn.qingchengfit.saasbase.network.model.Shop;
+import cn.qingchengfit.model.base.Shop;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 

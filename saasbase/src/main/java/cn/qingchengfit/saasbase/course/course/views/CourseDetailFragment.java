@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.course.course.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -41,6 +40,7 @@ import cn.qingchengfit.widgets.RatingBarVectorFix;
 import co.hkm.soltag.TagContainerLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -73,23 +73,9 @@ import javax.inject.Inject;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
   boolean isJumped = false;
   @Inject CourseDetailPresenter mPresenter;
-  private CourseType mCourseDetail;
+  @Need public CourseType mCourseDetail;
   private ViewPaperEndlessAdapter viewpageradapter;
 
-  public static CourseDetailFragment newInstance(CourseType courseDetail) {
-    Bundle args = new Bundle();
-    args.putParcelable("c", courseDetail);
-    CourseDetailFragment fragment = new CourseDetailFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      mCourseDetail = getArguments().getParcelable("c");
-    }
-  }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {

@@ -314,8 +314,12 @@ public class CommonInputView extends RelativeLayout {
     }
   }
 
+
   public String getContent() {
     return edit.getText().toString().trim();
+  }
+  public String getCivContent() {
+    return getContent();
   }
 
   public void setContent(String c) {

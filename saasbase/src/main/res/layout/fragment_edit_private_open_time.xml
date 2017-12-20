@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+  >
+  <data>
+    <variable
+        name="tr"
+        type="cn.qingchengfit.saasbase.course.batch.bean.Time_repeat"/>
+  </data>
+  <LinearLayout
+
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/label_can_order"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:text="可约时间段"
+        style="@style/TextTitleHint"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:divider="@drawable/divider_linearlayout_horizon"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        >
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/starttime"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="开始时间"
+          app:civ_showdivier="false"
+          style="@style/QcCivClickStyle"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/endtime"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="结束时间"
+          app:civ_showdivier="false"
+          style="@style/QcCivClickStyle"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_order_interval"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="约课时间间隔"
+          app:civ_showdivier="false"
+          style="@style/QcCivClickStyle"
+          />
+    </LinearLayout>
+
+  </LinearLayout>
+</layout>

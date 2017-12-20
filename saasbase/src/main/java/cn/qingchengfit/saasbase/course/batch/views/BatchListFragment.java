@@ -88,7 +88,6 @@ public abstract class BatchListFragment extends SaasBaseFragment
         .withBottomEdge(true));
     rv.setAdapter(commonFlexAdapter);
     rv.setItemAnimator(new FadeInUpItemAnimator());
-    srl.setRefreshing(true);
     srl.setOnRefreshListener(this);
     return view;
   }

@@ -284,6 +284,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
     List<String> getSupportSpace();
     List<BatchLoop> getBatchLoops();
     List<Rule> getRules();
+    ArrayList<Time_repeat> getTimeRepeats();
     int suportMemberNum();
 
     boolean needPay();

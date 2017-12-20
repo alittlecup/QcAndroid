@@ -14,6 +14,7 @@ import cn.qingchengfit.utils.DateUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
@@ -77,6 +78,19 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
           }
         }
       }));
+  }
+
+  @Override public boolean onItemClick(int i) {
+    IFlexible item = commonFlexAdapter.getItem(i);
+    if (item == null) return true;
+    if (item instanceof BatchCateItem){
+      routeTo("/batch/edit/",new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams()
+        .batchId(((BatchCateItem) item).getId())
+        .isPrvite(false)
+        .build()
+      );
+    }
+    return true;
   }
 
 }

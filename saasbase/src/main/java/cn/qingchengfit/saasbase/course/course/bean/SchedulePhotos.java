@@ -2,8 +2,8 @@ package cn.qingchengfit.saasbase.course.course.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.saasbase.network.model.Shop;
 import java.util.List;
 
 public class SchedulePhotos implements Parcelable {

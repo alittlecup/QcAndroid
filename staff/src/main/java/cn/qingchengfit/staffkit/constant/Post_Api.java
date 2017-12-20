@@ -31,7 +31,6 @@ import cn.qingchengfit.model.body.PushBody;
 import cn.qingchengfit.model.body.RenewBody;
 import cn.qingchengfit.model.body.ReturnWardrobeBody;
 import cn.qingchengfit.model.body.ScanBody;
-import cn.qingchengfit.model.body.ShopConfigBody;
 import cn.qingchengfit.model.body.ShopsBody;
 import cn.qingchengfit.model.body.ShortMsgBody;
 import cn.qingchengfit.model.body.SignInBody;
@@ -54,6 +53,7 @@ import cn.qingchengfit.model.responese.ResponseService;
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.staffkit.train.model.CreateGroupBody;
 import cn.qingchengfit.staffkit.train.model.OperationMemberBody;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
@@ -418,7 +418,8 @@ public interface Post_Api {
      * {@link ShopConfigs}
      */
     @PUT("/api/staffs/{staff_id}/shops/configs/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcShopConfigs(
-        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body ShopConfigBody body);
+        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body
+      ShopConfigBody body);
 
     /**
      * 签到扣费设置

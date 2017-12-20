@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.saasbase.R;
@@ -23,8 +24,12 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchSchedule;
 import cn.qingchengfit.saasbase.course.batch.items.BatchScheduleItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchScheduleListPresenter;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -146,6 +151,7 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
     if (editable){
       adapter.toggleSelection(position);
       adapter.notifyItemChanged(position);
+      btnDelSelected.setVisibility(adapter.getSelectedPositions().size() > 0?View.VISIBLE:View.GONE);
     }else {
       if (item instanceof BatchScheduleItem) {
         BatchSchedule batchLoop = ((BatchScheduleItem) item).getBatchSchedule();
@@ -161,6 +167,15 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
       }
     }
     return true;
+  }
+
+  @OnClick(R2.id.btn_del_selected)
+  public void del(){
+    DialogUtils.instanceDelDialog(getContext(), "确认删除已选课程？", new MaterialDialog.SingleButtonCallback() {
+      @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+        presenter.del();
+      }
+    }).show();
   }
 
   @Override public void onList(List<BatchSchedule> list) {
@@ -183,5 +198,16 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
 
   @Override public void onSuccess() {
 
+  }
+
+  @Override public String getDelIds() {
+    List<String> ids = new ArrayList<>();
+    for (Integer integer : adapter.getSelectedPositions()) {
+      IFlexible item = adapter.getItem(integer);
+      if (item instanceof BatchScheduleItem){
+        ids.add(((BatchScheduleItem) item).getBatchSchedule().id);
+      }
+    }
+    return ListUtils.List2Str(ids);
   }
 }

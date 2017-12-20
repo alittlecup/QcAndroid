@@ -1,76 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     >
 
-  <include layout="@layout/common_simple_toolbar"/>
+  <data/>
 
-  <android.support.v4.widget.NestedScrollView
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
+  <RelativeLayout
+
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginTop="?attr/actionBarSize"
-      android:background="@color/bg_grey"
       >
 
-    <LinearLayout
+    <!--<include-->
+        <!--layout="@layout/common_simple_toolbar"-->
+        <!--android:id="@+id/toolbar_layout"-->
+        <!--/>-->
+
+    <android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:background="@color/bg_grey"
         >
 
-      <FrameLayout
-          android:id="@+id/frag_course_info"
+      <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          />
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
 
-      <include layout="@layout/divider_grey"/>
-      <TextView
-          style="@style/TextTitleHint"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          android:text="课程排期"
-          />
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/civ_date"
-          style="@style/QcCivClickStyle"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          app:civ_lable="日期"
-          />
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/civ_course_time"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          style="@style/QcCivClickStyle"
-          app:civ_lable="课程时间"
-          />
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/civ_open_time"
-          style="@style/QcCivClickStyle"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          app:civ_lable="何时开放预约"
-          />
+        <FrameLayout
+            android:id="@+id/frag_course_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
+        <include layout="@layout/divider_grey"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:text="课程排期"
+            style="@style/TextTitleHint"
+            />
 
-      <include layout="@layout/divider_grey"/>
-      <Button
-          android:id="@+id/btn_del"
-          android:layout_marginTop="16dp"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          android:background="@drawable/bg_click"
-          android:textColor="@color/red"
-          android:text="删除该课程"
-          />
-    </LinearLayout>
-  </android.support.v4.widget.NestedScrollView>
-</FrameLayout>
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/civ_date"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="日期"
+            style="@style/QcCivClickStyle"
+            />
+
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/civ_course_time"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="课程时间"
+            style="@style/QcCivClickStyle"
+            />
+
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/civ_open_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:civ_lable="何时开放预约"
+            style="@style/QcCivClickStyle"
+            />
+        <include layout="@layout/divider_grey"/>
+
+        <Button
+            android:id="@+id/btn_del"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_click"
+            android:text="删除该课程"
+            android:textColor="@color/red"
+            />
+      </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+  </RelativeLayout>
+
+</layout>

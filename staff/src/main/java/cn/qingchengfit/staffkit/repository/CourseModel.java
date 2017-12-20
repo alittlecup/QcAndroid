@@ -172,10 +172,14 @@ public class CourseModel implements ICourseModel {
     return api.qcUpdateBatch(loginStatus.staff_id(), batchid, body, gymWrapper.getParams());
   }
 
+  @Override public Observable<QcDataResponse> qcDelBatchSchedule(boolean isPrivate, String ids) {
+    return null;
+  }
+
   /**
    * 删除某条 排课实例
    */
-  @Override public Observable<QcDataResponse> qcDelBatchSchedule(boolean isPrivate,
+  public Observable<QcDataResponse> qcDelBatchSchedule(boolean isPrivate,
     DelBatchScheduleBody body) {
     return api.qcDelBatchSchedule(loginStatus.staff_id(), isPrivate ? "timetables" : "schedules", body,
       gymWrapper.getParams());

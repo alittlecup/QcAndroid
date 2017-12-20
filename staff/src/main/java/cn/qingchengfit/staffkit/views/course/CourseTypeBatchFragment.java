@@ -18,10 +18,6 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.views.course.limit.OrderLimitFragment;
-import cn.qingchengfit.staffkit.views.course.limit.OrderLimitFragmentBuilder;
-import cn.qingchengfit.staffkit.views.course.msg.MsgNotiFragment;
-import cn.qingchengfit.staffkit.views.course.msg.MsgNotiFragmentBuilder;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.utils.IntentUtils;
@@ -120,11 +116,11 @@ import javax.inject.Inject;
                         showAlert(R.string.sorry_for_no_permission);
                         return;
                     }
-                    getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
-                        .replace(R.id.frag, new OrderLimitFragmentBuilder(mIsPrivate).build())
-                        .addToBackStack(null)
-                        .commit();
+                    //getFragmentManager().beginTransaction()
+                    //    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+                    //    .replace(R.id.frag, new OrderLimitFragmentBuilder(mIsPrivate).build())
+                    //    .addToBackStack(null)
+                    //    .commit();
                 } else if (pos == 2) {
                     /**
                      * 短信通知{@link MsgNotiFragment}
@@ -134,11 +130,11 @@ import javax.inject.Inject;
                         showAlert(R.string.sorry_for_no_permission);
                         return;
                     }
-                    getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
-                        .replace(R.id.frag, new MsgNotiFragmentBuilder(mIsPrivate).build())
-                        .addToBackStack(null)
-                        .commit();
+                    //getFragmentManager().beginTransaction()
+                    //    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+                    //    .replace(R.id.frag, new MsgNotiFragmentBuilder(mIsPrivate).build())
+                    //    .addToBackStack(null)
+                    //    .commit();
                 } else {
                     /**
                      * 课件

@@ -43,7 +43,7 @@
           android:textSize="30sp"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.RatingBarVectorFix
+      <cn.qingchengfit.widgets.RatingBarVectorFix
           android:id="@+id/student_judge_coach_star"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
           android:textSize="30sp"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.RatingBarVectorFix
+      <cn.qingchengfit.widgets.RatingBarVectorFix
           android:id="@+id/student_judge_course_star"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
           android:textSize="30sp"
           />
 
-      <cn.qingchengfit.staffkit.views.custom.RatingBarVectorFix
+      <cn.qingchengfit.widgets.RatingBarVectorFix
           android:id="@+id/server_rate"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

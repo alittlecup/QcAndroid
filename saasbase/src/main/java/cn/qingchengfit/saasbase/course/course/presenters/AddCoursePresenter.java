@@ -1,0 +1,45 @@
+package cn.qingchengfit.saasbase.course.course.presenters;
+
+import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
+import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.subscribes.NetSubscribe;
+import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+public class AddCoursePresenter extends BasePresenter<AddCoursePresenter.MVPview> {
+
+  @Inject ICourseModel courseModel;
+
+  @Inject public AddCoursePresenter() {
+  }
+
+  public void addCourse(CourseBody body) {
+    RxRegiste(courseModel.qcCreateCourse(body)
+      .onBackpressureBuffer()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcDataResponse) {
+          if (ResponseConstant.checkSuccess(qcDataResponse)){
+            mvpView.onShowError("添加成功");
+            mvpView.popBack();
+          }else {
+            mvpView.onShowError(qcDataResponse.getMsg());
+          }
+        }
+      }));
+  }
+
+  public void setSupportGyms() {
+
+  }
+
+  public interface MVPview extends CView {
+
+  }
+}

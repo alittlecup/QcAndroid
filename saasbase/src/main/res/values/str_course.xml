@@ -110,5 +110,5 @@
   <string name="online_pay_client">在线支付平台:</string>
   <string name="wechat_pay">微信支付</string>
   <string name="pay_online">在线支付</string>
-
+  <string name="course_type_private">私教课</string>
 </resources>

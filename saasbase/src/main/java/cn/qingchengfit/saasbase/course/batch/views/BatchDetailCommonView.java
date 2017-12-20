@@ -238,11 +238,13 @@ public class BatchDetailCommonView extends BaseFragment {
 
   public void setRules(List<Rule> rules, ArrayList<CardTplBatchShip> ships) {
     List<Rule> rules1 = new ArrayList<>();
-    for (Rule rule : rules){
-      if (rule.channel.equalsIgnoreCase("ONLINE")){
-        payOnlineRule = rule;
-      }else {
-        rules1.addAll(rules);
+    if (rules != null) {
+      for (Rule rule : rules) {
+        if (rule.channel.equalsIgnoreCase("ONLINE")) {
+          payOnlineRule = rule;
+        } else {
+          rules1.addAll(rules);
+        }
       }
     }
     setCardRule(rules1,ships);
@@ -335,6 +337,7 @@ public class BatchDetailCommonView extends BaseFragment {
     routeTo("/batch/pay/online/",
       new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
         .maxPeople(elMultiSupport.isExpanded() ? getOrderStudentCount() : 1)
+        .multiPrice(elMultiSupport.isExpanded())
         .build());
   }
 

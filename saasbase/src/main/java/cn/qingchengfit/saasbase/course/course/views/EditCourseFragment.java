@@ -24,7 +24,7 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.presenters.EditCoursePresenter;
-import cn.qingchengfit.saasbase.network.model.Shop;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;

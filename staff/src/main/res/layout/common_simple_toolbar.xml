@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
   >
-  <data/>
+  <data>
+
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel" />
+
+  </data>
   <FrameLayout
       xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -14,6 +14,7 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListGroupPresenter;
 import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -67,7 +68,6 @@ public class BatchListGroupFragment extends BatchListFragment
       DialogList.builder(getContext())
           .list(getResources().getStringArray(R.array.batch_list_group_flow),
             (parent, view, position, id) -> {
-              // TODO: 2017/9/11 跳转响应页面
               switch (position){
                 case 1://课程预约限制
                   /**
@@ -77,11 +77,7 @@ public class BatchListGroupFragment extends BatchListFragment
                     showAlert(R.string.sorry_for_no_permission);
                     return;
                   }
-                  //getFragmentManager().beginTransaction()
-                  //  .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
-                  //  .replace(R.id.frag, new OrderLimitFragmentBuilder(mIsPrivate).build())
-                  //  .addToBackStack(null)
-                  //  .commit();
+                  routeTo("gym","/orderlimit/",null);
                   break;
                 case 2://预约短信通知
                   /**
@@ -91,11 +87,7 @@ public class BatchListGroupFragment extends BatchListFragment
                     showAlert(R.string.sorry_for_no_permission);
                     return;
                   }
-                  //getFragmentManager().beginTransaction()
-                  //  .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
-                  //  .replace(R.id.frag, new MsgNotiFragmentBuilder(mIsPrivate).build())
-                  //  .addToBackStack(null)
-                  //  .commit();
+                  routeTo("gym","/msgnoti/",null);
                   break;
                 case 3://课件
                   /**
@@ -105,10 +97,7 @@ public class BatchListGroupFragment extends BatchListFragment
                     showAlert(R.string.sorry_for_no_permission);
                     return;
                   }
-                  //QRActivity.start(getContext(),);
-                  //gymFunctionFactory.goQrScan(this,
-                  //  mIsPrivate ? GymFunctionFactory.PLANS_SETTING_PRIVATE : GymFunctionFactory.PLANS_SETTING_GROUP, null,
-                  //  gymWrapper.getCoachService());
+                  QRActivity.start(getContext(), QRActivity.PLANS_SETTING_PRIVATE );
                   break;
                 default://课程种类
                   routeTo("/list/",new CourseListParams().mIsPrivate(false).build());
@@ -127,6 +116,7 @@ public class BatchListGroupFragment extends BatchListFragment
   }
 
   @Override public void onRefresh() {
+    srl.setRefreshing(true);
     privatePresenter.getBatchList();
   }
 

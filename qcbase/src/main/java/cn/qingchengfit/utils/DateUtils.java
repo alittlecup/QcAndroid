@@ -131,6 +131,17 @@ public class DateUtils {
     return date;
   }
 
+ public static Date HHMM2date(String s) {
+    SimpleDateFormat formatter = new SimpleDateFormat("HH-mm", Locale.CHINA);
+    Date date = new Date();
+    try {
+      date = formatter.parse(s);
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    return date;
+  }
+
   public static String getChineseMonth(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月", Locale.CHINA);
     return formatter.format(date);

@@ -145,8 +145,6 @@ import cn.qingchengfit.staffkit.views.course.EditCourseFragment;
 import cn.qingchengfit.staffkit.views.course.GymCourseListFragment;
 import cn.qingchengfit.staffkit.views.course.JacketManagerFragment;
 import cn.qingchengfit.staffkit.views.course.ShopCommentsFragment;
-import cn.qingchengfit.staffkit.views.course.limit.OrderLimitFragment;
-import cn.qingchengfit.staffkit.views.course.msg.MsgNotiFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.export.CardImportExportFragment;
@@ -374,8 +372,8 @@ import dagger.multibindings.IntoMap;
     AppComponent.FixPwModule.class, AppComponent.FixPhoneModule.class, AppComponent.FixCheckinModule.class, AppComponent.ReportModule.class,
     AppComponent.FixNotifySettingModule.class, AppComponent.GymDetailModule.class, AppComponent.GymMoreModule.class,
     AppComponent.GymExpireModule.class, AppComponent.UpgrateGymModule.class, AppComponent.TrialProDialogModule.class,
-    AppComponent.CourseTypeBatchModule.class, AppComponent.CourseDetailModule.class, AppComponent.MsgNotiModule.class,
-    AppComponent.CourseListModule.class, AppComponent.OrderLimitModule.class, AppComponent.CourseChooseDialogModule.class,
+    AppComponent.CourseTypeBatchModule.class, AppComponent.CourseDetailModule.class,
+    AppComponent.CourseListModule.class, AppComponent.CourseChooseDialogModule.class,
     AppComponent.JacketManagerModule.class, AppComponent.EditCourseModule.class, AppComponent.ShopCommentsModule.class,
     AppComponent.CourseImagesModule.class, AppComponent.CourseBatchListModule.class, AppComponent.CourseBatchDetailModule.class,
     AppComponent.BatchDetailModule.class, AppComponent.CourseManageModule.class, AppComponent.SingleBatchModule.class,
@@ -883,10 +881,7 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface MsgNotiSubcomponent extends AndroidInjector<MsgNotiFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MsgNotiFragment> {
-        }
-    }
+
 
     @Subcomponent() public interface CourseListSubcomponent extends AndroidInjector<CourseListFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseListFragment> {
@@ -922,10 +917,7 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface OrderLimitSubcomponent extends AndroidInjector<OrderLimitFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<OrderLimitFragment> {
-        }
-    }
+
 
     @Subcomponent() public interface CourseChooseDialogSubcomponent extends AndroidInjector<CourseChooseDialogFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseChooseDialogFragment> {
@@ -1335,11 +1327,9 @@ public interface AppComponent {
     //
     //void inject(CourseDetailFragment gymDetailFragment);
     //
-    //void inject(MsgNotiFragment gymDetailFragment);
     //
     //void inject(CourseListFragment gymDetailFragment);
     //
-    //void inject(OrderLimitFragment gymDetailFragment);
     //
     //void inject(CourseChooseDialogFragment gymDetailFragment);
     //
@@ -2775,10 +2765,6 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseDetailSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = MsgNotiSubcomponent.class) abstract class MsgNotiModule {
-        @Binds @IntoMap @FragmentKey(MsgNotiFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(MsgNotiSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = CourseListSubcomponent.class) abstract class CourseListModule {
         @Binds @IntoMap @FragmentKey(CourseListFragment.class)
@@ -2791,10 +2777,7 @@ public interface AppComponent {
             CourseImageViewFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = OrderLimitSubcomponent.class) abstract class OrderLimitModule {
-        @Binds @IntoMap @FragmentKey(OrderLimitFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(OrderLimitSubcomponent.Builder builder);
-    }
+
 
     @Module(subcomponents = CourseChooseDialogSubcomponent.class) abstract class CourseChooseDialogModule {
         @Binds @IntoMap @FragmentKey(CourseChooseDialogFragment.class)

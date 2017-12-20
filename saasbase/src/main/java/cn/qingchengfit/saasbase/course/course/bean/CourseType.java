@@ -50,6 +50,11 @@ public class CourseType extends Course implements Cloneable {
 
     public CourseType() {
     }
+
+    public CourseType(boolean isPrivate){
+        this.is_private = isPrivate;
+    }
+
     public boolean isRandom_show_photos() {
         return random_show_photos;
     }

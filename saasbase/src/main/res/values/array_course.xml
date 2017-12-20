@@ -7,7 +7,7 @@
     <item >课件</item>
   </string-array>
   <string-array name="batch_list_group_flow">
-    <item >私教种类</item>
+    <item >团教种类</item>
     <item >课程预约限制</item>
     <item >预约短信通知</item>
     <item >课件</item>

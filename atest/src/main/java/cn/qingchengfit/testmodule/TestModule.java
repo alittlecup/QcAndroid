@@ -1,28 +1,19 @@
 package cn.qingchengfit.testmodule;
 
 import android.app.Application;
-
-import java.util.HashMap;
-
-import javax.inject.Named;
-import javax.inject.Singleton;
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.studentImpl;
 import cn.qingchengfit.saasbase.student.bean.FollowUpFilterModel;
-import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
-import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import dagger.Module;
 import dagger.Provides;
-import rx.Observable;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 /**
  * power by
@@ -87,7 +78,7 @@ public class TestModule {
 
     @Provides
     SaasbaseRouterCenter providesSaasbaseRouterCenter() {
-        return new SaasbaseRouterCenter(null, null, null, null, null, new studentImpl());
+        return new SaasbaseRouterCenter(null, null, null, null, null, null,null,new studentImpl());
     }
 
     @Singleton

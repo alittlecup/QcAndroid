@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_begin_noti"
+
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      app:el_expanded="false"
+      app:el_label="团课开始前提醒会员"
+      >
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/sw_begin_noti_min"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_inputnum="true"
+        app:civ_lable="课程开始前（分钟）"
+        />
+  </cn.qingchengfit.widgets.ExpandedLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_less_noti"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+
+      app:el_expanded="false"
+      app:el_label="上课人数不足提醒教练"
+      >
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/sw_less_noti_min"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_inputnum="true"
+        app:civ_lable="课程开始前（分钟）"
+        />
+  </cn.qingchengfit.widgets.ExpandedLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_new_noti"
+
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+
+      app:el_expanded="false"
+      app:el_label="有新预约提醒教练"
+      >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+  </cn.qingchengfit.widgets.ExpandedLayout>
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_order_noti"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+
+      app:el_expanded="false"
+      app:el_label="有新预约提醒教练"
+      >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+  </cn.qingchengfit.widgets.ExpandedLayout>
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_cancle_noti"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+
+      app:el_expanded="false"
+      app:el_label="有新预约提醒教练"
+      >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+  </cn.qingchengfit.widgets.ExpandedLayout>
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/sw_seed_to_subtitute"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+
+      android:visibility="gone"
+      app:el_expanded="false"
+      app:el_label="有新预约提醒教练"
+      >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+  </cn.qingchengfit.widgets.ExpandedLayout>
+</LinearLayout>

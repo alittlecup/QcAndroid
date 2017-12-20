@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.course.batch.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.items.types.ICmLRTxt;
 import cn.qingchengfit.utils.DateUtils;
@@ -17,14 +19,18 @@ import cn.qingchengfit.utils.DateUtils;
  * <p/>
  * Created by Paper on 16/2/25 2016.
  */
-public class Time_repeat implements ICmLRTxt{
+public class Time_repeat implements ICmLRTxt, Parcelable {
     String id;
     String start;
     String end;
+    int slice;
     boolean is_cross;
     int weekday;
     boolean isPrivate;
 
+    public String getSliceTimeMin(){
+        return slice/60+"分钟";
+    }
     public void setPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
     }
@@ -42,7 +48,7 @@ public class Time_repeat implements ICmLRTxt{
     }
 
     @Override public String getRightTxt() {
-        return isPrivate?(start+"-"+ end):start;
+        return isPrivate?(start+(is_cross?"-次日":"-")+ end+"\n约课时间间隔为"+slice/60+"分钟"):start;
     }
 
     @Override public int getLeftIcon() {
@@ -84,4 +90,42 @@ public class Time_repeat implements ICmLRTxt{
     public void setWeekday(int weekday) {
         this.weekday = weekday;
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.start);
+        dest.writeString(this.end);
+        dest.writeInt(this.slice);
+        dest.writeByte(this.is_cross ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.weekday);
+        dest.writeByte(this.isPrivate ? (byte) 1 : (byte) 0);
+    }
+
+    public Time_repeat() {
+    }
+
+    protected Time_repeat(Parcel in) {
+        this.id = in.readString();
+        this.start = in.readString();
+        this.end = in.readString();
+        this.slice = in.readInt();
+        this.is_cross = in.readByte() != 0;
+        this.weekday = in.readInt();
+        this.isPrivate = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<Time_repeat> CREATOR =
+      new Parcelable.Creator<Time_repeat>() {
+          @Override public Time_repeat createFromParcel(Parcel source) {
+              return new Time_repeat(source);
+          }
+
+          @Override public Time_repeat[] newArray(int size) {
+              return new Time_repeat[size];
+          }
+      };
 }

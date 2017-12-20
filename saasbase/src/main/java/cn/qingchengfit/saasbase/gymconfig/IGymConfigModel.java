@@ -1,6 +1,8 @@
 package cn.qingchengfit.saasbase.gymconfig;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
+import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigListWrap;
 import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
 
 /**
@@ -27,4 +29,6 @@ import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
  */
 public interface IGymConfigModel {
   rx.Observable<QcDataResponse<SpaceListWrap>> getSites();
+  rx.Observable<QcDataResponse<ShopConfigListWrap>> getConfigs(String configs);
+  rx.Observable<QcDataResponse> saveShopConfigs(ShopConfigBody body);
 }

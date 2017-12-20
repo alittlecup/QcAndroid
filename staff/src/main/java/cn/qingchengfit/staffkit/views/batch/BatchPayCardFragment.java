@@ -97,7 +97,7 @@ import javax.inject.Inject;
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_batch_pay_by_cards, container, false);
+        View view = inflater.inflate(R.layout.fragment_saas_batch_pay_by_cards, container, false);
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(presenter, this);
         initToolbar(toolbar);

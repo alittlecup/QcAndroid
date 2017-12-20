@@ -88,6 +88,16 @@ public class ListUtils {
     }
     return ret;
   }
+
+  public static String List2Str(List<String> list) {
+    StringBuilder ret = new StringBuilder("");
+    for (String stringPropertyable : list) {
+      ret.append(stringPropertyable);
+      ret.append(Constants.SEPARATE_CN);
+    }
+    ret.deleteCharAt(ret.length()-1);
+    return ret.toString();
+  }
   public static ArrayList<String> getIdList(List<? extends IdPropertyable> list) {
     ArrayList<String> ret = new ArrayList<>();
     for (IdPropertyable stringPropertyable : list) {
