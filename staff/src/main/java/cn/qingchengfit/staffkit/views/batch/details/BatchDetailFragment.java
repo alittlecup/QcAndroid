@@ -440,6 +440,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
                     toChooseTrainer.putExtra("to", ChooseActivity.CHOOSE_TRAINER);
                     toChooseTrainer.putExtra("id", body.teacher_id);
                     startActivityForResult(toChooseTrainer, 1);
+                    //ChooseCoachFragment.start(this, 1, "", Configs.INIT_TYPE_ADD);
                 } else {
                     ChooseGroupCourseFragment.start(this, 2, "", mType);
                 }
@@ -482,12 +483,17 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1) {       //私教 教练
-                String name = IntentUtils.getIntentString(data, 0);
-                String id = IntentUtils.getIntentString(data, 1);
-                String imgUrl = IntentUtils.getIntentString(data, 2);
-                Glide.with(getActivity()).load(PhotoUtils.getSmall(imgUrl)).asBitmap().into(new CircleImgWrapper(img, getActivity()));
-                text1.setText(name);
-                body.teacher_id = id;
+                //String name = IntentUtils.getIntentString(data, 0);
+                //String id = IntentUtils.getIntentString(data, 1);
+                //String imgUrl = IntentUtils.getIntentString(data, 2);
+                Staff staff = data.getParcelableExtra("trainer");
+                if (staff == null) {
+                    ToastUtils.show("没有选择教练");
+                    return;
+                }
+                Glide.with(getActivity()).load(PhotoUtils.getSmall(staff.getAvatar())).asBitmap().into(new CircleImgWrapper(img, getActivity()));
+                text1.setText(staff.getUsername());
+                body.teacher_id = staff.getId();
             } else if (requestCode == 3) { //团课 教练
                 String name = IntentUtils.getIntentString(data, 0);
                 String id = IntentUtils.getIntentString(data, 1);
@@ -586,7 +592,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
             }
             timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
                 @Override public void onTimeSelect(Date start, Date end) {
-                    if (start.getTime() >= end.getTime()) {
+                    if (start.getTime() > end.getTime()) {
                         ToastUtils.showDefaultStyle("开始时间不能小于结束时间");
                         return;
                     }

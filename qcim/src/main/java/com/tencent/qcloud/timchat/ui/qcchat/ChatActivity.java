@@ -260,7 +260,9 @@ public class ChatActivity extends AppCompatActivity
         TIMFriendshipManager.getInstance()
             .getUsersProfile(list, new TIMValueCallBack<List<TIMUserProfile>>() {
               @Override public void onError(int i, String s) {
-                Util.showToast(ChatActivity.this, s);
+                if (i == 40002) {
+                  Util.showToast(ChatActivity.this, "对方还未注册聊天账号");
+                }
               }
 
               @Override public void onSuccess(List<TIMUserProfile> timUserProfiles) {

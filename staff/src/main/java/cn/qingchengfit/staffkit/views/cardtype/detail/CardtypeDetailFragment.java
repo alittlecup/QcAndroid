@@ -37,8 +37,10 @@ import cn.qingchengfit.staffkit.views.cardtype.standard.EditCardStandardFragment
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.EqualSpaceItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
+import cn.qingchengfit.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.ColorUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.DrawableUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -114,6 +116,8 @@ public class CardtypeDetailFragment extends BaseFragment implements CardtypeDeta
                     return true;
                 }
             });
+        cardBg.setBackground(DrawableUtils.generateBg(16,
+            CardBusinessUtils.getDefaultCardbgColor(card_tpl.getType())));
         datas.add(new CardStandard(true, "", "", "", ""));
         adapter = new StandardAdapter(getContext(), datas, false, card_tpl.is_enable);
         recycleview.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -259,7 +263,7 @@ public class CardtypeDetailFragment extends BaseFragment implements CardtypeDeta
                             break;
                         }
                     }
-                    if (!hasP) {
+                    if (!hasP && !gymWrapper.inBrand()) {
                         if (card_tpl.getShopIds().size() > 1) {
                             showAlert(R.string.alert_edit_cardtype_forbid);
                         } else {

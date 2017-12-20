@@ -47,6 +47,9 @@ public class ResumeTitleItem extends AbstractHeaderItem<ResumeTitleItem.ResumeTi
   }
 
   @Override public boolean equals(Object o) {
+    if (o instanceof ResumeTitleItem){
+      return ((ResumeTitleItem) o).getPos() == pos;
+    }
     return false;
   }
 
@@ -56,7 +59,7 @@ public class ResumeTitleItem extends AbstractHeaderItem<ResumeTitleItem.ResumeTi
     @BindView(R2.id.btn_edit) CompatTextView btnEdit;
 
     public ResumeTitleVH(View view, final FlexibleAdapter adapter) {
-      super(view, adapter);
+      super(view, adapter,true);
       ButterKnife.bind(this, view);
       btnEdit.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {

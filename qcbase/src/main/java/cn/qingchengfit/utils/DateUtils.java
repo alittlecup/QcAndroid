@@ -353,10 +353,9 @@ public class DateUtils {
   public static String getEndDayOfMonthNew(int year, int month) {
     Calendar c = Calendar.getInstance();
     c.set(Calendar.YEAR, year);
-    c.set(Calendar.MONTH, month);
-    c.add(Calendar.MONTH, 1);
+    c.set(Calendar.MONTH, month+1);
     c.set(Calendar.DAY_OF_MONTH, 0);
-    c.add(Calendar.DATE, -1);
+
     return Date2YYYYMMDD(c.getTime());
   }
 

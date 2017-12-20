@@ -90,6 +90,7 @@ public class BrandEditFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_brand, container, false);
         unbinder = ButterKnife.bind(this, view);
+        initBus();
         if (getArguments() != null) {
             brand = getArguments().getParcelable("brand");
 
@@ -116,8 +117,9 @@ public class BrandEditFragment extends BaseFragment {
                                     hideLoading();
                                     if (ResponseConstant.checkSuccess(qcResponse)) {
                                         ToastUtils.show("修改成功");
-                                        getFragmentManager().popBackStack(BrandManageFragment.TAG,
-                                            FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                        getActivity().getSupportFragmentManager()
+                                            .popBackStackImmediate(BrandManageFragment.TAG,
+                                                FragmentManager.POP_BACK_STACK_INCLUSIVE);
                                     } else {
                                         ToastUtils.show("修改失败");
                                     }
@@ -176,11 +178,29 @@ public class BrandEditFragment extends BaseFragment {
                 }));
             }
         });
+
         return view;
     }
 
+
+    private void initBus(){
+        RxBusAdd(ChangeOwenerEvent.class)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<ChangeOwenerEvent>() {
+                @Override public void call(ChangeOwenerEvent changeOwenerEvent) {
+                    if (changeOwenerEvent != null) {
+                        changeCreator.setContent(changeOwenerEvent.getBody().username);
+                        brand.created_by.setUsername(changeOwenerEvent.getBody().username);
+                        brand.created_by.setGender(changeOwenerEvent.getBody().gender);
+                        brand.created_by.setPhone(changeOwenerEvent.getBody().phone);
+                    }
+                }
+            });
+    }
+
     @Override public String getFragmentName() {
-        return BrandEditFragment.class.getName();
+        return BrandManageFragment.TAG;
     }
 
     @Override public void onDestroyView() {

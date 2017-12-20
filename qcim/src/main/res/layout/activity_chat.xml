@@ -102,7 +102,8 @@
         android:background="#fff"
         android:overScrollMode="never"
         android:scrollbars="none"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:clipToPadding="false"/>
     </LinearLayout>
 
     <com.tencent.qcloud.timchat.widget.VoiceSendingView

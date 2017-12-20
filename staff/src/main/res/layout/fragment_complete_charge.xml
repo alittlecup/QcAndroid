@@ -10,12 +10,12 @@
 
   <include
       layout="@layout/common_simple_toolbar"
+      android:visibility="gone"
       />
 
   <android.support.v4.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginTop="?actionBarSize"
       >
 
 
@@ -35,6 +35,7 @@
             android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:clipToPadding="false"
             android:elevation="4dp"
             android:orientation="vertical"
@@ -154,6 +155,7 @@
           app:civ_lable="销售"
           app:civ_nonnull="true"
           app:civ_showright="true"
+
           />
 
       <cn.qingchengfit.widgets.CommonInputView
@@ -179,14 +181,15 @@
           app:civ_showdivier="false"
           app:civ_showright="true"
           />
-
       <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/card_protocol"
+          android:id="@+id/input_card_protocol"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height_new"
           android:layout_marginTop="@dimen/activity_vertical_margin"
-          app:civ_clickable="true"
+          app:civ_lable="@string/card_protocol_content"
+          app:civ_content_color="@color/text_warm"
           app:civ_content="查看"
+          app:civ_clickable="true"
           app:civ_showright="true"
           />
     </LinearLayout>

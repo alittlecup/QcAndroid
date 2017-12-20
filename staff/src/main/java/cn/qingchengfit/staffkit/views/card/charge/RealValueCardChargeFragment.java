@@ -332,7 +332,7 @@ public class RealValueCardChargeFragment extends BaseFragment implements RealVal
                     imcomeSun.setVisibility(View.VISIBLE);
                     extraPeriod.setVisibility(View.VISIBLE);
                     switcherLayout.setVisibility(View.VISIBLE);
-                } else if (validDayCount < 0) {//规格有有效期
+                } else if (validDayCount > 0) {//规格有有效期
                     extraPeriod.setVisibility(View.VISIBLE);
                     switcherLayout.setVisibility(View.GONE);
                     starttime.setVisibility(View.VISIBLE);

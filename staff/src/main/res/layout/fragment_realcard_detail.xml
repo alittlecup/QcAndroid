@@ -11,6 +11,7 @@
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:paddingBottom="20dp"
       >
 
     <FrameLayout
@@ -41,9 +42,9 @@
           >
 
         <FrameLayout
+            android:id="@+id/frame_bg_card_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_realcard"
             android:layerType="software"
             >
 
@@ -51,7 +52,6 @@
               android:id="@+id/card_bg"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/bg_realcard"
               android:layerType="software"
               >
 
@@ -158,6 +158,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:layout_marginTop="150dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/bg_grey"
         android:orientation="vertical"
         >
@@ -348,53 +349,6 @@
       <include layout="@layout/divider_grey"/>
 
       <RelativeLayout
-          android:id="@+id/ll_support_gym"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/white"
-          android:paddingLeft="16dp"
-          android:paddingRight="16dp"
-          >
-
-        <ImageView
-            android:id="@+id/image_support_gym"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_spport_gym"
-            />
-
-        <TextView
-            android:id="@+id/text_support_gym"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="20dp"
-            android:layout_toRightOf="@+id/image_support_gym"
-            android:text="适用场馆"
-            android:textColor="@color/qc_text_black"
-            android:textSize="14dp"
-            />
-
-        <TextView
-            android:id="@+id/support_gyms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/text_support_gym"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="6dp"
-            android:layout_toRightOf="@+id/image_support_gym"
-            android:maxLines="2"
-            android:textSize="12dp"
-            tools:text="798店、阳光上冻店、中关村店、望京店、"
-            />
-
-      </RelativeLayout>
-
-      <include layout="@layout/divider_grey"/>
-
-      <RelativeLayout
           android:id="@+id/ll_consume_record"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -510,6 +464,107 @@
 
       <include layout="@layout/divider_grey"/>
 
+      <RelativeLayout
+          android:id="@+id/ll_support_gym"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="15dp"
+          android:background="@color/white"
+          android:paddingLeft="16dp"
+          android:paddingRight="16dp"
+          >
+
+        <ImageView
+            android:id="@+id/image_support_gym"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_spport_gym"
+            />
+
+        <TextView
+            android:id="@+id/text_support_gym"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/image_support_gym"
+            android:text="适用场馆"
+            android:textColor="@color/qc_text_black"
+            android:textSize="14dp"
+            />
+
+        <TextView
+            android:id="@+id/support_gyms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_support_gym"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@+id/image_support_gym"
+            android:maxLines="2"
+            android:textSize="12dp"
+            tools:text="798店、阳光上冻店、中关村店、望京店、"
+            />
+
+      </RelativeLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <RelativeLayout
+          android:id="@+id/ll_card_protocol"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:paddingLeft="16dp"
+          android:paddingRight="16dp"
+          >
+
+        <ImageView
+            android:id="@+id/image_card_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_card_number"
+            />
+
+        <TextView
+            android:id="@+id/text_card_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/image_card_protocol"
+            android:text="会员卡服务条款"
+            android:textColor="@color/qc_text_black"
+            android:textSize="14dp"
+            />
+
+        <TextView
+            android:id="@+id/read_card_protocol_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_card_protocol"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@+id/image_card_protocol"
+            android:maxLines="2"
+            android:textSize="12dp"
+            tools:text="已阅读第3版 (2017-09-08  08:00 宋一蓉版)"
+            />
+
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:src="@drawable/ic_arrow_right"
+          />
+      </RelativeLayout>
+      <include layout="@layout/divider_grey"/>
     </LinearLayout>
   </FrameLayout>
 

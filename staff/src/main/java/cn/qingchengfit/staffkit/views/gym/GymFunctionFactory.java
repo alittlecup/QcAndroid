@@ -381,9 +381,10 @@ public class GymFunctionFactory {
                 //break;
 
             case MODULE_SERVICE_FREE:
-                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)
-                    && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK)
-                    && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SCREEN)) {
+                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)
+                    && !SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK)
+                    && !SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK_NEW)
+                    && !SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SCREEN)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
@@ -468,7 +469,7 @@ public class GymFunctionFactory {
                 return;
             case MODULE_OPERTAT_KOUBEI:
                 goQrScan(fragment, module, PermissionServerUtils.KOUBEI, coachService);
-                break;
+                return;
             case MODULE_OPERATE_COMPETITION:
                 WebActivity.startWeb(Configs.Server + Configs.URL_QC_TRAIN + "?gym_id=" + coachService.getGym_id(), fragment.getContext());
                 return;

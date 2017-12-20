@@ -68,8 +68,8 @@ public class ChooseAddressFragment extends BaseFragment {
     private String mCityCode;
     private Unbinder unbinder;
     private CitiesChooser mCitiesChooser;
-    private double g_lon;
-    private double g_lat;
+    private Double g_lon;
+    private Double g_lat;
     private String defaultAddress;
     private String city;
 
@@ -118,6 +118,10 @@ public class ChooseAddressFragment extends BaseFragment {
                     ToastUtils.showDefaultStyle("获取城市信息失败，请重试");
                     return true;
                 }
+                if (address.isEmpty()){
+                    ToastUtils.showDefaultStyle("请填写详细地址");
+                    return true;
+                }
 
                 RxBus.getBus()
                     .post(new EventAddress.Builder().city_code(Integer.parseInt(mCityCode))
@@ -143,6 +147,19 @@ public class ChooseAddressFragment extends BaseFragment {
         mLocationClient = new AMapLocationClient(getContext());
         mLocationOption = new AMapLocationClientOption();
         mLocationClient.setLocationOption(mLocationOption);
+        //cur position button
+        mAMap.setLocationSource(new LocationSource() {
+            @Override public void activate(OnLocationChangedListener onLocationChangedListener) {
+                mLocationClient.startLocation();
+            }
+
+            @Override public void deactivate() {
+
+            }
+        });
+        UiSettings mUiSettings = mAMap.getUiSettings();
+        mUiSettings.setMyLocationButtonEnabled(true);
+
 
         if (mLatLng == null || (mLatLng.latitude == 0 && mLatLng.longitude == 0)){
             mLocationClient.startLocation();
@@ -154,23 +171,24 @@ public class ChooseAddressFragment extends BaseFragment {
                 new CameraPosition(new LatLng(g_lat, g_lon), 18, 0, 0)));
         }
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationClient.setLocationListener(new AMapLocationListener() {
-            @Override public void onLocationChanged(AMapLocation aMapLocation) {
-                mLocationClient.stopLocation();
-                hideLoading();
-                mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(
-                    new CameraPosition(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 18, 0, 0)));
-
-                //设置城市
-                cityName.setText(aMapLocation.getCity());
-                mCityCode = aMapLocation.getAdCode();
-
-                        //设置地理位置
-                        address.setContent(aMapLocation.getDistrict() + aMapLocation.getStreet() + aMapLocation.getStreetNum());
-                    }
-                });
-        showLoading();
+        mLocationClient.setLocationListener(locationListener);
     }
+
+   AMapLocationListener locationListener =  new AMapLocationListener() {
+        @Override public void onLocationChanged(AMapLocation aMapLocation) {
+            mLocationClient.stopLocation();
+            hideLoading();
+            mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+              new CameraPosition(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 18, 0, 0)));
+
+            //设置城市
+            cityName.setText(aMapLocation.getCity());
+            mCityCode = aMapLocation.getAdCode();
+
+            //设置地理位置
+            address.setContent(aMapLocation.getDistrict() + aMapLocation.getStreet() + aMapLocation.getStreetNum());
+        }
+    };
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

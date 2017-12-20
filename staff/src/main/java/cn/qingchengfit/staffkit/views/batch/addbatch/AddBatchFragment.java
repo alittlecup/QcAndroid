@@ -548,7 +548,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
           return;
         }
         if (date.getTime() - DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()
-            > 92 * DateUtils.DAY_TIME) {
+            > 366 * DateUtils.DAY_TIME) {
           Toast.makeText(getContext(), R.string.alert_batch_greater_three_month, Toast.LENGTH_SHORT)
               .show();
           return;

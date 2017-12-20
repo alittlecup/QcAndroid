@@ -79,7 +79,7 @@ public class CardListFragment extends BaseFragment {
                 getFragmentManager().beginTransaction()
                     .replace(mCallbackActivity.getFragId(), EditCardTypeFragment.newInstance(0))
                     .addToBackStack(null)
-                    .commit();
+                    .commitAllowingStateLoss();
                 return true;
             }
         });
@@ -106,7 +106,7 @@ public class CardListFragment extends BaseFragment {
                             getFragmentManager().beginTransaction()
                                 .replace(mCallbackActivity.getFragId(), EditCardTypeFragment.newInstance(0))
                                 .addToBackStack(null)
-                                .commit();
+                                .commitAllowingStateLoss();
                             return true;
                         }
                     });

@@ -24,6 +24,9 @@ public class Configs {
     public static final String PREFRENCE_IDENTIFY = "prefrence_identify";
     public static final String VALUE_IDENTIFY = "identify";
 
+    public static final String PREFRENCE_CONVERSATION_AVATAR = "conversation_list_avatar";
+    public static final String PREFRENCE_CONVERSATION_NAME = "conversation_list_name";
+
     public static final int C2C = 1080;
     public static final int GROUP = 1081;
 

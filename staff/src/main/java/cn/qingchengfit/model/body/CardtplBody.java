@@ -30,6 +30,7 @@ public class CardtplBody {
     public int buy_limit;
     public String shops;//支持场馆 ,隔开
     public List<CardTplOption> options;
+    public Boolean is_open_service_term;
 
     public CardtplBody clone() {
         try {
@@ -49,6 +50,7 @@ public class CardtplBody {
         b.month_times = this.month_times;
         b.shops = this.shops;
         b.buy_limit = this.buy_limit;
+        b.is_open_service_term = this.is_open_service_term;
         return b;
     }
 }

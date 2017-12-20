@@ -91,6 +91,7 @@ public class EditCardStandardPresenter extends BasePresenter {
         fix.description = body.description;
         fix.limit_days = body.limit_days;
         fix.price = body.price;
+        fix.for_staff = body.for_staff;
 
         spEdit =
             usecase.updateCardstandard(gymWrapper.id(), gymWrapper.model(), gymWrapper.brand_id(), body.id, fix, new Action1<QcResponse>() {

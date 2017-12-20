@@ -72,12 +72,14 @@ public class SignInPresenter extends BasePresenter {
         Observable observable = restRepository.getGet_api().qcGetShopConfig(App.staffId, ShopConfigs.USER_CHECKIN_WITH_LOCKER, params);
         HttpUtil.getInstance().toSubscribe(observable, new ResultSubscribe<SignInConfig.Data>() {
             @Override protected void _onNext(SignInConfig.Data signInConfig) {
-                view.onGetSignInConfig(signInConfig.configs);
+                if (view != null)
+                    view.onGetSignInConfig(signInConfig.configs);
             }
 
             @Override protected void _onError(String message) {
                 Timber.e(message);
-                view.onFail();
+                if (view != null)
+                    view.onFail();
             }
         });
     }

@@ -114,6 +114,7 @@ public class ResumeHomeFragment extends BaseFragment
     delegatePresenter(permissionPresenter, this);
     initToolbar(toolbar);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
+    commonFlexAdapter.setStickyHeaders(true).showAllHeaders().setDisplayHeadersAtStartUp(true);
     srl.setColorSchemeColors(AppUtils.getPrimaryColor(getContext()));
     srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {

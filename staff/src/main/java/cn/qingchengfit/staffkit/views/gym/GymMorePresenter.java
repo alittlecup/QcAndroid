@@ -12,6 +12,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
+import cn.qingchengfit.utils.LogUtil;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -61,7 +62,7 @@ public class GymMorePresenter extends BasePresenter {
                 }
             }, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
-
+                    LogUtil.e(throwable.getMessage());
                 }
             }));
     }

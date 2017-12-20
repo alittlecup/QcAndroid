@@ -322,7 +322,10 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
                     chargeSum.setVisibility(View.VISIBLE);
                     imcomeSun.setVisibility(View.VISIBLE);
                     extraPeriod.setVisibility(View.VISIBLE);
+                    starttime.setVisibility(View.GONE);
+                    endtime.setVisibility(View.GONE);
                     switcherLayout.setVisibility(View.VISIBLE);
+                    showAutoOpenCard(false);
                 } else if (validDayCount > 0) {//规格有有效期
                     extraPeriod.setVisibility(View.VISIBLE);
                     switcherLayout.setVisibility(View.GONE);
@@ -331,6 +334,7 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
                     showAutoOpenCard(true);
                 } else {//规格无有效期
                     extraPeriod.setVisibility(View.GONE);
+                    showAutoOpenCard(false);
                 }
 
                 break;
@@ -342,6 +346,9 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
                     imcomeSun.setVisibility(View.VISIBLE);
                     extraPeriod.setVisibility(View.VISIBLE);
                     switcherLayout.setVisibility(View.VISIBLE);
+                    starttime.setVisibility(View.GONE);
+                    endtime.setVisibility(View.GONE);
+                    showAutoOpenCard(false);
                 } else if (validDayCount > 0) {//规格有有效期
                     extraPeriod.setVisibility(View.VISIBLE);
                     switcherLayout.setVisibility(View.GONE);
@@ -350,6 +357,7 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
                     showAutoOpenCard(true);
                 } else {//规格无有效期
                     extraPeriod.setVisibility(View.GONE);
+                    showAutoOpenCard(false);
                 }
                 break;
             case Configs.CATEGORY_DATE:

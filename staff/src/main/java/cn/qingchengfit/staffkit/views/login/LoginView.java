@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.login;
 
+import android.content.Context;
 import cn.qingchengfit.di.PView;
 
 /**
@@ -24,6 +25,7 @@ public interface LoginView extends PView {
 
     //取消登录
     void cancelLogin();
+    Context getContext();
 
     /**
      * 用户状态

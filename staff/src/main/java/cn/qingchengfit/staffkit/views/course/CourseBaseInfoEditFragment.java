@@ -122,7 +122,13 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
             ToastUtils.show("请填写课程时长");
             return null;
         }
-        mCourse.setLength(Integer.parseInt(courseLength.getContent()) * 60);
+        try {
+            mCourse.setLength(Integer.parseInt(courseLength.getContent()) * 60);
+        }catch (Exception e){
+            ToastUtils.show("请填写正确的课程时长");
+            return null;
+        }
+
 
         if (courseMinCount.getVisibility() == View.VISIBLE && TextUtils.isEmpty(courseMinCount.getContent())) {
             ToastUtils.show("请填写课程最小上课人数");

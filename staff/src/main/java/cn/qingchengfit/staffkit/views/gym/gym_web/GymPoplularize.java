@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventPoplularize;
@@ -59,10 +57,24 @@ public class GymPoplularize extends ShareDialogFragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = super.onCreateView(inflater, container, savedInstanceState);
-    unbinder = ButterKnife.bind(this,view);
+
     btnToWX = (TextView) view.findViewById(R.id.connect_public);
     btnToWX.setText(getArguments().getBoolean("s", false) ? "已对接" : "未对接");
-
+    view.findViewById(R.id.btn_to_wechat_public).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        onBtnToWechatPublicClicked();
+      }
+    });
+    view.findViewById(R.id.btn_home_qr).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        onBtnHomeQrClicked();
+      }
+    });
+    view.findViewById(R.id.btn_more_popularize).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        onBtnMorePopularizeClicked();
+      }
+    });
     return view;
   }
 
@@ -70,17 +82,17 @@ public class GymPoplularize extends ShareDialogFragment {
     super.onDestroyView();
   }
 
-  @OnClick(R.id.btn_to_wechat_public) public void onBtnToWechatPublicClicked() {
+  public void onBtnToWechatPublicClicked() {
     RxBus.getBus().post(new EventPoplularize(R.id.btn_to_wechat_public));
     dismiss();
   }
 
-  @OnClick(R.id.btn_home_qr) public void onBtnHomeQrClicked() {
+  public void onBtnHomeQrClicked() {
     RxBus.getBus().post(new EventPoplularize(R.id.btn_home_qr));
     dismiss();
   }
 
-  @OnClick(R.id.btn_more_popularize) public void onBtnMorePopularizeClicked() {
+  public void onBtnMorePopularizeClicked() {
     RxBus.getBus().post(new EventPoplularize(R.id.btn_more_popularize));
     dismiss();
   }

@@ -1,12 +1,17 @@
 package com.tencent.qcloud.timchat.presenter;
 
+import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
+import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
+import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
+import com.tencent.qcloud.timchat.common.AppData;
 import com.tencent.qcloud.timchat.event.AddConversationEvent;
 import com.tencent.qcloud.timchat.event.FriendshipEvent;
 import com.tencent.qcloud.timchat.event.GroupEvent;
@@ -26,6 +31,7 @@ public class ConversationPresenter implements Observer {
 
     private static final String TAG = "ConversationPresenter";
     private ConversationView view;
+    private Context context;
 
     public ConversationPresenter(ConversationView view){
         //注册消息监听
@@ -41,11 +47,48 @@ public class ConversationPresenter implements Observer {
         this.view = view;
     }
 
+    public ConversationPresenter(ConversationView view, Context context){
+        //注册消息监听
+        MessageEvent.getInstance().addObserver(this);
+        //注册刷新监听
+        RefreshEvent.getInstance().addObserver(this);
+        //注册好友关系链监听
+        FriendshipEvent.getInstance().addObserver(this);
+        //注册群关系监听
+        GroupEvent.getInstance().addObserver(this);
+        //注册添加对话监听
+        AddConversationEvent.getInstance().addObserver(this);
+        this.view = view;
+        this.context = context;
+    }
+
     @Override
     public void update(Observable observable, Object data) {
         if (observable instanceof MessageEvent){
-            TIMMessage msg = (TIMMessage) data;
-            view.updateMessage(msg);
+            final TIMMessage msg = (TIMMessage) data;
+            if (msg != null) {
+                List<String> list = new ArrayList<>();
+                list.add(msg.getConversation().getPeer());
+                TIMFriendshipManager.getInstance().getUsersProfile(list, new TIMValueCallBack<List<TIMUserProfile>>() {
+                    @Override public void onError(int i, String s) {
+
+                    }
+
+                    @Override public void onSuccess(List<TIMUserProfile> timUserProfiles) {
+                        for (TIMUserProfile profile : timUserProfiles) {
+                            if (TextUtils.isEmpty(AppData.getConversationAvatar(context, profile.getIdentifier()))) {
+                                AppData.putConversationAvatar(context, profile.getIdentifier(),
+                                    profile.getFaceUrl());
+                                AppData.putConversationName(context, profile.getIdentifier(),
+                                    profile.getNickName());
+                            }
+                        }
+                        view.updateMessage(msg);
+                    }
+                });
+            }else{
+                view.updateMessage(msg);
+            }
         }else if (observable instanceof FriendshipEvent){
             FriendshipEvent.NotifyCmd cmd = (FriendshipEvent.NotifyCmd) data;
             switch (cmd.type){
@@ -82,13 +125,11 @@ public class ConversationPresenter implements Observer {
         List<TIMConversation> result = new ArrayList<>();
         for (TIMConversation conversation : list){
             if (conversation.getType() == TIMConversationType.System) continue;
-
             Log.e(TAG,"id:"+conversation.getIdentifer() + "   peer"+conversation.getPeer());
             result.add(conversation);
             conversation.getMessage(1, null, new TIMValueCallBack<List<TIMMessage>>() {
                 @Override
                 public void onError(int i, String s) {
-                    Log.e(TAG, "get message error" + s);
                 }
 
                 @Override
@@ -100,7 +141,6 @@ public class ConversationPresenter implements Observer {
             });
 
         }
-
         view.initView(result);
     }
 

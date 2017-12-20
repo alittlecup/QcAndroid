@@ -216,6 +216,7 @@ public class MainMsgFragment extends BaseFragment
       toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
           presenter.clearNoti(null);
+          unReadNoti = 0;
           conversationFragment.setAllMessageRead();
           if (getActivity() instanceof Main2Activity) {
             ((Main2Activity) getActivity()).freshNotiCount(0);
@@ -340,7 +341,7 @@ public class MainMsgFragment extends BaseFragment
       items.clear();
       for (int i = 0; i < list.size(); i++) {
         NotificationMsg msg = list.get(i).notification != null ? list.get(i).notification : null;
-        if (list.get(i).unread > 0) unReadNoti++;
+        if (list.get(i).unread > 0 && msg !=null ) unReadNoti++;
         if (msg == null || (msg.getId() != null && notificationDeleted.contains(
             Long.toString(msg.getId())))) {
           //如果被删除 就不展示

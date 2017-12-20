@@ -17,15 +17,6 @@ import android.os.Parcelable;
  * Created by Paper on 16/4/27 2016.
  */
 public class ChargeBody implements Parcelable {
-    public static final Creator<ChargeBody> CREATOR = new Creator<ChargeBody>() {
-        @Override public ChargeBody createFromParcel(Parcel source) {
-            return new ChargeBody(source);
-        }
-
-        @Override public ChargeBody[] newArray(int size) {
-            return new ChargeBody[size];
-        }
-    };
     String price;
     int charge_type; //支付类型
     String shop_id;
@@ -46,29 +37,15 @@ public class ChargeBody implements Parcelable {
 
     //    String app_id;
     String model;
+    int origin;
+
+
 
     public ChargeBody() {
     }
 
-    protected ChargeBody(Parcel in) {
-        this.price = in.readString();
-        this.charge_type = in.readInt();
-        this.shop_id = in.readString();
-        this.card_no = in.readString();
-        this.account = in.readString();
-        this.seller_id = in.readString();
-        this.times = in.readString();
-        this.start = in.readString();
-        this.end = in.readString();
-        this.check_valid = in.readByte() != 0;
-        this.valid_from = in.readString();
-        this.valid_to = in.readString();
-        this.option_id = in.readString();
-        this.remarks = in.readString();
-        this.type = in.readString();
-        this.card_id = in.readString();
-        this.id = in.readString();
-        this.model = in.readString();
+    public void setOrigin(int origin) {
+        this.origin = origin;
     }
 
     public String getId() {
@@ -230,5 +207,38 @@ public class ChargeBody implements Parcelable {
         dest.writeString(this.card_id);
         dest.writeString(this.id);
         dest.writeString(this.model);
+        dest.writeInt(this.origin);
     }
+
+    protected ChargeBody(Parcel in) {
+        this.price = in.readString();
+        this.charge_type = in.readInt();
+        this.shop_id = in.readString();
+        this.card_no = in.readString();
+        this.account = in.readString();
+        this.seller_id = in.readString();
+        this.times = in.readString();
+        this.start = in.readString();
+        this.end = in.readString();
+        this.check_valid = in.readByte() != 0;
+        this.valid_from = in.readString();
+        this.valid_to = in.readString();
+        this.option_id = in.readString();
+        this.remarks = in.readString();
+        this.type = in.readString();
+        this.card_id = in.readString();
+        this.id = in.readString();
+        this.model = in.readString();
+        this.origin = in.readInt();
+    }
+
+    public static final Creator<ChargeBody> CREATOR = new Creator<ChargeBody>() {
+        @Override public ChargeBody createFromParcel(Parcel source) {
+            return new ChargeBody(source);
+        }
+
+        @Override public ChargeBody[] newArray(int size) {
+            return new ChargeBody[size];
+        }
+    };
 }

@@ -775,24 +775,6 @@
         android:screenOrientation="portrait"
         android:windowSoftInputMode="adjustResize"
         >
-
-    </activity>
-    <activity
-        android:name="cn.qingchengfit.saasbase.SaasContainerActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="adjustResize"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-
-        <data
-            android:host="cardtpl"
-            android:scheme="qcstaff"
-            />
-      </intent-filter>
     </activity>
     <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
               android:theme="@style/Base.Theme.AppCompat"
@@ -807,7 +789,6 @@
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
-
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
 
@@ -929,6 +910,7 @@
       </intent-filter>
     </activity>
 
+    <activity android:name=".views.cardtype.CardProtocolActivity"/>
   </application>
 
 </manifest>

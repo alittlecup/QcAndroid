@@ -25,7 +25,7 @@
         android:ellipsize="end"
         android:freezesText="true"
         android:lines="1"
-        android:maxWidth="119dp"
+        android:maxWidth="230dp"
         android:minWidth="75dp"
         tools:text="@string/test_long"
         style="@style/QcTextStyleStandardDark"
