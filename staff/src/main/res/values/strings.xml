@@ -376,6 +376,7 @@
   <string name="alert_del_cardtype_forbid">此会员卡种类适用于多个场馆，需要具有所有适用场馆下删除会员卡种类权限的用户才能进行删除。</string>
   <string name="alert_edit_cardtype_link_manage">该会员卡种类适用于多个场馆，请到[连锁运营]中进行编辑。</string>
   <string name="alert_edit_cardtype_forbid">此会员卡种类适用于多个场馆，需要具有所有适用场馆下修改会员卡种类权限的用户才能进行编辑。</string>
+  <string name="alert_edit_cardtype_no_permission">仅在全部适用场馆下都具有编辑会员卡种类权限的用户才能编辑基本信息</string>
 
   <string name="course_category">课程种类</string>
   <string name="no_teacher_in_course">本课程暂无教练</string>
@@ -889,6 +890,8 @@
   <string formatted="false" name="qr_code_2web">%sapp2web/?brand_id=%s\u0026shop_id=%s\u0026module=%s</string>
   <string formatted="false" name="qr_code_2web_add_card_term">/card_tpl/%s/term/add</string>
   <string formatted="false" name="qr_code_2web_modify_card">/card_tpl/%s/term/edit</string>
+  <string formatted="false" name="qr_code_2web_multi_card_add">brand/%s/card-templates/%s/term/add </string>
+  <string formatted="false" name="qr_code_2web_multi_card_edit">brand/%s/card-templates/%s/term/edit</string>
   <string name="modify">修改</string>
 
 </resources>

@@ -62,6 +62,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
   public static final String MODULE_ADD_CARD_PROTOCOL_SINGLE = "term/add";
   public static final String MODULE_ADD_CARD_PROTOCOL = "/card_tpl/add";
   public static final String CARD_TPL_ID = "card_tpl_id";
+  public static final String MULTI_CARD_TPL = "card-templates/add";
 
   //    @BindView(R.id.qrdecoderview)
   QRCodeReaderView qrdecoderview;
@@ -162,6 +163,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     } else if (getIntent() != null && getIntent().hasExtra(LINK_URL)) {
       url = getIntent().getStringExtra(LINK_URL);
     }
+
     sp = restRepository.createPostApi(Post_Api.class)
         .qcScans(text, new ScanBody.Builder().url(url).session_id(session)
             //                .module(getIntent().getStringExtra(LINK_MODULE))

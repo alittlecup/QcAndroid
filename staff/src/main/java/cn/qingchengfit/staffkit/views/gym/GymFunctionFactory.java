@@ -461,7 +461,7 @@ public class GymFunctionFactory {
                 return;
             case MODULE_OPERTAT_KOUBEI:
                 goQrScan(fragment, module, PermissionServerUtils.KOUBEI, coachService);
-                break;
+                return;
             case MODULE_OPERATE_COMPETITION:
                 WebActivity.startWeb(Configs.Server + Configs.URL_QC_TRAIN + "?gym_id=" + coachService.getGym_id(), fragment.getContext());
                 return;

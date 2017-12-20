@@ -107,7 +107,6 @@ public class LoginFragment extends BaseFragment
         if (!isFocus) {
           if (loginPhone != null && (loginPhone.getPhoneNum().length() == 11
               || loginPhone.getPhoneNum().length() == 10)) {
-            //TODO 请求是否勾选过协议
             presenter.getIsAgree(loginPhone.getPhoneNum());
           }
         }
