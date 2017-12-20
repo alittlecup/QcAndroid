@@ -66,6 +66,7 @@
       android:supportsRtl="true"
       android:theme="@style/QcAppTheme"
       tools:replace="android:label"
+      android:taskAffinity="cn.qingchengfit.staff"
       >
     <meta-data
         android:name="BUG_HD_SDK_GENERAL_KEY"
@@ -351,6 +352,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
+
     <activity
         android:name=".views.login.LoginActivity"
         android:launchMode="standard"
@@ -912,6 +914,23 @@
       </intent-filter>
     </activity>
 
+    <activity
+        android:name=".student.StaffStudentActivity"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="student"
+            android:scheme="qcstaff"
+            />
+      </intent-filter>
+    </activity>
+
   <activity
         android:name=".gym.GymConfigAcitivty"
         android:screenOrientation="portrait"
@@ -924,6 +943,23 @@
 
         <data
             android:host="gym"
+            android:scheme="qcstaff"
+            />
+      </intent-filter>
+    </activity>
+
+    <activity
+        android:name="cn.qingchengfit.saasbase.common.views.SaasCommonActivity"
+        android:screenOrientation="portrait">
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="common"
             android:scheme="qcstaff"
             />
       </intent-filter>

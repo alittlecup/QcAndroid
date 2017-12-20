@@ -57,16 +57,16 @@ public class CardBusinessUtils {
     int[] colors = new int[2];
     switch (type) {
       case 1:
-        colors[0] = Color.parseColor("#4d90fe");
-        colors[1] = Color.parseColor("#54c2fa");
+        colors[0] = Color.parseColor("#a99f84");
+        colors[1] = Color.parseColor("#dacebd");
         break;
       case 2:
-        colors[0] = Color.parseColor("#ff6098");
-        colors[1] = Color.parseColor("#ffa467");
+        colors[0] = Color.parseColor("#5a6a8e");
+        colors[1] = Color.parseColor("#a4b2ce");
         break;
       default:
-        colors[0] = Color.parseColor("#24beb8");
-        colors[1] = Color.parseColor("#43e695");
+        colors[0] = Color.parseColor("#48484f");
+        colors[1] = Color.parseColor("#a7a7b5");
         break;
     }
     return colors;

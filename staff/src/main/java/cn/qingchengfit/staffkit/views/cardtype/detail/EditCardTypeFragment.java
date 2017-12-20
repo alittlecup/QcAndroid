@@ -25,6 +25,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.CardtplBody;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -35,7 +36,6 @@ import cn.qingchengfit.staffkit.views.cardtype.standard.CardStandardFragment;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
-import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -125,7 +125,6 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_cardtype, container, false);
         unbinder = ButterKnife.bind(this, view);
-
         presenter.attachView(this);
         if (mType != 0) {//
             mCallbackActivity.setToolbar(getString(R.string.title_cardtype_edit), false, null,

@@ -1,12 +1,10 @@
 package cn.qingchengfit.testmodule;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
-
-import cn.qingchengfit.student.base.BaseViewModel;
+import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
 
 /**
  * Created by huangbaole on 2017/11/16.

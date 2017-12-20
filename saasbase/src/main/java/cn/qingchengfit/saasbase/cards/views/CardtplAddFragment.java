@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -102,18 +101,18 @@ public class CardtplAddFragment extends CardTplDetailFragment {
     });
   }
 
-  @Override public void initToolbar(@NonNull Toolbar toolbar) {
-    super.initToolbar(toolbar);
+  @Override public void setToolbar(Toolbar toolbar) {
+    initToolbar(toolbar);
     toolbarTitle.setText("新增会员卡种类");
     toolbar.getMenu().clear();
     toolbar.getMenu().add("保存").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     RxMenuItem.clicks(toolbar.getMenu().getItem(0))
-      .throttleFirst(500, TimeUnit.MILLISECONDS)
-      .subscribe(new BusSubscribe<Void>() {
-        @Override public void onNext(Void aVoid) {
-          presenter.createCardTpl();
-        }
-      });
+        .throttleFirst(500, TimeUnit.MILLISECONDS)
+        .subscribe(new BusSubscribe<Void>() {
+          @Override public void onNext(Void aVoid) {
+            presenter.createCardTpl();
+          }
+        });
   }
 
   @Override protected void onFinishAnimation() {
@@ -123,6 +122,7 @@ public class CardtplAddFragment extends CardTplDetailFragment {
       Bundle savedInstanceState) {
     View view =  super.onCreateView(inflater, container, savedInstanceState);
     initCardTpl();
+
     return view;
   }
 

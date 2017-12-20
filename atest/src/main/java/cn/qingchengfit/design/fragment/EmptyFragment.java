@@ -1,5 +1,7 @@
 package cn.qingchengfit.design.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.qingchengfit.design.SearchActivity;
 import cn.qingchengfit.testmodule.R;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
@@ -19,6 +24,8 @@ import cn.qingchengfit.views.fragments.BaseFragment;
  */
 
 public class EmptyFragment extends BaseFragment {
+
+  public static final String TAG = "EmptyFragment";
 
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.toolbar_title) TextView toolbarTitle;
@@ -55,6 +62,7 @@ public class EmptyFragment extends BaseFragment {
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    LogUtil.e(TAG, "---- onCreate");
     if (getArguments() != null){
       toolbarStr = getArguments().getString("toolbar");
       title = getArguments().getString("title");
@@ -65,15 +73,51 @@ public class EmptyFragment extends BaseFragment {
     }
   }
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_empty, container, false);
-    unbinder = ButterKnife.bind(this, view);
-    initToolbar(toolbar);
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
+    LogUtil.e(TAG, "---- onAttach");
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    LogUtil.e(TAG, "---- onResume");
+  }
+
+  @Override public void onDetach() {
+    super.onDetach();
+    LogUtil.e(TAG, "---- onDetach");
+  }
+
+  @OnClick(R.id.tv_empty_title)
+  public void onClick(){
+    getFragmentManager().beginTransaction()
+    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+        .replace(R.id.frag_empty, new SearchFragment())
+        .addToBackStack(null)
+        .commit();
+  }
+
+  @Override protected void onFinishAnimation() {
+    super.onFinishAnimation();
+    LogUtil.e(TAG, "---- onFinishAnimation");
     toolbarTitle.setText(toolbarStr);
     tvEmptyTitle.setText(title);
     tvEmptyHint.setText(hint);
+  }
+
+  @OnClick(R.id.tv_empty_hint)
+  public void onClickHint(){
+    Intent intent = new Intent(getContext(), SearchActivity.class);
+    getContext().startActivity(intent);
+  }
+
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    LogUtil.e(TAG, "---- onCreateView");
+    View view = inflater.inflate(R.layout.fragment_empty, container, false);
+    unbinder = ButterKnife.bind(this, view);
+    initToolbar(toolbar);
     if (drawable != 0){
       imgEmpty.setImageResource(drawable);
     }
@@ -82,5 +126,6 @@ public class EmptyFragment extends BaseFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
+    LogUtil.e(TAG, "---- onDestroyView");
   }
 }

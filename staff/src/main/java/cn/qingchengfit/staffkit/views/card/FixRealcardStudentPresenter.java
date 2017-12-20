@@ -11,10 +11,10 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.body.FixCard;
-import cn.qingchengfit.model.responese.Students;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
@@ -125,8 +125,8 @@ public class FixRealcardStudentPresenter extends BasePresenter {
             .qcGetCardBundldStudents(staffid, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .map(new Func1<QcDataResponse<Students>, Boolean>() {
-                @Override public Boolean call(QcDataResponse<Students> qcResponseAllStudent) {
+            .map(new Func1<QcDataResponse<StudentListWrapper>, Boolean>() {
+                @Override public Boolean call(QcDataResponse<StudentListWrapper> qcResponseAllStudent) {
 
                     if (ResponseConstant.checkSuccess(qcResponseAllStudent)) {
                         for (QcStudentBean bean : qcResponseAllStudent.data.users) {

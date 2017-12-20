@@ -1,11 +1,11 @@
 include ':saasbase',
-        ':atest',
-    ':pos',
-    ':recruit',
+//        ':atest',
+//    ':pos',
+//    ':recruit',
     ':qcim',
     ':sdk',
     ':staff',
-    ':student',
+//    ':student',
 ':qcbase'
 //    ':trainer',
 //

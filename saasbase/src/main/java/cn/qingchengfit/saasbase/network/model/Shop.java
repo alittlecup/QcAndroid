@@ -17,15 +17,6 @@ import android.os.Parcelable;
  * Created by Paper on 16/2/23 2016.
  */
 public class Shop implements Parcelable {
-    public static final Creator<Shop> CREATOR = new Creator<Shop>() {
-        @Override public Shop createFromParcel(Parcel source) {
-            return new Shop(source);
-        }
-
-        @Override public Shop[] newArray(int size) {
-            return new Shop[size];
-        }
-    };
     public String id;
     public String name;
     public String address;
@@ -37,6 +28,9 @@ public class Shop implements Parcelable {
     public double gd_lng;
     public String system_end;
     public String contact;
+    public boolean has_permission;
+
+
 
     public Shop() {
     }
@@ -55,44 +49,12 @@ public class Shop implements Parcelable {
         contact = builder.contact;
     }
 
-    protected Shop(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.address = in.readString();
-        this.phone = in.readString();
-        this.description = in.readString();
-        this.photo = in.readString();
-        this.gd_district_id = in.readString();
-        this.gd_lat = in.readDouble();
-        this.gd_lng = in.readDouble();
-        this.system_end = in.readString();
-        this.contact = in.readString();
-    }
-
     @Override public boolean equals(Object obj) {
         return ((Shop) obj).id.equalsIgnoreCase(id);
     }
 
     @Override public int hashCode() {
         return id.hashCode();
-    }
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.address);
-        dest.writeString(this.phone);
-        dest.writeString(this.description);
-        dest.writeString(this.photo);
-        dest.writeString(this.gd_district_id);
-        dest.writeDouble(this.gd_lat);
-        dest.writeDouble(this.gd_lng);
-        dest.writeString(this.system_end);
-        dest.writeString(this.contact);
     }
 
     public static final class Builder {
@@ -170,4 +132,48 @@ public class Shop implements Parcelable {
             return new Shop(this);
         }
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.address);
+        dest.writeString(this.phone);
+        dest.writeString(this.description);
+        dest.writeString(this.photo);
+        dest.writeString(this.gd_district_id);
+        dest.writeDouble(this.gd_lat);
+        dest.writeDouble(this.gd_lng);
+        dest.writeString(this.system_end);
+        dest.writeString(this.contact);
+        dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
+    }
+
+    protected Shop(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.address = in.readString();
+        this.phone = in.readString();
+        this.description = in.readString();
+        this.photo = in.readString();
+        this.gd_district_id = in.readString();
+        this.gd_lat = in.readDouble();
+        this.gd_lng = in.readDouble();
+        this.system_end = in.readString();
+        this.contact = in.readString();
+        this.has_permission = in.readByte() != 0;
+    }
+
+    public static final Creator<Shop> CREATOR = new Creator<Shop>() {
+        @Override public Shop createFromParcel(Parcel source) {
+            return new Shop(source);
+        }
+
+        @Override public Shop[] newArray(int size) {
+            return new Shop[size];
+        }
+    };
 }

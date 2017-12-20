@@ -5,6 +5,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.response.QcAnyResponse;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.net.CardApi;
 import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
@@ -20,6 +21,7 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
+import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import java.util.HashMap;
@@ -143,14 +145,14 @@ public class CardModel implements ICardModel {
     return posApi.qcCreateCardtplOption(gymWrapper.getGymId(),card_tpl_id,gymWrapper.getParams(),body);
   }
 
-  @Override public Observable<QcDataResponse<PayBusinessResponseWrap>> qcChargeCard(ChargeBody ochargeBody) {
+  @Override public Observable<QcDataResponse<PayBusinessResponseWrap>> qcChargeCard(CardBuyBody ochargeBody) {
     ChargeBody chargeBody = (ChargeBody) ochargeBody.clone();
     if (chargeBody.getSeller_id().equalsIgnoreCase("0"))
       chargeBody.setSeller_id(null);
     return posApi.qcCardCharge(gymWrapper.getGymId(),chargeBody.getCard_id(),gymWrapper.getParams(),chargeBody);
   }
 
-  @Override public Observable<QcDataResponse<PayBusinessResponseWrap>> buyCard(@Body CardBuyBody obody) {
+  @Override public Observable<QcDataResponse<T>> buyCard(@Body CardBuyBody obody) {
     CardBuyBody body = (CardBuyBody) obody.clone();
     if (body.getSeller_id().equalsIgnoreCase("0"))
       body.setSeller_id(null);

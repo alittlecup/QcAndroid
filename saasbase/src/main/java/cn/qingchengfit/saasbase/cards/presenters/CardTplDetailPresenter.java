@@ -11,6 +11,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.cards.bean.CardLimit;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
@@ -35,7 +36,7 @@ public class CardTplDetailPresenter extends BasePresenter {
 
   private MVPView view;
 
-  @Inject CardTplDetailPresenter() {
+  @Inject public CardTplDetailPresenter() {
   }
 
   public void setCardTpl(CardTpl cardTpl) {
@@ -141,10 +142,19 @@ public class CardTplDetailPresenter extends BasePresenter {
    */
   public void createCardTpl() {
     if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
+      CardLimit limit = view.getCardLimit();
       CardtplBody body = new CardtplBody.Builder().type(cardCate)
-        .name(view.getCardName())
-        .options(view.getCardTplOptions())
-        .build();
+          .name(view.getCardName())
+          .description(view.getDescription())
+          .options(view.getCardTplOptions())
+          .is_limit(limit.is_limit)
+          .buy_limit(limit.buy_limit)
+          .pre_times(limit.pre_times)
+          .day_times(limit.day_times)
+          .week_times(limit.week_times)
+          .month_times(limit.month_times)
+          .shops(view.getSupportShopId())
+          .build();
       cardModel.qcCreateCardtpl(body)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
@@ -250,5 +260,12 @@ public class CardTplDetailPresenter extends BasePresenter {
     String getCardName();
 
     List<CardTplOption> getCardTplOptions();
+
+    CardLimit getCardLimit();
+
+    String getDescription();
+
+    String getSupportShopId();
+
   }
 }

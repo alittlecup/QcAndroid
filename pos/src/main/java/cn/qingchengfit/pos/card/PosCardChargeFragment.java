@@ -6,7 +6,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.pos.RongPay;
 import cn.qingchengfit.saasbase.bill.view.BillDetailParams;
 import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponse;
-import cn.qingchengfit.saasbase.cards.views.CardChargeFragment;
+import cn.qingchengfit.saasbase.cards.views.NewCardChargeFragment;
 import javax.inject.Inject;
 
 /**
@@ -30,7 +30,7 @@ import javax.inject.Inject;
  * Created by Paper on 2017/10/12.
  */
 
-public class PosCardChargeFragment extends CardChargeFragment {
+public class PosCardChargeFragment extends NewCardChargeFragment {
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
 

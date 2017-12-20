@@ -139,7 +139,7 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
         webDesc.getSettings().setUseWideViewPort(true);
         webDesc.getSettings().setLoadWithOverviewMode(true);
         webDesc.setHorizontalScrollBarEnabled(false);
-        editJacket.setCompoundDrawables(ContextCompat.getDrawable(getContext(), R.drawable.ic_edit), null, null, null);
+        editJacket.setCompoundDrawables(ContextCompat.getDrawable(getContext(), R.drawable.vd_custom_card_option), null, null, null);
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override public void onRefresh() {
                 mPresenter.queryDetail(mCourseDetail.getId());

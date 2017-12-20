@@ -18,10 +18,11 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
-import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
+import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.repository.CardApi;
+import com.google.gson.JsonObject;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.Path;
@@ -121,7 +122,7 @@ public class CardModel implements ICardModel {
   }
 
   @Override
-  public Observable<QcDataResponse<PayBusinessResponseWrap>> qcChargeCard(ChargeBody ochargeBody) {
+  public Observable<QcDataResponse<JsonObject>> qcChargeCard(CardBuyBody ochargeBody) {
     ChargeBody chargeBody = (ChargeBody) ochargeBody.clone();
     if (chargeBody.getSeller_id().equalsIgnoreCase("0")) {
       chargeBody.setSeller_id(null);
@@ -131,8 +132,9 @@ public class CardModel implements ICardModel {
   }
 
   @Override
-  public Observable<QcDataResponse<PayBusinessResponseWrap>> buyCard(@Body CardBuyBody obody) {
+  public Observable<QcDataResponse<JsonObject>> buyCard(@Body CardBuyBody obody) {
     CardBuyBody body = (CardBuyBody) obody.clone();
+    body.setType(null);
     if (body.getSeller_id().equalsIgnoreCase("0")) {
       body.setSeller_id(null);
     }
@@ -182,5 +184,9 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse> qcPostBalanceCondition(CardBalanceNotifyBody body) {
     return posApi.qcPostBalanceCondition(loginStatus.staff_id(),gymWrapper.getParams(),body);
+  }
+
+  public Observable<QcDataResponse<Shops>> qcGetBrandShops(String brand_id) {
+    return posApi.qcGetBrandShops(loginStatus.staff_id(), brand_id);
   }
 }

@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:maxHeight="12dp"
         android:scaleType="fitXY"
+        tools:src="@drawable/ic_local_camera_prime_24dp"
         />
     <Space
         android:layout_width="0dp"

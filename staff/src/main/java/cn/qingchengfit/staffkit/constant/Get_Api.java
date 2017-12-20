@@ -108,11 +108,11 @@ import cn.qingchengfit.model.responese.TrackSellers;
 import cn.qingchengfit.model.responese.TrackStudents;
 import cn.qingchengfit.network.response.NotiSmsCountListWrap;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcListData;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.network.response.ShopOrdersWrap;
 import cn.qingchengfit.network.response.SmsListWrap;
 import cn.qingchengfit.network.response.WxAuthorWrap;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
 import cn.qingchengfit.staffkit.train.model.GroupListResponse;
@@ -215,7 +215,7 @@ public interface Get_Api {
         @Query("id") String gymid, @Query("model") String model);
 
     //会员卡可绑定的会员列表
-    @GET("/api/staffs/{staff_id}/method/users/?show_all=1") rx.Observable<QcDataResponse<Students>> qcGetCardBundldStudents(
+    @GET("/api/staffs/{staff_id}/method/users/?show_all=1") rx.Observable<QcDataResponse<StudentListWrapper>> qcGetCardBundldStudents(
         @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
     /**

@@ -151,14 +151,18 @@ import javax.inject.Inject;
           new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              routeTo("/cardtpl/add/",
-                new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(
-                  position + 1).build());
+              onMenuAdd(position);
             }
           }).show();
         return true;
       }
     });
+  }
+
+  public void onMenuAdd(int position){
+    routeTo("/cardtpl/add/",
+        new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(
+            position + 1).build());
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
