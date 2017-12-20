@@ -6,9 +6,9 @@ import android.os.Bundle;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.responese.CardTpl;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import javax.inject.Inject;
@@ -23,6 +23,7 @@ import rx.schedulers.Schedulers;
 public class CardProtocolActivity extends WebActivity{
 
   @Inject GymWrapper gymWrapper;
+  @Inject SerPermisAction serPermisAction;
 
   public static void startWeb(String url, Context context, boolean isHaveModify) {
     Intent intent = new Intent(context, CardProtocolActivity.class);
@@ -58,13 +59,13 @@ public class CardProtocolActivity extends WebActivity{
       ((CardProtocolWebFragment)webfrag).setOnMenuClickListener(new CardProtocolWebFragment.OnMenuClickListener() {
         @Override public void onMenuClick() {
           CardTpl cardTpl = getIntent().getParcelableExtra("card_tpl");
-          if (!gymWrapper.inBrand() && SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
+          if (!gymWrapper.inBrand() && serPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
               cardTpl.getShopIds())) {
             Intent intent = new Intent(CardProtocolActivity.this, QRActivity.class);
             intent.putExtra(QRActivity.LINK_MODULE, getString(R.string.qr_code_2web_modify_card,
                 cardTpl.id));
             startActivity(intent);
-          }else if (gymWrapper.inBrand() && SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
+          }else if (gymWrapper.inBrand() && serPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
               cardTpl.getShopIds())){
             Intent intent = new Intent(CardProtocolActivity.this, QRActivity.class);
             intent.putExtra(QRActivity.LINK_MODULE,

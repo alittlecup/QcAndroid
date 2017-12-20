@@ -96,6 +96,7 @@
   <color name="white_two">#f4f4f4</color>
   <color name="shamrock_green">#0db14b</color>
   <color name="black">#000000</color>
+  <color name="black_a_20">#33000000</color>
 
   <!-- Fonts -->
   <color name="month_title">@color/text_black</color>
@@ -115,6 +116,8 @@
   <color name="private_color">#7986cb</color>
   <color name="colorPrimarytrans">#110db14b</color>
   <color name="text_link">#6EB8F1</color>
+
+  <color name="pos_login_bg">#242424</color>
 
 
 </resources>

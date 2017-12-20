@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.signin.config;
 
+import android.util.Pair;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;

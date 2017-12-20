@@ -25,11 +25,11 @@ import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.RxCardTypeEvent;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.cardtype.detail.EditCardTypeFragment;
@@ -63,6 +63,7 @@ public class BrandCardListFragment extends BaseFragment {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
 
     private String mChooseShopId, mChooseShopName;//, mId, mModel;
     private CardViewpagerAdapter adapter;
@@ -95,7 +96,7 @@ public class BrandCardListFragment extends BaseFragment {
                 }
             }, R.menu.menu_add, new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
-                    if (SerPermisAction.checkNoOne(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
+                    if (serPermisAction.checkNoOne(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
                         showAlert(R.string.alert_permission_forbid);
                         return true;
                     }

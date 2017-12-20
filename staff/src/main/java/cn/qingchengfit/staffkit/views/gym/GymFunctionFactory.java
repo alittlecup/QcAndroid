@@ -381,10 +381,10 @@ public class GymFunctionFactory {
                 //break;
 
             case MODULE_SERVICE_FREE:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)
-                    && !SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK)
-                    && !SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK_NEW)
-                    && !SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SCREEN)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)
+                    && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK)
+                    && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK_NEW)
+                    && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SCREEN)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }

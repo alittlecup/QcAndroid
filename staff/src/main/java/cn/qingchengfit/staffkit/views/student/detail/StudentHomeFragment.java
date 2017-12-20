@@ -33,11 +33,11 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EditStudentEvent;
@@ -102,6 +102,8 @@ public class StudentHomeFragment extends BaseFragment {
     @Inject RestRepository restRepository;
     @Inject StudentWrapper studentBean;
     @Inject SerPermisAction serPermisAction;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
+    @Inject StudentAction studentAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     ArrayList<Fragment> fragments = new ArrayList<>();
@@ -196,7 +198,7 @@ public class StudentHomeFragment extends BaseFragment {
             }
         });
 
-        RxRegiste(StudentAction.newInstance()
+        RxRegiste(studentAction
             .getStudentById(studentBean.id()).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcStudentBean>() {
@@ -276,7 +278,7 @@ public class StudentHomeFragment extends BaseFragment {
                 if (gymWrapper.inBrand()) {
                     final List<String> supportId = new ArrayList<>();
 
-                    List<String> sa = SerPermisAction.checkMutiTrue(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE,
+                    List<String> sa = serPermisAction.checkMutiTrue(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE,
                         studentBean.getStudentBean().getSupportIdList());
 
                     supportId.addAll(sa);
@@ -313,11 +315,11 @@ public class StudentHomeFragment extends BaseFragment {
             } else if (requestCode == 9) {//选择场馆
 
                 Shop shop = (Shop) IntentUtils.getParcelable(data);
-                if (!SerPermisAction.check(shop.id, PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+                if (!serPermisAction.check(shop.id, PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
                     showAlert("您没有该场馆购卡权限");
                     return;
                 }
-                CoachService mChooseShop = GymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shop.id);
+                CoachService mChooseShop = gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shop.id);
                 if (mChooseShop != null) {
                     Intent toCardType = new Intent(getActivity(), ChooseCardTypeActivity.class);
                     gymWrapper.setCoachService(mChooseShop);
@@ -327,7 +329,7 @@ public class StudentHomeFragment extends BaseFragment {
                 final Shop shop = (Shop) IntentUtils.getParcelable(data);
 
                 if (shop != null) {
-                    if (!SerPermisAction.check(shop.id, PermissionServerUtils.MANAGE_STAFF_CAN_DELETE)) {
+                    if (!serPermisAction.check(shop.id, PermissionServerUtils.MANAGE_STAFF_CAN_DELETE)) {
                         showAlert(getString(R.string.alert_permission_forbid));
                         return;
                     }

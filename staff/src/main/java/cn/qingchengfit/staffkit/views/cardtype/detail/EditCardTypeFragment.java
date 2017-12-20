@@ -24,10 +24,10 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.CardtplBody;
 import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventLimitBuyCount;
 import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.bottom.BottomBuyLimitFragment;
@@ -89,6 +89,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   @Inject EditCardTypePresenter presenter;
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
+  @Inject SerPermisAction serPermisAction;
   @BindView(R.id.expand_card_protocol) ExpandedLayout expandCardProtocol;
   @BindView(R.id.input_card_protocol) CommonInputView inputCardProtocol;
   @BindView(R.id.show_card_protocol) TextView showCardProtocol;
@@ -172,7 +173,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
             } else {
               inputCardProtocol.setVisibility(View.GONE);
               Intent intent = new Intent(getActivity(), QRActivity.class);
-              if (SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
+              if (serPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
                   card_tpl.getShopIds())) {
                 if (!gymWrapper.inBrand()) {
                   intent.putExtra(QRActivity.LINK_MODULE,
@@ -252,7 +253,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   @Override public void onCardTpl(CardTpl card_tpl) {
     if (card_tpl != null) {
 
-      if (SerPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
+      if (serPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
           card_tpl.getShopIds())) {
         switcher.setVisibility(View.VISIBLE);
         expandCardProtocol.setVisibility(View.VISIBLE);
