@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.db.utils;
 
 import android.databinding.BindingAdapter;
-import android.databinding.InverseBindingMethod;
-import android.databinding.InverseBindingMethods;
 import cn.qingchengfit.widgets.CommonInputView;
 
 /**
@@ -25,11 +23,11 @@ import cn.qingchengfit.widgets.CommonInputView;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/12/19.
  */
-@InverseBindingMethods({
-  @InverseBindingMethod(type = CommonInputView.class, attribute = "app:civ_content"),
-})
+//@InverseBindingMethods({
+//  @InverseBindingMethod(type = CommonInputView.class, attribute = "app:civ_content"),
+//})
 public class CommonInputViewAdapter {
-  @BindingAdapter("app:civ_content")
+  @BindingAdapter("civ_content")
   public static void setContent(CommonInputView v,String content){
     v.setContent(content);
   }

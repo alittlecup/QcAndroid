@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.MainActivity;
-import com.qingchengfit.fitcoach.bean.NewPushMsg;
+import cn.qingchengfit.bean.NewPushMsg;
 import java.util.List;
 
 /**

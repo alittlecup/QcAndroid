@@ -1,10 +1,10 @@
 package com.qingchengfit.fitcoach.fragment.batch.details;
 
+import cn.qingchengfit.bean.Space;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.Course;
-import com.qingchengfit.fitcoach.bean.BatchOpenRule;
-import com.qingchengfit.fitcoach.bean.Rule;
-import com.qingchengfit.fitcoach.bean.Space;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
+import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import java.util.List;
 

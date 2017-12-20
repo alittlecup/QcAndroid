@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.action;
 
-import com.qingchengfit.fitcoach.bean.CurentPermissions;
+import cn.qingchengfit.bean.CurentPermissions;
 import java.util.List;
 
 /**

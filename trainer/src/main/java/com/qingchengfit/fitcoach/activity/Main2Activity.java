@@ -22,6 +22,8 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.bean.NetworkBean;
+import cn.qingchengfit.bean.UpdateVersion;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.events.EventSessionError;
@@ -30,6 +32,7 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -44,11 +47,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
-import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.bean.NetworkBean;
-import com.qingchengfit.fitcoach.bean.UpdateVersion;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.fragment.main.MainMsgFragment;
@@ -84,7 +84,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static com.qingchengfit.fitcoach.App.diskLruCache;
 import static com.qingchengfit.fitcoach.http.QcCloudClient.getApi;
 
 public class Main2Activity extends BaseActivity implements WebActivityInterface {
@@ -130,6 +129,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     private File newAkp;
     private int mGwShowNum = 0;
     private boolean isShowFindRed = true;
+    private DiskLruCache diskLruCache;
 
     public Date getChooseDate() {
         return mChooseDate;
@@ -384,7 +384,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
                 }
 
                 url = updateVersion.direct_install_url;
-                newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + updateVersion.version + ".apk");
+                newAkp = new File(getExternalCacheDir().getAbsolutePath() + getString(R.string.app_name) + "_" + updateVersion.version + ".apk");
                 MaterialDialog.Builder builder = new MaterialDialog.Builder(Main2Activity.this).title("前方发现新版本!!")
                     .content(updateVersion.changelog)
                     .positiveText("更新")
@@ -465,11 +465,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
      * create dir in SDcard
      */
     private void setupFile() {
-        File file = new File(Configs.ExternalPath);
-        if (!file.exists()) {
-            file.mkdir();
-        }
-        File fileCache = new File(Configs.ExternalCache);
+        File fileCache = getExternalCacheDir();
         if (!fileCache.exists()) {
             fileCache.mkdir();
         }

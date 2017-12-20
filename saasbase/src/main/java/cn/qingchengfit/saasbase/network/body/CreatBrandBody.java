@@ -16,4 +16,31 @@ package cn.qingchengfit.saasbase.network.body;
 public class CreatBrandBody {
     public String name;
     public String photo;
+
+    private CreatBrandBody(Builder builder) {
+        name = builder.name;
+        photo = builder.photo;
+    }
+
+    public static final class Builder {
+        private String name;
+        private String photo;
+
+        public Builder() {
+        }
+
+        public Builder name(String val) {
+            name = val;
+            return this;
+        }
+
+        public Builder photo(String val) {
+            photo = val;
+            return this;
+        }
+
+        public CreatBrandBody build() {
+            return new CreatBrandBody(this);
+        }
+    }
 }

@@ -26,7 +26,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.bean.CoachInitBean;
+import cn.qingchengfit.bean.CoachInitBean;
 import cn.qingchengfit.events.EventChooseImage;
 import java.util.ArrayList;
 import rx.android.schedulers.AndroidSchedulers;

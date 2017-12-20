@@ -2,13 +2,13 @@ package com.qingchengfit.fitcoach.fragment.statement.presenter;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import cn.qingchengfit.bean.CourseTypeSample;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.utils.DateUtils;
-import com.qingchengfit.fitcoach.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.fragment.StatementDetailFragment;
 import com.qingchengfit.fitcoach.fragment.statement.CustomStatementView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
@@ -32,7 +32,7 @@ import rx.Subscription;
  * <p/>
  * Created by Paper on 16/3/11 2016.
  */
-public class CustomStatmentPresenter implements Presenter {
+public class CustomStatmentPresenter extends BasePresenter {
 
     @Inject StatementUsecase usecase;
 
@@ -96,6 +96,7 @@ public class CustomStatmentPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         customStatementView = null;
         if (spGym != null) spGym.unsubscribe();
         if (spStudent != null) spStudent.unsubscribe();

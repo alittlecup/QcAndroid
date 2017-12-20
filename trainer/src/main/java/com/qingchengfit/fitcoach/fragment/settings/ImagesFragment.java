@@ -147,13 +147,13 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
     }
 
     private void changeMode() {
-        if (commonFlexAdapter.getMode() == SelectableAdapter.MODE_IDLE) {
+        if (commonFlexAdapter.getMode() == SelectableAdapter.Mode.IDLE) {
             commonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
             btnAdd.setVisibility(View.GONE);
             del.setVisibility(View.VISIBLE);
         } else {
             commonFlexAdapter.clearSelection();
-            commonFlexAdapter.setMode(SelectableAdapter.MODE_IDLE);
+            commonFlexAdapter.setMode(SelectableAdapter.Mode.IDLE);
             del.setVisibility(View.GONE);
             btnAdd.setVisibility(View.VISIBLE);
         }
@@ -191,7 +191,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
                     @Override public void call(QcResponse qcResponse) {
                         if (ResponseConstant.checkSuccess(qcResponse)) {
                             cn.qingchengfit.utils.ToastUtils.show("删除成功");
-                            commonFlexAdapter.setMode(SelectableAdapter.MODE_IDLE);
+                            commonFlexAdapter.setMode(SelectableAdapter.Mode.IDLE);
                             freshData();
                             btnAdd.setVisibility(View.VISIBLE);
                             del.setVisibility(View.GONE);

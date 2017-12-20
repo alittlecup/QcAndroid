@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextAdapter;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
-import com.qingchengfit.fitcoach.bean.RxAddCourse;
+import cn.qingchengfit.bean.RxAddCourse;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import java.util.ArrayList;
 import java.util.List;

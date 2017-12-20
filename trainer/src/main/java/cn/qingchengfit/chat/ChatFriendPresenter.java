@@ -1,7 +1,6 @@
 package cn.qingchengfit.chat;
 
 import android.util.Pair;
-import cn.qingchengfit.chat.model.ChatGym;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -9,6 +8,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.ChatFriendsData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.recruit.model.ChatGym;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import java.util.ArrayList;
 import java.util.List;

@@ -43,6 +43,12 @@ public class Time_repeat implements ICmLRTxt, Parcelable {
         this.is_cross = is_cross;
     }
 
+    public Time_repeat(String start, String end, int weekday) {
+        this.start = start;
+        this.end = end;
+        this.weekday = weekday;
+    }
+
     @Override public String getLeftTxt() {
         return DateUtils.getChineseWeekStr(weekday-1);
     }

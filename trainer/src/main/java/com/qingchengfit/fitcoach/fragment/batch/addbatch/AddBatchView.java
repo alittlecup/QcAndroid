@@ -1,9 +1,9 @@
 package com.qingchengfit.fitcoach.fragment.batch.addbatch;
 
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.model.base.TimeRepeat;
-import com.qingchengfit.fitcoach.bean.BatchOpenRule;
-import com.qingchengfit.fitcoach.bean.Rule;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
+import cn.qingchengfit.saasbase.course.batch.bean.Rule;
+import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
 import java.util.ArrayList;
 
 /**
@@ -29,5 +29,5 @@ public interface AddBatchView extends PView {
     void checkFailed(String s);
     void onOpenRule(BatchOpenRule batchOpenRule);
 
-    void onTemplete(ArrayList<Rule> rules, ArrayList<TimeRepeat> time_repeats, int maxuer);
+    void onTemplete(ArrayList<Rule> rules, ArrayList<Time_repeat> time_repeats, int maxuer);
 }

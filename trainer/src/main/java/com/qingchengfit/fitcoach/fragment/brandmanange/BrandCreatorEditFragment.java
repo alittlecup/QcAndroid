@@ -24,7 +24,7 @@ import cn.qingchengfit.widgets.PasswordView;
 import cn.qingchengfit.widgets.PhoneEditText;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.BrandManageActivity;
-import com.qingchengfit.fitcoach.bean.ChangeBrandCreatorBody;
+import cn.qingchengfit.bean.ChangeBrandCreatorBody;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import java.util.concurrent.TimeUnit;

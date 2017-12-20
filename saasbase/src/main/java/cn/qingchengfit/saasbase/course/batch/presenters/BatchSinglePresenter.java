@@ -66,24 +66,21 @@ public class BatchSinglePresenter extends BasePresenter<BatchSinglePresenter.MVP
   @Inject public BatchSinglePresenter() {
   }
 
-
-
-  public void queryData(){
-    RxRegiste(courseApi.qcGetSingleBatch(isPrivate,scheduleId)
-          .onBackpressureLatest()
-              .subscribeOn(Schedulers.io())
-              .observeOn(AndroidSchedulers.mainThread())
-              .subscribe(new NetSubscribe<QcDataResponse<SingleBatchWrap>>() {
-                @Override public void onNext(QcDataResponse<SingleBatchWrap> qcResponse) {
-                  if (ResponseConstant.checkSuccess(qcResponse)) {
-                    batchDetail = isPrivate?qcResponse.data.timetable:qcResponse.data.schedule;
-                    mvpView.onDetail(isPrivate?qcResponse.data.timetable:qcResponse.data.schedule);
-                  } else {
-                    mvpView.onShowError(qcResponse.getMsg());
-                  }
-                }
-              }));
-
+  public void queryData() {
+    RxRegiste(courseApi.qcGetSingleBatch(isPrivate, scheduleId)
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<SingleBatchWrap>>() {
+        @Override public void onNext(QcDataResponse<SingleBatchWrap> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            batchDetail = isPrivate ? qcResponse.data.timetable : qcResponse.data.schedule;
+            mvpView.onDetail(isPrivate ? qcResponse.data.timetable : qcResponse.data.schedule);
+          } else {
+            mvpView.onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 
   public void setOpenRuleType(int type) {
@@ -95,7 +92,7 @@ public class BatchSinglePresenter extends BasePresenter<BatchSinglePresenter.MVP
     this.body.open_rule.open_datetime = time;
   }
 
-  public void editSchedule(){
+  public void editSchedule() {
 
     body.course_id = mvpView.getCourseId();
     body.teacher_id = mvpView.getTrainerId();
@@ -106,8 +103,20 @@ public class BatchSinglePresenter extends BasePresenter<BatchSinglePresenter.MVP
     //  body.
   }
 
-  public void delSchedule(){
-
+  public void delSchedule() {
+    RxRegiste(courseApi.qcDelBatchSchedule(isPrivate, scheduleId)
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            mvpView.popBack();
+          } else {
+            mvpView.onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 
   public interface MVPView extends CView {
@@ -120,9 +129,13 @@ public class BatchSinglePresenter extends BasePresenter<BatchSinglePresenter.MVP
     boolean supportMutiMember();
 
     String getStart();
+
     String getEnd();
+
     List<String> getSupportSpace();
+
     List<BatchLoop> getBatchLoops();
+
     List<Rule> getRules();
 
     int suportMemberNum();

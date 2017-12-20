@@ -22,7 +22,7 @@ import com.bigkoo.pickerview.lib.ArrayWheelAdapter;
 import com.bigkoo.pickerview.lib.OnWheelChangedListener;
 import com.bigkoo.pickerview.lib.WheelView;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CourseTypeSample;
+import cn.qingchengfit.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.fragment.statement.CourseChooseView;
 import com.qingchengfit.fitcoach.fragment.statement.presenter.CourseChoosePresenter;
 import java.util.ArrayList;

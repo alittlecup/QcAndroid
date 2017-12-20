@@ -41,8 +41,8 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.FragActivity;
-import com.qingchengfit.fitcoach.bean.RecieveMsg;
-import com.qingchengfit.fitcoach.bean.SendSmsCode;
+import cn.qingchengfit.bean.RecieveMsg;
+import cn.qingchengfit.bean.SendSmsCode;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
@@ -142,7 +142,7 @@ public class RegisterFragment extends BaseFragment {
                     //TODO 注册成功
                     getActivity().runOnUiThread(() -> {
                       Toast.makeText(App.AppContex, "注册成功", Toast.LENGTH_SHORT).show();
-                      //                                                RxBus.getBus().send(new com.qingchengfit.fitcoach.bean.LoginBean());
+                      //                                                RxBus.getBus().send(new cn.qingchengfit.bean.LoginBean());
                       PreferenceUtils.setPrefString(getActivity(), "session_id",
                           qcResponLogin.data.session_id);
                       PreferenceUtils.setPrefString(getActivity(), "user_info",

@@ -2,15 +2,15 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.bean.CmBean;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
-import cn.qingchengfit.chat.model.ChatGym;
 import cn.qingchengfit.recruit.ChooseStaffFragment;
+import cn.qingchengfit.recruit.model.ChatGym;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CmBean;
 import com.qingchengfit.fitcoach.fragment.guide.AddCycleFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragmentBuilder;
 import com.qingchengfit.fitcoach.fragment.schedule.ChooseScheduleGymFragmentBuilder;

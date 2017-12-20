@@ -20,6 +20,9 @@
             />
       </intent-filter>
     </activity>
+    <activity android:name=".qrcode.views.QRActivity">
+
+    </activity>
   </application>
 
 </manifest>

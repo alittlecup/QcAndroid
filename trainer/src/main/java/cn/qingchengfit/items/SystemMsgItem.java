@@ -2,15 +2,13 @@ package cn.qingchengfit.items;
 
 import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.bean.NotificationGlance;
 import cn.qingchengfit.constant.ConstantNotification;
-import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

@@ -9,7 +9,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.EventStep;
+import cn.qingchengfit.bean.EventStep;
 
 /**
  * power by

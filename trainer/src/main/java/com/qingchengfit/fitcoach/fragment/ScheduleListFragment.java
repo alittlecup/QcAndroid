@@ -37,7 +37,7 @@ import com.qingchengfit.fitcoach.Utils.CompatUtils;
 import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
-import com.qingchengfit.fitcoach.bean.RxRefreshList;
+import cn.qingchengfit.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleService;

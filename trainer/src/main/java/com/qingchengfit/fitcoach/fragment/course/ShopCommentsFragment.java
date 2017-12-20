@@ -15,7 +15,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.RatingBarVectorFix;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
+import cn.qingchengfit.bean.CourseDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponseShopComment;
 import com.qingchengfit.fitcoach.items.ShopCommentItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -96,8 +96,6 @@ public class ShopCommentsFragment extends BaseFragment
         adapter.setAnimationOnScrolling(true)
             .setAnimationInitialDelay(300L)
             .setAnimationInterpolator(new DecelerateInterpolator())
-            .setAnimationStartPosition(0)
-
         ;
         recyclerview.setAdapter(adapter);
     }

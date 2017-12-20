@@ -7,7 +7,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.utils.GymUtils;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
+import cn.qingchengfit.bean.CourseDetail;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponseShopComment;
 import java.util.List;

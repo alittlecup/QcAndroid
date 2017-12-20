@@ -24,7 +24,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
-import com.qingchengfit.fitcoach.bean.CoursePlan;
+import cn.qingchengfit.bean.CoursePlan;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

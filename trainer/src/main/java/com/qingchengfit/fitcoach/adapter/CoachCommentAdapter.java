@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
-import com.qingchengfit.fitcoach.bean.CourseTeacher;
+import cn.qingchengfit.bean.CourseTeacher;
 import com.qingchengfit.fitcoach.fragment.course.CoachCommentDetailFragment;
 import java.util.ArrayList;
 import java.util.List;

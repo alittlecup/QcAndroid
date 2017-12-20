@@ -21,7 +21,7 @@ import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CourseTypeSample;
+import cn.qingchengfit.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.fragment.statement.CustomStatementView;
 import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseChooseDialogFragment;
 import com.qingchengfit.fitcoach.fragment.statement.presenter.CustomStatmentPresenter;

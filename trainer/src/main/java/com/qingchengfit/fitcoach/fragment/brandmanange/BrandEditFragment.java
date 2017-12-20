@@ -29,7 +29,7 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.activity.BrandManageActivity;
-import com.qingchengfit.fitcoach.bean.BrandBody;
+import cn.qingchengfit.bean.BrandBody;
 import cn.qingchengfit.events.EventChooseImage;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;

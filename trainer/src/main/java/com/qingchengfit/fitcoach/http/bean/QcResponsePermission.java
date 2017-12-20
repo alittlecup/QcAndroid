@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
-import com.qingchengfit.fitcoach.bean.Permission;
+import cn.qingchengfit.bean.Permission;
 import java.util.List;
 
 public class QcResponsePermission extends QcResponse {

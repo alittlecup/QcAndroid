@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.RatingBarVectorFix;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CourseDetailTeacher;
+import cn.qingchengfit.bean.CourseDetailTeacher;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import java.util.List;

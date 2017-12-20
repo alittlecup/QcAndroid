@@ -24,7 +24,7 @@
 //import cn.qingchengfit.utils.PhoneFuncUtils;
 //import com.qingchengfit.fitcoach.activity.MainActivity;
 //import cn.qingchengfit.model.common.Contact;
-//import com.qingchengfit.fitcoach.bean.NewPushMsg;
+//import cn.qingchengfit.bean.NewPushMsg;
 //import cn.qingchengfit.model.common.PlatformInfo;
 //import com.tencent.smtt.sdk.CookieManager;
 //import com.tencent.smtt.sdk.ValueCallback;

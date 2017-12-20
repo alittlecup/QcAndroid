@@ -1,13 +1,11 @@
 package com.qingchengfit.fitcoach.fragment.statement.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
+import cn.qingchengfit.bean.CourseDetail;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;

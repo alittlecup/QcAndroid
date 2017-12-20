@@ -26,7 +26,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.adapter.FragmentAdater;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
-import com.qingchengfit.fitcoach.bean.RxAddCourse;
+import cn.qingchengfit.bean.RxAddCourse;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcGymDetailResponse;

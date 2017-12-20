@@ -1,8 +1,8 @@
 package com.qingchengfit.fitcoach.fragment.batch;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import javax.inject.Inject;
 
@@ -19,7 +19,7 @@ import javax.inject.Inject;
  * <p/>
  * Created by Paper on 16/3/23 2016.
  */
-public class GymCoursesPresenter implements Presenter {
+public class GymCoursesPresenter extends BasePresenter {
 
     CoachService coachService;
     GymCoursesView view;
@@ -53,6 +53,7 @@ public class GymCoursesPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
     }
 

@@ -21,10 +21,8 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.SingleBatch;
-import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchSinglePresenter;
 import cn.qingchengfit.saasbase.databinding.FragmentSaasSingleBatchBinding;
-import cn.qingchengfit.saasbase.items.CmLRTxtItem;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -38,7 +36,6 @@ import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.jakewharton.rxbinding.view.RxMenuItem;
-import eu.davidea.flexibleadapter.items.IFlexible;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,7 +92,7 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
     db = DataBindingUtil.inflate(inflater,R.layout.fragment_saas_single_batch, container, false);
     //unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter,this);
-    //initToolbar(db.loToolbar.findViewById(R.id.toolbar));
+    initToolbar(db.toolbarLayout.toolbar);
     db.civOpenTime.setOnClickListener(view -> onOpenTime());
     db.civDate.setOnClickListener(view -> onCivDateClicked());
     db.civCourseTime.setOnClickListener(view -> onCivCourseTimeClicked());
@@ -160,7 +157,9 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
    * 删除排期
    */
   public void onBtnDelClicked() {
-    presenter.delSchedule();
+    DialogUtils.instanceDelDialog(getContext(), "确认删除此排期？", (dialog, which) -> {
+      presenter.delSchedule();
+    }).show();
   }
 
   @Override public void onDetail(SingleBatch batchDetail) {

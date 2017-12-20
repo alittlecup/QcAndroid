@@ -86,6 +86,7 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     adapter = new CommonFlexAdapter(new ArrayList(), this);
+    adapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true).setStickyHeaderElevation(1);
     rv.setItemAnimator(new FadeInUpItemAnimator());
     rv.setLayoutManager(new LinearLayoutManager(getContext()));
     rv.addItemDecoration(new FlexibleItemDecoration(getContext())

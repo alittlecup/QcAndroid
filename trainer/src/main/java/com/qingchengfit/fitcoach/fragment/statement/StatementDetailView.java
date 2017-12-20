@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.statement;
 
 import cn.qingchengfit.di.PView;
-import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
+import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import java.util.List;
 
 /**

@@ -26,7 +26,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
-import com.qingchengfit.fitcoach.bean.RxAddCourse;
+import cn.qingchengfit.bean.RxAddCourse;
 import com.qingchengfit.fitcoach.fragment.batch.list.CourseBatchDetailFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourse;
 import java.util.ArrayList;

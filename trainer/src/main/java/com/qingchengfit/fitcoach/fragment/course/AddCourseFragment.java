@@ -14,17 +14,17 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.bean.CourseDetail;
+import cn.qingchengfit.bean.CoursePlan;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
-import com.qingchengfit.fitcoach.bean.CoursePlan;
-import com.qingchengfit.fitcoach.http.bean.CourseBody;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
@@ -85,7 +85,7 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
                     CourseBody body = new CourseBody.Builder().name(courseDetail.getName())
                         .capacity(courseDetail.getCapacity())
                         .is_private(getArguments().getBoolean("p") ? 1 : 0)
-                        .length(courseDetail.getLength() + "")
+                        .length(courseDetail.getLength())
                         .min_users(getArguments().getBoolean("p") ? null : courseDetail.getMin_users())
                         .photo(courseDetail.getPhoto())
                         .plan_id(Planid)

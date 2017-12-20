@@ -18,7 +18,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.WebActivityWithShare;
-import com.qingchengfit.fitcoach.bean.MeetingBean;
+import cn.qingchengfit.bean.MeetingBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;

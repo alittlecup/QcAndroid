@@ -23,8 +23,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.bean.CmBean;
+import cn.qingchengfit.bean.CourseDetail;
+import cn.qingchengfit.bean.RxbusBatchLooperConfictEvent;
+import cn.qingchengfit.bean.Space;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.base.TimeRepeat;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
+import cn.qingchengfit.saasbase.course.batch.bean.Rule;
+import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
+import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.ToastUtils;
@@ -45,13 +52,6 @@ import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
-import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
-import com.qingchengfit.fitcoach.bean.BatchOpenRule;
-import com.qingchengfit.fitcoach.bean.CmBean;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
-import com.qingchengfit.fitcoach.bean.Rule;
-import com.qingchengfit.fitcoach.bean.RxbusBatchLooperConfictEvent;
-import com.qingchengfit.fitcoach.bean.Space;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
@@ -320,7 +320,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
 
     }
 
-    @Override public void onTemplete(ArrayList<Rule> rules, ArrayList<TimeRepeat> time_repeats, int maxuer) {
+    @Override public void onTemplete(ArrayList<Rule> rules, ArrayList<Time_repeat> time_repeats, int maxuer) {
         //TODO 可以选择不自动填充
         if (rules.size() > 0) {
             body.rules = rules;
@@ -331,7 +331,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
              */
             mTimeRep.clear();
             for (int i = 0; i < time_repeats.size(); i++) {
-                TimeRepeat time_repeat = time_repeats.get(i);
+                Time_repeat time_repeat = time_repeats.get(i);
                 String key = time_repeat.getStart() + "-" + time_repeat.getEnd();
                 if (mTimeRep.get(key) != null) {
                     mTimeRep.get(key).add(time_repeat.getWeekday());

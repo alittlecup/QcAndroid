@@ -16,7 +16,7 @@ import co.hkm.soltag.TagContainerLayout;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.BusinessUtils;
-import com.qingchengfit.fitcoach.bean.CourseTeacher;
+import cn.qingchengfit.bean.CourseTeacher;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 
 /**

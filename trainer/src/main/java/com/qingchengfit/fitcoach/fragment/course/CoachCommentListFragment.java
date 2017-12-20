@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.CoachCommentAdapter;
-import com.qingchengfit.fitcoach.bean.CourseTeacher;
+import cn.qingchengfit.bean.CourseTeacher;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseTeacher;
 import java.util.ArrayList;

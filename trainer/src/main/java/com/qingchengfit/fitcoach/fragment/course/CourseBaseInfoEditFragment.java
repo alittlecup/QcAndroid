@@ -22,8 +22,8 @@ import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
-import com.qingchengfit.fitcoach.bean.CoursePlan;
+import cn.qingchengfit.bean.CourseDetail;
+import cn.qingchengfit.bean.CoursePlan;
 import javax.inject.Inject;
 import rx.functions.Action1;
 

@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.statement;
 
 import cn.qingchengfit.di.PView;
-import com.qingchengfit.fitcoach.bean.StudentBean;
+import cn.qingchengfit.bean.StudentBean;
 import java.util.List;
 
 /**

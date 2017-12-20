@@ -11,7 +11,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.StudentBean;
+import cn.qingchengfit.bean.StudentBean;
 import com.qingchengfit.fitcoach.fragment.statement.model.CardTpl;
 import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseSaleDetail;
 import java.util.ArrayList;

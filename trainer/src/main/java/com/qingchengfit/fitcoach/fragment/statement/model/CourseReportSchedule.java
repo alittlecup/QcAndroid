@@ -3,7 +3,7 @@ package com.qingchengfit.fitcoach.fragment.statement.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.model.base.Shop;
-import com.qingchengfit.fitcoach.bean.CourseTypeSample;
+import cn.qingchengfit.bean.CourseTypeSample;
 
 /**
  * Created by fb on 2017/5/16.

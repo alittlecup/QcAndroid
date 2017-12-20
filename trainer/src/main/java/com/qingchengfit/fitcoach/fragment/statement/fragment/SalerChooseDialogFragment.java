@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.StudentBean;
+import cn.qingchengfit.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.fragment.statement.SalerChooseDialogView;
 import com.qingchengfit.fitcoach.fragment.statement.StringAdapter;

@@ -37,7 +37,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.StudentBean;
+import cn.qingchengfit.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.fragment.statement.RxNetWorkEvent;

@@ -25,7 +25,7 @@ import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.StudentBean;
+import cn.qingchengfit.bean.StudentBean;
 import com.qingchengfit.fitcoach.fragment.statement.model.CardTpl;
 import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseSaleDetail;
 import com.qingchengfit.fitcoach.fragment.statement.model.SaleFilter;

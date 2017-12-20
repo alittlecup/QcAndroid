@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +40,7 @@ import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePeriodChooser;
 import com.bigkoo.pickerview.TimePopupWindow;
+import com.jakewharton.rxbinding.view.RxMenuItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -46,6 +48,7 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 /**
@@ -104,6 +107,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     presenter.setBatchId(batchId);
     presenter.setPrivate(isPrvite);
     initView();
+    initToolbar(toolbar);
     RxBusAdd(Time_repeat.class)
       .onBackpressureDrop()
       .subscribe(new BusSubscribe<Time_repeat>() {
@@ -112,6 +116,19 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
         }
       });
     return view;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("详情");
+    toolbar.inflateMenu(R.menu.menu_save);
+    RxMenuItem.clicks(toolbar.getMenu().getItem(0))
+      .throttleFirst(500, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<Void>() {
+        @Override public void onNext(Void aVoid) {
+          presenter.checkBatch();
+        }
+      });
   }
 
   private void initView() {

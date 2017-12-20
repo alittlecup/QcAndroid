@@ -10,7 +10,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
-import com.qingchengfit.fitcoach.bean.CourseTypeSample;
+import cn.qingchengfit.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.fragment.statement.CourseChooseView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;

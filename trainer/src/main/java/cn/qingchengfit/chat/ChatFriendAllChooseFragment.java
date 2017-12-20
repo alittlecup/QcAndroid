@@ -14,28 +14,28 @@ import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.chat.model.ChatGym;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.items.AlphabetHeaderItem;
 import cn.qingchengfit.items.ChatGymItem;
-import cn.qingchengfit.items.ChooseStaffItem;
 import cn.qingchengfit.items.ChooseStudentItem;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.recruit.model.ChatGym;
+import cn.qingchengfit.saasbase.student.items.ChooseStaffItem;
+import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.utils.ChineseCharToEn;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.QcPersonalComparator;
-import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.AlphabetLessView;
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.event.EventChoosePerson;
 import com.qingchengfit.fitcoach.event.EventFresh;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -152,8 +152,7 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
         if (adapter.getItem(i) instanceof ChatGymItem) {
             getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_fade_out, R.anim.slide_fade_in, R.anim.slide_right_out)
-                .add(R.id.chat_friend_frag, ChatChooseInGymFragment.newInstance(
-                    ((ChatGymItem) adapter.getItem(i)).getChatGym()))
+                .add(R.id.chat_friend_frag, ChatChooseInGymFragment.newInstance(((ChatGymItem) adapter.getItem(i)).getChatGym()))
                 .addToBackStack(null)
                 .commit();
         } else if (adapter.getItem(i) instanceof ChooseStaffItem) {
@@ -207,7 +206,7 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
                 itemA = new AlphabetHeaderItem(TextUtils.equals(header, "~") ? "#" : header.toUpperCase());
                 layoutAlphabet.addElement(header, i);
             }
-            items.add(new ChooseStaffItem(a, itemA));
+            items.add(new ChooseStaffItem(a));
         }
         layoutAlphabet.init();
 

@@ -22,7 +22,7 @@ import cn.qingchengfit.widgets.PhoneEditText;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
-import com.qingchengfit.fitcoach.bean.SendSmsCode;
+import cn.qingchengfit.bean.SendSmsCode;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;

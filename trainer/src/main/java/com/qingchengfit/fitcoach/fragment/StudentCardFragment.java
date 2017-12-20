@@ -12,7 +12,7 @@ import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.StudentCardAdapter;
-import com.qingchengfit.fitcoach.bean.StudentCardBean;
+import cn.qingchengfit.bean.StudentCardBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import java.util.ArrayList;
 import java.util.List;

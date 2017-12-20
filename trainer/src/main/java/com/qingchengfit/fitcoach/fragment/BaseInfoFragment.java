@@ -21,7 +21,7 @@ import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.HTMLUtils;
-import com.qingchengfit.fitcoach.bean.BaseInfoBean;
+import cn.qingchengfit.bean.BaseInfoBean;
 import com.qingchengfit.fitcoach.component.RecyclerViewInScroll;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;

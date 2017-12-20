@@ -1,8 +1,8 @@
 package com.qingchengfit.fitcoach.fragment.batch;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.http.RestRepository;
@@ -27,7 +27,7 @@ import rx.schedulers.Schedulers;
  * <p>
  * Created by Paper on 16/4/30 2016.
  */
-public class CoureseListPresenter implements Presenter {
+public class CoureseListPresenter extends BasePresenter {
 
     CoachService coachService;
     CourseListView view;
@@ -64,6 +64,7 @@ public class CoureseListPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (spgourp != null) spgourp.unsubscribe();
         if (spPrivate != null) spPrivate.unsubscribe();

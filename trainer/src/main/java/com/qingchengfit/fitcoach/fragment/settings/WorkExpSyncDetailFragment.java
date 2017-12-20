@@ -26,7 +26,7 @@ import cn.qingchengfit.widgets.ExpandedLayout;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.SyncExpBody;
+import cn.qingchengfit.bean.SyncExpBody;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;

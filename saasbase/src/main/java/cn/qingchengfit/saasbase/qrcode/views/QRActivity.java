@@ -171,7 +171,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr);
+        setContentView(R.layout.activity_saas_qr);
         ButterKnife.bind(this);
         View v = new View(this);
         v.setBackgroundResource(R.color.toolbar);

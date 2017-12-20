@@ -1,12 +1,12 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import cn.qingchengfit.bean.Space;
 import cn.qingchengfit.model.base.Course;
-import cn.qingchengfit.model.base.TimeRepeat;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
+import cn.qingchengfit.saasbase.course.batch.bean.Rule;
+import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
 import com.google.gson.annotations.SerializedName;
-import com.qingchengfit.fitcoach.bean.BatchOpenRule;
-import com.qingchengfit.fitcoach.bean.Rule;
-import com.qingchengfit.fitcoach.bean.Space;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class QcResponsePrivateBatchDetail extends QcResponse {
         @SerializedName("course") public Course course;
         @SerializedName("rule") public List<Rule> rule;
         @SerializedName("teacher") public QcSchedulesResponse.Teacher teacher;
-        @SerializedName("time_repeats") public List<TimeRepeat> time_repeats;
+        @SerializedName("time_repeats") public List<Time_repeat> time_repeats;
         public BatchOpenRule open_rule;
     }
 }

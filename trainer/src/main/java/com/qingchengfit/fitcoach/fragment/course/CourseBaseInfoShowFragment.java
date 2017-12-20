@@ -15,7 +15,7 @@ import butterknife.Unbinder;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
+import cn.qingchengfit.bean.CourseDetail;
 import java.util.Locale;
 
 /**

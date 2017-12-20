@@ -17,9 +17,14 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.model.base.Course;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
+import cn.qingchengfit.saasbase.gymconfig.views.MsgNotiParams;
+import cn.qingchengfit.saasbase.gymconfig.views.OrderLimitParams;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -75,6 +80,49 @@ public abstract class BatchListFragment extends SaasBaseFragment
           );
         }
       });
+  }
+
+  /**
+   * flow sheet弹出菜单选择
+   * @param pos        位置
+   * @param isPrivate  是否为私教
+   */
+  protected void menuSelected(int pos,boolean isPrivate){
+    switch (pos) {
+      case 1://课程预约限制
+        /**
+         * 预约限制 {@link OrderLimitFragment}
+         */
+        if (!serPermisAction.check(PermissionServerUtils.TEAM_COURSE_LIMIT)) {
+          showAlert(R.string.sorry_for_no_permission);
+          return;
+        }
+        routeTo("gym","/orderlimit/",new OrderLimitParams().mIsPrivate(isPrivate).build());
+        break;
+      case 2://预约短信通知
+        /**
+         * 短信通知{@link MsgNotiFragment}
+         */
+        if (!serPermisAction.check(PermissionServerUtils.TEAM_COURSE_MSG_SETTING)) {
+          showAlert(R.string.sorry_for_no_permission);
+          return;
+        }
+        routeTo("gym","/msgnoti/",new MsgNotiParams().mIsPrivate(isPrivate).build());
+        break;
+      case 3://课件
+        /**
+         * 课件
+         */
+        if (!serPermisAction.check(PermissionServerUtils.PLANSSETTING)) {
+          showAlert(R.string.sorry_for_no_permission);
+          return;
+        }
+        QRActivity.start(getContext(), QRActivity.PLANS_SETTING_GROUP );
+        break;
+      default://课程种类
+        routeTo("/list/",new CourseListParams().mIsPrivate(isPrivate).build());
+        break;
+    }
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

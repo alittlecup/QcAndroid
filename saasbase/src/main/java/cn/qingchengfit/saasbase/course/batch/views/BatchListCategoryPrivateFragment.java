@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
@@ -41,6 +43,12 @@ import rx.schedulers.Schedulers;
 public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment {
 
   @Need String trainer_id;
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("私教排期");
+  }
+
 
   @Override public void onRefresh() {
     RxRegiste(courseModel.qcGetPrivateCoaches(trainer_id)

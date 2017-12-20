@@ -1,6 +1,5 @@
 package cn.qingchengfit.saasbase.course.batch.bean;
 
-import cn.qingchengfit.model.base.Space;
 import java.util.List;
 
 /**
@@ -25,7 +24,6 @@ import java.util.List;
  */
 
 public class SingleBatch extends BatchDetail{
-    public Space space;
     public String batch_id;
     public String start;
     public String end;

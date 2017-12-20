@@ -47,7 +47,7 @@ public class BatchScheduleItem extends AbstractFlexibleItem<BatchScheduleItem.Ba
       List payloads) {
     holder.date.setText(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(batchSchedule.start)));
     holder.weekday.setText(Constants.WEEKS[DateUtils.getDayOfWeek(DateUtils.formatDateFromServer(batchSchedule.start))]);
-    holder.time.setText(DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(batchSchedule.start))+(isPrivate?DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(batchSchedule.end)):""));
+    holder.time.setText(DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(batchSchedule.start))+(isPrivate?" - "+DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(batchSchedule.end)):""));
 
     if (DateUtils.isOutOfDate(DateUtils.formatDateFromServer(batchSchedule.start))){
       //已过期

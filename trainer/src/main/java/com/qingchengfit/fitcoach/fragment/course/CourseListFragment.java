@@ -34,7 +34,7 @@ import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
+import cn.qingchengfit.bean.CourseDetail;
 import com.qingchengfit.fitcoach.event.DelCourseEvent;
 import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.RestRepository;

@@ -155,7 +155,7 @@ public class QcRestRepository {
   public <T> T createPostApi(final Class<T> service) {
     return postApiAdapter.create(service);
   }
-
+  
   public interface GetCsrfToken {
     @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
   }

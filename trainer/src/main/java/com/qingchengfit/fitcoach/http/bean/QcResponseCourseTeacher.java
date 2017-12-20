@@ -2,8 +2,8 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
-import com.qingchengfit.fitcoach.bean.CourseTeacher;
+import cn.qingchengfit.bean.CourseDetail;
+import cn.qingchengfit.bean.CourseTeacher;
 import java.util.List;
 
 public class QcResponseCourseTeacher extends QcResponse {

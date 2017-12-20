@@ -3,7 +3,7 @@ package com.qingchengfit.fitcoach.fragment.statement.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.model.base.Staff;
-import com.qingchengfit.fitcoach.bean.StudentBean;
+import cn.qingchengfit.bean.StudentBean;
 
 /**
  * power by
