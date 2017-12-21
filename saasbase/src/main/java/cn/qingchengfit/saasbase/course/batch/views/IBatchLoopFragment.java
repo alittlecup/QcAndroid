@@ -25,6 +25,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
+import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -73,7 +74,8 @@ public abstract class IBatchLoopFragment extends BaseFragment implements
   /**
    * 私教约课间隔，单位秒
    */
-  protected int slice,courseLength;
+  @Need Integer slice;
+  @Need Integer courseLength;
 
 
 

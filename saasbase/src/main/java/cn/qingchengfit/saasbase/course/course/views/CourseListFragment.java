@@ -109,6 +109,7 @@ public class CourseListFragment extends SaasBaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
+    toolbarTitle.setText(mIsPrivate ? "私教课程":"团课课程");
   }
 
 
@@ -136,10 +137,16 @@ public class CourseListFragment extends SaasBaseFragment
     return true;
   }
 
+  /**
+   * 新增课程
+   */
   @OnClick(R2.id.add_course_btn) public void onViewClicked() {
-    //routeTo("");
+    routeTo("/add/",new AddCourseParams().isPrivate(mIsPrivate).build());
   }
 
+  /**
+   * 刷新列表
+   */
   @Override public void onRefresh() {
     RxRegiste(courseApi.qcGetCourses(mIsPrivate)
         .onBackpressureLatest()

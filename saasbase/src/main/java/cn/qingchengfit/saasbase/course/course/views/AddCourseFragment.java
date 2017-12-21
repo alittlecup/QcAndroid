@@ -1,31 +1,41 @@
 package cn.qingchengfit.saasbase.course.course.views;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.presenters.AddCoursePresenter;
-import cn.qingchengfit.saasbase.databinding.FragmentSaasCourseAddBinding;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import javax.inject.Inject;
 
-@Leaf(module = "course", path = "/add/")
-public class AddCourseFragment extends BaseFragment {
+@Leaf(module = "course", path = "/add/") public class AddCourseFragment extends SaasBaseFragment implements AddCoursePresenter.MVPview{
+
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R2.id.frag_baseinfo) FrameLayout fragBaseinfo;
+  @BindView(R2.id.btn_suit_gyms) CommonInputView btnSuitGyms;
+  @BindView(R2.id.layout_suit_gym) LinearLayout layoutSuitGym;
 
   private CourseBaseInfoEditFragment mEditBaseInfo;
-  FragmentSaasCourseAddBinding db;
 
   @Inject AddCoursePresenter presenter;
   @Inject GymWrapper gymWrapper;
@@ -73,28 +83,33 @@ public class AddCourseFragment extends BaseFragment {
     }
   };
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (isPrivate == null ) isPrivate = true;
+  }
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
-    db = DataBindingUtil.inflate(inflater,R.layout.fragment_saas_course_add, container, false);
+    View view = inflater.inflate(R.layout.fragment_saas_course_add, container, false);
+    unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
-    //initToolbar(db.layo);
+    initToolbar(toolbar);
     if (mEditBaseInfo == null) {
       mEditBaseInfo = CourseBaseInfoEditFragment.newInstance(new CourseType(isPrivate));
     }
-
-    return db.getRoot();
+    return view;
   }
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    stuff(R.id.frag_baseinfo,mEditBaseInfo);
+    stuff(R.id.frag_baseinfo, mEditBaseInfo);
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    //toolbarTitile.setText(getArguments().getBoolean("p") ? "新增私教种类" : "新增团课种类");
-    //toolbar.inflateMenu(R.menu.menu_compelete);
-    //toolbar.setOnMenuItemClickListener(listener);
+    toolbarTitle.setText(isPrivate ? "新增私教种类" : "新增团课种类");
+    toolbar.inflateMenu(R.menu.menu_compelete);
+    toolbar.setOnMenuItemClickListener(listener);
   }
 
   @Override public String getFragmentName() {

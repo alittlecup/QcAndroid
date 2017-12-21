@@ -30,7 +30,6 @@ ext {
   bakPath = "tinkeroutput/"
   chat_version = "1.0.0"
   recruit_version = "1.0.1"
-  isTask = { name -> return project.gradle.startParameter.taskNames.contains(name) }
 //    isApInvalidated = { -> return hasAnyFileRelatedToApChanged() }
 }
 

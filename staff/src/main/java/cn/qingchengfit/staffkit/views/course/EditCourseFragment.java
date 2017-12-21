@@ -118,6 +118,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         super.initToolbar(toolbar);
         toolbarTitile.setText("编辑基本信息");
+        toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.menu_save);
         toolbar.setOnMenuItemClickListener(menuItemClickListener);
     }

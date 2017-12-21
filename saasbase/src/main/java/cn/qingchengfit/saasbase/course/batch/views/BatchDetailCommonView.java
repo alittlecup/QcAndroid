@@ -162,13 +162,9 @@ public class BatchDetailCommonView extends BaseFragment {
   public void setCourse(Course course) {
     if (course == null) return;
     if (text1 == null) return;
-    if (course.is_private) {
-      coach.setContent(course.getName());
-    } else {
-      PhotoUtils.small(img, course.getPhoto());
-      text1.setText(course.getName());
-      text3.setText(getString(R.string.course_d_lenght, course.getLength() / 60));
-    }
+    PhotoUtils.small(img, course.getPhoto());
+    text1.setText(course.getName());
+    text3.setText(getString(R.string.course_d_lenght, course.getLength() / 60));
   }
 
   public String getCourseId() {
@@ -186,12 +182,7 @@ public class BatchDetailCommonView extends BaseFragment {
     if (staff == null) return;
     if (coach == null) return;
     this.trainer = staff;
-    if (course.is_private) {
-      PhotoUtils.smallCircle(img, staff.getAvatar());
-      text1.setText(staff.getUsername());
-    } else {
-      coach.setContent(staff.getUsername());
-    }
+    coach.setContent(staff.getUsername());
   }
 
   public String getTrainerId() {
@@ -247,8 +238,7 @@ public class BatchDetailCommonView extends BaseFragment {
         }
       }
     }
-    setCardRule(rules1,ships);
-
+    setCardRule(rules1, ships);
   }
 
   private void setCardRule(List<Rule> rules, ArrayList<CardTplBatchShip> ships) {

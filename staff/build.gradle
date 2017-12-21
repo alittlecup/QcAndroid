@@ -63,12 +63,16 @@ android {
       shrinkResources false
       //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
       debuggable true
+      debug {
+        ext.enableCrashlytics = false
+      }
     }
   }
 
   flavorDimensions "qc"
   productFlavors {
     dev {
+      minSdkVersion 21
       applicationId "cn.qingchengfit.staffkit.internaltest"
       manifestPlaceholders = [APP_NAME          : "内部测试",
                               bdpush_authorities: "cn.qingchengfit.bdpush.internaltest",
@@ -125,7 +129,10 @@ android {
   }
 //  sourceSets {
 //    main{
-//      java.srcDirs = ['main/java']
+//      java.srcDirs = ['main/java','../build/generated/source/apt/dev/debug']
+//    }
+//    dev{
+//      java.srcDirs = ['main/java','dev/java','../build/generated/source/apt/dev/debug']
 //    }
 //  }
 
@@ -143,6 +150,13 @@ gradle.projectsEvaluated {
   tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xmaxerrs" << "500" // or whatever number you want
   }
+}
+def isTask = { name ->
+  println 'isTask....'
+  println name
+  println project.gradle.startParameter.taskNames
+  boolean r = project.gradle.startParameter.taskNames.contains(name)
+  return r
 }
 
 dependencies {
@@ -202,8 +216,9 @@ dependencies {
   androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-//  if (isTask("buildWithAP")) {
+//  if (isTask(":staff:assembleDevDebug")) {
     println "Going to run annotation processors ..."
+    android.sourceSets.dev.java.srcDirs += projectDir.absolutePath + "../build/output"
     annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
     annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
@@ -211,8 +226,8 @@ dependencies {
     annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
     annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
-
-
+//  }
+//  println 'no processor'
 //  } else {
 //    println "skip to run annotation processors ..."
 //
@@ -220,14 +235,31 @@ dependencies {
 //    // must be in else branch or multiple AP calls will collide!
 //    println "sourseset"
 //
-//    android.sourceSets.main.java.srcDirs += projectDir.absolutePath + "/build/generated/source/apt/dev/debug"
-//    println android.sourceSets.main.java.srcDirs
+//    android.sourceSets.dev.java.srcDirs += projectDir.absolutePath + "/../output/debug"
+//    println android.sourceSets.dev.java.srcDirs
 //
 //  }
 
 //  compile project(path: ':trainer')
 }
-
+//afterEvaluate {
+//  android.applicationVariants.all { variant ->
+//    variant.assemble.doLast {
+//      if (variant.buildType.name.contains('debug')) {
+//        variant.outputs.all {
+//          output ->
+//            def apkpath = output.outputFile as File
+//            exec {
+//              ignoreExitValue true
+//              def rootFile = new File("output")
+//              commandLine "mv", projectDir.absolutePath + "/build/generated/source/apt/dev/debug", rootFile.absolutePath
+//            }
+//        }
+//
+//      }
+//    }
+//  }
+//}
 
 //apply from: 'tinkerpatch.gradle'
 //apply plugin: 'com.antfortune.freeline'

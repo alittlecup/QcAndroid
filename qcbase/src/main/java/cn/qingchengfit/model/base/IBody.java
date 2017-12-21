@@ -1,4 +1,4 @@
-package cn.qingchengfit.network;
+package cn.qingchengfit.model.base;
 
 /**
  * power by
@@ -18,11 +18,10 @@ package cn.qingchengfit.network;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/11/1.
+ * Created by Paper on 2017/12/21.
  */
-@Deprecated
-public interface IBodyCheckable {
-  int checkStaff();
-  int checkPos();
-  int checkTrainer();
+
+public interface IBody {
+  int check(int type);
+  int check();
 }

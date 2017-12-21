@@ -22,12 +22,22 @@ package cn.qingchengfit.network.response;
  */
 
 public class QcDataResponse<T> extends QcResponse {
+
     public QcDataResponse() {
         status = 901;
-
     }
 
+
     public T data;
+
+    private QcDataResponse(Builder builder) {
+        setStatus(builder.status);
+        setMsg(builder.msg);
+        setInfo(builder.info);
+        setLevel(builder.level);
+        setError_code(builder.error_code);
+    }
+
     //public int total_count;
     //public int current_page;
     //public int pages;
@@ -40,4 +50,43 @@ public class QcDataResponse<T> extends QcResponse {
         this.data = data;
     }
 
+    public static final class Builder {
+        private int status;
+        private String msg;
+        private String info;
+        private String level;
+        private String error_code;
+
+        public Builder() {
+        }
+
+        public Builder status(int val) {
+            status = val;
+            return this;
+        }
+
+        public Builder msg(String val) {
+            msg = val;
+            return this;
+        }
+
+        public Builder info(String val) {
+            info = val;
+            return this;
+        }
+
+        public Builder level(String val) {
+            level = val;
+            return this;
+        }
+
+        public Builder error_code(String val) {
+            error_code = val;
+            return this;
+        }
+
+        public QcDataResponse build() {
+            return new QcDataResponse(this);
+        }
+    }
 }

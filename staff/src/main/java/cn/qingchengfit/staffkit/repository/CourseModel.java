@@ -3,6 +3,7 @@ package cn.qingchengfit.staffkit.repository;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
@@ -25,6 +26,7 @@ import cn.qingchengfit.saasbase.course.course.network.response.CourseTeacherWrap
 import cn.qingchengfit.saasbase.course.course.network.response.CourseTypeWrap;
 import cn.qingchengfit.saasbase.course.course.network.response.ShopCommentWrap;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.staffkit.App;
 import rx.Observable;
 
 /**
@@ -172,18 +174,17 @@ public class CourseModel implements ICourseModel {
     return api.qcUpdateBatch(loginStatus.staff_id(), batchid, body, gymWrapper.getParams());
   }
 
-  @Override public Observable<QcDataResponse> qcDelBatchSchedule(boolean isPrivate, String ids) {
-    return null;
-  }
-
   /**
    * 删除某条 排课实例
    */
-  public Observable<QcDataResponse> qcDelBatchSchedule(boolean isPrivate,
-    DelBatchScheduleBody body) {
-    return api.qcDelBatchSchedule(loginStatus.staff_id(), isPrivate ? "timetables" : "schedules", body,
-      gymWrapper.getParams());
+  @Override public Observable<QcDataResponse> qcDelBatchSchedule(boolean isPrivate, String ids) {
+    DelBatchScheduleBody body = new DelBatchScheduleBody();
+    body.ids = ids;
+    body.id = gymWrapper.id();
+    body.model = gymWrapper.model();
+    return api.qcDelBatchSchedule(loginStatus.staff_id(),isPrivate ? "timetables" : "schedules",body,gymWrapper.getParams());
   }
+
 
   /**
    * 获取某条 排课实例
@@ -239,6 +240,9 @@ public class CourseModel implements ICourseModel {
   }
 
   @Override public Observable<QcDataResponse> qcCreateCourse(CourseBody courseBody) {
+    int err = courseBody.check();
+    if (err > 0)
+      return ResponseConstant.generateError(err, App.context);
     return api.qcCreateCourse(loginStatus.staff_id(), courseBody, gymWrapper.getParams());
   }
 

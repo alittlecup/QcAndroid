@@ -95,6 +95,7 @@ public class EditCourseFragment extends SaasBaseFragment implements EditCoursePr
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         super.initToolbar(toolbar);
         toolbarTitile.setText("编辑基本信息");
+        toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.menu_save);
         toolbar.setOnMenuItemClickListener(menuItemClickListener);
     }
@@ -103,9 +104,6 @@ public class EditCourseFragment extends SaasBaseFragment implements EditCoursePr
         return EditCourseFragment.class.getName();
     }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
 
     @Override public void showBaseInfoHint(String hint) {
         if (TextUtils.isEmpty(hint)) {

@@ -65,6 +65,8 @@ public class BatchScheduleListPresenter extends BasePresenter<BatchScheduleListP
       .subscribe(new NetSubscribe<QcDataResponse>() {
         @Override public void onNext(QcDataResponse qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
+            mvpView.onSuccess();
+            queryList();
           } else {
             mvpView.onShowError(qcResponse.getMsg());
           }

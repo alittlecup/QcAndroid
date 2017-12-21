@@ -26,6 +26,8 @@ public class EventSaasFresh {
   public static class CardTplList{}
   public static class CardList{}
   public static class StaffList{}
+  public static class BatchList{}
+  public static class ScheduleList{}
   public static class PayRequestList{}
   public static class LoginUserModify{}
 }

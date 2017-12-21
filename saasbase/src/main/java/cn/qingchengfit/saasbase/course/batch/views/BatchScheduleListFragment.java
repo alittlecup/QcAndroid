@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.course.batch.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,7 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchSchedule;
 import cn.qingchengfit.saasbase.course.batch.items.BatchScheduleItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchScheduleListPresenter;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ListUtils;
@@ -61,11 +63,12 @@ import javax.inject.Inject;
  */
 @Leaf(module = "course", path = "/batch/schedule/list/")
 public class BatchScheduleListFragment extends SaasBaseFragment implements
-    FlexibleAdapter.OnItemClickListener,BatchScheduleListPresenter.MVPView{
+    FlexibleAdapter.OnItemClickListener,BatchScheduleListPresenter.MVPView,SwipeRefreshLayout.OnRefreshListener{
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.rv) RecyclerView rv;
+  @BindView(R2.id.srl) SwipeRefreshLayout srl;
   @BindView(R2.id.btn_del_selected) Button btnDelSelected;
 
   @Inject BatchScheduleListPresenter presenter;
@@ -77,6 +80,9 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
     super.onCreate(savedInstanceState);
     presenter.setBatchId(batchId);
     presenter.setPrivate(isPrivate);
+    doEventOnCreatView(EventSaasFresh.ScheduleList.class, o -> {
+      onRefresh();
+    });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +99,8 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
       .withOffset(1).withBottomEdge(true)
     );
     rv.setAdapter(adapter);
+    srl.setRefreshing(true);
+    srl.setOnRefreshListener(this);
     presenter.queryList();
     return view;
   }
@@ -180,6 +188,7 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
   }
 
   @Override public void onList(List<BatchSchedule> list) {
+    srl.setRefreshing(false);
     try {
       List<IFlexible> datas = new ArrayList<>();
       String curDay = "";
@@ -198,7 +207,6 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
   }
 
   @Override public void onSuccess() {
-
   }
 
   @Override public String getDelIds() {
@@ -210,5 +218,9 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
       }
     }
     return ListUtils.List2Str(ids);
+  }
+
+  @Override public void onRefresh() {
+    presenter.queryList();
   }
 }

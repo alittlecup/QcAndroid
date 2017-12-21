@@ -27,7 +27,7 @@
         android:id="@+id/edit_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:drawableStart="@drawable/ic_circle_info"
+        app:drawableStart="@drawable/ic_vector_info_grey"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:paddingBottom="8dp"
@@ -50,13 +50,14 @@
         style="@style/TextTitleHint"
         />
 
-    <TextView
+    <cn.qingchengfit.support.widgets.CompatTextView
         android:id="@+id/suit_gyms_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_circle_info"
+        app:drawableStart="@drawable/ic_vector_info_grey"
         android:drawablePadding="8dp"
         android:paddingBottom="8dp"
+        android:gravity="center_vertical"
         android:text="请在[连锁运营]中修改适用场馆"
         style="@style/TextTitleHint"
         />

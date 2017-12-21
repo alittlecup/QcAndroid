@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.course.course.views;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -58,6 +59,11 @@ import javax.inject.Inject;
     delegatePresenter(mPresenter, this);
     mPresenter.queryShopComments(mCourseId);
     return view;
+  }
+
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitile.setText("课程评价");
   }
 
   public void initRv() {

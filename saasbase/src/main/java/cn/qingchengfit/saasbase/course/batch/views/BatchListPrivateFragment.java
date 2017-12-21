@@ -11,15 +11,18 @@ import android.widget.AdapterView;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresenter;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 /**
@@ -53,6 +56,16 @@ import javax.inject.Inject;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     delegatePresenter(privatePresenter, this);
+    RxBusAdd(EventStaffWrap.class)
+      .throttleFirst(1000, TimeUnit.MILLISECONDS)
+      .subscribe(new BusSubscribe<EventStaffWrap>() {
+        @Override public void onNext(EventStaffWrap eventStaffWrap) {
+          routeTo("/batch/add/",AddBatchParams.builder()
+            .mCourse(null)
+            .mTeacher(eventStaffWrap.getStaff())
+            .build());
+        }
+      });
     return super.onCreateView(inflater, container, savedInstanceState);
   }
 
@@ -90,6 +103,10 @@ import javax.inject.Inject;
           ((BatchItem) item).getBatchCoach().id).build());
     }
     return false;
+  }
+
+  @Override public void clickAddBatch() {
+    routeTo("staff","/trainer/choose/",null);
   }
 
   @Override public void onList(List<BatchCoach> coaches) {

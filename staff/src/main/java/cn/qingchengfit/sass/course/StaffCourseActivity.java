@@ -10,6 +10,8 @@ import cn.qingchengfit.saasbase.course.batch.views.BatchScheduleListFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchSingleFragment;
 import cn.qingchengfit.saasbase.course.batch.views.EditBatchFragment;
 import cn.qingchengfit.saasbase.course.batch.views.IBatchListCategoryFragment;
+import cn.qingchengfit.saasbase.course.course.views.AddCourseFragment;
+import cn.qingchengfit.saasbase.course.course.views.CoachCommentListFragment;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseFragment;
 import cn.qingchengfit.saasbase.course.course.views.CourseDetailFragment;
 import cn.qingchengfit.saasbase.course.course.views.CourseListFragment;
@@ -44,6 +46,7 @@ import com.anbillon.flabellum.annotations.Trunk;
   IBatchListCategoryFragment.class, EditBatchFragment.class, BatchScheduleListFragment.class,
   BatchSingleFragment.class, CourseDetailFragment.class, EditCourseFragment.class,
   CourseChooseFragment.class, CourseListFragment.class,JacketManagerFragment.class,ShopCommentsFragment.class,
+  AddCourseFragment.class, CoachCommentListFragment.class,
 })
 public class StaffCourseActivity extends CourseActivity {
 

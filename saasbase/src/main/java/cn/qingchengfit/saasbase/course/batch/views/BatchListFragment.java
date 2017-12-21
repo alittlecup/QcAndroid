@@ -65,6 +65,7 @@ public abstract class BatchListFragment extends SaasBaseFragment
 
   protected CommonFlexAdapter commonFlexAdapter;
   @Inject IPermissionModel serPermisAction;
+  private LinearLayoutManager linearLayoutManager;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -130,14 +131,25 @@ public abstract class BatchListFragment extends SaasBaseFragment
     View view = inflater.inflate(R.layout.fragment_sass_course_type_batch, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
-    rv.setLayoutManager(new LinearLayoutManager(getContext()));
+    linearLayoutManager = new LinearLayoutManager(getContext());
+    rv.setLayoutManager(linearLayoutManager);
     rv.addItemDecoration(new FlexibleItemDecoration(getContext())
         .withDefaultDivider()
+        .withOffset(1)
         .withBottomEdge(true));
     rv.setAdapter(commonFlexAdapter);
     rv.setItemAnimator(new FadeInUpItemAnimator());
+    if (savedInstanceState != null && savedInstanceState.containsKey("p")) {
+      linearLayoutManager.scrollToPosition(savedInstanceState.getInt("p", 0));
+    }
     srl.setOnRefreshListener(this);
     return view;
+  }
+
+  @Override public void onSaveInstanceState(Bundle outState) {
+    if (linearLayoutManager != null)
+      outState.putInt("p", linearLayoutManager.findFirstVisibleItemPosition());
+    super.onSaveInstanceState(outState);
   }
 
   @Override protected void onFinishAnimation() {

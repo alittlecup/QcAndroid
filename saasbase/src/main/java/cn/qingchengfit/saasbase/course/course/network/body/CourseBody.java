@@ -1,6 +1,10 @@
 package cn.qingchengfit.saasbase.course.course.network.body;
 
-public class CourseBody {
+import cn.qingchengfit.model.base.IBody;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.utils.CmStringUtils;
+
+public class CourseBody implements IBody{
 
     public String name;
     public int length;
@@ -41,6 +45,23 @@ public class CourseBody {
         capacity = builder.capacity;
         min_users = builder.min_users;
         shop_ids = builder.shop_ids;
+    }
+
+    @Override public int check(int type) {
+        if (CmStringUtils.isEmpty(name))
+            return R.string.err_no_course_name;
+        if (length <= 0)
+            return R.string.err_no_course_time;
+        if (capacity <= 0)
+            return R.string.err_no_course_max_count;
+        if (is_private == 0 && min_users <= 0){
+            return R.string.err_no_course_min_count;
+        }
+        return 0;
+    }
+
+    @Override public int check() {
+        return check(0);
     }
 
     public static final class Builder {

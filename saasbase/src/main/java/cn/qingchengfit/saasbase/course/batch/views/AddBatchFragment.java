@@ -163,13 +163,11 @@ import rx.android.schedulers.AndroidSchedulers;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitile.setText(
-      presenter.isPrivate() ? R.string.t_add_private_course : R.string.t_add_group_course);
+      presenter.isPrivate() ? "新增私教课开放时间" : "新增团课排课");
     toolbar.inflateMenu(R.menu.menu_compelete);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        presenter.checkBatch();
-        return true;
-      }
+    toolbar.setOnMenuItemClickListener(item -> {
+      presenter.checkBatch();
+      return true;
     });
   }
 
@@ -436,7 +434,7 @@ import rx.android.schedulers.AndroidSchedulers;
    * 添加课程周期
    */
   @OnClick(R2.id.add) public void addBatchLoop() {
-    routeTo("/batch/loop/add/", null);
+      routeTo("/batch/loop/add/", null);
   }
   //
   //// TODO: 2017/9/12 非高级版本

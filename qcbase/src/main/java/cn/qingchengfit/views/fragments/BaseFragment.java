@@ -58,6 +58,8 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
 
@@ -107,6 +109,15 @@ public abstract class BaseFragment extends RxFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+  }
+
+  protected void doEventOnCreatView(Class classz ,Action1 action1){
+    RxBus.getBus().register(classz)
+      .throttleFirst(500,TimeUnit.MILLISECONDS)
+      .compose(bindToLifecycle())
+      .compose(doWhen(FragmentEvent.CREATE_VIEW))
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(action1,throwable -> {LogUtil.e("doEventOnCreatView",throwable.toString());});
   }
 
   @Nullable @Override

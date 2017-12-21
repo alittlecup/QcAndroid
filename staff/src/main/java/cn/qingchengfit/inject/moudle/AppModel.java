@@ -160,6 +160,10 @@ import rx.Observable;
       @Override public boolean check(String permission) {
         return true;
       }
+
+      @Override public boolean check(String permission, List<String> shopids) {
+        return true;
+      }
     };
   }
 

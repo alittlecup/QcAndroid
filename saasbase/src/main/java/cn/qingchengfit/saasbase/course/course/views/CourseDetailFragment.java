@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.adapter.ViewPaperEndlessAdapter;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Trainer;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
@@ -73,9 +74,9 @@ import javax.inject.Inject;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
   boolean isJumped = false;
   @Inject CourseDetailPresenter mPresenter;
+  @Inject GymWrapper gymWrapper;
   @Need public CourseType mCourseDetail;
   private ViewPaperEndlessAdapter viewpageradapter;
-
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -287,22 +288,15 @@ import javax.inject.Inject;
    * 查看评价详情
    */
   @OnClick(R2.id.comments_detail) public void checkComments() {
-    routeTo("/shop/comment/",new cn.qingchengfit.saasbase.course.course.views.ShopCommentsParams()
-      .mCourseId(mCourseDetail.getId())
-      .build()
-    );
-    // TODO: 2017/11/30 品牌问题
-    //if (gymWrapper.inBrand()) {
-    //    getFragmentManager().beginTransaction()
-    //        .replace(mCallbackActivity.getFragId(), ShopCommentsFragment.newInstance(mCourseDetail.getId()))
-    //        .addToBackStack(getFragmentName())
-    //        .commit();
-    //} else {
-    //    getFragmentManager().beginTransaction()
-    //        .replace(mCallbackActivity.getFragId(), CoachCommentListFragment.newInstance(mCourseDetail.getId()))
-    //        .addToBackStack(getFragmentName())
-    //        .commit();
-    //}
+    if (gymWrapper.inBrand()) {
+      routeTo("/shop/comment/",
+        new cn.qingchengfit.saasbase.course.course.views.ShopCommentsParams().mCourseId(
+          mCourseDetail.getId()).build());
+    } else {
+      routeTo("/coach/comment/",CoachCommentListParams.builder().shop_id(gymWrapper.shop_id())
+        .course_id(mCourseDetail.getId())
+        .build());
+    }
   }
 
   /**
@@ -310,16 +304,16 @@ import javax.inject.Inject;
    */
   @OnClick(R2.id.go_to_scan) public void gotoScan() {
     if (!mPresenter.hasAllEditPermission(mCourseDetail)) return;
-    QRActivity.start(getContext(),mCourseDetail.getEdit_url());
+    QRActivity.start(getContext(), mCourseDetail.getEdit_url());
   }
 
   /**
    * 编辑基本信息
    */
   @OnClick(R2.id.edit_base_info) public void editBaseInfo() {
-    routeTo("/edit/",new cn.qingchengfit.saasbase.course.course.views.EditCourseParams()
-      .courseType(mCourseDetail)
-      .build());
+    routeTo("/edit/",
+      new cn.qingchengfit.saasbase.course.course.views.EditCourseParams().courseType(mCourseDetail)
+        .build());
   }
 
   @Override public String getFragmentName() {
@@ -336,9 +330,9 @@ import javax.inject.Inject;
     if (position == viewpageradapter.getCount() - 2 && positionOffset > 0.4 && !isJumped) {
       isJumped = true;
       jacketVp.setCurrentItem(0);
-      routeTo("/image/",new cn.qingchengfit.saasbase.course.course.views.CourseImagesParams()
-        .course_id(mCourseDetail.getId())
-        .build());
+      routeTo("/image/",
+        new cn.qingchengfit.saasbase.course.course.views.CourseImagesParams().course_id(
+          mCourseDetail.getId()).build());
     }
   }
 

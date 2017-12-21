@@ -15,16 +15,18 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.course.course.bean.CoursePlan;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
+import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.DialogList;
 import com.bumptech.glide.Glide;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-import javax.inject.Inject;
 import rx.functions.Action1;
 
 public class CourseBaseInfoEditFragment extends BaseFragment {
@@ -36,8 +38,8 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
     @BindView(R2.id.course_min_count) CommonInputView courseMinCount;
     @BindView(R2.id.default_course_plan) CommonInputView defaultCoursePlan;
     @BindView(R2.id.single_count) CommonInputView singleCount;
-    @Inject ChooseCoursePlanFragment chooseCoursePlanFragment;
     private CourseType mCourse;
+    private boolean isPrivate;
 
     public static CourseBaseInfoEditFragment newInstance(CourseType course) {
         Bundle args = new Bundle();
@@ -51,6 +53,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mCourse = getArguments().getParcelable("course");
+            isPrivate = mCourse.is_private;
         }
         //
     }
@@ -90,6 +93,36 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
                 }
             }
         });
+        courseMinCount.setOnClickListener(view1 -> {
+            new DialogList(getContext()).list(
+               isPrivate? CmStringUtils.getNums(1, 10) : CmStringUtils.getNums(1, 300),
+              (parent, view2, position, id) -> {
+                  int before = 8;
+                  try {
+                      before = Integer.parseInt(courseMinCount.getContent());
+                  } catch (Exception e) {
+                      LogUtil.e("上课人数不为int类型");
+                  }
+                  if (before != (position + 1)) {
+                      courseMinCount.setContent(Integer.toString(position + 1));
+                  }
+              }).title("选择人数").show();
+        });
+        singleCount.setOnClickListener(view1 -> {
+            new DialogList(getContext()).list(
+              isPrivate? CmStringUtils.getNums(1, 10) : CmStringUtils.getNums(1, 300),
+              (parent, view2, position, id) -> {
+                  int before = 8;
+                  try {
+                      before = Integer.parseInt(singleCount.getContent());
+                  } catch (Exception e) {
+                      LogUtil.e("上课人数不为int类型");
+                  }
+                  if (before != (position + 1)) {
+                      singleCount.setContent(Integer.toString(position + 1));
+                  }
+              }).title("选择人数").show();
+        });
         return view;
     }
 
@@ -126,17 +159,9 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
         super.onDetach();
     }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-    }
-
     @OnClick(R2.id.default_course_plan) public void onCoursePlan() {
-        if (mCourse.getPlan() != null && mCourse.getPlan().getId() != null) chooseCoursePlanFragment.mChosenId = mCourse.getPlan().getId();
-        getActivity().getSupportFragmentManager()
-            .beginTransaction()
-            .add(mCallbackActivity.getFragId(), chooseCoursePlanFragment)
-            .addToBackStack("")
-            .commit();
+        if (mCourse.getPlan() != null && mCourse.getPlan().getId() != null)
+            routeTo("/plan/list/",new ChooseCoursePlanParams().mChosenId(mCourse.getPlan().getId()+"").build());
     }
 
     /**

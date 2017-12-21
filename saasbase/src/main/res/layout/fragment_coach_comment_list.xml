@@ -110,7 +110,7 @@
         android:orientation="vertical"
         >
 
-      <cn.qingchengfit.staffkit.views.custom.PagerSlidingTabImageStrip
+      <cn.qingchengfit.widgets.PagerSlidingTabImageStrip
           android:id="@+id/strip"
           android:layout_width="match_parent"
           android:layout_height="96dp"
@@ -141,7 +141,6 @@
           android:layout_width="146dp"
           android:layout_height="147dp"
           android:layout_marginTop="100dp"
-          tools:src="@drawable/no_statement"
           />
 
       <TextView

@@ -1,6 +1,5 @@
 package cn.qingchengfit.saasbase.course.batch.views;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
@@ -22,11 +28,11 @@ import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.SingleBatch;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchSinglePresenter;
-import cn.qingchengfit.saasbase.databinding.FragmentSaasSingleBatchBinding;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -64,16 +70,23 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/22.
  */
-@Leaf(module = "course", path = "/batch/schedule/single/")
-public class BatchSingleFragment extends SaasBaseFragment implements BatchSinglePresenter.MVPView{
-
+@Leaf(module = "course", path = "/batch/schedule/single/") public class BatchSingleFragment
+  extends SaasBaseFragment implements BatchSinglePresenter.MVPView {
 
   @Inject BatchSinglePresenter presenter;
 
   @Need public String scheduleId;
   @Need public Boolean isPrivate = false;
 
-  FragmentSaasSingleBatchBinding db;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
+  @BindView(R2.id.frag_course_info) FrameLayout fragCourseInfo;
+  @BindView(R2.id.civ_date) CommonInputView civDate;
+  @BindView(R2.id.civ_course_time) CommonInputView civCourseTime;
+  @BindView(R2.id.civ_open_time) CommonInputView civOpenTime;
+  @BindView(R2.id.btn_del) Button btnDel;
+  Unbinder unbinder;
   private BatchDetailCommonView batchBaseFragment;
   private DialogList openDialog;
   private String[] arrayOpenTime;
@@ -87,22 +100,25 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    super.onCreateView(inflater,container,savedInstanceState);
-    db = DataBindingUtil.inflate(inflater,R.layout.fragment_saas_single_batch, container, false);
-    //unbinder = ButterKnife.bind(this, view);
-    delegatePresenter(presenter,this);
-    initToolbar(db.toolbarLayout.toolbar);
-    db.civOpenTime.setOnClickListener(view -> onOpenTime());
-    db.civDate.setOnClickListener(view -> onCivDateClicked());
-    db.civCourseTime.setOnClickListener(view -> onCivCourseTimeClicked());
-    db.btnDel.setOnClickListener(view -> onBtnDelClicked());
-    return db.getRoot();
+    Bundle savedInstanceState) {
+    super.onCreateView(inflater, container, savedInstanceState);
+    //db = DataBindingUtil.inflate(inflater, R.layout.fragment_saas_single_batch, container, false);
+    View view = inflater.inflate(R.layout.fragment_saas_single_batch,container,false);
+    unbinder = ButterKnife.bind(this, view);
+    delegatePresenter(presenter, this);
+    initToolbar(toolbar);
+    civOpenTime.setOnClickListener(v -> onOpenTime());
+    civDate.setOnClickListener(v -> onCivDateClicked());
+    civCourseTime.setOnClickListener(v -> onCivCourseTimeClicked());
+    btnDel.setOnClickListener(v -> onBtnDelClicked());
+
+    return view;
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    //((TextView)db.loToolbar.findViewById(R.id.toolbar_title)).setText("课程");
+    toolbarTitle.setText("课程");
+    toolbar.inflateMenu(R.menu.menu_save);
     RxMenuItem.clicks(toolbar.getMenu().getItem(0))
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
@@ -112,12 +128,10 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
       });
   }
 
-
-
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
     Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
-    if (f instanceof BatchDetailCommonView){
+    if (f instanceof BatchDetailCommonView) {
       inflateBatchInfo(presenter.getBatchDetail());
     }
   }
@@ -128,11 +142,12 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
   }
 
   @Override public boolean onFragmentBackPress() {
-    DialogUtils.instanceDelDialog(getContext(), "确认放弃本次编辑?", new MaterialDialog.SingleButtonCallback() {
-      @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-        popBack();
-      }
-    }).show();
+    DialogUtils.instanceDelDialog(getContext(), "确认放弃本次编辑?",
+      new MaterialDialog.SingleButtonCallback() {
+        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+          popBack();
+        }
+      }).show();
     return true;
   }
 
@@ -140,18 +155,17 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
     return BatchSingleFragment.class.getName();
   }
 
-
   public void onCivDateClicked() {
-    chooseTime(db.civDate);
+    chooseTime(civDate);
   }
 
   /**
    * 课程时间修改
    */
   public void onCivCourseTimeClicked() {
-    choosTime(TimePopupWindow.Type.HOURS_MINS, 0, 0, DateUtils.HHMM2date(db.civCourseTime.getContent()), db.civCourseTime);
+    choosTime(TimePopupWindow.Type.HOURS_MINS, 0, 0,
+      DateUtils.HHMM2date(civCourseTime.getContent()), civCourseTime);
   }
-
 
   /**
    * 删除排期
@@ -163,39 +177,46 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
   }
 
   @Override public void onDetail(SingleBatch batchDetail) {
-    if (batchBaseFragment == null)
-      batchBaseFragment = BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher);
-    else {
+    if (batchBaseFragment == null) {
+      batchBaseFragment =
+        BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher);
+    } else {
       batchBaseFragment.setTrainer(batchDetail.teacher);
       batchBaseFragment.setCourse(batchDetail.course);
     }
-    if (!batchBaseFragment.isAdded())
-      stuff(R.id.frag_course_info,batchBaseFragment);
-    else {
+    if (!batchBaseFragment.isAdded()) {
+      stuff(R.id.frag_course_info, batchBaseFragment);
+    } else {
       inflateBatchInfo(batchDetail);
     }
 
-    db.civDate.setContent(DateUtils.getYYYYMMDDfromServer(batchDetail.start));
-    db.civCourseTime.setContent(isPrivate?DateUtils.getHHMMDuringFromServer(batchDetail.start,batchDetail.end, batchDetail.is_cross):DateUtils.getYYMMfromServer(batchDetail.start));
-    onOpenRule(batchDetail.open_rule,DateUtils.formatDateFromServer(batchDetail.start));
+    civDate.setContent(DateUtils.getYYYYMMDDfromServer(batchDetail.start));
+    civCourseTime.setContent(
+      isPrivate ? DateUtils.getHHMMDuringFromServer(batchDetail.start, batchDetail.end,
+        batchDetail.is_cross) : DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(batchDetail.start)));
+    onOpenRule(batchDetail.open_rule, DateUtils.formatDateFromServer(batchDetail.start));
   }
 
-  public void onOpenRule(BatchOpenRule rule,Date start) {
-    if (rule != null ){
-      if (rule.type <3 && !TextUtils.isEmpty(rule.open_datetime))
-        db.civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(rule.open_datetime)));
-      else if (rule.type == 3 && rule.advance_hours != null){
-        if (start != null)
-          db.civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(DateUtils.addHour(start,-rule.advance_hours)));
+  public void onOpenRule(BatchOpenRule rule, Date start) {
+    if (rule != null) {
+      if (rule.type < 3 && !TextUtils.isEmpty(rule.open_datetime)) {
+        civOpenTime.setContent(
+          DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(rule.open_datetime)));
+      } else if (rule.type == 3 && rule.advance_hours != null) {
+        if (start != null) {
+          civOpenTime.setContent(
+            DateUtils.Date2YYYYMMDDHHmm(DateUtils.addHour(start, -rule.advance_hours)));
+        }
       }
     }
   }
 
-  private void inflateBatchInfo(BatchDetail batchDetail){
+  private void inflateBatchInfo(BatchDetail batchDetail) {
     batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
     batchBaseFragment.openPayOnline(!batchDetail.is_free);
     batchBaseFragment.setSpace(batchDetail.getSpaces());
-    batchBaseFragment.setRules(batchDetail.rule, (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
+    batchBaseFragment.setRules(batchDetail.rule,
+      (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
   }
 
   public void onOpenTime() {
@@ -206,7 +227,7 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (position == 0) {
               presenter.setOpenRuleType(1);
-              db.civOpenTime.setContent(arrayOpenTime[0]);
+              civOpenTime.setContent(arrayOpenTime[0]);
             } else if (position == 1) {
               chooseOpenTime();
             } else {
@@ -226,7 +247,7 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
       chooseOpenTimeDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.ALL);
       chooseOpenTimeDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
         @Override public void onTimeSelect(Date date) {
-          db.civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(date));
+          civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(date));
           presenter.setOpenRuleType(2);
           presenter.setOpenRuleTime(DateUtils.Date2YYYYMMDDHHmmss(date), null);
         }
@@ -235,10 +256,10 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
     chooseOpenTimeDialog.setRange(DateUtils.getYear(new Date()) - 1,
       DateUtils.getYear(new Date()) + 1);
     Date d = new Date();
-    if (!TextUtils.isEmpty(db.civOpenTime.getContent())) {
+    if (!TextUtils.isEmpty(civOpenTime.getContent())) {
       try {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD HH:mm", Locale.CHINA);
-        d = formatter.parse(db.civOpenTime.getContent());
+        d = formatter.parse(civOpenTime.getContent());
       } catch (Exception e) {
         LogUtil.e(e.getMessage());
       }
@@ -246,6 +267,7 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
 
     chooseOpenTimeDialog.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
   }
+
   /**
    * 提前x小时开放预约
    */
@@ -254,15 +276,13 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
     simpleScrollPicker.setLabel("小时");
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
-        db.civOpenTime.setContent("提前" + pos + "小时预约");
+        civOpenTime.setContent("提前" + pos + "小时预约");
         presenter.setOpenRuleType(3);
         presenter.setOpenRuleTime(null, pos);
       }
     });
     simpleScrollPicker.show(0, 240, 4);
   }
-
-
 
   @Override public String getCourseId() {
     return batchBaseFragment.getCourseId();
@@ -295,8 +315,6 @@ public class BatchSingleFragment extends SaasBaseFragment implements BatchSingle
   @Override public List<Rule> getRules() {
     return batchBaseFragment.getRules();
   }
-
-
 
   @Override public int suportMemberNum() {
     return batchBaseFragment.getOrderStudentCount();

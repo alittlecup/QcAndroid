@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.MenuRes;
@@ -178,10 +179,11 @@ public class MainActivity extends BaseActivity implements FragCallBack {
          * 全局监听App关闭的消息
          */
         mCloseOb = RxBus.getBus().register(RxCloseAppEvent.class);
-        mCloseOb.subscribe(new Action1<RxCloseAppEvent>() {
-            @Override public void call(RxCloseAppEvent rxCloseAppEvent) {
-                finish();
-            }
+        mCloseOb.subscribe(rxCloseAppEvent -> {
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAndRemoveTask ();
+          }else finishAffinity();
+          System.exit(0);
         });
         /*
          * App异常时重新回到主页
@@ -419,10 +421,11 @@ public class MainActivity extends BaseActivity implements FragCallBack {
                     .negativeColorRes(R.color.text_grey)
                     .positiveColorRes(R.color.colorPrimary)
                     .canceledOnTouchOutside(true)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            MainActivity.this.finish();
-                        }
+                    .onPositive((dialog, which) -> {
+                      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        finishAndRemoveTask ();
+                      }else finishAffinity();
+                      System.exit(0);
                     })
                     .build();
             }

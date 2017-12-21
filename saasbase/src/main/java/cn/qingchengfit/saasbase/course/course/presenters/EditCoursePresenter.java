@@ -2,6 +2,8 @@ package cn.qingchengfit.saasbase.course.course.presenters;
 
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
@@ -17,45 +19,46 @@ public class EditCoursePresenter extends BasePresenter<EditCoursePresenter.EditC
 
   @Inject IPermissionModel serPermisAction;
   @Inject ICourseModel courseModel;
+  @Inject GymWrapper gymWrapper;
 
   @Inject public EditCoursePresenter() {
   }
 
   public void judgePermission(CourseType courseDetail) {
-    //if (gymWrapper.inBrand()) {
-    //    if ((courseDetail.is_private() && serPermisAction.checkMuti(PermissionServerUtils.PRISETTING_CAN_CHANGE,
-    //        courseDetail.getShopIdList())) || (!courseDetail.is_private() && serPermisAction.checkMuti(
-    //        PermissionServerUtils.TEAMSETTING_CAN_CHANGE, courseDetail.getShopIdList()))) { //连锁运营下 全权限
-    //        mvpView.showBaseInfoHint(null);
-    //        mvpView.editBaseInfo(courseDetail);
-    //        mvpView.showSuitGymHint(null);
-    //    } else {
-    //        mvpView.showBaseInfoHint("仅具有全部适用场馆管理员身份的用户才能编辑");
-    //        mvpView.showSuitGymHint(null);
-    //        mvpView.showbaseInfo(courseDetail);//连锁运营下部分权限
-    //    }
-    //    mvpView.editSuitGym(courseDetail);
-    //} else {//场馆下
-    //    if (gymWrapper.singleMode()) { //但场馆模式
-    //        mvpView.showBaseInfoHint(null);
-    //        mvpView.editBaseInfo(courseDetail);
-    //    } else {//多场馆进入
-    //        if (courseDetail.getShopIdList().size() > 1) {
-    //            mvpView.showBaseInfoHint("请在「连锁运营」中修改基本信息");
-    //            mvpView.showbaseInfo(courseDetail);
-    //        } else if ((courseDetail.is_private() && serPermisAction.check(courseDetail.getShopIdList().get(0),
-    //            PermissionServerUtils.PRISETTING_CAN_CHANGE)) || (!courseDetail.is_private() && serPermisAction.check(
-    //            courseDetail.getShopIdList().get(0), PermissionServerUtils.TEAMSETTING_CAN_CHANGE))) {
-    //            mvpView.showBaseInfoHint(null);
-    //            mvpView.editBaseInfo(courseDetail);
-    //        } else {
-    //            mvpView.showBaseInfoHint("抱歉!您没有修改权限");
-    //            mvpView.showbaseInfo(courseDetail);
-    //        }
-    //    }
-    //    mvpView.showSuitGymHint("请在「连锁运营」中修改所属场馆");
-    //    mvpView.showSuitGym(courseDetail);
-    //}
+    if (gymWrapper.inBrand()) {
+        if ((courseDetail.is_private() && serPermisAction.check(PermissionServerUtils.PRISETTING_CAN_CHANGE,
+            courseDetail.getShopIdList())) || (!courseDetail.is_private() && serPermisAction.check(
+            PermissionServerUtils.TEAMSETTING_CAN_CHANGE, courseDetail.getShopIdList()))) { //连锁运营下 全权限
+            mvpView.showBaseInfoHint(null);
+            mvpView.editBaseInfo(courseDetail);
+            mvpView.showSuitGymHint(null);
+        } else {
+            mvpView.showBaseInfoHint("仅具有全部适用场馆管理员身份的用户才能编辑");
+            mvpView.showSuitGymHint(null);
+            mvpView.showbaseInfo(courseDetail);//连锁运营下部分权限
+        }
+        mvpView.editSuitGym(courseDetail);
+    } else {//场馆下
+        if (gymWrapper.singleMode()) { //但场馆模式
+            mvpView.showBaseInfoHint(null);
+            mvpView.editBaseInfo(courseDetail);
+        } else {//多场馆进入
+            if (courseDetail.getShopIdList().size() > 1) {
+                mvpView.showBaseInfoHint("请在「连锁运营」中修改基本信息");
+                mvpView.showbaseInfo(courseDetail);
+            } else if ((courseDetail.is_private() && serPermisAction.check(
+                PermissionServerUtils.PRISETTING_CAN_CHANGE)) || (!courseDetail.is_private() && serPermisAction.check(
+                  PermissionServerUtils.TEAMSETTING_CAN_CHANGE))) {
+                mvpView.showBaseInfoHint(null);
+                mvpView.editBaseInfo(courseDetail);
+            } else {
+                mvpView.showBaseInfoHint("抱歉!您没有修改权限");
+                mvpView.showbaseInfo(courseDetail);
+            }
+        }
+        mvpView.showSuitGymHint("请在「连锁运营」中修改所属场馆");
+        mvpView.showSuitGym(courseDetail);
+    }
   }
 
   public void editCourse(String courseid, CourseBody body) {

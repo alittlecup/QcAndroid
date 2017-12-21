@@ -46,13 +46,13 @@ public class CoachCommentAdapter extends FragmentStatePagerAdapter implements Pa
         return POSITION_NONE;
     }
 
-    //    public CharSequence getPageTitle(int position) {
-    //        Fragment f = fragments.get(position);
-    //        if (f instanceof TitleFragment) {
-    //            return ((TitleFragment) f).getTitle();
-    //        } else return "";
-    //
-    //    }
+        //public CharSequence getPageTitle(int position) {
+        //    Fragment f = fragments.get(position);
+        //    if (f instanceof TitleFragment) {
+        //        return ((TitleFragment) f).getTitle();
+        //    } else return "";
+        //
+        //}
 
     @Override public String getTextStr(int position) {
         return mCoaches.get(position).getUser().username;

@@ -20,6 +20,8 @@ import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.views.fragments.BaseListFragment;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -29,10 +31,11 @@ import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+@Leaf(module = "course", path = "/plan/list/")
 public class ChooseCoursePlanFragment extends BaseListFragment
   implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-  public Long mChosenId = 0L;
+  @Need public String mChosenId ;
   protected Toolbar toolbar;
   protected TextView toolbarTitle;
   @Inject ICourseModel courseModel;
