@@ -9,9 +9,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.StudentBean;
-import cn.qingchengfit.model.responese.Students;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -91,8 +91,8 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
             .qcGetCardBundldStudents(staffid, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .map(new Func1<QcDataResponse<Students>, List<QcStudentBean>>() {
-                @Override public List<QcStudentBean> call(QcDataResponse<Students> qcResponseAllStudent) {
+            .map(new Func1<QcDataResponse<StudentListWrapper>, List<QcStudentBean>>() {
+                @Override public List<QcStudentBean> call(QcDataResponse<StudentListWrapper> qcResponseAllStudent) {
 
                     if (ResponseConstant.checkSuccess(qcResponseAllStudent)) {
                         for (QcStudentBean bean : qcResponseAllStudent.data.users) {

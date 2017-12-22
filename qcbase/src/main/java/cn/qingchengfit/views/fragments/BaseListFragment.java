@@ -57,6 +57,7 @@ public abstract class BaseListFragment extends BaseFragment {
   protected SmoothScrollLinearLayoutManager linearLayoutManager;
   @Nullable @BindView(R2.id.srl) protected SwipeRefreshLayout srl;
   @BindView(R2.id.fab) FloatingActionButton fab;
+  protected int fabDrawable;
   protected List<AbstractFlexibleItem> datas = new ArrayList<>();
   private Object listeners;
 
@@ -199,8 +200,9 @@ public abstract class BaseListFragment extends BaseFragment {
   }
 
   public abstract int getNoDataIconRes();
+
   public int getFbIcon(){
-    return 0;
+    return fabDrawable;
   }
 
   public abstract String getNoDataStr();

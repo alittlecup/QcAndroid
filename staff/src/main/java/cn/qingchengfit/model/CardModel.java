@@ -6,11 +6,16 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.bean.DayOffs;
+import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
+import cn.qingchengfit.saasbase.cards.network.body.AddDayOffBody;
+import cn.qingchengfit.saasbase.cards.network.body.AheadOffDayBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.body.UpdateCardValidBody;
 import cn.qingchengfit.saasbase.cards.network.response.BalanceConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
@@ -18,10 +23,11 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
-import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
+import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.repository.CardApi;
+import com.google.gson.JsonObject;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.Path;
@@ -121,18 +127,17 @@ public class CardModel implements ICardModel {
   }
 
   @Override
-  public Observable<QcDataResponse<PayBusinessResponseWrap>> qcChargeCard(ChargeBody ochargeBody) {
-    ChargeBody chargeBody = (ChargeBody) ochargeBody.clone();
-    if (chargeBody.getSeller_id().equalsIgnoreCase("0")) {
-      chargeBody.setSeller_id(null);
-    }
-    return posApi.qcCardCharge(loginStatus.staff_id(), chargeBody.getCard_id(),
+  public Observable<QcDataResponse<JsonObject>> qcChargeCard(String cardId, CardBuyBody ochargeBody) {
+    CardBuyBody chargeBody = (CardBuyBody) ochargeBody.clone();
+    chargeBody.setType(null);
+    return posApi.qcCardCharge(loginStatus.staff_id(), cardId,
       gymWrapper.getParams(), chargeBody);
   }
 
   @Override
-  public Observable<QcDataResponse<PayBusinessResponseWrap>> buyCard(@Body CardBuyBody obody) {
+  public Observable<QcDataResponse<JsonObject>> buyCard(@Body CardBuyBody obody) {
     CardBuyBody body = (CardBuyBody) obody.clone();
+    body.setType(null);
     if (body.getSeller_id().equalsIgnoreCase("0")) {
       body.setSeller_id(null);
     }
@@ -182,5 +187,52 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse> qcPostBalanceCondition(CardBalanceNotifyBody body) {
     return posApi.qcPostBalanceCondition(loginStatus.staff_id(),gymWrapper.getParams(),body);
+  }
+
+  public Observable<QcDataResponse<Shops>> qcGetBrandShops(String brand_id) {
+    return posApi.qcGetBrandShops(loginStatus.staff_id(), brand_id);
+  }
+
+  @Override public Observable<QcDataResponse<UUIDModel>> qcStashNewCardTpl(CardtplBody body) {
+    return posApi.qcStashNewCardTpl(loginStatus.staff_id(), body, gymWrapper.getShopParams());
+  }
+
+  @Override public Observable<QcDataResponse<JsonObject>> qcChargeRefund(String cardId, ChargeBody body) {
+    return posApi.qcMinusMoney(loginStatus.staff_id(), cardId, gymWrapper.getParams(), body);
+  }
+
+  @Override
+  public Observable<QcDataResponse> qcAddDayOff(AddDayOffBody body) {
+    return posApi.qcAddDayOff(loginStatus.staff_id(), gymWrapper.brand_id(), gymWrapper.id(),
+        gymWrapper.model(), body);
+  }
+
+  @Override public Observable<QcDataResponse> qcDelDayOff(String leaveId) {
+    return posApi.qcDelDayOff(loginStatus.staff_id(), leaveId, gymWrapper.brand_id(),
+        gymWrapper.id(), gymWrapper.model());
+  }
+
+  @Override public Observable<QcDataResponse<DayOffs>> qcGetDayOffList(String cardId) {
+    return posApi.qcGetDayOff(loginStatus.staff_id(), cardId, gymWrapper.brand_id(),
+        gymWrapper.id(), gymWrapper.model());
+  }
+
+  @Override
+  public Observable<QcDataResponse> qcAheadOffDay(String leaveId, AheadOffDayBody body) {
+    return posApi.qcAheadDayOff(loginStatus.staff_id(), leaveId, gymWrapper.getParams(), body);
+  }
+
+  @Override public Observable<QcDataResponse> qcStopCard(String cardId) {
+    return posApi.qcUnregisteCard(loginStatus.staff_id(), cardId, gymWrapper.brand_id(),
+        gymWrapper.id(), gymWrapper.model());
+  }
+
+  @Override public Observable<QcDataResponse> qcModifyValidate(String cardId, UpdateCardValidBody body) {
+    return posApi.qcUndateCardValid(loginStatus.staff_id(), cardId, gymWrapper.getParams(), body);
+  }
+
+  @Override public Observable<QcDataResponse> qcResumeCard(String cardId) {
+    return posApi.qcResumeCard(loginStatus.staff_id(), cardId, gymWrapper.brand_id(),
+        gymWrapper.id(), gymWrapper.model());
   }
 }

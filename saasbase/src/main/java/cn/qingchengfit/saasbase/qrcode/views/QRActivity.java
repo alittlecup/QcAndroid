@@ -15,12 +15,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.repository.PostApi;
@@ -145,6 +147,11 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String USER_PROTOCOL = "/user/protocol";
     public static final String USER_PROTOCOL_URL = "/protocol/staff/";
 
+    //会员卡服务协议
+    public static final String MODULE_ADD_CARD_PROTOCOL = "/card_tpl/add";
+    public static final String CARD_TPL_ID = "card_tpl_id";
+    public static final String MULTI_CARD_TPL = "card-templates/add";
+
     //    @BindView(R.id.qrdecoderview)
     QRCodeReaderView qrdecoderview;
 
@@ -226,9 +233,12 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
         if (qrdecoderview != null) qrdecoderview.getCameraManager().stopPreview();
         final String session = PreferenceUtils.getPrefString(this, Configs.PREFER_SESSION, "");
         String url = "";
-        if (getIntent() != null) {
-            url = getBaseContext().getResources()
-                .getString(R.string.qr_code_2web, Configs.Server, gymWrapper.id(), getIntent().getStringExtra(LINK_MODULE));
+        if (getIntent() != null && getIntent().hasExtra(LINK_MODULE)) {
+            url = getResources()
+                .getString(R.string.qr_code_2web, Configs.Server, gymWrapper.brand_id(),
+                    gymWrapper.shop_id(), getIntent().getStringExtra(LINK_MODULE));
+        } else if (getIntent() != null && getIntent().hasExtra(LINK_URL)) {
+            url = getIntent().getStringExtra(LINK_URL);
         }
         sp = restRepository.createPostApi(PostApi.class).qcScans(text, new ScanBody.Builder().url(url).session_id(session)
             //                .module(getIntent().getStringExtra(LINK_MODULE))
@@ -251,6 +261,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
                 if (ResponseConstant.checkSuccess(qcResponse)) {
                     done.setVisibility(View.VISIBLE);
                     toolbarTitile.setText("扫码成功");
+                    RxBus.getBus().post(new OnBackEvent());
                 } else {
                     new AlertDialogWrapper.Builder(QRActivity.this).setTitle(R.string.err_sacn_qrcode)
                         .setPositiveButton(R.string.common_comfirm, new DialogInterface.OnClickListener() {

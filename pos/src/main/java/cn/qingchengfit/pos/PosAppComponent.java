@@ -50,8 +50,7 @@ import dagger.multibindings.IntoMap;
   BindPosCardActivity.class,  BindPosBillActivity.class, BindLoginActivity.class,
   BindExchangeActivity.class, BindSettingActivity.class, BindSaasCommonActivity.class,
   BindPosStaffActivity.class, PosAppComponent.SplashModule.class, BindCashierDeskActivity.class,
-  cn.qingchengfit.pos.PosAppComponent.QRModule.class, cn.qingchengfit.pos.PosAppComponent.SplashModule.class
-
+  cn.qingchengfit.pos.PosAppComponent.QRModule.class, cn.qingchengfit.pos.PosAppComponent.SplashModule.class,
 })
 public interface PosAppComponent {
   void inject(PosApp app);

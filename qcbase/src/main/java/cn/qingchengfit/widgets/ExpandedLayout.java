@@ -209,6 +209,14 @@ public class ExpandedLayout extends LinearLayout {
     requestLayout();
   }
 
+  public void setLeftClickListener(OnClickListener listener){
+    if (listener != null) {
+      mTvLable.setOnClickListener(listener);
+    }else{
+      throw new NullPointerException("left listener is null");
+    }
+  }
+
   public void setLabel(String s) {
     mTvLable.setText(s);
   }

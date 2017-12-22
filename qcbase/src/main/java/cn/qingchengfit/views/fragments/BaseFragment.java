@@ -107,6 +107,8 @@ public abstract class BaseFragment extends RxFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    //TODO 删除  -- by fb
+    LogUtil.e("----TAG----", getClass().getSimpleName());
   }
 
   @Nullable @Override
@@ -535,6 +537,13 @@ public abstract class BaseFragment extends RxFragment
             civ.setContent(DateUtils.date2TimePicker(date, type));
           }
         });
+    }
+  }
+
+  protected void choosTime(final TimePopupWindow.Type type, int start, int end, Date inputDate,
+      final CommonInputView civ, TimeDialogWindow.OnTimeSelectListener listener) {
+    if (getActivity() instanceof BaseActivity) {
+      ((BaseActivity) getActivity()).chooseTime(type, start, end, inputDate, listener);
     }
   }
 

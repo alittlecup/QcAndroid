@@ -29,6 +29,7 @@ import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.GymBody;
 import cn.qingchengfit.model.common.Shop;
+import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;

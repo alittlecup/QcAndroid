@@ -136,7 +136,7 @@ public class CompletedBuyPresenter extends BasePresenter {
         });
     }
 
-    void cacluScore(String price, final String user_ids) {
+    public void cacluScore(String price, final String user_ids) {
         RxRegiste(mRestRepository.getGet_api()
             .qcGetScoreCalu(App.staffId, Configs.CACLU_SCORE_BUY, price,
                 GymUtils.getParamsV2(gymWrapper.getCoachService(), gymWrapper.getBrand()))

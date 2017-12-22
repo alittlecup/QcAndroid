@@ -1,11 +1,16 @@
 package cn.qingchengfit.saasbase.repository;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.bean.DayOffs;
+import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
+import cn.qingchengfit.saasbase.cards.network.body.AddDayOffBody;
+import cn.qingchengfit.saasbase.cards.network.body.AheadOffDayBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.body.UpdateCardValidBody;
 import cn.qingchengfit.saasbase.cards.network.response.BalanceConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
@@ -13,12 +18,14 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
-import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
+import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
+import com.google.gson.JsonObject;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import rx.Observable;
 
 /**
  * power by
@@ -124,12 +131,12 @@ public interface ICardModel {
   /**
    * 充卡
    */
-  rx.Observable<QcDataResponse<PayBusinessResponseWrap>> qcChargeCard(ChargeBody chargeBody);
+  rx.Observable<QcDataResponse<JsonObject>> qcChargeCard(String cardId, CardBuyBody chargeBody);
 
   /**
    * 购卡操作
    */
-  @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse<PayBusinessResponseWrap>> buyCard(
+  @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse<JsonObject>> buyCard(
       @Body CardBuyBody body);
 
   /**
@@ -158,4 +165,40 @@ public interface ICardModel {
   rx.Observable<QcDataResponse<NotityIsOpenConfigs>> qcGetNotifySetting(HashMap<String,Object> params);
   rx.Observable<QcDataResponse<BalanceConfigs>> qcGetBalanceCondition(HashMap<String,Object> params,String keys);
   rx.Observable<QcDataResponse> qcPostBalanceCondition(CardBalanceNotifyBody body);
+
+  Observable<QcDataResponse<Shops>> qcGetBrandShops(String brand_id);
+
+  /**
+   * 会员卡服务协议暂存接口
+   * @param body
+   * @return
+   */
+  rx.Observable<QcDataResponse<UUIDModel>> qcStashNewCardTpl(@Body CardtplBody body);
+
+  /**
+   * 扣费
+   * @param body
+   * @return
+   */
+  rx.Observable<QcDataResponse<JsonObject>> qcChargeRefund(String cardId, @Body ChargeBody body);
+
+  /**
+   * 请假
+   * @param body
+   * @return
+   */
+  rx.Observable<QcDataResponse> qcAddDayOff(@Body AddDayOffBody body);
+
+  rx.Observable<QcDataResponse> qcDelDayOff(String leaveId);
+
+  rx.Observable<QcDataResponse<DayOffs>> qcGetDayOffList(String cardId);
+
+  rx.Observable<QcDataResponse> qcAheadOffDay(String leaveId, AheadOffDayBody body);
+
+  rx.Observable<QcDataResponse> qcStopCard(String cardId);
+
+  rx.Observable<QcDataResponse> qcModifyValidate(String cardId, UpdateCardValidBody body);
+
+  rx.Observable<QcDataResponse> qcResumeCard(String cardId);
+
 }

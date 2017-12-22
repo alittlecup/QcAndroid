@@ -66,6 +66,7 @@
       android:supportsRtl="true"
       android:theme="@style/QcAppTheme"
       tools:replace="android:label"
+      android:taskAffinity="cn.qingchengfit.staff"
       >
     <meta-data
         android:name="BUG_HD_SDK_GENERAL_KEY"
@@ -775,6 +776,24 @@
         android:screenOrientation="portrait"
         android:windowSoftInputMode="adjustResize"
         >
+
+    </activity>
+    <activity
+        android:name="cn.qingchengfit.saasbase.SaasContainerActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="cardtpl"
+            android:scheme="qcstaff"
+            />
+      </intent-filter>
     </activity>
     <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
               android:theme="@style/Base.Theme.AppCompat"
@@ -789,6 +808,7 @@
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
 
@@ -910,7 +930,23 @@
       </intent-filter>
     </activity>
 
-    <activity android:name=".views.cardtype.CardProtocolActivity"/>
+    <activity
+        android:name="cn.qingchengfit.saasbase.common.views.SaasCommonActivity"
+        android:screenOrientation="portrait">
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="common"
+            android:scheme="qcstaff"
+            />
+      </intent-filter>
+    </activity>
+
   </application>
 
 </manifest>

@@ -66,7 +66,6 @@ import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
 import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
-import cn.qingchengfit.staffkit.views.cardtype.UUIDModel;
 import java.util.HashMap;
 import java.util.List;
 import retrofit2.Call;
@@ -673,6 +672,6 @@ public interface Post_Api {
 
     //暂存添加会员卡种类信息
     @POST("api/staffs/{staff_id}/cache/")
-    rx.Observable<QcDataResponse<UUIDModel>> qcStashNewCardTpl(@Path("staff_id") String staff_id,
+    rx.Observable<QcDataResponse> qcStashNewCardTpl(@Path("staff_id") String staff_id,
         @Body CardtplBody body, @QueryMap HashMap<String, Object> params);
 }

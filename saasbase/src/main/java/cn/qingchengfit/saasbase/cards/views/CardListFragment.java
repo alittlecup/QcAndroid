@@ -1,10 +1,15 @@
 package cn.qingchengfit.saasbase.cards.views;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import cn.qingchengfit.animator.SlideInRightItemAnimator;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -33,6 +38,12 @@ import java.util.List;
  */
 public class CardListFragment extends BaseListFragment {
 
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    fabDrawable = R.drawable.ic_add_card;
+    return super.onCreateView(inflater, container, savedInstanceState);
+  }
+
   @Override public String getFragmentName() {
     return CardListFragment.class.getName();
   }
@@ -44,6 +55,11 @@ public class CardListFragment extends BaseListFragment {
     rv.setPadding(15, 0, 15, 0);
     rv.addItemDecoration(
       new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_saas_realcard));
+  }
+
+  @Override public void onClickFab() {
+    super.onClickFab();
+    routeTo(AppUtils.getRouterUri(getContext(), "/card/choose/cardtpl/"), null);
   }
 
   public void setCardtpls(List<Card> list, int page) {

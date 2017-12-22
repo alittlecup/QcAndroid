@@ -179,7 +179,7 @@
         <data
             android:host="scan"
             android:scheme="qcpos"
-            android:pathPattern="^toweb"
+            android:pathPattern="toweb"
             />
       </intent-filter>
     </activity>

@@ -24,7 +24,7 @@ public class CardBuyBody implements Parcelable,Cloneable {
   /**
    * 卡类型
    */
-  int type;
+  Integer type;
 
   public int getType() {
     return type;
@@ -47,6 +47,13 @@ public class CardBuyBody implements Parcelable,Cloneable {
   public String user_ids;
   public String app_id;
   public boolean is_auto_start;//是否自动开卡
+
+  public String card_id;
+  public String staff_id;
+
+  public int origin;
+
+
 
   public int checkData() {
     if (!CmStringUtils.checkMoney(price)) return R.string.e_card_realpay_cannot_empty;
@@ -111,14 +118,14 @@ public class CardBuyBody implements Parcelable,Cloneable {
       case 3:
         this.start = start;
         this.end = end;
-        if (cto != null){
-          try {
-            this.end = DateUtils.addDay(start,(int)Float.parseFloat(cto.charge));
-          }catch (Exception e){
-
-          }
-
-        }
+        //if (cto != null){
+        //  try {
+        //    this.end = DateUtils.addDay(start,(int)Float.parseFloat(cto.charge));
+        //  }catch (Exception e){
+        //
+        //  }
+        //
+        //}
         break;
     }
   }
@@ -194,7 +201,7 @@ public class CardBuyBody implements Parcelable,Cloneable {
 
 
 
-  public void setType(int type) {
+  public void setType(Integer type) {
     this.type = type;
   }
 
@@ -268,6 +275,10 @@ public class CardBuyBody implements Parcelable,Cloneable {
 
   public void setRemarks(String remarks) {
     this.remarks = remarks;
+  }
+
+  public void setCard_id(String card_id) {
+    this.card_id = card_id;
   }
 
   public static final class Builder {
@@ -413,9 +424,9 @@ public class CardBuyBody implements Parcelable,Cloneable {
   }
 
   @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeInt(this.type);
+    dest.writeValue(this.type);
     dest.writeString(this.price);
-    dest.writeInt(this.charge_type);
+    dest.writeValue(this.charge_type);
     dest.writeString(this.card_no);
     dest.writeString(this.account);
     dest.writeString(this.seller_id);
@@ -430,12 +441,14 @@ public class CardBuyBody implements Parcelable,Cloneable {
     dest.writeString(this.card_tpl_id);
     dest.writeString(this.user_ids);
     dest.writeString(this.app_id);
+    dest.writeByte(this.is_auto_start ? (byte) 1 : (byte) 0);
+    dest.writeString(this.card_id);
   }
 
   protected CardBuyBody(Parcel in) {
-    this.type = in.readInt();
+    this.type = (Integer) in.readValue(Integer.class.getClassLoader());
     this.price = in.readString();
-    this.charge_type = in.readInt();
+    this.charge_type = (Integer) in.readValue(Integer.class.getClassLoader());
     this.card_no = in.readString();
     this.account = in.readString();
     this.seller_id = in.readString();
@@ -450,6 +463,8 @@ public class CardBuyBody implements Parcelable,Cloneable {
     this.card_tpl_id = in.readString();
     this.user_ids = in.readString();
     this.app_id = in.readString();
+    this.is_auto_start = in.readByte() != 0;
+    this.card_id = in.readString();
   }
 
   public static final Creator<CardBuyBody> CREATOR = new Creator<CardBuyBody>() {

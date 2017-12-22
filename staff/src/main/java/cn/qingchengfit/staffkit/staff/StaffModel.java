@@ -53,7 +53,7 @@ public class StaffModel implements IStaffModel {
   }
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getSalers() {
-    return null;
+    return staffApi.qcGetSalers(loginStatus.staff_id(), gymWrapper.getParams());
   }
 
   @Override public Observable<QcDataResponse<SalerListWrap>> getStaffList(String id) {

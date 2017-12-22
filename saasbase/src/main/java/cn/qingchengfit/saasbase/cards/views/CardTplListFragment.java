@@ -37,6 +37,7 @@ public class CardTplListFragment extends BaseListFragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
+
     View view =  super.onCreateView(inflater, container, savedInstanceState);
     if (view != null)
       view.setBackgroundResource(R.color.transparent);
@@ -58,8 +59,6 @@ public class CardTplListFragment extends BaseListFragment {
         .withRightEdge(true)
     );
   }
-
-
 
   public void setCardtpls(List<CardTpl> list){
     stopRefresh();
@@ -96,6 +95,4 @@ public class CardTplListFragment extends BaseListFragment {
   @Override public String getNoDataStr() {
     return "暂无会员卡种类";
   }
-
-
 }

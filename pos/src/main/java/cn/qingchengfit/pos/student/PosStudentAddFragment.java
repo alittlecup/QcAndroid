@@ -64,7 +64,7 @@ public class PosStudentAddFragment extends BaseFragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_pos_student_add, container, false);
+    View view = inflater.inflate(R.layout.fragment_student_add, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     return view;
