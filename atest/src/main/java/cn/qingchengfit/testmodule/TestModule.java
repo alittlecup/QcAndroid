@@ -78,7 +78,7 @@ public class TestModule {
 
     @Provides
     SaasbaseRouterCenter providesSaasbaseRouterCenter() {
-        return new SaasbaseRouterCenter(null, null, null, null, null, null,null,new studentImpl());
+        return new SaasbaseRouterCenter(null, null, null, null, null, null, null, new studentImpl());
     }
 
     @Singleton

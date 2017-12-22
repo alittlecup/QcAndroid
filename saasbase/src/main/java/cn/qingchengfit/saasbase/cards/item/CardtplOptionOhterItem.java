@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.cards.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,27 +17,24 @@ import java.util.List;
 public class CardtplOptionOhterItem
     extends AbstractFlexibleItem<CardtplOptionOhterItem.CardtplOptionOhterVH> {
 
-
-
   @Override public int getLayoutRes() {
     return R.layout.item_cardtpl_standard_other;
   }
 
-  @Override
-  public CardtplOptionOhterVH createViewHolder(View view, FlexibleAdapter adapter) {
+  @Override public CardtplOptionOhterVH createViewHolder(View view, FlexibleAdapter adapter) {
     return new CardtplOptionOhterVH(view, adapter);
   }
 
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, CardtplOptionOhterVH holder, int position,
       List payloads) {
-    holder.chosen.setVisibility(adapter.isSelected(position)?View.VISIBLE:View.GONE);
+    holder.chosen.setVisibility(adapter.isSelected(position) ? View.VISIBLE : View.GONE);
     int colorPrimary = CompatUtils.getColor(holder.title.getContext(), R.color.text_color_gray);
     holder.realIncome.setTextColor(colorPrimary);
     holder.validDate.setTextColor(colorPrimary);
     holder.title.setTextColor(colorPrimary);
-    if (adapter.isSelected(position) ) {
-      holder.chosen.setVisibility( View.VISIBLE);
+    if (adapter.isSelected(position)) {
+      holder.chosen.setVisibility(View.VISIBLE);
       holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_primary);
     } else {
       holder.chosen.setVisibility(View.GONE);
@@ -59,10 +54,11 @@ public class CardtplOptionOhterItem
     @BindView(R2.id.charge_layout) LinearLayout chargeLayout;
     @BindView(R2.id.chosen) ImageView chosen;
     @BindView(R2.id.tag_only_staff) ImageView tagOnlyStaff;
+
     public CardtplOptionOhterVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
-      title.setText("其他");
+      title.setText("自定义");
       realIncome.setVisibility(View.GONE);
       validDate.setVisibility(View.GONE);
       supportType.setVisibility(View.GONE);

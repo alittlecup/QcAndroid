@@ -11,7 +11,9 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.cards.bean.CardLimit;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
@@ -35,7 +37,7 @@ public class CardTplDetailPresenter extends BasePresenter {
 
   private MVPView view;
 
-  @Inject CardTplDetailPresenter() {
+  @Inject public CardTplDetailPresenter() {
   }
 
   public void setCardTpl(CardTpl cardTpl) {
@@ -95,7 +97,38 @@ public class CardTplDetailPresenter extends BasePresenter {
       }, new NetWorkThrowable()));
   }
 
+  public void stashCardTplInfo(){
+    CardLimit limit = view.getCardLimit();
+    CardtplBody body = new CardtplBody.Builder().type(cardCate)
+        .name(view.getCardName())
+        .description(view.getDescription())
+        .options(view.getCardTplOptions())
+        .is_limit(limit.is_limit)
+        .buy_limit(limit.buy_limit)
+        .pre_times(limit.pre_times)
+        .day_times(limit.day_times)
+        .week_times(limit.week_times)
+        .month_times(limit.month_times)
+        .shops(view.getSupportShopId())
+        .is_has_card_term(view.isOpenCardTerm())
+        .build();
+    RxRegiste(cardModel.qcStashNewCardTpl(body)
+        .observeOn(AndroidSchedulers.mainThread())
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .subscribe(new Action1<QcDataResponse<UUIDModel>>() {
+          @Override public void call(QcDataResponse<UUIDModel> uuidModelQcDataResponse) {
+            if (ResponseConstant.checkSuccess(uuidModelQcDataResponse)){
+              view.onStashSuccessed(uuidModelQcDataResponse.data.uuid);
+            }else {
+              view.onShowError(uuidModelQcDataResponse.getMsg());
+            }
+          }
+        }, new NetWorkThrowable()));
+  }
+
   public void queryCardtplOption() {
+
     RxRegiste(cardModel.qcGetOptions(cardTpl.id)
       .onBackpressureLatest()
       .subscribeOn(Schedulers.io())
@@ -141,10 +174,20 @@ public class CardTplDetailPresenter extends BasePresenter {
    */
   public void createCardTpl() {
     if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
+      CardLimit limit = view.getCardLimit();
       CardtplBody body = new CardtplBody.Builder().type(cardCate)
-        .name(view.getCardName())
-        .options(view.getCardTplOptions())
-        .build();
+          .name(view.getCardName())
+          .description(view.getDescription())
+          .options(view.getCardTplOptions())
+          .is_limit(limit.is_limit)
+          .buy_limit(limit.buy_limit)
+          .pre_times(limit.pre_times)
+          .day_times(limit.day_times)
+          .week_times(limit.week_times)
+          .month_times(limit.month_times)
+          .shops(view.getSupportShopId())
+          .is_has_card_term(view.isOpenCardTerm())
+          .build();
       cardModel.qcCreateCardtpl(body)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
@@ -244,11 +287,22 @@ public class CardTplDetailPresenter extends BasePresenter {
 
     void onResumeOk();
 
+    void onStashSuccessed(String uuid);
+
     /**
      * 新增会员卡种类时获取 会员卡种的名字和规格
      */
     String getCardName();
 
     List<CardTplOption> getCardTplOptions();
+
+    CardLimit getCardLimit();
+
+    String getDescription();
+
+    String getSupportShopId();
+
+    boolean isOpenCardTerm();
+
   }
 }

@@ -40,6 +40,7 @@ public class CardtplBody {
   public Integer buy_limit;
   public String shops;//支持场馆 ,隔开
   public List<CardTplOption> options;
+  public Boolean is_open_service_term;
 
   /**
    * 在pos机内检查数据
@@ -74,6 +75,7 @@ public class CardtplBody {
     buy_limit = builder.buy_limit;
     shops = builder.shops;
     options = builder.options;
+    is_open_service_term = builder.is_open_service_term;
   }
 
   public CardtplBody clone() {
@@ -94,6 +96,7 @@ public class CardtplBody {
     b.month_times = this.month_times;
     b.shops = this.shops;
     b.buy_limit = this.buy_limit;
+    b.is_open_service_term = this.is_open_service_term;
     return b;
   }
 
@@ -110,6 +113,7 @@ public class CardtplBody {
     private Integer buy_limit;
     private String shops;
     private List<CardTplOption> options;
+    public boolean is_open_service_term;
 
     public Builder() {
     }
@@ -131,6 +135,11 @@ public class CardtplBody {
 
     public Builder description(String val) {
       description = val;
+      return this;
+    }
+
+    public Builder is_has_card_term(boolean val) {
+      is_open_service_term = val;
       return this;
     }
 

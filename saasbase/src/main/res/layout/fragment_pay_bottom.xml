@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    >
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
+      android:gravity="center_vertical"
+      android:text="在线支付"
+      />
+
+  <RelativeLayout
+      android:id="@+id/wechat_code"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      >
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_wechat_scan"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/wechat_scan"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:background="@color/divider_grey"
+        />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/wechat_pay"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      >
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_wechat"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/wechat_pay"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:background="@color/divider_grey"
+        />
+  </RelativeLayout>
+
+  <TextView
+      android:id="@+id/pay_offline"
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/qc_item_height"
+      android:gravity="center_vertical"
+      android:text="线下支付"
+
+      />
+
+  <RelativeLayout
+      android:id="@+id/cash"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      >
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_cash_pay"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/cash_pay"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:background="@color/divider_grey"
+        />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/card"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      >
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_credit_pay"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/credit_pay"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:background="@color/divider_grey"
+        />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/transfer"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      >
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_transit_pay"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/transit_pay"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:background="@color/divider_grey"
+        />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/others"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      >
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_other_pay"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/other"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:background="@color/divider_grey"
+        />
+  </RelativeLayout>
+
+</LinearLayout>

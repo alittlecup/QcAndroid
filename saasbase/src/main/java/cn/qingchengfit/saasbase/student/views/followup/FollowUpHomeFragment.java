@@ -28,7 +28,6 @@ import cn.qingchengfit.saasbase.student.network.body.FollowUpDataStatistic;
 import cn.qingchengfit.saasbase.student.presenters.followup.FollowUpHomePresenter;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import cn.qingchengfit.saasbase.student.views.followup.FollowUpStatusParams;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 
 /**

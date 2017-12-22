@@ -69,7 +69,6 @@ public class SaasContainerActivity extends BaseActivity implements HasSupportFra
     return dispatchingFragmentInjector;
   }
 
-
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {
@@ -88,23 +87,23 @@ public class SaasContainerActivity extends BaseActivity implements HasSupportFra
           String tradeFlowId = args.getString("tradeFlowId");                // 交易流水号
           String dealTime = args.getString("dealTime");               // 交易时间
           LogUtil.d("PosPay", "amount:"
-            + amount
-            + "|merorderId:"
-            + merorderId
-            + "|title:"
-            + title
-            + "|operator:"
-            + operator
-            + "|packageName:"
-            + packageName
-            + "|payType:"
-            + payType
-            + "|tradeFlowId:"
-            + tradeFlowId
-            + "|dealTime:"
-            + dealTime
-            + "|payStatus:"
-            + payStatus);
+              + amount
+              + "|merorderId:"
+              + merorderId
+              + "|title:"
+              + title
+              + "|operator:"
+              + operator
+              + "|packageName:"
+              + packageName
+              + "|payType:"
+              + payType
+              + "|tradeFlowId:"
+              + tradeFlowId
+              + "|dealTime:"
+              + dealTime
+              + "|payStatus:"
+              + payStatus);
           onPayDone(merorderId);
         }
       }
@@ -120,7 +119,7 @@ public class SaasContainerActivity extends BaseActivity implements HasSupportFra
   protected void routeTo(String model, String path, Bundle bd) {
     String uri = model + path;
     try {
-      uri = AppUtils.getCurAppSchema(this)+"://"+model+path;
+      uri = AppUtils.getCurAppSchema(this) + "://" + model + path;
       Intent to = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
       to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       if (bd != null) {
@@ -133,5 +132,4 @@ public class SaasContainerActivity extends BaseActivity implements HasSupportFra
       CrashUtils.sendCrash(e);
     }
   }
-
 }

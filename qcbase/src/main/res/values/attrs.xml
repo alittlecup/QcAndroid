@@ -181,4 +181,8 @@
     <attr format="integer" name="ci_count_less"/>
   </declare-styleable>
 
+  <declare-styleable name="LargeInputView">
+    <attr format="string" name="liv_lable"/>
+  </declare-styleable>
+
 </resources>

@@ -557,8 +557,8 @@ import dagger.multibindings.IntoMap;
 
     //服务协议
     AppComponent.CardProtocolModule.class,
-    AppComponent.CoachListFragmentModule.class,
   AppComponent.StaffDetailFragmentModule.class,
+  AppComponent.CoachListModule.class
 
 })
 
@@ -587,14 +587,6 @@ public interface AppComponent {
     void inject(ScoreRuleAddFragemnt activity);
 
     void inject(ScoreAwardAddFragment activity);
-
-    @Subcomponent() public interface CoachListFragmentSubcomponent extends AndroidInjector<CoachListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CoachListFragment> {}
-    }
-    @Module(subcomponents = CoachListFragmentSubcomponent.class) abstract class CoachListFragmentModule {
-        @Binds @IntoMap @FragmentKey(CoachListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CoachListFragmentSubcomponent.Builder builder);
-    }
 
     @Subcomponent() public interface ChooseGymSubcomponent extends AndroidInjector<ChooseGymActivity> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseGymActivity> {

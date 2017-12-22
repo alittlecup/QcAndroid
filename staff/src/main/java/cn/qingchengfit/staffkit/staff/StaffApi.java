@@ -39,5 +39,8 @@ public interface StaffApi {
   @GET("/api/staffs/{id}/method/coaches/") rx.Observable<QcDataResponse<SalerListWrap>> qcGetGymCoachesPermission(@Path("id") String id,
     @QueryMap HashMap<String, Object> params);
 
+  //获取销售 卖卡  包含销售和教练
+  @GET("/api/staffs/{staff_id}/sellers/") rx.Observable<QcDataResponse<SalerListWrap>> qcGetSalers(@Path("staff_id") String staff_id,
+      @QueryMap HashMap<String, Object> params);
 
 }

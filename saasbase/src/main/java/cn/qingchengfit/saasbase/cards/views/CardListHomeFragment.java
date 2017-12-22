@@ -21,6 +21,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
@@ -29,7 +30,6 @@ import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.support.widgets.CompatTextView;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.jakewharton.rxbinding.view.RxMenuItem;
@@ -62,7 +62,8 @@ import rx.android.schedulers.AndroidSchedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/28.
  */
-@Leaf(module = "card", path = "/list/home/") public class CardListHomeFragment extends BaseFragment
+@Leaf(module = "card", path = "/list/home/") public class CardListHomeFragment extends
+    SaasBaseFragment
   implements CardListPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
   SwipeRefreshLayout.OnRefreshListener,FlexibleAdapter.EndlessScrollListener {
 

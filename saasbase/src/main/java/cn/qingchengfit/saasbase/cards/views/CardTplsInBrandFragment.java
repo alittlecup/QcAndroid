@@ -43,6 +43,12 @@ import javax.inject.Inject;
     return presenterBrand;
   }
 
+  @Override public void onMenuAdd(int position) {
+    routeTo("/cardtpl/add/brand",
+        new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(
+            position + 1).build());
+  }
+
   @Override void initVp() {
     pageAdapter = new CardViewpagerAdapterInBrand(getChildFragmentManager());
     viewpager.setAdapter(pageAdapter);

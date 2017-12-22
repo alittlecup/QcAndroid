@@ -24,6 +24,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class PayBusinessResponse {
+
   public String order_no;
   @SerializedName("amount")
   public long order_amount;

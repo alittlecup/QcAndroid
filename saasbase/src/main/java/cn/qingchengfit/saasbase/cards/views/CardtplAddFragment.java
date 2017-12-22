@@ -1,7 +1,6 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -76,6 +75,12 @@ public class CardtplAddFragment extends CardTplDetailFragment {
 
   }
 
+  @Override public void initCardProtocol() {
+
+    inputCardProtocol.setVisibility(View.GONE);
+    presenter.stashCardTplInfo();
+  }
+
   @Override public void onRefresh() {
 
   }
@@ -84,6 +89,9 @@ public class CardtplAddFragment extends CardTplDetailFragment {
     super.onViewCreated(view, savedInstanceState);
     presenter.setCardCate(cardCategory);
     civInputCardname.setVisibility(View.VISIBLE);
+    civInputCardDesc.setVisibility(View.VISIBLE);
+    expandSettingLimit.setVisibility(View.VISIBLE);
+    expandCardProtocol.setVisibility(View.VISIBLE);
     civInputCardname.addTextWatcher(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -99,28 +107,28 @@ public class CardtplAddFragment extends CardTplDetailFragment {
     });
   }
 
-  @Override public void initToolbar(@NonNull Toolbar toolbar) {
-    super.initToolbar(toolbar);
+  @Override public void setToolbar(Toolbar toolbar) {
+    initToolbar(toolbar);
     toolbarTitle.setText("新增会员卡种类");
     toolbar.getMenu().clear();
     toolbar.getMenu().add("保存").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     RxMenuItem.clicks(toolbar.getMenu().getItem(0))
-      .throttleFirst(500, TimeUnit.MILLISECONDS)
-      .subscribe(new BusSubscribe<Void>() {
-        @Override public void onNext(Void aVoid) {
-          presenter.createCardTpl();
-        }
-      });
+        .throttleFirst(500, TimeUnit.MILLISECONDS)
+        .subscribe(new BusSubscribe<Void>() {
+          @Override public void onNext(Void aVoid) {
+            presenter.createCardTpl();
+          }
+        });
   }
 
   @Override protected void onFinishAnimation() {
-
   }
 
   @Override public View onCreateView(LayoutInflater inflater, final ViewGroup container,
       Bundle savedInstanceState) {
     View view =  super.onCreateView(inflater, container, savedInstanceState);
     initCardTpl();
+
     return view;
   }
 

@@ -30,7 +30,8 @@ import cn.qingchengfit.saasbase.routers.cardImpl;
  */
 
 public class CardRouters extends cardImpl {
-  @Override public Fragment toCardChargeFragment(Bundle args) {
+
+  @Override public Fragment toNewCardChargeFragment(Bundle args) {
     PosCardChargeFragment fragment = new PosCardChargeFragment();
     fragment.setArguments(args);
     return fragment;

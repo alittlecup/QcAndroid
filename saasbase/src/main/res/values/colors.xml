@@ -2,5 +2,5 @@
 <resources>
   <color name="bg_card_off_day">#F9944E</color>
   <color name="bg_card_stop">#ea6161</color>
-  <color name="bg_card_out_of_day">#cccccc</color>
+  <color name="bg_card_out_of_day">#888888</color>
 </resources>
