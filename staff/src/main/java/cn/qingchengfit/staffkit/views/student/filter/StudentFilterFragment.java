@@ -102,6 +102,10 @@ import java.util.Locale;
         return view;
     }
 
+    @Override public boolean isBlockTouch() {
+        return false;
+    }
+
     public void setFromPage(int fromPage) {
         this.fromPage = fromPage;
     }

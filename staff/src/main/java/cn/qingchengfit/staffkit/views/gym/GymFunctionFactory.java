@@ -378,7 +378,6 @@ public class GymFunctionFactory {
                 }
                 fragment.routeTo("course","/batches/group/list/",null);
                 return;
-                //break;
 
             case MODULE_SERVICE_FREE:
                 if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)
@@ -429,7 +428,7 @@ public class GymFunctionFactory {
                 return;
             case MODULE_STUDENT_BODY_TEST:
                 goQrScan(fragment, module, null, coachService);
-                break;
+                return;
             /**内部管理
              * 工作人员  教练
              */

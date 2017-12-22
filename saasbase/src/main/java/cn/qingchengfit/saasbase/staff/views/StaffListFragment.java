@@ -123,6 +123,11 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
         //    .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(datas.get(pos), staffId))
         //    .addToBackStack(null)
         //    .commit();
+        Staff staff = new Staff(datas.get(pos).user);
+        staff.setId(datas.get(pos).id);
+        routeTo("staff","detail",new StaffDetailParams()
+          .staff(staff)
+          .build());
       }
     });
     presenter.querSelfInfo(staffId);

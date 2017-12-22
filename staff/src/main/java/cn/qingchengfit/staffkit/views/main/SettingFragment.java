@@ -113,6 +113,8 @@ public class SettingFragment extends BaseFragment implements SettingView {
     }
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
+      super.initToolbar(toolbar);
+      toolbar.setNavigationIcon(null);
         toolbarTitile.setText(R.string.setting);
     }
 

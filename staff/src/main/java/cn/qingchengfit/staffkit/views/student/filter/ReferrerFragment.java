@@ -139,7 +139,8 @@ import javax.inject.Inject;
             }
             if (items.size() == 0) items.add(new SimpleTextItemItem("暂无推荐人", 13));
         }
-        flexibleAdapter.notifyDataSetChanged();
+        flexibleAdapter.clear();
+        flexibleAdapter.updateDataSet(items);
         isShowShort = !isShowShort;
     }
 

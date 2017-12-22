@@ -29,15 +29,7 @@ import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
-import cn.qingchengfit.saasbase.coach.views.AddNewCoachFragment;
-import cn.qingchengfit.saasbase.coach.views.CoachDetailFragment;
-import cn.qingchengfit.saasbase.coach.views.CoachListFragment;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
-import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
-import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
-import cn.qingchengfit.saasbase.staff.views.SuFragment;
-import cn.qingchengfit.saasbase.staff.views.SuIdendifyFragment;
-import cn.qingchengfit.saasbase.staff.views.SuNewFragment;
 import cn.qingchengfit.staff.di.BindGymConfigAcitivty;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
@@ -153,6 +145,7 @@ import cn.qingchengfit.staffkit.views.export.ExportRecordFragment;
 import cn.qingchengfit.staffkit.views.export.ExportSendEmailFragment;
 import cn.qingchengfit.staffkit.views.export.ImportExportFragment;
 import cn.qingchengfit.staffkit.views.gym.AddBrandInMainFragment;
+import cn.qingchengfit.staffkit.views.gym.AddNewCoachFragment;
 import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
 import cn.qingchengfit.staffkit.views.gym.ChooseGroupCourseFragment;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
@@ -167,6 +160,8 @@ import cn.qingchengfit.staffkit.views.gym.SetGymFragment;
 import cn.qingchengfit.staffkit.views.gym.WriteAddressFragment;
 import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
 import cn.qingchengfit.staffkit.views.gym.coach.ChooseTrainerFragment;
+import cn.qingchengfit.staffkit.views.gym.coach.CoachDetailFragment;
+import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
 import cn.qingchengfit.staffkit.views.gym.cycle.AddCycleFragment;
 import cn.qingchengfit.staffkit.views.gym.gym_web.HomePageQrCodeFragment;
 import cn.qingchengfit.staffkit.views.gym.site.AddNewSiteFragment;
@@ -174,6 +169,11 @@ import cn.qingchengfit.staffkit.views.gym.site.ChooseSiteFragment;
 import cn.qingchengfit.staffkit.views.gym.site.MutiChooseSiteFragment;
 import cn.qingchengfit.staffkit.views.gym.site.SiteDetailFragment;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
+import cn.qingchengfit.staffkit.views.gym.staff.StaffDetailFragment;
+import cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment;
+import cn.qingchengfit.staffkit.views.gym.staff.SuFragment;
+import cn.qingchengfit.staffkit.views.gym.staff.SuIdendifyFragment;
+import cn.qingchengfit.staffkit.views.gym.staff.SuNewFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.TrialProDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
@@ -557,6 +557,8 @@ import dagger.multibindings.IntoMap;
 
     //服务协议
     AppComponent.CardProtocolModule.class,
+    AppComponent.CoachListFragmentModule.class,
+  AppComponent.StaffDetailFragmentModule.class,
 
 })
 
@@ -585,6 +587,14 @@ public interface AppComponent {
     void inject(ScoreRuleAddFragemnt activity);
 
     void inject(ScoreAwardAddFragment activity);
+
+    @Subcomponent() public interface CoachListFragmentSubcomponent extends AndroidInjector<CoachListFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CoachListFragment> {}
+    }
+    @Module(subcomponents = CoachListFragmentSubcomponent.class) abstract class CoachListFragmentModule {
+        @Binds @IntoMap @FragmentKey(CoachListFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CoachListFragmentSubcomponent.Builder builder);
+    }
 
     @Subcomponent() public interface ChooseGymSubcomponent extends AndroidInjector<ChooseGymActivity> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseGymActivity> {

@@ -21,14 +21,14 @@ import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.notisetting.view.NotiSettingHomeFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
-import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventToolbar;
 import cn.qingchengfit.staffkit.views.course.CourseTypeBatchFragmentBuilder;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
+import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffDetailFragment;
+import cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SaleGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SigninGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.StatementGlanceFragment;
@@ -116,10 +116,11 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 break;
             case GymFunctionFactory.MODULE_MANAGE_COACH:
                 // TODO: 2017/12/ 教练模块
-                //fragment = cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment.newInstance(App.staffId);
+                fragment = new CoachListFragment();
                 break;
             case GymFunctionFactory.MODULE_MANAGE_STAFF:
-                fragment = StaffListFragment.newInstance(App.staffId);
+                //fragment = StaffListFragment.newInstance(App.staffId);
+                fragment = new StaffListFragment();
                 break;
             case GymFunctionFactory.MODULE_MANAGE_STAFF_ADD:
                 fragment = StaffDetailFragment.newInstance(null);

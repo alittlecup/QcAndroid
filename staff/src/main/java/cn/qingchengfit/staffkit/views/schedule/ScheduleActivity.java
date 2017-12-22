@@ -12,6 +12,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,7 +23,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.responese.ScheduleAction;
 import cn.qingchengfit.model.responese.ScheduleActions;
@@ -40,6 +40,7 @@ import cn.qingchengfit.staffkit.views.custom.PagerSlidingTabStrip;
 import cn.qingchengfit.staffkit.views.custom.RobotoCalendarView;
 import cn.qingchengfit.staffkit.views.gym.ChooseGymFragment;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -109,6 +110,10 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
                 onBackPressed();
             }
         });
+        if (toolbar.getParent() instanceof ViewGroup ) {
+            ((ViewGroup) toolbar.getParent()).setPadding(0,
+              MeasureUtils.getStatusBarHeight(this), 0, 0);
+        }
         setUpViewPager();
 
         FloatingActionButton btn1 = new FloatingActionButton(this);

@@ -359,7 +359,7 @@ public class ConfigFragment extends BaseFragment implements ConfigPresenter.Pres
                     itemsAwardDis.add(new ScoreAwardItem(award.toAwardRuleBean()));
                 }
             }
-            flexibleAdapterAwardActive.notifyDataSetChanged();
+            flexibleAdapterAwardActive.updateDataSet(itemsAwardActive);
             flexibleAdapterAwardDis.updateDataSet(itemsAwardDis);
             flexibleAdapterAwardDis.notifyDataSetChanged();
         } else {

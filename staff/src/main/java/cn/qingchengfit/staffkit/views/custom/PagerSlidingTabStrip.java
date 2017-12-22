@@ -60,7 +60,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
     private int mLastScrollX = 0;
     private int mNumPadding = 8;
     private int mTabPadding = 25;
-    private int mTabTextSize = 14;
+    private int mTabTextSize = 13;
     private int mNumTextSize = 10;
     private int mTabTextColor = 0xaaffffff;
     private int mIndicatorColor = 0xFFffffff;

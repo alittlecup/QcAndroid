@@ -200,7 +200,8 @@ import javax.inject.Inject;
                 items.add(new SourceItem(datas.get(i)));
             }
         }
-        flexibleAdapter.notifyDataSetChanged();
+        flexibleAdapter.clear();
+        flexibleAdapter.updateDataSet(items);
         isShowShort = !isShowShort;
     }
 

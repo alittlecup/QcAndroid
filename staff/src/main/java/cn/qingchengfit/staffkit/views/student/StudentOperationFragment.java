@@ -42,6 +42,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -83,6 +84,7 @@ public class StudentOperationFragment extends BaseFragment
       }
     });
     recycleview.setLayoutManager(gridLayoutManager);
+    recycleview.setItemAnimator(new ScaleInAnimator());
     recycleview.setAdapter(mCommonFlexAdapter);
     return v;
   }
@@ -121,7 +123,10 @@ public class StudentOperationFragment extends BaseFragment
                 R.string.qc_student_vip, proGym, false));
             setRecyclerPadding(datas.size());
             indicator.createIndicators(datas.size() / 8 + 1);
-            if (mCommonFlexAdapter != null) mCommonFlexAdapter.notifyDataSetChanged();
+            if (mCommonFlexAdapter != null) {
+              mCommonFlexAdapter.clear();
+              mCommonFlexAdapter.updateDataSet(datas,true);
+            };
           }
         }));
   }

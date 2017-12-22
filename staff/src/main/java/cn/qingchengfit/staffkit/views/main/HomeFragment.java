@@ -117,6 +117,8 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
     }
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
+        super.initToolbar(toolbar);
+        toolbar.setNavigationIcon(null);
         toolbarTitile.setText(gymWrapper.brand_name());
         down.setVisibility(View.VISIBLE);
         tvLeft.setText(R.string.brand_manange);

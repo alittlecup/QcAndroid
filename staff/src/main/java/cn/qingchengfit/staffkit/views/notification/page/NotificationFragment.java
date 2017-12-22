@@ -20,6 +20,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
@@ -130,6 +131,7 @@ public class NotificationFragment extends BaseFragment
         mAdatper = new CommonFlexAdapter(mData, this);
         mAdatper.setEndlessScrollListener(this, new ProgressItem(getContext()));
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        rv.setItemAnimator(new FadeInUpItemAnimator());
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         rv.setAdapter(mAdatper);
         rv.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -286,7 +288,8 @@ public class NotificationFragment extends BaseFragment
                 }
             }
         }
-        mAdatper.notifyDataSetChanged();
+        mAdatper.clear();
+        mAdatper.updateDataSet(mData,true);
         if (mfirstUnread > 0) {
             RxBus.getBus()
                 .post(new EventLatestNoti(DateUtils.formatDateFromServer(data.get(mfirstUnread).getCreated_at()).getTime(),

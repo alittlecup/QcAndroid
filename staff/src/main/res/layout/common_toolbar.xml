@@ -10,7 +10,9 @@
   <RelativeLayout
       android:id="@+id/toolbar_layout"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
+      android:layout_height="wrap_content"
+      android:background="@color/toolbar"
+      tools:paddingTop="26dp"
       >
 
     <android.support.v7.widget.Toolbar
@@ -29,7 +31,7 @@
       <TextView
           android:id="@+id/tv_left"
           android:layout_width="wrap_content"
-          android:layout_height="match_parent"
+          android:layout_height="?attr/actionBarSize"
           android:gravity="center"
           android:textColor="@color/white"
           tools:text="hahah"
@@ -39,7 +41,7 @@
     <CheckBox
         android:id="@+id/rb_select_all"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="?attr/actionBarSize"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:button="@drawable/radio_selector_allotsale_white"
@@ -67,18 +69,17 @@
     <LinearLayout
         android:id="@+id/titile_layout"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center_vertical"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_centerHorizontal="true"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         >
 
       <TextView
           android:id="@+id/toolbar_title"
           android:layout_width="wrap_content"
-          android:layout_height="match_parent"
+          android:layout_height="wrap_content"
           android:textColor="@color/white"
-
           android:textSize="16sp"
           tools:text="@string/site_usage"
           style="@style/Qc.TextCommonBlack"

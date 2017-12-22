@@ -204,7 +204,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     }
 
     @Override public String getFragmentName() {
-        return null;
+        return "工作人员列表";
     }
 
     @Override public void onDestroyView() {
@@ -254,4 +254,5 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
             showAlert("仅超级管理员本人有权限查看其基本信息");
         }
     }
+
 }

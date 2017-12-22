@@ -90,12 +90,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(mGymMorePresenter, this);
         ViewCompat.setTransitionName(myFunRecycleview, "funcitonView");
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                popBack();
-            }
-        });
+        initToolbar(toolbar);
         toolbarTitile.setText("全部功能");
         toolbar.inflateMenu(R.menu.menu_mangage);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

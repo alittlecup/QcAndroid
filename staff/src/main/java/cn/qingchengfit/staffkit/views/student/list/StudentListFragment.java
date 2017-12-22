@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -138,17 +137,17 @@ public class StudentListFragment extends FilterCommonFragment {
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.getView().setFocusableInTouchMode(true);
-        this.getView().requestFocus();
-        this.getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && drawer.isShown()) {
-                    drawer.closeDrawer(GravityCompat.END);
-                    return true;
-                }
-                return false;
-            }
-        });
+        //this.getView().setFocusableInTouchMode(true);
+        //this.getView().requestFocus();
+        //this.getView().setOnKeyListener(new View.OnKeyListener() {
+        //    @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
+        //        if (keyCode == KeyEvent.KEYCODE_BACK && drawer.isShown()) {
+        //            drawer.closeDrawer(GravityCompat.END);
+        //            return true;
+        //        }
+        //        return false;
+        //    }
+        //});
     }
 
     public void initToolBar() {
