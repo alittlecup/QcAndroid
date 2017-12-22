@@ -42,6 +42,7 @@
   <color name="grey">#555555</color>
   <color name="warm_grey">#999999</color>
 
+  <color name="bg_orange">#33f9944e</color>
   <color name="less_grey">#dddddd</color>
   <color name="orange">#fbaa72</color>
   <color name="red">#ff5151</color>

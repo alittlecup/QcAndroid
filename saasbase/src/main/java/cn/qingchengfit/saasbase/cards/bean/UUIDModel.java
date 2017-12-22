@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.cardtype;
+package cn.qingchengfit.saasbase.cards.bean;
 
 /**
  * Created by fb on 2017/11/29.

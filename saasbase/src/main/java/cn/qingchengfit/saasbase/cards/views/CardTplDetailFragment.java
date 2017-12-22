@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -30,11 +31,14 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardLimit;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.event.EventLimitBuyCount;
+import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTplDetailPresenter;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.network.model.Shop;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.saasbase.utils.StringUtils;
@@ -57,6 +61,8 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -86,6 +92,9 @@ import rx.functions.Action1;
 @Leaf(module = "card", path = "/cardtpl/detail/") public class CardTplDetailFragment
     extends SaasBaseFragment
     implements CardTplDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
+
+  private final static String PARAMS_KEY = "uuid=";
+
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -102,6 +111,7 @@ import rx.functions.Action1;
 
   @Inject public CardTplDetailPresenter presenter;
   @Inject GymWrapper gymWrapper;
+  @Inject SerPermisAction serPermisAction;
   @Need public CardTpl cardTpl;
   CommonFlexAdapter comonAdapter;
   @BindView(R2.id.civ_input_card_desc) CommonInputView civInputCardDesc;
@@ -114,6 +124,7 @@ import rx.functions.Action1;
   protected CardLimit cardLimit = new CardLimit();
   @BindView(R2.id.layout_card_value_desc) LinearLayout layoutCardValueDesc;
   @BindView(R2.id.layout_card_option) RelativeLayout layoutCardOption;
+  @BindView(R2.id.input_card_protocol) CommonInputView inputCardProtocol;
   private String desc;
   protected String supportShopStr;
 
@@ -129,6 +140,7 @@ import rx.functions.Action1;
             onRefresh();
           }
         });
+    initBus();
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -152,9 +164,42 @@ import rx.functions.Action1;
         .withLeftEdge(true)
         .withRightEdge(true));
     recycleview.setAdapter(comonAdapter);
+    expandCardProtocol.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+          inputCardProtocol.setVisibility(View.VISIBLE);
+          initCardProtocol();
+        } else {
+          inputCardProtocol.setVisibility(View.GONE);
+        }
+      }
+    });
     onRefresh();
     return view;
   }
+
+  public void initCardProtocol(){
+    if (cardTpl.has_service_term) {
+      inputCardProtocol.setLabel(getResources().getString(R.string.card_protocol_content));
+    }else{
+      inputCardProtocol.setVisibility(View.GONE);
+      Intent intent = new Intent(getActivity(), QRActivity.class);
+      if (serPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE, cardTpl.getShopIds())) {
+        if (!gymWrapper.inBrand()) {
+          intent.putExtra(QRActivity.LINK_MODULE,
+              getResources().getString(R.string.qr_code_2web_add_card_term, cardTpl.id));
+        } else {
+          intent.putExtra(QRActivity.LINK_MODULE,
+              getResources().getString(R.string.qr_code_2web_multi_card_add, gymWrapper.brand_id(),
+                  cardTpl.id));
+        }
+      } else {
+        showAlert(R.string.alert_edit_cardtype_no_permission);
+      }
+      getContext().startActivity(intent);
+    }
+  }
+
 
   @Override public boolean isBlockTouch() {
     return false;
@@ -215,6 +260,23 @@ import rx.functions.Action1;
               }
             })
         .show();
+  }
+
+  private void initBus(){
+    RxBus.getBus()
+        .register(OnBackEvent.class)
+        .compose(this.<OnBackEvent>bindToLifecycle())
+        .compose(this.<OnBackEvent>doWhen(FragmentEvent.CREATE_VIEW))
+        .subscribe(new BusSubscribe<OnBackEvent>() {
+          @Override public void onNext(OnBackEvent cardList) {
+            getActivity().getSupportFragmentManager().popBackStack(null, 1);
+            if(!gymWrapper.inBrand()) {
+              routeTo(AppUtils.getRouterUri(getContext(), "card/cardtpl/list/"), null);
+            }else{
+              routeTo(AppUtils.getRouterUri(getContext(), "card/brand/cardtpl/list/"), null);
+            }
+          }
+        });
   }
 
   public void alertDisableCardtpl() {
@@ -280,6 +342,27 @@ import rx.functions.Action1;
     ToastUtils.show("已恢复");
   }
 
+  @Override public void onStashSuccessed(String uuid) {
+    Intent intent = new Intent(getActivity(), QRActivity.class);
+    if (!gymWrapper.inBrand()) {
+      intent.putExtra(QRActivity.LINK_MODULE,
+          QRActivity.MODULE_ADD_CARD_PROTOCOL + "?" + PARAMS_KEY + uuid);
+    }else{
+      try {
+        intent.putExtra(QRActivity.LINK_MODULE, URLEncoder.encode(QRActivity.MULTI_CARD_TPL
+            + "?"
+            + "brand_id="
+            + gymWrapper.brand_id()
+            + "&"
+            + PARAMS_KEY
+            + uuid, "utf-8"));
+      } catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+      }
+    }
+    getContext().startActivity(intent);
+  }
+
   @Override public String getCardName() {
     return civInputCardname.getContent().trim();
   }
@@ -305,6 +388,10 @@ import rx.functions.Action1;
 
   @Override public String getSupportShopId() {
     return TextUtils.isEmpty(supportShopStr) ? gymWrapper.shop_id() : supportShopStr;
+  }
+
+  @Override public boolean isOpenCardTerm() {
+    return expandCardProtocol.isExpanded();
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -363,6 +450,13 @@ import rx.functions.Action1;
     }
   }
 
+  @OnClick({R2.id.input_card_protocol}) public void onOpenProtocol() {
+    if (cardTpl != null && cardTpl.has_service_term) {
+      CardProtocolActivity.startWeb(cardTpl.card_tpl_service_term.content_link, getContext(), true,
+          "", cardTpl);
+    }
+  }
+
   @OnClick(R2.id.civ_input_card_desc) public void onDesc() {
     WriteDescFragment.start(this, 2, getString(R.string.title_cardtype_edit_desc), "请填写简介信息",
         cardTpl == null ? desc
@@ -373,13 +467,14 @@ import rx.functions.Action1;
 
   }
 
-  @OnClick(R2.id.support_gyms)
-  public void onSupportGyms(){
+  @OnClick(R2.id.support_gyms) public void onSupportGyms() {
     if (cardTpl != null && cardTpl.getShopIds() != null) {
-      MutiChooseGymFragment.start(CardTplDetailFragment.this, false, (ArrayList<String>) cardTpl.getShopIds(),
-          PermissionServerUtils.CARDSETTING_CAN_CHANGE, 4);
+      MutiChooseGymFragment.start(CardTplDetailFragment.this, false,
+          (ArrayList<String>) cardTpl.getShopIds(), PermissionServerUtils.CARDSETTING_CAN_CHANGE,
+          4);
     } else if (!TextUtils.isEmpty(supportShopStr)) {
-      MutiChooseGymFragment.start(CardTplDetailFragment.this, false, (ArrayList<String>) StringUtils.Str2List(supportShopStr),
+      MutiChooseGymFragment.start(CardTplDetailFragment.this, false,
+          (ArrayList<String>) StringUtils.Str2List(supportShopStr),
           PermissionServerUtils.CARDSETTING_CAN_CHANGE, 4);
     } else {
       MutiChooseGymFragment.start(CardTplDetailFragment.this, false, null,
@@ -426,5 +521,9 @@ import rx.functions.Action1;
               .build());
     }
     return true;
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
   }
 }

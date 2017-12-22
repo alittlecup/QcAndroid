@@ -47,6 +47,8 @@ public class Card implements Parcelable {
     //    @Ignore
     private List<Shop> shops;
     private String remarks;
+    public boolean is_open_service_term;
+    public CardProtocol card_tpl_service_term;
 
 
 
@@ -432,6 +434,8 @@ public class Card implements Parcelable {
         dest.writeString(this.lock_end);
         dest.writeTypedList(this.shops);
         dest.writeString(this.remarks);
+        dest.writeByte(this.is_open_service_term ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.card_tpl_service_term, flags);
     }
 
     protected Card(Parcel in) {
@@ -468,6 +472,8 @@ public class Card implements Parcelable {
         this.lock_end = in.readString();
         this.shops = in.createTypedArrayList(Shop.CREATOR);
         this.remarks = in.readString();
+        this.is_open_service_term = in.readByte() != 0;
+        this.card_tpl_service_term = in.readParcelable(CardProtocol.class.getClassLoader());
     }
 
     public static final Creator<Card> CREATOR = new Creator<Card>() {

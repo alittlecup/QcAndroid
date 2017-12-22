@@ -4,6 +4,7 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
@@ -13,6 +14,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
+import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
@@ -33,6 +35,7 @@ public class CardBuyPresenter extends BasePresenter {
   @Inject GymWrapper gymWrapper;
   @Inject ICardModel cardModel;
   @Inject SerPermisAction serPermisAction;
+  @Inject LoginStatus loginStatus;
   private Card mCard;
   private String mCardTplId;
   private int cardCate;
@@ -113,7 +116,7 @@ public class CardBuyPresenter extends BasePresenter {
       .subscribe(new BusSubscribe<Staff>() {
         @Override public void onNext(Staff staff) {
           view.bindSaler(staff.getUsername());
-          cardBuyBody.setSeller_id(staff.id);
+            cardBuyBody.setSeller_id(staff.id);
         }
       });
 
@@ -183,9 +186,10 @@ public class CardBuyPresenter extends BasePresenter {
 
   //续卡操作
   public void chargeCard() {
-    cardBuyBody.setCharge_type(4);
-    cardBuyBody.setCard_id(mCard.getId());
+    cardBuyBody.setCharge_type(view.payMethod());
+    //cardBuyBody.setCard_id(mCard.getId());
     cardBuyBody.setType(mCard.getType());
+    cardBuyBody.setCard_tpl_id(mCardTplId);
     //chargeBody.setUser_ids(CmStringUtils.List2Str(mCard.getUserIds()));
     if (mChosenOption == null) {
       cardBuyBody.setPrice(view.realMoney());
@@ -205,11 +209,35 @@ public class CardBuyPresenter extends BasePresenter {
       cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
     }
 
-    if (cardBuyBody.checkData() > 0) {
-      view.showAlert(cardBuyBody.checkData());
-      return;
+    //if (cardBuyBody.checkData() > 0) {
+    //  view.showAlert(cardBuyBody.checkData());
+    //  return;
+    //}
+    cardBuyBody.is_auto_start = view.autoOpen();
+    cardBuyBody.origin = 2;
+    if (cardBuyBody.getSeller_id() != null && cardBuyBody.getSeller_id()
+        .equals(loginStatus.staff_id())) {
+      cardBuyBody.setSeller_id(null);
+      cardBuyBody.staff_id = loginStatus.staff_id();
     }
-    RxRegiste(cardModel.qcChargeCard(cardBuyBody)
+    RxRegiste(cardModel.qcChargeCard(mCard.getId(), cardBuyBody)
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse<JsonObject>>() {
+          @Override public void onNext(QcDataResponse<JsonObject> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              view.onBusinessOrder(qcResponse.data);
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }));
+  }
+
+  //扣费操作
+  public void proactiveDeduction(String cardId, ChargeBody body) {
+    RxRegiste(cardModel.qcChargeRefund(String.valueOf(cardCate), body)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -327,5 +355,6 @@ public class CardBuyPresenter extends BasePresenter {
     String endDay();   //结束日期
 
     boolean autoOpen();//自动开卡
+
   }
 }

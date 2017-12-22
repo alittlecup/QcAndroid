@@ -75,6 +75,12 @@ public class CardtplAddFragment extends CardTplDetailFragment {
 
   }
 
+  @Override public void initCardProtocol() {
+
+    inputCardProtocol.setVisibility(View.GONE);
+    presenter.stashCardTplInfo();
+  }
+
   @Override public void onRefresh() {
 
   }

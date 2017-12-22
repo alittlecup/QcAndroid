@@ -120,7 +120,23 @@
         android:visibility="gone"
         app:el_label="会员卡服务条款"
         tools:visibility="visible"
-        />
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/input_card_protocol"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height_new"
+            app:civ_lable="@string/card_protocol_content"
+            app:civ_content_color="@color/qc_text_black"
+            app:civ_clickable="true"
+            app:civ_showright="true"
+            />
+
+      </LinearLayout>
+    </cn.qingchengfit.widgets.ExpandedLayout>
 
     <LinearLayout
         android:id="@+id/layout_card_value_desc"

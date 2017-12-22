@@ -13,7 +13,6 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.constant.Post_Api;
-import cn.qingchengfit.staffkit.views.cardtype.UUIDModel;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.inject.Inject;
@@ -141,10 +140,10 @@ public class EditCardTypePresenter extends BasePresenter {
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<QcDataResponse<UUIDModel>>() {
-                @Override public void call(QcDataResponse<UUIDModel> uuidModelQcDataResponse) {
+            .subscribe(new Action1<QcDataResponse>() {
+                @Override public void call(QcDataResponse uuidModelQcDataResponse) {
                     if (ResponseConstant.checkSuccess(uuidModelQcDataResponse)){
-                        view.onStashSuccessed(uuidModelQcDataResponse.data.uuid);
+                        view.onStashSuccessed("");
                     }else {
                         view.onEditFailed(uuidModelQcDataResponse.getMsg());
                     }

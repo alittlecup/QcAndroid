@@ -23,6 +23,7 @@
     <activity android:name=".qrcode.views.QRActivity">
 
     </activity>
+    <activity android:name=".cards.views.CardProtocolActivity"/>
   </application>
 
 </manifest>

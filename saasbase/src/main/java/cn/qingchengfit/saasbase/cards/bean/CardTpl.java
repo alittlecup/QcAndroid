@@ -60,6 +60,9 @@ public class CardTpl implements Parcelable {
   public String gymModel;
   public List<Shop> shops;
   public List<CardTplOption> options;
+  public boolean is_open_service_term;
+  public boolean has_service_term;
+  public CardProtocol card_tpl_service_term;
 
   public CardTpl() {
   }

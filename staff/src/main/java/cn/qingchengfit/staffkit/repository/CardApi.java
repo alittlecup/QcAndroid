@@ -2,11 +2,16 @@ package cn.qingchengfit.staffkit.repository;
 
 import cn.qingchengfit.model.body.ShopsBody;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.bean.DayOffs;
+import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
+import cn.qingchengfit.saasbase.cards.network.body.AddDayOffBody;
+import cn.qingchengfit.saasbase.cards.network.body.AheadOffDayBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBalanceNotifyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.body.UpdateCardValidBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
@@ -132,8 +137,12 @@ public interface CardApi {
     @Path("cardtpl_id") String card_tpl, @Body ShopsBody body, @QueryMap HashMap<String, Object> params);
 
   //充值扣费
-  @POST("/api/staffs/{staff_id}/cards/{card_id}/charge/") rx.Observable<QcDataResponse<JsonObject>> qcCardCharge(@Path("staff_id") String staff_id,
-    @Path("card_id") String cardid,@QueryMap HashMap<String, Object> params , @Body ChargeBody body);
+  @POST("/api/staffs/{staff_id}/cards/{card_id}/charge/v2/") rx.Observable<QcDataResponse<JsonObject>> qcCardCharge(@Path("staff_id") String staff_id,
+    @Path("card_id") String cardid,@QueryMap HashMap<String, Object> params , @Body CardBuyBody body);
+
+  //扣费
+  @POST("/api/staffs/{staff_id}/cards/{card_id}/charge/") rx.Observable<QcDataResponse<JsonObject>> qcMinusMoney(@Path("staff_id") String staff_id,
+      @Path("card_id") String cardid,@QueryMap HashMap<String, Object> params , @Body ChargeBody body);
 
   //购卡
   @POST("/api/staffs/{id}/cards/create/") rx.Observable<QcDataResponse<JsonObject>> qcCreateRealcard(@Path("id") String staffid,
@@ -176,5 +185,40 @@ public interface CardApi {
 
   @GET("/api/staffs/{id}/shops/") rx.Observable<QcDataResponse<Shops>> qcGetBrandShops(@Path("id") String id,
       @Query("brand_id") String brand_id);
+
+  //暂存添加会员卡种类信息
+  @POST("api/staffs/{staff_id}/cache/")
+  rx.Observable<QcDataResponse<UUIDModel>> qcStashNewCardTpl(@Path("staff_id") String staff_id,
+      @Body CardtplBody body, @QueryMap HashMap<String, Object> params);
+
+  //新增请假
+  @POST("/api/staffs/{id}/leaves/") rx.Observable<QcDataResponse> qcAddDayOff(@Path("id") String staffid, @Query("brand_id") String brand_id,
+      @Query("id") String gymid, @Query("model") String model, @Body AddDayOffBody body);
+
+  //取消请假
+  @DELETE("/api/staffs/{id}/leaves/{leave_id}/") rx.Observable<QcDataResponse> qcDelDayOff(@Path("id") String staffid,
+      @Path("leave_id") String leave_id, @Query("brand_id") String brandid, @Query("id") String gymid, @Query("model") String model);
+
+  //提前销假
+  @PUT("/api/staffs/{staffid}/leaves/{leave_id}/") rx.Observable<QcDataResponse> qcAheadDayOff(@Path("staffid") String staffid,
+      @Path("leave_id") String leave_id, @QueryMap HashMap<String, Object> params, @Body
+      AheadOffDayBody body);
+
+  //获取请假列表
+  @GET("/api/staffs/{id}/leaves/?order_by=-created_at") rx.Observable<QcDataResponse<DayOffs>> qcGetDayOff(@Path("id") String staffid,
+      @Query("brand_id") String brandid, @Query("card_id") String card_id, @Query("id") String gymid, @Query("model") String model);
+
+  //销卡
+  @DELETE("/api/staffs/{id}/cards/{card_id}/") rx.Observable<QcDataResponse> qcUnregisteCard(@Path("id") String staffid,
+      @Path("card_id") String cardid, @Query("brand_id") String brand_id, @Query("id") String id, @Query("model") String model);
+
+  //卡修改有效期
+  @PUT("/api/staffs/{id}/cards/{card_id}/change-date/") rx.Observable<QcDataResponse> qcUndateCardValid(@Path("id") String staffid,
+      @Path("card_id") String cardid, @QueryMap HashMap<String, Object> params, @Body
+      UpdateCardValidBody body);
+
+  //恢复卡
+  @POST("/api/staffs/{id}/cards/{card_id}/recovery/") rx.Observable<QcDataResponse> qcResumeCard(@Path("id") String staffid,
+      @Path("card_id") String cardid, @Query("brand_id") String brand_id, @Query("id") String id, @Query("model") String model);
 
 }

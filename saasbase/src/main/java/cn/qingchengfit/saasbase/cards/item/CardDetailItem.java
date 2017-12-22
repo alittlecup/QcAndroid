@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.bean.Card;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DrawableUtils;
@@ -45,10 +46,13 @@ public class CardDetailItem extends AbstractFlexibleItem<CardDetailItem.CardDeta
       CardBusinessUtils.getCardTypeCategoryStrHead(mCard.getType(), holder.tvCardTplType.getContext()));
     holder.cardview.setBackground(
       DrawableUtils.generateBg(8f, CardBusinessUtils.getDefaultCardbgColor(mCard.getType())));
-    if (mCard.isCheck_valid()) {
+    if (mCard.isCheck_valid() && mCard.getType() != Configs.CATEGORY_DATE) {
       holder.tvCardAppend.setText("有效期：" + DateUtils.getYYMMfromServer(mCard.getValid_from()) + "至"
         + DateUtils.getYYMMfromServer(mCard.getValid_to()));
-    } else {
+    } else if (mCard.getType() == Configs.CATEGORY_DATE){
+      holder.tvCardAppend.setText("有效期：" + DateUtils.getYYMMfromServer(mCard.getStart()) + "至"
+          + DateUtils.getYYMMfromServer(mCard.getEnd()));
+    } else{
       holder.tvCardAppend.setText("");
     }
   }

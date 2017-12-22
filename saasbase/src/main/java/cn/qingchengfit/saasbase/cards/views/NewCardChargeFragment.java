@@ -12,6 +12,7 @@ import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.DateUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.google.gson.JsonObject;
@@ -24,25 +25,27 @@ import javax.inject.Inject;
 @Leaf(module = "card", path = "/charge/")
 public class NewCardChargeFragment extends CardBuyFragment {
 
-  @Need Card card;
+  @Need protected Card card;
   @Inject LoginStatus loginStatus;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     cardTpl = card.getCard_tpl();
     View view = super.onCreateView(inflater, container, savedInstanceState);
+    toolbarTitle.setText("续卡");
     initView();
     return view;
   }
 
   private void initView(){
+    civStartTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(
+        card.getStart())));
     tvCardValidateTotal.setVisibility(View.VISIBLE);
     elAutoOpen.setExpanded(card.is_auto_start());
     //TODO 支付方式
     //civPayMethod.setContent(getResources().getStringArray(R.array.pay_method)[]);
     //civBindMenbers.setContent(card.getUsers().size() + "  人");
     civSaler.setContent("本人");
-    presenter.setSaler(loginStatus.staff_id());
     civBindMenbers.setVisibility(View.GONE);
     civMark.setContentColor(getResources().getColor(R.color.text_warm));
     if (TextUtils.isEmpty(card.getRemarks())){
@@ -58,16 +61,23 @@ public class NewCardChargeFragment extends CardBuyFragment {
     super.showInputMoney(other, option, validDay);
     if(cardTpl.getType() == Configs.CATEGORY_DATE){
       tvCardValidateTotal.setText(getResources().getString(R.string.text_charge_time_card_validate,
-          card.getBalance() + Float.parseFloat(option.charge)));
+          String.valueOf(card.getBalance() + Float.parseFloat(option.charge))));
     }else{
       tvCardValidateTotal.setText(getResources().getString(R.string.text_charge_card_validate,
-          card.getBalance() + Float.parseFloat(option.charge),
+          String.valueOf(card.getBalance() + Float.parseFloat(option.charge)),
           option.isLimit_days() ? String.valueOf(card.getTrial_days() + option.days) : "不限"));
     }
+    civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(
+        DateUtils.formatDateFromServer(
+            option.created_at),
+        (int)(Float.parseFloat(option.charge) + card.getBalance()))));
   }
 
-  @Override public void onShowDetail() {
-    super.onShowDetail();
+  @Override public void onShowDetail(CardTplOption cardOption) {
+    civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(
+        DateUtils.formatDateFromServer(
+            cardOption.created_at),
+        (int)(Float.parseFloat(cardOption.charge) + card.getBalance()))));
   }
 
   @Override public void onClickCardId() {

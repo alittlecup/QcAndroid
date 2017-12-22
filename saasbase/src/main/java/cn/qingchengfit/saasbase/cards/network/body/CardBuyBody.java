@@ -49,6 +49,9 @@ public class CardBuyBody implements Parcelable,Cloneable {
   public boolean is_auto_start;//是否自动开卡
 
   public String card_id;
+  public String staff_id;
+
+  public int origin;
 
 
 
@@ -115,14 +118,14 @@ public class CardBuyBody implements Parcelable,Cloneable {
       case 3:
         this.start = start;
         this.end = end;
-        if (cto != null){
-          try {
-            this.end = DateUtils.addDay(start,(int)Float.parseFloat(cto.charge));
-          }catch (Exception e){
-
-          }
-
-        }
+        //if (cto != null){
+        //  try {
+        //    this.end = DateUtils.addDay(start,(int)Float.parseFloat(cto.charge));
+        //  }catch (Exception e){
+        //
+        //  }
+        //
+        //}
         break;
     }
   }

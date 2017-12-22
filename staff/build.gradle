@@ -69,6 +69,7 @@ android {
   flavorDimensions "qc"
   productFlavors {
     dev {
+      minSdkVersion 21
       applicationId "cn.qingchengfit.staffkit.internaltest"
       manifestPlaceholders = [APP_NAME          : "内部测试",
                               bdpush_authorities: "cn.qingchengfit.bdpush.internaltest",

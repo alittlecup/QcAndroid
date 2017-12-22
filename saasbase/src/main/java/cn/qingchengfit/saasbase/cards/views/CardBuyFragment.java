@@ -109,6 +109,7 @@ import rx.schedulers.Schedulers;
   @Need public CardTpl cardTpl;
   @BindView(R2.id.layout_validate) LinearLayout layoutValidate;
   @BindView(R2.id.tv_card_validate_total) TextView tvCardValidateTotal;
+  @BindView(R2.id.card_protocol) CommonInputView cardProtocol;
 
   private CardTplOption cardOptionCustom = new CardTplOption();
   public int patType;
@@ -137,7 +138,13 @@ import rx.schedulers.Schedulers;
             "知道了", "提示").show(getFragmentManager(), null);
       }
     });
+
     civEndTime.setClickable(false);
+    if (cardTpl.has_service_term) {
+      cardProtocol.setVisibility(View.VISIBLE);
+    }else{
+      cardProtocol.setVisibility(View.GONE);
+    }
     SmoothScrollLinearLayoutManager layoutManager =
         new SmoothScrollLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
     rv.setNestedScrollingEnabled(false);
@@ -177,19 +184,16 @@ import rx.schedulers.Schedulers;
           @Override public void call(EventCustomOption eventCustomOption) {
             if (eventCustomOption != null) {
               cardOptionCustom = eventCustomOption.getCardOptionCustom();
-              civStartTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(
-                  eventCustomOption.getCardOptionCustom().created_at)));
-              civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(
-                  DateUtils.formatDateFromServer(
-                      eventCustomOption.getCardOptionCustom().created_at),
-                  ((int) Float.parseFloat(eventCustomOption.getCardOptionCustom().charge)))));
-              onShowDetail();
+              onShowDetail(cardOptionCustom);
             }
           }
         });
   }
 
-  public void onShowDetail() {
+  public void onShowDetail(CardTplOption cardOption) {
+    civEndTime.setContent(DateUtils.Date2YYYYMMDD(
+        DateUtils.addDay(DateUtils.formatDateFromServer(cardOption.created_at),
+            ((int) Float.parseFloat(cardOption.charge)))));
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -230,6 +234,13 @@ import rx.schedulers.Schedulers;
     commonFlexAdapter.toggleSelection(position);
     commonFlexAdapter.notifyDataSetChanged();
     return true;
+  }
+
+  @OnClick(R2.id.card_protocol)
+  public void onCardProrocol(){
+    if (cardTpl.card_tpl_service_term != null){
+      CardProtocolActivity.startWeb(cardTpl.card_tpl_service_term.content_link, getContext(), false);
+    }
   }
 
   @Override public void onGetOptions(List<CardTplOption> options) {
@@ -437,5 +448,9 @@ import rx.schedulers.Schedulers;
                 ((CardTplOptionForBuy) commonFlexAdapter.getItem(position)).getOption()).build());
       }
     }
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
   }
 }

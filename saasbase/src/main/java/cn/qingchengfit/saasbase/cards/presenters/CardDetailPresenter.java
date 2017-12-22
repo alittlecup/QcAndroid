@@ -102,6 +102,40 @@ public class CardDetailPresenter extends BasePresenter {
     editInfo(params);
   }
 
+  public void unRegeister(){
+    RxRegiste(cardModel.qcStopCard(cardId)
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse>() {
+          @Override public void onNext(QcDataResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              queryCardDetail();
+              RxBus.getBus().post(new EventSaasFresh.CardList());
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }));
+  }
+
+  public void resumeCard(){
+    RxRegiste(cardModel.qcResumeCard(cardId)
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse>() {
+          @Override public void onNext(QcDataResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              queryCardDetail();
+              RxBus.getBus().post(new EventSaasFresh.CardList());
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
+          }
+        }));
+  }
+
   private void editInfo(HashMap<String, Object> params) {
     RxRegiste(cardModel.editCardInfo(cardId, params)
       .onBackpressureLatest()
