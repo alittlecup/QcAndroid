@@ -138,9 +138,6 @@ public class CardModel implements ICardModel {
   public Observable<QcDataResponse<JsonObject>> buyCard(@Body CardBuyBody obody) {
     CardBuyBody body = (CardBuyBody) obody.clone();
     body.setType(null);
-    if (body.getSeller_id().equalsIgnoreCase("0")) {
-      body.setSeller_id(null);
-    }
     return posApi.qcCreateRealcard(loginStatus.staff_id(), body, gymWrapper.getParams());
   }
 
@@ -194,7 +191,13 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse<UUIDModel>> qcStashNewCardTpl(CardtplBody body) {
-    return posApi.qcStashNewCardTpl(loginStatus.staff_id(), body, gymWrapper.getShopParams());
+    HashMap<String, Object> params = new HashMap<>();
+    if (gymWrapper.getCoachService() == null){
+      params.put("brand_id", gymWrapper.brand_id());
+    }else{
+      params.putAll(gymWrapper.getParams());
+    }
+    return posApi.qcStashNewCardTpl(loginStatus.staff_id(), body, params);
   }
 
   @Override public Observable<QcDataResponse<JsonObject>> qcChargeRefund(String cardId, ChargeBody body) {

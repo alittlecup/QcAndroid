@@ -13,6 +13,7 @@ import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.card.presenter.StaffCardBuyPresenter;
 import cn.qingchengfit.staffkit.views.card.buy.CompletedBuyView;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -76,7 +77,7 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
   @Override public void onSuccess() {
     ToastUtils.showS("购卡成功");
     getActivity().setResult(Activity.RESULT_OK);
-    getActivity().finish();
+    routeTo(AppUtils.getRouterUri(getContext(), "card/cardtpl/list/"), null);
   }
 
   @Override public void onFailed(String s) {

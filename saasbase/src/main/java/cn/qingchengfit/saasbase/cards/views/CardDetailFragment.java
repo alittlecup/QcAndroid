@@ -281,6 +281,9 @@ import javax.inject.Inject;
       dialogSheet.addButton("修改会员卡有效期", new View.OnClickListener() {
         @Override public void onClick(View view) {
           routeTo(AppUtils.getRouterUri(getContext(), "card/modify/validate"), new CardFixValidDayParams().card(mCard).build());
+          if (dialogSheet.isShowing()) {
+            dialogSheet.dismiss();
+          }
         }
       });
     }

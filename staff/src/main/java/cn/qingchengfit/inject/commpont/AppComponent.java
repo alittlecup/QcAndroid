@@ -33,6 +33,10 @@ import cn.qingchengfit.saasbase.coach.views.AddNewCoachFragment;
 import cn.qingchengfit.saasbase.coach.views.CoachDetailFragment;
 import cn.qingchengfit.saasbase.coach.views.CoachListFragment;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
+import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
+import cn.qingchengfit.saasbase.gymconfig.views.MsgNotiFragment;
+import cn.qingchengfit.saasbase.gymconfig.views.OrderLimitFragment;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
 import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
 import cn.qingchengfit.saasbase.staff.views.SuFragment;
@@ -42,6 +46,7 @@ import cn.qingchengfit.staff.di.BindGymConfigAcitivty;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
+import cn.qingchengfit.staff.di.BindStaffStudentActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -79,7 +84,6 @@ import cn.qingchengfit.staffkit.views.GuideChooseBrandAcitivity;
 import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;
 import cn.qingchengfit.staffkit.views.MainFirstFragment;
 import cn.qingchengfit.staffkit.views.PopFromBottomActivity;
-import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.WebActivityForGuide;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.staffkit.views.allotsales.MultiModifyFragment;
@@ -145,8 +149,6 @@ import cn.qingchengfit.staffkit.views.course.EditCourseFragment;
 import cn.qingchengfit.staffkit.views.course.GymCourseListFragment;
 import cn.qingchengfit.staffkit.views.course.JacketManagerFragment;
 import cn.qingchengfit.staffkit.views.course.ShopCommentsFragment;
-import cn.qingchengfit.staffkit.views.course.limit.OrderLimitFragment;
-import cn.qingchengfit.staffkit.views.course.msg.MsgNotiFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.export.CardImportExportFragment;
@@ -656,11 +658,6 @@ public interface AppComponent {
 
     @Subcomponent() public interface WebSubcomponent extends AndroidInjector<WebActivity> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<WebActivity> {
-        }
-    }
-
-    @Subcomponent() public interface QRSubcomponent extends AndroidInjector<QRActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<QRActivity> {
         }
     }
 
@@ -2548,11 +2545,6 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(WebSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = QRSubcomponent.class) abstract class QRModule {
-        @Binds @IntoMap @ActivityKey(QRActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(QRSubcomponent.Builder builder);
-    }
-
     @Module(subcomponents = CardSubcomponent.class) abstract class CardModule {
         @Binds @IntoMap @ActivityKey(CardActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardSubcomponent.Builder builder);
@@ -4207,4 +4199,12 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AttendanceNotSignFragmentSubcomponent.Builder builder);
     }
 
+    @Subcomponent() public interface QRSubcomponent extends AndroidInjector<QRActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<QRActivity> {
+        }
+    }
+    @Module(subcomponents = QRSubcomponent.class) abstract class QRModule {
+        @Binds @IntoMap @ActivityKey(QRActivity.class)
+        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(QRSubcomponent.Builder builder);
+    }
 }

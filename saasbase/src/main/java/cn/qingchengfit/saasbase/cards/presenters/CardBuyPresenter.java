@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.cards.presenters;
 
+import android.text.TextUtils;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -87,21 +88,25 @@ public class CardBuyPresenter extends BasePresenter {
     return serPermisAction.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE);
   }
 
+  public void setmChosenOption(CardTplOption mChosenOption) {
+    this.mChosenOption = mChosenOption;
+  }
+
   /**
    * 选择规格时的逻辑
    */
-  public void selectOption(int pos) {
-    if (pos < mOptions.size()) {
-      //已有规格 展示价格
-      mChosenOption = mOptions.get(pos);
-      view.showInputMoney(false, mChosenOption, mChosenOption.limit_days);
-      view.setPayMoney(mChosenOption.price);
-    } else {
-      //其他规格
-      mChosenOption = null;
-      view.showInputMoney(true, mChosenOption, false);
-    }
-  }
+  //public void selectOption(int pos) {
+  //  if (pos < mOptions.size()) {
+  //    //已有规格 展示价格
+  //    mChosenOption = mOptions.get(pos);
+  //    view.showInputMoney(false, mChosenOption, mChosenOption.limit_days);
+  //    view.setPayMoney(mChosenOption.price + "元");
+  //  } else {
+  //    //其他规格
+  //    mChosenOption = null;
+  //    view.showInputMoney(true, mChosenOption, false);
+  //  }
+  //}
 
   public void setSaler(String id){
     cardBuyBody.setSeller_id(id);
@@ -273,6 +278,10 @@ public class CardBuyPresenter extends BasePresenter {
     } else {
       cardBuyBody.setPrice(mChosenOption.price);
       cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
+    }
+    if (TextUtils.isEmpty(cardBuyBody.getSeller_id())){
+      cardBuyBody.setSeller_id(null);
+      cardBuyBody.staff_id = loginStatus.staff_id();
     }
 
     if (cardBuyBody.checkData() > 0) {

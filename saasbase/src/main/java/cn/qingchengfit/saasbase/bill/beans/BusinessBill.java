@@ -50,7 +50,6 @@ public class BusinessBill implements Parcelable{
   public String bank_logo;
   public String bank_username;
   public String bank_name;
-
   public String remarks;
   public Extra extra;         //根据业务订单变
 

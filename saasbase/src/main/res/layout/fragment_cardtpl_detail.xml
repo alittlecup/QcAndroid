@@ -40,7 +40,6 @@
         app:civ_clickable="true"
         app:civ_hint="选填"
         app:civ_lable="会员卡简介"
-        app:civ_nonnull="true"
         app:civ_showright="true"
         tools:visibility="visible"
         style="@style/QcCivInputStyle"

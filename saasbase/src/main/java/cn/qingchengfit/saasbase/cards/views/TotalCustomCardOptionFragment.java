@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.CardTplOption;
+import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 
 /**
  * Created by fb on 2017/12/20.
@@ -15,6 +17,13 @@ import com.anbillon.flabellum.annotations.Leaf;
 
 @Leaf(module = "card", path = "/custom/all/option")
 public class TotalCustomCardOptionFragment extends CustomCardOptionFragment {
+
+  @Need Integer unuse;
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    SaasbaseParamsInjector.inject(this);
+  }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,

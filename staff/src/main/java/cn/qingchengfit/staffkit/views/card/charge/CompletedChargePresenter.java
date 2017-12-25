@@ -157,7 +157,7 @@ public class CompletedChargePresenter extends BasePresenter {
                     if (cacluScoreQcResponseData.getStatus() == 200) {
                         if (cacluScoreQcResponseData.getData().has_score) {
                             if (user_ids.contains(",") || user_ids.contains(Configs.SEPARATOR)) {
-                                view.onScoreHint(cacluScoreQcResponseData.getData().score + "");
+                                view.onScoreHint(cacluScoreQcResponseData.getData().number + "");
                             } else {
                                 view.onSuccess();
                             }
