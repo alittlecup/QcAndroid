@@ -44,7 +44,6 @@ import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.adapter.ImageTextBean;
 import cn.qingchengfit.staffkit.views.charts.BaseStatementChartFragment;
 import cn.qingchengfit.staffkit.views.charts.BaseStatementChartFragmentBuilder;
-import cn.qingchengfit.staffkit.views.course.CourseActivity;
 import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.staffkit.views.custom.ItemDecorationAlbumColumns;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -365,6 +364,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
             return;
         }
         routeTo("card","/brand/cardtpl/list/",null);
+
         //Intent toCardType = new Intent(getActivity(), CardTypeActivity.class);
         //goActivity(toCardType);
     }
@@ -377,8 +377,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
             showAlert(R.string.alert_permission_forbid);
             return;
         }
-        Intent toQr = new Intent(getActivity(), CourseActivity.class);
-        goActivity(toQr);
+        routeTo("course","/home/brand/",null);
     }
 
     private void goActivity(Intent it) {

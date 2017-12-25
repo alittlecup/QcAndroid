@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -118,7 +121,21 @@ public class StudentListFragment extends FilterCommonFragment {
         return view;
     }
 
+    @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+      Bundle savedInstanceState) {
+        super.onChildViewCreated(fm, f, v, savedInstanceState);
+        setBackPress();
+    }
+
+    @Override public boolean onFragmentBackPress() {
+        if (drawer.isDrawerOpen(Gravity.END)){
+            drawer.closeDrawer(Gravity.END);
+            return true;
+        }else return false;
+    }
+
     public void filterStudentConfirm(final StudentFilterEvent event) {
+        if (getActivity() != null)
         getActivity().runOnUiThread(new Runnable() {
             @Override public void run() {
                 filter = event.filter;
@@ -151,12 +168,7 @@ public class StudentListFragment extends FilterCommonFragment {
     }
 
     public void initToolBar() {
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        super.initToolbar(toolbar);
 
         if (!gymWrapper.inBrand()) {
             toolbarTitile.setText("会员");

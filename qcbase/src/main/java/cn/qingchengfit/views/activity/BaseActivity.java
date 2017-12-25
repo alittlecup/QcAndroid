@@ -45,6 +45,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+import static android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+
 /**
  * power by
  * <p>
@@ -145,7 +147,15 @@ public class BaseActivity extends AppCompatActivity {
     return new Fragment();
   };
 
+  public void setStatusTextColor(boolean dark){
+    if(Build.VERSION.SDK_INT >= 23) {
+      Window window = getWindow();
+      if (dark)
+        window.addFlags(SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+      else window.clearFlags(SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
+    }
+  }
   @Override protected void onDestroy() {
     getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(fcb);
     super.onDestroy();

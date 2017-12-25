@@ -34,12 +34,11 @@ import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePeriodChooser;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.jakewharton.rxbinding.view.RxMenuItem;
 import java.text.SimpleDateFormat;
@@ -91,6 +90,10 @@ import javax.inject.Inject;
   private DialogList openDialog;
   private String[] arrayOpenTime;
   private TimeDialogWindow chooseOpenTimeDialog;
+  private TimePeriodChooser timePeriodChooser;
+  private TimeDialogWindow timeDialogWindow;
+  private Date dateTime;
+  private boolean isCross = false;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -142,12 +145,7 @@ import javax.inject.Inject;
   }
 
   @Override public boolean onFragmentBackPress() {
-    DialogUtils.instanceDelDialog(getContext(), "确认放弃本次编辑?",
-      new MaterialDialog.SingleButtonCallback() {
-        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-          popBack();
-        }
-      }).show();
+    DialogUtils.instanceDelDialog(getContext(), "确认放弃本次编辑?", (dialog, which) -> popBack()).show();
     return true;
   }
 
@@ -163,8 +161,11 @@ import javax.inject.Inject;
    * 课程时间修改
    */
   public void onCivCourseTimeClicked() {
-    choosTime(TimePopupWindow.Type.HOURS_MINS, 0, 0,
-      DateUtils.HHMM2date(civCourseTime.getContent()), civCourseTime);
+    //根据团课私教选择
+    if (isPrivate){
+      if (timePeriodChooser == null){
+      }
+    }
   }
 
   /**
@@ -297,11 +298,22 @@ import javax.inject.Inject;
   }
 
   @Override public String getStart() {
-    return null;
+    // TODO: 2017/12/24
+    return civDate.getContent()
+      + "T"
+      + (isPrivate?civCourseTime.getContent().split("至")[0]:civCourseTime.getContent())
+      + ":00";
   }
 
   @Override public String getEnd() {
-    return null;
+    if (isPrivate){
+      return civDate.getContent()
+        + "T"
+        + (isPrivate?civCourseTime.getContent().split("至")[0]:civCourseTime.getContent())
+        + ":00";
+    }else {
+      return "";
+    }
   }
 
   @Override public List<String> getSupportSpace() {

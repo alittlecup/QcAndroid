@@ -12,6 +12,7 @@ import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.response.SingleBatchWrap;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -99,8 +100,23 @@ public class BatchSinglePresenter extends BasePresenter<BatchSinglePresenter.MVP
     body.is_free = !mvpView.needPay();
     body.max_users = mvpView.suportMemberNum();
     body.spaces = mvpView.getSupportSpace();
-    body.from_date = mvpView.getStart();
-    //  body.
+    body.rule = (ArrayList<Rule>) mvpView.getRules();
+    body.start = mvpView.getStart();
+    body.end = mvpView.getEnd();
+    RxRegiste(courseApi.qcUpdateBatchSchedule(isPrivate, scheduleId, body)
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            mvpView.onShowError("保存成功");
+            mvpView.popBack();
+          } else {
+            mvpView.onShowError("保存失败："+qcResponse.getMsg());
+          }
+        }
+      }));
   }
 
   public void delSchedule() {

@@ -51,6 +51,7 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View child = super.onCreateView(inflater, container, savedInstanceState);
+    setBackPress();
     ViewGroup parent = (ViewGroup) inflater.inflate(R.layout.layout_toolbar_container,container,false);
     parent.addView(child,1);
     toolbar = parent.findViewById(R.id.toolbar);
@@ -76,9 +77,9 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
     onRefresh();
   }
 
-
-
-
+  @Override public int getFbIcon() {
+    return R.drawable.vd_add_batch;
+  }
 
   @Override public String getFragmentName() {
     return IBatchListCategoryFragment.class.getName();

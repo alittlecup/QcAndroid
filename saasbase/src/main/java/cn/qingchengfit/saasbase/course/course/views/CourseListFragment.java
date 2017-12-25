@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.course.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +28,7 @@ import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.views.fragments.TitleFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -60,9 +62,8 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/2.
  */
-@Leaf(module = "course",path = "/list/")
-public class CourseListFragment extends SaasBaseFragment
-    implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+@Leaf(module = "course", path = "/list/") public class CourseListFragment extends SaasBaseFragment
+  implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener,TitleFragment {
 
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
@@ -71,23 +72,37 @@ public class CourseListFragment extends SaasBaseFragment
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
+  @BindView(R2.id.toolbar_layout) ViewGroup toolbarLayout;
   @BindView(R2.id.rv) RecyclerView rv;
   @BindView(R2.id.srl) SwipeRefreshLayout srl;
 
   protected CommonFlexAdapter commonFlexAdapter;
   @Need public Boolean mIsPrivate = false;
 
+  public static CourseListFragment newInstance(boolean isPrivate) {
+    Bundle args = new Bundle();
+    args.putBoolean("p",isPrivate);
+    CourseListFragment fragment = new CourseListFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (getArguments() != null && getArguments().containsKey("p")){
+      mIsPrivate = getArguments().getBoolean("p",true);
+    }
 
+  }
 
   @Override public View onCreateView(final LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_saas_course_list, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     if ((!mIsPrivate && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING)) || (
-        mIsPrivate
-            && !serPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING))) {
+      mIsPrivate
+        && !serPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING))) {
       View v = inflater.inflate(R.layout.item_common_no_data, container, false);
       ImageView img = (ImageView) v.findViewById(R.id.img);
       img.setImageResource(R.drawable.ic_no_permission);
@@ -100,7 +115,7 @@ public class CourseListFragment extends SaasBaseFragment
     rv.setItemAnimator(new FadeInUpItemAnimator());
     rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
     rv.addItemDecoration(
-        new FlexibleItemDecoration(getContext()).withDefaultDivider().withBottomEdge(true));
+      new FlexibleItemDecoration(getContext()).withDefaultDivider().withBottomEdge(true));
     rv.setAdapter(commonFlexAdapter);
     srl.setOnRefreshListener(this);
     onRefresh();
@@ -108,11 +123,13 @@ public class CourseListFragment extends SaasBaseFragment
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
-    super.initToolbar(toolbar);
-    toolbarTitle.setText(mIsPrivate ? "私教课程":"团课课程");
+    if (getParentFragment() instanceof CourseHomeInBrandFragment) {
+      toolbarLayout.setVisibility(View.GONE);
+    }else {
+      super.initToolbar(toolbar);
+      toolbarTitle.setText(mIsPrivate ? "私教课程" : "团课课程");
+    }
   }
-
-
 
   @Override public String getFragmentName() {
     return CourseListFragment.class.getName();
@@ -122,17 +139,14 @@ public class CourseListFragment extends SaasBaseFragment
     super.onDestroyView();
   }
 
-
   @Override public boolean onItemClick(int position) {
     IFlexible iFlexible = commonFlexAdapter.getItem(position);
     if (iFlexible == null) return true;
-    if (iFlexible instanceof CourseItem){
+    if (iFlexible instanceof CourseItem) {
 
-      routeTo("/detail/",new CourseDetailParams()
-        .mCourseDetail(((CourseItem) iFlexible).courseDetail)
-        .build());
+      routeTo("/detail/",
+        new CourseDetailParams().mCourseDetail(((CourseItem) iFlexible).courseDetail).build());
     }
-
 
     return true;
   }
@@ -141,7 +155,7 @@ public class CourseListFragment extends SaasBaseFragment
    * 新增课程
    */
   @OnClick(R2.id.add_course_btn) public void onViewClicked() {
-    routeTo("/add/",new AddCourseParams().isPrivate(mIsPrivate).build());
+    routeTo("/add/", new AddCourseParams().isPrivate(mIsPrivate).build());
   }
 
   /**
@@ -149,25 +163,29 @@ public class CourseListFragment extends SaasBaseFragment
    */
   @Override public void onRefresh() {
     RxRegiste(courseApi.qcGetCourses(mIsPrivate)
-        .onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(qcResponse -> {
-          srl.setRefreshing(false);
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            if (qcResponse.data != null && qcResponse.data.courses != null) {
-              List<IFlexible> datas = new ArrayList<IFlexible>();
-              for (CourseType course : qcResponse.data.courses) {
-                datas.add(new CourseItem(course));
-              }
-              if (datas.size() == 0) {
-                datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程种类"));
-              }
-              commonFlexAdapter.updateDataSet(datas,true);
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(qcResponse -> {
+        srl.setRefreshing(false);
+        if (ResponseConstant.checkSuccess(qcResponse)) {
+          if (qcResponse.data != null && qcResponse.data.courses != null) {
+            List<IFlexible> datas = new ArrayList<IFlexible>();
+            for (CourseType course : qcResponse.data.courses) {
+              datas.add(new CourseItem(course));
             }
-          } else {
-            onShowError(qcResponse.getMsg());
+            if (datas.size() == 0) {
+              datas.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无课程种类"));
+            }
+            commonFlexAdapter.updateDataSet(datas, true);
           }
-        }, new NetWorkThrowable()));
+        } else {
+          onShowError(qcResponse.getMsg());
+        }
+      }, new NetWorkThrowable()));
+  }
+
+  @Override public String getTitle() {
+    return mIsPrivate ? "私教课程" : "团课课程";
   }
 }

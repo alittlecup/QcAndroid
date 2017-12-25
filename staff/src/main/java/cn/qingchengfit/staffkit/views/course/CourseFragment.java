@@ -89,8 +89,8 @@ public class CourseFragment extends BaseFragment {
         initToolbar(toolbar);
 
         if (fragments.size() == 0) {
-            fragments.add(CourseListFragment.newInstance(false));
-            fragments.add(CourseListFragment.newInstance(true));
+            fragments.add(cn.qingchengfit.saasbase.course.course.views.CourseListFragment.newInstance(false));
+            fragments.add(cn.qingchengfit.saasbase.course.course.views.CourseListFragment.newInstance(false));
         }
         fragmentAdater = new FragmentAdapter(getChildFragmentManager(), fragments);
         viewpager.setAdapter(fragmentAdater);

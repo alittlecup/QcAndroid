@@ -27,6 +27,13 @@
       android:layout_height="wrap_content"
       android:layout_weight="1"
       />
+  <com.bigkoo.pickerview.lib.WheelView
+      android:id="@+id/today"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:visibility="gone"
+      />
 
   <com.bigkoo.pickerview.lib.WheelView
       android:id="@+id/hour"

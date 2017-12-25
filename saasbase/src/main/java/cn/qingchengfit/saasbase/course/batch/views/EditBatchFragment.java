@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
@@ -34,9 +37,15 @@ import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.DialogList;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePeriodChooser;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -45,9 +54,12 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.IFlexible;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
@@ -82,6 +94,9 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   @BindView(R2.id.tv_clear_auto_batch) TextView tvClearAutoBatch;
   @BindView(R2.id.recyclerview) RecyclerView recyclerview;
   @BindView(R2.id.btn_all_schedule) CompatTextView btnAllSchedule;
+  @BindView(R2.id.starttime) CommonInputView starttime;
+  @BindView(R2.id.endtime) CommonInputView endtime;
+  @BindView(R2.id.civ_to_open_time) CommonInputView civOpenTime;
   @BindView(R2.id.btn_del) Button btnDel;
 
   @Inject BatchEditPresenter presenter;
@@ -92,9 +107,17 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   private BatchDetailCommonView batchBaseFragment;
   private TimeDialogWindow timeWindow;
   private TimePeriodChooser timeDialogWindow;
+  private TimeDialogWindow pwTime;
+  /**
+   * 选择准确的时间
+   */
+  TimeDialogWindow chooseOpenTimeDialog;
+  private DialogList openDialog;
+  private String[] arrayOpenTime;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    arrayOpenTime = getResources().getStringArray(R.array.order_open_time);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(),this);
   }
 
@@ -115,6 +138,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
           commonFlexAdapter.updateItem(new CmLRTxt90Item(time_repeat));
         }
       });
+
     return view;
   }
 
@@ -126,14 +150,14 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
-          presenter.checkBatch();
+          presenter.buildBody();
+          presenter.arrangeBatch();
         }
       });
   }
 
   private void initView() {
     recyclerview.addItemDecoration(new FlexibleItemDecoration(getContext())
-      //.withDivider(R.drawable.divider_grey_left_margin,R.layout.item_cm_lr_txt)
       .withOffset(1).withBottomEdge(true)
     );
     recyclerview.setNestedScrollingEnabled(false);
@@ -169,6 +193,14 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       .build());
   }
 
+  @Override public boolean onFragmentBackPress() {
+    DialogUtils.instanceDelDialog(getContext(), "是否放弃本次更改？", new MaterialDialog.SingleButtonCallback() {
+      @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+        popBack();
+      }
+    }).show();
+    return true;
+  }
 
   /**
    * 删除当前批次
@@ -207,6 +239,21 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       }
       commonFlexAdapter.updateDataSet(items);
     }
+    starttime.setContent(DateUtils.getYYYYMMDDfromServer(batchDetail.from_date));
+    endtime.setContent(DateUtils.getYYYYMMDDfromServer(batchDetail.to_date));
+    onOpenRule(batchDetail.open_rule);
+  }
+
+   public void onOpenRule(BatchOpenRule rule) {
+    if (rule != null){
+      if (rule.type == 1)
+        civOpenTime.setContent(arrayOpenTime[0]);
+      else  if (rule.type == 2 ){
+        civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(rule.open_datetime)));
+      }else if (rule.type == 3){
+        civOpenTime.setContent("提前"+rule.advance_hours+"小时开放");
+      }
+    }
   }
 
   private IFlexible generateRepeatItem(Time_repeat tr){
@@ -244,11 +291,11 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   }
 
   @Override public String getStart() {
-    return null;
+    return starttime.getContent();
   }
 
   @Override public String getEnd() {
-    return null;
+    return endtime.getContent();
   }
 
   @Override public List<String> getSupportSpace() {
@@ -267,7 +314,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
     ArrayList<Time_repeat> tp = new ArrayList<>();
     for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
       IFlexible item = commonFlexAdapter.getItem(i);
-      if (item instanceof CmLRTxtItem ){
+      if (item instanceof CmLRTxtItem){
         tp.add(((Time_repeat)((CmLRTxtItem) item).getData()));
       }
     }
@@ -281,6 +328,111 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   @Override public boolean needPay() {
     return batchBaseFragment.needPay();
   }
+
+
+  /**
+   * 选择开始时间
+   */
+  @OnClick(R2.id.starttime) public void onStartTime() {
+    if (pwTime == null) {
+      pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+    }
+    pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
+      Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
+    pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+      @Override public void onTimeSelect(Date date) {
+        starttime.setContent(DateUtils.Date2YYYYMMDD(date));
+        if (endtime.isEmpty()) endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
+        pwTime.dismiss();
+      }
+    });
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+  }
+
+  /**
+   * 选择结束时间
+   */
+  @OnClick(R2.id.endtime) public void onEndTime() {
+    if (pwTime == null) {
+      pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+    }
+    pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
+      Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
+    pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+      @Override public void onTimeSelect(Date date) {
+        endtime.setContent(DateUtils.Date2YYYYMMDD(date));
+        pwTime.dismiss();
+      }
+    });
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+  }
+
+  @OnClick(R2.id.civ_to_open_time) public void onOpenTime() {
+    if (openDialog == null) {
+      openDialog =
+        DialogList.builder(getContext()).list(arrayOpenTime, new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (position == 0) {
+              presenter.setOpenRuleType(1);
+              civOpenTime.setContent(arrayOpenTime[0]);
+            } else if (position == 1) {
+              chooseOpenTime();
+            } else {
+              chooseAheadOfHour();
+            }
+          }
+        });
+    }
+    openDialog.show();
+  }
+
+  /**
+   * 选择开放时间
+   */
+  public void chooseOpenTime() {
+    if (chooseOpenTimeDialog == null) {
+      chooseOpenTimeDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.ALL);
+      chooseOpenTimeDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+        @Override public void onTimeSelect(Date date) {
+          civOpenTime.setContent(DateUtils.Date2YYYYMMDDHHmm(date));
+          presenter.setOpenRuleType(2);
+          presenter.setOpenRuleTime(DateUtils.Date2YYYYMMDDHHmmss(date), null);
+        }
+      });
+    }
+    chooseOpenTimeDialog.setRange(DateUtils.getYear(new Date()) - 1,
+      DateUtils.getYear(new Date()) + 1);
+    Date d = new Date();
+    if (!TextUtils.isEmpty(civOpenTime.getContent())) {
+      try {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-DD HH:mm", Locale.CHINA);
+        d = formatter.parse(civOpenTime.getContent());
+      } catch (Exception e) {
+        LogUtil.e(e.getMessage());
+      }
+    }
+
+    chooseOpenTimeDialog.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
+  }
+
+  /**
+   * 提前x小时开放预约
+   */
+  public void chooseAheadOfHour() {
+    SimpleScrollPicker simpleScrollPicker = new SimpleScrollPicker(getContext());
+    simpleScrollPicker.setLabel("小时");
+    simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
+      @Override public void onSelectItem(int pos) {
+        civOpenTime.setContent("提前" + pos + "小时预约");
+        presenter.setOpenRuleType(3);
+        presenter.setOpenRuleTime(null, pos);
+      }
+    });
+    simpleScrollPicker.show(0, 240, 4);
+  }
+
+
 
   /**
    *

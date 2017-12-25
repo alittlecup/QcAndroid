@@ -103,13 +103,6 @@ public class ConfigFragment extends BaseFragment implements ConfigPresenter.Pres
         return fragment;
     }
 
-    public static ConfigFragment newInstance() {
-        Bundle args = new Bundle();
-        //args.putBoolean("isOpen", isOpen);
-        ConfigFragment fragment = new ConfigFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

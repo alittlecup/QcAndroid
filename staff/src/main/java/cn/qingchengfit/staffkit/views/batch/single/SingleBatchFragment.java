@@ -214,7 +214,6 @@ import rx.functions.Action1;
     View view = inflater.inflate(R.layout.fragment_single_batch, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
-
     delegatePresenter(mSingleBatchPresenter, this);
     showLoading();
     mSingleBatchPresenter.querySingleBatchId(App.staffId, mIsPrivate, mSingleBatchid);

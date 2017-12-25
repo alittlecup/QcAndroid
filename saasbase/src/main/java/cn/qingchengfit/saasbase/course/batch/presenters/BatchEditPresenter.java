@@ -3,10 +3,8 @@ package cn.qingchengfit.saasbase.course.batch.presenters;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
-import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchDetailWrap;
 import cn.qingchengfit.subscribes.NetSubscribe;
-import java.util.ArrayList;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -103,18 +101,7 @@ public class BatchEditPresenter extends IBatchPresenter {
   /**
    * 保存排期
    */
-  public void editBatch() {
-
-  }
-
   @Override public void arrangeBatch() {
-    body.teacher_id = mvpView.getTrainerId();
-    body.course_id = mvpView.getCourseId();
-    body.spaces = mvpView.getSupportSpace();
-    body.max_users = mvpView.suportMemberNum();
-    body.rules = (ArrayList<Rule>) mvpView.getRules();
-    //body.batch_id = batchId;
-    body.time_repeats = mvpView.getTimeRepeats();
     int err = body.checkAddBatch();
     if (err > 0) {
       mvpView.showAlert(err);

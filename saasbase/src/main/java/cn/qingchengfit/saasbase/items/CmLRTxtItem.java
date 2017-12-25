@@ -21,6 +21,12 @@ public class CmLRTxtItem extends AbstractFlexibleItem<CmLRTxtItem.CmLRTxtVH> {
     return cmLRTxt;
   }
 
+  public String getId(){
+    if (cmLRTxt != null)
+      return cmLRTxt.getId();
+    else return "";
+  }
+
   public void setCmLRTxt(ICmLRTxt cmLRTxt) {
     this.cmLRTxt = cmLRTxt;
   }
@@ -44,8 +50,8 @@ public class CmLRTxtItem extends AbstractFlexibleItem<CmLRTxtItem.CmLRTxtVH> {
   }
 
   @Override public boolean equals(Object o) {
-    if (o instanceof ICmLRTxt){
-      return ((ICmLRTxt) o).getId().equalsIgnoreCase(cmLRTxt.getId());
+    if (o instanceof CmLRTxtItem){
+      return ((CmLRTxtItem) o).getId().equalsIgnoreCase(cmLRTxt.getId());
     }
     return false;
   }

@@ -132,7 +132,6 @@ public abstract class BaseFragment extends RxFragment
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
     super.onViewCreated(view, savedInstanceState);
-    setBackPress();
     //使fitsystem生效
     ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
       @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH) @Override
@@ -194,13 +193,13 @@ public abstract class BaseFragment extends RxFragment
   }
 
   public void initToolbar(@NonNull Toolbar toolbar) {
-    if (!CompatUtils.less21()) toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
+    toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         getActivity().onBackPressed();
       }
     });
-    if (toolbar.getParent() instanceof ViewGroup  && isfitSystemPadding()) {
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  && isfitSystemPadding()) {
       ((ViewGroup) toolbar.getParent()).setPadding(0,
         MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
     }
@@ -220,6 +219,11 @@ public abstract class BaseFragment extends RxFragment
     //if (getActivity() instanceof BaseActivity) {
     //  ((BaseActivity) getActivity()).hideLoading();
     //  }
+  }
+  protected void setStatusTextColor(boolean dark){
+    if (getActivity() != null && getActivity() instanceof BaseActivity){
+      ((BaseActivity) getActivity()).setStatusTextColor(dark);
+    }
   }
 
   @Override public boolean onFragmentBackPress() {

@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
+import cn.qingchengfit.views.fragments.TitleFragment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
         Fragment f = fragments.get(position);
         if (f instanceof VpFragment) {
             return ((VpFragment) f).getTitle();
+        }else if(f instanceof TitleFragment){
+            return ((TitleFragment) f).getTitle();
         } else {
             return "";
         }

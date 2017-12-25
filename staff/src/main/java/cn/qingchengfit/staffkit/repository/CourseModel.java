@@ -210,7 +210,11 @@ public class CourseModel implements ICourseModel {
    */
   @Override public Observable<QcDataResponse> qcUpdateBatchSchedule(boolean isPirvate,
     String scheduleid, SingleBatchBody body) {
-    return api.qcUpdateBatchSchedule(loginStatus.staff_id(), isPirvate ? "timetables" : "schedules", scheduleid,
+    int err = body.check();
+    if (err > 0){
+      return ResponseConstant.generateError(err,App.context);
+    }else
+      return api.qcUpdateBatchSchedule(loginStatus.staff_id(), isPirvate ? "timetables" : "schedules", scheduleid,
       body, gymWrapper.getParams());
   }
 

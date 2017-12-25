@@ -56,6 +56,9 @@ public class ArrangeBatchBody {
         if (DateUtils.formatDateFromYYYYMMDD(from_date).getTime() >
             DateUtils.formatDateFromYYYYMMDD(to_date).getTime())
             return R.string.err_start_great_end;
+        if (DateUtils.formatDateFromYYYYMMDD(to_date).getTime() - DateUtils.formatDateFromYYYYMMDD(from_date).getTime()
+            > 366 * DateUtils.DAY_TIME)
+            return R.string.alert_batch_greater_three_month;
         if (max_users <= 0)
             return R.string.err_max_user;
         if (spaces == null || spaces.size() == 0)

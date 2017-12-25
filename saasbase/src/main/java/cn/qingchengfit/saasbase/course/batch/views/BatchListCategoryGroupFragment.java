@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
@@ -44,6 +45,7 @@ import rx.schedulers.Schedulers;
 public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
 
   @Need String course_id;
+  private Course course;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -62,6 +64,7 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
             if (qcResponse.data.batches != null){
               List<AbstractFlexibleItem> datas = new ArrayList<>();
               datas.add(new BatchItem(qcResponse.data.course));
+              course = qcResponse.data.course;
               for (GroupCourseSchedule coach : qcResponse.data.batches) {
                 try {
                   datas.add(new BatchCateItem(DateUtils.getDuringFromServer(coach.from_date,coach.to_date)
@@ -93,4 +96,9 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
     return true;
   }
 
+  @Override public void onClickFab() {
+    if (course != null) {
+      routeTo("/batch/add/", AddBatchParams.builder().mCourse(course).build());
+    }
+  }
 }

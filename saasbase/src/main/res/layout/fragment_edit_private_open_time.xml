@@ -4,9 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
   >
   <data>
+
     <variable
-        name="tr"
-        type="cn.qingchengfit.saasbase.course.batch.bean.Time_repeat"/>
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel" />
   </data>
   <LinearLayout
 
@@ -15,7 +16,9 @@
       android:background="@color/bg_grey"
       android:orientation="vertical"
       >
-
+    <include layout="@layout/common_simple_toolbar"
+        android:id="@+id/layout_toolbar"
+        />
     <TextView
         android:id="@+id/label_can_order"
         android:layout_width="match_parent"

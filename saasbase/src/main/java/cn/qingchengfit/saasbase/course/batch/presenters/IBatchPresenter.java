@@ -159,7 +159,6 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
   }
 
   public void buildBody() {
-    // TODO: 2017/9/20
     body.rules.clear();
     body.rules.addAll(mvpView.getRules());
     body.open_rule = getBatchOpenRule();
@@ -169,7 +168,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
     body.spaces = mvpView.getSupportSpace();
     body.course_id = mvpView.getCourseId();
     body.teacher_id = mvpView.getTrainerId();
-    body.time_repeats = BatchLoop.geTimeRepFromBean(mvpView.getBatchLoops());
+    body.time_repeats = mvpView.getBatchLoops() == null?mvpView.getTimeRepeats():BatchLoop.geTimeRepFromBean(mvpView.getBatchLoops());
     body.is_free = !mvpView.needPay();
     body.max_users = mvpView.suportMemberNum();
   }
@@ -180,7 +179,10 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
   public void checkBatch() {
     buildBody();
     int ret = body.checkAddBatch();
-    if (ret > 0) mvpView.onShowError(ret);
+    if (ret > 0) {
+      mvpView.showAlert(ret);
+      return;
+    }
     RxRegiste(courseApi.qcCheckBatch(isPrivate, body)
       .onBackpressureLatest()
       .subscribeOn(Schedulers.io())
@@ -280,11 +282,17 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
     boolean supportMutiMember();
 
     String getStart();
+
     String getEnd();
+
     List<String> getSupportSpace();
+
     List<BatchLoop> getBatchLoops();
+
     List<Rule> getRules();
+
     ArrayList<Time_repeat> getTimeRepeats();
+
     int suportMemberNum();
 
     boolean needPay();

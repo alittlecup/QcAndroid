@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
@@ -39,7 +40,7 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/11/29.
  */
-@Leaf(module = "course",path = "/batch/cate/private/")
+@Leaf(module = "course", path = "/batch/cate/private/")
 public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment {
 
   @Need String trainer_id;
@@ -49,7 +50,6 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
     toolbarTitle.setText("私教排期");
   }
 
-
   @Override public void onRefresh() {
     RxRegiste(courseModel.qcGetPrivateCoaches(trainer_id)
       .onBackpressureLatest()
@@ -58,38 +58,41 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
       .subscribe(new NetSubscribe<QcDataResponse<QcResponsePrivateDetail>>() {
         @Override public void onNext(QcDataResponse<QcResponsePrivateDetail> qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
-            if (qcResponse.data.batches != null){
+            if (qcResponse.data.batches != null) {
               List<AbstractFlexibleItem> datas = new ArrayList<>();
               datas.add(new BatchItem(qcResponse.data.coach));
               for (QcResponsePrivateDetail.PrivateBatch coach : qcResponse.data.batches) {
                 try {
-                  datas.add(new BatchCateItem(DateUtils.getDuringFromServer(coach.from_date,coach.to_date)
-                    ,coach.course.getName(),coach.id,coach.course.getPhoto()
-                  ));
-                }catch (Exception e){
+                  datas.add(
+                    new BatchCateItem(DateUtils.getDuringFromServer(coach.from_date, coach.to_date),
+                      coach.course.getName(), coach.id, coach.course.getPhoto()));
+                } catch (Exception e) {
                   CrashUtils.sendCrash(e);
                 }
               }
-              setDatas(datas,1);
+              setDatas(datas, 1);
             }
           } else {
             onShowError(qcResponse.getMsg());
           }
         }
       }));
-
   }
 
   @Override public boolean onItemClick(int i) {
     IFlexible item = commonFlexAdapter.getItem(i);
     if (item == null) return true;
-    if (item instanceof BatchCateItem){
-      routeTo("/batch/edit/",new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams()
-        .batchId(((BatchCateItem) item).getId())
-        .isPrvite(true)
-        .build()
-      );
+    if (item instanceof BatchCateItem) {
+      routeTo("/batch/edit/",
+        new cn.qingchengfit.saasbase.course.batch.views.EditBatchParams().batchId(
+          ((BatchCateItem) item).getId()).isPrvite(true).build());
     }
     return true;
+  }
+
+  @Override public void onClickFab() {
+    Staff staff = new Staff();
+    staff.id = trainer_id;
+    routeTo("/batch/add/", AddBatchParams.builder().mTeacher(staff).build());
   }
 }

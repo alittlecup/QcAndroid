@@ -29,6 +29,10 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
         this.done = done;
     }
 
+    public int getIconRes() {
+        return iconRes;
+    }
+
     public int getStrRes(){
         return strRes;
     }
@@ -39,8 +43,7 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
 
     @Override public StudentOperationVH createViewHolder(View view, FlexibleAdapter adapter) {
         StudentOperationVH holder = new StudentOperationVH(view, adapter);
-        this.width = view.getWidth();
-        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(view.getWidth() / 4, view.getHeight() / 2));
+        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(adapter.getRecyclerView().getWidth() / 4, adapter.getRecyclerView().getHeight() / 2));
         return holder;
     }
 
@@ -55,6 +58,9 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
     }
 
     @Override public boolean equals(Object o) {
+        if (o instanceof StudentOperationItem){
+            return ((StudentOperationItem) o).getIconRes() == getIconRes();
+        }
         return false;
     }
 

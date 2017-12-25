@@ -44,8 +44,8 @@ import javax.inject.Inject;
 
   @Need ArrayList<Rule> rules;
   @Need ArrayList<CardTplBatchShip> cardTplBatchShips;
-  @Need int maxCount = 1;
-  @Need boolean multiPrice;
+  @Need Integer maxCount = 1;
+  @Need Boolean multiPrice;
 
   TextView toolbarTitile;
   Toolbar toolbar;

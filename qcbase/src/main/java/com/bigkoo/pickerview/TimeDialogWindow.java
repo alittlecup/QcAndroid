@@ -179,6 +179,9 @@ public class TimeDialogWindow extends Dialog implements OnClickListener {
                 try {
                     Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
                     timeSelectListener.onTimeSelect(date);
+                    if (wheelTime.getType() == TimePopupWindow.Type.TODAY_HOURS_MINS && timeSelectListener instanceof OnTodayTimeSelectListener){
+                        ((OnTodayTimeSelectListener) timeSelectListener).onTimeSelect(date,wheelTime.isToday());
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -198,5 +201,9 @@ public class TimeDialogWindow extends Dialog implements OnClickListener {
 
     public interface OnTimeSelectListener {
         public void onTimeSelect(Date date);
+    }
+
+    public interface OnTodayTimeSelectListener extends OnTimeSelectListener{
+        public void onTimeSelect(Date date,boolean isToday);
     }
 }
