@@ -84,8 +84,8 @@ public class CardtplAddFragment extends CardTplDetailFragment {
   private void initBus(){
     RxBus.getBus()
         .register(OnBackEvent.class)
-        //.compose(this.<OnBackEvent>bindToLifecycle())
-        //.compose(this.<OnBackEvent>doWhen(FragmentEvent.RESUME))
+        .compose(this.<OnBackEvent>bindToLifecycle())
+        .compose(this.<OnBackEvent>doWhen(FragmentEvent.RESUME))
         .subscribe(new BusSubscribe<OnBackEvent>() {
           @Override public void onNext(OnBackEvent cardList) {
             Uri toUri;
