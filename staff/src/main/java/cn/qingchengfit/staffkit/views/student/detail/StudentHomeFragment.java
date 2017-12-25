@@ -2,7 +2,6 @@ package cn.qingchengfit.staffkit.views.student.detail;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -31,20 +30,16 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EditStudentEvent;
 import cn.qingchengfit.staffkit.rxbus.event.StudentBaseInfoEvent;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
-import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
-import cn.qingchengfit.staffkit.views.cardtype.ChooseCardTypeActivity;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
 import cn.qingchengfit.utils.AppUtils;
@@ -266,8 +261,7 @@ public class StudentHomeFragment extends BaseFragment {
                 showAlert("您没有该场馆购卡权限");
                 return;
             }
-            Intent toCardType = new Intent(getActivity(), ChooseCardTypeActivity.class);
-            startActivityForResult(toCardType, 10);
+            routeTo("card","/choose/cardtpl/",null);
         }
     }
 
@@ -311,7 +305,7 @@ public class StudentHomeFragment extends BaseFragment {
                     }
                 }
             } else if (requestCode == 10) {//购卡
-                buyCard(getContext(), (CardTpl) data.getParcelableExtra(Configs.EXTRA_CARD_TYPE), this);
+                //buyCard(getContext(), (CardTpl) data.getParcelableExtra(Configs.EXTRA_CARD_TYPE), this);
             } else if (requestCode == 9) {//选择场馆
 
                 Shop shop = (Shop) IntentUtils.getParcelable(data);
@@ -321,9 +315,10 @@ public class StudentHomeFragment extends BaseFragment {
                 }
                 CoachService mChooseShop = gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shop.id);
                 if (mChooseShop != null) {
-                    Intent toCardType = new Intent(getActivity(), ChooseCardTypeActivity.class);
-                    gymWrapper.setCoachService(mChooseShop);
-                    startActivityForResult(toCardType, 10);
+                    //Intent toCardType = new Intent(getActivity(), ChooseCardTypeActivity.class);
+                    //gymWrapper.setCoachService(mChooseShop);
+                    //startActivityForResult(toCardType, 10);
+                    routeTo("card","/choose/cardtpl/",null);
                 }
             } else if (requestCode == 11) {//删除学员所属场馆
                 final Shop shop = (Shop) IntentUtils.getParcelable(data);
@@ -345,12 +340,7 @@ public class StudentHomeFragment extends BaseFragment {
         }
     }
 
-    public void buyCard(final Context context, final CardTpl card_tpl, final Fragment f) {
-        Intent it = new Intent(context, BuyCardActivity.class);
-        it.putExtra(Configs.EXTRA_CARD_TYPE, card_tpl);
-        it.putExtra(Configs.EXTRA_STUDENT_ID, studentBean.id());
-        context.startActivity(it);
-    }
+
 
     @Override public void onDestroyView() {
         RxBus.getBus().unregister(StudentBaseInfoEvent.class.getName(), ObInfo);

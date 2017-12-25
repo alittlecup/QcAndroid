@@ -186,6 +186,6 @@ import rx.schedulers.Schedulers;
   }
 
   @Override public String getTitle() {
-    return mIsPrivate ? "私教课程" : "团课课程";
+    return (getArguments() != null && getArguments().getBoolean("p")) ? "私教课程" : "团课课程";
   }
 }

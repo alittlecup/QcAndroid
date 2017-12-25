@@ -30,6 +30,7 @@ import cn.qingchengfit.model.common.Card;
 import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
@@ -40,7 +41,6 @@ import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventClearAllNoti;
 import cn.qingchengfit.staffkit.rxbus.event.EventLatestNoti;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.card.CardDetailActivity;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.student.StudentActivity;
@@ -216,11 +216,12 @@ public class NotificationFragment extends BaseFragment
                                                 toActivity = new Intent(getActivity(), StudentActivity.class);
                                             } else if (msg.type == 13) {
                                                 if (msg.card_id == 0) return;
-                                                toActivity = new Intent(getActivity(), CardDetailActivity.class);
+                                                //toActivity = new Intent(getActivity(), CardDetailActivity.class);
                                                 Card realCard = new Card();
                                                 realCard.setCard_no("#70A4A9");
                                                 realCard.setId(msg.card_id + "");
-                                                toActivity.putExtra(Configs.EXTRA_REAL_CARD, realCard);
+                                                routeTo("card","/detail/", CardDetailParams.builder().cardid(msg.card_id+"").build());
+                                                //toActivity.putExtra(Configs.EXTRA_REAL_CARD, realCard);
                                             }
 
                                             toActivity.putExtra(Configs.EXTRA_GYM_SERVICE, coachService1);

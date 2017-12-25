@@ -1,6 +1,7 @@
 package cn.qingchengfit.model.responese;
 
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 

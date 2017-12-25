@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.rxbus.event;
 
-import cn.qingchengfit.model.responese.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import java.util.List;
 
 /**

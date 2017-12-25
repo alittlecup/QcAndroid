@@ -27,7 +27,6 @@ import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextAdapter;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
-import cn.qingchengfit.staffkit.views.course.CourseActivity;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
@@ -113,10 +112,10 @@ public class ChooseCoachFragment extends BaseDialogFragment {
 
     private void initView() {
 
-        if (getActivity() instanceof CourseActivity) {
-            toolbarLayout.setVisibility(View.GONE);
-            ((CourseActivity) getActivity()).setToolbar("选择教练", false, null, 0, null);
-        } else {
+        //if (getActivity() instanceof CourseActivity) {
+        //    toolbarLayout.setVisibility(View.GONE);
+        //    ((CourseActivity) getActivity()).setToolbar("选择教练", false, null, 0, null);
+        //} else {
             toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
@@ -124,7 +123,7 @@ public class ChooseCoachFragment extends BaseDialogFragment {
                 }
             });
             toolbarTitile.setText(getString(R.string.title_choose_coach));
-        }
+        //}
 
         adapter = new ImageTwoTextAdapter(datas);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));

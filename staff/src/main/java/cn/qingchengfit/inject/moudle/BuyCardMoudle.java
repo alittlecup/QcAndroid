@@ -1,7 +1,7 @@
 package cn.qingchengfit.inject.moudle;
 
 import cn.qingchengfit.model.body.CreateCardBody;
-import cn.qingchengfit.model.responese.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import dagger.Module;
 import dagger.Provides;
 

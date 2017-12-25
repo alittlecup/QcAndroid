@@ -8,11 +8,12 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.common.RealCard;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.utils.RouterUtils;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.ConstantNotification;
@@ -20,7 +21,6 @@ import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventNewPush;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
-import cn.qingchengfit.staffkit.views.card.CardDetailActivity;
 import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -126,10 +126,11 @@ public class PushReciever extends PushMessageReceiver {
                                 DialogUtils.showAlert(context, "抱歉，您无会员卡查看权限");
                                 return;
                             }
-                            intent.setClass(context, CardDetailActivity.class);
-                            RealCard realCard = new RealCard("", "", "", "#70A4A9");
-                            realCard.id = bean.card_id + "";
-                            intent.putExtra(Configs.EXTRA_REAL_CARD, realCard);
+                            //intent.setClass(context, CardDetailActivity.class);
+                            //RealCard realCard = new RealCard("", "", "", "#70A4A9");
+                            //realCard.id = bean.card_id + "";
+                            //intent.putExtra(Configs.EXTRA_REAL_CARD, realCard);
+                            RouterUtils.routeTo(context,"card","/detail/", CardDetailParams.builder().cardid(bean.brand_id).build(),intent);
                             break;
                     }
                     context.startActivity(intent);

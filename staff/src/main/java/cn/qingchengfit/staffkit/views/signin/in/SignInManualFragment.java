@@ -1,13 +1,11 @@
 package cn.qingchengfit.staffkit.views.signin.in;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -26,11 +24,11 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.common.RealCard;
-import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.model.responese.SigninValidCard;
+import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -38,9 +36,6 @@ import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.views.adapter.SignInCourseAdapter;
-import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
-import cn.qingchengfit.staffkit.views.card.CardDetailActivity;
-import cn.qingchengfit.staffkit.views.cardtype.ChooseCardTypeActivity;
 import cn.qingchengfit.staffkit.views.custom.SignInCardSelectDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
@@ -261,9 +256,7 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
             tvSigninCard.setText(charSequence);
             tvSigninCard.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View view) {
-                    ToastUtils.show("立即购买");
-                    Intent toCardType = new Intent(getActivity(), ChooseCardTypeActivity.class);
-                    startActivityForResult(toCardType, 1);
+                    routeTo("card","/choose/cardtpl/",null);
                 }
             });
         }
@@ -331,7 +324,7 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
                     selectedLocker = null;
                 }
             } else if (requestCode == 1) {
-                buyCard(getContext(), (CardTpl) data.getParcelableExtra(Configs.EXTRA_CARD_TYPE), this);
+                //buyCard(getContext(), (CardTpl) data.getParcelableExtra(Configs.EXTRA_CARD_TYPE), this);
             }
         }
     }
@@ -388,10 +381,9 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
                     //                            realCard.isCancel = !selectedCard.is_active();
                     //                            realCard.student_ids = selectedCard.getUserIds();
                     //                            realCard.support_gyms = selectedCard.getSupportGyms();
-                    Intent intent = new Intent(getActivity(), CardDetailActivity.class);
-                    intent.putExtra(Configs.EXTRA_REAL_CARD, realCard);
-
-                    startActivity(intent);
+                    routeTo("card","/detail/", CardDetailParams.builder()
+                      .cardid(selectedCardId)
+                      .build());
                 }
             });
         } else {
@@ -400,10 +392,10 @@ public class SignInManualFragment extends BaseFragment implements SignInManualPr
         }
     }
 
-    public void buyCard(final Context context, final CardTpl card_tpl, final Fragment f) {
-        Intent it = new Intent(context, BuyCardActivity.class);
-        it.putExtra(Configs.EXTRA_CARD_TYPE, card_tpl);
-        it.putExtra(Configs.EXTRA_STUDENT_ID, studentBean.id());
-        context.startActivity(it);
-    }
+    //public void buyCard(final Context context, final CardTpl card_tpl, final Fragment f) {
+    //    Intent it = new Intent(context, BuyCardActivity.class);
+    //    it.putExtra(Configs.EXTRA_CARD_TYPE, card_tpl);
+    //    it.putExtra(Configs.EXTRA_STUDENT_ID, studentBean.id());
+    //    context.startActivity(it);
+    //}
 }

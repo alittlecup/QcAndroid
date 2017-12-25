@@ -1,6 +1,11 @@
-package cn.qingchengfit.inject.model;
+package cn.qingchengfit.saasbase.cards.views;
 
-import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.saasbase.cards.item.CardTplItem;
+import com.anbillon.flabellum.annotations.Leaf;
+import eu.davidea.flexibleadapter.items.IFlexible;
 
 /**
  * power by
@@ -20,41 +25,29 @@ import cn.qingchengfit.saasbase.cards.bean.CardTpl;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/3/3.
+ * Created by Paper on 2017/12/25.
  */
+@Leaf(module = "card" , path = "/cardtpl/choose/")
+public class CardTplChooseFragment extends CardTplsHomeInGymFragment {
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbarTitle.setText("选择会员卡种类");
+  }
 
-public class CardTypeWrapper {
-    private CardTpl cardTpl;
-
-    public CardTypeWrapper(CardTpl cardTpl) {
-        this.cardTpl = cardTpl;
+  /**
+   *  点击事件发送消息
+   */
+  @Override public boolean onItemClick(int i) {
+    IFlexible item =fragmentList.get(viewpager.getCurrentItem()).getItem(i);
+    if (item instanceof CardTplItem){
+      if (((CardTplItem) item).getCardTpl().is_enable){
+        RxBus.getBus().post(((CardTplItem) item).getCardTpl());
+        popBack();
+      }
+      else {
+        showAlert("已停用的会员卡种类");
+      }
     }
-
-    public CardTpl getCardTpl() {
-        return cardTpl;
-    }
-
-    public void setCardTpl(CardTpl cardTpl) {
-        this.cardTpl = cardTpl;
-    }
-
-    public String id() {
-        return cardTpl == null ? null : cardTpl.getId();
-    }
-
-    public String color() {
-        return cardTpl == null ? null : cardTpl.getColor();
-    }
-
-    public String name() {
-        return cardTpl == null ? null : cardTpl.getName();
-    }
-
-    public int type() {
-        return cardTpl == null ? -1 : cardTpl.getCardTypeInt();
-    }
-
-    public boolean isEnable() {
-        return cardTpl != null && cardTpl.is_enable;
-    }
+    return true;
+  }
 }

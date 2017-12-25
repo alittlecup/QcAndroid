@@ -20,18 +20,11 @@ import butterknife.OnClick;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
 import cn.qingchengfit.chat.model.ChatGym;
 import cn.qingchengfit.model.base.Gym;
-import cn.qingchengfit.model.common.Rule;
 import cn.qingchengfit.model.others.ToolbarBean;
-import cn.qingchengfit.model.responese.CardTplBatchShip;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.views.batch.BatchPayCardFragment;
-import cn.qingchengfit.staffkit.views.batch.BatchPayCardFragmentBuilder;
-import cn.qingchengfit.staffkit.views.batch.BatchPayOnlineFragmentBuilder;
-import cn.qingchengfit.staffkit.views.course.GymCourseListFragment;
 import cn.qingchengfit.staffkit.views.gym.coach.ChooseTrainerFragmentBuilder;
 import cn.qingchengfit.staffkit.views.signin.config.SigninConfigCardtypeListFragmentBuilder;
 import cn.qingchengfit.staffkit.views.student.choose.MultiChooseStudentWithFilterFragmentBuilder;
@@ -45,7 +38,6 @@ import com.google.gson.Gson;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -132,23 +124,23 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
             case CHOOSE_REFERENCE:
                 fragment = new ReferrerFragmentBuilder(3).build();
                 break;
-            case BATCH_PAY_ONLINE:
-                /**
-                 * {@link BatchPayCardFragment}
-                 */
-                toolbarLayout.setVisibility(View.GONE);
-                fragment =
-                    new BatchPayOnlineFragmentBuilder(getIntent().getIntExtra("max", 1)).rule((Rule) getIntent().getParcelableExtra("rule"))
-                        .build();
-                break;
-            case BATCH_PAY_CARD:
-                toolbarLayout.setVisibility(View.GONE);
-                List<Rule> rules = getIntent().getParcelableArrayListExtra("rules");
-                List<CardTplBatchShip> ships = getIntent().getParcelableArrayListExtra("order");
-                fragment =
-                    new BatchPayCardFragmentBuilder(getIntent().getBooleanExtra("private", false), getIntent().getIntExtra("max", 1)).rules(
-                        (ArrayList<Rule>) rules).cardTplBatchShips((ArrayList<CardTplBatchShip>) ships).build();
-                break;
+            //case BATCH_PAY_ONLINE:
+            //    /**
+            //     * {@link BatchPayCardFragment}
+            //     */
+            //    toolbarLayout.setVisibility(View.GONE);
+            //    fragment =
+            //        new BatchPayOnlineFragmentBuilder(getIntent().getIntExtra("max", 1)).rule((Rule) getIntent().getParcelableExtra("rule"))
+            //            .build();
+            //    break;
+            //case BATCH_PAY_CARD:
+            //    toolbarLayout.setVisibility(View.GONE);
+            //    List<Rule> rules = getIntent().getParcelableArrayListExtra("rules");
+            //    List<CardTplBatchShip> ships = getIntent().getParcelableArrayListExtra("order");
+            //    fragment =
+            //        new BatchPayCardFragmentBuilder(getIntent().getBooleanExtra("private", false), getIntent().getIntExtra("max", 1)).rules(
+            //            (ArrayList<Rule>) rules).cardTplBatchShips((ArrayList<CardTplBatchShip>) ships).build();
+            //    break;
             case CHOOSE_MULTI_STUDENTS:
                 toolbarLayout.setVisibility(View.GONE);
                 fragment =
@@ -190,7 +182,7 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
               }else fragment = ChooseAddressFragment.newInstance();
                 break;
             default:
-                fragment = GymCourseListFragment.newInstance(getIntent().getIntExtra("type", Configs.TYPE_GROUP));
+                //fragment = GymCourseListFragment.newInstance(getIntent().getIntExtra("type", Configs.TYPE_GROUP));
                 break;
         }
         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold).replace(R.id.frag, fragment).commit();

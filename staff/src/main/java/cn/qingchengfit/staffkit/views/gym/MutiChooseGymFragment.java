@@ -29,7 +29,6 @@ import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import cn.qingchengfit.staffkit.views.adapter.MutiImageTwoTextAdapter;
-import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.DialogUtils;
@@ -141,11 +140,11 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chooose_gyms, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if (getActivity() instanceof BuyCardActivity) {
-            toolbarTitile.setText("选择开卡场馆");
-        } else {
+        //if (getActivity() instanceof BuyCardActivity) {
+        //    toolbarTitile.setText("选择开卡场馆");
+        //} else {
             toolbarTitile.setText(getString(R.string.choose_gym));
-        }
+        //}
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

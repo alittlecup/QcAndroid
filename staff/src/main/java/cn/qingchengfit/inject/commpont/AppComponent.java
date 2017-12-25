@@ -29,6 +29,7 @@ import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
+import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
@@ -79,67 +80,9 @@ import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.staffkit.views.allotsales.MultiModifyFragment;
 import cn.qingchengfit.staffkit.views.allotsales.SalesListFragment;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
-import cn.qingchengfit.staffkit.views.batch.BatchPayCardFragment;
-import cn.qingchengfit.staffkit.views.batch.BatchPayOnlineFragment;
-import cn.qingchengfit.staffkit.views.batch.addbatch.AddBatchFragment;
-import cn.qingchengfit.staffkit.views.batch.details.BatchDetailFragment;
-import cn.qingchengfit.staffkit.views.batch.list.CourseBatchDetailFragment;
-import cn.qingchengfit.staffkit.views.batch.looplist.CourseManageFragment;
-import cn.qingchengfit.staffkit.views.batch.single.SingleBatchFragment;
 import cn.qingchengfit.staffkit.views.bottom.BottomBuyLimitFragment;
-import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
-import cn.qingchengfit.staffkit.views.card.CardActivity;
-import cn.qingchengfit.staffkit.views.card.CardDetailActivity;
-import cn.qingchengfit.staffkit.views.card.FixRealCardBindStudentFragment;
-import cn.qingchengfit.staffkit.views.card.FixRealcardNumFragment;
-import cn.qingchengfit.staffkit.views.card.FixRealcardStudentFragment;
-import cn.qingchengfit.staffkit.views.card.buy.CompletedBuyFragment;
-import cn.qingchengfit.staffkit.views.card.buy.RealCardBuyFragment;
-import cn.qingchengfit.staffkit.views.card.cardlist.AutoNotifySettingFragment;
-import cn.qingchengfit.staffkit.views.card.cardlist.BalanceCardListFragment;
-import cn.qingchengfit.staffkit.views.card.cardlist.ChangeAutoNotifyFragment;
-import cn.qingchengfit.staffkit.views.card.cardlist.RealCardListFragment;
-import cn.qingchengfit.staffkit.views.card.charge.CardFixValidDayFragment;
-import cn.qingchengfit.staffkit.views.card.charge.CardRefundFragment;
-import cn.qingchengfit.staffkit.views.card.charge.CompletedChargeFragment;
-import cn.qingchengfit.staffkit.views.card.charge.RealValueCardChargeFragment;
-import cn.qingchengfit.staffkit.views.card.detail.RealCardDetailFragment;
-import cn.qingchengfit.staffkit.views.card.filter.FilterHeadCommonFragment;
-import cn.qingchengfit.staffkit.views.card.offday.AddOffDayFragment;
-import cn.qingchengfit.staffkit.views.card.offday.AheadOffDayFragment;
-import cn.qingchengfit.staffkit.views.card.offday.OffDayListFragment;
-import cn.qingchengfit.staffkit.views.card.spendrecord.SpendRecordFragment;
-import cn.qingchengfit.staffkit.views.card.spendrecord.SpendRecordListFragment;
-import cn.qingchengfit.staffkit.views.cardtype.CardProtocolActivity;
-import cn.qingchengfit.staffkit.views.cardtype.CardTypeActivity;
-import cn.qingchengfit.staffkit.views.cardtype.ChooseCardTypeActivity;
-import cn.qingchengfit.staffkit.views.cardtype.detail.CardtypeDetailFragment;
-import cn.qingchengfit.staffkit.views.cardtype.detail.ClassLimitBottomFragment;
-import cn.qingchengfit.staffkit.views.cardtype.detail.EditCardTypeFragment;
-import cn.qingchengfit.staffkit.views.cardtype.list.BrandCardListFragment;
-import cn.qingchengfit.staffkit.views.cardtype.list.BrandCardTypeListFragment;
-import cn.qingchengfit.staffkit.views.cardtype.list.CardListFragment;
-import cn.qingchengfit.staffkit.views.cardtype.list.CardTypeListFragment;
-import cn.qingchengfit.staffkit.views.cardtype.standard.AddCardStandardFragment;
-import cn.qingchengfit.staffkit.views.cardtype.standard.EditCardStandardFragment;
 import cn.qingchengfit.staffkit.views.charts.BaseStatementChartFragment;
-import cn.qingchengfit.staffkit.views.course.AddCourseFragment;
-import cn.qingchengfit.staffkit.views.course.CoachCommentDetailFragment;
-import cn.qingchengfit.staffkit.views.course.CoachCommentListFragment;
-import cn.qingchengfit.staffkit.views.course.CourseActivity;
-import cn.qingchengfit.staffkit.views.course.CourseBaseInfoEditFragment;
-import cn.qingchengfit.staffkit.views.course.CourseBaseInfoShowFragment;
-import cn.qingchengfit.staffkit.views.course.CourseDetailFragment;
-import cn.qingchengfit.staffkit.views.course.CourseFragment;
-import cn.qingchengfit.staffkit.views.course.CourseImageViewFragment;
-import cn.qingchengfit.staffkit.views.course.CourseImagesFragment;
-import cn.qingchengfit.staffkit.views.course.CourseListFragment;
 import cn.qingchengfit.staffkit.views.course.CourseReverseFragment;
-import cn.qingchengfit.staffkit.views.course.CourseTypeBatchFragment;
-import cn.qingchengfit.staffkit.views.course.EditCourseFragment;
-import cn.qingchengfit.staffkit.views.course.GymCourseListFragment;
-import cn.qingchengfit.staffkit.views.course.JacketManagerFragment;
-import cn.qingchengfit.staffkit.views.course.ShopCommentsFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.export.CardImportExportFragment;
@@ -149,7 +92,6 @@ import cn.qingchengfit.staffkit.views.export.ImportExportFragment;
 import cn.qingchengfit.staffkit.views.gym.AddBrandInMainFragment;
 import cn.qingchengfit.staffkit.views.gym.AddNewCoachFragment;
 import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
-import cn.qingchengfit.staffkit.views.gym.ChooseGroupCourseFragment;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.staffkit.views.gym.GymDetailFragment;
 import cn.qingchengfit.staffkit.views.gym.GymInfoFragment;
@@ -164,7 +106,6 @@ import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
 import cn.qingchengfit.staffkit.views.gym.coach.ChooseTrainerFragment;
 import cn.qingchengfit.staffkit.views.gym.coach.CoachDetailFragment;
 import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
-import cn.qingchengfit.staffkit.views.gym.cycle.AddCycleFragment;
 import cn.qingchengfit.staffkit.views.gym.gym_web.HomePageQrCodeFragment;
 import cn.qingchengfit.staffkit.views.gym.site.AddNewSiteFragment;
 import cn.qingchengfit.staffkit.views.gym.site.ChooseSiteFragment;
@@ -245,7 +186,6 @@ import cn.qingchengfit.staffkit.views.statement.detail.StatementDetailFragment;
 import cn.qingchengfit.staffkit.views.statement.excel.OutExcelFragment;
 import cn.qingchengfit.staffkit.views.statement.filter.CardTypeChooseDialogFragment;
 import cn.qingchengfit.staffkit.views.statement.filter.CoachChooseDialogFragment;
-import cn.qingchengfit.staffkit.views.statement.filter.CourseChooseDialogFragment;
 import cn.qingchengfit.staffkit.views.statement.filter.SalerChooseDialogFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SaleGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SigninGlanceFragment;
@@ -369,25 +309,17 @@ import dagger.multibindings.IntoMap;
     AppComponent.UnloginAdModule.class, AppComponent.HomeModule.class, AppComponent.QcVipModule.class,
     AppComponent.BaseStatementChartModule.class, AppComponent.YourFragmentModule.class, AppComponent.ChooseModule.class,
     AppComponent.MainModule.class, AppComponent.GymsModule.class, AppComponent.SettingModule.class, AppComponent.FixSelfInfoModule.class,
-    AppComponent.AddBatchModule.class, AppComponent.AddCardStandardModule.class, AppComponent.AutoNotifySettingModule.class,
-    AppComponent.AddCourseModule.class, AppComponent.WebActivityForGuideModule.class, AppComponent.ChooseGymModule.class,
-    AppComponent.PopFromBottomModule.class, AppComponent.StatmentFilterModule.class, AppComponent.CardModule.class,
+     AppComponent.WebActivityForGuideModule.class, AppComponent.ChooseGymModule.class,
+    AppComponent.PopFromBottomModule.class, AppComponent.StatmentFilterModule.class,
     AppComponent.FixPwModule.class, AppComponent.FixPhoneModule.class, AppComponent.FixCheckinModule.class, AppComponent.ReportModule.class,
     AppComponent.FixNotifySettingModule.class, AppComponent.GymDetailModule.class, AppComponent.GymMoreModule.class,
     AppComponent.GymExpireModule.class, AppComponent.UpgrateGymModule.class, AppComponent.TrialProDialogModule.class,
-    AppComponent.CourseTypeBatchModule.class, AppComponent.CourseDetailModule.class,
-    AppComponent.CourseListModule.class, AppComponent.CourseChooseDialogModule.class,
-    AppComponent.JacketManagerModule.class, AppComponent.EditCourseModule.class, AppComponent.ShopCommentsModule.class,
-    AppComponent.CourseImagesModule.class, AppComponent.CourseBatchListModule.class, AppComponent.CourseBatchDetailModule.class,
-    AppComponent.BatchDetailModule.class, AppComponent.CourseManageModule.class, AppComponent.SingleBatchModule.class,
-    AppComponent.GymCourseListModule.class, AppComponent.CoachCommentListModule.class, AppComponent.CourseBaseInfoEditModule.class,
     AppComponent.SaleGlanceModule.class, AppComponent.SaleDetailModule.class, AppComponent.CustomSaleModule.class,
     AppComponent.StatementGlanceModule.class, AppComponent.StatementDetailModule.class, AppComponent.CustomStatmentModule.class,
     AppComponent.SigninReportFormFragmentModule.class, AppComponent.EditTextModule.class, AppComponent.QuitGymFragmentModule.class,
     AppComponent.SaleTradeTypeFormFragmentModule.class, AppComponent.CourseCardFormFragmentModule.class,
     AppComponent.SaleCardTypeFragmentModule.class, AppComponent.SaleFilterModule.class, AppComponent.GuideChooseBrandModule.class,
-    AppComponent.AddBrandModule.class, AppComponent.HomePageQrCodeFragmentModule.class, AppComponent.CoachCommentDetailFragmentModule.class,
-    AppComponent.AheadOffDayFragmentModule.class, AppComponent.ClassLimitBottomFragmentModule.class,
+    AppComponent.AddBrandModule.class, AppComponent.HomePageQrCodeFragmentModule.class,
     AppComponent.BottomBuyLimitFragmentModule.class, AppComponent.ChooseStaffFragmentModule.class,
 
     AppComponent.SigninGlanceModule.class, AppComponent.SignInDetailModule.class, AppComponent.SigninReportModule.class,
@@ -407,34 +339,26 @@ import dagger.multibindings.IntoMap;
     AppComponent.SigninConfigCardtypeListModule.class, AppComponent.SignInConfigScreenModule.class,
     AppComponent.SigninConfigListModule.class, AppComponent.SignInTypeModule.class, AppComponent.ScoreHomeModule.class,
     AppComponent.ScoreConfigModule.class, AppComponent.BaseConfigModule.class, AppComponent.ScoreRuleAddModule.class,
-    AppComponent.ScoreAwardAddModule.class, AppComponent.CardTypeModule.class, AppComponent.BrandCardListModule.class,
-    AppComponent.EditCardTypeModule.class, AppComponent.CardtypeDetailModule.class, AppComponent.ChooseCardTypeModule.class,
-    AppComponent.EditCardStandardModule.class, AppComponent.CardTypeListModule.class, AppComponent.RealCardListModule.class,
-    AppComponent.BalanceCardListModule.class, AppComponent.FilterHeadCommonModule.class, AppComponent.DataStatementModule.class,
+    AppComponent.ScoreAwardAddModule.class,
+     AppComponent.DataStatementModule.class,
     AppComponent.SalerChooseDialogModule.class, AppComponent.StudentSearchModule.class, AppComponent.GymModule.class,
-    AppComponent.MutiChooseSalersModule.class, AppComponent.BuyCardModule.class, AppComponent.NotificationModule.class,
+    AppComponent.MutiChooseSalersModule.class,  AppComponent.NotificationModule.class,
     AppComponent.NotificationAModule.class, AppComponent.SimpleImgFragmentModule.class, AppComponent.ConversationFriendsModule.class,
     AppComponent.ChatFriendAllChooseModule.class, AppComponent.ChatChooseInGymModule.class,
-    AppComponent.GymDetailShowGuideDialogModule.class, AppComponent.BrandCardTypeListModule.class, AppComponent.CourseModule.class,
-    AppComponent.CourseCourseModule.class, AppComponent.AddCycleModule.class, AppComponent.CourseBaseInfoShowModule.class,
-    AppComponent.ChooseTrainerModule.class, AppComponent.MutiChooseSiteModule.class, AppComponent.BatchPayCardModule.class,
-    AppComponent.BatchPayOnlineModule.class, AppComponent.ChangeAutoNotifyModule.class, AppComponent.ChooseBrandModule.class,
-    AppComponent.LoginModule.class, AppComponent.WebModule.class, AppComponent.QRModule.class, AppComponent.CardDetailModule.class,
-    AppComponent.ChooseCardTypeModule.class, AppComponent.RealCardDetailModule.class, AppComponent.OffDayListModule.class,
-    AppComponent.CardRefundModule.class, AppComponent.RealValueCardChargeModule.class, AppComponent.FixRealCardBindStudentModule.class,
-    AppComponent.SimpleChooseModule.class, AppComponent.CompletedChargeModule.class, AppComponent.FixRealcardStudentModule.class,
-    AppComponent.SpendRecordListModule.class, AppComponent.WriteDescModule.class, AppComponent.AddOffDayModule.class,
+    AppComponent.GymDetailShowGuideDialogModule.class,
+    AppComponent.ChooseTrainerModule.class, AppComponent.MutiChooseSiteModule.class,
+    AppComponent.BatchPayOnlineModule.class,  AppComponent.ChooseBrandModule.class,
+    AppComponent.LoginModule.class, AppComponent.WebModule.class, AppComponent.QRModule.class,
+    AppComponent.SimpleChooseModule.class, AppComponent.WriteDescModule.class,
     AppComponent.CoachDetailFragmentModule.class, AppComponent.HomeUnLoginFragmentModule.class,
     AppComponent.WardrobeListFragmentModule.class, AppComponent.WardrobeDetailFragmentModule.class,
-    AppComponent.CompletedBuyFragmentModule.class, AppComponent.RealCardBuyFragmentModule.class,
-    AppComponent.FixRealcardNumFragmentModule.class, AppComponent.SpendRecordFragmentModule.class,
     AppComponent.SignInCloseFragmentModule.class,
     AppComponent.SignInManualFragmentModule.class, AppComponent.SignOutManualFragmentModule.class,
     AppComponent.ChooseMainFragmentModule.class, AppComponent.SearchResultFragmentModule.class,
-    AppComponent.CourseImageViewFragmentModule.class, AppComponent.TopFilterSourceFragmentModule.class,
+  AppComponent.TopFilterSourceFragmentModule.class,
     AppComponent.ChooseReferrerModule.class, AppComponent.WebFragmentNoFreshFragmentModule.class,
     AppComponent.UpgradeInfoDialogFragmentModule.class, AppComponent.RenewalHistoryFragmentModule.class, AppComponent.GuideModule.class,
-    AppComponent.CardListFragmentModule.class, AppComponent.MutiChooseGymFragmentModule.class, AppComponent.SetGymFragmentModule.class,
+     AppComponent.MutiChooseGymFragmentModule.class, AppComponent.SetGymFragmentModule.class,
     AppComponent.CourseTypeFormFragmentModule.class, AppComponent.SignUpChooseModule.class, AppComponent.SignUpDetailModule.class,
     AppComponent.ChooseCoachFragmentModule.class, AppComponent.EditGymInfoFragmentModule.class,
     //文章评论
@@ -450,7 +374,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.SignUpFormHomeFragmentModule.class, AppComponent.SignUpFormGroupFragmentModule.class,
     AppComponent.SignUpChangeNameFragmentModule.class, AppComponent.RankCountFragmentModule.class,
     AppComponent.MemberOperationFragmentModule.class, AppComponent.DeleteMemberFragmentModule.class,
-    AppComponent.CreateGroupFragmentModule.class, AppComponent.CardFixValidDayFragmentModule.class,
+    AppComponent.CreateGroupFragmentModule.class,
 
     AppComponent.SignUpDetailModule.class,
 
@@ -466,7 +390,6 @@ import dagger.multibindings.IntoMap;
     AppComponent.ScoreDetailAModule.class, AppComponent.ScoreDetailModule.class, AppComponent.ScoreModifyModule.class,
     AppComponent.AddNewSiteFragmentModule.class,
 
-    AppComponent.ChooseGroupCourseFragmentModule.class,
 
     //体测
     AppComponent.ModifyBodyTestFragmentModule.class, AppComponent.BodyTestListFragmentModule.class,
@@ -557,8 +480,6 @@ import dagger.multibindings.IntoMap;
     //筛选，签课
     AppComponent.NotSignFilterFragmentModule.class, AppComponent.AttendanceNotSignFragmentModule.class,
 
-    //服务协议
-    AppComponent.CardProtocolModule.class,
   AppComponent.StaffDetailFragmentModule.class,
   AppComponent.CoachListModule.class
 
@@ -630,15 +551,6 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface ChooseCardTypeSubcomponent extends AndroidInjector<ChooseCardTypeActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseCardTypeActivity> {
-        }
-    }
-
-    @Subcomponent() public interface CardDetailSubcomponent extends AndroidInjector<CardDetailActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardDetailActivity> {
-        }
-    }
 
     @Subcomponent() public interface WebActivityForGuideSubcomponent extends AndroidInjector<WebActivityForGuide> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<WebActivityForGuide> {
@@ -665,13 +577,7 @@ public interface AppComponent {
         }
     }
 
-    /**
-     * 会员卡相关
-     */
-    @Subcomponent() public interface CardSubcomponent extends AndroidInjector<CardActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardActivity> {
-        }
-    }
+
 
     @Subcomponent() public interface GymSubcomponent extends AndroidInjector<GymActivity> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<GymActivity> {
@@ -683,45 +589,7 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface RealValueCardChargeSubcomponent extends AndroidInjector<RealValueCardChargeFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RealValueCardChargeFragment> {
-        }
-    }
 
-    @Subcomponent() public interface CardRefundSubcomponent extends AndroidInjector<CardRefundFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardRefundFragment> {
-        }
-    }
-
-    @Subcomponent() public interface OffDayListSubcomponent extends AndroidInjector<OffDayListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<OffDayListFragment> {
-        }
-    }
-
-    @Subcomponent() public interface FixRealCardBindStudentSubcomponent extends AndroidInjector<FixRealCardBindStudentFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<FixRealCardBindStudentFragment> {
-        }
-    }
-
-    @Subcomponent() public interface SpendRecordFragmentSubcomponent extends AndroidInjector<SpendRecordFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SpendRecordFragment> {
-        }
-    }
-
-    @Subcomponent() public interface SpendRecordListSubcomponent extends AndroidInjector<SpendRecordListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SpendRecordListFragment> {
-        }
-    }
-
-    @Subcomponent() public interface FixRealcardStudentSubcomponent extends AndroidInjector<FixRealcardStudentFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<FixRealcardStudentFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CompletedChargeSubcomponent extends AndroidInjector<CompletedChargeFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CompletedChargeFragment> {
-        }
-    }
 
     @Subcomponent() public interface SimpleChooseSubcomponent extends AndroidInjector<SimpleChooseFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SimpleChooseFragment> {
@@ -733,25 +601,7 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface AddOffDaySubcomponent extends AndroidInjector<AddOffDayFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AddOffDayFragment> {
-        }
-    }
 
-    @Subcomponent() public interface RealCardBuyFragmentSubcomponent extends AndroidInjector<RealCardBuyFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RealCardBuyFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CompletedBuyFragmentSubcomponent extends AndroidInjector<CompletedBuyFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CompletedBuyFragment> {
-        }
-    }
-
-    @Subcomponent() public interface FixRealcardNumFragmentSubcomponent extends AndroidInjector<FixRealcardNumFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<FixRealcardNumFragment> {
-        }
-    }
 
     @Subcomponent() public interface HomeUnLoginFragmentSubcomponent extends AndroidInjector<HomeUnLoginFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<HomeUnLoginFragment> {
@@ -871,133 +721,6 @@ public interface AppComponent {
         }
     }
 
-    /**
-     * 工作台 课程
-     */
-    @Subcomponent() public interface CourseTypeBatchSubcomponent extends AndroidInjector<CourseTypeBatchFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseTypeBatchFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CourseDetailSubcomponent extends AndroidInjector<CourseDetailFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseDetailFragment> {
-        }
-    }
-
-
-
-    @Subcomponent() public interface CourseListSubcomponent extends AndroidInjector<CourseListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseListFragment> {
-        }
-    }
-
-  //void inject(ChooseBrandActivity activity);
-    //
-    //void inject(GuideChooseBrandAcitivity activity);
-    //
-    //void inject(AddBrandActivity activity);
-    //
-    //void inject(MutiChooseGymFragment activity);
-    //
-    //void inject(ChooseGymFromNetFragment activity);
-    //
-    //void inject(QRActivity activity);
-    //
-    //void inject(SimpleChooseGymFragment activity);
-    //
-    //void inject(ChooseBrandFragment activity);
-    //
-    //void inject(ChainFragment activity);
-    //
-    //void inject(LoginActivity activity);
-
-    //void inject(GymActivity activity);
-
-    //void inject(ContainerActivity activity);
-
-    @Subcomponent() public interface CourseImageViewFragmentSubcomponent extends AndroidInjector<CourseImageViewFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseImageViewFragment> {
-        }
-    }
-
-
-
-    @Subcomponent() public interface CourseChooseDialogSubcomponent extends AndroidInjector<CourseChooseDialogFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseChooseDialogFragment> {
-        }
-    }
-
-    @Subcomponent() public interface JacketManagerSubcomponent extends AndroidInjector<JacketManagerFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<JacketManagerFragment> {
-        }
-    }
-
-    @Subcomponent() public interface EditCourseSubcomponent extends AndroidInjector<EditCourseFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<EditCourseFragment> {
-        }
-    }
-
-    @Subcomponent() public interface ShopCommentsSubcomponent extends AndroidInjector<ShopCommentsFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ShopCommentsFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CourseImagesSubcomponent extends AndroidInjector<CourseImagesFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseImagesFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CourseBatchListSubcomponent
-        extends AndroidInjector<cn.qingchengfit.staffkit.views.batch.CourseListFragment> {
-        @Subcomponent.Builder public abstract class Builder
-            extends AndroidInjector.Builder<cn.qingchengfit.staffkit.views.batch.CourseListFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CourseBatchDetailSubcomponent extends AndroidInjector<CourseBatchDetailFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseBatchDetailFragment> {
-        }
-    }
-
-    @Subcomponent() public interface AddBatchSubcomponent extends AndroidInjector<AddBatchFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AddBatchFragment> {
-        }
-    }
-
-    @Subcomponent() public interface BatchDetailSubcomponent extends AndroidInjector<BatchDetailFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BatchDetailFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CourseManageSubcomponent extends AndroidInjector<CourseManageFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseManageFragment> {
-        }
-    }
-
-    @Subcomponent() public interface SingleBatchSubcomponent extends AndroidInjector<SingleBatchFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SingleBatchFragment> {
-        }
-    }
-
-    @Subcomponent() public interface GymCourseListSubcomponent extends AndroidInjector<GymCourseListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<GymCourseListFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CoachCommentListSubcomponent extends AndroidInjector<CoachCommentListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CoachCommentListFragment> {
-        }
-    }
-
-    @Subcomponent() public interface AddCourseSubcomponent extends AndroidInjector<AddCourseFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AddCourseFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CourseBaseInfoEditSubcomponent extends AndroidInjector<CourseBaseInfoEditFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseBaseInfoEditFragment> {
-        }
-    }
 
     /**
      * 销售报表
@@ -1393,90 +1116,7 @@ public interface AppComponent {
         }
     }
 
-    /**
-     * 会员卡种类
-     */
-    @Subcomponent() public interface CardTypeSubcomponent extends AndroidInjector<CardTypeActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardTypeActivity> {
-        }
-    }
 
-    @Subcomponent() public interface BrandCardListSubcomponent extends AndroidInjector<BrandCardListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BrandCardListFragment> {
-        }
-    }
-
-    @Subcomponent() public interface EditCardTypeSubcomponent extends AndroidInjector<EditCardTypeFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<EditCardTypeFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CardtypeDetailSubcomponent extends AndroidInjector<CardtypeDetailFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardtypeDetailFragment> {
-        }
-    }
-
-    @Subcomponent() public interface AddCardStandardSubcomponent extends AndroidInjector<AddCardStandardFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AddCardStandardFragment> {
-        }
-    }
-
-    @Subcomponent() public interface EditCardStandardSubcomponent extends AndroidInjector<EditCardStandardFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<EditCardStandardFragment> {
-        }
-    }
-    //
-    //void inject(BatchDetailFragment gymDetailFragment);
-    //
-    //void inject(CourseManageFragment gymDetailFragment);
-    //
-    //void inject(SingleBatchFragment gymDetailFragment);
-    //
-    //void inject(GymCourseListFragment gymDetailFragment);
-    //
-    //void inject(CoachCommentListFragment gymDetailFragment);
-    //
-    //void inject(AddCourseFragment gymDetailFragment);
-    //
-    //void inject(CourseBaseInfoEditFragment gymDetailFragment);
-
-    @Subcomponent() public interface CardTypeListSubcomponent extends AndroidInjector<CardTypeListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardTypeListFragment> {
-        }
-    }
-
-    /**
-     * 会员卡
-     */
-    @Subcomponent() public interface RealCardListSubcomponent extends AndroidInjector<RealCardListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RealCardListFragment> {
-        }
-    }
-
-    @Subcomponent() public interface BalanceCardListSubcomponent extends AndroidInjector<BalanceCardListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BalanceCardListFragment> {
-        }
-    }
-
-    @Subcomponent() public interface FilterHeadCommonSubcomponent extends AndroidInjector<FilterHeadCommonFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<FilterHeadCommonFragment> {
-        }
-    }
-
-    @Subcomponent() public interface AutoNotifySettingSubcomponent extends AndroidInjector<AutoNotifySettingFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AutoNotifySettingFragment> {
-        }
-    }
-
-    @Subcomponent() public interface ChangeAutoNotifySubcomponent extends AndroidInjector<ChangeAutoNotifyFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChangeAutoNotifyFragment> {
-        }
-    }
-
-    @Subcomponent() public interface RealCardDetailSubcomponent extends AndroidInjector<RealCardDetailFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RealCardDetailFragment> {
-        }
-    }
 
     @Subcomponent() public interface DataStatementSubcomponent extends AndroidInjector<DataStatementFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<DataStatementFragment> {
@@ -1502,10 +1142,7 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface BuyCardSubcomponent extends AndroidInjector<BuyCardActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BuyCardActivity> {
-        }
-    }
+
 
     /**
      * 通知
@@ -1545,40 +1182,14 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface BrandCardTypeListSubcomponent extends AndroidInjector<BrandCardTypeListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BrandCardTypeListFragment> {
-        }
-    }
 
-    @Subcomponent() public interface CourseSubcomponent extends AndroidInjector<CourseActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseActivity> {
-        }
-    }
-
-    @Subcomponent() public interface CourseCourseSubcomponent extends AndroidInjector<CourseFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseFragment> {
-        }
-    }
-
-    @Subcomponent() public interface AddCycleSubcomponent extends AndroidInjector<AddCycleFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AddCycleFragment> {
-        }
-    }
-
-    @Subcomponent() public interface CourseBaseInfoShowSubcomponent extends AndroidInjector<CourseBaseInfoShowFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseBaseInfoShowFragment> {
-        }
-    }
 
     @Subcomponent() public interface ChooseTrainerSubcomponent extends AndroidInjector<ChooseTrainerFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseTrainerFragment> {
         }
     }
 
-    @Subcomponent() public interface BatchPayCardSubcomponent extends AndroidInjector<BatchPayCardFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BatchPayCardFragment> {
-        }
-    }
+
     //
     //void inject(SaleGlanceFragment f);
     //
@@ -2067,13 +1678,7 @@ public interface AppComponent {
         }
     }
 
-    /**
-     * 会员卡种类
-     */
-    @Subcomponent() public interface CardListFragmentSubcomponent extends AndroidInjector<CardListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardListFragment> {
-        }
-    }
+
 
     @Subcomponent() public interface MutiChooseGymFragmentSubcomponent extends AndroidInjector<MutiChooseGymFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MutiChooseGymFragment> {
@@ -2253,15 +1858,7 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface CoachCommentDetailFragmentSubcomponent extends AndroidInjector<CoachCommentDetailFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CoachCommentDetailFragment> {
-        }
-    }
 
-    @Subcomponent() public interface ChooseGroupCourseFragmentSubcomponent extends AndroidInjector<ChooseGroupCourseFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseGroupCourseFragment> {
-        }
-    }
 
     @Subcomponent() public interface HomePageQrCodeFragmentSubcomponent extends AndroidInjector<HomePageQrCodeFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<HomePageQrCodeFragment> {
@@ -2278,18 +1875,10 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface AheadOffDayFragmentSubcomponent extends AndroidInjector<AheadOffDayFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AheadOffDayFragment> {
-        }
-    }
 
-    @Subcomponent() public interface CardFixValidDayFragmentSubcomponent extends AndroidInjector<CardFixValidDayFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardFixValidDayFragment> {
-        }
-    }
 
     /**
-     * {@link AheadOffDayFragment}
+     * {@link }
      * 教练分配
      */
     @Subcomponent() public interface AllocateCoachSubcomponent extends AndroidInjector<AllocateCoachActivity> {
@@ -2327,10 +1916,6 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface ClassLimitBottomFragmentSubcomponent extends AndroidInjector<ClassLimitBottomFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ClassLimitBottomFragment> {
-        }
-    }
 
     @Subcomponent() public interface BottomBuyLimitFragmentSubcomponent extends AndroidInjector<BottomBuyLimitFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BottomBuyLimitFragment> {
@@ -2505,15 +2090,7 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(ChooseSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = ChooseCardTypeSubcomponent.class) abstract class ChooseCardTypeModule {
-        @Binds @IntoMap @ActivityKey(ChooseCardTypeActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(ChooseCardTypeSubcomponent.Builder builder);
-    }
 
-    @Module(subcomponents = CardDetailSubcomponent.class) abstract class CardDetailModule {
-        @Binds @IntoMap @ActivityKey(CardDetailActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardDetailSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = WebActivityForGuideSubcomponent.class) abstract class WebActivityForGuideModule {
         @Binds @IntoMap @ActivityKey(WebActivityForGuide.class)
@@ -2541,11 +2118,6 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(WebSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = CardSubcomponent.class) abstract class CardModule {
-        @Binds @IntoMap @ActivityKey(CardActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardSubcomponent.Builder builder);
-    }
-
   @Module(subcomponents = GymSubcomponent.class) abstract class GymModule {
     @Binds @IntoMap @ActivityKey(GymActivity.class)
     abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
@@ -2560,52 +2132,6 @@ public interface AppComponent {
             LoginSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = RealValueCardChargeSubcomponent.class)
-    abstract class RealValueCardChargeModule {
-        @Binds @IntoMap @FragmentKey(RealValueCardChargeFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            RealValueCardChargeSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CardRefundSubcomponent.class) abstract class CardRefundModule {
-        @Binds @IntoMap @FragmentKey(CardRefundFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CardRefundSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = OffDayListSubcomponent.class) abstract class OffDayListModule {
-        @Binds @IntoMap @FragmentKey(OffDayListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            OffDayListSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = FixRealCardBindStudentSubcomponent.class) abstract class FixRealCardBindStudentModule {
-        @Binds @IntoMap @FragmentKey(FixRealCardBindStudentFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            FixRealCardBindStudentSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = SpendRecordFragmentSubcomponent.class) abstract class SpendRecordFragmentModule {
-        @Binds @IntoMap @FragmentKey(SpendRecordFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            SpendRecordFragmentSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = SpendRecordListSubcomponent.class) abstract class SpendRecordListModule {
-        @Binds @IntoMap @FragmentKey(SpendRecordListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(SpendRecordListSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = FixRealcardStudentSubcomponent.class) abstract class FixRealcardStudentModule {
-        @Binds @IntoMap @FragmentKey(FixRealcardStudentFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            FixRealcardStudentSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CompletedChargeSubcomponent.class) abstract class CompletedChargeModule {
-        @Binds @IntoMap @FragmentKey(CompletedChargeFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CompletedChargeSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = SimpleChooseSubcomponent.class) abstract class SimpleChooseModule {
         @Binds @IntoMap @FragmentKey(SimpleChooseFragment.class)
@@ -2617,28 +2143,7 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(WriteDescSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = AddOffDaySubcomponent.class) abstract class AddOffDayModule {
-        @Binds @IntoMap @FragmentKey(AddOffDayFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AddOffDaySubcomponent.Builder builder);
-    }
 
-    @Module(subcomponents = RealCardBuyFragmentSubcomponent.class) abstract class RealCardBuyFragmentModule {
-        @Binds @IntoMap @FragmentKey(RealCardBuyFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            RealCardBuyFragmentSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CompletedBuyFragmentSubcomponent.class) abstract class CompletedBuyFragmentModule {
-        @Binds @IntoMap @FragmentKey(CompletedBuyFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CompletedBuyFragmentSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = FixRealcardNumFragmentSubcomponent.class) abstract class FixRealcardNumFragmentModule {
-        @Binds @IntoMap @FragmentKey(FixRealcardNumFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            FixRealcardNumFragmentSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = HomeUnLoginFragmentSubcomponent.class) abstract class HomeUnLoginFragmentModule {
         @Binds @IntoMap @FragmentKey(HomeUnLoginFragment.class)
@@ -2753,106 +2258,6 @@ public interface AppComponent {
             TopFilterSourceFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = CourseTypeBatchSubcomponent.class) abstract class CourseTypeBatchModule {
-        @Binds @IntoMap @FragmentKey(CourseTypeBatchFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseTypeBatchSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CourseDetailSubcomponent.class) abstract class CourseDetailModule {
-        @Binds @IntoMap @FragmentKey(CourseDetailFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseDetailSubcomponent.Builder builder);
-    }
-
-
-    @Module(subcomponents = CourseListSubcomponent.class) abstract class CourseListModule {
-        @Binds @IntoMap @FragmentKey(CourseListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseListSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CourseImageViewFragmentSubcomponent.class) abstract class CourseImageViewFragmentModule {
-        @Binds @IntoMap @FragmentKey(CourseImageViewFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CourseImageViewFragmentSubcomponent.Builder builder);
-    }
-
-
-
-    @Module(subcomponents = CourseChooseDialogSubcomponent.class) abstract class CourseChooseDialogModule {
-        @Binds @IntoMap @FragmentKey(CourseChooseDialogFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CourseChooseDialogSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = JacketManagerSubcomponent.class) abstract class JacketManagerModule {
-        @Binds @IntoMap @FragmentKey(JacketManagerFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(JacketManagerSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = EditCourseSubcomponent.class) abstract class EditCourseModule {
-        @Binds @IntoMap @FragmentKey(EditCourseFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(EditCourseSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = ShopCommentsSubcomponent.class) abstract class ShopCommentsModule {
-        @Binds @IntoMap @FragmentKey(ShopCommentsFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ShopCommentsSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CourseImagesSubcomponent.class) abstract class CourseImagesModule {
-        @Binds @IntoMap @FragmentKey(CourseImagesFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseImagesSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CourseBatchListSubcomponent.class) abstract class CourseBatchListModule {
-        @Binds @IntoMap @FragmentKey(cn.qingchengfit.staffkit.views.batch.CourseListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseBatchListSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CourseBatchDetailSubcomponent.class) abstract class CourseBatchDetailModule {
-        @Binds @IntoMap @FragmentKey(CourseBatchDetailFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseBatchDetailSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = AddBatchSubcomponent.class) abstract class AddBatchModule {
-        @Binds @IntoMap @FragmentKey(AddBatchFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AddBatchSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = BatchDetailSubcomponent.class) abstract class BatchDetailModule {
-        @Binds @IntoMap @FragmentKey(BatchDetailFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(BatchDetailSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CourseManageSubcomponent.class) abstract class CourseManageModule {
-        @Binds @IntoMap @FragmentKey(CourseManageFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseManageSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = SingleBatchSubcomponent.class) abstract class SingleBatchModule {
-        @Binds @IntoMap @FragmentKey(SingleBatchFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(SingleBatchSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = GymCourseListSubcomponent.class) abstract class GymCourseListModule {
-        @Binds @IntoMap @FragmentKey(GymCourseListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(GymCourseListSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CoachCommentListSubcomponent.class) abstract class CoachCommentListModule {
-        @Binds @IntoMap @FragmentKey(CoachCommentListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CoachCommentListSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = AddCourseSubcomponent.class) abstract class AddCourseModule {
-        @Binds @IntoMap @FragmentKey(AddCourseFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AddCourseSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CourseBaseInfoEditSubcomponent.class) abstract class CourseBaseInfoEditModule {
-        @Binds @IntoMap @FragmentKey(CourseBaseInfoEditFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CourseBaseInfoEditSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = SaleGlanceSubcomponent.class) abstract class SaleGlanceModule {
         @Binds @IntoMap @FragmentKey(SaleGlanceFragment.class)
@@ -3180,70 +2585,6 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ScoreAwardAddSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = CardTypeSubcomponent.class) abstract class CardTypeModule {
-        @Binds @IntoMap @ActivityKey(CardTypeActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardTypeSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = BrandCardListSubcomponent.class) abstract class BrandCardListModule {
-        @Binds @IntoMap @FragmentKey(BrandCardListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(BrandCardListSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = EditCardTypeSubcomponent.class) abstract class EditCardTypeModule {
-        @Binds @IntoMap @FragmentKey(EditCardTypeFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(EditCardTypeSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CardtypeDetailSubcomponent.class) abstract class CardtypeDetailModule {
-        @Binds @IntoMap @FragmentKey(CardtypeDetailFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CardtypeDetailSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = AddCardStandardSubcomponent.class) abstract class AddCardStandardModule {
-        @Binds @IntoMap @FragmentKey(AddCardStandardFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AddCardStandardSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = EditCardStandardSubcomponent.class) abstract class EditCardStandardModule {
-        @Binds @IntoMap @FragmentKey(EditCardStandardFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(EditCardStandardSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CardTypeListSubcomponent.class) abstract class CardTypeListModule {
-        @Binds @IntoMap @FragmentKey(CardTypeListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CardTypeListSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = RealCardListSubcomponent.class) abstract class RealCardListModule {
-        @Binds @IntoMap @FragmentKey(RealCardListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(RealCardListSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = BalanceCardListSubcomponent.class) abstract class BalanceCardListModule {
-        @Binds @IntoMap @FragmentKey(BalanceCardListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(BalanceCardListSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = FilterHeadCommonSubcomponent.class) abstract class FilterHeadCommonModule {
-        @Binds @IntoMap @FragmentKey(FilterHeadCommonFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(FilterHeadCommonSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = AutoNotifySettingSubcomponent.class) abstract class AutoNotifySettingModule {
-        @Binds @IntoMap @FragmentKey(AutoNotifySettingFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AutoNotifySettingSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = ChangeAutoNotifySubcomponent.class) abstract class ChangeAutoNotifyModule {
-        @Binds @IntoMap @FragmentKey(ChangeAutoNotifyFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ChangeAutoNotifySubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = RealCardDetailSubcomponent.class) abstract class RealCardDetailModule {
-        @Binds @IntoMap @FragmentKey(RealCardDetailFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(RealCardDetailSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = DataStatementSubcomponent.class) abstract class DataStatementModule {
         @Binds @IntoMap @FragmentKey(DataStatementFragment.class)
@@ -3270,10 +2611,7 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(StudentWrapperComponent.Builder builder);
     }
 
-    @Module(subcomponents = BuyCardSubcomponent.class) abstract class BuyCardModule {
-        @Binds @IntoMap @ActivityKey(BuyCardActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(BuyCardSubcomponent.Builder builder);
-    }
+
 
     @Module(subcomponents = NotificationSubcomponent.class) abstract class NotificationModule {
         @Binds @IntoMap @FragmentKey(NotificationFragment.class)
@@ -3313,40 +2651,11 @@ public interface AppComponent {
             GymDetailShowGuideDialogSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = BrandCardTypeListSubcomponent.class) abstract class BrandCardTypeListModule {
-        @Binds @IntoMap @FragmentKey(BrandCardTypeListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(BrandCardTypeListSubcomponent.Builder builder);
-    }
 
-    @Module(subcomponents = CourseSubcomponent.class) abstract class CourseModule {
-        @Binds @IntoMap @ActivityKey(CourseActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CourseSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CourseCourseSubcomponent.class) abstract class CourseCourseModule {
-        @Binds @IntoMap @FragmentKey(CourseFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseCourseSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = AddCycleSubcomponent.class) abstract class AddCycleModule {
-        @Binds @IntoMap @FragmentKey(AddCycleFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AddCycleSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = CourseBaseInfoShowSubcomponent.class) abstract class CourseBaseInfoShowModule {
-        @Binds @IntoMap @FragmentKey(CourseBaseInfoShowFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CourseBaseInfoShowSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = ChooseTrainerSubcomponent.class) abstract class ChooseTrainerModule {
         @Binds @IntoMap @FragmentKey(ChooseTrainerFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ChooseTrainerSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = BatchPayCardSubcomponent.class) abstract class BatchPayCardModule {
-        @Binds @IntoMap @FragmentKey(BatchPayCardFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(BatchPayCardSubcomponent.Builder builder);
     }
 
     @Module(subcomponents = BatchPayOnlineSubcomponent.class) abstract class BatchPayOnlineModule {
@@ -3753,10 +3062,7 @@ public interface AppComponent {
             WriteAddressFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = CardListFragmentSubcomponent.class) abstract class CardListFragmentModule {
-        @Binds @IntoMap @FragmentKey(CardListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CardListFragmentSubcomponent.Builder builder);
-    }
+
 
     @Module(subcomponents = MutiChooseGymFragmentSubcomponent.class) abstract class MutiChooseGymFragmentModule {
         @Binds @IntoMap @FragmentKey(MutiChooseGymFragment.class)
@@ -3924,17 +3230,6 @@ public interface AppComponent {
             GymInfoNoEditFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = CoachCommentDetailFragmentSubcomponent.class) abstract class CoachCommentDetailFragmentModule {
-        @Binds @IntoMap @FragmentKey(CoachCommentDetailFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CoachCommentDetailFragmentSubcomponent.Builder builder);
-    }
-
-    @Module(subcomponents = ChooseGroupCourseFragmentSubcomponent.class) abstract class ChooseGroupCourseFragmentModule {
-        @Binds @IntoMap @FragmentKey(ChooseGroupCourseFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            ChooseGroupCourseFragmentSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = HomePageQrCodeFragmentSubcomponent.class) abstract class HomePageQrCodeFragmentModule {
         @Binds @IntoMap @FragmentKey(HomePageQrCodeFragment.class)
@@ -3953,17 +3248,7 @@ public interface AppComponent {
             CourseReverseFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = AheadOffDayFragmentSubcomponent.class) abstract class AheadOffDayFragmentModule {
-        @Binds @IntoMap @FragmentKey(AheadOffDayFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            AheadOffDayFragmentSubcomponent.Builder builder);
-    }
 
-    @Module(subcomponents = CardFixValidDayFragmentSubcomponent.class) abstract class CardFixValidDayFragmentModule {
-        @Binds @IntoMap @FragmentKey(CardFixValidDayFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CardFixValidDayFragmentSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = AllocateCoachSubcomponent.class) abstract class AllocateCoachModule {
         @Binds @IntoMap @ActivityKey(AllocateCoachActivity.class)
@@ -4005,11 +3290,7 @@ public interface AppComponent {
             CardTypeChooseDialogFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = ClassLimitBottomFragmentSubcomponent.class) abstract class ClassLimitBottomFragmentModule {
-        @Binds @IntoMap @FragmentKey(ClassLimitBottomFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            ClassLimitBottomFragmentSubcomponent.Builder builder);
-    }
+
 
     @Module(subcomponents = BottomBuyLimitFragmentSubcomponent.class) abstract class BottomBuyLimitFragmentModule {
         @Binds @IntoMap @FragmentKey(BottomBuyLimitFragment.class)
@@ -4188,14 +3469,7 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AttendanceNotSignFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface CardProtocolSubcomponent extends AndroidInjector<CardProtocolActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardProtocolActivity> {
-        }
-    }
-    @Module(subcomponents = CardProtocolSubcomponent.class) abstract class CardProtocolModule {
-        @Binds @IntoMap @ActivityKey(CardProtocolActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardProtocolSubcomponent.Builder builder);
-    }
+
 
     @Subcomponent() public interface QRSubcomponent extends AndroidInjector<QRActivity> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<QRActivity> {

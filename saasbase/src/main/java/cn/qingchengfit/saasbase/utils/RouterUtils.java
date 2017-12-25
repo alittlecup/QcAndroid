@@ -1,6 +1,12 @@
-package cn.qingchengfit.inject.model;
+package cn.qingchengfit.saasbase.utils;
 
-import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CrashUtils;
+import cn.qingchengfit.utils.LogUtil;
 
 /**
  * power by
@@ -20,41 +26,31 @@ import cn.qingchengfit.saasbase.cards.bean.CardTpl;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/3/3.
+ * Created by Paper on 2017/12/25.
  */
 
-public class CardTypeWrapper {
-    private CardTpl cardTpl;
+public class RouterUtils {
+  /**
+   * 跳转当前模块
+   */
+  public static void routeTo(Context context, String model, String path, Bundle bd,Intent it) {
+    String uri = model + path;
+    if (!uri.startsWith("/")) uri = "/" + uri;
+    routeTo(context, AppUtils.getRouterUri(context, uri), bd, it);
+  }
 
-    public CardTypeWrapper(CardTpl cardTpl) {
-        this.cardTpl = cardTpl;
+  public static void routeTo(Context context, Uri uri, Bundle bd,Intent to) {
+    try {
+      to.setAction(Intent.ACTION_VIEW);
+      to.setData(uri);
+      to.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      if (bd != null) {
+        to.putExtras(bd);
+      }
+      context.startActivity(to);
+    } catch (Exception e) {
+      LogUtil.e("找不到模块去处理" + uri);
+      CrashUtils.sendCrash(e);
     }
-
-    public CardTpl getCardTpl() {
-        return cardTpl;
-    }
-
-    public void setCardTpl(CardTpl cardTpl) {
-        this.cardTpl = cardTpl;
-    }
-
-    public String id() {
-        return cardTpl == null ? null : cardTpl.getId();
-    }
-
-    public String color() {
-        return cardTpl == null ? null : cardTpl.getColor();
-    }
-
-    public String name() {
-        return cardTpl == null ? null : cardTpl.getName();
-    }
-
-    public int type() {
-        return cardTpl == null ? -1 : cardTpl.getCardTypeInt();
-    }
-
-    public boolean isEnable() {
-        return cardTpl != null && cardTpl.is_enable;
-    }
+  }
 }
