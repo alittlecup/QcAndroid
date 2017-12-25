@@ -10,7 +10,7 @@
 
     <variable
         name="viewModel"
-        type="com.example.huangbaole.shop.ui.home.ShopHomeViewModel"
+        type="cn.qingchengfit.shop.ui.home.ShopHomeViewModel"
         />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

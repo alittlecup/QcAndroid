@@ -3,7 +3,7 @@
   <data>
     <variable
         name="viewModel"
-        type="com.example.huangbaole.shop.ui.home.inventorylist.ShopInventoryListViewModel"/>
+        type="cn.qingchengfit.shop.ui.home.inventorylist.ShopInventoryListViewModel"/>
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"

@@ -9,7 +9,7 @@
         />
     <variable
         name="viewModel"
-        type="com.example.huangbaole.shop.ui.home.productlist.ShopProductsViewModel"/>
+        type="cn.qingchengfit.shop.ui.home.productlist.ShopProductsViewModel"/>
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
@@ -56,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         >
-      <com.example.huangbaole.shop.ui.widget.SortTextView
+      <cn.qingchengfit.shop.ui.widget.SortTextView
           android:id="@+id/text"
           android:layout_width="100dp"
           android:layout_height="match_parent"

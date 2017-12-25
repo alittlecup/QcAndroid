@@ -148,7 +148,7 @@
       </intent-filter>
     </activity>
 
-    <activity android:name="com.example.huangbaole.shop.base.ShopActivity">
+    <activity android:name="cn.qingchengfit.shop.base.ShopActivity">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
 

@@ -11,7 +11,7 @@
 
     <variable
         name="viewModel"
-        type="com.example.huangbaole.shop.ui.inventory.ShopInventoryViewModel"
+        type="cn.qingchengfit.shop.ui.inventory.ShopInventoryViewModel"
         />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

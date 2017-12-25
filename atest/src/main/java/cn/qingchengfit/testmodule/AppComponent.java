@@ -2,8 +2,8 @@ package cn.qingchengfit.testmodule;
 
 import android.app.Activity;
 import cn.qingchengfit.shop.di.BindShopActivity;
-import com.example.huangbaole.shop.di.ShopModule;
-import com.example.huangbaole.shop.di.ShopViewModel;
+import cn.qingchengfit.shop.di.ShopModule;
+import cn.qingchengfit.shop.di.ShopViewModel;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;

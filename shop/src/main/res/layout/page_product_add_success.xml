@@ -7,7 +7,7 @@
         />
     <variable
         name="viewModel"
-        type="com.example.huangbaole.shop.ui.product.addsuccess.ProductAddSuccessViewModel"
+        type="cn.qingchengfit.shop.ui.product.addsuccess.ProductAddSuccessViewModel"
         />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
