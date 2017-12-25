@@ -53,8 +53,8 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
 //  compile project(path: ':recruit')
-  provided project(path: ':saasbase')
-  compile project(path: ':student')
+  compile project(path: ':saasbase')
+//  compile project(path: ':student')
 
   implementation 'com.android.support:multidex:1.0.2'
 

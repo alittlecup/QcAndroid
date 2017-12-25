@@ -31,7 +31,6 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardLimit;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.event.EventLimitBuyCount;
-import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTplDetailPresenter;
@@ -140,7 +139,6 @@ import rx.functions.Action1;
             onRefresh();
           }
         });
-    initBus();
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -260,23 +258,6 @@ import rx.functions.Action1;
               }
             })
         .show();
-  }
-
-  private void initBus(){
-    RxBus.getBus()
-        .register(OnBackEvent.class)
-        .compose(this.<OnBackEvent>bindToLifecycle())
-        .compose(this.<OnBackEvent>doWhen(FragmentEvent.CREATE_VIEW))
-        .subscribe(new BusSubscribe<OnBackEvent>() {
-          @Override public void onNext(OnBackEvent cardList) {
-            getActivity().getSupportFragmentManager().popBackStack(null, 1);
-            if(!gymWrapper.inBrand()) {
-              routeTo(AppUtils.getRouterUri(getContext(), "card/cardtpl/list/"), null);
-            }else{
-              routeTo(AppUtils.getRouterUri(getContext(), "card/brand/cardtpl/list/"), null);
-            }
-          }
-        });
   }
 
   public void alertDisableCardtpl() {

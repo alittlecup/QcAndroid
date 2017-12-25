@@ -41,5 +41,4 @@ import com.anbillon.flabellum.annotations.Trunk;
     AheadOffDayFragment.class, OffDayListFragment.class, CardFixValidDayFragment.class,
     StaffCardChargeFragment.class,
 }) public class StaffCardActivity extends CardActivity {
-
 }
