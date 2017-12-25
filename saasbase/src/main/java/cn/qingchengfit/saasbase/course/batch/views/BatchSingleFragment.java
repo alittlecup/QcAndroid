@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
@@ -27,6 +28,7 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.SingleBatch;
+import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchSinglePresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DateUtils;
@@ -43,11 +45,13 @@ import com.bigkoo.pickerview.TimePopupWindow;
 import com.jakewharton.rxbinding.view.RxMenuItem;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -84,6 +88,8 @@ import javax.inject.Inject;
   @BindView(R2.id.civ_date) CommonInputView civDate;
   @BindView(R2.id.civ_course_time) CommonInputView civCourseTime;
   @BindView(R2.id.civ_open_time) CommonInputView civOpenTime;
+  @BindView(R2.id.layout_private_time) ViewGroup lyPrivateTime;
+  @BindView(R2.id.tv_private_time) TextView tvPrivateTime;
   @BindView(R2.id.btn_del) Button btnDel;
   Unbinder unbinder;
   private BatchDetailCommonView batchBaseFragment;
@@ -94,6 +100,7 @@ import javax.inject.Inject;
   private TimeDialogWindow timeDialogWindow;
   private Date dateTime;
   private boolean isCross = false;
+  private Time_repeat timeRepeat = new Time_repeat();
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -106,7 +113,7 @@ import javax.inject.Inject;
     Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     //db = DataBindingUtil.inflate(inflater, R.layout.fragment_saas_single_batch, container, false);
-    View view = inflater.inflate(R.layout.fragment_saas_single_batch,container,false);
+    View view = inflater.inflate(R.layout.fragment_saas_single_batch, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
@@ -114,7 +121,13 @@ import javax.inject.Inject;
     civDate.setOnClickListener(v -> onCivDateClicked());
     civCourseTime.setOnClickListener(v -> onCivCourseTimeClicked());
     btnDel.setOnClickListener(v -> onBtnDelClicked());
-
+    RxBusAdd(Time_repeat.class).observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<Time_repeat>() {
+        @Override public void onNext(Time_repeat time_repeat) {
+          timeRepeat = time_repeat;
+          tvPrivateTime.setText(time_repeat.getRightTxt());
+        }
+      });
     return view;
   }
 
@@ -162,8 +175,8 @@ import javax.inject.Inject;
    */
   public void onCivCourseTimeClicked() {
     //根据团课私教选择
-    if (isPrivate){
-      if (timePeriodChooser == null){
+    if (isPrivate) {
+      if (timePeriodChooser == null) {
       }
     }
   }
@@ -192,10 +205,24 @@ import javax.inject.Inject;
     }
 
     civDate.setContent(DateUtils.getYYYYMMDDfromServer(batchDetail.start));
-    civCourseTime.setContent(
-      isPrivate ? DateUtils.getHHMMDuringFromServer(batchDetail.start, batchDetail.end,
-        batchDetail.is_cross) : DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(batchDetail.start)));
+    timeRepeat = batchDetail.getTimeRepeat(isPrivate);
+    if (isPrivate) {
+      civCourseTime.setVisibility(View.GONE);
+      lyPrivateTime.setVisibility(View.VISIBLE);
+      tvPrivateTime.setText(
+        timeRepeat.getEnd());
+    } else {
+      civCourseTime.setVisibility(View.VISIBLE);
+      lyPrivateTime.setVisibility(View.GONE);
+      civCourseTime.setContent(
+        DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(batchDetail.start)));
+    }
+
     onOpenRule(batchDetail.open_rule, DateUtils.formatDateFromServer(batchDetail.start));
+  }
+
+  @OnClick(R2.id.layout_private_time) public void onClickPrivateTime() {
+    EditPrivateOpenTimeFragment.newInstance(timeRepeat).show(getChildFragmentManager(), "");
   }
 
   public void onOpenRule(BatchOpenRule rule, Date start) {
@@ -212,14 +239,21 @@ import javax.inject.Inject;
     }
   }
 
+  /**
+   * @param batchDetail 填写基础信息
+   */
   private void inflateBatchInfo(BatchDetail batchDetail) {
     batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
+    batchBaseFragment.setMutlSupport(batchDetail.is_open_for_bodys);
     batchBaseFragment.openPayOnline(!batchDetail.is_free);
     batchBaseFragment.setSpace(batchDetail.getSpaces());
     batchBaseFragment.setRules(batchDetail.rule,
       (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);
   }
 
+  /**
+   * 点击提前预约时间
+   */
   public void onOpenTime() {
     if (openDialog == null) {
       openDialog =
@@ -298,21 +332,28 @@ import javax.inject.Inject;
   }
 
   @Override public String getStart() {
-    // TODO: 2017/12/24
-    return civDate.getContent()
-      + "T"
-      + (isPrivate?civCourseTime.getContent().split("至")[0]:civCourseTime.getContent())
-      + ":00";
+    if (!isPrivate) {//团课
+      return civDate.getContent() + "T" + civCourseTime.getContent() + ":00";
+    } else {//私教
+      if (timeRepeat != null)
+        return civDate.getContent() +"T"+timeRepeat.getStart()+":00";
+      else return "";
+    }
   }
 
   @Override public String getEnd() {
-    if (isPrivate){
-      return civDate.getContent()
-        + "T"
-        + (isPrivate?civCourseTime.getContent().split("至")[0]:civCourseTime.getContent())
-        + ":00";
-    }else {
-      return "";
+    if (!isPrivate) {//团课
+      Date d = DateUtils.formatDateFromServer(getStart());
+      return DateUtils.formatToServer(DateUtils.add(d, presenter.getBatchDetail().course.getLength(),Calendar.SECOND));
+    } else {//私教
+      if (timeRepeat != null) {
+        Date endday = DateUtils.formatDateFromYYYYMMDD(civDate.getContent());
+        if (timeRepeat.is_cross()){
+          endday = DateUtils.addDay(endday,1);
+        }
+        return DateUtils.Date2YYYYMMDD(endday) + "T" + timeRepeat.getEnd() + ":00";
+      }
+      else return "";
     }
   }
 
@@ -335,6 +376,4 @@ import javax.inject.Inject;
   @Override public boolean needPay() {
     return batchBaseFragment.needPay();
   }
-
-
 }

@@ -28,6 +28,16 @@ public class Time_repeat implements ICmLRTxt, Parcelable {
     int weekday;
     boolean isPrivate;
 
+    private Time_repeat(Builder builder) {
+        setId(builder.id);
+        setStart(builder.start);
+        setEnd(builder.end);
+        setSlice(builder.slice);
+        setIs_cross(builder.is_cross);
+        setWeekday(builder.weekday);
+        setPrivate(builder.isPrivate);
+    }
+
     public String getSliceTimeMin(){
         return slice/60+"分钟";
     }
@@ -136,8 +146,8 @@ public class Time_repeat implements ICmLRTxt, Parcelable {
         this.isPrivate = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<Time_repeat> CREATOR =
-      new Parcelable.Creator<Time_repeat>() {
+    public static final Creator<Time_repeat> CREATOR =
+      new Creator<Time_repeat>() {
           @Override public Time_repeat createFromParcel(Parcel source) {
               return new Time_repeat(source);
           }
@@ -146,4 +156,56 @@ public class Time_repeat implements ICmLRTxt, Parcelable {
               return new Time_repeat[size];
           }
       };
+
+    public static final class Builder {
+        private String id;
+        private String start;
+        private String end;
+        private int slice;
+        private boolean is_cross;
+        private int weekday;
+        private boolean isPrivate;
+
+        public Builder() {
+        }
+
+        public Builder id(String val) {
+            id = val;
+            return this;
+        }
+
+        public Builder start(String val) {
+            start = val;
+            return this;
+        }
+
+        public Builder end(String val) {
+            end = val;
+            return this;
+        }
+
+        public Builder slice(int val) {
+            slice = val;
+            return this;
+        }
+
+        public Builder is_cross(boolean val) {
+            is_cross = val;
+            return this;
+        }
+
+        public Builder weekday(int val) {
+            weekday = val;
+            return this;
+        }
+
+        public Builder isPrivate(boolean val) {
+            isPrivate = val;
+            return this;
+        }
+
+        public Time_repeat build() {
+            return new Time_repeat(this);
+        }
+    }
 }

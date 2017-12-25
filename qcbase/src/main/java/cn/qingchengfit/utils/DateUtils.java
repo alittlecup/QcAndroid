@@ -287,6 +287,12 @@ public class DateUtils {
     c.add(Calendar.DATE, i);
     return c.getTime();
   }
+  public static Date add(Date d, int i,int type) {
+    Calendar c = Calendar.getInstance();
+    c.setTime(d);
+    c.add(type, i);
+    return c.getTime();
+  }
 
   public static int getYear(){
     Calendar c = Calendar.getInstance();

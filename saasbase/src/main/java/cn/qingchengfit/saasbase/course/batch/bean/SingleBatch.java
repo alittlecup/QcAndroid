@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.course.batch.bean;
 
+import cn.qingchengfit.utils.DateUtils;
 import java.util.List;
 
 /**
@@ -30,6 +31,18 @@ public class SingleBatch extends BatchDetail{
     public boolean is_cross;
     public List<Rule> rules;
     public List orders;
-    //public List<Time_repeat> time_repeats;
+    public int slice;
+
+  public Time_repeat getTimeRepeat(boolean isPrivate) {
+    return new Time_repeat.Builder()
+      .start(DateUtils.Date2HHmm(DateUtils.formatDateFromServer(start)))
+      .end(DateUtils.Date2HHmm(DateUtils.formatDateFromServer(end)))
+      .id(id)
+      .isPrivate(isPrivate)
+      .is_cross(is_cross)
+      .slice(slice)
+      .build();
+  }
+  //public List<Time_repeat> time_repeats;
 
 }

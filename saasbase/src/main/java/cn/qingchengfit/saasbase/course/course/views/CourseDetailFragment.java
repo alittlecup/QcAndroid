@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +32,6 @@ import cn.qingchengfit.saasbase.course.course.bean.TeacherImpression;
 import cn.qingchengfit.saasbase.course.course.presenters.CourseDetailPresenter;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.utils.StringUtils;
-import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.TouchyWebView;
@@ -72,6 +72,7 @@ import javax.inject.Inject;
   @BindView(R2.id.edit_jacket) TextView editJacket;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  @BindView(R2.id.scroll_root) NestedScrollView scrollView;
   boolean isJumped = false;
   @Inject CourseDetailPresenter mPresenter;
   @Inject GymWrapper gymWrapper;
@@ -97,7 +98,20 @@ import javax.inject.Inject;
     editJacket.setCompoundDrawables(
       ContextCompat.getDrawable(getContext(), R.drawable.vd_edit_primary_20dp), null, null, null);
     srl.setOnRefreshListener(() -> mPresenter.queryDetail(mCourseDetail.getId()));
+    if (savedInstanceState != null){
+      scrollView.scrollTo(0,savedInstanceState.getInt("p",0));
+    }
     return view;
+  }
+
+  @Override public void onSaveInstanceState(@NonNull Bundle outState) {
+    try {
+      outState.putInt("p",scrollView.getScrollY());
+    }catch (Exception e){
+
+    }
+
+    super.onSaveInstanceState(outState);
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -137,8 +151,10 @@ import javax.inject.Inject;
       View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_vp_image, null);
 
       ImageView imageView = (ImageView) view.findViewById(R.id.img);
-      PhotoUtils.loadWidth(getContext(), photos.get(i), imageView,
-        MeasureUtils.getScreenWidth(getResources()));
+      imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+      PhotoUtils.origin(imageView,photos.get(i));
+      //PhotoUtils.loadWidth(getContext(), photos.get(i), imageView,
+      //  MeasureUtils.getScreenWidth(getResources()));
       final int curPos = i;
       imageView.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View view) {

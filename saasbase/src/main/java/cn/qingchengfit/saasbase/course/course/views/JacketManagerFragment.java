@@ -49,7 +49,7 @@ import rx.functions.Action1;
   private JacketManageAdapter mAdapter;
   @Need public String courseid;
   @Need public ArrayList<String> stringList = new ArrayList<>();
-  @Need public Boolean randomOpen = true;
+  @Need public Boolean randomOpen ;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -144,9 +144,9 @@ import rx.functions.Action1;
 
   private List<String> item2Str() {
     List<String> ret = new ArrayList<>();
-    for (int i = 0; i < mDatas.size(); i++) {
-      if (mDatas.get(i) instanceof JackManageItem) {
-        ret.add(((JackManageItem) mDatas.get(i)).getImg());
+    for (int i = 0; i < mAdapter.getItemCount(); i++) {
+      if (mAdapter.getItem(i) instanceof JackManageItem) {
+        ret.add(((JackManageItem) mAdapter.getItem(i)).getImg());
       }
     }
     return ret;
@@ -178,7 +178,7 @@ import rx.functions.Action1;
   }
 
   @Override public void onSwitch(boolean s) {
-    customSwitch.setExpanded(s);
+    customSwitch.setExpanded(!s);
   }
 
   @Override public void onShowError(String e) {

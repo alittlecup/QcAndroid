@@ -15,6 +15,7 @@ public class BatchDetail {
   @SerializedName("to_date") public String to_date;
   @SerializedName("spaces") public List<Space> spaces;
   public Space space;
+  public boolean is_open_for_bodys;
   @SerializedName("course") public BatchCourse course;
   @SerializedName("rule") public List<Rule> rule;
   @SerializedName("is_free") public boolean is_free;

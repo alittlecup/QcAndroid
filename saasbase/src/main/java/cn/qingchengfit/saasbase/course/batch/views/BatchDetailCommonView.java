@@ -225,6 +225,9 @@ public class BatchDetailCommonView extends BaseFragment {
     if (orderSutdentCount != null) orderSutdentCount.setContent(Integer.toString(x));
   }
 
+  public void setMutlSupport(boolean support){
+    elMultiSupport.setExpanded(support);
+  }
   public boolean mutilSupportble() {
     return elMultiSupport != null && elMultiSupport.isExpanded();
   }
