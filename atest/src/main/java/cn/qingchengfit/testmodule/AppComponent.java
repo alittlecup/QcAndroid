@@ -1,11 +1,6 @@
 package cn.qingchengfit.testmodule;
 
 import android.app.Activity;
-
-import javax.inject.Singleton;
-
-import cn.qingchengfit.student.di.BindStudentActivity;
-import cn.qingchengfit.student.di.ViewModelModule;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -15,6 +10,7 @@ import dagger.android.AndroidInjectionModule;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import dagger.multibindings.IntoMap;
+import javax.inject.Singleton;
 
 /**
  * power by
@@ -40,8 +36,8 @@ import dagger.multibindings.IntoMap;
 @Component(modules = {
         AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class,
         AppComponent.MainModule.class,
-        ViewModelModule.class,
-        BindStudentActivity.class,
+        //ViewModelModule.class,
+        //BindStudentActivity.class,
         //AppComponent.RecruitModule.class,
 })
 public interface AppComponent extends AndroidInjector<TestApp> {

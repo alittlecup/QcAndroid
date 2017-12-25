@@ -18,14 +18,15 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.event.EventCustomOption;
+import cn.qingchengfit.saasbase.cards.item.CardTplCustomOptionItem;
 import cn.qingchengfit.saasbase.cards.item.CardTplOptionForBuy;
-import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
@@ -45,6 +46,7 @@ import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.google.gson.JsonObject;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -53,9 +55,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -79,7 +79,7 @@ import rx.schedulers.Schedulers;
  */
 @Leaf(module = "card", path = "/pay/") public class CardBuyFragment extends SaasBaseFragment
     implements FlexibleAdapter.OnItemClickListener, CardBuyPresenter.MVPView,
-    CardtplOptionItem.OnCustomCardOptionListener {
+    CardTplOptionForBuy.OnCustomCardOptionListener {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
@@ -112,10 +112,12 @@ import rx.schedulers.Schedulers;
   @BindView(R2.id.card_protocol) CommonInputView cardProtocol;
 
   private CardTplOption cardOptionCustom = new CardTplOption();
+  private List<CardTplOption> optionList = new ArrayList<>();
   public int patType;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    initCustomOption();
   }
 
   private CommonFlexAdapter commonFlexAdapter;
@@ -138,7 +140,7 @@ import rx.schedulers.Schedulers;
             "知道了", "提示").show(getFragmentManager(), null);
       }
     });
-
+    civSaler.setContent("本人");
     civEndTime.setClickable(false);
     if (cardTpl.has_service_term) {
       cardProtocol.setVisibility(View.VISIBLE);
@@ -177,24 +179,31 @@ import rx.schedulers.Schedulers;
   }
 
   private void initCustomOption() {
-    RxBusAdd(EventCustomOption.class).onBackpressureLatest()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+    RxBus.getBus()
+        .register(EventCustomOption.class)
+        .compose(this.<EventCustomOption>bindToLifecycle())
+        .compose(this.<EventCustomOption>doWhen(FragmentEvent.CREATE_VIEW))
         .subscribe(new Action1<EventCustomOption>() {
           @Override public void call(EventCustomOption eventCustomOption) {
             if (eventCustomOption != null) {
               cardOptionCustom = eventCustomOption.getCardOptionCustom();
-              onShowDetail(cardOptionCustom);
+              optionList.add(eventCustomOption.getCardOptionCustom());
+              commonFlexAdapter.removeItem(commonFlexAdapter.getItemCount() - 1);
+              commonFlexAdapter.notifyItemRemoved(commonFlexAdapter.getItemCount() - 1);
+              commonFlexAdapter.addItem(commonFlexAdapter.getItemCount() ,
+                  new CardTplCustomOptionItem(eventCustomOption.getCardOptionCustom(), cardTpl.type,
+                      CardBuyFragment.this));
+              for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
+                commonFlexAdapter.removeSelection(i);
+              }
+              commonFlexAdapter.addSelection(commonFlexAdapter.getItemCount() - 1);
+              commonFlexAdapter.notifyDataSetChanged();
+              showInputMoney(false, cardOptionCustom, cardOptionCustom.isLimit_days());
             }
           }
         });
   }
 
-  public void onShowDetail(CardTplOption cardOption) {
-    civEndTime.setContent(DateUtils.Date2YYYYMMDD(
-        DateUtils.addDay(DateUtils.formatDateFromServer(cardOption.created_at),
-            ((int) Float.parseFloat(cardOption.charge)))));
-  }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -203,7 +212,6 @@ import rx.schedulers.Schedulers;
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    initCustomOption();
     presenter.queryOption();
   }
 
@@ -230,7 +238,16 @@ import rx.schedulers.Schedulers;
    * 选择规格
    */
   @Override public boolean onItemClick(int position) {
-    presenter.selectOption(position);
+    if (position < optionList.size()){
+      //已有规格 展示价格
+      cardOptionCustom = optionList.get(position);
+      showInputMoney(false, cardOptionCustom, cardOptionCustom.limit_days);
+      setPayMoney(cardOptionCustom.price + "元");
+    }else {
+      cardOptionCustom = null;
+      showInputMoney(true, cardOptionCustom, false);
+    }
+    presenter.setmChosenOption(cardOptionCustom);
     commonFlexAdapter.toggleSelection(position);
     commonFlexAdapter.notifyDataSetChanged();
     return true;
@@ -245,6 +262,10 @@ import rx.schedulers.Schedulers;
 
   @Override public void onGetOptions(List<CardTplOption> options) {
     commonFlexAdapter.clear();
+    if (options.size() > 0){
+      optionList.clear();
+      optionList.addAll(options);
+    }
     for (CardTplOption option : options) {
       commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type, this));
     }
@@ -276,9 +297,9 @@ import rx.schedulers.Schedulers;
     choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY, 0, 0, new Date(), civStartTime,
         new TimeDialogWindow.OnTimeSelectListener() {
           @Override public void onTimeSelect(Date date) {
-            civStartTime.setContent(DateUtils.Date2YYYYMMDD(new Date()));
+            civStartTime.setContent(DateUtils.Date2YYYYMMDD(date));
             civEndTime.setContent(
-                DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), cardOptionCustom.getDays())));
+                DateUtils.Date2YYYYMMDD(DateUtils.addDay(date, cardOptionCustom.getDays() + 1)));
           }
         });
   }
@@ -301,6 +322,11 @@ import rx.schedulers.Schedulers;
 
   @Override public void showInputMoney(boolean other, CardTplOption option, boolean validDay) {
     cardOptionCustom = option;
+    if (cardOptionCustom == null){
+      setPayMoney("0元");
+    }else{
+      setPayMoney(cardOptionCustom.getPrice());
+    }
     if (other) {
       if (cardTpl.getType() == Configs.CATEGORY_DATE) {
         routeTo("card", "/custom/option", null);
@@ -311,7 +337,7 @@ import rx.schedulers.Schedulers;
       layoutValidate.setVisibility(View.VISIBLE);
       civStartTime.setContent(DateUtils.Date2YYYYMMDD(new Date()));
       civEndTime.setContent(
-          DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), option.getDays())));
+          DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), option.getDays() + 1)));
     } else {
       layoutValidate.setVisibility(View.GONE);
     }
@@ -321,34 +347,8 @@ import rx.schedulers.Schedulers;
           DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(option.created_at)));
       civEndTime.setContent(DateUtils.Date2YYYYMMDD(
           DateUtils.addDay(DateUtils.formatDateFromServer(option.created_at),
-              ((int) Float.parseFloat(option.charge)))));
+              ((int) Float.parseFloat(option.charge)) + 1)));
     }
-    //if (cardCate == Configs.CATEGORY_DATE) {//期限卡
-    //  loInputMoney.setVisibility(View.VISIBLE);
-    //  elNeedValid.hideHeader(true);
-    //  civEndTime.setVisibility(other ? View.VISIBLE : View.GONE);
-    //  civChargeMoney.setVisibility(View.GONE);
-    //  civRealMoney.setVisibility(View.GONE);
-    //  elNeedValid.resizeContent((int)getResources().getDimension(R.dimen.qc_item_height)*(other?4:3)+1);
-    //  civRealMoney.setVisibility(other?View.VISIBLE:View.GONE);
-    //} else {//储值卡 或者次卡
-    //  if (!other && validDay) {
-    //    loInputMoney.setVisibility(View.VISIBLE);
-    //    elNeedValid.hideHeader(true);
-    //    civEndTime.setVisibility(View.GONE);
-    //    civChargeMoney.setVisibility(View.GONE);
-    //    civRealMoney.setVisibility(View.GONE);
-    //    elNeedValid.resizeContent((int)getResources().getDimension(R.dimen.qc_item_height)*3+1);
-    //  } else {
-    //    elNeedValid.hideHeader(false);
-    //    civEndTime.setVisibility(View.VISIBLE);
-    //    loInputMoney.setVisibility(other ? View.VISIBLE : View.GONE);
-    //    civChargeMoney.setVisibility(View.VISIBLE);
-    //    civChargeMoney.setUnit(CardBusinessUtils.getCardTypeCategoryUnit(cardCate,getContext()));
-    //    civRealMoney.setVisibility(View.VISIBLE);
-    //    elNeedValid.resizeContent(ViewGroup.LayoutParams.WRAP_CONTENT);
-    //  }
-    //}
   }
 
   //TODO 修改回调方式
@@ -445,7 +445,7 @@ import rx.schedulers.Schedulers;
       } else {
         routeTo(AppUtils.getRouterUri(getContext(), "/card/custom/all/option"),
             new TotalCustomCardOptionParams().cardOptionCustom(
-                ((CardTplOptionForBuy) commonFlexAdapter.getItem(position)).getOption()).build());
+                ((CardTplOptionForBuy) commonFlexAdapter.getItem(position)).getOption()).unuse(0).build());
       }
     }
   }

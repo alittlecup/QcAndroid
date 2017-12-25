@@ -30,10 +30,20 @@ import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
+import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
+import cn.qingchengfit.saasbase.gymconfig.views.MsgNotiFragment;
+import cn.qingchengfit.saasbase.gymconfig.views.OrderLimitFragment;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
+import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
+import cn.qingchengfit.saasbase.staff.views.SuFragment;
+import cn.qingchengfit.saasbase.staff.views.SuIdendifyFragment;
+import cn.qingchengfit.saasbase.staff.views.SuNewFragment;
 import cn.qingchengfit.staff.di.BindGymConfigAcitivty;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
+import cn.qingchengfit.staff.di.BindStaffStudentActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
@@ -71,7 +81,6 @@ import cn.qingchengfit.staffkit.views.GuideChooseBrandAcitivity;
 import cn.qingchengfit.staffkit.views.GymDetailShowGuideDialogFragment;
 import cn.qingchengfit.staffkit.views.MainFirstFragment;
 import cn.qingchengfit.staffkit.views.PopFromBottomActivity;
-import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.WebActivityForGuide;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.staffkit.views.allotsales.MultiModifyFragment;
@@ -360,7 +369,7 @@ import dagger.multibindings.IntoMap;
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
     BindStaffCardActivity.class, BindImportExportActivity.class, BindStaffStaffActivity.class,
-  BindGymConfigAcitivty.class,
+  BindGymConfigAcitivty.class,BindSaasCommonActivity.class,BindStaffStudentActivity.class,
 
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,
@@ -2544,11 +2553,6 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(WebSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = QRSubcomponent.class) abstract class QRModule {
-        @Binds @IntoMap @ActivityKey(QRActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(QRSubcomponent.Builder builder);
-    }
-
     @Module(subcomponents = CardSubcomponent.class) abstract class CardModule {
         @Binds @IntoMap @ActivityKey(CardActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardSubcomponent.Builder builder);
@@ -4205,4 +4209,12 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardProtocolSubcomponent.Builder builder);
     }
 
+    @Subcomponent() public interface QRSubcomponent extends AndroidInjector<QRActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<QRActivity> {
+        }
+    }
+    @Module(subcomponents = QRSubcomponent.class) abstract class QRModule {
+        @Binds @IntoMap @ActivityKey(QRActivity.class)
+        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(QRSubcomponent.Builder builder);
+    }
 }
