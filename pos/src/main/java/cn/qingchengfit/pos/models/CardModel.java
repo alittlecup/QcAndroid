@@ -24,7 +24,9 @@ import cn.qingchengfit.saasbase.cards.network.response.PayBusinessResponseWrap;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
+import com.google.gson.JsonObject;
 import java.util.HashMap;
+import org.json.JSONObject;
 import retrofit2.http.Body;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -152,7 +154,7 @@ public class CardModel implements ICardModel {
     return posApi.qcCardCharge(gymWrapper.getGymId(),chargeBody.getCard_id(),gymWrapper.getParams(),chargeBody);
   }
 
-  @Override public Observable<QcDataResponse<T>> buyCard(@Body CardBuyBody obody) {
+  @Override public Observable<QcDataResponse<JsonObject>> buyCard(@Body CardBuyBody obody) {
     CardBuyBody body = (CardBuyBody) obody.clone();
     if (body.getSeller_id().equalsIgnoreCase("0"))
       body.setSeller_id(null);

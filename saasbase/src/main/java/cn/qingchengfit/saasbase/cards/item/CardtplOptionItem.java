@@ -22,21 +22,10 @@ public class CardtplOptionItem
 
   CardTplOption option;
   int cardtplType;
-  private OnCustomCardOptionListener onCustomCardOptionListener;
 
   public CardtplOptionItem(CardTplOption option, int cardtplType) {
     this.option = option;
     this.cardtplType = cardtplType;
-  }
-
-  public CardtplOptionItem(CardTplOption option, int cardtplType, OnCustomCardOptionListener onCustomCardOptionListener) {
-    this.option = option;
-    this.cardtplType = cardtplType;
-    this.onCustomCardOptionListener = onCustomCardOptionListener;
-  }
-
-  public void setOnCustomCardOptionListener(OnCustomCardOptionListener onCustomCardOptionListener) {
-    this.onCustomCardOptionListener = onCustomCardOptionListener;
   }
 
   public CardTplOption getOption() {
@@ -81,6 +70,7 @@ public class CardtplOptionItem
       holder.supportType.setText(CardBusinessUtils.supportChargeAndCreate(option.can_charge,option.can_create));
     }
 
+      holder.imgCardOption.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.vd_chosen_hook));
     if (adapter.isSelected(position) ) {
       holder.imgCardOption.setVisibility( View.VISIBLE);
       holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_primary);
@@ -123,21 +113,10 @@ public class CardtplOptionItem
     @BindView(R2.id.charge_layout) LinearLayout chargeLayout;
     @BindView(R2.id.img_custom_card_option) ImageView imgCardOption;
     @BindView(R2.id.tag_only_staff) ImageView tagOnlyStaff;
+
     public CardtplStandardVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
-      imgCardOption.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View view) {
-          if (onCustomCardOptionListener != null){
-            onCustomCardOptionListener.onCustomCard(getAdapterPosition());
-          }
-        }
-      });
     }
   }
-
-  public interface OnCustomCardOptionListener{
-    void onCustomCard(int position);
-  }
-
 }

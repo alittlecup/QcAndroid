@@ -58,7 +58,7 @@
         android:background="@color/transparent"
         android:ellipsize="end"
         android:focusable="true"
-        android:freezesText="true"
+        android:freezesText="false"
         android:gravity="end"
         android:hint=""
         android:imeOptions="actionDone"

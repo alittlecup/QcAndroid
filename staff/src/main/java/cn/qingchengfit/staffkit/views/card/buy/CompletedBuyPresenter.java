@@ -149,7 +149,7 @@ public class CompletedBuyPresenter extends BasePresenter {
                     if (ResponseConstant.checkSuccess(cacluScoreQcResponseData)) {
                         if (cacluScoreQcResponseData.getData().has_score) {
                             if (user_ids.contains(",") || user_ids.contains(Configs.SEPARATOR)) {
-                                view.onScoreHint(cacluScoreQcResponseData.getData().score + "");
+                                view.onScoreHint(cacluScoreQcResponseData.getData().number + "");
                             } else {
                                 view.onSuccess();
                             }

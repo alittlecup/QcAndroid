@@ -175,6 +175,12 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
         context.startActivity(starter);
     }
 
+    public static void start(Context context, String module, String tpl_id) {
+        Intent starter = new Intent(context, QRActivity.class);
+        starter.putExtra(LINK_MODULE, module);
+        starter.putExtra(CARD_TPL_ID, tpl_id);
+        context.startActivity(starter);
+    }
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
