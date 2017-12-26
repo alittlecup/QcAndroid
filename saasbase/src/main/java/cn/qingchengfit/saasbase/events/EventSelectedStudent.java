@@ -29,10 +29,32 @@ import java.util.List;
 
 public class EventSelectedStudent {
   List<QcStudentBean> students = new ArrayList<>();
+  String src;
 
-  public EventSelectedStudent(List<QcStudentBean> students) {
-    this.students = students;
+  public String getSrc() {
+    return src;
   }
+
+  public void setSrc(String src) {
+    this.src = src;
+  }
+
+  public EventSelectedStudent(List<QcStudentBean> students, String src) {
+    this.students = students;
+    this.src = src;
+  }
+  public String getIdFirst(){
+    if (students != null && students.size()>0) {
+      return students.get(0).getId();
+    }else return "";
+  }
+
+  public String getNameFirst(){
+    if (students != null && students.size()>0) {
+      return students.get(0).getUsername();
+    }else return "";
+  }
+
   public  String getIdStr(){
     if (students != null) {
       String ret = "";

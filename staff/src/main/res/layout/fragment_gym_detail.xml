@@ -50,16 +50,15 @@
 
     <ImageView
         android:id="@+id/down"
-        android:layout_width="12dp"
-        android:layout_height="8dp"
+        android:layout_width="50dp"
+        android:layout_height="12dp"
         android:layout_below="@id/toolbar_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
         android:rotation="180"
         android:scaleType="center"
         android:src="@drawable/ic_title_triangle"
-        android:transformPivotX="6dp"
-        android:transformPivotY="4dp"
+        android:transformPivotX="25dp"
+        android:transformPivotY="6dp"
         android:visibility="visible"
         />
 

@@ -380,8 +380,7 @@ public class WebFragment extends BaseFragment
   public void initCookie(String url) {
     if (getContext() == null) return;
     sessionid = QcRestRepository.getSession(getContext());
-
-    if (sessionid != null) {
+    if (sessionid == null) sessionid = "";
       try {
         URI uri = new URI(url);
         setCookie(uri.getHost(), "qc_session_id", sessionid);
@@ -392,9 +391,6 @@ public class WebFragment extends BaseFragment
         //e.printStackTrace();
       }
       setCookie(Constants.Server, "sessionid", sessionid);
-    } else {
-      //TODO logout
-    }
   }
 
   public void setCookie(String url, String key, String value) {

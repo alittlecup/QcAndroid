@@ -128,13 +128,13 @@ public class RecruitMessageListFragment extends BaseFragment
         public void onSuccess(List<TIMMessage> timMessages) {
           if (timMessages.size() > 0){
             NomalConversation nomalConversation = dealMessage(timMessages.get(0));
-            //TODO 正式环境替换 qc_
             if (map.containsKey(conversation.getPeer())) {
               itemList.add(new ItemRecruitMessage(getContext(),
                   nomalConversation, records.get(
                   (Integer) map.get(conversation.getPeer())).gym.name));
             }
-          adapter.notifyDataSetChanged();
+          adapter.clear();
+            adapter.updateDataSet(itemList);
           }
         }
       });

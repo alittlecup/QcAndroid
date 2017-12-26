@@ -12,6 +12,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListGroupPresenter;
+import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -71,7 +72,7 @@ import javax.inject.Inject;
    * 新增团课
    */
   @Override public void clickAddBatch() {
-    routeTo("/choose/", null);
+    routeTo("/choose/", CourseChooseParams.builder().mIsPrivate(false).src(TARGET).build());
   }
 
   @Override public void onRefresh() {
@@ -84,7 +85,7 @@ import javax.inject.Inject;
     if (item == null) return true;
     if (item instanceof BatchItem) {
       routeTo("/batch/cate/group/",
-        new cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryGroupParams().course_id(
+        new BatchListCategoryGroupParams().course_id(
           ((BatchItem) item).getBatchCourse().getId()).build());
     }
     return false;

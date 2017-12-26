@@ -555,7 +555,6 @@
   <string name="qc_follow_up_lable_toady_member">新增会员</string>
   <string name="hint_refund_less_7">该场馆将在%s到期，请及时续费</string>
   <string name="hint_refund_less_0">该场馆已于%s到期，请续费</string>
-  <string name="alert_batch_has_ordered">该结算方式已约课，无法切换。如需切换结课方式，请先取消预约。</string>
   <string name="alert_cardtype_use_other">仅限%s使用\"其他\"规格</string>
   <string name="new_su_info">新超级管理员信息</string>
   <string name="comfirm_change">确认变更</string>

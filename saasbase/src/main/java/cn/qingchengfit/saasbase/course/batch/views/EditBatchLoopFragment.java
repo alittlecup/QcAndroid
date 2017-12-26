@@ -63,6 +63,10 @@ public class EditBatchLoopFragment extends IBatchLoopFragment {
       if (calendar.get(Calendar.DATE) > curD)
         cmBean.isCross = true;
     }
+    if (originBatchLoop != null && !BatchLoop.CheckCmBean(originBatchLoop,cmBean)){
+      showAlert("与已有周期时间冲突");
+      return;
+    }
     RxBus.getBus().post(cmBean);
   }
 }

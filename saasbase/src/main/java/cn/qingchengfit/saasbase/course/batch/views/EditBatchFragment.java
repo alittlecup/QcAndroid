@@ -222,7 +222,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
 
   @Override public void onBatchDetail(BatchDetail batchDetail) {
     if (batchBaseFragment == null)
-      batchBaseFragment = BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher);
+      batchBaseFragment = BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher,"editbatch");
     else {
       batchBaseFragment.setTrainer(batchDetail.teacher);
       batchBaseFragment.setCourse(batchDetail.course);
@@ -265,7 +265,7 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
 
   private void inflateBatchInfo(BatchDetail batchDetail){
     batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
-    batchBaseFragment.setMutlSupport(batchDetail.is_open_for_bodys);
+    batchBaseFragment.setMutlSupport(batchDetail.supportMulti());
     batchBaseFragment.openPayOnline(!batchDetail.is_free);
     batchBaseFragment.setSpace(batchDetail.getSpaces());
     batchBaseFragment.setRules(batchDetail.rule, (ArrayList<CardTplBatchShip>) batchDetail.card_tpls);

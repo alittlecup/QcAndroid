@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -14,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
@@ -25,6 +27,8 @@ import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseParams;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
+import cn.qingchengfit.saasbase.course.course.event.EventCourse;
+import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.events.EventPayOnline;
 import cn.qingchengfit.saasbase.gymconfig.event.EventSiteSelected;
 import cn.qingchengfit.saasbase.gymconfig.views.SiteSelectedParams;
@@ -41,6 +45,7 @@ import cn.qingchengfit.widgets.ExpandedLayout;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -80,6 +85,8 @@ public class BatchDetailCommonView extends BaseFragment {
   @BindView(R2.id.el_pay) ExpandedLayout elPay;
   @BindView(R2.id.el_multi_support) ExpandedLayout elMultiSupport;
 
+  @Inject GymWrapper gymWrapper;
+
   private Course course;
   private Staff trainer;
   private ArrayList<Rule> rulesPayCards = new ArrayList<>();
@@ -87,11 +94,14 @@ public class BatchDetailCommonView extends BaseFragment {
   private List<Space> spaces = new ArrayList<>();
   private ArrayList<CardTplBatchShip> cardtplships;
   private boolean numHasChange = false;//人数已经修改
+  private String mSource;
+  private boolean hasOrder;
 
-  public static BatchDetailCommonView newInstance(Course course, Staff trainer) {
+  public static BatchDetailCommonView newInstance(Course course, Staff trainer,String source) {
     Bundle args = new Bundle();
     args.putParcelable("course", course);
     args.putParcelable("trainer", trainer);
+    args.putString("source", source);
     BatchDetailCommonView fragment = new BatchDetailCommonView();
     fragment.setArguments(args);
     return fragment;
@@ -102,6 +112,7 @@ public class BatchDetailCommonView extends BaseFragment {
     if (getArguments() != null) {
       course = getArguments().getParcelable("course");
       trainer = getArguments().getParcelable("trainer");
+      mSource = getArguments().getString("source");
       if (course == null) {
         course = new Course();
         course.is_private = true;
@@ -119,14 +130,15 @@ public class BatchDetailCommonView extends BaseFragment {
         }
       });
     RxBus.getBus()
-      .register(Course.class)
+      .register(EventCourse.class)
       .compose(bindToLifecycle())
       .compose(doWhen(FragmentEvent.CREATE_VIEW))
       .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<Course>() {
-        @Override public void onNext(Course course) {
-          setCourse(course);
-          BatchDetailCommonView.this.course = course;
+      .filter(eventCourse -> CmStringUtils.isEmpty(eventCourse.getSrc()) || mSource.equalsIgnoreCase(eventCourse.getSrc()))
+      .subscribe(new BusSubscribe<EventCourse>() {
+        @Override public void onNext(EventCourse course) {
+          setCourse(course.getCourse());
+          BatchDetailCommonView.this.course = course.getCourse();
         }
       });
   }
@@ -161,10 +173,23 @@ public class BatchDetailCommonView extends BaseFragment {
         }
       });
     elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
-      if (b && getOrderStudentCount() > 1){
+      //if (b && getOrderStudentCount() > 1){
         numHasChange = true;
         payCard.setContent("已修改多人支持，请重新设置");
-      }
+      //}
+    });
+    elPay.setOnHeaderTouchListener((view1, motionEvent) -> {
+      if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+        if (gymWrapper.isPro()) {
+          if (hasOrder) {
+            showAlert(R.string.alert_batch_has_ordered);
+            return true;
+          } else return false;
+        } else {
+          new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
+          return true;
+        }
+      }else return false;
     });
     return view;
   }
@@ -172,6 +197,14 @@ public class BatchDetailCommonView extends BaseFragment {
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     elPay.setExpanded(true);
+  }
+
+  public boolean isHasOrder() {
+    return hasOrder;
+  }
+
+  public void setHasOrder(boolean hasOrder) {
+    this.hasOrder = hasOrder;
   }
 
   /**
@@ -183,6 +216,7 @@ public class BatchDetailCommonView extends BaseFragment {
     PhotoUtils.small(img, course.getPhoto());
     text1.setText(course.getName());
     text3.setText(getString(R.string.course_d_lenght, course.getLength() / 60));
+    queryTemple();
   }
 
   public String getCourseId() {
@@ -201,6 +235,11 @@ public class BatchDetailCommonView extends BaseFragment {
     if (coach == null) return;
     this.trainer = staff;
     coach.setContent(staff.getUsername());
+    queryTemple();
+  }
+  protected void queryTemple(){
+    if (trainer != null && this.course != null && listener != null)
+      listener.onBatchTemple();
   }
 
   public String getTrainerId() {
@@ -306,7 +345,7 @@ public class BatchDetailCommonView extends BaseFragment {
    * 更改课程
    */
   @OnClick(R2.id.course_layout) public void onCourseLayoutClicked() {
-    routeTo("course", "/choose/", null);
+    routeTo("course", "/choose/", CourseChooseParams.builder().src(mSource).mIsPrivate(course.is_private()).build());
   }
 
   /**
@@ -317,6 +356,8 @@ public class BatchDetailCommonView extends BaseFragment {
     routeTo("staff", "/trainer/choose/",
       new TrainerChooseParams().selectedId(trainer != null ? trainer.getId() : null).build());
   }
+
+
 
   /**
    * 更改场地
@@ -395,5 +436,19 @@ public class BatchDetailCommonView extends BaseFragment {
 
   @Override public boolean isBlockTouch() {
     return false;
+  }
+
+  BatchTempleListener listener;
+
+  public BatchTempleListener getListener() {
+    return listener;
+  }
+
+  public void setListener(BatchTempleListener listener) {
+    this.listener = listener;
+  }
+
+  public interface BatchTempleListener{
+    public void onBatchTemple();
   }
 }

@@ -73,7 +73,8 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by Paper on 16/5/4 2016.
  */
 @Leaf(module = "course", path = "/batch/add/") public class AddBatchFragment
-  extends SaasBaseFragment implements IBatchPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
+  extends SaasBaseFragment implements IBatchPresenter.MVPView,
+  FlexibleAdapter.OnItemClickListener,BatchDetailCommonView.BatchTempleListener {
 
   @BindView(R2.id.add) TextView add;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
@@ -110,11 +111,12 @@ import rx.android.schedulers.AndroidSchedulers;
   private CommonFlexAdapter commonFlexAdapter;
   @Need public Staff mTeacher;
   @Need public Course mCourse;
-  private List<BatchLoop> batchLoops = new ArrayList<>();
+
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    batchBaseFragment = BatchDetailCommonView.newInstance(mCourse, mTeacher);
+    batchBaseFragment = BatchDetailCommonView.newInstance(mCourse, mTeacher,"addbatch");
+    batchBaseFragment.setListener(this);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     arrayOpenTime = getResources().getStringArray(R.array.order_open_time);
     RxBus.getBus()
@@ -421,28 +423,41 @@ import rx.android.schedulers.AndroidSchedulers;
     IFlexible item = commonFlexAdapter.getItem(position);
     if (item == null) return true;
     if (item instanceof BatchLoopItem) {
-      routeTo("/batch/loop/add/",
+      routeTo("/batch/loop/edit/",
         new cn.qingchengfit.saasbase.course.batch.views.EditBatchLoopParams().batchLoop(
           ((BatchLoopItem) item).getBatchLoop())
           .isPrivate(mCourse == null || mCourse.is_private)
+          .originBatchLoop(getCurBatchLoop())
+          .courseLength(mCourse == null?0:mCourse.getLength())
+          .slice(10)
           .build());
     }
     return true;
   }
-
+  protected ArrayList<BatchLoop> getCurBatchLoop(){
+    ArrayList<BatchLoop> batchLoops = new ArrayList<>();
+    for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
+      IFlexible item = commonFlexAdapter.getItem(i);
+      if (item instanceof BatchLoopItem){
+        batchLoops.add(((BatchLoopItem) item).getBatchLoop());
+      }
+    }
+    return batchLoops;
+  }
   /**
    * 添加课程周期
    */
   @OnClick(R2.id.add) public void addBatchLoop() {
-      routeTo("/batch/loop/add/", null);
+      routeTo("/batch/loop/add/", AddBatchLoopParams.builder()
+        .courseLength(presenter.isPrivate()?0:mCourse.getLength())
+        .slice(10)
+        .originBatchLoop(getCurBatchLoop())
+        .build());
   }
-  //
-  //// TODO: 2017/9/12 非高级版本
-  //@OnClick(R2.id.can_not_close) public void canNotClose() {
-  //  if (proGym) {
-  //    showAlert(R.string.alert_batch_has_ordered);
-  //  } else {
-  //    new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
-  //  }
-  //}
+
+  @Override public void onBatchTemple() {
+    if (batchBaseFragment != null && batchBaseFragment.isAdded() && batchBaseFragment.getRules().size() ==0 && commonFlexAdapter.getItemCount() ==0)
+      presenter.getBatchTemplete(presenter.isPrivate(),batchBaseFragment.getTrainerId(),batchBaseFragment.getCourseId());
+  }
+
 }

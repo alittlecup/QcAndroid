@@ -19,14 +19,16 @@ import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.body.HireWardrobeBody;
 import cn.qingchengfit.model.common.Card;
 import cn.qingchengfit.model.responese.Locker;
+import cn.qingchengfit.saasbase.events.EventSelectedStudent;
+import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.student.MutiChooseStudentActivity;
 import cn.qingchengfit.staffkit.views.wardrobe.WardrobePayBottomFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.item.PayWardrobeItem;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeMainFragment;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -39,6 +41,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
@@ -137,6 +140,15 @@ public class WardrobeLongHireFragment extends BaseFragment implements WardrobeLo
                 }
             }
         });
+        RxBusAdd(EventSelectedStudent.class)
+          .observeOn(AndroidSchedulers.mainThread())
+          .filter(eventSelectedStudent -> CmStringUtils.isEmpty(eventSelectedStudent.getSrc()) || getFragmentName().equalsIgnoreCase(eventSelectedStudent.getSrc()))
+          .subscribe(eventSelectedStudent -> {
+              chooseStudent.setContent(eventSelectedStudent.getNameFirst());
+              StudentBean sb = new StudentBean();
+              sb.setId(eventSelectedStudent.getIdFirst());
+              mChosStu = sb;
+          });
         return view;
     }
 
@@ -151,12 +163,15 @@ public class WardrobeLongHireFragment extends BaseFragment implements WardrobeLo
     @OnClick({ R.id.choose_student, R.id.start_day, R.id.end_day, R.id.layout_pay_method, R.id.comfirm }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.choose_student://选择会员
-                Intent toChooseStudent = new Intent(getContext(), MutiChooseStudentActivity.class);
-                toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_KEY, PermissionServerUtils.LOCKER_SETTING);
-                toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_METHOD, "post");
-                startActivityForResult(toChooseStudent, 1);
+                //Intent toChooseStudent = new Intent(getContext(), MutiChooseStudentActivity.class);
+                //toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_KEY, PermissionServerUtils.LOCKER_SETTING);
+                //toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_METHOD, "post");
+                //startActivityForResult(toChooseStudent, 1);
+                routeTo("student","/choose/student/", ChooseAndSearchStudentParams.builder()
+                  .source(getFragmentName())
+                  .chooseType(1)
+                  .build());
                 //                toChooseStudent.putExtra(MutiChooseStudentActivity.EXTRA_STUDENTS)
-
                 break;
             case R.id.start_day: //开始时间
               if (pwTime == null) {

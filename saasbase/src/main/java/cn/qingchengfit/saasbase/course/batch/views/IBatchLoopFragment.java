@@ -20,8 +20,9 @@ import cn.qingchengfit.items.CmBottomListChosenItem;
 import cn.qingchengfit.network.errors.BusEventThrowable;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
@@ -55,7 +56,7 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/21.
  */
-public abstract class IBatchLoopFragment extends BaseFragment implements
+public abstract class IBatchLoopFragment extends SaasBaseFragment implements
     FlexibleAdapter.OnItemClickListener{
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
@@ -76,7 +77,7 @@ public abstract class IBatchLoopFragment extends BaseFragment implements
    */
   @Need Integer slice;
   @Need Integer courseLength;
-
+  @Need ArrayList<BatchLoop> originBatchLoop;
 
 
 

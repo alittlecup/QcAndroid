@@ -19,12 +19,12 @@ import cn.qingchengfit.model.responese.CourseReportDetail;
 import cn.qingchengfit.model.responese.CourseReportOrder;
 import cn.qingchengfit.model.responese.CourseReportSchedule;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.custom.RatingBarVectorFix;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import cn.qingchengfit.widgets.RatingBarVectorFix;
 import com.bumptech.glide.Glide;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -102,7 +102,8 @@ import javax.inject.Inject;
         for (CourseReportOrder order : courseReportDetail.orders) {
             itemList.add(new CourseReverseDetailItem(order));
         }
-        adapter.notifyDataSetChanged();
+        adapter.clear();
+        adapter.updateDataSet(itemList);
 
         CourseReportSchedule schedule = courseReportDetail.schedule;
         Glide.with(getContext())

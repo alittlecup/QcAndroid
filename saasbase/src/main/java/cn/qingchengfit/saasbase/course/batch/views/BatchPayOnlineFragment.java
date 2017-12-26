@@ -66,6 +66,7 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_batch_pay_onlien, container, false);
     unbinder = ButterKnife.bind(this, view);
+    setBackPress();
     initToolbar(toolbar);
     if (rule != null && rule.channel.equalsIgnoreCase(Configs.CHANNEL_ONLINE)) {
       payOnline.getViewTreeObserver()

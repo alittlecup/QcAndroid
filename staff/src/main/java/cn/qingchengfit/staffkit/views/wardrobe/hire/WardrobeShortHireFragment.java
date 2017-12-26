@@ -1,7 +1,5 @@
 package cn.qingchengfit.staffkit.views.wardrobe.hire;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -20,17 +18,18 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.body.HireWardrobeBody;
 import cn.qingchengfit.model.responese.Locker;
+import cn.qingchengfit.saasbase.events.EventSelectedStudent;
+import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rxbus.event.EventLongHire;
-import cn.qingchengfit.staffkit.views.student.MutiChooseStudentActivity;
 import cn.qingchengfit.staffkit.views.wardrobe.edit.WardrobeEditFragment;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -96,7 +95,15 @@ public class WardrobeShortHireFragment extends BaseFragment implements WardrobeS
         mCallbackActivity.setToolbar("租用更衣柜", false, null, R.menu.menu_edit, listener);
         //
         delegatePresenter(mPersenter, this);
-
+        RxBusAdd(EventSelectedStudent.class)
+          .observeOn(AndroidSchedulers.mainThread())
+          .filter(eventSelectedStudent -> CmStringUtils.isEmpty(eventSelectedStudent.getSrc()) || getFragmentName().equalsIgnoreCase(eventSelectedStudent.getSrc()))
+          .subscribe(eventSelectedStudent -> {
+              chooseStudent.setContent(eventSelectedStudent.getNameFirst());
+              StudentBean sb = new StudentBean();
+              sb.setId(eventSelectedStudent.getIdFirst());
+              mChoseStu = sb;
+          });
         return view;
     }
 
@@ -104,18 +111,6 @@ public class WardrobeShortHireFragment extends BaseFragment implements WardrobeS
         return WardrobeShortHireFragment.class.getName();
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) {
-                StudentBean studentBean = data.getParcelableExtra(MutiChooseStudentActivity.EXTRA_STUDENTS);
-                if (studentBean != null) {
-                    chooseStudent.setContent(studentBean.getUsername());
-                    mChoseStu = studentBean;
-                }
-            }
-        }
-    }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
@@ -155,10 +150,13 @@ public class WardrobeShortHireFragment extends BaseFragment implements WardrobeS
     }
 
     @OnClick(R.id.choose_student) public void onClick() {
-        // TODO: 2017/3/2
-        Intent toChooseStudent = new Intent(getContext(), MutiChooseStudentActivity.class);
-        toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_KEY, PermissionServerUtils.LOCKER_SETTING);
-        toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_METHOD, "post");
-        startActivityForResult(toChooseStudent, 1);
+        //Intent toChooseStudent = new Intent(getContext(), MutiChooseStudentActivity.class);
+        //toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_KEY, PermissionServerUtils.LOCKER_SETTING);
+        //toChooseStudent.putExtra(Configs.EXTRA_PERMISSION_METHOD, "post");
+        //startActivityForResult(toChooseStudent, 1);
+        routeTo("student","/choose/student/", ChooseAndSearchStudentParams.builder()
+          .source(getFragmentName())
+          .chooseType(1)
+          .build());
     }
 }

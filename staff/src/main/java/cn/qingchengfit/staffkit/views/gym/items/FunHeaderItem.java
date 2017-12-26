@@ -7,10 +7,12 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem;
+import eu.davidea.flexibleadapter.items.IHeader;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class FunHeaderItem extends AbstractHeaderItem<FunHeaderItem.FunHeaderVH> {
+public class FunHeaderItem extends AbstractHeaderItem<FunHeaderItem.FunHeaderVH> implements
+  IHeader<FunHeaderItem.FunHeaderVH>{
 
     public String txt;
 

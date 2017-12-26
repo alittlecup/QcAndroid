@@ -44,6 +44,16 @@ public class BatchLoop implements Parcelable {
         this.dateEnd = dateEnd;
     }
 
+    @Override public boolean equals(Object obj) {
+        if (obj instanceof BatchLoop){
+            return ((BatchLoop) obj).id.equalsIgnoreCase(id);
+        }else return false;
+    }
+
+    @Override public int hashCode() {
+        return id.hashCode();
+    }
+
     public static List<BatchLoop> getBeansFromTimeRep(HashMap<String, ArrayList<Integer>> map) {
         List<BatchLoop> ret = new ArrayList<>();
         try {
@@ -84,6 +94,8 @@ public class BatchLoop implements Parcelable {
     public static boolean CheckCmBean(List<BatchLoop> older, BatchLoop bean) {
         HashMap<Integer, List<Pair<Long, Long>>> dates = new HashMap<>();
         for (BatchLoop b : older) {
+            if (b.equals(bean))
+                continue;
             for (Integer week : b.week) {
                 if (dates.get(week) != null) {
                     dates.get(week).add(new Pair<Long, Long>(b.dateStart.getTime(), b.dateEnd.getTime()));

@@ -2,6 +2,7 @@ package cn.qingchengfit.sass.course;
 
 import cn.qingchengfit.saasbase.course.CourseActivity;
 import cn.qingchengfit.saasbase.course.batch.views.AddBatchFragment;
+import cn.qingchengfit.saasbase.course.batch.views.BatchDetailCommonView;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryGroupFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListGroupFragment;
@@ -10,6 +11,7 @@ import cn.qingchengfit.saasbase.course.batch.views.BatchScheduleListFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchSingleFragment;
 import cn.qingchengfit.saasbase.course.batch.views.EditBatchFragment;
 import cn.qingchengfit.saasbase.course.batch.views.IBatchListCategoryFragment;
+import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.course.course.views.AddCourseFragment;
 import cn.qingchengfit.saasbase.course.course.views.CoachCommentListFragment;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseFragment;
@@ -49,7 +51,7 @@ import com.anbillon.flabellum.annotations.Trunk;
   BatchSingleFragment.class, CourseDetailFragment.class, EditCourseFragment.class,
   CourseChooseFragment.class, CourseListFragment.class,JacketManagerFragment.class,ShopCommentsFragment.class,
   AddCourseFragment.class, CoachCommentListFragment.class, CourseHomeInBrandFragment.class,
-  CourseImagesFragment.class,
+  CourseImagesFragment.class, BatchDetailCommonView.class,UpgradeInfoDialogFragment.class,
 })
 public class StaffCourseActivity extends CourseActivity {
 

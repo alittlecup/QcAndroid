@@ -193,7 +193,7 @@ import rx.android.schedulers.AndroidSchedulers;
   @Override public void onDetail(SingleBatch batchDetail) {
     if (batchBaseFragment == null) {
       batchBaseFragment =
-        BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher);
+        BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher,"batchsingle");
     } else {
       batchBaseFragment.setTrainer(batchDetail.teacher);
       batchBaseFragment.setCourse(batchDetail.course);
@@ -244,7 +244,7 @@ import rx.android.schedulers.AndroidSchedulers;
    */
   private void inflateBatchInfo(BatchDetail batchDetail) {
     batchBaseFragment.setOrderSutdentCount(batchDetail.max_users);
-    batchBaseFragment.setMutlSupport(batchDetail.is_open_for_bodys);
+    batchBaseFragment.setMutlSupport(batchDetail.supportMulti());
     batchBaseFragment.openPayOnline(!batchDetail.is_free);
     batchBaseFragment.setSpace(batchDetail.getSpaces());
     batchBaseFragment.setRules(batchDetail.rule,

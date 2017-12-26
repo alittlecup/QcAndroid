@@ -91,7 +91,8 @@ import rx.schedulers.Schedulers;
                         }
                         mDatas.add(new ListAddItem("创建品牌"));
 
-                        mCommonFlexAdapter.notifyDataSetChanged();
+                        mCommonFlexAdapter.clear();
+                        mCommonFlexAdapter.updateDataSet(mDatas);
                     }
                 }
             }, new Action1<Throwable>() {

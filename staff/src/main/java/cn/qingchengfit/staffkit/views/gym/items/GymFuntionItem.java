@@ -37,7 +37,7 @@ public class GymFuntionItem extends AbstractFlexibleItem<GymFuntionItem.GymFunti
 
     public GymFuntionItem(GymFuntion gymFuntion, FunHeaderItem i) {
         mGymFuntion = gymFuntion;
-        //this.mFunHeaderItem = i;
+        this.mFunHeaderItem = i;
     }
 
     public GymFuntion getGymFuntion() {

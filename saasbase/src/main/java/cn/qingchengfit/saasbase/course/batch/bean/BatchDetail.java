@@ -34,4 +34,30 @@ public class BatchDetail {
       return spaces;
     }
   }
+
+  public boolean supportMulti() {
+    if (course != null && course.is_private){
+      return max_users > 1;
+    }else {
+      return hasCardTplid(rule);
+    }
+
+  }
+
+  /**
+   * 判断多人团课
+   * @param rules
+   * @return
+   */
+  private boolean hasCardTplid(List<Rule> rules){
+    if (rules != null){
+      List<String> strs = new ArrayList<>();
+      for (Rule rule1 : rules) {
+        if (strs.contains(rule1.card_tpl_id))
+          return true;
+        else strs.add(rule1.card_tpl_id);
+      }
+      return false;
+    }else return false;
+  }
 }

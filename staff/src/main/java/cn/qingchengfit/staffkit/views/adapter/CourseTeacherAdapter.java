@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.usecase.bean.CourseDetailTeacher;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-import cn.qingchengfit.staffkit.views.custom.RatingBarVectorFix;
+import cn.qingchengfit.widgets.RatingBarVectorFix;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import java.util.List;

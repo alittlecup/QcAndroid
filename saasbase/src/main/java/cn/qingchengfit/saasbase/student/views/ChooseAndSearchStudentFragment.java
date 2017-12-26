@@ -31,6 +31,7 @@ import com.anbillon.flabellum.annotations.Need;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import com.trello.rxlifecycle.android.FragmentEvent;
+import eu.davidea.flexibleadapter.SelectableAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -65,14 +66,18 @@ import rx.functions.Action1;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
   @BindView(R2.id.et_search) CompatEditView etSearch;
+  @BindView(R2.id.srl) SwipeRefreshLayout srl;
 
   private ChooseStudentListFragment chooseStudentListFragment;
   @Inject ChooseAndSearchPresenter presenter;
   @Need public ArrayList<String> studentIdList;
+  @Need public String source;
+  @Need public Integer chooseType;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    chooseStudentListFragment = new ChooseStudentListFragment();
+    if (chooseType == null || chooseType == 0 )chooseType = SelectableAdapter.Mode.MULTI;
+    chooseStudentListFragment =  ChooseStudentListFragment.newInstance(chooseType);
     RxBus.getBus()
       .register(EventSaasFresh.StudentList.class)
       .compose(this.<EventSaasFresh.StudentList>bindToLifecycle())
@@ -100,6 +105,8 @@ import rx.functions.Action1;
           }
         }
       });
+    srl.setRefreshing(true);
+    srl.setOnRefreshListener(this);
     return view;
   }
 
@@ -127,7 +134,7 @@ import rx.functions.Action1;
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         RxBus.getBus()
-          .post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent()));
+          .post(new EventSelectedStudent(chooseStudentListFragment.getSelectedStudent(),source));
         popBack();
         return false;
       }
@@ -150,6 +157,7 @@ import rx.functions.Action1;
   }
 
   @Override public void onStudentList(List<QcStudentBean> stus) {
+    srl.setRefreshing(false);
     if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
       chooseStudentListFragment.setData(stus);
       chooseStudentListFragment.selectStudent(studentIdList);

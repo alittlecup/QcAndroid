@@ -125,8 +125,6 @@ public class EditCourseFragment extends SaasBaseFragment implements EditCoursePr
 
     @Override public void editBaseInfo(CourseType courseDetail) {
         toolbarTitile.setText("编辑基本信息");
-        toolbar.inflateMenu(R.menu.menu_compelete);
-        toolbar.setOnMenuItemClickListener(menuItemClickListener);
         mCourseInfoFragment = CourseBaseInfoEditFragment.newInstance(courseDetail);
         getChildFragmentManager().beginTransaction().replace(R.id.course_layout, mCourseInfoFragment).commit();
     }

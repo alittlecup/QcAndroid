@@ -6,6 +6,7 @@ import cn.qingchengfit.saasbase.course.batch.bean.BatchLoop;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ListUtils;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ import java.util.UUID;
  */
 @Leaf(module = "Course",path = "/batch/loop/add/")
 public class AddBatchLoopFragment extends IBatchLoopFragment {
-
+  @Need Object o;
   //public static AddBatchLoopFragment newInstance(boolean isPrivate,int courseLenth) {
   //  Bundle args = new Bundle();
   //  args.putBoolean("p",isPrivate);
@@ -82,6 +83,10 @@ public class AddBatchLoopFragment extends IBatchLoopFragment {
       cmBean.dateEnd = calendar.getTime();
       if (calendar.get(Calendar.DATE) > curD)
         cmBean.isCross = true;
+    }
+    if (originBatchLoop != null && !BatchLoop.CheckCmBean(originBatchLoop,cmBean)){
+      showAlert("与已有周期时间冲突");
+      return;
     }
     RxBus.getBus().post(cmBean);
     popBack();

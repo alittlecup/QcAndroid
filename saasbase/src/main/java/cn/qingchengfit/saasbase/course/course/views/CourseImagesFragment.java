@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.course.course.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -65,13 +66,18 @@ public class CourseImagesFragment extends SaasBaseFragment
     return fragment;
   }
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    mAdatper = new CommonFlexAdapter<>(mDatas, this);
+  }
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_all_course_images, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     //init recycle
-    mAdatper = new CommonFlexAdapter<>(mDatas, this);
+
     mAdatper.setMode(SelectableAdapter.Mode.SINGLE);
     mAdatper.setDisplayHeadersAtStartUp(true);
 
@@ -121,7 +127,7 @@ public class CourseImagesFragment extends SaasBaseFragment
                   }
                 }
               }
-              mAdatper.notifyDataSetChanged();
+              mAdatper.onLoadMoreComplete(mDatas);
             }
           }
         }

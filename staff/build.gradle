@@ -151,13 +151,11 @@ gradle.projectsEvaluated {
     options.compilerArgs << "-Xmaxerrs" << "500" // or whatever number you want
   }
 }
-def isTask = { name ->
-  println 'isTask....'
-  println name
-  println project.gradle.startParameter.taskNames
-  boolean r = project.gradle.startParameter.taskNames.contains(name)
-  return r
-}
+
+
+ext.isTask = { name -> return project.gradle.startParameter.taskNames.contains(name) }
+
+task buildWithAP (dependsOn: build) {}
 
 dependencies {
   implementation project(path: ':saasbase')
@@ -216,15 +214,17 @@ dependencies {
   androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-//  if (isTask(":staff:assembleDevDebug")) {
+
+
+
+//  if (isTask("buildWithAP") ) {
     println "Going to run annotation processors ..."
-    android.sourceSets.dev.java.srcDirs += projectDir.absolutePath + "../build/output"
     annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
     annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+    annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
     annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
     annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
-    annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
 //  }
 //  println 'no processor'
@@ -235,7 +235,7 @@ dependencies {
 //    // must be in else branch or multiple AP calls will collide!
 //    println "sourseset"
 //
-//    android.sourceSets.dev.java.srcDirs += projectDir.absolutePath + "/../output/debug"
+//    android.sourceSets.main.java.srcDirs += projectDir.absolutePath + "/build/generated/source/apt"
 //    println android.sourceSets.dev.java.srcDirs
 //
 //  }

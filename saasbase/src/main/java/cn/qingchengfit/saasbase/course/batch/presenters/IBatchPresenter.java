@@ -164,7 +164,8 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
     body.open_rule = getBatchOpenRule();
     body.from_date = mvpView.getStart();
     body.to_date = mvpView.getEnd();
-    body.max_users = mvpView.suportMemberNum();
+    //body.is_open_for_bodys = mvpView.supportMutiMember();
+    body.max_users = (isPrivate && !mvpView.supportMutiMember())?1:mvpView.suportMemberNum();
     body.spaces = mvpView.getSupportSpace();
     body.course_id = mvpView.getCourseId();
     body.teacher_id = mvpView.getTrainerId();

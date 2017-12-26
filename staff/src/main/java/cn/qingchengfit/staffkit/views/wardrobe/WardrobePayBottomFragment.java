@@ -154,7 +154,8 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment imp
                             mDatas.add(new NoStudentCardItemItem());
                         }
 
-                        mAdapter.notifyDataSetChanged();
+                        mAdapter.clear();
+                        mAdapter.updateDataSet(mDatas);
                     }
                 }
             }, new Action1<Throwable>() {

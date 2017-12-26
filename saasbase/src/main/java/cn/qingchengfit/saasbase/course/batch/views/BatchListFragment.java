@@ -16,17 +16,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
-import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.course.course.event.EventCourse;
 import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
 import cn.qingchengfit.saasbase.gymconfig.views.MsgNotiParams;
 import cn.qingchengfit.saasbase.gymconfig.views.OrderLimitParams;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -66,19 +67,20 @@ public abstract class BatchListFragment extends SaasBaseFragment
   protected CommonFlexAdapter commonFlexAdapter;
   @Inject IPermissionModel serPermisAction;
   private LinearLayoutManager linearLayoutManager;
+  protected final static String TARGET = "BatchListFragment";
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(),this);
-    RxBus.getBus().register(Course.class)
-      .compose(this.<Course>bindToLifecycle())
-      .compose(this.<Course>doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new BusSubscribe<Course>() {
-        @Override public void onNext(Course course) {
-          routeTo("/batch/add/",new cn.qingchengfit.saasbase.course.batch.views.AddBatchParams()
-            .mCourse(course)
-            .build()
-          );
+    RxBus.getBus().register(EventCourse.class)
+      .compose(bindToLifecycle())
+      .compose(doWhen(FragmentEvent.CREATE_VIEW))
+      .filter(eventCourse -> CmStringUtils.isEmpty(eventCourse.getSrc()) || TARGET.equalsIgnoreCase(eventCourse.getSrc()))
+      .subscribe(new BusSubscribe<EventCourse>() {
+        @Override public void onNext(EventCourse eventCourse) {
+          routeTo("/batch/add/",new AddBatchParams()
+            .mCourse(eventCourse.getCourse())
+            .build());
         }
       });
   }

@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toolbar;
-
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.student.items.ChosenStudentItem;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
@@ -38,10 +36,18 @@ import java.util.List;
 public class ChooseStudentListFragment extends SimpleStudentListFragment {
   private ArrayList<String> studentIdList;
 
+  public static ChooseStudentListFragment newInstance(int choosetype) {
+    Bundle args = new Bundle();
+    args.putInt("c", SelectableAdapter.Mode.MULTI);
+    ChooseStudentListFragment fragment = new ChooseStudentListFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
-    commonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
+    commonFlexAdapter.setMode(getArguments().getInt("c", SelectableAdapter.Mode.MULTI));
     return v;
   }
 
@@ -53,8 +59,8 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
     return true;
   }
 
-  @Override protected IFlexible instanceItem(QcStudentBean qcStudentBean,IHeader iHeader) {
-    return new ChosenStudentItem(qcStudentBean,iHeader);
+  @Override protected IFlexible instanceItem(QcStudentBean qcStudentBean, IHeader iHeader) {
+    return new ChosenStudentItem(qcStudentBean, iHeader);
   }
 
   public List<QcStudentBean> getSelectedStudent() {

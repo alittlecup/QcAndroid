@@ -231,6 +231,10 @@ public class ExpandedLayout extends LinearLayout {
     invalidate();
   }
 
+  public void setOnHeaderTouchListener(OnTouchListener touchListener){
+    mSwitcher.setOnTouchListener(touchListener);
+  }
+
   @Override public Parcelable onSaveInstanceState() {
     Parcelable superState = super.onSaveInstanceState();
     CommonInputView.SavedState ss = new CommonInputView.SavedState(superState);

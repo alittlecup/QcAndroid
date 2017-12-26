@@ -101,6 +101,7 @@
   <string name="course_choose_coach">选择教练</string>
   <string name="course_add_new_coach">添加新教练</string>
 
+  <string name="alert_batch_has_ordered">该结算方式已约课，无法切换。如需切换结课方式，请先取消预约。</string>
 
   <string formatted="false" name="batch_can_pay_card_count">可用%d种卡结算</string>
   <string name="student_limit_buy_count">每个会员限购张数</string>
