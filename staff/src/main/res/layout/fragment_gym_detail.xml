@@ -25,15 +25,12 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/toolbar"
-        android:gravity="center_vertical"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/Qc.toolbarStyle"
         app:popupTheme="@style/ToolbarStyle.Overflow"
         app:theme="@style/Qc.toolbarStyle"
         app:titleTextAppearance="@style/ToolbarStyle"
-        >
-
-    </android.support.v7.widget.Toolbar>
+        />
 
     <TextView
         android:id="@+id/toolbar_title"
@@ -92,6 +89,7 @@
           android:layout_marginRight="@dimen/activity_horizontal_margin"
           android:src="@drawable/ic_actionbar_notification"
           android:visibility="gone"
+          tools:visibility="visible"
           />
 
       <TextView
@@ -105,6 +103,7 @@
           android:textColor="@color/white"
           android:textSize="11sp"
           android:visibility="gone"
+          tools:visibility="visible"
           tools:text="99"
           />
 

@@ -96,12 +96,12 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frag);
         ButterKnife.bind(this);
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        //toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+        //toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        //    @Override public void onClick(View v) {
+        //        onBackPressed();
+        //    }
+        //});
         Fragment fragment = new Fragment();
         int to = getIntent().getIntExtra("to", 0);
         chosenId = getIntent().getStringExtra("id");

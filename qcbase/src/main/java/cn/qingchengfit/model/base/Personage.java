@@ -43,6 +43,8 @@ public class Personage implements Parcelable {
     public String brand_id;
     public boolean is_superuser;
 
+
+
     public Personage() {
     }
 
@@ -162,13 +164,11 @@ public class Personage implements Parcelable {
         }
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.tag);
         dest.writeString(this.id);
         dest.writeString(this.username);
@@ -196,4 +196,13 @@ public class Personage implements Parcelable {
         this.is_superuser = in.readByte() != 0;
     }
 
+    public static final Creator<Personage> CREATOR = new Creator<Personage>() {
+        @Override public Personage createFromParcel(Parcel source) {
+            return new Personage(source);
+        }
+
+        @Override public Personage[] newArray(int size) {
+            return new Personage[size];
+        }
+    };
 }

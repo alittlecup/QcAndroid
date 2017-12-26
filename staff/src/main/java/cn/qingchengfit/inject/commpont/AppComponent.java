@@ -30,6 +30,7 @@ import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
+import cn.qingchengfit.saasbase.cards.views.CardProtocolActivity;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;

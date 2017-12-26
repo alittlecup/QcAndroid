@@ -346,7 +346,7 @@ public class StringUtils {
         return ret;
     }
 
-    public static String coachesNames(List<CoachBean> list) {
+    public static String coachesNames(List<Staff> list) {
         if (list == null) {
             return "";
         }

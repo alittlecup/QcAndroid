@@ -32,6 +32,7 @@
 
   <string name="resume_card">恢复</string>
   <string name="resume_card_title">是否确认恢复该卡</string>
+  <string name="resume_confirm">确认恢复</string>
 
   <string name="cardtype_limit_total">共计可上</string>
   <string name="cardtype_limit_class">节课</string>

@@ -58,7 +58,7 @@ public interface CardApi {
    * 修改卡信息
    */
   @PUT("/api/staffs/{id}/cards/{card_id}/") rx.Observable<QcDataResponse> editCardInfo(
-    @Path("gym_id") String gymid, @Path("card_id") String card_id,
+    @Path("id") String gymid, @Path("card_id") String card_id,
     @QueryMap HashMap<String, Object> params);
 
   //获取会员卡

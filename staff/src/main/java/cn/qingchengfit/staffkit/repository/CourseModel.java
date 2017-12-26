@@ -145,7 +145,7 @@ public class CourseModel implements ICourseModel {
    */
   @Override public Observable<QcDataResponse<ScheduleTemplete>> qcGetBatchTemplate(
     boolean isPrivate, String teacher_id, String course_id) {
-    return api.qcGetBatchTemplate(loginStatus.staff_id(), isPrivate ? "1" : "0", teacher_id,
+    return api.qcGetBatchTemplate(loginStatus.staff_id(), isPrivate ? "private" : "group", teacher_id,
       course_id, gymWrapper.getParams());
   }
 

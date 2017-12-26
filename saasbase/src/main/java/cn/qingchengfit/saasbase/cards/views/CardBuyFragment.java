@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -343,11 +344,13 @@ import rx.functions.Action1;
     }
     if (!other && cardTpl.getType() == Configs.CATEGORY_DATE) {
       layoutValidate.setVisibility(View.VISIBLE);
-      civStartTime.setContent(
-          DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(option.created_at)));
+      civStartTime.setContent(DateUtils.Date2YYYYMMDD(
+          TextUtils.isEmpty(option.created_at) ? new Date()
+              : DateUtils.formatDateFromServer(option.created_at)));
       civEndTime.setContent(DateUtils.Date2YYYYMMDD(
-          DateUtils.addDay(DateUtils.formatDateFromServer(option.created_at),
-              ((int) Float.parseFloat(option.charge)) + 1)));
+          TextUtils.isEmpty(option.created_at) ? DateUtils.addDay(new Date(), (option.days) + 1)
+              : DateUtils.addDay(DateUtils.formatDateFromServer(option.created_at),
+                  ((int) Float.parseFloat(option.charge)) + 1)));
     }
   }
 
@@ -441,7 +444,7 @@ import rx.functions.Action1;
       if (cardTpl.getType() == Configs.CATEGORY_DATE) {
         routeTo(AppUtils.getRouterUri(getContext(), "/card/custom/option"),
             new TimeCardOptionParams().cardOptionCustom(
-                ((CardTplOptionForBuy) commonFlexAdapter.getItem(position)).getOption()).build());
+                ((CardTplOptionForBuy) commonFlexAdapter.getItem(position)).getOption()).unUse(0).build());
       } else {
         routeTo(AppUtils.getRouterUri(getContext(), "/card/custom/all/option"),
             new TotalCustomCardOptionParams().cardOptionCustom(

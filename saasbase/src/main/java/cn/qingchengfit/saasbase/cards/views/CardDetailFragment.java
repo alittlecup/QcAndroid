@@ -237,7 +237,13 @@ import javax.inject.Inject;
 
   @Override public void onClickMore() {
     final DialogSheet dialogSheet = new DialogSheet(getContext());
-    dialogSheet.addButton(getString(R.string.unregiste_card), new View.OnClickListener() {
+    String buttonStr = "";
+    if (mCard.is_active()){
+      buttonStr = getString(R.string.unregiste_card);
+    }else{
+      buttonStr = getString(R.string.resume_card);
+    }
+    dialogSheet.addButton(buttonStr, new View.OnClickListener() {
 
       @Override public void onClick(View v) {
         if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
@@ -253,6 +259,9 @@ import javax.inject.Inject;
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                   presenter.unRegeister();
                   dialog.dismiss();
+                  if (dialogSheet.isShowing()) {
+                    dialogSheet.dismiss();
+                  }
                 }
               })
               .cancelable(true)
@@ -263,11 +272,14 @@ import javax.inject.Inject;
           new MaterialDialog.Builder(getContext()).title(getString(R.string.resume_card_title))
               .content(getString(R.string.resume_card))
               .negativeText(R.string.pickerview_cancel)
-              .positiveText(R.string.unregiste_Comfirm)
+              .positiveText(R.string.resume_confirm)
               .onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                   presenter.resumeCard();
                   dialog.dismiss();
+                  if (dialogSheet.isShowing()) {
+                    dialogSheet.dismiss();
+                  }
                 }
               })
               .cancelable(true)

@@ -60,7 +60,6 @@
         android:focusable="true"
         android:freezesText="false"
         android:gravity="end"
-        android:hint=""
         android:imeOptions="actionDone"
         android:lines="1"
         android:maxWidth="200dp"

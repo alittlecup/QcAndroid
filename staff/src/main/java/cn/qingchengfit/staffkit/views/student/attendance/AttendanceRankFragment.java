@@ -250,7 +250,7 @@ public class AttendanceRankFragment extends BaseFragment
             itemList.add(new AttendanceRankItem(attendance, getContext()));
         }
         commonFlexAdapter.setTag("revert", isRevert);
-        commonFlexAdapter.notifyDataSetChanged();
+        commonFlexAdapter.updateDataSet(itemList);
     }
 
     @Override public void onNoMore() {
