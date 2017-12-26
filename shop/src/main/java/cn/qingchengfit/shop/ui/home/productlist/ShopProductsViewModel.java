@@ -1,5 +1,6 @@
 package cn.qingchengfit.shop.ui.home.productlist;
 
+import android.util.Log;
 import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
 import cn.qingchengfit.shop.base.ShopBaseViewModel;
 import javax.inject.Inject;
@@ -19,5 +20,19 @@ public class ShopProductsViewModel extends ShopBaseViewModel {
 
   public void onAddProductCall(){
     productEvent.call();
+  }
+
+  public void onWeightClick() {
+
+    Log.d("TAG", "onWeightClick: ");
+  }
+  public void onSalesClick() {
+    Log.d("TAG", "onWeightClick: ");
+  }
+  public void onInventoryClick() {
+    Log.d("TAG", "onWeightClick: ");
+  }
+  public void onAdddDateClick() {
+    Log.d("TAG", "onWeightClick: ");
   }
 }

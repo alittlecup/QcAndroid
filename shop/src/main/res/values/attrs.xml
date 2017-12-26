@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="QcShopToogleButton">
+        <attr format="reference" name="unchecked_color"/>
+        <attr format="reference" name="checked_color"/>
+        <attr format="reference" name="unchecked_drawable"/>
+        <attr format="reference" name="checked_up_drawable"/>
+        <attr format="reference" name="checked_down_drawable"/>
+        <attr format="reference" name="checked_text"/>
+        <attr format="reference" name="unchecked_text"/>
+        <attr format="boolean" name="chekced"/>
+    </declare-styleable>
+
+</resources>

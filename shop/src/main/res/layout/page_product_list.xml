@@ -7,9 +7,11 @@
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+   <import type="cn.qingchengfit.widgets.QcFilterToggle"/>
     <variable
         name="viewModel"
-        type="cn.qingchengfit.shop.ui.home.productlist.ShopProductsViewModel"/>
+        type="cn.qingchengfit.shop.ui.home.productlist.ShopProductsViewModel"
+        />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
@@ -32,8 +34,8 @@
           android:background="@drawable/bg_rect_allotsale_search"
           android:drawableLeft="@drawable/ic_allotsale_search"
           android:drawablePadding="10dp"
-          android:hint="@string/search_product"
           android:focusable="false"
+          android:hint="@string/search_product"
           android:paddingLeft="10dp"
           android:paddingStart="10dp"
           android:textSize="@dimen/min_font"
@@ -52,43 +54,79 @@
           app:srcCompat="@drawable/ic_cancel_grey_16dp"
           />
     </RelativeLayout>
-    <LinearLayout
+    <cn.qingchengfit.widgets.QcRadioGroup
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:orientation="horizontal"
         >
-      <cn.qingchengfit.shop.ui.widget.SortTextView
-          android:id="@+id/text"
-          android:layout_width="100dp"
+      <cn.qingchengfit.shop.ui.widget.QcShopToogleButton
+          android:id="@+id/qc_weight"
+          android:layout_width="wrap_content"
           android:layout_height="match_parent"
-          android:background="@color/red"
-          android:drawablePadding="0dp"
-          android:checkMark="@drawable/fab_add"
-          android:checkMarkTintMode="multiply"
-          android:checkMarkTint="@color/colorPrimary"
-          android:gravity="center"
-          android:text="@string/weight"
-          style="@style/QcTextStyleMediumDark"
+          android:layout_weight="1"
+          android:onClick="@{(view)->viewModel.onWeightClick()}"
+          app:chekced="true"
+          style="@style/QcShopToogleItem"
+          app:checked_text="@string/weight"
+          app:unchecked_text="@string/weight"
           />
-    </LinearLayout>
+      <cn.qingchengfit.shop.ui.widget.QcShopToogleButton
+          android:id="@+id/qc_sales"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:onClick="@{()->viewModel.onSalesClick()}"
+          app:checked_text="@string/sale_count"
+          app:unchecked_text="@string/sale_count"
+          style="@style/QcShopToogleItem"
+          />
+      <cn.qingchengfit.shop.ui.widget.QcShopToogleButton
+          android:id="@+id/qc_inventory"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:onClick="@{()->viewModel.onInventoryClick()}"
+          app:checked_text="@string/inventory"
+          app:unchecked_text="@string/inventory"
+          style="@style/QcShopToogleItem"
+          />
+
+      <cn.qingchengfit.shop.ui.widget.QcShopToogleButton
+          android:id="@+id/qc_add_date"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:onClick="@{()->viewModel.onAdddDateClick()}"
+          app:checked_text="@string/add_product_time"
+          app:unchecked_text="@string/add_product_time"
+          style="@style/QcShopToogleItem"
+          />
+    </cn.qingchengfit.widgets.QcRadioGroup>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         />
     <include layout="@layout/divider_grey"/>
-    <TextView
-        android:id="@+id/add_product"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:drawablePadding="7dp"
-        style="@style/QcTextStyleLargeDark"
-        android:textColor="@color/colorPrimary"
-        android:gravity="center"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="@{()->viewModel.onAddProductCall()}"
-        android:drawableLeft="@drawable/product_add"
-        android:text="@string/add_product"
-        />
+        >
+      <TextView
+          android:id="@+id/add_product"
+          android:layout_width="wrap_content"
+          android:layout_height="50dp"
+          android:layout_gravity="center"
+          android:drawableLeft="@drawable/product_add"
+          android:drawablePadding="7dp"
+          android:gravity="center"
+          android:text="@string/add_product"
+          android:textColor="@color/colorPrimary"
+          style="@style/QcTextStyleLargeDark"
+          />
+    </FrameLayout>
 
 
   </LinearLayout>

@@ -14,4 +14,15 @@
 
   </style>
 
+  <style name="QcShopToogleItem" >
+    <item name="unchecked_color">@color/text_color_gray</item>
+    <item name="checked_color">@color/colorPrimary</item>
+    <item name="checked_up_drawable">@drawable/shop_check_up</item>
+    <item name="checked_down_drawable">@drawable/shop_check_down</item>
+    <item name="unchecked_drawable">@drawable/shop_uncheck</item>
+
+
+  </style>
+
+
 </resources>
