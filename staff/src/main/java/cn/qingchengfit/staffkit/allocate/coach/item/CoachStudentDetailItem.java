@@ -1,15 +1,13 @@
 package cn.qingchengfit.staffkit.allocate.coach.item;
 
 import android.os.Parcel;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.CommonAllocateDetailItem;
-import cn.qingchengfit.staffkit.allocate.coach.model.StudentWithCoach;
 import cn.qingchengfit.utils.StringUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
@@ -20,14 +18,14 @@ import java.util.List;
 
 public class CoachStudentDetailItem extends CommonAllocateDetailItem<CoachStudentDetailItem.CoachStudentDetailVH> {
 
-    private StudentWithCoach studentBean;
+    private QcStudentBean studentBean;
 
-    public CoachStudentDetailItem(StudentWithCoach studentBean) {
+    public CoachStudentDetailItem(QcStudentBean studentBean) {
         super(studentBean);
         this.studentBean = studentBean;
     }
 
-    public StudentWithCoach getData() {
+    public QcStudentBean getData() {
         return studentBean;
     }
 
@@ -41,21 +39,13 @@ public class CoachStudentDetailItem extends CommonAllocateDetailItem<CoachStuden
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CoachStudentDetailVH holder, int position, List payloads) {
         super.bindViewHolder(adapter, holder, position, payloads);
-        if (studentBean.coaches == null || (studentBean.coaches != null && studentBean.coaches.size() == 0)) {
+        if (studentBean.sellers == null || (studentBean.sellers != null && studentBean.sellers.size() == 0)) {
             holder.itemPersonDesc.setVisibility(View.GONE);
         } else {
             holder.itemPersonDesc.setVisibility(View.VISIBLE);
             holder.itemPersonDesc.setText(
-                holder.itemView.getContext().getString(R.string.coach_list, StringUtils.coachesNames(studentBean.coaches)));
+                holder.itemView.getContext().getString(R.string.coach_list, StringUtils.coachesNames(studentBean.sellers)));
         }
-    }
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel parcel, int i) {
-
     }
 
     class CoachStudentDetailVH extends CommonAllocateDetailItem.AllocateDetailVH {
@@ -67,4 +57,27 @@ public class CoachStudentDetailItem extends CommonAllocateDetailItem<CoachStuden
             ButterKnife.bind(this, view);
         }
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.studentBean, flags);
+    }
+
+    protected CoachStudentDetailItem(Parcel in) {
+        this.studentBean = in.readParcelable(QcStudentBean.class.getClassLoader());
+    }
+
+    public static final Creator<CoachStudentDetailItem> CREATOR =
+        new Creator<CoachStudentDetailItem>() {
+            @Override public CoachStudentDetailItem createFromParcel(Parcel source) {
+                return new CoachStudentDetailItem(source);
+            }
+
+            @Override public CoachStudentDetailItem[] newArray(int size) {
+                return new CoachStudentDetailItem[size];
+            }
+        };
 }

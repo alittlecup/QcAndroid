@@ -183,6 +183,7 @@ public class CommonInputView extends RelativeLayout {
     super.onFinishInflate();
     label = (TextView) findViewById(R.id.commoninput_lable);
     edit = (EditText) findViewById(R.id.commoninput_edit);
+    edit.setFreezesText(false);
     View divider = findViewById(R.id.commoninput_divider);
     rightview = (ImageView) findViewById(R.id.commoninput_righticon);
     disableView = findViewById(R.id.disable);

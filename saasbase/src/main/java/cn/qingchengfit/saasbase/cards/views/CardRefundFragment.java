@@ -156,9 +156,9 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
       Bundle savedInstanceState) {
     final View view = inflater.inflate(R.layout.fragment_modify_card_refund, container, false);
     unbinder = ButterKnife.bind(this, view);
+    delegatePresenter(presenter, this);
     initToolbar(toolbar);
     toolbarTitle.setText("会员卡扣费");
-    presenter.attachView(this);
     pwTime = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     initView();
     return view;

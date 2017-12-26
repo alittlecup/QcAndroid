@@ -15,6 +15,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarBean;
+import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.cardtype.list.BrandCardListFragment;
 import cn.qingchengfit.staffkit.views.cardtype.list.CardListFragment;

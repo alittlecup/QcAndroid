@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.cardtype.detail;
 
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.model.responese.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 
 /**
  * power by

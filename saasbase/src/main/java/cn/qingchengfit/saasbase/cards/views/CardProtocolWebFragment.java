@@ -17,6 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.fragments.WebFragment;
 import com.tencent.smtt.sdk.WebView;
 import java.io.Serializable;
@@ -112,6 +114,11 @@ public class CardProtocolWebFragment extends WebFragment {
         }
       });
     }
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  && isfitSystemPadding()) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0,
+          MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    }
+
   }
 
   @Override public void onDestroyView() {

@@ -23,17 +23,19 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.model.responese.StudentSourceBean;
+import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.MutiChooseCoachActivity;
-import cn.qingchengfit.staffkit.allocate.coach.model.CoachBean;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
@@ -42,6 +44,8 @@ import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity
 import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
 import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
+import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -60,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
@@ -118,7 +123,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     private StudentReferrerBean referrerBean;
     private StudentSourceBean sourceBean;
     private String remarks;
-    private List<CoachBean> coaches = new ArrayList<>();
+    private List<Staff> coaches = new ArrayList<>();
 
     public static EditStudentInfoFragment newInstance(boolean isAdd, User_Student student) {
         Bundle args = new Bundle();
@@ -127,6 +132,11 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         EditStudentInfoFragment fragment = new EditStudentInfoFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initBus();
     }
 
     @Nullable @Override
@@ -211,6 +221,22 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
             }
         });
         return view;
+    }
+
+    private void initBus() {
+        RxBus.getBus().register(EventTxT.class)
+            .onBackpressureLatest()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new BusSubscribe<EventTxT>() {
+                @Override public void onNext(EventTxT eventTxT) {
+                    if (!TextUtils.isEmpty(eventTxT.txt)) {
+                        civRemark.setContent("已填写");
+                        remarks = eventTxT.txt;
+                    }else{
+                        civRemark.setContent("请填写");
+                    }
+                }
+            });
     }
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -317,7 +343,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
             return;
         }
         List<String> idList = new ArrayList<>();
-        for (CoachBean coachBean : coaches) {
+        for (Staff coachBean : coaches) {
             idList.add(coachBean.id);
         }
         if (!idList.isEmpty()) {
@@ -435,6 +461,8 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
 
     @OnClick(R.id.civ_remark) public void onRemarkClick() {
         // TODO: 2017/11/6
+        routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
+            new CommonInputParams().title("填写备注信息").hint(remarks).build());
         //Intent toAddOrigin = new EditTextActivityIntentBuilder("填写备注").build(getActivity());
         //startActivityForResult(toAddOrigin, RESULT_ADD_REMARKS);
     }

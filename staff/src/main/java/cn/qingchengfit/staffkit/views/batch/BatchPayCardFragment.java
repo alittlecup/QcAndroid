@@ -19,8 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.common.Rule;
-import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.CardTplBatchShip;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.CardTplType;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -205,7 +205,8 @@ import javax.inject.Inject;
                     if (card_tpls.contains(cardTplBatchShip)) {
                         continue;
                     } else {
-                        CardTpl cardTpl = new CardTpl(cardTplBatchShip.name, cardTplBatchShip.type, "", cardTplBatchShip.id, "");
+                        CardTpl
+                            cardTpl = new CardTpl(cardTplBatchShip.name, cardTplBatchShip.type, "", cardTplBatchShip.id, "");
                         cardTpl.is_enable = false;
                         card_tpls.add(cardTpl);
                     }
