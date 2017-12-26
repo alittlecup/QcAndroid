@@ -91,7 +91,7 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_msg_send, container, false);
         unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+        setToolbar(toolbar);
         delegatePresenter(presenter, this);
         if (!TextUtils.isEmpty(msgid)) {
             showLoadingTrans();
@@ -141,11 +141,10 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
         return view;
     }
 
-    @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    private void setToolbar(@NonNull Toolbar toolbar) {
+        initToolbar(toolbar);
         toolbarTitile.setText("新建群发短信");
-        toolbar.setNavigationContentDescription(R.string.common_cancel);
         toolbar.inflateMenu(R.menu.menu_send);
-        tvLeft.setText("取消");
         tvLeft.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (TextUtils.isEmpty(etContent.getText().toString().trim()) && (chosenStudent == null || chosenStudent.size() == 0)) {

@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.views.student.choose;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -92,7 +93,7 @@ public class ChooseStudentListFragment extends BaseFragment
 
     public void localFilter(String s) {
         if (TextUtils.isEmpty(s)) {
-            adapter.setSearchText(null);
+            adapter.setSearchText("");
             sort(sortType);
         } else {
             adapter.setSearchText(s);
@@ -144,7 +145,6 @@ public class ChooseStudentListFragment extends BaseFragment
             //空状态
         }
         adapter.updateDataSet(items);
-        adapter.notifyDataSetChanged();
         for (int i = 0; i < adapter.getItemCount(); i++) {
             if (adapter.getItem(i) instanceof ChooseStudentItem) {
                 if (DirtySender.studentList.contains(((ChooseStudentItem) adapter.getItem(i)).getUser())) adapter.addSelection(i);
@@ -195,13 +195,16 @@ public class ChooseStudentListFragment extends BaseFragment
     //    return ret;
     //}
 
-    public void selectStudent(List<QcStudentBean> students) {
+    @SuppressLint("Range") public void selectStudent(List<QcStudentBean> students) {
         if (students != null) {
             adapter.clearSelection();
+            int pos = -1;
             for (int i = 0; i < students.size(); i++) {
-                adapter.toggleSelection(items.indexOf(students.get(i)));
+                pos = originData.indexOf(students.get(i));
+                char c = students.get(i).head.charAt(0);
+                adapter.toggleSelection(pos +  ((int)c - 96));
+                adapter.notifyItemChanged(pos + ((int)c - 96));
             }
-            adapter.notifyDataSetChanged();
         }
     }
 

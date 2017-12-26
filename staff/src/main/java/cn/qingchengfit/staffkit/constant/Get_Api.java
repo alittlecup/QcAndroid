@@ -913,7 +913,7 @@ public interface Get_Api {
         @QueryMap HashMap<String, Object> params);
 
     @GET("api/v2/staffs/{staff_id}/coaches/users/")
-    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<AllocateStudentBean>> qcGetCoachStudentDetail(
+    rx.Observable<QcDataResponse<AllocateStudentBean>> qcGetCoachStudentDetail(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     @GET("/api/v2/staffs/{staff_id}/coaches/users/") rx.Observable<QcDataResponse<AllocateStudentBean>> qcGetAllocateCoachStudents(

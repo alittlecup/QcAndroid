@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -17,6 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -56,6 +59,11 @@ public class AttendanceActivity extends BaseActivity implements FragCallBack {
                 onBackPressed();
             }
         });
+
+        if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup) {
+            ((ViewGroup) toolbar.getParent()).setPadding(0,
+                MeasureUtils.getStatusBarHeight(getBaseContext()), 0, 0);
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
