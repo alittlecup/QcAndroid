@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -28,6 +29,7 @@ import cn.qingchengfit.staffkit.rxbus.event.AllotSaleSelectAllEvent;
 import cn.qingchengfit.staffkit.views.custom.MyDrawerLayout;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterFragment;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterFragmentBuilder;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -146,6 +148,10 @@ public class AllotSalesActivity extends BaseActivity
         onBackPressed();
       }
     });
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0,
+          MeasureUtils.getStatusBarHeight(getBaseContext()), 0, 0);
+    }
   }
 
   public void initTextToolbar() {

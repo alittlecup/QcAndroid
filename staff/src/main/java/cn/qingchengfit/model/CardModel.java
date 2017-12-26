@@ -201,7 +201,12 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse<JsonObject>> qcChargeRefund(String cardId, ChargeBody body) {
-    return posApi.qcMinusMoney(loginStatus.staff_id(), cardId, gymWrapper.getParams(), body);
+    HashMap<String, Object> params = new HashMap<>();
+    if (!gymWrapper.inBrand()) {
+      params = gymWrapper.getParams();
+      params.putAll(gymWrapper.getShopParams());
+    }
+    return posApi.qcMinusMoney(loginStatus.staff_id(), cardId, params, body);
   }
 
   @Override
@@ -216,7 +221,7 @@ public class CardModel implements ICardModel {
   }
 
   @Override public Observable<QcDataResponse<DayOffs>> qcGetDayOffList(String cardId) {
-    return posApi.qcGetDayOff(loginStatus.staff_id(), cardId, gymWrapper.brand_id(),
+    return posApi.qcGetDayOff(loginStatus.staff_id(),  gymWrapper.brand_id(), cardId,
         gymWrapper.id(), gymWrapper.model());
   }
 

@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.statement.custom;
 
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.model.responese.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import java.util.List;
 
 /**

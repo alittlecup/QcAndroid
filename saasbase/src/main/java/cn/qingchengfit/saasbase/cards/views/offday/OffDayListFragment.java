@@ -91,7 +91,6 @@ public class OffDayListFragment
                 }).show();
           }
         } else {
-          //TODO 传递参数
           routeTo(AppUtils.getRouterUri(getContext(), "card/offday/ahead"),
               new AheadOffDayParams().card(card).offDayId(datas.get(pos).id).build());
         }

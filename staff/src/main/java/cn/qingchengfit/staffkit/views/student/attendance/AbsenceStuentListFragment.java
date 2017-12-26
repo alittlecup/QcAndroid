@@ -179,7 +179,7 @@ public class AbsenceStuentListFragment extends BaseFragment
         for (Absentce absentce : absentces) {
             itemList.add(new AttendanceStudentItem(absentce));
         }
-        commonFlexAdapter.notifyDataSetChanged();
+        commonFlexAdapter.updateDataSet(itemList);
     }
 
     @Override public void onNoMore() {

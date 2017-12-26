@@ -2,6 +2,7 @@ package cn.qingchengfit.model.responese;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 
 /**
  * power by

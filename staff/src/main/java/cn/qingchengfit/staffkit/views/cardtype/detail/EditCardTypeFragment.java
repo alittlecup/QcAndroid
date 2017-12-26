@@ -22,8 +22,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.body.CardtplBody;
-import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.views.CardProtocolActivity;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.App;
@@ -31,7 +32,6 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rxbus.event.EventLimitBuyCount;
 import cn.qingchengfit.staffkit.views.bottom.BottomBuyLimitFragment;
-import cn.qingchengfit.staffkit.views.cardtype.CardProtocolActivity;
 import cn.qingchengfit.staffkit.views.cardtype.standard.CardStandardFragment;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
@@ -94,7 +94,7 @@ public class EditCardTypeFragment extends BaseFragment implements EditCardTypeVi
   @BindView(R.id.input_card_protocol) CommonInputView inputCardProtocol;
   @BindView(R.id.show_card_protocol) TextView showCardProtocol;
   @BindView(R.id.card_protoccol) CommonInputView cardProtoccol;
-  private CardTpl card_tpl;
+  private cn.qingchengfit.saasbase.cards.bean.CardTpl card_tpl;
   private int mType = 0;//0 是新建 1 是修改
   private CardtplBody body = new CardtplBody();
   private Toolbar.OnMenuItemClickListener menuListener = new Toolbar.OnMenuItemClickListener() {

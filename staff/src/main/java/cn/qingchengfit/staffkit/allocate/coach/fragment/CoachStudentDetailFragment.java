@@ -32,7 +32,6 @@ import cn.qingchengfit.staffkit.allocate.coach.comparator.ItemComparator;
 import cn.qingchengfit.staffkit.allocate.coach.comparator.ItemComparatorJoinAt;
 import cn.qingchengfit.staffkit.allocate.coach.event.ChangeUIEvent;
 import cn.qingchengfit.staffkit.allocate.coach.item.CoachStudentDetailItem;
-import cn.qingchengfit.staffkit.allocate.coach.model.StudentWithCoach;
 import cn.qingchengfit.staffkit.allocate.coach.presenter.CoachDetailPresenter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.MyDrawerLayout;
@@ -154,7 +153,7 @@ import rx.schedulers.Schedulers;
             }
             if (alphabetview != null) alphabetview.setVisibility(View.GONE);
         }
-        adapter.notifyDataSetChanged();
+        adapter.updateDataSet(itemList);
     }
 
     public void sortDataByAlpah() {
@@ -277,12 +276,12 @@ import rx.schedulers.Schedulers;
         RxBus.getBus().unregister(StudentFilterEvent.class.getName(), obFilter);
     }
 
-    @Override public void onStudentList(List<StudentWithCoach> list) {
+    @Override public void onStudentList(List<QcStudentBean> list) {
         hideLoading();
         itemList.clear();
         datas.clear();
         datas.addAll(list);
-        for (StudentWithCoach data : list) {
+        for (QcStudentBean data : list) {
             itemList.add(new CoachStudentDetailItem(data));
         }
         new Handler().postDelayed(new Runnable() {

@@ -373,6 +373,7 @@
         android:name=".views.ChooseActivity"
         android:configChanges="keyboard"
         android:screenOrientation="portrait"
+        android:theme="@style/QcBaseTheme"
         >
       <intent-filter>
         <action android:name="${APP_PACKAGE}"/>

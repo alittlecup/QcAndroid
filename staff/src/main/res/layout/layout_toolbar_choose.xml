@@ -17,6 +17,7 @@
       android:minHeight="?attr/actionBarSize"
       android:theme="@style/Qc.toolbarStyle"
       app:popupTheme="@style/ToolbarStyle.Overflow"
+      android:fitsSystemWindows="true"
       app:theme="@style/Qc.toolbarStyle"
       app:titleTextAppearance="@style/ToolbarStyle"
       />
@@ -41,6 +42,7 @@
       android:layout_centerInParent="true"
       android:textColor="@color/white"
       android:textSize="16sp"
+      android:gravity="center_vertical"
       tools:text="@string/site_usage"
       style="@style/Qc.TextCommonBlack"
       />

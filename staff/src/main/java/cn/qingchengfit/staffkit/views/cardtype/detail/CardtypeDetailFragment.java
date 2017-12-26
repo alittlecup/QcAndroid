@@ -23,9 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.responese.CardStandard;
-import cn.qingchengfit.model.responese.CardTpl;
-import cn.qingchengfit.model.responese.CardTplOption;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -216,9 +216,9 @@ public class CardtypeDetailFragment extends BaseFragment implements CardtypeDeta
                 "适用于:" + (option.can_create ? "新购卡" : "") + ((option.can_create && option.can_charge) ? "、" : "") + (option.can_charge
                     ? "充值" : "");
             String unit = "";
-            if ("1".equals(option.card_tpl.type)) {
+            if ("1".equals(option.card_tpl.getType())) {
                 unit = "元";
-            } else if ("2".equals(option.card_tpl.type)) {
+            } else if ("2".equals(option.card_tpl.getType())) {
                 unit = "次";
             } else {
                 unit = "天";

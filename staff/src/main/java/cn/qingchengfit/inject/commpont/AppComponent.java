@@ -29,16 +29,10 @@ import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
+import cn.qingchengfit.saasbase.cards.views.CardProtocolActivity;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
-import cn.qingchengfit.saasbase.gymconfig.views.MsgNotiFragment;
-import cn.qingchengfit.saasbase.gymconfig.views.OrderLimitFragment;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
-import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
-import cn.qingchengfit.saasbase.staff.views.StaffListFragment;
-import cn.qingchengfit.saasbase.staff.views.SuFragment;
-import cn.qingchengfit.saasbase.staff.views.SuIdendifyFragment;
-import cn.qingchengfit.saasbase.staff.views.SuNewFragment;
 import cn.qingchengfit.staff.di.BindGymConfigAcitivty;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
@@ -117,7 +111,6 @@ import cn.qingchengfit.staffkit.views.card.offday.AheadOffDayFragment;
 import cn.qingchengfit.staffkit.views.card.offday.OffDayListFragment;
 import cn.qingchengfit.staffkit.views.card.spendrecord.SpendRecordFragment;
 import cn.qingchengfit.staffkit.views.card.spendrecord.SpendRecordListFragment;
-import cn.qingchengfit.staffkit.views.cardtype.CardProtocolActivity;
 import cn.qingchengfit.staffkit.views.cardtype.CardTypeActivity;
 import cn.qingchengfit.staffkit.views.cardtype.ChooseCardTypeActivity;
 import cn.qingchengfit.staffkit.views.cardtype.detail.CardtypeDetailFragment;
@@ -1222,7 +1215,7 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface StaffListSubcomponent extends AndroidInjector<StaffListFragment> {
+    @Subcomponent() public interface StaffListSubcomponent extends AndroidInjector<cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<StaffListFragment> {
         }
     }
@@ -4209,10 +4202,6 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardProtocolSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface QRSubcomponent extends AndroidInjector<QRActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<QRActivity> {
-        }
-    }
     @Module(subcomponents = QRSubcomponent.class) abstract class QRModule {
         @Binds @IntoMap @ActivityKey(QRActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(QRSubcomponent.Builder builder);

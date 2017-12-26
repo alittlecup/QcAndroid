@@ -95,6 +95,7 @@ public class TopFilterSaleFragment extends BaseFragment
     }
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
+        super.initToolbar(toolbar);
         toolbarLayout.setVisibility(View.GONE);
     }
 
@@ -180,7 +181,7 @@ public class TopFilterSaleFragment extends BaseFragment
         }
 
         mFlexAdapter.addSelection(0);
-        mFlexAdapter.notifyDataSetChanged();
+        mFlexAdapter.updateDataSet(items);
     }
 
     @Override public void onShowError(String e) {
@@ -222,7 +223,7 @@ public class TopFilterSaleFragment extends BaseFragment
                 if (datas.size() > i) items.add(new ChooseSalerItem(datas.get(i)));
             }
         }
-        mFlexAdapter.notifyDataSetChanged();
+        mFlexAdapter.updateDataSet(items);
     }
 
     @Override public boolean onTouch(View view, MotionEvent motionEvent) {

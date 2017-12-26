@@ -248,7 +248,7 @@ public class FollowUpDataTransferFragment extends BaseFragment
             for (Student s : conver.users) {
                 datas.add(new FollowUpItem(this, s, 4));
             }
-            commonFlexAdapter.notifyDataSetChanged();
+            commonFlexAdapter.updateDataSet(datas);
         }
     }
 

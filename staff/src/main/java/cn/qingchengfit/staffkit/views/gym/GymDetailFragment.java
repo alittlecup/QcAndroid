@@ -77,6 +77,7 @@ import cn.qingchengfit.staffkit.views.student.followup.FollowUpActivity;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.GymUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -304,6 +305,11 @@ public class GymDetailFragment extends BaseFragment
                 return true;
             }
         });
+
+        if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  && isfitSystemPadding()) {
+            toolbarLayout.setPadding(0,
+                MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+        }
     }
 
     private void initView() {

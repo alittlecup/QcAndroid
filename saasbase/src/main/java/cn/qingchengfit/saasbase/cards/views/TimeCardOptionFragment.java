@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.CardTplOption;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 
 /**
  * Created by fb on 2017/12/15.
@@ -14,6 +15,8 @@ import com.anbillon.flabellum.annotations.Leaf;
 
 @Leaf(module = "card", path = "/custom/option")
 public class TimeCardOptionFragment extends CustomCardOptionFragment {
+
+  @Need Integer unUse;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
