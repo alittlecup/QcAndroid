@@ -300,7 +300,7 @@ import rx.functions.Action1;
           @Override public void onTimeSelect(Date date) {
             civStartTime.setContent(DateUtils.Date2YYYYMMDD(date));
             civEndTime.setContent(
-                DateUtils.Date2YYYYMMDD(DateUtils.addDay(date, cardOptionCustom.getDays() + 1)));
+                DateUtils.Date2YYYYMMDD(DateUtils.addDay(date, cardOptionCustom.getDays())));
           }
         });
   }
@@ -338,7 +338,7 @@ import rx.functions.Action1;
       layoutValidate.setVisibility(View.VISIBLE);
       civStartTime.setContent(DateUtils.Date2YYYYMMDD(new Date()));
       civEndTime.setContent(
-          DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), option.getDays() + 1)));
+          DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), option.getDays())));
     } else {
       layoutValidate.setVisibility(View.GONE);
     }
@@ -348,9 +348,9 @@ import rx.functions.Action1;
           TextUtils.isEmpty(option.created_at) ? new Date()
               : DateUtils.formatDateFromServer(option.created_at)));
       civEndTime.setContent(DateUtils.Date2YYYYMMDD(
-          TextUtils.isEmpty(option.created_at) ? DateUtils.addDay(new Date(), (option.days) + 1)
+          TextUtils.isEmpty(option.created_at) ? DateUtils.addDay(new Date(), (option.days))
               : DateUtils.addDay(DateUtils.formatDateFromServer(option.created_at),
-                  ((int) Float.parseFloat(option.charge)) + 1)));
+                  ((int) Float.parseFloat(option.charge)))));
     }
   }
 
@@ -419,7 +419,7 @@ import rx.functions.Action1;
   }
 
   @Override public int payMethod() {
-    return patType;
+    return patType == 0 ? 7 : patType;
   }
 
   @Override public boolean openValidDay() {

@@ -16,6 +16,8 @@ import cn.qingchengfit.utils.DateUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.inject.Inject;
 
 /**
@@ -44,6 +46,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
     }
     tvCardValidateTotal.setVisibility(View.VISIBLE);
     elAutoOpen.setExpanded(card.is_auto_start());
+    presenter.setChoseStuIds((ArrayList<String>) card.getUserIds());
     //TODO 支付方式
     //civPayMethod.setContent(getResources().getStringArray(R.array.pay_method)[]);
     //civBindMenbers.setContent(card.getUsers().size() + "  人");
@@ -73,7 +76,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
     }
     civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(
         DateUtils.formatDateFromServer(
-            option.created_at),
+            DateUtils.Date2YYYYMMDD(new Date())),
         (int)(Float.parseFloat(option.charge) + card.getBalance()))));
   }
 

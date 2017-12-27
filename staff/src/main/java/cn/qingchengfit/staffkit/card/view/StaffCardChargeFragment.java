@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
 import cn.qingchengfit.saasbase.cards.views.NewCardChargeFragment;
 import cn.qingchengfit.staffkit.R;
@@ -44,11 +43,14 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
   @Override public void onBusinessOrder(JsonObject payBusinessResponse) {
     Gson gson = new Gson();
     if (payMethod() < 6) {
-      buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
+      buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(card.getUserIds()));
     } else {
-      QcResponsePayWx
-          qcResponsePayWx = gson.fromJson(payBusinessResponse.toString(), QcResponsePayWx.class);
-      onWxPay(qcResponsePayWx.data.url);
+      //QcResponsePayWx
+      //    qcResponsePayWx = gson.fromJson(payBusinessResponse.toString(), QcResponsePayWx.class);
+      if (payBusinessResponse.get("url") == null){
+        return;
+      }
+      onWxPay(payBusinessResponse.get("url").getAsString());
     }
   }
 
@@ -79,6 +81,7 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
   @Override public void onSuccess() {
     ToastUtils.showS("续卡成功");
     getActivity().setResult(Activity.RESULT_OK);
+    getActivity().getSupportFragmentManager().popBackStack("", 1 );
     routeTo(AppUtils.getRouterUri(getContext(), "card/detail/"),
         new CardDetailParams().cardid(card.getId()).build());
   }

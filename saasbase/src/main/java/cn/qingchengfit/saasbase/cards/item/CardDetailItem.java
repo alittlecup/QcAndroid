@@ -48,19 +48,19 @@ public class CardDetailItem extends AbstractFlexibleItem<CardDetailItem.CardDeta
         DrawableUtils.generateBg(8f, CardBusinessUtils.getDefaultCardbgColor(mCard.getType())));
     if (mCard.isCheck_valid() && mCard.getType() != Configs.CATEGORY_DATE) {
       holder.tvCardAppend.setText("有效期："
-          + DateUtils.getYYMMfromServer(mCard.getValid_from())
+          + DateUtils.getYYYYMMDDfromServer(mCard.getValid_from())
           + "至"
-          + DateUtils.getYYMMfromServer(mCard.getValid_to()));
+          + DateUtils.getYYYYMMDDfromServer(mCard.getValid_to()));
     } else if (mCard.getType() == Configs.CATEGORY_DATE) {
       holder.tvCardAppend.setText("有效期："
-          + DateUtils.getYYMMfromServer(mCard.getStart())
+          + DateUtils.getYYYYMMDDfromServer(mCard.getStart())
           + "至"
-          + DateUtils.getYYMMfromServer(mCard.getEnd()));
+          + DateUtils.getYYYYMMDDfromServer(mCard.getEnd()));
     } else {
       holder.tvCardAppend.setText("");
     }
 
-    holder.imgStutus.setVisibility(mCard.getCard_tpl().is_enable?View.GONE:View.VISIBLE);
+    holder.imgStutus.setVisibility(mCard.is_active() ? View.GONE:View.VISIBLE);
     holder.imgStutus.setText("已停卡");
     holder.imgStutus.setBackground(DrawableUtils.generateCardStatusBg(R.color.red,holder.imgStutus.getContext()));
   }

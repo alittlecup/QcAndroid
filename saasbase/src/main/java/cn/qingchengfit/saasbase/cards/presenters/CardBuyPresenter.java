@@ -72,6 +72,13 @@ public class CardBuyPresenter extends BasePresenter {
     cardCate = cate;
   }
 
+  public void setChoseStuIds(ArrayList<String> studentList) {
+    if (studentList.size() > 0){
+      choseStuIds.clear();
+    }
+    this.choseStuIds.addAll(choseStuIds);
+  }
+
   public ArrayList<String>  getChoseStuIds() {
     return choseStuIds;
   }
@@ -220,8 +227,8 @@ public class CardBuyPresenter extends BasePresenter {
     //}
     cardBuyBody.is_auto_start = view.autoOpen();
     cardBuyBody.origin = 2;
-    if (cardBuyBody.getSeller_id() != null && cardBuyBody.getSeller_id()
-        .equals(loginStatus.staff_id())) {
+    if ((cardBuyBody.getSeller_id() != null && cardBuyBody.getSeller_id()
+        .equals(loginStatus.staff_id())) || TextUtils.isEmpty(cardBuyBody.getSeller_id())) {
       cardBuyBody.setSeller_id(null);
       cardBuyBody.staff_id = loginStatus.staff_id();
     }

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.card.presenter.StaffCardBuyPresenter;
@@ -45,8 +44,8 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     if (payMethod() < 6) {
       buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
     } else {
-      QcResponsePayWx qcResponsePayWx = gson.fromJson(payBusinessResponse.toString(), QcResponsePayWx.class);
-      onWxPay(qcResponsePayWx.data.url);
+      //QcResponsePayWx qcResponsePayWx = gson.fromJson(payBusinessResponse.toString(), QcResponsePayWx.class);
+      onWxPay(String.valueOf(payBusinessResponse.get("url")));
     }
   }
 
@@ -77,6 +76,7 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
   @Override public void onSuccess() {
     ToastUtils.showS("购卡成功");
     getActivity().setResult(Activity.RESULT_OK);
+    getActivity().getSupportFragmentManager().popBackStack("", 1 );
     routeTo(AppUtils.getRouterUri(getContext(), "card/cardtpl/list/"), null);
   }
 
