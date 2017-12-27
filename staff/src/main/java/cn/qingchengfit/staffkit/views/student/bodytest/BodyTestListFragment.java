@@ -73,7 +73,7 @@ public class BodyTestListFragment extends BaseFragment implements BodyTestListVi
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bodytestlist, container, false);
         unbinder = ButterKnife.bind(this, view);
-        presenter.attachView(this);
+        delegatePresenter(presenter,this);
         initToolbar(toolbar);
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
         recycleview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));

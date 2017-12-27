@@ -31,6 +31,7 @@ import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
 import cn.qingchengfit.staffkit.views.TitleFragment;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
+import cn.qingchengfit.staffkit.views.student.ChooseOriginActivity;
 import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
 import cn.qingchengfit.staffkit.views.student.bodytest.BodyTestListFragment;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
@@ -132,6 +133,10 @@ public class StudentMoreInfoFragment extends BaseFragment
       }
     });
     return view;
+  }
+
+  @Override public boolean isBlockTouch() {
+    return false;
   }
 
   @Override public void onResume() {
@@ -246,6 +251,9 @@ public class StudentMoreInfoFragment extends BaseFragment
     super.onDestroyView();
   }
 
+  /**
+   * 点击体测
+   */
   @OnClick(R.id.body_layout) public void onClickBodyTest() {
     if (user_student == null) {
       Timber.e("获取学员信息失败");
@@ -290,6 +298,9 @@ public class StudentMoreInfoFragment extends BaseFragment
     }
   }
 
+  /**
+   * 选择教练
+   */
   @OnClick(R.id.coach_layout) public void allocateCoach() {
     if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
       Intent toChooseSaler = new Intent(getActivity(), MutiChooseCoachActivity.class);
@@ -306,6 +317,8 @@ public class StudentMoreInfoFragment extends BaseFragment
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
       // TODO: 2017/11/6
+      Intent toChooseOrigin = new Intent(getContext(), ChooseOriginActivity.class);
+      startActivityForResult(toChooseOrigin,RESULT_ORIGIN);
       //startActivityForResult(new ChooseOriginActivityIntentBuilder().build(getContext()),
       //    RESULT_ORIGIN);
     } else {
@@ -313,6 +326,9 @@ public class StudentMoreInfoFragment extends BaseFragment
     }
   }
 
+  /**
+   * 推荐
+   */
   @OnClick(R.id.ll_student_referrer) public void referrerClick(View view) {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
@@ -323,6 +339,9 @@ public class StudentMoreInfoFragment extends BaseFragment
     }
   }
 
+  /**
+   * 销售
+   */
   private void changeSaler() {
     Intent toChooseSaler = new Intent(getActivity(), MutiChooseSalersActivity.class);
     toChooseSaler.putStringArrayListExtra(MutiChooseSalersActivity.INPUT_STUDENT,

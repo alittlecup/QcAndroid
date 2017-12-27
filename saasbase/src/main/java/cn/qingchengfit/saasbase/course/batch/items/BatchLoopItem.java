@@ -57,11 +57,11 @@ public class BatchLoopItem extends AbstractFlexibleItem<BatchLoopItem.BatchLoopV
       sb.append(WEEKS[batchLoop.week.get(i) - 1]).append(Constants.SEPARATE_CN);
     }
     holder.week.setText(sb.substring(0, sb.length() - 1));
-    if (batchLoop.slice > 0){
+    if (isPrivate){
       holder.tvSlice.setText("约课时间间隔为"+(batchLoop.slice/60)+"分钟");
     }else holder.tvSlice.setText("");
     if (isPrivate) {
-      holder.time.setText(DateUtils.getTimeHHMM(batchLoop.dateStart) + "-" + DateUtils.getTimeHHMM(batchLoop.dateEnd));
+      holder.time.setText(DateUtils.getTimeHHMM(batchLoop.dateStart) + "-" +(batchLoop.isCross?"次日":"")+ DateUtils.getTimeHHMM(batchLoop.dateEnd));
     } else {
       holder.time.setText(DateUtils.getTimeHHMM(batchLoop.dateStart));
     }

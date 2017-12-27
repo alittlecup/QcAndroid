@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,6 +17,8 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.views.setting.brand.BrandDetailFragment;
 import cn.qingchengfit.staffkit.views.setting.brand.BrandManageFragment;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -42,6 +45,10 @@ public class BrandManageActivity extends BaseActivity implements FragCallBack {
                 onBackPressed();
             }
         });
+        if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup ) {
+            ((ViewGroup) toolbar.getParent()).setPadding(0,
+              MeasureUtils.getStatusBarHeight(this), 0, 0);
+        }
         if (getIntent() != null && getIntent().getParcelableExtra(Configs.EXTRA_BRAND) != null) {
             getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frag, BrandDetailFragment.newInstance((Brand) getIntent().getParcelableExtra(Configs.EXTRA_BRAND)))

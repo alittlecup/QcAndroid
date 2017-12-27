@@ -69,6 +69,7 @@ public class BodyTestListPresenter extends BasePresenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         view = null;
         if (sp != null) sp.unsubscribe();
     }

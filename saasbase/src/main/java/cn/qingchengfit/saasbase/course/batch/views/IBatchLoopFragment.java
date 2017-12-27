@@ -2,15 +2,16 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,10 +28,13 @@ import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Need;
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -62,30 +66,36 @@ public abstract class IBatchLoopFragment extends SaasBaseFragment implements
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.label_can_order) TextView labelCanOrder;
-  @BindView(R2.id.starttime) CommonInputView starttime;
-  @BindView(R2.id.endtime) CommonInputView endtime;
-  @BindView(R2.id.civ_order_interval) CommonInputView civOrderInterval;
+  @BindView(R2.id.starttime)protected CommonInputView starttime;
+  @BindView(R2.id.endtime)protected CommonInputView endtime;
+  @BindView(R2.id.civ_order_interval)protected CommonInputView civOrderInterval;
   @BindView(R2.id.desc) TextView desc;
   @BindView(R2.id.rv) RecyclerView rv;
-  @BindArray(R2.array.order_time_interval) String[] orderTimeIntervals;
-  protected boolean isPrivate;
+  String[] orderTimeIntervals;
+
   protected CommonFlexAdapter commonFlexAdapter;
   protected Date mStart,mEnd;
   protected boolean isCross;
   /**
    * 私教约课间隔，单位秒
    */
+  @Need public Boolean isPrivate;
   @Need Integer slice;
   @Need Integer courseLength;
   @Need ArrayList<BatchLoop> originBatchLoop;
+  private TimeDialogWindow timePickerDialog;
 
-
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    orderTimeIntervals = getResources().getStringArray(R.array.order_time_interval);
+  }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_add_batch_loop, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
+    setBackPress();
     endtime.setVisibility(isPrivate?View.VISIBLE:View.GONE);
     civOrderInterval.setVisibility(isPrivate?View.VISIBLE:View.GONE);
     //init rv
@@ -119,7 +129,7 @@ public abstract class IBatchLoopFragment extends SaasBaseFragment implements
 
   private void initView(){
     starttime.setContent(DateUtils.getTimeHHMM(mStart));
-    endtime.setContent((isCross?"":"次日")+DateUtils.getTimeHHMM(mEnd));
+    endtime.setContent((isCross?"次日":"")+DateUtils.getTimeHHMM(mEnd));
     if (isPrivate){
       endtime.setVisibility(View.VISIBLE);
       civOrderInterval.setVisibility(View.VISIBLE);
@@ -134,7 +144,7 @@ public abstract class IBatchLoopFragment extends SaasBaseFragment implements
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("新增周期");
+    toolbarTitle.setText(isPrivate==null || isPrivate?"新增开放时间":"新增周期");
     toolbar.inflateMenu(R.menu.menu_comfirm);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
@@ -155,21 +165,66 @@ public abstract class IBatchLoopFragment extends SaasBaseFragment implements
   }
 
   @OnClick(R2.id.starttime) public void onStarttimeClicked() {
+    timePickerDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
+    timePickerDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+      @Override public void onTimeSelect(Date date) {
+        mStart = date;
+        starttime.setContent(DateUtils.Date2HHmm(date));
+        if (!isPrivate){
+          endtime.setContent(DateUtils.Date2HHmm(DateUtils.add(mStart,courseLength, Calendar.SECOND)));
+        }
+        updateTxt();
+        //timeRepeat.setStart(DateUtils.Date2HHmm(date));
+      }
+    });
+    Date d = new Date();
+    try {
+      d = DateUtils.HHMM2date(starttime.getContent());
+    } catch (Exception e) {
 
+    }
+    timePickerDialog.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
   }
 
   @OnClick(R2.id.endtime) public void onEndtimeClicked() {
+    timePickerDialog = new TimeDialogWindow(getContext(), TimePopupWindow.Type.TODAY_HOURS_MINS, 5);
+    timePickerDialog.setOnTimeSelectListener(new TimeDialogWindow.OnTodayTimeSelectListener() {
+      @Override public void onTimeSelect(Date date, boolean isToday) {
+        mEnd = date;
+        endtime.setContent((isToday ? "" : "次日") + DateUtils.Date2HHmm(date));
+        isCross = !isToday;
+        updateTxt();
+      }
 
+      @Override public void onTimeSelect(Date date) {
+
+      }
+    });
+    Date d = new Date();
+    try {
+      String tim = endtime.getCivContent();
+      if (tim.contains("次日")) tim = tim.replace("次日", "").trim();
+      d = DateUtils.HHMM2date(tim);
+    } catch (Exception e) {
+
+    }
+    timePickerDialog.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
   }
 
+
+  //点击间隔
   @OnClick(R2.id.civ_order_interval) public void onClickInterval() {
     new DialogList(getContext())
         .list(orderTimeIntervals, new AdapterView.OnItemClickListener() {
           @Override
-          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            civOrderInterval.setContent(orderTimeIntervals[position]);
+          public void onItemClick(AdapterView<?> parent, View view, int p, long id) {
+            civOrderInterval.setContent(orderTimeIntervals[p]);
+            int position = p-1;
             //根据位置计算实际时间的公式 5 15 30 45 60
-            slice = (5+(position/3)*10)*(position%3+1+position/3)*60;
+            if (position == 1){
+              slice = 0;
+            }else
+              slice = (5+(position/3)*10)*(position%3+1+position/3)*60;
           }
         })
         .show();

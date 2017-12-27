@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -49,6 +50,7 @@ import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -87,6 +89,7 @@ import rx.android.schedulers.AndroidSchedulers;
 
   @BindView(R2.id.tv_clear_auto_batch) TextView tvClearAutoBatch;
   @BindView(R2.id.civ_to_open_time) CommonInputView civOpenTime;
+  @BindView(R2.id.scroll_root) NestedScrollView scrollRoot;
   String[] arrayOpenTime;
 
   @Inject AddBatchPresenter presenter;
@@ -145,11 +148,15 @@ import rx.android.schedulers.AndroidSchedulers;
     View view = inflater.inflate(R.layout.fragment_saas_add_batch, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
-    presenter.setPrivate(mCourse == null);
+    presenter.setPrivate(mCourse == null || mCourse.is_private());
 
     initToolbar(toolbar);
 
     recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+    recyclerview.addItemDecoration(new FlexibleItemDecoration(getContext())
+      .withOffset(1)
+      .withBottomEdge(true)
+    );
     recyclerview.setAdapter(commonFlexAdapter);
 
     Calendar calendar = Calendar.getInstance();
@@ -158,8 +165,17 @@ import rx.android.schedulers.AndroidSchedulers;
     calendar.set(Calendar.DAY_OF_MONTH, 1);
     calendar.add(Calendar.DATE, -1);
     endtime.setContent(DateUtils.Date2YYYYMMDD(calendar.getTime()));
-
+    if (savedInstanceState != null  && savedInstanceState.containsKey("p")){
+      scrollRoot.scrollTo(0,savedInstanceState.getInt("p",0));
+    }
     return view;
+  }
+
+  @Override public void onSaveInstanceState(Bundle outState) {
+    try {
+    outState.putInt("p", scrollRoot.getScrollY());
+    } catch (Exception e){}
+    super.onSaveInstanceState(outState);
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -451,6 +467,7 @@ import rx.android.schedulers.AndroidSchedulers;
       routeTo("/batch/loop/add/", AddBatchLoopParams.builder()
         .courseLength(presenter.isPrivate()?0:mCourse.getLength())
         .slice(10)
+        .isPrivate(mCourse == null || mCourse.is_private)
         .originBatchLoop(getCurBatchLoop())
         .build());
   }

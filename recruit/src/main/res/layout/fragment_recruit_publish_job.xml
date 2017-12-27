@@ -1,123 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_grey"
-    android:orientation="vertical"
+    xmlns:bind="http://schemas.android.com/tools"
     >
 
-  <include layout="@layout/common_simple_toolbar"/>
+  <data>
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_position_name"
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      app:civ_clickable="true"
-      app:civ_hint="@string/please_input"
-      app:civ_lable="职位名称"
-      app:civ_showdivier="true"
-      app:civ_showright="true"
-      app:civ_text_color="@color/qc_text_black"
-      />
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_salary_rank"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      app:civ_clickable="true"
-      app:civ_hint="@string/please_input"
-      app:civ_lable="薪资范围"
-      app:civ_showdivier="true"
-      app:civ_showright="true"
-      app:civ_text_color="@color/qc_text_black"
-      />
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/layout_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_position_desc"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      app:civ_clickable="true"
-      app:civ_hint="@string/please_input"
-      app:civ_lable="职位描述"
-      app:civ_showdivier="true"
-      app:civ_showright="true"
-      app:civ_text_color="@color/qc_text_black"
-      />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_position_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_hint="@string/please_input"
+        app:civ_lable="职位名称"
+        app:civ_showdivier="true"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_position_demands"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      app:civ_clickable="true"
-      app:civ_hint="@string/please_input"
-      app:civ_lable="任职要求"
-      app:civ_nonnull="false"
-      app:civ_showdivier="false"
-      app:civ_showright="true"
-      app:civ_text_color="@color/qc_text_black"
-      />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_salary_rank"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_hint="@string/please_input"
+        app:civ_lable="薪资范围"
+        app:civ_showdivier="true"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
 
-  <include layout="@layout/divider_grey"/>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_position_desc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_hint="@string/please_input"
+        app:civ_lable="职位描述"
+        app:civ_showdivier="true"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
 
-  <android.support.v4.widget.Space
-      android:layout_width="wrap_content"
-      android:layout_height="@dimen/activity_vertical_margin"
-      />
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_position_demands"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_hint="@string/please_input"
+        app:civ_lable="任职要求"
+        app:civ_nonnull="false"
+        app:civ_showdivier="false"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
 
-  <include layout="@layout/divider_grey"/>
+    <include layout="@layout/divider_grey"/>
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_position_require"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      app:civ_clickable="true"
-      app:civ_hint="@string/please_input"
-      app:civ_lable="职位要求"
-      app:civ_showdivier="true"
-      app:civ_showright="true"
-      app:civ_text_color="@color/qc_text_black"
-      />
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/activity_vertical_margin"
+        />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_position_welfare"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      app:civ_clickable="true"
-      app:civ_hint="@string/please_input"
-      app:civ_lable="职位福利"
-      app:civ_showdivier="false"
-      app:civ_showright="true"
-      app:civ_text_color="@color/qc_text_black"
-      />
+    <include layout="@layout/divider_grey"/>
 
-  <include layout="@layout/divider_grey"/>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_position_require"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_hint="@string/please_input"
+        app:civ_lable="职位要求"
+        app:civ_showdivier="true"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
 
-  <android.support.v4.widget.Space
-      android:layout_width="wrap_content"
-      android:layout_height="@dimen/activity_vertical_margin"
-      />
-  <include layout="@layout/divider_grey"/>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_position_welfare"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_hint="@string/please_input"
+        app:civ_lable="职位福利"
+        app:civ_showdivier="false"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
 
-  <cn.qingchengfit.widgets.CommonInputView
-      android:id="@+id/civ_gym_desc"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      app:civ_clickable="true"
-      app:civ_hint="@string/please_input"
-      app:civ_lable="场馆介绍"
-      app:civ_showdivier="false"
-      app:civ_showright="true"
-      app:civ_text_color="@color/qc_text_black"
-      />
+    <include layout="@layout/divider_grey"/>
 
-  <Button
-      android:id="@+id/btn_publish"
-      android:layout_width="match_parent"
-      android:layout_height="44dp"
-      android:layout_margin="@dimen/activity_horizontal_margin"
-      android:text="发布"
-      style="@style/QcBtnPrimery"
-      />
-</LinearLayout>
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/activity_vertical_margin"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_gym_desc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_hint="@string/please_input"
+        app:civ_lable="场馆介绍"
+        app:civ_showdivier="false"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
+
+    <Button
+        android:id="@+id/btn_publish"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="发布"
+        style="@style/QcBtnPrimery"
+        />
+  </LinearLayout>
+</layout>

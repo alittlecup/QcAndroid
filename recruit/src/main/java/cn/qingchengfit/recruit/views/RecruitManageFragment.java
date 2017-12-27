@@ -9,9 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import cn.qingchengfit.events.EventChooseGym;
 import cn.qingchengfit.items.StickerHintItem;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -122,7 +122,7 @@ public class RecruitManageFragment extends BaseFragment
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
-          onLayoutStarredResumeClicked();
+          onBtnPublishNewPositionClicked();
         }
       });
     return db.getRoot();
@@ -130,7 +130,8 @@ public class RecruitManageFragment extends BaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    ((TextView)db.layoutToolbar.toolbarTitle).setText("招聘管理");
+    ToolbarModel tbm = new ToolbarModel("招聘管理");
+    db.setToolbarModel(tbm);
   }
 
   @Override protected void onFinishAnimation() {

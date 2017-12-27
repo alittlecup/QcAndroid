@@ -70,6 +70,8 @@ public class BrandEditFragment extends BaseFragment {
     @BindView(R.id.brand_name) CommonInputView brandName;
     @BindView(R.id.change_creator) CommonInputView changeCreator;
     @BindView(R.id.del) TextView del;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
     @Inject RestRepository restRepository;
 
@@ -91,15 +93,18 @@ public class BrandEditFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_edit_brand, container, false);
         unbinder = ButterKnife.bind(this, view);
         initBus();
+        initToolbar(toolbar);
         if (getArguments() != null) {
             brand = getArguments().getParcelable("brand");
 
             if (brand != null) {
                 postBrand.name = brand.getName();
                 postBrand.photo = brand.getPhoto();
-                mCallbackActivity.setToolbar("修改品牌信息", false, null, R.menu.menu_save, new Toolbar.OnMenuItemClickListener() {
+                toolbarTitle.setText("修改品牌信息");
+                toolbar.getMenu().clear();
+                toolbar.inflateMenu(R.menu.menu_save);
+                toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                     @Override public boolean onMenuItemClick(MenuItem item) {
-
                         postBrand.name = brandName.getContent();
                         if (TextUtils.isEmpty(postBrand.name)) {
                             ToastUtils.show("请填写品牌名称");
@@ -108,23 +113,23 @@ public class BrandEditFragment extends BaseFragment {
                         showLoading();
 
                         RxRegiste(restRepository.getPost_api()
-                            .qcEditBrand(brand.getId(), postBrand)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .onBackpressureBuffer()
-                            .subscribeOn(Schedulers.io())
-                            .subscribe(new Action1<QcResponse>() {
-                                @Override public void call(QcResponse qcResponse) {
-                                    hideLoading();
-                                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                                        ToastUtils.show("修改成功");
-                                        getActivity().getSupportFragmentManager()
-                                            .popBackStackImmediate(BrandManageFragment.TAG,
-                                                FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                    } else {
-                                        ToastUtils.show("修改失败");
-                                    }
-                                }
-                            }));
+                          .qcEditBrand(brand.getId(), postBrand)
+                          .observeOn(AndroidSchedulers.mainThread())
+                          .onBackpressureBuffer()
+                          .subscribeOn(Schedulers.io())
+                          .subscribe(new Action1<QcResponse>() {
+                              @Override public void call(QcResponse qcResponse) {
+                                  hideLoading();
+                                  if (ResponseConstant.checkSuccess(qcResponse)) {
+                                      ToastUtils.show("修改成功");
+                                      getActivity().getSupportFragmentManager()
+                                        .popBackStackImmediate(BrandManageFragment.TAG,
+                                          FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                  } else {
+                                      ToastUtils.show("修改失败");
+                                  }
+                              }
+                          }));
 
                         return true;
                     }
@@ -181,6 +186,7 @@ public class BrandEditFragment extends BaseFragment {
 
         return view;
     }
+
 
 
     private void initBus(){

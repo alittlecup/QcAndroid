@@ -56,12 +56,7 @@ public class SignInManualActivity extends BaseActivity implements FragCallBack {
 
         boolean isSignIn = getIntent().getBooleanExtra("isSignIn", true);
 
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        initToolbar(toolbar);
         studentWrapper.setStudentBean(studentBean);
 
         if (isSignIn) {

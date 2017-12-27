@@ -49,6 +49,7 @@ public class CoachListFragment extends BaseStaffListFragment {
     SaasbaseParamsInjector.inject(this);
   }
 
+
   @Override public void initToolbar(@NonNull final Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("教练");

@@ -18,6 +18,7 @@ import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresente
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ import javax.inject.Inject;
     Bundle savedInstanceState) {
     delegatePresenter(privatePresenter, this);
     RxBusAdd(EventStaffWrap.class)
+      .compose(doWhen(FragmentEvent.RESUME))
       .throttleFirst(1000, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<EventStaffWrap>() {
         @Override public void onNext(EventStaffWrap eventStaffWrap) {

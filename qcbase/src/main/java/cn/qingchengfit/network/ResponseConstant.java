@@ -35,7 +35,7 @@ public class ResponseConstant {
     if (qcResponse.getStatus() == SUCCESS) {
       return true;
     } else {
-      if(qcResponse.error_code.equalsIgnoreCase(E_Login)){
+      if(qcResponse.error_code != null && qcResponse.error_code.equalsIgnoreCase(E_Login)){
         RxBus.getBus().post(new EventSessionError());
       }
       return false;

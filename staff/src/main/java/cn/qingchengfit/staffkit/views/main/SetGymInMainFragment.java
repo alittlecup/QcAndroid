@@ -2,7 +2,9 @@ package cn.qingchengfit.staffkit.views.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -79,6 +81,8 @@ import rx.schedulers.Schedulers;
     @BindView(R.id.phone) CommonInputView phone;
     @BindView(R.id.descripe) CommonInputView descripe;
     @BindView(R.id.comfirm) Button comfirm;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
     @Arg Brand mBrand;
     @BindView(R.id.guide_step_1) ImageView guideStep1;
@@ -111,6 +115,7 @@ import rx.schedulers.Schedulers;
         address.addTextWatcher(textChange);
         phone.addTextWatcher(textChange);
         guideStep1.setVisibility(View.GONE);
+        initToolbar(toolbar);
         RxBusAdd(EventAddress.class).subscribe(new Action1<EventAddress>() {
             @Override public void call(EventAddress eventAddress) {
                 address.setContent(eventAddress.address);
@@ -123,6 +128,11 @@ import rx.schedulers.Schedulers;
         //告诉 未登录home页，新增场馆到第几步了
         RxBus.getBus().post(new EventUnloginHomeLevel(2));
         return view;
+    }
+
+    @Override public void initToolbar(@NonNull Toolbar toolbar) {
+        toolbarTitle.setText("创建您的场馆");
+        super.initToolbar(toolbar);
     }
 
     @Override public String getFragmentName() {

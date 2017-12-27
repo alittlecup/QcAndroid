@@ -121,7 +121,7 @@ public class EditPrivateOpenTimeFragment extends BottomSheetDialogFragment {
       @Override public void onTimeSelect(Date date, boolean isToday) {
         db.endtime.setContent((isToday ? "" : "次日") + DateUtils.Date2HHmm(date));
         timeRepeat.setEnd(DateUtils.Date2HHmm(date));
-        timeRepeat.setIs_cross(isToday);
+        timeRepeat.setIs_cross(!isToday);
       }
 
       @Override public void onTimeSelect(Date date) {

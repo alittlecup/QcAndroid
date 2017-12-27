@@ -132,7 +132,7 @@ public class DateUtils {
   }
 
  public static Date HHMM2date(String s) {
-    SimpleDateFormat formatter = new SimpleDateFormat("HH-mm", Locale.CHINA);
+    SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
     Date date = new Date();
     try {
       date = formatter.parse(s);

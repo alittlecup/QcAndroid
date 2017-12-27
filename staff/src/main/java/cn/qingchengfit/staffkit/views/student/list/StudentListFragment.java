@@ -91,6 +91,12 @@ public class StudentListFragment extends FilterCommonFragment {
     private List<StudentBean> datas = new ArrayList<>();
     private List<StudentBean> datasOfigin = new ArrayList<>();
     private String mChooseShopId;
+    StudentFilterFragment filterFragment;
+
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        filterFragment = new StudentFilterFragmentBuilder(1).build();
+    }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_studentlist, container, false);
@@ -109,7 +115,7 @@ public class StudentListFragment extends FilterCommonFragment {
             .replace(R.id.frame_student_operation, new StudentOperationFragment())
             .commit();
         // 会员筛选页
-        StudentFilterFragment filterFragment = new StudentFilterFragmentBuilder(1).build();
+
         getChildFragmentManager().beginTransaction().replace(R.id.frame_student_filter, filterFragment).commit();
 
         // 注册 event 刷新列表
@@ -120,6 +126,8 @@ public class StudentListFragment extends FilterCommonFragment {
         });
         return view;
     }
+
+
 
     @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
       Bundle savedInstanceState) {
@@ -147,25 +155,13 @@ public class StudentListFragment extends FilterCommonFragment {
         });
     }
 
+
     @Override public void onDrawerClosed(View drawerView) {
         //filterFragment.resetView(filter);
         super.onDrawerClosed(drawerView);
     }
 
-    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //this.getView().setFocusableInTouchMode(true);
-        //this.getView().requestFocus();
-        //this.getView().setOnKeyListener(new View.OnKeyListener() {
-        //    @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
-        //        if (keyCode == KeyEvent.KEYCODE_BACK && drawer.isShown()) {
-        //            drawer.closeDrawer(GravityCompat.END);
-        //            return true;
-        //        }
-        //        return false;
-        //    }
-        //});
-    }
+
 
     public void initToolBar() {
         super.initToolbar(toolbar);
@@ -258,6 +254,7 @@ public class StudentListFragment extends FilterCommonFragment {
     }
 
     private void initView() {
+
         studentAdapter = new StudentAdapter(datas);
         studentlistRv.setLayoutManager(mLinearLayoutManager);
 
@@ -291,7 +288,7 @@ public class StudentListFragment extends FilterCommonFragment {
             @Override public boolean onTouch(View v, MotionEvent event) {
                 AppUtils.hideKeyboard(getActivity());
                 if (searchviewEt != null && TextUtils.isEmpty(searchviewEt.getText())) searchviewCancle.performClick();
-                return false;
+                return true;
             }
         });
 

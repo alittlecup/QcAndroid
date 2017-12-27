@@ -6,14 +6,17 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -25,8 +28,10 @@ import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.widgets.DialogList;
 import cn.qingchengfit.widgets.LoadingDialog;
 import cn.qingchengfit.widgets.LoadingDialogTransParent;
@@ -336,6 +341,22 @@ public class BaseActivity extends AppCompatActivity {
     return 0;
   }
 
+  /**
+   * 仅仅给一些陈旧页面使用
+   */
+  @Deprecated
+  public void initToolbar(@NonNull Toolbar toolbar) {
+    toolbar.setNavigationIcon(R.drawable.vd_navigate_before_white_24dp);
+    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onBackPressed();
+      }
+    });
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup ) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0,
+        MeasureUtils.getStatusBarHeight(this), 0, 0);
+    }
+  }
 
   public interface FragmentBackPress {
     boolean onFragmentBackPress();

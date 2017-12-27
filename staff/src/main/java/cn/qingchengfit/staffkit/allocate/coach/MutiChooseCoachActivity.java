@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -26,7 +27,9 @@ import cn.qingchengfit.staffkit.allocate.coach.model.CoachBean;
 import cn.qingchengfit.staffkit.allocate.coach.presenter.MutiChooseCoachPresenter;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.afollestad.materialdialogs.DialogAction;
@@ -73,6 +76,7 @@ public class MutiChooseCoachActivity extends BaseActivity
         setContentView(R.layout.activity_choose_all_coach);
         ButterKnife.bind(this);
         mPresenter.attachView(this);
+        mPresenter.onNewSps();
         if (getIntent().getStringArrayListExtra(INPUT_COACHES) != null) {
             mChoosedCoachsList = getIntent().getStringArrayListExtra(INPUT_COACHES);
         }
@@ -122,7 +126,10 @@ public class MutiChooseCoachActivity extends BaseActivity
 
     private void setToolbar() {
         mToolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
-
+        if (!CompatUtils.less21() && mToolbar.getParent() instanceof ViewGroup ) {
+            ((ViewGroup) mToolbar.getParent()).setPadding(0,
+              MeasureUtils.getStatusBarHeight(this), 0, 0);
+        }
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 finish();
@@ -223,7 +230,8 @@ public class MutiChooseCoachActivity extends BaseActivity
                 mFlexAdapter.notifyItemChanged(chose.get(j));
             }
         }
-        mFlexAdapter.notifyDataSetChanged();
+        mFlexAdapter.clear();
+        mFlexAdapter.updateDataSet(mDatas);
     }
 
     @Override public void onAllotSuccess() {

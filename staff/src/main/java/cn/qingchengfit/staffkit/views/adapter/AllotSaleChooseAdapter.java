@@ -79,21 +79,21 @@ public class AllotSaleChooseAdapter extends RecyclerView.Adapter<AllotSaleChoose
         }
 
         StudentBean studentBean = datas.get(position);
-
-        if (studentBean.isChosen) {
-            if (studentBean.isOrigin) {
-                holder.itemCheckbox.setButtonDrawable(
-                    holder.itemView.getContext().getResources().getDrawable(R.drawable.radio_selector_allotsale_grey));
-            } else {
-                holder.itemCheckbox.setButtonDrawable(
-                    holder.itemView.getContext().getResources().getDrawable(R.drawable.radio_selector_allotsale));
-            }
-            holder.itemCheckbox.setChecked(true);
-        } else {
-            holder.itemCheckbox.setButtonDrawable(
-                holder.itemView.getContext().getResources().getDrawable(R.drawable.radio_selector_allotsale));
-            holder.itemCheckbox.setChecked(false);
-        }
+        holder.itemCheckbox.setChecked(studentBean.isChosen());
+        //if (studentBean.isChosen) {
+        //    if (studentBean.isOrigin) {
+        //        holder.itemCheckbox.setButtonDrawable(
+        //            holder.itemView.getContext().getResources().getDrawable(R.drawable.radio_selector_allotsale_grey));
+        //    } else {
+        //        holder.itemCheckbox.setButtonDrawable(
+        //            holder.itemView.getContext().getResources().getDrawable(R.drawable.radio_selector_allotsale));
+        //    }
+        //    holder.itemCheckbox.setChecked(true);
+        //} else {
+        //    holder.itemCheckbox.setButtonDrawable(
+        //        holder.itemView.getContext().getResources().getDrawable(R.drawable.radio_selector_allotsale));
+        //    holder.itemCheckbox.setChecked(false);
+        //}
 
         // 销售names
         if (studentBean.sellers == null || studentBean.sellers.size() == 0) {

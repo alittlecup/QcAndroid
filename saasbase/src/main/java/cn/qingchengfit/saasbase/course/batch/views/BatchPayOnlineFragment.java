@@ -168,7 +168,7 @@ public class BatchPayOnlineFragment extends SaasBaseFragment {
           }
           rule.cost = payOnlineMoney.getContent();
           rule.from_number = 1;
-          rule.to_number = maxPeople;
+          rule.to_number = maxPeople+1;
           rule.card_tpl_id = "0";
           if (switcher.isChecked()) {
             try {

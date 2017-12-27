@@ -44,6 +44,7 @@ import rx.schedulers.Schedulers;
 public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment {
 
   @Need String trainer_id;
+  private QcResponsePrivateDetail.PrivateCoach mCoach;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -61,6 +62,7 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
             if (qcResponse.data.batches != null) {
               List<AbstractFlexibleItem> datas = new ArrayList<>();
               datas.add(new BatchItem(qcResponse.data.coach));
+              mCoach = qcResponse.data.coach;
               for (QcResponsePrivateDetail.PrivateBatch coach : qcResponse.data.batches) {
                 try {
                   datas.add(
@@ -93,6 +95,10 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
   @Override public void onClickFab() {
     Staff staff = new Staff();
     staff.id = trainer_id;
+    if (mCoach != null) {
+      staff.username = mCoach.username;
+      staff.avatar = mCoach.avatar;
+    }
     routeTo("/batch/add/", AddBatchParams.builder().mTeacher(staff).build());
   }
 }

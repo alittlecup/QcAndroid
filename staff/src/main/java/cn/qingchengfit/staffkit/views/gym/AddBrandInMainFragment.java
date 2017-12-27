@@ -30,7 +30,9 @@ import android.view.ViewGroup;
 public class AddBrandInMainFragment extends AddBrandFragment {
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        toolbarLayout.setVisibility(View.GONE);
+
         return v;
     }
+
+
 }

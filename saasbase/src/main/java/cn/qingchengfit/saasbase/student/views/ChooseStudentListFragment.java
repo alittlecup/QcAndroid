@@ -53,8 +53,14 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
 
   @Override public boolean onItemClick(int i) {
     if (commonFlexAdapter.getItem(i) instanceof StudentItem) {
+      int lastChoose = -1;
+
+      if (commonFlexAdapter.getMode() == 1){//单选模式
+        lastChoose = commonFlexAdapter.getSelectedPositions().size() > 0?commonFlexAdapter.getSelectedPositions().get(0):-1;
+      }
       commonFlexAdapter.toggleSelection(i);
       commonFlexAdapter.notifyItemChanged(i);
+      commonFlexAdapter.notifyItemChanged(lastChoose);
     }
     return true;
   }

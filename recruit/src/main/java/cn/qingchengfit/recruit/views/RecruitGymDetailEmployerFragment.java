@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import cn.qingchengfit.model.base.Gym;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -176,7 +176,8 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    ((TextView)db.layoutToolbar.toolbarTitle).setText("场馆招聘详情");
+    ToolbarModel tbm = new ToolbarModel("场馆招聘详情");
+    db.setToolbarModel(tbm);
     toolbar.inflateMenu(R.menu.menu_preview);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {

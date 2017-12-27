@@ -1,9 +1,11 @@
 package cn.qingchengfit.staffkit.views.gym;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -21,6 +24,8 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.main.HomeUnLoginFragment;
 import cn.qingchengfit.staffkit.views.main.SetGymInMainFragmentBuilder;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
@@ -46,6 +51,8 @@ import rx.functions.Action1;
 public class AddBrandFragment extends BaseDialogFragment implements AddBrandView {
 
     @BindView(R.id.toolbar_layout) public RelativeLayout toolbarLayout;
+    @BindView(R.id.toolbar) public Toolbar toolbar;
+    @BindView(R.id.toolbar_title) public TextView toolbarTitle;
     @BindView(R.id.btn) Button btn;
     @BindView(R.id.content) CommonInputView content;
     @BindView(R.id.brand_photo) ImageView brandPhoto;
@@ -65,6 +72,20 @@ public class AddBrandFragment extends BaseDialogFragment implements AddBrandView
         args.putString("brand", content);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void initToolbar(@NonNull Toolbar toolbar) {
+        toolbarTitle.setText("创建您的品牌");
+        toolbar.setNavigationIcon(cn.qingchengfit.widgets.R.drawable.vd_navigate_before_white_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup ) {
+            ((ViewGroup) toolbar.getParent()).setPadding(0,
+              MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+        }
     }
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,6 +115,7 @@ public class AddBrandFragment extends BaseDialogFragment implements AddBrandView
                 }
             }
         });
+        initToolbar(toolbar);
         //if (!TextUtils.isEmpty(getArguments().getString("brand")))
         //    content.setContent(getArguments().getString("brand"));
         return view;

@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.course.batch.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Pair;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PairFirstComparer;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * power by
@@ -46,6 +48,8 @@ public class BatchLoop implements Parcelable {
 
     @Override public boolean equals(Object obj) {
         if (obj instanceof BatchLoop){
+            if (CmStringUtils.isEmpty(((BatchLoop) obj).id) || CmStringUtils.isEmpty(id))
+                return false;
             return ((BatchLoop) obj).id.equalsIgnoreCase(id);
         }else return false;
     }
@@ -63,6 +67,11 @@ public class BatchLoop implements Parcelable {
                 String key = (String) iterator.next();
                 String[] times = key.split("-");
                 BatchLoop bean = new BatchLoop(map.get(key), DateUtils.getDateFromHHmm(times[0]), DateUtils.getDateFromHHmm(times[1]));
+                if (times.length >2)
+                    bean.isCross = true;
+                if (CmStringUtils.isEmpty(bean.id))
+                    bean.id = UUID.randomUUID().toString();
+
                 ret.add(bean);
             }
         } catch (Exception e) {
@@ -136,15 +145,18 @@ public class BatchLoop implements Parcelable {
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
         dest.writeByte(this.autoAdd ? (byte) 1 : (byte) 0);
         dest.writeList(this.week);
         dest.writeLong(this.dateStart != null ? this.dateStart.getTime() : -1);
         dest.writeLong(this.dateEnd != null ? this.dateEnd.getTime() : -1);
         dest.writeInt(this.position);
+        dest.writeInt(this.slice);
         dest.writeByte(this.isCross ? (byte) 1 : (byte) 0);
     }
 
     protected BatchLoop(Parcel in) {
+        this.id = in.readString();
         this.autoAdd = in.readByte() != 0;
         this.week = new ArrayList<Integer>();
         in.readList(this.week, Integer.class.getClassLoader());
@@ -153,6 +165,7 @@ public class BatchLoop implements Parcelable {
         long tmpDateEnd = in.readLong();
         this.dateEnd = tmpDateEnd == -1 ? null : new Date(tmpDateEnd);
         this.position = in.readInt();
+        this.slice = in.readInt();
         this.isCross = in.readByte() != 0;
     }
 

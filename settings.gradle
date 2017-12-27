@@ -1,7 +1,7 @@
 include ':saasbase',
 //        ':atest',
 //    ':pos',
-//    ':recruit',
+    ':recruit',
 //    ':qcim',
 //    ':sdk',
     ':staff',

@@ -5,9 +5,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -68,19 +68,15 @@ public class ScanActivity extends BaseActivity implements QRCodeReaderView.OnQRC
     });
   }
 
-  private void initToolbar(Toolbar toolbar) {
-    toolbar.setNavigationIcon(R.drawable.md_nav_back);
-    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        finish();
-      }
-    });
+  @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
     toolbarTitle.setText("扫码二维码");
-    String tips = getIntent().getStringExtra("tips");
-    if (tips != null) {
-      tvTips.setText(tips);
-    }
+      String tips = getIntent().getStringExtra("tips");
+      if (tips != null) {
+        tvTips.setText(tips);
+      }
   }
+
 
   public void initCamara() {
     qrdecoderview = new QRCodeReaderView(this);

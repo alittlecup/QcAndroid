@@ -58,6 +58,7 @@ public class SiteItem extends AbstractFlexibleItem<SiteItem.SiteItemVH> {
     public SiteItemVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
+      cb.setClickable(false);
     }
   }
 }

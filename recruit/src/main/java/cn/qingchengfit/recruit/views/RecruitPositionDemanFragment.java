@@ -9,21 +9,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.databinding.FragmentPositionWorkExBinding;
 import cn.qingchengfit.recruit.event.EventPulishPosition;
 import cn.qingchengfit.recruit.network.body.JobBody;
 import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.SimpleScrollPicker;
@@ -41,20 +36,11 @@ import java.util.Arrays;
 
   private final int MIN_WEIGHT = 30;
 
-  @BindView(R2.id.civ_work_exp) CommonInputView civWorkExp;
-  @BindView(R2.id.civ_work_gender) CommonInputView civWorkGender;
-  @BindView(R2.id.civ_work_age) CommonInputView civWorkAge;
-  @BindView(R2.id.civ_work_education) CommonInputView civWorkEducation;
-  @BindView(R2.id.civ_work_height) CommonInputView civWorkHeight;
-  @BindView(R2.id.civ_work_weight) CommonInputView civWorkWeight;
   @Arg JobBody jobBody;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
   private TwoScrollPicker twoScrollPicker;
   private SimpleScrollPicker simpleScrollPicker;
   //private HashMap<String, Object> map = new HashMap<>();
-
+  FragmentPositionWorkExBinding db;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     RecruitPositionDemanFragmentBuilder.injectArguments(this);
@@ -65,19 +51,19 @@ import java.util.Arrays;
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_position_work_ex, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    db = FragmentPositionWorkExBinding.inflate(inflater);
     initView();
     initToolbar();
     setBackPress();
-    return view;
+    return db.getRoot();
   }
 
   private void initToolbar() {
-    super.initToolbar(toolbar);
-    toolbarTitle.setText("职位要求");
-    toolbar.inflateMenu(R.menu.menu_save);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+    super.initToolbar(db.layoutToolbar.toolbar);
+    ToolbarModel tbm = new ToolbarModel("职位要求");
+    tbm.setMenu(R.menu.menu_save);
+    db.setToolbarModel(tbm);
+    db.layoutToolbar.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         RxBus.getBus().post(new EventPulishPosition(jobBody));
         getFragmentManager().popBackStackImmediate();
@@ -87,15 +73,22 @@ import java.util.Arrays;
   }
 
   private void initView() {
-    civWorkExp.setContent(
+    db.civWorkExp.setContent(
         RecruitBusinessUtils.getWorkYear(jobBody.min_work_year, jobBody.max_work_year));
-    civWorkGender.setContent(RecruitBusinessUtils.getGender(jobBody.gender));
-    civWorkAge.setContent(RecruitBusinessUtils.getAge(jobBody.min_age, jobBody.max_age));
-    civWorkEducation.setContent(RecruitBusinessUtils.getDegree(getContext(), jobBody.education));
-    civWorkHeight.setContent(
+    db.civWorkGender.setContent(RecruitBusinessUtils.getGender(jobBody.gender));
+    db.civWorkAge.setContent(RecruitBusinessUtils.getAge(jobBody.min_age, jobBody.max_age));
+    db.civWorkEducation.setContent(RecruitBusinessUtils.getDegree(getContext(), jobBody.education));
+    db.civWorkHeight.setContent(
         RecruitBusinessUtils.getHeight(jobBody.min_height, jobBody.max_height));
-    civWorkWeight.setContent(
+    db.civWorkWeight.setContent(
         RecruitBusinessUtils.getWeight(jobBody.min_weight, jobBody.max_weight));
+
+    db.civWorkExp.setOnClickListener(view -> onSelectWorkExp());
+    db.civWorkGender.setOnClickListener(view -> onSelectWorkGender());
+    db.civWorkAge.setOnClickListener(view -> onSelectWorkAge());
+    db.civWorkEducation.setOnClickListener(view -> onSelectWorkEducation());
+    db.civWorkHeight.setOnClickListener(view -> onSelectWorkHeight());
+    db.civWorkWeight.setOnClickListener(view -> onSelectWorkWeight());
   }
 
   @Override public void onDestroyView() {
@@ -103,7 +96,7 @@ import java.util.Arrays;
   }
 
   //选择工作经验
-  @OnClick(R2.id.civ_work_exp) public void onSelectWorkExp() {
+  public void onSelectWorkExp() {
     //String[] workexpStr = getContext().getResources().getStringArray(R.array.work_exp);
     //final ArrayList<String> d = new ArrayList<>(Arrays.asList(workexpStr));
     //twoScrollPicker.setListener(new TwoScrollPicker.TwoSelectItemListener() {
@@ -123,7 +116,7 @@ import java.util.Arrays;
         Arrays.asList(getContext().getResources().getStringArray(R.array.filter_work_year_write)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
-        civWorkExp.setContent(d.get(pos));
+        db.civWorkExp.setContent(d.get(pos));
         switch (pos) {
           case 1:
             jobBody.min_work_year = 0;
@@ -186,12 +179,12 @@ import java.util.Arrays;
   }
 
   //选择性别
-  @OnClick(R2.id.civ_work_gender) public void onSelectWorkGender() {
+  public void onSelectWorkGender() {
     final ArrayList<String> d = new ArrayList<>(
         Arrays.asList(getContext().getResources().getStringArray(R.array.filter_gender)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
-        civWorkGender.setContent(d.get(pos));
+        db.civWorkGender.setContent(d.get(pos));
         jobBody.gender = pos - 1;
       }
     });
@@ -199,7 +192,7 @@ import java.util.Arrays;
   }
 
   //选择年龄
-  @OnClick(R2.id.civ_work_age) public void onSelectWorkAge() {
+  public void onSelectWorkAge() {
     final ArrayList<String> d = new ArrayList<>();
     d.add("不限");
     for (int i = 0; i < 100; i++) {
@@ -213,19 +206,19 @@ import java.util.Arrays;
         }
         jobBody.min_age = left - 1;
         jobBody.max_age = right - 1;
-        civWorkAge.setContent(RecruitBusinessUtils.getAge(jobBody.min_age, jobBody.max_age));
+        db.civWorkAge.setContent(RecruitBusinessUtils.getAge(jobBody.min_age, jobBody.max_age));
       }
     });
     twoScrollPicker.show(d, d, jobBody.min_age + 1, jobBody.max_age + 1);
   }
 
   //选择学历
-  @OnClick(R2.id.civ_work_education) public void onSelectWorkEducation() {
+  public void onSelectWorkEducation() {
     final ArrayList<String> d = new ArrayList<>(
         Arrays.asList(getContext().getResources().getStringArray(R.array.education_degree)));
     simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
       @Override public void onSelectItem(int pos) {
-        civWorkEducation.setContent(d.get(pos));
+        db.civWorkEducation.setContent(d.get(pos));
         if (pos == 0) {
           jobBody.education = pos - 1;
         } else {
@@ -237,7 +230,7 @@ import java.util.Arrays;
   }
 
   //选择身高
-  @OnClick(R2.id.civ_work_height) public void onSelectWorkHeight() {
+  public void onSelectWorkHeight() {
     final ArrayList<String> d = new ArrayList<>();
     d.add("不限");
     for (int i = 0; i <= 60; i++) {
@@ -259,7 +252,7 @@ import java.util.Arrays;
           }else {
             jobBody.max_height = right + 139f;
           }
-          civWorkHeight.setContent(
+          db.civWorkHeight.setContent(
               RecruitBusinessUtils.getHeight(jobBody.min_height, jobBody.max_height));
         }
       }
@@ -272,7 +265,7 @@ import java.util.Arrays;
   }
 
   //选择体重
-  @OnClick(R2.id.civ_work_weight) public void onSelectWorkWeight() {
+  public void onSelectWorkWeight() {
     final ArrayList<String> d = new ArrayList<>();
     d.add("不限");
 
@@ -294,7 +287,7 @@ import java.util.Arrays;
           }else {
             jobBody.max_weight = right + MIN_WEIGHT -1f;
           }
-          civWorkWeight.setContent(
+          db.civWorkWeight.setContent(
               RecruitBusinessUtils.getWeight(jobBody.min_weight, jobBody.max_weight));
         }
       }

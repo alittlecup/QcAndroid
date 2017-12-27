@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import cn.qingchengfit.model.base.Gym;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.RecruitRouter;
@@ -103,8 +103,10 @@ public class RecruitGymDetailFragment extends BaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    ((TextView)getView().findViewById(R.id.toolbar_title)).setText("公司详情");
-    toolbar.inflateMenu(R.menu.menu_share);
+    ToolbarModel tm = new ToolbarModel("公司详情");
+    tm.setMenu(R.menu.menu_share);
+    db.setToolbarModel(tm);
+    //((TextView)getView().findViewById(R.id.toolbar_title)).setText("公司详情")
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         String title = gym != null ? gym.getBrand_name() + "|" + gym.getName() : "";

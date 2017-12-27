@@ -11,12 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventRichTextBack;
 import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragment;
 import cn.qingchengfit.utils.DialogUtils;
@@ -37,13 +33,14 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
   RichTxtFragment richTxtFragment;
   ChoosePictureFragmentNewDialog choosePictureFragmentDialog;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  Toolbar toolbar;
+  TextView toolbarTitile;
 
   @Arg String content;
   @Arg(required = false) int type;            //type用来区分多个富文本编辑器返回结果(发布职位)
   @Arg(required = false) String hint;            //type用来区分多个富文本编辑器返回结果(发布职位)
   @Arg String toolbarTitle;
+
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -54,8 +51,11 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_resume_edit_self_desc, container, false);
+    view.findViewById(R.id.btn_insert_img).setOnClickListener(view1 -> onBtnInsertImgClicked());
+    view.findViewById(R.id.btn_comfirm).setOnClickListener(view1 -> onBtnComfirmClicked());
     super.onCreateView(inflater, container, savedInstanceState);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = view.findViewById(R.id.toolbar);
+    toolbarTitile = view.findViewById(R.id.toolbar_title);
     initToolbar(toolbar);
     setBackPress();
     return view;
@@ -91,7 +91,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
     super.onDestroyView();
   }
 
-  @OnClick(R2.id.btn_insert_img) public void onBtnInsertImgClicked() {
+  public void onBtnInsertImgClicked() {
     if (choosePictureFragmentDialog == null) {
       choosePictureFragmentDialog = ChoosePictureFragmentNewDialog.newInstance();
     }
@@ -107,7 +107,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
     choosePictureFragmentDialog.show(getChildFragmentManager(), "");
   }
 
-  @OnClick(R2.id.btn_comfirm) public void onBtnComfirmClicked() {
+  public void onBtnComfirmClicked() {
     if (richTxtFragment != null) {
       String x = richTxtFragment.getContent();
       getActivity().getSupportFragmentManager().popBackStackImmediate();

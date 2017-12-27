@@ -48,7 +48,7 @@ public class ChooseWardrobeActivity extends BaseActivity implements ChooseWardro
         setContentView(R.layout.activity_chooose_wardrobe);
         ButterKnife.bind(this);
         presenter.attachView(this);
-
+        presenter.onNewSps();
         //获取已选择的locker
         mChosenLocker = getIntent().getParcelableExtra("locker");
 

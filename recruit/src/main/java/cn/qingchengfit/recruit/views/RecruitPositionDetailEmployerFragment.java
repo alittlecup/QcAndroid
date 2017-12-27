@@ -4,21 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.event.EventFreshJobsList;
 import cn.qingchengfit.recruit.model.Job;
@@ -29,8 +19,6 @@ import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.fragments.TouchyWebView;
-import cn.qingchengfit.widgets.QcTagGroup;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import javax.inject.Inject;
@@ -59,40 +47,41 @@ import rx.functions.Action1;
  */
 public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetailFragment {
 
-  @BindView(R2.id.rv_demands) RecyclerView rvDemands;
-  @BindView(R2.id.rv_welfare) QcTagGroup rvWelfare;
-  @BindView(R2.id.img_gym) ImageView imgGym;
-  @BindView(R2.id.tv_gym_name) TextView tvGymName;
-  @BindView(R2.id.tv_address) TextView tvAddress;
-  @BindView(R2.id.img_right) ImageView imgRight;
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.tv_position_name) TextView tvPositionName;
-  @BindView(R2.id.tv_salary) TextView tvSalary;
-  @BindView(R2.id.img_created_by) ImageView imgCreatedBy;
-  @BindView(R2.id.tv_created_by) TextView tvCreatedBy;
-  @BindView(R2.id.tv_starred) TextView tvStarred;
-  @BindView(R2.id.tv_position_crated_at) TextView tvPositionCratedAt;
-  @BindView(R2.id.tv_position_desc) TouchyWebView tvPositionDesc;
-  @BindView(R2.id.tv_position_require) TouchyWebView tvPositionRequire;
-  @BindView(R2.id.img_stared) ImageView imgStared;
-  @BindView(R2.id.btn_contact_him) Button btnContactHim;
-  @BindView(R2.id.btn_send_resume) Button btnSendResume;
-  @BindView(R2.id.layout_job_info) LinearLayout layoutJobInfo;
-  @BindView(R2.id.layout_employee_ctl) LinearLayout layoutEmployeeCtl;
-  @BindView(R2.id.layout_emloyer_ctl) LinearLayout layoutEmloyerCtl;
-  @BindView(R2.id.tv_dilive_positive) TextView tvDilivePositive;
-  @BindView(R2.id.tv_count_positive) TextView tvCountPositive;
-  @BindView(R2.id.tv_invited_position) TextView tvInvitedPositive;
-  @BindView(R2.id.tv_vp) TextView tvVp;
-  @BindView(R2.id.tv_sp) TextView tvSp;
-  @BindView(R2.id.tv_count_invited) TextView tvCountInvited;
-  @BindView(R2.id.btn_close_pos) Button btnClosePos;
+  //@BindView(R2.id.rv_demands) RecyclerView rvDemands;
+  //@BindView(R2.id.rv_welfare) QcTagGroup rvWelfare;
+  //@BindView(R2.id.img_recruit_gym_avatar) ImageView imgGym;
+  //@BindView(R2.id.tv_recruit_gym_name) TextView tvGymName;
+  //@BindView(R2.id.tv_address) TextView tvAddress;
+  //@BindView(R2.id.img_right) ImageView imgRight;
+  //@BindView(R2.id.toolbar) Toolbar toolbar;
+  //@BindView(R2.id.toolbar_title) TextView toolbarTitile;
+  //@BindView(R2.id.tv_position_name) TextView tvPositionName;
+  //@BindView(R2.id.tv_salary) TextView tvSalary;
+  //@BindView(R2.id.img_created_by) ImageView imgCreatedBy;
+  //@BindView(R2.id.tv_created_by) TextView tvCreatedBy;
+  //@BindView(R2.id.tv_starred) TextView tvStarred;
+  //@BindView(R2.id.tv_position_crated_at) TextView tvPositionCratedAt;
+  //@BindView(R2.id.tv_position_desc) TouchyWebView tvPositionDesc;
+  //@BindView(R2.id.tv_position_require) TouchyWebView tvPositionRequire;
+  //@BindView(R2.id.img_stared) ImageView imgStared;
+  //@BindView(R2.id.btn_contact_him) Button btnContactHim;
+  //@BindView(R2.id.btn_send_resume) Button btnSendResume;
+  //@BindView(R2.id.layout_job_info) LinearLayout layoutJobInfo;
+  //@BindView(R2.id.layout_employee_ctl) LinearLayout layoutEmployeeCtl;
+  //@BindView(R2.id.layout_emloyer_ctl) LinearLayout layoutEmloyerCtl;
+  //@BindView(R2.id.tv_dilive_positive) TextView tvDilivePositive;
+  //@BindView(R2.id.tv_count_positive) TextView tvCountPositive;
+  //@BindView(R2.id.tv_invited_position) TextView tvInvitedPositive;
+  //@BindView(R2.id.tv_vp) TextView tvVp;
+  //@BindView(R2.id.tv_sp) TextView tvSp;
+  //@BindView(R2.id.tv_count_invited) TextView tvCountInvited;
+  //@BindView(R2.id.btn_close_pos) Button btnClosePos;
 
   @Inject RecruitRouter router;
   @Inject JobPresenter presenter;
   @Inject ResumePresenter resumePresenter;
   @Inject QcRestRepository restRepository;
+
 
   private boolean isClosePosition;
   private boolean isShowShare;
@@ -124,8 +113,7 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_recruit_seek_position_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    initdatabding(inflater, container);
     delegatePresenter(presenter, this);
     delegatePresenter(resumePresenter, this);
     if (isShowShare) {
@@ -144,10 +132,10 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
       fragment.setCancelable(false);
       fragment.show(getChildFragmentManager(), null);
     }
-    initToolbar(toolbar);
-    layoutEmloyerCtl.setVisibility(View.VISIBLE);
-    layoutEmployeeCtl.setVisibility(View.GONE);
-    layoutJobInfo.setVisibility(View.VISIBLE);
+    initToolbar(db.layoutToolbar.toolbar);
+    db.layoutEmloyerCtl.setVisibility(View.VISIBLE);
+    db.layoutEmployeeCtl.setVisibility(View.GONE);
+    db.layoutJobInfo.setVisibility(View.VISIBLE);
     RxBusAdd(EventFreshJobsList.class).onBackpressureDrop()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<EventFreshJobsList>() {
@@ -155,7 +143,11 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
             presenter.queryStaffJob(job.id);
           }
         });
-    return view;
+    db.btnClosePos.setOnClickListener(view1 -> onBtnClosePosClicked());
+    db.btnEditPostion.setOnClickListener(view1 -> onBtnEditPostionClicked());
+    db.layoutDiliverd.setOnClickListener(view1 -> onLayoutDiliverdClicked());
+    db.layoutInvited.setOnClickListener(view1 -> onLayoutInvitedClicked());
+    return db.getRoot();
   }
 
   @Override protected void onFinishAnimation() {
@@ -169,17 +161,17 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
     /**
      * 招聘端 相关数据
      */
-    btnClosePos.setText(job.published ? "关闭该职位" : "再次开启");
-    tvDilivePositive.setCompoundDrawablesWithIntrinsicBounds(null, null,
+    db.btnClosePos.setText(job.published ? "关闭该职位" : "再次开启");
+    db.tvDilivePositive.setCompoundDrawablesWithIntrinsicBounds(null, null,
         job.has_new_delivery ? ContextCompat.getDrawable(getContext(), R.drawable.red_dot) : null,
         null);
-    tvInvitedPositive.setCompoundDrawablesWithIntrinsicBounds(null, null,
+    db.tvInvitedPosition.setCompoundDrawablesWithIntrinsicBounds(null, null,
         job.has_new_invite ? ContextCompat.getDrawable(getContext(), R.drawable.red_dot) : null,
         null);
-    tvCountInvited.setText(job.invitation_count + "");
-    tvCountPositive.setText(job.delivery_count + "");
-    tvVp.setText(job.view + "人查看");
-    tvSp.setText(job.favorite_count + "人收藏");
+    db.tvCountInvited.setText(job.invitation_count + "");
+    db.tvCountPositive.setText(job.delivery_count + "");
+    db.tvVp.setText(job.view + "人查看");
+    db.tvSp.setText(job.favorite_count + "人收藏");
   }
 
   @Override public String getFragmentName() {
@@ -193,7 +185,7 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   /**
    * 关闭职位
    */
-  @OnClick(R2.id.btn_close_pos) public void onBtnClosePosClicked() {
+  public void onBtnClosePosClicked() {
     DialogUtils.instanceDelDialog(getContext(), job.published ? "确定关闭该职位？" : "确定开启该职位",
         job.published ? "关闭后，该职位将不再收到简历" : "开启后，该职位将会收到投递简历",
         new MaterialDialog.SingleButtonCallback() {
@@ -228,14 +220,14 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   /**
    * 编辑职位
    */
-  @OnClick(R2.id.btn_edit_postion) public void onBtnEditPostionClicked() {
+  public void onBtnEditPostionClicked() {
     presenter.queryEditPermiss(job.gym.id, "job");
   }
 
   /**
    * 主动投递
    */
-  @OnClick(R2.id.layout_diliverd) public void onLayoutDiliverdClicked() {
+  public void onLayoutDiliverdClicked() {
     if (!loginStatus.isLogined()){
       BaseRouter.toLogin(this);
       return;
@@ -246,7 +238,7 @@ public class RecruitPositionDetailEmployerFragment extends RecruitPositionDetail
   /**
    * 邀约列表
    */
-  @OnClick(R2.id.layout_invited) public void onLayoutInvitedClicked() {
+  public void onLayoutInvitedClicked() {
     router.toInvitedResumes(job);
   }
 

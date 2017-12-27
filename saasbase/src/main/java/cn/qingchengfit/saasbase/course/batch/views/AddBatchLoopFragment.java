@@ -33,23 +33,6 @@ import java.util.UUID;
 @Leaf(module = "Course",path = "/batch/loop/add/")
 public class AddBatchLoopFragment extends IBatchLoopFragment {
   @Need Object o;
-  //public static AddBatchLoopFragment newInstance(boolean isPrivate,int courseLenth) {
-  //  Bundle args = new Bundle();
-  //  args.putBoolean("p",isPrivate);
-  //  args.putInt("l",courseLenth);
-  //  AddBatchLoopFragment fragment = new AddBatchLoopFragment();
-  //  fragment.setArguments(args);
-  //  return fragment;
-  //}
-  //
-  //@Override public void onCreate(@Nullable Bundle savedInstanceState) {
-  //  super.onCreate(savedInstanceState);
-  //  if (getArguments() != null){
-  //    isPrivate = getArguments().getBoolean("p");
-  //    courseLength = getArguments().getInt("l");
-  //  }
-  //}
-
 
   @Override void initSelect() {
     mStart = DateUtils.getDateFromHHmm("8:00");
@@ -77,8 +60,8 @@ public class AddBatchLoopFragment extends IBatchLoopFragment {
     cmBean.slice = this.slice;
     if (!isPrivate) {
       Calendar calendar = Calendar.getInstance();
-      int curD = calendar.get(Calendar.DATE);
       calendar.setTime(mStart);
+      int curD = calendar.get(Calendar.DATE);
       calendar.add(Calendar.SECOND, courseLength);
       cmBean.dateEnd = calendar.getTime();
       if (calendar.get(Calendar.DATE) > curD)

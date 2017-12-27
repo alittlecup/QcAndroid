@@ -87,10 +87,11 @@ import javax.inject.Inject;
         delegatePresenter(presenter, this);
         initView();
         if (chooseType != 3) {
-            presenter.getFilterSelers();
+
         } else {
 
         }
+        presenter.getFilterSelers();
         view.setOnTouchListener(this);
         return view;
     }
@@ -119,7 +120,7 @@ import javax.inject.Inject;
         flexibleAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         rvReferrer.setLayoutManager(mLinearLayoutManager);
-        rvReferrer.setHasFixedSize(true);
+        //rvReferrer.setHasFixedSize(true);
         rvReferrer.setNestedScrollingEnabled(false);
         rvReferrer.setAdapter(flexibleAdapter);
     }
@@ -229,7 +230,7 @@ import javax.inject.Inject;
             }
         }
 
-        flexibleAdapter.notifyDataSetChanged();
+        flexibleAdapter.updateDataSet(items);
     }
 
     @Override public void onShowError(String e) {

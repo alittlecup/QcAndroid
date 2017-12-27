@@ -44,10 +44,11 @@ android {
 
 dependencies {
     api project(path: ':qcbase')
+    api project(path: ':recruit')
 //    api "cn.qingchengfit:qcbase:1.0.0"
-    api ('cn.qingchengfit.recruit:recruit:1.0.1', {
-        exclude group: 'cn.qingchengfit.widgets', module: 'qcbase'
-    })
+//    api ('cn.qingchengfit.recruit:recruit:1.0.1', {
+//        exclude group: 'cn.qingchengfit.widgets', module: 'qcbase'
+//    })
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

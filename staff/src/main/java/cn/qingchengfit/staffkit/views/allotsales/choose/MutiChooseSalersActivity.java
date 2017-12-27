@@ -23,6 +23,7 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.afollestad.materialdialogs.DialogAction;
@@ -70,6 +71,7 @@ public class MutiChooseSalersActivity extends BaseActivity
         setContentView(R.layout.activity_muti_choose_salers);
         ButterKnife.bind(this);
         mPresenter.attachView(this);
+        mPresenter.onNewSps();
         mStudentId = getIntent().getStringArrayListExtra(INPUT_STUDENT);
         mChoosedSalersList = getIntent().getStringArrayListExtra(INPUT_SALERS);
         if (mChoosedSalersList == null) mChoosedSalersList = new ArrayList<>();
@@ -94,6 +96,7 @@ public class MutiChooseSalersActivity extends BaseActivity
                 onBackPressed();
             }
         });
+        mToolbar.setPadding(mToolbar.getPaddingLeft(), MeasureUtils.getStatusBarHeight(this),mToolbar.getPaddingRight(),mToolbar.getPaddingBottom());
         mToolbar.inflateMenu(R.menu.menu_compelete);
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {

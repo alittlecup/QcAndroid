@@ -66,6 +66,7 @@ public class SiteSelectedFragment extends SiteFragment {
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbar.getMenu().clear();
+    toolbarTitle.setText("选择场地");
     if (isPrivate){
       toolbar.getMenu().add("确定").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
       RxMenuItem.clicks(toolbar.getMenu().findItem(0))

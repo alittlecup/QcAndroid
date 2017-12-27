@@ -20,6 +20,7 @@
     <item >课程开始前x小时开放</item>
   </string-array>
   <string-array name="order_time_interval">
+    <item >无间隔</item>
     <item >5分钟</item>
     <item >10分钟</item>
     <item >15分钟</item>

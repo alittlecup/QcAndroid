@@ -70,7 +70,7 @@ public class FlexableListFragment extends BaseFragment {
 
     public void sort(String keyword) {
         if (TextUtils.isEmpty(keyword)) {
-            mFlexAdapter.setSearchText(null);
+            mFlexAdapter.setSearchText("");
         } else {
             List<AbstractFlexibleItem> copy = new ArrayList<>();
             copy.addAll(mData);

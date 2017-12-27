@@ -1,7 +1,6 @@
-package cn.qingchengfit.saasbase.course.batch.bean;
+package cn.qingchengfit.saasbase.course.course.views;
 
-import cn.qingchengfit.utils.DateUtils;
-import java.util.List;
+import com.anbillon.flabellum.annotations.Leaf;
 
 /**
  * power by
@@ -21,28 +20,9 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/1/22.
+ * Created by Paper on 2018/1/4.
  */
-
-public class SingleBatch extends BatchDetail{
-    public String batch_id;
-    public String start;
-    public String end;
-    public boolean is_cross;
-    //public List<Rule> rules;
-    public List orders;
-    public int slice;
-
-  public Time_repeat getTimeRepeat(boolean isPrivate) {
-    return new Time_repeat.Builder()
-      .start(DateUtils.Date2HHmm(DateUtils.formatDateFromServer(start)))
-      .end(DateUtils.Date2HHmm(DateUtils.formatDateFromServer(end)))
-      .id(id)
-      .isPrivate(isPrivate)
-      .is_cross(is_cross)
-      .slice(slice)
-      .build();
-  }
-  //public List<Time_repeat> time_repeats;
+@Leaf(module = "course", path = "/brand/add/")
+public class CourseAddInBrandFragment extends AddCourseFragment {
 
 }

@@ -334,7 +334,7 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
                     mLastModifyAt = newList.get(0).getModifyAt();
                 }
                 newList.clear();
-                recycleview.setNoData(flexibleAdapter.isEmpty());
+                recycleview.setNoData(false);
                 tvSigninFooter.setVisibility(View.GONE);
                 break;
             case R.id.tv_signin_footer:

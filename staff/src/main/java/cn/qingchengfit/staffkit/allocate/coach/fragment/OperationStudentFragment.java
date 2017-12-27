@@ -245,7 +245,7 @@ import static android.view.View.GONE;
 
     public void localFilter(String s) {
         if (TextUtils.isEmpty(s)) {
-            adapter.setSearchText(null);
+            adapter.setSearchText("");
             getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     adapter.updateDataSet(itemList);

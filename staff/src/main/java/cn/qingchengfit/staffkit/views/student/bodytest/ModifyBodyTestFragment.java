@@ -173,7 +173,7 @@ public class ModifyBodyTestFragment extends BaseFragment implements ModifyBodyTe
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_modify_body_test, container, false);
         unbinder = ButterKnife.bind(this, view);
-        presenter.attachView(this);
+        delegatePresenter(presenter,this);
         initToolbar(toolbar);
         if (TextUtils.isEmpty(measureId)) {//添加
             mCallbackActivity.setToolbar("添加体测", false, null, R.menu.menu_save, new Toolbar.OnMenuItemClickListener() {

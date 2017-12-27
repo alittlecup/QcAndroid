@@ -10,6 +10,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,6 +41,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
+
+import static android.support.v4.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
 /**
  * Created by fb on 2017/2/14.
@@ -128,13 +131,14 @@ public class FilterCommonFragment extends BaseFragment implements StudentListVie
     }
 
     private void initView() {
-
+        drawer.addDrawerListener(this);
+        drawer.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED, Gravity.END);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         alphabetView.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
                 AppUtils.hideKeyboard(getActivity());
                 if (searchviewEt != null && TextUtils.isEmpty(searchviewEt.getText())) searchviewCancle.performClick();
-                return false;
+                return true;
             }
         });
         alphabetView.setAlphaDialog(alphaTextDialog);
@@ -243,6 +247,7 @@ public class FilterCommonFragment extends BaseFragment implements StudentListVie
 
     @Override public void onDrawerOpened(View drawerView) {
         Timber.e("onDrawerOpened");
+        setBackPress();
     }
 
     @Override public void onDrawerClosed(View drawerView) {

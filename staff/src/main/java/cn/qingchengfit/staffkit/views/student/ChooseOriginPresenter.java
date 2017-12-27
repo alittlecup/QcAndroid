@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.views.student;
 
 import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -97,7 +98,7 @@ public class ChooseOriginPresenter extends BasePresenter {
             }));
     }
 
-    public interface PresenterView extends PView {
+    public interface PresenterView extends CView {
         void onSuccess();
 
         void onShowError(String e);

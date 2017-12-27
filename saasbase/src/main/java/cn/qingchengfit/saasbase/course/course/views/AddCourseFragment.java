@@ -1,10 +1,12 @@
 package cn.qingchengfit.saasbase.course.course.views;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,21 +16,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.cards.views.MutiChooseGymFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.presenters.AddCoursePresenter;
+import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import java.util.ArrayList;
 import javax.inject.Inject;
 
 @Leaf(module = "course", path = "/add/") public class AddCourseFragment extends SaasBaseFragment implements AddCoursePresenter.MVPview{
 
+  private static final int RESULT_GYMS = 601;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.frag_baseinfo) FrameLayout fragBaseinfo;
@@ -49,10 +58,9 @@ import javax.inject.Inject;
         if (courseDetail != null) {
           String support_gym = "";
           if (gymWrapper.inBrand()) {
-            // TODO: 2017/12/19 品牌下选择多加场馆
-            //if (layoutSuitGym.getVisibility() == View.VISIBLE) {
-            //  support_gym = (String) btnSuitGyms.getTag();
-            //}
+            if (layoutSuitGym.getVisibility() == View.VISIBLE) {
+              support_gym = (String) btnSuitGyms.getTag();
+            }
           } else {
             support_gym = null;
           }
@@ -67,9 +75,9 @@ import javax.inject.Inject;
           }
           CourseBody body = new CourseBody.Builder().name(courseDetail.getName())
             .capacity(courseDetail.getCapacity())
-            .is_private(getArguments().getBoolean("p") ? 1 : 0)
+            .is_private(isPrivate ? 1 : 0)
             .length(courseDetail.getLength())
-            .min_users(getArguments().getBoolean("p") ? null : courseDetail.getMin_users())
+            .min_users(isPrivate ? null : courseDetail.getMin_users())
             .photo(courseDetail.getPhoto())
             .plan_id(Planid)
             .shop_ids(support_gym)
@@ -120,34 +128,35 @@ import javax.inject.Inject;
     super.onDestroyView();
   }
 
+  @OnClick(R2.id.layout_suit_gym)
   public void onClickSuitGyms() {
-    //MutiChooseGymFragment.start(this, false, null,
-    //    getArguments().getBoolean("p") ? PermissionServerUtils.PRISETTING_CAN_WRITE : PermissionServerUtils.TEAMSETTING_CAN_WRITE,
-    //    RESULT_GYMS);
+    MutiChooseGymFragment.start(this, false, null,
+        getArguments().getBoolean("p") ? PermissionServerUtils.PRISETTING_CAN_WRITE : PermissionServerUtils.TEAMSETTING_CAN_WRITE,
+        RESULT_GYMS);
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    //if (resultCode == Activity.RESULT_OK) {
-    //  if (requestCode == RESULT_GYMS) {
-    //    String ids = "";
-    //    ArrayList<Shop> shops = data.getParcelableArrayListExtra(IntentUtils.RESULT);
-    //    if (shops != null) {
-    //      for (int i = 0; i < shops.size(); i++) {
-    //        if (i < shops.size() - 1) {
-    //          ids = TextUtils.concat(ids, shops.get(i).id, ",").toString();
-    //        } else {
-    //          ids = TextUtils.concat(ids, shops.get(i).id).toString();
-    //        }
-    //      }
-    //      btnSuitGyms.setTag(ids);
-    //      btnSuitGyms.setContent(shops.size() + "家");
-    //    }
-    //  }
-    //}
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == RESULT_GYMS) {
+        String ids = "";
+        ArrayList<Shop> shops = data.getParcelableArrayListExtra(IntentUtils.RESULT);
+        if (shops != null) {
+          for (int i = 0; i < shops.size(); i++) {
+            if (i < shops.size() - 1) {
+              ids = TextUtils.concat(ids, shops.get(i).id, ",").toString();
+            } else {
+              ids = TextUtils.concat(ids, shops.get(i).id).toString();
+            }
+          }
+          btnSuitGyms.setTag(ids);
+          btnSuitGyms.setContent(shops.size() + "家");
+        }
+      }
+    }
   }
 
-  //@Override public void showSuitGym() {
-  //  layoutSuitGym.setVisibility(View.VISIBLE);
-  //}
+  @Override public void showSuitGym() {
+    layoutSuitGym.setVisibility(View.VISIBLE);
+  }
 }

@@ -141,7 +141,7 @@ import javax.inject.Inject;
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         rvReferrer.setVisibility(View.VISIBLE);
         rvReferrer.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvReferrer.setHasFixedSize(true);
+        //rvReferrer.setHasFixedSize(true);
         rvReferrer.setNestedScrollingEnabled(false);
         rvReferrer.setAdapter(flexibleAdapter);
     }
@@ -314,7 +314,7 @@ import javax.inject.Inject;
         if (items.size() == 0 && chooseType == 3) {
 
         }
-        flexibleAdapter.notifyDataSetChanged();
+        flexibleAdapter.updateDataSet(datas);
     }
 
     @Override public void onShowError(String e) {

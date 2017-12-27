@@ -7,6 +7,7 @@ import android.support.annotation.MenuRes;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Action1;
@@ -168,6 +170,23 @@ public class ChooseOriginActivity extends BaseActivity implements FragCallBack, 
     }
 
     @Override public void onShowError(String e) {
+
+    }
+
+    @Override public void onShowError(int e) {
+
+    }
+
+    @Override public void showSelectSheet(String title, List<String> strs,
+      AdapterView.OnItemClickListener listener) {
+
+    }
+
+    @Override public void popBack() {
+
+    }
+
+    @Override public void popBack(int count) {
 
     }
 }

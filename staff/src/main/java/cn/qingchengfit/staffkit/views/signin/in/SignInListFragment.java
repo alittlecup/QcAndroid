@@ -246,7 +246,7 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
         flexibleAdapter.addItem(flexibleAdapter.getItemCount(), new SignInFooterItem());
         recycleview.setAdapter(flexibleAdapter);
         recycleview.stopLoading();
-        recycleview.setNoData(items.size() == 1);
+        recycleview.setNoData(false);
 
         tvSigninHeader.setVisibility(View.GONE);
         tvSigninFooter.setVisibility(View.GONE);

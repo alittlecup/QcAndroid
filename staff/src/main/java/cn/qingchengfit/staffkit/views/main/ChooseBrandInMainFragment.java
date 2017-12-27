@@ -1,10 +1,13 @@
 package cn.qingchengfit.staffkit.views.main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.ListAddItem;
 import cn.qingchengfit.model.responese.BrandsResponse;
@@ -16,6 +19,8 @@ import cn.qingchengfit.staffkit.rxbus.event.EventUnloginHomeLevel;
 import cn.qingchengfit.staffkit.views.BrandItemItem;
 import cn.qingchengfit.staffkit.views.ChooseBrandFragment;
 import cn.qingchengfit.staffkit.views.gym.AddBrandInMainFragment;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import rx.android.schedulers.AndroidSchedulers;
@@ -43,6 +48,10 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2017/2/23.
  */
 @FragmentWithArgs public class ChooseBrandInMainFragment extends ChooseBrandFragment {
+
+    Toolbar toolbar;
+    TextView toolbarTitle;
+
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.ChoosePicDialogStyle);
@@ -51,7 +60,22 @@ import rx.schedulers.Schedulers;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RxBus.getBus().post(new EventUnloginHomeLevel(1));
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.layout_toolbar_container,container,false);
+        viewGroup.addView(view,1);
+        toolbar = viewGroup.findViewById(R.id.toolbar);
+        toolbarTitle = viewGroup.findViewById(R.id.toolbar_title);
+        initToolbar(toolbar);
+        return viewGroup;
+
+    }
+
+    public void initToolbar(@NonNull Toolbar toolbar) {
+        toolbarTitle.setText("选择您的品牌");
+        if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup ) {
+            ((ViewGroup) toolbar.getParent()).setPadding(0,
+              MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+        }
     }
 
     @Override public boolean onItemClick(int position) {

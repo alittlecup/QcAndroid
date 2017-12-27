@@ -2,6 +2,8 @@ package cn.qingchengfit.saasbase.course.course.presenters;
 
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
@@ -14,9 +16,17 @@ import rx.schedulers.Schedulers;
 public class AddCoursePresenter extends BasePresenter<AddCoursePresenter.MVPview> {
 
   @Inject ICourseModel courseModel;
+  @Inject GymWrapper gymWrapper;
 
   @Inject public AddCoursePresenter() {
   }
+
+  @Override public void attachView(PView v) {
+    super.attachView(v);
+    if (gymWrapper.inBrand())
+      mvpView.showSuitGym();
+  }
+
 
   public void addCourse(CourseBody body) {
     RxRegiste(courseModel.qcCreateCourse(body)
@@ -40,6 +50,6 @@ public class AddCoursePresenter extends BasePresenter<AddCoursePresenter.MVPview
   }
 
   public interface MVPview extends CView {
-
+    void showSuitGym();
   }
 }

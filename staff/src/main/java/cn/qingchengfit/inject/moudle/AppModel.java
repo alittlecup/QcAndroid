@@ -145,11 +145,11 @@ import java.util.List;
   @Provides public IPermissionModel providePermissModel(){
     return new IPermissionModel() {
       @Override public boolean check(String permission) {
-        return true;
+        return qcDbManager.check(gymWrapper.shop_id(),permission);
       }
 
       @Override public boolean check(String permission, List<String> shopids) {
-        return true;
+        return qcDbManager.checkMuti(permission,shopids);
       }
     };
   }

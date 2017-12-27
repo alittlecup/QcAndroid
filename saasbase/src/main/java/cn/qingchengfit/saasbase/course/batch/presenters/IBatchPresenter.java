@@ -234,7 +234,7 @@ public abstract class IBatchPresenter extends BasePresenter<IBatchPresenter.MVPV
             HashMap<String, ArrayList<Integer>> mTimeRep = new HashMap<>();
             for (int i = 0; i < body.time_repeats.size(); i++) {
               Time_repeat time_repeat = body.time_repeats.get(i);
-              String key = time_repeat.getStart() + "-" + time_repeat.getEnd();
+              String key = time_repeat.getStart() + "-" + time_repeat.getEnd() +(time_repeat.is_cross()?"-next":"");
               if (mTimeRep.get(key) != null) {
                 mTimeRep.get(key).add(time_repeat.getWeekday());
               } else {

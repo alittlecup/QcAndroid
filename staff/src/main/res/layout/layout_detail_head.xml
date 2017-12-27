@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="89dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
     android:minHeight="?attr/actionBarSize"
     >
 
@@ -12,7 +11,7 @@
       android:id="@+id/myhome_bg"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="?colorPrimaryDark"
+      android:background="@color/toolbar"
       />
 
   <ImageView

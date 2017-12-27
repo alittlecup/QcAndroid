@@ -238,7 +238,7 @@ public class BatchDetailCommonView extends BaseFragment {
     queryTemple();
   }
   protected void queryTemple(){
-    if (trainer != null && this.course != null && listener != null)
+    if (trainer != null  && this.course != null && !CmStringUtils.isEmpty(this.course.getId()) && listener != null)
       listener.onBatchTemple();
   }
 
@@ -298,6 +298,7 @@ public class BatchDetailCommonView extends BaseFragment {
         }
       }
     }
+    openPayOnline(payOnlineRule != null);
     setCardRule(rules1, ships);
   }
 
@@ -397,7 +398,7 @@ public class BatchDetailCommonView extends BaseFragment {
   @OnClick(R2.id.pay_online) public void onPayOnlineClicked() {
     routeTo("/batch/pay/online/",
       new cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineParams().rule(payOnlineRule)
-        .maxPeople(elMultiSupport.isExpanded() ? getOrderStudentCount() : 1)
+        .maxPeople(getOrderStudentCount())
         .multiPrice(elMultiSupport.isExpanded())
         .build());
   }
