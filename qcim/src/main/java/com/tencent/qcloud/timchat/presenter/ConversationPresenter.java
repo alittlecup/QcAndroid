@@ -69,6 +69,7 @@ public class ConversationPresenter implements Observer {
             if (msg != null) {
                 List<String> list = new ArrayList<>();
                 list.add(msg.getConversation().getPeer());
+                view.updateMessage(msg);
                 TIMFriendshipManager.getInstance().getUsersProfile(list, new TIMValueCallBack<List<TIMUserProfile>>() {
                     @Override public void onError(int i, String s) {
 
@@ -83,8 +84,8 @@ public class ConversationPresenter implements Observer {
                                     profile.getNickName());
                             }
                         }
-                        view.updateMessage(msg);
-                    }git 
+                        //view.updateMessage(msg);
+                    }
                 });
             }else{
                 view.updateMessage(msg);
