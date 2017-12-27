@@ -85,6 +85,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import org.w3c.dom.Text;
 import tencent.tls.platform.TLSErrInfo;
 
 public class ChatActivity extends AppCompatActivity
@@ -487,71 +488,67 @@ public class ChatActivity extends AppCompatActivity
         RecruitBusinessUtils.getHeight(recruitModel.min_height, recruitModel.max_height, "身高"));
   }
 
-  private void dispatchMessage(Message message, boolean isSingle) {
+    private void dispatchMessage(Message message, boolean isSingle) {
+      String head = "";
 
-    if (message instanceof TextMessage) {
-      if (isSingle) {
-        itemList.add(0, new ChatTextItem(this, message, (isC2C() && message.isSelf()) ? avatar
-            : TextUtils.isEmpty(faceUrl) ? message.getMessage().getSenderProfile().getFaceUrl()
-                : faceUrl, ChatActivity.this));
-      } else {
-        itemList.add(new ChatTextItem(this, message, (isC2C() && message.isSelf()) ? avatar
-            : TextUtils.isEmpty(faceUrl) ? message.getMessage().getSenderProfile().getFaceUrl()
-                : faceUrl, ChatActivity.this));
+      if ((isC2C() && message.isSelf())){
+        head = avatar;
+      }else if (!isC2C() && message.getMessage().getSenderProfile() != null) {
+        head = message.getMessage().getSenderProfile().getFaceUrl();
+      }else if (isC2C() && !message.isSelf()){
+        if (message.getMessage().getSenderProfile() != null) {
+          head = TextUtils.isEmpty(faceUrl) ? message.getMessage().getSenderProfile().getFaceUrl() : faceUrl;
+        }else{
+          head = TextUtils.isEmpty(faceUrl) ? AppData.defaultAvatar : faceUrl;
+        }
       }
-    }
-    if (message instanceof ImageMessage) {
-      if (isSingle) {
-        itemList.add(0, new ChatImageItem(this, message, (isC2C() && message.isSelf()) ? avatar
-            : TextUtils.isEmpty(faceUrl) ? message.getMessage().getSenderProfile().getFaceUrl()
-                : faceUrl, ChatActivity.this));
-      } else {
-        itemList.add(new ChatImageItem(this, message, (isC2C() && message.isSelf()) ? avatar
-            : TextUtils.isEmpty(faceUrl) ? message.getMessage().getSenderProfile().getFaceUrl()
-                : faceUrl, ChatActivity.this));
-      }
-    }
 
-    if (message instanceof VoiceMessage) {
-      if (isSingle) {
-        itemList.add(0, new ChatVoiceItem(this, message, (isC2C() && message.isSelf()) ? avatar
-            : TextUtils.isEmpty(faceUrl) ? message.getMessage().getSenderProfile().getFaceUrl()
-                : faceUrl, ChatActivity.this));
-      } else {
-        itemList.add(new ChatVoiceItem(this, message, (isC2C() && message.isSelf()) ? avatar
-            : TextUtils.isEmpty(faceUrl) ? message.getMessage().getSenderProfile().getFaceUrl()
-                : faceUrl, ChatActivity.this));
+      if (message instanceof TextMessage) {
+        if (isSingle) {
+          itemList.add(0, new ChatTextItem(this, message, head, ChatActivity.this));
+        } else {
+          itemList.add(new ChatTextItem(this, message, head, ChatActivity.this));
+        }
       }
-    }
-    if (message instanceof CustomMessage) {
-      switch (((CustomMessage) message).getType()) {
-        case SEND_RECRUIT:
-          itemList.add(
-              new ChatRercuitItem(this, (RecruitModel) (((CustomMessage) message).getData()),
-                  message, (isC2C() && message.isSelf()) ? avatar
-                  : TextUtils.isEmpty(faceUrl) ? message.getMessage()
-                      .getSenderProfile()
-                      .getFaceUrl() : faceUrl, ChatActivity.this));
-          break;
-        case RESUME:
-          itemList.add(new ChatResumeItem(this, message, (isC2C() && message.isSelf()) ? avatar
-              : TextUtils.isEmpty(faceUrl) ? message.getMessage().getSenderProfile().getFaceUrl()
-                  : faceUrl, ChatActivity.this));
-          break;
-        case TOP_RESUME:
-          if (!isLatestMessage) {
-            showTopResume(message);
-            isLatestMessage = true;
-          }
-          break;
-        case RECRUIT:
-          if (!isLatestMessage) {
-            showTopRercuit(message);
-            isLatestMessage = true;
-          }
-          break;
+      if (message instanceof ImageMessage) {
+        if (isSingle) {
+          itemList.add(0, new ChatImageItem(this, message, head, ChatActivity.this));
+        } else {
+          itemList.add(new ChatImageItem(this, message, head, ChatActivity.this));
+        }
       }
-    }
+
+      if (message instanceof VoiceMessage) {
+        if (isSingle) {
+          itemList.add(0, new ChatVoiceItem(this, message, head, ChatActivity.this));
+        } else {
+          itemList.add(new ChatVoiceItem(this, message, head, ChatActivity.this));
+        }
+      }
+      if (message instanceof CustomMessage) {
+        switch (((CustomMessage) message).getType()) {
+          case SEND_RECRUIT:
+            itemList.add(
+                new ChatRercuitItem(this, (RecruitModel) (((CustomMessage) message).getData()),
+                    message, head, ChatActivity.this));
+            break;
+          case RESUME:
+            itemList.add(new ChatResumeItem(this, message, head, ChatActivity.this));
+            break;
+          case TOP_RESUME:
+            if (!isLatestMessage) {
+              showTopResume(message);
+              isLatestMessage = true;
+            }
+            break;
+          case RECRUIT:
+            if (!isLatestMessage) {
+              showTopRercuit(message);
+              isLatestMessage = true;
+            }
+            break;
+        }
+      }
   }
 
   ////对聊天记录进行重新排序

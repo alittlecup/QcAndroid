@@ -84,7 +84,7 @@ public class ConversationPresenter implements Observer {
                             }
                         }
                         view.updateMessage(msg);
-                    }
+                    }git 
                 });
             }else{
                 view.updateMessage(msg);
