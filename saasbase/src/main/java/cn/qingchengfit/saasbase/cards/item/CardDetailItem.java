@@ -33,28 +33,36 @@ public class CardDetailItem extends AbstractFlexibleItem<CardDetailItem.CardDeta
     return R.layout.item_card_detail;
   }
 
-  @Override public CardDetailVH createViewHolder(View view,FlexibleAdapter adapter) {
+  @Override public CardDetailVH createViewHolder(View view, FlexibleAdapter adapter) {
     return new CardDetailVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CardDetailVH holder, int position,
-    List payloads) {
+      List payloads) {
     holder.tvCardtplName.setText(mCard.getName());
     holder.tvCardId.setText(mCard.getId());
     holder.tvGymName.setText(mCard.getSupportGyms());
-    holder.tvCardTplType.setText(
-      CardBusinessUtils.getCardTypeCategoryStrHead(mCard.getType(), holder.tvCardTplType.getContext()));
+    holder.tvCardTplType.setText(CardBusinessUtils.getCardTypeCategoryStrHead(mCard.getType(),
+        holder.tvCardTplType.getContext()));
     holder.cardview.setBackground(
-      DrawableUtils.generateBg(8f, CardBusinessUtils.getDefaultCardbgColor(mCard.getType())));
+        DrawableUtils.generateBg(8f, CardBusinessUtils.getDefaultCardbgColor(mCard.getType())));
     if (mCard.isCheck_valid() && mCard.getType() != Configs.CATEGORY_DATE) {
-      holder.tvCardAppend.setText("有效期：" + DateUtils.getYYMMfromServer(mCard.getValid_from()) + "至"
-        + DateUtils.getYYMMfromServer(mCard.getValid_to()));
-    } else if (mCard.getType() == Configs.CATEGORY_DATE){
-      holder.tvCardAppend.setText("有效期：" + DateUtils.getYYMMfromServer(mCard.getStart()) + "至"
+      holder.tvCardAppend.setText("有效期："
+          + DateUtils.getYYMMfromServer(mCard.getValid_from())
+          + "至"
+          + DateUtils.getYYMMfromServer(mCard.getValid_to()));
+    } else if (mCard.getType() == Configs.CATEGORY_DATE) {
+      holder.tvCardAppend.setText("有效期："
+          + DateUtils.getYYMMfromServer(mCard.getStart())
+          + "至"
           + DateUtils.getYYMMfromServer(mCard.getEnd()));
-    } else{
+    } else {
       holder.tvCardAppend.setText("");
     }
+
+    holder.imgStutus.setVisibility(mCard.getCard_tpl().is_enable?View.GONE:View.VISIBLE);
+    holder.imgStutus.setText("已停卡");
+    holder.imgStutus.setBackground(DrawableUtils.generateCardStatusBg(R.color.red,holder.imgStutus.getContext()));
   }
 
   @Override public boolean equals(Object o) {
@@ -68,6 +76,7 @@ public class CardDetailItem extends AbstractFlexibleItem<CardDetailItem.CardDeta
     @BindView(R2.id.tv_card_id) TextView tvCardId;
     @BindView(R2.id.cardview) RelativeLayout cardview;
     @BindView(R2.id.tv_card_append) TextView tvCardAppend;
+    @BindView(R2.id.img_stutus) TextView imgStutus;
 
     public CardDetailVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
