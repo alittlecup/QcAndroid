@@ -36,9 +36,10 @@
 
   <string name="cardtype_limit_total">共计可上</string>
   <string name="cardtype_limit_class">节课</string>
-  <string name="everyday">每天</string>
-  <string name="everyweek">每周</string>
-  <string name="everymonth">每月</string>
+  <string formatted="false" name="buylimit">限购%d张</string>
+  <string formatted="false" name="everyday">每天%d节</string>
+  <string formatted="false" name="everyweek">每周%d节</string>
+  <string formatted="false" name="everymonth">每月%d节</string>
   <string name="title_cardtype_edit_desc">编辑简介</string>
   <string name="guide_write_gym_descript">描述您的健身房</string>
   <string name="custom_validity_civ_label">有效期天数(天)</string>
@@ -65,4 +66,7 @@
   <string name="modify">修改</string>
 
   <string formatted="false" name="hint_ahead_day_off">从今天(%s)起提前销假 已请假%d天</string>
+
+  <string name="edit_cardtpl_in_brand_no_permission">仅在全部适用场馆下都具有编辑会员卡种类权限的用户才能编辑基本信息</string>
+  <string name="edit_card_protocol">会员卡服务条款内容</string>
 </resources>

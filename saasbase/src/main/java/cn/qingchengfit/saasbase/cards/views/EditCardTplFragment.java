@@ -8,13 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.OnClick;
+import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.jakewharton.rxbinding.view.RxMenuItem;
 import java.util.concurrent.TimeUnit;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by fb on 2017/12/19.
@@ -23,10 +26,22 @@ import java.util.concurrent.TimeUnit;
 @Leaf(module = "card", path = "/cardtpl/edit")
 public class EditCardTplFragment extends CardTplDetailFragment {
 
+  private CardtplBody body = new CardtplBody();
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = super.onCreateView(inflater, container, savedInstanceState);
     initView();
+    RxBusAdd(EventTxT.class).observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new BusSubscribe<EventTxT>() {
+          @Override public void onNext(EventTxT eventTxT) {
+            body.name = eventTxT.txt;
+            civInputCardname.setContent(eventTxT.txt);
+          }
+        });
+    if (cardTpl != null){
+    }
+    desc = cardTpl.description;
     return view;
   }
 
@@ -81,6 +96,18 @@ public class EditCardTplFragment extends CardTplDetailFragment {
         .subscribe(new BusSubscribe<Void>() {
           @Override public void onNext(Void aVoid) {
             //TODO 保存编辑会员卡种类
+            body.description = desc;
+            if (cardLimit.is_limit){
+              body.is_limit = cardLimit.is_limit;
+              body.day_times = cardLimit.day_times;
+              body.buy_limit = cardLimit.buy_limit;
+              body.pre_times = cardLimit.pre_times;
+              body.week_times = cardLimit.week_times;
+              body.month_times = cardLimit.month_times;
+            }
+            body.is_open_service_term = expandCardProtocol.isExpanded();
+            presenter.editCardTpl(body);
+
           }
         });
   }

@@ -13,7 +13,7 @@
   <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@string/edit_cardtpl_in_brand_no_permission"
+      android:text="@string/alert_edit_cardtype_no_permission"
       style="@style/QcTextStyleSmallWarm"
       android:textSize="12dp"
       android:padding="15dp"
@@ -137,7 +137,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height_new"
       android:layout_marginTop="15dp"
-      app:civ_lable="@string/edit_card_protocol"
+      app:civ_lable="@string/card_protocol_content"
       app:civ_text_color="@color/text_dark"
       app:civ_showright="true"
       app:civ_clickable="true"

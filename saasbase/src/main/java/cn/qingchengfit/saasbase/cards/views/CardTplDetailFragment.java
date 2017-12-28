@@ -124,7 +124,7 @@ import rx.functions.Action1;
   @BindView(R2.id.layout_card_value_desc) LinearLayout layoutCardValueDesc;
   @BindView(R2.id.layout_card_option) RelativeLayout layoutCardOption;
   @BindView(R2.id.input_card_protocol) CommonInputView inputCardProtocol;
-  private String desc;
+  public String desc;
   protected String supportShopStr;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
