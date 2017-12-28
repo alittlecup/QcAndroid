@@ -7,6 +7,8 @@ import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMGroupCacheInfo;
+import com.tencent.TIMGroupDetailInfo;
+import com.tencent.TIMGroupManager;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMUserProfile;
@@ -69,23 +71,43 @@ public class ConversationPresenter implements Observer {
             if (msg != null) {
                 List<String> list = new ArrayList<>();
                 list.add(msg.getConversation().getPeer());
-                TIMFriendshipManager.getInstance().getUsersProfile(list, new TIMValueCallBack<List<TIMUserProfile>>() {
-                    @Override public void onError(int i, String s) {
+                if (msg.getConversation().getType() == TIMConversationType.C2C) {
+                    TIMFriendshipManager.getInstance().getUsersProfile(list, new TIMValueCallBack<List<TIMUserProfile>>() {
+                        @Override public void onError(int i, String s) {
 
-                    }
-
-                    @Override public void onSuccess(List<TIMUserProfile> timUserProfiles) {
-                        for (TIMUserProfile profile : timUserProfiles) {
-                            if (TextUtils.isEmpty(AppData.getConversationAvatar(context, profile.getIdentifier()))) {
-                                AppData.putConversationAvatar(context, profile.getIdentifier(),
-                                    profile.getFaceUrl());
-                                AppData.putConversationName(context, profile.getIdentifier(),
-                                    profile.getNickName());
-                            }
                         }
-                        view.updateMessage(msg);
-                    }
-                });
+
+                        @Override public void onSuccess(List<TIMUserProfile> timUserProfiles) {
+                            for (TIMUserProfile profile : timUserProfiles) {
+                                if (TextUtils.isEmpty(AppData.getConversationAvatar(context, profile.getIdentifier()))) {
+                                    AppData.putConversationAvatar(context, profile.getIdentifier(),
+                                        profile.getFaceUrl());
+                                    AppData.putConversationName(context, profile.getIdentifier(),
+                                        profile.getNickName());
+                                }
+                            }
+                            view.updateMessage(msg);
+                        }
+                    });
+                }else{
+                    TIMGroupManager.getInstance().getGroupDetailInfo(list, new TIMValueCallBack<List<TIMGroupDetailInfo>>() {
+                        @Override public void onError(int i, String s) {
+
+                        }
+                        @Override
+                        public void onSuccess(List<TIMGroupDetailInfo> timGroupDetailInfos) {
+                            for (TIMGroupDetailInfo profile : timGroupDetailInfos) {
+                                if (TextUtils.isEmpty(AppData.getConversationAvatar(context, profile.getGroupId()))) {
+                                    AppData.putConversationAvatar(context, profile.getGroupId(),
+                                        profile.getFaceUrl());
+                                    AppData.putConversationName(context, profile.getGroupId(),
+                                        profile.getGroupName());
+                                }
+                            }
+                            view.updateMessage(msg);
+                        }
+                    });
+                }
             }else{
                 view.updateMessage(msg);
             }
