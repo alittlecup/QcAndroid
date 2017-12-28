@@ -127,5 +127,8 @@
   <string name="end_time">结束时间</string>
   <string name="course_order_interval">约课间隔时间</string>
 
+  <string name="edit_cardtpl_in_brand_no_permission">仅在全部适用场馆下都具有编辑会员卡种类权限的用户才能编辑基本信息</string>
+  <string name="edit_card_protocol">会员卡服务条款内容</string>
+
 </resources>
 
