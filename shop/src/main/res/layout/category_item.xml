@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+  <data>
+  </data>
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="14dp"
+      android:orientation="horizontal"
+      >
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/category_price"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          app:civ_hint="@string/input_product_price"
+          app:civ_lable="@string/price"
+          style="@style/QcCivClickStyle"
+          />
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/category_inventory"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          app:civ_hint="@string/input_product_inventory"
+          app:civ_lable="@string/inventory"
+          style="@style/QcCivInputStyle"
+          />
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/category_name"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_common_input_60dp"
+          app:civ_hint="@string/input_product_category"
+          app:civ_lable="@string/type"
+          style="@style/QcCivInputStyle"
+          />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/im_delete"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/reduce_inventory"
+        />
+
+  </LinearLayout>
+</layout>

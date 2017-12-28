@@ -62,6 +62,29 @@
           app:civ_lable="@string/product_pay_channal"
           style="@style/QcCivClickStyle"
           />
+      <LinearLayout
+          android:id="@+id/ll_category_container"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          />
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="14dp"
+          >
+        <TextView
+            android:id="@+id/add_product_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/QcTextStyleLargeDark"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="end"
+            android:drawablePadding="10dp"
+            android:text="@string/add_product_category"
+            android:drawableRight="@drawable/product_add"
+            />
+      </FrameLayout>
 
       <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/product_desc"
@@ -108,10 +131,10 @@
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_marginBottom="37dp"
           android:layout_marginLeft="15dp"
           android:layout_marginRight="15dp"
           android:layout_marginTop="26dp"
-          android:layout_marginBottom="37dp"
           android:orientation="horizontal"
           >
         <Button
