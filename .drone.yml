@@ -2,8 +2,6 @@ pipeline:
   restore-cache:
     image: drillster/drone-volume-cache
     restore: true
-#    when:
-#      event: pull_request
     mount:
       - .gradle
       - gradle_cache
@@ -56,14 +54,3 @@ pipeline:
       - gradle_cache
 #      - build
     volumes:
-      - /cache:/cache/
-  wechat:
-      image: lizheming/drone-wechat
-      sckey: SCU20429Tda835b752e6cc08e10d276d233ca8b5f5a61ea96a6847
-      title: 青橙健身管理有更新
-      message: >
-        {%if success %}
-          build {{build.number}} 青橙健身管理成功上传到fir.im/staffbeta
-        {% else %}
-          build {{build.number}} 青橙健身管理编译失败
-        {% endif %}

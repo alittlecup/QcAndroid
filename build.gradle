@@ -1,5 +1,4 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply plugin: 'idea'
 
 ext {
   configuration = [package             : "cn.qingchengfit.staffkit",
@@ -9,8 +8,8 @@ ext {
                    targetSdk           : 26,
                    version_code        : 100, //缝10必更
                    version_name        : "0.1.0",
-                   trainer_version_code: 163,
-                   trainer_version_name: "1.6.3"
+                   trainer_version_code: 164,
+                   trainer_version_name: "1.6.4"
 
   ]
 
@@ -40,16 +39,10 @@ ext {
 
 buildscript {
   repositories {
-//    maven { url "https://maven.google.com" }
-//    jcenter()
-    maven {
-      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/maven-central/'
-    }
-    maven {
-      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
-    }
+    maven { url "https://maven.google.com" }
+    jcenter()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-//    mavenCentral()
+    mavenCentral()
   }
 
   dependencies {
@@ -87,12 +80,12 @@ allprojects {
     }
 
 
-//    mavenCentral()
-//
-//    maven { url "https://maven.google.com" }
-//
-//    maven {
-//      url "https://s3.amazonaws.com/repo.commonsware.com"
-//    }
+    mavenCentral()
+
+    maven { url "https://maven.google.com" }
+
+    maven {
+      url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
   }
 }
