@@ -100,7 +100,7 @@ public class MainMsgFragment extends BaseFragment
   @Inject GymWrapper gymWrapper;
   @Inject SystemMsgPresenter presenter;
   @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-  ConversationFragment conversationFragment = new ConversationFragment();
+  ConversationFragment conversationFragment;
   private List<AbstractFlexibleItem> items = new ArrayList<>();
   private CommonFlexAdapter adapter;
   private LoginProcessor loginProcessor;

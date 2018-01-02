@@ -415,7 +415,9 @@ public class ConversationFragment extends Fragment
   }
 
   @Override public void onItemLongClick(final int position) {
-    onUnReadMessageListener.onLongClickListener(position);
+    if (onUnReadMessageListener != null) {
+      onUnReadMessageListener.onLongClickListener(position);
+    }
   }
 
   public interface OnUnReadMessageListener {
