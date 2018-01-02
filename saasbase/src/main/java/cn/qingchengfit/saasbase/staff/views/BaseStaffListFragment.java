@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.animator.FadeInUpItemAnimator;
+import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.staff.items.StaffItem;
+import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
 import cn.qingchengfit.views.fragments.BaseListFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -72,20 +73,21 @@ public abstract class BaseStaffListFragment extends BaseListFragment
   }
 
   @Override protected void addDivider() {
+    rv.setItemAnimator(new FadeInUpItemAnimator());
     rv.setBackgroundResource(R.color.white);
     rv.addItemDecoration(
       new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin,
-        R.layout.item_saas_staff).withOffset(1).withBottomEdge(true));
+        R.layout.item_common_user).withOffset(1).withBottomEdge(true));
   }
 
   protected abstract void initData();
 
   protected abstract String getTitle();
 
-  protected void onGetData(List<Staff> staffs) {
+  protected void onGetData(List<? extends ICommonUser> staffs) {
     stopRefresh();
     ret.clear();
-    for (Staff staff : staffs) {
+    for (ICommonUser staff : staffs) {
       ret.add(generateItem(staff));
     }
     setDatas(ret, 1);
@@ -93,10 +95,13 @@ public abstract class BaseStaffListFragment extends BaseListFragment
 
   @Override public void onRefresh() {
     initData();
+    if (getParentFragment() != null && getParentFragment() instanceof StaffHomeFragment){
+      ((StaffHomeFragment) getParentFragment()).freshData();
+    }
   }
 
-  protected StaffItem generateItem(Staff staff) {
-    return new StaffItem(staff);
+  protected CommonUserItem generateItem(ICommonUser staff) {
+    return new CommonUserItem(staff);
   }
 
   @Override public int getNoDataIconRes() {

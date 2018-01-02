@@ -3,6 +3,7 @@ package cn.qingchengfit.views.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -135,7 +136,10 @@ public class BaseActivity extends AppCompatActivity {
     setIntent(intent);
     if (intent != null && intent.getData() != null)
       LogUtil.d("router",intent.getData().toString());
-
+    Uri uri = intent.getData();
+    boolean notStack = false;
+    if (uri != null && uri.getBooleanQueryParameter("nostack",false))
+      notStack = true;
     if (preHandle(intent)) return;
     FragmentTransaction tr = getSupportFragmentManager().beginTransaction();
     if (hasFrag)
@@ -143,7 +147,7 @@ public class BaseActivity extends AppCompatActivity {
           R.anim.slide_right_out);
     else tr.setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold);
     tr.replace(R.id.web_frag_layout, getRouterFragment(intent));
-    if (hasFrag) tr.addToBackStack(null);
+    if (hasFrag && !notStack) tr.addToBackStack(null);
     try {
       tr.commit();
     } catch (Exception e) {

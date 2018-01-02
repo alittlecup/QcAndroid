@@ -23,10 +23,11 @@ public class ManagerBody {
     private String username;
     private String phone;
     private String avatar;
-    private int gender;
+    private Integer gender;
     private String position_id;
     private String area_code;
-
+    public Boolean staff_enable;
+    public Boolean coach_enable;
 
     public ManagerBody() {
     }
@@ -39,10 +40,6 @@ public class ManagerBody {
         return 0;
     }
 
-
-
-
-
     private ManagerBody(Builder builder) {
         setId(builder.id);
         setUsername(builder.username);
@@ -51,6 +48,8 @@ public class ManagerBody {
         setGender(builder.gender);
         setPosition_id(builder.position_id);
         setArea_code(builder.area_code);
+        staff_enable = builder.staff_enable;
+        coach_enable = builder.coach_enable;
     }
 
     public String getArea_code() {
@@ -93,11 +92,11 @@ public class ManagerBody {
         this.avatar = avatar;
     }
 
-    public int getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -114,9 +113,11 @@ public class ManagerBody {
         private String username;
         private String phone;
         private String avatar;
-        private int gender;
+        private Integer gender;
         private String position_id;
         private String area_code;
+        private Boolean staff_enable;
+        private Boolean coach_enable;
 
         public Builder() {
         }
@@ -141,7 +142,7 @@ public class ManagerBody {
             return this;
         }
 
-        public Builder gender(int val) {
+        public Builder gender(Integer val) {
             gender = val;
             return this;
         }
@@ -156,8 +157,20 @@ public class ManagerBody {
             return this;
         }
 
+        public Builder staff_enable(Boolean val) {
+            staff_enable = val;
+            return this;
+        }
+
+        public Builder coach_enable(Boolean val) {
+            coach_enable = val;
+            return this;
+        }
+
         public ManagerBody build() {
             return new ManagerBody(this);
         }
     }
+
+
 }

@@ -1,12 +1,31 @@
 package cn.qingchengfit.staffkit.staff;
 
-import cn.qingchengfit.saasbase.coach.views.AddNewCoachFragment;
 import cn.qingchengfit.saasbase.coach.views.CoachListFragment;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseFragment;
 import cn.qingchengfit.saasbase.staff.StaffActivity;
 import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
+import cn.qingchengfit.saasbase.staff.views.InviteLinkFragment;
+import cn.qingchengfit.saasbase.staff.views.InviteQrCodeFragment;
+import cn.qingchengfit.saasbase.staff.views.InviteSendMsgFragment;
 import cn.qingchengfit.saasbase.staff.views.SalersListFragment;
+import cn.qingchengfit.saasbase.staff.views.StaffAddFragment;
 import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
+import cn.qingchengfit.saasbase.staff.views.StaffHomeFragment;
+import cn.qingchengfit.saasbase.staff.views.StaffLeaveDetailFragment;
+import cn.qingchengfit.saasbase.staff.views.StaffReInviteFragment;
+import cn.qingchengfit.saasbase.staff.views.StaffTabInviteListFragment;
+import cn.qingchengfit.saasbase.staff.views.StaffTabLeaveListFragment;
+import cn.qingchengfit.saasbase.staff.views.StaffTabListFragment;
+import cn.qingchengfit.saasbase.staff.views.SuFragment;
+import cn.qingchengfit.saasbase.staff.views.SuIdendifyFragment;
+import cn.qingchengfit.saasbase.staff.views.SuNewFragment;
+import cn.qingchengfit.saasbase.staff.views.TrainerAddFragment;
+import cn.qingchengfit.saasbase.staff.views.TrainerDetailFragment;
+import cn.qingchengfit.saasbase.staff.views.TrainerHomeFragment;
+import cn.qingchengfit.saasbase.staff.views.TrainerLeaveDetailFragment;
+import cn.qingchengfit.saasbase.staff.views.TrainerTabInviteListFragment;
+import cn.qingchengfit.saasbase.staff.views.TrainerTabLeaveListFragment;
+import cn.qingchengfit.saasbase.staff.views.TrainerTabListFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -30,8 +49,16 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/12/1.
  */
 @Trunk(fragments = {
-  ChooseSalerFragment.class, SalersListFragment.class, AddNewCoachFragment.class,
-  TrainerChooseFragment.class, CoachListFragment.class, StaffDetailFragment.class
+  ChooseSalerFragment.class, SalersListFragment.class,
+  TrainerChooseFragment.class, CoachListFragment.class, StaffDetailFragment.class, StaffHomeFragment.class,
+  StaffAddFragment.class, StaffReInviteFragment.class,
+  StaffTabListFragment.class, StaffTabInviteListFragment.class, StaffTabLeaveListFragment.class,
+  InviteSendMsgFragment.class, InviteQrCodeFragment.class,
+  InviteLinkFragment.class, TrainerHomeFragment.class, TrainerTabInviteListFragment.class,
+  TrainerTabLeaveListFragment.class, TrainerTabListFragment.class, TrainerAddFragment.class,
+  SuFragment.class, SuIdendifyFragment.class, SuNewFragment.class, TrainerDetailFragment.class,
+  StaffLeaveDetailFragment.class, TrainerLeaveDetailFragment.class
+
 })
-public class StaffStaffActivity extends StaffActivity {
+public class StaffStaffActivity extends StaffActivity  {
 }

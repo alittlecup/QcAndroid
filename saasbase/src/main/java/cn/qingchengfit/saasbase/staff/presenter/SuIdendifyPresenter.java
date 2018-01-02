@@ -6,9 +6,9 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-
 import cn.qingchengfit.saasbase.network.body.GetCodeBody;
 import cn.qingchengfit.saasbase.repository.PostApi;
+import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.body.CheckCodeBody;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,10 +18,9 @@ import rx.schedulers.Schedulers;
 public class SuIdendifyPresenter extends BasePresenter {
     private MVPView view;
 
+    @Inject IStaffModel staffModel;
     @Inject QcRestRepository restRepository;
-
-    @Inject public SuIdendifyPresenter(QcRestRepository restRepository) {
-        this.restRepository = restRepository;
+    @Inject public SuIdendifyPresenter() {
     }
 
     public void sendMsg(GetCodeBody body) {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="invite_link">链接邀请</string>
+  <string name="invite_qrcode">扫码邀请</string>
+  <string name="invite_msm">短信邀请</string>
+
+
+  <string name="at_recovery_sb_position">确定要复职%s吗？</string>
+
+
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    xmlns:tools="http://schemas.android.com/tools"
+  >
+  <LinearLayout
+      android:id="@+id/layout"
+      android:orientation="vertical"
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:gravity="center"
+      >
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        tools:src="@drawable/vd_card_empty"
+        />
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_horizontal_margin"
+        />
+    <TextView
+        android:id="@+id/tv"
+        style="@style/QcTextStyleSmallDark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="链接邀请"
+        />
+  </LinearLayout>
+  <ImageView
+      android:id="@+id/img_check"
+      android:layout_marginEnd="@dimen/little"
+      android:layout_marginStart="@dimen/little"
+      android:layout_marginTop="@dimen/little"
+      android:layout_width="16dp"
+      android:layout_height="16dp"
+      android:layout_gravity="end"
+      app:srcCompat="@drawable/ic_checkbox_checked"
+      />
+</FrameLayout>

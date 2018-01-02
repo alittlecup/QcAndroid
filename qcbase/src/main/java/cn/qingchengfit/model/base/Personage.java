@@ -42,8 +42,33 @@ public class Personage implements Parcelable {
     public String head;
     public String brand_id;
     public boolean is_superuser;
+    private boolean phone_active;
+    private String weixin;
+    private boolean weixin_active;
 
+    public boolean isPhone_active() {
+        return phone_active;
+    }
 
+    public void setPhone_active(boolean phone_active) {
+        this.phone_active = phone_active;
+    }
+
+    public String getWeixin() {
+        return weixin;
+    }
+
+    public void setWeixin(String weixin) {
+        this.weixin = weixin;
+    }
+
+    public boolean isWeixin_active() {
+        return weixin_active;
+    }
+
+    public void setWeixin_active(boolean weixin_active) {
+        this.weixin_active = weixin_active;
+    }
 
     public Personage() {
     }
@@ -180,6 +205,9 @@ public class Personage implements Parcelable {
         dest.writeString(this.head);
         dest.writeString(this.brand_id);
         dest.writeByte(this.is_superuser ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.phone_active ? (byte) 1 : (byte) 0);
+        dest.writeString(this.weixin);
+        dest.writeByte(this.weixin_active ? (byte) 1 : (byte) 0);
     }
 
     protected Personage(Parcel in) {
@@ -194,6 +222,9 @@ public class Personage implements Parcelable {
         this.head = in.readString();
         this.brand_id = in.readString();
         this.is_superuser = in.readByte() != 0;
+        this.phone_active = in.readByte() != 0;
+        this.weixin = in.readString();
+        this.weixin_active = in.readByte() != 0;
     }
 
     public static final Creator<Personage> CREATOR = new Creator<Personage>() {

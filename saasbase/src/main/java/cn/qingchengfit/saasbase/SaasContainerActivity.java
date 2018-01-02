@@ -132,4 +132,8 @@ public class SaasContainerActivity extends BaseActivity implements HasSupportFra
       CrashUtils.sendCrash(e);
     }
   }
+
+  @Override public int getFragId() {
+    return R.id.web_frag_layout;
+  }
 }

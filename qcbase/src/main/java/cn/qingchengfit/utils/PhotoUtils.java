@@ -80,7 +80,7 @@ public class PhotoUtils {
   }
 
   public static void smallCircle(ImageView v, String url) {
-    smallCircle(v, url, R.drawable.img_loadingimage, R.drawable.img_loadingimage);
+    smallCircle(v, url, R.drawable.default_manage_male, R.drawable.default_manage_male);
   }
 
   public static void smallCircle(ImageView v, String url, int placeholder, int error) {

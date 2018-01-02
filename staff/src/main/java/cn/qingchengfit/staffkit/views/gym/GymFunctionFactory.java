@@ -437,14 +437,15 @@ public class GymFunctionFactory {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
-
-                break;
+                fragment.routeTo("staff","/home/",null);
+                return;
             case MODULE_MANAGE_COACH:
                 if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.COACHSETTING)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
-                break;
+                fragment.routeTo("staff","/trainer/home/",null);
+                return;
 
             /** 运营推广
              * 会员积分  活动   场馆主页广告

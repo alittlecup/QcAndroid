@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+  <include layout="@layout/common_simple_toolbar"/>
+  <cn.qingchengfit.widgets.CommonInputView
+      style="@style/QcCivInputStyle"
+      android:id="@+id/civ_name"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="@string/name"
+      />
+  <cn.qingchengfit.widgets.CommonInputView
+      style="@style/QcCivClickStyle"
+      android:id="@+id/civ_gender"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:content="@string/gender_male"
+      app:civ_lable="@string/gender"
+      />
+  <cn.qingchengfit.widgets.PhoneEditText
+      android:id="@+id/phone_num"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:background="@color/white"
+      app:phone_show_icon="false"
+      />
+  <include layout="@layout/divider_grey_left_right"/>
+  <cn.qingchengfit.widgets.CommonInputView
+      style="@style/QcCivClickStyle"
+      android:id="@+id/civ_position"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="职位"
+      />
+  <TextView
+      android:padding="@dimen/activity_horizontal_margin"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="选择邀请方式：(添加工作人员需要向对方发送邀请，对方接受邀请后即可加入你的健身房)"
+      />
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      />
+  <Button
+      android:id="@+id/btn_done"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      style="@style/QcBtnPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="完成并生成邀请链接"
+      />
+</LinearLayout>

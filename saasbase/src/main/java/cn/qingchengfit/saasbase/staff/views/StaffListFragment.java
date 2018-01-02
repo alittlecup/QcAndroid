@@ -123,10 +123,8 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
         //    .replace(mCallbackActivity.getFragId(), StaffDetailFragment.newInstance(datas.get(pos), staffId))
         //    .addToBackStack(null)
         //    .commit();
-        Staff staff = new Staff(datas.get(pos).user);
-        staff.setId(datas.get(pos).id);
         routeTo("staff","detail",new StaffDetailParams()
-          .staff(staff)
+          .staffShip(datas.get(pos))
           .build());
       }
     });
@@ -268,11 +266,11 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
 
   @OnClick(R2.id.layout_su) public void onClickSu() {
     if (mSu != null && mSelf != null && mSu.getPhone().equalsIgnoreCase(mSelf.getPhone())) {
-      getFragmentManager().beginTransaction()
-          .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
-          .replace(mCallbackActivity.getFragId(), SuFragment.newInstance(staffId, mSu))
-          .addToBackStack(getFragmentName())
-          .commit();
+      //getFragmentManager().beginTransaction()
+      //    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
+      //    .replace(mCallbackActivity.getFragId(), SuFragment.newInstance(staffId, mSu))
+      //    .addToBackStack(getFragmentName())
+      //    .commit();
     } else {
       showAlert("仅超级管理员本人有权限查看其基本信息");
     }

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentBean;
+import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachBean;
 import cn.qingchengfit.utils.StringUtils;
 import java.util.ArrayList;
@@ -24,15 +25,6 @@ import java.util.List;
  */
 public class User_Student implements Parcelable, Cloneable {
 
-    public static final Creator<User_Student> CREATOR = new Creator<User_Student>() {
-        @Override public User_Student createFromParcel(Parcel source) {
-            return new User_Student(source);
-        }
-
-        @Override public User_Student[] newArray(int size) {
-            return new User_Student[size];
-        }
-    };
     private String username;
     private String id;
     private String date_of_birth;
@@ -53,6 +45,15 @@ public class User_Student implements Parcelable, Cloneable {
     private String remarks;
     private int status;
     private String area_code;
+    private User cloud_user;
+
+    public User getCloud_user() {
+        return cloud_user;
+    }
+
+    public void setCloud_user(User cloud_user) {
+        this.cloud_user = cloud_user;
+    }
 
     private User_Student(Builder builder) {
         setUsername(builder.username);
@@ -77,28 +78,6 @@ public class User_Student implements Parcelable, Cloneable {
     }
 
     public User_Student() {
-    }
-
-    protected User_Student(Parcel in) {
-        this.username = in.readString();
-        this.id = in.readString();
-        this.date_of_birth = in.readString();
-        this.phone = in.readString();
-        this.address = in.readString();
-        this.joined_at = in.readString();
-        this.avatar = in.readString();
-        this.checkin_avatar = in.readString();
-        this.gender = in.readInt();
-        this.sellers = in.createTypedArrayList(Staff.CREATOR);
-        this.seller_ids = in.readString();
-        this.coaches = in.createTypedArrayList(CoachBean.CREATOR);
-        this.shops = in.readString();
-        this.recommend_by_id = in.readString();
-        this.recommend_by = in.readString();
-        this.origin = in.readString();
-        this.remarks = in.readString();
-        this.status = in.readInt();
-        this.area_code = in.readString();
     }
 
     public StudentBean toStudentBean() {
@@ -280,32 +259,6 @@ public class User_Student implements Parcelable, Cloneable {
         return super.clone();
     }
 
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.username);
-        dest.writeString(this.id);
-        dest.writeString(this.date_of_birth);
-        dest.writeString(this.phone);
-        dest.writeString(this.address);
-        dest.writeString(this.joined_at);
-        dest.writeString(this.avatar);
-        dest.writeString(this.checkin_avatar);
-        dest.writeInt(this.gender);
-        dest.writeTypedList(this.sellers);
-        dest.writeString(this.seller_ids);
-        dest.writeTypedList(this.coaches);
-        dest.writeString(this.shops);
-        dest.writeString(this.recommend_by_id);
-        dest.writeString(this.recommend_by);
-        dest.writeString(this.origin);
-        dest.writeString(this.remarks);
-        dest.writeInt(this.status);
-        dest.writeString(this.area_code);
-    }
-
     public static final class Builder {
         private String username;
         private String id;
@@ -423,4 +376,66 @@ public class User_Student implements Parcelable, Cloneable {
             return new User_Student(this);
         }
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.username);
+        dest.writeString(this.id);
+        dest.writeString(this.date_of_birth);
+        dest.writeString(this.phone);
+        dest.writeString(this.address);
+        dest.writeString(this.joined_at);
+        dest.writeString(this.avatar);
+        dest.writeString(this.checkin_avatar);
+        dest.writeInt(this.gender);
+        dest.writeTypedList(this.sellers);
+        dest.writeString(this.seller_ids);
+        dest.writeTypedList(this.coaches);
+        dest.writeString(this.coach_ids);
+        dest.writeString(this.shops);
+        dest.writeString(this.recommend_by_id);
+        dest.writeString(this.recommend_by);
+        dest.writeString(this.origin);
+        dest.writeString(this.remarks);
+        dest.writeInt(this.status);
+        dest.writeString(this.area_code);
+        dest.writeParcelable(this.cloud_user, flags);
+    }
+
+    protected User_Student(Parcel in) {
+        this.username = in.readString();
+        this.id = in.readString();
+        this.date_of_birth = in.readString();
+        this.phone = in.readString();
+        this.address = in.readString();
+        this.joined_at = in.readString();
+        this.avatar = in.readString();
+        this.checkin_avatar = in.readString();
+        this.gender = in.readInt();
+        this.sellers = in.createTypedArrayList(Staff.CREATOR);
+        this.seller_ids = in.readString();
+        this.coaches = in.createTypedArrayList(CoachBean.CREATOR);
+        this.coach_ids = in.readString();
+        this.shops = in.readString();
+        this.recommend_by_id = in.readString();
+        this.recommend_by = in.readString();
+        this.origin = in.readString();
+        this.remarks = in.readString();
+        this.status = in.readInt();
+        this.area_code = in.readString();
+        this.cloud_user = in.readParcelable(User.class.getClassLoader());
+    }
+
+    public static final Creator<User_Student> CREATOR = new Creator<User_Student>() {
+        @Override public User_Student createFromParcel(Parcel source) {
+            return new User_Student(source);
+        }
+
+        @Override public User_Student[] newArray(int size) {
+            return new User_Student[size];
+        }
+    };
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
+
+  <data>
+
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      >
+
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/layout_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="46dp"
+        android:gravity="center"
+        android:text="将二维码转发给方志恒，即可邀请TA加入你的健身房"
+        style="@style/QcTextStyleStandardDark"
+        />
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:scaleType="fitXY"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        />
+
+    <Button
+        android:id="@+id/btn_share"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="发送给朋友"
+        style="@style/QcBtnPrimary"
+        />
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:text="保存到手机"
+        style="@style/QcBtnGreyRectCorner"
+        />
+  </LinearLayout>
+</layout>

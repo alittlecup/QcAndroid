@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.staff.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -17,10 +16,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.network.body.GetCodeBody;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.presenter.SuNewPresenter;
 import cn.qingchengfit.utils.CircleImgWrapper;
@@ -32,8 +31,9 @@ import cn.qingchengfit.widgets.PasswordView;
 import cn.qingchengfit.widgets.PhoneEditText;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import com.bumptech.glide.Glide;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.Observable;
@@ -61,9 +61,9 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2016/12/27.
  */
+@Leaf(module = "staff", path = "/su/new/")
 public class SuNewFragment extends BaseFragment implements SuNewPresenter.MVPView {
 
-    private Staff mStaff;
 
     @BindView(R2.id.hint) TextView hint;
     @BindView(R2.id.old_avatar) ImageView oldAvatar;
@@ -80,21 +80,10 @@ public class SuNewFragment extends BaseFragment implements SuNewPresenter.MVPVie
 
     private MaterialDialog alertChange;
     private MaterialDialog dialogSuccess;
-    private String staffId;
 
-    public static SuNewFragment newInstance(String staffId, Staff mStaff) {
-        Bundle args = new Bundle();
-        args.putString("staffId", staffId);
-        args.putParcelable("staff", mStaff);
-        SuNewFragment fragment = new SuNewFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    @Need StaffShip mStaff;
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FragmentArgs.inject(this);
-    }
+
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_su_change_to_new_saas, container, false);
@@ -173,7 +162,7 @@ public class SuNewFragment extends BaseFragment implements SuNewPresenter.MVPVie
             .onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                     showLoading();
-                    mSuNewPresenter.changeSu(staffId, new ChangeSuBody.Builder().area_code(phoneNum.getDistrictInt())
+                    mSuNewPresenter.changeSu(new ChangeSuBody.Builder().area_code(phoneNum.getDistrictInt())
                         .code(pwView.getCode())
                         .phone(phoneNum.getPhoneNum())
                         .username(newName.getText().toString())

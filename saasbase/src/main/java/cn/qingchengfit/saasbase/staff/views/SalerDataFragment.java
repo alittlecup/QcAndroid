@@ -144,10 +144,11 @@ import rx.schedulers.Schedulers;
               public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                   case 0:
-                    routeTo("/detail/",
-                        cn.qingchengfit.saasbase.staff.views.StaffDetailParams.builder()
-                            .staff(staff)
-                            .build());
+                    // TODO: 2018/1/16 pos机统一用户修改 
+                    //routeTo("/detail/",
+                        //StaffDetailParams.builder()
+                            //.staffShip(staff)
+                            //.build());
                     break;
                   case 1:
                     QRActivity.start(getContext(),QRActivity.MODULE_MANAGE_STAFF);

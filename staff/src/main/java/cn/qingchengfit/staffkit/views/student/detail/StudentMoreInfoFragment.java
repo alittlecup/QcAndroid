@@ -22,6 +22,8 @@ import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.responese.StudentSourceBean;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.staff.beans.StaffLoginMethod;
+import cn.qingchengfit.saasbase.student.views.LoginMethodFragment;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.MutiChooseCoachActivity;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachBean;
@@ -310,6 +312,17 @@ public class StudentMoreInfoFragment extends BaseFragment
       toChooseSaler.putStringArrayListExtra(MutiChooseCoachActivity.INPUT_COACHES,
           (ArrayList<String>) StringUtils.coachIds(user_student.getCoaches()));
       startActivityForResult(toChooseSaler, RESULT_COACH);
+    }
+  }
+
+  @OnClick(R.id.civ_login_method)
+  public void onClickLoginMethod(){
+    if (user_student != null && user_student.getCloud_user() !=null) {
+      routeTo(LoginMethodFragment.newInstance(new StaffLoginMethod.Builder().wx_active(user_student.getCloud_user().isWeixin_active())
+        .phone_active(user_student.getCloud_user().isPhone_active())
+        .wx(user_student.getCloud_user().getWeixin())
+        .phone(user_student.getCloud_user().phone)
+        .build()), "");
     }
   }
 

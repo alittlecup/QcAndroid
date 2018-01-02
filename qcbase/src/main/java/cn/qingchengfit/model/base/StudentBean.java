@@ -24,17 +24,6 @@ import java.util.List;
 @Deprecated
 public class StudentBean implements Parcelable {
 
-    public static final Creator<StudentBean> CREATOR = new Creator<StudentBean>() {
-        @Override
-        public StudentBean createFromParcel(Parcel source) {
-            return new StudentBean(source);
-        }
-
-        @Override
-        public StudentBean[] newArray(int size) {
-            return new StudentBean[size];
-        }
-    };
     public String username;
     public String phone;
     public String avatar;
@@ -56,32 +45,9 @@ public class StudentBean implements Parcelable {
     public String support_shop_ids;
     public int status;//会员状态,
     public List<Staff> sellers;
+    public User cloud_user;
 
     public StudentBean() {
-    }
-
-    protected StudentBean(Parcel in) {
-        this.username = in.readString();
-        this.phone = in.readString();
-        this.avatar = in.readString();
-        this.checkin_avatar = in.readString();
-        this.gender = in.readByte() != 0;
-        this.systemUrl = in.readString();
-        this.head = in.readString();
-        this.id = in.readString();
-        this.isTag = in.readByte() != 0;
-        this.isChosen = in.readByte() != 0;
-        this.isOrigin = in.readByte() != 0;
-        this.color = in.readString();
-        this.modelid = in.readString();
-        this.model = in.readString();
-        this.brandid = in.readString();
-        this.joined_at = in.readString();
-        this.modeltype = in.readInt();
-        this.support_shop = in.readString();
-        this.support_shop_ids = in.readString();
-        this.status = in.readInt();
-        this.sellers = in.createTypedArrayList(Staff.CREATOR);
     }
 
     @Override
@@ -241,13 +207,11 @@ public class StudentBean implements Parcelable {
         this.modeltype = modeltype;
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.username);
         dest.writeString(this.phone);
         dest.writeString(this.avatar);
@@ -269,5 +233,41 @@ public class StudentBean implements Parcelable {
         dest.writeString(this.support_shop_ids);
         dest.writeInt(this.status);
         dest.writeTypedList(this.sellers);
+        dest.writeParcelable(this.cloud_user, flags);
     }
+
+    protected StudentBean(Parcel in) {
+        this.username = in.readString();
+        this.phone = in.readString();
+        this.avatar = in.readString();
+        this.checkin_avatar = in.readString();
+        this.gender = in.readByte() != 0;
+        this.systemUrl = in.readString();
+        this.head = in.readString();
+        this.id = in.readString();
+        this.isTag = in.readByte() != 0;
+        this.isChosen = in.readByte() != 0;
+        this.isOrigin = in.readByte() != 0;
+        this.color = in.readString();
+        this.modelid = in.readString();
+        this.model = in.readString();
+        this.brandid = in.readString();
+        this.joined_at = in.readString();
+        this.modeltype = in.readInt();
+        this.support_shop = in.readString();
+        this.support_shop_ids = in.readString();
+        this.status = in.readInt();
+        this.sellers = in.createTypedArrayList(Staff.CREATOR);
+        this.cloud_user = in.readParcelable(User.class.getClassLoader());
+    }
+
+    public static final Creator<StudentBean> CREATOR = new Creator<StudentBean>() {
+        @Override public StudentBean createFromParcel(Parcel source) {
+            return new StudentBean(source);
+        }
+
+        @Override public StudentBean[] newArray(int size) {
+            return new StudentBean[size];
+        }
+    };
 }

@@ -85,6 +85,7 @@ public class QcStudentBean extends Personage
     private District district;//--Staff
     private StaffPosition postion;//--Staff
     private List<Shop> shops;
+    private User cloud_user;
 
     public QcStudentBean() {
     }

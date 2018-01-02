@@ -6,6 +6,7 @@ import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.Login;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
@@ -23,7 +24,6 @@ import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.File;
@@ -94,8 +94,8 @@ public class RestRepository implements Repository {
                             .addHeader("Connection", "close")
                             .addHeader("X-CSRFToken", token)
                             .addHeader("Cookie",
-                                "csrftoken=" + token + ";sessionid=" + PreferenceUtils.getPrefString(App.context, Configs.PREFER_SESSION,
-                                    ""))
+                                "csrftoken=" + token + ";"+ QcRestRepository.getSessionName(
+                                  App.context)+"=" + QcRestRepository.getSession(App.context))
                             .addHeader("User-Agent",
                                 " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.context) + " Android  OEM:" + App.context.getString(
                                     R.string.oem_tag) + "  QingchengApp/Staff")
@@ -108,7 +108,8 @@ public class RestRepository implements Repository {
                     } else {
                         request = request.newBuilder()
                             .addHeader("Connection", "close")
-                            .addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(App.context, Configs.PREFER_SESSION, ""))
+                            .addHeader("Cookie", QcRestRepository.getSessionName(
+                              App.context)+"=" + QcRestRepository.getSession(App.context))
                             .addHeader("User-Agent",
                                 " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.context) + " Android  OEM:" + App.context.getString(
                                     R.string.oem_tag) + "  QingchengApp/Staff")
@@ -160,12 +161,14 @@ public class RestRepository implements Repository {
 
                     request = request.newBuilder()
                         .addHeader("X-CSRFToken", token)
-                        .addHeader("Cookie", "csrftoken=" + token + ";sessionid=" + session)
+                        .addHeader("Cookie", "csrftoken=" + token + ";"+ QcRestRepository.getSessionName(
+                          App.context)+"=" + QcRestRepository.getSession(App.context))
                         .addHeader("User-Agent", "Android Staff")
                         .build();
                 } else {
                     request =
-                        request.newBuilder().addHeader("Cookie", "sessionid=" + session).addHeader("User-Agent", "Android Staff").build();
+                        request.newBuilder().addHeader("Cookie", QcRestRepository.getSessionName(
+                          App.context)+"=" + QcRestRepository.getSession(App.context)).addHeader("User-Agent", "Android Staff").build();
                 }
                 return chain.proceed(request);
             }

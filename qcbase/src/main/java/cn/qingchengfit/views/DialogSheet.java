@@ -78,7 +78,11 @@ public class DialogSheet extends Dialog {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             (int) context.getResources().getDimension(R.dimen.qc_item_height));
         view.addView(textView, params);
-        textView.setOnClickListener(listener);
+        textView.setOnClickListener(view1 -> {
+          if (listener != null)
+            listener.onClick(view1);
+          dismiss();
+        });
         return this;
     }
 

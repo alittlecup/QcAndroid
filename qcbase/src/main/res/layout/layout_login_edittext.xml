@@ -56,10 +56,11 @@
       android:background="@color/transparent"
       android:gravity="end|center_vertical"
       android:hint="@string/please_input_phone_num"
+      android:digits="0123456789"
       android:inputType="phone"
       android:lines="1"
-      android:maxLength="16"
-      style="@style/QcTextStyleMediumWarm"
+      android:maxLength="11"
+      style="@style/QcTextStyleMediumDark"
 
       />
 

@@ -4,6 +4,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcRequestToken;
+import cn.qingchengfit.staffkit.App;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -51,7 +52,8 @@ public abstract class RestRepository {
           }
           request = request.newBuilder()
               .addHeader("X-CSRFToken", token)
-              .addHeader("Cookie", "csrftoken=" + token + ";sessionid=" + sessionId())
+              .addHeader("Cookie", "csrftoken=" + token + ";"+QcRestRepository.getSessionName(
+                App.context)+"=" + QcRestRepository.getSession(App.context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + appVersionName()
                   + " Android  OEM:"
@@ -66,7 +68,8 @@ public abstract class RestRepository {
         } else {
 
           request = request.newBuilder()
-              .addHeader("Cookie", "sessionid=" + sessionId())
+              .addHeader("Cookie",  QcRestRepository.getSessionName(
+                App.context)+"=" + QcRestRepository.getSession(App.context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + appVersionName()
                   + " Android  OEM:"

@@ -384,6 +384,7 @@ public class WebFragment extends BaseFragment
       try {
         URI uri = new URI(url);
         setCookie(uri.getHost(), "qc_session_id", sessionid);
+        setCookie(uri.getHost(), QcRestRepository.getSessionName(getContext()), sessionid);
         setCookie(uri.getHost(), "sessionid", sessionid);
         setCookie(uri.getHost(), "oem", oemTag);
         LogUtil.e("session:" + sessionid);

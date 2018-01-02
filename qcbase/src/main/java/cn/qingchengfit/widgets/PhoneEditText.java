@@ -192,5 +192,13 @@ public class PhoneEditText extends LinearLayout implements View.OnClickListener,
         void onFocusChange(boolean isFocus);
     }
 
+    public void setEditble(boolean editble){
+        mPhoneNum.setFocusable(editble);
+        mPhoneNum.setFocusableInTouchMode(editble);
+        if (editble)
+            mDistrict.setOnClickListener(this);
+        else mDistrict.setOnClickListener(view -> {});
+        mPhoneNum.setAlpha(editble?1f:0.5f);
+    }
 
 }

@@ -3,16 +3,11 @@ package cn.qingchengfit.saasbase.staff.presenter;
 import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.repository.PostApi;
+import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -30,13 +25,11 @@ import rx.schedulers.Schedulers;
  */
 public class SuPresenter extends BasePresenter {
 
-    @Inject LoginStatus loginStatus;
-    @Inject GymWrapper gymWrapper;
+    @Inject IStaffModel staffModel;
     private StaffDetailView view;
-    @Inject QcRestRepository mRestRepository;
 
-    @Inject public SuPresenter(QcRestRepository useCase) {
-        this.mRestRepository = useCase;
+    @Inject public SuPresenter() {
+
     }
 
     @Override public void onStart() {
@@ -68,24 +61,17 @@ public class SuPresenter extends BasePresenter {
         view = null;
     }
 
-    public void onFixStaff(ManagerBody body, String staffid, String userid) {
-        RxRegiste(mRestRepository.createPostApi(PostApi.class)
-            .qcUpdateManager(staffid, userid, gymWrapper.id(), gymWrapper.model(), body)
+    public void onFixStaff(ManagerBody body, String userid) {
+        RxRegiste(staffModel.editStaff(userid,body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponse>() {
-                @Override public void call(QcResponse qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                        view.onFixSuccess();
-                    } else {
-                        view.onFailed(qcResponse.getMsg());
-                    }
+            .subscribe(qcResponse -> {
+                if (ResponseConstant.checkSuccess(qcResponse)) {
+                    view.onFixSuccess();
+                } else {
+                    view.onFailed(qcResponse.getMsg());
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onFailed(throwable.getMessage());
-                }
-            }));
+            }, throwable -> view.onFailed(throwable.getMessage())));
     }
 }

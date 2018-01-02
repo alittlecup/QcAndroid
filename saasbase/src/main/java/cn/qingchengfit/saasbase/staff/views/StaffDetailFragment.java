@@ -4,39 +4,25 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
-import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.databinding.FragmentStaffDetailSassBinding;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saasbase.staff.beans.StaffLoginMethod;
 import cn.qingchengfit.saasbase.staff.event.EventAddStaffDone;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.presenter.StaffDetailPresenter;
-import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
-import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
-import cn.qingchengfit.widgets.PhoneEditText;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import javax.inject.Inject;
@@ -57,57 +43,71 @@ import javax.inject.Inject;
 @Leaf(module = "staff",path = "/detail/")
 public class StaffDetailFragment extends SaasBaseFragment implements StaffDetailPresenter.MVPView {
 
-  @BindView(R2.id.toolbar) protected Toolbar toolbar;
-  @BindView(R2.id.toolbar_title)protected TextView toolbarTitle;
-  @BindView(R2.id.header_img)protected ImageView headerImg;
-  @BindView(R2.id.header_layout)protected RelativeLayout headerLayout;
-  @BindView(R2.id.username)protected CommonInputView username;
-  @BindView(R2.id.civ_gender)protected CommonInputView civGender;
-  @BindView(R2.id.phone_num)protected PhoneEditText phoneNum;
-  @BindView(R2.id.position)protected CommonInputView position;
-  @BindView(R2.id.deny_layout)protected View denyLayout;
-  @BindView(R2.id.go_to_web)protected TextView goToWeb;
-  @BindView(R2.id.btn_del)protected RelativeLayout btnDel;
-  @BindView(R2.id.btn_add)protected Button btnAdd;
-
   @Inject public StaffDetailPresenter presenter;
   @Inject SerPermisAction serPermisAction;
-  @Need Staff staff;
+  @Need StaffShip staffShip;
 
-
+  FragmentStaffDetailSassBinding db;
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
     @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_staff_detail_sass, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    db = FragmentStaffDetailSassBinding.inflate(inflater);
     delegatePresenter(presenter, this);
-    presenter.setStaff(staff);
+    presenter.setStaff(staffShip);
     presenter.queryPositions();
-    initToolbar(toolbar);
-    initHint();
-    return view;
+    initToolbar(db.layoutToolbar.toolbar);
+    db.btnDel.setVisibility(View.VISIBLE);
+    db.btnAdd.setVisibility(View.GONE);
+    db.setMethods(new StaffLoginMethod.Builder().phone(staffShip.user.phone)
+      .phone_active(staffShip.user.isPhone_active())
+      .wx(staffShip.user.getWeixin())
+      .wx_active(staffShip.user.isWeixin_active())
+      .build()
+    );
+    initClick();
+    return db.getRoot();
   }
-  protected  void initHint(){
-    SpannableString ss = new SpannableString(getString(R.string.hint_login_web));
-    ss.setSpan(new ForegroundColorSpan(CompatUtils.getColor(getContext(), R.color.text_orange)), 4,
-      7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色
-    goToWeb.setText(ss, TextView.BufferType.SPANNABLE);
-  }
+  //protected  void initHint(){
+  //  SpannableString ss = new SpannableString(getString(R.string.hint_login_web));
+  //  ss.setSpan(new ForegroundColorSpan(CompatUtils.getColor(getContext(), R.color.text_orange)), 4,
+  //    7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色
+  //  goToWeb.setText(ss, TextView.BufferType.SPANNABLE);
+  //}
+
+
+
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitle.setText("工作人员详情");
-    toolbar.getMenu().clear();
-    toolbar.getMenu().add("保存").setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        if (phoneNum.checkPhoneNum())
-          presenter.editStaff();
-        return true;
-      }
+    //toolbarTitle.setText("工作人员详情");
+    db.setToolbarModel(new ToolbarModel("工作人员详情"));
+    db.getToolbarModel().setMenu(R.menu.menu_save);
+    db.getToolbarModel().setListener(item -> {
+      if (db.phoneNum.checkPhoneNum())
+        presenter.editStaff();
+      return true;
     });
   }
 
-  @OnClick(R2.id.deny_layout) public void onDeny() {
+  protected void initClick(){
+    if (serPermisAction.check(PermissionServerUtils.MANAGE_STAFF_CAN_CHANGE)){
+      db.denyLayout.setVisibility(View.GONE);
+    }else {
+      db.denyLayout.setVisibility(View.VISIBLE);
+      //db.position.setOnClickListener(view -> onDeny());
+      //db.civGender.setOnClickListener(view -> onDeny());
+      //db.username.setCanClick(true);
+      //db.username.setOnClickListener(view -> onDeny());
+      //db.headerLayout.setOnClickListener(view -> onDeny());
+    }
+    db.denyLayout.setOnClickListener(view -> onDeny());
+    db.position.setOnClickListener(view -> onPositionClicked());
+    db.headerLayout.setOnClickListener(view -> onHeaderLayoutClicked());
+    db.civGender.setOnClickListener(view -> clickGender());
+    db.btnAdd.setOnClickListener(view -> onBtnAddClicked());
+    db.btnDel.setOnClickListener(view -> onBtnDelClicked());
+  }
+
+  public void onDeny() {
     showAlert(R.string.alert_permission_forbid);
   }
 
@@ -117,9 +117,6 @@ public class StaffDetailFragment extends SaasBaseFragment implements StaffDetail
 
 
 
-  @OnClick(R2.id.position) public void onClick() {
-    presenter.choosePosition();
-  }
 
   @Override public void onFixSuccess() {
     hideLoading();
@@ -137,12 +134,14 @@ public class StaffDetailFragment extends SaasBaseFragment implements StaffDetail
     popBack();
   }
 
-  @Override public void onStaff(Staff staff) {
+  @Override public void onStaff(StaffShip staff) {
     if (staff != null){
-      username.setContent(staff.getUsername());
-      phoneNum.setPhoneNum(staff.getPhone());
-      civGender.setContent(getResources().getStringArray(R.array.gender_list)[staff.gender]);
-      position.setContent(staff.position_str);
+      PhotoUtils.smallCircle(db.headerImg,staff.getAvatar());
+      db.username.setContent(staff.getUsername());
+      db.phoneNum.setPhoneNum(staff.getPhone());
+      db.civGender.setContent(getResources().getStringArray(R.array.gender_list)[staff.gender]);
+      if (staff.position != null)
+        db.position.setContent(staff.position.getName());
       if (staff.is_coach && !staff.is_staff){
         onPosition("教练");
       }else {
@@ -158,59 +157,72 @@ public class StaffDetailFragment extends SaasBaseFragment implements StaffDetail
   }
 
   @Override public void onPosition(String positon) {
-    this.position.setContent(positon);
+    this.db.position.setContent(positon);
   }
 
   @Override public String getName() {
-    return this.username.getContent();
+    return this.db.username.getContent();
   }
 
   @Override public String getPhone() {
-    return this.phoneNum.getPhoneNum();
+    return this.db.phoneNum.getPhoneNum();
   }
 
-  @OnClick(R2.id.civ_gender) public void clickGender(){
+  @Override public String getAreaCode() {
+    return db.phoneNum.getDistrictInt();
+  }
+
+  public void clickGender(){
     new DialogList(getContext()).list(getResources().getStringArray(R.array.gender_list), new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         presenter.setGender(position);
-        civGender.setContent(getResources().getStringArray(R.array.gender_list)[position]);
+        db.civGender.setContent(getResources().getStringArray(R.array.gender_list)[position]);
       }
     }).show();
   }
 
-  @OnClick(R2.id.header_layout) public void onHeaderLayoutClicked() {
-    ChoosePictureFragmentNewDialog.newInstance(true).show(getChildFragmentManager(),"");
+   public void onHeaderLayoutClicked() {
+    ChoosePictureFragmentNewDialog dialog = ChoosePictureFragmentNewDialog.newInstance(true);
+    dialog.setResult(new ChoosePictureFragmentNewDialog.ChoosePicResult() {
+      @Override public void onChoosefile(String filePath) {
+        PhotoUtils.smallCircle(db.headerImg,filePath);
+      }
+
+      @Override public void onUploadComplete(String filePaht, String url) {
+        PhotoUtils.smallCircle(db.headerImg,url);
+        presenter.setAvatar(url);
+      }
+    });
+      dialog.show(getChildFragmentManager(),"");
   }
 
-  @OnClick(R2.id.position) public void onPositionClicked() {
+  public void onPositionClicked() {
     presenter.choosePosition();
   }
 
-  @OnClick(R2.id.deny_layout) public void onDenyLayoutClicked() {
-    showAlert(R.string.sorry_for_no_permission);
-  }
 
-  @OnClick(R2.id.go_to_web) public void onGoToWebClicked() {
-    //跳去扫码页面
-    QRActivity.start(getContext(),QRActivity.MODULE_MANAGE_STAFF);
-  }
 
-  @OnClick(R2.id.btn_del) public void onBtnDelClicked() {
+  //@OnClick(R2.id.go_to_web) public void onGoToWebClicked() {
+  //  //跳去扫码页面
+  //  QRActivity.start(getContext(),QRActivity.MODULE_MANAGE_STAFF);
+  //}
+
+  public void onBtnDelClicked() {
     if (!serPermisAction.checkAll(PermissionServerUtils.MANAGE_STAFF_CAN_DELETE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
     }
-
-    DialogUtils.instanceDelDialog(getActivity(), "确定删除此工作人员?",
-      new MaterialDialog.SingleButtonCallback() {
-        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+    DialogUtils.instanceDelDialog(getActivity(), String.format("确定将%s设为离职吗？",staffShip.getUsername()),"离职后\n"
+        + "1.该用户不能登录到当前场馆后台。\n"
+        + "2.跟该工作人员相关的过往业务数据将被保留。\n"
+        + "3.可以由健身房工作人员复职", (dialog, which) -> {
           showLoading();
           presenter.delStaff();
-        }
-      }).show();
+        }).show();
   }
 
-  @OnClick(R2.id.btn_add) public void onBtnAddClicked() {
+
+ public void onBtnAddClicked() {
     presenter.addStaff();
   }
 }

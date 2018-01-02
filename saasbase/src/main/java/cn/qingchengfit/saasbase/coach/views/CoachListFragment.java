@@ -10,16 +10,17 @@ import android.view.MenuItem;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
-import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
-import cn.qingchengfit.saasbase.staff.items.StaffItem;
+import cn.qingchengfit.saasbase.staff.beans.response.StaffShipsListWrap;
+import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
 import cn.qingchengfit.saasbase.staff.items.StaffSelectSingleItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
-import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.views.BaseStaffListFragment;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -88,12 +89,12 @@ public class CoachListFragment extends BaseStaffListFragment {
       .onBackpressureLatest()
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new NetSubscribe<QcDataResponse<SalerListWrap>>() {
-        @Override public void onNext(QcDataResponse<SalerListWrap> qcResponse) {
+      .subscribe(new NetSubscribe<QcDataResponse<StaffShipsListWrap>>() {
+        @Override public void onNext(QcDataResponse<StaffShipsListWrap> qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
-            if (qcResponse.data.coaches != null){
-              List<StaffItem> staffItems  = new ArrayList<>();
-              for (Staff coach : qcResponse.data.coaches) {
+            if (qcResponse.data.staffships != null){
+              List<CommonUserItem> staffItems  = new ArrayList<>();
+              for (StaffShip coach : qcResponse.data.staffships) {
                 staffItems.add(generateItem(coach));
               }
               setDatas(staffItems ,1);
@@ -109,9 +110,7 @@ public class CoachListFragment extends BaseStaffListFragment {
       commonFlexAdapter.updateDataSet(ds,true);
   }
 
-
-
-  @Override protected StaffItem generateItem(Staff staff) {
+  @Override protected CommonUserItem generateItem(ICommonUser staff) {
     return new StaffSelectSingleItem(staff);
   }
 

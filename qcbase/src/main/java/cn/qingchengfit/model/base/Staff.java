@@ -2,6 +2,7 @@ package cn.qingchengfit.model.base;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.common.ICommonUser;
 
 /**
  * //  ┏┓　　　┏┓
@@ -25,7 +26,7 @@ import android.os.Parcelable;
  * //Created by yangming on 16/11/18.
  */
 
-public class Staff extends Personage implements Parcelable {
+public class Staff extends Personage implements Parcelable,ICommonUser {
 
     public String gd_district_id;//地区id
     public District gd_district;//地区
@@ -167,4 +168,28 @@ public class Staff extends Personage implements Parcelable {
             return new Staff[size];
         }
     };
+
+    @Override public String getTitle() {
+        return username;
+    }
+
+    @Override public String getSubTitle() {
+        return phone;
+    }
+
+    @Override public String getContent() {
+        return position_str;
+    }
+
+    @Override public String getRight() {
+        return "";
+    }
+
+    @Override public int getRightColor() {
+        return 0;
+    }
+
+    @Override public boolean filter(String str) {
+        return username.contains(str) || phone.contains(str);
+    }
 }

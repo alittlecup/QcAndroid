@@ -1,11 +1,17 @@
 package cn.qingchengfit.saasbase.staff.model;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.staff.beans.body.InvitationBody;
+import cn.qingchengfit.saasbase.staff.beans.response.InvitationListWrap;
+import cn.qingchengfit.saasbase.staff.beans.response.InvitationWrap;
 import cn.qingchengfit.saasbase.staff.beans.response.SalerDataWrap;
+import cn.qingchengfit.saasbase.staff.beans.response.StaffShipsListWrap;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import com.google.gson.JsonObject;
 import java.util.HashMap;
+import retrofit2.http.Body;
 
 /**
  * power by
@@ -35,16 +41,31 @@ public interface IStaffModel {
 
   /**
    * 获取工作人员详情
-   * @param id 工作人员ID
    */
-  rx.Observable<QcDataResponse<SalerListWrap>> getStaffList(String id);
+  rx.Observable<QcDataResponse<StaffShipsListWrap>> getStaffList();
+  rx.Observable<QcDataResponse<StaffShipsListWrap>> getLeaveStaffList();
+  rx.Observable<QcDataResponse<InvitationListWrap>> getInvitedStaffList();
+  rx.Observable<QcDataResponse<InvitationWrap>> inviteStaff(InvitationBody body);
+  rx.Observable<QcDataResponse> cancelInvite(String inviteId);
 
   rx.Observable<QcDataResponse> addStaff(ManagerBody body);
   rx.Observable<QcDataResponse> delStaff(String id);
+  rx.Observable<QcDataResponse> resumeStaff(String id,String position_id);
   rx.Observable<QcDataResponse> editStaff(String id,ManagerBody body);
+  rx.Observable<QcDataResponse> editTrainer(String id,ManagerBody body);
+
   rx.Observable<QcDataResponse<PostionListWrap>> getPositions();
 
   rx.Observable<QcDataResponse<SalerDataWrap>> getSalerDatas(String staffid, HashMap<String, Object> params);
 
-  rx.Observable<QcDataResponse<SalerListWrap>> getTrainers();
+  rx.Observable<QcDataResponse<StaffShipsListWrap>> getTrainers();
+  rx.Observable<QcDataResponse<StaffShipsListWrap>> getLeaveTrainers();
+  rx.Observable<QcDataResponse<InvitationListWrap>> getInvitedTrainers();
+  rx.Observable<QcDataResponse<InvitationWrap>> inviteTrainer(InvitationBody body);
+  rx.Observable<QcDataResponse> delTrainer(String id);
+  rx.Observable<QcDataResponse> resumeTrainer(String id);
+
+  rx.Observable<QcDataResponse> inviteBySms(String uuid, @Body String area_code,@Body String phone);
+  rx.Observable<QcDataResponse<JsonObject>> isSelfSu();
+
 }

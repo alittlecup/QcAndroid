@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.staff.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -21,19 +20,19 @@ import butterknife.OnClick;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.network.body.GetCodeBody;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.model.body.CheckCodeBody;
 import cn.qingchengfit.saasbase.staff.presenter.SuIdendifyPresenter;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import com.bumptech.glide.Glide;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.Observable;
@@ -62,9 +61,11 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2016/12/27.
  */
-public class SuIdendifyFragment extends BaseFragment implements SuIdendifyPresenter.MVPView {
 
-    private Staff mStaff;
+@Leaf(module = "staff", path = "/su/change/")
+public class SuIdendifyFragment extends SaasBaseFragment implements SuIdendifyPresenter.MVPView {
+
+
     @BindView(R2.id.su_avatar) ImageView suAvatar;
     @BindView(R2.id.su_name) TextView suName;
     @BindView(R2.id.su_phone) TextView suPhone;
@@ -80,24 +81,8 @@ public class SuIdendifyFragment extends BaseFragment implements SuIdendifyPresen
     @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
 
     private Subscription mSendMsgSp;
-    private String staffId;
+    @Need StaffShip mStaff;
 
-    public static SuIdendifyFragment newInstance(String staffId, Staff mStaff) {
-        Bundle args = new Bundle();
-        args.putString("staffId", staffId);
-        args.putParcelable("staff", mStaff);
-        SuIdendifyFragment fragment = new SuIdendifyFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null){
-            mStaff = getArguments().getParcelable("staff");
-            staffId = getArguments().getString("staffId");
-        }
-    }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_check_identity, container, false);
@@ -180,11 +165,7 @@ public class SuIdendifyFragment extends BaseFragment implements SuIdendifyPresen
     }
 
     @Override public void onCheckOk() {
-        getFragmentManager().beginTransaction()
-            .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
-            .replace(mCallbackActivity.getFragId(), SuNewFragment.newInstance(staffId, mStaff))
-            .addToBackStack(getFragmentName())
-            .commit();
+        routeTo("/su/new/",SuNewParams.builder().mStaff(mStaff).build());
         hideLoading();
     }
 

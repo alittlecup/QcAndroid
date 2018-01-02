@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saasbase.staff.items.CommonUserItem;
 import cn.qingchengfit.saasbase.staff.items.SalerItem;
 import cn.qingchengfit.saasbase.staff.items.StaffItem;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
@@ -117,9 +119,10 @@ import rx.schedulers.Schedulers;
       }));
   }
 
-  @Override protected StaffItem generateItem(Staff staff) {
+  @Override protected CommonUserItem generateItem(ICommonUser staff) {
     return new SalerItem(staff);
   }
+
 
   @Override protected String getTitle() {
     return "销售";

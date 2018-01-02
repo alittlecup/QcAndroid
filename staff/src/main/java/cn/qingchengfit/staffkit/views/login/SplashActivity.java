@@ -15,6 +15,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.StaffResponse;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -105,7 +106,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onStart();
 
         String staffid = PreferenceUtils.getPrefString(this, Configs.PREFER_WORK_ID, "");
-        if (PreferenceUtils.getPrefString(SplashActivity.this, Configs.PREFER_SESSION, null) != null && !TextUtils.isEmpty(staffid)) {
+        if (QcRestRepository.getSession(this) != null && !TextUtils.isEmpty(staffid)) {
             App.staffId = staffid;
             sp = restRepository.getGet_api()
                 .qcGetSelfInfo(staffid).delay(2500, TimeUnit.MILLISECONDS)

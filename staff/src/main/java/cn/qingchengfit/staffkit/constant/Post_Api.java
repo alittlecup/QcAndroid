@@ -117,7 +117,7 @@ public interface Post_Api {
      * 个人操作
      */
 
-    @POST("/api/staffs/login/") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
+    @POST("/api/user/login/") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
 
     @POST("/api/staffs/login/") Call<Login> qcLoginTest(@Body LoginBody loginBody);
 

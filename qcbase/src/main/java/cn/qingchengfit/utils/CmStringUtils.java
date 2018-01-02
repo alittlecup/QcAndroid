@@ -35,6 +35,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 public class CmStringUtils {
 
+
+
   public static boolean isID(String s){
     try {
       long x = Long.parseLong(s);

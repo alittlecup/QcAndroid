@@ -8,13 +8,13 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StaffPosition;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.PostionListWrap;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.ListUtils;
@@ -42,8 +42,8 @@ public class StaffDetailPresenter extends BasePresenter {
   @Inject IStaffModel staffModel;
   private ManagerBody body = new ManagerBody();
   private MVPView view;
-  private List<StaffPosition> positions ;
-  private Staff staff;
+  private List<StaffPosition> positions;
+  private StaffShip staffShip;
 
   @Inject public StaffDetailPresenter() {
   }
@@ -60,17 +60,20 @@ public class StaffDetailPresenter extends BasePresenter {
     super.onPause();
   }
 
-  public void setStaff(Staff staff) {
-    this.staff = staff;
+  public void setStaff(StaffShip staff) {
+    this.staffShip = staff;
     view.onStaff(staff);
+  }
 
+  public ManagerBody getBody() {
+    return body;
   }
 
   @Override public void attachView(PView v) {
     view = (MVPView) v;
   }
 
-  public void setGender(int g){
+  public void setGender(int g) {
     body.setGender(g);
   }
 
@@ -87,14 +90,19 @@ public class StaffDetailPresenter extends BasePresenter {
     view = null;
   }
 
+  public void setAvatar(String avatar){
+    body.setAvatar(avatar);
+  }
+
   public void editStaff() {
     body.setUsername(view.getName());
     body.setPhone(view.getPhone());
+    body.setArea_code(view.getAreaCode());
     int ret = body.checkDataInPos();
     if (ret > 0) {
       view.showAlert(ret);
     } else {
-      RxRegiste(staffModel.editStaff(staff.id ,body)
+      RxRegiste(staffModel.editStaff(staffShip.id, body)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -110,6 +118,26 @@ public class StaffDetailPresenter extends BasePresenter {
           }
         }));
     }
+  }
+
+  public void resumeStaff() {
+    ManagerBody resumeBody = new ManagerBody();
+    resumeBody.staff_enable = true;
+    RxRegiste(staffModel.editStaff(staffShip.id, resumeBody)
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            RxBus.getBus().post(new EventSaasFresh.StaffList());
+            view.onShowError("复职成功！");
+            view.popBack();
+          } else {
+            view.onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 
   public void addStaff() {
@@ -138,14 +166,14 @@ public class StaffDetailPresenter extends BasePresenter {
   }
 
   public void delStaff() {
-    RxRegiste(staffModel.delStaff(staff.id)
+    RxRegiste(staffModel.delStaff(staffShip.id)
       .onBackpressureLatest()
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new NetSubscribe<QcDataResponse>() {
         @Override public void onNext(QcDataResponse qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
-            view.onShowError("添加成功！");
+            view.onShowError("离职成功！");
             view.popBack();
           } else {
             view.onShowError(qcResponse.getMsg());
@@ -154,38 +182,38 @@ public class StaffDetailPresenter extends BasePresenter {
       }));
   }
 
-
   public void queryPositions() {
     RxRegiste(staffModel.getPositions()
-          .onBackpressureLatest()
-              .subscribeOn(Schedulers.io())
-              .observeOn(AndroidSchedulers.mainThread())
-              .subscribe(new NetSubscribe<QcDataResponse<PostionListWrap>>() {
-                @Override public void onNext(QcDataResponse<PostionListWrap> qcResponse) {
-                  if (ResponseConstant.checkSuccess(qcResponse)) {
-                    positions = qcResponse.data.positions;
-                  } else {
-                    view.onShowError(qcResponse.getMsg());
-                  }
-                }
-              }));
-             
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<PostionListWrap>>() {
+        @Override public void onNext(QcDataResponse<PostionListWrap> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            positions = qcResponse.data.positions;
+          } else {
+            view.onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 
   public void choosePosition() {
-    if (staff != null &&staff.is_coach && !staff.is_staff ){
+    if (staffShip != null && staffShip.is_coach && !staffShip.is_staff) {
       //只是教练的话 不能修改
       view.showAlert("教练身份无法被修改");
-    }else {
-      if (positions != null && view != null){
-        view.showSelectSheet(null, ListUtils.ListObj2Str(positions),new AdapterView.OnItemClickListener(){
-          @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            if (i < positions.size()){
-              body.setPosition_id(positions.get(i).id);
-              StaffDetailPresenter.this.view.onPosition(positions.get(i).getName());
+    } else {
+      if (positions != null && view != null) {
+        view.showSelectSheet(null, ListUtils.ListObj2Str(positions),
+          new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+              if (i < positions.size()) {
+                body.setPosition_id(positions.get(i).id);
+                StaffDetailPresenter.this.view.onPosition(positions.get(i).getName());
+              }
             }
-          }
-        });
+          });
       }
     }
   }
@@ -196,11 +224,16 @@ public class StaffDetailPresenter extends BasePresenter {
     void onAddSuccess();
 
     void onDelSuccess();
-    void onStaff(Staff staff);
-    void onFailed(String s);
-    void onPosition(String positon);
-    String getName();
-    String getPhone();
 
+    void onStaff(StaffShip staff);
+
+    void onFailed(String s);
+
+    void onPosition(String positon);
+
+    String getName();
+
+    String getPhone();
+    String getAreaCode();
   }
 }

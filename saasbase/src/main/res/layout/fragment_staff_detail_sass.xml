@@ -1,176 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     >
-
-  <include layout="@layout/common_simple_toolbar"/>
-
-  <FrameLayout
+  <data
+    >
+    <variable
+        name="methods"
+        type="cn.qingchengfit.saasbase.staff.beans.StaffLoginMethod"/>
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel" />
+  </data>
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
-      <RelativeLayout
-          android:id="@+id/header_layout"
-          android:layout_width="match_parent"
-          android:layout_height="90dp"
-          android:background="@color/white"
-          android:paddingLeft="@dimen/activity_horizontal_margin"
-          android:paddingRight="@dimen/activity_horizontal_margin"
-          >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="@string/header"
-            />
-
-        <ImageView
-            android:id="@+id/header_img"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            tools:src="@drawable/ic_default_header"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_arrow_right"
-            />
-      </RelativeLayout>
-
-      <include layout="@layout/divider_grey"/>
-
-      <include layout="@layout/divider_grey_margin"/>
-
-      <cn.qingchengfit.widgets.CommonInputView
-          style="@style/QcCivInputStyle"
-          android:id="@+id/username"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          app:civ_lable="@string/label_username"
-          />
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/civ_gender"
-          style="@style/QcCivClickStyle"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          app:civ_showright="false"
-          app:civ_lable="@string/gender"
-          app:civ_content="@string/gender_male"
-          />
-
-      <cn.qingchengfit.widgets.PhoneEditText
-          android:id="@+id/phone_num"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          android:background="@color/white"
-          android:paddingLeft="@dimen/activity_horizontal_margin"
-          android:paddingRight="@dimen/activity_horizontal_margin"
-          app:phone_show_icon="false"
-          app:phone_only_mainland="true"
-          />
-      <include layout="@layout/divider_grey"/>
-      <android.support.v4.widget.Space
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/activity_vertical_margin"
-          />
-
-      <include layout="@layout/divider_grey"/>
-      <cn.qingchengfit.widgets.CommonInputView
-          style="@style/QcCivClickStyle"
-          android:id="@+id/position"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          app:civ_clickable="true"
-          app:civ_lable="职位"
-          app:civ_showdivier="false"
-          />
-
-      <include layout="@layout/divider_grey"/>
-    </LinearLayout>
-
-    <View
-        android:id="@+id/deny_layout"
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:visibility="gone"
-        />
-  </FrameLayout>
-
-  <TextView
-      android:id="@+id/go_to_web"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/activity_horizontal_margin"
-      android:layout_marginRight="@dimen/activity_horizontal_margin"
-      android:layout_marginTop="@dimen/activity_vertical_margin"
-      android:text="@string/hint_login_web"
-      android:visibility="visible"
-      tools:visibility="visible"
-      />
-
-  <RelativeLayout
-      android:id="@+id/btn_del"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      android:layout_marginTop="@dimen/activity_vertical_margin"
-      android:background="@color/white"
+      android:layout_height="match_parent"
       android:orientation="vertical"
       >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <include layout="@layout/common_simple_toolbar"
+        android:id="@+id/layout_toolbar"
+             bind:toolbarModel="@{toolbarModel}"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="删除该工作人员"
-        android:textColor="@color/red"
+        >
+
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+
+        <RelativeLayout
+            android:id="@+id/header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            >
+
+          <TextView
+              style="@style/QcTextStyleStandardDark"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              android:layout_centerVertical="true"
+              android:text="@string/header"
+              />
+
+          <ImageView
+              android:id="@+id/header_img"
+              android:layout_width="65dp"
+              android:layout_height="65dp"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:layout_marginEnd="20dp"
+              android:layout_marginRight="20dp"
+              tools:src="@drawable/ic_default_header"
+              />
+
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:src="@drawable/ic_arrow_right"
+              />
+        </RelativeLayout>
+
+        <include layout="@layout/divider_grey"/>
+
+        <include layout="@layout/divider_grey_margin"/>
+
+        <cn.qingchengfit.widgets.CommonInputView
+            style="@style/QcCivInputStyle"
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="@string/label_username"
+            />
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/civ_gender"
+            style="@style/QcCivClickStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_showright="false"
+            app:civ_lable="@string/gender"
+            app:civ_content="@string/gender_male"
+            />
+
+        <cn.qingchengfit.widgets.PhoneEditText
+            android:id="@+id/phone_num"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            app:phone_show_icon="false"
+            />
+        <include layout="@layout/divider_grey_left_right"/>
+
+        <cn.qingchengfit.widgets.CommonInputView
+            style="@style/QcCivClickStyle"
+            android:id="@+id/position"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
+            app:civ_lable="职位"
+            app:civ_showdivier="false"
+            />
+
+        <include layout="@layout/divider_grey"/>
+      </LinearLayout>
+
+      <View
+          android:id="@+id/deny_layout"
+          android:layout_width="match_parent"
+          android:layout_height="280dp"
+          android:visibility="gone"
+          />
+    </FrameLayout>
+
+
+    <include layout="@layout/layout_login_methods"
+             android:id="@+id/layout_login_methods"
+             bind:methods="@{methods}"
         />
 
-    <View
+    <Button
+        android:id="@+id/btn_del"
+        style="@style/QcBtnGreyRectCorner"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider_grey"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="离职"
         />
 
-    <View
+    <Button
+        android:id="@+id/btn_add"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/divider_grey"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="@string/common_comfirm"
         />
-  </RelativeLayout>
-
-  <Button
-      android:id="@+id/btn_add"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/qc_item_height"
-      android:layout_margin="@dimen/activity_vertical_margin"
-      android:text="@string/common_comfirm"
-      />
 
 
-</LinearLayout>
+  </LinearLayout>
+</layout>

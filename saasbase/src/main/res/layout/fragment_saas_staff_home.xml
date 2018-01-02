@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+  <data>
+
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:background="@color/bg_grey"
+      >
+
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/toolbar_layout"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+
+    <LinearLayout
+        android:id="@+id/layout_su"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="5dp"
+          android:background="@drawable/bg_su_border"
+          />
+      <cn.qingchengfit.support.widgets.CompatTextView
+          android:id="@+id/su_admin_title"
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:text="@string/su_manager"
+          android:textColor="@color/orange"
+          android:drawablePadding="@dimen/little"
+          android:background="@color/white"
+          app:drawableStart="@drawable/ic_superadmin_crown"
+          />
+
+      <LinearLayout
+          android:background="@drawable/bg_click_white"
+          android:layout_width="match_parent"
+          android:layout_height="84dp"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <ImageView
+            android:id="@+id/su_avatar"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:scaleType="fitXY"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:id="@+id/su_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/Qc.TextCommonBlack"
+              />
+
+          <TextView
+              android:id="@+id/su_phone"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="2dp"
+              android:textSize="12sp"
+              style="@style/Qc.TextCommonGrey"
+              />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_arrow_right"
+            />
+
+      </LinearLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="5dp"
+          android:background="@drawable/bg_su_border"
+          />
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin"
+        />
+    </LinearLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:tabMinWidth="100dp"
+        style="@style/QcTabLayout"
+        />
+    <include layout="@layout/divider_grey"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+  </LinearLayout>
+</layout>
+

@@ -2,7 +2,6 @@ package cn.qingchengfit.saasbase.staff.views;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -20,10 +19,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.events.EventChooseImage;
-import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StaffPosition;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
 import cn.qingchengfit.saasbase.staff.presenter.StaffDetailView;
 import cn.qingchengfit.saasbase.staff.presenter.SuPresenter;
@@ -31,14 +31,12 @@ import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.PhoneEditText;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import com.bumptech.glide.Glide;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
@@ -63,7 +61,8 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2016/12/27.
  */
-@FragmentWithArgs public class SuFragment extends BaseFragment implements StaffDetailView {
+@Leaf(module = "staff", path = "/su/")
+public class SuFragment extends SaasBaseFragment implements StaffDetailView {
 
     @BindView(R2.id.hint) TextView hint;
     @BindView(R2.id.header_img) ImageView headerImg;
@@ -81,26 +80,7 @@ import rx.functions.Action1;
     @Inject SuPresenter mSuPresenter;
     //上传的照片
     private String uploadImg;
-    private String staffId;
-    private Staff mStaff;
-
-    public static SuFragment newInstance(String staffId, Staff mStaff) {
-        Bundle args = new Bundle();
-        args.putString("staffId", staffId);
-        args.putParcelable("staff", mStaff);
-        SuFragment fragment = new SuFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FragmentArgs.inject(this);
-        if (getArguments() != null){
-            staffId = getArguments().getString("staffId");
-            mStaff = getArguments().getParcelable("staff");
-        }
-    }
+    @Need StaffShip mStaff;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_su_staff_saas, container, false);
@@ -162,7 +142,7 @@ import rx.functions.Action1;
 
                 builder.gender(courseTypeRg.getCheckedRadioButtonId() == R.id.gender_male ? 0 : 1);
                 showLoading();
-                mSuPresenter.onFixStaff(builder.build(), staffId, mStaff.id);
+                mSuPresenter.onFixStaff(builder.build(), mStaff.id);
                 return true;
             }
         });
@@ -177,11 +157,7 @@ import rx.functions.Action1;
     }
 
     @OnClick(R2.id.change_su_btn) public void onClick(View view) {
-        getFragmentManager().beginTransaction()
-            .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
-            .replace(mCallbackActivity.getFragId(), SuIdendifyFragment.newInstance(staffId, mStaff))
-            .addToBackStack(getFragmentName())
-            .commit();
+        routeTo("/su/change/",SuIdendifyParams.builder().mStaff(mStaff).build());
     }
 
     @Override public void onFixSuccess() {

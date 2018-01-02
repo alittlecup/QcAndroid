@@ -80,7 +80,7 @@ public class QcRestRepository {
 
           request = request.newBuilder()
               .addHeader("X-CSRFToken", token)
-              .addHeader("Cookie", "csrftoken=" + token + ";sessionid=" + getSession(context))
+              .addHeader("Cookie", "csrftoken=" + token + ";"+getSessionName(context)+"=" + getSession(context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + AppUtils.getAppVer(context)
                   + " Android  OEM:"
@@ -95,7 +95,8 @@ public class QcRestRepository {
           return response;
         } else {
           request = request.newBuilder()
-              .addHeader("Cookie", "sessionid=" + getSession(context))
+              .addHeader("Cookie",  QcRestRepository.getSessionName(
+                context)+"=" + QcRestRepository.getSession(context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + AppUtils.getAppVer(context)
                   + " Android  OEM:"
@@ -139,6 +140,10 @@ public class QcRestRepository {
         .build();
   }
 
+  public static String getSessionName(Context context){
+    return PreferenceUtils.getPrefString(context, "session_key", "");
+  }
+
   public static String getSession(Context context) {
     String session1 = PreferenceUtils.getPrefString(context, "session_id", "");
     String session2 = PreferenceUtils.getPrefString(context, "qingcheng.session", "");
@@ -154,8 +159,13 @@ public class QcRestRepository {
       }
     }
   }
+  public static void setSession(Context context,String key,String value){
+    PreferenceUtils.setPrefString(context,"session_key",key);
+    PreferenceUtils.setPrefString(context,"session_id",value);
+  }
 
   public static void clearSession(Context context){
+    PreferenceUtils.setPrefString(context, "session_key", "");
     PreferenceUtils.setPrefString(context, "session_id", "");
     PreferenceUtils.setPrefString(context, "qingcheng.session", "");
   }

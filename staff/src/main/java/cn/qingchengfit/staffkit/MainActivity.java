@@ -38,6 +38,7 @@ import cn.qingchengfit.model.body.PushBody;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.UpdateVersion;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.BusEventThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -338,7 +339,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     protected void initInject() {
         String staffid = PreferenceUtils.getPrefString(this, Configs.PREFER_WORK_ID, "");
         String staffname = PreferenceUtils.getPrefString(this, Configs.PREFER_WORK_NAME, "");
-        String session = PreferenceUtils.getPrefString(this, Configs.PREFER_SESSION, "");
+        String session = QcRestRepository.getSession(this);
         String user_id = PreferenceUtils.getPrefString(this, Configs.PREFER_USER_ID, "");
 
         Staff staff = new Staff();

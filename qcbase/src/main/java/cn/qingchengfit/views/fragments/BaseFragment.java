@@ -393,7 +393,7 @@ public abstract class BaseFragment extends RxFragment
     }
   }
 
-  protected void routeTo(Fragment fragment, String tag) {
+  public void routeTo(Fragment fragment, String tag) {
     if (getActivity() instanceof BaseActivity) {
       getActivity().getSupportFragmentManager()
         .beginTransaction()

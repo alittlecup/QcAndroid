@@ -58,6 +58,14 @@ public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
   //  return animators;
   //}
 
+  @Override public void updateDataSet(@Nullable List items) {
+    super.updateDataSet(items);
+  }
+
+  @Override public void updateDataSet(@Nullable List items, boolean animate) {
+    super.updateDataSet(items, animate);
+  }
+
   @Override public boolean hasNewSearchText(String newText) {
     //return super.hasNewSearchText(newText);
     return true;
@@ -79,6 +87,12 @@ public class CommonFlexAdapter<T extends IFlexible> extends FlexibleAdapter {
       ret.add(getItem(i));
     }
     return ret;
+  }
+
+  public int getSingleSelectedPos(){
+    if (getSelectedPositions().size() > 0){
+      return getSelectedPositions().get(0);
+    }else return -1;
   }
 
   public int getStatus() {

@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.staff.items;
 
 import android.view.View;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.saasbase.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
@@ -27,13 +28,18 @@ import java.util.List;
  * Created by Paper on 2017/12/1.
  */
 
-public class StaffSelectSingleItem extends StaffItem{
-  public StaffSelectSingleItem(Staff staff) {
+public class StaffSelectSingleItem extends CommonUserItem{
+  public StaffSelectSingleItem(ICommonUser staff) {
     super(staff);
   }
+  public Staff getStaff(){
+    if (getUser() instanceof Staff)
+      return (Staff)getUser();
+    else return null;
+  }
 
-  @Override
-  public void bindViewHolder(FlexibleAdapter adapter, StaffVH holder, int position, List payloads) {
+  @Override public void bindViewHolder(FlexibleAdapter adapter, CommonUserVH holder, int position,
+    List payloads) {
     super.bindViewHolder(adapter, holder, position, payloads);
     if (adapter.isSelected(position)){
       holder.iconRight.setVisibility(View.VISIBLE);
@@ -42,4 +48,6 @@ public class StaffSelectSingleItem extends StaffItem{
       holder.iconRight.setVisibility(View.GONE);
     }
   }
+
+
 }

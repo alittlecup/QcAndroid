@@ -34,6 +34,7 @@
       >
 
     <TextView
+        style="@style/QcTextStyleStandardDark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -70,6 +71,7 @@
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/username"
+      style="@style/QcCivInputStyle"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       civ:civ_lable="@string/label_username"
@@ -88,6 +90,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="@string/gender"
+        android:gravity="center_vertical"
+        style="@style/QcTextStyleStandardDark"
         />
 
     <RadioGroup

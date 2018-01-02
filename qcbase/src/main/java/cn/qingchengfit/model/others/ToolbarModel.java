@@ -15,6 +15,12 @@ public class ToolbarModel {
         this.title = title;
     }
 
+    private ToolbarModel(Builder builder) {
+        setTitle(builder.title);
+        setMenu(builder.menu);
+        setListener(builder.listener);
+    }
+
     public String getTitle() {
         return title;
     }
@@ -44,6 +50,7 @@ public class ToolbarModel {
 
     @BindingAdapter("menu")
     public static void setToolbarMenu(Toolbar toolbar, @MenuRes int menu) {
+        toolbar.getMenu().clear();
         if (0 != menu) {
             toolbar.inflateMenu(menu);
         }
@@ -55,6 +62,31 @@ public class ToolbarModel {
         toolbar.setOnMenuItemClickListener(listener);
     }
 
+    public static final class Builder {
+        private String title;
+        private int menu;
+        private Toolbar.OnMenuItemClickListener listener;
 
+        public Builder() {
+        }
 
+        public Builder title(String val) {
+            title = val;
+            return this;
+        }
+
+        public Builder menu(int val) {
+            menu = val;
+            return this;
+        }
+
+        public Builder listener(Toolbar.OnMenuItemClickListener val) {
+            listener = val;
+            return this;
+        }
+
+        public ToolbarModel build() {
+            return new ToolbarModel(this);
+        }
+    }
 }

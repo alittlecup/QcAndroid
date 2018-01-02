@@ -17,14 +17,12 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class SuNewPresenter extends BasePresenter {
-    @Inject LoginStatus loginStatus;
-    @Inject GymWrapper gymWrapper;
     private MVPView view;
     @Inject
     QcRestRepository restRepository;
-
-    @Inject public SuNewPresenter(QcRestRepository restRepository) {
-        this.restRepository = restRepository;
+    @Inject GymWrapper gymWrapper;
+    @Inject LoginStatus loginStatus;
+    @Inject public SuNewPresenter() {
     }
 
     public void sendMsg(GetCodeBody body) {
@@ -46,9 +44,9 @@ public class SuNewPresenter extends BasePresenter {
             }));
     }
 
-    public void changeSu(String staffid, ChangeSuBody body) {
+    public void changeSu(ChangeSuBody body) {
         RxRegiste(restRepository.createPostApi(PostApi.class)
-            .qcChangeSu(staffid, gymWrapper.getParams(), body)
+            .qcChangeSu(loginStatus.staff_id(), gymWrapper.getParams(), body)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
