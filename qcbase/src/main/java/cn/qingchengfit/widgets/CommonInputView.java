@@ -357,6 +357,9 @@ public class CommonInputView extends RelativeLayout {
   }
 
   @Override public void onRestoreInstanceState(Parcelable state) {
+    if (state == null ){
+      return;
+    }
     SavedState ss = (SavedState) state;
     super.onRestoreInstanceState(ss.getSuperState());
     for (int i = 0; i < getChildCount(); i++) {

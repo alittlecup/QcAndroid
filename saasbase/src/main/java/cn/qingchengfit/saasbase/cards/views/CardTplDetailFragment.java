@@ -54,6 +54,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
+import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.jakewharton.rxbinding.view.RxMenuItem;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -466,14 +467,29 @@ import rx.functions.Action1;
   //可提前预约课程数
   public void onPreOrderCount() {
     final DialogList list = new DialogList(getContext());
-    list.list(1, 99, new AdapterView.OnItemClickListener() {
-      @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        list.dismiss();
-        preOrderCount.setContent(Integer.toString(position + 1));
-        cardLimit.pre_times = position + 1;
+    List<String> preList = new ArrayList<>();
+    int i = 1;
+    while (i < 100){
+     preList.add(String.valueOf(i));
+     i++;
+    }
+    SimpleScrollPicker simpleScrollPicker = new SimpleScrollPicker(getContext());
+    simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
+      @Override public void onSelectItem(int pos) {
+        preOrderCount.setContent(Integer.toString(pos + 1));
+        cardLimit.pre_times = pos + 1;
       }
     });
-    list.show();
+
+    //list.list(1, 99, new AdapterView.OnItemClickListener() {
+    //  @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    //    list.dismiss();
+    //    preOrderCount.setContent(Integer.toString(position + 1));
+    //    cardLimit.pre_times = position + 1;
+    //  }
+    //});
+    //list.show();
+    simpleScrollPicker.show(preList, cardLimit.pre_times > 0  ? cardLimit.pre_times - 1 : 0);
   }
 
   //单位时间可上课程数

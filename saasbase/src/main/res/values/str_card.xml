@@ -51,7 +51,7 @@
   <string name="transit_pay">转账支付</string>
 
   <string formatted="false" name="text_charge_time_card_validate">续卡后面额共计：%s天</string>
-  <string formatted="false" name="text_charge_card_validate">续卡后面额共计：%s元／有效期共计：%s</string>
+  <string formatted="false" name="text_charge_card_validate">续卡后面额共计：%s元 / 有效期共计：%s天</string>
 
   <string name="tips_auto_open_card">开启提前激活后，允许该会员卡在开始日期之前被使用。一旦使用，有效期自动从当天开始计算。</string>
   <string name="card_protocol_content">会员卡服务条款内容</string>

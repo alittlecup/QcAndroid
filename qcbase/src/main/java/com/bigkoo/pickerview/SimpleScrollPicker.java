@@ -15,6 +15,7 @@ import com.bigkoo.pickerview.lib.ArrayWheelAdapter;
 import com.bigkoo.pickerview.lib.NumericWheelAdapter;
 import com.bigkoo.pickerview.lib.WheelView;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * power by
@@ -79,8 +80,8 @@ public class SimpleScrollPicker extends Dialog {
         this.label = label;
     }
 
-    public void show(ArrayList<String> datas, int pos) {
-        wheelview.setAdapter(new ArrayWheelAdapter<String>(datas));// 设置"年"的显示数据
+    public void show(List<String> datas, int pos) {
+        wheelview.setAdapter(new ArrayWheelAdapter<String>((ArrayList<String>) datas));// 设置"年"的显示数据
         wheelview.TEXT_SIZE = 50;
         wheelview.setCyclic(false);
         wheelview.setLabel(label);// 添加文字

@@ -63,21 +63,26 @@ public class NewCardChargeFragment extends CardBuyFragment {
 
   @Override public void showInputMoney(boolean other, CardTplOption option, boolean validDay) {
     super.showInputMoney(other, option, validDay);
+    int interval;
     if (other){
       return;
     }
     if(cardTpl.getType() == Configs.CATEGORY_DATE){
       tvCardValidateTotal.setText(getResources().getString(R.string.text_charge_time_card_validate,
           String.valueOf(card.getBalance() + Float.parseFloat(option.charge))));
+      interval = (int)(Float.parseFloat(option.charge)+ card.getBalance());
     }else{
       tvCardValidateTotal.setText(getResources().getString(R.string.text_charge_card_validate,
           String.valueOf(card.getBalance() + Float.parseFloat(option.charge)),
-          option.isLimit_days() ? String.valueOf(card.getTrial_days() + option.days) : "不限"));
+          option.isLimit_days() ? String.valueOf(
+              card.isCheck_valid() ? (DateUtils.interval(card.getValid_from(), card.getValid_to())
+                  + option.days) : option.days) : "不限"));
+      interval = card.isCheck_valid() ? (DateUtils.interval(card.getValid_from(), card.getValid_to())
+          + option.days) : option.days;
     }
-    civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(
-        DateUtils.formatDateFromServer(
-            DateUtils.Date2YYYYMMDD(new Date())),
-        (int)(Float.parseFloat(option.charge) + card.getBalance()))));
+    civEndTime.setContent(DateUtils.Date2YYYYMMDD(
+        DateUtils.addDay(DateUtils.formatDateFromServer(DateUtils.Date2YYYYMMDD(new Date())),
+            interval)));
   }
 
   //@Override public void onShowDetail(CardTplOption cardOption) {

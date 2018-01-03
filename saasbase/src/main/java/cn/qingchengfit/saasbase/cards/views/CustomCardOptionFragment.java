@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.cards.views;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.event.EventCustomOption;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
 import com.anbillon.flabellum.annotations.Need;
@@ -49,6 +51,10 @@ public abstract class CustomCardOptionFragment extends SaasBaseFragment {
   }
 
   @OnClick(R2.id.tv_custom_card_option_confirm) public void onConfirm() {
+    if (elNeedValid.isExpanded() && TextUtils.isEmpty(civCustomValidity.getContent())){
+      DialogUtils.showAlert(getContext(), "请填写有效期");
+      return;
+    }
     initData();
     if (cardOptionCustom != null) RxBus.getBus().post(new EventCustomOption(cardOptionCustom));
     getActivity().onBackPressed();

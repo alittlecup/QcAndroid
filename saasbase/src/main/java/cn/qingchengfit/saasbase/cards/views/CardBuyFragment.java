@@ -188,6 +188,9 @@ import rx.functions.Action1;
           @Override public void call(EventCustomOption eventCustomOption) {
             if (eventCustomOption != null) {
               cardOptionCustom = eventCustomOption.getCardOptionCustom();
+              if(optionList.size() > 0 && TextUtils.isEmpty(optionList.get(optionList.size() - 1).id)){
+                optionList.remove(optionList.size() - 1);
+              }
               optionList.add(eventCustomOption.getCardOptionCustom());
               commonFlexAdapter.removeItem(commonFlexAdapter.getItemCount() - 1);
               commonFlexAdapter.notifyItemRemoved(commonFlexAdapter.getItemCount() - 1);

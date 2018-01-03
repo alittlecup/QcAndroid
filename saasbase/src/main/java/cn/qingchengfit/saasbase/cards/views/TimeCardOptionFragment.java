@@ -39,7 +39,7 @@ public class TimeCardOptionFragment extends CustomCardOptionFragment {
     if (cardOptionCustom == null){
       cardOptionCustom = new CardTplOption();
     }
-    cardOptionCustom.setDays(Integer.valueOf(civChargeMoney.getContent()));
+    cardOptionCustom.setCharge(civChargeMoney.getContent());
     cardOptionCustom.setPrice(String.valueOf(civRealMoney.getContent()));
   }
 
