@@ -161,7 +161,6 @@ public class LoginPresenter extends BasePresenter {
                         loginStatus.setLoginUser(staff);
                         loginStatus.setSession(qcResponLogin.data.session_id);
                         loginStatus.setUserId(qcResponLogin.data.user.getId());
-
                         List<CoachService> services = gymListQcResponseData.getData().services;
                         qCDbManager.writeGyms(services);
                         if (services == null || services.size() == 0) {

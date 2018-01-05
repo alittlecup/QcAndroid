@@ -1,9 +1,9 @@
 include ':saasbase',
 //        ':atest',
 //    ':pos',
-    ':recruit',
-    ':qcim',
-    ':sdk',
+//    ':recruit',
+//    ':qcim',
+//    ':sdk',
     ':staff',
 //    ':student',
 ':qcbase'

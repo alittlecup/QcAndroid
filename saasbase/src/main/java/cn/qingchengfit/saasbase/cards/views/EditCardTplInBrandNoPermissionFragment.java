@@ -35,6 +35,7 @@ import javax.inject.Inject;
  * Created by fb on 2017/12/28.
  */
 
+//多场馆下编辑无权限页面
 @Leaf(module = "card", path = "/path/edit/card/nopermission")
 public class EditCardTplInBrandNoPermissionFragment extends SaasBaseFragment {
 

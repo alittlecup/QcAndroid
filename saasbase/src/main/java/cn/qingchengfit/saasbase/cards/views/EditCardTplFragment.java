@@ -7,12 +7,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.OnClick;
 import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
-import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.jakewharton.rxbinding.view.RxMenuItem;
@@ -45,14 +42,7 @@ public class EditCardTplFragment extends CardTplDetailFragment {
     return view;
   }
 
-  @OnClick(R2.id.civ_input_card_name)
-  public void onName(){
-    routeTo("common", "/input/",
-        new CommonInputParams().content(presenter.getCardName())
-            .title("编辑会员卡种类名称")
-            .hint("填写会员卡种类名称")
-            .build());
-  }
+
 
   @Override public String getFragmentName() {
     return EditCardTplFragment.class.getName();

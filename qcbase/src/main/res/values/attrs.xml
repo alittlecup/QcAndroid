@@ -185,4 +185,14 @@
     <attr format="string" name="liv_lable"/>
   </declare-styleable>
 
+  <declare-styleable name="ExpandTextView">
+    <attr format="boolean" name="el_tv_isExpand"/>
+    <attr format="integer" name="el_tv_drawable"/>
+    <attr format="string" name="el_tv_content"/>
+    <attr format="integer" name="el_tv_max_line"/>
+  </declare-styleable>
+
+  <item name="expand_text" type="id"/>
+  <item name="expand_image" type="id"/>
+
 </resources>

@@ -49,7 +49,7 @@ public class CardtplOptionItem
   public void bindViewHolder(FlexibleAdapter adapter, CardtplStandardVH holder, int position,
       List payloads) {
     String unitStr = CardBusinessUtils.getCardTypeCategoryUnit(cardtplType,holder.title.getContext());
-    holder.title.setText("价格"+option.price + "元");
+    holder.title.setText("价格"+ "¥" + option.price);
     if (TextUtils.isEmpty(option.charge)) {
       holder.realIncome.setVisibility(View.GONE);
     } else {
@@ -73,10 +73,10 @@ public class CardtplOptionItem
       holder.imgCardOption.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.vd_chosen_hook));
     if (adapter.isSelected(position) ) {
       holder.imgCardOption.setVisibility( View.VISIBLE);
-      holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_primary);
+      holder.shadow.setVisibility(View.VISIBLE);
     } else {
       holder.imgCardOption.setVisibility(View.GONE);
-      holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_grey);
+      holder.shadow.setVisibility(View.GONE);
     }
 
     holder.tagOnlyStaff.setVisibility(option.for_staff ? View.VISIBLE : View.GONE);
@@ -113,6 +113,7 @@ public class CardtplOptionItem
     @BindView(R2.id.charge_layout) LinearLayout chargeLayout;
     @BindView(R2.id.img_custom_card_option) ImageView imgCardOption;
     @BindView(R2.id.tag_only_staff) ImageView tagOnlyStaff;
+    @BindView(R2.id.shadow_card_option) View shadow;
 
     public CardtplStandardVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

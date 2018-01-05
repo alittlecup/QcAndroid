@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.CardTplOption;
+import cn.qingchengfit.utils.CmStringUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -26,7 +27,7 @@ public class TimeCardOptionFragment extends CustomCardOptionFragment {
     elNeedValid.setVisibility(View.GONE);
     if (cardOptionCustom != null){
       civChargeMoney.setContent(String.valueOf(cardOptionCustom.getCharge()));
-      civRealMoney.setContent(cardOptionCustom.getPrice());
+      civRealMoney.setContent(CmStringUtils.getMoneyStr(cardOptionCustom.getPrice()));
     }
     return view;
   }
@@ -40,7 +41,7 @@ public class TimeCardOptionFragment extends CustomCardOptionFragment {
       cardOptionCustom = new CardTplOption();
     }
     cardOptionCustom.setCharge(civChargeMoney.getContent());
-    cardOptionCustom.setPrice(String.valueOf(civRealMoney.getContent()));
+    cardOptionCustom.setPrice(Float.parseFloat(civRealMoney.getContent()));
   }
 
   @Override String getToolbarTitle() {

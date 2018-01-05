@@ -23,6 +23,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.utils.CmStringUtils;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
@@ -217,7 +218,7 @@ public class CardBuyPresenter extends BasePresenter {
         }
       }
     } else {
-      cardBuyBody.setPrice(mChosenOption.price);
+      cardBuyBody.setPrice(CmStringUtils.getMoneyStr(mChosenOption.price));
       cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
     }
 
@@ -283,7 +284,7 @@ public class CardBuyPresenter extends BasePresenter {
         }
       }
     } else {
-      cardBuyBody.setPrice(mChosenOption.price);
+      cardBuyBody.setPrice(CmStringUtils.getMoneyStr(mChosenOption.price));
       cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
     }
     if (TextUtils.isEmpty(cardBuyBody.getSeller_id())){
@@ -343,7 +344,7 @@ public class CardBuyPresenter extends BasePresenter {
 
     void remark(boolean remark);
 
-    void setPayMoney(String x);
+    void setPayMoney(float x);
 
     /**
      * 下单完成后返回的数据

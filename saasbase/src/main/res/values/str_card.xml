@@ -69,4 +69,11 @@
 
   <string name="edit_cardtpl_in_brand_no_permission">仅在全部适用场馆下都具有编辑会员卡种类权限的用户才能编辑基本信息</string>
   <string name="edit_card_protocol">会员卡服务条款内容</string>
+  <string formatted="false" name="cardtpl_description">简介：%s</string>
+  <string formatted="false" name="cardtpl_remainder">剩余面额：%s</string>
+  <string formatted="false" name="date_cardtpl_remainder">剩余天数：%s</string>\
+
+  <string name="stop_card_tpl">停用该会员卡种类</string>
+  <string name="resume_card_tpl">恢复该会员卡种类</string>
+
 </resources>

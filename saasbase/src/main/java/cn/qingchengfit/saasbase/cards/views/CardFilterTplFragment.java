@@ -125,8 +125,19 @@ public class CardFilterTplFragment extends BaseFragment {
                 adapterLeft.addItem(new CardCateFilterItem(s,false));
               }
             }
+
+            adapterLeft.toggleSelection(0);
+            adapterRight.toggleSelection(0);
+            if (leftClickListener != null) leftClickListener.onItemClick(0);
+            if (rightClickListener != null) rightClickListener.onItemClick(0);
+            adapterLeft.notifyDataSetChanged();
+            adapterRight.notifyDataSetChanged();
+
           }
         }));
+    //if (adapterLeft.getSelectedItemCount() == 0){
+    //
+    //}
   }
 
   @Override public String getFragmentName() {
