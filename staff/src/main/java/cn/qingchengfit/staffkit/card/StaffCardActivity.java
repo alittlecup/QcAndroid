@@ -28,6 +28,7 @@ import cn.qingchengfit.saasbase.cards.views.offday.AheadOffDayFragment;
 import cn.qingchengfit.saasbase.cards.views.offday.OffDayListFragment;
 import cn.qingchengfit.staffkit.card.view.StaffCardBuyFragment;
 import cn.qingchengfit.staffkit.card.view.StaffCardChargeFragment;
+import cn.qingchengfit.staffkit.card.view.StaffCardListHomeFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 @Trunk(fragments = {
@@ -39,6 +40,6 @@ import com.anbillon.flabellum.annotations.Trunk;
   BindCardModel.class, EditCardTplFragment.class, CardTplAddInBrandFragment.class, MutiChooseGymFragment.class,
     StaffCardBuyFragment.class, CardRefundFragment.class, AddOffDayFragment.class,
     AheadOffDayFragment.class, OffDayListFragment.class, CardFixValidDayFragment.class,
-    StaffCardChargeFragment.class,
+    StaffCardChargeFragment.class, StaffCardListHomeFragment.class,
 }) public class StaffCardActivity extends CardActivity {
 }

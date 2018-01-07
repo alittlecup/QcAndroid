@@ -22,7 +22,7 @@ public class CardTplOption implements Parcelable {
     @SerializedName("id") public String id;
     @SerializedName("created_at") public String created_at;
     @SerializedName("description") public String description;
-    @SerializedName("price") public String price;  //充值金额
+    @SerializedName("price") public float price;  //充值金额
     @SerializedName("days") public int days;
     @SerializedName("charge") public String charge;  //实收金额
     @SerializedName("can_charge") public boolean can_charge;
@@ -43,7 +43,7 @@ public class CardTplOption implements Parcelable {
         this.description = description;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -87,7 +87,7 @@ public class CardTplOption implements Parcelable {
         return description;
     }
 
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
 
@@ -130,7 +130,7 @@ public class CardTplOption implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.created_at);
         dest.writeString(this.description);
-        dest.writeString(this.price);
+        dest.writeFloat(this.price);
         dest.writeInt(this.days);
         dest.writeString(this.charge);
         dest.writeByte(this.can_charge ? (byte) 1 : (byte) 0);
@@ -144,7 +144,7 @@ public class CardTplOption implements Parcelable {
         this.id = in.readString();
         this.created_at = in.readString();
         this.description = in.readString();
-        this.price = in.readString();
+        this.price = in.readFloat();
         this.days = in.readInt();
         this.charge = in.readString();
         this.can_charge = in.readByte() != 0;

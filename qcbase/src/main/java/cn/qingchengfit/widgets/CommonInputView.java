@@ -260,6 +260,12 @@ public class CommonInputView extends RelativeLayout {
     edit.setTextColor(contentColor);
     edit.setText(str_content);
     edit.setHint(str_hint);
+    label.setOnTouchListener(new OnTouchListener() {
+      @Override public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        return false;
+      }
+    });
   }
 
   public void setCanClick(boolean canClick) {
@@ -328,6 +334,11 @@ public class CommonInputView extends RelativeLayout {
     if (c != null) edit.setSelection(c.length() > 20 ? 20 : c.length());
   }
 
+  public void setContent(SpannableString c){
+    edit.setText(c);
+    if (c != null) edit.setSelection(c.length() > 20 ? 20 : c.length());
+  }
+
   public void setContentColor(int color) {
     contentColor = color;
     edit.setTextColor(color);
@@ -357,6 +368,9 @@ public class CommonInputView extends RelativeLayout {
   }
 
   @Override public void onRestoreInstanceState(Parcelable state) {
+    if (state == null ){
+      return;
+    }
     SavedState ss = (SavedState) state;
     super.onRestoreInstanceState(ss.getSuperState());
     for (int i = 0; i < getChildCount(); i++) {

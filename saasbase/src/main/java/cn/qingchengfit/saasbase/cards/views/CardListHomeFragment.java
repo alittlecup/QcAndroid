@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +41,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -81,6 +81,7 @@ import rx.android.schedulers.AndroidSchedulers;
   @BindView(R2.id.filter_status) QcFilterToggle filterStatus;
   @BindView(R2.id.layout_card_operate) protected LinearLayout layoutCardOperate;
   @BindView(R2.id.tv_card_count) TextView tvCardCount;
+  @BindView(R2.id.layout_card_list) protected RelativeLayout cardListLayout;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -111,18 +112,18 @@ import rx.android.schedulers.AndroidSchedulers;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("会员卡");
+    toolbar.getMenu().clear();
     toolbar.inflateMenu(R.menu.menu_search_flow_searchview);
     RxMenuItem.clicks(toolbar.getMenu().getItem(0))
       .throttleFirst(500, TimeUnit.MILLISECONDS)
-      .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
           showSearch(tl);
         }
       });
+
     RxMenuItem.clicks(toolbar.getMenu().getItem(1))
       .throttleFirst(500, TimeUnit.MILLISECONDS)
-      .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
           showSelectSheet(null, Arrays.asList("会员卡种类管理"), new AdapterView.OnItemClickListener() {
@@ -132,8 +133,7 @@ import rx.android.schedulers.AndroidSchedulers;
           });
         }
       });
-    initSearch(tl,"输入会员姓名或手机号搜索",2000);
-
+    initSearch(tl,"输入会员卡名称进行搜索");
   }
 
   @Override public void onTextSearch(String text) {

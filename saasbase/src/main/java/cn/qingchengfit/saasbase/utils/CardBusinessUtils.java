@@ -77,7 +77,7 @@ public class CardBusinessUtils {
       case 2:
         return ((Float) card.getBalance()).intValue() + "次";
       case 3:
-        return ((Float) card.getBalance()).intValue() + "天";
+        return (((Float) card.getBalance()).intValue() < 0 ? 0 : ((Float) card.getBalance()).intValue()) + "天";
       default:
         return CmStringUtils.getFloatDot2(card.getBalance()) + "元";
     }
@@ -102,7 +102,7 @@ public class CardBusinessUtils {
     o.days       = body.days;
     o.charge     = body.charge;
     o.for_staff  = body.for_staff;
-    o.price      = body.price;
+    o.price      = Float.parseFloat(body.price);
     o.id         = body.id;
     return o;
   }

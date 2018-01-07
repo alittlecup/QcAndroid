@@ -105,6 +105,8 @@ import rx.functions.Action1;
           }
         }
       });
+
+
     srl.setRefreshing(true);
     srl.setOnRefreshListener(this);
     return view;
@@ -161,7 +163,6 @@ import rx.functions.Action1;
     if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
       chooseStudentListFragment.setData(stus);
       chooseStudentListFragment.selectStudent(studentIdList);
-
     }
   }
 

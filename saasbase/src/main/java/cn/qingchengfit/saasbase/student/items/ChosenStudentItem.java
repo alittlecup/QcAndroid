@@ -40,6 +40,8 @@ public class ChosenStudentItem extends StudentItem {
   @Override public StudentVH createViewHolder(View view, FlexibleAdapter adapter) {
     StudentVH vh = super.createViewHolder(view, adapter);
     vh.cb.setVisibility(View.VISIBLE);
+    vh.iconRight.setVisibility(View.GONE);
+    vh.itemTvStudentStatus.setVisibility(View.GONE);
     return vh;
   }
 

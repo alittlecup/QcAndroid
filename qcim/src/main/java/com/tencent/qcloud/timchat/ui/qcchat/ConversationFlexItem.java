@@ -1,23 +1,13 @@
 package com.tencent.qcloud.timchat.ui.qcchat;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.tencent.TIMConversationType;
-import com.tencent.TIMFriendshipManager;
-import com.tencent.TIMGroupDetailInfo;
-import com.tencent.TIMGroupManager;
-import com.tencent.TIMUserProfile;
-import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.chatmodel.Conversation;
 import com.tencent.qcloud.timchat.chatmodel.NomalConversation;
@@ -62,6 +52,10 @@ public class ConversationFlexItem extends AbstractFlexibleItem<ConversationFlexI
 
     public void onChangeName(ConversationViewHolder holder){
 
+    }
+
+    @Override public int getLayoutRes() {
+        return R.layout.item_conversation;
     }
 
     @Override

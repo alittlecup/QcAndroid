@@ -310,7 +310,7 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
 
   }
 
-  @Override public void setPayMoney(String x) {
+  @Override public void setPayMoney(float x) {
 
   }
 

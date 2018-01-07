@@ -20,4 +20,12 @@
       android:layout_height="wrap_content"
       tools:text="有效期 ：2103-10-10"
       />
+
+  <cn.qingchengfit.widgets.ExpandTextView
+      android:id="@+id/tv_card_expand_desc"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="2.2dp"
+      />
+
 </LinearLayout>

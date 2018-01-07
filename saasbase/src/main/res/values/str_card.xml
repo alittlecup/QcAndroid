@@ -36,9 +36,10 @@
 
   <string name="cardtype_limit_total">共计可上</string>
   <string name="cardtype_limit_class">节课</string>
-  <string name="everyday">每天</string>
-  <string name="everyweek">每周</string>
-  <string name="everymonth">每月</string>
+  <string formatted="false" name="buylimit">限购%d张</string>
+  <string formatted="false" name="everyday">每天%d节</string>
+  <string formatted="false" name="everyweek">每周%d节</string>
+  <string formatted="false" name="everymonth">每月%d节</string>
   <string name="title_cardtype_edit_desc">编辑简介</string>
   <string name="guide_write_gym_descript">描述您的健身房</string>
   <string name="custom_validity_civ_label">有效期天数(天)</string>
@@ -50,7 +51,7 @@
   <string name="transit_pay">转账支付</string>
 
   <string formatted="false" name="text_charge_time_card_validate">续卡后面额共计：%s天</string>
-  <string formatted="false" name="text_charge_card_validate">续卡后面额共计：%s元／有效期共计：%s</string>
+  <string formatted="false" name="text_charge_card_validate">续卡后面额共计：%s元 / 有效期共计：%s天</string>
 
   <string name="tips_auto_open_card">开启提前激活后，允许该会员卡在开始日期之前被使用。一旦使用，有效期自动从当天开始计算。</string>
   <string name="card_protocol_content">会员卡服务条款内容</string>
@@ -65,4 +66,14 @@
   <string name="modify">修改</string>
 
   <string formatted="false" name="hint_ahead_day_off">从今天(%s)起提前销假 已请假%d天</string>
+
+  <string name="edit_cardtpl_in_brand_no_permission">仅在全部适用场馆下都具有编辑会员卡种类权限的用户才能编辑基本信息</string>
+  <string name="edit_card_protocol">会员卡服务条款内容</string>
+  <string formatted="false" name="cardtpl_description">简介：%s</string>
+  <string formatted="false" name="cardtpl_remainder">剩余面额：%s</string>
+  <string formatted="false" name="date_cardtpl_remainder">剩余天数：%s</string>\
+
+  <string name="stop_card_tpl">停用该会员卡种类</string>
+  <string name="resume_card_tpl">恢复该会员卡种类</string>
+
 </resources>

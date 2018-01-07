@@ -2,8 +2,10 @@ package cn.qingchengfit.saasbase.student.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import cn.qingchengfit.saasbase.student.utils.StudentCompareByAlphabet;
 import cn.qingchengfit.saasbase.student.utils.StudentCompareJoinAt;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.AlphabetLessView;
+import cn.qingchengfit.widgets.AlphabetView;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -57,6 +60,8 @@ public class SimpleStudentListFragment extends BaseFragment
   private List<QcStudentBean> qcStudentBeens = new ArrayList<>();
   private CommonNoDataItem commonNoDataItem;
   protected List<IFlexible> mDatas = new ArrayList<>();
+  SmoothScrollLinearLayoutManager layoutManager;
+  private ArrayMap<String, Integer> alphabetSort = new ArrayMap<>();
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -67,7 +72,9 @@ public class SimpleStudentListFragment extends BaseFragment
       Bundle savedInstanceState) {
     FrameLayout frameLayout = new FrameLayout(getContext());
     RecyclerView recyclerView = new RecyclerView(getContext());
-    recyclerView.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
+    AlphabetView alphabetView = new AlphabetView(getContext());
+    layoutManager = new SmoothScrollLinearLayoutManager(getContext());
+    recyclerView.setLayoutManager(layoutManager);
     commonFlexAdapter
       .setStickyHeaders(true)
       .setStickyHeaderElevation(1)
@@ -82,10 +89,31 @@ public class SimpleStudentListFragment extends BaseFragment
     );
 
     commonNoDataItem = new CommonNoDataItem(getNoDataIconRes(),getNoDataStr());
+
+    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    params.gravity = Gravity.RIGHT;
+    alphabetView.setLayoutParams(params);
     frameLayout.addView(recyclerView);
+    frameLayout.addView(alphabetView);
+    alphabetView.setOnAlphabetChange(new AlphabetView.OnAlphabetChange() {
+      @Override public void onChange(int position, String s) {
+        if (alphabetSort.get(s) != null) {
+          alphabetViewChange(alphabetSort.get(s));
+        } else {
+          if (TextUtils.equals(s, "#")) {
+            if (alphabetSort.get("~") != null) {
+              alphabetViewChange(alphabetSort.get("~"));
+            }
+          }
+        }
+      }
+    });
     return frameLayout;
   }
 
+  public void alphabetViewChange(int pos){
+    layoutManager.scrollToPositionWithOffset(pos, 0);
+  }
 
   @Override public boolean isBlockTouch() {
     return false;
@@ -127,9 +155,12 @@ public class SimpleStudentListFragment extends BaseFragment
           String head = null;
           //mDatas.add(sh);
           StickerDateItem sh = null;
+          int i = 0;
           for (QcStudentBean qcStudentBeen : qcStudentBeens) {
             if (head == null || !qcStudentBeen.head().equalsIgnoreCase(head)){
               head = qcStudentBeen.head();
+              alphabetSort.put(head, i);
+              i++;
               sh = new StickerDateItem(head.toUpperCase());
               mDatas.add(new StickerDateItem(qcStudentBeen.head().toUpperCase()));
             }

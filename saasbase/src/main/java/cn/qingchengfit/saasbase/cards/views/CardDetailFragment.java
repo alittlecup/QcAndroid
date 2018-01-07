@@ -165,7 +165,7 @@ import javax.inject.Inject;
         .title("实体卡号")
         .desc(card.getCard_no())
         .build());
-    if (card.is_open_service_term) {
+    if (card.is_open_service_term && card.card_tpl_service_term != null) {
 
       protocolUrl = card.card_tpl_service_term.content_link;
       if (card.card_tpl_service_term.is_read) {
