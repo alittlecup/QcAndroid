@@ -217,6 +217,14 @@ public class ExpandedLayout extends LinearLayout {
     }
   }
 
+  public void setIconClickListener(OnClickListener listener){
+    if (listener != null) {
+      leftImage.setOnClickListener(listener);
+    }else{
+      throw new NullPointerException("left listener is null");
+    }
+  }
+
   public void setLabel(String s) {
     mTvLable.setText(s);
   }

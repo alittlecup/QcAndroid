@@ -4,7 +4,6 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
@@ -20,7 +19,6 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
-import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import java.util.List;
 import javax.inject.Inject;
@@ -74,6 +72,10 @@ public class CardTplDetailPresenter extends BasePresenter {
     } else {
       return false;
     }
+  }
+
+  public void setBody(CardtplBody body) {
+    this.body = body;
   }
 
   public void setCardCate(int cardCate) {
@@ -147,13 +149,13 @@ public class CardTplDetailPresenter extends BasePresenter {
   /**
    * 编辑卡模板，判断是否在品牌下，是否有权限
    */
-  public void editCardTpl() {
+  public void editCardTpl(CardtplBody cardtplBody) {
     if (!cardTpl.is_enable) {
       view.onShowError(R.string.alert_edit_disable_cardtpl);
       return;
     }
     if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
-      RxRegiste(cardModel.qcUpdateCardtpl(cardTpl.getId(), body)
+      RxRegiste(cardModel.qcUpdateCardtpl(cardTpl.getId(), cardtplBody)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -261,15 +263,6 @@ public class CardTplDetailPresenter extends BasePresenter {
 
   @Override public void attachView(final PView v) {
     view = (MVPView) v;
-    RxBusAdd(EventTxT.class).observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new BusSubscribe<EventTxT>() {
-        @Override public void onNext(EventTxT eventTxT) {
-          body.name = eventTxT.txt;
-          editCardTpl();
-          cardTpl.setName(eventTxT.txt);
-          view.onGetCardTypeInfo(cardTpl);
-        }
-      });
   }
 
   @Override public void unattachView() {

@@ -115,7 +115,7 @@ public interface CardApi {
     @Body CardtplBody body, @QueryMap HashMap<String, Object> params);
 
   @PUT("/api/staffs/{staff_id}/cardtpls/{card_tpl_id}/")
-  rx.Observable<QcDataResponse> qcUpdateCardtpl(@Path("id") String staffid,
+  rx.Observable<QcDataResponse> qcUpdateCardtpl(@Path("staff_id") String staffid,
     @Path("card_tpl_id") String card_tpl_id, @Body CardtplBody body,
     @QueryMap HashMap<String, Object> params);
 

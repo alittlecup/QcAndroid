@@ -75,7 +75,7 @@ public class QcStudentBean extends Personage
      * 3 # 非会员
      */
     public int status;//会员状态,--student
-    @SerializedName(value = "sellers", alternate = "coaches")
+    @SerializedName(value = "sellers", alternate = {"coaches", "users"})
     public List<Staff> sellers;//所属销售--student
     public String joined_at;
     private String join_at;

@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout"
     >
 
   <include layout="@layout/common_simple_toolbar"/>
@@ -24,7 +25,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_lable="价格"
-      app:civ_unit="元"
+      app:civ_unit="¥"
       app:civ_inputnum="true"
       />
 
@@ -46,6 +47,7 @@
         app:civ_clickable="false"
         app:civ_showdivier="true"
         app:civ_showright="false"
+        app:civ_inputnum="true"
         />
 
   </cn.qingchengfit.widgets.ExpandedLayout>

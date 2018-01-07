@@ -23,6 +23,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.utils.CmStringUtils;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,13 @@ public class CardBuyPresenter extends BasePresenter {
   public void setCardCate(int cate) {
     cardBuyBody.setType(cate);
     cardCate = cate;
+  }
+
+  public void setChoseStuIds(ArrayList<String> studentList) {
+    if (studentList.size() > 0){
+      choseStuIds.clear();
+    }
+    this.choseStuIds.addAll(choseStuIds);
   }
 
   public ArrayList<String>  getChoseStuIds() {
@@ -210,7 +218,7 @@ public class CardBuyPresenter extends BasePresenter {
         }
       }
     } else {
-      cardBuyBody.setPrice(mChosenOption.price);
+      cardBuyBody.setPrice(CmStringUtils.getMoneyStr(mChosenOption.price));
       cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
     }
 
@@ -220,8 +228,8 @@ public class CardBuyPresenter extends BasePresenter {
     //}
     cardBuyBody.is_auto_start = view.autoOpen();
     cardBuyBody.origin = 2;
-    if (cardBuyBody.getSeller_id() != null && cardBuyBody.getSeller_id()
-        .equals(loginStatus.staff_id())) {
+    if ((cardBuyBody.getSeller_id() != null && cardBuyBody.getSeller_id()
+        .equals(loginStatus.staff_id())) || TextUtils.isEmpty(cardBuyBody.getSeller_id())) {
       cardBuyBody.setSeller_id(null);
       cardBuyBody.staff_id = loginStatus.staff_id();
     }
@@ -276,7 +284,7 @@ public class CardBuyPresenter extends BasePresenter {
         }
       }
     } else {
-      cardBuyBody.setPrice(mChosenOption.price);
+      cardBuyBody.setPrice(CmStringUtils.getMoneyStr(mChosenOption.price));
       cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
     }
     if (TextUtils.isEmpty(cardBuyBody.getSeller_id())){
@@ -336,7 +344,7 @@ public class CardBuyPresenter extends BasePresenter {
 
     void remark(boolean remark);
 
-    void setPayMoney(String x);
+    void setPayMoney(float x);
 
     /**
      * 下单完成后返回的数据

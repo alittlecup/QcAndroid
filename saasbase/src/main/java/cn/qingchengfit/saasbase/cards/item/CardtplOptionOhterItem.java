@@ -35,10 +35,10 @@ public class CardtplOptionOhterItem
     holder.title.setTextColor(colorPrimary);
     if (adapter.isSelected(position)) {
       holder.chosen.setVisibility(View.VISIBLE);
-      holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_primary);
+      holder.shadow.setVisibility(View.VISIBLE);
     } else {
       holder.chosen.setVisibility(View.GONE);
-      holder.chargeLayout.setBackgroundResource(R.drawable.bg_card_option_grey);
+      holder.shadow.setVisibility(View.GONE);
     }
   }
 
@@ -54,6 +54,7 @@ public class CardtplOptionOhterItem
     @BindView(R2.id.charge_layout) LinearLayout chargeLayout;
     @BindView(R2.id.chosen) ImageView chosen;
     @BindView(R2.id.tag_only_staff) ImageView tagOnlyStaff;
+    @BindView(R2.id.shadow_card_option) View shadow;
 
     public CardtplOptionOhterVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

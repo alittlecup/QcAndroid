@@ -170,14 +170,14 @@
     </LinearLayout>
 
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_card_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
+        android:orientation="vertical"
         >
-
       <android.support.v7.widget.RecyclerView
           android:id="@+id/recycleview"
           android:layout_width="match_parent"
@@ -188,14 +188,6 @@
           android:paddingTop="12dp"
           />
 
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_alignParentBottom="true"
-          android:background="@color/bg_grey"
-          android:visibility="gone"
-          >
-
         <TextView
             android:id="@+id/btn_del"
             android:layout_width="match_parent"
@@ -204,12 +196,13 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@color/white"
             android:gravity="center"
-            android:text="删除该会员卡种类"
+            android:text="停用该会员卡种类"
             android:textColor="@color/red"
+            android:visibility="gone"
+            tools:visibility="visible"
             />
-      </FrameLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
   </LinearLayout>
 </ScrollView>

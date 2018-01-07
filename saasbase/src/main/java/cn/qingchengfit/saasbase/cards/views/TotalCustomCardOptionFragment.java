@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.utils.CmStringUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -34,7 +35,7 @@ public class TotalCustomCardOptionFragment extends CustomCardOptionFragment {
       elNeedValid.setExpanded(cardOptionCustom.isLimit_days());
       civCustomValidity.setContent(String.valueOf(cardOptionCustom.getDays()));
       civChargeMoney.setContent(cardOptionCustom.getCharge());
-      civRealMoney.setContent(cardOptionCustom.getPrice());
+      civRealMoney.setContent(CmStringUtils.getMoneyStr(cardOptionCustom.getPrice()));
     }
     return view;
   }
@@ -52,7 +53,7 @@ public class TotalCustomCardOptionFragment extends CustomCardOptionFragment {
       cardOptionCustom.setDays(Integer.valueOf(civCustomValidity.getContent()));
     }
     cardOptionCustom.setCharge(civChargeMoney.getContent());
-    cardOptionCustom.setPrice(String.valueOf(civRealMoney.getContent()));
+    cardOptionCustom.setPrice(Float.parseFloat(civRealMoney.getContent()));
   }
 
   @Override String getToolbarTitle() {

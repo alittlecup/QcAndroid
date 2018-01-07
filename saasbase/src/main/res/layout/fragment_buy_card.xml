@@ -99,6 +99,7 @@
                 android:layout_height="@dimen/qc_item_height"
                 app:civ_lable="开始日期"
                 style="@style/QcCivClickStyle"
+                app:civ_content_color="@color/text_grey"
                 />
 
             <cn.qingchengfit.widgets.CommonInputView
@@ -109,6 +110,7 @@
                 app:civ_showright="false"
                 app:civ_clickable="true"
                 android:clickable="false"
+                app:civ_content_color="@color/text_grey"
                 style="@style/QcCivClickStyle"
                 />
 
@@ -133,6 +135,7 @@
               app:civ_nonnull="true"
               app:civ_showdivier="false"
               app:civ_showright="true"
+              style="@style/QcCivClickStyle"
               />
 
           <android.support.v4.widget.Space
@@ -194,6 +197,7 @@
             app:civ_hint="请选择销售"
             app:civ_lable="业绩归属"
             style="@style/QcCivClickStyle"
+            app:civ_content_color="@color/text_dark"
             />
 
         <cn.qingchengfit.widgets.CommonInputView
@@ -239,7 +243,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:text="金额："
+        android:text="支付金额："
         style="@style/QcTextStyleMediumDark"
         />
     <TextView
@@ -250,6 +254,8 @@
         android:layout_toEndOf="@id/tv_money_label"
         android:layout_toRightOf="@id/tv_money_label"
         android:textColor="@color/red"
+        android:textSize="20dp"
+        tools:text="12"
         />
     <Button
         android:id="@+id/btn_pay"
