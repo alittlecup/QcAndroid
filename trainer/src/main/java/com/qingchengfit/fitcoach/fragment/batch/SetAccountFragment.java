@@ -99,7 +99,18 @@ public class SetAccountFragment extends BaseFragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 Intent ret = new Intent();
-                ret.putExtra("count", Integer.parseInt(count.getContent()));
+                int count1 = 0;
+                try{
+                    count1 = Integer.parseInt(count.getContent());
+                }catch (Exception e){
+                    ToastUtils.show("单节可约人数错误");
+                    return true;
+                }
+                if (count1 <= 0 ){
+                    ToastUtils.show("单节可约人数错误");
+                    return true;
+                }
+                ret.putExtra("count", count1);
                 getActivity().setResult(Activity.RESULT_OK, ret);
                 getActivity().finish();
                 return true;

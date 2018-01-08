@@ -347,7 +347,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
             }
             mData.add(new AddBatchCircleItem(getString(R.string.add_course_circle)));
             mAdapter.notifyDataSetChanged();
-            accountType.setContent("已设置");
+            accountType.setContent("");
             ToastUtils.showS("已自动填充排期");
         }
     }

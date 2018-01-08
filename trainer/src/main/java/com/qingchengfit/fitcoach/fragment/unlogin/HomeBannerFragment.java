@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +17,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
-import cn.qingchengfit.views.FragmentAdapter;
+import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -133,5 +137,54 @@ public class HomeBannerFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
+    }
+
+
+    public class FragmentAdapter extends FragmentPagerAdapter {
+
+        List<Fragment> fragments;
+        FragmentManager fm;
+
+        public FragmentAdapter(FragmentManager fm, ArrayList<Fragment> fs) {
+            super(fm);
+            this.fragments = fs;
+            this.fm = fm;
+        }
+
+        @Override public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            return fragment;
+        }
+
+        @Override public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override public int getCount() {
+            return fragments.size();
+        }
+
+        @Override public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+        @Override public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+            if (position >= getCount()) {
+                FragmentManager manager = ((Fragment) object).getFragmentManager();
+                FragmentTransaction trans = manager.beginTransaction();
+                trans.remove((Fragment) object);
+                trans.commit();
+            }
+        }
+
+        @Override public CharSequence getPageTitle(int position) {
+            Fragment f = fragments.get(position);
+            if (f instanceof VpFragment) {
+                return ((VpFragment) f).getTitle();
+            } else {
+                return "";
+            }
+        }
     }
 }

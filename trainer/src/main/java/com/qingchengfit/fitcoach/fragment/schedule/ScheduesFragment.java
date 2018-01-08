@@ -46,6 +46,7 @@ import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleAction;
+import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
@@ -240,7 +241,17 @@ import rx.functions.Action1;
                 mFragmentAdapter.notifyDataSetChanged();
             }
         });
-
+        RxBusAdd(EventScheduleService.class).subscribe(new Action1<EventScheduleService>() {
+            @Override public void call(EventScheduleService eventScheduleService) {
+                if (eventScheduleService.mCoachService != null) {
+                    curSystemId = eventScheduleService.mCoachService.id;
+                    curModel = eventScheduleService.mCoachService.model;
+                } else {
+                    curSystemId = null;
+                    curModel = "";
+                }
+            }
+        });
         return view;
     }
 

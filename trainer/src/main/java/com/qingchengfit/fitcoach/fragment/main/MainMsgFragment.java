@@ -272,6 +272,10 @@ public class MainMsgFragment extends BaseFragment
       getChildFragmentManager().beginTransaction()
           .replace(R.id.frame_chat, conversationFragment, "chat")
           .commitAllowingStateLoss();
+    }else {
+      getChildFragmentManager().beginTransaction()
+        .show(getChildFragmentManager().findFragmentByTag("chat"))
+        .commitAllowingStateLoss();
     }
     if (getActivity() instanceof Main2Activity) {
       ((Main2Activity) getActivity()).freshNotiCount(getUnredCount());

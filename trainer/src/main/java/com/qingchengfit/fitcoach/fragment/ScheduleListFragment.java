@@ -234,7 +234,7 @@ public class ScheduleListFragment extends BaseFragment {
             List<QcScheduleBean> schedules = system.schedules;
             if (system.system == null) continue;
             String syscolor = system.system.name;
-            if (!TextUtils.isEmpty(curentGym) && !(curentGym.equals(system.system.id) || !system.system.model.equals(currentModel))) {
+            if (!TextUtils.isEmpty(curentGym) && (!curentGym.equals(system.system.id) || !system.system.model.equals(currentModel))) {
                 continue;
             }
             if (!system.private_schedules_exists) showPrivate++;
