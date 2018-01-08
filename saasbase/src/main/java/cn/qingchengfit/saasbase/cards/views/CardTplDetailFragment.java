@@ -586,7 +586,7 @@ import rx.functions.Action1;
         cardTpl == null ? desc
             : cardTpl.getDescription().substring(3, cardTpl.getDescription().length()));
     editInfoListener(true);
-  }
+  }git
 
   @OnClick(R2.id.expand_card_protocol) public void onProtocol() {
 
