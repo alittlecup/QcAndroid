@@ -37,6 +37,7 @@ import com.anbillon.flabellum.annotations.Need;
   @Need public String title;
   @Need public String hint;
   @Need public String content;
+  @Need public Integer type;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -65,7 +66,11 @@ import com.anbillon.flabellum.annotations.Need;
       onShowError("请填写修改内容");
       return;
     }
-    RxBus.getBus().post(new EventTxT.Builder().txt(et.getText().toString().trim()).build());
+    if (type != 0) {
+      RxBus.getBus().post(new EventTxT.Builder().txt(et.getText().toString().trim()).type(type).build());
+    }else{
+      RxBus.getBus().post(new EventTxT.Builder().txt(et.getText().toString().trim()).build());
+    }
     popBack();
   }
 }

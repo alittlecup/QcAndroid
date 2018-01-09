@@ -133,7 +133,7 @@ import javax.inject.Inject;
           });
         }
       });
-    initSearch(tl,"输入会员卡名称进行搜索");
+    initSearch(tl,"输入会员姓名或手机号查找会员卡");
   }
 
   @Override public void onTextSearch(String text) {

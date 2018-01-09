@@ -6,15 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import cn.qingchengfit.animator.SlideInRightItemAnimator;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.item.CardItem;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseListFragment;
+import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -36,7 +41,10 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/8/14.
  */
+@Leaf(module = "card", path = "/card/list/")
 public class CardListFragment extends BaseListFragment {
+
+  @Inject IPermissionModel permissionModel;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -59,7 +67,11 @@ public class CardListFragment extends BaseListFragment {
 
   @Override public void onClickFab() {
     super.onClickFab();
-    routeTo(AppUtils.getRouterUri(getContext(), "/card/choose/cardtpl/"), null);
+    if (permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)){
+      routeTo(AppUtils.getRouterUri(getContext(), "/card/choose/cardtpl/"), null);
+    }else{
+      DialogUtils.showAlert(getContext(), getResources().getString(R.string.buy_card_no_permission));
+    }
   }
 
   public void setCardtpls(List<Card> list, int page) {

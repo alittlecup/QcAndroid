@@ -97,13 +97,13 @@ public interface CardApi {
   rx.Observable<QcDataResponse> qcDelCardtplOption(@Path("id") String staffid,
     @Path("option_id") String option_id, @QueryMap HashMap<String, Object> params);
 
-  @PUT("/api/staffs/{staff_id}/options/{option_id}/")
+  @PUT("/api/staffs/{id}/options/{option_id}/")
   rx.Observable<QcDataResponse> qcUpdateCardtplOption(@Path("id") String staffid,
     @Path("option_id") String option_id, @QueryMap HashMap<String, Object> params,
     @Body OptionBody body);
 
   @POST("/api/staffs/{staff_id}/cardtpls/{card_tpl_id}/options/")
-  rx.Observable<QcDataResponse> qcCreateCardtplOption(@Path("id") String staffid,
+  rx.Observable<QcDataResponse> qcCreateCardtplOption(@Path("staff_id") String staffid,
     @Path("card_tpl_id") String card_tpl_id, @QueryMap HashMap<String, Object> params,
     @Body OptionBody body);
 

@@ -18,7 +18,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.pos.R;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
-import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
+import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -60,7 +60,7 @@ public class PosStudentAddFragment extends BaseFragment {
 
   @Inject IStudentModel studentModel;
 
-  private AddStdudentBody body = new AddStdudentBody();
+  private AddStudentBody body = new AddStudentBody();
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {

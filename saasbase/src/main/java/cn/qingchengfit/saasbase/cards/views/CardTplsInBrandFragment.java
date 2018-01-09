@@ -2,8 +2,13 @@ package cn.qingchengfit.saasbase.cards.views;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTplListInBrandPresenter;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import com.anbillon.flabellum.annotations.Leaf;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import javax.inject.Inject;
 
 /**
@@ -30,6 +35,7 @@ import javax.inject.Inject;
   extends CardTplsHomeInGymFragment {
 
   @Inject CardTplListInBrandPresenter presenterBrand;
+  @Inject IPermissionModel permissionModel;
 
   @Override void initFragments() {
     if (fragmentList.size() == 0) {
@@ -69,6 +75,23 @@ import javax.inject.Inject;
 
       }
     });
+  }
+
+  @Override public boolean onItemClick(int i) {
+    IFlexible item = fragmentList.get(viewpager.getCurrentItem()).getItem(i);
+    if (item instanceof CardTplItem) {
+      CardTpl cardTpl = ((CardTplItem) item).getCardTpl();
+      getPresenter().chooseOneCardTpl(((CardTplItem) item).getCardTpl());
+      if (!permissionModel.check(PermissionServerUtils.CARDBALANCE_CAN_CHANGE,
+          cardTpl.getShopIds())) {
+        routeTo("/path/edit/card/nopermission",
+            new EditCardTplInBrandNoPermissionParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
+      } else {
+        routeTo("/cardtpl/detail/brand/",
+            new CardTplDetailInBrandParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
+      }
+    }
+    return true;
   }
 
   public class CardViewpagerAdapterInBrand extends CardViewpagerAdapter {

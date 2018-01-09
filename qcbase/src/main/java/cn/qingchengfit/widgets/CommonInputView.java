@@ -158,6 +158,7 @@ public class CommonInputView extends RelativeLayout {
 
   public void setEnable(boolean enable) {
     this.enable = enable;
+    edit.setFocusable(enable);
     disableView.setVisibility(enable ? GONE : VISIBLE);
   }
 
@@ -178,12 +179,16 @@ public class CommonInputView extends RelativeLayout {
     }
     invalidate();
   }
+  public void setNoSaved(){
+    if (edit != null){
+      edit.setSaveEnabled(false);
+    }
+  }
 
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
     label = (TextView) findViewById(R.id.commoninput_lable);
     edit = (EditText) findViewById(R.id.commoninput_edit);
-    edit.setFreezesText(false);
     View divider = findViewById(R.id.commoninput_divider);
     rightview = (ImageView) findViewById(R.id.commoninput_righticon);
     disableView = findViewById(R.id.disable);
@@ -360,6 +365,7 @@ public class CommonInputView extends RelativeLayout {
   @Override public Parcelable onSaveInstanceState() {
     Parcelable superState = super.onSaveInstanceState();
     SavedState ss = new SavedState(superState);
+
     ss.childrenStates = new SparseArray();
     for (int i = 0; i < getChildCount(); i++) {
       getChildAt(i).saveHierarchyState(ss.childrenStates);
@@ -377,6 +383,7 @@ public class CommonInputView extends RelativeLayout {
       getChildAt(i).restoreHierarchyState(ss.childrenStates);
     }
   }
+
 
   @Override protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
     dispatchFreezeSelfOnly(container);

@@ -142,6 +142,7 @@ import java.util.List;
     return new CardModel(qcrestRepository, gymWrapper, loginStatus);
   }
   @Provides IExportModel provideExportModel(){return  exportModel;}
+
   @Provides public IPermissionModel providePermissModel(){
     return new IPermissionModel() {
       @Override public boolean check(String permission) {

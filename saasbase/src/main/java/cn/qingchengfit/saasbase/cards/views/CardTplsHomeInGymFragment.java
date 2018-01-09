@@ -21,12 +21,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTypeListPresenter;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -71,6 +74,7 @@ import javax.inject.Inject;
   @BindView(R2.id.card_disable) TextView cardDisable;
 
   @Inject CardTypeListPresenter presenter;
+  @Inject IPermissionModel permissionModel;
 
   int childCount = 0;
   protected List<CardTplListFragment> fragmentList = new ArrayList<>();
@@ -160,9 +164,13 @@ import javax.inject.Inject;
   }
 
   public void onMenuAdd(int position){
-    routeTo("/cardtpl/add/",
-        new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(
-            position + 1).build());
+    if(permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)){
+      routeTo("/cardtpl/add/",
+          new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(
+              position + 1).build());
+    }else{
+      DialogUtils.showAlert(getContext(), getResources().getString(R.string.add_cardtpl_no_permission));
+    }
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,

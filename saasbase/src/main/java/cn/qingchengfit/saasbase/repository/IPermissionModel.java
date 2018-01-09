@@ -29,5 +29,5 @@ public interface IPermissionModel {
    * @return
    */
   boolean check(String permission);
-  boolean check(String permission,List<String> shopids);
+  boolean check(String permission, List<String> shopids);
 }

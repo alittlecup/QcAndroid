@@ -9,10 +9,12 @@ import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.saasbase.cards.views.CardDetailFragment;
 import cn.qingchengfit.saasbase.cards.views.CardFilterTplFragment;
 import cn.qingchengfit.saasbase.cards.views.CardFixValidDayFragment;
+import cn.qingchengfit.saasbase.cards.views.CardListFragment;
 import cn.qingchengfit.saasbase.cards.views.CardListHomeFragment;
 import cn.qingchengfit.saasbase.cards.views.CardRefundFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplAddInBrandFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplDetailFragment;
+import cn.qingchengfit.saasbase.cards.views.CardTplDetailInBrandFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplOptionFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplsHomeInGymFragment;
 import cn.qingchengfit.saasbase.cards.views.CardTplsInBrandFragment;
@@ -40,6 +42,7 @@ import com.anbillon.flabellum.annotations.Trunk;
   BindCardModel.class, EditCardTplFragment.class, CardTplAddInBrandFragment.class, MutiChooseGymFragment.class,
     StaffCardBuyFragment.class, CardRefundFragment.class, AddOffDayFragment.class,
     AheadOffDayFragment.class, OffDayListFragment.class, CardFixValidDayFragment.class,
-    StaffCardChargeFragment.class, StaffCardListHomeFragment.class,
+    StaffCardChargeFragment.class, StaffCardListHomeFragment.class, CardTplDetailInBrandFragment.class,
+    CardListFragment.class,
 }) public class StaffCardActivity extends CardActivity {
 }

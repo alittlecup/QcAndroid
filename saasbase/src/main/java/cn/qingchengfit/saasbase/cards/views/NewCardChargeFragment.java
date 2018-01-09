@@ -106,20 +106,15 @@ public class NewCardChargeFragment extends CardBuyFragment {
           option.isLimit_days() ? String.valueOf(
               card.isCheck_valid() ? (DateUtils.interval(card.getValid_from(), card.getValid_to())
                   + option.days) : option.days) : "不限"));
-      interval = card.isCheck_valid() ? (DateUtils.interval(card.getValid_from(), card.getValid_to())
-          + option.days) : option.days;
+      interval =
+          card.isCheck_valid() ? (card.getTrial_days() > 0 ? (card.getTrial_days() + option.days)
+              : option.days) : option.days;
     }
+    civStartTime.setContent(setTimeFormat(DateUtils.Date2YYYYMMDD(new Date())));
     civEndTime.setContent(DateUtils.Date2YYYYMMDD(
         DateUtils.addDay(DateUtils.formatDateFromServer(DateUtils.Date2YYYYMMDD(new Date())),
-            interval)));
+            interval - 1)));
   }
-
-  //@Override public void onShowDetail(CardTplOption cardOption) {
-  //  civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(
-  //      DateUtils.formatDateFromServer(
-  //          cardOption.created_at),
-  //      (int)(Float.parseFloat(cardOption.charge) + card.getBalance()))));
-  //}
 
   @Override public void onCardProrocol() {
     if (card.card_tpl_service_term != null){
@@ -127,27 +122,31 @@ public class NewCardChargeFragment extends CardBuyFragment {
     }
   }
 
-  @Override public void checkValidate() {
-    super.checkValidate();
-    if (cardTpl.getType() != Configs.CATEGORY_DATE && card.isExpired()){
-      Date start = DateUtils.formatDateFromYYYYMMDD(civStartTime.getContent());
+  @Override public void checkValidate(Date date) {
+    if (cardTpl.getType() != Configs.CATEGORY_DATE){
       if (cardOptionCustom.isLimit_days()) {
-        if (start.before(new Date())) {
-          int interval = cardOptionCustom.days - DateUtils.interval(start, new Date());
+        if (date.before(new Date())) {
+          int interval = cardOptionCustom.days;
           if (interval < 0) {
             interval = 0;
           }
           tvCardValidateTotal.setText(getResources().getString(R.string.text_charge_card_validate,
               String.valueOf(card.getBalance() + Float.parseFloat(cardOptionCustom.charge)),
               String.valueOf(interval)));
+          civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date,
+              (card.isExpired() ? cardOptionCustom.getDays() - 1
+                  : cardOptionCustom.getDays() + card.getTrial_days() - 1))));
         }
       }
+    }else if (cardTpl.getType() == Configs.CATEGORY_DATE){
+      civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date,
+          (int)(Float.parseFloat(cardOptionCustom.getCharge()) + card.getBalance() - 1))));
     }
   }
 
   @Override public void onGetCardTpl(CardTpl cardTpl) {
     tvCardtplName.setText(cardTpl.getName());
-    tvCardId.setText(cardTpl.getId());
+    tvCardId.setText(card.getId());
     tvCardTplType.setText(CardBusinessUtils.getCardTypeCategoryStrHead(cardTpl.type, getContext()));
     tvGymName.setText(cardTpl.getShopNames());
     cardview.setBackground(
@@ -157,8 +156,9 @@ public class NewCardChargeFragment extends CardBuyFragment {
   @Override public void onClickCardId() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
         new CommonInputParams().title("修改实体卡号")
-            .hint(presenter.getmCard().getCard_no())
-            .content(presenter.getmCard().getCard_no())
+            .hint(presenter.getRealCardNo())
+            .content(presenter.getRealCardNo())
+            .type(TYPE_CARD_BUY_CARD_NO)
             .build());
   }
 
@@ -167,6 +167,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
         new CommonInputParams().title("会员卡备注")
             .content(presenter.getRemarks())
             .hint(presenter.getRemarks())
+            .type(TYPE_CARD_BUY_REMARK)
             .build());
   }
 

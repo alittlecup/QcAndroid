@@ -23,6 +23,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CardTplOption;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
@@ -35,6 +36,7 @@ import cn.qingchengfit.saasbase.cards.item.CardtplOptionOhterItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardBuyPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
@@ -87,6 +89,9 @@ import rx.functions.Action1;
     implements FlexibleAdapter.OnItemClickListener, CardBuyPresenter.MVPView,
     CardTplOptionForBuy.OnCustomCardOptionListener {
 
+  public static final int TYPE_CARD_BUY_CARD_NO = 1001;
+  public static final int TYPE_CARD_BUY_REMARK = 1002;
+
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.tv_card_tpl_type) TextView tvCardTplType;
@@ -114,6 +119,7 @@ import rx.functions.Action1;
 
   @Inject public CardBuyPresenter presenter;
   @Inject LoginStatus loginStatus;
+  @Inject IPermissionModel permissionModel;
   @Need public CardTpl cardTpl;
   @BindView(R2.id.layout_validate) LinearLayout layoutValidate;
   @BindView(R2.id.tv_card_validate_total) TextView tvCardValidateTotal;
@@ -134,7 +140,7 @@ import rx.functions.Action1;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
-    View view = inflater.inflate(R.layout.fragment_buy_card, container, false);
+    View view = inflater.inflate(R.layout.fragment_bu y_card, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
@@ -152,6 +158,10 @@ import rx.functions.Action1;
     });
     elAutoOpen.setVisibility(View.GONE);
     civSaler.setContent(loginStatus.staff_name());
+
+    civStartTime.setNoSaved();
+    civEndTime.setNoSaved();
+
     civEndTime.setClickable(false);
     if (cardTpl.has_service_term) {
       cardProtocol.setVisibility(View.VISIBLE);
@@ -309,8 +319,9 @@ import rx.functions.Action1;
     for (CardTplOption option : options) {
       commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type, this));
     }
-    // TODO: 2017/9/30 判断权限
-    commonFlexAdapter.addItem(new CardtplOptionOhterItem());
+    if(permissionModel.check(PermissionServerUtils.CARDBALANCE_CAN_CHANGE)){
+      commonFlexAdapter.addItem(new CardtplOptionOhterItem());
+    }
     if (options.size() > 0) {
       onItemClick(0);
     }else{
@@ -351,26 +362,26 @@ import rx.functions.Action1;
             }else{
               elAutoOpen.setVisibility(View.GONE);
             }
-            checkValidate();
             civStartTime.setContent(setTimeFormat(DateUtils.Date2YYYYMMDD(date)));
-            civEndTime.setContent(
-                DateUtils.Date2YYYYMMDD(DateUtils.addDay(date, cardOptionCustom.getDays())));
+            checkValidate(date);
           }
         });
   }
 
-  public void checkValidate(){
-
+  public void checkValidate(Date date){
+    civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date,
+        cardTpl.getType() == Configs.CATEGORY_DATE ? (int)Float.parseFloat(
+            cardOptionCustom.getCharge()) - 1 : cardOptionCustom.getDays() - 1)));
   }
 
   @OnClick(R2.id.civ_mark) public void onCivMarkClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-        new CommonInputParams().title("会员卡备注").hint(presenter.getRemarks()).build());
+        new CommonInputParams().title("会员卡备注").content(presenter.getRemarks()).type(TYPE_CARD_BUY_REMARK).build());
   }
 
   @OnClick(R2.id.civ_real_card_num) public void onClickCardId() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-        new CommonInputParams().title("添加实体账号").hint(realCardNum()).build());
+        new CommonInputParams().title("添加实体账号").content(presenter.getRealCardNo()).type(TYPE_CARD_BUY_CARD_NO).build());
   }
 
   @OnClick(R2.id.civ_pay_method) public void onSelectPayMethod() {
@@ -395,19 +406,15 @@ import rx.functions.Action1;
     } else if (validDay) {
       layoutValidate.setVisibility(View.VISIBLE);
       civStartTime.setContent(setTimeFormat(DateUtils.Date2YYYYMMDD(new Date())));
-      civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), option.getDays())));
+      civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), option.getDays() - 1)));
     } else {
       layoutValidate.setVisibility(View.GONE);
     }
     if (!other && cardTpl.getType() == Configs.CATEGORY_DATE) {
       layoutValidate.setVisibility(View.VISIBLE);
-      civStartTime.setContent(setTimeFormat(DateUtils.Date2YYYYMMDD(
-          TextUtils.isEmpty(option.created_at) ? new Date()
-              : DateUtils.formatDateFromServer(option.created_at))));
-      civEndTime.setContent(DateUtils.Date2YYYYMMDD(
-          TextUtils.isEmpty(option.created_at) ? DateUtils.addDay(new Date(), (option.days))
-              : DateUtils.addDay(DateUtils.formatDateFromServer(option.created_at),
-                  ((int) Float.parseFloat(option.charge)))));
+      civStartTime.setContent(setTimeFormat(DateUtils.Date2YYYYMMDD(new Date())));
+      civEndTime.setContent(
+          DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), (int)(Float.parseFloat(option.charge) - 1))));
     }
   }
 
@@ -420,7 +427,9 @@ import rx.functions.Action1;
   }
 
   @Override public void remark(boolean remark) {
-    civMark.setHint(remark ? "已填写" : getString(R.string.please_input));
+    if (civMark != null) {
+      civMark.setHint(remark ? "已填写" : getString(R.string.please_input));
+    }
   }
 
   @Override public void onBusinessOrder(JsonObject payBusinessResponse) {
@@ -430,8 +439,10 @@ import rx.functions.Action1;
     tvPayMoney.setText("¥" + CmStringUtils.getMoneyStr(s));
   }
 
-  @Override public String realCardNum() {
-    return civRealCardNum.getContent();
+  @Override public void realCardNum(boolean isRealCard) {
+    if (civRealCardNum != null) {
+      civRealCardNum.setHint(isRealCard ? "已填写" : getString(R.string.please_input));
+    }
   }
 
   @Override public String realMoney() {

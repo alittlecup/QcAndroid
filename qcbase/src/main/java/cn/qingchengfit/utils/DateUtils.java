@@ -381,6 +381,9 @@ public class DateUtils {
   }
 
   public static int interval(String start, String end) {
+    if (start.isEmpty() || end.isEmpty()){
+      return 0;
+    }
     Date s = formatDateFromYYYYMMDD(start);
     Date e = formatDateFromYYYYMMDD(end);
     return (int) ((e.getTime() - s.getTime()) / DAY_TIME);

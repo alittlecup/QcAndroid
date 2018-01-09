@@ -76,7 +76,12 @@ import javax.inject.Inject;
   public void initView() {
     civChargeMoney.setUnit(CardBusinessUtils.getCardTypeCategoryUnit(cardCate,getContext()));
     //期限卡不需要设置有效期
-    elValidDay.setVisibility(cardCate == 3?View.GONE:View.VISIBLE);
+    elValidDay.setVisibility(cardCate == 3 ? View.GONE:View.VISIBLE);
+    if (cardCate == 3){
+      elValidDay.setVisibility(View.GONE);
+    }else{
+      elValidDay.setVisibility(View.VISIBLE);
+    }
     elUseCharge.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         presenter.setCanCharge(isChecked);

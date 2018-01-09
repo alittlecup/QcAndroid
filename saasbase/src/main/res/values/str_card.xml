@@ -71,9 +71,14 @@
   <string name="edit_card_protocol">会员卡服务条款内容</string>
   <string formatted="false" name="cardtpl_description">简介：%s</string>
   <string formatted="false" name="cardtpl_remainder">剩余面额：%s</string>
-  <string formatted="false" name="date_cardtpl_remainder">剩余天数：%s</string>\
+  <string formatted="false" name="date_cardtpl_remainder">剩余天数：%s</string>
 
   <string name="stop_card_tpl">停用该会员卡种类</string>
   <string name="resume_card_tpl">恢复该会员卡种类</string>
+
+  <string name="buy_card_no_permission">抱歉，您没有开卡权限</string>
+  <string name="add_cardtpl_no_permission">抱歉，您没有添加会员卡种类权限</string>
+  <string name="add_cardoption_no_permission">抱歉，您没有添加规格权限</string>
+  <string name="delete_cardtpl_no_permission">抱歉，您没有停用会员卡权限</string>
 
 </resources>

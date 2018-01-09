@@ -89,7 +89,7 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
     }
 
     civChargeMoney.setContent(option.charge);
-    civRealMoney.setContent(CmStringUtils.getMoneyStr(option.price) + "元");
+    civRealMoney.setContent(CmStringUtils.getMoneyStr(option.price));
     elValidDay.setExpanded(option.limit_days);
     civValidDay.setContent(option.days+"");
     elUseCharge.setExpanded(option.can_charge);

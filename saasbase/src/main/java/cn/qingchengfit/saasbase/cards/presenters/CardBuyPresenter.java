@@ -18,6 +18,7 @@ import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
+import cn.qingchengfit.saasbase.cards.views.CardBuyFragment;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICardModel;
@@ -62,10 +63,16 @@ public class CardBuyPresenter extends BasePresenter {
 
   public void setmCard(Card mCard) {
     this.mCard = mCard;
+    cardBuyBody.card_no = mCard.getCard_no();
+    cardBuyBody.remarks = mCard.getRemarks();
   }
 
   public Card getmCard() {
     return mCard;
+  }
+
+  public String getRealCardNo(){
+    return cardBuyBody.card_no;
   }
 
   public void setCardCate(int cate) {
@@ -138,8 +145,13 @@ public class CardBuyPresenter extends BasePresenter {
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<EventTxT>() {
         @Override public void onNext(EventTxT eventTxT) {
-          view.remark(!eventTxT.txt.isEmpty());
-          cardBuyBody.remarks = eventTxT.txt;
+          if (eventTxT.type == CardBuyFragment.TYPE_CARD_BUY_REMARK) {
+            view.remark(!eventTxT.txt.isEmpty());
+            cardBuyBody.remarks = eventTxT.txt;
+          }else{
+            view.realCardNum(!eventTxT.txt.isEmpty());
+            cardBuyBody.card_no = eventTxT.txt;
+          }
         }
       });
 
@@ -222,10 +234,6 @@ public class CardBuyPresenter extends BasePresenter {
       cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
     }
 
-    //if (cardBuyBody.checkData() > 0) {
-    //  view.showAlert(cardBuyBody.checkData());
-    //  return;
-    //}
     cardBuyBody.is_auto_start = view.autoOpen();
     cardBuyBody.origin = 2;
     if ((cardBuyBody.getSeller_id() != null && cardBuyBody.getSeller_id()
@@ -354,7 +362,7 @@ public class CardBuyPresenter extends BasePresenter {
     /**
      * @return 实体卡号
      */
-    String realCardNum();
+    void realCardNum(boolean isRealCard);
 
     String realMoney();
 

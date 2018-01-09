@@ -8,7 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,15 +42,17 @@ import cn.qingchengfit.saasbase.cards.presenters.CardTplDetailPresenter;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.network.model.Shop;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.DrawableUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -60,7 +64,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.SimpleScrollPicker;
-import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -115,7 +118,8 @@ import rx.functions.Action1;
 
   @Inject public CardTplDetailPresenter presenter;
   @Inject GymWrapper gymWrapper;
-  @Inject SerPermisAction serPermisAction;
+  //@Inject SerPermisAction serPermisAction;
+  @Inject IPermissionModel permissionModel;
   @Need public CardTpl cardTpl;
   CommonFlexAdapter comonAdapter;
   @BindView(R2.id.civ_input_card_desc) CommonInputView civInputCardDesc;
@@ -137,25 +141,24 @@ import rx.functions.Action1;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     comonAdapter = new CommonFlexAdapter(new ArrayList(), this);
+
     RxBus.getBus()
-        .register(EventSaasFresh.CardList.class)
-        .compose(this.<EventSaasFresh.CardList>bindToLifecycle())
-        .compose(this.<EventSaasFresh.CardList>doWhen(FragmentEvent.CREATE_VIEW))
-        .subscribe(new BusSubscribe<EventSaasFresh.CardList>() {
-          @Override public void onNext(EventSaasFresh.CardList cardList) {
-            onRefresh();
+        .register(EventSaasFresh.CardTplList.class)
+        .subscribe(new BusSubscribe<EventSaasFresh.CardTplList>() {
+          @Override public void onNext(EventSaasFresh.CardTplList cardList) {
+            if (getActivity() != null) {
+              getActivity().onBackPressed();
+            }
           }
         });
 
     RxBus.getBus()
         .register(EventTxT.class)
-        .compose(this.<EventTxT>bindToLifecycle())
-        .compose(this.<EventTxT>doWhen(FragmentEvent.CREATE_VIEW))
         .subscribe(new BusSubscribe<EventTxT>() {
           @Override public void onNext(EventTxT eventTxT) {
-            body.name = eventTxT.txt;
-            civInputCardname.setContent(eventTxT.txt);
-            editInfoListener(false);
+            body.description = eventTxT.txt;
+            desc = eventTxT.txt;
+            civInputCardDesc.setContent("查看");
           }
         });
   }
@@ -166,7 +169,7 @@ import rx.functions.Action1;
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     presenter.setCardTpl(cardTpl);
-    setToolbar(toolbar);
+    setToolbar();
     SmoothScrollLinearLayoutManager layoutManager =
         new SmoothScrollLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
     //layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -204,6 +207,23 @@ import rx.functions.Action1;
     return view;
   }
 
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    civInputCardname.addTextWatcher(new TextWatcher() {
+      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+        tvCardtplName.setText(s.toString());
+      }
+
+      @Override public void afterTextChanged(Editable s) {
+
+      }
+    });
+  }
+
   private void initView(){
 
     layoutCardValueDesc.setVisibility(View.VISIBLE);
@@ -213,21 +233,22 @@ import rx.functions.Action1;
     expandSettingLimit.setVisibility(View.VISIBLE);
     expandCardProtocol.setVisibility(View.VISIBLE);
     btnDel.setVisibility(View.VISIBLE);
-    if(!cardTpl.is_enable){
+    if(cardTpl.is_enable){
       btnDel.setText(getResources().getString(R.string.stop_card_tpl));
-      civInputCardname.setEnable(false);
-      civInputCardDesc.setEnable(false);
-      expandSettingLimit.setEnabled(false);
-      expandCardProtocol.setEnabled(false);
-      recycleview.setEnabled(false);
+      isEnable(true);
     }else{
       btnDel.setText(getResources().getString(R.string.resume_card_tpl));
+      isEnable(false);
     }
-
+    if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE)){
+      isEnable(false);
+    }
     civInputCardname.setContent(cardTpl.getName());
+    body.description = cardTpl.getDescription();
     civInputCardDesc.setContent(TextUtils.isEmpty(cardTpl.getDescription()) ? "选填" : "查看");
     expandSettingLimit.setExpanded(cardTpl.is_limit());
-    if (cardLimit.is_limit) {
+    expandCardProtocol.setExpanded(cardTpl.is_open_service_term);
+    if (cardTpl.is_limit) {
       preOrderCount.setContent(String.valueOf(cardTpl.getPre_times()));
       if (cardTpl.getMonth_times() > 0) {
         duringCount.setContent("每月," + cardTpl.getMonth_times() + "节");
@@ -244,18 +265,37 @@ import rx.functions.Action1;
     }
   }
 
+  //无权限或停用时所有选项不能点击
+  protected void isEnable(boolean isEnable){
+    civInputCardname.setEnable(isEnable);
+    civInputCardDesc.setEnable(isEnable);
+    civInputCardname.setClickable(isEnable);
+    civInputCardDesc.setClickable(isEnable);
+
+    expandSettingLimit.setEnabled(isEnable);
+    expandCardProtocol.setEnabled(isEnable);
+
+    for (int i = 0; i < comonAdapter.getItemCount(); i++) {
+      comonAdapter.getItem(i).setEnabled(isEnable);
+    }
+    comonAdapter.notifyDataSetChanged();
+  }
+
   private void editInfoListener(boolean isEdit){
 
+    if (cardTpl == null){
+      return;
+    }
     isShouldSave = isEdit
         || !civInputCardname.getContent().equals(cardTpl.getName())
         || expandSettingLimit.isExpanded() != cardTpl.is_limit
         || expandCardProtocol.isExpanded() != cardTpl.is_open_service_term;
-    if (isShouldSave) {
-
+    if (isShouldSave && toolbar.getMenu().size() <= 0) {
       toolbar.inflateMenu(R.menu.menu_save);
       toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
-          body.description = civInputCardDesc.getContent();
+          body.name = civInputCardname.getContent();
+          cardLimit.is_limit = expandSettingLimit.isExpanded();
           if (cardLimit.is_limit){
             body.is_limit = cardLimit.is_limit;
             body.day_times = cardLimit.day_times;
@@ -273,14 +313,14 @@ import rx.functions.Action1;
     }
   }
 
-  @OnClick(R2.id.civ_input_card_name)
-  public void onName(){
-    routeTo("common", "/input/",
-        new CommonInputParams().content(presenter.getCardName())
-            .title("编辑会员卡种类名称")
-            .hint("填写会员卡种类名称")
-            .build());
-  }
+  //@OnClick(R2.id.civ_input_card_name)
+  //public void onName(){
+  //  routeTo("common", "/input/",
+  //      new CommonInputParams().content(presenter.getCardName())
+  //          .title("编辑会员卡种类名称")
+  //          .hint("填写会员卡种类名称")
+  //          .build());
+  //}
 
   public void initCardProtocol(){
     if (cardTpl.has_service_term) {
@@ -288,7 +328,7 @@ import rx.functions.Action1;
     }else{
       inputCardProtocol.setVisibility(View.GONE);
       Intent intent = new Intent(getActivity(), QRActivity.class);
-      if (serPermisAction.checkMuti(PermissionServerUtils.CARDSETTING_CAN_CHANGE, cardTpl.getShopIds())) {
+      if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE, cardTpl.getShopIds())) {
         if (!gymWrapper.inBrand()) {
           intent.putExtra(QRActivity.LINK_MODULE,
               getResources().getString(R.string.qr_code_2web_add_card_term, cardTpl.id));
@@ -300,6 +340,7 @@ import rx.functions.Action1;
       } else {
         showAlert(R.string.alert_edit_cardtype_no_permission);
       }
+      expandCardProtocol.setExpanded(false);
       getContext().startActivity(intent);
     }
   }
@@ -320,15 +361,24 @@ import rx.functions.Action1;
 
   @OnClick(R2.id.btn_del)
   public void onDeleteCardTpl(){
-    if (presenter.isCardTplEnable()) {
-      alertDisableCardtpl();
-    } else {
-      alertEnableCardtpl();
+    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_DELETE)){
+      if (presenter.isCardTplEnable()) {
+        alertDisableCardtpl();
+      } else {
+        alertEnableCardtpl();
+      }
+    }else{
+      DialogUtils.showAlert(getContext(), getResources().getString(R.string.delete_cardtpl_no_permission));
     }
   }
 
-  public void setToolbar(Toolbar toolbar) {
-    initToolbar(toolbar);
+  public void setToolbar() {
+    toolbar.setNavigationIcon(cn.qingchengfit.widgets.R.drawable.vd_navigate_before_white_24dp);
+    if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  && isfitSystemPadding()) {
+      ((ViewGroup) toolbar.getParent()).setPadding(0,
+          MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    }
+    toolbar.setSaveEnabled(true);
     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         if (isShouldSave){
@@ -336,7 +386,7 @@ import rx.functions.Action1;
             @Override
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
               if (which == DialogAction.POSITIVE){
-                body.description = civInputCardDesc.getContent();
+                cardLimit.is_limit = expandSettingLimit.isExpanded();
                 if (cardLimit.is_limit){
                   body.is_limit = cardLimit.is_limit;
                   body.day_times = cardLimit.day_times;
@@ -348,23 +398,15 @@ import rx.functions.Action1;
                 body.is_open_service_term = expandCardProtocol.isExpanded();
                 presenter.editCardTpl(body);
                 return;
-              }else{
-                getActivity().onBackPressed();
               }
             }
-          });
+          }).show();
+        }else{
+          getActivity().onBackPressed();
         }
       }
     });
     toolbarTitle.setText("会员卡种类详情");
-    //toolbar.inflateMenu(R.menu.menu_flow);
-    //RxMenuItem.clicks(toolbar.getMenu().getItem(0))
-    //    .throttleFirst(500, TimeUnit.MILLISECONDS)
-    //    .subscribe(new BusSubscribe<Void>() {
-    //      @Override public void onNext(Void aVoid) {
-    //        showBottomList();
-    //      }
-    //    });
   }
 
   public void onRefresh() {
@@ -437,6 +479,7 @@ import rx.functions.Action1;
     tvCardAppend.setText(card_tpl.getLimit());
     tvGymName.setText(card_tpl.getShopNames());
     cardStatus.setVisibility(cardTpl.is_enable ? View.GONE : View.VISIBLE);
+    cardStatus.setText("已停用");
     cardStatus.setBackground(DrawableUtils.generateCardStatusBg(R.color.red, getContext()));
   }
 
@@ -449,7 +492,7 @@ import rx.functions.Action1;
         comonAdapter.addItem(new CardtplOptionItem(cardStandard, presenter.getCardCate()));
       }
     }
-    if (presenter.isCardTplEnable()) {
+    if (presenter.isCardTplEnable() ) {
       comonAdapter.addItem(new AddCardtplStantardItem());
     }
   }
@@ -523,7 +566,6 @@ import rx.functions.Action1;
     if (resultCode == Activity.RESULT_OK) {
       switch (requestCode) {
         case 2:
-          civInputCardDesc.setContent("已填写");
           desc = IntentUtils.getIntentString(data);
           break;
         case 3:
@@ -582,11 +624,13 @@ import rx.functions.Action1;
   }
 
   @OnClick(R2.id.civ_input_card_desc) public void onDesc() {
-    WriteDescFragment.start(this, 2, getString(R.string.title_cardtype_edit_desc), "请填写简介信息",
-        cardTpl == null ? desc
-            : cardTpl.getDescription().substring(3, cardTpl.getDescription().length()));
+    routeTo("common", "/input/",
+        new CommonInputParams().content(body.description)
+            .title("填加简介")
+            .hint("填写会员卡简介")
+            .build());
     editInfoListener(true);
-  }git
+  }
 
   @OnClick(R2.id.expand_card_protocol) public void onProtocol() {
 
@@ -609,7 +653,6 @@ import rx.functions.Action1;
 
   //可提前预约课程数
   public void onPreOrderCount() {
-    final DialogList list = new DialogList(getContext());
     List<String> preList = new ArrayList<>();
     int i = 1;
     while (i < 100){
@@ -624,14 +667,6 @@ import rx.functions.Action1;
       }
     });
 
-    //list.list(1, 99, new AdapterView.OnItemClickListener() {
-    //  @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    //    list.dismiss();
-    //    preOrderCount.setContent(Integer.toString(position + 1));
-    //    cardLimit.pre_times = position + 1;
-    //  }
-    //});
-    //list.show();
     simpleScrollPicker.show(preList, cardLimit.pre_times > 0  ? cardLimit.pre_times - 1 : 0);
   }
 
@@ -647,7 +682,9 @@ import rx.functions.Action1;
 
   @Override public boolean onItemClick(int i) {
     IFlexible item = comonAdapter.getItem(i);
-
+    if (!civInputCardname.isEnabled()){
+      return false;
+    }
     if (item instanceof CardtplOptionItem) {
 
       //会员卡价格修改

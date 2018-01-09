@@ -159,11 +159,11 @@ public class SimpleStudentListFragment extends BaseFragment
           for (QcStudentBean qcStudentBeen : qcStudentBeens) {
             if (head == null || !qcStudentBeen.head().equalsIgnoreCase(head)){
               head = qcStudentBeen.head();
-              alphabetSort.put(head, i);
-              i++;
+              alphabetSort.put(head.toUpperCase(), i);
               sh = new StickerDateItem(head.toUpperCase());
               mDatas.add(new StickerDateItem(qcStudentBeen.head().toUpperCase()));
             }
+            i++;
             mDatas.add(instanceItem(qcStudentBeen,null));
           }
         }else {
