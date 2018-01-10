@@ -3,6 +3,7 @@ package cn.qingchengfit.staffkit.repository;
 import cn.qingchengfit.model.body.ShopsBody;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
+import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
 import cn.qingchengfit.saasbase.cards.network.body.AddDayOffBody;
 import cn.qingchengfit.saasbase.cards.network.body.AheadOffDayBody;
@@ -220,5 +221,12 @@ public interface CardApi {
   //恢复卡
   @POST("/api/staffs/{id}/cards/{card_id}/recovery/") rx.Observable<QcDataResponse> qcResumeCard(@Path("id") String staffid,
       @Path("card_id") String cardid, @Query("brand_id") String brand_id, @Query("id") String id, @Query("model") String model);
+
+  //获取消费记录
+  @GET("/api/staffs/{id}/cards/{card_id}/histories/?order_by=-created_at")
+  rx.Observable<QcDataResponse<QcResponseRealcardHistory>> qcGetCardhistory(@Path("id") String staffid,
+      @Path("card_id") String card_id, @QueryMap HashMap<String, Object> params,
+      @Query("created_at__gte") String start, @Query("created_at__lte") String end,
+      @Query("page") int page);
 
 }

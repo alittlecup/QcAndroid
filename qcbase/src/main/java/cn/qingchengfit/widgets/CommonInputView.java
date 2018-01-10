@@ -159,6 +159,7 @@ public class CommonInputView extends RelativeLayout {
   public void setEnable(boolean enable) {
     this.enable = enable;
     edit.setFocusable(enable);
+    edit.setFocusableInTouchMode(enable);
     disableView.setVisibility(enable ? GONE : VISIBLE);
   }
 

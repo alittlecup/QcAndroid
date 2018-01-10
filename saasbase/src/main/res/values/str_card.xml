@@ -52,6 +52,7 @@
 
   <string formatted="false" name="text_charge_time_card_validate">续卡后面额共计：%s天</string>
   <string formatted="false" name="text_charge_card_validate">续卡后面额共计：%s元 / 有效期共计：%s天</string>
+  <string formatted="false" name="text_charge_card_validate_times">续卡后面额共计：%s次 / 有效期共计：%s天</string>
 
   <string name="tips_auto_open_card">开启提前激活后，允许该会员卡在开始日期之前被使用。一旦使用，有效期自动从当天开始计算。</string>
   <string name="card_protocol_content">会员卡服务条款内容</string>
@@ -80,5 +81,9 @@
   <string name="add_cardtpl_no_permission">抱歉，您没有添加会员卡种类权限</string>
   <string name="add_cardoption_no_permission">抱歉，您没有添加规格权限</string>
   <string name="delete_cardtpl_no_permission">抱歉，您没有停用会员卡权限</string>
+  <string formatted="false" name="card_limit_pre_times">可提前预约%d节</string>
+  <string formatted="false" name="card_can_work_in_time">每天%d节, 每周%d节, 每月%d节</string>
+  <string name="edit_card_tpl_back_tips">内容已被修改，是否保存？</string>
+  <string formatted="false" name="card_detail_cost">累计充值%.2f天, 累计消费%.2f元</string>
 
 </resources>

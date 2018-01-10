@@ -102,14 +102,16 @@ import rx.functions.Action1;
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     RxTextView.afterTextChangeEvents(etSearch)
-      .throttleLast(1000, TimeUnit.MILLISECONDS)
-      .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
-        @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
-          if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded() && etSearch != null) {
-            chooseStudentListFragment.filter(etSearch.getText().toString());
+        .throttleLast(1000, TimeUnit.MILLISECONDS)
+        .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
+          @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
+            if (chooseStudentListFragment != null
+                && chooseStudentListFragment.isAdded()
+                && etSearch != null) {
+              chooseStudentListFragment.filter(etSearch.getText().toString());
+            }
           }
-        }
-      });
+        });
 
 
     srl.setRefreshing(true);

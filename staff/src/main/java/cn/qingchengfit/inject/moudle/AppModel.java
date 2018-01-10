@@ -21,9 +21,9 @@ import cn.qingchengfit.saasbase.routers.courseImpl;
 import cn.qingchengfit.saasbase.routers.exportImpl;
 import cn.qingchengfit.saasbase.routers.gymImpl;
 import cn.qingchengfit.saasbase.routers.staffImpl;
-import cn.qingchengfit.saasbase.routers.studentImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.staffkit.App;
+import cn.qingchengfit.staffkit.CardStudentRouters;
 import cn.qingchengfit.staffkit.card.StaffCardRouters;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.CourseModel;
@@ -79,7 +79,7 @@ import java.util.List;
     cardModel = new CardModel(qcrestRepository,gymWrapper,loginStatus);
     exportModel = new ExportModel(qcrestRepository,gymWrapper,loginStatus);
     courseModel = new CourseModel(qcrestRepository,gymWrapper,loginStatus);
-    this.saasbaseRouterCenter = new SaasbaseRouterCenter(new billImpl(),new StaffCardRouters(),new staffImpl(),new commonImpl(),new courseImpl(),new exportImpl(),new gymImpl(),new studentImpl());
+    this.saasbaseRouterCenter = new SaasbaseRouterCenter(new billImpl(),new StaffCardRouters(),new staffImpl(),new commonImpl(),new courseImpl(),new exportImpl(),new gymImpl(),new CardStudentRouters());
   }
 
   @Provides App provideApplicationContext() {
@@ -147,6 +147,10 @@ import java.util.List;
     return new IPermissionModel() {
       @Override public boolean check(String permission) {
         return qcDbManager.check(gymWrapper.shop_id(),permission);
+      }
+
+      @Override public boolean checkInBrand(String permission) {
+        return qcDbManager.checkAtLeastOne(permission);
       }
 
       @Override public boolean check(String permission, List<String> shopids) {

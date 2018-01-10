@@ -20,6 +20,7 @@ import cn.qingchengfit.saasbase.cards.item.CardActionsItem;
 import cn.qingchengfit.saasbase.cards.item.CardDetailFunItem;
 import cn.qingchengfit.saasbase.cards.item.CardDetailItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
+import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordParams;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
@@ -159,7 +160,8 @@ import javax.inject.Inject;
         .icon(R.drawable.vd_card_bills)
         .title("消费记录")
         .clickable(false)
-        .desc("todo")
+        .desc(getResources().getString(R.string.card_detail_cost, card.getTotal_account(),
+            card.getTotal_cost()))
         .build());
     items.add(new ActionDescItem.Builder().action(4)
         .icon(R.drawable.vd_card_no)
@@ -201,7 +203,9 @@ import javax.inject.Inject;
           break;
 
         case 3://消费记录
-
+          routeTo(AppUtils.getRouterUri(getContext(),"/card/consumption/record/"),new SpendRecordParams()
+              .card(mCard)
+              .build());
           break;
 
         case 4://实体卡号

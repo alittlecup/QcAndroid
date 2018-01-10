@@ -58,6 +58,7 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
     super.onFinishAnimation();
     if (cardTplOption != null && !CmStringUtils.isEmpty(cardTplOption.id)) {
       presenter.setOptionId(cardTplOption.id);
+      presenter.setDesc(cardTplOption.getDescription());
       if (cardTplOption.card_tpl != null)
         presenter.setTplId(cardTplOption.card_tpl.getId());
     }
@@ -95,6 +96,7 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
     elUseCharge.setExpanded(option.can_charge);
     elUseCreate.setExpanded(option.can_create);
     elOnlyStaff.setExpanded(option.for_staff);
+    civPriceDesc.setContent(option.getDescription().isEmpty() ? "选填" : "已填写");
   }
 
   /**

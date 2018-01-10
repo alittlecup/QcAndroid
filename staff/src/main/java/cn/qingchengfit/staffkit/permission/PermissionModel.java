@@ -14,6 +14,10 @@ public class PermissionModel implements IPermissionModel {
     return true;
   }
 
+  @Override public boolean checkInBrand(String permission) {
+    return false;
+  }
+
   @Override public boolean check(String permission, List<String> shopids) {
     return false;
   }

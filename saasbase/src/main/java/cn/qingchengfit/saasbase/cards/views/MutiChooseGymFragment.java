@@ -145,7 +145,12 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
         View view = inflater.inflate(R.layout.fragment_chooose_gyms, container, false);
         unbinder = ButterKnife.bind(this, view);
         toolbarTitile.setText("选择场馆");
-        initToolbar(toolbar);
+        toolbar.setNavigationIcon(cn.qingchengfit.widgets.R.drawable.vd_navigate_before_white_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                dismiss();
+            }
+        });
         if (!isSimple) {
             toolbar.inflateMenu(R.menu.menu_save);
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

@@ -175,7 +175,6 @@ public class CardTplDetailPresenter extends BasePresenter {
    * 新建会员卡种类
    */
   public void createCardTpl() {
-    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
       CardLimit limit = view.getCardLimit();
       CardtplBody body = new CardtplBody.Builder().type(cardCate)
           .name(view.getCardName())
@@ -205,9 +204,6 @@ public class CardTplDetailPresenter extends BasePresenter {
             }
           }
         });
-    } else {
-      view.showAlert(R.string.sorry_for_no_permission);
-    }
   }
 
   /**

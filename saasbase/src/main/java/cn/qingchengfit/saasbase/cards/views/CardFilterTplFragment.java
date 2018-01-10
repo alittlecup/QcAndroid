@@ -126,10 +126,9 @@ public class CardFilterTplFragment extends BaseFragment {
               }
             }
 
-            adapterLeft.toggleSelection(0);
-            adapterRight.toggleSelection(0);
             if (leftClickListener != null) leftClickListener.onItemClick(0);
-            if (rightClickListener != null) rightClickListener.onItemClick(0);
+            //if (rightClickListener != null) rightClickListener.onItemClick(0);
+            adapterRight.toggleSelection(0);
             adapterLeft.notifyDataSetChanged();
             adapterRight.notifyDataSetChanged();
 

@@ -81,7 +81,8 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
   @Override public void onSuccess() {
     ToastUtils.showS("续卡成功");
     getActivity().setResult(Activity.RESULT_OK);
-    getActivity().getSupportFragmentManager().popBackStack("", 1 );
+    //getActivity().getSupportFragmentManager().popBackStack("", 1 );
+    getActivity().finish();
     routeTo(AppUtils.getRouterUri(getContext(), "card/detail/"),
         new CardDetailParams().cardid(card.getId()).build());
   }

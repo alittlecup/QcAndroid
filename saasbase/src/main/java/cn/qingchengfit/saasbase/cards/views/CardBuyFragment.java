@@ -63,6 +63,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
+import rx.Observable;
 import rx.functions.Action1;
 
 /**
@@ -129,6 +130,7 @@ import rx.functions.Action1;
   private List<CardTplOption> optionList = new ArrayList<>();
   public int patType;
   private int selectPos = 0;
+  private Observable<PayEvent> ob;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -140,7 +142,7 @@ import rx.functions.Action1;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
-    View view = inflater.inflate(R.layout.fragment_bu y_card, container, false);
+    View view = inflater.inflate(R.layout.fragment_buy_card, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
@@ -237,18 +239,16 @@ import rx.functions.Action1;
   }
 
   private void initBus(){
-    RxBus.getBus()
-        .register(PayEvent.class)
-        .compose(this.<PayEvent>bindToLifecycle())
-        .subscribe(new Action1<PayEvent>() {
-          @Override public void call(PayEvent payEvent) {
-            if (payEvent != null && payEvent.getPayMethod() != null){
-              patType = payEvent.getPayMethod().payType;
-              civPayMethod.setContent(payEvent.getPayMethod().name);
-              selectPos = payEvent.getPosition();
-            }
-          }
-        });
+    ob = RxBus.getBus().register(PayEvent.class);
+    ob.compose(this.<PayEvent>bindToLifecycle()).subscribe(new Action1<PayEvent>() {
+      @Override public void call(PayEvent payEvent) {
+        if (payEvent != null && payEvent.getPayMethod() != null) {
+          patType = payEvent.getPayMethod().payType;
+          civPayMethod.setContent(payEvent.getPayMethod().name);
+          selectPos = payEvent.getPosition();
+        }
+      }
+    });
   }
 
 
@@ -381,7 +381,7 @@ import rx.functions.Action1;
 
   @OnClick(R2.id.civ_real_card_num) public void onClickCardId() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-        new CommonInputParams().title("添加实体账号").content(presenter.getRealCardNo()).type(TYPE_CARD_BUY_CARD_NO).build());
+        new CommonInputParams().title("添加实体卡号").content(presenter.getRealCardNo()).type(TYPE_CARD_BUY_CARD_NO).build());
   }
 
   @OnClick(R2.id.civ_pay_method) public void onSelectPayMethod() {
@@ -490,5 +490,8 @@ import rx.functions.Action1;
 
   @Override public void onDestroyView() {
     super.onDestroyView();
+    if (ob != null){
+      RxBus.getBus().unregister(PayEvent.class.getName(), ob);
+    }
   }
 }

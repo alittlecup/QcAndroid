@@ -15,7 +15,6 @@
       app:civ_inputnum="true"
       app:civ_lable="面额"
       app:civ_unit="次"
-
       />
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/civ_real_money"
@@ -63,7 +62,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       android:background="@color/white"
-      app:el_label="用于充值"
+      app:el_label="用于续卡"
       />
   <cn.qingchengfit.widgets.ExpandedLayout
       android:id="@+id/el_only_staff"
@@ -72,10 +71,24 @@
       android:background="@color/white"
       app:el_label="仅工作人员可见"
       />
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_price_desc"
+      style="@style/QcCivInputStyle"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginTop="15dp"
+      app:civ_inputnum="true"
+      app:civ_lable="说明"
+      app:civ_clickable="true"
+      app:civ_showright="true"
+      app:civ_hint="选填"
+      />
   <android.support.v4.widget.Space
       android:layout_width="match_parent"
       android:layout_height="@dimen/activity_vertical_margin"
       />
+
+
   <Button
       android:visibility="gone"
       android:id="@+id/btn_del"

@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.DrawableUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -54,6 +56,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
       civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(card.getValid_to())));
     }
     tvCardValidateTotal.setVisibility(View.VISIBLE);
+    civRealCardNum.setVisibility(View.GONE);
     elAutoOpen.setExpanded(card.is_auto_start());
     presenter.setChoseStuIds((ArrayList<String>) card.getUserIds());
     //TODO 支付方式
@@ -98,17 +101,21 @@ public class NewCardChargeFragment extends CardBuyFragment {
     }
     if(cardTpl.getType() == Configs.CATEGORY_DATE){
       tvCardValidateTotal.setText(getResources().getString(R.string.text_charge_time_card_validate,
-          String.valueOf(card.getBalance() + Float.parseFloat(option.charge))));
-      interval = (int)(Float.parseFloat(option.charge)+ card.getBalance());
+          String.valueOf((card.getBalance() > 0 ? card.getBalance() : 0) + Float.parseFloat(option.charge))));
+      interval = (int)(Float.parseFloat(option.charge)+ (card.getBalance() > 0 ? card.getBalance() : 0));
     }else{
-      tvCardValidateTotal.setText(getResources().getString(R.string.text_charge_card_validate,
+      @StringRes int stringId = R.string.text_charge_card_validate;
+      if (card.getType() == Configs.CATEGORY_TIMES){
+        stringId = R.string.text_charge_card_validate_times;
+      }
+      tvCardValidateTotal.setText(getResources().getString(stringId,
           String.valueOf(card.getBalance() + Float.parseFloat(option.charge)),
           option.isLimit_days() ? String.valueOf(
               card.isCheck_valid() ? (DateUtils.interval(card.getValid_from(), card.getValid_to())
-                  + option.days) : option.days) : "不限"));
+                  + option.days + 1) : option.days) : "不限"));
       interval =
-          card.isCheck_valid() ? (card.getTrial_days() > 0 ? (card.getTrial_days() + option.days)
-              : option.days) : option.days;
+          card.isCheck_valid() ? (!card.isExpired() ? (DateUtils.interval(card.getValid_from(),
+              card.getValid_to()) + option.days + 1) : option.days) : option.days;
     }
     civStartTime.setContent(setTimeFormat(DateUtils.Date2YYYYMMDD(new Date())));
     civEndTime.setContent(DateUtils.Date2YYYYMMDD(
@@ -140,7 +147,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
       }
     }else if (cardTpl.getType() == Configs.CATEGORY_DATE){
       civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date,
-          (int)(Float.parseFloat(cardOptionCustom.getCharge()) + card.getBalance() - 1))));
+          (int)(Float.parseFloat(cardOptionCustom.getCharge()) + (card.getBalance() > 0 ? card.getBalance() : 0) - 1))));
     }
   }
 
@@ -153,14 +160,6 @@ public class NewCardChargeFragment extends CardBuyFragment {
         DrawableUtils.generateBg(16, CardBusinessUtils.getDefaultCardbgColor(cardTpl.type)));
   }
 
-  @Override public void onClickCardId() {
-    routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-        new CommonInputParams().title("修改实体卡号")
-            .hint(presenter.getRealCardNo())
-            .content(presenter.getRealCardNo())
-            .type(TYPE_CARD_BUY_CARD_NO)
-            .build());
-  }
 
   @Override public void onCivMarkClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
@@ -176,7 +175,11 @@ public class NewCardChargeFragment extends CardBuyFragment {
   }
 
   @Override public void onConfirmPay() {
-    presenter.chargeCard();
+    if(cardOptionCustom == null) {
+      DialogUtils.showAlert(getContext(), "请选择正确的会员卡规格");
+      return;
+    }
+      presenter.chargeCard();
   }
 
   @Override public void setCardInfo() {
@@ -194,7 +197,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
   }
 
   @Override public void remark(boolean remark) {
-    civMark.setContent(remark ? "已设置" : "未设置");
+    civMark.setContent(remark ? "已填写" : "未填写");
   }
 
   @Override public void onBusinessOrder(JsonObject payBusinessResponse) {

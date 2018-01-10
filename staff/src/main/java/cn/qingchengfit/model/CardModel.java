@@ -7,6 +7,7 @@ import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
+import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
 import cn.qingchengfit.saasbase.cards.network.body.AddDayOffBody;
 import cn.qingchengfit.saasbase.cards.network.body.AheadOffDayBody;
@@ -163,6 +164,7 @@ public class CardModel implements ICardModel {
 
   @Override
   public Observable<QcDataResponse> editCardInfo(String cardid, HashMap<String, Object> p) {
+    p.putAll(gymWrapper.getParams());
     return posApi.editCardInfo(loginStatus.staff_id(), cardid, p);
   }
 
@@ -242,5 +244,12 @@ public class CardModel implements ICardModel {
   @Override public Observable<QcDataResponse> qcResumeCard(String cardId) {
     return posApi.qcResumeCard(loginStatus.staff_id(), cardId, gymWrapper.brand_id(),
         gymWrapper.id(), gymWrapper.model());
+  }
+
+  @Override
+  public Observable<QcDataResponse<QcResponseRealcardHistory>> qcConsumeRecord(String cardId, int page, String start, String end) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("brand_id", gymWrapper.brand_id());
+    return posApi.qcGetCardhistory(loginStatus.staff_id(), cardId, params, start, end, page);
   }
 }

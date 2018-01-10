@@ -21,10 +21,9 @@ public class CardTplDetailInBrandFragment extends CardTplDetailFragment {
       Bundle savedInstanceState) {
     View view = super.onCreateView(inflater, container, savedInstanceState);
     supportGyms.setVisibility(View.VISIBLE);
+    supportGyms.setContent(cardTpl.getShopIds().size() + "家");
     isEnable(true);
     return view;
   }
-
-
 
 }

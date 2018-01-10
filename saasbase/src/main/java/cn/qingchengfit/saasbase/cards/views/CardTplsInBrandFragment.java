@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.cards.views;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTplListInBrandPresenter;
@@ -50,9 +51,12 @@ import javax.inject.Inject;
   }
 
   @Override public void onMenuAdd(int position) {
-    routeTo("/cardtpl/add/brand",
-        new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(
-            position + 1).build());
+    if (permissionModel.checkInBrand(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
+      routeTo("/cardtpl/add/brand",
+          new cn.qingchengfit.saasbase.cards.views.CardtplAddParams().cardCategory(position + 1).build());
+    }else{
+      showAlert(getResources().getString(R.string.alert_permission_forbid));
+    }
   }
 
   @Override void initVp() {

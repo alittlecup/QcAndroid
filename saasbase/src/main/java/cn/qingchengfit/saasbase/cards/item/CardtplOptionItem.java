@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -50,18 +51,22 @@ public class CardtplOptionItem extends AbstractFlexibleItem<CardtplOptionItem.Ca
     holder.layoutCardOption.setEnabled(mEnabled);
     String unitStr =
         CardBusinessUtils.getCardTypeCategoryUnit(cardtplType, holder.title.getContext());
-    holder.title.setText("价格" + "¥" + option.price);
+    holder.title.setText("¥" + option.price);
     if (TextUtils.isEmpty(option.charge)) {
       holder.realIncome.setVisibility(View.GONE);
     } else {
-      holder.realIncome.setText("(面额" + option.charge + unitStr + ")");
+      holder.realIncome.setText("面额" + option.charge + unitStr);
       holder.realIncome.setVisibility(View.VISIBLE);
     }
-    if (option.days <= 0) {
-      holder.validDate.setVisibility(View.GONE);
+    if (option.days <= 0 || !option.isLimit_days()) {
+      holder.validDate.setVisibility(View.VISIBLE);
+      holder.validDate.setText("有效期:不限");
     } else {
       holder.validDate.setVisibility(View.VISIBLE);
-      holder.validDate.setText("(有效期" + option.days + "天)");
+      holder.validDate.setText("有效期" + option.days + "天");
+    }
+    if (cardtplType == Configs.CATEGORY_DATE){
+      holder.validDate.setVisibility(View.GONE);
     }
     //是否支持充卡 和 购卡
     if (!option.can_charge && !option.can_create) {

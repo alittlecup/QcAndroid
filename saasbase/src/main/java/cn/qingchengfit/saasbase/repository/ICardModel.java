@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.repository;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
+import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
 import cn.qingchengfit.saasbase.cards.network.body.AddDayOffBody;
 import cn.qingchengfit.saasbase.cards.network.body.AheadOffDayBody;
@@ -200,5 +201,7 @@ public interface ICardModel {
   rx.Observable<QcDataResponse> qcModifyValidate(String cardId, UpdateCardValidBody body);
 
   rx.Observable<QcDataResponse> qcResumeCard(String cardId);
+
+  rx.Observable<QcDataResponse<QcResponseRealcardHistory>> qcConsumeRecord(String cardId, int page, String start, String end);
 
 }
