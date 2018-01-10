@@ -6,7 +6,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.weex.WeexPage;
+import cn.qingchengfit.weex.ui.WeexSplashPage;
 import com.anbillon.flabellum.annotations.Leaf;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
@@ -57,9 +57,7 @@ public class ShopHomePage extends ShopBaseFragment<PageShopHomeBinding, ShopHome
       fragmentList.add(new Pair<>(getString(R.string.off_sale),new ShopProductsListPage()));
       fragmentList.add(new Pair<>(getString(R.string.category_manage),new ShopCategoryListPage()));
       fragmentList.add(new Pair<>(getString(R.string.inventory_manage),new ShopInventoryListPage()));
-      fragmentList.add(new Pair<>("weex",WeexPage.newInstance("commodity_list_new.js")));
-      fragmentList.add(new Pair<>("weex2",WeexPage.newInstance("commodity_list.js")));
-
+      fragmentList.add(new Pair<>("weex",new WeexSplashPage()));
     }
     return fragmentList;
   }

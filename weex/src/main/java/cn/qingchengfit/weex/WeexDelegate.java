@@ -1,24 +1,19 @@
 package cn.qingchengfit.weex;
 
 import android.app.Application;
-import android.content.Intent;
 import cn.qingchengfit.weex.adapter.ImageAdapter;
+import cn.qingchengfit.weex.utils.WeexUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.InitConfig;
-import com.taobao.weex.WXEnvironment;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.appfram.navigator.IActivityNavBarSetter;
-
-import static android.content.Intent.ACTION_VIEW;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by huangbaole on 2018/1/8.
  */
 
 public class WeexDelegate {
-  private static final String ACTION = "cn.qingchengfit.weex.page";
   private static InitConfig defaultInitConfig =
       new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
   private static IActivityNavBarSetter activityNavBarSetter = new WxActivityNavBarSetter();
@@ -47,11 +42,7 @@ public class WeexDelegate {
     @Override public boolean push(String param) {
       JSONObject jsonObject = JSON.parseObject(param);
       String url = jsonObject.getString("url");
-      Intent intent = new Intent(ACTION_VIEW);
-      intent.addCategory("cn.qingchengfit.android.intent.category.WEEX");
-      intent.putExtra("url",url);;
-      intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-      WXEnvironment.getApplication().startActivity(intent);
+      WeexUtil.openWeexActivity(WeexUtil.checkUri(url));
       return true;
     }
 

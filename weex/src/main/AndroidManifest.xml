@@ -3,8 +3,8 @@
     package="cn.qingchengfit.weex">
 
   <application>
-    <activity android:name=".WxPageActivity"
-         android:launchMode="singleTask">
+    <activity android:name=".ui.WxPageActivity"
+         android:launchMode="standard">
       <intent-filter>
         <action android:name="cn.qignchengfit.android.intent.action.WEEX"/>
 
