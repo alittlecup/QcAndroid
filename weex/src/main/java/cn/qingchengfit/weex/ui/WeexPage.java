@@ -12,6 +12,7 @@ import cn.qingchengfit.weex.utils.WeexLoadView;
 import com.taobao.weex.WXSDKInstance;
 
 /**
+ * Fragment展示页
  * Created by huangbaole on 2018/1/8.
  */
 
@@ -27,6 +28,7 @@ public class WeexPage extends BaseFragment {
     args.putString(WXSDKInstance.BUNDLE_URL, url);
     fragment.setArguments(args);
     return fragment;
+
   }
 
   View rootView;

@@ -14,7 +14,7 @@ import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.weex.WeexDelegate;
+import cn.qingchengfit.weex.utils.WeexDelegate;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;

@@ -3,13 +3,11 @@ package cn.qingchengfit.weex.utils;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import cn.qingchengfit.weex.https.WXHttpManager;
 import cn.qingchengfit.weex.https.WXHttpTask;
 import cn.qingchengfit.weex.https.WXRequestListener;
-import com.taobao.weex.IWXRenderListener;
 import com.taobao.weex.RenderContainer;
 import com.taobao.weex.WXSDKInstance;
 import com.taobao.weex.common.WXRenderStrategy;
@@ -19,14 +17,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 加载js文件的工具类
  * Created by huangbaole on 2018/1/10.
  */
 
-public final class WeexLoadView implements IWXRenderListener {
+public final class WeexLoadView {
   private WXSDKInstance mWXSDKInstance;
   private Map<String, Object> mConfigMap = new HashMap<>();
   private ViewGroup rootView;
 
+  /**
+   * 从本地加载
+   *
+   * @param url 地址
+   * @param context 上下文
+   * @param rootView 需要展示的view
+   */
   private void loadWXfromLocal(String url, final Context context, ViewGroup rootView) {
     this.rootView = rootView;
     createWXSDKInstance(context, rootView);
@@ -42,6 +48,13 @@ public final class WeexLoadView implements IWXRenderListener {
     });
   }
 
+  /**
+   * 加载url
+   *
+   * @param mUri 地址
+   * @param context 上下文
+   * @param viewGroup 需要展示的view
+   */
   public void loadUri(Uri mUri, Context context, ViewGroup viewGroup) {
 
     if (TextUtils.equals("http", mUri.getScheme()) || TextUtils.equals("https", mUri.getScheme())) {
@@ -51,6 +64,13 @@ public final class WeexLoadView implements IWXRenderListener {
     }
   }
 
+  /**
+   * 从远程加载
+   *
+   * @param url 地址
+   * @param context 上下文
+   * @param rootView 需要展示的view
+   */
   private void loadWXfromService(final String url, final Context context, ViewGroup rootView) {
 
     this.rootView = rootView;
@@ -94,23 +114,8 @@ public final class WeexLoadView implements IWXRenderListener {
             ViewGroup.LayoutParams.MATCH_PARENT));
     mWXSDKInstance = new WXSDKInstance(context);
     mWXSDKInstance.setRenderContainer(renderContainer);
-    mWXSDKInstance.registerRenderListener(this);
+    //mWXSDKInstance.registerRenderListener(this);
     //mWXSDKInstance.setNestedInstanceInterceptor(this);
     mWXSDKInstance.setTrackComponent(true);
-  }
-
-  @Override public void onViewCreated(WXSDKInstance instance, View view) {
-  }
-
-  @Override public void onRenderSuccess(WXSDKInstance instance, int width, int height) {
-
-  }
-
-  @Override public void onRefreshSuccess(WXSDKInstance instance, int width, int height) {
-
-  }
-
-  @Override public void onException(WXSDKInstance instance, String errCode, String msg) {
-
   }
 }

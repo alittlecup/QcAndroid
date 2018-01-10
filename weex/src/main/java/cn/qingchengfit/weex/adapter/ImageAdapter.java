@@ -11,6 +11,7 @@ import com.taobao.weex.common.WXImageStrategy;
 import com.taobao.weex.dom.WXImageQuality;
 
 /**
+ * 图片加载
  * Created by huangbaole on 2018/1/8.
  */
 

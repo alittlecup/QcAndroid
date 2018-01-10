@@ -1,8 +1,8 @@
-package cn.qingchengfit.weex;
+package cn.qingchengfit.weex.utils;
 
 import android.app.Application;
 import cn.qingchengfit.weex.adapter.ImageAdapter;
-import cn.qingchengfit.weex.utils.WeexUtil;
+import cn.qingchengfit.weex.ui.WxPageActivity;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.InitConfig;
@@ -10,6 +10,7 @@ import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.appfram.navigator.IActivityNavBarSetter;
 
 /**
+ * Weex初始化代理类
  * Created by huangbaole on 2018/1/8.
  */
 
@@ -18,27 +19,49 @@ public class WeexDelegate {
       new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
   private static IActivityNavBarSetter activityNavBarSetter = new WxActivityNavBarSetter();
 
+  /**
+   * 初始化方法
+   * @param application 当前的Application
+   */
   public static void initWXSDKEngine(Application application) {
     initWXSDKEngine(application, defaultInitConfig);
   }
-
+  /**
+   * 初始化方法
+   * @param application 当前的Application
+   * @param initConfig 当前初始化需要的配置
+   */
   public static void initWXSDKEngine(Application application, InitConfig initConfig) {
     WXSDKEngine.initialize(application, initConfig);
+    //设置WXNavigatorModule的拦截方法，主要是为了拦截push方法
     WXSDKEngine.setActivityNavBarSetter(activityNavBarSetter);
     initModules();
     initComponents();
   }
 
+  /**
+   * 注册modules
+   */
   private static void initComponents() {
 
   }
 
+  /**
+   * 注册components
+   */
   private static void initModules() {
 
   }
 
+  /**
+   *
+   */
   private static class WxActivityNavBarSetter implements IActivityNavBarSetter {
-
+    /**
+     * 拦截push()方法，用于跳转至{@link WxPageActivity}
+     * @param param
+     * @return
+     */
     @Override public boolean push(String param) {
       JSONObject jsonObject = JSON.parseObject(param);
       String url = jsonObject.getString("url");

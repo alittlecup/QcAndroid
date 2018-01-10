@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import cn.qingchengfit.weex.R;
 import cn.qingchengfit.weex.utils.WeexLoadView;
 
+/**
+ * Activity展示页，同时也是新打开的js文件默认页
+ */
 public class WxPageActivity extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

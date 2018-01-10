@@ -10,6 +10,7 @@ import cn.qingchengfit.weex.R;
 import cn.qingchengfit.weex.utils.WeexUtil;
 
 /**
+ * 测试入口页
  * Created by huangbaole on 2018/1/10.
  */
 

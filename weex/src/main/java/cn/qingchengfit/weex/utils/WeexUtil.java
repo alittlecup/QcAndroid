@@ -18,18 +18,30 @@ import java.util.Set;
 import static android.content.Intent.ACTION_VIEW;
 
 /**
+ * weex工具类
  * Created by huangbaole on 2018/1/10.
  */
 
 public final class WeexUtil {
   public static HashMap<String, String> jsMap = new HashMap<>();
 
+  /**
+   * 获取本地asset下uri对应的文件名
+   * @param uri
+   * @return
+   */
   public static String assembleFilePath(Uri uri) {
-    if (uri != null && uri.getPath() != null) {
+    if (uri != null && uri.getPath() != null&&"file".equals(uri.getScheme())) {
       return uri.getPath().replaceFirst("/", "");
     }
     return "";
   }
+
+  /**
+   * 获取传入的url是否有对应的配置文件中的路径
+   * @param url
+   * @return
+   */
   public static String checkUri(String url) {
     Set<String> keySet = WeexUtil.jsMap.keySet();
     Iterator<String> iterator = keySet.iterator();
@@ -41,6 +53,14 @@ public final class WeexUtil {
     }
     return url;
   }
+
+  /**
+   * 根据加载的地址获取需要给JS端的BundleURL,主要目的是去除远端js路径的hash值
+   *
+   *
+   * @param uri https://qcfile.b0.upaiyun.com/qc-commodity-weex/commodity_list.a5edc2d0468d4df8541811b307654dd2.js
+   * @return https://qcfile.b0.upaiyun.com/qc-commodity-weex/commodity_list.js
+   */
 
   public static String makeBundleUri(Uri uri) {
     if (uri != null && uri.getPath() != null) {
@@ -66,6 +86,11 @@ public final class WeexUtil {
     return "";
   }
 
+  /**
+   * 开启新的界面
+   * @param url
+   */
+
   public static void openWeexActivity(String url) {
     Intent intent = new Intent(ACTION_VIEW);
     intent.addCategory("cn.qingchengfit.android.intent.category.WEEX");
@@ -73,6 +98,9 @@ public final class WeexUtil {
     WXEnvironment.getApplication().startActivity(intent);
   }
 
+  /**
+   * 加载远程的js配置文件并保存至{@link WeexUtil {@link #jsMap}}
+   */
   public static void loadJsMap() {
     WXHttpTask task = new WXHttpTask();
     task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
