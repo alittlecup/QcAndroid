@@ -11,6 +11,7 @@ import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.cards.network.body.UpdateCardValidBody;
 import cn.qingchengfit.saasbase.cards.network.response.BalanceConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
@@ -108,11 +109,6 @@ public interface ICardModel {
   rx.Observable<QcDataResponse> qcResumeCardtpl(@Path("card_tpl_id") String card_tpl_id);
 
   /**
-   * 修改适用场馆 { shops:12,12,123 }
-   */
-  rx.Observable<QcDataResponse> qcFixGyms(@Path("cardtpl_id") String card_tpl, String shops);
-
-  /**
    * 卡规格删除操作
    */
   rx.Observable<QcDataResponse> qcDelCardStandard(@Path("option_id") String option_id);
@@ -203,5 +199,7 @@ public interface ICardModel {
   rx.Observable<QcDataResponse> qcResumeCard(String cardId);
 
   rx.Observable<QcDataResponse<QcResponseRealcardHistory>> qcConsumeRecord(String cardId, int page, String start, String end);
+
+  rx.Observable<QcDataResponse> qcFixGyms(String cardId, ShopsBody body);
 
 }

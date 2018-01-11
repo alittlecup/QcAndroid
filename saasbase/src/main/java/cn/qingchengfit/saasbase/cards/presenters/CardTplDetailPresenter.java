@@ -14,6 +14,7 @@ import cn.qingchengfit.saasbase.cards.bean.CardLimit;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
+import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
@@ -144,6 +145,23 @@ public class CardTplDetailPresenter extends BasePresenter {
           }
         }
       }));
+  }
+
+  public void qcFixGyms(ShopsBody body) {
+
+    RxRegiste(cardModel.qcFixGyms(cardTpl.id, body)
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse>() {
+          @Override public void call(QcDataResponse qcDataResponse) {
+            if (ResponseConstant.checkSuccess(qcDataResponse)){
+
+            }else{
+              view.onShowError(qcDataResponse.getMsg());
+            }
+          }
+        }));
   }
 
   /**

@@ -162,6 +162,10 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
                             pos.add(mShops.get(i));
                         }
                     }
+                    if (pos.size() <= 0){
+                        showAlert(getResources().getString(R.string.card_not_select_gym));
+                        return false;
+                    }
                     Intent result = new Intent();
                     result.putParcelableArrayListExtra(IntentUtils.RESULT, pos);
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, result);

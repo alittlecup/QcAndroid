@@ -65,17 +65,18 @@ public class NewCardChargeFragment extends CardBuyFragment {
     civBindMenbers.setVisibility(View.GONE);
     civMark.setContentColor(getResources().getColor(R.color.text_warm));
     if (card.isCheck_valid() && card.getType() != Configs.CATEGORY_DATE) {
-      tvCardAppend.setText("有效期："
-          + DateUtils.getYYYYMMDDfromServer(card.getValid_from())
-          + " - "
-          + DateUtils.getYYYYMMDDfromServer(card.getValid_to()));
+      if (DateUtils.interval(card.getValid_from(), card.getValid_to()) > 0) {
+        tvCardAppend.setText("有效期："
+            + DateUtils.getYYYYMMDDfromServer(card.getValid_from())
+            + " - "
+            + DateUtils.getYYYYMMDDfromServer(card.getValid_to()));
+      }else{
+        tvCardAppend.setText("有效期：不限");
+      }
       tvCardExpandDesc.setContent(getResources().getString(R.string.cardtpl_remainder,
           String.valueOf(card.getBalance() < 0 ? 0 : card.getBalance())));
     } else if (card.getType() == Configs.CATEGORY_DATE) {
-      tvCardAppend.setText("有效期："
-          + DateUtils.getYYYYMMDDfromServer(card.getStart())
-          + " - "
-          + DateUtils.getYYYYMMDDfromServer(card.getEnd()));
+      tvCardAppend.setText("有效期：" + DateUtils.getYYYYMMDDfromServer(card.getStart()) + " - " + DateUtils.getYYYYMMDDfromServer(card.getEnd()));
       tvCardExpandDesc.setContent(getResources().getString(R.string.date_cardtpl_remainder,
           String.valueOf(card.getBalance() < 0 ? 0 : card.getBalance())));
     } else {
@@ -95,7 +96,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
 
   @Override public void showInputMoney(boolean other, CardTplOption option, boolean validDay) {
     super.showInputMoney(other, option, validDay);
-    int interval;
+    int interval = 0;
     if (other){
       return;
     }
@@ -108,14 +109,21 @@ public class NewCardChargeFragment extends CardBuyFragment {
       if (card.getType() == Configs.CATEGORY_TIMES){
         stringId = R.string.text_charge_card_validate_times;
       }
+      if (card.isCheck_valid()
+          && !card.isExpired()
+          && DateUtils.interval(card.getValid_from(), card.getValid_to()) > 0) {
+        if (DateUtils.formatDateFromYYYYMMDD(card.getValid_from()).before(new Date())){
+          interval = DateUtils.interval(new Date(), DateUtils.formatDateFromYYYYMMDD(card.getValid_to()));
+        }else{
+          interval = DateUtils.interval(card.getValid_from(), card.getValid_to());
+        }
+      }
+      if (option.isLimit_days()){
+        interval += option.days;
+      }
       tvCardValidateTotal.setText(getResources().getString(stringId,
           String.valueOf(card.getBalance() + Float.parseFloat(option.charge)),
-          option.isLimit_days() ? String.valueOf(
-              card.isCheck_valid() ? (DateUtils.interval(card.getValid_from(), card.getValid_to())
-                  + option.days + 1) : option.days) : "不限"));
-      interval =
-          card.isCheck_valid() ? (!card.isExpired() ? (DateUtils.interval(card.getValid_from(),
-              card.getValid_to()) + option.days + 1) : option.days) : option.days;
+          interval != 0 ? String.valueOf(interval) : "不限"));
     }
     civStartTime.setContent(setTimeFormat(DateUtils.Date2YYYYMMDD(new Date())));
     civEndTime.setContent(DateUtils.Date2YYYYMMDD(
@@ -132,19 +140,36 @@ public class NewCardChargeFragment extends CardBuyFragment {
   @Override public void checkValidate(Date date) {
     if (cardTpl.getType() != Configs.CATEGORY_DATE){
       if (cardOptionCustom.isLimit_days()) {
-        if (date.before(new Date())) {
           int interval = cardOptionCustom.days;
           if (interval < 0) {
             interval = 0;
           }
+          if (card.isCheck_valid()
+              && DateUtils.interval(card.getValid_from(), card.getValid_to()) > 0 && !card.isExpired()) {
+            if (date.before(DateUtils.formatDateFromYYYYMMDD(card.getValid_from()))) {
+              interval = interval + (DateUtils.interval(card.getValid_from(), card.getValid_to()) + 1);
+            } else {
+              interval = interval + (DateUtils.interval(new Date(),
+                  DateUtils.formatDateFromYYYYMMDD(card.getValid_to())) + 1);
+            }
+          }
+        if (date.before(new Date()) && !card.isExpired()) {
+          civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(
+              card.isCheck_valid() ? DateUtils.formatDateFromYYYYMMDD(card.getValid_to())
+                  : new Date(), cardOptionCustom.days - 1)));
+        }else {
+          civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date, interval - 1)));
+        }
+        tvCardValidateTotal.setText(getResources().getString(R.string.text_charge_card_validate,
+            String.valueOf(card.getBalance() + Float.parseFloat(cardOptionCustom.charge)),
+            String.valueOf(interval)));
+      }else{
           tvCardValidateTotal.setText(getResources().getString(R.string.text_charge_card_validate,
               String.valueOf(card.getBalance() + Float.parseFloat(cardOptionCustom.charge)),
-              String.valueOf(interval)));
-          civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date,
-              (card.isExpired() ? cardOptionCustom.getDays() - 1
-                  : cardOptionCustom.getDays() + card.getTrial_days() - 1))));
+              "不限"));
+          layoutValidate.setVisibility(View.GONE);
         }
-      }
+
     }else if (cardTpl.getType() == Configs.CATEGORY_DATE){
       civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date,
           (int)(Float.parseFloat(cardOptionCustom.getCharge()) + (card.getBalance() > 0 ? card.getBalance() : 0) - 1))));
@@ -175,8 +200,8 @@ public class NewCardChargeFragment extends CardBuyFragment {
   }
 
   @Override public void onConfirmPay() {
-    if(cardOptionCustom == null) {
-      DialogUtils.showAlert(getContext(), "请选择正确的会员卡规格");
+    if(cardOptionCustom == null || tvPayMoney.getText().toString().isEmpty()) {
+      DialogUtils.showAlert(getContext(), "请填写正确的续卡价格");
       return;
     }
       presenter.chargeCard();

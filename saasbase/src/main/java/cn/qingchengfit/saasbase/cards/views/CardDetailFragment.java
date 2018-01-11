@@ -231,7 +231,7 @@ import javax.inject.Inject;
   }
 
   @Override public void onClickSpend() {
-    if (permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+    if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
     }
@@ -240,7 +240,7 @@ import javax.inject.Inject;
   }
 
   @Override public void onAskOffDay() {
-    if (permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+    if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
       showAlert(R.string.alert_permission_forbid);
       return;
     }
@@ -259,7 +259,7 @@ import javax.inject.Inject;
     dialogSheet.addButton(buttonStr, new View.OnClickListener() {
 
       @Override public void onClick(View v) {
-        if (permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+        if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
           showAlert(R.string.alert_permission_forbid);
           return;
         }

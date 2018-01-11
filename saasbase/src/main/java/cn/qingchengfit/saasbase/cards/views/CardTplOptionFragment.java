@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.cards.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -96,7 +97,7 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
     elUseCharge.setExpanded(option.can_charge);
     elUseCreate.setExpanded(option.can_create);
     elOnlyStaff.setExpanded(option.for_staff);
-    civPriceDesc.setContent(option.getDescription().isEmpty() ? "选填" : "已填写");
+    civPriceDesc.setContent(TextUtils.isEmpty(option.getDescription()) ? "选填" : "已填写");
   }
 
   /**

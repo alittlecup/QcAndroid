@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -90,6 +91,8 @@ import rx.android.schedulers.AndroidSchedulers;
   private EditText storeEdit, secondEdit, timeEdit;
   private TextView textFilterReset, textFilterSure;
   private HashMap<String, String> idMap = new HashMap<>();
+  protected CardTpl card_tpl = new CardTpl();
+  private int cardStatus;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -136,6 +139,8 @@ import rx.android.schedulers.AndroidSchedulers;
     super.onFinishAnimation();
     filterFragment.setListener(new CardListFilterFragment.CardlistFilterListener() {
       @Override public void onFilterResult(CardTpl cardTpl, int status) {
+        card_tpl = cardTpl;
+        cardStatus = status;
         filterTpl.setChecked(false);
         filterStatus.setChecked(false);
         cardListFragment.initLoadMore(100, CardBalanceFragment.this);
@@ -218,6 +223,7 @@ import rx.android.schedulers.AndroidSchedulers;
     configsBeanList.add(configsBean3);
 
     presenter.putBalanceRemindCondition(configsBeanList);
+    delayRefreshData();
   }
 
   void reset() {
@@ -236,7 +242,17 @@ import rx.android.schedulers.AndroidSchedulers;
     configsBean3.setValue(5);
     configsBeanList.add(configsBean3);
     presenter.putBalanceRemindCondition(configsBeanList);
+    delayRefreshData();
 
+  }
+
+  private void delayRefreshData() {
+    new Handler().postDelayed(new Runnable() {
+      @Override public void run() {
+        presenter.initpage();
+        presenter.setFilter(card_tpl.type, card_tpl.getId(), cardStatus);
+      }
+    }, 500);
   }
 
   @Override public int getLayoutRes() {
@@ -268,6 +284,7 @@ import rx.android.schedulers.AndroidSchedulers;
   @Override public void onGetBalance(List<BalanceDetail> balanceDetailList) {
     if (popupWindow != null) popupWindow.dismiss();
     int storeValue=0, secondValue=0, timeValue=0;
+
     for (BalanceDetail balanceDetail : balanceDetailList) {
 
       if (balanceDetail.key.equalsIgnoreCase(presenter.QUERY_STORE_BALANCE)) {

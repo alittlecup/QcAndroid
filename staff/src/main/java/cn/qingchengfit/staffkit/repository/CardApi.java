@@ -1,6 +1,5 @@
 package cn.qingchengfit.staffkit.repository;
 
-import cn.qingchengfit.model.body.ShopsBody;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
@@ -12,6 +11,7 @@ import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.cards.network.body.UpdateCardValidBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
@@ -95,7 +95,7 @@ public interface CardApi {
    * 卡规格操作
    */
   @DELETE("/api/staffs/{staff_id}/options/{option_id}/")
-  rx.Observable<QcDataResponse> qcDelCardtplOption(@Path("id") String staffid,
+  rx.Observable<QcDataResponse> qcDelCardtplOption(@Path("staff_id") String staffid,
     @Path("option_id") String option_id, @QueryMap HashMap<String, Object> params);
 
   @PUT("/api/staffs/{id}/options/{option_id}/")

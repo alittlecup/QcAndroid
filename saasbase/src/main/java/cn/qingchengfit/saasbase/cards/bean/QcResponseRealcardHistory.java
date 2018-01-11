@@ -44,7 +44,7 @@ public class QcResponseRealcardHistory extends QcResponse {
 
         public int card_type;
         @SerializedName("order") public Order order;
-        @SerializedName("cost") public String cost;
+        @SerializedName("cost") public float cost;
         @SerializedName("remarks") public String remarks;
         @SerializedName("type") public String type;
         @SerializedName("type_int") public int type_int;

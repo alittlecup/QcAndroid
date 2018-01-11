@@ -129,6 +129,7 @@ public class CardtplAddFragment extends CardTplDetailFragment {
         .throttleFirst(500, TimeUnit.MILLISECONDS)
         .subscribe(new BusSubscribe<Void>() {
           @Override public void onNext(Void aVoid) {
+            cardLimit.is_limit = expandSettingLimit.isExpanded();
             presenter.createCardTpl();
           }
         });

@@ -36,7 +36,7 @@
 
   <string name="cardtype_limit_total">共计可上</string>
   <string name="cardtype_limit_class">节课</string>
-  <string formatted="false" name="buylimit">限购%d张</string>
+  <string formatted="false" name="buylimit">限购%s张</string>
   <string formatted="false" name="everyday">每天%d节</string>
   <string formatted="false" name="everyweek">每周%d节</string>
   <string formatted="false" name="everymonth">每月%d节</string>
@@ -81,9 +81,10 @@
   <string name="add_cardtpl_no_permission">抱歉，您没有添加会员卡种类权限</string>
   <string name="add_cardoption_no_permission">抱歉，您没有添加规格权限</string>
   <string name="delete_cardtpl_no_permission">抱歉，您没有停用会员卡权限</string>
-  <string formatted="false" name="card_limit_pre_times">可提前预约%d节</string>
-  <string formatted="false" name="card_can_work_in_time">每天%d节, 每周%d节, 每月%d节</string>
+  <string formatted="false" name="card_limit_pre_times">可提前预约%s节</string>
+  <string formatted="false" name="card_can_work_in_time">每天%s节, 每周%s节, 每月%s节</string>
   <string name="edit_card_tpl_back_tips">内容已被修改，是否保存？</string>
   <string formatted="false" name="card_detail_cost">累计充值%.2f天, 累计消费%.2f元</string>
+  <string name="card_not_select_gym">至少选择一家场馆</string>
 
 </resources>

@@ -9,6 +9,7 @@
     >
 
   <LinearLayout
+      android:id="@+id/layout_card_detail"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/bg_grey"
@@ -113,7 +114,7 @@
     <cn.qingchengfit.widgets.ExpandedLayout
         android:id="@+id/expand_card_protocol"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height_new"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:background="@color/white"
         android:gravity="center_vertical"

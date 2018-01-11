@@ -86,14 +86,8 @@ import javax.inject.Inject;
     if (item instanceof CardTplItem) {
       CardTpl cardTpl = ((CardTplItem) item).getCardTpl();
       getPresenter().chooseOneCardTpl(((CardTplItem) item).getCardTpl());
-      if (!permissionModel.check(PermissionServerUtils.CARDBALANCE_CAN_CHANGE,
-          cardTpl.getShopIds())) {
-        routeTo("/path/edit/card/nopermission",
-            new EditCardTplInBrandNoPermissionParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
-      } else {
-        routeTo("/cardtpl/detail/brand/",
-            new CardTplDetailInBrandParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
-      }
+      routeTo("/cardtpl/detail/brand/",
+          new CardTplDetailInBrandParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
     }
     return true;
   }
