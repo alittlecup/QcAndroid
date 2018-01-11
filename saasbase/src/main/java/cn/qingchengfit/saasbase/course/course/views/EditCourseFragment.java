@@ -88,7 +88,7 @@ public class EditCourseFragment extends SaasBaseFragment implements EditCoursePr
         unbinder = ButterKnife.bind(this, view);
         initToolbar(toolbar);
         delegatePresenter(mPresenter, this);
-        mPresenter.judgePermission(courseType);
+
         return view;
     }
 
@@ -98,6 +98,11 @@ public class EditCourseFragment extends SaasBaseFragment implements EditCoursePr
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.menu_save);
         toolbar.setOnMenuItemClickListener(menuItemClickListener);
+    }
+
+    @Override protected void onFinishAnimation() {
+        super.onFinishAnimation();
+        mPresenter.judgePermission(courseType);
     }
 
     @Override public String getFragmentName() {

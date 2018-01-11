@@ -11,10 +11,12 @@ import android.widget.RelativeLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.course.course.bean.CoursePlan;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PhotoUtils;
@@ -25,8 +27,10 @@ import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.DialogList;
 import com.bumptech.glide.Glide;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class CourseBaseInfoEditFragment extends BaseFragment {
@@ -55,7 +59,21 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
             mCourse = getArguments().getParcelable("course");
             isPrivate = mCourse.is_private;
         }
-        //
+        RxBus.getBus().register(CoursePlan.class)
+          .compose(bindToLifecycle())
+          .compose(doWhen(FragmentEvent.CREATE_VIEW))
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new BusSubscribe<CoursePlan>() {
+              @Override public void onNext(CoursePlan coursePlan) {
+                  if (coursePlan.getId() > 0) {
+                      defaultCoursePlan.setContent(coursePlan.getName());
+                      mCourse.setPlan(coursePlan);
+                  } else {
+                      mCourse.setPlan(null);
+                      defaultCoursePlan.setContent("不使用");
+                  }
+              }
+          });
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,17 +100,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
         } else {
             mCourse = new CourseType();
         }
-        RxBusAdd(CoursePlan.class).subscribe(new Action1<CoursePlan>() {
-            @Override public void call(CoursePlan coursePlan) {
-                if (coursePlan.getId() > 0) {
-                    defaultCoursePlan.setContent(coursePlan.getName());
-                    mCourse.setPlan(coursePlan);
-                } else {
-                    mCourse.setPlan(null);
-                    defaultCoursePlan.setContent("不使用");
-                }
-            }
-        });
+
         courseMinCount.setOnClickListener(view1 -> {
             new DialogList(getContext()).list(
                isPrivate? CmStringUtils.getNums(1, 10) : CmStringUtils.getNums(1, 300),

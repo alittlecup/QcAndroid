@@ -21,10 +21,7 @@ import cn.qingchengfit.views.fragments.BaseListFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
-import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -46,7 +43,9 @@ public class ChooseCoursePlanFragment extends BaseListFragment
     toolbarTitle = p.findViewById(R.id.toolbar_title);
     p.addView(v,1);
     initToolbar(toolbar);
+    if (srl != null) srl.setOnRefreshListener(this);
     onRefresh();
+    commonFlexAdapter.addListener(this);
     return p;
   }
 
@@ -91,14 +90,14 @@ public class ChooseCoursePlanFragment extends BaseListFragment
         @Override public void onNext(QcDataResponse<CoursePlans> qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
             if (qcResponse.data.plans != null) {
-              List<AbstractFlexibleItem> datas = new ArrayList<>();
+              datas.clear();
               datas.add(new ChooseCoursePlanItem(
                 new CoursePlan.Builder().id(0L).name("不使用任何课程计划模板").build()));
               for (CoursePlan plan : qcResponse.data.plans) {
                 datas.add(new ChooseCoursePlanItem(plan));
               }
             }
-            setDatas(datas, 1);
+            commonFlexAdapter.updateDataSet(datas);
           } else {
             onShowError(qcResponse.getMsg());
           }

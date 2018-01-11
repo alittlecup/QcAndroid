@@ -69,7 +69,7 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implement
     if (staff == null || staff.phone == null || staff.username == null)
       return false;
     else {
-      return staff.username.contains(constraint) || staff.phone.contains(constraint);
+      return staff.phone.contains(constraint) || staff.username.contains(constraint) ;
     }
   }
 

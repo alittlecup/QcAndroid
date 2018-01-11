@@ -31,36 +31,25 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.coach.event.LoadingEvent;
-import cn.qingchengfit.saasbase.coach.model.CoachResponse;
 import cn.qingchengfit.saasbase.coach.presenter.AddNewCoachPresenter;
 import cn.qingchengfit.saasbase.constant.Configs;
-import cn.qingchengfit.saasbase.network.response.QcResponseData;
-import cn.qingchengfit.saasbase.repository.PostApi;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
-import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
+import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.PhoneEditText;
 import com.bumptech.glide.Glide;
 import dagger.android.support.AndroidSupportInjection;
-import java.io.File;
 import javax.inject.Inject;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -204,14 +193,15 @@ public class AddNewCoachFragment extends BaseDialogFragment implements
     }
 
     @OnClick(R2.id.header_layout) public void onHeaderClick() {
-        ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance();
-        choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
-            @Override public void onChoosePicResult(boolean isSuccess, final String filePath) {
-                if (isSuccess) {
-                    presenter.upLoadFile(filePath);
-                } else {
-                    ToastUtils.showDefaultStyle("图片上传失败");
-                }
+        ChoosePictureFragmentNewDialog choosePictureFragmentDialog = ChoosePictureFragmentNewDialog.newInstance();
+        choosePictureFragmentDialog.setResult(new ChoosePictureFragmentNewDialog.ChoosePicResult() {
+            @Override public void onChoosefile(String filePath) {
+
+            }
+
+            @Override public void onUploadComplete(String filePaht, String url) {
+                PhotoUtils.smallCircle(headerImg,url);
+                onUpLoadSucc(url);
             }
         });
         choosePictureFragmentDialog.show(getFragmentManager(), "");
@@ -229,7 +219,6 @@ public class AddNewCoachFragment extends BaseDialogFragment implements
         if (TextUtils.isEmpty(upImg)) {
             ToastUtils.showDefaultStyle("图片上传失败");
         } else {
-            Glide.with(getContext()).load(PhotoUtils.getSmall(upImg)).into(headerImg);
             uploadImageUrl = upImg;
         }
         RxBus.getBus().post(new LoadingEvent(false));
