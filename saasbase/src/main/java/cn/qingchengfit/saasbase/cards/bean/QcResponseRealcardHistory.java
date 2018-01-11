@@ -1,6 +1,6 @@
-package cn.qingchengfit.model.responese;
+package cn.qingchengfit.saasbase.cards.bean;
 
-import cn.qingchengfit.model.common.Course;
+import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
@@ -20,7 +20,9 @@ import java.util.List;
  */
 public class QcResponseRealcardHistory extends QcResponse {
 
-    @SerializedName("data") public Data data;
+    public Stat stat;
+    public List<CardHistory> card_histories;
+    public int pages;
 
     public class Data {
         @SerializedName("total_count") public int total_count;
@@ -40,13 +42,16 @@ public class QcResponseRealcardHistory extends QcResponse {
         @SerializedName("created_by_name") public String created_by_name;
         @SerializedName("account") public String account;
 
+        public int card_type;
         @SerializedName("order") public Order order;
-        @SerializedName("cost") public String cost;
+        @SerializedName("cost") public float cost;
         @SerializedName("remarks") public String remarks;
         @SerializedName("type") public String type;
         @SerializedName("type_int") public int type_int;
         @SerializedName("photo") public String photo;
         @SerializedName("id") public String id;
+        public String start;
+        public String end;
     }
 
     public class Order {

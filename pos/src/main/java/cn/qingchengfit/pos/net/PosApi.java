@@ -8,7 +8,7 @@ import cn.qingchengfit.pos.login.model.GetCodeBody;
 import cn.qingchengfit.pos.login.model.GymResponse;
 import cn.qingchengfit.pos.login.model.Login;
 import cn.qingchengfit.pos.login.model.LoginBody;
-import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
+import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -78,7 +78,7 @@ public interface PosApi {
    */
   @POST("/api/rongshu/gyms/{id}/users/") rx.Observable<QcDataResponse> qcCreateStudent(
       @Path("id") String id, @QueryMap HashMap<String, Object> params,
-      @Body AddStdudentBody body);
+      @Body AddStudentBody body);
 
   /**
    * 新增收银员

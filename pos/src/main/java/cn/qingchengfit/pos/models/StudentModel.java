@@ -13,7 +13,7 @@ import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
 import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
-import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
+import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceListWrap;
@@ -64,7 +64,7 @@ public class StudentModel implements IStudentModel {
         .qcGetCardBundldStudents(gymWrapper.getGymId(),gymWrapper.getParams());
   }
 
-  @Override public Observable<QcDataResponse> addStudent(AddStdudentBody body) {
+  @Override public Observable<QcDataResponse> addStudent(AddStudentBody body) {
     return repository.createGetApi(PosApi.class)
         .qcCreateStudent(gymWrapper.getGymId(),gymWrapper.getParams(),body);
   }

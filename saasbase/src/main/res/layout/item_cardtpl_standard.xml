@@ -6,6 +6,7 @@
     android:layout_width="100dp"
     android:layout_height="90dp"
     android:background="@drawable/bg_rect_corner_primary"
+    android:id="@+id/layout_card_option"
     >
 
   <RelativeLayout
@@ -32,6 +33,7 @@
         android:textColor="@color/colorPrimary"
         tools:text="1200元"
         android:textStyle="bold"
+        android:maxWidth="70dp"
         />
 
     <TextView
@@ -42,6 +44,7 @@
         android:lines="1"
         android:textColor="@color/colorPrimary"
         tools:text="(售价1200元)"
+        android:maxWidth="90dp"
         />
 
     <TextView
@@ -52,6 +55,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/txt_11sp"
         tools:text="有效期:300天"
+        android:maxWidth="90dp"
         />
 
     <TextView
@@ -62,6 +66,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/txt_11sp"
         tools:text="适用于"
+        android:maxWidth="90dp"
         />
 
   </LinearLayout>

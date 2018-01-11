@@ -1,8 +1,9 @@
 package cn.qingchengfit.staffkit.repository;
 
-import cn.qingchengfit.model.body.ShopsBody;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
+import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
 import cn.qingchengfit.saasbase.cards.network.body.AddDayOffBody;
 import cn.qingchengfit.saasbase.cards.network.body.AheadOffDayBody;
@@ -11,6 +12,7 @@ import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.cards.network.body.UpdateCardValidBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
@@ -94,16 +96,16 @@ public interface CardApi {
    * 卡规格操作
    */
   @DELETE("/api/staffs/{staff_id}/options/{option_id}/")
-  rx.Observable<QcDataResponse> qcDelCardtplOption(@Path("id") String staffid,
+  rx.Observable<QcDataResponse> qcDelCardtplOption(@Path("staff_id") String staffid,
     @Path("option_id") String option_id, @QueryMap HashMap<String, Object> params);
 
-  @PUT("/api/staffs/{staff_id}/options/{option_id}/")
+  @PUT("/api/staffs/{id}/options/{option_id}/")
   rx.Observable<QcDataResponse> qcUpdateCardtplOption(@Path("id") String staffid,
     @Path("option_id") String option_id, @QueryMap HashMap<String, Object> params,
     @Body OptionBody body);
 
   @POST("/api/staffs/{staff_id}/cardtpls/{card_tpl_id}/options/")
-  rx.Observable<QcDataResponse> qcCreateCardtplOption(@Path("id") String staffid,
+  rx.Observable<QcDataResponse> qcCreateCardtplOption(@Path("staff_id") String staffid,
     @Path("card_tpl_id") String card_tpl_id, @QueryMap HashMap<String, Object> params,
     @Body OptionBody body);
 
@@ -220,5 +222,17 @@ public interface CardApi {
   //恢复卡
   @POST("/api/staffs/{id}/cards/{card_id}/recovery/") rx.Observable<QcDataResponse> qcResumeCard(@Path("id") String staffid,
       @Path("card_id") String cardid, @Query("brand_id") String brand_id, @Query("id") String id, @Query("model") String model);
+
+  //获取消费记录
+  @GET("/api/staffs/{id}/cards/{card_id}/histories/?order_by=-created_at")
+  rx.Observable<QcDataResponse<QcResponseRealcardHistory>> qcGetCardhistory(@Path("id") String staffid,
+      @Path("card_id") String card_id, @QueryMap HashMap<String, Object> params,
+      @Query("created_at__gte") String start, @Query("created_at__lte") String end,
+      @Query("page") int page);
+
+  //获取余额不足会员卡总数
+  @GET("api/staffs/{id}/balance/cards/count/")
+  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<BalanceCount>> qcGetCardCount(@Path("id") String staffId,
+      @QueryMap HashMap<String, Object> params);
 
 }

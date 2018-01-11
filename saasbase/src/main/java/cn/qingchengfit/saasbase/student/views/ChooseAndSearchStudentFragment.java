@@ -17,14 +17,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.student.presenters.ChooseAndSearchPresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.widgets.CompatEditView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -70,6 +74,7 @@ import rx.functions.Action1;
 
   private ChooseStudentListFragment chooseStudentListFragment;
   @Inject ChooseAndSearchPresenter presenter;
+  @Inject IPermissionModel permissionModel;
   @Need public ArrayList<String> studentIdList;
   @Need public String source;
   @Need public Integer chooseType;
@@ -97,14 +102,16 @@ import rx.functions.Action1;
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     RxTextView.afterTextChangeEvents(etSearch)
-      .throttleLast(1000, TimeUnit.MILLISECONDS)
-      .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
-        @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
-          if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded() && etSearch != null) {
-            chooseStudentListFragment.filter(etSearch.getText().toString());
+        .throttleLast(1000, TimeUnit.MILLISECONDS)
+        .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
+          @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
+            if (chooseStudentListFragment != null
+                && chooseStudentListFragment.isAdded()
+                && etSearch != null) {
+              chooseStudentListFragment.filter(etSearch.getText().toString());
+            }
           }
-        }
-      });
+        });
 
 
     srl.setRefreshing(true);
@@ -155,7 +162,11 @@ import rx.functions.Action1;
    * 新增会员
    */
   @OnClick(R2.id.btn_add_student) public void onBtnAddStudentClicked() {
-    routeTo("/add/", null);
+    if (permissionModel.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+      routeTo(AppUtils.getRouterUri(getContext(), "student/add/"), null);
+    }else{
+      DialogUtils.showAlert(getContext(), getResources().getString(R.string.alert_permission_forbid));
+    }
   }
 
   @Override public void onStudentList(List<QcStudentBean> stus) {

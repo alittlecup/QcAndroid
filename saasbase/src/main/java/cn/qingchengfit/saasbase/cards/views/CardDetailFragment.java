@@ -20,8 +20,9 @@ import cn.qingchengfit.saasbase.cards.item.CardActionsItem;
 import cn.qingchengfit.saasbase.cards.item.CardDetailFunItem;
 import cn.qingchengfit.saasbase.cards.item.CardDetailItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
+import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordParams;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;
 import cn.qingchengfit.subscribes.BusSubscribe;
@@ -65,7 +66,8 @@ import javax.inject.Inject;
     CardDetailFunItem.OnClickCardFunListener {
   @Need
   public String cardid;
-  @Inject SerPermisAction serPermisAction;
+
+  @Inject IPermissionModel permissionModel;
 
   private String protocolUrl;
   private String alreadyInfo;
@@ -154,12 +156,13 @@ import javax.inject.Inject;
         .clickable(false)
         .desc(card.getSupportGyms())
         .build());
-    //items.add(new ActionDescItem.Builder().action(3)
-    //    .icon(R.drawable.vd_card_bills)
-    //    .title("消费记录")
-    //    .clickable(false)
-    //    .desc("todo")
-    //    .build());
+    items.add(new ActionDescItem.Builder().action(3)
+        .icon(R.drawable.vd_card_bills)
+        .title("消费记录")
+        .clickable(false)
+        .desc(getResources().getString(R.string.card_detail_cost, card.getTotal_account(),
+            card.getTotal_cost()))
+        .build());
     items.add(new ActionDescItem.Builder().action(4)
         .icon(R.drawable.vd_card_no)
         .title("实体卡号")
@@ -200,7 +203,9 @@ import javax.inject.Inject;
           break;
 
         case 3://消费记录
-
+          routeTo(AppUtils.getRouterUri(getContext(),"/card/consumption/record/"),new SpendRecordParams()
+              .card(mCard)
+              .build());
           break;
 
         case 4://实体卡号
@@ -226,11 +231,19 @@ import javax.inject.Inject;
   }
 
   @Override public void onClickSpend() {
+    if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+      showAlert(R.string.alert_permission_forbid);
+      return;
+    }
     routeTo(AppUtils.getRouterUri(getContext(), "/card/deduction/"),
         new CardRefundParams().card(mCard).build());
   }
 
   @Override public void onAskOffDay() {
+    if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+      showAlert(R.string.alert_permission_forbid);
+      return;
+    }
     routeTo(AppUtils.getRouterUri(getContext(), "/card/offday/list"),
         new CardRefundParams().card(mCard).build());
   }
@@ -246,7 +259,7 @@ import javax.inject.Inject;
     dialogSheet.addButton(buttonStr, new View.OnClickListener() {
 
       @Override public void onClick(View v) {
-        if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+        if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
           showAlert(R.string.alert_permission_forbid);
           return;
         }

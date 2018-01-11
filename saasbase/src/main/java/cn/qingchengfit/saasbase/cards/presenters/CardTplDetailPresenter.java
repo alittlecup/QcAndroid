@@ -4,6 +4,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
@@ -14,6 +15,7 @@ import cn.qingchengfit.saasbase.cards.bean.CardLimit;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
+import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplOptionListWrap;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
@@ -29,6 +31,7 @@ import rx.schedulers.Schedulers;
 public class CardTplDetailPresenter extends BasePresenter {
   @Inject ICardModel cardModel;
   @Inject IPermissionModel permissionModel;
+  @Inject GymWrapper gymWrapper;
   CardTpl cardTpl; //卡种类详情
   private CardtplBody body = new CardtplBody();
   private int cardCate; //新增卡种类是记录卡类型
@@ -84,22 +87,22 @@ public class CardTplDetailPresenter extends BasePresenter {
 
   public void queryCardtpl() {
     RxRegiste(cardModel.qcGetCardTplsDetail(cardTpl.getId())
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new Action1<QcDataResponse<CardTplWrapper>>() {
-        @Override public void call(QcDataResponse<CardTplWrapper> qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            cardTpl = qcResponse.data.card_tpl;
-            view.onGetCardTypeInfo(qcResponse.data.card_tpl);
-          } else {
-            view.onShowError(qcResponse.getMsg());
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<CardTplWrapper>>() {
+          @Override public void call(QcDataResponse<CardTplWrapper> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              cardTpl = qcResponse.data.card_tpl;
+              view.onGetCardTypeInfo(qcResponse.data.card_tpl);
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
           }
-        }
-      }, new NetWorkThrowable()));
+        }, new NetWorkThrowable()));
   }
 
-  public void stashCardTplInfo(){
+  public void stashCardTplInfo() {
     CardLimit limit = view.getCardLimit();
     CardtplBody body = new CardtplBody.Builder().type(cardCate)
         .name(view.getCardName())
@@ -120,9 +123,9 @@ public class CardTplDetailPresenter extends BasePresenter {
         .subscribeOn(Schedulers.io())
         .subscribe(new Action1<QcDataResponse<UUIDModel>>() {
           @Override public void call(QcDataResponse<UUIDModel> uuidModelQcDataResponse) {
-            if (ResponseConstant.checkSuccess(uuidModelQcDataResponse)){
+            if (ResponseConstant.checkSuccess(uuidModelQcDataResponse)) {
               view.onStashSuccessed(uuidModelQcDataResponse.data.uuid);
-            }else {
+            } else {
               view.onShowError(uuidModelQcDataResponse.getMsg());
             }
           }
@@ -132,18 +135,35 @@ public class CardTplDetailPresenter extends BasePresenter {
   public void queryCardtplOption() {
 
     RxRegiste(cardModel.qcGetOptions(cardTpl.id)
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new NetSubscribe<QcDataResponse<CardTplOptionListWrap>>() {
-        @Override public void onNext(QcDataResponse<CardTplOptionListWrap> qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            view.onGetStandards(qcResponse.data.options);
-          } else {
-            view.onShowError(qcResponse.getMsg());
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new NetSubscribe<QcDataResponse<CardTplOptionListWrap>>() {
+          @Override public void onNext(QcDataResponse<CardTplOptionListWrap> qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              view.onGetStandards(qcResponse.data.options);
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
           }
-        }
-      }));
+        }));
+  }
+
+  public void qcFixGyms(ShopsBody body) {
+
+    RxRegiste(cardModel.qcFixGyms(cardTpl.id, body)
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse>() {
+          @Override public void call(QcDataResponse qcDataResponse) {
+            if (ResponseConstant.checkSuccess(qcDataResponse)) {
+
+            } else {
+              view.onShowError(qcDataResponse.getMsg());
+            }
+          }
+        }));
   }
 
   /**
@@ -154,8 +174,19 @@ public class CardTplDetailPresenter extends BasePresenter {
       view.onShowError(R.string.alert_edit_disable_cardtpl);
       return;
     }
-    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
-      RxRegiste(cardModel.qcUpdateCardtpl(cardTpl.getId(), cardtplBody)
+    if (gymWrapper.inBrand()) {
+      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
+          cardTpl.getShopIds())) {
+        view.showAlert("抱歉，您无该功能权限");
+        return;
+      }
+    } else {
+      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
+        view.showAlert("抱歉，您无该功能权限");
+        return;
+      }
+    }
+    RxRegiste(cardModel.qcUpdateCardtpl(cardTpl.getId(), cardtplBody)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -168,29 +199,27 @@ public class CardTplDetailPresenter extends BasePresenter {
             }
           }
         }));
-    }
   }
 
   /**
    * 新建会员卡种类
    */
   public void createCardTpl() {
-    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
-      CardLimit limit = view.getCardLimit();
-      CardtplBody body = new CardtplBody.Builder().type(cardCate)
-          .name(view.getCardName())
-          .description(view.getDescription())
-          .options(view.getCardTplOptions())
-          .is_limit(limit.is_limit)
-          .buy_limit(limit.buy_limit)
-          .pre_times(limit.pre_times)
-          .day_times(limit.day_times)
-          .week_times(limit.week_times)
-          .month_times(limit.month_times)
-          .shops(view.getSupportShopId())
-          .is_has_card_term(view.isOpenCardTerm())
-          .build();
-      cardModel.qcCreateCardtpl(body)
+    CardLimit limit = view.getCardLimit();
+    CardtplBody body = new CardtplBody.Builder().type(cardCate)
+        .name(view.getCardName())
+        .description(view.getDescription())
+        .options(view.getCardTplOptions())
+        .is_limit(limit.is_limit)
+        .buy_limit(limit.buy_limit)
+        .pre_times(limit.pre_times)
+        .day_times(limit.day_times)
+        .week_times(limit.week_times)
+        .month_times(limit.month_times)
+        .shops(view.getSupportShopId())
+        .is_has_card_term(view.isOpenCardTerm())
+        .build();
+    cardModel.qcCreateCardtpl(body)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -201,13 +230,10 @@ public class CardTplDetailPresenter extends BasePresenter {
               view.onShowError("创建成功");
               view.popBack();
             } else {
-              view.onShowError(qcResponse.getMsg());
+              //view.onShowError(qcResponse.getMsg());
             }
           }
         });
-    } else {
-      view.showAlert(R.string.sorry_for_no_permission);
-    }
   }
 
   /**
@@ -215,18 +241,18 @@ public class CardTplDetailPresenter extends BasePresenter {
    */
   public void disable() {
     cardModel.qcDelCardtpl(cardTpl.id)
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new Action1<QcDataResponse>() {
-        @Override public void call(QcDataResponse qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            view.onDelSucceess();
-          } else {
-            view.onShowError(qcResponse.getMsg());
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse>() {
+          @Override public void call(QcDataResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              view.onDelSucceess();
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
           }
-        }
-      }, new NetWorkThrowable());
+        }, new NetWorkThrowable());
   }
 
   /**
@@ -234,18 +260,18 @@ public class CardTplDetailPresenter extends BasePresenter {
    */
   public void enable() {
     cardModel.qcResumeCardtpl(cardTpl.id)
-      .onBackpressureLatest()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new Action1<QcDataResponse>() {
-        @Override public void call(QcDataResponse qcResponse) {
-          if (ResponseConstant.checkSuccess(qcResponse)) {
-            view.onResumeOk();
-          } else {
-            view.onShowError(qcResponse.getMsg());
+        .onBackpressureLatest()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse>() {
+          @Override public void call(QcDataResponse qcResponse) {
+            if (ResponseConstant.checkSuccess(qcResponse)) {
+              view.onResumeOk();
+            } else {
+              view.onShowError(qcResponse.getMsg());
+            }
           }
-        }
-      }, new NetWorkThrowable());
+        }, new NetWorkThrowable());
   }
 
   /**
@@ -296,6 +322,5 @@ public class CardTplDetailPresenter extends BasePresenter {
     String getSupportShopId();
 
     boolean isOpenCardTerm();
-
   }
 }

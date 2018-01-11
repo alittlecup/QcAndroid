@@ -6,7 +6,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
+import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
 import cn.qingchengfit.saasbase.cards.network.body.AddDayOffBody;
 import cn.qingchengfit.saasbase.cards.network.body.AheadOffDayBody;
@@ -15,6 +17,7 @@ import cn.qingchengfit.saasbase.cards.network.body.CardBuyBody;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
 import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
+import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.cards.network.body.UpdateCardValidBody;
 import cn.qingchengfit.saasbase.cards.network.response.BalanceConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
@@ -102,11 +105,6 @@ public class CardModel implements ICardModel {
   }
 
   @Override
-  public Observable<QcDataResponse> qcFixGyms(@Path("cardtpl_id") String card_tpl, String shops) {
-    return null;
-  }
-
-  @Override
   public Observable<QcDataResponse> qcDelCardStandard(@Path("option_id") String option_id) {
     return posApi.qcDelCardtplOption(loginStatus.staff_id(), option_id, gymWrapper.getParams());
   }
@@ -163,6 +161,7 @@ public class CardModel implements ICardModel {
 
   @Override
   public Observable<QcDataResponse> editCardInfo(String cardid, HashMap<String, Object> p) {
+    p.putAll(gymWrapper.getParams());
     return posApi.editCardInfo(loginStatus.staff_id(), cardid, p);
   }
 
@@ -242,5 +241,21 @@ public class CardModel implements ICardModel {
   @Override public Observable<QcDataResponse> qcResumeCard(String cardId) {
     return posApi.qcResumeCard(loginStatus.staff_id(), cardId, gymWrapper.brand_id(),
         gymWrapper.id(), gymWrapper.model());
+  }
+
+  @Override
+  public Observable<QcDataResponse<QcResponseRealcardHistory>> qcConsumeRecord(String cardId, int page, String start, String end) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.put("brand_id", gymWrapper.brand_id());
+    return posApi.qcGetCardhistory(loginStatus.staff_id(), cardId, params, start, end, page);
+  }
+
+  @Override public Observable<QcDataResponse> qcFixGyms(String cardId, ShopsBody body) {
+    return posApi.qcFixGyms(loginStatus.staff_id(), cardId, body, gymWrapper.getParams());
+  }
+
+  @Override
+  public Observable<QcDataResponse<BalanceCount>> qcGetBalanceCount() {
+    return posApi.qcGetCardCount(loginStatus.staff_id(), gymWrapper.getParams());
   }
 }

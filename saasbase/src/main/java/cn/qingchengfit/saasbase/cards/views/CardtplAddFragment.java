@@ -1,12 +1,7 @@
 package cn.qingchengfit.saasbase.cards.views;
 
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,13 +9,11 @@ import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.saasbase.cards.event.EventCardTplOption;
-import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.network.body.OptionBody;
 import cn.qingchengfit.saasbase.utils.CardBusinessUtils;
 import cn.qingchengfit.subscribes.BusSubscribe;
-import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DrawableUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -77,36 +70,11 @@ public class CardtplAddFragment extends CardTplDetailFragment {
         }
       });
 
-    initBus();
-
   }
 
-  private void initBus(){
-    RxBus.getBus()
-        .register(OnBackEvent.class)
-        .compose(this.<OnBackEvent>bindToLifecycle())
-        .compose(this.<OnBackEvent>doWhen(FragmentEvent.RESUME))
-        .subscribe(new BusSubscribe<OnBackEvent>() {
-          @Override public void onNext(OnBackEvent cardList) {
-            Uri toUri;
-            if(!gymWrapper.inBrand()) {
-              toUri = AppUtils.getRouterUri(getContext(), "card/cardtpl/list/");
-            }else{
-              toUri = AppUtils.getRouterUri(getContext(), "card/brand/cardtpl/list/");
-            }
-            //getActivity().getSupportFragmentManager().popBackStack(null, 1);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-              if (!getActivity().isDestroyed()) {
-                getActivity().finish();
-              }
-            }
-            routeTo(toUri, null);
-          }
-        });
-  }
+
 
   @Override public void initCardProtocol() {
-
     inputCardProtocol.setVisibility(View.GONE);
     presenter.stashCardTplInfo();
   }
@@ -122,22 +90,9 @@ public class CardtplAddFragment extends CardTplDetailFragment {
     civInputCardDesc.setVisibility(View.VISIBLE);
     expandSettingLimit.setVisibility(View.VISIBLE);
     expandCardProtocol.setVisibility(View.VISIBLE);
-    civInputCardname.addTextWatcher(new TextWatcher() {
-      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-      }
-
-      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-        tvCardtplName.setText(s.toString());
-      }
-
-      @Override public void afterTextChanged(Editable s) {
-
-      }
-    });
   }
 
-  @Override public void setToolbar(Toolbar toolbar) {
+  @Override public void setToolbar() {
     initToolbar(toolbar);
     toolbarTitle.setText("新增会员卡种类");
     toolbar.getMenu().clear();
@@ -146,6 +101,7 @@ public class CardtplAddFragment extends CardTplDetailFragment {
         .throttleFirst(500, TimeUnit.MILLISECONDS)
         .subscribe(new BusSubscribe<Void>() {
           @Override public void onNext(Void aVoid) {
+            cardLimit.is_limit = expandSettingLimit.isExpanded();
             presenter.createCardTpl();
           }
         });

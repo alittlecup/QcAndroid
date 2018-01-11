@@ -1,10 +1,5 @@
 package cn.qingchengfit.testmodule;
 
-import java.util.HashMap;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
@@ -16,7 +11,7 @@ import cn.qingchengfit.saasbase.student.bean.SourceBeans;
 import cn.qingchengfit.saasbase.student.bean.StudentWIthCount;
 import cn.qingchengfit.saasbase.student.network.api.StudentApi;
 import cn.qingchengfit.saasbase.student.network.body.AbsentceListWrap;
-import cn.qingchengfit.saasbase.student.network.body.AddStdudentBody;
+import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.saasbase.student.network.body.AllotDataResponseWrap;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceCharDataBean;
 import cn.qingchengfit.saasbase.student.network.body.AttendanceListWrap;
@@ -25,6 +20,8 @@ import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.network.body.StudentWithCoashListWrap;
+import java.util.HashMap;
+import java.util.List;
 import rx.Observable;
 
 /**
@@ -45,8 +42,7 @@ public class StudentModel implements IStudentModel {
         return null;
     }
 
-    @Override
-    public Observable<QcDataResponse> addStudent(AddStdudentBody body) {
+    @Override public Observable<QcDataResponse> addStudent(AddStudentBody body) {
         return null;
     }
 

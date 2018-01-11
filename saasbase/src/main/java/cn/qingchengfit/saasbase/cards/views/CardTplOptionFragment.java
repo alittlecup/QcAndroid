@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.cards.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +59,7 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
     super.onFinishAnimation();
     if (cardTplOption != null && !CmStringUtils.isEmpty(cardTplOption.id)) {
       presenter.setOptionId(cardTplOption.id);
+      presenter.setDesc(cardTplOption.getDescription());
       if (cardTplOption.card_tpl != null)
         presenter.setTplId(cardTplOption.card_tpl.getId());
     }
@@ -89,12 +91,13 @@ public class CardTplOptionFragment extends CardtplOptionAddFragment {
     }
 
     civChargeMoney.setContent(option.charge);
-    civRealMoney.setContent(CmStringUtils.getMoneyStr(option.price) + "元");
+    civRealMoney.setContent(CmStringUtils.getMoneyStr(option.price));
     elValidDay.setExpanded(option.limit_days);
     civValidDay.setContent(option.days+"");
     elUseCharge.setExpanded(option.can_charge);
     elUseCreate.setExpanded(option.can_create);
     elOnlyStaff.setExpanded(option.for_staff);
+    civPriceDesc.setContent(TextUtils.isEmpty(option.getDescription()) ? "选填" : "已填写");
   }
 
   /**

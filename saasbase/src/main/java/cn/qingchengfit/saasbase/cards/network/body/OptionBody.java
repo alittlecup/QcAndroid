@@ -47,6 +47,9 @@ public class OptionBody implements IBodyCheckable{
     if (limit_days && days <= 0){
       return R.string.e_option_limit_day_less_one;
     }
+    if (!can_create && !can_charge){
+      return R.string.e_no_select_use;
+    }
     //if (CmStringUtils.isEmpty(card_tpl_id)){
     //  return R.string.e_empty_cardtpl;
     //}

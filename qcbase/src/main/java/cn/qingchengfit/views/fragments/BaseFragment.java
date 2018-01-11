@@ -109,8 +109,6 @@ public abstract class BaseFragment extends RxFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    //TODO 删除  -- by fb
-    LogUtil.e("----TAG----", getClass().getSimpleName());
   }
 
   protected void doEventOnCreatView(Class classz ,Action1 action1){

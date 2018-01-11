@@ -65,6 +65,8 @@ public class AddCardtplStandardPresenter extends BasePresenter {
     this.ob.price = price;
   }
 
+
+
   public void setCanCharge(boolean charge) {
     this.ob.can_charge = charge;
   }
@@ -105,13 +107,16 @@ public class AddCardtplStandardPresenter extends BasePresenter {
 
     if (CmStringUtils.isEmpty(tplId)) {
       if (!CmStringUtils.checkMoney(ob.charge) || !CmStringUtils.checkMoney(ob.price)) {
-        view.showAlert("请填写正确的充值和实收");
+        view.showAlert("请填写正确的面额和价格");
+        return;
+      }
+      if (!ob.can_charge && !ob.can_create){
+        view.showAlert("请至少选择一种选择用途");
         return;
       }
       RxBus.getBus().post(new EventCardTplOption(ob, 0));
       view.onSaveOk();
     } else {
-      ob.card_tpl_id = tplId;
       if (ob.checkStaff() != 0) {
         view.showAlert(ob.checkPos());
         return;
@@ -158,6 +163,10 @@ public class AddCardtplStandardPresenter extends BasePresenter {
     if (CmStringUtils.isEmpty(tplId)) {
       if (!CmStringUtils.checkMoney(ob.charge) || !CmStringUtils.checkMoney(ob.price)) {
         view.showAlert("请填写正确的充值和实收");
+        return;
+      }
+      if (!ob.can_charge && !ob.can_create){
+        view.showAlert("请至少选择一种选择用途");
         return;
       }
       ob.id = optionId;

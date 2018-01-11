@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.utils;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.cards.bean.Card;
@@ -102,7 +103,7 @@ public class CardBusinessUtils {
     o.days       = body.days;
     o.charge     = body.charge;
     o.for_staff  = body.for_staff;
-    o.price      = Float.parseFloat(body.price);
+    o.price      = TextUtils.isEmpty(body.price) ? 0f : Float.parseFloat(body.price);
     o.id         = body.id;
     return o;
   }

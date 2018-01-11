@@ -6,6 +6,7 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.network.response.CardListWrap;
 import cn.qingchengfit.saasbase.repository.ICardModel;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class CardListPresenter extends BasePresenter {
@@ -82,6 +84,22 @@ public class CardListPresenter extends BasePresenter {
     else view.onCardList(null,curPage);
   }
 
+  public void queryBalanceCount() {
+
+    RxRegiste(cardModel.qcGetBalanceCount()
+        .onBackpressureBuffer()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<QcDataResponse<BalanceCount>>() {
+          @Override public void call(
+              cn.qingchengfit.network.response.QcDataResponse<BalanceCount> balanceCountQcResponseData) {
+            if (view != null) {
+              view.onGetBalanceCount(balanceCountQcResponseData.data.count);
+            }
+          }
+        }));
+  }
+
   @Override public void attachView(PView v) {
     view = (MVPView) v;
   }
@@ -104,5 +122,6 @@ public class CardListPresenter extends BasePresenter {
   public interface MVPView extends CView {
     void onCardList(List<Card> cards,int page);
     void onCardCount(int count);
+    void onGetBalanceCount(int count);
   }
 }

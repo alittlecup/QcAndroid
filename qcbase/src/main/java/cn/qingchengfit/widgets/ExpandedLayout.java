@@ -194,6 +194,13 @@ public class ExpandedLayout extends LinearLayout {
     mSwitcher.setChecked(expanded);
   }
 
+  @Override public void setEnabled(boolean enabled) {
+    mTvLable.setEnabled(enabled);
+    mTvLable.setClickable(enabled);
+    mSwitcher.setEnabled(enabled);
+    mSwitcher.setClickable(enabled);
+  }
+
   public void hideHeader(boolean hide) {
     if (view != null) {
       view.setVisibility(hide ? GONE : VISIBLE);

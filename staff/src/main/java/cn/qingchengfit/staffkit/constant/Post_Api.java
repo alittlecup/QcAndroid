@@ -31,7 +31,6 @@ import cn.qingchengfit.model.body.PushBody;
 import cn.qingchengfit.model.body.RenewBody;
 import cn.qingchengfit.model.body.ReturnWardrobeBody;
 import cn.qingchengfit.model.body.ScanBody;
-import cn.qingchengfit.model.body.ShopsBody;
 import cn.qingchengfit.model.body.ShortMsgBody;
 import cn.qingchengfit.model.body.SignInBody;
 import cn.qingchengfit.model.body.SignInCostBody;
@@ -53,7 +52,9 @@ import cn.qingchengfit.model.responese.ResponseService;
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
+import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.staffkit.train.model.CreateGroupBody;
 import cn.qingchengfit.staffkit.train.model.OperationMemberBody;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
@@ -296,6 +297,13 @@ public interface Post_Api {
     @POST("/api/staffs/{id}/users/") rx.Observable<QcDataResponse> qcCreateStudent(
         @Path("id") String id, @QueryMap HashMap<String, Object> params,
         @Body User_Student student);
+
+    /**
+     * 学员操作
+     */
+    @POST("/api/staffs/{id}/users/") rx.Observable<QcDataResponse> qcAddStudent(
+        @Path("id") String id, @QueryMap HashMap<String, Object> params,
+        @Body AddStudentBody student);
 
     @PUT("/api/v2/staffs/{staff_id}/users/{id}/") rx.Observable<QcDataResponse> qcUpdateStudent(@Path("staff_id") String staff_id,
         @Path("id") String id, @Query("id") String gymid, @Query("model") String model, @Query("brand_id") String brandid

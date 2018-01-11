@@ -26,7 +26,7 @@ import java.util.List;
  * Created by Paper on 2017/10/16.
  */
 
-public class AddStdudentBody {
+public class AddStudentBody {
 
   public String username;
   public String date_of_birth;
@@ -53,10 +53,10 @@ public class AddStdudentBody {
     return 0;
   }
 
-  public AddStdudentBody() {
+  public AddStudentBody() {
   }
 
-  private AddStdudentBody(Builder builder) {
+  private AddStudentBody(Builder builder) {
     username = builder.username;
     date_of_birth = builder.date_of_birth;
     phone = builder.phone;
@@ -176,8 +176,8 @@ public class AddStdudentBody {
       return this;
     }
 
-    public AddStdudentBody build() {
-      return new AddStdudentBody(this);
+    public AddStudentBody build() {
+      return new AddStudentBody(this);
     }
   }
 }

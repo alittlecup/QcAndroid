@@ -13,7 +13,7 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_weight="1"
-      style="@style/QcTextStyleSmallWarm"
+      style="@style/QcTextStyleXsGrey"
       android:singleLine="false"
       tools:text="sadaddsadasdadadasdasdasdasdasddsadasdasdsadasdsadsadasdasdasdasdasdadad"
       />
