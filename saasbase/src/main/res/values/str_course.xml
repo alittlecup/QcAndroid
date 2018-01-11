@@ -112,4 +112,8 @@
   <string name="wechat_pay">微信支付</string>
   <string name="pay_online">在线支付</string>
   <string name="course_type_private">私教课</string>
+
+  <string name="alert_edit_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有编辑课程种类权限的用户才能进行编辑.</string>
+  <string name="alert_del_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有删除课程种类权限的用户才能进行删除.</string>
+
 </resources>

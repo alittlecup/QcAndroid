@@ -162,6 +162,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
     @OnClick(R2.id.default_course_plan) public void onCoursePlan() {
         if (mCourse.getPlan() != null && mCourse.getPlan().getId() != null)
             routeTo("/plan/list/",new ChooseCoursePlanParams().mChosenId(mCourse.getPlan().getId()+"").build());
+        else routeTo("/plan/list/",new ChooseCoursePlanParams().build());
     }
 
     /**

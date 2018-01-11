@@ -112,7 +112,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
     if (savedInstanceState != null) {
       mResult = (ChoosePicResult) savedInstanceState.getSerializable("callback");
     }
-    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA)
+    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE)
         .subscribe(new Action1<Boolean>() {
           @Override public void call(Boolean aBoolean) {
             if (aBoolean) {

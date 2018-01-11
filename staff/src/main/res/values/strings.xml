@@ -345,9 +345,7 @@
   <string name="alert_at_least_one_gym">至少选择一家场馆</string>
   <string name="simple_desc">简介</string>
   <string name="limit">限制</string>
-  <string name="alert_edit_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有编辑课程种类权限的用户才能进行编辑.</string>
-  <string name="alert_del_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有删除课程种类权限的用户才能进行删除.</string>
-  <string name="notification">通知</string>
+   <string name="notification">通知</string>
 
   <!-- 签到 签出-->
   <string name="sign_type_in">签到</string>

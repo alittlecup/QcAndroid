@@ -1,16 +1,21 @@
 package cn.qingchengfit.saasbase.course.course.presenters;
 
+import android.content.Context;
 import android.support.annotation.StringRes;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Trainer;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.bean.TeacherImpression;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import java.util.List;
+import java.util.Locale;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -20,6 +25,7 @@ public class CourseDetailPresenter extends BasePresenter<CourseDetailPresenter.C
 
   @Inject IPermissionModel serPermisAction;
   @Inject ICourseModel courseModel;
+  @Inject GymWrapper gymWrapper;
 
   @Inject public CourseDetailPresenter() {
   }
@@ -56,31 +62,30 @@ public class CourseDetailPresenter extends BasePresenter<CourseDetailPresenter.C
    * 判定权限
    */
   public boolean hasAllEditPermission(CourseType mCourseDetail) {
-    //todo 品牌和场馆下的不同权限
-    //if (gymWrapper.inBrand()) {
-    //  if (mCourseDetail.is_private() && !serPermisAction.checkMuti(
-    //    PermissionServerUtils.PRISETTING_CAN_CHANGE, mCourseDetail.getShopIdList())
-    //    || !mCourseDetail.is_private() && !serPermisAction.checkMuti(
-    //    PermissionServerUtils.TEAMSETTING_CAN_CHANGE, mCourseDetail.getShopIdList())) {
-    //    mvpView.showDelFailed(R.string.alert_edit_course_all_permission);
-    //    return false;
-    //  }
-    //} else {
-    //  if (mCourseDetail.getShops().size() == 1) {
-    //    if (mCourseDetail.is_private() && !serPermisAction.check(
-    //      PermissionServerUtils.PRISETTING_CAN_CHANGE)
-    //      || !mCourseDetail.is_private() && !serPermisAction.check(
-    //      PermissionServerUtils.TEAMSETTING_CAN_CHANGE)) {
-    //      mvpView.showDelFailed(R.string.alert_permission_forbid);
-    //      return false;
-    //    }
-    //  } else if (gymWrapper.singleMode()) {
-    //    mvpView.showDelFailed(R.string.alert_edit_course_all_permission);
-    //  } else {
-    //    mvpView.showDelFailed("此课程种类适用于多个场馆，请在【连锁运营】里进行编辑");
-    //    return false;
-    //  }
-    //}
+    if (gymWrapper.inBrand()) {
+      if (mCourseDetail.is_private() && !serPermisAction.check(
+        PermissionServerUtils.PRISETTING_CAN_CHANGE, mCourseDetail.getShopIdList())
+        || !mCourseDetail.is_private() && !serPermisAction.check(
+        PermissionServerUtils.TEAMSETTING_CAN_CHANGE, mCourseDetail.getShopIdList())) {
+        mvpView.showDelFailed(R.string.alert_edit_course_all_permission);
+        return false;
+      }
+    } else {
+      if (mCourseDetail.getShops().size() == 1) {
+        if (mCourseDetail.is_private() && !serPermisAction.check(
+          PermissionServerUtils.PRISETTING_CAN_CHANGE)
+          || !mCourseDetail.is_private() && !serPermisAction.check(
+          PermissionServerUtils.TEAMSETTING_CAN_CHANGE)) {
+          mvpView.showDelFailed(R.string.alert_permission_forbid);
+          return false;
+        }
+      } else if (gymWrapper.singleMode()) {
+        mvpView.showDelFailed(R.string.alert_edit_course_all_permission);
+      } else {
+        mvpView.showDelFailed("此课程种类适用于多个场馆，请在【连锁运营】里进行编辑");
+        return false;
+      }
+    }
 
     return true;
   }
@@ -102,38 +107,37 @@ public class CourseDetailPresenter extends BasePresenter<CourseDetailPresenter.C
       }));
   }
 
-  public void judgeDel(CourseType courseDetail, int shopcount) {
-    // TODO: 2017/11/30 同样是品牌的问题
-    //if (gymWrapper.inBrand()) {
-    //  if (courseDetail.is_private() && serPermisAction.checkMuti(
-    //    PermissionServerUtils.PRISETTING_CAN_DELETE, courseDetail.getShopIdList())
-    //    || !courseDetail.is_private() && serPermisAction.checkMuti(
-    //    PermissionServerUtils.TEAMSETTING_CAN_DELETE, courseDetail.getShopIdList())) {
-    //    mvpView.showDelDialog(
-    //      String.format(Locale.CHINA, App.context.getString(R.string.alert_del_course), shopcount));
-    //  } else {
-    //    mvpView.showDelFailed(
-    //      String.format(Locale.CHINA, App.context.getString(R.string.alert_del_course_forbid),
-    //        shopcount));
-    //  }
-    //} else {
-    //  if (shopcount == 1) {
-    //    if (courseDetail.is_private() && serPermisAction.check(gymWrapper.shop_id(),
-    //      PermissionServerUtils.PRISETTING_CAN_DELETE)
-    //      || !courseDetail.is_private() && serPermisAction.check(gymWrapper.shop_id(),
-    //      PermissionServerUtils.TEAMSETTING_CAN_DELETE)) {
-    //      mvpView.showDelDialog("删除后，已有的排期和课程预约都不会受到影响");
-    //    } else {
-    //      mvpView.showDelFailed("抱歉!您没有该功能权限");
-    //    }
-    //  } else if (gymWrapper.singleMode()) {
-    //    mvpView.showDelFailed(
-    //      String.format(Locale.CHINA, App.context.getString(R.string.alert_del_course_forbid),
-    //        shopcount));
-    //  } else {
-    //    mvpView.showDelFailed("该课程适用于多家场馆,请到【连锁运营】里进行删除");
-    //  }
-    //}
+  public void judgeDel(CourseType courseDetail, int shopcount,Context context) {
+    if (gymWrapper.inBrand()) {
+      if (courseDetail.is_private() && serPermisAction.check(
+        PermissionServerUtils.PRISETTING_CAN_DELETE, courseDetail.getShopIdList())
+        || !courseDetail.is_private() && serPermisAction.check(
+        PermissionServerUtils.TEAMSETTING_CAN_DELETE, courseDetail.getShopIdList())) {
+        mvpView.showDelDialog(
+          String.format(Locale.CHINA, context.getString(R.string.alert_del_course), shopcount));
+      } else {
+        mvpView.showDelFailed(
+          String.format(Locale.CHINA, context.getString(R.string.alert_del_course_forbid),
+            shopcount));
+      }
+    } else {
+      if (shopcount == 1) {
+        if (courseDetail.is_private() && serPermisAction.check(
+          PermissionServerUtils.PRISETTING_CAN_DELETE)
+          || !courseDetail.is_private() && serPermisAction.check(
+          PermissionServerUtils.TEAMSETTING_CAN_DELETE)) {
+          mvpView.showDelDialog("删除后，已有的排期和课程预约都不会受到影响");
+        } else {
+          mvpView.showDelFailed("抱歉!您没有该功能权限");
+        }
+      } else if (gymWrapper.singleMode()) {
+        mvpView.showDelFailed(
+          String.format(Locale.CHINA, context.getString(R.string.alert_del_course_forbid),
+            shopcount));
+      } else {
+        mvpView.showDelFailed("该课程适用于多家场馆,请到【连锁运营】里进行删除");
+      }
+    }
   }
 
   public interface CourseDetailView extends CView {

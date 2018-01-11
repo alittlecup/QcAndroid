@@ -1,11 +1,14 @@
 package cn.qingchengfit.saasbase.coach.views;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import cn.qingchengfit.animator.FadeInUpItemAnimator;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
@@ -43,6 +46,7 @@ public class CoachListFragment extends BaseStaffListFragment {
 
   @Inject IPermissionModel serPermisAction;
   @Inject IStaffModel staffModel;
+  @Inject LoginStatus loginStatus;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -54,16 +58,24 @@ public class CoachListFragment extends BaseStaffListFragment {
     super.initToolbar(toolbar);
     toolbarTitle.setText("教练");
     toolbar.getMenu().clear();
-    toolbar.inflateMenu(R.menu.menu_search_flow_searchview);
+    toolbar.inflateMenu(R.menu.menu_search);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.action_flow) {
           //TODO 移动BottomSheetListDialogFragment
           //BottomSheetListDialogFragment.start(CoachListFragment.this, RESULT_FLOW, new String[] { "教练权限设置" });
+        }else if (item.getItemId() == R.id.action_search){
+          showSearch(toolbarRoot);
         }
         return true;
       }
     });
+    initSearch(toolbarRoot,"搜索教练");
+  }
+
+  @Override public void onTextSearch(String text) {
+    commonFlexAdapter.setSearchText(text != null?text:"");
+    commonFlexAdapter.filterItems();
   }
 
   @Override protected void addDivider() {
@@ -116,38 +128,17 @@ public class CoachListFragment extends BaseStaffListFragment {
         showAlert(R.string.alert_permission_forbid);
         return;
     }
-    //AddNewCoachFragment.start(CoachListFragment.this, RESULT_ADD, staffId);
+    AddNewCoachFragment.start(CoachListFragment.this, 11, loginStatus.staff_id());
   }
 
-  //@Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-  //  super.onActivityResult(requestCode, resultCode, data);
-  //  if (resultCode == Activity.RESULT_OK) {
-  //    if (requestCode == RESULT_ADD) {
-  //      presenter.queryData(staffId, null);
-  //    } else if (requestCode == RESULT_FLOW) {
-  //      int pos = Integer.parseInt(IntentUtils.getIntentString(data));
-  //      if (pos == 0) {
-  //        if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
-  //          PermissionServerUtils.POSITION_SETTING)) {
-  //          showAlert(R.string.sorry_for_no_permission);
-  //          return;
-  //        }
-  //
-  //        Intent toScan = new Intent(getActivity(), QRActivity.class);
-  //        toScan.putExtra(QRActivity.LINK_URL, Configs.Server
-  //          + "app2web/?id="
-  //          + gymWrapper.id()
-  //          + "&model="
-  //          + gymWrapper.model()
-  //          + "&module="
-  //          + CoachConstant.PERMISSION_TRAINER);
-  //        startActivity(toScan);
-  //      } else {
-  //
-  //      }
-  //    }
-  //  }
-  //}
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == 11) {
+        initData();
+      }
+    }
+  }
 
   @Override public String getFragmentName() {
     return CoachListFragment.class.getName();

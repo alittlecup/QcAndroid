@@ -190,9 +190,9 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
         mResult.onChoosePicResult(true, filepath);
       }
     } else {
-      if (mResult != null) {
-        mResult.onChoosePicResult(false, filepath);
-      }
+      //if (mResult != null) {
+      //  mResult.onChoosePicResult(false, filepath);
+      //}
       dismissAllowingStateLoss();
       //            RxBus.getBus().post(new EventChooseImage(""));
     }
