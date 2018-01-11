@@ -1,4 +1,4 @@
-package cn.qingchengfit.model.responese;
+package cn.qingchengfit.saasbase.cards.bean;
 
 import com.google.gson.annotations.SerializedName;
 

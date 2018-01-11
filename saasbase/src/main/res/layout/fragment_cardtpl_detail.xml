@@ -9,6 +9,7 @@
     >
 
   <LinearLayout
+      android:id="@+id/layout_card_detail"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/bg_grey"
@@ -29,6 +30,7 @@
         app:civ_lable="会员卡名称"
         app:civ_nonnull="true"
         tools:visibility="visible"
+        app:civ_clickable="false"
         style="@style/QcCivInputStyle"
         />
 
@@ -53,8 +55,8 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:visibility="gone"
-        app:el_label="设置限制条件"
         app:el_expanded="false"
+        app:el_label="设置限制条件"
         tools:visibility="visible"
         >
       <LinearLayout
@@ -62,35 +64,35 @@
           android:layout_height="wrap_content"
           android:orientation="vertical"
           >
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/pre_order_count"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          app:civ_clickable="true"
-          app:civ_content="0"
-          app:civ_lable="可提前预约课程数 (节)"
-          app:civ_showright="true"
-          />
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/pre_order_count"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
+            app:civ_content="0"
+            app:civ_lable="可提前预约课程数 (节)"
+            app:civ_showright="true"
+            />
 
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/during_count"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          app:civ_clickable="true"
-          app:civ_content="0"
-          app:civ_lable="单位时间可上课程数 (节)"
-          app:civ_showright="true"
-          />
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/during_count"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
+            app:civ_content="0"
+            app:civ_lable="单位时间可上课程数 (节)"
+            app:civ_showright="true"
+            />
 
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/limit_bug_count"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          app:civ_clickable="true"
-          app:civ_content="0"
-          app:civ_lable="@string/student_limit_buy_count"
-          app:civ_showright="true"
-          />
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/limit_bug_count"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
+            app:civ_content="0"
+            app:civ_lable="@string/student_limit_buy_count"
+            app:civ_showright="true"
+            />
       </LinearLayout>
     </cn.qingchengfit.widgets.ExpandedLayout>
 
@@ -98,21 +100,21 @@
         android:id="@+id/support_gyms"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
+        android:layout_marginTop="12dp"
         android:visibility="gone"
         app:civ_clickable="true"
         app:civ_hint="@string/common_please_choose"
-        android:layout_marginTop="12dp"
-        app:civ_text_color="@color/text_dark"
         app:civ_lable="适用健身房"
         app:civ_nonnull="true"
         app:civ_showright="true"
+        app:civ_text_color="@color/text_dark"
         tools:visibility="visible"
         />
 
     <cn.qingchengfit.widgets.ExpandedLayout
         android:id="@+id/expand_card_protocol"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height_new"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:background="@color/white"
         android:gravity="center_vertical"
@@ -128,9 +130,9 @@
             android:id="@+id/input_card_protocol"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height_new"
-            app:civ_lable="@string/card_protocol_content"
-            app:civ_content_color="@color/qc_text_black"
             app:civ_clickable="true"
+            app:civ_content_color="@color/qc_text_black"
+            app:civ_lable="@string/card_protocol_content"
             app:civ_showright="true"
             />
 
@@ -174,7 +176,6 @@
         android:id="@+id/layout_card_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="vertical"
         >
@@ -186,21 +187,30 @@
           android:paddingBottom="12dp"
           android:paddingRight="12dp"
           android:paddingTop="12dp"
+          android:background="@color/white"
           />
 
-        <TextView
-            android:id="@+id/btn_del"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qc_item_height"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@color/white"
-            android:gravity="center"
-            android:text="停用该会员卡种类"
-            android:textColor="@color/red"
-            android:visibility="gone"
-            tools:visibility="visible"
-            />
+      <include layout="@layout/divider_grey"
+          android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+      <TextView
+          android:id="@+id/btn_del"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:gravity="center"
+          android:text="停用该会员卡种类"
+          android:textColor="@color/red"
+          android:visibility="gone"
+          tools:visibility="visible"
+          />
+
+      <include layout="@layout/divider_grey"
+          android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
     </LinearLayout>
 

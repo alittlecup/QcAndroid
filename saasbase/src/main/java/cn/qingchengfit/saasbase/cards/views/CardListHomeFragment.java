@@ -133,7 +133,7 @@ import javax.inject.Inject;
           });
         }
       });
-    initSearch(tl,"输入会员卡名称进行搜索");
+    initSearch(tl,"输入会员姓名或手机号查找会员卡");
   }
 
   @Override public void onTextSearch(String text) {
@@ -244,12 +244,17 @@ import javax.inject.Inject;
     cardListFragment.initLoadMore(100,this);
     presenter.initpage();
     presenter.queryAllCards();
+    presenter.queryBalanceCount();
   }
 
 
   @Override public void onCardCount(int count) {
     tvCardCount.setText(getString(R.string.card_total_count_d,count));
     cardListFragment.initLoadMore(count,this);
+  }
+
+  @Override public void onGetBalanceCount(int count) {
+    tvCardBalance.setText("续卡提醒(" + count + ")");
   }
 
   @Override public void noMoreLoad(int newItemsSize) {

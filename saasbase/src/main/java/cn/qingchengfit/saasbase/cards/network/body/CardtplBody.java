@@ -48,6 +48,7 @@ public class CardtplBody {
    */
   public int checkInPos() {
     if (CmStringUtils.isEmpty(name)) return R.string.e_card_name_empty;
+    if (CmStringUtils.isEmpty(shops)) return R.string.e_no_select_gym;
     if (!CmStringUtils.isEmpty(id)) {
       id = null;
     }

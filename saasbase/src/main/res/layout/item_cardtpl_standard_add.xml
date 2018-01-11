@@ -7,5 +7,5 @@
     android:background="@drawable/bg_card_option_grey"
     android:orientation="vertical"
     android:scaleType="center"
-    app:srcCompat="@drawable/vd_add_primary_20dp"
+    app:srcCompat="@drawable/vd_add_grey_40dp"
     />

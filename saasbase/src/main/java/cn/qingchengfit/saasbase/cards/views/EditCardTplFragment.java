@@ -1,8 +1,6 @@
 package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +75,7 @@ public class EditCardTplFragment extends CardTplDetailFragment {
     }
   }
 
-  @Override public void setToolbar(@NonNull Toolbar toolbar) {
+  @Override public void setToolbar() {
     initToolbar(toolbar);
     toolbarTitle.setText("编辑会员卡种类");
     toolbar.inflateMenu(R.menu.menu_save);

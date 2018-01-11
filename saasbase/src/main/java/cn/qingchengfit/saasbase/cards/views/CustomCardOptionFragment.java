@@ -80,6 +80,10 @@ public abstract class CustomCardOptionFragment extends SaasBaseFragment {
       DialogUtils.showAlert(getContext(), "请填写有效期");
       return;
     }
+    if (civChargeMoney.isEmpty() || civRealMoney.isEmpty()){
+      showAlert("请正确填写规格");
+      return;
+    }
     initData();
     if (cardOptionCustom != null) RxBus.getBus().post(new EventCustomOption(cardOptionCustom));
     getActivity().onBackPressed();

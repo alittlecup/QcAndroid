@@ -66,7 +66,7 @@ public class StaffItem extends AbstractFlexibleItem<StaffItem.StaffVH> implement
   }
 
   @Override public boolean filter(String constraint) {
-    if (staff == null || staff.phone == null || staff.username == null)
+    if (staff == null || staff.username == null)
       return false;
     else {
       return staff.phone.contains(constraint) || staff.username.contains(constraint) ;

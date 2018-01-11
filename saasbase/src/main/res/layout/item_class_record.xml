@@ -152,6 +152,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginRight="70dp"
+          android:maxLines="1"
           tools:text="5月"
           style="@style/Qc.TextCommonGrey"
           />
@@ -167,6 +168,7 @@
         android:textSize="16sp"
         android:visibility="gone"
         tools:text="100"
+        tools:visibility="visible"
         style="@style/Qc.TextCommonBlack"
         />
   </RelativeLayout>

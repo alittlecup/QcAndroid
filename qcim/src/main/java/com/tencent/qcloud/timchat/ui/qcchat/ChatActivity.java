@@ -174,6 +174,9 @@ public class ChatActivity extends AppCompatActivity
     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     title = (TemplateTitle) findViewById(R.id.chat_title);
     root = (RelativeLayout) findViewById(R.id.root);
+    if (!(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)) {
+      title.setPadding(0, getStatusBarHeight(getBaseContext()), 0, 0);
+    }
     frameDetailLayout.setVisibility(View.GONE);
     chatSendResume.setVisibility(View.GONE);
     if (getIntent().getStringExtra(Configs.FACEURL) != null) {
@@ -194,6 +197,15 @@ public class ChatActivity extends AppCompatActivity
     } else {
       initView();
     }
+  }
+
+  private int getStatusBarHeight(Context context){
+    int result = 0;
+    int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+    if (resourceId > 0) {
+      result = context.getResources().getDimensionPixelSize(resourceId);
+    }
+    return result;
   }
 
   private void initView() {
@@ -590,7 +602,7 @@ public class ChatActivity extends AppCompatActivity
         dispatchMessage(mMessage, false);
       }
     }
-    flexibleAdapter.notifyDataSetChanged();
+    flexibleAdapter.updateDataSet(itemList);
     final int finalNewMsgNum = newMsgNum;
     //listView.getLayoutManager()
     //            .scrollToPosition(finalNewMsgNum);

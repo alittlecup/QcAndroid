@@ -482,7 +482,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.NotSignFilterFragmentModule.class, AppComponent.AttendanceNotSignFragmentModule.class,
 
   AppComponent.StaffDetailFragmentModule.class,
-  AppComponent.CoachListModule.class
+  AppComponent.CoachListModule.class, AppComponent.CardProtocolModule.class,
 
 })
 
@@ -3479,5 +3479,14 @@ public interface AppComponent {
     @Module(subcomponents = QRSubcomponent.class) abstract class QRModule {
         @Binds @IntoMap @ActivityKey(QRActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(QRSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface CardProtocolSubcomponent extends AndroidInjector<CardProtocolActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardProtocolActivity> {
+        }
+    }
+    @Module(subcomponents = CardProtocolSubcomponent.class) abstract class CardProtocolModule {
+        @Binds @IntoMap @ActivityKey(CardProtocolActivity.class)
+        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardProtocolSubcomponent.Builder builder);
     }
 }

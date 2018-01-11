@@ -112,9 +112,12 @@ public class EditCardTplInBrandNoPermissionFragment extends SaasBaseFragment {
     toolbar.inflateMenu(R.menu.menu_save);
     tvCardTplNameBrand.setText(cardTpl.name);
     body.shops = StringUtils.List2Str(cardTpl.getShopIds());
+    inputCardTplBrandSupportGym.setContent(cardTpl.getShopIds().size() + "家");
     tvCardTplDesc.setText(TextUtils.isEmpty(cardTpl.getDescription()) ? "无" : cardTpl.getDescription());
-    if (cardTpl.is_open_service_term){
+    if (cardTpl.is_open_service_term && cardTpl.card_tpl_service_term != null){
       inputCardTplBrandTerm.setVisibility(View.VISIBLE);
+    }else{
+      inputCardTplBrandTerm.setVisibility(View.GONE);
     }
     if (cardTpl.is_limit()) {
       StringBuilder sb = new StringBuilder();

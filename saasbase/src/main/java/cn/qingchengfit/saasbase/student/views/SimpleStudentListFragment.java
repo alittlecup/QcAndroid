@@ -22,6 +22,7 @@ import cn.qingchengfit.widgets.AlphabetLessView;
 import cn.qingchengfit.widgets.AlphabetView;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -79,6 +80,7 @@ public class SimpleStudentListFragment extends BaseFragment
       .setStickyHeaders(true)
       .setStickyHeaderElevation(1)
       .setDisplayHeadersAtStartUp(true);
+    commonFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
     recyclerView.setAdapter(commonFlexAdapter);
     //recyclerView.setItemAnimator(new FadeInUpItemAnimator());
     recyclerView.setHasFixedSize(true);
@@ -159,11 +161,11 @@ public class SimpleStudentListFragment extends BaseFragment
           for (QcStudentBean qcStudentBeen : qcStudentBeens) {
             if (head == null || !qcStudentBeen.head().equalsIgnoreCase(head)){
               head = qcStudentBeen.head();
-              alphabetSort.put(head, i);
-              i++;
+              alphabetSort.put(head.toUpperCase(), i);
               sh = new StickerDateItem(head.toUpperCase());
               mDatas.add(new StickerDateItem(qcStudentBeen.head().toUpperCase()));
             }
+            i++;
             mDatas.add(instanceItem(qcStudentBeen,null));
           }
         }else {
@@ -185,7 +187,7 @@ public class SimpleStudentListFragment extends BaseFragment
   }
   public void filter(String s){
     commonFlexAdapter.setSearchText(s);
-    commonFlexAdapter.filterItems(mDatas);
+    commonFlexAdapter.filterItems();
   }
 
   protected IFlexible instanceItem(QcStudentBean qcStudentBean,IHeader iHeader){

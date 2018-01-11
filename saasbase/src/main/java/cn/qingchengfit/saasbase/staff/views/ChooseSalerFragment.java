@@ -78,7 +78,7 @@ import rx.schedulers.Schedulers;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("选择业绩归属");
-    initSearch(toolbarLayout, "输入姓名或者手机号搜索");
+    initSearch(toolbarLayout, "输入姓名搜索");
     toolbar.inflateMenu(R.menu.menu_search);
     RxMenuItem.clicks(toolbar.getMenu().getItem(0))
       .throttleFirst(500, TimeUnit.MILLISECONDS)

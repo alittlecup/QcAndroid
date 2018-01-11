@@ -30,4 +30,5 @@ public class StaffCardRouters extends cardImpl {
     fragment.setArguments(args);
     return fragment;
   }
+
 }

@@ -95,6 +95,9 @@ public class CommonInputTextFragment extends BaseFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
+    if(getActivity() != null){
+      AppUtils.hideKeyboard(getActivity());
+    }
   }
 
   @OnClick(R2.id.img_close) public void onImgCloseClicked() {

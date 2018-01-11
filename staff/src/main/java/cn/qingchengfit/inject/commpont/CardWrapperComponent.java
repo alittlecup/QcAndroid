@@ -7,7 +7,7 @@
 //import cn.qingchengfit.staffkit.views.card.FixRealCardBindStudentFragment;
 //import cn.qingchengfit.staffkit.views.card.FixRealcardStudentFragment;
 //import cn.qingchengfit.staffkit.views.card.charge.CompletedChargeFragment;
-//import cn.qingchengfit.staffkit.views.card.spendrecord.SpendRecordListFragment;
+//import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordListFragment;
 //import dagger.Binds;
 //import dagger.Module;
 //import dagger.Subcomponent;

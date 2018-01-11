@@ -58,6 +58,12 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
       if (commonFlexAdapter.getMode() == 1){//单选模式
         lastChoose = commonFlexAdapter.getSelectedPositions().size() > 0?commonFlexAdapter.getSelectedPositions().get(0):-1;
       }
+      StudentItem item = (StudentItem)commonFlexAdapter.getItem(i);
+      if (studentIdList.contains(item.getId())){
+        studentIdList.remove(item.getId());
+      }else{
+        studentIdList.add(item.getId());
+      }
       commonFlexAdapter.toggleSelection(i);
       commonFlexAdapter.notifyItemChanged(i);
       commonFlexAdapter.notifyItemChanged(lastChoose);
@@ -83,6 +89,10 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
     return commonFlexAdapter.getSelectedItemCount();
   }
 
+  @Override public void filter(String s) {
+    super.filter(s);
+  }
+
   public void selectStudent(ArrayList<String> studentIdList) {
     this.studentIdList = studentIdList;
     if (studentIdList != null) {
@@ -90,7 +100,9 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
         IFlexible item = commonFlexAdapter.getItem(i);
         if (item instanceof ChosenStudentItem) {
           if (studentIdList.contains(((ChosenStudentItem) item).getId())) {
-            commonFlexAdapter.toggleSelection(i);
+            if (!commonFlexAdapter.isSelected(i)){
+              commonFlexAdapter.addSelection(i);
+            }
             commonFlexAdapter.notifyItemChanged(i);
           }
         }
@@ -99,6 +111,16 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
   }
 
   @Override public void onUpdateEmptyView(int size) {
+    if (studentIdList != null && studentIdList.size() > 0 ){
+      selectStudent(studentIdList);
+    }
+    //super.onUpdateEmptyView(size);
+    //if (studentIdList.size() > 0){
+    //  if (commonFlexAdapter.getSelectedPositions().size() > 0){
+    //    commonFlexAdapter.clearSelection();
+    //  }
+    //  selectStudent(studentIdList);
+    //}
     //  if (studentIdList != null) {
     //    for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
     //      IFlexible item = commonFlexAdapter.getItem(i);

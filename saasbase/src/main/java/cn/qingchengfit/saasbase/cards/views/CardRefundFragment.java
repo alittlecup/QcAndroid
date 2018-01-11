@@ -320,8 +320,8 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
     getActivity().onBackPressed();
   }
 
-  @Override public String realCardNum() {
-    return null;
+  @Override public void realCardNum(boolean isReal) {
+
   }
 
   @Override public String realMoney() {

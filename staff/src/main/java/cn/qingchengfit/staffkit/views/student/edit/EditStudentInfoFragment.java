@@ -86,7 +86,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     public static final int RESULT_REFERRER = 12;
     private static final int RESULT_ADD_REMARKS = 13;
     private static final int RESULT_COACH = 14;
-    public boolean isAdd = false;
+    public boolean isAdd = true;
     public User_Student user;
     @BindView(R.id.tv_student_source) TextView tvStudentSource;
     @BindView(R.id.ll_student_source) LinearLayout llStudentSource;
@@ -144,18 +144,12 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         View view = inflater.inflate(R.layout.fragment_edit_student_info, container, false);
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(presenter, this);
-        initToolbar(toolbar);
         if (getArguments() != null){
             isAdd = getArguments().getBoolean("add");
             user = getArguments().getParcelable("student");
         }
+        initToolbar(toolbar);
         if (!isAdd) {
-            mCallbackActivity.setToolbar("修改学员", false, null, R.menu.menu_save, new Toolbar.OnMenuItemClickListener() {
-                @Override public boolean onMenuItemClick(MenuItem item) {
-                    saveStudentInfo();
-                    return false;
-                }
-            });
             civName.setContent(user.getUsername());
             civAddress.setContent(user.getAddress());
             civRemark.setContent(user.getRemarks());
@@ -186,12 +180,6 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
                     .into(new CircleImgWrapper(headerImg, getActivity()));
             }
         } else {
-            mCallbackActivity.setToolbar("新增学员", false, null, R.menu.menu_save, new Toolbar.OnMenuItemClickListener() {
-                @Override public boolean onMenuItemClick(MenuItem item) {
-                    saveStudentInfo();
-                    return false;
-                }
-            });
             user = new User_Student();
             headerImg.setImageResource(R.drawable.ic_camara_grey);
             tvAddHint.setVisibility(View.VISIBLE);
