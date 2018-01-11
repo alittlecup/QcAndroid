@@ -82,6 +82,22 @@ public class CardListPresenter extends BasePresenter {
     else view.onCardList(null,curPage);
   }
 
+  //public void queryBalanceCount() {
+  //
+  //  RxRegiste(cardModel.qcGetCardCount(loginStatus.staff_id(), gymWrapper.getParams())
+  //      .onBackpressureBuffer()
+  //      .subscribeOn(Schedulers.io())
+  //      .observeOn(AndroidSchedulers.mainThread())
+  //      .subscribe(new Action1<cn.qingchengfit.network.response.QcDataResponse<BalanceCount>>() {
+  //        @Override public void call(
+  //            cn.qingchengfit.network.response.QcDataResponse<BalanceCount> balanceCountQcResponseData) {
+  //          if (onSettingBalanceListener != null) {
+  //            onSettingBalanceListener.onGetCardCount(balanceCountQcResponseData.data.count);
+  //          }
+  //        }
+  //      }));
+  //}
+
   @Override public void attachView(PView v) {
     view = (MVPView) v;
   }
@@ -104,5 +120,6 @@ public class CardListPresenter extends BasePresenter {
   public interface MVPView extends CView {
     void onCardList(List<Card> cards,int page);
     void onCardCount(int count);
+    void onGetBalanceCount(int count);
   }
 }

@@ -11,7 +11,7 @@ import cn.qingchengfit.model.responese.AllotSaleStudents;
 import cn.qingchengfit.model.responese.ArticleCommentListData;
 import cn.qingchengfit.model.responese.AttendanceCharDataBean;
 import cn.qingchengfit.model.responese.BalanceConfigs;
-import cn.qingchengfit.model.responese.BalanceCount;
+import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.model.responese.BalanceNotifyConfigs;
 import cn.qingchengfit.model.responese.BodyTestMeasureData;
 import cn.qingchengfit.model.responese.BodyTestPreviews;
