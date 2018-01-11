@@ -143,7 +143,7 @@ public class SignInDetailFragment extends BaseFragment implements SignInDetailPr
     @OnClick(img_signout_item_face) public void onClickFace() {
         if (mSignInTask != null) {
             if (StringUtils.isEmpty(mSignInTask.getCheckinAvatar())) {
-                if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
+                if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return;
                 }

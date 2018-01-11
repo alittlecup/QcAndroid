@@ -7,6 +7,7 @@ import android.support.annotation.MenuRes;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,7 +33,9 @@ import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.staffkit.views.gym.SetGymFragment;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -124,6 +127,10 @@ public class GuideActivity extends BaseActivity implements FragCallBack {
                 onBackPressed();
             }
         });
+        if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup ) {
+            ((ViewGroup) toolbar.getParent()).setPadding(0,
+              MeasureUtils.getStatusBarHeight(this), 0, 0);
+        }
         toolbarTitile.setText("新建健身房");
 
         saveObservabl = RxBus.getBus().register(SaveEvent.class);

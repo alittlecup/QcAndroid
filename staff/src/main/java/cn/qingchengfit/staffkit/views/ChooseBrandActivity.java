@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import cn.qingchengfit.staffkit.views.adapter.BrandManageAdapterAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +71,9 @@ public class ChooseBrandActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+        if (toolbar.getParent() != null && toolbar.getParent() instanceof ViewGroup){
+            ((ViewGroup) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(this),0,0);
+        }
         toolbarTitile.setText(R.string.choose_brand);
         datas = new ArrayList<>();
         adapter = new BrandManageAdapterAdapter(datas);

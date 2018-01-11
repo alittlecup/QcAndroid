@@ -103,7 +103,7 @@ public class CoachListFragment extends BaseFragment implements CoachListView {
         } else {
             super.initToolbar(toolbar);
             toolbarTitile.setText("教练");
-            toolbar.inflateMenu(R.menu.menu_search_flow_searchview);
+            toolbar.inflateMenu(R.menu.menu_search_flow_searchview_temp);
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
                     if (item.getItemId() == R.id.action_flow) {
