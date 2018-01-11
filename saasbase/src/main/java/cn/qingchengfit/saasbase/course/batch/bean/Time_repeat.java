@@ -72,7 +72,7 @@ public class Time_repeat implements ICmLRTxt, Parcelable {
     }
 
     @Override public String getLeftTxt() {
-        return DateUtils.getChineseWeekStr(weekday-1);
+        return DateUtils.getChineseWeekStr(weekday-1)+(isPrivate?"可约时间段":"");
     }
 
     @Override public String getRightTxt() {

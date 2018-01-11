@@ -150,12 +150,12 @@ public class BatchDetailCommonView extends BaseFragment {
     unbinder = ButterKnife.bind(this, view);
     setCourse(course);
     setTrainer(trainer);
-    RxBusAdd(EventBatchPayCard.class).onBackpressureDrop()
+    RxBusAdd(EventBatchPayCard.class).onBackpressureBuffer()
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new BusSubscribe<EventBatchPayCard>() {
         @Override public void onNext(EventBatchPayCard eventBatchPayCard) {
-          setCardRule(eventBatchPayCard.getRules(), null);
           numHasChange = false;
+          setCardRule(eventBatchPayCard.getRules(), null);
         }
       });
     RxBusAdd(EventStaffWrap.class).onBackpressureDrop()
@@ -266,6 +266,7 @@ public class BatchDetailCommonView extends BaseFragment {
 
   public void setMutlSupport(boolean support){
     elMultiSupport.setExpanded(support);
+    numHasChange = false;
   }
   public boolean mutilSupportble() {
     return elMultiSupport != null && elMultiSupport.isExpanded();
