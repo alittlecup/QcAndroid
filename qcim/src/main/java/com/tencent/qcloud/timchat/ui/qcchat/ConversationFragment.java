@@ -245,7 +245,7 @@ public class ConversationFragment extends Fragment
       onUnReadMessageListener.onUnReadMessage(getTotalUnreadNum());
     }
     Collections.sort(flexItemList);
-    flexibleAdapter.notifyDataSetChanged();
+    flexibleAdapter.updateDataSet(flexItemList);
   }
 
   @Override public void createGroup(List<String> datas, List<String> memberList) {

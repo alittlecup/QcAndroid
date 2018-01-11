@@ -389,7 +389,7 @@ public class ChatActivity extends AppCompatActivity
                   (isC2C() && message.isSelf()) ? avatar
                       : TextUtils.isEmpty(faceUrl) ? message.getSenderProfile().getFaceUrl()
                           : faceUrl, ChatActivity.this));
-              flexibleAdapter.notifyDataSetChanged();
+              flexibleAdapter.updateItem(itemList.get(0));
               break;
             case SEND_RECRUIT:
               itemList.add(0, new ChatRercuitItem(getBaseContext(),
@@ -397,7 +397,7 @@ public class ChatActivity extends AppCompatActivity
                   (isC2C() && message.isSelf()) ? avatar
                       : TextUtils.isEmpty(faceUrl) ? message.getSenderProfile().getFaceUrl()
                           : faceUrl, ChatActivity.this));
-              flexibleAdapter.notifyDataSetChanged();
+              flexibleAdapter.updateItem(itemList.get(0));
               break;
             case TOP_RESUME:
               if (!isLatestMessage) {
@@ -417,7 +417,7 @@ public class ChatActivity extends AppCompatActivity
           List<String> list = new ArrayList<>();
           list.add(message.getSender());
           dispatchMessage(mMessage, true);
-          flexibleAdapter.notifyDataSetChanged();
+          flexibleAdapter.updateDataSet(itemList);
         }
       }
     }

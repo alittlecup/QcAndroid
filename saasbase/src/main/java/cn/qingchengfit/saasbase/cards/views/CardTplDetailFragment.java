@@ -214,7 +214,7 @@ import rx.functions.Action1;
     });
     expandSettingLimit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+        tvCardAppend.setVisibility(b ? View.GONE : View.VISIBLE);
         editInfoListener(false);
       }
     });
