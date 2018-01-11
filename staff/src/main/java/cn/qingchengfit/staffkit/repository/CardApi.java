@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit.repository;
 
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
@@ -228,5 +229,10 @@ public interface CardApi {
       @Path("card_id") String card_id, @QueryMap HashMap<String, Object> params,
       @Query("created_at__gte") String start, @Query("created_at__lte") String end,
       @Query("page") int page);
+
+  //获取余额不足会员卡总数
+  @GET("api/staffs/{id}/balance/cards/count/")
+  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<BalanceCount>> qcGetCardCount(@Path("id") String staffId,
+      @QueryMap HashMap<String, Object> params);
 
 }

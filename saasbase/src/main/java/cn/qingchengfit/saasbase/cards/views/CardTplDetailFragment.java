@@ -2,6 +2,8 @@ package cn.qingchengfit.saasbase.cards.views;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +38,7 @@ import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.CardLimit;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.event.EventLimitBuyCount;
+import cn.qingchengfit.saasbase.cards.event.OnBackEvent;
 import cn.qingchengfit.saasbase.cards.item.AddCardtplStantardItem;
 import cn.qingchengfit.saasbase.cards.item.CardtplOptionItem;
 import cn.qingchengfit.saasbase.cards.network.body.CardtplBody;
@@ -66,6 +69,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.SimpleScrollPicker;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -171,6 +175,7 @@ import rx.functions.Action1;
         }
       }
     });
+    initBus();
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -216,6 +221,30 @@ import rx.functions.Action1;
     });
     onRefresh();
     return view;
+  }
+
+  private void initBus(){
+    RxBus.getBus()
+        .register(OnBackEvent.class)
+        .compose(this.<OnBackEvent>bindToLifecycle())
+        .compose(this.<OnBackEvent>doWhen(FragmentEvent.CREATE_VIEW))
+        .subscribe(new BusSubscribe<OnBackEvent>() {
+          @Override public void onNext(OnBackEvent cardList) {
+            Uri toUri;
+            if(!gymWrapper.inBrand()) {
+              toUri = AppUtils.getRouterUri(getContext(), "card/cardtpl/list/");
+            }else{
+              toUri = AppUtils.getRouterUri(getContext(), "card/brand/cardtpl/list/");
+            }
+            //getActivity().getSupportFragmentManager().popBackStack(null, 1);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+              if (!getActivity().isDestroyed()) {
+                getActivity().finish();
+              }
+            }
+            routeTo(toUri, null);
+          }
+        });
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -328,6 +357,10 @@ import rx.functions.Action1;
       toolbar.inflateMenu(R.menu.menu_save);
       toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
+          if (TextUtils.isEmpty(civInputCardname.getContent())){
+            showAlert(R.string.e_card_name_empty);
+            return false;
+          }
           body.name = civInputCardname.getContent();
           cardLimit.is_limit = expandSettingLimit.isExpanded();
           if (cardLimit.is_limit) {
@@ -389,6 +422,7 @@ import rx.functions.Action1;
         cardLimit.buy_limit = eventLimitBuyCount.buy_count;
         limitBugCount.setContent(eventLimitBuyCount.text);
         syncLimit();
+        editInfoListener(true);
       }
     });
   }
@@ -431,6 +465,10 @@ import rx.functions.Action1;
                 @Override
                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                   if (which == DialogAction.POSITIVE) {
+                    if (TextUtils.isEmpty(civInputCardname.getContent())){
+                      showAlert(R.string.e_card_name_empty);
+                      return;
+                    }
                     cardLimit.is_limit = expandSettingLimit.isExpanded();
                     body.name = civInputCardname.getContent();
                     if (cardLimit.is_limit) {
@@ -637,12 +675,24 @@ import rx.functions.Action1;
   private void syncLimit() {
     sb.delete(0, sb.length());
     sb.append("限制: ");
-    sb.append(getResources().getString(R.string.card_limit_pre_times, tempChargeLimit(cardLimit.pre_times)));
-    sb.append(",");
-    sb.append(getResources().getString(R.string.card_can_work_in_time, tempChargeLimit(cardLimit.day_times),
-        tempChargeLimit(cardLimit.week_times), tempChargeLimit(cardLimit.month_times)));
-    sb.append(",");
-    sb.append(getResources().getString(R.string.buylimit, tempChargeLimit(cardLimit.buy_limit)));
+    if (cardLimit.pre_times > 0) {
+      sb.append(getResources().getString(R.string.card_limit_pre_times, tempChargeLimit(cardLimit.pre_times)));
+      sb.append(",");
+    }
+    if (cardLimit.day_times > 0){
+      sb.append(getResources().getString(R.string.card_can_work_everyday, cardLimit.day_times));
+      sb.append(",");
+    }
+    if (cardLimit.week_times > 0){
+      sb.append(getResources().getString(R.string.card_can_work_everyweek, cardLimit.week_times));
+      sb.append(",");
+    }
+    if (cardLimit.month_times > 0){
+      sb.append(getResources().getString(R.string.card_can_work_month, cardLimit.month_times));
+      sb.append(",");
+    }
+    if (cardLimit.buy_limit > 0)
+      sb.append(getResources().getString(R.string.buylimit, tempChargeLimit(cardLimit.buy_limit)));
     tvCardAppend.setText(sb);
   }
 
@@ -673,6 +723,7 @@ import rx.functions.Action1;
             cardLimit.month_times = circ_time;
           }
           syncLimit();
+          editInfoListener(true);
           break;
         case 4:
           onSelectSupportGyms(data.getParcelableArrayListExtra(IntentUtils.RESULT));
@@ -755,6 +806,7 @@ import rx.functions.Action1;
         preOrderCount.setContent(Integer.toString(pos));
         cardLimit.pre_times = pos;
         syncLimit();
+        editInfoListener(true);
       }
     });
 

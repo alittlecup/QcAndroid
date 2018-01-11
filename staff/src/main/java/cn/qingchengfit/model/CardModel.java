@@ -6,6 +6,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.DayOffs;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.cards.bean.UUIDModel;
@@ -251,5 +252,10 @@ public class CardModel implements ICardModel {
 
   @Override public Observable<QcDataResponse> qcFixGyms(String cardId, ShopsBody body) {
     return posApi.qcFixGyms(loginStatus.staff_id(), cardId, body, gymWrapper.getParams());
+  }
+
+  @Override
+  public Observable<QcDataResponse<BalanceCount>> qcGetBalanceCount() {
+    return posApi.qcGetCardCount(loginStatus.staff_id(), gymWrapper.getParams());
   }
 }

@@ -103,7 +103,7 @@ public class SpendRecordListPresenter extends BasePresenter {
                         //                                销卡：11
                         //                                取消销卡：12
                         //                                扣费：14
-                        account = String.valueOf(history.cost);
+                        account = String.valueOf(Math.abs(history.cost) == 0f ? 0 : history.cost);
                         if (history.type_int == 2) {
                             pic = history.order.course.photo;
                             name = history.order.course.name;

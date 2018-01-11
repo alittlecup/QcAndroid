@@ -280,6 +280,7 @@ import rx.functions.Action1;
   public void onConfirmPay() {
     if (optionList.size() == 0){
       DialogUtils.showAlert(getContext(), "请至少选择一种会员卡规格");
+      return;
     }
     presenter.buyCard();
   }

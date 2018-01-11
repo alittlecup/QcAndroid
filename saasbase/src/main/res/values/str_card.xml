@@ -82,6 +82,9 @@
   <string name="add_cardoption_no_permission">抱歉，您没有添加规格权限</string>
   <string name="delete_cardtpl_no_permission">抱歉，您没有停用会员卡权限</string>
   <string formatted="false" name="card_limit_pre_times">可提前预约%s节</string>
+  <string formatted="false" name="card_can_work_everyday">每天%d节</string>
+  <string formatted="false" name="card_can_work_everyweek">每周%d节</string>
+  <string formatted="false" name="card_can_work_month">每月%d节</string>
   <string formatted="false" name="card_can_work_in_time">每天%s节, 每周%s节, 每月%s节</string>
   <string name="edit_card_tpl_back_tips">内容已被修改，是否保存？</string>
   <string formatted="false" name="card_detail_cost">累计充值%.2f天, 累计消费%.2f元</string>

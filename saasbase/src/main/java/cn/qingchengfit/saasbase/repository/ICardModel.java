@@ -203,6 +203,6 @@ public interface ICardModel {
 
   rx.Observable<QcDataResponse> qcFixGyms(String cardId, ShopsBody body);
 
-  rx.Observable<QcDataResponse<BalanceCount>> qcGetBalanceCount(String cardId, ShopsBody body);
+  rx.Observable<QcDataResponse<BalanceCount>> qcGetBalanceCount();
 
 }

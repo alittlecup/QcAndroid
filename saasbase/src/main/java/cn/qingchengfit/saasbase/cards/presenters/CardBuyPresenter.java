@@ -258,7 +258,7 @@ public class CardBuyPresenter extends BasePresenter {
 
   //扣费操作
   public void proactiveDeduction(String cardId, ChargeBody body) {
-    RxRegiste(cardModel.qcChargeRefund(String.valueOf(cardCate), body)
+    RxRegiste(cardModel.qcChargeRefund(cardId, body)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
