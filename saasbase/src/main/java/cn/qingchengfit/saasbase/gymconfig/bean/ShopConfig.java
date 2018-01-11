@@ -37,7 +37,7 @@ public class ShopConfig {
 
   public int getValueInt(){
     try {
-      return (int)value;
+      return ((Double)value).intValue();
     }catch (Exception e){
       return 0;
     }
