@@ -69,7 +69,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.SimpleScrollPicker;
-import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -227,7 +226,6 @@ import rx.functions.Action1;
     RxBus.getBus()
         .register(OnBackEvent.class)
         .compose(this.<OnBackEvent>bindToLifecycle())
-        .compose(this.<OnBackEvent>doWhen(FragmentEvent.CREATE_VIEW))
         .subscribe(new BusSubscribe<OnBackEvent>() {
           @Override public void onNext(OnBackEvent cardList) {
             Uri toUri;
