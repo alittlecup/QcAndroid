@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.staff;
 
+import cn.qingchengfit.saasbase.coach.views.AddNewCoachFragment;
 import cn.qingchengfit.saasbase.coach.views.CoachListFragment;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseFragment;
 import cn.qingchengfit.saasbase.staff.StaffActivity;
@@ -29,7 +30,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/12/1.
  */
 @Trunk(fragments = {
-  ChooseSalerFragment.class, SalersListFragment.class,
+  ChooseSalerFragment.class, SalersListFragment.class, AddNewCoachFragment.class,
   TrainerChooseFragment.class, CoachListFragment.class, StaffDetailFragment.class
 })
 public class StaffStaffActivity extends StaffActivity {

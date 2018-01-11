@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.course.course.bean.CoursePlan;
 import cn.qingchengfit.saasbase.course.course.items.ChooseCoursePlanItem;
 import cn.qingchengfit.saasbase.course.course.network.response.CoursePlans;
@@ -73,8 +71,6 @@ public class ChooseCoursePlanFragment extends BaseListFragment
     return "暂无课程计划";
   }
 
-  @OnClick(R2.id.copy_link) public void onClick() {
-  }
 
   @Override public boolean onItemClick(int position) {
     IFlexible item = commonFlexAdapter.getItem(position);

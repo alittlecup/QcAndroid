@@ -175,7 +175,7 @@ public class BatchDetailCommonView extends BaseFragment {
     elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
       //if (b && getOrderStudentCount() > 1){
         numHasChange = true;
-        payCard.setContent("已修改多人支持，请重新设置");
+        payCard.setContent(b?"已开启多人支持，请重新设置":"已关闭多人支持，请重新设置");
       //}
     });
     elPay.setOnHeaderTouchListener((view1, motionEvent) -> {

@@ -123,7 +123,7 @@ import javax.inject.Inject;
       d.add("删除该课程种类");
       new DialogList(getContext()).list(d,
         (adapterView, view, i, l) -> mPresenter.judgeDel(mCourseDetail,
-          mCourseDetail.getShops() == null ? 1 : mCourseDetail.getShops().size())).show();
+          mCourseDetail.getShops() == null ? 1 : mCourseDetail.getShops().size(),getContext())).show();
       return true;
     });
   }

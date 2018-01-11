@@ -1,5 +1,6 @@
 package cn.qingchengfit.saasbase.repository;
 
+import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.coach.model.CoachResponse;
@@ -101,4 +102,12 @@ public interface PostApi {
    */
   @PUT("/api/staffs/{staff_id}/superuser/") rx.Observable<QcResponse> qcChangeSu(@Path("staff_id") String staffid,
       @QueryMap HashMap<String, Object> params, @Body ChangeSuBody body);
+  /**
+   * 场地操作
+   */
+  //新建场地
+  @POST("/api/staffs/{staff_id}/spaces/") rx.Observable<QcResponse> qcCreateSpace(@Path("staff_id") String staff_id,
+    @Query("id") String gymid, @Query("model") String model, @Query("brand_id") String brand_id, @Body
+    Space space);
+
 }

@@ -1,5 +1,7 @@
 package cn.qingchengfit.saasbase.gymconfig.views;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -120,6 +122,23 @@ public class SiteFragment extends BaseListFragment
   @Override public void onUpdateEmptyView(int size) {
     if (size == 0){
 
+    }
+  }
+
+  @Override public int getFbIcon() {
+    return R.drawable.fab_add;
+  }
+
+  @Override public void onClickFab() {
+    AddNewSiteFragment.start(this,11,11);
+  }
+
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK){
+      if (requestCode == 11){
+        onRefresh();
+      }
     }
   }
 }

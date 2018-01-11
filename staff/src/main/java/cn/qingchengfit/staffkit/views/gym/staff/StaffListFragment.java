@@ -122,7 +122,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         super.initToolbar(toolbar);
         toolbarTitile.setText("工作人员");
-        toolbar.inflateMenu(R.menu.menu_search_flow_searchview);
+        toolbar.inflateMenu(R.menu.menu_search_flow_searchview_temp);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {

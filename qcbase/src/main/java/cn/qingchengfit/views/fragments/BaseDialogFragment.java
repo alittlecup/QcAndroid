@@ -116,6 +116,10 @@ public abstract class BaseDialogFragment extends DialogFragment implements CView
         getActivity().onBackPressed();
       }
     });
+    //if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  ) {
+    //  ((ViewGroup) toolbar.getParent()).setPadding(0,
+    //    MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    //}
   }
 
   public void showLoading() {
