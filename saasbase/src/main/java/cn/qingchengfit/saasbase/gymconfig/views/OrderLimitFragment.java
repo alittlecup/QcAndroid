@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
@@ -99,7 +100,7 @@ public class OrderLimitFragment extends SaasBaseFragment
     });
   }
 
-  //@OnClick(R.id.input_sign_class_way)
+  @OnClick(R2.id.input_sign_class_way)
   public void onSelectSignway(){
     ArrayList<String> items = new ArrayList<>();
     items.add("教练点名");
@@ -142,7 +143,8 @@ public class OrderLimitFragment extends SaasBaseFragment
       data.add(new ShopConfigBody.Config(mSignStartId, inputSignClassStart.getContent()));
       data.add(new ShopConfigBody.Config(mSignEndId, inputSignClassEnd.getContent()));
     }
-    //        data.add(new ShopConfigBody.Config(ShopConfigs.TEAM_MINUTES_,swOrderCourse.isExpanded()?"1":"0"));
+            //data.add(new ShopConfigBody.Config(
+              //ShopConfigs.TEAM_MINUTES_,swOrderCourse.isExpanded()?"1":"0"));
     mOrderLimitPresenter.saveConfigs(new ShopConfigBody(data));
     showLoading();
   }

@@ -181,7 +181,7 @@ import rx.android.schedulers.AndroidSchedulers;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitile.setText(
-      presenter.isPrivate() ? "新增私教课开放时间" : "新增团课排课");
+      presenter.isPrivate() ? "新增私教排期" : "新增团课排课");
     toolbar.inflateMenu(R.menu.menu_compelete);
     toolbar.setOnMenuItemClickListener(item -> {
       presenter.checkBatch();
@@ -431,7 +431,7 @@ import rx.android.schedulers.AndroidSchedulers;
    */
   @OnClick(R2.id.tv_clear_auto_batch) public void clearBatch() {
     commonFlexAdapter.clear();
-    tvBatchLoopHint.setText("课程周期");
+    tvBatchLoopHint.setText(presenter.isPrivate()?"":"课程周期");
     tvClearAutoBatch.setVisibility(View.GONE);
   }
 
