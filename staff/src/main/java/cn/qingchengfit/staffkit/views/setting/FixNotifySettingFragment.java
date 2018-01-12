@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -64,6 +65,7 @@ public class FixNotifySettingFragment extends BaseDialogFragment implements FixN
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notify_setting, container, false);
+        delegatePresenter(fixNotifyPresenter, this);
         unbinder = ButterKnife.bind(this, view);
         initToolbar();
         getData();
@@ -72,7 +74,6 @@ public class FixNotifySettingFragment extends BaseDialogFragment implements FixN
     }
 
     @Override public void onDestroyView() {
-        fixNotifyPresenter.unattachView();
         super.onDestroyView();
     }
 
@@ -126,6 +127,35 @@ public class FixNotifySettingFragment extends BaseDialogFragment implements FixN
     }
 
     @Override public void onDone() {
+
+    }
+
+    @Override public void onShowError(String e) {
+
+    }
+
+    @Override public void onShowError(int e) {
+
+    }
+
+    @Override public void showAlert(String s) {
+
+    }
+
+    @Override public void showAlert(int s) {
+
+    }
+
+    @Override public void showSelectSheet(String title, List<String> strs,
+        AdapterView.OnItemClickListener listener) {
+
+    }
+
+    @Override public void popBack() {
+
+    }
+
+    @Override public void popBack(int count) {
 
     }
 }

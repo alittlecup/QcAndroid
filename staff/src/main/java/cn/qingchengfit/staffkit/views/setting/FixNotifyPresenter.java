@@ -1,6 +1,7 @@
 package cn.qingchengfit.staffkit.views.setting;
 
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
 import cn.qingchengfit.model.body.CardBalanceNotifyBody;
 import cn.qingchengfit.model.responese.BalanceNotify;
 import cn.qingchengfit.model.responese.BalanceNotifyConfigs;
@@ -92,7 +93,7 @@ public class FixNotifyPresenter extends BasePresenter {
             }));
     }
 
-    public interface OnGetBalanceNotifyListener {
+    public interface OnGetBalanceNotifyListener extends CView {
         void onGetSuccess(List<BalanceNotify> balanceNotify);
 
         void onGetFailed(String msg);
