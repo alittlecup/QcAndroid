@@ -1,9 +1,11 @@
 package cn.qingchengfit.saasbase.course.batch.presenters;
 
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchDetail;
 import cn.qingchengfit.saasbase.course.batch.network.response.BatchDetailWrap;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -114,6 +116,7 @@ public class BatchEditPresenter extends IBatchPresenter {
           @Override public void onNext(QcDataResponse qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
               mvpView.onShowError("保存成功");
+              RxBus.getBus().post(new EventSaasFresh.BatchList());
               mvpView.popBack();
             } else {
               mvpView.onShowError(qcResponse.getMsg());

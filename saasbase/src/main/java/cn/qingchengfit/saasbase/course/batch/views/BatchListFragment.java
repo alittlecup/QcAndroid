@@ -22,6 +22,7 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.event.EventCourse;
 import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.gymconfig.views.MsgNotiParams;
 import cn.qingchengfit.saasbase.gymconfig.views.OrderLimitParams;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
@@ -34,6 +35,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -81,6 +83,15 @@ public abstract class BatchListFragment extends SaasBaseFragment
           routeTo("/batch/add/",new AddBatchParams()
             .mCourse(eventCourse.getCourse())
             .build());
+        }
+      });
+    RxBus.getBus().register(EventSaasFresh.BatchList.class)
+      .compose(bindToLifecycle())
+      .compose(doWhen(FragmentEvent.CREATE_VIEW))
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventSaasFresh.BatchList>() {
+        @Override public void onNext(EventSaasFresh.BatchList batchList) {
+          onRefresh();
         }
       });
   }

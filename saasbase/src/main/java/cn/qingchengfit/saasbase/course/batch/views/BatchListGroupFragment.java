@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListGroupPresenter;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -40,7 +42,6 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/11.
- *
  *
  * 团课
  */
@@ -87,6 +88,8 @@ import javax.inject.Inject;
       routeTo("/batch/cate/group/",
         new BatchListCategoryGroupParams().course_id(
           ((BatchItem) item).getBatchCourse().getId()).build());
+    }else if (item instanceof TitleHintItem){
+      WebActivity.startWeb(Configs.WEB_HOW_TO_USE_BATCH_GROUP,getContext());
     }
     return false;
   }

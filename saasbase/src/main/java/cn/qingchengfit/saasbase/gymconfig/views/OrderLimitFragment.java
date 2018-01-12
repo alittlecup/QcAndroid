@@ -43,7 +43,7 @@ public class OrderLimitFragment extends SaasBaseFragment
   @BindView(R2.id.sw_cancle) ExpandedLayout swCancle;
   @BindView(R2.id.sw_substitute) ExpandedLayout swSubstitute;
 
-  @Need public boolean mIsPrivate;
+  @Need public Boolean mIsPrivate;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitile;
   @Inject OrderLimitPresenter mOrderLimitPresenter;

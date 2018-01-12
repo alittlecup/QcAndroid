@@ -8,13 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.fragments.BaseListFragment;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -46,6 +51,15 @@ public abstract class IBatchListCategoryFragment extends BaseListFragment implem
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     SaasbaseParamsInjector.inject(this);
+    RxBus.getBus().register(EventSaasFresh.BatchList.class)
+      .compose(bindToLifecycle())
+      .compose(doWhen(FragmentEvent.CREATE_VIEW))
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventSaasFresh.BatchList>() {
+        @Override public void onNext(EventSaasFresh.BatchList batchList) {
+          onRefresh();
+        }
+      });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -12,10 +12,12 @@ import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.trello.rxlifecycle.android.FragmentEvent;
@@ -103,6 +105,8 @@ import javax.inject.Inject;
       routeTo("/batch/cate/private/",
         new cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateParams().trainer_id(
           ((BatchItem) item).getBatchCoach().id).build());
+    }else if (item instanceof TitleHintItem){
+      WebActivity.startWeb(Configs.WEB_HOW_TO_USE_BATCH_PRIVATE,getContext());
     }
     return false;
   }
@@ -119,7 +123,7 @@ import javax.inject.Inject;
       for (BatchCoach coach : coaches) {
         data.add(new BatchItem(coach));
       }
-      data.add(new TitleHintItem("如何添加团课排期"));
+      data.add(new TitleHintItem("如何添加私教排期"));
       commonFlexAdapter.updateDataSet(data, true);
     }
   }
