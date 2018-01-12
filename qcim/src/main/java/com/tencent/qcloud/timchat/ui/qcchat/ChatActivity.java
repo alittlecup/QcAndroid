@@ -85,7 +85,6 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.w3c.dom.Text;
 import tencent.tls.platform.TLSErrInfo;
 
 public class ChatActivity extends AppCompatActivity
@@ -199,6 +198,8 @@ public class ChatActivity extends AppCompatActivity
       initView();
     }
   }
+
+
 
   private int getStatusBarHeight(Context context){
     int result = 0;
