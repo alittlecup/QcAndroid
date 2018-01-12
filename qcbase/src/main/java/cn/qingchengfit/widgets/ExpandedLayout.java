@@ -158,6 +158,11 @@ public class ExpandedLayout extends LinearLayout {
     mSwitcher.setOnCheckedChangeListener(listener);
   }
 
+  public void setSwitchClickListenr(OnClickListener listenr){
+    if (mSwitcher != null)
+      mSwitcher.setOnClickListener(listenr);
+  }
+
   /**
    * This is where the magic happens for measuring the actual
    * (un-expanded) height of the content. If the actual height

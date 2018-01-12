@@ -172,9 +172,10 @@ public class BatchDetailCommonView extends BaseFragment {
           setSpace(eventSiteSelected.getSpaces());
         }
       });
+    elMultiSupport.setSwitchClickListenr(view1 -> numHasChange = true);
     elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
       //if (b && getOrderStudentCount() > 1){
-        numHasChange = true;
+
         payCard.setContent(b?"已开启多人支持，请重新设置":"已关闭多人支持，请重新设置");
       //}
     });
