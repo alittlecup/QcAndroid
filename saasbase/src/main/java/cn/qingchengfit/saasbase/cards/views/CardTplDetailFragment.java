@@ -69,6 +69,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bigkoo.pickerview.SimpleScrollPicker;
+import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -214,7 +215,7 @@ import rx.functions.Action1;
     });
     expandSettingLimit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+        tvCardAppend.setVisibility(b ? View.VISIBLE : View.GONE);
         editInfoListener(false);
       }
     });
@@ -225,6 +226,7 @@ import rx.functions.Action1;
   private void initBus(){
     RxBus.getBus()
         .register(OnBackEvent.class)
+        .compose(this.<OnBackEvent>doWhen(FragmentEvent.RESUME))
         .compose(this.<OnBackEvent>bindToLifecycle())
         .subscribe(new BusSubscribe<OnBackEvent>() {
           @Override public void onNext(OnBackEvent cardList) {
