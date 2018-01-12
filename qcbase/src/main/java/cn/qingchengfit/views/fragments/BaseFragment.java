@@ -109,6 +109,7 @@ public abstract class BaseFragment extends RxFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    LogUtil.e("---fb---", getClass().getSimpleName());
   }
 
   protected void doEventOnCreatView(Class classz ,Action1 action1){

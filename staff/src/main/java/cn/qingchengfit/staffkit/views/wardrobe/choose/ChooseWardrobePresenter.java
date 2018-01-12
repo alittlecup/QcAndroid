@@ -57,7 +57,9 @@ public class ChooseWardrobePresenter extends BasePresenter {
         params.put("q", key);
 
         RxRegiste(restRepository.getGet_api()
-            .qcGetAllLockers(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
+            .qcGetAllLockers(staffid, params)
+            .onBackpressureLatest()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcDataResponse<AllLockers>>() {
                 @Override public void call(QcDataResponse<AllLockers> qcResponse) {

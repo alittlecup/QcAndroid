@@ -118,6 +118,7 @@ public class SearchResultFragment extends BaseFragment implements FlexibleAdapte
             mItems.add(new CommonNoDataItem(R.drawable.no_search_result, "未找到相关结果"));
         }
         rv.setAdapter(adatper);
+        adatper.updateDataSet(mItems);
         return view;
     }
 
