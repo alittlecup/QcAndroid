@@ -76,6 +76,7 @@
     <item name="colorPrimary">@color/toolbar</item>
     <item name="colorPrimaryDark">@color/toolbar</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowTranslucentStatus">true</item>
   </style>
 
   <style name="QcWebStyle" parent="Theme.AppCompat.Light.NoActionBar">

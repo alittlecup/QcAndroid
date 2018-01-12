@@ -113,9 +113,9 @@ public class NewCardChargeFragment extends CardBuyFragment {
           && !card.isExpired()
           && DateUtils.interval(card.getValid_from(), card.getValid_to()) > 0) {
         if (DateUtils.formatDateFromYYYYMMDD(card.getValid_from()).before(new Date())){
-          interval = DateUtils.interval(new Date(), DateUtils.formatDateFromYYYYMMDD(card.getValid_to()));
+          interval = DateUtils.interval(DateUtils.Date2YYYYMMDD(new Date()), card.getValid_to()) + 1;
         }else{
-          interval = DateUtils.interval(card.getValid_from(), card.getValid_to());
+          interval = DateUtils.interval(card.getValid_from(), card.getValid_to()) + 1;
         }
       }
       if (option.isLimit_days()){
@@ -149,8 +149,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
             if (date.before(DateUtils.formatDateFromYYYYMMDD(card.getValid_from()))) {
               interval = interval + (DateUtils.interval(card.getValid_from(), card.getValid_to()) + 1);
             } else {
-              interval = interval + (DateUtils.interval(new Date(),
-                  DateUtils.formatDateFromYYYYMMDD(card.getValid_to())) + 1);
+              interval = interval + (DateUtils.interval(DateUtils.Date2YYYYMMDD(new Date()), card.getValid_to()) + 1);
             }
           }
         if (date.before(new Date()) && !card.isExpired()) {
