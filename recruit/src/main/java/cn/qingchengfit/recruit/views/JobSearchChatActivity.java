@@ -45,6 +45,7 @@ public class JobSearchChatActivity extends ChatActivity
     super.onCreate(savedInstanceState);
     AndroidInjection.inject(this);
     presenter.attachView(this);
+    presenter.onNewSps();
     type = getIntent().getIntExtra(RecruitConstants.CHAT_JOB_SEARCH_OR_RECRUIT, 0);
     if (!TextUtils.isEmpty(getIntent().getStringExtra(INVITE_RESUME_ID))) {
       resumeId = getIntent().getStringExtra(INVITE_RESUME_ID);
