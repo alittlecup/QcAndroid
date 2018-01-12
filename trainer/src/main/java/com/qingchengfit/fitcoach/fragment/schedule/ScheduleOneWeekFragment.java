@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -165,9 +166,14 @@ public class ScheduleOneWeekFragment extends BaseFragment {
             }
         });
 
-        RxBusAdd(EventScheduleService.class).subscribe(new Action1<EventScheduleService>() {
+        RxBusAdd(EventScheduleService.class)
+          .onBackpressureLatest()
+          .subscribe(new Action1<EventScheduleService>() {
             @Override public void call(EventScheduleService eventScheduleService) {
-                mCoachService = eventScheduleService.mCoachService;
+                if (CmStringUtils.isEmpty(eventScheduleService.mCoachService.getId())){
+                    mCoachService = null;
+                }else
+                    mCoachService = eventScheduleService.mCoachService;
                 inflateData();
             }
         });
@@ -253,7 +259,7 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         mEvents.clear();
         for (int i = 0; i < mQcSchedulesResponse.data.services.size(); i++) {
             QcSchedulesResponse.Service scheduleService = mQcSchedulesResponse.data.services.get(i);
-            if (mCoachService == null || mCoachService.id == scheduleService.system.id) {
+            if (mCoachService == null || mCoachService.id.equalsIgnoreCase(scheduleService.system.id)) {
                 for (int j = 0; j < scheduleService.rests.size(); j++) {
                     QcSchedulesResponse.Rest rest = scheduleService.rests.get(j);
                     startTime = Calendar.getInstance();
