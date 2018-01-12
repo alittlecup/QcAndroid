@@ -135,7 +135,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
               //startActivityForResult(new CameraActivity.IntentBuilder(getContext()).confirmationQuality(0.7f).to(uri).build(),
               //    CHOOSE_CAMERA);
             } else {
-              ToastUtils.show("请开启拍照权限");
+              ToastUtils.show("请开启拍照及存储权限");
             }
           }
         });
@@ -183,6 +183,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
         filepath = fileClip.getAbsolutePath();
       }
     } else {
+      dismissAllowingStateLoss();
       return;
     }
     if (!TextUtils.isEmpty(filepath)) {
