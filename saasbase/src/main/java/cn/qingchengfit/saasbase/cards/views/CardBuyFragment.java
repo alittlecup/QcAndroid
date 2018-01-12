@@ -451,7 +451,7 @@ import rx.functions.Action1;
   }
 
   @Override public String chargeMoney() {
-    return String.valueOf(cardOptionCustom.getDays());
+    return String.valueOf(cardOptionCustom.getCharge());
   }
 
   @Override public int payMethod() {
