@@ -46,8 +46,8 @@ public class AddBatchPresenter extends IBatchPresenter {
         .subscribe(new NetSubscribe<QcResponse>() {
           @Override public void onNext(QcResponse qcResponse) {
             if (ResponseConstant.checkSuccess(qcResponse)) {
-              mvpView.onSuccess();
               RxBus.getBus().post(new EventSaasFresh.BatchList());
+              mvpView.onSuccess();
             } else {
               mvpView.onShowError(qcResponse.getMsg());
             }

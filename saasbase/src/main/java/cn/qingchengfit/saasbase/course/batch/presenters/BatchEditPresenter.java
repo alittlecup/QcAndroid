@@ -70,6 +70,7 @@ public class BatchEditPresenter extends IBatchPresenter {
         @Override public void onNext(QcDataResponse qcDataResponse) {
           if (ResponseConstant.checkSuccess(qcDataResponse)) {
             mvpView.onShowError("删除成功");
+            RxBus.getBus().post(new EventSaasFresh.BatchList());
             mvpView.popBack();
           } else {
             mvpView.onShowError(qcDataResponse.getMsg());
