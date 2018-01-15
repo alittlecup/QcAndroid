@@ -76,14 +76,22 @@
       android:visibility="visible"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
-      android:id="@+id/recycleview"
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/swipe_layout"
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
+      >
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recycleview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
       recycle:rn_drawable="@drawable/ic_sign_in_nodata"
       recycle:rn_hint="暂无未处理签到"
       />
+
+  </android.support.v4.widget.SwipeRefreshLayout>
 
   <TextView
       android:id="@+id/tv_signin_footer"

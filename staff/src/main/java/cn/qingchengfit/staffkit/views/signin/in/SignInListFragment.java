@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.SignInTasks;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
@@ -35,7 +37,6 @@ import cn.qingchengfit.staffkit.rxbus.event.SignInQrCodeEvent;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.SignInFooterItem;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.SignInItem;
 import cn.qingchengfit.staffkit.views.adapter.SignInFlexibleAdapter;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
 import cn.qingchengfit.staffkit.views.wardrobe.choose.ChooseWardrobeActivity;
@@ -63,17 +64,18 @@ import rx.schedulers.Schedulers;
  * Created by yangming on 16/8/25.
  */
 public class SignInListFragment extends BaseFragment implements SignInListPresenter.SignInListView,
-  FlexibleAdapter.OnUpdateListener{
+  FlexibleAdapter.OnUpdateListener, SwipeRefreshLayout.OnRefreshListener{
 
     public final static int RESULT_LOCKER = 5;
     @BindView(R.id.ll_signin_qrcode) LinearLayout llSigninQrcode;
     @BindView(R.id.tv_signin_manual) TextView tvSigninManual;
     @BindView(R.id.ll_signin_manual) LinearLayout llSigninManual;
-    @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
+    @BindView(R.id.recycleview) RecyclerView recycleview;
     SignInFlexibleAdapter flexibleAdapter;
     @BindView(R.id.tv_signin_qrcode) TextView tvSigninQrcode;
     @BindView(R.id.tv_signin_header) TextView tvSigninHeader;
     @BindView(R.id.tv_signin_footer) TextView tvSigninFooter;
+    @BindView(R.id.swipe_layout) SwipeRefreshLayout swipeRefreshLayout;
     List<AbstractFlexibleItem> items = new ArrayList<>();
     List<SignInTasks.SignInTask> sourceList = new ArrayList<>();
     List<SignInTasks.SignInTask> newList = new ArrayList<>();
@@ -139,11 +141,15 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
         drawableQr.setBounds(0, 0, drawableQr.getMinimumWidth(), drawableQr.getMinimumHeight());
         tvSigninQrcode.setCompoundDrawables(drawableQr, null, null, null);
 
+        flexibleAdapter = new SignInFlexibleAdapter(items);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         recycleview.setLayoutManager(mLinearLayoutManager);
         recycleview.addItemDecoration(new SpaceItemDecoration(20, getContext()));
-        recycleview.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeRefreshLayout.setNestedScrollingEnabled(true);
+        recycleview.setAdapter(flexibleAdapter);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
                 presenter.queryData();
             }
         });
@@ -225,28 +231,29 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
         this.sourceList = list;
         // 下拉刷新后,无数据时,移除所有 item
         if (list == null || list.size() == 0) {
-            if (flexibleAdapter != null && flexibleAdapter.getItemCount() > 0) {
-                do {
-                    flexibleAdapter.removeItem(0);
-                } while (flexibleAdapter.getItemCount() > 0);
+            if (flexibleAdapter != null) {
+                flexibleAdapter.clear();
             }
-            recycleview.stopLoading();
-            recycleview.setNoData(true);
+            //recycleview.stopLoading();
+            swipeRefreshLayout.setRefreshing(false);
+            //recycleview.setNoData(true);
+            setNoData();
             tvSigninFooter.setVisibility(View.VISIBLE);
             return;
         }
 
         items.clear();
+        if (flexibleAdapter != null) flexibleAdapter.clear();
         mLastId = sourceList.get(0).getId();
         for (SignInTasks.SignInTask signInTask : sourceList) {
             items.add(new SignInItem(signInTask));
         }
 
-        flexibleAdapter = new SignInFlexibleAdapter(items);
-        flexibleAdapter.addItem(flexibleAdapter.getItemCount(), new SignInFooterItem());
-        recycleview.setAdapter(flexibleAdapter);
-        recycleview.stopLoading();
-        recycleview.setNoData(false);
+        items.add(new SignInFooterItem());
+        flexibleAdapter.updateDataSet(items);
+        swipeRefreshLayout.setRefreshing(false);
+        //recycleview.setNoData(false);
+        //setNoData();
 
         tvSigninHeader.setVisibility(View.GONE);
         tvSigninFooter.setVisibility(View.GONE);
@@ -320,9 +327,19 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
             flexibleAdapter.removeItem(0);
             tvSigninFooter.setVisibility(View.VISIBLE);
         }
-        recycleview.setNoData(flexibleAdapter.isEmpty());
+
+        //recycleview.setNoData(flexibleAdapter.isEmpty());
+        setNoData();
         selectedLocker = null;
         mLockerPos = 0;
+    }
+
+    private void setNoData(){
+        if (flexibleAdapter != null && flexibleAdapter.isEmpty()){
+            items.clear();
+            items.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂时没有签到记录"));
+            flexibleAdapter.updateDataSet(items);
+        }
     }
 
     @OnClick({ R.id.ll_signin_qrcode, R.id.ll_signin_manual, R.id.tv_signin_header, R.id.tv_signin_footer })
@@ -348,17 +365,21 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
                     recycleview.setAdapter(flexibleAdapter);
                 }
                 if (newList.size() > 0) {
+                    if (flexibleAdapter.getItemCount() == 1 && flexibleAdapter.getItem(0) instanceof CommonNoDataItem){
+                        flexibleAdapter.clear();
+                    }
                     for (SignInTasks.SignInTask signInTask : newList) {
                         flexibleAdapter.addItem(0, new SignInItem(signInTask));
                     }
                     if (newList.size() == flexibleAdapter.getItemCount()) {//添加 footer View
                         flexibleAdapter.addItem(flexibleAdapter.getItemCount(), new SignInFooterItem());
                     }
-                    mLinearLayoutManager.scrollToPosition(0);
+                    //mLinearLayoutManager.scrollToPosition(0);
                     mLastId = newList.get(0).getId();
                 }
                 newList.clear();
-                recycleview.setNoData(flexibleAdapter.isEmpty());
+                //recycleview.setNoData(flexibleAdapter.isEmpty());
+                setNoData();
                 tvSigninFooter.setVisibility(View.GONE);
                 break;
             case R.id.tv_signin_footer:
@@ -374,6 +395,11 @@ public class SignInListFragment extends BaseFragment implements SignInListPresen
     }
 
     @Override public void onUpdateEmptyView(int size) {
-            recycleview.setNoData(items.size() == 0);
+            //recycleview.setNoData(items.size() == 0);
+        setNoData();
+    }
+
+    @Override public void onRefresh() {
+
     }
 }

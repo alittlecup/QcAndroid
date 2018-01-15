@@ -104,7 +104,7 @@ public class CardBuyBody implements Parcelable,Cloneable {
         if (cto != null && cto.limit_days){
           this.check_valid = true;
           this.valid_from = start;
-          this.valid_to = DateUtils.addDay(start,cto.days);
+          this.valid_to = end;
         }
         break;
       case 2:
@@ -112,7 +112,7 @@ public class CardBuyBody implements Parcelable,Cloneable {
         if (cto != null && cto.limit_days){
           this.check_valid = true;
           this.valid_from = start;
-          this.valid_to = DateUtils.addDay(start,cto.days);
+          this.valid_to = end;
         }
         break;
       case 3:

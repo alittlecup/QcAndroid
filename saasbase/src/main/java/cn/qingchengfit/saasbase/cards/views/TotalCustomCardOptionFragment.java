@@ -30,6 +30,7 @@ public class TotalCustomCardOptionFragment extends CustomCardOptionFragment {
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = super.onCreateView(inflater, container, savedInstanceState);
+
     civChargeMoney.setLabel("面额(元)");
     if (cardOptionCustom != null){
       elNeedValid.setExpanded(cardOptionCustom.isLimit_days());
