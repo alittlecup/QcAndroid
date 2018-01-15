@@ -402,7 +402,8 @@ import rx.functions.Action1;
       if (cardTpl.getType() == Configs.CATEGORY_DATE) {
         routeTo("card", "/custom/option", null);
       } else {
-        routeTo("card", "/custom/all/option", null);
+        routeTo("card", "/custom/all/option",
+            new TotalCustomCardOptionParams().cardTplId(cardTpl.type).build());
       }
     } else if (validDay) {
       layoutValidate.setVisibility(View.VISIBLE);
@@ -484,7 +485,9 @@ import rx.functions.Action1;
       } else {
         routeTo(AppUtils.getRouterUri(getContext(), "/card/custom/all/option"),
             new TotalCustomCardOptionParams().cardOptionCustom(
-                ((CardTplOptionForBuy) commonFlexAdapter.getItem(position)).getOption()).unuse(0).build());
+                ((CardTplOptionForBuy) commonFlexAdapter.getItem(position)).getOption())
+                .cardTplId(cardTpl.type)
+                .build());
       }
     }
   }

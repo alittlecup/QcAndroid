@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.CardTplOption;
+import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.utils.CmStringUtils;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -19,7 +20,7 @@ import com.anbillon.flabellum.annotations.Need;
 @Leaf(module = "card", path = "/custom/all/option")
 public class TotalCustomCardOptionFragment extends CustomCardOptionFragment {
 
-  @Need Integer unuse;
+  @Need Integer cardTplId;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -31,7 +32,7 @@ public class TotalCustomCardOptionFragment extends CustomCardOptionFragment {
       @Nullable Bundle savedInstanceState) {
     View view = super.onCreateView(inflater, container, savedInstanceState);
 
-    civChargeMoney.setLabel("面额(元)");
+    civChargeMoney.setLabel(cardTplId == Configs.CATEGORY_TIMES ? "面额(次)" : "面额(元)");
     if (cardOptionCustom != null){
       elNeedValid.setExpanded(cardOptionCustom.isLimit_days());
       civCustomValidity.setContent(String.valueOf(cardOptionCustom.getDays()));
