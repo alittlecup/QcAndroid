@@ -356,7 +356,8 @@ public class MainMsgFragment extends BaseFragment
       recruitMsg.setId(0x11L);
       recruitNoty.notification = recruitMsg;
       items.add(new SystemMsgItem(R.drawable.ic_vd_notification_job, recruitNoty));
-      adapter.notifyDataSetChanged();
+      adapter.clear();
+      adapter.updateDataSet(items);
 
       try {
         //判断是否要填充空页面

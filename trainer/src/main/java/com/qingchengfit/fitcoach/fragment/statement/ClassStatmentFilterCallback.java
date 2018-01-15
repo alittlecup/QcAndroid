@@ -1,8 +1,8 @@
 package com.qingchengfit.fitcoach.fragment.statement;
 
-import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.bean.CourseTypeSample;
 import cn.qingchengfit.bean.StudentBean;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 
 /**
  * power by

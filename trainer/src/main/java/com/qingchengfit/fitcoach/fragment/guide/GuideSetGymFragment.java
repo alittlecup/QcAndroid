@@ -187,36 +187,9 @@ import rx.schedulers.Schedulers;
     @OnClick({ R.id.layout_brand, R.id.layout_gym_img, R.id.gym_address }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_brand:
-                //Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
-                //startActivityForResult(toChooseBrand, 1);
                 break;
             case R.id.layout_gym_img:
                 ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance(true);;
-                //choosePictureFragmentDialog.setResult(
-                //    new ChoosePictureFragmentDialog.ChoosePicResult() {
-                //        @Override
-                //        public void onChoosePicResult(boolean isSuccess, String filePath) {
-                //            if (isSuccess) {
-                //                showLoading();
-                //                UpYunClient.rxUpLoad("/header/", filePath)
-                //                    .onBackpressureBuffer()
-                //                    .subscribeOn(Schedulers.io())
-                //                    .observeOn(AndroidSchedulers.mainThread())
-                //                    .subscribe(new Action1<String>() {
-                //                        @Override public void call(String s) {
-                //                            imgHeader = s;
-                //                            Glide.with(getContext())
-                //                                .load(
-                //                                    com.tencent.qcloud.timchat.widget.PhotoUtils.getSmall(s))
-                //                                .asBitmap()
-                //                                .into(
-                //                                    new com.tencent.qcloud.timchat.widget.CircleImgWrapper(
-                //                                        gymImg, getContext()));
-                //                        }
-                //                    }, new NetWorkThrowable());
-                //            }
-                //        }
-                //    });
                 choosePictureFragmentDialog.show(getFragmentManager(), "");
                 break;
             case R.id.gym_address:
@@ -234,9 +207,7 @@ import rx.schedulers.Schedulers;
                     });
 
                 break;
-            //            case R.id.next_step:
-            //
-            //                break;
+
         }
     }
 

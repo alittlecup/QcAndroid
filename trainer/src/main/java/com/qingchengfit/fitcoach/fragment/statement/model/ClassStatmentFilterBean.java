@@ -2,9 +2,9 @@ package com.qingchengfit.fitcoach.fragment.statement.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.bean.CourseTypeSample;
 import cn.qingchengfit.bean.StudentBean;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 
 /**
  * power by

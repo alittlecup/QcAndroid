@@ -3,7 +3,6 @@ package cn.qingchengfit.saasbase.report.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.model.base.Shop;
-import cn.qingchengfit.saasbase.network.model.CourseTypeSample;
 
 public class CourseReportSchedule implements Parcelable {
 

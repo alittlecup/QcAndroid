@@ -96,7 +96,7 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
         recyclerview.setNestedScrollingEnabled(false);
         linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());
         recyclerview.setLayoutManager(linearLayoutManager);
-        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.divier_horizon_left_48dp));
+        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(adapter);
         presenter.queryChatFriend();
         showLoading();

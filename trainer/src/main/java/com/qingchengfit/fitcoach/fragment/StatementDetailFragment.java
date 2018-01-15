@@ -30,7 +30,10 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
+import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -41,8 +44,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import cn.qingchengfit.bean.CourseTypeSample;
-import cn.qingchengfit.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.fragment.statement.RxNetWorkEvent;
@@ -55,7 +56,6 @@ import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseTypeFormFragm
 import com.qingchengfit.fitcoach.fragment.statement.model.ClassStatmentFilterBean;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseCardForm;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeform;
-import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
 import com.qingchengfit.fitcoach.fragment.statement.presenter.StatementDetailPresenter;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
@@ -109,7 +109,7 @@ public class StatementDetailFragment extends BaseFragment
   private ClassStatmentFilterBean mFilter = new ClassStatmentFilterBean();
   private ArrayList<CourseTypeSample> mFilterCourse = new ArrayList<>();
   private ArrayList<Staff> mFilterCoaches = new ArrayList<>();
-  private ArrayList<StudentBean> mFilterUsers = new ArrayList<>();
+  private ArrayList<QcStudentBean> mFilterUsers = new ArrayList<>();
   /**
    * 报表参数
    */

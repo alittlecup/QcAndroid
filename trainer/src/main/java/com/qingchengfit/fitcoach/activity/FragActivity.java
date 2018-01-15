@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
-import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.AddBelongGymFragment;
 import com.qingchengfit.fitcoach.fragment.AddSelfGymFragment;
@@ -18,8 +17,6 @@ import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.SaleGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
-import com.qingchengfit.fitcoach.fragment.batch.SetAccountFragment;
-import com.qingchengfit.fitcoach.fragment.batch.space.SpaceListFragment;
 import com.qingchengfit.fitcoach.fragment.course.plan.CoursePlanHomeFragment;
 import com.qingchengfit.fitcoach.fragment.manage.EditGymFragment;
 
@@ -88,12 +85,12 @@ public class FragActivity extends BaseActivity {
             case 10://Go sync page
                 fragment = new SyncGymFragment();
                 break;
-            case 11:
-                fragment = SpaceListFragment.newInstance(getIntent().getIntExtra("course_type", Configs.TYPE_GROUP));
-                break;
-            case 12:
-                fragment = SetAccountFragment.newInstance(getIntent().getIntExtra("count", 1), getIntent().getBooleanExtra("isfree", true));
-                break;
+            //case 11:
+            //    fragment = SpaceListFragment.newInstance(getIntent().getIntExtra("course_type", Configs.TYPE_GROUP));
+            //    break;
+            //case 12:
+            //    fragment = SetAccountFragment.newInstance(getIntent().getIntExtra("count", 1), getIntent().getBooleanExtra("isfree", true));
+            //    break;
             case 13:
                 fragment = EditGymFragment.newInstance(mCoachService.id, mCoachService.model, mCoachService.getBrand_name());
                 break;
@@ -108,6 +105,10 @@ public class FragActivity extends BaseActivity {
 
     public CoachService getCoachService() {
         return mCoachService;
+    }
+
+    @Override protected boolean isFitSystemBar() {
+        return false;
     }
 
     @Override protected void onDestroy() {

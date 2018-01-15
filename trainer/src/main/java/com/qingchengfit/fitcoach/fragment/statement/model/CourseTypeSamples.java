@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.statement.model;
 
+import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import com.google.gson.annotations.SerializedName;
-import cn.qingchengfit.bean.CourseTypeSample;
 import java.util.List;
 
 /**

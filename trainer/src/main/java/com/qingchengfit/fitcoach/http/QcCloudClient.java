@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.http;
 
-import android.support.annotation.Nullable;
 import cn.qingchengfit.Constants;
 import cn.qingchengfit.bean.BrandBody;
 import cn.qingchengfit.bean.ChangeBrandCreatorBody;
@@ -16,6 +15,7 @@ import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.body.PostCommentBody;
 import cn.qingchengfit.model.responese.ArticleCommentListData;
 import cn.qingchengfit.model.responese.ChatFriendsData;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponToken;
 import cn.qingchengfit.network.response.QcResponse;
@@ -30,7 +30,7 @@ import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.network.body.EditJacketBody;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
-import cn.qingchengfit.saasbase.network.model.CourseTypeSample;
+import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
 import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.report.bean.CourseReportDetail;
@@ -201,7 +201,7 @@ public class QcCloudClient {
                         .addHeader("Connection", "close")
                         .addHeader("X-CSRFToken", token)
                         .addHeader("Cookie",
-                            "csrftoken=" + token + ";sessionid=" + PreferenceUtils.getPrefString(App.AppContex, Configs.PREFER_SESSION, ""))
+                            "csrftoken=" + token + ";sessionid=" + QcRestRepository.getSession(App.AppContex))
                         .addHeader("User-Agent",
                             " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(
                                 R.string.oem_tag) + "  QingchengApp/Trainer")
@@ -211,7 +211,7 @@ public class QcCloudClient {
                         .addHeader("Connection", "close")
                         .addHeader("max-age", "5")
                         .addHeader("Cache-Control", "public")
-                        .addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(App.AppContex, Configs.PREFER_SESSION, ""))
+                        .addHeader("Cookie", "sessionid=" + QcRestRepository.getSession(App.AppContex))
                         .addHeader("User-Agent",
                             " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(
                                 R.string.oem_tag) + "  QingchengApp/Trainer")
@@ -233,13 +233,13 @@ public class QcCloudClient {
             //                    }
             //                })
             .create();
-        Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(Constants.Server)
+        Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(BuildConfig.DEBUG?Constants.ServerDebug:Constants.Server)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .build();
 
-        Retrofit postApiAdapter = new Retrofit.Builder().baseUrl(Constants.Server)
+        Retrofit postApiAdapter = new Retrofit.Builder().baseUrl(BuildConfig.DEBUG?Constants.ServerDebug:Constants.Server)
             .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .client(client)
@@ -548,11 +548,11 @@ public class QcCloudClient {
 
         @GET("/api/v1/coaches/{id}/{type}/{single_id}/") rx.Observable<QcResponseSingleBatch> qcGetSingleBatch(@Path("id") String coach_id,
             @Path("type") String type, @Path("single_id") String single_id, @QueryMap HashMap<String, Object> params);
-
-        //排课填充
-        @GET("/api/v1/coaches/{id}/{type}/arrange/template/") rx.Observable<QcResponseBtachTemplete> qcGetBatchTemplate(
-            @Path("id") String id, @Path("type") String type, @Query("id") String gymid, @Query("model") String gymmodel,
-            @Nullable @Query("teacher_id") String teacher_id, @Query("course_id") String course_id);
+        //
+        ////排课填充
+        //@GET("/api/v1/coaches/{id}/{type}/arrange/template/") rx.Observable<QcResponseBtachTemplete> qcGetBatchTemplate(
+        //    @Path("id") String id, @Path("type") String type, @Query("id") String gymid, @Query("model") String gymmodel,
+        //    @Nullable @Query("teacher_id") String teacher_id, @Query("course_id") String course_id);
 
         //获取某个排期的详情
         @GET("/api/v1/coaches/{id}/batches/{batch_id}/") rx.Observable<QcResponsePrivateBatchDetail> qcGetBatchDetail(

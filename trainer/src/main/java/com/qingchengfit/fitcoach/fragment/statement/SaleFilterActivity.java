@@ -27,6 +27,8 @@ import cn.qingchengfit.widgets.DialogList;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseSaleDetail;
+import com.qingchengfit.fitcoach.fragment.statement.model.SaleFilter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

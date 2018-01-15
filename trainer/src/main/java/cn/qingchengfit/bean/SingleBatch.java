@@ -1,6 +1,8 @@
 package cn.qingchengfit.bean;
 
-import cn.qingchengfit.model.base.TimeRepeat;
+import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
+import cn.qingchengfit.saasbase.course.batch.bean.Rule;
+import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
 import com.qingchengfit.fitcoach.http.bean.CardTplBatchShip;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class SingleBatch {
 
     public boolean is_free;
     public List orders;
-    public List<TimeRepeat> time_repeats;
+    public List<Time_repeat> time_repeats;
     public List<CardTplBatchShip> card_tpls;
     public boolean has_order;
     public BatchOpenRule open_rule;

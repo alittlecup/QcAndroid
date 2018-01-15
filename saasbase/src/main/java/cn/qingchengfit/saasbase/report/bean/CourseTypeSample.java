@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.network.model;
+package cn.qingchengfit.saasbase.report.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

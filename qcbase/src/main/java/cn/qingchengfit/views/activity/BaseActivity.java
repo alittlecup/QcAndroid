@@ -95,7 +95,7 @@ public class BaseActivity extends AppCompatActivity {
       LogUtil.e("not find in AppCompot ");
     }
     getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && isFitSystemBar()) {
       Window window = getWindow();
       window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
       );
@@ -123,6 +123,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     getSupportFragmentManager().registerFragmentLifecycleCallbacks(fcb,false);
+  }
+
+  protected boolean isFitSystemBar(){
+    return true;
   }
 
   boolean hasFrag = false;

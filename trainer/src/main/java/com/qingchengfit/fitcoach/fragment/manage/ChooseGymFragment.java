@@ -163,7 +163,8 @@ import rx.schedulers.Schedulers;
                         mDatas.add(new BrandShopsItem(b, ds));
                     }
                     mDatas.add(new AddCardStyleItem("新建健身房"));
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.clear();
+                    mAdapter.updateDataSet(mDatas);
                 }
             }, throwable -> hideLoading()));
     }

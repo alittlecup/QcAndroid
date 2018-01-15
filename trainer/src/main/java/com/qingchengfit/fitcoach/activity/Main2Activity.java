@@ -260,6 +260,10 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
         }
     }
 
+    @Override protected boolean isFitSystemBar() {
+        return false;
+    }
+
     private void initRouter() {
         baseRouter.registeRouter("recruit", RecruitActivity.class);
     }

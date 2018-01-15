@@ -121,7 +121,6 @@ public class RecruitPositionDetailFragment extends BaseFragment
 
    void initdatabding(LayoutInflater inflater, ViewGroup container){
     db = DataBindingUtil.inflate(inflater,R.layout.fragment_recruit_seek_position_detail,container,false);
-
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

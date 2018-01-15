@@ -129,8 +129,13 @@ public class ArticleReplyFragment extends BaseFragment implements ArticleReplyPr
             for (int i = 0; i < list.size(); i++) {
                 items.add(new ArticleReplyItem(list.get(i)));
             }
-            commonFlexAdapter.notifyDataSetChanged();
+            commonFlexAdapter.clear();
+            commonFlexAdapter.updateDataSet(items);
         }
+    }
+
+    @Override protected boolean isfitSystemPadding() {
+        return false;
     }
 
     @Override public void onTotalCount(int count, int pages) {

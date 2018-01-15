@@ -68,6 +68,10 @@ public class SettingActivity extends BaseActivity
         }
     }
 
+    @Override protected boolean isFitSystemBar() {
+        return false;
+    }
+
     @Override public void onFragmentChange(Fragment fragment) {
         AppUtils.hideKeyboard(this);
         fragmentManager.beginTransaction()

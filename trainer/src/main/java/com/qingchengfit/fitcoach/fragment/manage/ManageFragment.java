@@ -18,6 +18,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.bean.CurentPermissions;
+import cn.qingchengfit.bean.FunctionBean;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
@@ -37,13 +39,10 @@ import com.qingchengfit.fitcoach.Utils.Utils;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.PopFromBottomActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
-import cn.qingchengfit.bean.CurentPermissions;
-import cn.qingchengfit.bean.FunctionBean;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
 import com.qingchengfit.fitcoach.event.EventChooseGym;
-import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
@@ -311,10 +310,7 @@ public class ManageFragment extends BaseFragment
               || CurentPermissions.newInstance()
               .queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR)) {
 
-            Intent toGuide = new Intent(getActivity(), CourseActivity.class);
-            toGuide.putExtra("to", CourseActivity.TO_GROUP_BATCH);
-            toGuide.putExtra("service", gymWrapper.getCoachService());
-            startActivity(toGuide);
+            routeTo("course","/batches/group/list/",null);
           } else {
             showAlert(getString(R.string.sorry_no_permission));
           }
@@ -325,10 +321,7 @@ public class ManageFragment extends BaseFragment
               || CurentPermissions.newInstance()
               .queryPermission(PermissionServerUtils.PRISETTING)) {
 
-            Intent toCourse = new Intent(getActivity(), CourseActivity.class);
-            toCourse.putExtra("service", gymWrapper.getCoachService());
-            toCourse.putExtra("to", CourseActivity.TO_PRIVATE_BATCH);
-            startActivity(toCourse);
+            routeTo("course","/batches/private/list/",null);
           } else {
             showAlert(getString(R.string.sorry_no_permission));
           }

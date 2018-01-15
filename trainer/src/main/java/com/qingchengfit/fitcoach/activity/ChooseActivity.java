@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.bean.CmBean;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
 import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.recruit.model.ChatGym;
@@ -11,7 +10,6 @@ import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.fragment.guide.AddCycleFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragmentBuilder;
 import com.qingchengfit.fitcoach.fragment.schedule.ChooseScheduleGymFragmentBuilder;
 
@@ -41,8 +39,8 @@ public class ChooseActivity extends BaseActivity {
 
     switch (to) {
       case 1:
-        fragment = AddCycleFragment.newInstance((CmBean) getIntent().getParcelableExtra("cmbean"),
-            getIntent().getLongExtra("len", 0));
+        //fragment = AddCycleFragment.newInstance((CmBean) getIntent().getParcelableExtra("cmbean"),
+        //    getIntent().getLongExtra("len", 0));
         break;
       case TO_CHOSSE_GYM:
         fragment = new ChooseGymFragmentBuilder(getIntent().getParcelableExtra("service")).build();

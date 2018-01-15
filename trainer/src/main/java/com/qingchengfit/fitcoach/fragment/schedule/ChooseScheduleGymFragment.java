@@ -134,7 +134,8 @@ import rx.schedulers.Schedulers;
                             }
                         }
                         //mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
-                        mAdapter.notifyDataSetChanged();
+                        mAdapter.clear();
+                        mAdapter.updateDataSet(mDatas);
                         mAdapter.toggleSelection(selectpos);
                     } else {
                         ToastUtils.showDefaultStyle(qcCoachServiceResponse.msg);

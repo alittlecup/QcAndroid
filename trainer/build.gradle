@@ -55,7 +55,9 @@ android {
     versionName cfg.trainer_version_name
     vectorDrawables.useSupportLibrary = true
   }
-
+  dataBinding {
+    enabled true
+  }
   useLibrary 'org.apache.http.legacy'
 
 

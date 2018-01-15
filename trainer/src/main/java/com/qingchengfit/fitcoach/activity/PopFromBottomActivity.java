@@ -62,6 +62,10 @@ public class PopFromBottomActivity extends BaseActivity {
         toolbarTitile.setText(title);
     }
 
+    @Override protected boolean isFitSystemBar() {
+        return false;
+    }
+
     @Override public void onBackPressed() {
         finish();
         overridePendingTransition(R.anim.slide_hold, R.anim.slide_bottom_out);

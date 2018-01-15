@@ -38,7 +38,6 @@ import com.qingchengfit.fitcoach.fragment.unlogin.HomeBannerFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnLoginHomeFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnLoginScheduleAdFragment;
 import com.qingchengfit.fitcoach.fragment.unlogin.UnloginManageFragment;
-import com.tencent.qcloud.timchat.ui.qcchat.SplashActivity;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -81,7 +80,6 @@ import dagger.multibindings.IntoMap;
     AppComponent.ManageFragmentModule.class, AppComponent.CustomStatmentFragmentModule.class,
     AppComponent.BaseDialogFragmentModule.class, AppComponent.CustomSaleFragmentModule.class,
     AppComponent.CardTypeChooseDialogFragmentModule.class,
-    AppComponent.SplashModule.class,
     AppComponent.Main2Module.class,
     AppComponent.UnLoginHomeFragmentModule.class,
     AppComponent.HomeBannerFragmentModule.class,
@@ -111,8 +109,8 @@ import dagger.multibindings.IntoMap;
             extends AndroidInjector.Builder<ConversationFriendsFragment> {
         }
     }
-    @Subcomponent() public interface SplashSubcomponent extends AndroidInjector<SplashActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SplashActivity> {
+    @Subcomponent() public interface SplashSubcomponent extends AndroidInjector<com.qingchengfit.fitcoach.activity.SplashActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<com.qingchengfit.fitcoach.activity.SplashActivity> {
         }
     }
     @Subcomponent() public interface ChatChooseInGymFragmentSubcomponent extends AndroidInjector<ChatChooseInGymFragment> {
@@ -281,7 +279,7 @@ import dagger.multibindings.IntoMap;
     }
 
     @Module(subcomponents = SplashSubcomponent.class) abstract class SplashModule {
-        @Binds @IntoMap @ActivityKey(SplashActivity.class)
+        @Binds @IntoMap @ActivityKey(com.qingchengfit.fitcoach.activity.SplashActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(SplashSubcomponent.Builder builder);
     }
 

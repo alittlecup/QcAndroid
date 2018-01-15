@@ -3,7 +3,6 @@ package cn.qingchengfit.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.model.base.Course;
-import cn.qingchengfit.model.base.InitBatch;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.User;
 import java.util.List;
@@ -44,14 +43,11 @@ public class CoachInitBean implements Parcelable {
     public Shop shop;
     public List<User> teachers;
     public List<Course> courses;
-    public List<InitBatch> batches;
 
     private CoachInitBean(Builder builder) {
         brand_id = builder.brand_id;
         shop = builder.shop;
         teachers = builder.teachers;
-        courses = builder.courses;
-        batches = builder.batches;
     }
 
     public CoachInitBean() {
@@ -62,7 +58,6 @@ public class CoachInitBean implements Parcelable {
         this.shop = in.readParcelable(Shop.class.getClassLoader());
         this.teachers = in.createTypedArrayList(User.CREATOR);
         this.courses = in.createTypedArrayList(Course.CREATOR);
-        this.batches = in.createTypedArrayList(InitBatch.CREATOR);
     }
 
     @Override public int describeContents() {
@@ -73,16 +68,12 @@ public class CoachInitBean implements Parcelable {
         dest.writeString(this.brand_id);
         dest.writeParcelable(this.shop, flags);
         dest.writeTypedList(this.teachers);
-        dest.writeTypedList(this.courses);
-        dest.writeTypedList(this.batches);
     }
 
     public static final class Builder {
         private String brand_id;
         private Shop shop;
         private List<User> teachers;
-        private List<Course> courses;
-        private List<InitBatch> batches;
 
         public Builder() {
         }
@@ -102,15 +93,7 @@ public class CoachInitBean implements Parcelable {
             return this;
         }
 
-        public Builder courses(List<Course> val) {
-            courses = val;
-            return this;
-        }
 
-        public Builder batches(List<InitBatch> val) {
-            batches = val;
-            return this;
-        }
 
         public CoachInitBean build() {
             return new CoachInitBean(this);

@@ -6,7 +6,7 @@ include ':qcbase', ':saasbase',
     ':sdk',
     ':staff',
 //    ':student',
-':qcbase'
-//    ':trainer'
+':qcbase',
+    ':trainer'
 //
 

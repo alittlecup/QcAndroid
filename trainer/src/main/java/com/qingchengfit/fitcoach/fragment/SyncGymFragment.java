@@ -100,7 +100,7 @@ public class SyncGymFragment extends BaseFragment {
                         mData.add(new SyncGymItem(qcCoachServiceResponse.data.services.get(i)));
                     }
                     mData.add(syncItem);
-                    commonFlexAdapter.notifyDataSetChanged();
+                    commonFlexAdapter.updateDataSet(mData);
                     recyclerview.scrollToPosition(mData.size());
                     RxRegiste(rx.Observable.just("")
                         .delay(2, TimeUnit.SECONDS)

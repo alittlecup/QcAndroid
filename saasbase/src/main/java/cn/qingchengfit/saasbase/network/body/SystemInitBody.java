@@ -4,7 +4,7 @@ import cn.qingchengfit.model.base.Space;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.network.model.Batch;
-import cn.qingchengfit.saasbase.network.model.CourseTypeSample;
+import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.model.base.Shop;
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;

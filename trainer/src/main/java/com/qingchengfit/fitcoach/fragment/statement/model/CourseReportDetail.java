@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.statement.model;
 
+import cn.qingchengfit.saasbase.report.bean.CourseReportOrder;
+import cn.qingchengfit.saasbase.report.bean.CourseReportSchedule;
 import java.util.List;
 
 /**

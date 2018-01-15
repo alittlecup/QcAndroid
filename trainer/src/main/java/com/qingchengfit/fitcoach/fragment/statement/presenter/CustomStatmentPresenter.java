@@ -2,12 +2,12 @@ package com.qingchengfit.fitcoach.fragment.statement.presenter;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
-import cn.qingchengfit.bean.CourseTypeSample;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.fragment.StatementDetailFragment;
 import com.qingchengfit.fitcoach.fragment.statement.CustomStatementView;
