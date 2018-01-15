@@ -96,12 +96,14 @@ public class BatchDetailCommonView extends BaseFragment {
   private boolean numHasChange = false;//人数已经修改
   private String mSource;
   private boolean hasOrder;
+  private boolean isPrivate = true;
 
-  public static BatchDetailCommonView newInstance(Course course, Staff trainer,String source) {
+  public static BatchDetailCommonView newInstance(Course course, Staff trainer,String source, boolean isPrivate) {
     Bundle args = new Bundle();
     args.putParcelable("course", course);
     args.putParcelable("trainer", trainer);
     args.putString("source", source);
+    args.putBoolean("private", isPrivate);
     BatchDetailCommonView fragment = new BatchDetailCommonView();
     fragment.setArguments(args);
     return fragment;
@@ -113,9 +115,11 @@ public class BatchDetailCommonView extends BaseFragment {
       course = getArguments().getParcelable("course");
       trainer = getArguments().getParcelable("trainer");
       mSource = getArguments().getString("source");
+      isPrivate = getArguments().getBoolean("private");
+
       if (course == null) {
         course = new Course();
-        course.is_private = true;
+        course.is_private = isPrivate;
       }
     }
     RxBus.getBus()
@@ -145,7 +149,7 @@ public class BatchDetailCommonView extends BaseFragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
-    View view = inflater.inflate(course.is_private ? R.layout.fragment_batch_detail_common_private
+    View view = inflater.inflate(isPrivate ? R.layout.fragment_batch_detail_common_private
       : R.layout.fragment_batch_detail_common_group, container, false);
     unbinder = ButterKnife.bind(this, view);
     setCourse(course);
@@ -348,7 +352,7 @@ public class BatchDetailCommonView extends BaseFragment {
    * 更改课程
    */
   @OnClick(R2.id.course_layout) public void onCourseLayoutClicked() {
-    routeTo("course", "/choose/", CourseChooseParams.builder().src(mSource).mIsPrivate(course.is_private()).build());
+    routeTo("course", "/choose/", CourseChooseParams.builder().src(mSource).mIsPrivate(isPrivate).build());
   }
 
   /**
@@ -366,7 +370,7 @@ public class BatchDetailCommonView extends BaseFragment {
    * 更改场地
    */
   @OnClick(R2.id.space) public void onSpaceClicked() {
-    routeTo("gym", "/site/choose/", new SiteSelectedParams().isPrivate(course.is_private)
+    routeTo("gym", "/site/choose/", new SiteSelectedParams().isPrivate(isPrivate)
       .selectIds(ListUtils.getIdList(spaces))
       .build());
   }
@@ -376,7 +380,7 @@ public class BatchDetailCommonView extends BaseFragment {
    */
   @OnClick(R2.id.order_sutdent_count) public void onOrderSutdentCountClicked() {
     new DialogList(getContext()).list(
-      course.is_private ? CmStringUtils.getNums(1, 10) : CmStringUtils.getNums(1, 300),
+      isPrivate ? CmStringUtils.getNums(1, 10) : CmStringUtils.getNums(1, 300),
       (parent, view, position, id) -> {
         int before = 8;
         try {

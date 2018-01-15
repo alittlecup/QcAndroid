@@ -120,6 +120,8 @@ public class NewCardChargeFragment extends CardBuyFragment {
       }
       if (option.isLimit_days()){
         interval += option.days;
+      }else{
+        interval = 0;
       }
       tvCardValidateTotal.setText(getResources().getString(stringId,
           String.valueOf(card.getBalance() + Float.parseFloat(option.charge)),
@@ -146,16 +148,27 @@ public class NewCardChargeFragment extends CardBuyFragment {
           }
           if (card.isCheck_valid()
               && DateUtils.interval(card.getValid_from(), card.getValid_to()) > 0 && !card.isExpired()) {
-            if (date.before(DateUtils.formatDateFromYYYYMMDD(card.getValid_from()))) {
-              interval = interval + (DateUtils.interval(card.getValid_from(), card.getValid_to()) + 1);
-            } else {
+            if (((new Date())).after(DateUtils.formatDateFromYYYYMMDD(card.getValid_from()))) {
+              //if (date.before(DateUtils.formatDateFromYYYYMMDD(card.getValid_from()))) {
+              //  interval = interval + (DateUtils.interval(card.getValid_from(), card.getValid_to()) + 1);
+              //} else {
               interval = interval + (DateUtils.interval(DateUtils.Date2YYYYMMDD(new Date()), card.getValid_to()) + 1);
+            }else{
+              interval = interval + (DateUtils.interval(card.getValid_from(), card.getValid_to()) + 1);
             }
+            //}
           }
         if (date.before(new Date()) && !card.isExpired()) {
-          civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(
-              card.isCheck_valid() ? DateUtils.formatDateFromYYYYMMDD(card.getValid_to())
-                  : new Date(), cardOptionCustom.days - 1)));
+            if ((card.isCheck_valid() && DateUtils.formatDateFromYYYYMMDD(card.getValid_from())
+                .before(new Date()))){
+              civEndTime.setContent(DateUtils.Date2YYYYMMDD(
+                  DateUtils.addDay(DateUtils.formatDateFromYYYYMMDD(card.getValid_to()),
+                      cardOptionCustom.getDays())));
+            }else{
+              civEndTime.setContent(DateUtils.Date2YYYYMMDD(
+                  DateUtils.addDay(new Date(),
+                      interval - 1)));
+            }
         }else {
           civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date, interval - 1)));
         }
@@ -170,8 +183,22 @@ public class NewCardChargeFragment extends CardBuyFragment {
         }
 
     }else if (cardTpl.getType() == Configs.CATEGORY_DATE){
-      civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date,
-          (int)(Float.parseFloat(cardOptionCustom.getCharge()) + (card.getBalance() > 0 ? card.getBalance() : 0) - 1))));
+      if (!card.isExpired()) {
+        if (date.before(new Date())){
+          civEndTime.setContent(DateUtils.Date2YYYYMMDD(
+              DateUtils.addDay(DateUtils.formatDateFromYYYYMMDD(card.getEnd()),
+                  (int) (Float.parseFloat(cardOptionCustom.getCharge())))));
+        }else{
+
+        civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date,
+            (int) (Float.parseFloat(cardOptionCustom.getCharge()) + (card.getBalance() > 0
+                ? card.getBalance() : 0) - 1))));
+        }
+      } else {
+        civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date,
+            (int) (Float.parseFloat(cardOptionCustom.getCharge()) + (card.getBalance() > 0
+                ? card.getBalance() : 0) - 1))));
+      }
     }
   }
 

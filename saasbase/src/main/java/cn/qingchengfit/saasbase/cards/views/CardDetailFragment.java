@@ -20,6 +20,7 @@ import cn.qingchengfit.saasbase.cards.item.CardActionsItem;
 import cn.qingchengfit.saasbase.cards.item.CardDetailFunItem;
 import cn.qingchengfit.saasbase.cards.item.CardDetailItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardDetailPresenter;
+import cn.qingchengfit.saasbase.cards.views.offday.OffDayListParams;
 import cn.qingchengfit.saasbase.cards.views.spendrecord.SpendRecordParams;
 import cn.qingchengfit.saasbase.common.views.CommonInputParams;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
@@ -105,17 +106,13 @@ import javax.inject.Inject;
             }
           }
         });
+    onRefresh();
     return parent;
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("会员卡详情");
-  }
-
-  @Override protected void onFinishAnimation() {
-    super.onFinishAnimation();
-    onRefresh();
   }
 
   @Override protected void addDivider() {
@@ -245,7 +242,7 @@ import javax.inject.Inject;
       return;
     }
     routeTo(AppUtils.getRouterUri(getContext(), "/card/offday/list"),
-        new CardRefundParams().card(mCard).build());
+        new OffDayListParams().card(mCard).build());
   }
 
   @Override public void onClickMore() {

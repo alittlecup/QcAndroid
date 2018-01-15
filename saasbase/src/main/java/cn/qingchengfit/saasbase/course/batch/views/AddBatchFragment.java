@@ -118,7 +118,7 @@ import rx.android.schedulers.AndroidSchedulers;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    batchBaseFragment = BatchDetailCommonView.newInstance(mCourse, mTeacher,"addbatch");
+    batchBaseFragment = BatchDetailCommonView.newInstance(mCourse, mTeacher,"addbatch", mCourse == null || mCourse.is_private());
     batchBaseFragment.setListener(this);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
     arrayOpenTime = getResources().getStringArray(R.array.order_open_time);

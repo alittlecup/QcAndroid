@@ -221,9 +221,11 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
   }
 
   @Override public void onBatchDetail(BatchDetail batchDetail) {
-    if (batchBaseFragment == null)
-      batchBaseFragment = BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher,"editbatch");
-    else {
+    if (batchBaseFragment == null) {
+      batchBaseFragment =
+          BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher, "editbatch",
+              isPrvite);
+    } else {
       batchBaseFragment.setTrainer(batchDetail.teacher);
       batchBaseFragment.setCourse(batchDetail.course);
     }

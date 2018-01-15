@@ -220,7 +220,8 @@ public class CardRefundFragment extends SaasBaseFragment implements CardBuyPrese
         .subscribe(new BusSubscribe<Staff>() {
           @Override public void onNext(Staff staff) {
             sale.setContent(staff.getUsername());
-            chargeBody.setSeller_id(staff.id);
+            if (staff.id.equals("0"))
+              chargeBody.setSeller_id(null);
           }
         });
   }

@@ -193,7 +193,7 @@ import rx.android.schedulers.AndroidSchedulers;
   @Override public void onDetail(SingleBatch batchDetail) {
     if (batchBaseFragment == null) {
       batchBaseFragment =
-        BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher,"batchsingle");
+        BatchDetailCommonView.newInstance(batchDetail.course, batchDetail.teacher,"batchsingle", isPrivate);
     } else {
       batchBaseFragment.setTrainer(batchDetail.teacher);
       batchBaseFragment.setCourse(batchDetail.course);
