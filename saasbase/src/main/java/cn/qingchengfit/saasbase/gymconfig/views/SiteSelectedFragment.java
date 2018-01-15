@@ -46,7 +46,7 @@ import rx.android.schedulers.AndroidSchedulers;
 @Leaf(module = "gym", path = "/site/choose/")
 public class SiteSelectedFragment extends SiteFragment {
 
-  @Need boolean isPrivate;
+  @Need Boolean isPrivate;
   @Need ArrayList<String> selectIds;
   protected Toolbar toolbar;
   protected TextView toolbarTitle;
