@@ -1,6 +1,5 @@
 package cn.qingchengfit.staffkit.views.signin.config;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -22,21 +21,24 @@ import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Router;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
+import cn.qingchengfit.staffkit.views.signin.zq.model.Guard;
+import cn.qingchengfit.staffkit.views.signin.zq.presenter.ZqAccessPresenter;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import cn.qingchengfit.widgets.ExpandedLayout;
+import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
 import timber.log.Timber;
@@ -62,12 +64,13 @@ import timber.log.Timber;
  * Created by Paper on 2017/2/13.
  */
 public class SigninConfigListFragment extends BaseFragment
-    implements ModuleConfigsPresenter.MVPView {
+    implements ModuleConfigsPresenter.MVPView, ZqAccessPresenter.MVPView {
 
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject RestRepositoryV2 restRepository;
   @Inject ModuleConfigsPresenter presenter;
+  @Inject IPermissionModel permissionModel;
   @BindView(R.id.tv_signin_type_setted) TextView tvSigninTypeSetted;
   @BindView(R.id.btn_how_to_use) TextView btnHowToUse;
   @BindView(R.id.layout_signin_type) LinearLayout layoutSigninType;
@@ -79,6 +82,7 @@ public class SigninConfigListFragment extends BaseFragment
   @BindView(R.id.input_sign_use_card) CommonInputView inputSignUseCard;
   @BindView(R.id.input_sign_use_qrcode) CommonInputView inputSignUseQrcode;
   @BindView(R.id.input_sign_use_zq) CommonInputView inputSignUseZq;
+  @Inject ZqAccessPresenter zqPresenter;
   private boolean setted;
   private boolean isJumping = false;
   private boolean isAutoOpen = false;
@@ -104,6 +108,7 @@ public class SigninConfigListFragment extends BaseFragment
           @Override public void onGlobalLayout() {
             CompatUtils.removeGlobalLayout(swOpen.getViewTreeObserver(), this);
             presenter.getModuleConfigs();
+            zqPresenter.getAccess();
           }
         });
 
@@ -146,8 +151,7 @@ public class SigninConfigListFragment extends BaseFragment
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.layout_signin_type:
-        if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
-            PermissionServerUtils.CHECKIN_HELP)) {
+        if (!permissionModel.check(PermissionServerUtils.CHECKIN_HELP)) {
           showAlert(R.string.sorry_for_no_permission);
           return;
         }
@@ -158,8 +162,7 @@ public class SigninConfigListFragment extends BaseFragment
             .commit();
         break;
       case R.id.layout_signin_wardrobe:
-        if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
-            PermissionServerUtils.CHECKIN_LOCKER_LINK)) {
+        if (!permissionModel.check(PermissionServerUtils.CHECKIN_LOCKER_LINK_NEW)) {
           showAlert(R.string.sorry_for_no_permission);
           return;
         }
@@ -170,8 +173,7 @@ public class SigninConfigListFragment extends BaseFragment
             .commit();
         break;
       case R.id.layout_signin_screen:
-        if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
-            PermissionServerUtils.CHECKIN_SCREEN)) {
+        if (!permissionModel.check(PermissionServerUtils.CHECKIN_SCREEN)) {
           showAlert(R.string.sorry_for_no_permission);
           return;
         }
@@ -237,5 +239,25 @@ public class SigninConfigListFragment extends BaseFragment
 
   @Override public void onDestroyView() {
     super.onDestroyView();
+  }
+
+  @Override public void onGetAccess(List<Guard> guardList) {
+    inputSignUseZq.setContent(guardList.size() +  "个");
+  }
+
+  @Override public void changeStatusOk() {
+
+  }
+
+  @Override public void onDeleteOk() {
+
+  }
+
+  @Override public void onAddOk() {
+
+  }
+
+  @Override public void onEditOk() {
+
   }
 }

@@ -1,10 +1,7 @@
 package cn.qingchengfit.staffkit.views.signin.zq;
 
-import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,9 +82,8 @@ public class ItemZqAccess extends AbstractFlexibleItem<ItemZqAccess.ZqAccessVH> 
     return str;
   }
 
-  @Override public ZqAccessVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ZqAccessVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ZqAccessVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ZqAccessVH(view, adapter);
   }
 
   @Override public boolean equals(Object o) {

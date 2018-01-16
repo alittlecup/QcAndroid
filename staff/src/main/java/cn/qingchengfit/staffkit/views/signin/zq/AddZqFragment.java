@@ -14,8 +14,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.course.SimpleTextItemItem;
 import cn.qingchengfit.staffkit.views.signin.zq.event.EventAddZq;
 import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
 import cn.qingchengfit.staffkit.views.signin.zq.model.Guard;
@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
-import org.w3c.dom.Text;
 
 /**
  * Created by fb on 2017/9/20.

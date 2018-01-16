@@ -108,7 +108,7 @@ public class ZqAccessPresenter extends BasePresenter {
 
   public void addZqAccess(AccessBody body){
     RxRegiste(restRepository.createPostApi(Post_Api.class)
-        .qcAddAccess(App.staffId, gymWrapper.getParams(), body)
+        .qcAddAccess(App.staffId, body)
         .onBackpressureBuffer()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

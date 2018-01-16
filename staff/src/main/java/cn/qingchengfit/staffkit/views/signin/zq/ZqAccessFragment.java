@@ -1,7 +1,6 @@
 package cn.qingchengfit.staffkit.views.signin.zq;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,9 +20,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.RxBus;
+import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.course.SimpleTextItemItem;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.signin.zq.event.EventAddZq;
 import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
@@ -48,7 +46,6 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -196,7 +193,7 @@ public class ZqAccessFragment extends BaseFragment
     for (Guard guard : guardList) {
       itemList.add(new ItemZqAccess(guard));
     }
-    adapter.notifyDataSetChanged();
+    adapter.updateDataSet(itemList);
   }
 
   @Override public void changeStatusOk() {
@@ -205,7 +202,7 @@ public class ZqAccessFragment extends BaseFragment
 
   @Override public void onDeleteOk() {
     itemList.remove(position);
-    adapter.notifyItemRemoved(position);
+    adapter.updateItem(adapter.getItem(position));
   }
 
   @Override public void onAddOk() {
