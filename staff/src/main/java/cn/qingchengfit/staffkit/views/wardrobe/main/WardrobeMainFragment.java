@@ -112,7 +112,6 @@ public class WardrobeMainFragment extends BaseFragment implements FlexibleAdapte
             return true;
         }
     };
-
     public static WardrobeMainFragment newInstance(List<Locker> lockers) {
 
         Bundle args = new Bundle();
