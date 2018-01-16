@@ -35,7 +35,7 @@ import javax.inject.Inject;
   public static final int ADD = 0;
   public static final int DELETE = 2;
 
-  @CategoryAction @Need Integer action ;//0-新建,1-更新，2-删除
+  @CategoryAction @Need Integer action;//0-新建,1-更新，2-删除
   @Need Category category;
 
   PageShopCategoryBinding mBinding;

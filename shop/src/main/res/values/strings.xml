@@ -22,6 +22,7 @@
   <string name="continue_add">继续添加</string>
 
   <!--product-->
+  <string name="product_detail_format">销量：%d 库存：%d 权重：%d</string>
   <string name="add_product_date">添加时间：%</string>
   <string name="add_product_time">添加时间</string>
   <string name="add_product">添加商品</string>
@@ -49,7 +50,6 @@
   <string name="product_pay_offline_prices">线下支付价格</string>
 
 
-
   <string name="product_name">商品名称</string>
   <string name="product_unit">单位</string>
   <string name="product_onsale">商品上架成功！</string>
@@ -63,7 +63,6 @@
   <string name="deliver_onsale">馆内购买</string>
   <string name="deliver_by_self">自取</string>
   <string name="deliver_send">配送</string>
-
 
 
   <!--category-->
@@ -80,7 +79,6 @@
   <string name="reduce_inventory_count">减少库存数</string>
   <string name="add_inventory_count_input">输入增加的库存数</string>
   <string name="reduce_inventory_count_input">输入减少的库存数</string>
-
 
 
 </resources>

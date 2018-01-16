@@ -82,6 +82,10 @@ public class QcShopToogleButton extends CompoundButton implements QcCheckable {
     if (isChecked()) {
       isArrowUp = !isArrowUp;
       invalidate();
+      if (hasOnClickListeners()) {
+        if (callOnClick()) {
+        }
+      }
       return true;
     } else {
       return super.performClick();
@@ -112,7 +116,12 @@ public class QcShopToogleButton extends CompoundButton implements QcCheckable {
       invalidate();
     }
   }
-  private float drawableWidth=10;
+
+  private float drawableWidth = 10;
+
+  public boolean isArrowUp() {
+    return isArrowUp;
+  }
 
   @Override protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
@@ -121,12 +130,15 @@ public class QcShopToogleButton extends CompoundButton implements QcCheckable {
     String txt = mChecked ? checkedText : unCheckedText;
     if (txt == null) txt = "";
     float textLenth = mTextPaint.measureText(txt);
-    float leftText = (getWidth() - (textLenth + MeasureUtils.dpToPx(drawableWidth, getResources()))) / 2;
+    float leftText =
+        (getWidth() - (textLenth + MeasureUtils.dpToPx(drawableWidth, getResources()))) / 2;
     //if (textLenth > getWidth() - MeasureUtils.dpToPx(20f, getResources()) - (checkedUpDrawable == null ? 0 : checkedUpDrawable.getIntrinsicWidth())) {
     //  int ind = (int) ((getWidth() - MeasureUtils.dpToPx(20f, getResources()) - (checkedUpDrawable == null ? 0 : checkedUpDrawable.getIntrinsicWidth())) / textLenth * txt.length());
     //  txt = txt.substring(0, ind).concat("…");
     //}
-    float topText = (getMeasuredHeight() - mTextPaint.getFontMetrics().bottom + mTextPaint.getFontMetrics().top) / 2 - mTextPaint.getFontMetrics().top;
+    float topText =
+        (getMeasuredHeight() - mTextPaint.getFontMetrics().bottom + mTextPaint.getFontMetrics().top)
+            / 2 - mTextPaint.getFontMetrics().top;
     mTextPaint.setColor(mChecked ? checkedColor : unCheckedColor);
     float textHeight = mTextPaint.getFontMetrics().descent - mTextPaint.getFontMetrics().ascent;
 
@@ -148,8 +160,9 @@ public class QcShopToogleButton extends CompoundButton implements QcCheckable {
     //final int drawableWidth = curDrawable.getIntrinsicWidth();
     //int top = canvas.getHeight() / 2 - drawableHeight / 2;
     //if (top < 0) top = 0;
-    curDrawable.setBounds((int) (leftText + textLenth + 10), (int) (topText-textHeight+10),
-        (int) (leftText + textLenth + 10+MeasureUtils.dpToPx(drawableWidth, getResources())), (int) (topText+10));
+    curDrawable.setBounds((int) (leftText + textLenth + 10), (int) (topText - textHeight + 10),
+        (int) (leftText + textLenth + 10 + MeasureUtils.dpToPx(drawableWidth, getResources())),
+        (int) (topText + 10));
     curDrawable.draw(canvas);
   }
 

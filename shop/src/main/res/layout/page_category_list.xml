@@ -3,30 +3,34 @@
   <data>
     <variable
         name="viewModel"
-        type="cn.qingchengfit.shop.ui.home.categorylist.ShopCategoryListViewModel"/>
+        type="cn.qingchengfit.shop.ui.home.categorylist.ShopCategoryListViewModel"
+        />
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:orientation="vertical"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        app:items="@{viewModel.items}"
         />
     <include layout="@layout/divider_grey"/>
     <TextView
         android:id="@+id/add_product"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/product_add"
         android:drawablePadding="7dp"
-        style="@style/QcTextStyleLargeDark"
-        android:textColor="@color/colorPrimary"
         android:gravity="center"
         android:onClick="@{view->viewModel.onAddButtonClick()}"
-        android:drawableLeft="@drawable/product_add"
         android:text="@string/add_category"
+        android:textColor="@color/colorPrimary"
+        style="@style/QcTextStyleLargeDark"
         />
 
   </LinearLayout>

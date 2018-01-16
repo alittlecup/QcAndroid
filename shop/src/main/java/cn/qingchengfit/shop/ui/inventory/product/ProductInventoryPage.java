@@ -3,6 +3,7 @@ package cn.qingchengfit.shop.ui.inventory.product;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import com.anbillon.flabellum.annotations.Leaf;
 import cn.qingchengfit.shop.R;
@@ -21,6 +22,13 @@ import cn.qingchengfit.shop.databinding.PageProductInventoryBinding;
       Uri uri = Uri.parse("shop://shop/update/inventory");
       routeTo(uri, null);
     });
+    mViewModel.getLiveItems().observe(this, item -> {
+      mViewModel.items.set(item);
+    });
+    mViewModel.fragVisible.observe(this,
+        aBoolean -> mBinding.fragFilter.setVisibility(aBoolean ? View.VISIBLE : View.GONE));
+
+    mViewModel.indexEvent.observe(this, index -> filterView.showPage(index));
   }
 
   @Override

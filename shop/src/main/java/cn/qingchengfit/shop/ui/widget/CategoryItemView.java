@@ -9,14 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import cn.qingchengfit.shop.R;
-import cn.qingchengfit.shop.databinding.CategoryItemBinding;
+import cn.qingchengfit.shop.databinding.ItemCategoryBinding;
 
 /**
  * Created by huangbaole on 2017/12/27.
  */
 
 public class CategoryItemView extends LinearLayout {
-  CategoryItemBinding binding;
+  ItemCategoryBinding binding;
 
   public CategoryItemView(Context context) {
     this(context, null, 0);
@@ -33,7 +33,7 @@ public class CategoryItemView extends LinearLayout {
 
   private void init(Context context) {
     binding =
-        DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.category_item, this, true);
+        DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.item_category, this, true);
     binding.imDelete.setOnClickListener(new OnClickListener() {
       @Override public void onClick(View v) {
         ViewGroup parent = (ViewGroup) CategoryItemView.this.getParent();

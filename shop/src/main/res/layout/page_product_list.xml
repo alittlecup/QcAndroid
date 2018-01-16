@@ -3,11 +3,11 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     >
   <data>
+    <import type="cn.qingchengfit.shop.ui.widget.QcShopToogleButton"/>
     <variable
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
-   <import type="cn.qingchengfit.widgets.QcFilterToggle"/>
     <variable
         name="viewModel"
         type="cn.qingchengfit.shop.ui.home.productlist.ShopProductsViewModel"
@@ -64,18 +64,18 @@
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:layout_weight="1"
-          android:onClick="@{(view)->viewModel.onWeightClick()}"
-          app:chekced="true"
-          style="@style/QcShopToogleItem"
+          android:onClick="@{(view)->viewModel.onWeightClick(((QcShopToogleButton)view).isArrowUp())}"
           app:checked_text="@string/weight"
+          app:chekced="true"
           app:unchecked_text="@string/weight"
+          style="@style/QcShopToogleItem"
           />
       <cn.qingchengfit.shop.ui.widget.QcShopToogleButton
           android:id="@+id/qc_sales"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:layout_weight="1"
-          android:onClick="@{()->viewModel.onSalesClick()}"
+          android:onClick="@{(view)->viewModel.onSalesClick(((QcShopToogleButton)view).isArrowUp())}"
           app:checked_text="@string/sale_count"
           app:unchecked_text="@string/sale_count"
           style="@style/QcShopToogleItem"
@@ -85,7 +85,7 @@
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:layout_weight="1"
-          android:onClick="@{()->viewModel.onInventoryClick()}"
+          android:onClick="@{(view)->viewModel.onInventoryClick(((QcShopToogleButton)view).isArrowUp())}"
           app:checked_text="@string/inventory"
           app:unchecked_text="@string/inventory"
           style="@style/QcShopToogleItem"
@@ -96,17 +96,18 @@
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:layout_weight="1"
-          android:onClick="@{()->viewModel.onAdddDateClick()}"
+          android:onClick="@{(view)->viewModel.onAdddDateClick(((QcShopToogleButton)view).isArrowUp())}"
           app:checked_text="@string/add_product_time"
           app:unchecked_text="@string/add_product_time"
           style="@style/QcShopToogleItem"
           />
     </cn.qingchengfit.widgets.QcRadioGroup>
-
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        app:items="@{viewModel.items}"
         />
     <include layout="@layout/divider_grey"/>
     <FrameLayout

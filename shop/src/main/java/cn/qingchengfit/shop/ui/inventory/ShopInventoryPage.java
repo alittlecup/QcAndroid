@@ -2,11 +2,12 @@ package cn.qingchengfit.shop.ui.inventory;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import com.anbillon.flabellum.annotations.Leaf;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopInventoryBinding;
+import com.anbillon.flabellum.annotations.Leaf;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -16,7 +17,15 @@ import cn.qingchengfit.shop.databinding.PageShopInventoryBinding;
   InventoryFilterView filterView;
 
   @Override protected void subscribeUI() {
-
+    mViewModel.getLiveItems().observe(this, item -> {
+      mViewModel.items.set(item);
+    });
+    mViewModel.indexEvent.observe(this, index -> {
+      filterView.showPage(index);
+    });
+    mViewModel.fragVisible.observe(this,aBoolean -> {
+      mBinding.fragFilter.setVisibility(aBoolean? View.VISIBLE:View.GONE);
+    });
   }
 
   @Override
