@@ -136,7 +136,7 @@ public class CardBuyPresenter extends BasePresenter {
       .subscribe(new BusSubscribe<Staff>() {
         @Override public void onNext(Staff staff) {
           view.bindSaler(staff.getUsername());
-            cardBuyBody.setSeller_id(staff.id);
+          cardBuyBody.setSeller_id(staff.id);
         }
       });
 
@@ -241,6 +241,7 @@ public class CardBuyPresenter extends BasePresenter {
       cardBuyBody.setSeller_id(null);
       cardBuyBody.staff_id = loginStatus.staff_id();
     }
+
     RxRegiste(cardModel.qcChargeCard(mCard.getId(), cardBuyBody)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())
@@ -294,10 +295,6 @@ public class CardBuyPresenter extends BasePresenter {
     } else {
       cardBuyBody.setPrice(CmStringUtils.getMoneyStr(mChosenOption.price));
       cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
-    }
-    if (TextUtils.isEmpty(cardBuyBody.getSeller_id())){
-      cardBuyBody.setSeller_id(null);
-      cardBuyBody.staff_id = loginStatus.staff_id();
     }
 
     if (cardBuyBody.checkData() > 0) {

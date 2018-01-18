@@ -86,6 +86,7 @@ public class WebActivity extends BaseActivity {
     } else {
       webfrag = WebFragment.newInstance(toUrl, hideToolbar);
     }
+
     new RxPermissions(this).request(Manifest.permission.READ_PHONE_STATE).subscribe();
     getSupportFragmentManager().beginTransaction().replace(R.id.student_frag, webfrag).commit();
   }

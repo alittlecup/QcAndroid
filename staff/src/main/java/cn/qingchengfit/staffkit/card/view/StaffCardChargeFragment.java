@@ -14,7 +14,6 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.card.presenter.StaffCardBuyPresenter;
 import cn.qingchengfit.staffkit.views.card.buy.CompletedBuyView;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -64,17 +63,12 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
       switch (requestCode){
         case 404:
           if (data != null) {
-
-            int ret = data.getIntExtra(IntentUtils.RESULT, -1);
-            if (ret == 0) {
-              //                        onSuccess();
               buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
-            } else {
-              ToastUtils.show("充值失败");
             }
-          }
           break;
-      }
+          }
+      }else{
+      ToastUtils.show("充值失败");
     }
   }
 
@@ -88,6 +82,9 @@ public class StaffCardChargeFragment extends NewCardChargeFragment implements Co
   }
 
   @Override public void onFailed(String s) {
+    getActivity().finish();
+    routeTo(AppUtils.getRouterUri(getContext(), "card/detail/"),
+        new CardDetailParams().cardid(card.getId()).build());
     ToastUtils.show(s);
   }
 

@@ -823,7 +823,6 @@ public class WebFragment extends BaseFragment
 
     @JavascriptInterface public void completeAction() {
       Intent intent = new Intent();
-      //intent.putExtra(IntentUtils.RESULT, 0);
       getActivity().setResult(Activity.RESULT_OK, intent);
       getActivity().finish();
     }

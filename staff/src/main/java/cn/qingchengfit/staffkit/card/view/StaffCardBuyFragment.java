@@ -13,7 +13,6 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.card.presenter.StaffCardBuyPresenter;
 import cn.qingchengfit.staffkit.views.card.buy.CompletedBuyView;
 import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -45,7 +44,7 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
       buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
     } else {
       //QcResponsePayWx qcResponsePayWx = gson.fromJson(payBusinessResponse.toString(), QcResponsePayWx.class);
-      onWxPay(String.valueOf(payBusinessResponse.get("url")));
+      onWxPay(payBusinessResponse.get("url").getAsString());
     }
   }
 
@@ -58,30 +57,24 @@ public class StaffCardBuyFragment extends CardBuyFragment implements CompletedBu
     if (resultCode == Activity.RESULT_OK){
       switch (requestCode){
         case 404:
-          if (data != null) {
-
-            int ret = data.getIntExtra(IntentUtils.RESULT, -1);
-            if (ret == 0) {
-              //                        onSuccess();
-              buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
-            } else {
-              ToastUtils.show("充值失败");
-            }
-          }
+            buyPresenter.cacluScore(realMoney(), StringUtils.List2Str(presenter.getChoseStuIds()));
           break;
-      }
+          }
+      }else{
+      ToastUtils.show("充值失败");
     }
   }
 
   @Override public void onSuccess() {
     ToastUtils.showS("购卡成功");
     getActivity().setResult(Activity.RESULT_OK);
-    //getActivity().getSupportFragmentManager().popBackStack("", 1 );
     getActivity().finish();
-    routeTo(AppUtils.getRouterUri(getContext(), "card/cardtpl/list/"), null);
+    routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
   }
 
   @Override public void onFailed(String s) {
+    getActivity().finish();
+    routeTo(AppUtils.getRouterUri(getContext(), "card/list/home/"), null);
     ToastUtils.show(s);
   }
 

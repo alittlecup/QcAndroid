@@ -116,4 +116,13 @@
   <string name="alert_edit_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有编辑课程种类权限的用户才能进行编辑.</string>
   <string name="alert_del_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有删除课程种类权限的用户才能进行删除.</string>
 
+  <string name="text_course_limit_tips_group">会员在团课开始前多长时间内不能预约：</string>
+  <string name="text_course_limit_tips_private">会员在私教开始前多长时间内不能预约：</string>
+
+  <string name="text_course_limit_cancel_group">会员在团课开始前多长时间不能取消：</string>
+  <string name="text_course_limit_cancel_private">会员在私教开始前多长时间不能取消：</string>
+
+  <string name="text_group_limit_cancel">团课取消预约限制</string>
+  <string name="text_private_limit_cancel">私教取消预约限制</string>
+
 </resources>

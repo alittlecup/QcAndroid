@@ -106,6 +106,7 @@
         android:layout_height="30dp"
         android:gravity="center_vertical"
         tools:text="会员卡总数：100"
+        android:background="@color/white"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:freezesText="true"
@@ -117,6 +118,7 @@
         android:layout_height="match_parent"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:background="@color/white"
         />
 
     <FrameLayout
