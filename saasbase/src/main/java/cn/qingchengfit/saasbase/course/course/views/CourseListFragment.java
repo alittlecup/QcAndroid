@@ -69,7 +69,6 @@ import rx.schedulers.Schedulers;
   @Inject LoginStatus loginStatus;
   @Inject SerPermisAction serPermisAction;
   @Inject ICourseModel courseApi;
-
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.toolbar_layout) ViewGroup toolbarLayout;
@@ -140,6 +139,11 @@ import rx.schedulers.Schedulers;
   }
 
   @Override public boolean onItemClick(int position) {
+    if ( !serPermisAction.checkAtLeastOne(mIsPrivate?PermissionServerUtils.PRISETTING_CAN_CHANGE:PermissionServerUtils.TEAMSETTING_CAN_CHANGE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return true;
+    }
+
     IFlexible iFlexible = commonFlexAdapter.getItem(position);
     if (iFlexible == null) return true;
     if (iFlexible instanceof CourseItem) {
@@ -155,6 +159,10 @@ import rx.schedulers.Schedulers;
    * 新增课程
    */
   @OnClick(R2.id.add_course_btn) public void onViewClicked() {
+    if ( !serPermisAction.checkAtLeastOne(mIsPrivate?PermissionServerUtils.PRISETTING_CAN_WRITE:PermissionServerUtils.TEAMSETTING_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return ;
+    }
     routeTo("/add/", new AddCourseParams().isPrivate(mIsPrivate).build());
   }
 

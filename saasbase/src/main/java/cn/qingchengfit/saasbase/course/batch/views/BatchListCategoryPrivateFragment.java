@@ -2,12 +2,15 @@ package cn.qingchengfit.saasbase.course.batch.views;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -17,6 +20,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -45,7 +49,7 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
 
   @Need String trainer_id;
   private QcResponsePrivateDetail.PrivateCoach mCoach;
-
+  @Inject IPermissionModel permissionModel;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("私教排期");
@@ -82,6 +86,10 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
   }
 
   @Override public boolean onItemClick(int i) {
+    if ( !permissionModel.check(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return true;
+    }
     IFlexible item = commonFlexAdapter.getItem(i);
     if (item == null) return true;
     if (item instanceof BatchCateItem) {
@@ -93,6 +101,10 @@ public class BatchListCategoryPrivateFragment extends IBatchListCategoryFragment
   }
 
   @Override public void onClickFab() {
+    if ( !permissionModel.check(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
     Staff staff = new Staff();
     staff.id = trainer_id;
     if (mCoach != null) {

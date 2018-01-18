@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.items.TitleHintItem;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCoach;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListPrivatePresenter;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
@@ -55,7 +57,7 @@ import javax.inject.Inject;
   extends BatchListFragment implements BatchListPrivatePresenter.MVPView {
 
   @Inject BatchListPrivatePresenter privatePresenter;
-
+  @Inject IPermissionModel permissionModel;
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     delegatePresenter(privatePresenter, this);
@@ -102,6 +104,10 @@ import javax.inject.Inject;
     IFlexible item = commonFlexAdapter.getItem(position);
     if (item == null) return true;
     if (item instanceof BatchItem) {
+      if ( !permissionModel.check(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return true;
+      }
       routeTo("/batch/cate/private/",
         new cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateParams().trainer_id(
           ((BatchItem) item).getBatchCoach().id).build());
@@ -112,6 +118,10 @@ import javax.inject.Inject;
   }
 
   @Override public void clickAddBatch() {
+    if ( !permissionModel.check(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
     routeTo("staff","/trainer/choose/",null);
   }
 

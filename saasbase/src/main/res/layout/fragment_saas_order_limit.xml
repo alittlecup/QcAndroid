@@ -17,9 +17,9 @@
     <include layout="@layout/common_simple_toolbar"/>
 
     <TextView
+        android:id="@+id/tv_class_limit_tips"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-
         android:text="会员在团课开始前多长时间内不能预约："
         style="@style/TextTitleHint"
         />
@@ -45,6 +45,7 @@
     <include layout="@layout/divider_grey"/>
 
     <TextView
+        android:id="@+id/tv_class_cancel_tips"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:text="会员在团课开始前多长时间不能取消："
@@ -57,7 +58,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:el_expanded="false"
-        app:el_label="团课取消预约限制"
+        app:el_label="取消预约限制"
         >
 
       <cn.qingchengfit.widgets.CommonInputView

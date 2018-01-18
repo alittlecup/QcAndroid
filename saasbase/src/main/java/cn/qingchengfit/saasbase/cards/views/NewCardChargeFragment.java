@@ -62,6 +62,7 @@ public class NewCardChargeFragment extends CardBuyFragment {
     //TODO 支付方式
     //civPayMethod.setContent(getResources().getStringArray(R.array.pay_method)[]);
     //civBindMenbers.setContent(card.getUsers().size() + "  人");
+    civSaler.setContent(loginStatus.staff_name());
     civBindMenbers.setVisibility(View.GONE);
     civMark.setContentColor(getResources().getColor(R.color.text_warm));
     if (card.isCheck_valid() && card.getType() != Configs.CATEGORY_DATE) {

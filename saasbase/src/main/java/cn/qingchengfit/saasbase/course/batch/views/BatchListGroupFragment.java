@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.items.TitleHintItem;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchCourse;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.BatchListGroupPresenter;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -49,6 +51,7 @@ import javax.inject.Inject;
   extends BatchListFragment implements BatchListGroupPresenter.MVPView {
 
   @Inject BatchListGroupPresenter privatePresenter;
+  @Inject IPermissionModel permissionModel;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -73,6 +76,11 @@ import javax.inject.Inject;
    * 新增团课
    */
   @Override public void clickAddBatch() {
+    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
+
     routeTo("/choose/", CourseChooseParams.builder().mIsPrivate(false).src(TARGET).build());
   }
 
@@ -85,6 +93,10 @@ import javax.inject.Inject;
     IFlexible item = commonFlexAdapter.getItem(position);
     if (item == null) return true;
     if (item instanceof BatchItem) {
+      if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)){
+        showAlert(R.string.sorry_for_no_permission);
+        return true;
+      }
       routeTo("/batch/cate/group/",
         new BatchListCategoryGroupParams().course_id(
           ((BatchItem) item).getBatchCourse().getId()).build());

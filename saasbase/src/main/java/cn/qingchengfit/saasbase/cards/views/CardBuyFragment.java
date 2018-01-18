@@ -159,7 +159,7 @@ import rx.functions.Action1;
       }
     });
     elAutoOpen.setVisibility(View.GONE);
-    civSaler.setContent(loginStatus.staff_name());
+    //civSaler.setContent(loginStatus.staff_name());
 
     civStartTime.setNoSaved();
     civEndTime.setNoSaved();

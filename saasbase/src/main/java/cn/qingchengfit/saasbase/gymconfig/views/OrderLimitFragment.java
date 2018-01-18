@@ -33,8 +33,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
-@Leaf(module = "gym", path = "/orderlimit/")
-public class OrderLimitFragment extends SaasBaseFragment
+
+@Leaf(module = "gym", path = "/orderlimit/") public class OrderLimitFragment
+    extends SaasBaseFragment
     implements OrderLimitPresenter.MVPView, BottomListFragment.ComfirmChooseListener {
 
   @BindView(R2.id.civ_order_course_time) CommonInputView civOrderCourseTime;
@@ -51,6 +52,8 @@ public class OrderLimitFragment extends SaasBaseFragment
   @BindView(R2.id.input_sign_class_start) CommonInputView inputSignClassStart;
   @BindView(R2.id.input_sign_class_end) CommonInputView inputSignClassEnd;
   @BindView(R2.id.sw_sign_group) ExpandedLayout swSignGroup;
+  @BindView(R2.id.tv_class_limit_tips) TextView tvClassLimitTips;
+  @BindView(R2.id.tv_class_cancel_tips) TextView tvClassCancelTips;
   private String mOrderId;
   private String mCancleId;
   private String mMsgId;
@@ -80,6 +83,14 @@ public class OrderLimitFragment extends SaasBaseFragment
     swSignGroup.setLabel(mIsPrivate ? getResources().getString(R.string.label_sign_private_class)
         : getResources().getString(R.string.label_sign_group_class));
 
+    tvClassLimitTips.setText(
+        mIsPrivate ? getResources().getString(R.string.text_course_limit_tips_private)
+            : getResources().getString(R.string.text_course_limit_tips_group));
+
+    tvClassCancelTips.setText(
+        mIsPrivate ? getResources().getString(R.string.text_course_limit_cancel_private)
+            : getResources().getString(R.string.text_course_limit_cancel_group));
+
     mOrderLimitPresenter.queryCancelLimit(mIsPrivate);
     mOrderLimitPresenter.queryOrderLimit(mIsPrivate);
     mOrderLimitPresenter.querySubstituteLimit(mIsPrivate);
@@ -100,8 +111,7 @@ public class OrderLimitFragment extends SaasBaseFragment
     });
   }
 
-  @OnClick(R2.id.input_sign_class_way)
-  public void onSelectSignway(){
+  @OnClick(R2.id.input_sign_class_way) public void onSelectSignway() {
     ArrayList<String> items = new ArrayList<>();
     items.add("教练点名");
     items.add("会员扫码");
@@ -135,21 +145,23 @@ public class OrderLimitFragment extends SaasBaseFragment
       return;
     }
     List<ShopConfigBody.Config> data = new ArrayList<>();
-    data.add(new ShopConfigBody.Config(mOrderId, swOrderCourse.isExpanded() ? civOrderCourseTime.getContent() : "0"));
-    data.add(new ShopConfigBody.Config(mCancleId, swCancle.isExpanded() ? civCancelTime.getContent() : "0"));
+    data.add(new ShopConfigBody.Config(mOrderId,
+        swOrderCourse.isExpanded() ? civOrderCourseTime.getContent() : "0"));
+    data.add(new ShopConfigBody.Config(mCancleId,
+        swCancle.isExpanded() ? civCancelTime.getContent() : "0"));
     data.add(new ShopConfigBody.Config(mSignOpenId, swSignGroup.isExpanded() ? "1" : "0"));
-    if (swSignGroup.isExpanded()){
+    if (swSignGroup.isExpanded()) {
       data.add(new ShopConfigBody.Config(mSignWayId, getSignWayId(inputSignClassWay.getContent())));
       data.add(new ShopConfigBody.Config(mSignStartId, inputSignClassStart.getContent()));
       data.add(new ShopConfigBody.Config(mSignEndId, inputSignClassEnd.getContent()));
     }
-            //data.add(new ShopConfigBody.Config(
-              //ShopConfigs.TEAM_MINUTES_,swOrderCourse.isExpanded()?"1":"0"));
+    //data.add(new ShopConfigBody.Config(
+    //ShopConfigs.TEAM_MINUTES_,swOrderCourse.isExpanded()?"1":"0"));
     mOrderLimitPresenter.saveConfigs(new ShopConfigBody(data));
     showLoading();
   }
 
-  private boolean isHaveUnData(String content){
+  private boolean isHaveUnData(String content) {
     String p = "\\D{1,}";
     Pattern pattern = Pattern.compile(p);
     Matcher matcher = pattern.matcher(content);
@@ -157,8 +169,8 @@ public class OrderLimitFragment extends SaasBaseFragment
   }
 
   //1表示教练点名， 2表示会员扫码
-  private String getSignWayId(String way){
-    switch (way){
+  private String getSignWayId(String way) {
+    switch (way) {
       case "教练点名":
         return "1";
       case "会员扫码":
@@ -166,9 +178,6 @@ public class OrderLimitFragment extends SaasBaseFragment
     }
     return "";
   }
-
-
-
 
   @Override public void onCourseSubstituteLimit(ShopConfig config) {
 
@@ -193,9 +202,6 @@ public class OrderLimitFragment extends SaasBaseFragment
       }
     }
   }
-
-
-
 
   @Override public void onSignClassLimit(List<ShopConfig> configs) {
     if (configs.size() > 0) {
@@ -229,7 +235,7 @@ public class OrderLimitFragment extends SaasBaseFragment
 
   @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {
     if (dats.get(0) instanceof SimpleTextItemItem) {
-      inputSignClassWay.setContent(((SimpleTextItemItem)dats.get(0)).getData());
+      inputSignClassWay.setContent(((SimpleTextItemItem) dats.get(0)).getData());
     }
   }
 }

@@ -3,12 +3,15 @@ package cn.qingchengfit.saasbase.course.batch.views;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import cn.qingchengfit.model.base.Course;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.course.batch.items.BatchCateItem;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseSchedule;
 import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseScheduleDetail;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
@@ -18,6 +21,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -46,6 +50,7 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
 
   @Need String course_id;
   private Course course;
+  @Inject IPermissionModel permissionModel;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -84,6 +89,10 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
   }
 
   @Override public boolean onItemClick(int i) {
+    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return true;
+    }
     IFlexible item = commonFlexAdapter.getItem(i);
     if (item == null) return true;
     if (item instanceof BatchCateItem){
@@ -97,7 +106,11 @@ public class BatchListCategoryGroupFragment extends IBatchListCategoryFragment {
   }
 
   @Override public void onClickFab() {
-    if (course != null) {
+    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
+    if (course != null ) {
       routeTo("/batch/add/", AddBatchParams.builder().mCourse(course).build());
     }
   }
