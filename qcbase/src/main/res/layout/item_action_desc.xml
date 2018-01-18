@@ -35,6 +35,8 @@
       style="@style/QcTextStyleMediumGrey"
       android:layout_marginTop="@dimen/little"
       tools:text="随便"
+      android:lines="1"
+      android:ellipsize="end"
       android:textColor="@color/text_warm"
       />
 

@@ -104,10 +104,6 @@ import javax.inject.Inject;
     IFlexible item = commonFlexAdapter.getItem(position);
     if (item == null) return true;
     if (item instanceof BatchItem) {
-      if ( !permissionModel.check(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE)){
-        showAlert(R.string.sorry_for_no_permission);
-        return true;
-      }
       routeTo("/batch/cate/private/",
         new cn.qingchengfit.saasbase.course.batch.views.BatchListCategoryPrivateParams().trainer_id(
           ((BatchItem) item).getBatchCoach().id).build());

@@ -93,10 +93,6 @@ import javax.inject.Inject;
     IFlexible item = commonFlexAdapter.getItem(position);
     if (item == null) return true;
     if (item instanceof BatchItem) {
-      if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)){
-        showAlert(R.string.sorry_for_no_permission);
-        return true;
-      }
       routeTo("/batch/cate/group/",
         new BatchListCategoryGroupParams().course_id(
           ((BatchItem) item).getBatchCourse().getId()).build());

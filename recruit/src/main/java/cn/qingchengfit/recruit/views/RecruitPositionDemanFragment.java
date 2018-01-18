@@ -62,14 +62,14 @@ import java.util.Arrays;
     super.initToolbar(db.layoutToolbar.toolbar);
     ToolbarModel tbm = new ToolbarModel("职位要求");
     tbm.setMenu(R.menu.menu_save);
-    db.setToolbarModel(tbm);
-    db.layoutToolbar.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+    tbm.setListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         RxBus.getBus().post(new EventPulishPosition(jobBody));
         getFragmentManager().popBackStackImmediate();
         return false;
       }
     });
+    db.setToolbarModel(tbm);
   }
 
   private void initView() {

@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -32,8 +31,8 @@ public class LoginActivity extends BaseActivity {
     setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
 
-    if (!CompatUtils.less21() && loginTabview.getParent() instanceof ViewGroup) {
-      ((ViewGroup) loginTabview.getParent()).setPadding(0,
+    if (!CompatUtils.less21() ) {
+      loginTabview.setPadding(0,
           MeasureUtils.getStatusBarHeight(getBaseContext()), 0, 0);
     }
     viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(loginTabview));

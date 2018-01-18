@@ -61,8 +61,7 @@ public class SetNameCommenFragment extends BaseFragment {
     initToolbar(db.layoutToolbar.toolbar);
     ToolbarModel tbm = new ToolbarModel(getArguments() != null ? getArguments().getString("toolbarTitle") : "");
     tbm.setMenu(R.menu.menu_save);
-    db.setToolbarModel(tbm);
-    db.layoutToolbar.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+    tbm.setListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
         if (db.editGroupName.getText().toString().equals("")) {
           DialogUtils.showAlert(getContext(), "请填写职位名称");
@@ -74,6 +73,7 @@ public class SetNameCommenFragment extends BaseFragment {
         return false;
       }
     });
+    db.setToolbarModel(tbm);
   }
 
   @Override public boolean onFragmentBackPress() {

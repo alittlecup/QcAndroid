@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import cn.qingchengfit.model.base.Gym;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.databinding.FragmentRecruitWriteGymDescBinding;
@@ -117,9 +117,9 @@ import rx.functions.Action1;
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    ((TextView)db.layoutToolbar.toolbarTitle).setText("场馆介绍");
-    toolbar.inflateMenu(R.menu.menu_save);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+    ToolbarModel tbm = new ToolbarModel("场馆介绍");
+    tbm.setMenu(R.menu.menu_save);
+    tbm.setListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
 
         RecruitGymBody.Builder body = new RecruitGymBody.Builder();
@@ -142,6 +142,7 @@ import rx.functions.Action1;
         return false;
       }
     });
+    db.setToolbarModel(tbm);
   }
 
   @Override protected void onFinishAnimation() {
