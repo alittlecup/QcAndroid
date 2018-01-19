@@ -79,7 +79,16 @@ import java.util.List;
     cardModel = new CardModel(qcrestRepository,gymWrapper,loginStatus);
     exportModel = new ExportModel(qcrestRepository,gymWrapper,loginStatus);
     courseModel = new CourseModel(qcrestRepository,gymWrapper,loginStatus);
-    this.saasbaseRouterCenter = new SaasbaseRouterCenter(new billImpl(),new StaffCardRouters(),new staffImpl(),new commonImpl(),new courseImpl(),new exportImpl(),new gymImpl(),new CardStudentRouters());
+    this.saasbaseRouterCenter = new SaasbaseRouterCenter()
+      .registe(new exportImpl())
+      .registe(new gymImpl())
+      .registe(new StaffCardRouters())
+      .registe(new staffImpl())
+      .registe(new commonImpl())
+      .registe(new courseImpl())
+      .registe(new CardStudentRouters())
+      .registe(new billImpl());
+
   }
 
   @Provides App provideApplicationContext() {

@@ -2,52 +2,68 @@ pipeline:
   restore-cache:
     image: drillster/drone-volume-cache
     restore: true
+#    when:
+#      event: pull_request
     mount:
       - .gradle
       - gradle_cache
 #      - build
     volumes:
-      - /tmp/cache:/cache/
+      - /cache:/cache/
+
+
+
   build:
     image: androidci
-    workspace:
-      base: /root
     secrets: 
       - DEBUG
       - LICENA
       - LICENB
-    when: 
-      event: pull_request
+    volumes:
+      - /cache:/cache/
+#    when:
+#      event: pull_request
     commands:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
-      - ./gradlew -g gradle_cache assembleDevDebug --no-daemon
-      - fir publish staff/build/outputs/apk/staff-dev-debug.apk -T $DEBUG
+      - /cache/gradle/gradle-4.1/bin/gradle -g gradle_cache assembleDevDebug --no-daemon
+      - fir publish staff/build/outputs/apk/dev/debug/staff-dev-debug.apk -T $DEBUG
 #      - fir publish trainer/build/outputs/apk/trainer-dev-debug.apk -T $DEBUG
   mirror:
     image: androidci
-    workspace:
-      base: /root
     secrets: 
       - PRO
       - LICENA
       - LICENB
-    when: 
-    when: 
+    when:
       branch: develop
     commands:
       - agree-license.sh android-sdk-license $LICENA
       - agree-license.sh android-sdk-preview-license $LICENB
       - echo 'start'
       - ./gradlew -g gradle_cache assembleProductRelease --no-daemon
-      - fir publish staff/build/outputs/apk/staff-product-release.apk -T $PRO
+      - fir publish staff/build/outputs/apk/product/release/staff-product-release.apk -T $PRO
 #      - fir publish trainer/build/outputs/apk/trainer-product-release.apk -T $PRO
+
   rebuild-cache:
     image: drillster/drone-volume-cache
     rebuild: true
+    #    when:
+    #      event: pull_request
     mount:
       - .gradle
       - gradle_cache
 #      - build
     volumes:
+      - /cache:/cache/
+  wechat:
+      image: lizheming/drone-wechat
+      sckey: SCU20429Tda835b752e6cc08e10d276d233ca8b5f5a61ea96a6847
+      title: 青橙健身管理有更新
+      message: >
+        {%if success %}
+          build {{build.number}} 青橙健身管理成功上传到fir.im/staffbeta
+        {% else %}
+          build {{build.number}} 青橙健身管理编译失败
+        {% endif %}
