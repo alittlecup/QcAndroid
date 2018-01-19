@@ -24,7 +24,7 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.Date;
@@ -129,7 +129,9 @@ public class AttendanceRankFragment extends BaseFragment
         rlAttendList.setLayoutManager(new LinearLayoutManager(getContext()));
         commonFlexAdapter = new CommonFlexAdapter(itemList, this);
         //commonFlexAdapter.setEndlessScrollListener(this,new ProgressItem(getContext()));
-        rlAttendList.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.divider_horizon_left_44dp, 1));
+        rlAttendList.addItemDecoration(new FlexibleItemDecoration(getContext())
+          .withDivider(R.drawable.divider_horizon_left_44dp,R.layout.layout_filter_sort)
+          .withOffset(1).withBottomEdge(true));
         rlAttendList.setAdapter(commonFlexAdapter);
 
         getChildFragmentManager().beginTransaction().replace(R.id.frag_attendance_rank, filterFragment).commit();
@@ -248,7 +250,7 @@ public class AttendanceRankFragment extends BaseFragment
             itemList.add(new AttendanceRankItem(attendance, getContext()));
         }
         commonFlexAdapter.setTag("revert", isRevert);
-        commonFlexAdapter.notifyDataSetChanged();
+        commonFlexAdapter.updateDataSet(itemList);
     }
 
     @Override public void onNoMore() {

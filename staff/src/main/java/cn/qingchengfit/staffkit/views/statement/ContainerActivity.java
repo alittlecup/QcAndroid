@@ -20,10 +20,9 @@ import cn.qingchengfit.article.ArticleReplyFragment;
 import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.notisetting.view.NotiSettingHomeFragment;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventToolbar;
-import cn.qingchengfit.staffkit.views.course.CourseTypeBatchFragmentBuilder;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
@@ -99,10 +98,10 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
         Fragment fragment = new Fragment();
         switch (router.toLowerCase()) {
             case GymFunctionFactory.MODULE_SERVICE_GROUP:
-                fragment = new CourseTypeBatchFragmentBuilder(false).build();
+                //fragment = new CourseTypeBatchFragmentBuilder(false).build();
                 break;
             case GymFunctionFactory.MODULE_SERVICE_PRIVATE:
-                fragment = new CourseTypeBatchFragmentBuilder(true).build();
+                //fragment = new CourseTypeBatchFragmentBuilder(true).build();
                 break;
 
             case GymFunctionFactory.MODULE_FINANCE_SALE:
@@ -115,9 +114,11 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 fragment = new SigninGlanceFragment();
                 break;
             case GymFunctionFactory.MODULE_MANAGE_COACH:
+                // TODO: 2017/12/ 教练模块
                 fragment = new CoachListFragment();
                 break;
             case GymFunctionFactory.MODULE_MANAGE_STAFF:
+                //fragment = StaffListFragment.newInstance(App.staffId);
                 fragment = new StaffListFragment();
                 break;
             case GymFunctionFactory.MODULE_MANAGE_STAFF_ADD:

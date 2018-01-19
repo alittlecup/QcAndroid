@@ -19,19 +19,19 @@ import cn.qingchengfit.model.responese.CourseReportDetail;
 import cn.qingchengfit.model.responese.CourseReportOrder;
 import cn.qingchengfit.model.responese.CourseReportSchedule;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.custom.RatingBarVectorFix;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import cn.qingchengfit.widgets.RatingBarVectorFix;
 import com.bumptech.glide.Glide;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -81,7 +81,9 @@ import javax.inject.Inject;
         presenter.qcGetCourseReverse(sechduleId);
         adapter = new CommonFlexAdapter(itemList, this);
         recyclerReportDetail.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerReportDetail.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.divider_card_list, 5));
+            recyclerReportDetail.addItemDecoration(new FlexibleItemDecoration(getContext())
+          .withDivider(R.drawable.divider_horizon_left_44dp)
+          .withOffset(1).withBottomEdge(true));
         recyclerReportDetail.setAdapter(adapter);
         return view;
     }
@@ -100,7 +102,8 @@ import javax.inject.Inject;
         for (CourseReportOrder order : courseReportDetail.orders) {
             itemList.add(new CourseReverseDetailItem(order));
         }
-        adapter.notifyDataSetChanged();
+        adapter.clear();
+        adapter.updateDataSet(itemList);
 
         CourseReportSchedule schedule = courseReportDetail.schedule;
         Glide.with(getContext())

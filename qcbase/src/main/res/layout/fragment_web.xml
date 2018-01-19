@@ -13,7 +13,8 @@
   <RelativeLayout
       android:id="@+id/layout_toolbar"
       android:layout_width="match_parent"
-      android:layout_height="?actionBarSize"
+      android:layout_height="wrap_content"
+      android:background="@color/toolbar"
       >
 
     <android.support.v7.widget.Toolbar
@@ -61,10 +62,9 @@
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
         android:maxLines="1"
-        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
-
         android:text="关闭"
         android:textColor="@color/white"
         />
@@ -74,6 +74,7 @@
   android:id="@+id/refresh"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="@color/white"
   android:layout_below="@id/layout_toolbar"
   >
 

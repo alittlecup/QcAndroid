@@ -29,7 +29,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
 import com.qingchengfit.fitcoach.adapter.ImageGridAdapter;
-import com.qingchengfit.fitcoach.bean.CurentPermissions;
+import cn.qingchengfit.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.component.FullyGridLayoutManager;
 import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
 import com.qingchengfit.fitcoach.component.InterupteLinearLayout;

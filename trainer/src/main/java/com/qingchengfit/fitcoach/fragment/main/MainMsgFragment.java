@@ -20,6 +20,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.bean.NotificationGlance;
+import cn.qingchengfit.bean.NotificationMsg;
 import cn.qingchengfit.chat.model.Record;
 import cn.qingchengfit.constant.ConstantNotification;
 import cn.qingchengfit.constant.DirtySender;
@@ -29,8 +31,6 @@ import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.SystemMsgItem;
 import cn.qingchengfit.model.common.NotificationDeleted;
-import cn.qingchengfit.model.common.NotificationMsg;
-import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.presenters.SystemMsgPresenter;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -360,7 +360,8 @@ public class MainMsgFragment extends BaseFragment
       recruitMsg.setId(0x11L);
       recruitNoty.notification = recruitMsg;
       items.add(new SystemMsgItem(R.drawable.ic_vd_notification_job, recruitNoty));
-      adapter.notifyDataSetChanged();
+      adapter.clear();
+      adapter.updateDataSet(items);
 
       try {
         //判断是否要填充空页面

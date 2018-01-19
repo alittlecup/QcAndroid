@@ -1,13 +1,11 @@
 package cn.qingchengfit.staffkit.views.abstractflexibleitem;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.model.responese.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem;
@@ -65,8 +63,8 @@ public class BatchPayCardHeaderItem extends AbstractHeaderItem<BatchPayCardHeade
         return R.layout.item_batch_pay_card_header;
     }
 
-    @Override public BatchPayCardHeaderVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new BatchPayCardHeaderVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public BatchPayCardHeaderVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new BatchPayCardHeaderVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BatchPayCardHeaderVH holder, int position, List payloads) {

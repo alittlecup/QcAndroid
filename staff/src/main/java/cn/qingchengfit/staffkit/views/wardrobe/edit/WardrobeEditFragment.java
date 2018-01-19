@@ -18,10 +18,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.EditWardrobeBody;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.model.responese.LockerRegion;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.wardrobe.choose.ChooseRegionFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeMainFragment;
 import cn.qingchengfit.utils.ToastUtils;
@@ -61,6 +61,7 @@ public class WardrobeEditFragment extends BaseFragment implements WardrobeEditPr
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     private Locker mLocker;
     private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
@@ -93,7 +94,7 @@ public class WardrobeEditFragment extends BaseFragment implements WardrobeEditPr
         delegatePresenter(presenter, this);
         //        CommonInputView wardrobeNo = (CommonInputView) view.findViewById(R.id.wardrobe_no);
         //        final CommonInputView wardrobeDistrict = (CommonInputView) view.findViewById(R.id.wardrobe_district);
-        boolean permissionChg = SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_CHANGE);
+        boolean permissionChg = serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_CHANGE);
         mCallbackActivity.setToolbar("编辑更衣柜", false, null, permissionChg ? R.menu.menu_compelete : 0, listener);
         permissonDendy.setVisibility(permissionChg ? View.GONE : View.VISIBLE);
         wardrobeNo.setContent(mLocker.name);
@@ -138,7 +139,7 @@ public class WardrobeEditFragment extends BaseFragment implements WardrobeEditPr
                     .commit();
                 break;
             case R.id.btn_del:
-                if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_DELETE)) {
+                if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_DELETE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return;
                 }

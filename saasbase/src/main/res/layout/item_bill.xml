@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="14dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingRight="14dp"
+    android:background="@drawable/bg_click"
+    >
+
+  <TextView
+      android:id="@+id/tv_time"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      style="@style/QcTextStyleSmallWarm"
+      tools:text="09-29 09:43"
+      />
+
+  <TextView
+      android:id="@+id/tv_operator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      style="@style/QcTextStyleSmallWarm"
+      tools:text="操作人：静静"
+      android:layout_alignParentRight="true"
+      />
+  
+  <ImageView
+      android:id="@+id/img_bill"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_below="@id/tv_time"
+      tools:src="@drawable/ic_default_header"
+      android:layout_marginTop="7dp"
+      />
+
+  <TextView
+      android:id="@+id/tv_item_bill_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      style="@style/QcTextStyleLargeDark"
+      tools:text="提现－交行(7789）"
+      android:layout_toRightOf="@id/img_bill"
+      android:layout_alignTop="@id/img_bill"
+      android:layout_marginLeft="13dp"
+      />
+
+  <TextView
+      android:id="@+id/tv_item_bill_action"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      style="@style/QcTextStyleSmallWarm"
+      tools:text="提现  (POS)"
+      android:layout_below="@id/tv_item_bill_name"
+      android:layout_toRightOf="@id/img_bill"
+      android:layout_marginLeft="13dp"
+      android:layout_alignBottom="@id/img_bill"
+      />
+
+  <TextView
+      android:id="@+id/tv_item_bill_account"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      style="@style/QcTextStyleLargeDark"
+      tools:text="-1000.00"
+      android:layout_alignParentRight="true"
+      android:layout_alignTop="@id/img_bill"
+      android:layout_marginLeft="13dp"
+      />
+
+  <TextView
+      android:id="@+id/tv_item_bill_status"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      style="@style/QcTextStyleSmallWarm"
+      tools:text="提现中"
+      android:layout_below="@id/tv_item_bill_account"
+      android:layout_alignParentRight="true"
+      android:layout_marginLeft="13dp"
+      android:layout_alignBottom="@id/img_bill"
+      />
+  
+</RelativeLayout>

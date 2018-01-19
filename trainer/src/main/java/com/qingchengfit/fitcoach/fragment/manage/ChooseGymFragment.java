@@ -95,7 +95,7 @@ import rx.schedulers.Schedulers;
         mDatas.clear();
         //mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
         mAdapter = new CommonFlexAdapter(mDatas, this);
-        mAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+        mAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         recyclerview.setAdapter(mAdapter);
@@ -163,7 +163,8 @@ import rx.schedulers.Schedulers;
                         mDatas.add(new BrandShopsItem(b, ds));
                     }
                     mDatas.add(new AddCardStyleItem("新建健身房"));
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.clear();
+                    mAdapter.updateDataSet(mDatas);
                 }
             }, throwable -> hideLoading()));
     }

@@ -1,9 +1,8 @@
 package cn.qingchengfit.staffkit;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -23,7 +22,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.debug.LogView;
-import cn.qingchengfit.staffkit.model.db.QCDbManager;
+import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.train.moudle.TrainIds;
@@ -40,9 +39,6 @@ import com.tencent.TIMOfflinePushListener;
 import com.tencent.TIMOfflinePushNotification;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
 import com.tencent.smtt.sdk.QbSdk;
-import com.tencent.tinker.loader.app.ApplicationLike;
-import com.tinkerpatch.sdk.TinkerPatch;
-import com.tinkerpatch.sdk.loader.TinkerPatchApplicationLike;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -68,7 +64,7 @@ import static cn.qingchengfit.staffkit.constant.Configs.Server;
  * <p/>
  * Created by Paper on 15/11/19 2015.
  */
-public class App extends MultiDexApplication
+public class App extends Application
     implements HasActivityInjector, HasSupportFragmentInjector {
     public static HashMap<String, Object> caches = new HashMap<>();
     public static Context context;
@@ -88,7 +84,7 @@ public class App extends MultiDexApplication
     @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
     @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
     private AppComponent appCompoent;
-    private ApplicationLike tinkerApplicationLike;
+    //private ApplicationLike tinkerApplicationLike;
 
     public AppComponent getAppCompoent() {
         return appCompoent;
@@ -97,16 +93,16 @@ public class App extends MultiDexApplication
     @Override public void onCreate() {
 
         super.onCreate();
-
-        tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
-        //开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
-        if (tinkerApplicationLike != null) {
-            TinkerPatch.init(tinkerApplicationLike)
-                .reflectPatchLibrary()
-                .setPatchRollbackOnScreenOff(true)
-                .setPatchRestartOnSrceenOff(true);
-            TinkerPatch.with().fetchPatchUpdate(true);
-        }
+        //
+        //tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
+        ////开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
+        //if (tinkerApplicationLike != null) {
+        //    TinkerPatch.init(tinkerApplicationLike)
+        //        .reflectPatchLibrary()
+        //        .setPatchRollbackOnScreenOff(true)
+        //        .setPatchRestartOnSrceenOff(true);
+        //    TinkerPatch.with().fetchPatchUpdate(true);
+        //}
 
         try {
             FIR.init(this);
@@ -177,7 +173,7 @@ public class App extends MultiDexApplication
 
     @Override protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
+        //MultiDex.install(this);
     }
 
     private void initX5() {
@@ -197,11 +193,11 @@ public class App extends MultiDexApplication
         lb.loginUser(staff);
         lb.session(session);
         lb.userId(user_id);
-        QCDbManager qcDbManager = new QCDbManager(this);
+        QCDbManagerImpl qcDbManager = new QCDbManagerImpl(this);
         appCompoent = DaggerAppComponent.builder()
             .appModel(new AppModel(this, new SerPermissionImpl(this), lb.build(),
                 new GymWrapper.Builder().build(), new RestRepository(), new BaseRouter(),
-                new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag))))
+                new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag)),new QCDbManagerImpl(this)))
             .staffWrapperMoudle(new StaffWrapperMoudle(new StaffWrapper()))
             .studentWrapperModule(new StudentWrapperModule(new StudentWrapper()))
             .cardTypeWrapperModule(new CardTypeWrapperModule(new CardTypeWrapper(null)))

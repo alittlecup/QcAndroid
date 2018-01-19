@@ -3,18 +3,16 @@ package com.qingchengfit.fitcoach.fragment.statement.item;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.saasbase.report.bean.CourseReportOrder;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.StringUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.fragment.statement.model.CourseReportOrder;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -43,8 +41,8 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
         return order;
     }
 
-    @Override public CourseReverseVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new CourseReverseVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public CourseReverseVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new CourseReverseVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CourseReverseVH holder, int position, List payloads) {
@@ -101,7 +99,7 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
         switch (cardType) {
             case "CARD":
                 drawable = R.drawable.ic_credit_pay_yellow;
-                holder.textPayWay.setText(order.card.card_name + " ( ID:" + order.card.id + ")");
+                holder.textPayWay.setText(order.card.getName() + " ( ID:" + order.card.getId() + ")");
                 break;
             case "FREE":
                 drawable = R.drawable.ic_payment_free;

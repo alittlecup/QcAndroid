@@ -2,12 +2,12 @@ package cn.qingchengfit.staffkit.views;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import cn.qingchengfit.staffkit.views.adapter.ImageTwoTextBean;
 import cn.qingchengfit.utils.IntentUtils;
@@ -31,8 +31,9 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/3/5 2016.
  */
-public class ChooseGymPresenter implements Presenter {
+public class ChooseGymPresenter extends BasePresenter {
     @Inject GymUseCase useCase;
+    @Inject SerPermisAction serPermisAction;
     private Subscription gymListSp;
 
     private ChooseGymView view;
@@ -71,6 +72,7 @@ public class ChooseGymPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         if (gymListSp != null) gymListSp.unsubscribe();
         this.view = null;
     }
@@ -88,17 +90,17 @@ public class ChooseGymPresenter implements Presenter {
 
                         if (!StringUtils.isEmpty(permission)) {
                             if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS)) {
-                                if (!SerPermisAction.check(service.getId(), service.getModel(), PermissionServerUtils.MANAGE_MEMBERS)) {
+                                if (!serPermisAction.check(service.getId(), service.getModel(), PermissionServerUtils.MANAGE_MEMBERS)) {
                                     bean.hiden = true;
                                 }
                             } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS)) {
 
-                                if (!SerPermisAction.check(service.getShop_id(), PermissionServerUtils.MANAGE_COSTS)) bean.hiden = true;
+                                if (!serPermisAction.check(service.getShop_id(), PermissionServerUtils.MANAGE_COSTS)) bean.hiden = true;
                             } else if (permission.equalsIgnoreCase(PermissionServerUtils.SALES_REPORT)) {
-                                if (!SerPermisAction.check(service.getShop_id(), PermissionServerUtils.SALES_REPORT)) bean.hiden = true;
+                                if (!serPermisAction.check(service.getShop_id(), PermissionServerUtils.SALES_REPORT)) bean.hiden = true;
                             } else if (permission.equalsIgnoreCase(PermissionServerUtils.ORDERS_DAY)) {
-                                if (!SerPermisAction.check(service.getShop_id(), PermissionServerUtils.ORDERS_DAY)) bean.hiden = true;
-                            } else if (!SerPermisAction.check(service.getShop_id(), permission)) bean.hiden = true;
+                                if (!serPermisAction.check(service.getShop_id(), PermissionServerUtils.ORDERS_DAY)) bean.hiden = true;
+                            } else if (!serPermisAction.check(service.getShop_id(), permission)) bean.hiden = true;
                         }
 
                         bean.tags.put("type", Integer.toString(1));

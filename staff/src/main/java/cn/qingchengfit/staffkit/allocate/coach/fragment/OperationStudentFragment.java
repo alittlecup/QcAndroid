@@ -33,6 +33,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.CommonAllocateDetailItem;
 import cn.qingchengfit.staffkit.allocate.coach.AllocateCoachActivity;
@@ -40,8 +41,6 @@ import cn.qingchengfit.staffkit.allocate.coach.MutiChooseCoachActivity;
 import cn.qingchengfit.staffkit.allocate.coach.comparator.ItemComparator;
 import cn.qingchengfit.staffkit.allocate.coach.comparator.ItemComparatorJoinAt;
 import cn.qingchengfit.staffkit.allocate.coach.item.ChooseStudentItem;
-import cn.qingchengfit.staffkit.allocate.coach.model.CoachBean;
-import cn.qingchengfit.staffkit.allocate.coach.model.StudentWithCoach;
 import cn.qingchengfit.staffkit.allocate.coach.presenter.OperationPresenter;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
@@ -119,7 +118,7 @@ import static android.view.View.GONE;
     @BindView(R.id.clear_text) ImageView clearText;
     private List<CommonAllocateDetailItem> itemList = new ArrayList<>();
     private CommonFlexAdapter adapter;
-    private List<StudentWithCoach> selectList = new ArrayList<>();
+    private List<QcStudentBean> selectList = new ArrayList<>();
     private String keyword;
     private Observable<StudentFilterEvent> obFilter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -178,7 +177,7 @@ import static android.view.View.GONE;
                 if (b) {
                     for (int i = 0; i < adapter.getItemCount(); i++) {
                         adapter.addSelection(i);
-                        selectList.add((StudentWithCoach) itemList.get(i).getData());
+                        selectList.add(itemList.get(i).getData());
                     }
                 } else {
                     for (int i = 0; i < adapter.getItemCount(); i++) {
@@ -246,7 +245,7 @@ import static android.view.View.GONE;
 
     public void localFilter(String s) {
         if (TextUtils.isEmpty(s)) {
-            adapter.setSearchText(null);
+            adapter.setSearchText("");
             getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     adapter.updateDataSet(itemList);
@@ -281,9 +280,9 @@ import static android.view.View.GONE;
         if (v.getId() == R.id.btn_allocate_coach || v.getId() == R.id.btn_change_coach) {
             ArrayList<String> students = new ArrayList<>();
             ArrayList<String> coachIdList = new ArrayList<>();
-            for (StudentWithCoach studentBean : selectList) {
+            for (QcStudentBean studentBean : selectList) {
                 students.add(studentBean.id());
-                for (CoachBean coachBean : studentBean.coaches) {
+                for (Staff coachBean : studentBean.sellers) {
                     coachIdList.add(coachBean.id);
                 }
             }
@@ -464,7 +463,7 @@ import static android.view.View.GONE;
         selectSutdentFragment.setListener(new BottomStudentsFragment.BottomStudentsListener() {
             @Override public void onBottomStudents(List<Personage> list) {
                 selectList.clear();
-                selectList.addAll(ListUtils.transerList(new ArrayList<StudentWithCoach>(), list));
+                selectList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(), list));
                 adapter.clearSelection();
                 for (int i = 0; i < adapter.getItemCount(); i++) {
                     QcStudentBean b = ((ChooseStudentItem) adapter.getItem(i)).getData();
@@ -503,11 +502,11 @@ import static android.view.View.GONE;
         return false;
     }
 
-    @Override public void onStudentList(List<StudentWithCoach> list) {
+    @Override public void onStudentList(List<QcStudentBean> list) {
         itemList.clear();
         datas.clear();
         datas.addAll(list);
-        for (StudentWithCoach data : list) {
+        for (QcStudentBean data : list) {
             itemList.add(new ChooseStudentItem(data));
         }
         hideLoadingTrans();

@@ -3,8 +3,6 @@ package cn.qingchengfit.pos.di;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.pos.PosApp;
 import cn.qingchengfit.pos.models.BillModel;
 import cn.qingchengfit.pos.models.CardModel;
@@ -20,33 +18,19 @@ import cn.qingchengfit.pos.routers.StudentRouters;
 import cn.qingchengfit.pos.routers.deskImpl;
 import cn.qingchengfit.pos.routers.exchangeImpl;
 import cn.qingchengfit.pos.routers.settingImpl;
-import cn.qingchengfit.saasbase.course.batch.bean.ScheduleTemplete;
-import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
-import cn.qingchengfit.saasbase.course.batch.network.body.DelBatchScheduleBody;
-import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
-import cn.qingchengfit.saasbase.course.batch.network.response.BatchCoachListWrap;
-import cn.qingchengfit.saasbase.course.batch.network.response.BatchCourseListWrap;
-import cn.qingchengfit.saasbase.course.batch.network.response.BatchDetailWrap;
-import cn.qingchengfit.saasbase.course.batch.network.response.BatchSchedulesWrap;
-import cn.qingchengfit.saasbase.course.batch.network.response.GroupCourseScheduleDetail;
-import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
-import cn.qingchengfit.saasbase.course.batch.network.response.SingleBatchWrap;
-import cn.qingchengfit.saasbase.course.course.network.response.CourseLisWrap;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.IBillModel;
 import cn.qingchengfit.saasbase.repository.ICardModel;
-import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.saasbase.routers.commonImpl;
 import cn.qingchengfit.saasbase.routers.courseImpl;
+import cn.qingchengfit.saasbase.routers.exportImpl;
+import cn.qingchengfit.saasbase.routers.gymImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.http.Body;
-import retrofit2.http.Path;
-import rx.Observable;
 
 /**
  * power by
@@ -83,7 +67,7 @@ public class AppModel {
   }
 
   @Provides SaasbaseRouterCenter providerRouterCenter(){
-    return new SaasbaseRouterCenter(new BillRouters(),new CardRouters(),new commonImpl(),new courseImpl(),new StaffRouters(),new StudentRouters());
+    return new SaasbaseRouterCenter(new BillRouters(),new CardRouters(),new StaffRouters(),new commonImpl(),new courseImpl(),new exportImpl(),new gymImpl(),new StudentRouters());
   }
   @Provides PosRouterCenter providerPosRouterCenter(){
     return new PosRouterCenter(new deskImpl(),new settingImpl(),new exchangeImpl());
@@ -128,87 +112,87 @@ public class AppModel {
   }
 
 
-  @Provides ICourseModel provideCourseModel(){
-    return new ICourseModel() {
-
-      @Override public Observable<QcDataResponse<BatchCourseListWrap>> qcGetGroupBatch() {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<BatchCoachListWrap>> qcGetPrivateBatch() {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<CourseLisWrap>> qcGetCourses(boolean is_private) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcDataResponse<CourseLisWrap>> qcGetCoursesPermission(boolean is_private) {
-        return null;
-      }
-
-      @Override public Observable<QcResponsePrivateDetail> qcGetPrivateCoaches(String coach_id) {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(
-          @Path("course_id") String course_id) {
-        return null;
-      }
-
-      @Override public Observable<QcDataResponse<BatchDetailWrap>> qcGetBatchDetail(
-          @Path("batch_id") String batch_id) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcDataResponse<BatchSchedulesWrap>> qcGetbatchSchedules(String batch_id,
-          boolean isPrivate) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcDataResponse<ScheduleTemplete>> qcGetBatchTemplate(boolean isPrivate,
-          String teacher_id, String course_id) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcResponse> qcCheckBatch(boolean isPrivate, ArrangeBatchBody body) {
-        return null;
-      }
-
-      @Override public Observable<QcResponse> qcArrangeBatch(ArrangeBatchBody body) {
-        return null;
-      }
-
-      @Override public Observable<QcResponse> qcUpdateBatch(String batchid, ArrangeBatchBody body) {
-        return null;
-      }
-
-      @Override public Observable<QcResponse> qcDelBatchSchedule(boolean isPrivate,
-          @Body DelBatchScheduleBody body) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcDataResponse<SingleBatchWrap>> qcGetSingleBatch(boolean isPrivate,
-          String single_id) {
-        return null;
-      }
-
-      @Override public Observable<QcResponse> delBatch(String batch_id) {
-        return null;
-      }
-
-      @Override
-      public Observable<QcResponse> qcUpdateBatchSchedule(boolean isPirvate, String scheduleid,
-          SingleBatchBody body) {
-        return null;
-      }
-    };
-  }
+  //@Provides ICourseModel provideCourseModel(){
+  //  return new ICourseModel() {
+  //    @Override public Observable<QcDataResponse<BatchCourseListWrap>> qcGetGroupBatch() {
+  //      return null;
+  //    }
+  //
+  //    @Override public Observable<QcDataResponse<BatchCoachListWrap>> qcGetPrivateBatch() {
+  //      return null;
+  //    }
+  //
+  //    @Override public Observable<QcDataResponse<CourseLisWrap>> qcGetCourses(boolean is_private) {
+  //      return null;
+  //    }
+  //
+  //    @Override
+  //    public Observable<QcDataResponse<CourseLisWrap>> qcGetCoursesPermission(boolean is_private) {
+  //      return null;
+  //    }
+  //
+  //    @Override public Observable<QcDataResponse<QcResponsePrivateDetail>> qcGetPrivateCoaches(
+  //      String coach_id) {
+  //      return null;
+  //    }
+  //
+  //    @Override public Observable<QcDataResponse<GroupCourseScheduleDetail>> qcGetGroupCourses(
+  //        @Path("course_id") String course_id) {
+  //      return null;
+  //    }
+  //
+  //    @Override public Observable<QcDataResponse<BatchDetailWrap>> qcGetBatchDetail(
+  //        @Path("batch_id") String batch_id) {
+  //      return null;
+  //    }
+  //
+  //    @Override
+  //    public Observable<QcDataResponse<BatchSchedulesWrap>> qcGetbatchSchedules(String batch_id,
+  //        boolean isPrivate) {
+  //      return null;
+  //    }
+  //
+  //    @Override
+  //    public Observable<QcDataResponse<ScheduleTemplete>> qcGetBatchTemplate(boolean isPrivate,
+  //        String teacher_id, String course_id) {
+  //      return null;
+  //    }
+  //
+  //    @Override
+  //    public Observable<QcResponse> qcCheckBatch(boolean isPrivate, ArrangeBatchBody body) {
+  //      return null;
+  //    }
+  //
+  //    @Override public Observable<QcResponse> qcArrangeBatch(ArrangeBatchBody body) {
+  //      return null;
+  //    }
+  //
+  //    @Override public Observable<QcResponse> qcUpdateBatch(String batchid, ArrangeBatchBody body) {
+  //      return null;
+  //    }
+  //
+  //    @Override public Observable<QcResponse> qcDelBatchSchedule(boolean isPrivate,
+  //        @Body DelBatchScheduleBody body) {
+  //      return null;
+  //    }
+  //
+  //    @Override
+  //    public Observable<QcDataResponse<SingleBatchWrap>> qcGetSingleBatch(boolean isPrivate,
+  //        String single_id) {
+  //      return null;
+  //    }
+  //
+  //    @Override public Observable<QcResponse> delBatch(String batch_id) {
+  //      return null;
+  //    }
+  //
+  //    @Override
+  //    public Observable<QcResponse> qcUpdateBatchSchedule(boolean isPirvate, String scheduleid,
+  //        SingleBatchBody body) {
+  //      return null;
+  //    }
+  //  };
+  //}
 
 
   public static final class Builder {

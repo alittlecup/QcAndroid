@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
+    >
+
+  <data>
+
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_grey"
     android:orientation="vertical"
     >
 
-  <include layout="@layout/common_simple_toolbar"/>
+  <include layout="@layout/common_simple_toolbar"
+           android:id="@+id/layout_toolbar"
+           bind:toolbarModel="@{toolbarModel}"/>
 
   <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/civ_work_exp"
@@ -84,3 +97,4 @@
       />
 
 </LinearLayout>
+</layout>

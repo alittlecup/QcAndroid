@@ -2,15 +2,13 @@ package cn.qingchengfit.items;
 
 import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.bean.NotificationGlance;
 import cn.qingchengfit.constant.ConstantNotification;
-import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -47,8 +45,8 @@ public class SystemMsgItem extends AbstractFlexibleItem<SystemMsgItem.SystemMsgV
         return R.layout.item_system_msg;
     }
 
-    @Override public SystemMsgVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new SystemMsgVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SystemMsgVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new SystemMsgVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, SystemMsgVH holder, int position, List payloads) {

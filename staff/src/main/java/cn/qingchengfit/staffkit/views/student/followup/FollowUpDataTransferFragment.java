@@ -22,8 +22,8 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.FollowUpConver;
 import cn.qingchengfit.model.responese.Student;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
@@ -248,7 +248,7 @@ public class FollowUpDataTransferFragment extends BaseFragment
             for (Student s : conver.users) {
                 datas.add(new FollowUpItem(this, s, 4));
             }
-            commonFlexAdapter.notifyDataSetChanged();
+            commonFlexAdapter.updateDataSet(datas);
         }
     }
 

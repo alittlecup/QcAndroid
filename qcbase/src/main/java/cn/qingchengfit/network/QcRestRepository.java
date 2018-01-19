@@ -155,6 +155,11 @@ public class QcRestRepository {
     }
   }
 
+  public static void clearSession(Context context){
+    PreferenceUtils.setPrefString(context, "session_id", "");
+    PreferenceUtils.setPrefString(context, "qingcheng.session", "");
+  }
+
   public String getHost() {
     return host;
   }
@@ -166,7 +171,7 @@ public class QcRestRepository {
   public <T> T createPostApi(final Class<T> service) {
     return postApiAdapter.create(service);
   }
-
+  
   public interface GetCsrfToken {
     @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
   }

@@ -51,6 +51,10 @@ public class PresenterDelegate<T extends PView> implements Presenter {
         presenter.attachView(v);
     }
 
+    @Override public void onNewSps() {
+        presenter.onNewSps();
+    }
+
     @Override
     public void attachIncomingIntent(Intent intent) {
         presenter.attachIncomingIntent(intent);

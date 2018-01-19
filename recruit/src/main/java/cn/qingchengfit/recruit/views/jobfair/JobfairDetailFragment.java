@@ -42,7 +42,6 @@ import cn.qingchengfit.recruit.views.JobsFilterFragment;
 import cn.qingchengfit.recruit.views.ResumeFilterFragment;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -159,6 +158,11 @@ public class JobfairDetailFragment extends BaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
+    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        popBack();
+      }
+    });
     toolbarTitle.setText("招聘会详情");
     if (type == 0) {
       toolbar.inflateMenu(R.menu.menu_share);
@@ -176,7 +180,6 @@ public class JobfairDetailFragment extends BaseFragment
   private void initAppbar() {
     smoothAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
       @Override public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        LogUtil.e("offset:" + verticalOffset);
         if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
           tvDuring.setVisibility(View.GONE);
           tvName.setVisibility(View.GONE);

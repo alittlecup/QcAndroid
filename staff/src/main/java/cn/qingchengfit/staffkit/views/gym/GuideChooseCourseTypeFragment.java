@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.gym.addcourse.AddGuideCourseFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
@@ -44,18 +43,18 @@ public class GuideChooseCourseTypeFragment extends BaseFragment {
 
     @OnClick({ R.id.go_group, R.id.go_private }) public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.go_group:
-                getFragmentManager().beginTransaction()
-                    .add(R.id.frag, AddGuideCourseFragment.newInstance(false))
-                    .addToBackStack(null)
-                    .commit();
-                break;
-            case R.id.go_private:
-                getFragmentManager().beginTransaction()
-                    .add(R.id.frag, AddGuideCourseFragment.newInstance(true))
-                    .addToBackStack(null)
-                    .commit();
-                break;
+            //case R.id.go_group:
+            //    getFragmentManager().beginTransaction()
+            //        .add(R.id.frag, AddGuideCourseFragment.newInstance(false))
+            //        .addToBackStack(null)
+            //        .commit();
+            //    break;
+            //case R.id.go_private:
+            //    getFragmentManager().beginTransaction()
+            //        .add(R.id.frag, AddGuideCourseFragment.newInstance(true))
+            //        .addToBackStack(null)
+            //        .commit();
+            //    break;
         }
     }
 }

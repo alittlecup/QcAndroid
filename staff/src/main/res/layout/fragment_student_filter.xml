@@ -58,7 +58,7 @@
           <cn.qingchengfit.widgets.CheckBoxButton
               android:id="@+id/cbb_gender_male"
               android:layout_width="74dp"
-              android:layout_height="26dp"
+              android:layout_height="match_parent"
               android:gravity="center"
               android:textSize="@dimen/min_font"
               app:cb_background_normal="@drawable/shape_bg_rect_grey_corner4"
@@ -68,8 +68,7 @@
               app:cb_select="false"
               app:cb_text_content="男"
               app:cb_text_normal_color="@color/qc_text_grey"
-              app:cb_text_select_color="@color/qc_theme_green"
-              />
+              app:cb_text_select_color="@color/qc_theme_green" />
 
           <Space
               android:layout_width="12dp"

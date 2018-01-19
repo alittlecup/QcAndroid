@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.Utils;
 
+import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import cn.qingchengfit.utils.DateUtils;
-import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
 import java.util.Comparator;
 
 /**

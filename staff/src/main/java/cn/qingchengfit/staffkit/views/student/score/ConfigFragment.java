@@ -26,9 +26,9 @@ import cn.qingchengfit.model.responese.ScoreRuleAward;
 import cn.qingchengfit.model.responese.ScoreRuleCard;
 import cn.qingchengfit.model.responese.StudentScoreAwardRuleBean;
 import cn.qingchengfit.model.responese.StudentScoreBaseConfigBean;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.SwitcherLayout;
@@ -103,13 +103,6 @@ public class ConfigFragment extends BaseFragment implements ConfigPresenter.Pres
         return fragment;
     }
 
-    public static ConfigFragment newInstance() {
-        Bundle args = new Bundle();
-        //args.putBoolean("isOpen", isOpen);
-        ConfigFragment fragment = new ConfigFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -359,7 +352,7 @@ public class ConfigFragment extends BaseFragment implements ConfigPresenter.Pres
                     itemsAwardDis.add(new ScoreAwardItem(award.toAwardRuleBean()));
                 }
             }
-            flexibleAdapterAwardActive.notifyDataSetChanged();
+            flexibleAdapterAwardActive.updateDataSet(itemsAwardActive);
             flexibleAdapterAwardDis.updateDataSet(itemsAwardDis);
             flexibleAdapterAwardDis.notifyDataSetChanged();
         } else {

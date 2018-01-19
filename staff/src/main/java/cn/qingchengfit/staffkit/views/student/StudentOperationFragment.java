@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
@@ -17,13 +16,12 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.AllocateCoachActivity;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
 import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
@@ -37,12 +35,14 @@ import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -55,22 +55,25 @@ public class StudentOperationFragment extends BaseFragment
   @Inject LoginStatus loginStatus;
   @Inject GymWrapper gymWrapper;
   @Inject SerPermisAction serPermisAction;
+  @Inject GymBaseInfoAction gymBaseInfoAction;
   @BindView(R.id.indicator) MyIndicator indicator;
   private List<AbstractFlexibleItem> datas = new ArrayList<>();
   private CommonFlexAdapter mCommonFlexAdapter;
   private boolean proGym = false;
 
-  @Inject public StudentOperationFragment() {
+   public StudentOperationFragment() {
   }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    mCommonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
+   }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_student_operation, container, false);
     unbinder = ButterKnife.bind(this, v);
-
-    mCommonFlexAdapter = new CommonFlexAdapter(datas, this);
-
     final SmoothScrollGridLayoutManager gridLayoutManager =
         new SmoothScrollGridLayoutManager(getContext(), 2, LinearLayoutManager.HORIZONTAL, false);
     MySnapHelper pagerSnapHelper = new MySnapHelper();
@@ -83,13 +86,18 @@ public class StudentOperationFragment extends BaseFragment
       }
     });
     recycleview.setLayoutManager(gridLayoutManager);
+    //recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
+    recycleview.setItemAnimator(new ScaleInAnimator());
+
     recycleview.setAdapter(mCommonFlexAdapter);
+
+
     return v;
   }
 
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
-    RxRegiste(GymBaseInfoAction.getGymByModel(gymWrapper.id(), gymWrapper.model())
+    RxRegiste(gymBaseInfoAction.getGymByModel(gymWrapper.id(), gymWrapper.model())
         .filter(new Func1<List<CoachService>, Boolean>() {
           @Override public Boolean call(List<CoachService> list) {
             return list != null && list.size() > 0;
@@ -102,26 +110,26 @@ public class StudentOperationFragment extends BaseFragment
             proGym = GymUtils.getSystemEndDay(now) >= 0;
             datas.clear();
             datas.add(new StudentOperationItem(R.drawable.vector_student_management_sales,
-                R.string.qc_student_allotsale, proGym, true));
+              R.string.qc_student_allotsale, proGym, true));
             datas.add(new StudentOperationItem(R.drawable.vector_student_management_attend,
-                R.string.qc_student_attendance, proGym, true));
+              R.string.qc_student_attendance, proGym, true));
             datas.add(new StudentOperationItem(R.drawable.vector_student_management_coach,
-                R.string.qc_student_allot_coach, proGym, true));
+              R.string.qc_student_allot_coach, proGym, true));
             datas.add(new StudentOperationItem(R.drawable.vector_student_send_sms,
-                R.string.qc_student_send_sms, proGym, true));
+              R.string.qc_student_send_sms, proGym, true));
             datas.add(new StudentOperationItem(R.drawable.vector_student_management_follow,
-                R.string.qc_student_follow_up, proGym, true));
+              R.string.qc_student_follow_up, proGym, true));
             datas.add(new StudentOperationItem(R.drawable.ic_student_management_export,
-                R.string.fun_name_export, proGym, true));
+              R.string.fun_name_export, proGym, true));
             datas.add(new StudentOperationItem(R.drawable.vd_student_transfer,
-                R.string.qc_student_follow_transfer, proGym, true));
+              R.string.qc_student_follow_transfer, proGym, true));
             datas.add(new StudentOperationItem(R.drawable.vector_student_management_birthday,
-                R.string.qc_student_birthday_notice, proGym, false));
+              R.string.qc_student_birthday_notice, proGym, false));
             datas.add(new StudentOperationItem(R.drawable.vector_student_management_tag,
-                R.string.qc_student_vip, proGym, false));
+              R.string.qc_student_vip, proGym, false));
             setRecyclerPadding(datas.size());
             indicator.createIndicators(datas.size() / 8 + 1);
-            if (mCommonFlexAdapter != null) mCommonFlexAdapter.notifyDataSetChanged();
+            mCommonFlexAdapter.updateDataSet(datas, true);
           }
         }));
   }
@@ -134,17 +142,7 @@ public class StudentOperationFragment extends BaseFragment
         MeasureUtils.getScreenWidth(getResources()) * (4 - lastPosition % 8) / 4, 0);
   }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-  }
 
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-  }
 
   @Override public String getFragmentName() {
     return this.getClass().getName();
@@ -156,12 +154,12 @@ public class StudentOperationFragment extends BaseFragment
       if (requestCode == 2) {// 跳转分配销售
         Shop shops = (Shop) IntentUtils.getParcelable(data);
         if (shops != null) {
-          if (!SerPermisAction.check(shops.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+          if (!serPermisAction.check(shops.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
             showAlert("抱歉!您无该场馆权限");
             return;
           }
           CoachService coachService =
-              GymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shops.id);
+              gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), shops.id);
           if (coachService == null) {
             ToastUtils.show("数据错误");
             return;

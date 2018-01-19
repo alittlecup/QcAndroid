@@ -70,7 +70,7 @@ public class FlexableListFragment extends BaseFragment {
 
     public void sort(String keyword) {
         if (TextUtils.isEmpty(keyword)) {
-            mFlexAdapter.setSearchText(null);
+            mFlexAdapter.setSearchText("");
         } else {
             List<AbstractFlexibleItem> copy = new ArrayList<>();
             copy.addAll(mData);
@@ -83,7 +83,7 @@ public class FlexableListFragment extends BaseFragment {
 
     public void freshView() {
         if (getContext() != null && mFlexAdapter != null) {
-            mFlexAdapter.notifyDataSetChanged();
+            mFlexAdapter.updateDataSet(mData);
         }
     }
 
@@ -98,7 +98,7 @@ public class FlexableListFragment extends BaseFragment {
         if (mData.size() == 0) {
             mData.add(new CommonNoDataItem(customNoImage, customNoStr, customNoStrTitle));
         }
-        if (mFlexAdapter != null && recycleview != null) mFlexAdapter.notifyDataSetChanged();
+        if (mFlexAdapter != null && recycleview != null) mFlexAdapter.updateDataSet(mData);
     }
 
     public FlexibleAdapter.OnItemClickListener getItemClickListener() {

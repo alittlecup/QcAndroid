@@ -18,10 +18,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.items.CommonNoDataItem;
+import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.course.SimpleTextItemItem;
 import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -87,10 +87,11 @@ import javax.inject.Inject;
         delegatePresenter(presenter, this);
         initView();
         if (chooseType != 3) {
-            presenter.getFilterSelers();
+
         } else {
 
         }
+        presenter.getFilterSelers();
         view.setOnTouchListener(this);
         return view;
     }
@@ -116,10 +117,10 @@ import javax.inject.Inject;
 
     public void initView() {
         flexibleAdapter = new CommonFlexAdapter(items, this);
-        flexibleAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+        flexibleAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         rvReferrer.setLayoutManager(mLinearLayoutManager);
-        rvReferrer.setHasFixedSize(true);
+        //rvReferrer.setHasFixedSize(true);
         rvReferrer.setNestedScrollingEnabled(false);
         rvReferrer.setAdapter(flexibleAdapter);
     }
@@ -139,7 +140,8 @@ import javax.inject.Inject;
             }
             if (items.size() == 0) items.add(new SimpleTextItemItem("暂无推荐人", 13));
         }
-        flexibleAdapter.notifyDataSetChanged();
+        flexibleAdapter.clear();
+        flexibleAdapter.updateDataSet(items);
         isShowShort = !isShowShort;
     }
 
@@ -228,7 +230,7 @@ import javax.inject.Inject;
             }
         }
 
-        flexibleAdapter.notifyDataSetChanged();
+        flexibleAdapter.updateDataSet(items);
     }
 
     @Override public void onShowError(String e) {

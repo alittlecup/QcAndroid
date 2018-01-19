@@ -23,8 +23,8 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.network.response.ChatGymWrap;
 import cn.qingchengfit.saas.network.GetApi;
 import cn.qingchengfit.saas.response.SuWrap;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.rxbus.event.EventChoosePerson;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.bottom.BottomStudentsFragment;
@@ -65,6 +65,8 @@ import rx.schedulers.Schedulers;
 public class ChooseStaffFragment extends ConversationFriendsFragment {
   @Inject QcRestRepository qcRestRepository;
   @Inject GymWrapper gymWrapper;
+  @Inject QcDbManager qcDbManager;
+  @Inject GymFunctionFactory gymFunctionFactory;
   private ChatGym chatGym;
   //@Inject QCDbManager qcDbManager;
 
@@ -98,7 +100,7 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
                   final QcDataResponse<SuWrap> suWrapQcDataResponse) {
                 if (suWrapQcDataResponse.status == 200) {
                   if (suWrapQcDataResponse.data.is_superuser) {
-                    return QCDbManager.getGymByGymId(chatGym.id);
+                    return qcDbManager.getGymByGymId(chatGym.id);
                   } else {
 
                   }
@@ -123,7 +125,7 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
                   //toStatement.putExtra("")
                   //startActivity(toStatement);
                   gymWrapper.setCoachService(coachServices.get(0));
-                  GymFunctionFactory.getJumpIntent(GymFunctionFactory.MODULE_MANAGE_STAFF_ADD,
+                  gymFunctionFactory.getJumpIntent(GymFunctionFactory.MODULE_MANAGE_STAFF_ADD,
                       coachServices.get(0), null, null, ChooseStaffFragment.this);
                 } else {
                   ToastUtils.show("找不到对应场馆");

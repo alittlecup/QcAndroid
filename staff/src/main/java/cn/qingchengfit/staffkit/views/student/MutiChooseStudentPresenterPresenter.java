@@ -9,9 +9,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.StudentBean;
-import cn.qingchengfit.model.responese.Students;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -29,6 +29,7 @@ import rx.schedulers.Schedulers;
 public class MutiChooseStudentPresenterPresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject StudentAction studentAction;
     private MVPView view;
     private RestRepository restRepository;
     private Subscription spFilter;
@@ -90,8 +91,8 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
             .qcGetCardBundldStudents(staffid, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
-            .map(new Func1<QcDataResponse<Students>, List<QcStudentBean>>() {
-                @Override public List<QcStudentBean> call(QcDataResponse<Students> qcResponseAllStudent) {
+            .map(new Func1<QcDataResponse<StudentListWrapper>, List<QcStudentBean>>() {
+                @Override public List<QcStudentBean> call(QcDataResponse<StudentListWrapper> qcResponseAllStudent) {
 
                     if (ResponseConstant.checkSuccess(qcResponseAllStudent)) {
                         for (QcStudentBean bean : qcResponseAllStudent.data.users) {
@@ -112,7 +113,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
                                 bean.setSupport_gym(support);
                             }
                         }
-                        StudentAction.newInstance().saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
+                        studentAction.saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
                         return qcResponseAllStudent.data.users;
                     } else {
                         return null;
@@ -140,7 +141,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
 
     public void subsribeDb() {
         if (gymWrapper.inBrand()) {//连锁运营
-            RxRegiste(StudentAction.newInstance()
+            RxRegiste(studentAction
                 .getStudentByBrand(gymWrapper.brand_id())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -151,7 +152,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
                     }
                 }));
         } else {//场馆
-            RxRegiste(StudentAction.newInstance()
+            RxRegiste(studentAction
                 .getStudentByGym(gymWrapper.id(), gymWrapper.model())
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
@@ -165,7 +166,7 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
     }
 
     public void filter(String keyword) {
-        spFilter = StudentAction.newInstance()
+        spFilter = studentAction
             .getStudentByKeyWord(keyword)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<List<QcStudentBean>>() {

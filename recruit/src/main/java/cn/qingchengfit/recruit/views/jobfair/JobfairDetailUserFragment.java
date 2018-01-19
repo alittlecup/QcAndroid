@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.items.FilterHeadItem;
 import cn.qingchengfit.items.TitleHintItem;
 import cn.qingchengfit.recruit.R;
@@ -81,7 +80,7 @@ public class JobfairDetailUserFragment extends SeekPositionHomeFragment
     coordinatorLayout =
         (CoordinatorLayout) inflater.inflate(R.layout.layout_jobfair_toolbar_container, null);
     coordinatorLayout.addView(v, 1);
-    smoothAppBarLayout = ButterKnife.findById(container, R.id.smooth_app_bar_layout);
+    smoothAppBarLayout = container.findViewById(R.id.smooth_app_bar_layout);
 
     presenter.queryJobFairDetail(jobFair.id);
     return coordinatorLayout;
@@ -106,9 +105,9 @@ public class JobfairDetailUserFragment extends SeekPositionHomeFragment
     });
   }
 
-  @Override protected void initView() {
+  @Override protected void initView(Bundle sav) {
     commonFlexAdapter.setStickyHeaders(true).setDisplayHeadersAtStartUp(true);
-    super.initView();
+    super.initView(sav);
     rv.setClipToPadding(false);
   }
 

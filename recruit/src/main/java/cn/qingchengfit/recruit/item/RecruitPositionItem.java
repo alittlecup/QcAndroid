@@ -41,8 +41,8 @@ public class RecruitPositionItem extends AbstractFlexibleItem<RecruitPositionIte
     return R.layout.item_recruit_position;
   }
 
-  @Override public RecruitPositionVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new RecruitPositionVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public RecruitPositionVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new RecruitPositionVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitPositionVH holder, int position, List payloads) {

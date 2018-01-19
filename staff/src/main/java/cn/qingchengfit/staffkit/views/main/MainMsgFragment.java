@@ -223,6 +223,8 @@ public class MainMsgFragment extends BaseFragment
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
+    super.initToolbar(toolbar);
+    toolbar.setNavigationIcon(null);
     toolbarTitile.setText(R.string.title_msg);
     toolbar.inflateMenu(R.menu.menu_clear_noti);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -365,7 +367,8 @@ public class MainMsgFragment extends BaseFragment
       recruitMsg.setId(0x11L);
       recruitNoty.notification = recruitMsg;
       items.add(new SystemMsgItem(R.drawable.ic_vd_notification_job, recruitNoty));
-      adapter.notifyDataSetChanged();
+      adapter.clear();
+      adapter.updateDataSet(items);
       checkNoInfo();
       if (getActivity() instanceof MainActivity) {
         ((MainActivity) getActivity()).freshNotiCount(getUnredCount());

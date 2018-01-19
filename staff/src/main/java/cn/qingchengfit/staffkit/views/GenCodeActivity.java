@@ -2,9 +2,7 @@ package cn.qingchengfit.staffkit.views;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,10 +13,11 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.StringUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import com.google.zxing.WriterException;
 import timber.log.Timber;
 
-public class GenCodeActivity extends AppCompatActivity {
+public class GenCodeActivity extends BaseActivity {
 
     public static final String GEN_CODE_URL = "gen.code.url";
     public static final String GEN_CODE_TITLE = "gen.code.title";
@@ -35,12 +34,7 @@ public class GenCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gen_code);
         ButterKnife.bind(this);
 
-        toolbar.setNavigationIcon(R.drawable.ic_clear_white_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        initToolbar(toolbar);
         String tilte = getIntent().getStringExtra(GEN_CODE_TITLE);
         String url = getIntent().getStringExtra(GEN_CODE_URL);
         int bgRes = getIntent().getIntExtra(GEN_CODE_BG, R.drawable.bg_qr_code);

@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseBottomSheetDialogFragment;
 import cn.qingchengfit.utils.IntentUtils;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -70,7 +70,9 @@ public class BottomSheetListDialogFragment extends BaseBottomSheetDialogFragment
         unbinder = ButterKnife.bind(this, view);
         BSAdapter adatper = new BSAdapter();
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycleview.addItemDecoration(new DividerItemDecoration(getContext()));
+        recycleview.addItemDecoration(new FlexibleItemDecoration(getContext())
+          .withDivider(R.drawable.divider_horizon_left_44dp)
+          .withOffset(1).withBottomEdge(true));
         recycleview.setAdapter(adatper);
         adatper.setListener(new OnRecycleItemClickListener() {
             @Override public void onItemClick(View v, int pos) {

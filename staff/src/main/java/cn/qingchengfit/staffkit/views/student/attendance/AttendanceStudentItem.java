@@ -1,8 +1,6 @@
 package cn.qingchengfit.staffkit.views.student.attendance;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,12 +25,16 @@ public class AttendanceStudentItem extends AbstractFlexibleItem<AttendanceStuden
         this.data = data;
     }
 
+    public Absentce getData() {
+        return data;
+    }
+
     @Override public int getLayoutRes() {
         return R.layout.item_student_attendance;
     }
 
-    @Override public AttendanceStudentVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AttendanceStudentVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public AttendanceStudentVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AttendanceStudentVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, AttendanceStudentVH holder, int position, List payloads) {
@@ -47,6 +49,7 @@ public class AttendanceStudentItem extends AbstractFlexibleItem<AttendanceStuden
         holder.tvAbsenceDay.setText(data.absence + "");
         holder.tvStudentTitle.setText(data.title);
         holder.tvStudentDate.setText(data.date_and_time);
+        holder.tvStudentContactTa.setTag(position);
     }
 
     @Override public boolean equals(Object o) {
@@ -70,7 +73,8 @@ public class AttendanceStudentItem extends AbstractFlexibleItem<AttendanceStuden
             ButterKnife.bind(this, view);
             tvStudentContactTa.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    if (data != null) RxBus.getBus().post(new EventContactUser(data.user));
+                    Absentce absentce = ((AttendanceStudentItem)adapter.getItem((int)v.getTag())).getData();
+                    if (absentce != null) RxBus.getBus().post(new EventContactUser(absentce.user));
                 }
             });
         }

@@ -17,9 +17,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.responese.Space;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.custom.DialogSheet;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -50,6 +50,7 @@ public class SiteDetailFragment extends BaseFragment implements SiteDetailView {
     @BindView(R.id.btn_del) RelativeLayout btnDel;
 
     @Inject SiteDetailPresenter presenter;
+    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.deny_layout) View denyLayout;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
@@ -79,7 +80,7 @@ public class SiteDetailFragment extends BaseFragment implements SiteDetailView {
         unbinder = ButterKnife.bind(this, view);
         initToolbar(toolbar);
 
-        boolean eP = SerPermisAction.checkAll(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE);
+        boolean eP = serPermisAction.checkAll(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE);
         denyLayout.setVisibility(eP ? View.GONE : View.VISIBLE);
 
         presenter.attachView(this);
@@ -131,7 +132,7 @@ public class SiteDetailFragment extends BaseFragment implements SiteDetailView {
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         super.initToolbar(toolbar);
-        boolean eP = SerPermisAction.checkAll(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE);
+        boolean eP = serPermisAction.checkAll(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE);
         toolbarTitile.setText("场地详情");
         if (eP) {
             toolbar.inflateMenu(R.menu.menu_save);
@@ -201,7 +202,7 @@ public class SiteDetailFragment extends BaseFragment implements SiteDetailView {
     }
 
     @OnClick(R.id.btn_del) public void onDel() {
-        if (!SerPermisAction.checkAll(PermissionServerUtils.STUDIO_LIST_CAN_DELETE)) {
+        if (!serPermisAction.checkAll(PermissionServerUtils.STUDIO_LIST_CAN_DELETE)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }

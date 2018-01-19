@@ -87,7 +87,7 @@
     #项目特殊处理代码
 
 
-    -keep class com.qingchengfit.fitcoach.bean.**{*;}
+    -keep class cn.qingchengfit.bean.**{*;}
     -keep class com.qingchengfit.fitcoach.http.**{*;}
     -keep class com.qingchengfit.fitcoach.http.QcCloudClient.**{*;}
     -keep class com.qingchengfit.fitcoach.http.QcCloudClient.PostApi.**{*;}
@@ -442,7 +442,7 @@
     -keep class io.reactivex.**{*;}
     -keep class org.glassfish.**{*;}
     -keep class com.google.**{*;}
-    -keep class com.qingchengfit.fitcoach.bean.**{*;}
+    -keep class cn.qingchengfit.bean.**{*;}
     -keep class com.qingchengfit.fitcoach.http.bean.**{*;}
         -keep class net.kencochrane.raven.**{*;}
         -keep public class * implements com.bumptech.glide.module.GlideModule

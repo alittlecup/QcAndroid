@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="cardtype_category">
+    <item >储值类型</item>
+    <item >次卡类型</item>
+    <item >期限类型</item>
+  </string-array>
+
+  <string-array name="cardtype_disable_stauts">
+    <item >正常</item>
+    <item >停用</item>
+  </string-array>
+
+  <array name="card_tpl_flow">
+    <item>编辑</item>
+    <item>停用该会员卡种类</item>
+  </array>
+  <array name="card_tpl_flow_resume">
+    <item>编辑</item>
+    <item>恢复该会员卡种类</item>
+  </array>
+
+  <array name="card_filter_tags">
+    <item >cardtpls</item>
+    <item >cardstatus</item>
+  </array>
+
+  <string-array name="card_filter_cardtype_category">
+    <item >全部类型</item>
+    <item >储值类型</item>
+    <item >次卡类型</item>
+    <item >期限类型</item>
+  </string-array>
+
+  <array name="pay_method">
+    <item>@string/wechat_scan</item>
+    <item>@string/wechat_pay</item>
+    <item>@string/cash_pay</item>
+    <item>@string/credit_pay</item>
+    <item>@string/transit_pay</item>
+    <item>@string/other</item>
+  </array>
+
+  <array name="class_frequent">
+    <item>@string/everyday</item>
+    <item>@string/everyweek</item>
+    <item>@string/everymonth</item>
+  </array>
+
+  <string-array name="card_filter_status">
+    <item >默认</item>
+    <item >正常</item>
+    <item >请假中</item>
+    <item >已过期</item>
+    <item >已停卡</item>
+  </string-array>
+</resources>

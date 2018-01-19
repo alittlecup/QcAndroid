@@ -3,10 +3,7 @@ package cn.qingchengfit.staffkit.views.student.list;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -32,6 +29,10 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
         this.done = done;
     }
 
+    public int getIconRes() {
+        return iconRes;
+    }
+
     public int getStrRes(){
         return strRes;
     }
@@ -40,10 +41,9 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
         return R.layout.item_student_operation;
     }
 
-    @Override public StudentOperationVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        StudentOperationVH holder = new StudentOperationVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
-        this.width = parent.getWidth();
-        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(parent.getWidth() / 4, parent.getHeight() / 2));
+    @Override public StudentOperationVH createViewHolder(View view, FlexibleAdapter adapter) {
+        StudentOperationVH holder = new StudentOperationVH(view, adapter);
+        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(adapter.getRecyclerView().getWidth() / 4, adapter.getRecyclerView().getHeight() / 2));
         return holder;
     }
 
@@ -58,6 +58,9 @@ public class StudentOperationItem extends AbstractFlexibleItem<StudentOperationI
     }
 
     @Override public boolean equals(Object o) {
+        if (o instanceof StudentOperationItem){
+            return ((StudentOperationItem) o).getIconRes() == getIconRes();
+        }
         return false;
     }
 

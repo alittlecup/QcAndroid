@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="text_sign_group_class">团课是否需要签课?</string>
+  <string name="text_sign_class_way">签课方式</string>
+  <string name="text_sign_class_select">请选择</string>
+  <string name="text_sign_class_start">签课开始于课程前(分钟)</string>
+  <string name="text_sign_class_end">签课开始于课程后(分钟)</string>
+  <string name="label_sign_group_class">团课是否需要签课？</string>
+  <string name="label_sign_private_class">私教是否需要签课?</string>
+
+
+  <string formatted="false" name="msg_noti_before">%s开始前提醒会员</string>
+  <string formatted="false" name="msg_less_student">上课人数不足提醒教练</string>
+  <string formatted="false" name="msg_new_noti_trainer">有新预约提醒教练</string>
+  <string formatted="false" name="msg_help_order_noti_student">教练工作人员代约%s提醒会员</string>
+  <string formatted="false" name="msg_cancle_order_noti_student">会员取消%s预约提醒会员</string>
+  <string formatted="false" name="msg_send_to_substitute">当有可约名额时发送短信给排队候补会员</string>
+</resources>

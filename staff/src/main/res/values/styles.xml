@@ -22,7 +22,6 @@
     <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
     <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
     <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
-
   </style>
 
   <style name="QcAppThemeForWeb" parent="Theme.AppCompat.Light.NoActionBar">
@@ -77,6 +76,7 @@
     <item name="colorPrimary">@color/toolbar</item>
     <item name="colorPrimaryDark">@color/toolbar</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:windowTranslucentStatus">true</item>
   </style>
 
   <style name="QcWebStyle" parent="Theme.AppCompat.Light.NoActionBar">
@@ -146,7 +146,6 @@
     <item name="android:height">38dp</item>
     <item name="android:paddingLeft">8dp</item>
     <item name="android:paddingRight">8dp</item>
-    <item name="android:elevation">0dp</item>
   </style>
 
   <style name="Qc.ScrollviewStyle" parent="android:Widget.ScrollView">
@@ -274,16 +273,16 @@
   </style>
 
   <style name="ButtomDialogStyle" parent="android:Animation">
-    <item name="@android:windowEnterAnimation">@anim/slide_from_bottom</item>
+    <item name="android:windowEnterAnimation">@anim/slide_from_bottom</item>
     //进入时的动画
-    <item name="@android:windowExitAnimation">@anim/slide_out_bottom</item>
+    <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
     //退出时的动画
   </style>
 
   <style name="TopDialogStyle" parent="android:Animation">
-    <item name="@android:windowEnterAnimation">@anim/slide_top_in</item>
+    <item name="android:windowEnterAnimation">@anim/slide_top_in</item>
     //进入时的动画
-    <item name="@android:windowExitAnimation">@anim/slide_top_out</item>
+    <item name="android:windowExitAnimation">@anim/slide_top_out</item>
     //退出时的动画
   </style>
   <!-- 时间选择器popwidnow 显示消失动画 -->

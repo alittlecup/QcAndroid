@@ -3,124 +3,146 @@ apply plugin: "maven"
 apply plugin: "com.squareup.sqldelight"
 apply plugin: "com.jakewharton.butterknife"
 
-def libs = rootProject.ext.libraries;
-def cfg = rootProject.ext.configuration;
+def libs = rootProject.ext.libraries
+def cfg = rootProject.ext.configuration
 android {
-  compileSdkVersion cfg.compileVersion
-  buildToolsVersion cfg.buildToolsVersion
+    compileSdkVersion cfg.compileVersion
+    buildToolsVersion cfg.buildToolsVersion
+    dataBinding {
+        enabled true
+    }
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [fragmentArgsLib               : 'true',
+                             fragmentArgsSupportAnnotations: 'true']
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
-  defaultConfig {
-    minSdkVersion 16
-    targetSdkVersion 25
-    versionCode 1
-    versionName "1.0"
-    vectorDrawables.useSupportLibrary = true
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments = [fragmentArgsLib               : 'true',
-                     fragmentArgsSupportAnnotations: 'true']
-      }
-    }
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-    }
-  }
 }
 
 configurations.all {
   resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
+  resolutionStrategy.force "com.android.support:support-v4:${libs.supportVersion}"
 }
 
 dependencies {
-  compile fileTree(include: ['*.jar','*.aar'], dir: 'libs')
-  compile "com.google.dagger:dagger:${libs.dagger}"
-  compile "com.google.dagger:dagger-android:${libs.dagger}"
-  compile "com.google.dagger:dagger-android-support:${libs.dagger}"
+  implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
+  api 'com.jakewharton.timber:timber:4.0.1'
+  api "com.google.dagger:dagger:${libs.dagger}"
+  api "com.google.dagger:dagger-android:${libs.dagger}"
+  api "com.google.dagger:dagger-android-support:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  compile "com.android.support:support-v4:${libs.supportVersion}"
-  compile "com.android.support:support-v13:${libs.supportVersion}"
-  compile "com.android.support:support-annotations:${libs.supportVersion}"
-  compile "com.android.support:appcompat-v7:${libs.supportVersion}"
-  compile "com.android.support:cardview-v7:${libs.supportVersion}"
-  compile "com.android.support:design:${libs.supportVersion}"
-  compile "com.android.support:percent:${libs.supportVersion}"
-  compile("com.squareup.retrofit2:retrofit:${libs.retrofit}") {
+  api "com.android.support:support-v4:${libs.supportVersion}"
+  api "com.android.support:support-v13:${libs.supportVersion}"
+  api "com.android.support:support-annotations:${libs.supportVersion}"
+  api("com.android.support:appcompat-v7:${libs.supportVersion}") {
+    exclude group: "android.arch.lifecycle", module: "runtime"
+  }
+  api "com.android.support:appcompat-v7:${libs.supportVersion}"
+  api "com.android.support:cardview-v7:${libs.supportVersion}"
+  api "com.android.support:design:${libs.supportVersion}"
+  api "com.android.support:percent:${libs.supportVersion}"
+  api("com.squareup.retrofit2:retrofit:${libs.retrofit}") {
     exclude module: 'okhttp'
   }
-  compile "com.squareup.retrofit2:adapter-rxjava:${libs.retrofit}"
-  compile "com.squareup.retrofit2:converter-gson:${libs.retrofit}"
-  compile "com.squareup.okhttp3:okhttp:${libs.okhttp}"
-  compile "com.squareup.okhttp3:logging-interceptor:${libs.okhttp}"
-  compile "io.reactivex:rxandroid:${libs.rxandroid}"
-  compile "io.reactivex:rxjava:${libs.rxjava}"
-  compile "com.jakewharton.rxbinding:rxbinding:${libs.rxbind}"
-  compile "com.jakewharton:butterknife:${libs.butterknife}"
+  api "com.squareup.retrofit2:adapter-rxjava:${libs.retrofit}"
+  api "com.squareup.retrofit2:converter-gson:${libs.retrofit}"
+  api "com.squareup.okhttp3:okhttp:${libs.okhttp}"
+  api "com.squareup.okhttp3:logging-interceptor:${libs.okhttp}"
+  api "io.reactivex:rxandroid:${libs.rxandroid}"
+  api "io.reactivex:rxjava:${libs.rxjava}"
+  api 'com.trello:rxlifecycle:1.0'
+  // If you want to bind to Android-specific lifecycles
+  api 'com.trello:rxlifecycle-android:1.0'
+  // If you want pre-written Activities and Fragments you can subclass as providers
+  api 'com.trello:rxlifecycle-components:1.0'
+  api "com.jakewharton.rxbinding:rxbinding:${libs.rxbind}"
+  api "com.jakewharton:butterknife:${libs.butterknife}"
   annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
-  compile 'com.google.code.gson:gson:2.7'
-  compile 'com.nineoldandroids:library:2.4.0'
-  compile 'com.github.chrisbanes:PhotoView:1.2.6'
-  compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
-  compile 'com.github.bumptech.glide:glide:3.7.0'
-  compile 'com.squareup.sqlbrite:sqlbrite:1.1.1'
-  compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar'
+  api 'com.google.code.gson:gson:2.7'
+  api 'com.nineoldandroids:library:2.4.0'
+  api 'com.github.chrisbanes:PhotoView:1.2.6'
+  api 'eu.davidea:flexible-adapter:5.0.0-rc3'
+  api 'com.github.bumptech.glide:glide:3.7.0'
+  api 'com.squareup.sqlbrite:sqlbrite:1.1.1'
+  api 'com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar'
   //图片选择库
-  compile 'com.zhihu.android:matisse:0.5.0-alpha4'
-  compile('com.github.afollestad.material-dialogs:core:0.8.5.5@aar') {
+  api 'com.zhihu.android:matisse:0.5.0-alpha4'
+  api('com.github.afollestad.material-dialogs:core:0.8.5.5@aar') {
     transitive = true
   }
-  compile 'com.umeng.analytics:analytics:latest.integration'
-  compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:latest.integration'
-  //  compile "me.henrytao:smooth-app-bar-layout:${libs.supportVersion}.0"
-  compile 'com.google.android:flexbox:0.3.0-alpha3'
-  compile 'com.github.rubensousa:gravitysnaphelper:1.1'
-  compile files('libs/Bughd_android_sdk_v1.3.7.jar')
+  api 'eu.davidea:flexible-adapter-databinding:1.0.0-b2'
+  api 'com.umeng.analytics:analytics:6.1.2'
+  api 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.8.8'
+  //  api "me.henrytao:smooth-app-bar-layout:${libs.supportVersion}.0"
+  api 'com.google.android:flexbox:0.3.0-alpha3'
+  api 'com.github.rubensousa:gravitysnaphelper:1.1'
+  api files('libs/Bughd_android_sdk_v1.3.7.jar')
   annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
-  compile "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
-  compile 'com.getbase:floatingactionbutton:1.10.0'
+  api "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
+  api 'com.getbase:floatingactionbutton:1.10.0'
   //fab
-  compile 'com.theartofdev.edmodo:android-image-cropper:2.4.5'
+  api 'com.theartofdev.edmodo:android-image-cropper:2.4.5'
   //裁剪图片
-//  compile 'com.commonsware.cwac:cam2:0.7.6'
-  compile(name: 'cam2-0.7.6', ext: 'aar')
-  compile 'com.github.clans:fab:1.6.4'
-  compile 'org.greenrobot:eventbus:3.0.0'
-  //  compile project(":zcam2-0.7.6")
+//  api 'com.commonsware.cwac:cam2:0.7.6'
+  api(name: 'cam2-0.7.6', ext: 'aar')
+  api 'com.github.clans:fab:1.6.4'
+  api 'org.greenrobot:eventbus:3.0.0'
+  //  api project(":zcam2-0.7.6")
   //拍照
-  compile 'me.gujun.android.taggroup:library:1.4@aar'
+  api 'me.gujun.android.taggroup:library:1.4@aar'
   //taggroup
-  compile('com.upyun:upyun-android-sdk:2.0.1') {
+  api('com.upyun:upyun-android-sdk:2.0.1') {
     //upyun 又拍云
     exclude group: 'com.squareup.okhttp3'
   }
-  compile files('libs/java-sdk-3.1.jar')
-  compile files('libs/AMap2DMap_2.9.2_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
-  compile files(
+//  api files('libs/java-sdk-3.1.jar')
+  api files('libs/AMap2DMap_2.9.2_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
+  api files(
       'libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar')
-  compile files('libs/mid-sdk-2.20.jar')
-  compile('com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+')
-  compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
-  compile 'com.airbnb.android:lottie:2.0.0'
-
-  testCompile 'junit:junit:4.12'
-  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+  api files('libs/mid-sdk-2.20.jar')
+  api('com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+')
+  api 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
+  api 'com.airbnb.android:lottie:2.0.0'
+  api ('io.socket:socket.io-client:0.9.0') {
+    // excluding org.json which is provided by Android
+    exclude group: 'org.json', module: 'json'
+  }
+  testImplementation 'junit:junit:4.12'
+  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
 }
 
-group "cn.qingchegfit.widgets"
-version "1.4"
-
+group 'cn.qingchengfit.widgets'
+version rootProject.ext.recruit_version
 uploadArchives{
   repositories {
     mavenDeployer {
-      repository(url: uri("../../repo"))
-      pom.artifactId = "widgets"
+      repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
+        authentication(userName: "admin", password: "admin123")
+      }
+      pom.groupId = 'cn.qingchengfit.widgets'
+      pom.artifactId = 'qcbase'
     }
   }
 }
-

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,12 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.SignInTasks;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rxbus.event.SignInEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignInLogEvent;
@@ -32,7 +34,6 @@ import cn.qingchengfit.staffkit.rxbus.event.SignInQrCodeEvent;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.SignInFooterItem;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.SignOutItem;
 import cn.qingchengfit.staffkit.views.adapter.SignInFlexibleAdapter;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -62,18 +63,21 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
     @BindView(R.id.ll_signin_qrcode) LinearLayout llSigninQrcode;
 
     @BindView(R.id.ll_signin_manual) LinearLayout llSigninManual;
-    @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
+    @BindView(R.id.recycleview) RecyclerView recycleview;
     @BindView(R.id.tv_signin_qrcode) TextView tvSigninQrcode;
     @BindView(R.id.tv_signin_manual) TextView tvSigninManual;
 
     @BindView(R.id.tv_signin_header) TextView tvSigninHeader;
     @BindView(R.id.tv_signin_footer) TextView tvSigninFooter;
+    @BindView(R.id.swipe_layout) SwipeRefreshLayout swipeRefreshLayout;
     List<AbstractFlexibleItem> items = new ArrayList<>();
     List<SignInTasks.SignInTask> sourceList = new ArrayList<>();
     List<SignInTasks.SignInTask> newList = new ArrayList<>();
     @Inject SignOutListPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
+    @Inject StudentAction studentAction;
     private LinearLayoutManager mLinearLayoutManager;
     private SignInFlexibleAdapter flexibleAdapter;
     private Subscription subscribe_auto;
@@ -133,11 +137,14 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
         drawableQr.setBounds(0, 0, drawableQr.getMinimumWidth(), drawableQr.getMinimumHeight());
         tvSigninQrcode.setCompoundDrawables(drawableQr, null, null, null);
 
+        flexibleAdapter = new SignInFlexibleAdapter(items);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         recycleview.setLayoutManager(mLinearLayoutManager);
-        recycleview.setNodataHint("暂无未处理签出");
+        swipeRefreshLayout.setNestedScrollingEnabled(true);
+        //recycleview.setNodataHint("暂无未处理签出");
         recycleview.addItemDecoration(new SpaceItemDecoration(20, getContext()));
-        recycleview.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        recycleview.setAdapter(flexibleAdapter);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override public void onRefresh() {
                 presenter.queryData();
             }
@@ -162,7 +169,7 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
                             if (items.size() > signInEvent.getPosition()) {
                                 String imgUrl = ((SignOutItem) items.get(signInEvent.getPosition())).bean.getCheckinAvatar();
                                 if (StringUtils.isEmpty(imgUrl)) {
-                                    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
+                                    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
                                         PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
                                         showAlert(R.string.alert_permission_forbid);
                                         return;
@@ -188,7 +195,7 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
                             presenter.changeImage(App.staffId, s, mStudentId);
-                            StudentAction.newInstance().updateStudentCheckin(mStudentId, s);
+                            studentAction.updateStudentCheckin(mStudentId, s);
                             hideLoading();
                         }
                     }));
@@ -213,29 +220,26 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
         this.sourceList = list;
         // 下拉刷新后,无数据时,移除所有 item
         if (list == null || list.size() == 0) {
-            if (flexibleAdapter != null && flexibleAdapter.getItemCount() > 0) {
-                do {
-                    flexibleAdapter.removeItem(0);
-                } while (flexibleAdapter.getItemCount() > 0);
+            if (flexibleAdapter != null) {
+                flexibleAdapter.clear();
             }
-            recycleview.stopLoading();
-            recycleview.setNoData(true);
+            swipeRefreshLayout.setRefreshing(false);
+            setNoData();
             tvSigninFooter.setVisibility(View.VISIBLE);
             return;
         }
 
+        if(flexibleAdapter != null) flexibleAdapter.clear();
         mLastModifyAt = sourceList.get(0).getModifyAt();
-
         items.clear();
         for (SignInTasks.SignInTask signInTask : list) {
             items.add(new SignOutItem(signInTask));
         }
         items.add(new SignInFooterItem());
-        flexibleAdapter = new SignInFlexibleAdapter(items);
-        recycleview.setAdapter(flexibleAdapter);
-        recycleview.stopLoading();
-        recycleview.setNoData(flexibleAdapter.isEmpty());
-
+        flexibleAdapter.updateDataSet(items);
+        swipeRefreshLayout.setRefreshing(false);
+        //recycleview.setNoData(flexibleAdapter.isEmpty());
+        setNoData();
         tvSigninHeader.setVisibility(View.GONE);
         tvSigninFooter.setVisibility(View.GONE);
     }
@@ -290,7 +294,8 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
             flexibleAdapter.removeItem(0);
             tvSigninFooter.setVisibility(View.VISIBLE);
         }
-        recycleview.setNoData(flexibleAdapter.isEmpty());
+        //recycleview.setNoData(flexibleAdapter.isEmpty());
+        setNoData();
     }
 
     @OnClick({ R.id.ll_signin_qrcode, R.id.ll_signin_manual, R.id.tv_signin_header, R.id.tv_signin_footer })
@@ -316,6 +321,9 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
                     recycleview.setAdapter(flexibleAdapter);
                 }
                 if (newList.size() > 0) {
+                    if (flexibleAdapter.getItemCount() == 1 && flexibleAdapter.getItem(0) instanceof CommonNoDataItem){
+                        flexibleAdapter.clear();
+                    }
                     for (SignInTasks.SignInTask signInTask : newList) {
                         if (sourceList.contains(signInTask)) {
                             int index = sourceList.indexOf(signInTask);
@@ -328,16 +336,24 @@ public class SignOutListFragment extends BaseFragment implements SignOutListPres
                     if (newList.size() == flexibleAdapter.getItemCount()) {//添加 footer View
                         flexibleAdapter.addItem(flexibleAdapter.getItemCount(), new SignInFooterItem());
                     }
-                    mLinearLayoutManager.scrollToPosition(0);
+                    //mLinearLayoutManager.scrollToPosition(0);
                     mLastModifyAt = newList.get(0).getModifyAt();
                 }
                 newList.clear();
-                recycleview.setNoData(flexibleAdapter.isEmpty());
+                //recycleview.setNoData(false);
+                setNoData();
                 tvSigninFooter.setVisibility(View.GONE);
                 break;
             case R.id.tv_signin_footer:
                 RxBus.getBus().post(new SignInLogEvent());
                 break;
+        }
+    }
+    private void setNoData(){
+        if (flexibleAdapter != null && flexibleAdapter.isEmpty()){
+            items.clear();
+            items.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂时没有签出记录"));
+            flexibleAdapter.updateDataSet(items);
         }
     }
 

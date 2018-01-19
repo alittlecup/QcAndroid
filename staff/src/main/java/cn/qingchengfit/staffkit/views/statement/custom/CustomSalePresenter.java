@@ -14,7 +14,6 @@ import cn.qingchengfit.utils.DateUtils;
 import java.util.Date;
 import javax.inject.Inject;
 import rx.Subscription;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -115,18 +114,18 @@ public class CustomSalePresenter extends BasePresenter {
     }
 
     public void queryCardTpl() {
-        if (gymWrapper.inBrand()) {
-            RxRegiste(usecase.queryCardTypeList(gymWrapper.brand_id(), 0, new Action1<QcDataResponse<CardTpls>>() {
-                @Override public void call(QcDataResponse<CardTpls> qcResponseCardTpls) {
-                    if (ResponseConstant.checkSuccess(qcResponseCardTpls)) customSaleView.onGetCards(qcResponseCardTpls.data.card_tpls);
-                }
-            }));
-        } else {
-            RxRegiste(usecase.queryGymCardTpl(gymWrapper.id(), gymWrapper.model(), 0, new Action1<QcDataResponse<GymCardtpl>>() {
-                @Override public void call(QcDataResponse<GymCardtpl> qcResponseGymCardtpl) {
-                    if (ResponseConstant.checkSuccess(qcResponseGymCardtpl)) customSaleView.onGetCards(qcResponseGymCardtpl.data.card_tpls);
-                }
-            }));
-        }
+        //if (gymWrapper.inBrand()) {
+        //    RxRegiste(usecase.queryCardTypeList(gymWrapper.brand_id(), 0, new Action1<QcDataResponse<CardTpls>>() {
+        //        @Override public void call(QcDataResponse<CardTpls> qcResponseCardTpls) {
+        //            if (ResponseConstant.checkSuccess(qcResponseCardTpls)) customSaleView.onGetCards(qcResponseCardTpls.data.card_tpls);
+        //        }
+        //    }));
+        //} else {
+        //    RxRegiste(usecase.queryGymCardTpl(gymWrapper.id(), gymWrapper.model(), 0, new Action1<QcDataResponse<GymCardtpl>>() {
+        //        @Override public void call(QcDataResponse<GymCardtpl> qcResponseGymCardtpl) {
+        //            if (ResponseConstant.checkSuccess(qcResponseGymCardtpl)) customSaleView.onGetCards(qcResponseGymCardtpl.data.card_tpls);
+        //        }
+        //    }));
+        //}
     }
 }

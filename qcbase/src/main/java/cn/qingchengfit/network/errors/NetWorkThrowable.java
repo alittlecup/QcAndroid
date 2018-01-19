@@ -1,6 +1,5 @@
 package cn.qingchengfit.network.errors;
 
-import cn.qingchengfit.RxBus;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import rx.functions.Action1;
@@ -32,8 +31,9 @@ public class NetWorkThrowable implements Action1<Throwable> {
       if (s == null) {
         s = "";
       }
+      throwable.printStackTrace();
       LogUtil.e("NetWorkThrowable", s);
       ToastUtils.show(s);
-      RxBus.getBus().post(s);
+      //RxBus.getBus().post();
     }
 }

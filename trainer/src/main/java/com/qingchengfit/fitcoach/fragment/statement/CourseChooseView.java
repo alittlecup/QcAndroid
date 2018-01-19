@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.statement;
 
 import cn.qingchengfit.di.PView;
-import com.qingchengfit.fitcoach.bean.CourseTypeSample;
+import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import java.util.List;
 
 /**

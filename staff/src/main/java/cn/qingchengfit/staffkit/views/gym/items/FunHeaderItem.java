@@ -1,18 +1,18 @@
 package cn.qingchengfit.staffkit.views.gym.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem;
+import eu.davidea.flexibleadapter.items.IHeader;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class FunHeaderItem extends AbstractHeaderItem<FunHeaderItem.FunHeaderVH> {
+public class FunHeaderItem extends AbstractHeaderItem<FunHeaderItem.FunHeaderVH> implements
+  IHeader<FunHeaderItem.FunHeaderVH>{
 
     public String txt;
 
@@ -21,12 +21,16 @@ public class FunHeaderItem extends AbstractHeaderItem<FunHeaderItem.FunHeaderVH>
         this.txt = txt;
     }
 
+    public String getTxt() {
+        return txt;
+    }
+
     @Override public int getLayoutRes() {
         return R.layout.item_fun_header;
     }
 
-    @Override public FunHeaderVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new FunHeaderVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public FunHeaderVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new FunHeaderVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, FunHeaderVH holder, int position, List payloads) {
@@ -34,14 +38,14 @@ public class FunHeaderItem extends AbstractHeaderItem<FunHeaderItem.FunHeaderVH>
     }
 
     @Override public boolean equals(Object o) {
-        return false;
+        return o instanceof FunHeaderItem && ((FunHeaderItem) o).getTxt().equalsIgnoreCase(txt);
     }
 
     public class FunHeaderVH extends FlexibleViewHolder {
         @BindView(R.id.title) TextView title;
 
         public FunHeaderVH(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
+            super(view, adapter ,true);
             ButterKnife.bind(this, view);
         }
     }

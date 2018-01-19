@@ -10,12 +10,11 @@ import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymFuntion;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
-import cn.qingchengfit.staffkit.views.QRActivity;
-import cn.qingchengfit.staffkit.views.card.CardActivity;
 import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
 import cn.qingchengfit.staffkit.views.schedule.ScheduleActivity;
 import cn.qingchengfit.staffkit.views.signin.SignInActivity;
@@ -24,6 +23,7 @@ import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -123,6 +123,11 @@ public class GymFunctionFactory {
 
     //求职招聘消息列表
     public static final String RECRUIT_MESSAGE_LIST = "/recruit/message_list";
+    @Inject SerPermisAction serPermisAction;//// TODO: 2017/8/14 修改成注入
+
+    @Inject
+    public GymFunctionFactory() {
+    }
 
     //导入导出
     public static final String REPORT_EXPORT = "/report/export";
@@ -349,7 +354,7 @@ public class GymFunctionFactory {
         }
     }
 
-    public static void getJumpIntent(String module, CoachService coachService, Brand brand, GymStatus gymStatus, BaseFragment fragment) {
+    public  void getJumpIntent(String module, CoachService coachService, Brand brand, GymStatus gymStatus, BaseFragment fragment) {
       if (coachService == null) {
         RxBus.getBus().post(new EventInitApp());
         return;
@@ -360,24 +365,25 @@ public class GymFunctionFactory {
              *
              */
             case MODULE_SERVICE_PRIVATE:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.PRIARRANGE_CALENDAR)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.PRIARRANGE_CALENDAR)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
-                break;
+                fragment.routeTo("course","/batches/private/list/",null);
+                return;
             case MODULE_SERVICE_GROUP:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.TEAMARRANGE_CALENDAR)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.TEAMARRANGE_CALENDAR)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
-
-                break;
+                fragment.routeTo("course","/batches/group/list/",null);
+                return;
 
             case MODULE_SERVICE_FREE:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)
-                    && !SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK)
-                    && !SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK_NEW)
-                    && !SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SCREEN)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)
+                    && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK)
+                    && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK_NEW)
+                    && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SCREEN)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
@@ -388,7 +394,7 @@ public class GymFunctionFactory {
                 fragment.startActivity(toSignInConfigs);
                 return;
             case MODULE_SERVICE_SHOP:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.COMMODITY_INVENTORY)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.COMMODITY_INVENTORY)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
@@ -412,28 +418,29 @@ public class GymFunctionFactory {
              * 会员卡
              */
             case MODULE_STUDENT_CARDS:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.MANAGE_COSTS)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.MANAGE_COSTS)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
-                Intent toCard = new Intent(fragment.getActivity(), CardActivity.class);
-                fragment.startActivity(toCard);
+                //Intent toCard = new Intent(fragment.getActivity(), CardActivity.class);
+                //fragment.startActivity(toCard);
+                fragment.routeTo("card","/list/home/",null);
                 return;
             case MODULE_STUDENT_BODY_TEST:
                 goQrScan(fragment, module, null, coachService);
-                break;
+                return;
             /**内部管理
              * 工作人员  教练
              */
             case MODULE_MANAGE_STAFF:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.MANAGE_STAFF)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.MANAGE_STAFF)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
 
                 break;
             case MODULE_MANAGE_COACH:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.COACHSETTING)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.COACHSETTING)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
@@ -444,7 +451,7 @@ public class GymFunctionFactory {
              * 介入口碑  注册送卡 场馆公告
              */
             case MODULE_OPERATE_SCORE:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.SCORE_SETTING)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.SCORE_SETTING)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
@@ -474,21 +481,21 @@ public class GymFunctionFactory {
                 goQrScan(fragment, module, PermissionServerUtils.PAY_BILLS, coachService);
                 return;
             case MODULE_FINANCE_COURSE:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.COST_REPORT)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.COST_REPORT)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
 
                 break;
             case MODULE_FINANCE_SALE:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.SALES_REPORT)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.SALES_REPORT)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
 
                 break;
             case MODULE_FINANCE_SIGN_IN:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_REPORT)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_REPORT)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
@@ -508,13 +515,13 @@ public class GymFunctionFactory {
              *
              */
             case MODULE_GYM_SITE://场地管理
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.SPACE_SETTING)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.SPACE_SETTING)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
                 break;
             case MODULE_WARDROBE:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.LOCKER_SETTING)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.LOCKER_SETTING)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
@@ -543,14 +550,14 @@ public class GymFunctionFactory {
              * 入场签到
              */
             case MODULE_WORKSPACE_ORDER_LIST:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.ORDERS_DAY)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.ORDERS_DAY)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
                 fragment.startActivity(new Intent(fragment.getContext(), ScheduleActivity.class));
                 return;
             case MODULE_WORKSPACE_GROUP:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.ORDERS_DAY)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.ORDERS_DAY)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
@@ -559,7 +566,7 @@ public class GymFunctionFactory {
                     fragment.getContext());
                 return;
             case MODULE_WORKSPACE_PRIVATE:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.ORDERS_DAY)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.ORDERS_DAY)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
@@ -569,7 +576,7 @@ public class GymFunctionFactory {
 
                 return;
             case MODULE_WORKSPACE_ORDER_SIGNIN:
-                if (!SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)) {
+                if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
@@ -578,7 +585,6 @@ public class GymFunctionFactory {
                 return;
             case MODULE_MANAGE_STAFF_ADD:
                 break;
-
             default:
                 return;
         }
@@ -587,8 +593,8 @@ public class GymFunctionFactory {
         fragment.startActivity(toStatement);
     }
 
-    public static void goQrScan(final BaseFragment context, final String toUrl, String Permission, final CoachService mCoachService) {
-        if (SerPermisAction.check(mCoachService.getId(), mCoachService.getModel(), Permission) || Permission == null) {
+    public void goQrScan(final BaseFragment context, final String toUrl, String Permission, final CoachService mCoachService) {
+        if (serPermisAction.check(mCoachService.getId(), mCoachService.getModel(), Permission) || Permission == null) {
 
             Intent toScan = new Intent(context.getActivity(), QRActivity.class);
             toScan.putExtra(QRActivity.LINK_URL,

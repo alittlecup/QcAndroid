@@ -7,7 +7,7 @@ import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CoachInitBean;
+import cn.qingchengfit.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.fragment.guide.GuideFragment;
 
 public class GuideActivity extends BaseActivity {

@@ -1,7 +1,7 @@
 package cn.qingchengfit.utils;
 
 import android.text.TextUtils;
-import cn.qingchengfit.model.responese.NotificationGlance;
+import cn.qingchengfit.bean.NotificationGlance;
 import java.util.Comparator;
 
 /**

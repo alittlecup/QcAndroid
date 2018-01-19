@@ -85,7 +85,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
   public ChoosePicResult getResult() {
     return mResult;
   }
-
+  @Deprecated
   public void setResult(ChoosePicResult mResult) {
     this.mResult = mResult;
   }
@@ -112,7 +112,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
     if (savedInstanceState != null) {
       mResult = (ChoosePicResult) savedInstanceState.getSerializable("callback");
     }
-    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA)
+    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE)
         .subscribe(new Action1<Boolean>() {
           @Override public void call(Boolean aBoolean) {
             if (aBoolean) {
@@ -135,7 +135,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
               //startActivityForResult(new CameraActivity.IntentBuilder(getContext()).confirmationQuality(0.7f).to(uri).build(),
               //    CHOOSE_CAMERA);
             } else {
-              ToastUtils.show("请开启拍照权限");
+              ToastUtils.show("请开启拍照及存储权限");
             }
           }
         });
@@ -183,6 +183,7 @@ public class ChoosePictureFragmentNewDialog extends DialogFragment {
         filepath = fileClip.getAbsolutePath();
       }
     } else {
+      dismissAllowingStateLoss();
       return;
     }
     if (!TextUtils.isEmpty(filepath)) {

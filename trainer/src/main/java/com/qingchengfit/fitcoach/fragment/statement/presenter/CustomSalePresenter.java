@@ -7,11 +7,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
+import cn.qingchengfit.saasbase.report.bean.GymCardtpl;
 import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.fragment.statement.CustomSaleView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
-import com.qingchengfit.fitcoach.fragment.statement.model.CardTpls;
-import com.qingchengfit.fitcoach.fragment.statement.model.GymCardtpl;
 import java.util.Date;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -117,8 +117,8 @@ public class CustomSalePresenter extends BasePresenter {
 
     public void queryCardTpl() {
         if (gymWrapper.inBrand()) {
-            RxRegiste(usecase.queryCardTypeList(gymWrapper.brand_id(), 0, new Action1<QcDataResponse<CardTpls>>() {
-                @Override public void call(QcDataResponse<CardTpls> qcResponseCardTpls) {
+            RxRegiste(usecase.queryCardTypeList(gymWrapper.brand_id(), 0, new Action1<QcDataResponse<CardTplListWrap>>() {
+                @Override public void call(QcDataResponse<CardTplListWrap> qcResponseCardTpls) {
                     if (ResponseConstant.checkSuccess(qcResponseCardTpls)) customSaleView.onGetCards(qcResponseCardTpls.data.card_tpls);
                 }
             }));

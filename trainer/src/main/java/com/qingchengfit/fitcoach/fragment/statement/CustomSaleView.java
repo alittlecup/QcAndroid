@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.statement;
 
 import cn.qingchengfit.di.PView;
-import com.qingchengfit.fitcoach.fragment.statement.model.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import java.util.List;
 
 /**

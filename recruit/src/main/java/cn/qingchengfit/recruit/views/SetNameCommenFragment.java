@@ -12,16 +12,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.databinding.FragmentSetNameCommonBinding;
 import cn.qingchengfit.recruit.event.EventSetName;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -35,12 +29,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 public class SetNameCommenFragment extends BaseFragment {
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
-  @BindView(R2.id.edit_group_name) EditText editGroupName;
-  @BindView(R2.id.image_clear_name) ImageView imageClearName;
-
+  //@BindView(R2.id.toolbar) Toolbar toolbar;
+  //@BindView(R2.id.toolbar_title) TextView toolbarTitle;
+  //@BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
+  //@BindView(R2.id.edit_group_name) EditText editGroupName;
+  //@BindView(R2.id.image_clear_name) ImageView imageClearName;
+  FragmentSetNameCommonBinding db;
   public static SetNameCommenFragment newInstance(String title, String txt, String hint) {
     Bundle args = new Bundle();
     args.putString("toolbarTitle", title);
@@ -54,30 +48,32 @@ public class SetNameCommenFragment extends BaseFragment {
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_set_name_common, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    //View view = inflater.inflate(R.layout.fragment_set_name_common, container, false);
+    db = FragmentSetNameCommonBinding.inflate(inflater);
     setBackPress();
     setToolbar();
     initEdit();
-    return view;
+    db.imageClearName.setOnClickListener(view -> onClearContent());
+    return db.getRoot();
   }
 
   private void setToolbar() {
-    initToolbar(toolbar);
-    toolbarTitle.setText(getArguments() != null ? getArguments().getString("toolbarTitle") : "");
-    toolbar.inflateMenu(R.menu.menu_save);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+    initToolbar(db.layoutToolbar.toolbar);
+    ToolbarModel tbm = new ToolbarModel(getArguments() != null ? getArguments().getString("toolbarTitle") : "");
+    tbm.setMenu(R.menu.menu_save);
+    tbm.setListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        if (editGroupName.getText().toString().equals("")) {
+        if (db.editGroupName.getText().toString().equals("")) {
           DialogUtils.showAlert(getContext(), "请填写职位名称");
           return false;
         } else {
-          RxBus.getBus().post(new EventSetName(editGroupName.getText().toString()));
+          RxBus.getBus().post(new EventSetName(db.editGroupName.getText().toString()));
           getActivity().getSupportFragmentManager().popBackStackImmediate();
         }
         return false;
       }
     });
+    db.setToolbarModel(tbm);
   }
 
   @Override public boolean onFragmentBackPress() {
@@ -96,22 +92,22 @@ public class SetNameCommenFragment extends BaseFragment {
     }
   }
 
-  @OnClick(R2.id.image_clear_name) public void onClearContent() {
-    editGroupName.setText("");
+  public void onClearContent() {
+    db.editGroupName.setText("");
     initEdit();
   }
 
   @Override protected void onFinishAnimation() {
-    editGroupName.requestFocus();
-    AppUtils.showKeyboard(getContext(), editGroupName);
+    db.editGroupName.requestFocus();
+    AppUtils.showKeyboard(getContext(),db.editGroupName);
   }
 
   private void initEdit() {
-    editGroupName.setHint(getArguments() != null ? getArguments().getString("hint") : "");
-    editGroupName.setText(getArguments() != null ? getArguments().getString("txt") : "");
-    editGroupName.setHintTextColor(ContextCompat.getColor(getContext(), R.color.qc_text_grey));
-    imageClearName.setVisibility(View.GONE);
-    editGroupName.addTextChangedListener(new TextWatcher() {
+    db.editGroupName.setHint(getArguments() != null ? getArguments().getString("hint") : "");
+    db.editGroupName.setText(getArguments() != null ? getArguments().getString("txt") : "");
+    db.editGroupName.setHintTextColor(ContextCompat.getColor(getContext(), R.color.qc_text_grey));
+    db.imageClearName.setVisibility(View.GONE);
+    db.editGroupName.addTextChangedListener(new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
       }
 
@@ -121,9 +117,9 @@ public class SetNameCommenFragment extends BaseFragment {
 
       @Override public void afterTextChanged(Editable editable) {
         if (!TextUtils.isEmpty(editable.toString().trim())) {
-          imageClearName.setVisibility(View.VISIBLE);
+          db.imageClearName.setVisibility(View.VISIBLE);
         } else {
-          imageClearName.setVisibility(View.GONE);
+          db.imageClearName.setVisibility(View.GONE);
         }
       }
     });

@@ -1,0 +1,13 @@
+<eu.davidea.samples.flexibleadapter.ModifiedFastScroller
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/fast_scroller"
+	android:layout_width="wrap_content"
+	android:layout_height="match_parent"
+	android:layout_centerHorizontal="true"
+	app:fastScrollerAutoHideEnabled="false"
+	app:fastScrollerAutoHideDelayInMillis="50"
+	app:fastScrollerBubblePosition="center"
+	app:fastScrollerBubbleEnabled="true"
+	tools:visibility="visible"/>

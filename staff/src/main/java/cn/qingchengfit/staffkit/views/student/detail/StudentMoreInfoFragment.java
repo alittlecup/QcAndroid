@@ -21,17 +21,17 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.responese.StudentSourceBean;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.MutiChooseCoachActivity;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachBean;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EditStudentEvent;
 import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
 import cn.qingchengfit.staffkit.views.TitleFragment;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
-import cn.qingchengfit.staffkit.views.student.ChooseOriginActivityIntentBuilder;
+import cn.qingchengfit.staffkit.views.student.ChooseOriginActivity;
 import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
 import cn.qingchengfit.staffkit.views.student.bodytest.BodyTestListFragment;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
@@ -133,6 +133,10 @@ public class StudentMoreInfoFragment extends BaseFragment
       }
     });
     return view;
+  }
+
+  @Override public boolean isBlockTouch() {
+    return false;
   }
 
   @Override public void onResume() {
@@ -247,6 +251,9 @@ public class StudentMoreInfoFragment extends BaseFragment
     super.onDestroyView();
   }
 
+  /**
+   * 点击体测
+   */
   @OnClick(R.id.body_layout) public void onClickBodyTest() {
     if (user_student == null) {
       Timber.e("获取学员信息失败");
@@ -291,6 +298,9 @@ public class StudentMoreInfoFragment extends BaseFragment
     }
   }
 
+  /**
+   * 选择教练
+   */
   @OnClick(R.id.coach_layout) public void allocateCoach() {
     if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
       Intent toChooseSaler = new Intent(getActivity(), MutiChooseCoachActivity.class);
@@ -306,13 +316,19 @@ public class StudentMoreInfoFragment extends BaseFragment
   @OnClick(R.id.ll_student_source) public void sourceClick(View view) {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
-      startActivityForResult(new ChooseOriginActivityIntentBuilder().build(getContext()),
-          RESULT_ORIGIN);
+      // TODO: 2017/11/6
+      Intent toChooseOrigin = new Intent(getContext(), ChooseOriginActivity.class);
+      startActivityForResult(toChooseOrigin,RESULT_ORIGIN);
+      //startActivityForResult(new ChooseOriginActivityIntentBuilder().build(getContext()),
+      //    RESULT_ORIGIN);
     } else {
       showAlert(R.string.alert_permission_forbid);
     }
   }
 
+  /**
+   * 推荐
+   */
   @OnClick(R.id.ll_student_referrer) public void referrerClick(View view) {
     boolean hasP = serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
     if (hasP) {
@@ -323,6 +339,9 @@ public class StudentMoreInfoFragment extends BaseFragment
     }
   }
 
+  /**
+   * 销售
+   */
   private void changeSaler() {
     Intent toChooseSaler = new Intent(getActivity(), MutiChooseSalersActivity.class);
     toChooseSaler.putStringArrayListExtra(MutiChooseSalersActivity.INPUT_STUDENT,

@@ -27,9 +27,8 @@ public class StickerHintItem extends AbstractFlexibleItem<StickerHintItem.Sticke
     return R.layout.item_sticker_hint;
   }
 
-  @Override public StickerDateVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new StickerDateVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public StickerDateVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new StickerDateVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, StickerDateVH holder, int position,

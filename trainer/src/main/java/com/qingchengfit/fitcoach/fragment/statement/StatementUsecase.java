@@ -2,12 +2,12 @@ package com.qingchengfit.fitcoach.fragment.statement;
 
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
+import cn.qingchengfit.saasbase.report.bean.GymCardtpl;
+import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
+import cn.qingchengfit.saasbase.report.bean.StatementGlanceResp;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.fragment.statement.model.CardTpls;
-import com.qingchengfit.fitcoach.fragment.statement.model.GymCardtpl;
-import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
 import com.qingchengfit.fitcoach.fragment.statement.model.Sellers;
-import com.qingchengfit.fitcoach.fragment.statement.model.StatementGlanceResp;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import java.util.HashMap;
 import javax.inject.Inject;
@@ -108,7 +108,7 @@ public class StatementUsecase {
     //            }
     //        });
 
-    public Subscription queryCardTypeList(String brand_id, int type, Action1<QcDataResponse<CardTpls>> action1) {
+    public Subscription queryCardTypeList(String brand_id, int type, Action1<QcDataResponse<CardTplListWrap>> action1) {
         String t = type == 0 ? null : Integer.toString(type);
         HashMap<String, Object> params = new HashMap<>();
         params.put("id", "10212");

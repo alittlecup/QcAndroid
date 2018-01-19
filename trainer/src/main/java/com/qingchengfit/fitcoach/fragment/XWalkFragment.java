@@ -24,7 +24,7 @@
 //import com.qingchengfit.fitcoach.RxBus;
 //import com.qingchengfit.fitcoach.activity.MainActivity;
 //import com.qingchengfit.fitcoach.activity.NotificationActivity;
-//import com.qingchengfit.fitcoach.bean.NewPushMsg;
+//import cn.qingchengfit.bean.NewPushMsg;
 //import cn.qingchengfit.model.common.PlatformInfo;
 //
 //import org.xwalk.core.JavascriptInterface;

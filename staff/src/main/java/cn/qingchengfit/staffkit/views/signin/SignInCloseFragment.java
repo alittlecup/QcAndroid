@@ -11,9 +11,9 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.presenters.SignInConfigPresenter;
 import cn.qingchengfit.staffkit.views.signin.config.SignInTypeFragmentBuilder;
@@ -65,7 +65,7 @@ public class SignInCloseFragment extends BaseFragment implements SignInConfigPre
     @OnClick(R.id.btn_open) public void onClickOpen() {
         //presenter.getSignInConfigs();
         if (!serPermisAction.check(PermissionServerUtils.CHECKIN_SETTING)
-            //                        || !SerPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SETTING_CAN_CHANGE)
+            //                        || !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SETTING_CAN_CHANGE)
             ) {
             showAlert(R.string.alert_permission_forbid);
             return;

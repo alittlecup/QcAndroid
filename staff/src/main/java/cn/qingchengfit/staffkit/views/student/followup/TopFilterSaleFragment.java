@@ -95,6 +95,7 @@ public class TopFilterSaleFragment extends BaseFragment
     }
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
+        super.initToolbar(toolbar);
         toolbarLayout.setVisibility(View.GONE);
     }
 
@@ -114,16 +115,16 @@ public class TopFilterSaleFragment extends BaseFragment
          * 在侧滑中全是单选
          */
         if (getParentFragment() != null && getParentFragment() instanceof StudentFilterFragment) {
-            mFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+            mFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         } else {
-            mFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+            mFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         }
 
         mFlexAdapter.setAnimationOnScrolling(true)
             .setAnimationInitialDelay(50L)
             .setAnimationInterpolator(new DecelerateInterpolator())
             .setAnimationDelay(100L)
-            .setAnimationStartPosition(0);
+        ;
 
         GridLayoutManager gridLayoutManager = new SmoothScrollGridLayoutManager(getActivity(), 4);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -180,7 +181,7 @@ public class TopFilterSaleFragment extends BaseFragment
         }
 
         mFlexAdapter.addSelection(0);
-        mFlexAdapter.notifyDataSetChanged();
+        mFlexAdapter.updateDataSet(items);
     }
 
     @Override public void onShowError(String e) {
@@ -222,7 +223,7 @@ public class TopFilterSaleFragment extends BaseFragment
                 if (datas.size() > i) items.add(new ChooseSalerItem(datas.get(i)));
             }
         }
-        mFlexAdapter.notifyDataSetChanged();
+        mFlexAdapter.updateDataSet(items);
     }
 
     @Override public boolean onTouch(View view, MotionEvent motionEvent) {

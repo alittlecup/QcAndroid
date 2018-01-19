@@ -37,8 +37,8 @@ public class NotificationItem extends AbstractFlexibleItem<NotificationItem.Noti
         return R.layout.item_notifacation;
     }
 
-    @Override public NotificationVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new NotificationVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public NotificationVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new NotificationVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, NotificationVH holder, int position, List payloads) {

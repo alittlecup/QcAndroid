@@ -30,8 +30,8 @@ public class AttendanceAnalysItem extends AbstractFlexibleItem<AttendanceAnalysI
         return R.layout.item_attendance_class;
     }
 
-    @Override public AttendanceAnalysVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AttendanceAnalysVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public AttendanceAnalysVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AttendanceAnalysVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, AttendanceAnalysVH holder, int position, List payloads) {

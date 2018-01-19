@@ -82,7 +82,7 @@ public class LatestTimeFragment extends BaseFragment implements FlexibleAdapter.
             "最近30天(" + DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), -29)) + "至" + DateUtils.Date2YYYYMMDD(new Date()) + ")"));
         items.add(new LatestTimeItem("自定义"));
         flexibleAdapter = new CommonFlexAdapter(items, this);
-        flexibleAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+        flexibleAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         rvReferrer.setLayoutManager(mLinearLayoutManager);
         rvReferrer.setAdapter(flexibleAdapter);

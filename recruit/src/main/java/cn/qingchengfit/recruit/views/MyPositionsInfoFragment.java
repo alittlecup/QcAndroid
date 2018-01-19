@@ -9,12 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
-import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.RecruitPositionItem;
 import cn.qingchengfit.recruit.model.Job;
@@ -52,9 +48,9 @@ public class MyPositionsInfoFragment extends BaseFragment
   public static final int MY_INVITED = 1;
   public static final int MY_STARED = 2;
 
-  @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitile;
-  @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
+  Toolbar toolbar;
+  TextView toolbarTitile;
+
 
   @Inject RecruitRouter router;
   @Inject MinePositionPresenter presenter;
@@ -95,7 +91,8 @@ public class MyPositionsInfoFragment extends BaseFragment
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     View view = inflater.inflate(R.layout.fragment_my_positions, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    toolbar = view.findViewById(R.id.toolbar);
+    toolbarTitile = view.findViewById(R.id.toolbar_title);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
     switch (type) {

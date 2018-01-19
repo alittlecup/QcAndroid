@@ -17,7 +17,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
-import cn.qingchengfit.staffkit.views.wardrobe.WardrobeActivity;
+import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.staffkit.views.wardrobe.back.WardrobeReturnDialog;
 import cn.qingchengfit.staffkit.views.wardrobe.hire.WardrobeDetailFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.item.LockerHeaderItem;
@@ -57,6 +57,7 @@ public class SearchResultFragment extends BaseFragment implements FlexibleAdapte
 
     @BindView(R.id.rv) RecycleViewWithNoImg rv;
     CommonFlexAdapter adatper;
+    private List<AbstractFlexibleItem> mItems = new ArrayList<>();
 
     public static SearchResultFragment newInstance(List<Locker> l) {
 
@@ -71,7 +72,7 @@ public class SearchResultFragment extends BaseFragment implements FlexibleAdapte
         View view = inflater.inflate(R.layout.fragment_serach_result, container, false);
         unbinder = ButterKnife.bind(this, view);
         ArrayList<Locker> lockers = getArguments().getParcelableArrayList("l");
-        List<AbstractFlexibleItem> mItems = new ArrayList<>();
+
         if (adatper != null) RxBus.getBus().post(new EventFresh());
         adatper = new CommonFlexAdapter(mItems, this);
         SmoothScrollGridLayoutManager manger = new SmoothScrollGridLayoutManager(getContext(), 2);
@@ -111,14 +112,46 @@ public class SearchResultFragment extends BaseFragment implements FlexibleAdapte
                 for (int j = 0; j < ls.size(); j++) {
                     if (getActivity() instanceof ChooseWardrobeActivity) {
                         mItems.add(new WardrobeChooseItem(ls.get(j)));
-                    } else if (getActivity() instanceof WardrobeActivity) mItems.add(new WardrobeItem(ls.get(j)));
+                    } else if (getActivity() instanceof ContainerActivity) mItems.add(new WardrobeItem(ls.get(j)));
                 }
             }
         } else {
             mItems.add(new CommonNoDataItem(R.drawable.no_search_result, "未找到相关结果"));
         }
         rv.setAdapter(adatper);
+        adatper.updateDataSet(mItems);
         return view;
+    }
+
+    public void updateItems(List<Locker> lockers){
+        if (lockers.size() >= 0){
+            mItems.clear();
+        }
+        if (lockers != null && lockers.size() > 0) {
+            HashMap<Long, List<Locker>> datas = new HashMap<>();
+            for (int i = 0; i < lockers.size(); i++) {
+                Locker locker = lockers.get(i);
+                if (datas.keySet().contains(locker.region.id)) {
+                    datas.get(locker.region.id).add(locker);
+                } else {
+                    List<Locker> d = new ArrayList<>();
+                    d.add(locker);
+                    datas.put(locker.region.id, d);
+                }
+            }
+            for (long lid : datas.keySet()) {
+                List<Locker> ls = datas.get(lid);
+                mItems.add(new LockerHeaderItem(ls.get(0).region));
+                for (int j = 0; j < ls.size(); j++) {
+                    if (getActivity() instanceof ChooseWardrobeActivity) {
+                        mItems.add(new WardrobeChooseItem(ls.get(j)));
+                    } else if (getActivity() instanceof ContainerActivity) mItems.add(new WardrobeItem(ls.get(j)));
+                }
+            }
+        } else {
+            mItems.add(new CommonNoDataItem(R.drawable.no_search_result, "未找到相关结果"));
+        }
+        adatper.updateDataSet(mItems);
     }
 
     @Override public String getFragmentName() {

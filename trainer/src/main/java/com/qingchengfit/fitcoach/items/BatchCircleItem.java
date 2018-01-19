@@ -1,8 +1,6 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -10,7 +8,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CmBean;
+import cn.qingchengfit.bean.CmBean;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -30,8 +28,8 @@ public class BatchCircleItem extends AbstractFlexibleItem<BatchCircleItem.BatchC
         return R.layout.item_batch_circle;
     }
 
-    @Override public BatchCircleVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new BatchCircleVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public BatchCircleVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new BatchCircleVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BatchCircleVH holder, int position, List payloads) {

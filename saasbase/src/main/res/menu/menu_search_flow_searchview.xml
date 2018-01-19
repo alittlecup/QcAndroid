@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item
+      android:id="@+id/card_list_search"
+      android:icon="@drawable/ic_search_24dp"
+      android:orderInCategory="100"
+      android:title="@string/action_search"
+      app:showAsAction="always"
+      />
+  <item
+      android:id="@+id/action_flow"
+      android:icon="@drawable/ic_more_vert_24dp"
+      android:orderInCategory="100"
+      android:title="@string/edit"
+      app:showAsAction="always"
+      />
+</menu>

@@ -7,7 +7,23 @@
                android:label="@string/app_name"
                android:supportsRtl="true"
       >
+    <activity android:name=".course.CourseActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
 
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="course"
+            android:scheme="saasbase"
+            />
+      </intent-filter>
+    </activity>
+    <activity android:name=".qrcode.views.QRActivity">
+
+    </activity>
+    <activity android:name=".cards.views.CardProtocolActivity"/>
   </application>
 
 </manifest>

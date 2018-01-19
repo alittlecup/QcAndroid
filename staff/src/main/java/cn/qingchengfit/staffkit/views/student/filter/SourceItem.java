@@ -57,8 +57,8 @@ public class SourceItem extends AbstractFlexibleItem<SourceItem.SourceItemVH> {
         return R.layout.item_source;
     }
 
-    @Override public SourceItem.SourceItemVH createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new SourceItem.SourceItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SourceItem.SourceItemVH createViewHolder(final View view, FlexibleAdapter adapter) {
+        return new SourceItem.SourceItemVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, SourceItem.SourceItemVH holder, int position, List payloads) {

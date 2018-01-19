@@ -15,22 +15,21 @@ import butterknife.OnClick;
 import cn.qingchengfit.items.CmBottomListChosenItem;
 import cn.qingchengfit.items.CmBottomListItem;
 import cn.qingchengfit.notisetting.presenter.NotiSettingChannelPresenter;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.TitleFragment;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.views.fragments.BottomListFragment;
 import cn.qingchengfit.widgets.CommonInputView;
+import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-
-import static eu.davidea.flexibleadapter.SelectableAdapter.MODE_SINGLE;
 
 /**
  * power by
@@ -83,9 +82,9 @@ public class SendChannelTabFragment extends VpFragment
       presenter.querySendChannel();
     } else {
       view = inflater.inflate(R.layout.item_common_no_data, container, false);
-      ((ImageView) ButterKnife.findById(view, R.id.img)).setImageResource(
+      ((ImageView) view.findViewById( R.id.img)).setImageResource(
           R.drawable.vd_img_no_permission);
-      ((TextView) ButterKnife.findById(view, R.id.tv_title)).setText(R.string.no_read_permission);
+      ((TextView) view.findViewById( R.id.tv_title)).setText(R.string.no_read_permission);
     }
     return view;
   }
@@ -123,7 +122,7 @@ public class SendChannelTabFragment extends VpFragment
       showAlert(R.string.alert_permission_forbid);
       return;
     }
-    bottomListFragment = BottomListFragment.newInstance("发送给会员的通知", MODE_SINGLE);
+    bottomListFragment = BottomListFragment.newInstance("发送给会员的通知", SelectableAdapter.Mode.SINGLE);
     bottomListFragment.loadData(getStudentBottomItems());
     bottomListFragment.setListener(new BottomListFragment.ComfirmChooseListener() {
       @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {
@@ -143,7 +142,7 @@ public class SendChannelTabFragment extends VpFragment
       showAlert(R.string.alert_permission_forbid);
       return;
     }
-    bottomListFragment = BottomListFragment.newInstance("发送给员工的通知", MODE_SINGLE);
+    bottomListFragment = BottomListFragment.newInstance("发送给员工的通知", SelectableAdapter.Mode.SINGLE);
     bottomListFragment.loadData(getStaffBottomItems());
     bottomListFragment.setListener(new BottomListFragment.ComfirmChooseListener() {
       @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {

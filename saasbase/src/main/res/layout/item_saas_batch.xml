@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/course_layout"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:background="@drawable/bg_click"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin"
+    >
+
+  <FrameLayout
+      android:id="@+id/img_layout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bg_rect_square_img"
+      android:padding="0.5dp"
+      >
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/img_loadingimage"
+        />
+
+  </FrameLayout>
+
+  <ImageView
+      android:id="@+id/img_foot"
+      android:layout_width="16dp"
+      android:layout_height="16dp"
+      android:visibility="gone"
+      />
+  <Space
+      android:layout_width="@dimen/activity_horizontal_margin"
+      android:layout_height="match_parent"
+      />
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="200dp"
+        tools:text="健康公益讲座"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="200dp"
+        android:textSize="12sp"
+        tools:text="健康公益讲座"
+        />
+
+
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/righticon"
+      android:layout_width="25dp"
+      android:layout_height="25dp"
+      android:scaleType="center"
+      android:src="@drawable/ic_arrow_right"
+      android:visibility="gone"
+      tools:visibility="visible"
+      />
+
+
+</LinearLayout>

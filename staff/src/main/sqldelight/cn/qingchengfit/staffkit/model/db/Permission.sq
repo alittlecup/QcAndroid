@@ -1,23 +1,23 @@
-CREATE TABLE Permission (
-  shop_id  TEXT,
-  value   INTEGER AS Boolean DEFAULT 0,
-  key   TEXT
-);
-
-getAllPermission:
-SELECT * FROM Permission;
-
-deleteAllPermission:
-DELETE FROM Permission;
-
-getByShopIdAndKey:
-SELECT * FROM Permission WHERE shop_id = ? and key = ?;
-
-getByShopIdAndKeyValue:
-SELECT * FROM Permission WHERE shop_id = ? and key = ? and value = ?;
-
-getByKeyValue:
-SELECT * FROM Permission WHERE key = ? and value = ?;
-
-getByKey:
-SELECT * FROM Permission WHERE key = ?;
+--CREATE TABLE Permission (
+--  shop_id  TEXT,
+--  value   INTEGER AS Boolean DEFAULT 0,
+--  key   TEXT
+--);
+--
+--getAllPermission:
+--SELECT * FROM Permission;
+--
+--deleteAllPermission:
+--DELETE FROM Permission;
+--
+--getByShopIdAndKey:
+--SELECT * FROM Permission WHERE shop_id = ? and key = ?;
+--
+--getByShopIdAndKeyValue:
+--SELECT * FROM Permission WHERE shop_id = ? and key = ? and value = ?;
+--
+--getByKeyValue:
+--SELECT * FROM Permission WHERE key = ? and value = ?;
+--
+--getByKey:
+--SELECT * FROM Permission WHERE key = ?;

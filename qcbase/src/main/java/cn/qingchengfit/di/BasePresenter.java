@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
 import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * power by
@@ -23,11 +24,12 @@ import rx.Subscription;
  * <p/>
  * Created by Paper on 16/5/13 2016.
  */
-public class BasePresenter implements Presenter {
+public class BasePresenter<V extends CView> implements Presenter {
 
-    private List<Subscription> sps = new ArrayList<>();
+
+    CompositeSubscription sps ;
     private List<Pair<String, Observable>> observables = new ArrayList<>();
-
+    protected V mvpView;
     @Override public void onStart() {
 
     }
@@ -41,7 +43,11 @@ public class BasePresenter implements Presenter {
     }
 
     @Override public void attachView(PView v) {
+       this.mvpView = (V)v;
+    }
 
+    @Override public void onNewSps() {
+        sps = new CompositeSubscription();
     }
 
     @Override public void attachIncomingIntent(Intent intent) {
@@ -53,9 +59,9 @@ public class BasePresenter implements Presenter {
     }
 
     @CallSuper @Override public void unattachView() {
-        for (int i = 0; i < sps.size(); i++) {
-            sps.get(i).unsubscribe();
-        }
+        this.mvpView = null;
+        if (sps != null)
+            sps.unsubscribe();
         for (int i = 0; i < observables.size(); i++) {
             RxBus.getBus().unregister(observables.get(i).first, observables.get(i).second);
         }
@@ -65,6 +71,7 @@ public class BasePresenter implements Presenter {
         sps.add(subscription);
         return subscription;
     }
+    
 
     public <T> Observable<T> RxBusAdd(@NonNull Class<T> clazz) {
         Observable ob = RxBus.getBus().register(clazz);

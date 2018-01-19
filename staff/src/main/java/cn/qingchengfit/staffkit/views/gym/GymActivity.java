@@ -20,11 +20,11 @@ import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import cn.qingchengfit.model.others.ToolbarBean;
+import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.AddBrandActivity;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -60,6 +60,7 @@ public class GymActivity extends BaseActivity implements ISetGymView, FragCallBa
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
     @Inject SetGymPresenter setGymPresenter;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     private int to;
     private Subscription spSearch;
 
@@ -103,7 +104,8 @@ public class GymActivity extends BaseActivity implements ISetGymView, FragCallBa
                 break;
             case GYM_INFO:
                 //有权限或者超级管理员
-                if (getIntent().getBooleanExtra("su", false) || (!TextUtils.isEmpty(gymWrapper.shop_id()) && SerPermisAction.check(
+                if (getIntent().getBooleanExtra("su", false) || (!TextUtils.isEmpty(gymWrapper.shop_id()) && serPermisAction
+                    .check(
                     gymWrapper.shop_id(), PermissionServerUtils.STUDIO_LIST_CAN_CHANGE))) {
                     fragment = EditGymInfoFragment.newInstance(gymWrapper.getCoachService().gym_id());
                 } else {

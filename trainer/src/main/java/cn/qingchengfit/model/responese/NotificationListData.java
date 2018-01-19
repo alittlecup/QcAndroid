@@ -1,5 +1,6 @@
 package cn.qingchengfit.model.responese;
 
+import cn.qingchengfit.bean.NotificationGlance;
 import java.util.List;
 
 /**

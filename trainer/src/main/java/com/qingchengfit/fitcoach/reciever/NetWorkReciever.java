@@ -9,7 +9,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventNetWorkError;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
-import com.qingchengfit.fitcoach.bean.NetworkBean;
+import cn.qingchengfit.bean.NetworkBean;
 
 /**
  * power by

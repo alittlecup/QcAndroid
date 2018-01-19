@@ -36,7 +36,6 @@ import cn.qingchengfit.staffkit.allocate.coach.AllocateCoachActivity;
 import cn.qingchengfit.staffkit.allocate.coach.comparator.ItemComparator;
 import cn.qingchengfit.staffkit.allocate.coach.comparator.ItemComparatorJoinAt;
 import cn.qingchengfit.staffkit.allocate.coach.item.ChooseStudentItem;
-import cn.qingchengfit.staffkit.allocate.coach.model.StudentWithCoach;
 import cn.qingchengfit.staffkit.allocate.coach.presenter.OperationPresenter;
 import cn.qingchengfit.staffkit.rxbus.event.AllotSaleSelectAllEvent;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
@@ -111,7 +110,7 @@ import static android.view.View.GONE;
     private List<CommonAllocateDetailItem> itemList = new ArrayList<>();
     private List<CommonAllocateDetailItem> stashList = new ArrayList<>();
     private CommonFlexAdapter adapter;
-    private List<StudentWithCoach> selectList = new ArrayList<>();
+    private List<QcStudentBean> selectList = new ArrayList<>();
     private String keyword;
     private Observable<StudentFilterEvent> obFilter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -144,7 +143,7 @@ import static android.view.View.GONE;
         adapter = new CommonFlexAdapter(itemList, this);
         adapter.setDisplayHeadersAtStartUp(true);
         adapter.showAllHeaders().setNotifyChangeOfUnfilteredItems(false).setNotifyChangeOfUnfilteredItems(true);
-        adapter.setMode(SelectableAdapter.MODE_MULTI);
+        adapter.setMode(SelectableAdapter.Mode.MULTI);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         rvStudent.setLayoutManager(mLinearLayoutManager);
         rvStudent.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -230,7 +229,7 @@ import static android.view.View.GONE;
 
     public void localFilter(String s) {
         if (TextUtils.isEmpty(s)) {
-            adapter.setSearchText(null);
+            adapter.setSearchText("");
             getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
                     adapter.updateDataSet(itemList);
@@ -412,7 +411,7 @@ import static android.view.View.GONE;
         selectSutdentFragment.setListener(new BottomStudentsFragment.BottomStudentsListener() {
             @Override public void onBottomStudents(List<Personage> list) {
                 selectList.clear();
-                selectList.addAll(ListUtils.transerList(new ArrayList<StudentWithCoach>(), list));
+                selectList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(), list));
                 adapter.clearSelection();
                 for (int i = 0; i < adapter.getItemCount(); i++) {
                     QcStudentBean b = ((ChooseStudentItem) adapter.getItem(i)).getData();
@@ -431,7 +430,7 @@ import static android.view.View.GONE;
     private void filterNoAllocateCoach() {
         List<CommonAllocateDetailItem> tempList = new ArrayList<>();
         for (CommonAllocateDetailItem item : itemList) {
-            if (((ChooseStudentItem) item).getData().coaches.size() == 0) {
+            if (((ChooseStudentItem) item).getData().sellers.size() == 0) {
                 tempList.add(item);
             }
         }
@@ -467,11 +466,11 @@ import static android.view.View.GONE;
         return false;
     }
 
-    @Override public void onStudentList(List<StudentWithCoach> list) {
+    @Override public void onStudentList(List<QcStudentBean> list) {
         itemList.clear();
         datas.clear();
         datas.addAll(list);
-        for (StudentWithCoach data : list) {
+        for (QcStudentBean data : list) {
             itemList.add(new ChooseStudentItem(data));
         }
         hideLoadingTrans();

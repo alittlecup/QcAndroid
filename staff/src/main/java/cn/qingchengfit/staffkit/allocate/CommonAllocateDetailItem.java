@@ -1,9 +1,7 @@
 package cn.qingchengfit.staffkit.allocate;
 
 import android.os.Parcelable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -30,6 +28,9 @@ public abstract class CommonAllocateDetailItem<T extends CommonAllocateDetailIte
     private QcStudentBean studentBean;
     private boolean isAlphaBet;
 
+    public CommonAllocateDetailItem() {
+    }
+
     public CommonAllocateDetailItem(QcStudentBean studentBean) {
         this.studentBean = studentBean;
     }
@@ -50,8 +51,8 @@ public abstract class CommonAllocateDetailItem<T extends CommonAllocateDetailIte
         isAlphaBet = alphaBet;
     }
 
-    @Override public T createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return (T) new AllocateDetailVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public T createViewHolder(View view, FlexibleAdapter adapter) {
+        return (T) new AllocateDetailVH(view, adapter);
     }
 
     @Override public boolean filter(String constraint) {

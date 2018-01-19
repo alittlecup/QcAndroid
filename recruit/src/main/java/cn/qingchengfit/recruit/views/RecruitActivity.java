@@ -3,6 +3,7 @@ package cn.qingchengfit.recruit.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -79,7 +80,7 @@ public class RecruitActivity extends BaseActivity implements HasSupportFragmentI
           router.resumeHome();
         } else {
           BaseRouter.routerToWeb(restRepository.getHost() + RecruitConstants.RESUME_WEB_PATH + id,
-              this);
+            this);
           this.finish();
           return;
         }
@@ -120,7 +121,40 @@ public class RecruitActivity extends BaseActivity implements HasSupportFragmentI
     return dispatchingFragmentInjector;
   }
 
+  @IdRes
   @Override public int getFragId() {
-    return R.id.frag_recruit;
+    return cn.qingchengfit.recruit.R.id.web_frag_layout;
+  }
+
+  public void init(Fragment fragment) {
+    getSupportFragmentManager().beginTransaction()
+      .setCustomAnimations(cn.qingchengfit.widgets.R.anim.slide_hold,
+        cn.qingchengfit.widgets.R.anim.slide_hold)
+      .replace(getFragId(), fragment)
+      .commitAllowingStateLoss();
+  }
+
+  public void add(Fragment s) {
+    getSupportFragmentManager().beginTransaction()
+      .setCustomAnimations(cn.qingchengfit.widgets.R.anim.slide_right_in,
+        cn.qingchengfit.widgets.R.anim.slide_left_out, cn.qingchengfit.widgets.R.anim.slide_left_in,
+        cn.qingchengfit.widgets.R.anim.slide_right_out)
+      .add(getFragId(), s)
+      .addToBackStack(null)
+      .commitAllowingStateLoss();
+  }
+
+  public void addNoStack(Fragment s) {
+    getSupportFragmentManager().popBackStackImmediate();
+    getSupportFragmentManager().beginTransaction()
+      .setCustomAnimations(cn.qingchengfit.widgets.R.anim.slide_right_in,
+        cn.qingchengfit.widgets.R.anim.slide_left_out, cn.qingchengfit.widgets.R.anim.slide_left_in,
+        cn.qingchengfit.widgets.R.anim.slide_right_out)
+      .add(getFragId(), s)
+      .commitAllowingStateLoss();
+  }
+
+  public void remove(Fragment fragment) {
+    getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
   }
 }

@@ -1,6 +1,6 @@
 package cn.qingchengfit.model.responese;
 
-import cn.qingchengfit.chat.model.ChatGym;
+import cn.qingchengfit.recruit.model.ChatGym;
 import java.util.List;
 
 /**

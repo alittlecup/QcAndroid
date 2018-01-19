@@ -125,6 +125,10 @@ public class BaseConfigFragment extends BaseFragment implements BaseConfigPresen
         });
     }
 
+    @Override public boolean isBlockTouch() {
+        return false;
+    }
+
     private void initView() {
 
         // 新购会员卡积分
@@ -159,9 +163,6 @@ public class BaseConfigFragment extends BaseFragment implements BaseConfigPresen
             @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 swScoreConfigPrivate.setOpen(b);
                 civScoreConfigPrivate.setVisibility(b ? View.VISIBLE : View.GONE);
-                //if (!b) {
-                //    civScoreConfigPrivate.setContent("");
-                //}
             }
         });
 
@@ -321,7 +322,7 @@ public class BaseConfigFragment extends BaseFragment implements BaseConfigPresen
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        initToolbar(toolbar);//// TODO: 2017/4/10 麻蛋 这种方法要改  又 Add Fragment
+        //initToolbar(toolbar);//// TODO: 2017/4/10 麻蛋 这种方法要改  又 Add Fragment
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 11) { // 新购卡
                 StudentScoreRuleBean ruleBean = new StudentScoreRuleBean();

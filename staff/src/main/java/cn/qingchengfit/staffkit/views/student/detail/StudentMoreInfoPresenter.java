@@ -49,6 +49,7 @@ public class StudentMoreInfoPresenter extends BasePresenter {
     @Inject StudentWrapper studentWrapper;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject StudentAction studentAction;
     private StudentUsecase usecase;
     private Subscription querySp;
     private Subscription delSp;
@@ -127,10 +128,10 @@ public class StudentMoreInfoPresenter extends BasePresenter {
                 if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
                     if (gymWrapper.inBrand()) {
                         if (studentWrapper.getStudentBean().getSupport_shop_ids().equalsIgnoreCase(shop_ids)) {
-                            StudentAction.newInstance().delStudentByBrand(gymWrapper.brand_id(), studentWrapper.id());
+                            studentAction.delStudentByBrand(gymWrapper.brand_id(), studentWrapper.id());
                         }
                     } else {
-                        StudentAction.newInstance().delStudentByGym(gymWrapper.id(), gymWrapper.model(), studentWrapper.id());
+                        studentAction.delStudentByGym(gymWrapper.id(), gymWrapper.model(), studentWrapper.id());
                     }
                     view.onSuccess();
                     RxBus.getBus().post(new EventFreshStudent());

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.animator.FadeInUpItemAnimator;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
@@ -29,17 +30,17 @@ import cn.qingchengfit.model.common.Card;
 import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.ConstantNotification;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventClearAllNoti;
 import cn.qingchengfit.staffkit.rxbus.event.EventLatestNoti;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.card.CardDetailActivity;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
 import cn.qingchengfit.staffkit.views.student.StudentActivity;
@@ -90,6 +91,8 @@ public class NotificationFragment extends BaseFragment
     @BindView(R.id.rv) RecycleViewWithNoImg rv;
     @Inject NotificationPresenter presenter;
     @Inject RestRepository mRestRepository;
+    @Inject SerPermisAction serPermisAction;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -128,6 +131,7 @@ public class NotificationFragment extends BaseFragment
         mAdatper = new CommonFlexAdapter(mData, this);
         mAdatper.setEndlessScrollListener(this, new ProgressItem(getContext()));
         rv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        rv.setItemAnimator(new FadeInUpItemAnimator());
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         rv.setAdapter(mAdatper);
         rv.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -188,7 +192,7 @@ public class NotificationFragment extends BaseFragment
                     }
                     if (!StringUtils.isEmpty(msg.getBrand_id()) && !StringUtils.isEmpty(
                         msg.getShop_id()) && msg.type < 16) {
-                        final CoachService coachService1 = GymBaseInfoAction.getGymByShopIdNow(msg.getBrand_id(), msg.getShop_id());
+                        final CoachService coachService1 = gymBaseInfoAction.getGymByShopIdNow(msg.getBrand_id(), msg.getShop_id());
                         if (coachService1 != null) {
                             HashMap<String, Object> p = new HashMap<>();
                             p.put("id", coachService1.getId());
@@ -201,7 +205,7 @@ public class NotificationFragment extends BaseFragment
                                 .subscribe(new Action1<QcResponsePermission>() {
                                     @Override public void call(QcResponsePermission qcResponse) {
                                         if (ResponseConstant.checkSuccess(qcResponse)) {
-                                            SerPermisAction.writePermiss(qcResponse.data.permissions);
+                                            serPermisAction.writePermiss(qcResponse.data.permissions);
                                             Intent toActivity = null;
                                             if (!StringUtils.isEmpty(msg.getUrl())) {
                                                 toActivity =
@@ -212,11 +216,12 @@ public class NotificationFragment extends BaseFragment
                                                 toActivity = new Intent(getActivity(), StudentActivity.class);
                                             } else if (msg.type == 13) {
                                                 if (msg.card_id == 0) return;
-                                                toActivity = new Intent(getActivity(), CardDetailActivity.class);
+                                                //toActivity = new Intent(getActivity(), CardDetailActivity.class);
                                                 Card realCard = new Card();
                                                 realCard.setCard_no("#70A4A9");
                                                 realCard.setId(msg.card_id + "");
-                                                toActivity.putExtra(Configs.EXTRA_REAL_CARD, realCard);
+                                                routeTo("card","/detail/", CardDetailParams.builder().cardid(msg.card_id+"").build());
+                                                //toActivity.putExtra(Configs.EXTRA_REAL_CARD, realCard);
                                             }
 
                                             toActivity.putExtra(Configs.EXTRA_GYM_SERVICE, coachService1);
@@ -284,7 +289,8 @@ public class NotificationFragment extends BaseFragment
                 }
             }
         }
-        mAdatper.notifyDataSetChanged();
+        mAdatper.clear();
+        mAdatper.updateDataSet(mData,true);
         if (mfirstUnread > 0) {
             RxBus.getBus()
                 .post(new EventLatestNoti(DateUtils.formatDateFromServer(data.get(mfirstUnread).getCreated_at()).getTime(),

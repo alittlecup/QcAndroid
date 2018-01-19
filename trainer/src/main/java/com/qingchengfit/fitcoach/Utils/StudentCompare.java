@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.Utils;
 
-import com.qingchengfit.fitcoach.bean.StudentBean;
+import cn.qingchengfit.bean.StudentBean;
 import java.util.Comparator;
 
 /**

@@ -81,6 +81,7 @@ public class ChooseWardrobeListFragment extends BaseFragment implements Flexible
         countTitle.setText(getString(R.string.free_wardrobe));
         freeCount.setText("" + count);
         rv.setAdapter(mAdatper);
+        mAdatper.updateDataSet(mData);
         return view;
     }
 

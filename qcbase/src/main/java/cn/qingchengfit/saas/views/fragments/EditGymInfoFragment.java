@@ -32,6 +32,7 @@ import cn.qingchengfit.widgets.R2;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import eu.davidea.flexibleadapter.items.IFilterable;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

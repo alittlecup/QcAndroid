@@ -2,7 +2,9 @@ package cn.qingchengfit.staffkit.views.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -22,15 +24,15 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventUnloginHomeLevel;
 import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
@@ -45,6 +47,7 @@ import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -78,10 +81,13 @@ import rx.schedulers.Schedulers;
     @BindView(R.id.phone) CommonInputView phone;
     @BindView(R.id.descripe) CommonInputView descripe;
     @BindView(R.id.comfirm) Button comfirm;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
     @Arg Brand mBrand;
     @BindView(R.id.guide_step_1) ImageView guideStep1;
 
+    @Inject GymBaseInfoAction gymBaseInfoAction;
     private String gymImgStr;
     private String descripeStr;
     private String cityStr;
@@ -109,6 +115,7 @@ import rx.schedulers.Schedulers;
         address.addTextWatcher(textChange);
         phone.addTextWatcher(textChange);
         guideStep1.setVisibility(View.GONE);
+        initToolbar(toolbar);
         RxBusAdd(EventAddress.class).subscribe(new Action1<EventAddress>() {
             @Override public void call(EventAddress eventAddress) {
                 address.setContent(eventAddress.address);
@@ -121,6 +128,11 @@ import rx.schedulers.Schedulers;
         //告诉 未登录home页，新增场馆到第几步了
         RxBus.getBus().post(new EventUnloginHomeLevel(2));
         return view;
+    }
+
+    @Override public void initToolbar(@NonNull Toolbar toolbar) {
+        toolbarTitle.setText("创建您的场馆");
+        super.initToolbar(toolbar);
     }
 
     @Override public String getFragmentName() {
@@ -176,7 +188,7 @@ import rx.schedulers.Schedulers;
                                 if (getActivity() instanceof MainActivity) {
                                     List<CoachService> coachServices = new ArrayList<>();
                                     coachServices.add(qcResponseSystenInit.data);
-                                    GymBaseInfoAction.writeGyms(coachServices);
+                                    gymBaseInfoAction.writeGyms(coachServices);
                                 }
                             } else {
                                 ToastUtils.showDefaultStyle(qcResponseSystenInit.getMsg());

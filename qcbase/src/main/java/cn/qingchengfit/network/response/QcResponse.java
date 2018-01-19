@@ -22,6 +22,17 @@ public class QcResponse {
     @SerializedName("level") public String level;
     @SerializedName("error_code") public String error_code;
 
+    public QcResponse() {
+    }
+
+    private QcResponse(Builder builder) {
+        setStatus(builder.status);
+        setMsg(builder.msg);
+        setInfo(builder.info);
+        setLevel(builder.level);
+        setError_code(builder.error_code);
+    }
+
     public int getStatus() {
         return status;
     }
@@ -60,5 +71,45 @@ public class QcResponse {
 
     public void setError_code(String error_code) {
         this.error_code = error_code;
+    }
+
+    public static final class Builder {
+        private int status;
+        private String msg;
+        private String info;
+        private String level;
+        private String error_code;
+
+        public Builder() {
+        }
+
+        public Builder status(int val) {
+            status = val;
+            return this;
+        }
+
+        public Builder msg(String val) {
+            msg = val;
+            return this;
+        }
+
+        public Builder info(String val) {
+            info = val;
+            return this;
+        }
+
+        public Builder level(String val) {
+            level = val;
+            return this;
+        }
+
+        public Builder error_code(String val) {
+            error_code = val;
+            return this;
+        }
+
+        public QcResponse build() {
+            return new QcResponse(this);
+        }
     }
 }

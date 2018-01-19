@@ -24,12 +24,12 @@ import cn.qingchengfit.model.responese.SigninFilter;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.cards.views.WriteDescFragment;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
-import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -70,6 +70,7 @@ public class OutExcelFragment extends BaseFragment {
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
     private String mShopId;
 
     private ClassStatmentFilterBean mClassFilter;
@@ -164,7 +165,7 @@ public class OutExcelFragment extends BaseFragment {
                         titleStr = "";
                         if (gymWrapper.inBrand()) {
                             if (!TextUtils.isEmpty(mShopId)) {
-                                CoachService coachService = GymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), mShopId);
+                                CoachService coachService = gymBaseInfoAction.getGymByShopIdNow(gymWrapper.brand_id(), mShopId);
                                 if (coachService != null) {
                                     brandStr = brandStr.concat(coachService.getName());
                                 }

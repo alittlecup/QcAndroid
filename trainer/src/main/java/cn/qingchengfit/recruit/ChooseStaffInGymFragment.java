@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.chat.ChatChooseInGymFragment;
-import cn.qingchengfit.chat.model.ChatGym;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.items.ChooseStaffItem;
 import cn.qingchengfit.items.PositionHeaderItem;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.recruit.model.ChatGym;
 import cn.qingchengfit.utils.ToastUtils;
 import com.qingchengfit.fitcoach.event.EventChoosePerson;
 

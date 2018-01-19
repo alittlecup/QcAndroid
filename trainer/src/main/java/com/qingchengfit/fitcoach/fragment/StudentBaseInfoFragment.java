@@ -12,7 +12,7 @@ import butterknife.Unbinder;
 import cn.qingchengfit.views.VpFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.BaseInfoAdapter;
-import com.qingchengfit.fitcoach.bean.BaseInfoBean;
+import cn.qingchengfit.bean.BaseInfoBean;
 import java.util.ArrayList;
 import java.util.List;
 

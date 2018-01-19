@@ -31,8 +31,6 @@ import cn.qingchengfit.model.body.PushBody;
 import cn.qingchengfit.model.body.RenewBody;
 import cn.qingchengfit.model.body.ReturnWardrobeBody;
 import cn.qingchengfit.model.body.ScanBody;
-import cn.qingchengfit.model.body.ShopConfigBody;
-import cn.qingchengfit.model.body.ShopsBody;
 import cn.qingchengfit.model.body.ShortMsgBody;
 import cn.qingchengfit.model.body.SignInBody;
 import cn.qingchengfit.model.body.SignInCostBody;
@@ -54,6 +52,9 @@ import cn.qingchengfit.model.responese.ResponseService;
 import cn.qingchengfit.model.responese.Space;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
+import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
+import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.staffkit.train.model.CreateGroupBody;
 import cn.qingchengfit.staffkit.train.model.OperationMemberBody;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
@@ -66,7 +67,6 @@ import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
 import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
-import cn.qingchengfit.staffkit.views.cardtype.UUIDModel;
 import java.util.HashMap;
 import java.util.List;
 import retrofit2.Call;
@@ -298,13 +298,15 @@ public interface Post_Api {
         @Path("id") String id, @QueryMap HashMap<String, Object> params,
         @Body User_Student student);
 
-    //<<<<<<< HEAD
-    //    @PUT("/api/v2/staffs/{staff_id}/users/{id}/") rx.Observable<QcResponseData> qcUpdateStudent(
-    //            @Path("staff_id") String staff_id, @Path("id") String id
-    //=======
+    /**
+     * 学员操作
+     */
+    @POST("/api/staffs/{id}/users/") rx.Observable<QcDataResponse> qcAddStudent(
+        @Path("id") String id, @QueryMap HashMap<String, Object> params,
+        @Body AddStudentBody student);
+
     @PUT("/api/v2/staffs/{staff_id}/users/{id}/") rx.Observable<QcDataResponse> qcUpdateStudent(@Path("staff_id") String staff_id,
         @Path("id") String id, @Query("id") String gymid, @Query("model") String model, @Query("brand_id") String brandid
-
         , @Body User_Student student);
 
     @DELETE("/api/staffs/{staff_id}/users/{id}/") rx.Observable<QcResponse> qcDelStudent(@Path("staff_id") String staff_id,
@@ -424,7 +426,8 @@ public interface Post_Api {
      * {@link ShopConfigs}
      */
     @PUT("/api/staffs/{staff_id}/shops/configs/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse> qcShopConfigs(
-        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body ShopConfigBody body);
+        @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body
+      ShopConfigBody body);
 
     /**
      * 签到扣费设置
@@ -677,6 +680,6 @@ public interface Post_Api {
 
     //暂存添加会员卡种类信息
     @POST("api/staffs/{staff_id}/cache/")
-    rx.Observable<QcDataResponse<UUIDModel>> qcStashNewCardTpl(@Path("staff_id") String staff_id,
+    rx.Observable<QcDataResponse> qcStashNewCardTpl(@Path("staff_id") String staff_id,
         @Body CardtplBody body, @QueryMap HashMap<String, Object> params);
 }

@@ -71,8 +71,8 @@ public class LatestTimeItem extends AbstractFlexibleItem<LatestTimeItem.LatestTi
     }
 
     @Override
-    public LatestTimeItem.LatestTimeItemVH createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new LatestTimeItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    public LatestTimeItem.LatestTimeItemVH createViewHolder(final View view, FlexibleAdapter adapter) {
+        return new LatestTimeItemVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, LatestTimeItem.LatestTimeItemVH holder, int position, List payloads) {

@@ -8,19 +8,19 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.common.RealCard;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.utils.RouterUtils;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.ConstantNotification;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventNewPush;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
-import cn.qingchengfit.staffkit.views.card.CardDetailActivity;
 import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -28,8 +28,10 @@ import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.google.gson.Gson;
+import dagger.android.AndroidInjection;
 import java.util.HashMap;
 import java.util.List;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -60,6 +62,8 @@ public class PushReciever extends PushMessageReceiver {
      */
     public static String BD_CHANNELID = "bd_channelid";
     public static String BD_USERLID = "bd_userid";
+    @Inject GymBaseInfoAction gymBaseInfoAction;
+    @Inject SerPermisAction serPermisAction;
 
     @Override public void onBind(Context context, int i, String s, String s1, String s2, String s3) {
         Timber.e("error:" + i + "   " + s + "  " + s1 + "  channelid:" + s2 + "    " + s3);
@@ -89,6 +93,7 @@ public class PushReciever extends PushMessageReceiver {
     }
 
     @Override public void onNotificationClicked(final Context context, String s, String s1, String s2) {
+        AndroidInjection.inject(this, context);
         Timber.d("title:" + s + "   content:" + s1 + "   self:" + s2);
         if (!TextUtils.isEmpty(s2)) {
             final PushBean bean = new Gson().fromJson(s2, PushBean.class);
@@ -99,7 +104,7 @@ public class PushReciever extends PushMessageReceiver {
             restRepository.getPost_api().qcClearAllNoti(App.staffId, params);
             if (TextUtils.isEmpty(bean.url)) {
                 if (bean.type != 0 && bean.type < 16) {
-                    final CoachService coachService = GymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
+                    final CoachService coachService = gymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
                     String staffid = PreferenceUtils.getPrefString(context, Configs.PREFER_WORK_ID, "");
                     Intent intent = new Intent();
                     intent.putExtra(Configs.EXTRA_GYM_SERVICE, coachService);
@@ -117,14 +122,15 @@ public class PushReciever extends PushMessageReceiver {
                             break;
                         case ConstantNotification.TYPE_FITNESS_REMIND_CARD_BALANCE:
                             if (bean.card_id == 0) return;
-                            if (!SerPermisAction.check(bean.shop_id, PermissionServerUtils.MANAGE_COSTS)) {
+                            if (!serPermisAction.check(bean.shop_id, PermissionServerUtils.MANAGE_COSTS)) {
                                 DialogUtils.showAlert(context, "抱歉，您无会员卡查看权限");
                                 return;
                             }
-                            intent.setClass(context, CardDetailActivity.class);
-                            RealCard realCard = new RealCard("", "", "", "#70A4A9");
-                            realCard.id = bean.card_id + "";
-                            intent.putExtra(Configs.EXTRA_REAL_CARD, realCard);
+                            //intent.setClass(context, CardDetailActivity.class);
+                            //RealCard realCard = new RealCard("", "", "", "#70A4A9");
+                            //realCard.id = bean.card_id + "";
+                            //intent.putExtra(Configs.EXTRA_REAL_CARD, realCard);
+                            RouterUtils.routeTo(context,"card","/detail/", CardDetailParams.builder().cardid(bean.brand_id).build(),intent);
                             break;
                     }
                     context.startActivity(intent);
@@ -143,7 +149,7 @@ public class PushReciever extends PushMessageReceiver {
                             new Intent(context.getPackageName(), Uri.parse(bean.url));
                         String staffid = PreferenceUtils.getPrefString(context, Configs.PREFER_WORK_ID, "");
                         if (!StringUtils.isEmpty(bean.brand_id) && !StringUtils.isEmpty(bean.shop_id)) {
-                            final CoachService coachService1 = GymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
+                            final CoachService coachService1 = gymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
                             if (coachService1 != null) {
                                 HashMap<String, Object> p = new HashMap<>();
                                 p.put("id", coachService1.getId());
@@ -156,7 +162,7 @@ public class PushReciever extends PushMessageReceiver {
                                     .subscribe(new Action1<QcResponsePermission>() {
                                         @Override public void call(QcResponsePermission qcResponse) {
                                             if (ResponseConstant.checkSuccess(qcResponse)) {
-                                                SerPermisAction.writePermiss(qcResponse.data.permissions);
+                                                serPermisAction.writePermiss(qcResponse.data.permissions);
                                                 toActivity.putExtra(Configs.EXTRA_GYM_SERVICE, coachService1);
                                                 toActivity.putExtra(Configs.EXTRA_BRAND, new Brand.Builder().id(bean.brand_id).build());
                                                 toActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -197,7 +203,6 @@ public class PushReciever extends PushMessageReceiver {
                     intent.putExtra("url", bean.url);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-
                 }
             }
         }

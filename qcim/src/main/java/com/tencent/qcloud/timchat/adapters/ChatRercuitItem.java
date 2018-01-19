@@ -49,9 +49,8 @@ public class ChatRercuitItem extends ChatItem<ChatRercuitItem.RecruitVH> {
     this.message = message;
   }
 
-  @Override public RecruitVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    RecruitVH holder = new RecruitVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public RecruitVH createViewHolder(View view, FlexibleAdapter adapter) {
+    RecruitVH holder = new RecruitVH(view, adapter);
     return holder;
   }
 

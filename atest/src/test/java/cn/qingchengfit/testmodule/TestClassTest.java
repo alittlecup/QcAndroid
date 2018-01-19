@@ -93,4 +93,16 @@ public class TestClassTest {
         });
     Assert.assertTrue(true);
   }
+  @Test
+  public void testMinInterval(){
+    Assert.assertTrue(getInterval(0) == 5);
+    Assert.assertTrue(getInterval(1) == 10);
+    Assert.assertTrue(getInterval(2) == 15);
+    Assert.assertTrue(getInterval(3) == 30);
+    Assert.assertTrue(getInterval(4) == 45);
+    Assert.assertTrue(getInterval(5) == 60);
+  }
+  private int getInterval(int position){
+    return (5+(position/3)*10)*(position%3+1+position/3);
+  }
 }

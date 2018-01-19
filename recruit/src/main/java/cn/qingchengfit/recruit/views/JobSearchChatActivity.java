@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.recruit.RecruitConstants;
 import cn.qingchengfit.recruit.item.RecruitPositionChooseItem;
@@ -44,6 +45,7 @@ public class JobSearchChatActivity extends ChatActivity
     super.onCreate(savedInstanceState);
     AndroidInjection.inject(this);
     presenter.attachView(this);
+    presenter.onNewSps();
     type = getIntent().getIntExtra(RecruitConstants.CHAT_JOB_SEARCH_OR_RECRUIT, 0);
     if (!TextUtils.isEmpty(getIntent().getStringExtra(INVITE_RESUME_ID))) {
       resumeId = getIntent().getStringExtra(INVITE_RESUME_ID);
@@ -100,6 +102,27 @@ public class JobSearchChatActivity extends ChatActivity
   }
 
   @Override public void showAlert(@StringRes int s) {
+
+  }
+
+  @Override public void showLoading() {
+
+  }
+
+  @Override public void hideLoading() {
+
+  }
+
+  @Override public void showSelectSheet(String title, List<String> strs,
+    AdapterView.OnItemClickListener listener) {
+
+  }
+
+  @Override public void popBack() {
+
+  }
+
+  @Override public void popBack(int count) {
 
   }
 

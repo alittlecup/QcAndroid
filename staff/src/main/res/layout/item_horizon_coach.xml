@@ -25,7 +25,7 @@
       tools:text="Mike"
       />
 
-  <cn.qingchengfit.staffkit.views.custom.RatingBarVectorFix
+  <cn.qingchengfit.widgets.RatingBarVectorFix
       android:id="@+id/rater"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

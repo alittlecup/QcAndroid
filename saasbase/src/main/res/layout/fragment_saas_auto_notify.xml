@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+  <include layout="@layout/common_simple_toolbar"/>
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:paddingTop="12dp"
+      android:text="设置好提醒条件后，系统将:"
+      android:textSize="12dp"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="1. 自动发送提醒短信给会员卡余额不足的会员"
+      android:textSize="12dp"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:paddingBottom="12dp"
+      android:text="2. APP发送系统通知提醒该会员的销售"
+      android:textSize="12dp"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:gravity="center"
+      android:paddingBottom="12dp"
+      android:paddingTop="12dp"
+      android:text="－当前自动提醒设置－"
+      android:textColor="@color/qc_text_black"
+      android:textSize="14dp"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:id="@+id/text_store_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="储值卡"
+        android:textColor="@color/qc_text_black"
+        android:textSize="14dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_store_card"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="6.5dp"
+        android:text="余额少于多少元时会员将收到提醒短信？"
+        android:textSize="12dp"
+        />
+
+    <TextView
+        android:id="@+id/text_store_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/qc_theme_green"
+        tools:text="&#60; 500元"
+        />
+
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:id="@+id/text_second_card_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="次卡"
+        android:textColor="@color/qc_text_black"
+        android:textSize="14dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_second_card_title"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="6.5dp"
+        android:text="余额少于多少次时会员将收到提醒短信？"
+        android:textSize="12dp"
+        />
+
+    <TextView
+        android:id="@+id/text_second_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/red"
+        tools:text="已关闭"
+        />
+
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:id="@+id/text_time_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="会员卡有效期"
+        android:textColor="@color/qc_text_black"
+        android:textSize="14dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_time_card"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="6.5dp"
+        android:text="有效期少于多少天时会员将收到提醒短信？"
+        android:textSize="12dp"
+        />
+
+    <TextView
+        android:id="@+id/text_time_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/qc_theme_green"
+        tools:text="&#60; 15天"
+        />
+
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:id="@+id/btn_change_setting"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:layout_marginLeft="16dp"
+      android:layout_marginRight="16dp"
+      android:layout_marginTop="16dp"
+      android:background="@color/qc_allotsale_green"
+      android:gravity="center"
+      android:text="修改设置"
+      android:textColor="@color/white"
+      android:textSize="14dp"
+      />
+
+
+</LinearLayout>

@@ -16,10 +16,10 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.LockerRegion;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.wardrobe.add.DistrictAddFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.item.DistrictAddItem;
@@ -58,6 +58,7 @@ public class DistrictListFragment extends BaseFragment implements FlexibleAdapte
     @Inject DistrictListPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -101,7 +102,7 @@ public class DistrictListFragment extends BaseFragment implements FlexibleAdapte
 
     @Override public boolean onItemClick(int position) {
         if (mData.get(position) instanceof DistrictAddItem) {//新增
-            if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_WRITE)) {
+            if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_WRITE)) {
                 showAlert(R.string.alert_permission_forbid);
                 return true;
             }
@@ -110,8 +111,8 @@ public class DistrictListFragment extends BaseFragment implements FlexibleAdapte
                 .addToBackStack(getFragmentName())
                 .commit();
         } else if (mData.get(position) instanceof DistrictItem) {//编辑区域
-            if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_CHANGE)
-                && !SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_DELETE)) {
+            if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_CHANGE)
+                && !serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_DELETE)) {
                 showAlert(R.string.alert_permission_forbid);
                 return true;
             }
@@ -129,11 +130,11 @@ public class DistrictListFragment extends BaseFragment implements FlexibleAdapte
         if (data != null) {
             for (LockerRegion lr : data) {
                 mData.add(new DistrictItem(lr,
-                    SerPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.LOCKER_SETTING_CAN_DELETE) || SerPermisAction.check(
+                    serPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.LOCKER_SETTING_CAN_DELETE) || serPermisAction.check(
                         gymWrapper.shop_id(), PermissionServerUtils.LOCKER_SETTING_CAN_CHANGE)));
             }
         }
-        mAdatper.notifyDataSetChanged();
+        mAdatper.updateDataSet(mData);
     }
 
     @Override public void onShowError(String e) {

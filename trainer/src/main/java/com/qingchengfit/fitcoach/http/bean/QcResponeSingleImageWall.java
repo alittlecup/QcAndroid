@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import cn.qingchengfit.network.response.QcResponse;
-import com.qingchengfit.fitcoach.bean.ImageWall;
+import cn.qingchengfit.bean.ImageWall;
 import java.util.List;
 
 /**

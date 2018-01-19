@@ -46,9 +46,9 @@
 //import com.qingchengfit.fitcoach.activity.SettingActivity;
 //import cn.qingchengfit.views.activity.WebActivity;
 //import cn.qingchengfit.model.common.Contact;
-//import com.qingchengfit.fitcoach.bean.PayEvent;
+//import cn.qingchengfit.bean.PayEvent;
 //import cn.qingchengfit.model.common.PlatformInfo;
-//import com.qingchengfit.fitcoach.bean.ShareBean;
+//import cn.qingchengfit.bean.ShareBean;
 //import cn.qingchengfit.model.common.ToolbarAction;
 //import cn.qingchengfit.widgets.CustomSwipeRefreshLayout;
 //import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;

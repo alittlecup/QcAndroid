@@ -5,18 +5,13 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.responese.CardTpl;
-import cn.qingchengfit.model.responese.CardTpls;
-import cn.qingchengfit.model.responese.GymCardtpl;
-import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import cn.qingchengfit.utils.DateUtils;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
-import rx.functions.Action1;
 
 /**
  *
@@ -86,19 +81,19 @@ public class CustomSigninPresenter extends BasePresenter {
     }
 
     public void queryCardTpl() {
-        if (gymWrapper.inBrand()) {
-            RxRegiste(usecase.queryCardTypeList(gymWrapper.brand_id(), 0, new Action1<QcDataResponse<CardTpls>>() {
-                @Override public void call(QcDataResponse<CardTpls> qcResponseCardTpls) {
-                    if (ResponseConstant.checkSuccess(qcResponseCardTpls)) customSaleView.onGetCards(qcResponseCardTpls.data.card_tpls);
-                }
-            }));
-        } else {
-            RxRegiste(usecase.queryGymCardTpl(gymWrapper.id(), gymWrapper.model(), 0, new Action1<QcDataResponse<GymCardtpl>>() {
-                @Override public void call(QcDataResponse<GymCardtpl> qcResponseGymCardtpl) {
-                    if (ResponseConstant.checkSuccess(qcResponseGymCardtpl)) customSaleView.onGetCards(qcResponseGymCardtpl.data.card_tpls);
-                }
-            }));
-        }
+        //if (gymWrapper.inBrand()) {
+        //    RxRegiste(usecase.queryCardTypeList(gymWrapper.brand_id(), 0, new Action1<QcDataResponse<CardTpls>>() {
+        //        @Override public void call(QcDataResponse<CardTpls> qcResponseCardTpls) {
+        //            if (ResponseConstant.checkSuccess(qcResponseCardTpls)) customSaleView.onGetCards(qcResponseCardTpls.data.card_tpls);
+        //        }
+        //    }));
+        //} else {
+        //    RxRegiste(usecase.queryGymCardTpl(gymWrapper.id(), gymWrapper.model(), 0, new Action1<QcDataResponse<GymCardtpl>>() {
+        //        @Override public void call(QcDataResponse<GymCardtpl> qcResponseGymCardtpl) {
+        //            if (ResponseConstant.checkSuccess(qcResponseGymCardtpl)) customSaleView.onGetCards(qcResponseGymCardtpl.data.card_tpls);
+        //        }
+        //    }));
+        //}
     }
 
     public interface PresenterView extends PView {

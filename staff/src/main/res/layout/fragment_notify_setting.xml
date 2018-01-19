@@ -49,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/qc_item_height"
         android:background="@color/white"
+        android:gravity="center_vertical"
         android:text="@string/home_fix_checkin"
         android:textColor="@color/qc_text_black"
         />

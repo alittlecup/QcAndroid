@@ -24,6 +24,8 @@ public interface Presenter {
 
     void attachView(PView v);
 
+    void onNewSps();
+
     void attachIncomingIntent(Intent intent);
 
     void onCreate();

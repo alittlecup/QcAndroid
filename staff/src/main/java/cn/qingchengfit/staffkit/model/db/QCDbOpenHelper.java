@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.Permission;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.staffkit.usecase.bean.Permission;
 
 public class QCDbOpenHelper extends SQLiteOpenHelper {
 

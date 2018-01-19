@@ -14,7 +14,7 @@ import cn.qingchengfit.widgets.PasswordView;
 import cn.qingchengfit.widgets.PhoneEditText;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.bean.SendSmsCode;
+import cn.qingchengfit.bean.SendSmsCode;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import java.lang.ref.WeakReference;
 import rx.Observable;

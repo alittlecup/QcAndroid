@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.databinding.DialogFragmentAllotsaleShowSelectedBinding;
@@ -22,8 +23,10 @@ import cn.qingchengfit.staffkit.views.adapter.AllotSaleChooseAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.IntentUtils;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,14 +54,17 @@ public class AllotSaleShowSelectDialogFragment extends BottomSheetDialogFragment
         return fragment;
     }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             datas = getArguments().getParcelableArrayList("datas");
         }
     }
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_fragment_allotsale_show_selected, container, false);
         binding.setHandleClick(this);
         binding.tvStudCount.setText(getString(R.string.qc_allotsale_select, datas.size()));
@@ -72,7 +78,8 @@ public class AllotSaleShowSelectDialogFragment extends BottomSheetDialogFragment
         binding.recycleview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         binding.recycleview.setAdapter(adatper);
         adatper.setListener(new OnRecycleItemClickListener() {
-            @Override public void onItemClick(View v, int pos) {
+            @Override
+            public void onItemClick(View v, int pos) {
                 StudentBean student = datas.get(pos);
                 student.isChosen = false;
                 datas.remove(pos);
@@ -84,11 +91,13 @@ public class AllotSaleShowSelectDialogFragment extends BottomSheetDialogFragment
         return binding.getRoot();
     }
 
-    @Override public void onDestroyView() {
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
     }
 
-    @Override public void onDismiss(DialogInterface dialog) {
+    @Override
+    public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         Intent it = new Intent();
         it.putExtra(IntentUtils.RESULT, (ArrayList<StudentBean>) datas);
@@ -96,22 +105,24 @@ public class AllotSaleShowSelectDialogFragment extends BottomSheetDialogFragment
     }
 
     //处理绑定的点击事件--清空所有
-    @Override public void handleBindClick(View view) {
+    @Override
+    public void handleBindClick(View view) {
         new MaterialDialog.Builder(view.getContext()).content(getString(R.string.qc_allotsale_clear_alert))
-            .positiveText(R.string.common_comfirm)
-            .negativeText(R.string.common_cancel)
-            .autoDismiss(true)
-            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    for (StudentBean studentBean : datas) {
-                        studentBean.isChosen = false;
+                .positiveText(R.string.common_comfirm)
+                .negativeText(R.string.common_cancel)
+                .autoDismiss(true)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        for (StudentBean studentBean : datas) {
+                            studentBean.isChosen = false;
+                        }
+                        datas.clear();
+                        adatper.notifyDataSetChanged();
+                        binding.tvStudCount.setText(getString(R.string.qc_allotsale_select, datas.size()));
+                        AllotSaleShowSelectDialogFragment.this.dismiss();
                     }
-                    datas.clear();
-                    adatper.notifyDataSetChanged();
-                    binding.tvStudCount.setText(getString(R.string.qc_allotsale_select, datas.size()));
-                    AllotSaleShowSelectDialogFragment.this.dismiss();
-                }
-            })
-            .show();
+                })
+                .show();
     }
 }

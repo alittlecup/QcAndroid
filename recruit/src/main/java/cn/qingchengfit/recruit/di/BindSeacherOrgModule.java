@@ -27,7 +27,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
  */
 @Module public abstract class BindSeacherOrgModule {
   @ContributesAndroidInjector(modules = {
-      AndroidSupportInjectionModule.class, SearchOrg.SearchModule.class, SearchOrg.SearchFragmentModule.class,
+      AndroidSupportInjectionModule.class,
+      SearchOrg.SearchModule.class, SearchOrg.SearchFragmentModule.class,
       SearchOrg.AddOganasitionFragmentModule.class,
   }) abstract SearchActivity contributeSearchOrgActivityInjector();
 }

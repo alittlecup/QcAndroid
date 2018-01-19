@@ -308,7 +308,7 @@ public class UpgrateGymFragment extends BaseFragment {
         //        }
         hidenTrans.setVisibility(hasDiscount ? View.INVISIBLE : View.VISIBLE);
 
-        mPayAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+        mPayAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         rvFirstPayChoose.setNestedScrollingEnabled(false);
         rvFirstPayChoose.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvFirstPayChoose.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL));
@@ -322,7 +322,7 @@ public class UpgrateGymFragment extends BaseFragment {
         }
         rvFirstPayChoose.setAdapter(mPayAdapter);
 
-        mHidenPayAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+        mHidenPayAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         rvSecoundPayChoose.setNestedScrollingEnabled(false);
         rvSecoundPayChoose.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvSecoundPayChoose.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL));

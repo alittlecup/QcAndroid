@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:text="青橙健身房管理系统---标题"
+      android:gravity="center"
+      android:background="#eea"
+      style="@style/QcTextStyleTitleBold"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:text="青橙健身房管理系统---大文字 17sp"
+      android:gravity="center"
+      android:background="#eeaa"
+      style="@style/QcTextStyleLargeDark"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:text="青橙健身房管理系统---常规文字 15sp"
+      android:gravity="center"
+      android:background="#eea1"
+      style="@style/QcTextStyleStandardDark"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:text="青橙健身房管理系统---中文字 14sp"
+      android:gravity="center"
+      android:background="#aad1"
+      style="@style/QcTextStyleMediumDark"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:text="青橙健身房管理系统---小文字 13sp"
+      android:gravity="center"
+      android:background="#ffbb"
+      style="@style/QcTextStyleSmallDark"
+      />
+
+</LinearLayout>

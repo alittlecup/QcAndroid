@@ -10,7 +10,7 @@
       android:translateY="-4">
     <path
         android:name="hook"
-        android:fillColor="?colorPrimary"
+        android:fillColor="@color/colorPrimary"
         android:pathData="M5.52157,11.0089 C5.35358,10.835,5.32894,10.5423,5.47958,10.3373
 L5.53374,10.2636 C5.67855,10.0666,5.94912,10.0243,6.14531,10.1747
 L8.29583,11.8229 C8.48879,11.9708,8.79739,11.9639,8.9859,11.8069

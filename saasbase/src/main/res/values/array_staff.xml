@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="saler_datas_duiring">
+    <item >今日业绩统计</item>
+    <item >本周业绩统计</item>
+    <item >本月业绩统计</item>
+  </string-array>
+</resources>

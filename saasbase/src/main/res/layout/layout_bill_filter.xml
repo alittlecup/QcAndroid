@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/filter_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="12dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:background="@color/white"
+    android:paddingTop="27dp"
+    >
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recycler_bill_filter"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:overScrollMode="never"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal"
+      android:layout_below="@id/recycler_bill_filter"
+      android:layout_alignParentBottom="true"
+      >
+
+    <TextView
+        android:id="@+id/btn_bill_filter_reset"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:background="@drawable/bg_rect_corner_primary"
+        android:gravity="center"
+        android:text="重置"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp"
+        />
+
+    <TextView
+        android:id="@+id/btn_bill_filter_confirm"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="12dp"
+        android:background="@drawable/btn_prime"
+        android:gravity="center"
+        android:text="@string/confirm"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        />
+  </LinearLayout>
+</LinearLayout>

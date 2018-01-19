@@ -8,30 +8,29 @@ import cn.qingchengfit.chat.ChatChooseInGymFragment;
 import cn.qingchengfit.chat.ChatFriendAllChooseFragment;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
 import cn.qingchengfit.chat.RecruitMessageListFragment;
-import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
+import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
+import cn.qingchengfit.saasbase.student.other.ChooseStaffFragment;
+import cn.qingchengfit.saasbase.student.views.allot.SaleDetailFragment;
 import cn.qingchengfit.views.container.ContainerActivity;
+import cn.qingchengfit.views.fragments.BaseDialogFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
-import com.qingchengfit.fitcoach.activity.SplashActivity;
 import com.qingchengfit.fitcoach.fragment.CustomSaleFragment;
 import com.qingchengfit.fitcoach.fragment.CustomStatmentFragment;
 import com.qingchengfit.fitcoach.fragment.LoginFragment;
 import com.qingchengfit.fitcoach.fragment.RegisterFragment;
-import com.qingchengfit.fitcoach.fragment.SaleDetailFragment;
 import com.qingchengfit.fitcoach.fragment.StatementDetailFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
 import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
 import com.qingchengfit.fitcoach.fragment.main.MainMsgFragment;
 import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
-import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
 import com.qingchengfit.fitcoach.fragment.statement.CardTypeChooseDialogFragment;
-import com.qingchengfit.fitcoach.fragment.statement.fragment.BaseDialogFragment;
 import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseChooseDialogFragment;
 import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseReverseFragment;
 import com.qingchengfit.fitcoach.fragment.statement.fragment.SalerChooseDialogFragment;
@@ -81,7 +80,6 @@ import dagger.multibindings.IntoMap;
     AppComponent.ManageFragmentModule.class, AppComponent.CustomStatmentFragmentModule.class,
     AppComponent.BaseDialogFragmentModule.class, AppComponent.CustomSaleFragmentModule.class,
     AppComponent.CardTypeChooseDialogFragmentModule.class,
-    AppComponent.SplashModule.class,
     AppComponent.Main2Module.class,
     AppComponent.UnLoginHomeFragmentModule.class,
     AppComponent.HomeBannerFragmentModule.class,
@@ -111,8 +109,8 @@ import dagger.multibindings.IntoMap;
             extends AndroidInjector.Builder<ConversationFriendsFragment> {
         }
     }
-    @Subcomponent() public interface SplashSubcomponent extends AndroidInjector<SplashActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SplashActivity> {
+    @Subcomponent() public interface SplashSubcomponent extends AndroidInjector<com.qingchengfit.fitcoach.activity.SplashActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<com.qingchengfit.fitcoach.activity.SplashActivity> {
         }
     }
     @Subcomponent() public interface ChatChooseInGymFragmentSubcomponent extends AndroidInjector<ChatChooseInGymFragment> {
@@ -281,7 +279,7 @@ import dagger.multibindings.IntoMap;
     }
 
     @Module(subcomponents = SplashSubcomponent.class) abstract class SplashModule {
-        @Binds @IntoMap @ActivityKey(SplashActivity.class)
+        @Binds @IntoMap @ActivityKey(com.qingchengfit.fitcoach.activity.SplashActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(SplashSubcomponent.Builder builder);
     }
 

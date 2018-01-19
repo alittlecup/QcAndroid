@@ -3,14 +3,12 @@ package cn.qingchengfit.staffkit.views.abstractflexibleitem;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.model.responese.CardTpl;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.utils.MeasureUtils;
@@ -57,8 +55,8 @@ public class BatchPayCardItem extends AbstractFlexibleItem<BatchPayCardItem.Batc
         return R.layout.item_batch_pay_card;
     }
 
-    @Override public BatchPayCardVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new BatchPayCardVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public BatchPayCardVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new BatchPayCardVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BatchPayCardVH holder, int position, List payloads) {

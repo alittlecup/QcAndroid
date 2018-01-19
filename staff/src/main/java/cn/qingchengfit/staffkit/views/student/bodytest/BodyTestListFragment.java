@@ -15,9 +15,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.BodyTestBean;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.SimpleAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -47,6 +47,7 @@ public class BodyTestListFragment extends BaseFragment implements BodyTestListVi
     List<BodyTestBean> datas = new ArrayList<>();
     @Inject BodyTestListPresenter presenter;
     @Inject StudentWrapper studentBean;
+    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
@@ -72,7 +73,7 @@ public class BodyTestListFragment extends BaseFragment implements BodyTestListVi
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bodytestlist, container, false);
         unbinder = ButterKnife.bind(this, view);
-        presenter.attachView(this);
+        delegatePresenter(presenter,this);
         initToolbar(toolbar);
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
         recycleview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -109,7 +110,7 @@ public class BodyTestListFragment extends BaseFragment implements BodyTestListVi
     @OnClick(R.id.add_bodytest) public void onClick() {
         boolean hasP = false;
         for (int i = 0; i < studentBean.getStudentBean().getSupportIdList().size(); i++) {
-            if (SerPermisAction.check(studentBean.getStudentBean().getSupportIdList().get(i),
+            if (serPermisAction.check(studentBean.getStudentBean().getSupportIdList().get(i),
                 PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
                 hasP = true;
                 break;

@@ -97,7 +97,7 @@
 //        for (int i = 0; i < s.length; i++) {
 //            ret = ret.concat(s[i]);
 //            if (i < s.length -1){
-//                ret = ret.concat(Constant.SEPARATE);
+//                ret = ret.concat(Constant.SEPARATE_CN);
 //            }
 //        }
 //        return ret;

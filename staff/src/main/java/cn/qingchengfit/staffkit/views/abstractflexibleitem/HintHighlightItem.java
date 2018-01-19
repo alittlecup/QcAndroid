@@ -1,9 +1,7 @@
 package cn.qingchengfit.staffkit.views.abstractflexibleitem;
 
 import android.support.annotation.DrawableRes;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -12,7 +10,7 @@ import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IHeader;
-import eu.davidea.flexibleadapter.utils.Utils;
+import eu.davidea.flexibleadapter.utils.FlexibleUtils;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -47,13 +45,13 @@ public class HintHighlightItem extends AbstractFlexibleItem<HintHighlightItem.Hi
         return R.layout.item_hint_hightlight;
     }
 
-    @Override public HintHighlightVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new HintHighlightVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public HintHighlightVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new HintHighlightVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, HintHighlightVH holder, int position, List payloads) {
         holder.imgInfo.setImageResource(drawabele);
-        Utils.highlightText(holder.tvHint, hintStr, hightLightStr);
+        FlexibleUtils.highlightWords(holder.tvHint, hintStr, hightLightStr);
     }
 
     @Override public boolean equals(Object o) {

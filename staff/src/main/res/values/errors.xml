@@ -7,6 +7,4 @@
   <string name="err_phone">请输入正确的电话号码</string>
   <string name="err_advice">请输入您的联系方式和建议</string>
   <string name="err_time_start_less_end">开始时间不能晚于结束时间</string>
-
-
 </resources>

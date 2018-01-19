@@ -3,9 +3,7 @@ package com.tencent.qcloud.timchat.ui.qcchat;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
@@ -56,6 +54,10 @@ public class ConversationFlexItem extends AbstractFlexibleItem<ConversationFlexI
 
     }
 
+    @Override public int getLayoutRes() {
+        return R.layout.item_conversation;
+    }
+
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, final ConversationViewHolder holder, int position, final List payloads) {
         if (((NomalConversation)conversation).getType() == TIMConversationType.Group) {
@@ -83,8 +85,8 @@ public class ConversationFlexItem extends AbstractFlexibleItem<ConversationFlexI
     }
 
     @Override
-    public ConversationViewHolder createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        ConversationViewHolder vh = new ConversationViewHolder(inflater.inflate(R.layout.item_conversation, parent, false), adapter);
+    public ConversationViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
+        ConversationViewHolder vh = new ConversationViewHolder(view, adapter);
         return vh;
     }
 

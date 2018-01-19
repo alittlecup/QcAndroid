@@ -317,12 +317,12 @@ public class CourseDetailFragment extends Fragment {
     }
 
     public void goBatch(int pos) {
-        getFragmentManager().beginTransaction()
-            .add(R.id.web_frag_layout,
-                CourseManageFragment.newInstance(mBean.tags.get(ImageThreeTextBean.TAG_MODEL), mBean.tags.get(ImageThreeTextBean.TAG_ID),
-                    datas.get(pos).id, Integer.parseInt(mBean.tags.get(ImageThreeTextBean.TAG_COURSETYPE))))
-            .addToBackStack(null)
-            .commit();
+        //getFragmentManager().beginTransaction()
+        //    .add(R.id.web_frag_layout,
+        //        CourseManageFragment.newInstance(mBean.tags.get(ImageThreeTextBean.TAG_MODEL), mBean.tags.get(ImageThreeTextBean.TAG_ID),
+        //            datas.get(pos).id, Integer.parseInt(mBean.tags.get(ImageThreeTextBean.TAG_COURSETYPE))))
+        //    .addToBackStack(null)
+        //    .commit();
     }
 
     public void loadGroupData() {

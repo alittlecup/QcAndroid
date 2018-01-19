@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.recruit.views.organization.AddGymBean;
 import java.util.List;
 
 /**

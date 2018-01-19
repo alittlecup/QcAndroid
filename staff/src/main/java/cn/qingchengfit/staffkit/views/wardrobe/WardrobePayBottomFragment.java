@@ -1,10 +1,8 @@
 package cn.qingchengfit.staffkit.views.wardrobe;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,22 +12,22 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.model.common.Card;
-import cn.qingchengfit.model.responese.CardTpl;
 import cn.qingchengfit.model.responese.QcResponseStudentCards;
+import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.views.CardBuyParams;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.BaseBottomSheetDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.card.BuyCardActivity;
-import cn.qingchengfit.staffkit.views.cardtype.ChooseCardTypeActivity;
-import cn.qingchengfit.staffkit.views.course.SimpleTextItemItem;
 import cn.qingchengfit.staffkit.views.wardrobe.item.NoStudentCardItemItem;
 import cn.qingchengfit.staffkit.views.wardrobe.item.PayWardrobeItem;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import dagger.android.support.AndroidSupportInjection;
@@ -71,6 +69,7 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment imp
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
 
     private CommonFlexAdapter mAdapter;
     private List<AbstractFlexibleItem> mDatas = new ArrayList<>();
@@ -100,6 +99,13 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment imp
         mAdapter = new CommonFlexAdapter(mDatas, this);
         mDatas.clear();
         rv.setAdapter(mAdapter);
+        RxBusAdd(CardTpl.class)
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new BusSubscribe<CardTpl>() {
+              @Override public void onNext(CardTpl cardTpl) {
+                  routeTo("card","/buy/", CardBuyParams.builder().cardTpl(cardTpl).build());
+              }
+          });
         return view;
     }
 
@@ -148,7 +154,8 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment imp
                             mDatas.add(new NoStudentCardItemItem());
                         }
 
-                        mAdapter.notifyDataSetChanged();
+                        mAdapter.clear();
+                        mAdapter.updateDataSet(mDatas);
                     }
                 }
             }, new Action1<Throwable>() {
@@ -186,29 +193,14 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment imp
             dismiss();
         } else if (mAdapter.getItem(position) instanceof NoStudentCardItemItem) {
 
-            if (!SerPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+            if (!serPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
                 ToastUtils.show("您没有该场馆购卡权限");
             }
-            Intent toCardType = new Intent(getActivity(), ChooseCardTypeActivity.class);
-            startActivityForResult(toCardType, 10);
+            routeTo("card","/cardtpl/choose/",null);
         }
 
         return true;
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == android.app.Activity.RESULT_OK) {
-            if (requestCode == 10) {
-                buyCard(getContext(), (CardTpl) data.getParcelableExtra(Configs.EXTRA_CARD_TYPE), this);
-            }
-        }
-    }
 
-    public void buyCard(final Context context, final CardTpl card_tpl, final Fragment f) {
-        Intent it = new Intent(context, BuyCardActivity.class);
-        it.putExtra(Configs.EXTRA_CARD_TYPE, card_tpl);
-        it.putExtra(Configs.EXTRA_STUDENT_ID, getArguments().getString("s"));
-        context.startActivity(it);
-    }
 }

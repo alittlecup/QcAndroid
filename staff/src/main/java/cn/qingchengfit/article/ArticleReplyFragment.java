@@ -138,7 +138,7 @@ public class ArticleReplyFragment extends BaseFragment implements ArticleReplyPr
             for (int i = 0; i < list.size(); i++) {
                 items.add(new ArticleReplyItem(list.get(i)));
             }
-            commonFlexAdapter.notifyDataSetChanged();
+            commonFlexAdapter.updateDataSet(items);
         }
     }
 

@@ -7,22 +7,23 @@ import android.text.TextUtils;
 import cn.qingchengfit.inject.moudle.GymStatus;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.common.RealCard;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.utils.RouterUtils;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.GymBaseInfoAction;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.reciever.PushBean;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
-import cn.qingchengfit.staffkit.views.card.CardDetailActivity;
 import cn.qingchengfit.staffkit.views.student.StudentActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import com.google.gson.Gson;
 import java.util.HashMap;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -50,7 +51,14 @@ import timber.log.Timber;
  */
 
 public class PushUtils {
-    public static void HandlePush(final Context context, String s2) {
+    @Inject SerPermisAction serPermisAction;
+    @Inject GymBaseInfoAction gymBaseInfoAction;
+
+    @Inject
+    public PushUtils() {
+    }
+
+    public void HandlePush(final Context context, String s2) {
         if (!TextUtils.isEmpty(s2)) {
             final PushBean bean = new Gson().fromJson(s2, PushBean.class);
             //标记为已读
@@ -65,7 +73,7 @@ public class PushUtils {
 
             if (TextUtils.isEmpty(bean.url)) {//除了会员卡 分配销售等情况 其他都走schema
                 if (bean.type != 0 && bean.type >= 11) {
-                    final CoachService coachService = GymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
+                    final CoachService coachService = gymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
                     String staffid = PreferenceUtils.getPrefString(context, Configs.PREFER_WORK_ID, "");
                     Intent intent = new Intent();
                     intent.putExtra(Configs.EXTRA_GYM_SERVICE, coachService);
@@ -82,14 +90,11 @@ public class PushUtils {
                             break;
                         case 13:
                             if (bean.card_id == 0) return;
-                            if (!SerPermisAction.check(bean.shop_id, PermissionServerUtils.MANAGE_COSTS)) {
+                            if (!serPermisAction.check(bean.shop_id, PermissionServerUtils.MANAGE_COSTS)) {
                                 DialogUtils.showAlert(context, "抱歉，您无会员卡查看权限");
                                 return;
                             }
-                            intent.setClass(context, CardDetailActivity.class);
-                            RealCard realCard = new RealCard("", "", "", "#70A4A9");
-                            realCard.id = bean.card_id + "";
-                            intent.putExtra(Configs.EXTRA_REAL_CARD, realCard);
+                            RouterUtils.routeTo(context,"card","/detail/", CardDetailParams.builder().cardid(bean.brand_id).build(),intent);
                             break;
                         //case ConstantNotification.TYPE_CLOUD_JOB_FAIR_ADD_GYM:
                         //case ConstantNotification.TYPE_CLOUD_JOB_FAIR_CHECK:
@@ -109,7 +114,7 @@ public class PushUtils {
 
                             final Intent toActivity =
                                 new Intent(context.getPackageName(), Uri.parse(bean.url));
-                            final CoachService coachService1 = GymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
+                            final CoachService coachService1 = gymBaseInfoAction.getGymByShopIdNow(bean.brand_id, bean.shop_id);
                             String staffid = PreferenceUtils.getPrefString(context, Configs.PREFER_WORK_ID, "");
                             if (!StringUtils.isEmpty(bean.brand_id) && !StringUtils.isEmpty(bean.shop_id)) {
 
@@ -125,7 +130,7 @@ public class PushUtils {
                                         .subscribe(new Action1<QcResponsePermission>() {
                                             @Override public void call(QcResponsePermission qcResponse) {
                                                 if (ResponseConstant.checkSuccess(qcResponse)) {
-                                                    SerPermisAction.writePermiss(qcResponse.data.permissions);
+                                                    serPermisAction.writePermiss(qcResponse.data.permissions);
                                                     toActivity.putExtra(Configs.EXTRA_GYM_SERVICE, coachService1);
                                                     toActivity.putExtra(Configs.EXTRA_BRAND, new Brand.Builder().id(bean.brand_id).build());
                                                     toActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -10,11 +10,11 @@ import cn.qingchengfit.model.responese.CacluScore;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.Sellers;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.BuyCardUsecase;
 import cn.qingchengfit.utils.GymUtils;
@@ -136,7 +136,7 @@ public class CompletedBuyPresenter extends BasePresenter {
         });
     }
 
-    void cacluScore(String price, final String user_ids) {
+    public void cacluScore(String price, final String user_ids) {
         RxRegiste(mRestRepository.getGet_api()
             .qcGetScoreCalu(App.staffId, Configs.CACLU_SCORE_BUY, price,
                 GymUtils.getParamsV2(gymWrapper.getCoachService(), gymWrapper.getBrand()))
@@ -149,7 +149,7 @@ public class CompletedBuyPresenter extends BasePresenter {
                     if (ResponseConstant.checkSuccess(cacluScoreQcResponseData)) {
                         if (cacluScoreQcResponseData.getData().has_score) {
                             if (user_ids.contains(",") || user_ids.contains(Configs.SEPARATOR)) {
-                                view.onScoreHint(cacluScoreQcResponseData.getData().score + "");
+                                view.onScoreHint(cacluScoreQcResponseData.getData().number + "");
                             } else {
                                 view.onSuccess();
                             }

@@ -57,9 +57,10 @@ public class ChatItem<T extends ChatItem.ViewHolder> extends AbstractFlexibleIte
         return message;
     }
 
+
     @Override
-    public T createViewHolder(final FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        T vh = (T) new ViewHolder(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    public T createViewHolder(final View view, FlexibleAdapter adapter) {
+        T vh = (T) new ViewHolder(view, adapter);
         //leftMessage.setOnLongClickListener(new View.OnLongClickListener() {
         //    @Override
         //    public boolean onLongClick(View view) {

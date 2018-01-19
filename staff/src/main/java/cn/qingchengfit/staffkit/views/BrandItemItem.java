@@ -39,8 +39,8 @@ public class BrandItemItem extends AbstractFlexibleItem<BrandItemItem.BrandItemV
         return R.layout.item_brand;
     }
 
-    @Override public BrandItemVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new BrandItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public BrandItemVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new BrandItemVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BrandItemVH holder, int position, List payloads) {

@@ -6,11 +6,11 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
-import cn.qingchengfit.staffkit.allocate.coach.model.StudentWithCoach;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import java.util.HashMap;
@@ -73,7 +73,7 @@ public class OperationPresenter extends BasePresenter {
      * @param coachIds sellerId
      * @param list list
      */
-    public void AddStudents(List<String> coachIds, List<StudentWithCoach> list) {
+    public void AddStudents(List<String> coachIds, List<QcStudentBean> list) {
         HashMap<String, Object> body = gymWrapper.getParams();
         String coachRet = "";
         for (int i = 0; i < coachIds.size(); i++) {
@@ -121,7 +121,7 @@ public class OperationPresenter extends BasePresenter {
      * @param list list
      * POST {"user_ids":"1,3,2", "seller_id":5}
      */
-    public void removeStudents(String coachId, List<StudentWithCoach> list) {
+    public void removeStudents(String coachId, List<QcStudentBean> list) {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("coach_id", coachId);
 
@@ -203,14 +203,14 @@ public class OperationPresenter extends BasePresenter {
                 .subscribe(new Action1<QcDataResponse<AllocateStudentBean>>() {
                     @Override public void call(
                         QcDataResponse<AllocateStudentBean> allocateStudentBeanQcResponseData) {
-                        view.onStudentList(allocateStudentBeanQcResponseData.data.users);
+                           view.onStudentList(allocateStudentBeanQcResponseData.data.users);
                     }
                 }));
         }
     }
 
     public interface OperationView extends PView {
-        void onStudentList(List<StudentWithCoach> list);
+        void onStudentList(List<QcStudentBean> list);
 
         void onShowError(String e);
 

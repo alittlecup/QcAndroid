@@ -84,16 +84,6 @@ public class WardrobeListFragment extends BaseFragment implements TitleFragment,
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wardrobe_list, container, false);
         unbinder = ButterKnife.bind(this, view);
-        //        if (mAdatper == null) {
-
-        //        List<Locker> lockers = getArguments().getParcelableArrayList("l");
-
-        //        mData.clear();
-        //        if (lockers != null) {
-        //            for (int i = 0; i < lockers.size(); i++) {
-        //                mData.add(new WardrobeItem(lockers.get(i)));
-        //            }
-        //        }
         mAdatper = new CommonFlexAdapter(mData, this);
         //        }
         rv.setHasFixedSize(true);
@@ -129,7 +119,7 @@ public class WardrobeListFragment extends BaseFragment implements TitleFragment,
         }
         if (mData.size() == 0) mData.add(new CommonNoDataItem(R.drawable.no_wardrobe, "暂无更衣柜"));
         if (freeCount != null) freeCount.setText(count + "");
-        if (mAdatper != null) mAdatper.notifyDataSetChanged();
+        if (mAdatper != null) mAdatper.updateDataSet(mData);
     }
 
     public void fresh() {

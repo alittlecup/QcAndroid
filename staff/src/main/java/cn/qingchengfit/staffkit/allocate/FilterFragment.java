@@ -58,7 +58,7 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
     public void setItemList(List<? extends AbstractFlexibleItem> items) {
         if (items.size() > 0) {
             commonFlexAdapter = new CommonFlexAdapter(items, this);
-            commonFlexAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+            commonFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         }
     }
 

@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.items;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -13,7 +11,7 @@ import cn.qingchengfit.RxBus;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
-import com.qingchengfit.fitcoach.bean.SchedulePhoto;
+import cn.qingchengfit.bean.SchedulePhoto;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IHeader;
@@ -56,8 +54,8 @@ public class AllCourseImageItem extends AbstractFlexibleItem implements ISection
         return R.layout.item_all_course_image_view;
     }
 
-    @Override public RecyclerView.ViewHolder createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new AllCourseImageItemHolder(inflater.inflate(R.layout.item_all_course_image_view, parent, false), adapter);
+    @Override public RecyclerView.ViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
+        return new AllCourseImageItemHolder(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, RecyclerView.ViewHolder holder, int position, List payloads) {

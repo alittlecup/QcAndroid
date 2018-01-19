@@ -118,4 +118,5 @@ public class User extends Personage implements Parcelable {
         dest.writeString(this.hidden_phone);
         dest.writeString(this.date_of_birth);
     }
+
 }

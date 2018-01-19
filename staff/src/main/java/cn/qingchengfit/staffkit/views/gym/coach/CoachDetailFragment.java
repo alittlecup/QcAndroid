@@ -28,10 +28,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
 import cn.qingchengfit.utils.CompatUtils;
@@ -74,6 +74,7 @@ public class CoachDetailFragment extends BaseFragment implements CoachDetailView
     @BindView(R.id.gender_layout) RelativeLayout genderLayout;
 
     @Inject EditCoachInfoPresenter presenter;
+    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.down_trainer_app) TextView downTrainerApp;
     @BindView(R.id.header_layout) RelativeLayout headerLayout;
     @BindView(R.id.btn_del) RelativeLayout btnDel;
@@ -114,7 +115,7 @@ public class CoachDetailFragment extends BaseFragment implements CoachDetailView
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(presenter, this);
         initToolbar(toolbar);
-        boolean eP = SerPermisAction.checkAll(PermissionServerUtils.COACHSETTING_CAN_CHANGE);
+        boolean eP = serPermisAction.checkAll(PermissionServerUtils.COACHSETTING_CAN_CHANGE);
 
         denyLayout.setVisibility(eP ? View.GONE : View.VISIBLE);
         Glide.with(getContext())
@@ -197,7 +198,7 @@ public class CoachDetailFragment extends BaseFragment implements CoachDetailView
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         super.initToolbar(toolbar);
-        boolean eP = SerPermisAction.checkAll(PermissionServerUtils.COACHSETTING_CAN_CHANGE);
+        boolean eP = serPermisAction.checkAll(PermissionServerUtils.COACHSETTING_CAN_CHANGE);
         toolbarTitile.setText("教练详情");
         if (eP) {
             toolbar.inflateMenu(R.menu.menu_save);
@@ -261,7 +262,7 @@ public class CoachDetailFragment extends BaseFragment implements CoachDetailView
                 break;
             case R.id.btn_del:
 
-                if (!SerPermisAction.checkAll(PermissionServerUtils.COACHSETTING_CAN_DELETE)) {
+                if (!serPermisAction.checkAll(PermissionServerUtils.COACHSETTING_CAN_DELETE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return;
                 }

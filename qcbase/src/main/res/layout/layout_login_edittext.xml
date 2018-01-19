@@ -21,7 +21,7 @@
       android:layout_height="match_parent"
       android:gravity="center_vertical"
       android:text="中国 +86"
-      style="@style/QcTextStyleLargeWarm"
+      style="@style/QcTextStyleStandardDark"
       />
   <TextView
       android:id="@+id/nonull_tv"
@@ -43,6 +43,7 @@
 
       />
   <ImageView
+      android:id="@+id/img_divier"
       android:layout_width="17dp"
       android:layout_height="match_parent"
       app:srcCompat="@drawable/divier_linear"

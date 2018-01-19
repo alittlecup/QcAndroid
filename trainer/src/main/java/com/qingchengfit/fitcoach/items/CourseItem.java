@@ -1,8 +1,6 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -10,7 +8,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
+import cn.qingchengfit.bean.CourseDetail;
 import com.qingchengfit.fitcoach.event.DelCourseEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -62,8 +60,8 @@ public class CourseItem extends AbstractFlexibleItem<CourseItem.CourseVh> {
         return R.layout.item_course;
     }
 
-    @Override public CourseVh createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new CourseVh(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public CourseVh createViewHolder(View view, FlexibleAdapter adapter) {
+        return new CourseVh(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CourseVh holder, int position, List payloads) {

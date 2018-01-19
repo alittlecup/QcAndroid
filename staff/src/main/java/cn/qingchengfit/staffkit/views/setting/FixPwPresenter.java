@@ -1,10 +1,8 @@
 package cn.qingchengfit.staffkit.views.setting;
 
 import android.content.Intent;
-import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.usecase.SettingUseCase;
@@ -27,7 +25,7 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/2/22 2016.
  */
-public class FixPwPresenter implements Presenter {
+public class FixPwPresenter extends BasePresenter {
 
     private SettingUseCase useCase;
     private Subscription subscription;
@@ -63,6 +61,7 @@ public class FixPwPresenter implements Presenter {
     }
 
     @Override public void unattachView() {
+        super.unattachView();
         this.view = null;
         if (subscription != null) subscription.unsubscribe();
         if (subscriptionQuery != null) subscriptionQuery.unsubscribe();

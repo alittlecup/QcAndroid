@@ -18,6 +18,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.events.EventFreshGyms;
 import cn.qingchengfit.items.CoachServiceItem;
 import cn.qingchengfit.items.ListAddItem;
+import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -25,7 +26,6 @@ import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.GuideActivity;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.course.SimpleTextItemItem;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -152,7 +152,7 @@ public class GymsFragment extends BaseFragment implements FlexibleAdapter.OnItem
             adapterDatas.add(new SimpleTextItemItem("该品牌下暂无场馆", Gravity.CENTER));
             adapterDatas.add(new ListAddItem("添加场馆"));
         }
-        mAdapter.notifyDataSetChanged();
+        mAdapter.updateDataSet(adapterDatas);
     }
 
     @Override public void onShowError(String e) {

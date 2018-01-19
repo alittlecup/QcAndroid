@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.fragment.statement.model;
 
 import cn.qingchengfit.model.base.Staff;
 import com.google.gson.annotations.SerializedName;
-import com.qingchengfit.fitcoach.bean.QcResponsePage;
+import cn.qingchengfit.bean.QcResponsePage;
 import java.util.List;
 
 /**

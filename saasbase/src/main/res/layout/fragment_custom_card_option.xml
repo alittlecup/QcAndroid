@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_charge_money"
+      style="@style/QcCivInputStyle"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginTop="12dp"
+      app:civ_lable="面额"
+      app:civ_inputnum="true"
+      />
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_real_money"
+      style="@style/QcCivInputStyle"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="价格"
+      app:civ_unit="¥"
+      app:civ_inputnum="true"
+      />
+
+  <cn.qingchengfit.widgets.ExpandedLayout
+      android:id="@+id/el_need_valid"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:el_label="设置有效期"
+      android:background="@color/white"
+      android:layout_marginTop="13dp"
+      >
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_custom_validity"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        app:civ_lable="@string/custom_validity_civ_label"
+        app:civ_hint="@string/custom_validity_civ_hint"
+        app:civ_clickable="false"
+        app:civ_showdivier="true"
+        app:civ_showright="false"
+        app:civ_inputnum="true"
+        />
+
+  </cn.qingchengfit.widgets.ExpandedLayout>
+
+  <TextView
+      android:id="@+id/tv_custom_card_option_confirm"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingTop="11dp"
+      android:paddingBottom="11dp"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"
+      android:text="@string/confirm"
+      android:gravity="center"
+      style="@style/QcTextStyleLargeDark"
+      android:textColor="@color/white"
+      android:background="@drawable/btn_text_primary"
+      android:layout_marginTop="21dp"
+      />
+
+</LinearLayout>

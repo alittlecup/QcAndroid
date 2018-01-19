@@ -35,6 +35,15 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 public class CmStringUtils {
 
+  public static boolean isID(String s){
+    try {
+      long x = Long.parseLong(s);
+      return x > 0;
+    }catch (Exception e){
+      return false;
+    }
+  }
+
   public static String getMaybeInt(float s) {
     int ret = (int) s;
     if (ret == s) {
@@ -207,4 +216,39 @@ public class CmStringUtils {
             + content
             + "</div></body></html>";
     }
+
+
+  /**
+   * 数字数组,包含头尾
+   */
+  public static List<String> getNums(int from, int to) {
+    List<String> ret = new ArrayList<>();
+    for (int i = from; i < to + 1; i++) {
+      ret.add(Integer.toString(i));
+    }
+    return ret;
+  }
+
+  /**
+   * 保留两位小数
+   */
+  public static String getFloatDot2(float f) {
+    if (((int) (f * 100)) % 100 != 0) return String.format(Locale.CHINA, "%.2f", f);
+    if (f == 0) return "0";
+
+    return String.format(Locale.CHINA, "%.0f", f);
+  }
+
+  public static  boolean checkMoney(String money){
+    try {
+      Float amont = Float.parseFloat(money);
+      if (amont < 0 || amont > 1000000000){
+        return false;
+      }
+    }catch (Exception e) {
+      return false;
+    }
+    return true;
+  }
+
 }

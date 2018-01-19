@@ -51,7 +51,7 @@ public class FilterLeftRightFragment extends BaseFragment{
   private void initView() {
 
     leftAdapter = new CommonFlexAdapter(leftItemList);
-    leftAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+    leftAdapter.setMode(SelectableAdapter.Mode.SINGLE);
     leftAdapter.addListener(new FlexibleAdapter.OnItemClickListener() {
       @Override public boolean onItemClick(int position) {
         if (listener != null) {
@@ -67,7 +67,7 @@ public class FilterLeftRightFragment extends BaseFragment{
     filterLeftList.setAdapter(leftAdapter);
 
     rightAdapter = new CommonFlexAdapter(rightItemList);
-    rightAdapter.setMode(SelectableAdapter.MODE_SINGLE);
+    rightAdapter.setMode(SelectableAdapter.Mode.SINGLE);
     rightAdapter.addListener(new FlexibleAdapter.OnItemClickListener() {
       @Override public boolean onItemClick(int position) {
         if (listener != null) {
@@ -89,31 +89,34 @@ public class FilterLeftRightFragment extends BaseFragment{
 
   public void setLeftItemList(List<String> datas) {
     if (datas.size() > 0) {
+      leftAdapter.clear();
       leftItemList.clear();
       for (String data : datas){
         leftItemList.add(new FilterCommonLinearItem(data, false));
       }
-      leftAdapter.notifyDataSetChanged();
+      leftAdapter.updateDataSet(leftItemList);
     }
   }
 
   public void setRightItemList(List<String> datas) {
     if (datas.size() > 0) {
+      rightAdapter.clear();
       rightItemList.clear();
       for (String data : datas){
         rightItemList.add(new FilterCommonLinearItem(data));
       }
-      rightAdapter.notifyDataSetChanged();
+      rightAdapter.updateDataSet(rightItemList);
     }
   }
 
   public void onChangedCity(List<CityBean> cityBeanList){
     if (cityBeanList.size() > 0) {
+      rightAdapter.clear();
       rightItemList.clear();
       for (CityBean cityBean : cityBeanList){
         rightItemList.add(new FilterCommonLinearItem(cityBean.name));
       }
-      rightAdapter.notifyDataSetChanged();
+      rightAdapter.updateDataSet(rightItemList);
     }
 
   }

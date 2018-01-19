@@ -1,9 +1,7 @@
 package com.qingchengfit.fitcoach.items;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -19,7 +17,6 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.event.EventChooseGym;
 import com.qingchengfit.fitcoach.event.EventClickManageBrand;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -39,8 +36,8 @@ public class BrandShopsItem extends AbstractFlexibleItem<BrandShopsItem.BrandSho
         return R.layout.item_brand_shops;
     }
 
-    @Override public BrandShopsVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        BrandShopsVH vh = new BrandShopsVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public BrandShopsVH createViewHolder(View view, FlexibleAdapter adapter) {
+        BrandShopsVH vh = new BrandShopsVH(view, adapter);
         return vh;
     }
 
@@ -56,7 +53,7 @@ public class BrandShopsItem extends AbstractFlexibleItem<BrandShopsItem.BrandSho
             .into(new CircleImgWrapper(holder.imgBrand, holder.itemView.getContext()));
         holder.tvBrandName.setText(brand.getName());
         holder.recyclerInsert.setLayoutManager(new SmoothScrollLinearLayoutManager(holder.itemView.getContext()));
-        holder.recyclerInsert.addItemDecoration(new DividerItemDecoration(holder.itemView.getContext()));
+        //holder.recyclerInsert.addItemDecoration(new DividerItemDecoration(holder.itemView.getContext()));
         commonFlexAdapter = new CommonFlexAdapter(datas, this);
         holder.recyclerInsert.setAdapter(commonFlexAdapter);
         holder.btnManageBrand.setOnClickListener(v -> {

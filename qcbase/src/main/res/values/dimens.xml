@@ -32,6 +32,7 @@
 
   <dimen name="qc_actionbar_height">44dp</dimen>
 
+  <dimen name="qc_common_input_height">50dp</dimen>
   <dimen name="qc_item_height">44dp</dimen>
   <dimen name="qc_item_height_outside">54dp</dimen>
   <dimen name="qc_drawer_item_height">58dp</dimen>
@@ -73,5 +74,7 @@
   <dimen name="quarter_width">100dp</dimen>
 
   <dimen name="grid_expected_size">120dp</dimen>
+
+  <dimen name="dimen_common_input_60dp">60dp</dimen>
 
 </resources>

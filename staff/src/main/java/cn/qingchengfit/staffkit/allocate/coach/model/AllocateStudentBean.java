@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.allocate.coach.model;
 
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.responese.QcResponsePage;
-import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
@@ -10,5 +10,5 @@ import java.util.List;
 
 public class AllocateStudentBean extends QcResponsePage {
 
-    @SerializedName("users") public List<StudentWithCoach> users;
+    public List<QcStudentBean> users;
 }

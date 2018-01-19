@@ -1,8 +1,6 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -46,11 +44,9 @@ public class ShareDialogExtendsItem
     return R.layout.item_share_dialog_extends;
   }
 
-  @Override
-  public ShareDialogExtendsVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
+  @Override public ShareDialogExtendsVH createViewHolder(View view, FlexibleAdapter adapter) {
     ShareDialogExtendsVH holder =
-        new ShareDialogExtendsVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+      new ShareDialogExtendsVH(view, adapter);
     if (shareExtends.type.equals(ShareDialogFragment.SHARE_TYPE_ACTION)) {
       holder.textFunNameShare.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
@@ -62,6 +58,7 @@ public class ShareDialogExtendsItem
     }
     return holder;
   }
+
 
   @Override
   public void bindViewHolder(FlexibleAdapter adapter, ShareDialogExtendsVH holder, int position,

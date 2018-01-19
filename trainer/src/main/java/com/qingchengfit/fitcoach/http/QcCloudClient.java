@@ -1,16 +1,42 @@
 package com.qingchengfit.fitcoach.http;
 
-import android.support.annotation.Nullable;
+import cn.qingchengfit.Constants;
+import cn.qingchengfit.bean.BrandBody;
+import cn.qingchengfit.bean.ChangeBrandCreatorBody;
+import cn.qingchengfit.bean.CoachInitBean;
+import cn.qingchengfit.bean.Notification;
+import cn.qingchengfit.bean.NotificationGlance;
+import cn.qingchengfit.bean.QcResponsePage;
+import cn.qingchengfit.bean.QcResponseSpaces;
+import cn.qingchengfit.bean.SyncExpBody;
 import cn.qingchengfit.chat.model.RecordWrap;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.body.PostCommentBody;
 import cn.qingchengfit.model.responese.ArticleCommentListData;
 import cn.qingchengfit.model.responese.ChatFriendsData;
-import cn.qingchengfit.model.responese.Notification;
-import cn.qingchengfit.model.responese.NotificationGlance;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponToken;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.recruit.views.organization.OrganizationBean;
+import cn.qingchengfit.recruit.views.organization.QcAddOrganizationResponse;
+import cn.qingchengfit.recruit.views.organization.QcSearchOrganResponse;
+import cn.qingchengfit.recruit.views.organization.QcSerachGymRepsonse;
+import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
+import cn.qingchengfit.saasbase.constant.Configs;
+import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
+import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
+import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
+import cn.qingchengfit.saasbase.course.course.network.body.EditJacketBody;
+import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
+import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
+import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
+import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
+import cn.qingchengfit.saasbase.report.bean.CourseReportDetail;
+import cn.qingchengfit.saasbase.report.bean.GymCardtpl;
+import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
+import cn.qingchengfit.saasbase.report.bean.StatementGlanceResp;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -18,27 +44,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
-import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
-import com.qingchengfit.fitcoach.bean.BrandBody;
-import com.qingchengfit.fitcoach.bean.ChangeBrandCreatorBody;
-import com.qingchengfit.fitcoach.bean.CoachInitBean;
-import com.qingchengfit.fitcoach.bean.QcResponsePage;
-import com.qingchengfit.fitcoach.bean.QcResponseSpaces;
-import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
-import com.qingchengfit.fitcoach.bean.ScanBody;
-import com.qingchengfit.fitcoach.bean.SingleBatchBody;
-import com.qingchengfit.fitcoach.bean.SyncExpBody;
 import com.qingchengfit.fitcoach.fragment.protocol.CheckProtocolModel;
-import com.qingchengfit.fitcoach.fragment.statement.model.CardTpls;
-import com.qingchengfit.fitcoach.fragment.statement.model.CourseReportDetail;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
-import com.qingchengfit.fitcoach.fragment.statement.model.GymCardtpl;
 import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseSaleDetail;
-import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
 import com.qingchengfit.fitcoach.fragment.statement.model.Sellers;
-import com.qingchengfit.fitcoach.fragment.statement.model.StatementGlanceResp;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
@@ -50,15 +60,11 @@ import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.BodyTestReponse;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
-import com.qingchengfit.fitcoach.http.bean.CourseBody;
-import com.qingchengfit.fitcoach.http.bean.CreatBrandBody;
 import com.qingchengfit.fitcoach.http.bean.DelCourseManage;
-import com.qingchengfit.fitcoach.http.bean.EditJacketBody;
 import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
 import com.qingchengfit.fitcoach.http.bean.FixBatchBean;
 import com.qingchengfit.fitcoach.http.bean.GetBatchesResponse;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
-import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.HidenBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyCoachInfo;
@@ -66,12 +72,10 @@ import com.qingchengfit.fitcoach.http.bean.ModifyDes;
 import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.OneExperienceResponse;
-import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
 import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
-import com.qingchengfit.fitcoach.http.bean.QcAddOrganizationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcBatchResponse;
@@ -101,8 +105,6 @@ import com.qingchengfit.fitcoach.http.bean.QcResponCoachSys;
 import com.qingchengfit.fitcoach.http.bean.QcResponCode;
 import com.qingchengfit.fitcoach.http.bean.QcResponDrawer;
 import com.qingchengfit.fitcoach.http.bean.QcResponLogin;
-import com.qingchengfit.fitcoach.http.bean.QcResponSystem;
-import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponeSingleImageWall;
 import com.qingchengfit.fitcoach.http.bean.QcResponsCreatBrand;
@@ -125,8 +127,6 @@ import com.qingchengfit.fitcoach.http.bean.QcResponseSingleBatch;
 import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
-import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
-import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
 import com.qingchengfit.fitcoach.http.bean.QcServiceDetialResponse;
 import com.qingchengfit.fitcoach.http.bean.QcStatementDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;
@@ -161,7 +161,6 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-
 /**
  * power by
  * <p>
@@ -202,7 +201,7 @@ public class QcCloudClient {
                         .addHeader("Connection", "close")
                         .addHeader("X-CSRFToken", token)
                         .addHeader("Cookie",
-                            "csrftoken=" + token + ";sessionid=" + PreferenceUtils.getPrefString(App.AppContex, Configs.PREFER_SESSION, ""))
+                            "csrftoken=" + token + ";sessionid=" + QcRestRepository.getSession(App.AppContex))
                         .addHeader("User-Agent",
                             " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(
                                 R.string.oem_tag) + "  QingchengApp/Trainer")
@@ -212,7 +211,7 @@ public class QcCloudClient {
                         .addHeader("Connection", "close")
                         .addHeader("max-age", "5")
                         .addHeader("Cache-Control", "public")
-                        .addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(App.AppContex, Configs.PREFER_SESSION, ""))
+                        .addHeader("Cookie", "sessionid=" + QcRestRepository.getSession(App.AppContex))
                         .addHeader("User-Agent",
                             " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(
                                 R.string.oem_tag) + "  QingchengApp/Trainer")
@@ -234,13 +233,13 @@ public class QcCloudClient {
             //                    }
             //                })
             .create();
-        Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(Configs.Server)
+        Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(BuildConfig.DEBUG?Constants.ServerDebug:Constants.Server)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .build();
 
-        Retrofit postApiAdapter = new Retrofit.Builder().baseUrl(Configs.Server)
+        Retrofit postApiAdapter = new Retrofit.Builder().baseUrl(BuildConfig.DEBUG?Constants.ServerDebug:Constants.Server)
             .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .client(client)
@@ -389,7 +388,7 @@ public class QcCloudClient {
         @GET("/api/v1/coaches/{id}/reports/sale/cardtpls/") rx.Observable<QcCardsResponse> qcGetSaleCard(@Path("id") int id);
 
         //获取教练课程
-        @GET("/api/coaches/{id}/systems/courses/") rx.Observable<QcDataResponse<CourseTypeSamples>> qcGetSystemCourses(@Path("id") int id,
+        @GET("/api/coaches/{id}/systems/courses/") rx.Observable<QcDataResponse<CourseTypeSample>> qcGetSystemCourses(@Path("id") int id,
             @QueryMap HashMap<String, Object> params);
 
         //获取教练某个系统下的学员
@@ -549,11 +548,11 @@ public class QcCloudClient {
 
         @GET("/api/v1/coaches/{id}/{type}/{single_id}/") rx.Observable<QcResponseSingleBatch> qcGetSingleBatch(@Path("id") String coach_id,
             @Path("type") String type, @Path("single_id") String single_id, @QueryMap HashMap<String, Object> params);
-
-        //排课填充
-        @GET("/api/v1/coaches/{id}/{type}/arrange/template/") rx.Observable<QcResponseBtachTemplete> qcGetBatchTemplate(
-            @Path("id") String id, @Path("type") String type, @Query("id") String gymid, @Query("model") String gymmodel,
-            @Nullable @Query("teacher_id") String teacher_id, @Query("course_id") String course_id);
+        //
+        ////排课填充
+        //@GET("/api/v1/coaches/{id}/{type}/arrange/template/") rx.Observable<QcResponseBtachTemplete> qcGetBatchTemplate(
+        //    @Path("id") String id, @Path("type") String type, @Query("id") String gymid, @Query("model") String gymmodel,
+        //    @Nullable @Query("teacher_id") String teacher_id, @Query("course_id") String course_id);
 
         //获取某个排期的详情
         @GET("/api/v1/coaches/{id}/batches/{batch_id}/") rx.Observable<QcResponsePrivateBatchDetail> qcGetBatchDetail(
@@ -642,7 +641,7 @@ public class QcCloudClient {
             @QueryMap HashMap<String, Object> params, @Query("type") String type);
 
 
-        @GET("/api/v2/staffs/{id}/cardtpls/all/?show_all=1&order_by=-id") rx.Observable<QcDataResponse<CardTpls>> qcGetCardTpls(
+        @GET("/api/v2/staffs/{id}/cardtpls/all/?show_all=1&order_by=-id") rx.Observable<QcDataResponse<CardTplListWrap>> qcGetCardTpls(
             @Path("id") String id, @QueryMap HashMap<String, Object> params, @Query("type") String type,
             @Query("is_enable") String isEnable);
 
@@ -669,7 +668,8 @@ public class QcCloudClient {
         @POST("/api/v1/coaches/register/") rx.Observable<QcResponLogin> qcRegister(@Body RegisteBean params);
 
         //创建品牌
-        @POST("/api/brands/") rx.Observable<QcResponsCreatBrand> qcCreatBrand(@Body CreatBrandBody body);
+        @POST("/api/brands/") rx.Observable<QcResponsCreatBrand> qcCreatBrand(@Body
+          CreatBrandBody body);
 
         //修改品牌
         @PUT("/api/brands/{id}/") rx.Observable<QcResponsCreatBrand> qcEditBrand(@Path("id") String id, @Body BrandBody body);
@@ -733,7 +733,8 @@ public class QcCloudClient {
         @POST("/api/gym/") rx.Observable<QcAddGymResponse> qcAddGym(@Body AddGymPostBean addGymBean);
 
         //新增组织
-        @POST("/api/organizations/") rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
+        @POST("/api/organizations/") rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body
+          OrganizationBean organizationBean);
 
         //修改电话号码
         @POST("/api/coaches/{id}/change/phone/") rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") int id,
@@ -869,7 +870,8 @@ public class QcCloudClient {
         /**
          * 扫码
          */
-        @PUT("/api/scans/{uuid}/") rx.Observable<QcResponse> qcScans(@Path("uuid") String uuid, @Body ScanBody body);
+        @PUT("/api/scans/{uuid}/") rx.Observable<QcResponse> qcScans(@Path("uuid") String uuid, @Body
+          ScanBody body);
 
         /**
          * 照片墙添加个人照片
@@ -882,14 +884,15 @@ public class QcCloudClient {
         @POST("/api/news/{newsid}/comment/") rx.Observable<QcResponse> qcAddComment(@Path("newsid") String news_id,
             @Body PostCommentBody body);
 
-        @PUT("/api/v2/notifications/") rx.Observable<QcResponse> qcClearTypeNoti(@Body ClearNotiBody body);
+        @PUT("/api/v2/notifications/") rx.Observable<QcResponse> qcClearTypeNoti(@Body
+          ClearNotiBody body);
     }
 
     public interface DownLoadApi {
         @GET("/") Response qcDownload();
     }
 
-    public interface MutiSystemApi {
-        @POST("/api/cloud/authenticate/") rx.Observable<QcResponSystem> qcGetSession(@Body GetSysSessionBean phone);
-    }
+    //public interface MutiSystemApi {
+    //    @POST("/api/cloud/authenticate/") rx.Observable<QcResponSystem> qcGetSession(@Body GetSysSessionBean phone);
+    //}
 }

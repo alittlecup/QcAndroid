@@ -36,8 +36,8 @@ public class JobFairHorizonItem extends AbstractFlexibleItem<JobFairHorizonItem.
     return R.layout.item_jobfairs;
   }
 
-  @Override public JobFairVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new JobFairVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public JobFairVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new JobFairVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, JobFairVH holder, int position, List payloads) {

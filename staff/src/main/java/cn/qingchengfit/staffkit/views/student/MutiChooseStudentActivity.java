@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -304,6 +305,19 @@ public class MutiChooseStudentActivity extends BaseActivity implements MutiChoos
 
     @Override public void onShowError(@StringRes int e) {
         onShowError(getString(e));
+    }
+
+    @Override public void showSelectSheet(String title, List<String> strs,
+      AdapterView.OnItemClickListener listener) {
+
+    }
+
+    @Override public void popBack() {
+
+    }
+
+    @Override public void popBack(int count) {
+
     }
 
     /**

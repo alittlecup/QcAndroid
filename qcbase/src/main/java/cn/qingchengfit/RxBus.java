@@ -1,7 +1,6 @@
 package cn.qingchengfit;
 
 import android.support.annotation.NonNull;
-import cn.qingchengfit.utils.LogUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -60,7 +59,7 @@ public class RxBus {
 
         Subject<T, T> subject;
         subjectList.add(subject = PublishSubject.create());
-        LogUtil.d(TAG, "[register]subjectMapper: " + subjectMapper);
+        //LogUtil.d(TAG, "[register]subjectMapper: " + subjectMapper);
         return subject;
     }
 
@@ -73,7 +72,7 @@ public class RxBus {
 
         Subject<T, T> subject;
         subjectList.add(subject = PublishSubject.create());
-        LogUtil.d(TAG, "[register]subjectMapper: " + subjectMapper);
+        //LogUtil.d(TAG, "[register]subjectMapper: " + subjectMapper);
         return subject;
     }
 
@@ -87,7 +86,7 @@ public class RxBus {
 
         Subject<T, T> subject;
         subjectList.add(subject = PublishSubject.create());
-        LogUtil.d(TAG, "[register]subjectMapper: " + subjectMapper);
+        //LogUtil.d(TAG, "[register]subjectMapper: " + subjectMapper);
         return subject;
     }
 
@@ -98,7 +97,7 @@ public class RxBus {
                 subjects.remove((Subject) observable);
                 if (subjects.size() == 0) {
                     subjectMapper.remove(tag);
-                    LogUtil.d(TAG, "[unregister]subjectMapper: " + subjectMapper);
+                    //LogUtil.d(TAG, "[unregister]subjectMapper: " + subjectMapper);
                 }
             }
         }
@@ -121,6 +120,6 @@ public class RxBus {
                 subject.onNext(content);
             }
         }
-        LogUtil.d(TAG, "[send]subjectMapper: " + subjectMapper);
+        //LogUtil.d(TAG, "[send]subjectMapper: " + subjectMapper);
     }
 }

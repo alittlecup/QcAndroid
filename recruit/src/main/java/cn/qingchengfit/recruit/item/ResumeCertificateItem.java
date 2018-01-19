@@ -35,8 +35,8 @@ public class ResumeCertificateItem extends AbstractFlexibleItem<ResumeCertificat
     return R.layout.item_resume_certificate;
   }
 
-  @Override public ResumeCertificateVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new ResumeCertificateVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeCertificateVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeCertificateVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeCertificateVH holder, int position, List payloads) {

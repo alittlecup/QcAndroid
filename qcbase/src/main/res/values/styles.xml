@@ -148,15 +148,15 @@
   </style>
 
   <style name="ButtomDialogStyle" parent="android:Animation">
-    <item name="@android:windowEnterAnimation">@anim/slide_from_bottom</item>
-    <item name="@android:windowExitAnimation">@anim/slide_out_bottom</item>
+    <item name="android:windowEnterAnimation">@anim/slide_from_bottom</item>
+    <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
   </style>
 
 
   <style name="TopDialogStyle" parent="android:Animation">
-    <item name="@android:windowEnterAnimation">@anim/slide_top_in</item>
+    <item name="android:windowEnterAnimation">@anim/slide_top_in</item>
     //进入时的动画
-    <item name="@android:windowExitAnimation">@anim/slide_top_out</item>
+    <item name="android:windowExitAnimation">@anim/slide_top_out</item>
     //退出时的动画
   </style>
 
@@ -176,10 +176,10 @@
   </style>
 
   <style name="Translucent_NoTitle.TransParent" parent="android:style/Theme.Dialog">
-    <item name="android:background">@color/white</item>
+    <item name="android:background">@color/transparent</item>
     <item name="android:backgroundDimEnabled">false</item>
     <!-- 设置自定义布局的背景透明 -->
-    <item name="android:windowBackground">@color/white</item>
+    <item name="android:windowBackground">@color/transparent</item>
     <!-- 设置window背景透明，也就是去边框 -->
   </style>
 
@@ -309,5 +309,46 @@
     <item name="android:background">@color/bg_grey</item>
   </style>
 
+  <style name="animate_dialog">
+    <item name="android:windowEnterAnimation">@anim/slide_bottom_in</item>
+    <item name="android:windowExitAnimation">@anim/slide_bottom_out</item>
+  </style>
 
+  <style name="QcBtnPrimary">
+    <item name="android:background">@drawable/btn_prime</item>
+    <item name="android:height">45dp</item>
+    <item name="android:maxWidth">345dp</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:textSize">17sp</item>
+  </style>
+
+  <style name="QcBtnPrimaryFrame">
+    <item name="android:background">@drawable/btn_primary_frame</item>
+    <item name="android:height">45dp</item>
+    <item name="android:maxWidth">345dp</item>
+    <item name="android:textColor">@color/btn_text_primary_color</item>
+    <item name="android:textSize">17sp</item>
+  </style>
+
+  <style name="QcBtnPrimaryDanger">
+    <item name="android:background">@drawable/btn_border_top_bottom</item>
+    <item name="android:height">45dp</item>
+    <item name="android:maxWidth">345dp</item>
+    <item name="android:textColor">@color/btn_text_danger_color</item>
+    <item name="android:textSize">17sp</item>
+  </style>
+  <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+  <item name="queryBackground">@drawable/bg_searchview</item>
+  <!--<item name="closeIcon">...</item>-->
+  <!-- Search button icon -->
+  <!--<item name="searchIcon">...</item>-->
+  <!-- Go/commit button icon -->
+  <!--<item name="goIcon">...</item>-->
+  <!-- Voice search button icon -->
+  <!--<item name="voiceIcon">...</item>-->
+  <!-- Commit icon shown in the query suggestion row -->
+  <!--<item name="commitIcon">...</item>-->
+  <!-- Layout for query suggestion rows -->
+  <!--<item name="suggestionRowLayout">...</item>-->
+</style>
 </resources>

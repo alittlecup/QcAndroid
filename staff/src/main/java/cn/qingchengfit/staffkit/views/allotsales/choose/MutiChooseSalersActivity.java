@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +23,7 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.afollestad.materialdialogs.DialogAction;
@@ -69,6 +71,7 @@ public class MutiChooseSalersActivity extends BaseActivity
         setContentView(R.layout.activity_muti_choose_salers);
         ButterKnife.bind(this);
         mPresenter.attachView(this);
+        mPresenter.onNewSps();
         mStudentId = getIntent().getStringArrayListExtra(INPUT_STUDENT);
         mChoosedSalersList = getIntent().getStringArrayListExtra(INPUT_SALERS);
         if (mChoosedSalersList == null) mChoosedSalersList = new ArrayList<>();
@@ -93,6 +96,7 @@ public class MutiChooseSalersActivity extends BaseActivity
                 onBackPressed();
             }
         });
+        mToolbar.setPadding(mToolbar.getPaddingLeft(), MeasureUtils.getStatusBarHeight(this),mToolbar.getPaddingRight(),mToolbar.getPaddingBottom());
         mToolbar.inflateMenu(R.menu.menu_compelete);
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
@@ -171,13 +175,13 @@ public class MutiChooseSalersActivity extends BaseActivity
             }
 
             mFlexAdapter = new CommonFlexAdapter(mDatas, this);
-            mFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+            mFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
 
             mFlexAdapter.setAnimationOnScrolling(true)
                 .setAnimationInitialDelay(50L)
                 .setAnimationInterpolator(new DecelerateInterpolator())
                 .setAnimationDelay(100L)
-                .setAnimationStartPosition(0);
+            ;
 
             GridLayoutManager gridLayoutManager = new SmoothScrollGridLayoutManager(this, 4);
             gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -212,6 +216,19 @@ public class MutiChooseSalersActivity extends BaseActivity
 
     @Override public void onShowError(@StringRes int e) {
         onShowError(getString(e));
+    }
+
+    @Override public void showSelectSheet(String title, List<String> strs,
+      AdapterView.OnItemClickListener listener) {
+
+    }
+
+    @Override public void popBack() {
+
+    }
+
+    @Override public void popBack(int count) {
+
     }
 
     @Override public boolean onItemClick(int position) {

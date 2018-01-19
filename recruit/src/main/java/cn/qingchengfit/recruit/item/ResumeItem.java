@@ -38,9 +38,8 @@ public class ResumeItem extends AbstractFlexibleItem<ResumeItem.ResumeVH> {
     return R.layout.item_resume;
   }
 
-  @Override public ResumeVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new ResumeVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeVH holder, int position,

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <!--三状态-->
   <style name="Qc.CheckBox" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
     <item name="android:button">@drawable/selector_qc_checkbox</item>
   </style>
 
+  <!--两状态-->
   <style name="Qc.CheckBox2" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
     <item name="android:button">@drawable/selector_qc_checkbox_2</item>
   </style>
@@ -22,8 +24,9 @@
   <style name="QcBtnGreyRectCorner"
       >
     <item name="android:background">@drawable/btn_qc_rect_round_coner_grey</item>
-    <item name="android:textColor">@color/white</item>
+    <item name="android:textColor">@color/text_dark</item>
   </style>
+
 
   <style name="QcCivClickStyle">
     <item name="android:layout_width">match_parent</item>
@@ -48,6 +51,22 @@
     <item name="ft_vc_drawable_off">@drawable/vd_filter_arrow_down</item>
     <item name="ft_color_on">@color/text_black</item>
     <item name="ft_color_off">@color/text_black</item>
+    <item name="ft_text_size">13sp</item>
+  </style>
+
+  <style name="QcFilterStyle_Dark">
+    <item name="ft_vc_drawable_on">@drawable/vd_filter_arrow_up</item>
+    <item name="ft_vc_drawable_off">@drawable/vd_filter_arrow_down</item>
+    <item name="ft_color_on">@color/colorPrimary</item>
+    <item name="ft_color_off">@color/white</item>
+    <item name="ft_text_size">13sp</item>
+  </style>
+
+  <style name="QcFilterRadio">
+    <item name="ft_vc_drawable_on">@drawable/bg_rect_corner_primary</item>
+    <item name="ft_vc_drawable_off">@drawable/shape_bg_rect_grey_corner4</item>
+    <item name="ft_color_on">@color/colorPrimary</item>
+    <item name="ft_color_off">@color/qc_text_black</item>
     <item name="ft_text_size">13sp</item>
   </style>
 
@@ -77,6 +96,17 @@
     <item name="tabMaxWidth">100dp</item>
     <item name="tabSelectedTextColor">@color/colorPrimary</item>
     <item name="tabBackground">@drawable/bg_click</item>
+    <item name="tabTextAppearance">@style/QcTextStyleStandardGrey</item>
+  </style>
+  <style name="QcTabLayoutDark">
+    <item name="android:background">@color/toolbar</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">50dp</item>
+    <item name="tabGravity">center</item>
+    <item name="tabIndicatorColor">@color/colorPrimary</item>
+    <item name="tabMode">fixed</item>
+    <item name="tabMaxWidth">100dp</item>
+    <item name="tabSelectedTextColor">@color/colorPrimary</item>
     <item name="tabTextAppearance">@style/QcTextStyleStandardGrey</item>
   </style>
 </resources>

@@ -67,8 +67,12 @@ public class FlexableListFragment extends BaseFragment {
 
     public void freshView() {
         if (getContext() != null && mFlexAdapter != null) {
-            mFlexAdapter.notifyDataSetChanged();
+            mFlexAdapter.updateDataSet(mData);
         }
+    }
+
+    @Override public boolean isBlockTouch() {
+        return false;
     }
 
     public String getFragmentName() {

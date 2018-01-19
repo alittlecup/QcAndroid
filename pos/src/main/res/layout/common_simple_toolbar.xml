@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/toolbar"
+    >
+
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:minHeight="?attr/actionBarSize"
+      android:theme="@style/Qc.toolbarStyle"
+      tools:paddingTop="15dp"
+      app:popupTheme="@style/ToolbarStyle.Overflow"
+      app:theme="@style/Qc.toolbarStyle"
+      app:titleTextAppearance="@style/ToolbarStyle"
+      />
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:layout_gravity="center_vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      >
+    <ImageView
+        android:id="@+id/img_title_left"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="@dimen/little"
+        android:layout_marginEnd="@dimen/little"
+        />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:lines="1"
+        tools:text="我是标题"
+        android:layout_gravity="left"
+        style="@style/Qc.TextCommonBlack"
+        />
+  </LinearLayout>
+
+
+
+</FrameLayout>
+
+
+
+
+
+

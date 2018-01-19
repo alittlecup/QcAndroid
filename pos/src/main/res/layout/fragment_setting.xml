@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="16dp"
+      android:gravity="center_vertical"
+      android:text="当前场馆"
+      android:paddingTop="6dp"
+      android:paddingBottom="6dp"
+      android:background="@color/bg_grey"
+      style="@style/QcTextStyleMediumWarm"
+      />
+
+  <LinearLayout
+      android:id="@+id/layout_setting_gym"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <ImageView
+        android:id="@+id/img_setting_gym"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:src="@drawable/vector_student_management_follow"
+        />
+
+    <TextView
+        android:id="@+id/tv_setting_gym_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        tools:text="798店"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_arrow_right"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="16dp"
+      android:gravity="center_vertical"
+      android:text="当前收银员"
+      android:paddingTop="6dp"
+      android:paddingBottom="6dp"
+      android:background="@color/bg_grey"
+      style="@style/QcTextStyleMediumWarm"
+      />
+
+  <LinearLayout
+      android:id="@+id/layout_setting_staff"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <ImageView
+        android:id="@+id/img_setting_staff"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/ic_default_staff_man_head"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/tv_setting_staff_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="14dp"
+          tools:text="杨娜（1888888888）"
+          android:freezesText="false"
+          style="@style/QcTextStyleLargeDark"
+          />
+
+      <TextView
+          android:id="@+id/tv_setting_staff_position"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="14dp"
+          tools:text="店长"
+          style="@style/QcTextStyleSmallWarm"
+          />
+    </LinearLayout>
+
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_arrow_right"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="16dp"
+      android:gravity="center_vertical"
+      android:text="收银员管理"
+      android:paddingTop="6dp"
+      android:paddingBottom="6dp"
+      android:background="@color/bg_grey"
+      style="@style/QcTextStyleMediumWarm"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_cashier"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      app:civ_lable="@string/bill_setting_cashier"
+      app:civ_text_color="@color/black"
+      app:civ_showright="true"
+      app:civ_content="..."
+      app:civ_content_color="@color/text_warm"
+      app:civ_clickable="true"
+      />
+
+</LinearLayout>

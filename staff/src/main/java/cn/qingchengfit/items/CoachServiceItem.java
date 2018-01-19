@@ -1,8 +1,6 @@
 package cn.qingchengfit.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -61,15 +59,17 @@ public class CoachServiceItem extends AbstractFlexibleItem<CoachServiceItem.Coac
     }
 
     @Override public boolean equals(Object o) {
-        return false;
+        if (o instanceof CoachServiceItem){
+            return ((CoachServiceItem) o).getCoachService().getId().equalsIgnoreCase(coachService.getId());
+        }else return false;
     }
 
     @Override public int getLayoutRes() {
         return R.layout.item_gym;
     }
 
-    @Override public CoachServiceVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new CoachServiceVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public CoachServiceVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new CoachServiceVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CoachServiceVH holder, int position, List payloads) {

@@ -4,7 +4,8 @@ lt application files
 .idea
 # Files for the Dalvik VM
 *.dex
-
+/jiagu
+/output
 # Java class files
 *.class
 
@@ -35,3 +36,4 @@ staff/staff.iml
 qcbase/qcbase.iml
 trainer/trainer.iml
 widgets/widgets.iml
+pos/pos.iml

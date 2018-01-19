@@ -1,0 +1,34 @@
+<resources>
+  <string name="app_name">健身房专用POS机</string>
+
+  <!--通用-->
+  <string name="dialog_confirm_login_failed">好，知道了！</string>
+  <string name="head">头像</string>
+  <string name="name">姓名</string>
+  <string name="gender">性别</string>
+  <string name="phone">手机号</string>
+  <string name="input">请填写</string>
+  <string name="select_gender">选择性别</string>
+
+  <!--登录-->
+  <string name="login_title">健身房专用POS机</string>
+  <string name="login_btn_confirm">登录</string>
+  <string name="login_have_some_question">登录遇到问题?</string>
+  <string name="login_get_code">获取验证码</string>
+  <string name="login_resend_msg">%ds</string>
+  <string name="tips_login_failed">登录失败</string>
+  <string name="tips_get_code">获取验证码失败</string>
+  <string name="tips_phone_not_correct">请输入合法的手机号</string>
+
+  <!--交班-->
+  <string name="tips_exchange">交班后将自动登出！</string>
+  <string name="exchange_confirm">确认交班？</string>
+  <string name="exchange_now_cashier">当前收银员</string>
+
+  <!--收银员-->
+  <string name="tips_confirm_delete_cashier">确定删除收银员？</string>
+  <string name="tips_confirm_logout">确定退出登录?</string>
+
+  <!--支付参数-->
+  <string formatted="false" name="pay_to_operator">%s(%s)</string>
+</resources>

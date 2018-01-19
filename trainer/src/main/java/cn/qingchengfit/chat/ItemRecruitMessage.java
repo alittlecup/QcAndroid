@@ -1,8 +1,6 @@
 package cn.qingchengfit.chat;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import com.tencent.qcloud.timchat.chatmodel.Conversation;
 import com.tencent.qcloud.timchat.ui.qcchat.ConversationFlexItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -25,11 +23,7 @@ public class ItemRecruitMessage extends ConversationFlexItem {
     super(context, conversation);
   }
 
-  @Override
-  public ConversationViewHolder createViewHolder(FlexibleAdapter adapter,
-      LayoutInflater inflater, ViewGroup parent) {
-    return super.createViewHolder(adapter, inflater, parent);
-  }
+
 
   @Override public void onChangeName(ConversationViewHolder holder) {
     super.onChangeName(holder);

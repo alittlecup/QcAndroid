@@ -36,8 +36,8 @@ public class RecruitGymItem extends AbstractFlexibleItem<RecruitGymItem.RecruitG
     return R.layout.item_recruit_gym;
   }
 
-  @Override public RecruitGymVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new RecruitGymVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public RecruitGymVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new RecruitGymVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitGymVH holder, int position, List payloads) {

@@ -15,9 +15,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.SignInTasks;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rxbus.event.SignInEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SignOutManualEvent;
@@ -50,6 +50,8 @@ public class SignOutManualFragment extends BaseFragment implements SignOutManual
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentWrapper studentWrapper;
+    @Inject SerPermisAction serPermisAction;
+    @Inject StudentAction studentAction;
 
     List<SignInTasks.SignInTask> list;
     List<AbstractFlexibleItem> items = new ArrayList<>();
@@ -86,7 +88,7 @@ public class SignOutManualFragment extends BaseFragment implements SignOutManual
                     if (signOutManualEvent.getType() == SignInEvent.ACTION_SIGNOUT_MANUAL) {
                         //添加照片
                         if (StringUtils.isEmpty(presenter.studentWrapper.checkin_avatar())) {
-                            if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
+                            if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
                                 PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
                                 showAlert(R.string.alert_permission_forbid);
                                 return;
@@ -112,7 +114,7 @@ public class SignOutManualFragment extends BaseFragment implements SignOutManual
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
                             presenter.changeImage(s);
-                            StudentAction.newInstance().updateStudentCheckin(studentWrapper.id(), s);
+                            studentAction.updateStudentCheckin(studentWrapper.id(), s);
                         }
                     }));
             }

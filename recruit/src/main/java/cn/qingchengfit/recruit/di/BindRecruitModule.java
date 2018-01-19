@@ -1,6 +1,5 @@
 package cn.qingchengfit.recruit.di;
 
-import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -58,8 +57,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
       Recruit.TipDialogFragmentModule.class,
   }) abstract RecruitActivity contributeRecruitActivityInjector();
 
-  @ContributesAndroidInjector(modules = {
-      AndroidSupportInjectionModule.class
-  })
-  abstract JobSearchChatActivity contributeJobSearchActivityInjector();
+  //@ContributesAndroidInjector(modules = {
+  //    AndroidSupportInjectionModule.class
+  //})
+  //abstract JobSearchChatActivity contributeJobSearchActivityInjector();
 }

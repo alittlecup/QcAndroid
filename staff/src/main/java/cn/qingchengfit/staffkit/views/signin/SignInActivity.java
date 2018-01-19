@@ -5,7 +5,6 @@ import android.support.annotation.MenuRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,7 +36,7 @@ public class SignInActivity extends BaseActivity implements FragCallBack, SignIn
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.student_frag) FrameLayout studentFrag;
-    @BindView(R.id.down) ImageView down;
+    //@BindView(R.id.down) ImageView down;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject SignInPresenter presenter;
@@ -50,6 +49,7 @@ public class SignInActivity extends BaseActivity implements FragCallBack, SignIn
 
         ButterKnife.bind(this);
         presenter.attachView(this);
+        presenter.onNewSps();
 
         presenter.getSignInConfig();
         presenter.getSigninUrl();
@@ -95,7 +95,7 @@ public class SignInActivity extends BaseActivity implements FragCallBack, SignIn
     @Override public void setToolbar(String title, boolean showRight, View.OnClickListener titleClick, @MenuRes int menu,
         Toolbar.OnMenuItemClickListener listener) {
         toolbarTitile.setText(title);
-        down.setVisibility(showRight ? View.VISIBLE : View.GONE);
+        //down.setVisibility(showRight ? View.VISIBLE : View.GONE);
         if (title != null) {
             toolbarTitile.setOnClickListener(titleClick);
         } else {
@@ -122,7 +122,7 @@ public class SignInActivity extends BaseActivity implements FragCallBack, SignIn
 
     @Override public void setBar(ToolbarBean bar) {
         toolbarTitile.setText(bar.title);
-        down.setVisibility(bar.showRight ? View.VISIBLE : View.GONE);
+        //down.setVisibility(bar.showRight ? View.VISIBLE : View.GONE);
         if (bar.onClickListener != null) {
             titileLayout.setOnClickListener(bar.onClickListener);
         } else {

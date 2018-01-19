@@ -14,7 +14,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventAddress;
-import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.CitiesChooser;
 import cn.qingchengfit.widgets.CommonInputView;

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.StudentCardBean;
+import cn.qingchengfit.bean.StudentCardBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import java.util.List;
 

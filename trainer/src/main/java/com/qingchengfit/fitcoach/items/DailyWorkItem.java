@@ -1,14 +1,12 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.FunctionBean;
+import cn.qingchengfit.bean.FunctionBean;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -26,8 +24,8 @@ public class DailyWorkItem extends AbstractFlexibleItem<DailyWorkItem.DailyWorkV
         return R.layout.item_daily_work;
     }
 
-    @Override public DailyWorkVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new DailyWorkVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public DailyWorkVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new DailyWorkVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, DailyWorkVH holder, int position, List payloads) {

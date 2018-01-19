@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="带箭头  可点击"
+        android:textSize="12dp"
+        />
+
+    <include layout="@layout/divider_grey"/>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/input_click_test"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        app:civ_clickable="true"
+        app:civ_lable="意见反馈"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
+    <include layout="@layout/divider_grey"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="右侧带箭头、文字"
+        android:textSize="12dp"
+        />
+
+    <include layout="@layout/divider_grey"/>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        app:civ_clickable="true"
+        app:civ_content="3家场馆已开启"
+        app:civ_content_color="@color/qc_text_grey"
+        app:civ_lable="签到通知"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
+    <include layout="@layout/divider_grey"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="左侧带icon，右侧带箭头、文字"
+        android:textSize="12dp"
+        />
+
+    <include layout="@layout/divider_grey"/>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        app:civ_clickable="true"
+        app:civ_content="V1.2"
+        app:civ_content_color="@color/qc_text_grey"
+        app:civ_lable="检查更新"
+        app:civ_left_icon="@drawable/vd_close_white_24dp"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
+    <include layout="@layout/divider_grey"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="form_input"
+        android:textSize="12dp"
+        />
+
+    <include layout="@layout/divider_grey"/>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        app:civ_clickable="false"
+        app:civ_content="V1.2"
+        app:civ_content_color="@color/qc_text_grey"
+        app:civ_lable="检查更新"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
+    <include layout="@layout/divider_grey"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="时间选择"
+        android:textSize="12dp"
+        />
+
+    <include layout="@layout/divider_grey"/>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/common_input_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:background="@color/white"
+        app:civ_clickable="true"
+        app:civ_hint="请选择时间"
+        app:civ_content_color="@color/qc_text_grey"
+        app:civ_lable="时间选择"
+        app:civ_showright="true"
+        app:civ_text_color="@color/qc_text_black"
+        />
+    <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height_new"
+      android:gravity="center_vertical"
+      android:paddingLeft="15dp"
+      android:text="switch Button"
+      android:textSize="12dp"
+      />
+
+  <include layout="@layout/divider_grey"/>
+  <cn.qingchengfit.widgets.SwitcherLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height_new"
+      android:background="@color/white"
+      app:sw_lable="开启中"
+      app:sw_showdivier="true"
+      app:sw_text_color="@color/qc_text_black"
+      />
+
+    <cn.qingchengfit.widgets.SwitcherLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:background="@color/white"
+        android:clickable="false"
+        android:focusable="false"
+        app:sw_lable="开启中"
+        app:sw_showdivier="true"
+        app:sw_text_color="@color/qc_text_black"
+        />
+</LinearLayout>
+
+</ScrollView>

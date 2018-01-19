@@ -26,12 +26,12 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.StaffShip;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
-import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.adapter.StaffAdapter;
 import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
@@ -122,7 +122,8 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         super.initToolbar(toolbar);
         toolbarTitile.setText("工作人员");
-        toolbar.inflateMenu(R.menu.menu_search_flow_searchview);
+        toolbar.inflateMenu(R.menu.menu_search_flow_searchview_temp);
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_search) {
@@ -169,7 +170,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
             if (requestCode == RESULT_FLOW) {
                 int pos = Integer.parseInt(IntentUtils.getIntentString(data));
                 if (pos == 0) {//权限设置
-                    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.POSITION_SETTING)) {
+                    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.POSITION_SETTING)) {
                         showAlert(R.string.sorry_for_no_permission);
                         return;
                     }
@@ -203,7 +204,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     }
 
     @Override public String getFragmentName() {
-        return null;
+        return "工作人员列表";
     }
 
     @Override public void onDestroyView() {
@@ -253,4 +254,5 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
             showAlert("仅超级管理员本人有权限查看其基本信息");
         }
     }
+
 }

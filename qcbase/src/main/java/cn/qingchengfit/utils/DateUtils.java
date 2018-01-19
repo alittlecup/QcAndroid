@@ -1,7 +1,9 @@
 package cn.qingchengfit.utils;
 
+import android.support.annotation.IntRange;
 import android.text.TextUtils;
 import android.util.Pair;
+import com.bigkoo.pickerview.TimePopupWindow;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,11 +29,11 @@ public class DateUtils {
   public static final Long HOUR_TIME = 60 * 60 * 1000L;
   public static final Long MINITE_TIME = 60 * 1000L;
   public static final Long SECOND_TIME = 1000L;
+  public static final String[] weeks = {"周一","周二","周三","周四","周五","周六","周日"};
 
   public static Date formatDateFromServer(String s) {
     try {
-      if (s.contains("T"))
-        s = s.replace("T", " ");
+      if (s.contains("T")) s = s.replace("T", " ");
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
       Date date = null;
       date = formatter.parse(s);
@@ -41,6 +43,12 @@ public class DateUtils {
     } catch (Exception e) {
       return new Date();
     }
+  }
+
+  public static String getChineseWeekStr( int x){
+    if (x <0 || x > 6){
+      return "";
+    }else return weeks[x];
   }
 
   public static String getDuring(Date start, Date end) {
@@ -53,6 +61,13 @@ public class DateUtils {
       return "";
     }
     return start.substring(0, 10) + "至" + end.substring(0, 10);
+  }
+ public static String getHHMMDuringFromServer(String start, String end ,boolean cross) {
+    if (TextUtils.isEmpty(start) || TextUtils.isEmpty(end)) {
+      LogUtil.e("getDuringFromServer: server date string error");
+      return "";
+    }
+    return start.substring(11, 16) + "至" +(cross?" 次日":"")+ end.substring(11, 16);
   }
 
   public static String getYYMMfromServer(String s) {
@@ -116,6 +131,17 @@ public class DateUtils {
     return date;
   }
 
+ public static Date HHMM2date(String s) {
+    SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
+    Date date = new Date();
+    try {
+      date = formatter.parse(s);
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    return date;
+  }
+
   public static String getChineseMonth(Date date) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月", Locale.CHINA);
     return formatter.format(date);
@@ -124,13 +150,13 @@ public class DateUtils {
   public static String formatToMMFromServer(String s) {
     try {
       s = s.replace("T", " ");
-      return s.substring(0, s.length() - 1);
+      return s.substring(0, s.length());
     } catch (Exception e) {
       return "";
     }
   }
 
-  public static String replaceTFromServer(String s){
+  public static String replaceTFromServer(String s) {
     return s.replace("T", " ");
   }
 
@@ -190,6 +216,7 @@ public class DateUtils {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
     return formatter.format(d);
   }
+
   public static String Date2YYYYMMDDHHmmss(Date d) {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
     return formatter.format(d);
@@ -204,6 +231,11 @@ public class DateUtils {
   public static String Date2MMDD(Date d) {
 
     SimpleDateFormat formatter = new SimpleDateFormat("MM-dd", Locale.CHINA);
+    return formatter.format(d);
+  }
+  public static String Date2HHmm(Date d) {
+
+    SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
     return formatter.format(d);
   }
 
@@ -254,6 +286,31 @@ public class DateUtils {
     c.setTime(d);
     c.add(Calendar.DATE, i);
     return c.getTime();
+  }
+  public static Date add(Date d, int i,int type) {
+    Calendar c = Calendar.getInstance();
+    c.setTime(d);
+    c.add(type, i);
+    return c.getTime();
+  }
+
+  public static int getYear(){
+    Calendar c = Calendar.getInstance();
+    return c.get(Calendar.YEAR);
+  }
+
+  /**
+   * 以YYMMDD的格式增加天数
+   */
+  public static String addDay(String d, int i) {
+    try {
+      Calendar c = Calendar.getInstance();
+      c.setTime(formatDateFromYYYYMMDD(d));
+      c.add(Calendar.DATE, i);
+      return Date2YYYYMMDD(c.getTime());
+    }catch (Exception e){
+      return "";
+    }
   }
 
   /**
@@ -324,6 +381,9 @@ public class DateUtils {
   }
 
   public static int interval(String start, String end) {
+    if (start.isEmpty() || end.isEmpty()){
+      return 0;
+    }
     Date s = formatDateFromYYYYMMDD(start);
     Date e = formatDateFromYYYYMMDD(end);
     return (int) ((e.getTime() - s.getTime()) / DAY_TIME);
@@ -333,7 +393,7 @@ public class DateUtils {
     return (int) ((end.getTime() - start.getTime()) / DAY_TIME);
   }
 
-  public static int getDayOfWeek(Date date) {
+  @IntRange(from = 0, to = 6) public static int getDayOfWeek(Date date) {
     Calendar c = Calendar.getInstance();
     c.setTime(date);
     int i = c.get(Calendar.DAY_OF_WEEK);
@@ -380,6 +440,7 @@ public class DateUtils {
     c.add(Calendar.DATE, -day);
     return Date2YYYYMMDD(c.getTime());
   }
+
   public static Date addHour(Date d, int hour) {
     Calendar c = Calendar.getInstance();
     c.setTime(d);
@@ -489,7 +550,24 @@ public class DateUtils {
     return curYear - c.get(Calendar.YEAR);
   }
 
-  public static String getFileNameFormServer(String str){
+  public static String date2TimePicker(Date d,TimePopupWindow.Type type){
+    switch (type){
+      case ALL:
+        return date2YYMMDDTHHMMSS(d);
+      case YEAR_MONTH:
+        return date2YYMM(d);
+      case YEAR_MONTH_DAY:
+        return Date2YYYYMMDD(d);
+      case MONTH_DAY:
+        return Date2MMDD(d);
+      case HOURS_MINS:
+        return Date2HHmm(d);
+      default:
+        return Date2MMDDHHmm(d);
+    }
+  }
+
+  public static String getFileNameFormServer(String str) {
     return str.replace("T", " ");
   }
 }

@@ -85,7 +85,6 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.w3c.dom.Text;
 import tencent.tls.platform.TLSErrInfo;
 
 public class ChatActivity extends AppCompatActivity
@@ -175,6 +174,9 @@ public class ChatActivity extends AppCompatActivity
     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     title = (TemplateTitle) findViewById(R.id.chat_title);
     root = (RelativeLayout) findViewById(R.id.root);
+    if (!(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)) {
+      title.setPadding(0, getStatusBarHeight(getBaseContext()), 0, 0);
+    }
     frameDetailLayout.setVisibility(View.GONE);
     chatSendResume.setVisibility(View.GONE);
     if (getIntent().getStringExtra(Configs.FACEURL) != null) {
@@ -195,6 +197,17 @@ public class ChatActivity extends AppCompatActivity
     } else {
       initView();
     }
+  }
+
+
+
+  private int getStatusBarHeight(Context context){
+    int result = 0;
+    int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+    if (resourceId > 0) {
+      result = context.getResources().getDimensionPixelSize(resourceId);
+    }
+    return result;
   }
 
   private void initView() {
@@ -378,7 +391,7 @@ public class ChatActivity extends AppCompatActivity
                   (isC2C() && message.isSelf()) ? avatar
                       : TextUtils.isEmpty(faceUrl) ? message.getSenderProfile().getFaceUrl()
                           : faceUrl, ChatActivity.this));
-              flexibleAdapter.notifyDataSetChanged();
+              flexibleAdapter.updateDataSet(itemList);
               break;
             case SEND_RECRUIT:
               itemList.add(0, new ChatRercuitItem(getBaseContext(),
@@ -386,7 +399,7 @@ public class ChatActivity extends AppCompatActivity
                   (isC2C() && message.isSelf()) ? avatar
                       : TextUtils.isEmpty(faceUrl) ? message.getSenderProfile().getFaceUrl()
                           : faceUrl, ChatActivity.this));
-              flexibleAdapter.notifyDataSetChanged();
+              flexibleAdapter.updateDataSet(itemList);
               break;
             case TOP_RESUME:
               if (!isLatestMessage) {
@@ -406,7 +419,7 @@ public class ChatActivity extends AppCompatActivity
           List<String> list = new ArrayList<>();
           list.add(message.getSender());
           dispatchMessage(mMessage, true);
-          flexibleAdapter.notifyDataSetChanged();
+          flexibleAdapter.updateDataSet(itemList);
         }
       }
     }
@@ -587,7 +600,7 @@ public class ChatActivity extends AppCompatActivity
         dispatchMessage(mMessage, false);
       }
     }
-    flexibleAdapter.notifyDataSetChanged();
+    flexibleAdapter.updateDataSet(itemList);
     final int finalNewMsgNum = newMsgNum;
     //listView.getLayoutManager()
     //            .scrollToPosition(finalNewMsgNum);

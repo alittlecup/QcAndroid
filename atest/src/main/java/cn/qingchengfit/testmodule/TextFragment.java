@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.items.TextItem;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import eu.davidea.flexibleadapter.items.IHeader;
 import java.util.ArrayList;
 
 /**
@@ -41,10 +43,12 @@ public class TextFragment extends BaseFragment {
   @BindView(R.id.rv) RecyclerView rv;
   Unbinder unbinder;
   private LinearLayoutManager linearLayoutManager;
+  private NestedFragmentFragment nestedFragmentFragment;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
+    nestedFragmentFragment = new NestedFragmentFragment();
   }
 
   @Nullable @Override
@@ -52,7 +56,7 @@ public class TextFragment extends BaseFragment {
       @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_test, container, false);
     unbinder = ButterKnife.bind(this, v);
-    ButterKnife.findById(v, R.id.btn).setOnClickListener(new View.OnClickListener() {
+    v.findViewById( R.id.btn).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         getFragmentManager().beginTransaction()
             .setCustomAnimations(R.anim.slide_top_in, R.anim.slide_top_out)
@@ -64,6 +68,7 @@ public class TextFragment extends BaseFragment {
     linearLayoutManager = new LinearLayoutManager(getContext());
     rv.setLayoutManager(linearLayoutManager);
     rv.setAdapter(commonFlexAdapter);
+    commonFlexAdapter.setDisplayHeadersAtStartUp(true).setStickyHeaders(true).setDisplayHeadersAtStartUp(true).showAllHeaders();
     if (savedInstanceState != null) {
       linearLayoutManager.scrollToPosition(savedInstanceState.getInt("pos", 0));
     }
@@ -71,10 +76,20 @@ public class TextFragment extends BaseFragment {
     return v;
   }
 
+  @Override public int getLayoutRes() {
+    return R.id.frag_id;
+  }
+
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
+    stuff(nestedFragmentFragment);
     for (int i = 0; i < 20; i++) {
-      commonFlexAdapter.addItem(new TextItem("xx" + i, R.style.QcTextStyleLargeDark));
+      IHeader header = null;
+      if (i %5 == 0) {
+        header = new StickerDateItem("aa"+i);
+        //commonFlexAdapter.addItem(header);
+      }
+      commonFlexAdapter.addItem(new TextItem("xx" + i, R.style.QcTextStyleLargeDark,header));
     }
   }
 
@@ -85,6 +100,5 @@ public class TextFragment extends BaseFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
   }
 }

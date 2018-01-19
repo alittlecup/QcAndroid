@@ -1,9 +1,6 @@
 package cn.qingchengfit.staffkit.views.abstractflexibleitem;
 
-import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -19,7 +16,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFilterable;
 import eu.davidea.flexibleadapter.items.ISectionable;
-import eu.davidea.flexibleadapter.utils.Utils;
+import eu.davidea.flexibleadapter.utils.FlexibleUtils;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -50,18 +47,16 @@ public class ChooseStudentItem extends AbstractFlexibleItem<ChooseStudentItem.Ch
         return R.layout.item_choose_student;
     }
 
-    @Override public ChooseStudentVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ChooseStudentVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ChooseStudentVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ChooseStudentVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseStudentVH holder, int position, List payloads) {
         holder.itemPersonGender.setImageResource(
             user.getGender() == 0 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female);
         if (adapter.hasSearchText()) {
-            Utils.highlightText(holder.itemView.getContext(), holder.itemPersonName, user.getUsername(), adapter.getSearchText(),
-                ContextCompat.getColor(holder.itemView.getContext(), R.color.red));
-            Utils.highlightText(holder.itemView.getContext(), holder.itemPersonPhonenum, user.getPhone(), adapter.getSearchText(),
-                ContextCompat.getColor(holder.itemView.getContext(), R.color.red));
+            FlexibleUtils.highlightWords( holder.itemPersonName, user.getUsername(), adapter.getSearchText());
+            FlexibleUtils.highlightWords( holder.itemPersonPhonenum, user.getPhone(), adapter.getSearchText());
         } else {
             holder.itemPersonName.setText(user.getUsername());
             holder.itemPersonPhonenum.setText(user.getPhone());
@@ -72,7 +67,7 @@ public class ChooseStudentItem extends AbstractFlexibleItem<ChooseStudentItem.Ch
         Glide.with(holder.itemView.getContext())
             .load(user.getAvatar())
             .asBitmap()
-            .placeholder(user.gender().equals("0") ? R.drawable.default_manage_male : R.drawable.default_manager_female)
+            .placeholder((user.gender() == null || user.gender() == 0 )? R.drawable.default_manage_male : R.drawable.default_manager_female)
             .into(new CircleImgWrapper(holder.itemPersonHeader, holder.itemView.getContext()));
     }
 

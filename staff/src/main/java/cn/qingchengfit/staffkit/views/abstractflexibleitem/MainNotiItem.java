@@ -19,8 +19,8 @@ public class MainNotiItem extends AbstractFlexibleItem<MainNotiItem.MainNotiVH> 
         return R.layout.item_system_msg;
     }
 
-    @Override public MainNotiVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new MainNotiVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public MainNotiVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new MainNotiVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, MainNotiVH holder, int position, List payloads) {

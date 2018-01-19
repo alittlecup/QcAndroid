@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:background="@color/bg_grey"
+    >
+  <TextView
+      android:id="@+id/tv_bill_time"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="2009年7月"
+      style="@style/QcTextStyleMediumWarm"
+      />
+
+  <android.support.v4.widget.Space
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      />
+  
+  <ImageView
+      android:layout_width="15dp"
+      android:layout_height="15dp"
+      app:srcCompat="@drawable/vd_add"
+      />
+  <TextView
+      android:id="@+id/tv_bill_income"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="5dp"
+      tools:text="1000.00"
+      style="@style/QcTextStyleMediumWarm"
+      />
+
+  <ImageView
+      android:layout_width="15dp"
+      android:layout_height="15dp"
+      android:layout_marginLeft="10dp"
+      app:srcCompat="@drawable/vd_minus"
+      />
+  <TextView
+      android:id="@+id/tv_bill_reduce"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="5dp"
+      tools:text="1000.00"
+      style="@style/QcTextStyleMediumWarm"
+      />
+
+</LinearLayout>

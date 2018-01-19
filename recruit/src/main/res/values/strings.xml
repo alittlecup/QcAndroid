@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">recruit</string>
-  <string formatted="false" name="please_to_complete_your_resume">您的简历完善度为%d \%，还不够完善，完善的简历机会更大哦～</string>
+  <string formatted="false"
+          name="please_to_complete_your_resume">您的简历完善度为%d&#037;，还不够完善，完善的简历机会更大哦～</string>
   <string formatted="false" name="some_count_job_fair">%d场</string>
   <string formatted="false" name="course_count">%d节</string>
   <string formatted="false" name="course_menber">%d人次</string>

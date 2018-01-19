@@ -2,7 +2,6 @@ package cn.qingchengfit.staffkit.views.gym.items;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -58,8 +57,8 @@ public class GymFuntionItem extends AbstractFlexibleItem<GymFuntionItem.GymFunti
         return R.layout.item_gym_function;
     }
 
-    @Override public GymFuntionVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new GymFuntionVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public GymFuntionVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new GymFuntionVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, GymFuntionVH holder, int position, List payloads) {

@@ -1,16 +1,14 @@
 package com.qingchengfit.fitcoach.items;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.Space;
+import cn.qingchengfit.bean.Space;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -31,8 +29,8 @@ public class SpaceItem extends AbstractFlexibleItem<SpaceItem.SpaceVH> {
         return R.layout.item_space;
     }
 
-    @Override public SpaceVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new SpaceVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SpaceVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new SpaceVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, SpaceVH holder, int position, List payloads) {

@@ -1,9 +1,12 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.squareup.sqldelight'
 def libs = rootProject.ext.libraries;
 def cfg = rootProject.ext.configuration;
 
 android {
+  dataBinding {
+    enabled true
+  }
   compileSdkVersion cfg.compileVersion
   buildToolsVersion cfg.buildToolsVersion
   useLibrary 'org.apache.http.legacy'
@@ -19,7 +22,9 @@ android {
   }
   dexOptions {
     jumboMode true
+    javaMaxHeapSize "4g"
   }
+
 
 
   buildTypes {
@@ -28,7 +33,15 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+
+
 }
+
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -39,11 +52,13 @@ dependencies {
   compile "com.google.dagger:dagger-android-support:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  compile project(path: ':recruit')
-  compile project(path: ':qcbase')
+//  compile project(path: ':recruit')
+  compile project(path: ':saasbase')
+//  compile project(path: ':student')
+
+  implementation 'com.android.support:multidex:1.0.2'
 
   compile 'com.jakewharton:butterknife:8.6.0'
-//  compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
   annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
   compile "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"

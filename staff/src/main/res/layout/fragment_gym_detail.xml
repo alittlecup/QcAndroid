@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,9 +12,10 @@
   <RelativeLayout
       android:id="@+id/toolbar_layout"
       android:layout_width="match_parent"
-      android:layout_height="?android:actionBarSize"
+      android:layout_height="wrap_content"
       android:visibility="gone"
       tools:visibility="visible"
+      android:background="@color/toolbar"
       >
 
     <android.support.v7.widget.Toolbar
@@ -24,15 +25,12 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/toolbar"
-        android:gravity="center_vertical"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/Qc.toolbarStyle"
         app:popupTheme="@style/ToolbarStyle.Overflow"
         app:theme="@style/Qc.toolbarStyle"
         app:titleTextAppearance="@style/ToolbarStyle"
-        >
-
-    </android.support.v7.widget.Toolbar>
+        />
 
     <TextView
         android:id="@+id/toolbar_title"
@@ -40,6 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="@color/white"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center"
         android:textSize="16sp"
         tools:text="@string/site_usage"
         style="@style/Qc.TextCommonBlack"
@@ -47,16 +47,15 @@
 
     <ImageView
         android:id="@+id/down"
-        android:layout_width="12dp"
-        android:layout_height="8dp"
+        android:layout_width="50dp"
+        android:layout_height="12dp"
         android:layout_below="@id/toolbar_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
         android:rotation="180"
         android:scaleType="center"
         android:src="@drawable/ic_title_triangle"
-        android:transformPivotX="6dp"
-        android:transformPivotY="4dp"
+        android:transformPivotX="25dp"
+        android:transformPivotY="6dp"
         android:visibility="visible"
         />
 
@@ -64,9 +63,10 @@
     <TextView
         android:id="@+id/toolbar_left"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:gravity="center"
         android:text="添加场馆"
         android:textColor="@color/white"
         android:visibility="visible"
@@ -90,6 +90,7 @@
           android:layout_marginRight="@dimen/activity_horizontal_margin"
           android:src="@drawable/ic_actionbar_notification"
           android:visibility="gone"
+          tools:visibility="visible"
           />
 
       <TextView
@@ -103,6 +104,7 @@
           android:textColor="@color/white"
           android:textSize="11sp"
           android:visibility="gone"
+          tools:visibility="visible"
           tools:text="99"
           />
 
@@ -114,8 +116,8 @@
       android:id="@+id/root_scroll"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginTop="?android:actionBarSize"
       android:fillViewport="true"
+      android:layout_below="@id/toolbar_layout"
       >
 
     <android.support.design.widget.AppBarLayout
@@ -123,16 +125,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-
         >
 
-      <!--<android.support.v4.widget.SwipeRefreshLayout-->
-      <!--android:id="@+id/swipe_to_refresh"-->
-      <!--android:layout_width="match_parent"-->
-      <!--android:layout_height="wrap_content"-->
-      <!--android:minHeight="266.5dp"-->
-      <!--app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways"-->
-      <!--&gt;-->
 
       <LinearLayout
           android:layout_width="match_parent"
@@ -223,7 +217,7 @@
       android:id="@+id/gym_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="?android:actionBarSize"
+      android:layout_below="@id/toolbar_layout"
       android:background="@color/toolbar"
       android:gravity="center_vertical"
       android:minHeight="72dp"
@@ -319,4 +313,4 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       />
-</FrameLayout>
+</RelativeLayout>

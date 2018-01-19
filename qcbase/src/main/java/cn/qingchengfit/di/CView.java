@@ -1,6 +1,8 @@
 package cn.qingchengfit.di;
 
 import android.support.annotation.StringRes;
+import android.widget.AdapterView;
+import java.util.List;
 
 /**
  * power by
@@ -23,10 +25,20 @@ import android.support.annotation.StringRes;
  * Created by Paper on 16/8/24.
  */
 public interface CView extends PView {
-    void onShowError(String e);
-    void onShowError(@StringRes int e);
+  void onShowError(String e);
+  void onShowError(@StringRes int e);
 
   void showAlert(String s);
 
   void showAlert(@StringRes int s);
+
+  void showLoading();
+  void hideLoading();
+  void showSelectSheet(String title,List<String> strs,AdapterView.OnItemClickListener listener);
+  void popBack();
+
+  /**
+   * @param count fragment回退数量，超过栈数量则直接关闭Activity
+   */
+  void popBack(int count);
 }

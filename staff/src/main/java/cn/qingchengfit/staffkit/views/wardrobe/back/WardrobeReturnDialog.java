@@ -7,6 +7,7 @@ import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.utils.DateUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -162,6 +164,19 @@ public class WardrobeReturnDialog extends BaseDialogFragment implements Wardrobe
   @Override public void showAlert(@StringRes int s) {
 
   }
+
+    @Override public void showSelectSheet(String title, List<String> strs,
+      AdapterView.OnItemClickListener listener) {
+
+    }
+
+    @Override public void popBack() {
+
+    }
+
+    @Override public void popBack(int count) {
+
+    }
 
     @OnClick(R.id.btn_close) public void onClick() {
         dismiss();

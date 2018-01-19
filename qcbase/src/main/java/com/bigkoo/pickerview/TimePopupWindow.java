@@ -143,7 +143,7 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
     }
 
     public enum Type {
-      ALL, YEAR_MONTH, YEAR_MONTH_DAY, MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN
+      ALL, YEAR_MONTH, YEAR_MONTH_DAY, MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN,TODAY_HOURS_MINS
     }
     public interface OnTimeSelectListener {
         public void onTimeSelect(Date date);

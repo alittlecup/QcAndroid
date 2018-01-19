@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    >
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <TextView
+      android:id="@+id/label_can_order"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:text="可约时间段"
+      style="@style/TextTitleHint"
+      />
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:divider="@drawable/divider_linearlayout_horizon"
+      android:showDividers="middle"
+      android:background="@color/white"
+      >
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/starttime"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        style="@style/QcCivClickStyle"
+        app:civ_clickable="true"
+        app:civ_lable="开始时间"
+        app:civ_showdivier="false"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/endtime"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        style="@style/QcCivClickStyle"
+        app:civ_clickable="true"
+        app:civ_lable="结束时间"
+        app:civ_showdivier="false"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_order_interval"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        style="@style/QcCivClickStyle"
+        app:civ_clickable="true"
+        app:civ_lable="约课时间间隔"
+        app:civ_showdivier="false"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+  <TextView
+      android:id="@+id/desc"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingBottom="8dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="8dp"
+      tools:text="每周xxxxxx 行行行行行\n行有此课程"
+      />
+  <include layout="@layout/divider_grey"/>
+  <android.support.v7.widget.RecyclerView
+      android:id="@id/rv"
+      android:background="@color/white"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:overScrollMode="never"
+      />
+</LinearLayout>

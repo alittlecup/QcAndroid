@@ -1,9 +1,7 @@
 package cn.qingchengfit.items;
 
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -19,7 +17,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFilterable;
 import eu.davidea.flexibleadapter.items.ISectionable;
-import eu.davidea.flexibleadapter.utils.Utils;
+import eu.davidea.flexibleadapter.utils.FlexibleUtils;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -50,17 +48,17 @@ public class ChooseStudentItem extends AbstractFlexibleItem<ChooseStudentItem.Ch
         return R.layout.item_choose_student_new;
     }
 
-    @Override public ChooseStudentVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ChooseStudentVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ChooseStudentVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ChooseStudentVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseStudentVH holder, int position, List payloads) {
         holder.itemPersonGender.setImageResource(
             user.getGender() == 0 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female);
         if (adapter.hasSearchText()) {
-            Utils.highlightText(holder.itemView.getContext(), holder.itemPersonName, user.getUsername(), adapter.getSearchText(),
+            FlexibleUtils.highlightWords( holder.itemPersonName, user.getUsername(), adapter.getSearchText(),
                 ContextCompat.getColor(holder.itemView.getContext(), R.color.red));
-            Utils.highlightText(holder.itemView.getContext(), holder.itemPersonPhonenum, user.getPhone(), adapter.getSearchText(),
+            FlexibleUtils.highlightWords( holder.itemPersonPhonenum, user.getPhone(), adapter.getSearchText(),
                 ContextCompat.getColor(holder.itemView.getContext(), R.color.red));
         } else {
             holder.itemPersonName.setText(user.getUsername());

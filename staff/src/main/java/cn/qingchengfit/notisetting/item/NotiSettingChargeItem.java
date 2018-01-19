@@ -28,9 +28,8 @@ public class NotiSettingChargeItem
   }
 
   @Override
-  public NotiSettingChargeVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new NotiSettingChargeVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  public NotiSettingChargeVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new NotiSettingChargeVH(view, adapter);
   }
 
   @Override

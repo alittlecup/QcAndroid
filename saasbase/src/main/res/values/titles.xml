@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="t_private_batch_list">私教课</string>
+  <string name="t_group_batch_list">团课</string>
+  <string name="t_choose_group_list">选择团课种类</string>
+  <string name="t_choose_private_list">选择私教种类</string>
+  <string name="t_add_private_course">新增私教种类</string>
+  <string name="t_add_group_course">新增团课种类</string>
+
+  <string name="t_private_course_list">私教种类</string>
+  <string name="t_group_course_list">团课</string>
+  <string name="t_group_order_limit">团课预约限制</string>
+  <string name="t_private_order_limit">私教预约限制</string>
+  <string name="t_noti_order_msm">预约短信通知</string>
+  <string name="t_batch_schedule_list">所有课程</string>
+
+
+  <string name="t_card_bind_student">绑定会员</string>
+
+</resources>

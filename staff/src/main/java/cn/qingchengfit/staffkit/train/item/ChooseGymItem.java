@@ -36,8 +36,8 @@ public class ChooseGymItem extends AbstractFlexibleItem<ChooseGymItem.ChooseGymV
         return R.layout.item_competition_gym;
     }
 
-    @Override public ChooseGymVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ChooseGymVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ChooseGymVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ChooseGymVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseGymVH holder, int position, List payloads) {

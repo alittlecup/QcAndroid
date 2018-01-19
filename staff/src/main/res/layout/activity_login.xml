@@ -11,7 +11,8 @@
   <android.support.design.widget.TabLayout
       android:id="@+id/login_tabview"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
+      android:layout_height="wrap_content"
+      android:minHeight="?attr/actionBarSize"
       android:background="@color/toolbar"
       android:paddingBottom="1px"
       app:tabIndicatorColor="@color/white"

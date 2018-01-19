@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/alert_edit_cardtype_no_permission"
+      style="@style/QcTextStyleSmallWarm"
+      android:textSize="12dp"
+      android:padding="15dp"
+      android:drawableLeft="@drawable/ic_vector_info_grey"
+      android:drawablePadding="6dp"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="15dp"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="名称"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+      <TextView
+          android:id="@+id/tv_card_tpl_name_brand"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="多点通卡"
+          style="@style/QcTextStyleSmallDark"
+          android:layout_marginLeft="36dp"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="简介"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+      <TextView
+          android:id="@+id/tv_card_tpl_desc"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="无"
+          style="@style/QcTextStyleSmallDark"
+          android:layout_marginLeft="36dp"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="限制"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+      <TextView
+          android:id="@+id/tv_card_tpl_limit"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="好奇怪的逻辑好奇怪的逻辑好奇怪的逻辑好奇怪的逻辑好奇怪的逻辑"
+          style="@style/QcTextStyleSmallDark"
+          android:layout_marginLeft="36dp"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="服务条款"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+      <TextView
+          android:id="@+id/tv_card_tpl_term"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="已关闭"
+          style="@style/QcTextStyleSmallDark"
+          android:layout_marginLeft="36dp"
+          />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_card_tpl_brand_term"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height_new"
+      android:layout_marginTop="15dp"
+      app:civ_lable="@string/card_protocol_content"
+      app:civ_text_color="@color/text_dark"
+      app:civ_showright="true"
+      app:civ_clickable="true"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="15dp"
+      android:text="适用场馆"
+      style="@style/QcTextStyleSmallWarm"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_card_tpl_brand_support_gym"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height_new"
+      app:civ_lable="适用场馆"
+      app:civ_nonnull="true"
+      app:civ_text_color="@color/text_dark"
+      app:civ_showright="true"
+      app:civ_clickable="true"
+      />
+
+</LinearLayout>

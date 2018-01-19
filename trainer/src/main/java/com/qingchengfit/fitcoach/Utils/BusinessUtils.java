@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.Utils;
 
 import cn.qingchengfit.model.base.CoachService;
-import com.qingchengfit.fitcoach.bean.TeacherImpression;
+import cn.qingchengfit.bean.TeacherImpression;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import java.util.ArrayList;
 import java.util.List;

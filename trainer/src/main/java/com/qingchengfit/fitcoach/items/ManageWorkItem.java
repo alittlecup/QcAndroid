@@ -2,16 +2,14 @@ package com.qingchengfit.fitcoach.items;
 
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.TextpaperUtils;
-import com.qingchengfit.fitcoach.bean.FunctionBean;
+import cn.qingchengfit.bean.FunctionBean;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -29,8 +27,8 @@ public class ManageWorkItem extends AbstractFlexibleItem<ManageWorkItem.ManageWo
         return R.layout.item_manage_work;
     }
 
-    @Override public ManageWorkVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ManageWorkVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ManageWorkVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ManageWorkVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ManageWorkVH holder, int position, List payloads) {

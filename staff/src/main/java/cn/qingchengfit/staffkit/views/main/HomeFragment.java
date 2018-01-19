@@ -32,20 +32,18 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.Banner;
 import cn.qingchengfit.model.responese.FollowUpDataStatistic;
 import cn.qingchengfit.model.responese.HomeStatement;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventBrandChange;
 import cn.qingchengfit.staffkit.rxbus.event.EventChartTitle;
 import cn.qingchengfit.staffkit.views.ChooseBrandFragment;
 import cn.qingchengfit.staffkit.views.GuideActivity;
-import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.adapter.ImageTextBean;
-import cn.qingchengfit.staffkit.views.cardtype.CardTypeActivity;
 import cn.qingchengfit.staffkit.views.charts.BaseStatementChartFragment;
 import cn.qingchengfit.staffkit.views.charts.BaseStatementChartFragmentBuilder;
-import cn.qingchengfit.staffkit.views.course.CourseActivity;
 import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.staffkit.views.custom.ItemDecorationAlbumColumns;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
@@ -96,6 +94,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
     GymsFragment gymsFragment;  //场馆列表
     @Inject GymWrapper gymWrapper;
     @Inject HomePresenter homePresenter;
+    @Inject SerPermisAction serPermisAction;
     private List<ImageTextBean> datas1 = new ArrayList<>();
     private List<AbstractFlexibleItem> adapterDatas = new ArrayList<>();
     private HomeStatement mHomeStatement;
@@ -117,6 +116,8 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
     }
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
+        super.initToolbar(toolbar);
+        toolbar.setNavigationIcon(null);
         toolbarTitile.setText(gymWrapper.brand_name());
         down.setVisibility(View.VISIBLE);
         tvLeft.setText(R.string.brand_manange);
@@ -187,7 +188,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
             @Override public void call(EventChartTitle eventChartTitle) {
                 switch (eventChartTitle.getChartType()) {
                     case 1:
-                        if (SerPermisAction.checkNoOne(PermissionServerUtils.COST_REPORT)) {
+                        if (serPermisAction.checkNoOne(PermissionServerUtils.COST_REPORT)) {
                             return;
                         }
                         Intent toStatement = new Intent(getActivity(), ContainerActivity.class);
@@ -195,7 +196,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
                         startActivity(toStatement);
                         break;
                     case 2:
-                        if (SerPermisAction.checkNoOne(PermissionServerUtils.CHECKIN_REPORT)) {
+                        if (serPermisAction.checkNoOne(PermissionServerUtils.CHECKIN_REPORT)) {
                             return;
                         }
                         Intent toSignIn = new Intent(getActivity(), ContainerActivity.class);
@@ -204,7 +205,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
                         break;
 
                     default:
-                        if (SerPermisAction.checkNoOne(PermissionServerUtils.SALES_REPORT)) {
+                        if (serPermisAction.checkNoOne(PermissionServerUtils.SALES_REPORT)) {
                             return;
                         }
                         Intent toSale = new Intent(getActivity(), ContainerActivity.class);
@@ -358,25 +359,25 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
      * 跳转会员卡种类
      */
     private void toCardType() {
-        if (SerPermisAction.checkNoOne(PermissionServerUtils.CARDSETTING)) {
+        if (serPermisAction.checkNoOne(PermissionServerUtils.CARDSETTING)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }
+        routeTo("card","/brand/cardtpl/list/",null);
 
-        Intent toCardType = new Intent(getActivity(), CardTypeActivity.class);
-        goActivity(toCardType);
+        //Intent toCardType = new Intent(getActivity(), CardTypeActivity.class);
+        //goActivity(toCardType);
     }
 
     /**
      * 跳转课程种类
      */
     private void toCourse() {
-        if (SerPermisAction.checkNoOne(PermissionServerUtils.PRISETTING) && SerPermisAction.checkNoOne(PermissionServerUtils.TEAMSETTING)) {
+        if (serPermisAction.checkNoOne(PermissionServerUtils.PRISETTING) && serPermisAction.checkNoOne(PermissionServerUtils.TEAMSETTING)) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }
-        Intent toQr = new Intent(getActivity(), CourseActivity.class);
-        goActivity(toQr);
+        routeTo("course","/home/brand/",null);
     }
 
     private void goActivity(Intent it) {
@@ -384,7 +385,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
     }
 
     private void goQrScan(final String toUrl, String Permission) {
-        if (SerPermisAction.checkAtLeastOne(Permission) || Permission == null) {
+        if (serPermisAction.checkAtLeastOne(Permission) || Permission == null) {
             new RxPermissions(getActivity()).request(Manifest.permission.CAMERA).subscribe(new Action1<Boolean>() {
                 @Override public void call(Boolean aBoolean) {
                     if (aBoolean) {

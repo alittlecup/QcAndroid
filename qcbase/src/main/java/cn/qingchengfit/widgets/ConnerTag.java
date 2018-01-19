@@ -91,6 +91,7 @@ public class ConnerTag extends View {
         this.mText = mText;
     }
 
+    //三角形加斜字
     private void drawBg(Canvas canvas) {
         int w = getWidth(), h = getHeight();
         canvas.drawArc(new RectF(w-mRaduim*2,0,w,mRaduim*2),0,-90,false,bgPaint);
@@ -118,4 +119,5 @@ public class ConnerTag extends View {
         canvas.drawText(mText, (int)(0.7*w/2-textlenght/2)  , h/5, textPaint);
         canvas.restore();
     }
+
 }

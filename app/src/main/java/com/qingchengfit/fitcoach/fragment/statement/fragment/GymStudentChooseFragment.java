@@ -12,7 +12,7 @@ import com.qingchengfit.fitcoach.event.EventChooseStudent;
 import com.qingchengfit.fitcoach.fragment.course.SimpleTextItemItem;
 import com.qingchengfit.fitcoach.fragment.statement.item.ChooseStudentItem;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.ResponseConstant;
+import cn.qingchengfit.network.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.HashMap;

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="bg_red">#1aea6161</color>
+  <color name="toolbar">#3a3a3a</color>
+
+  <!--账单-->
+  <color name="bill_head_background">#3a3a3a</color>
+  <color name="bill_withdraw_color">#00ced8</color>
+  <color name="bill_can_withdraw_color">#d88c00</color>
+  <color name="bill_settlement">#d83600</color>
+  <color name="bill_divider">#464646</color>
+
+
+  <!-- 折线图的折线和填充颜色-->
+  <color name="follow_line_color">#f9944e</color>
+  <color name="follow_fill_color">#aaf9944e</color>
+
+  <color name="student_line_color">#0db14b</color>
+  <color name="student_fill_color">#aa0db14b</color>
+
+  <color name="registe_line_color">#6eb8f1</color>
+  <color name="registe_fill_color">#aa6eb8f1</color>
+
+
+</resources>

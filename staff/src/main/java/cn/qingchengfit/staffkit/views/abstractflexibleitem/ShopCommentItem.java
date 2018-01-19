@@ -55,8 +55,8 @@ public class ShopCommentItem extends AbstractFlexibleItem<ShopCommentItem.ShopCo
         return R.layout.item_shop_comment;
     }
 
-    @Override public ShopCommentVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ShopCommentVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ShopCommentVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ShopCommentVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ShopCommentVH holder, int position, List payloads) {

@@ -48,7 +48,7 @@ public class PrivateBatchAdapter extends RecyclerView.Adapter<PrivateBatchAdapte
     }
 
     @Override public PrivateBatchAdapter.BatchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        BatchViewHolder holder = new BatchViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_batch, parent, false));
+        BatchViewHolder holder = new BatchViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_saas_batch, parent, false));
         holder.itemView.setOnClickListener(this);
         return holder;
     }

@@ -1,7 +1,7 @@
 package cn.qingchengfit.model.responese;
 
+import cn.qingchengfit.model.base.Permission;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.usecase.bean.Permission;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 

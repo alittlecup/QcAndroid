@@ -23,8 +23,8 @@ public class SyncWaitingItemItem extends AbstractFlexibleItem<SyncWaitingItemIte
         return R.layout.item_sync_waiting;
     }
 
-    @Override public SyncWaitingItemVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new SyncWaitingItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public SyncWaitingItemVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new SyncWaitingItemVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, SyncWaitingItemVH holder, int position, List payloads) {

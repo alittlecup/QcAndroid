@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:paddingTop="6dp"
+    >
+
+  <RelativeLayout
+      android:id="@+id/bg_card"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:padding="10dp"
+      tools:background="@drawable/bg_default_card"
+      >
+
+    <TextView
+        android:id="@+id/tv_card_type"
+        tools:text="储"
+        android:background="@drawable/circle_balck_a_20"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        />
+    <TextView
+        android:id="@+id/realcard_name"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_width="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_height="25dp"
+        android:textColor="@color/white"
+        tools:text="中美引力储值卡(123)1"
+        />
+
+    <TextView
+        android:id="@+id/realcard_students"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/realcard_name"
+        android:layout_marginTop="4dp"
+        android:lines="1"
+        android:maxWidth="200dp"
+        android:textColor="@color/white"
+        tools:text="陈驰元,陈驰元,陈驰元,陈驰元,陈驰元,陈驰元,陈驰元,"
+        />
+
+    <TextView
+        android:id="@+id/realcard_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/realcard_name"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/white"
+        tools:text="余额:105000元"
+        />
+
+  </RelativeLayout>
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="15dp"
+      android:background="@drawable/card_bottom_shadow"
+      android:layout_gravity="bottom"
+      />
+  <TextView
+      android:id="@+id/img_stutus"
+      style="@style/QcTextStyleStandardDark"
+      android:textColor="@color/white"
+      android:layout_width="wrap_content"
+      android:layout_height="25dp"
+      tools:text="(已停卡)"
+      android:gravity="center"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:layout_gravity="end"
+      />
+</FrameLayout>

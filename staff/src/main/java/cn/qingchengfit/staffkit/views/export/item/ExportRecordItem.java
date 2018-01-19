@@ -1,8 +1,6 @@
 package cn.qingchengfit.staffkit.views.export.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,9 +42,8 @@ public class ExportRecordItem extends AbstractFlexibleItem<ExportRecordItem.Expo
     return R.layout.item_export_record;
   }
 
-  @Override public ExportRecordVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    ExportRecordVH holder = new ExportRecordVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ExportRecordVH createViewHolder(View view, FlexibleAdapter adapter) {
+    ExportRecordVH holder = new ExportRecordVH(view, adapter);
     holder.tvExportDownload.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if(listener != null){

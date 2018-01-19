@@ -11,7 +11,7 @@ import cn.qingchengfit.model.responese.AllotSaleStudents;
 import cn.qingchengfit.model.responese.ArticleCommentListData;
 import cn.qingchengfit.model.responese.AttendanceCharDataBean;
 import cn.qingchengfit.model.responese.BalanceConfigs;
-import cn.qingchengfit.model.responese.BalanceCount;
+import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.model.responese.BalanceNotifyConfigs;
 import cn.qingchengfit.model.responese.BodyTestMeasureData;
 import cn.qingchengfit.model.responese.BodyTestPreviews;
@@ -59,7 +59,6 @@ import cn.qingchengfit.model.responese.QcResponsePostions;
 import cn.qingchengfit.model.responese.QcResponsePrivateBatchDetail;
 import cn.qingchengfit.model.responese.QcResponsePrivateCourse;
 import cn.qingchengfit.model.responese.QcResponsePrivateDetail;
-import cn.qingchengfit.model.responese.QcResponseRealcardHistory;
 import cn.qingchengfit.model.responese.QcResponseRenewalHistory;
 import cn.qingchengfit.model.responese.QcResponseSaleDetail;
 import cn.qingchengfit.model.responese.QcResponseSchedulePhotos;
@@ -112,6 +111,8 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.network.response.ShopOrdersWrap;
 import cn.qingchengfit.network.response.SmsListWrap;
 import cn.qingchengfit.network.response.WxAuthorWrap;
+import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
 import cn.qingchengfit.staffkit.train.model.GroupListResponse;
@@ -214,7 +215,7 @@ public interface Get_Api {
         @Query("id") String gymid, @Query("model") String model);
 
     //会员卡可绑定的会员列表
-    @GET("/api/staffs/{staff_id}/method/users/?show_all=1") rx.Observable<QcDataResponse<Students>> qcGetCardBundldStudents(
+    @GET("/api/staffs/{staff_id}/method/users/?show_all=1") rx.Observable<QcDataResponse<StudentListWrapper>> qcGetCardBundldStudents(
         @Path("staff_id") String id, @QueryMap HashMap<String, Object> params);
 
     /**
@@ -912,7 +913,7 @@ public interface Get_Api {
         @QueryMap HashMap<String, Object> params);
 
     @GET("api/v2/staffs/{staff_id}/coaches/users/")
-    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<AllocateStudentBean>> qcGetCoachStudentDetail(
+    rx.Observable<QcDataResponse<AllocateStudentBean>> qcGetCoachStudentDetail(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
     @GET("/api/v2/staffs/{staff_id}/coaches/users/") rx.Observable<QcDataResponse<AllocateStudentBean>> qcGetAllocateCoachStudents(
@@ -950,6 +951,9 @@ public interface Get_Api {
   @GET("/api/gyms/orders/")
   rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ShopOrdersWrap>> qcGetGymOrders(
       @QueryMap HashMap<String, Object> params);
+
+
+
 
     //判断是否同意用户协议
     @GET(" /api/user/check/read_agreement/")

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+  <include layout="@layout/common_simple_toolbar"/>
+  <android.support.design.widget.TabLayout
+      android:id="@+id/tab"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      style="@style/QcTabLayoutDark"
+      />
+  <include layout="@layout/divider_grey"/>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="38dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="会员卡种类:"
+        />
+
+    <TextView
+        android:id="@+id/card_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:freezesText="true"
+        android:text="0"
+        android:textColor="@color/text_black"
+        />
+
+    <TextView
+        android:id="@+id/card_disable_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="状态: "
+        />
+
+    <TextView
+        android:id="@+id/card_disable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:freezesText="true"
+        android:text="正常"
+        />
+
+    <ImageView
+        android:id="@+id/card_type_down1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        app:srcCompat="@drawable/vd_filter_arrow_down"
+        />
+  </LinearLayout>
+  <android.support.v4.view.ViewPager
+      android:id="@+id/viewpager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      />
+
+</LinearLayout>

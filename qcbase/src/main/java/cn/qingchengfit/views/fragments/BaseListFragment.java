@@ -1,20 +1,25 @@
 package cn.qingchengfit.views.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
-import cn.qingchengfit.widgets.QcLeftRightDivider;
 import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
@@ -51,7 +56,9 @@ public abstract class BaseListFragment extends BaseFragment {
   protected ProgressItem progressItem;
   protected SmoothScrollLinearLayoutManager linearLayoutManager;
   @Nullable @BindView(R2.id.srl) protected SwipeRefreshLayout srl;
-  List<AbstractFlexibleItem> datas = new ArrayList<>();
+  @BindView(R2.id.fab) FloatingActionButton fab;
+  protected int fabDrawable;
+  protected List<AbstractFlexibleItem> datas = new ArrayList<>();
   private Object listeners;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +69,7 @@ public abstract class BaseListFragment extends BaseFragment {
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     View view = null;
     if (isChild) {
       view = inflater.inflate(R.layout.fragment_base_list_nosrl, container, false);
@@ -71,30 +78,62 @@ public abstract class BaseListFragment extends BaseFragment {
     }
     super.onCreateView(inflater, container, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
-    initView();
+    initView(savedInstanceState);
     return view;
   }
 
-  protected void initView() {
+  protected void initView(Bundle savedInstanceState) {
+    if (getFbIcon() != 0){
+      fab.setVisibility(View.VISIBLE);
+      fab.setImageResource(getFbIcon());
+    }
+
     linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());
+    if (savedInstanceState != null && savedInstanceState.containsKey("p")) {
+      linearLayoutManager.scrollToPosition(savedInstanceState.getInt("p", 0));
+    }
     rv.setLayoutManager(linearLayoutManager);
+    setAnimation();
     addDivider();
     rv.setAdapter(commonFlexAdapter);
+    rv.setItemViewCacheSize(0);
     if (listeners != null) commonFlexAdapter.addListener(listeners);
     if (srl != null && listeners instanceof SwipeRefreshLayout.OnRefreshListener) {
       srl.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) listeners);
     }
+  }
 
+  protected void setAnimation() {
+    commonFlexAdapter.setAnimationEntryStep(false)
+      .setAnimationOnReverseScrolling(true)
+      .setAnimationOnScrolling(true)
+      .setAnimationDuration(300L)
+      .setAnimationInterpolator(new LinearInterpolator());
   }
 
   protected void addDivider() {
-    rv.addItemDecoration(new QcLeftRightDivider(getContext(), 1, 0, left, right));
+    rv.addItemDecoration(
+        new FlexibleItemDecoration(getContext()).withDivider(R.drawable.divider_grey_left_margin)
+            .withBottomEdge(true));
   }
 
   public void initLoadMore() {
     if (commonFlexAdapter != null) {
       commonFlexAdapter.setEndlessProgressItem(progressItem);
     }
+  }
+
+  public void initLoadMore(int count, FlexibleAdapter.EndlessScrollListener l) {
+    if (commonFlexAdapter != null) {
+      commonFlexAdapter.setEndlessScrollListener(l, progressItem);
+      commonFlexAdapter.setEndlessTargetCount(count);
+      commonFlexAdapter.setEndlessPageSize(30);
+    }
+  }
+
+  @Override public void onSaveInstanceState(Bundle outState) {
+    outState.putInt("p", linearLayoutManager.findFirstVisibleItemPosition());
+    super.onSaveInstanceState(outState);
   }
 
   public void initListener(Object o) {
@@ -108,16 +147,17 @@ public abstract class BaseListFragment extends BaseFragment {
   protected void clearItems() {
     commonFlexAdapter.clear();
   }
-  public void setDatas(List<AbstractFlexibleItem> ds, int page) {
+
+  public void setDatas(List<? extends IFlexible> ds, @IntRange(from = 1) int page) {
     stopRefresh();
     if (rv != null && commonFlexAdapter != null) {
       if (page == 1) clearItems();
-      for (AbstractFlexibleItem item : ds) {
-        commonFlexAdapter.addItem(item);
-      }
-      if (commonFlexAdapter.getItemCount() == 0 && commonNoDataItem != null) {
+      commonFlexAdapter.onLoadMoreComplete(ds, 500);
+      if ((ds == null || ds.size() == 0) && commonNoDataItem != null) {
         addEmptyPage();
       }
+
+      commonFlexAdapter.notifyDataSetChanged();
     }
   }
 
@@ -149,6 +189,8 @@ public abstract class BaseListFragment extends BaseFragment {
     commonFlexAdapter.removeItem(commonFlexAdapter.getGlobalPositionOf(progressItem));
   }
 
+  @OnClick(R2.id.fab) public void onClickFab(){};
+
   @Override public String getFragmentName() {
     return BaseListFragment.class.getName();
   }
@@ -158,6 +200,10 @@ public abstract class BaseListFragment extends BaseFragment {
   }
 
   public abstract int getNoDataIconRes();
+
+  public int getFbIcon(){
+    return fabDrawable;
+  }
 
   public abstract String getNoDataStr();
 }

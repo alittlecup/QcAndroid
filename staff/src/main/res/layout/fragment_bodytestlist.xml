@@ -7,13 +7,15 @@
     android:orientation="vertical"
     >
 
-  <include layout="@layout/common_simple_toolbar"/>
+  <include layout="@layout/common_simple_toolbar"
+      android:id="@+id/layout_toolbar"
+      />
 
   <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
       android:id="@+id/recycleview"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginTop="?attr/actionBarSize"
+      android:layout_below="@id/layout_toolbar"
       />
 
   <Button

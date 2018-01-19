@@ -18,27 +18,18 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.others.ToolbarBean;
-import cn.qingchengfit.model.responese.AllLockers;
-import cn.qingchengfit.model.responese.Locker;
-import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventBackPress;
 import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.rxbus.event.EventOpenSearch;
-import cn.qingchengfit.staffkit.views.wardrobe.choose.SearchResultFragment;
 import cn.qingchengfit.staffkit.views.wardrobe.main.WardrobeMainFragment;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.StringUtils;
-import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.Observable;
@@ -46,7 +37,6 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 public class WardrobeActivity extends BaseActivity implements FragCallBack {
 
@@ -91,7 +81,7 @@ public class WardrobeActivity extends BaseActivity implements FragCallBack {
                         } else {
                             //  搜索
 
-                            searchLocker(App.staffId, charSequence.toString());
+                            //searchLocker(App.staffId, charSequence.toString());
                         }
                     }
                 });
@@ -102,7 +92,7 @@ public class WardrobeActivity extends BaseActivity implements FragCallBack {
             @Override public void call(EventFresh eventFresh) {
                 if (!StringUtils.isEmpty(keyword)) {
                     searchview.setVisibility(View.VISIBLE);
-                    searchLocker(App.staffId, keyword);
+                    //searchLocker(App.staffId, keyword);
                 }
             }
         });
@@ -114,33 +104,33 @@ public class WardrobeActivity extends BaseActivity implements FragCallBack {
         getSupportFragmentManager().beginTransaction().replace(getFragId(), new WardrobeMainFragment()).commit();
     }
 
-    public void onSearch(List<Locker> regions) {
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.frag, SearchResultFragment.newInstance(regions))
-            .commitAllowingStateLoss();
-    }
+    //public void onSearch(List<Locker> regions) {
+    //    getSupportFragmentManager().beginTransaction()
+    //        .replace(R.id.frag, SearchResultFragment.newInstance(regions))
+    //        .commitAllowingStateLoss();
+    //}
 
-    public void searchLocker(String staffid, String key) {
-        HashMap<String, Object> params = gymWrapper.getParams();
-        params.put("q", key);
-
-        sp = restRepository.getGet_api()
-            .qcGetAllLockers(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcDataResponse<AllLockers>>() {
-                @Override public void call(QcDataResponse<AllLockers> qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                        onSearch(qcResponse.data.lockers);
-                    } else {
-                        ToastUtils.show(qcResponse.getMsg());
-                    }
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    ToastUtils.show(throwable.getMessage());
-                }
-            });
-    }
+    //public void searchLocker(String staffid, String key) {
+    //    HashMap<String, Object> params = gymWrapper.getParams();
+    //    params.put("q", key);
+    //
+    //    sp = restRepository.getGet_api()
+    //        .qcGetAllLockers(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
+    //        .observeOn(AndroidSchedulers.mainThread())
+    //        .subscribe(new Action1<QcDataResponse<AllLockers>>() {
+    //            @Override public void call(QcDataResponse<AllLockers> qcResponse) {
+    //                if (ResponseConstant.checkSuccess(qcResponse)) {
+    //                    onSearch(qcResponse.data.lockers);
+    //                } else {
+    //                    ToastUtils.show(qcResponse.getMsg());
+    //                }
+    //            }
+    //        }, new Action1<Throwable>() {
+    //            @Override public void call(Throwable throwable) {
+    //                ToastUtils.show(throwable.getMessage());
+    //            }
+    //        });
+    //}
 
     @Override protected void onDestroy() {
         RxBus.getBus().unregister(EventOpenSearch.class.getName(), mOb);

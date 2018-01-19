@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.statement.model;
 
 import android.os.Parcel;
-import com.qingchengfit.fitcoach.bean.Card;
+import cn.qingchengfit.bean.Card;
 
 /**
  * Created by fb on 2017/5/17.

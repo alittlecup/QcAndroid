@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.QcTagGroup;
 import cn.qingchengfit.widgets.R;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class TagInputFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tag_input, container, false);
-        tagGroup = ButterKnife.findById(view, R.id.taggroup);
+        tagGroup = view.findViewById(R.id.taggroup);
         List<String> strings = new ArrayList<>();
         tagGroup.setTags(strings);
         return view;

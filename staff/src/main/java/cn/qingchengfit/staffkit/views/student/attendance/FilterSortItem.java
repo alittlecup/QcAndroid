@@ -40,8 +40,8 @@ public class FilterSortItem extends AbstractFlexibleItem<FilterSortItem.FilterSo
         return R.layout.layout_filter_sort;
     }
 
-    @Override public FilterSortVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        final FilterSortVH holder = new FilterSortVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public FilterSortVH createViewHolder(View view, FlexibleAdapter adapter) {
+        final FilterSortVH holder = new FilterSortVH(view, adapter);
 
         holder.llHighToLow.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {

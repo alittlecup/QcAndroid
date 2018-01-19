@@ -72,7 +72,7 @@ public class ScoreRule implements Parcelable {
     }
 
     public boolean allDisable() {
-        return teamarrange_enable | priarrange_enable | checkin_enable | buycard_enable | chargecard_enable;
+        return !(teamarrange_enable || priarrange_enable || checkin_enable || buycard_enable || chargecard_enable);
     }
 
     @Override public int describeContents() {

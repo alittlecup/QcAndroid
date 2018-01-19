@@ -28,8 +28,8 @@ public class FooterStudentCountItem extends AbstractFlexibleItem<FooterStudentCo
         return false;
     }
 
-    @Override public FooterStudentCountVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new FooterStudentCountVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public FooterStudentCountVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new FooterStudentCountVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, FooterStudentCountVH holder, int position, List payloads) {

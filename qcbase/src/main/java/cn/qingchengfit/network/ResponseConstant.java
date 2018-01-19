@@ -1,7 +1,9 @@
 package cn.qingchengfit.network;
 
+import android.content.Context;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventSessionError;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 
 /**
@@ -33,10 +35,17 @@ public class ResponseConstant {
     if (qcResponse.getStatus() == SUCCESS) {
       return true;
     } else {
-      if(qcResponse.error_code.equalsIgnoreCase(E_Login)){
+      if(qcResponse.error_code != null && qcResponse.error_code.equalsIgnoreCase(E_Login)){
         RxBus.getBus().post(new EventSessionError());
       }
       return false;
     }
+  }
+
+  public static rx.Observable<QcDataResponse> generateError(int err,Context context){
+     return rx.Observable.just(new QcDataResponse.Builder()
+       .status(901)
+       .msg(context.getString(err))
+       .build());
   }
 }

@@ -23,26 +23,29 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.events.EventTxT;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
 import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.model.responese.StudentSourceBean;
+import cn.qingchengfit.saasbase.common.views.CommonInputParams;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.MutiChooseCoachActivity;
-import cn.qingchengfit.staffkit.allocate.coach.model.CoachBean;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.staffkit.views.EditTextActivityIntentBuilder;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
 import cn.qingchengfit.staffkit.views.custom.PhoneEditText;
 import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
 import cn.qingchengfit.staffkit.views.student.ChooseReferrerActivity;
+import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -61,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
@@ -82,7 +86,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     public static final int RESULT_REFERRER = 12;
     private static final int RESULT_ADD_REMARKS = 13;
     private static final int RESULT_COACH = 14;
-    public boolean isAdd = false;
+    public boolean isAdd = true;
     public User_Student user;
     @BindView(R.id.tv_student_source) TextView tvStudentSource;
     @BindView(R.id.ll_student_source) LinearLayout llStudentSource;
@@ -119,7 +123,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     private StudentReferrerBean referrerBean;
     private StudentSourceBean sourceBean;
     private String remarks;
-    private List<CoachBean> coaches = new ArrayList<>();
+    private List<Staff> coaches = new ArrayList<>();
 
     public static EditStudentInfoFragment newInstance(boolean isAdd, User_Student student) {
         Bundle args = new Bundle();
@@ -130,23 +134,22 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
         return fragment;
     }
 
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initBus();
+    }
+
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_student_info, container, false);
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(presenter, this);
-        initToolbar(toolbar);
         if (getArguments() != null){
             isAdd = getArguments().getBoolean("add");
             user = getArguments().getParcelable("student");
         }
+        initToolbar(toolbar);
         if (!isAdd) {
-            mCallbackActivity.setToolbar("修改学员", false, null, R.menu.menu_save, new Toolbar.OnMenuItemClickListener() {
-                @Override public boolean onMenuItemClick(MenuItem item) {
-                    saveStudentInfo();
-                    return false;
-                }
-            });
             civName.setContent(user.getUsername());
             civAddress.setContent(user.getAddress());
             civRemark.setContent(user.getRemarks());
@@ -177,12 +180,6 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
                     .into(new CircleImgWrapper(headerImg, getActivity()));
             }
         } else {
-            mCallbackActivity.setToolbar("新增学员", false, null, R.menu.menu_save, new Toolbar.OnMenuItemClickListener() {
-                @Override public boolean onMenuItemClick(MenuItem item) {
-                    saveStudentInfo();
-                    return false;
-                }
-            });
             user = new User_Student();
             headerImg.setImageResource(R.drawable.ic_camara_grey);
             tvAddHint.setVisibility(View.VISIBLE);
@@ -212,6 +209,22 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
             }
         });
         return view;
+    }
+
+    private void initBus() {
+        RxBus.getBus().register(EventTxT.class)
+            .onBackpressureLatest()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new BusSubscribe<EventTxT>() {
+                @Override public void onNext(EventTxT eventTxT) {
+                    if (!TextUtils.isEmpty(eventTxT.txt)) {
+                        civRemark.setContent("已填写");
+                        remarks = eventTxT.txt;
+                    }else{
+                        civRemark.setContent("请填写");
+                    }
+                }
+            });
     }
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -318,7 +331,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
             return;
         }
         List<String> idList = new ArrayList<>();
-        for (CoachBean coachBean : coaches) {
+        for (Staff coachBean : coaches) {
             idList.add(coachBean.id);
         }
         if (!idList.isEmpty()) {
@@ -435,9 +448,11 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     }
 
     @OnClick(R.id.civ_remark) public void onRemarkClick() {
-        //
-        Intent toAddOrigin = new EditTextActivityIntentBuilder("填写备注").build(getActivity());
-        startActivityForResult(toAddOrigin, RESULT_ADD_REMARKS);
+        // TODO: 2017/11/6
+        routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
+            new CommonInputParams().title("填写备注信息").hint(remarks).build());
+        //Intent toAddOrigin = new EditTextActivityIntentBuilder("填写备注").build(getActivity());
+        //startActivityForResult(toAddOrigin, RESULT_ADD_REMARKS);
     }
 
     /**

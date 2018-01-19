@@ -65,6 +65,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     @Inject GymMorePresenter mGymMorePresenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject GymFunctionFactory gymFunctionFactory;
     private GymMoreAdapter mAdapter;
     /**
      * 我的功能呢详情页
@@ -75,40 +76,12 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     private boolean mEditableMode = false;
     private FunHeaderItem mMyFuntions;
 
-    public GymMoreFragment() {
+    @Inject public GymMoreFragment() {
     }
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMyFuntions = new FunHeaderItem("常用功能");
-        mFunAdapter = new GymMoreAdapter(mFunsDatas, new FlexibleAdapter.OnItemClickListener() {
-            @Override public boolean onItemClick(int position) {
-                if (mFunAdapter.getItem(position) instanceof GymFuntionItem) {
-                    if (mEditableMode) {
-                        mFunsDatas.remove(position);
-                        int len = mFunsDatas.size() - 1;
-                        for (int i = len; i >= 0; i--) {
-                            if (mFunsDatas.get(i) instanceof GymFuntionItem) {
-                                if (((GymFuntionItem) mFunsDatas.get(i)).getGymFuntion().getImg() == 0) mFunsDatas.remove(i);
-                            }
-                        }
-                        notificationMyFuntion();
-                        notificationAllFuntion();
-                    } else {
-                        if (!gymWrapper.isPro()
-                          && GymFunctionFactory.getModuleStatus(
-                          ((GymFuntionItem) mFunAdapter.getItem(position)).getGymFuntion().getModuleName()) > 0) {
-                            new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
-                            return true;
-                        }
-                        GymFunctionFactory.getJumpIntent(
-                          ((GymFuntionItem) mFunAdapter.getItem(position)).getGymFuntion().getModuleName(),
-                          gymWrapper.getCoachService(), null, null, GymMoreFragment.this);
-                    }
-                }
-                return true;
-            }
-        });
     }
 
     @Nullable @Override
@@ -117,12 +90,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
         unbinder = ButterKnife.bind(this, view);
         delegatePresenter(mGymMorePresenter, this);
         ViewCompat.setTransitionName(myFunRecycleview, "funcitonView");
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
+        initToolbar(toolbar);
         toolbarTitile.setText("全部功能");
         toolbar.inflateMenu(R.menu.menu_mangage);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -133,7 +101,6 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                     mFunAdapter.setStatus(0);
                     mAdapter.setStatus(0);
                     mFunAdapter.notifyDataSetChanged();
-                    mFunAdapter.showAllHeaders();
                     mAdapter.notifyDataSetChanged();
                     List<String> modules = new ArrayList<String>();
                     for (int i = 0; i < mFunsDatas.size(); i++) {
@@ -151,7 +118,6 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                     mAdapter.mOtherDatas.clear();
                     mAdapter.mOtherDatas.addAll(mFunsDatas);
                     mFunAdapter.notifyDataSetChanged();
-                    mAdapter.showAllHeaders();
                     mAdapter.notifyDataSetChanged();
                 }
                 mEditableMode = !mEditableMode;
@@ -170,6 +136,34 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
         myFunRecycleview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
                 CompatUtils.removeGlobalLayout(myFunRecycleview.getViewTreeObserver(), this);
+                mFunAdapter = new GymMoreAdapter(mFunsDatas, new FlexibleAdapter.OnItemClickListener() {
+                    @Override public boolean onItemClick(int position) {
+                        if (mFunAdapter.getItem(position) instanceof GymFuntionItem) {
+                            if (mEditableMode) {
+                                mFunsDatas.remove(position-1);//adapter 中带有headeritem
+                                int len = mFunsDatas.size() - 1;
+                                for (int i = len; i >= 0; i--) {
+                                    if (mFunsDatas.get(i) instanceof GymFuntionItem) {
+                                        if (((GymFuntionItem) mFunsDatas.get(i)).getGymFuntion().getImg() == 0) mFunsDatas.remove(i);
+                                    }
+                                }
+                                notificationMyFuntion();
+                                notificationAllFuntion();
+                            } else {
+                                if (!gymWrapper.isPro()
+                                    && GymFunctionFactory.getModuleStatus(
+                                    ((GymFuntionItem) mFunAdapter.getItem(position)).getGymFuntion().getModuleName()) > 0) {
+                                    new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
+                                    return true;
+                                }
+                                gymFunctionFactory.getJumpIntent(
+                                    ((GymFuntionItem) mFunAdapter.getItem(position)).getGymFuntion().getModuleName(),
+                                    gymWrapper.getCoachService(), null, null, GymMoreFragment.this);
+                            }
+                        }
+                        return true;
+                    }
+                });
                 mFunAdapter.setTag("isPro", gymWrapper.isPro());
                 mFunAdapter.setDisplayHeadersAtStartUp(true);
                 myFunRecycleview.setHasFixedSize(true);
@@ -212,7 +206,6 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_SERVICE_SHOP), serviceFuntion));
 
                 FunHeaderItem studentsFuntion = new FunHeaderItem("会员管理");
-
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_STUDENT), studentsFuntion));
                 mDatas.add(
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_STUDENT_CARDS), studentsFuntion));
@@ -221,7 +214,6 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.REPORT_EXPORT), studentsFuntion));
 
                 FunHeaderItem internalFuntion = new FunHeaderItem("员工管理");
-
                 mDatas.add(
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_MANAGE_STAFF), internalFuntion));
                 mDatas.add(
@@ -230,7 +222,6 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), internalFuntion));
 
                 FunHeaderItem runFuntion = new FunHeaderItem("运营推广");
-
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_SCORE), runFuntion));
                 mDatas.add(
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_ACTIVITY), runFuntion));
@@ -245,7 +236,6 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), runFuntion));
 
                 FunHeaderItem financialFuntion = new FunHeaderItem("财务与报表");
-
                 mDatas.add(
                     new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_FINACE_ONLINE), financialFuntion));
                 mDatas.add(
@@ -262,7 +252,6 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), financialFuntion));
 
                 FunHeaderItem gymFuntion = new FunHeaderItem("场馆管理");
-
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_GYM_INFO), gymFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_GYM_TIME), gymFuntion));
                 mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_GYM_SITE), gymFuntion));
@@ -311,12 +300,12 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     }
 
     private void notificationMyFuntion() {
-        int addcount = ((4 - (mFunsDatas.size()-mFunAdapter.getHeaderItems().size()) % 4) % 4);
+        int addcount = ((4 - (mFunsDatas.size()) % 4) % 4);
         for (int i = 0; i < addcount; i++) {
             mFunsDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), mMyFuntions));
         }
         if (mFunsDatas.size() == 1) mFunsDatas.add(new EmptyFunItem());
-        mFunAdapter.notifyDataSetChanged();
+        mFunAdapter.updateDataSet(mFunsDatas);
     }
 
     private void notificationAllFuntion() {
@@ -349,7 +338,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                     new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
                     return true;
                 }
-                GymFunctionFactory.getJumpIntent(((GymFuntionItem) mAdapter.getItem(position)).getGymFuntion().getModuleName(),
+                gymFunctionFactory.getJumpIntent(((GymFuntionItem) mAdapter.getItem(position)).getGymFuntion().getModuleName(),
                     gymWrapper.getCoachService(), null, null, this);
             }
         }

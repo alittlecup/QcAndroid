@@ -18,10 +18,10 @@ import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.LockerRegion;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -59,6 +59,7 @@ public class DistrictAddFragment extends BaseFragment implements DistrictAddPres
     @BindView(R.id.no_permission) View noPermission;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
@@ -69,7 +70,7 @@ public class DistrictAddFragment extends BaseFragment implements DistrictAddPres
             if (mLockerRegion == null) {//新增
                 presenter.addRegion(App.staffId, text.getContent());
             } else { //编辑
-                if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_CHANGE)) {
+                if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_CHANGE)) {
                     showAlert(R.string.alert_permission_forbid);
                     return true;
                 }
@@ -114,10 +115,10 @@ public class DistrictAddFragment extends BaseFragment implements DistrictAddPres
             toolbar.inflateMenu(R.menu.menu_save);
             toolbar.setOnMenuItemClickListener(listener);
             noPermission.setVisibility(
-                SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_CHANGE) ? View.GONE
+                serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.LOCKER_SETTING_CAN_CHANGE) ? View.GONE
                     : View.VISIBLE);
             layoutDel.setVisibility(
-                SerPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.LOCKER_SETTING_CAN_DELETE) ? View.VISIBLE : View.GONE);
+                serPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.LOCKER_SETTING_CAN_DELETE) ? View.VISIBLE : View.GONE);
             text.setContent(mLockerRegion.name);
         }
     }

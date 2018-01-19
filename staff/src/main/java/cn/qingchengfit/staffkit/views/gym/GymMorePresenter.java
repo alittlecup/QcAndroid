@@ -9,8 +9,8 @@ import cn.qingchengfit.model.body.UpdateModule;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.constant.Post_Api;
-import cn.qingchengfit.staffkit.model.db.QCDbManager;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.utils.LogUtil;
 import java.util.List;
@@ -22,6 +22,7 @@ import rx.schedulers.Schedulers;
 public class GymMorePresenter extends BasePresenter {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject QcDbManager qcDbManager;
     private MVPView view;
     private RestRepositoryV2 restRepository;
 
@@ -31,7 +32,7 @@ public class GymMorePresenter extends BasePresenter {
 
     void updateFunction(List<String> modules) {
         if (modules != null) {
-            QCDbManager.insertFunction(modules);
+            qcDbManager.insertFunction(modules);
         }
         RxRegiste(restRepository.getApi(Post_Api.class)
             .qcUpdateModule(loginStatus.staff_id(), new UpdateModule.Builder().module_custom(modules).build(), gymWrapper.getParams())
@@ -51,7 +52,7 @@ public class GymMorePresenter extends BasePresenter {
 
     @Override public void attachView(PView v) {
         view = (MVPView) v;
-        RxRegiste(QCDbManager.queryAllFunctions()
+        RxRegiste(qcDbManager.queryAllFunctions()
             .observeOn(AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())

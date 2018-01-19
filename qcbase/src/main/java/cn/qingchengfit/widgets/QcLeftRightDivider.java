@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import cn.qingchengfit.utils.Utils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 
 /**
  * power by
@@ -35,8 +36,9 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
  * Created by Paper on 2017/4/7.
  *
  * 可以传入左右padding
+ * （已废弃）推荐使用{@link FlexibleItemDecoration}
  */
-
+@Deprecated
 public class QcLeftRightDivider extends RecyclerView.ItemDecoration {
 
   private static final int[] ATTRS = new int[] {

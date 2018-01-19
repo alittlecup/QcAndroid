@@ -1,13 +1,11 @@
 package com.qingchengfit.fitcoach.fragment.statement.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CourseDetail;
+import cn.qingchengfit.bean.CourseDetail;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -25,8 +23,8 @@ public class ChooseCourseItem extends AbstractFlexibleItem<ChooseCourseItem.Choo
         return R.layout.item_choose_student;
     }
 
-    @Override public ChooseStudentVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ChooseStudentVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ChooseStudentVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ChooseStudentVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseStudentVH holder, int position, List payloads) {

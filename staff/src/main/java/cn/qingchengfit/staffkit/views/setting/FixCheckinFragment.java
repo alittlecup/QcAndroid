@@ -85,7 +85,7 @@ public class FixCheckinFragment extends BaseDialogFragment implements FixCheckin
             }
         });
         toolbarTitile.setText(R.string.title_fix_checkin);
-        presenter.attachView(this);
+        delegatePresenter(presenter, this);
 
         showLoading();
         presenter.getConfigs();

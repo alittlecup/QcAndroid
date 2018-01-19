@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,16 +9,18 @@
     android:orientation="vertical"
     >
 
-  <include layout="@layout/common_simple_toolbar"/>
+  <include layout="@layout/common_simple_toolbar"
+      android:id="@+id/layout_toolbar"
+      />
 
   <LinearLayout
       xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginTop="?attr/actionBarSize"
       android:background="@color/white"
       android:orientation="vertical"
+      android:layout_below="@id/layout_toolbar"
       >
 
     <ImageView
@@ -105,4 +107,4 @@
 
         />
   </LinearLayout>
-</FrameLayout>
+</RelativeLayout>

@@ -44,8 +44,8 @@ public class ResumeIntentItem extends AbstractFlexibleItem<ResumeIntentItem.Resu
     return R.layout.item_resume_work_intent;
   }
 
-  @Override public ResumeIntentVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new ResumeIntentVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeIntentVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeIntentVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeIntentVH holder, int position, List payloads) {

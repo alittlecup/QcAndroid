@@ -252,7 +252,7 @@ public class ClassRecordFragment extends BaseFragment
     monthData = new ArrayList<>();
     g = p = c = 0;
 
-    commonFlexAdapter.notifyDataSetChanged();
+    commonFlexAdapter.updateDataSet(datas);
     recycleview.setNoData(datas.size() == 0);
   }
 

@@ -36,8 +36,8 @@ public class ResumeEduExpItem extends AbstractFlexibleItem<ResumeEduExpItem.Resu
     return R.layout.item_edu_exp;
   }
 
-  @Override public ResumeEduExpVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new ResumeEduExpVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public ResumeEduExpVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new ResumeEduExpVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeEduExpVH holder, int position, List payloads) {

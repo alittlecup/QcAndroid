@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +11,8 @@
 
   <FrameLayout
       android:layout_width="match_parent"
-      android:layout_height="?actionBarSize"
+      android:layout_height="wrap_content"
+      android:fitsSystemWindows="true"
       >
 
     <include layout="@layout/common_simple_toolbar"/>
@@ -24,6 +26,7 @@
         android:orientation="horizontal"
         android:padding="5dp"
         android:visibility="gone"
+        tools:visibility="visible"
         >
 
       <FrameLayout

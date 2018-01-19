@@ -1,8 +1,6 @@
 package com.qingchengfit.fitcoach.items;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import butterknife.BindView;
@@ -36,13 +34,13 @@ public class ImageItem extends AbstractFlexibleItem<ImageItem.ImageVH> {
         return R.layout.item_image_wall_choose;
     }
 
-    @Override public ImageVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ImageVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ImageVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ImageVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ImageVH holder, int position, List payloads) {
         Glide.with(holder.itemView.getContext()).load(imgPath).placeholder(R.drawable.img_loadingimage).into(holder.img);
-        if (adapter.getMode() == SelectableAdapter.MODE_IDLE) {
+        if (adapter.getMode() == SelectableAdapter.Mode.IDLE) {
             holder.checkbox.setVisibility(View.GONE);
         } else {
             holder.checkbox.setVisibility(View.VISIBLE);

@@ -76,7 +76,7 @@ public class NotiSettingMsgChargeFragment extends BaseFragment
     list.add(new NotiSettingChargeItem(1000, 20000));
     list.add(new NotiSettingChargeItem(2000, 40000));
     adapter = new CommonFlexAdapter(list, this);
-    adapter.setMode(SelectableAdapter.MODE_SINGLE);
+    adapter.setMode(SelectableAdapter.Mode.SINGLE);
     GridLayoutManager gridLayoutManager = new SmoothScrollGridLayoutManager(getContext(),
         getResources().getInteger(R.integer.grid_item_count));
     gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -121,7 +121,7 @@ public class NotiSettingMsgChargeFragment extends BaseFragment
     adapter.notifyItemChanged(i);
     btnConfirm.setEnabled(adapter.getSelectedItemCount() > 0);
     String newCount = Integer.toString(presenter.getNewCount(i));
-    eu.davidea.flexibleadapter.utils.Utils.highlightText(tvCountAfterCharge,
+    eu.davidea.flexibleadapter.utils.FlexibleUtils.highlightWords(tvCountAfterCharge,
         "充值后剩余条数：" + newCount + "条", newCount);
     return true;
   }

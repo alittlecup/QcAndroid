@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:id="@+id/course_layout"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/white"
+        >
+
+      <FrameLayout
+          android:id="@+id/img_layout"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:background="@drawable/bg_rect_square_img"
+          android:padding="0.5dp"
+          >
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:scaleType="centerCrop"
+            />
+
+      </FrameLayout>
+
+      <ImageView
+          android:id="@+id/img_foot"
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          android:layout_alignBottom="@id/img_layout"
+          android:layout_alignRight="@id/img_layout"
+          android:src="@drawable/bg_rect_square_img"
+          android:visibility="gone"
+          />
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="100dp"
+          android:orientation="vertical"
+          >
+
+
+          <TextView
+              android:id="@+id/text1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:maxWidth="200dp"
+              tools:text="健康公益讲座"
+              style="@style/Qc.TextCommonBlack"
+              />
+
+        <android.support.v4.widget.Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/activity_vertical_margin"
+            />
+
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="200dp"
+            android:textSize="12sp"
+            tools:text="健康公益讲座"
+
+            />
+
+      </LinearLayout>
+
+      <ImageView
+          android:id="@+id/righticon"
+          android:layout_width="25dp"
+          android:layout_height="25dp"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:scaleType="center"
+          android:src="@drawable/ic_arrow_right"
+          android:visibility="gone"
+          tools:visibility="visible"
+          />
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_alignParentBottom="true"
+          android:background="@color/divider_white"
+          />
+    </RelativeLayout>
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/coach"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_hint="@string/please_choose"
+        app:civ_showdivier="true"
+        app:civ_showright="true"
+        app:civ_lable="教练"
+        style="@style/QcCivInputStyle"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_lable="场地"
+        app:civ_showdivier="true"
+        app:civ_showright="true"
+        style="@style/QcCivInputStyle"
+        />
+
+    <cn.qingchengfit.widgets.ExpandedLayout
+        android:id="@+id/el_multi_support"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:el_label="支持多人私教"
+        >
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/order_sutdent_count"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_content="1"
+          app:civ_lable="单节可预约人数"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          style="@style/QcCivInputStyle"
+          />
+    </cn.qingchengfit.widgets.ExpandedLayout>
+
+
+    <include layout="@layout/divider_grey"/>
+
+    <include layout="@layout/divider_grey_margin"/>
+
+    <cn.qingchengfit.widgets.ExpandedLayout
+        android:id="@+id/el_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:el_label="需要支付"
+        app:el_expanded="false"
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/pay_online"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
+            app:civ_hint="未开启"
+            app:civ_lable="在线支付结算"
+            app:civ_showright="true"
+            app:civ_text_color="@color/text_black"
+            />
+
+        <cn.qingchengfit.widgets.CommonInputView
+            android:id="@+id/pay_card"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
+            app:civ_hint="未设置"
+            app:civ_lable="会员卡结算"
+            app:civ_showdivier="false"
+            app:civ_showright="true"
+            app:civ_text_color="@color/text_black"
+            />
+      </LinearLayout>
+
+    </cn.qingchengfit.widgets.ExpandedLayout>
+</LinearLayout>

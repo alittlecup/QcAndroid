@@ -13,9 +13,9 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.model.db.QCDbManager;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
 import cn.qingchengfit.utils.CrashUtils;
@@ -46,6 +46,8 @@ public class GymDetailPresenter extends BasePresenter {
     GymUseCase gymUseCase;
     @Inject GymWrapper gymWrapper;
     @Inject LoginStatus loginStatus;
+    @Inject QcDbManager qcDbManager;
+    @Inject SerPermisAction serPermisAction;
     private Subscription sp;
     private Subscription spWelcome;
     private RestRepository restRepository;
@@ -70,7 +72,7 @@ public class GymDetailPresenter extends BasePresenter {
 
     @Override public void attachView(PView v) {
         gymDetailView = (GymDetailView) v;
-        RxRegiste(QCDbManager.queryAllFunctions()
+        RxRegiste(qcDbManager.queryAllFunctions()
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -131,7 +133,7 @@ public class GymDetailPresenter extends BasePresenter {
             .subscribe(new Action1<QcResponsePermission>() {
                 @Override public void call(QcResponsePermission qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse) && qcResponse.data.permissions != null) {
-                        SerPermisAction.writePermiss(qcResponse.data.permissions);
+                        serPermisAction.writePermiss(qcResponse.data.permissions);
                         getGymWelcome();
                     }
                 }
@@ -156,9 +158,9 @@ public class GymDetailPresenter extends BasePresenter {
                     gymDetailView.onSpecialPoint(qcResponseGymDetail.data.qingcheng_activity_count);
                     if (qcResponseGymDetail.data.gym.module_custom != null) {
                         try {
-                            QCDbManager.insertFunction((List<String>) qcResponseGymDetail.data.gym.module_custom);
+                            qcDbManager.insertFunction((List<String>) qcResponseGymDetail.data.gym.module_custom);
                         } catch (Exception e) {
-                            QCDbManager.insertFunction(null);
+                            qcDbManager.insertFunction(null);
                             Timber.d(e.getMessage());
                             CrashUtils.sendCrash(e);
                         }

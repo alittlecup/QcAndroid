@@ -17,7 +17,7 @@ import cn.qingchengfit.staffkit.rxbus.event.EventMutiChoose;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.utils.ToastUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -73,10 +73,12 @@ public class OnlineLimitFragment extends BottomSheetDialogFragment implements Fl
         mDatas.add(new ChooseItem("已接洽"));
         mDatas.add(new ChooseItem("会员"));
         mFlexAdapter = new CommonFlexAdapter(mDatas, this);
-        //        mFlexAdapter.setMode(SelectableAdapter.MODE_MULTI);
+        //        mFlexAdapter.setMode(SelectableAdapter.Mode.MULTI);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-        recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
+        recyclerview.addItemDecoration(new FlexibleItemDecoration(getContext())
+          .withDivider(R.drawable.divider_horizon_left_44dp)
+          .withOffset(1).withBottomEdge(true));
 
         if (getArguments() != null && getArguments().getIntArray("k") != null && getArguments().getIntArray("k").length > 0) {
             int[] x = getArguments().getIntArray("k");

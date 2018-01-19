@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="121.5dp"
+      android:background="@color/toolbar"
+      android:gravity="center"
+      >
+
+    <cn.qingchengfit.support.widgets.CompatTextView
+        android:id="@+id/btn_cash"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/little"
+        android:gravity="center"
+        android:text="直接收银"
+        app:drawableTop="@drawable/vd_btn_home_checkstand"
+        />
+
+    <cn.qingchengfit.support.widgets.CompatTextView
+        android:id="@+id/btn_create_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/little"
+        android:gravity="center"
+        android:text="新开会员卡"
+        app:drawableTop="@drawable/vd_btn_home_newcard"
+        />
+
+    <cn.qingchengfit.support.widgets.CompatTextView
+        android:id="@+id/btn_charge_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/little"
+        android:gravity="center"
+        android:text="会员卡续卡"
+        app:drawableTop="@drawable/vd_btn_home_charge"
+        />
+  </LinearLayout>
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:overScrollMode="never"
+        />
+    <LinearLayout
+        android:id="@+id/layout_notification"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@drawable/bg_rect_corner_halftrans_black"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="收款请求"
+          android:textColor="@color/white"
+          style="@style/QcTextStyleLargeDark"
+          />
+      <TextView
+          android:visibility="gone"
+          android:id="@+id/tv_noti_count"
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          android:background="@drawable/red_dot"
+          android:gravity="center"
+          android:textColor="@color/white"
+          android:textSize="@dimen/txt_12sp"
+          tools:text="11"
+          />
+      <android.support.v4.widget.Space
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          />
+      <Button
+          android:id="@+id/btn_to_pay"
+          android:layout_width="75dp"
+          android:layout_height="35dp"
+          android:text="去收款"
+          />
+    </LinearLayout>
+  </FrameLayout>
+
+</LinearLayout>

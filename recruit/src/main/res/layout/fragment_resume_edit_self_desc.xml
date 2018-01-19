@@ -1,52 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_grey"
-    android:orientation="vertical"
-    >
 
-  <include layout="@layout/common_simple_toolbar"/>
-
-  <FrameLayout
-      android:id="@+id/frag_desc"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      />
-
-  <include layout="@layout/divider_grey"/>
 
   <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:divider="@drawable/divider_linearlayout_horizon"
-      android:orientation="horizontal"
-      android:showDividers="middle"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
       >
 
-    <cn.qingchengfit.support.widgets.CompatTextView
-        android:id="@+id/btn_insert_img"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/bg_click"
-        android:gravity="center"
-        android:text="插入图片"
-        style="@style/QcTextStyleLargeDark"
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/layout_toolbar"
         />
 
-    <TextView
-        android:id="@+id/btn_comfirm"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+    <FrameLayout
+        android:id="@+id/frag_desc"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/btn_prime_no_corner"
-        android:gravity="center"
-        android:text="@string/complete"
-        android:textSize="17sp"
-        style="@style/QcBtnPrimery"
         />
+
+    <include layout="@layout/divider_grey"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:divider="@drawable/divider_linearlayout_horizon"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        >
+
+      <cn.qingchengfit.support.widgets.CompatTextView
+          android:id="@+id/btn_insert_img"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_click"
+          android:gravity="center"
+          android:text="插入图片"
+          style="@style/QcTextStyleLargeDark"
+          />
+
+      <TextView
+          android:id="@+id/btn_comfirm"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/btn_prime_no_corner"
+          android:gravity="center"
+          android:text="@string/complete"
+          android:textSize="17sp"
+          style="@style/QcBtnPrimery"
+          />
+    </LinearLayout>
   </LinearLayout>
-</LinearLayout>

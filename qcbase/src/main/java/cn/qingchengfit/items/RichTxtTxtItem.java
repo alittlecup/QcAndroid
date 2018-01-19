@@ -4,9 +4,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,10 +38,10 @@ public class RichTxtTxtItem extends AbstractFlexibleItem<RichTxtTxtItem.RichTxtT
     return R.layout.item_rich_txt_txt;
   }
 
-  @Override public RichTxtTxtVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater,
-      ViewGroup parent) {
-    return new RichTxtTxtVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public RichTxtTxtVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new RichTxtTxtVH(view,adapter);
   }
+
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, RichTxtTxtVH holder, int position,
       List payloads) {

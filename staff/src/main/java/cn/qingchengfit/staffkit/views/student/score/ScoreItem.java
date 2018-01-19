@@ -52,8 +52,8 @@ public class ScoreItem extends AbstractFlexibleItem<ScoreItem.ItemVH> {
         return R.layout.item_student_score;
     }
 
-    @Override public ItemVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new ItemVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public ItemVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new ItemVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ItemVH holder, int position, List payloads) {

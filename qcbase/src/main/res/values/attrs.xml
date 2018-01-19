@@ -21,6 +21,7 @@
     <attr format="boolean" name="phone_show_icon"/>
     <attr format="boolean" name="phone_nonull"/>
     <attr format="string" name="phone_hint"/>
+    <attr format="boolean" name="phone_only_mainland"/>
   </declare-styleable>
 
 
@@ -120,7 +121,8 @@
     <attr format="string" name="civ_hint"/>
     <attr format="string" name="civ_unit"/>
     <attr format="dimension" name="civ_label_width"/>
-
+    <attr format="boolean" name="civ_is_show_left"/>
+    <attr format="integer" name="civ_left_icon"/>
   </declare-styleable>
 
   <declare-styleable name="PagerSlidingTabStrip">
@@ -155,5 +157,42 @@
     <attr format="reference" name="img_filter"/>
     <attr format="string" name="filter_label"/>
   </declare-styleable>
+
+  <declare-styleable name="QcRadioGroup">
+    <attr format="boolean" name="qc_single"/>
+  </declare-styleable>
+
+  <declare-styleable name="LayoutSwitcher">
+    <attr format="string" name="sw_lable"/>
+    <attr format="reference" name="sw_layout"/>
+    <attr format="boolean" name="sw_showdivier"/>
+    <attr format="boolean" name="sw_open"/>
+    <attr format="integer" name="sw_text_color"/>
+    <attr format="integer" name="sw_background"/>
+  </declare-styleable>
+  <declare-styleable name="CircleIndicator">
+    <attr format="dimension" name="ci_width"/>
+    <attr format="dimension" name="ci_height"/>
+    <attr format="dimension" name="ci_margin"/>
+    <attr format="reference" name="ci_animator"/>
+    <attr format="reference" name="ci_animator_reverse"/>
+    <attr format="reference" name="ci_drawable"/>
+    <attr format="reference" name="ci_drawable_unselected"/>
+    <attr format="integer" name="ci_count_less"/>
+  </declare-styleable>
+
+  <declare-styleable name="LargeInputView">
+    <attr format="string" name="liv_lable"/>
+  </declare-styleable>
+
+  <declare-styleable name="ExpandTextView">
+    <attr format="boolean" name="el_tv_isExpand"/>
+    <attr format="integer" name="el_tv_drawable"/>
+    <attr format="string" name="el_tv_content"/>
+    <attr format="integer" name="el_tv_max_line"/>
+  </declare-styleable>
+
+  <item name="expand_text" type="id"/>
+  <item name="expand_image" type="id"/>
 
 </resources>

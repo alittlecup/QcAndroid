@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -30,10 +32,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.Shop;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshStudent;
 import cn.qingchengfit.staffkit.views.ChooseGymActivity;
 import cn.qingchengfit.staffkit.views.FilterCommonFragment;
@@ -83,11 +85,18 @@ public class StudentListFragment extends FilterCommonFragment {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject StudentWrapper studentWrapper;
+    @Inject SerPermisAction serPermisAction;
     private String keyWord;//搜索关键字
     private StudentAdapter studentAdapter;
     private List<StudentBean> datas = new ArrayList<>();
     private List<StudentBean> datasOfigin = new ArrayList<>();
     private String mChooseShopId;
+    StudentFilterFragment filterFragment;
+
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        filterFragment = new StudentFilterFragmentBuilder(1).build();
+    }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_studentlist, container, false);
@@ -106,7 +115,7 @@ public class StudentListFragment extends FilterCommonFragment {
             .replace(R.id.frame_student_operation, new StudentOperationFragment())
             .commit();
         // 会员筛选页
-        StudentFilterFragment filterFragment = new StudentFilterFragmentBuilder(1).build();
+
         getChildFragmentManager().beginTransaction().replace(R.id.frame_student_filter, filterFragment).commit();
 
         // 注册 event 刷新列表
@@ -118,7 +127,23 @@ public class StudentListFragment extends FilterCommonFragment {
         return view;
     }
 
+
+
+    @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+      Bundle savedInstanceState) {
+        super.onChildViewCreated(fm, f, v, savedInstanceState);
+        setBackPress();
+    }
+
+    @Override public boolean onFragmentBackPress() {
+        if (drawer.isDrawerOpen(Gravity.END)){
+            drawer.closeDrawer(Gravity.END);
+            return true;
+        }else return false;
+    }
+
     public void filterStudentConfirm(final StudentFilterEvent event) {
+        if (getActivity() != null)
         getActivity().runOnUiThread(new Runnable() {
             @Override public void run() {
                 filter = event.filter;
@@ -130,33 +155,16 @@ public class StudentListFragment extends FilterCommonFragment {
         });
     }
 
+
     @Override public void onDrawerClosed(View drawerView) {
         //filterFragment.resetView(filter);
         super.onDrawerClosed(drawerView);
     }
 
-    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        this.getView().setFocusableInTouchMode(true);
-        this.getView().requestFocus();
-        this.getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && drawer.isShown()) {
-                    drawer.closeDrawer(GravityCompat.END);
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+
 
     public void initToolBar() {
-        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        super.initToolbar(toolbar);
 
         if (!gymWrapper.inBrand()) {
             toolbarTitile.setText("会员");
@@ -192,7 +200,7 @@ public class StudentListFragment extends FilterCommonFragment {
                             .addToBackStack(null)
                             .commit();
                     } else if (item.getItemId() == R.id.action_add) {
-                        if (SerPermisAction.checkNoOne(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+                        if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
                             showAlert(R.string.alert_permission_forbid);
                             return true;
                         }
@@ -220,7 +228,7 @@ public class StudentListFragment extends FilterCommonFragment {
                 mChooseShopId = IntentUtils.getIntentString(data, 1);
                 String title = IntentUtils.getIntentString(data, 0);
                 if (!TextUtils.isEmpty(mChooseShopId)) {
-                    if (!SerPermisAction.check(mChooseShopId, PermissionServerUtils.MANAGE_MEMBERS)) {
+                    if (!serPermisAction.check(mChooseShopId, PermissionServerUtils.MANAGE_MEMBERS)) {
                         showAlert("您没有该场馆查看会员权限");
                         return;
                     }
@@ -236,7 +244,7 @@ public class StudentListFragment extends FilterCommonFragment {
                  */
                 Shop shops = (Shop) IntentUtils.getParcelable(data);
                 if (shops != null) {
-                    if (!SerPermisAction.check(shops.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+                    if (!serPermisAction.check(shops.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
                         showAlert("抱歉!您无该场馆权限");
                         return;
                     }
@@ -246,6 +254,7 @@ public class StudentListFragment extends FilterCommonFragment {
     }
 
     private void initView() {
+
         studentAdapter = new StudentAdapter(datas);
         studentlistRv.setLayoutManager(mLinearLayoutManager);
 
@@ -279,7 +288,7 @@ public class StudentListFragment extends FilterCommonFragment {
             @Override public boolean onTouch(View v, MotionEvent event) {
                 AppUtils.hideKeyboard(getActivity());
                 if (searchviewEt != null && TextUtils.isEmpty(searchviewEt.getText())) searchviewCancle.performClick();
-                return false;
+                return true;
             }
         });
 
@@ -416,7 +425,7 @@ public class StudentListFragment extends FilterCommonFragment {
 
     @OnClick(R.id.fab_add_student) void onClickAddStudent() {
 
-        if (SerPermisAction.checkNoOne(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+        if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
             showAlert(getString(R.string.alert_permission_forbid));
             return;
         }

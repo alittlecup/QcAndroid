@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="100dp"
+    android:layout_height="90dp"
+    android:background="@drawable/bg_rect_corner_primary"
+    android:id="@+id/layout_card_option"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      >
+
+  <LinearLayout
+      android:id="@+id/charge_layout"
+      android:layout_width="match_parent"
+      android:layout_height="90dp"
+      android:gravity="center"
+      android:minHeight="90dp"
+      android:orientation="vertical"
+      android:paddingBottom="6dp"
+      android:paddingTop="6dp"
+      >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        tools:text="1200元"
+        android:textStyle="bold"
+        android:maxWidth="70dp"
+        />
+
+    <TextView
+        android:id="@+id/real_income"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:lines="1"
+        android:textColor="@color/colorPrimary"
+        tools:text="(售价1200元)"
+        android:maxWidth="90dp"
+        />
+
+    <TextView
+        android:id="@+id/valid_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/txt_11sp"
+        tools:text="有效期:300天"
+        android:maxWidth="90dp"
+        />
+
+    <TextView
+        android:id="@+id/support_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/txt_11sp"
+        tools:text="适用于"
+        android:maxWidth="90dp"
+        />
+
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/img_custom_card_option"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignRight="@id/charge_layout"
+      android:layout_alignTop="@id/charge_layout"
+      app:srcCompat="@drawable/vd_custom_card_option"
+      />
+
+  <ImageView
+      android:id="@+id/tag_only_staff"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:visibility="gone"
+      app:srcCompat="@drawable/vd_card_visible_staff_only"
+
+      />
+  </RelativeLayout>
+
+  <View
+      android:id="@+id/shadow_card_option"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/colorPrimary"
+      android:alpha="0.1"
+      android:visibility="gone"/>
+</FrameLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -14,6 +15,8 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.inject.commpont.StudentWrapperComponent;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.FragCallBack;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -67,11 +70,16 @@ public class ScoreDetailActivity extends BaseActivity implements FragCallBack {
         initToolBar();
     }
 
+
+
     private void initView() {
         getSupportFragmentManager().beginTransaction().replace(getFragId(), scoreDetailFragment).commit();
     }
 
     private void initToolBar() {
+        if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup){
+            ((ViewGroup) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(this),0,0);
+        }
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

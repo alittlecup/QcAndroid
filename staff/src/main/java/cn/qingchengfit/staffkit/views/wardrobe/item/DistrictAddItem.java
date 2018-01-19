@@ -38,8 +38,8 @@ public class DistrictAddItem extends AbstractFlexibleItem<DistrictItem.DistrictV
         return R.layout.item_wardrobe_district_add;
     }
 
-    @Override public DistrictItem.DistrictVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new DistrictItem.DistrictVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public DistrictItem.DistrictVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new DistrictItem.DistrictVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, DistrictItem.DistrictVH holder, int position, List payloads) {

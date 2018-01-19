@@ -6,17 +6,17 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.body.ShopConfigBody;
 import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.network.ActivityLifeCycleEvent;
 import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
+import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.constant.ShopConfigs;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +30,7 @@ public class SigninConfigWradrobePresenter extends BasePresenter {
     PublishSubject<ActivityLifeCycleEvent> lifecycleSubject = PublishSubject.create();
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     private MVPView view;
     private RestRepositoryV2 restRepository;
 
@@ -74,8 +75,7 @@ public class SigninConfigWradrobePresenter extends BasePresenter {
     }
 
     boolean checkPermission() {
-        return SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK_CAN_CHANGE)||
-          SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK_CAN_CHANGE_NEW);
+        return serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_LOCKER_LINK_CAN_CHANGE_NEW);
     }
 
     //public void putCheckinWithLocker(String id, boolean value) {

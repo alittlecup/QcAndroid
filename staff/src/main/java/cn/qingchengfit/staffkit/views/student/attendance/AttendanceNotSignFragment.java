@@ -199,7 +199,7 @@ public class AttendanceNotSignFragment extends BaseFragment
     });
   }
 
-  private void onTextSearch(String text) {
+  public void onTextSearch(String text) {
     if (adapter.hasNewSearchText(text)) {
       adapter.setSearchText(text);
       adapter.filterItems(itemList, 100);

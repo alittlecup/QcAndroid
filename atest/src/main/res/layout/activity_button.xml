@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    >
+
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/fab_add_conversation"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      app:backgroundTint="@color/colorPrimary"
+      app:elevation="4dp"
+      app:fabSize="normal"
+      app:rippleColor="@color/colorPrimary"
+      app:srcCompat="@drawable/vd_share_white_24dp"
+      />
+
+  <android.support.design.widget.FloatingActionButton
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      app:backgroundTint="@color/colorPrimary"
+      app:elevation="4dp"
+      app:fabSize="normal"
+      app:rippleColor="@color/colorPrimary"
+      app:srcCompat="@drawable/vd_close_white_24dp"
+      />
+
+  <android.support.design.widget.FloatingActionButton
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      app:backgroundTint="@color/colorPrimary"
+      app:elevation="4dp"
+      app:fabSize="normal"
+      app:rippleColor="@color/colorPrimary"
+      app:srcCompat="@drawable/vd_order_filter"
+      />
+
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="测试按钮"
+      style="@style/QcBtnPrimary"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"/>
+
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="测试按钮(disable)"
+      android:enabled="false"
+      style="@style/QcBtnPrimary"
+      android:layout_marginTop="20dp"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"/>
+
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="测试按钮"
+      style="@style/QcBtnPrimaryFrame"
+      android:layout_marginTop="20dp"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"/>
+
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="测试按钮(danger)"
+      style="@style/QcBtnPrimaryDanger"
+      android:layout_marginTop="20dp"/>
+
+</LinearLayout>

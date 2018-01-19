@@ -17,7 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventRecycleClick;
 import cn.qingchengfit.items.FilterHeadItem;
@@ -116,13 +115,13 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     delegatePresenter(endFairPresenter, this);
     delegatePresenter(gymDetailPresenter, this);
     ((FrameLayout) layoutFilter.getChildAt(1)).addView(v, 0);
-    toolbar = ButterKnife.findById(view, R.id.toolbar);
-    toolbarTitile = ButterKnife.findById(view, R.id.toolbar_title);
-    searchEt = ButterKnife.findById(view, R.id.tb_searchview_et);
-    layoutSearch = ButterKnife.findById(view, R.id.searchview);
+    toolbar = view.findViewById( R.id.toolbar);
+    toolbarTitile = view.findViewById( R.id.toolbar_title);
+    searchEt = view.findViewById( R.id.tb_searchview_et);
+    layoutSearch = view.findViewById( R.id.searchview);
     searchEt.setHint("搜索意向职位");
-    imgClear = ButterKnife.findById(view, R.id.tb_searchview_clear);
-    btnCancel = ButterKnife.findById(view, R.id.tb_searchview_cancle);
+    imgClear = view.findViewById( R.id.tb_searchview_clear);
+    btnCancel = view.findViewById( R.id.tb_searchview_cancle);
     view.addView(layoutFilter, 1);
     layoutFilter.setOnRefreshListener(this);
     initToolbar(toolbar);
@@ -198,11 +197,11 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
     });
   }
 
-  @Override protected void initView() {
+  @Override protected void initView(Bundle savedInstanceState) {
     commonFlexAdapter.setStickyHeaders(true)
         .setDisplayHeadersAtStartUp(true)
         .setStickyHeaderElevation(1);
-    super.initView();
+    super.initView(savedInstanceState);
     rv.setClipToPadding(false);
     rv.addItemDecoration(
         new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_resume, 1)
@@ -316,8 +315,7 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
 
   }
 
-  @Override public void onStickyHeaderChange(int i) {
-  }
+
 
   /**
    * 展示筛选项
@@ -483,6 +481,10 @@ public class ResumeMarketHomeFragment extends ResumeListFragment
   }
 
   @Override public void onPermission(boolean has) {
+
+  }
+
+  @Override public void onStickyHeaderChange(int newPosition, int oldPosition) {
 
   }
 }

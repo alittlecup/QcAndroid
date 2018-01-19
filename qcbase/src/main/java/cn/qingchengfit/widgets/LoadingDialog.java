@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.utils.MeasureUtils;
 
 /**
@@ -43,7 +42,7 @@ public class LoadingDialog extends Dialog {
                 }
             }
         });
-        imgLoading = ButterKnife.findById(this, R.id.img_input_loading);
+        imgLoading = findViewById( R.id.img_input_loading);
         rotate = AnimationUtils.loadAnimation(context, R.anim.loading_rotate);
     }
 
@@ -52,8 +51,9 @@ public class LoadingDialog extends Dialog {
         if(window != null){
             window.getDecorView().setPadding(0, 0, 0, 0);
             WindowManager.LayoutParams lp = window.getAttributes();
-            lp.width = MeasureUtils.dpToPx(150f, getContext().getResources());
-            lp.height = MeasureUtils.dpToPx(130f, getContext().getResources());
+            lp.width = MeasureUtils.dpToPx(90f, getContext().getResources());
+            lp.height = MeasureUtils.dpToPx(90f, getContext().getResources());
+            window.setBackgroundDrawableResource(R.drawable.bg_input_loading_cornor);
             window.setAttributes(lp);
             imgLoading.startAnimation(rotate);
             super.show();

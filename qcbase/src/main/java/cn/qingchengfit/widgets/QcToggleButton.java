@@ -76,6 +76,14 @@ public class QcToggleButton extends View implements Checkable{
 
     }
 
+    public void setButtonDrawable(Drawable buttonDrawable) {
+        this.buttonDrawable = buttonDrawable;
+    }
+
+    public void setContent(String text){
+        this.text = text;
+    }
+
     @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.save();

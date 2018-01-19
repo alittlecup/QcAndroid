@@ -11,7 +11,6 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
-import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -21,11 +20,10 @@ import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.di.AppComponent;
 import com.qingchengfit.fitcoach.di.AppModule;
 import com.qingchengfit.fitcoach.di.DaggerAppComponent;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
-import com.tencent.tinker.loader.app.ApplicationLike;
-import com.tinkerpatch.sdk.TinkerPatch;
-import com.tinkerpatch.sdk.loader.TinkerPatchApplicationLike;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -53,8 +51,8 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     public static boolean gMainAlive = false;
     public static User gUser;
     public static int coachid;
-    public static DiskLruCache diskLruCache;
     public static boolean gCanReload = false;
+    public static DiskLruCache diskLruCache;
     // 数据接收的 URL
     final String SA_SERVER_URL = "http://qingchengfit.cloud.sensorsdata.cn:8006/sa?token=2f79f21494c6f970";
     // 配置分发的 URL
@@ -68,7 +66,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
     @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
     private String KEY_DEX2_SHA1 = "XXDSDSFHALJFDKLASF";
-    private ApplicationLike tinkerApplicationLike;
+    //private ApplicationLike tinkerApplicationLike;
 
     public static void setgUser(User ser) {
         gUser = ser;
@@ -92,16 +90,16 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     //
     @Override public void onCreate() {
         super.onCreate();
-        tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
-        //开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
-        if (tinkerApplicationLike != null) {
-            TinkerPatch.init(tinkerApplicationLike)
-                .reflectPatchLibrary()
-                .fetchPatchUpdate(true)
-                .setPatchRollbackOnScreenOff(true)
-                .setPatchRestartOnSrceenOff(true);
-            TinkerPatch.with().fetchPatchUpdate(true);
-        }
+        //tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
+        ////开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
+        //if (tinkerApplicationLike != null) {
+        //    TinkerPatch.init(tinkerApplicationLike)
+        //        .reflectPatchLibrary()
+        //        .fetchPatchUpdate(true)
+        //        .setPatchRollbackOnScreenOff(true)
+        //        .setPatchRestartOnSrceenOff(true);
+        //    TinkerPatch.with().fetchPatchUpdate(true);
+        //}
         try {
             FIR.init(this);
         } catch (Exception e) {
@@ -139,7 +137,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
         }
         AppComponent appComponent = DaggerAppComponent.builder().appModule(new AppModule.Builder().app(this)
                 .gymWrapper(new GymWrapper.Builder().build())
-            .restRepository(new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag)))
+            .restRepository(new RestRepository(new QcCloudClient()))
             .router(new BaseRouter())
             .loginStatus(new LoginStatus.Builder().loginUser(gUser == null ? new Staff() : Staff.formatFromUser(gUser, App.coachid + ""))
                 .session(session_id)

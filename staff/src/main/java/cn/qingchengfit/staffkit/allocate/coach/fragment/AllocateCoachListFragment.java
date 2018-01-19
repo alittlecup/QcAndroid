@@ -85,7 +85,7 @@ public class AllocateCoachListFragment extends BaseFragment
         for (Coach coach : list) {
             itemList.add(new CommonAllocateItem(coach));
         }
-        adapter.notifyDataSetChanged();
+        adapter.updateDataSet(itemList);
     }
 
     @Override public boolean onItemClick(int position) {

@@ -17,11 +17,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.GymExtra;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.utils.ToastUtils;
@@ -54,10 +54,12 @@ import rx.schedulers.Schedulers;
 public class SignInConfigScreenFragment extends BaseFragment {
 
     @Inject RestRepository mRestRepository;
+    @Inject GymFunctionFactory gymFunctionFactory;
     @BindView(R.id.tv_screen_url) TextView tvScreenUrl;
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
@@ -103,11 +105,11 @@ public class SignInConfigScreenFragment extends BaseFragment {
     }
 
     @OnClick(R.id.layout_screen) public void onClick() {
-        if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SCREEN_CAN_CHANGE)) {
+        if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SCREEN_CAN_CHANGE)) {
             showAlert(R.string.sorry_for_no_permission);
             return;
         }
-        GymFunctionFactory.goQrScan(this, GymFunctionFactory.SIGNIN_SCREEN, null, gymWrapper.getCoachService());
+        gymFunctionFactory.goQrScan(this, GymFunctionFactory.SIGNIN_SCREEN, null, gymWrapper.getCoachService());
     }
 
     @OnClick(R.id.btn_cpoy_link) public void onCopyLink() {

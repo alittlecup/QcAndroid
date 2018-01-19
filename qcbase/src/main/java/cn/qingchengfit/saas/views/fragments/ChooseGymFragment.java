@@ -37,7 +37,9 @@ import cn.qingchengfit.widgets.R;
 import cn.qingchengfit.widgets.R2;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -121,13 +123,15 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
             if (ResponseConstant.checkSuccess(qcResponse)) {
               if (qcResponse.data.gyms != null) {
                 adapter.clear();
+                List<IFlexible> datas = new ArrayList<>();
                 for (Gym gym : qcResponse.data.gyms) {
-                  adapter.addItem(new ChooseGymItem(gym));
+                  datas.add(new ChooseGymItem(gym));
                 }
-                if (adapter.getItemCount() == 0) {
-                  adapter.addItem(new NoDataTxtBtnItem("暂无场馆", "请先添加一个场馆并完善信息", "新增场馆"));
+                if (datas.size()== 0) {
+                  datas.add(new NoDataTxtBtnItem("暂无场馆", "请先添加一个场馆并完善信息", "新增场馆"));
                   btnAddGym.setVisibility(View.GONE);
                 }
+                adapter.updateDataSet(datas);
               }
             } else {
               onShowError(qcResponse.getMsg());

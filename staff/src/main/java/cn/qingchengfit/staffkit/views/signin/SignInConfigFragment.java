@@ -21,10 +21,10 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.SignInCostBody;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.model.responese.SignInConfig;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.SignInConfigItem;
 import cn.qingchengfit.staffkit.views.adapter.SignInFlexibleAdapter;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
@@ -50,6 +50,7 @@ public class SignInConfigFragment extends BaseFragment implements SignInConfigPr
     @BindView(R.id.recyclerView_SignIn_config) RecyclerView recyclerViewSignInConfig;
 
     @Inject SignInConfigPresenter presenter;
+    @Inject SerPermisAction serPermisAction;
     /**
      * 获得的初始化费用配置信息
      */
@@ -93,7 +94,7 @@ public class SignInConfigFragment extends BaseFragment implements SignInConfigPr
         unbinder = ButterKnife.bind(this, view);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         delegatePresenter(presenter, this);
-        isGranted = SerPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SETTING_CAN_CHANGE);
+        isGranted = serPermisAction.check(gymWrapper.id(), gymWrapper.model(), PermissionServerUtils.CHECKIN_SETTING_CAN_CHANGE);
         noPermission.setVisibility(isGranted ? View.GONE : View.VISIBLE);
         if (!PreferenceUtils.getPrefBoolean(getContext(), "showNotice" + App.staffId, false)) {
             tvSignInConfigNotice.setVisibility(View.VISIBLE);

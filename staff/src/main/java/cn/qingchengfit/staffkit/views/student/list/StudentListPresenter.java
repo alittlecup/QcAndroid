@@ -10,8 +10,9 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.Students;
-import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -48,6 +49,7 @@ public class StudentListPresenter extends BasePresenter {
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject StudentAction studentAction;
     private Subscription spQuery;
     private Subscription spQueryNet;
     private Subscription spFilter;
@@ -101,8 +103,8 @@ public class StudentListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map(new Func1<QcDataResponse<Students>, Boolean>() {
-                @Override public Boolean call(QcDataResponse<Students> qcResponseAllStudent) {
+            .map(new Func1<QcDataResponse<StudentListWrapper>, Boolean>() {
+                @Override public Boolean call(QcDataResponse<StudentListWrapper> qcResponseAllStudent) {
 
                     if (ResponseConstant.checkSuccess(qcResponseAllStudent)) {
                         for (QcStudentBean bean : qcResponseAllStudent.data.users) {
@@ -187,7 +189,7 @@ public class StudentListPresenter extends BasePresenter {
                                 bean.setSupport_gym(support);
                             }
                         }
-                        StudentAction.newInstance().saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
+                        studentAction.saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
                     }
 
                   return Observable.just(true)
@@ -215,7 +217,7 @@ public class StudentListPresenter extends BasePresenter {
 
     public void subsribeDb() {
         if (gymWrapper.inBrand()) {//连锁运营
-            RxRegiste(StudentAction.newInstance()
+            RxRegiste(studentAction
                 .getStudentByBrand(gymWrapper.brand_id())
                 .throttleLast(500, TimeUnit.MILLISECONDS)
                 .onBackpressureBuffer()
@@ -227,7 +229,7 @@ public class StudentListPresenter extends BasePresenter {
                     }
                 }));
         } else {//场馆
-            RxRegiste(StudentAction.newInstance()
+            RxRegiste(studentAction
                 .getStudentByGym(gymWrapper.id(), gymWrapper.model())
                 .throttleLast(500, TimeUnit.MILLISECONDS)
                 .onBackpressureBuffer()
@@ -257,7 +259,7 @@ public class StudentListPresenter extends BasePresenter {
 
     public void filter(String keyword) {
         if (spFilter != null) spFilter.unsubscribe();
-        spFilter = StudentAction.newInstance()
+        spFilter = studentAction
             .getStudentByKeyWord(keyword)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<List<QcStudentBean>>() {

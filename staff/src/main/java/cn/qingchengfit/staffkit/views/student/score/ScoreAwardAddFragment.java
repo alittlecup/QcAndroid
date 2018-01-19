@@ -125,6 +125,10 @@ public class ScoreAwardAddFragment extends BaseFragment implements ScoreAwardAdd
         //
     }
 
+    @Override public boolean isBlockTouch() {
+        return false;
+    }
+
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_score_config_award_add, container, false);

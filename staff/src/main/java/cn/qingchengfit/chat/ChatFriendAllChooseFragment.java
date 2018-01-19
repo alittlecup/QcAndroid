@@ -183,7 +183,7 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
 
     public void localFilter(String s) {
         if (TextUtils.isEmpty(s)) {
-            adapter.setSearchText(null);
+            adapter.setSearchText("");
             initData();
         } else {
             adapter.setSearchText(s);

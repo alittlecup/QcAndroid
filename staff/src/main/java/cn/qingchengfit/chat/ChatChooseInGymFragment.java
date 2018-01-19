@@ -25,12 +25,12 @@ import cn.qingchengfit.staffkit.rxbus.event.EventFresh;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.ChooseStaffItem;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.PositionHeaderItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
+import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
 import com.bumptech.glide.Glide;
-import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -109,7 +109,7 @@ public class ChatChooseInGymFragment extends BaseFragment
         //清空数据
         RxBusAdd(EventFresh.class).subscribe(new Action1<EventFresh>() {
             @Override public void call(EventFresh eventFresh) {
-                adapter.notifyDataSetChanged();
+                adapter.clear();
                 checkbox.setChecked(false);
             }
         });
@@ -150,7 +150,7 @@ public class ChatChooseInGymFragment extends BaseFragment
             }
             datas.add(item);
         }
-        adapter.notifyDataSetChanged();
+        adapter.updateDataSet(datas);
         for (int i = 0; i < adapter.getItemCount(); i++) {
             if (adapter.getItem(i) instanceof ChooseStaffItem) {
                 ChooseStaffItem item = (ChooseStaffItem) adapter.getItem(i);
@@ -159,7 +159,7 @@ public class ChatChooseInGymFragment extends BaseFragment
                 }
             }
         }
-        adapter.notifyDataSetChanged();
+        adapter.updateDataSet(datas);
     }
 
     @Override public String getFragmentName() {

@@ -30,6 +30,7 @@ public class StudentListPresenter extends BasePresenter {
 
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    @Inject StudentAction studentAction;
     private Subscription spFilter;
     private RestRepository restRepository;
     private StudentListView view;
@@ -97,7 +98,7 @@ public class StudentListPresenter extends BasePresenter {
                                 bean.setSupport_gym(support);
                             }
                         }
-                        StudentAction.newInstance().saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
+                        studentAction.saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
                       return qcResponseAllStudent.data.users;
                     } else {
                       return null;

@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+apply plugin: "com.squareup.sqldelight"
+
+def libs = rootProject.ext.libraries;
+def cfg = rootProject.ext.configuration;
+android {
+  compileSdkVersion cfg.compileVersion
+  buildToolsVersion cfg.buildToolsVersion
+
+  defaultConfig {
+    applicationId "cn.qingchengfit.pos"
+    minSdkVersion 21
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    multiDexEnabled true
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [packageName: 'cn.qingchengfit.pos',]
+      }
+    }
+  }
+
+  signingConfigs {
+    release {
+      storeFile file("../qingcheng.keystore")
+      storePassword "Qingcheng2014"
+      keyAlias "Qingcheng"
+      keyPassword "Qingcheng2014"
+    }
+  }
+
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      manifestPlaceholders = [
+                              APP_PACKAGE       : "cn.qingchengfit.pos",
+      ]
+    }
+    debug {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      manifestPlaceholders = [
+                              APP_PACKAGE       : "cn.qingchengfit.pos",
+      ]
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+}
+
+afterEvaluate {
+  android.applicationVariants.all { variant ->
+    variant.assemble.doLast {
+      if (variant.buildType.name.contains('release')) {
+        variant.outputs.all {
+          output ->
+            def apkpath = output.outputFile as File
+            exec {
+              ignoreExitValue true
+              def rootFile = new File("output")
+              commandLine "sh", rootFile.absolutePath+"/../reinforce.sh", apkpath, rootFile.absolutePath+"/.."
+            }
+        }
+
+      }
+    }
+  }
+}
+
+configurations.all {
+  resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation project(path: ':saasbase')
+  implementation "com.jakewharton:butterknife:${libs.butterknife}"
+  annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
+  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
+  implementation "org.glassfish:javax.annotation:${libs.javax_annotation}"
+  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  implementation 'com.android.support:multidex:1.0.2'
+  annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
+  annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+  testImplementation 'junit:junit:4.12'
+
+}

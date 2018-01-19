@@ -13,11 +13,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
-import cn.qingchengfit.staffkit.views.QRActivity;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecord;
 import cn.qingchengfit.staffkit.views.export.presenter.ImportExportPresenter;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
@@ -36,6 +36,7 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
   public static final String CARD_EXPORT_STR = "member_card";
 
   @Inject GymWrapper gymWrapper;
+  @Inject SerPermisAction serPermisAction;
   @BindView(R.id.tv_import) public TextView tvStudentImport;
   @BindView(R.id.tv_export) public TextView tvStudentExport;
   @Inject public ImportExportPresenter presenter;
@@ -56,7 +57,7 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
   }
 
   @OnClick(R.id.tv_import) public void onImport() {
-    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
+    if (!serPermisAction.check(gymWrapper.id(), gymWrapper.model(),
         PermissionServerUtils.STUDENT_IMPORT)) {
       showAlert(R.string.sorry_for_no_permission);
       return;
@@ -77,8 +78,7 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
   }
 
   @OnClick(R.id.tv_export) public void onExport() {
-    if (!SerPermisAction.check(gymWrapper.id(), gymWrapper.model(),
-        PermissionServerUtils.STUDENT_EXPORT)) {
+    if (!serPermisAction.check(PermissionServerUtils.STUDENT_EXPORT)) {
       showAlert(R.string.sorry_for_no_permission);
       return;
     }

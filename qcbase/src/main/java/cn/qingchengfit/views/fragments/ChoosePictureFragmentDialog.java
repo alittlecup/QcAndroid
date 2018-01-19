@@ -110,7 +110,7 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
     if (savedInstanceState != null) {
       mResult = (ChoosePicResult) savedInstanceState.getSerializable("callback");
     }
-    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE)
+    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
         .subscribe(new Action1<Boolean>() {
           @Override public void call(Boolean aBoolean) {
             if (aBoolean) {
@@ -134,8 +134,7 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
               //    CHOOSE_CAMERA);
 
             } else {
-              ToastUtils.show("请开启权限");
-              dismiss();
+              ToastUtils.show("请开启拍照及存储权限");
             }
           }
         });
@@ -191,9 +190,9 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
         mResult.onChoosePicResult(true, filepath);
       }
     } else {
-      if (mResult != null) {
-        mResult.onChoosePicResult(false, filepath);
-      }
+      //if (mResult != null) {
+      //  mResult.onChoosePicResult(false, filepath);
+      //}
       dismissAllowingStateLoss();
       //            RxBus.getBus().post(new EventChooseImage(""));
     }

@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#00c8d1</color>
-  <color name="colorPrimaryDark">#016368</color>
-  <color name="colorPrimaryDisable">@color/grey</color>
+  <color name="colorPrimary">#00CED8</color>
+  <color name="colorPrimaryDark">#00B8C1</color>
+  <color name="colorPrimaryDisable">#99EBEF</color>
+
+  <color name="danger_red_normal">#EA6161</color>
+  <color name="danger_red_pressed">#D25757</color>
+  <color name="danger_red_disable">#F6BFBF</color>
+
+  <color name="success_green">#58B87A</color>
 
   <color name="colorSetBg">#838B86</color>
-  <color name="divider_white">#e5e5e5</color>
+  <color name="divider_white">#E5E5E5</color>
   <color name="divider_grey">#dddddd</color>
   <color name="text_black">#333333</color>
   <color name="text_light">#ccc</color>
   <color name="bg_grey">#f4f4f4</color>
+  <color name="bg_grey_dark">#454545</color>
   <color name="backgroud_grey">@color/bg_grey</color>
   <color name="toolbar">#232428</color>
   <color name="most_black">#222222</color>
@@ -74,6 +81,7 @@
   <color name="iris">#5061c8</color>
   <color name="perrywinkle">#8a95d9</color>
   <color name="light_blue_grey">#b7beec</color>
+  <color name="bg_orange">#33f9944e</color>
 
 
   <color name="pinkish_grey">#bbbbbb</color>
@@ -89,6 +97,7 @@
   <color name="white_two">#f4f4f4</color>
   <color name="shamrock_green">#0db14b</color>
   <color name="black">#000000</color>
+  <color name="black_a_20">#33000000</color>
 
   <!-- Fonts -->
   <color name="month_title">@color/text_black</color>
@@ -108,6 +117,8 @@
   <color name="private_color">#7986cb</color>
   <color name="colorPrimarytrans">#110db14b</color>
   <color name="text_link">#6EB8F1</color>
+
+  <color name="pos_login_bg">#242424</color>
 
 
 </resources>

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.CView;
@@ -115,6 +116,10 @@ public abstract class BaseDialogFragment extends DialogFragment implements CView
         getActivity().onBackPressed();
       }
     });
+    //if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup  ) {
+    //  ((ViewGroup) toolbar.getParent()).setPadding(0,
+    //    MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
+    //}
   }
 
   public void showLoading() {
@@ -259,7 +264,7 @@ public abstract class BaseDialogFragment extends DialogFragment implements CView
   }
 
   /**
-   * 用语页面为空的状态
+   * 用于页面为空的状态
    */
   public void showLoadingTrans() {
     if (getActivity() instanceof BaseActivity) {
@@ -279,7 +284,21 @@ public abstract class BaseDialogFragment extends DialogFragment implements CView
     ToastUtils.show(e);
   }
 
+  @Override public void popBack() {
+    dismiss();
+  }
+
   @Override public void onShowError(@StringRes int e) {
     onShowError(getString(e));
+  }
+
+  @Override public void showSelectSheet(String title,List<String> strs,AdapterView.OnItemClickListener listener) {
+    if (getActivity() instanceof BaseActivity){
+      ((BaseActivity) getActivity()).showDialogList(title,strs,listener);
+    }
+  }
+
+  @Override public void popBack(int count) {
+    dismiss();
   }
 }

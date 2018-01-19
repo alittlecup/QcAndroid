@@ -1,15 +1,13 @@
 package com.qingchengfit.fitcoach.items;
 
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CoursePlan;
+import cn.qingchengfit.bean.CoursePlan;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -35,8 +33,8 @@ public class CoursePlanItem extends AbstractFlexibleItem<CoursePlanItem.CoursePl
         return R.layout.item_course_plan;
     }
 
-    @Override public CoursePlanVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new CoursePlanVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+    @Override public CoursePlanVH createViewHolder(View view, FlexibleAdapter adapter) {
+        return new CoursePlanVH(view, adapter);
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CoursePlanVH holder, int position, List payloads) {

@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
 import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
@@ -66,12 +66,13 @@ public class NotiSettingHomeFragment extends BaseFragment {
     View view = inflater.inflate(R.layout.fragment_noti_setting_home, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
+    vp.setAdapter(adapter);
+    tablayout.setupWithViewPager(vp);
     return view;
   }
 
   @Override protected void onFinishAnimation() {
-    vp.setAdapter(adapter);
-    tablayout.setupWithViewPager(vp);
+
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {

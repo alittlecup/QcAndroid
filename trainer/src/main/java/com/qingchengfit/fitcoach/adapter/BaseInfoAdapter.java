@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.BaseInfoBean;
+import cn.qingchengfit.bean.BaseInfoBean;
 import java.util.List;
 
 /**

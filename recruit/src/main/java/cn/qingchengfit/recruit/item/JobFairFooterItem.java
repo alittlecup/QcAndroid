@@ -25,8 +25,8 @@ public class JobFairFooterItem extends AbstractFlexibleItem<JobFairFooterItem.Jo
     return R.layout.item_more_job_fair;
   }
 
-  @Override public JobFairFooterVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-    return new JobFairFooterVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
+  @Override public JobFairFooterVH createViewHolder(View view, FlexibleAdapter adapter) {
+    return new JobFairFooterVH(view, adapter);
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, JobFairFooterVH holder, int position, List payloads) {

@@ -41,11 +41,11 @@ import cn.qingchengfit.widgets.R2;
 public class CommonInputTextFragment extends BaseFragment {
 
   @BindView(R2.id.toolbar) Toolbar toolbar;
-  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
-  @BindView(R2.id.et) EditText et;
-  private String title;
-  private String hint;
-  private String content;
+  @BindView(R2.id.toolbar_title) protected TextView toolbarTitle;
+  @BindView(R2.id.et) protected EditText et;
+  public String title;
+  public String hint;
+  public String content;
 
   public static CommonInputTextFragment newInstance(String title, String content, String hint) {
     Bundle args = new Bundle();
@@ -95,6 +95,9 @@ public class CommonInputTextFragment extends BaseFragment {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
+    if(getActivity() != null){
+      AppUtils.hideKeyboard(getActivity());
+    }
   }
 
   @OnClick(R2.id.img_close) public void onImgCloseClicked() {

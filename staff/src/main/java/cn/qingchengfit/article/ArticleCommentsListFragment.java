@@ -185,7 +185,7 @@ import rx.functions.Action1;
                 commonFlexAdapter.addItem(new CommonNoDataItem(R.drawable.vd_no_comment, "还没人评论，快来抢沙发"));
             }
 
-            commonFlexAdapter.notifyDataSetChanged();
+            commonFlexAdapter.updateDataSet(items);
             if (curPage == 1) linearLayoutManager.scrollToPosition(0);
         }
     }

@@ -7,13 +7,15 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
-import cn.qingchengfit.staffkit.allocate.coach.model.StudentWithCoach;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.Get_Api;
+import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import java.util.HashMap;
 import java.util.List;
@@ -31,10 +33,9 @@ public class CoachDetailPresenter extends BasePresenter {
 
     @Inject GymWrapper gymWrapper;
     private CoachPreView view;
-    private RestRepository restRepository;
+    @Inject QcRestRepository restRepository;
 
-    @Inject public CoachDetailPresenter(RestRepository restRepository) {
-        this.restRepository = restRepository;
+    @Inject public CoachDetailPresenter() {
     }
 
     @Override public void onStart() {
@@ -70,7 +71,7 @@ public class CoachDetailPresenter extends BasePresenter {
         HashMap<String, Object> params = gymWrapper.getParams();
         params.put("user_id", studId);
         params.put("seller_id", salerId);
-        RxRegiste(restRepository.getPost_api()
+        RxRegiste(restRepository.createPostApi(Post_Api.class)
             .qcDeleteStudent(App.staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -113,7 +114,7 @@ public class CoachDetailPresenter extends BasePresenter {
 
         if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
         if (filter.sale != null) params.put("seller_id", filter.sale.getId());
-        RxRegiste(restRepository.getGet_api()
+        RxRegiste(restRepository.createGetApi(Get_Api.class)
             .qcGetCoachStudentDetail(staffId, params)
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
@@ -126,7 +127,7 @@ public class CoachDetailPresenter extends BasePresenter {
     }
 
     public interface CoachPreView extends CView {
-        void onStudentList(List<StudentWithCoach> list);
+        void onStudentList(List<QcStudentBean> list);
 
         void onRemoveSucess(int position);
 

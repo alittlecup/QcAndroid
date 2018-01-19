@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="text_student_import">会员导入</string>
+  <string name="text_student_export">会员导出</string>
+  <string name="text_card_import">会员卡导入</string>
+  <string name="text_card_export">会员卡导出</string>
+  <string name="text_export_status">导出中...</string>
+  <string name="toolbar_export_record">数据导出记录</string>
+  <string name="text_send_email">系统将把文件发送到邮箱</string>
+  <string name="hint_email_address">请输入您的邮箱地址</string>
+  <string name="text_email">邮箱</string>
+  <string name="toolbar_send_email">下载数据文件</string>
+  <string name="module_export_name">导出记录</string>
+  <string name="fun_name_import_export">导入导出</string>
+  <string name="toolbar_import_export_student">会员导入导出</string>
+  <string name="toolbar_import_export_card">会员卡导入导出</string>
+  <string name="tip_dialog_success_title">提交成功</string>
+  <string name="tip_dialog_success_content">请在 全部功能-场馆管理-数据导出记录 中查看</string>
+</resources>

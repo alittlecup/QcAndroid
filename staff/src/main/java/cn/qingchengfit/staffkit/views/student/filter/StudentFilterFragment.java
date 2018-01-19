@@ -20,6 +20,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.student.followup.FollowUpFilterFragment;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CheckBoxButton;
 import cn.qingchengfit.widgets.QcRadioGroup;
@@ -54,6 +55,7 @@ import java.util.Locale;
  * //     ┗┻┛　┗┻┛
  * //
  * //Created by yangming on 16/11/29.
+ *
  */
 @FragmentWithArgs public class StudentFilterFragment extends BaseFragment {
 
@@ -99,7 +101,12 @@ import java.util.Locale;
         View view = inflater.inflate(R.layout.fragment_student_filter, container, false);
         unbinder = ButterKnife.bind(this, view);
         initView();
+        view.setPadding(0, MeasureUtils.getStatusBarHeight(getContext()),0,0);
         return view;
+    }
+
+    @Override public boolean isBlockTouch() {
+        return false;
     }
 
     public void setFromPage(int fromPage) {
@@ -138,14 +145,13 @@ import java.util.Locale;
         //if (studentFilter.referrerBean != null ) {
         //    referrerFragment.onReferrers(studentFilter.referrerBean);
         //}
-        //
+
         //if (studentFilter.sourceBeanList != null && studentFilter.sourceBeanList.size() != 0) {
         //    sourceFragment.onSources(studentFilter.sourceBeanList);
         //}
     }
 
     private void initView() {
-
         referrerFragment = new ReferrerFragmentBuilder(2).build();
         getChildFragmentManager().beginTransaction().replace(R.id.frame_student_filter_referrer, referrerFragment).commit();
 
@@ -279,7 +285,7 @@ import java.util.Locale;
         referrerFragment.reset();
         // // 重置来源
         sourceFragment.reset();
-        // // reset Filter
+        // // reset FilterModel
         filter = new StudentFilter();
 
         //  // 关闭筛选页

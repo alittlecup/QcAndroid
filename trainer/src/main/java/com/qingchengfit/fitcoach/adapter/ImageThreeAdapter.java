@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.ImageThreeBean;
+import cn.qingchengfit.bean.ImageThreeBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import java.util.List;
 

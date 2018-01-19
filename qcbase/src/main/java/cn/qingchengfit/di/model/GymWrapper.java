@@ -5,6 +5,7 @@ import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.GymUtils;
 import java.util.HashMap;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -27,17 +28,33 @@ import java.util.HashMap;
  * Created by Paper on 2017/3/1.
  */
 
-public class GymWrapper{
+public class GymWrapper {
 
   private CoachService coachService;
   private Brand brand;
+  private SuperUser superuser;
+  private String custumNo;  //pos机的客户号
   private boolean noService;
   private boolean isOutOfDate;
   private boolean isSingleMode;
+  private String socket_channel_id;
 
-  private GymWrapper(Builder builder) {
+  @Inject
+  public GymWrapper(){
+
+  }
+
+  public GymWrapper(Builder builder) {
     coachService = builder.coachService;
     brand = builder.brand;
+  }
+
+  public String getCustumNo() {
+    return custumNo;
+  }
+
+  public void setCustumNo(String custumNo) {
+    this.custumNo = custumNo;
   }
 
   public boolean isNoService() {
@@ -58,6 +75,14 @@ public class GymWrapper{
 
   public boolean inBrand() {
     return coachService == null || TextUtils.isEmpty(coachService.getId());
+  }
+
+  public String getSocket_channel_id() {
+    return socket_channel_id;
+  }
+
+  public void setSocket_channel_id(String socket_channel_id) {
+    this.socket_channel_id = socket_channel_id;
   }
 
   public boolean isPro() {
@@ -82,6 +107,15 @@ public class GymWrapper{
   public String id() {
     if (coachService != null) {
       return coachService.id();
+    } else {
+      return "";
+    }
+  }
+
+
+  public String getGymId(){
+    if (coachService != null) {
+      return coachService.gym_id();
     } else {
       return "";
     }
@@ -174,6 +208,10 @@ public class GymWrapper{
     this.coachService = coachService;
   }
 
+  public void setSuperuser(SuperUser superuser) {
+    this.superuser = superuser;
+  }
+
   public Brand getBrand() {
     if (brand == null && coachService != null) {
       return new Brand.Builder().id(coachService.brand_id())
@@ -187,7 +225,7 @@ public class GymWrapper{
     this.brand = brand;
   }
 
-  public static final class Builder {
+  public static class Builder {
     private CoachService coachService;
     private Brand brand;
 
