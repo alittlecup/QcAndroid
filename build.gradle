@@ -39,10 +39,16 @@ ext {
 
 buildscript {
   repositories {
-    maven { url "https://maven.google.com" }
-    jcenter()
+//    maven { url "https://maven.google.com" }
+//    jcenter()
+    maven {
+      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/maven-central/'
+    }
+    maven {
+      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
+    }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-    mavenCentral()
+//    mavenCentral()
   }
 
   dependencies {
@@ -80,12 +86,12 @@ allprojects {
     }
 
 
-    mavenCentral()
-
-    maven { url "https://maven.google.com" }
-
-    maven {
-      url "https://s3.amazonaws.com/repo.commonsware.com"
-    }
+//    mavenCentral()
+//
+//    maven { url "https://maven.google.com" }
+//
+//    maven {
+//      url "https://s3.amazonaws.com/repo.commonsware.com"
+//    }
   }
 }
