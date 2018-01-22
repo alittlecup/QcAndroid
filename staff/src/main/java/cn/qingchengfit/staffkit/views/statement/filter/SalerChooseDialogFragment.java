@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,6 +60,7 @@ public class SalerChooseDialogFragment extends BaseDialogFragment implements Sal
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_coach, container, false);
         unbinder = ButterKnife.bind(this, view);
+        delegatePresenter(presenter, this);
         title.setText(R.string.choose_salers);
         adapter = new StringAdapter(stringList);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -76,7 +78,6 @@ public class SalerChooseDialogFragment extends BaseDialogFragment implements Sal
             }
         });
         presenter.querySaler();
-        presenter.attachView(this);
         return view;
     }
 
@@ -114,5 +115,34 @@ public class SalerChooseDialogFragment extends BaseDialogFragment implements Sal
             stringList.add(salers.get(i).getUsername());
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override public void onShowError(String e) {
+
+    }
+
+    @Override public void onShowError(int e) {
+
+    }
+
+    @Override public void showAlert(String s) {
+
+    }
+
+    @Override public void showAlert(int s) {
+
+    }
+
+    @Override public void showSelectSheet(String title, List<String> strs,
+        AdapterView.OnItemClickListener listener) {
+
+    }
+
+    @Override public void popBack() {
+
+    }
+
+    @Override public void popBack(int count) {
+
     }
 }

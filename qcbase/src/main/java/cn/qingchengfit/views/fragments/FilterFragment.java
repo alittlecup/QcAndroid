@@ -43,6 +43,11 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
         this.onSelectListener = onSelectListener;
     }
 
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        commonFlexAdapter = new CommonFlexAdapter(items, this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,6 +57,7 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
         rlPopWindowCommon.setAdapter(commonFlexAdapter);
         commonFlexAdapter.setMode(SelectableAdapter.Mode.SINGLE);
         commonFlexAdapter.addListener(this);
+        commonFlexAdapter.updateDataSet(items);
         return view;
     }
 
@@ -71,10 +77,8 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
         if (items.size() > 0) {
             this.items.clear();
             this.items.addAll(items);
-            if (commonFlexAdapter == null) {
-                commonFlexAdapter = new CommonFlexAdapter(this.items, this);
-            }
-            commonFlexAdapter.notifyDataSetChanged();
+            if (commonFlexAdapter != null)
+                commonFlexAdapter.updateDataSet(items);
         }
     }
 

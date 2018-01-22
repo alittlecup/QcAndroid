@@ -59,10 +59,12 @@ public class ChooseStudentListFragment extends SimpleStudentListFragment {
         lastChoose = commonFlexAdapter.getSelectedPositions().size() > 0?commonFlexAdapter.getSelectedPositions().get(0):-1;
       }
       StudentItem item = (StudentItem)commonFlexAdapter.getItem(i);
-      if (studentIdList.contains(item.getId())){
-        studentIdList.remove(item.getId());
-      }else{
-        studentIdList.add(item.getId());
+      if (studentIdList != null) {
+        if (studentIdList.contains(item.getId())) {
+          studentIdList.remove(item.getId());
+        } else {
+          studentIdList.add(item.getId());
+        }
       }
       commonFlexAdapter.toggleSelection(i);
       commonFlexAdapter.notifyItemChanged(i);

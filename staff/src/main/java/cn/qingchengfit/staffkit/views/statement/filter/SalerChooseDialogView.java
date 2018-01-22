@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.views.statement.filter;
 
-import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.CView;
 import cn.qingchengfit.model.base.StudentBean;
 import java.util.List;
 
@@ -24,6 +24,6 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/7/5 2016.
  */
-public interface SalerChooseDialogView extends PView {
+public interface SalerChooseDialogView extends CView {
     void onList(List<StudentBean> salers);
 }
