@@ -26,6 +26,7 @@ import cn.qingchengfit.staffkit.views.main.HomeUnLoginFragment;
 import cn.qingchengfit.staffkit.views.main.SetGymInMainFragmentBuilder;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
@@ -128,6 +129,7 @@ public class AddBrandFragment extends BaseDialogFragment implements AddBrandView
         if (!TextUtils.isEmpty(content.getContent().trim())) {
             showLoading();
             presenter.createBrand(content.getContent().trim(), uploadImg);
+
         }
     }
 
@@ -152,6 +154,7 @@ public class AddBrandFragment extends BaseDialogFragment implements AddBrandView
     @Override public void onSucceed(CreatBrand creatBrand) {
         //getTargetFragment().onActivityResult(getTargetRequestCode(), 1, IntentUtils.instanceStringIntent(content.getContent().trim()));
         //this.dismiss();
+        SensorsUtils.track("QcSaasCreateBrand").commit(getContext());
         hideLoading();
         if (getParentFragment() instanceof HomeUnLoginFragment) {
             ((HomeUnLoginFragment) getParentFragment()).replace(new SetGymInMainFragmentBuilder(creatBrand.brand).build(), true);

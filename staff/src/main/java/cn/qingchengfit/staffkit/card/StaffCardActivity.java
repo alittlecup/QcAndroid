@@ -34,7 +34,10 @@ import cn.qingchengfit.staffkit.card.view.StaffCardBuyFragment;
 import cn.qingchengfit.staffkit.card.view.StaffCardChargeFragment;
 import cn.qingchengfit.staffkit.card.view.StaffCardListHomeFragment;
 import com.anbillon.flabellum.annotations.Trunk;
+import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 
+
+@SensorsDataIgnoreTrackAppViewScreen
 @Trunk(fragments = {
   CardTplsHomeInGymFragment.class, CardTplsInBrandFragment.class, CardTplDetailFragment.class, AutoNotifySettingFragment.class,CardBalanceFragment.class,
   ChangeAutoNotifyFragment.class, BatchPayCardFragment.class,

@@ -148,7 +148,7 @@ public class App extends Application
 
         App.staffId = PreferenceUtils.getPrefString(this, Configs.PREFER_WORK_ID, "");
         logView = new LogView(this);
-        if (!BuildConfig.DEBUG) {
+        //if (!BuildConfig.DEBUG) {
             //初始化神策
             SensorsDataAPI.sharedInstance(this,                               // 传入 Context
                 SA_SERVER_URL,                      // 数据接收的 URL
@@ -157,7 +157,8 @@ public class App extends Application
 
             try {
                 SensorsDataAPI.sharedInstance(this).enableAutoTrack();
-
+                //初始化 SDK 之后，开启自动采集 Fragment 页面浏览事件
+                SensorsDataAPI.sharedInstance().trackFragmentAppViewScreen();
                 JSONObject properties = new JSONObject();
                 properties.put("qc_app_name", "Staff");
                 SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
@@ -168,7 +169,7 @@ public class App extends Application
                 e.printStackTrace();
                 Log.e("hs_bug", e.getMessage());
             }
-        }
+        //}
         initX5();
 
     }

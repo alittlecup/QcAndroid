@@ -22,6 +22,7 @@ import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.PopFromBottomActivity;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.GymUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import javax.inject.Inject;
@@ -110,6 +111,15 @@ public class UpgradeInfoDialogFragment extends BaseDialogFragment {
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
+
+
+                        SensorsUtils.track("QcSaasTrial")
+                          .addProperty("qc_brand_created_at",gymWrapper.getBrand().getCreated_at())
+                          //.addProperty("qc_shop_created_at",gymWrapper.getCoachService().)//todo 无法获取场馆创建时间
+                          .commit(getContext());
+
+
+
                         new TrialProDialogFragment().show(getFragmentManager(), "");
                         dismiss();
                     }

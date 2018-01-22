@@ -25,6 +25,7 @@ import cn.qingchengfit.staffkit.views.gym.AddBrandView;
 import cn.qingchengfit.staffkit.views.gym.CreateBrandPresenter;
 import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.activity.BaseActivity;
@@ -60,6 +61,7 @@ public class AddBrandActivity extends BaseActivity implements AddBrandView {
         setContentView(R.layout.fragment_gym_add_brand);
         ButterKnife.bind(this);
         presenter.attachView(this);
+        presenter.onNewSps();
         if (getIntent() != null && getIntent().getIntExtra(GymActivity.GYM_TO, -1) == GymActivity.GYM_GUIDE) {
             guideStep1.setVisibility(View.VISIBLE);
         }
@@ -119,6 +121,9 @@ public class AddBrandActivity extends BaseActivity implements AddBrandView {
     }
 
     @Override public void onSucceed(final CreatBrand creatBrand) {
+        SensorsUtils.track("QcSaasCreateBrand")
+          .commit(this);
+
 
         restRepository.getGet_api()
             .qcGetBrands(App.staffId).onBackpressureBuffer().subscribeOn(Schedulers.io())

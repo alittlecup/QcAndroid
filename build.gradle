@@ -41,11 +41,15 @@ buildscript {
   repositories {
     maven { url "https://maven.google.com" }
     jcenter()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-    mavenCentral()
+        mavenCentral()
+
     maven {
-      url 'https://dl.bintray.com/zouyuhan/maven'
+      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/maven-central/'
     }
+    maven {
+      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
+    }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
   }
 
   dependencies {

@@ -40,6 +40,7 @@ import cn.qingchengfit.staffkit.views.gym.GymActivity;
 import cn.qingchengfit.staffkit.views.gym.upgrate.item.LinearFunItem;
 import cn.qingchengfit.staffkit.views.gym.upgrate.item.PayItem;
 import cn.qingchengfit.utils.GymUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.AnimatedButton;
@@ -234,6 +235,17 @@ public class UpgrateGymFragment extends BaseFragment {
     }
 
     @OnClick(R.id.btn_pay) public void onClickPay() {
+        //记录场馆充值
+        SensorsUtils.track("QcSaasRecharge")
+          //.addProperty("qc_saas_first_recharge_time",)//当前场馆第一次付费时间
+          //.addProperty("qc_saas_shop_status",)//当前Saas场馆的状态
+          //.addProperty("qc_saas_shop_expire_time",)//当前场馆的过期时间
+          //.addProperty("qc_saas_recharge_type",)//Saas场馆续费方式
+          //.addProperty("qc_saas_shop_has_trialed",)//Saas场馆是否续费过
+          //.addProperty("qc_saas_recharge_times",)//Saas场馆续费的月数
+          //.addProperty("qc_saas_recharge_price",)//Saas场馆续费的价格
+        .commit(getContext());
+
         showLoading();
         RxRegiste(new RestRepository().getPost_api()
             .qcCharge(new RenewBody.Builder().app_id(getString(R.string.wechat_code))

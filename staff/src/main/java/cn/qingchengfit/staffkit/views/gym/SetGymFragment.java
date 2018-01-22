@@ -38,7 +38,9 @@ import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -191,6 +193,7 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
         RxBus.getBus().post(new SaveEvent());
         body.auto_trial = false;
         showLoading();
+
         mSetGymPresenter.initShop(body);
     }
 
@@ -281,6 +284,19 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
                 getActivity().finish();
             }
         }
+
+
+        //记录创建场馆动作
+        RxRegiste(gymBaseInfoAction.getAllGyms()
+            .subscribe(new BusSubscribe<List<CoachService>>() {
+                @Override public void onNext(List<CoachService> services) {
+                    SensorsUtils.track("QcSaasCreateShop")
+                      .addProperty("qc_brand_shops_count",(services.size()-1)+"")
+                      .commit(getContext());
+                }
+            })
+        );
+
     }
 
     @Override public void onFailed() {

@@ -92,7 +92,7 @@ dependencies {
   }
   api 'eu.davidea:flexible-adapter-databinding:1.0.0-b2'
   api 'com.umeng.analytics:analytics:6.1.2'
-  api 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.8.8'
+  api 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.8.16'
   //  api "me.henrytao:smooth-app-bar-layout:${libs.supportVersion}.0"
   api 'com.google.android:flexbox:0.3.0-alpha3'
   api 'com.github.rubensousa:gravitysnaphelper:1.1'

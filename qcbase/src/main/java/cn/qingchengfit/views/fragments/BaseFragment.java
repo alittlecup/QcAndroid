@@ -48,6 +48,7 @@ import com.bigkoo.pickerview.TimePopupWindow;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
+import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxFragment;
 import dagger.android.support.AndroidSupportInjection;
@@ -76,6 +77,7 @@ import rx.functions.Func1;
  * <p>
  * Created by Paper on 15/9/22 2015.
  */
+@SensorsDataTrackFragmentAppViewScreen
 public abstract class BaseFragment extends RxFragment
   implements BaseActivity.FragmentBackPress, CView {
   @Deprecated public FragCallBack mCallbackActivity;
@@ -109,6 +111,10 @@ public abstract class BaseFragment extends RxFragment
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+  }
+  @Override
+  public void onResume() {
+    super.onResume();
   }
 
   protected void doEventOnCreatView(Class classz ,Action1 action1){

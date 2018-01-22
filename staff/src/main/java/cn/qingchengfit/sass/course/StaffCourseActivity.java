@@ -25,6 +25,7 @@ import cn.qingchengfit.saasbase.course.course.views.EditCourseFragment;
 import cn.qingchengfit.saasbase.course.course.views.JacketManagerFragment;
 import cn.qingchengfit.saasbase.course.course.views.ShopCommentsFragment;
 import com.anbillon.flabellum.annotations.Trunk;
+import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 
 /**
  * power by
@@ -46,6 +47,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/11/6.
  */
+@SensorsDataIgnoreTrackAppViewScreen
 @Trunk(fragments = {
   BatchListPrivateFragment.class, BatchListGroupFragment.class, AddBatchFragment.class,
   BatchListCategoryGroupFragment.class, BatchListCategoryPrivateFragment.class,

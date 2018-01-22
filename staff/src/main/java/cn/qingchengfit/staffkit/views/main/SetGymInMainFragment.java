@@ -34,6 +34,7 @@ import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.utils.IntentUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -189,6 +190,12 @@ import rx.schedulers.Schedulers;
                                     List<CoachService> coachServices = new ArrayList<>();
                                     coachServices.add(qcResponseSystenInit.data);
                                     gymBaseInfoAction.writeGyms(coachServices);
+
+                                    //记录创建场馆动作
+                                    SensorsUtils.track("QcSaasCreateShop")
+                                      .addProperty("qc_brand_shops_count","0")
+                                      .commit(getContext());
+
                                 }
                             } else {
                                 ToastUtils.showDefaultStyle(qcResponseSystenInit.getMsg());
