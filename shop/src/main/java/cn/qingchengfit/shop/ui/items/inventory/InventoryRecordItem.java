@@ -12,7 +12,13 @@ import java.util.List;
  * Created by huangbaole on 2018/1/16.
  */
 
-public class InventoryRecordItem extends AbstractFlexibleItem<DataBindingViewHolder<ItemInventoryRecordBinding>> {
+public class InventoryRecordItem
+    extends AbstractFlexibleItem<DataBindingViewHolder<ItemInventoryRecordBinding>> {
+  private IInventoryRecordData data;
+
+  public InventoryRecordItem(IInventoryRecordData data) {
+    this.data = data;
+  }
 
   @Override public boolean equals(Object o) {
     return false;

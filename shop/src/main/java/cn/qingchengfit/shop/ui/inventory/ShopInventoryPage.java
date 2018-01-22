@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopInventoryBinding;
@@ -23,8 +24,8 @@ import com.anbillon.flabellum.annotations.Leaf;
     mViewModel.indexEvent.observe(this, index -> {
       filterView.showPage(index);
     });
-    mViewModel.fragVisible.observe(this,aBoolean -> {
-      mBinding.fragFilter.setVisibility(aBoolean? View.VISIBLE:View.GONE);
+    mViewModel.fragVisible.observe(this, aBoolean -> {
+      mBinding.fragFilter.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
     });
   }
 
@@ -33,7 +34,13 @@ import com.anbillon.flabellum.annotations.Leaf;
       Bundle savedInstanceState) {
     mBinding = PageShopInventoryBinding.inflate(inflater, container, false);
     initFragment();
+    initToolbar();
     return mBinding;
+  }
+
+  private void initToolbar() {
+    mBinding.setToolbarModel(new ToolbarModel(getString(R.string.inventory_reocrd)));
+    initToolbar(mBinding.includeToolbar.toolbar);
   }
 
   private void initFragment() {

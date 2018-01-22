@@ -21,16 +21,18 @@
         />
     <cn.qingchengfit.widgets.SwitcherLayout
         app:sw_lable="@string/product_pay_online"
+        app:sw_text_color="000"
         style="@style/QcSwitchLayout"
         />
     <cn.qingchengfit.widgets.SwitcherLayout
+        style="@style/QcSwitchLayout"
         android:layout_marginTop="14dp"
         app:sw_lable="@string/product_pay_offline"
-        style="@style/QcSwitchLayout"
         />
     <cn.qingchengfit.widgets.SwitcherLayout
         android:layout_marginTop="14dp"
-        app:sw_lable="@string/product_pay_card"
+        app:sw_lable="会员卡支付"
+        app:sw_text_color="000"
         style="@style/QcSwitchLayout"
         />
 

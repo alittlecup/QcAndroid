@@ -50,8 +50,9 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:layout_marginTop="22dp"
-        tools:text="@string/add_inventory"
+        tools:text="@string/inventory_add"
         style="@style/QcTextStyleMediumDark"
+        android:textColor="@color/colorPrimary"
         />
     <TextView
         android:id="@+id/inventory_count"
@@ -64,13 +65,13 @@
         style="@style/QcTextStyleSmallDark"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="29dp"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/operator_way"
-        android:layout_marginTop="22dp"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="22dp"
+        android:layout_toLeftOf="@id/operator_way"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/txt_20sp"
+        android:textSize="20sp"
         tools:text="+3"
         style="@style/QcTextStyleLargeDark"
         />

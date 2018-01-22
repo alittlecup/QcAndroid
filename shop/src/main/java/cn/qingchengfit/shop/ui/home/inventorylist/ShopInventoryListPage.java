@@ -23,7 +23,6 @@ public class ShopInventoryListPage
       Uri uri = Uri.parse("shop://shop/shop/inventory");
       routeTo(uri, null);
     });
-
     mViewModel.getLiveItems().observe(this, items -> {
       mViewModel.items.set(items);
     });
@@ -35,6 +34,7 @@ public class ShopInventoryListPage
     mBinding = PageInventoryListBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mViewModel);
     initRecyclerView();
+    mViewModel.loadSource(mViewModel.getParams());
     return mBinding;
   }
 

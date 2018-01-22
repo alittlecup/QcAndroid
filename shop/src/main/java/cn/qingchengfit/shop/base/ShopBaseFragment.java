@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.common.mvvm.BaseViewModel;
+import cn.qingchengfit.shop.routers.ShopParamsInjector;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import javax.inject.Inject;
@@ -28,6 +29,7 @@ public abstract class ShopBaseFragment<DB extends ViewDataBinding, VM extends Vi
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    ShopParamsInjector.inject(this);
     mViewModel = ViewModelProviders.of(this, factory).get(getVMClass());
     subscribeUI();
   }

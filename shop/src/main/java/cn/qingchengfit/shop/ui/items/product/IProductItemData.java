@@ -7,7 +7,7 @@ package cn.qingchengfit.shop.ui.items.product;
 public interface IProductItemData {
   String getProductName();
 
-  String[] getProductImages();
+  String getProductImage();
 
   String getProductAddTime();
 
@@ -18,4 +18,6 @@ public interface IProductItemData {
   int getProductInventory();
 
   int getProductPriority();
+
+  boolean getProductStatus();
 }

@@ -26,6 +26,8 @@
   <string name="add_product_date">添加时间：%</string>
   <string name="add_product_time">添加时间</string>
   <string name="add_product">添加商品</string>
+  <string name="add_product_image">添加商品图片</string>
+  <string name="product_detail">商品详情</string>
   <string name="search_product">搜索店内商品</string>
   <string name="product_empty_text">暂无出售中商品，赶快去添加吧～</string>
   <string name="input_product_name">请填写商品名称</string>
@@ -43,6 +45,7 @@
   <string name="product_pay_online">线上支付</string>
   <string name="product_pay_offline">线下支付</string>
   <string name="product_pay_card">会员卡支付</string>
+  <string name="choose_product_pay_channel">选择支付方式</string>
 
 
   <string name="product_pay_card_prices">会员卡支付价格</string>
@@ -73,6 +76,9 @@
 
   <!--inventory-->
   <string name="all_inventory_list">查看总库存记录</string>
+  <string name="inventory_reocrd">库存记录</string>
+  <string name="inventory_add">(库存增加)</string>
+  <string name="inventory_reduce">库存减少</string>
   <string name="add_inventory">增加库存</string>
   <string name="reduce_inventory">减少库存</string>
   <string name="add_inventory_count">增加库存数</string>

@@ -21,6 +21,7 @@
           android:layout_height="@dimen/dimen_common_input_60dp"
           app:civ_hint="@string/input_product_price"
           app:civ_lable="@string/price"
+          app:civ_nonnull="true"
           style="@style/QcCivClickStyle"
           />
       <cn.qingchengfit.widgets.CommonInputView
@@ -29,6 +30,7 @@
           android:layout_height="@dimen/dimen_common_input_60dp"
           app:civ_hint="@string/input_product_inventory"
           app:civ_lable="@string/inventory"
+          app:civ_nonnull="true"
           style="@style/QcCivInputStyle"
           />
       <cn.qingchengfit.widgets.CommonInputView
@@ -37,6 +39,7 @@
           android:layout_height="@dimen/dimen_common_input_60dp"
           app:civ_hint="@string/input_product_category"
           app:civ_lable="@string/type"
+          app:civ_nonnull="true"
           style="@style/QcCivInputStyle"
           />
     </LinearLayout>

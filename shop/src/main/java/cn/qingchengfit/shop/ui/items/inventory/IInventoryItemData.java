@@ -10,9 +10,10 @@ public interface IInventoryItemData {
 
   String getImageUri();
 
-  String getProductStatus();
+  boolean getProductStatus();
 
   String getInventoryCount();
+  String getProductUnit();
 
-  String getCategoryDetail();
+  CharSequence getCategoryDetail();
 }

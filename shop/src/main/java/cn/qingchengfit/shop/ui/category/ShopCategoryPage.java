@@ -82,13 +82,20 @@ import javax.inject.Inject;
     switch (action) {
       case 0:
         mBinding.categoryTitle.setText(getString(R.string.add_category));
-        mBinding.includeBottom.postive.setOnClickListener(
-            view -> mViewModel.addShopCategory(category));
+        mBinding.includeBottom.postive.setOnClickListener(view -> {
+          Category category = new Category();
+          category.setName(mBinding.categoryName.toString());
+          category.setPriority(Integer.valueOf(mBinding.categoryWeight.toString()));
+          mViewModel.addShopCategory(category);
+        });
         break;
       case 1:
         mBinding.categoryTitle.setText(getString(R.string.update_category));
-        mBinding.includeBottom.postive.setOnClickListener(
-            view -> mViewModel.updateShopCategory(category));
+        mBinding.includeBottom.postive.setOnClickListener(view -> {
+          category.setName(mBinding.categoryName.toString());
+          category.setPriority(Integer.valueOf(mBinding.categoryWeight.toString()));
+          mViewModel.updateShopCategory(category);
+        });
         break;
       case 2:
         mBinding.categoryName.setVisibility(View.GONE);

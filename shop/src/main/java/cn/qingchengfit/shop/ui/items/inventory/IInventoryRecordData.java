@@ -6,4 +6,5 @@ package cn.qingchengfit.shop.ui.items.inventory;
 
 public interface IInventoryRecordData {
 
+
 }

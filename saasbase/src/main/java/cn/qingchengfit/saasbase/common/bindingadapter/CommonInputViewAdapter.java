@@ -11,9 +11,9 @@ import cn.qingchengfit.widgets.CommonInputView;
 
 /**
  * 在使用的时候应该注意的是要加'='
- *  app:civ_content="@={content}"
+ * app:civ_content="@={content}"
  *
- *  content为{@link ObservableField}
+ * content为{@link ObservableField}
  *
  * Created by huangbaole on 2017/12/20.
  */
@@ -31,6 +31,11 @@ import cn.qingchengfit.widgets.CommonInputView;
     if (!inputView.getContent().equals(content)) {
       inputView.setContent(content);
     }
+  }
+
+  @BindingAdapter(value = { "civ_showright" })
+  public static void setCommonInputViewShowRight(CommonInputView inputView, Boolean showRight) {
+    inputView.setShowRight(showRight);
   }
 
   @BindingAdapter(value = "onConentChange")

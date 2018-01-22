@@ -8,9 +8,9 @@ public interface ICategotyItemData {
 
   String getCategoryName();
 
-  String getCategoryPriority();
+  int getCategoryPriority();
 
   int getCategoryProductCount();
 
-  String getId();
+  int getId();
 }

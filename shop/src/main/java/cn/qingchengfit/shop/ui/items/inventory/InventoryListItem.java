@@ -1,9 +1,12 @@
 package cn.qingchengfit.shop.ui.items.inventory;
 
+import android.content.Context;
+import android.text.SpannableStringBuilder;
 import android.view.View;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemProductInventoryBinding;
 import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
+import cn.qingchengfit.shop.util.SpanUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -37,9 +40,23 @@ public class InventoryListItem
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemProductInventoryBinding> holder, int position, List payloads) {
     ItemProductInventoryBinding dataBinding = holder.getDataBinding();
+    Context context = dataBinding.getRoot().getContext();
     dataBinding.productName.setText(data.getName());
-    dataBinding.productSaleStatus.setText(data.getProductStatus());
+    dataBinding.productSaleStatus.setText(
+        context.getString(data.getProductStatus() ? R.string.on_sale : R.string.off_sale));
     PhotoUtils.smallCornner4dp(dataBinding.productImage, data.getImageUri());
-    // TODO: 2018/1/16 缺少规格详情数据
+    dataBinding.goodsContent.setText(data.getCategoryDetail());
+    SpannableStringBuilder spannableStringBuilder = new SpanUtils().append(data.getInventoryCount())
+        .setFontSize(18, true)
+        .setForegroundColor(context.getColor(R.color.colorPrimary))
+        .append("/" + data.getProductUnit())
+        .setFontSize(10, true)
+        .setForegroundColor(context.getColor(R.color.colorPrimary))
+        .append("(总共)")
+        .setFontSize(10, true)
+        .setForegroundColor(context.getColor(R.color.text_color_gray))
+        .create();
+    dataBinding.inventoryCount.setText(spannableStringBuilder);
+
   }
 }

@@ -3,6 +3,7 @@ package cn.qingchengfit.shop.ui.items.category;
 import android.view.View;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemCategotyListBinding;
+import cn.qingchengfit.shop.listener.CategotyItemClickListener;
 import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -15,9 +16,11 @@ import java.util.List;
 public class CategoryListItem
     extends AbstractFlexibleItem<DataBindingViewHolder<ItemCategotyListBinding>> {
   private ICategotyItemData data;
+  private CategotyItemClickListener listener;
 
-  public CategoryListItem(ICategotyItemData data) {
+  public CategoryListItem(ICategotyItemData data, CategotyItemClickListener listener) {
     this.data = data;
+    this.listener = listener;
   }
 
   @Override public boolean equals(Object o) {
@@ -30,14 +33,19 @@ public class CategoryListItem
 
   @Override public DataBindingViewHolder<ItemCategotyListBinding> createViewHolder(View view,
       FlexibleAdapter adapter) {
-    return new DataBindingViewHolder<>(view, adapter);
+    DataBindingViewHolder<ItemCategotyListBinding> viewHolder =
+        new DataBindingViewHolder<>(view, adapter);
+    ItemCategotyListBinding dataBinding = viewHolder.getDataBinding();
+    dataBinding.categoryDelete.setOnClickListener(v -> listener.onDeleteClick(data));
+    dataBinding.categoryUpdate.setOnClickListener(v -> listener.onPutClick(data));
+    return viewHolder;
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemCategotyListBinding> holder, int position, List payloads) {
     ItemCategotyListBinding dataBinding = holder.getDataBinding();
     dataBinding.categoryName.setText(data.getCategoryName());
-    dataBinding.categoryWeight.setText(data.getCategoryPriority());
+    dataBinding.categoryWeight.setText(String.valueOf(data.getCategoryPriority()));
     dataBinding.categoryProductCount.setText(dataBinding.getRoot()
         .getContext()
         .getString(R.string.category_products, data.getCategoryProductCount()));

@@ -20,8 +20,8 @@ import java.util.List;
 /**
  * Created by huangbaole on 2017/12/18.
  */
-@Leaf(module = "shop",path = "/shop/home")
-public class ShopHomePage extends ShopBaseFragment<PageShopHomeBinding, ShopHomeViewModel> {
+@Leaf(module = "shop", path = "/shop/home") public class ShopHomePage
+    extends ShopBaseFragment<PageShopHomeBinding, ShopHomeViewModel> {
   private List<Pair<String, Fragment>> fragmentList;
 
   @Override protected void subscribeUI() {
@@ -34,30 +34,33 @@ public class ShopHomePage extends ShopBaseFragment<PageShopHomeBinding, ShopHome
     initToolBar();
     mBinding.setViewModel(mViewModel);
     initView();
-    return mBinding ;
+    return mBinding;
   }
 
   private void initView() {
     mBinding.viewpager.setOffscreenPageLimit(3);
-    mBinding.viewpager.setAdapter(new ShopHomePageAdapter(getChildFragmentManager(), getFragmentList()));
+    mBinding.viewpager.setAdapter(
+        new ShopHomePageAdapter(getChildFragmentManager(), getFragmentList()));
     mBinding.tabview.setupWithViewPager(mBinding.viewpager);
   }
 
   private void initToolBar() {
-
     initToolbar(mBinding.includeToolbar.toolbar);
     mBinding.setToolbarModel(new ToolbarModel("商店"));
   }
 
-  public List<Pair<String,Fragment>> getFragmentList() {
-    if(fragmentList==null){
-      fragmentList=new ArrayList<>();
+  public List<Pair<String, Fragment>> getFragmentList() {
+    if (fragmentList == null) {
+      fragmentList = new ArrayList<>();
       // TODO: 2017/12/18 确定viewpager的itemFragment
-      fragmentList.add(new Pair<>(getString(R.string.on_sale),new ShopProductsListPage()));
-      fragmentList.add(new Pair<>(getString(R.string.off_sale),new ShopProductsListPage()));
-      fragmentList.add(new Pair<>(getString(R.string.category_manage),new ShopCategoryListPage()));
-      fragmentList.add(new Pair<>(getString(R.string.inventory_manage),new ShopInventoryListPage()));
-      fragmentList.add(new Pair<>("weex",new WeexSplashPage()));
+      fragmentList.add(
+          new Pair<>(getString(R.string.on_sale), ShopProductsListPage.newInstance(0)));
+      fragmentList.add(
+          new Pair<>(getString(R.string.off_sale), ShopProductsListPage.newInstance(1)));
+      fragmentList.add(new Pair<>(getString(R.string.category_manage), new ShopCategoryListPage()));
+      fragmentList.add(
+          new Pair<>(getString(R.string.inventory_manage), new ShopInventoryListPage()));
+      fragmentList.add(new Pair<>("weex", new WeexSplashPage()));
     }
     return fragmentList;
   }

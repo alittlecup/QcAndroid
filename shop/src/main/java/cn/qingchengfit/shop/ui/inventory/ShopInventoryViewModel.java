@@ -9,7 +9,7 @@ import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.shop.ui.items.CommonItemFactory;
 import cn.qingchengfit.shop.ui.items.inventory.InventoryRecordItem;
-import cn.qingchengfit.shop.vo.Inventory;
+import cn.qingchengfit.shop.vo.Record;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -18,7 +18,7 @@ import javax.inject.Inject;
  */
 
 public class ShopInventoryViewModel
-    extends FlexibleViewModel<List<Inventory>, InventoryRecordItem, String> {
+    extends FlexibleViewModel<List<Record>, InventoryRecordItem, String> {
 
   public final ObservableField<List<InventoryRecordItem>> items = new ObservableField<>();
   public final MutableLiveData<Integer> indexEvent = new MutableLiveData<>();
@@ -38,17 +38,19 @@ public class ShopInventoryViewModel
     }
   }
 
-  @NonNull @Override protected LiveData<List<Inventory>> getSource(@NonNull String s) {
+  @NonNull @Override protected LiveData<List<Record>> getSource(@NonNull String s) {
+
+
     return null;
   }
 
-  @Override protected boolean isSourceValid(@Nullable List<Inventory> inventories) {
+  @Override protected boolean isSourceValid(@Nullable List<Record> inventories) {
     return inventories != null && !inventories.isEmpty();
   }
 
-  @Override protected List<InventoryRecordItem> map(@NonNull List<Inventory> inventories) {
+  @Override protected List<InventoryRecordItem> map(@NonNull List<Record> inventories) {
     return FlexibleItemProvider.with(
-        new CommonItemFactory<Inventory, InventoryRecordItem>(InventoryRecordItem.class))
+        new CommonItemFactory<Record, InventoryRecordItem>(InventoryRecordItem.class))
         .from(inventories);
   }
 }

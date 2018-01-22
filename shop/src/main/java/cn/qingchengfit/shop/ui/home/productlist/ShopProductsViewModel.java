@@ -2,9 +2,9 @@ package cn.qingchengfit.shop.ui.home.productlist;
 
 import android.arch.lifecycle.LiveData;
 import android.databinding.ObservableField;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
@@ -14,6 +14,8 @@ import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.ui.items.CommonItemFactory;
 import cn.qingchengfit.shop.ui.items.product.ProductListItem;
 import cn.qingchengfit.shop.vo.Product;
+import cn.qingchengfit.shop.vo.ShopOrderBy;
+import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -22,7 +24,7 @@ import javax.inject.Inject;
  */
 
 public class ShopProductsViewModel
-    extends FlexibleViewModel<List<Product>, ProductListItem, String> {
+    extends FlexibleViewModel<List<Product>, ProductListItem, HashMap<String, Object>> {
   public ActionLiveEvent getProductEvent() {
     return productEvent;
   }
@@ -34,7 +36,20 @@ public class ShopProductsViewModel
   @Inject GymWrapper gymWrapper;
   @Inject ShopRepository repository;
 
+  public void setStatus(@IntRange(from = 0, to = 1) int status) {
+    params.put("status", status);
+  }
+
+  public HashMap<String, Object> getParams() {
+    return params;
+  }
+
+  private HashMap<String, Object> params = new HashMap<>();
+
   @Inject public ShopProductsViewModel() {
+    params.put("status", 0);
+    params.put("order_by", ShopOrderBy.PRRORITY_UP);
+    params.put("page", 1);
   }
 
   public void onAddProductCall() {
@@ -42,24 +57,30 @@ public class ShopProductsViewModel
   }
 
   public void onWeightClick(boolean isArrowUp) {
-    Log.d("TAG", "onWeightClick: " + isArrowUp);
+    params.put("order_by", isArrowUp ? ShopOrderBy.PRRORITY_UP : ShopOrderBy.PRRORITY_DOWN);
+    loadSource(params);
   }
 
   public void onSalesClick(boolean isArrowUp) {
-    Log.d("TAG", "onWeightClick: ");
+    params.put("order_by", isArrowUp ? ShopOrderBy.TOTAL_SALES_UP : ShopOrderBy.TOTAL_SALES_DOWN);
+    loadSource(params);
   }
 
   public void onInventoryClick(boolean isArrowUp) {
-    Log.d("TAG", "onWeightClick: ");
+    params.put("order_by", isArrowUp ? ShopOrderBy.INVENTPORY_UP : ShopOrderBy.INVENTPORY_DOWN);
+    loadSource(params);
   }
 
   public void onAdddDateClick(boolean isArrowUp) {
-    Log.d("TAG", "onWeightClick: ");
+    params.put("order_by", isArrowUp ? ShopOrderBy.CREATED_AT_UP : ShopOrderBy.CREATED_AT_DOWN);
+    loadSource(params);
   }
 
-  @NonNull @Override protected LiveData<List<Product>> getSource(@NonNull String s) {
-
-    return null;
+  @NonNull @Override
+  protected LiveData<List<Product>> getSource(@NonNull HashMap<String, Object> map) {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    params.putAll(map);
+    return repository.qcLoadProductList(loginStatus.staff_id(), params);
   }
 
   @Override protected boolean isSourceValid(@Nullable List<Product> product) {
@@ -67,7 +88,7 @@ public class ShopProductsViewModel
   }
 
   @Override protected List<ProductListItem> map(@NonNull List<Product> products) {
-    return FlexibleItemProvider.with(new CommonItemFactory<Product, ProductListItem>(ProductListItem.class))
-        .from(products);
+    return FlexibleItemProvider.with(
+        new CommonItemFactory<Product, ProductListItem>(ProductListItem.class)).from(products);
   }
 }

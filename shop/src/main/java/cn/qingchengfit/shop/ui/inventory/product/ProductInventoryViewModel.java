@@ -10,7 +10,7 @@ import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
 import cn.qingchengfit.shop.ui.items.CommonItemFactory;
 import cn.qingchengfit.shop.ui.items.inventory.InventoryRecordItem;
-import cn.qingchengfit.shop.vo.Inventory;
+import cn.qingchengfit.shop.vo.Record;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -19,7 +19,7 @@ import javax.inject.Inject;
  */
 
 public class ProductInventoryViewModel
-    extends FlexibleViewModel<List<Inventory>, InventoryRecordItem, String> {
+    extends FlexibleViewModel<List<Record>, InventoryRecordItem, String> {
   public final ObservableField<List<InventoryRecordItem>> items = new ObservableField<>();
 
   private final ActionLiveEvent addInventoryEvent = new ActionLiveEvent();
@@ -32,8 +32,8 @@ public class ProductInventoryViewModel
     return reduceInventoryEvent;
   }
 
-  public final MutableLiveData<Integer> indexEvent=new MutableLiveData<>();
-  public final MutableLiveData<Boolean> fragVisible=new MutableLiveData<>();
+  public final MutableLiveData<Integer> indexEvent = new MutableLiveData<>();
+  public final MutableLiveData<Boolean> fragVisible = new MutableLiveData<>();
 
   private final ActionLiveEvent reduceInventoryEvent = new ActionLiveEvent();
 
@@ -50,26 +50,26 @@ public class ProductInventoryViewModel
     reduceInventoryEvent.call();
   }
 
-  public void onShowFragmentByIndex(Boolean isChecked,Integer index){
-    if(isChecked){
+  public void onShowFragmentByIndex(Boolean isChecked, Integer index) {
+    if (isChecked) {
       fragVisible.setValue(true);
       indexEvent.setValue(index);
-    }else{
+    } else {
       fragVisible.setValue(false);
     }
   }
 
-  @NonNull @Override protected LiveData<List<Inventory>> getSource(@NonNull String s) {
+  @NonNull @Override protected LiveData<List<Record>> getSource(@NonNull String s) {
     return null;
   }
 
-  @Override protected boolean isSourceValid(@Nullable List<Inventory> inventories) {
+  @Override protected boolean isSourceValid(@Nullable List<Record> inventories) {
     return inventories != null && !inventories.isEmpty();
   }
 
-  @Override protected List<InventoryRecordItem> map(@NonNull List<Inventory> inventories) {
+  @Override protected List<InventoryRecordItem> map(@NonNull List<Record> inventories) {
     return FlexibleItemProvider.with(
-        new CommonItemFactory<Inventory, InventoryRecordItem>(InventoryRecordItem.class))
+        new CommonItemFactory<Record, InventoryRecordItem>(InventoryRecordItem.class))
         .from(inventories);
   }
 }
