@@ -594,6 +594,9 @@ public class GymFunctionFactory {
     }
 
     public void goQrScan(final BaseFragment context, final String toUrl, String Permission, final CoachService mCoachService) {
+        if (mCoachService.getId() == null){
+            return;
+        }
         if (serPermisAction.check(mCoachService.getId(), mCoachService.getModel(), Permission) || Permission == null) {
 
             Intent toScan = new Intent(context.getActivity(), QRActivity.class);

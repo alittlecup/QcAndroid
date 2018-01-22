@@ -161,9 +161,12 @@ public class NotSignFilterFragment extends BaseFragment
       }
     });
 
-    getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, typeFilter, "type").commit();
-    getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, statusFilter, "status").commit();
-    getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, timeFitler, "time").commit();
+    if (!typeFilter.isAdded())
+      getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, typeFilter, "type").commit();
+    if (!statusFilter.isAdded())
+      getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, statusFilter, "status").commit();
+    if (!timeFitler.isAdded())
+      getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, timeFitler, "time").commit();
   }
 
 

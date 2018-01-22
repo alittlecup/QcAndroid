@@ -29,8 +29,8 @@ import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
-import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
 import cn.qingchengfit.saasbase.cards.views.CardProtocolActivity;
+import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
@@ -187,6 +187,7 @@ import cn.qingchengfit.staffkit.views.statement.detail.StatementDetailFragment;
 import cn.qingchengfit.staffkit.views.statement.excel.OutExcelFragment;
 import cn.qingchengfit.staffkit.views.statement.filter.CardTypeChooseDialogFragment;
 import cn.qingchengfit.staffkit.views.statement.filter.CoachChooseDialogFragment;
+import cn.qingchengfit.staffkit.views.statement.filter.CourseChooseDialogFragment;
 import cn.qingchengfit.staffkit.views.statement.filter.SalerChooseDialogFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SaleGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SigninGlanceFragment;
@@ -482,7 +483,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.NotSignFilterFragmentModule.class, AppComponent.AttendanceNotSignFragmentModule.class,
 
   AppComponent.StaffDetailFragmentModule.class,
-  AppComponent.CoachListModule.class, AppComponent.CardProtocolModule.class,
+  AppComponent.CoachListModule.class, AppComponent.CardProtocolModule.class, AppComponent.COurseChooseDialogFragmentModule.class,
 
 })
 
@@ -3488,5 +3489,13 @@ public interface AppComponent {
     @Module(subcomponents = CardProtocolSubcomponent.class) abstract class CardProtocolModule {
         @Binds @IntoMap @ActivityKey(CardProtocolActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(CardProtocolSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface CourseChooseDialogFragmentSubcomponent extends AndroidInjector<CourseChooseDialogFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseChooseDialogFragment> {}
+    }
+    @Module(subcomponents = CourseChooseDialogFragmentSubcomponent.class) abstract class COurseChooseDialogFragmentModule {
+        @Binds @IntoMap @FragmentKey(CourseChooseDialogFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseChooseDialogFragmentSubcomponent.Builder builder);
     }
 }

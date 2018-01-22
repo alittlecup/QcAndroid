@@ -91,12 +91,16 @@ public class AttendanceNotSignFragment extends BaseFragment
         getResources().getString(R.string.text_filter_not_sign_count, 5));
     timeFilterFragment = new FilterFragment();
     countFilterFragment = new FilterFragment();
-    getChildFragmentManager().beginTransaction()
-        .add(R.id.frag_not_sign_filter, timeFilterFragment)
-        .commit();
-    getChildFragmentManager().beginTransaction()
-        .add(R.id.fragment_not_sign_count, countFilterFragment)
-        .commit();
+    if (!timeFilterFragment.isAdded()) {
+      getChildFragmentManager().beginTransaction()
+          .add(R.id.frag_not_sign_filter, timeFilterFragment)
+          .commit();
+    }
+    if (!countFilterFragment.isAdded()) {
+      getChildFragmentManager().beginTransaction()
+          .add(R.id.fragment_not_sign_count, countFilterFragment)
+          .commit();
+    }
 
     ViewGroup.LayoutParams params = fragNotSignFilter.getLayoutParams();
     params.height = 0;
@@ -306,7 +310,7 @@ public class AttendanceNotSignFragment extends BaseFragment
         }
       }));
     }
-    adapter.notifyDataSetChanged();
+    adapter.updateDataSet(itemList);
     textFilterTotal.setText(
         getResources().getString(R.string.text_not_sign_tip, DateUtils.interval(start, end) + 1,
             count, studentList.size()));

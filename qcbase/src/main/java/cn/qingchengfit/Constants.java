@@ -31,7 +31,7 @@ public class Constants {
 
   public static final String Server =
       "http://cloud.qingchengfit.cn/";
-  public static String ServerDebug = "http://cloudtest01.qingchengfit.cn/";
+  public static String ServerDebug = "http://cloudtest.qingchengfit.cn/";
   public static final String ServerMirror =
       "http://cloudmirror.qingchengfit.cn/";
 

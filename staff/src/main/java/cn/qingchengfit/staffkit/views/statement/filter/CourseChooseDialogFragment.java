@@ -69,12 +69,13 @@ public class CourseChooseDialogFragment extends BaseDialogFragment implements Co
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_course, container, false);
         unbinder = ButterKnife.bind(this, view);
+        delegatePresenter(presenter, this);
         ArrayWheelAdapter<String> courseTypeAdatper =
             new ArrayWheelAdapter<String>(new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.choose_course_type))),
                 8);
         courseType.setAdapter(courseTypeAdatper);
         courseType.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 16f);
-        presenter.attachView(this);
+
         if (getArguments() != null) {
             presenter.setCourse(getArguments());
             presenter.changeCourse();
@@ -92,11 +93,6 @@ public class CourseChooseDialogFragment extends BaseDialogFragment implements Co
 
     @Override public void onAttach(Context context) {
         super.onAttach(context);
-    }
-
-    @Override public void onDestroyView() {
-        presenter.unattachView();
-        super.onDestroyView();
     }
 
     @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -167,7 +167,7 @@ import rx.functions.Action1;
     civEndTime.setClickable(false);
     if (cardTpl.has_service_term) {
       cardProtocol.setVisibility(View.VISIBLE);
-    }else{
+    } else {
       cardProtocol.setVisibility(View.GONE);
     }
     SmoothScrollLinearLayoutManager layoutManager =
@@ -196,7 +196,7 @@ import rx.functions.Action1;
     return view;
   }
 
-  protected SpannableString setTimeFormat(String content){
+  protected SpannableString setTimeFormat(String content) {
     SpannableString s = new SpannableString(content + " 修改");
     s.setSpan(
         new ForegroundColorSpan(getResources().getColor(cn.qingchengfit.widgets.R.color.text_dark)),
@@ -218,13 +218,14 @@ import rx.functions.Action1;
           @Override public void call(EventCustomOption eventCustomOption) {
             if (eventCustomOption != null) {
               cardOptionCustom = eventCustomOption.getCardOptionCustom();
-              if(optionList.size() > 0 && TextUtils.isEmpty(optionList.get(optionList.size() - 1).id)){
+              if (optionList.size() > 0 && TextUtils.isEmpty(
+                  optionList.get(optionList.size() - 1).id)) {
                 optionList.remove(optionList.size() - 1);
               }
               optionList.add(eventCustomOption.getCardOptionCustom());
               commonFlexAdapter.removeItem(commonFlexAdapter.getItemCount() - 1);
               commonFlexAdapter.notifyItemRemoved(commonFlexAdapter.getItemCount() - 1);
-              commonFlexAdapter.addItem(commonFlexAdapter.getItemCount() ,
+              commonFlexAdapter.addItem(commonFlexAdapter.getItemCount(),
                   new CardTplCustomOptionItem(eventCustomOption.getCardOptionCustom(), cardTpl.type,
                       CardBuyFragment.this));
               for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
@@ -238,7 +239,7 @@ import rx.functions.Action1;
         });
   }
 
-  private void initBus(){
+  private void initBus() {
     ob = RxBus.getBus().register(PayEvent.class);
     ob.compose(this.<PayEvent>bindToLifecycle()).subscribe(new Action1<PayEvent>() {
       @Override public void call(PayEvent payEvent) {
@@ -250,7 +251,6 @@ import rx.functions.Action1;
       }
     });
   }
-
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
@@ -278,7 +278,7 @@ import rx.functions.Action1;
   }
 
   public void onConfirmPay() {
-    if (optionList.size() == 0){
+    if (optionList.size() == 0) {
       DialogUtils.showAlert(getContext(), "请至少选择一种会员卡规格");
       return;
     }
@@ -289,12 +289,12 @@ import rx.functions.Action1;
    * 选择规格
    */
   @Override public boolean onItemClick(int position) {
-    if (position < optionList.size()){
+    if (position < optionList.size()) {
       //已有规格 展示价格
       cardOptionCustom = optionList.get(position);
       showInputMoney(false, cardOptionCustom, cardOptionCustom.limit_days);
       setPayMoney(cardOptionCustom.price);
-    }else {
+    } else {
       cardOptionCustom = null;
       showInputMoney(true, cardOptionCustom, false);
     }
@@ -304,28 +304,28 @@ import rx.functions.Action1;
     return true;
   }
 
-  @OnClick(R2.id.card_protocol)
-  public void onCardProrocol(){
-    if (cardTpl.card_tpl_service_term != null){
-      CardProtocolActivity.startWeb(cardTpl.card_tpl_service_term.content_link, getContext(), false);
+  @OnClick(R2.id.card_protocol) public void onCardProrocol() {
+    if (cardTpl.card_tpl_service_term != null) {
+      CardProtocolActivity.startWeb(cardTpl.card_tpl_service_term.content_link, getContext(),
+          false);
     }
   }
 
   @Override public void onGetOptions(List<CardTplOption> options) {
     commonFlexAdapter.clear();
-    if (options.size() > 0){
+    if (options.size() > 0) {
       optionList.clear();
       optionList.addAll(options);
     }
     for (CardTplOption option : options) {
       commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type, this));
     }
-    if(permissionModel.check(PermissionServerUtils.CARDBALANCE_CAN_CHANGE)){
+    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
       commonFlexAdapter.addItem(new CardtplOptionOhterItem());
     }
     if (options.size() > 0) {
       onItemClick(0);
-    }else{
+    } else {
       layoutValidate.setVisibility(View.GONE);
     }
   }
@@ -338,9 +338,9 @@ import rx.functions.Action1;
     cardview.setBackground(
         DrawableUtils.generateBg(16, CardBusinessUtils.getDefaultCardbgColor(cardTpl.type)));
     tvCardAppend.setText(cardTpl.getLimit());
-    if (TextUtils.isEmpty(cardTpl.getDescription())){
+    if (TextUtils.isEmpty(cardTpl.getDescription())) {
       tvCardExpandDesc.setContent("简介：无");
-    }else {
+    } else {
       tvCardExpandDesc.setContent("简介: " + cardTpl.getDescription());
     }
   }
@@ -358,9 +358,9 @@ import rx.functions.Action1;
     choosTime(TimePopupWindow.Type.YEAR_MONTH_DAY, 0, 0, new Date(), civStartTime,
         new TimeDialogWindow.OnTimeSelectListener() {
           @Override public void onTimeSelect(Date date) {
-            if (date.after(new Date())){
+            if (date.after(new Date())) {
               elAutoOpen.setVisibility(View.VISIBLE);
-            }else{
+            } else {
               elAutoOpen.setVisibility(View.GONE);
             }
             civStartTime.setContent(setTimeFormat(DateUtils.Date2YYYYMMDD(date)));
@@ -369,20 +369,26 @@ import rx.functions.Action1;
         });
   }
 
-  public void checkValidate(Date date){
+  public void checkValidate(Date date) {
     civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(date,
-        cardTpl.getType() == Configs.CATEGORY_DATE ? (int)Float.parseFloat(
+        cardTpl.getType() == Configs.CATEGORY_DATE ? (int) Float.parseFloat(
             cardOptionCustom.getCharge()) - 1 : cardOptionCustom.getDays() - 1)));
   }
 
   @OnClick(R2.id.civ_mark) public void onCivMarkClicked() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-        new CommonInputParams().title("会员卡备注").content(presenter.getRemarks()).type(TYPE_CARD_BUY_REMARK).build());
+        new CommonInputParams().title("会员卡备注")
+            .content(presenter.getRemarks())
+            .type(TYPE_CARD_BUY_REMARK)
+            .build());
   }
 
   @OnClick(R2.id.civ_real_card_num) public void onClickCardId() {
     routeTo(AppUtils.getRouterUri(getContext(), "/common/input/"),
-        new CommonInputParams().title("添加实体卡号").content(presenter.getRealCardNo()).type(TYPE_CARD_BUY_CARD_NO).build());
+        new CommonInputParams().title("添加实体卡号")
+            .content(presenter.getRealCardNo())
+            .type(TYPE_CARD_BUY_CARD_NO)
+            .build());
   }
 
   @OnClick(R2.id.civ_pay_method) public void onSelectPayMethod() {
@@ -393,9 +399,9 @@ import rx.functions.Action1;
   @Override public void showInputMoney(boolean other, CardTplOption option, boolean validDay) {
     cardOptionCustom = option;
     elAutoOpen.setVisibility(View.GONE);
-    if (cardOptionCustom == null){
+    if (cardOptionCustom == null) {
       setPayMoney(0f);
-    }else{
+    } else {
       setPayMoney(cardOptionCustom.getPrice());
     }
     if (other) {
@@ -408,15 +414,16 @@ import rx.functions.Action1;
     } else if (validDay) {
       layoutValidate.setVisibility(View.VISIBLE);
       civStartTime.setContent(setTimeFormat(DateUtils.Date2YYYYMMDD(new Date())));
-      civEndTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), option.getDays() - 1)));
+      civEndTime.setContent(
+          DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), option.getDays() - 1)));
     } else {
       layoutValidate.setVisibility(View.GONE);
     }
     if (!other && cardTpl.getType() == Configs.CATEGORY_DATE) {
       layoutValidate.setVisibility(View.VISIBLE);
       civStartTime.setContent(setTimeFormat(DateUtils.Date2YYYYMMDD(new Date())));
-      civEndTime.setContent(
-          DateUtils.Date2YYYYMMDD(DateUtils.addDay(new Date(), (int)(Float.parseFloat(option.charge) - 1))));
+      civEndTime.setContent(DateUtils.Date2YYYYMMDD(
+          DateUtils.addDay(new Date(), (int) (Float.parseFloat(option.charge) - 1))));
     }
   }
 
@@ -481,7 +488,9 @@ import rx.functions.Action1;
       if (cardTpl.getType() == Configs.CATEGORY_DATE) {
         routeTo(AppUtils.getRouterUri(getContext(), "/card/custom/option"),
             new TimeCardOptionParams().cardOptionCustom(
-                ((CardTplOptionForBuy) commonFlexAdapter.getItem(position)).getOption()).unUse(0).build());
+                ((CardTplOptionForBuy) commonFlexAdapter.getItem(position)).getOption())
+                .unUse(0)
+                .build());
       } else {
         routeTo(AppUtils.getRouterUri(getContext(), "/card/custom/all/option"),
             new TotalCustomCardOptionParams().cardOptionCustom(
@@ -494,7 +503,7 @@ import rx.functions.Action1;
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    if (ob != null){
+    if (ob != null) {
       RxBus.getBus().unregister(PayEvent.class.getName(), ob);
     }
   }

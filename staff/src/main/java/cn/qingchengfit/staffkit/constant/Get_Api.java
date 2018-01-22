@@ -11,7 +11,6 @@ import cn.qingchengfit.model.responese.AllotSaleStudents;
 import cn.qingchengfit.model.responese.ArticleCommentListData;
 import cn.qingchengfit.model.responese.AttendanceCharDataBean;
 import cn.qingchengfit.model.responese.BalanceConfigs;
-import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.model.responese.BalanceNotifyConfigs;
 import cn.qingchengfit.model.responese.BodyTestMeasureData;
 import cn.qingchengfit.model.responese.BodyTestPreviews;
@@ -107,10 +106,10 @@ import cn.qingchengfit.model.responese.TrackSellers;
 import cn.qingchengfit.model.responese.TrackStudents;
 import cn.qingchengfit.network.response.NotiSmsCountListWrap;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.network.response.ShopOrdersWrap;
 import cn.qingchengfit.network.response.SmsListWrap;
 import cn.qingchengfit.network.response.WxAuthorWrap;
+import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
@@ -393,7 +392,7 @@ public interface Get_Api {
     /**
      * 会员卡模板
      */
-    @GET("/api/staffs/{id}/cardtpls/all/") rx.Observable<QcResponse> qcGetBrandCardtpl(@Path("id") String staffid,
+    @GET("/api/staffs/{id}/cardtpls/all/") rx.Observable<QcDataResponse<GymCardtpl>> qcGetBrandCardtpl(@Path("id") String staffid,
         @Query("brand_id") String brand_id);
 
     //获取请假列表

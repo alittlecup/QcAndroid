@@ -57,6 +57,7 @@ public class CoachChooseDialogFragment extends BaseDialogFragment implements Coa
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_coach, container, false);
         unbinder = ButterKnife.bind(this, view);
+        delegatePresenter(presenter, this);
         adapter = new StringAdapter(stringList);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.setAdapter(adapter);
@@ -69,7 +70,6 @@ public class CoachChooseDialogFragment extends BaseDialogFragment implements Coa
             }
         });
         presenter.queryCoach();
-        presenter.attachView(this);
         return view;
     }
 
