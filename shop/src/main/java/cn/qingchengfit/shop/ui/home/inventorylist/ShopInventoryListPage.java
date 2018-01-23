@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageInventoryListBinding;
 import cn.qingchengfit.shop.ui.inventory.product.ProductInventoryPageParams;
-import cn.qingchengfit.shop.ui.inventory.product.UpdateInventoryPage;
-import cn.qingchengfit.shop.ui.inventory.product.UpdateInventoryPageParams;
 import cn.qingchengfit.shop.ui.items.inventory.InventoryListItem;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
@@ -27,10 +25,11 @@ public class ShopInventoryListPage
 
   @Override protected void subscribeUI() {
     mViewModel.getShowAllRecord().observe(this, aVoid -> {
-      //Uri uri = Uri.parse("shop://shop/shop/inventory");
-      Uri uri = Uri.parse("shop://shop/update/inventory");
-      routeTo(uri,
-          new UpdateInventoryPageParams().action(UpdateInventoryPage.REDUCE).productID(10).build());
+      Uri uri = Uri.parse("shop://shop/shop/inventory");
+      routeTo(uri,null);
+      //Uri uri = Uri.parse("shop://shop/update/inventory");
+      //routeTo(uri,
+      //    new UpdateInventoryPageParams().action(UpdateInventoryPage.REDUCE).productID(10).build());
     });
     mViewModel.getLiveItems().observe(this, items -> {
       mViewModel.items.set(items);

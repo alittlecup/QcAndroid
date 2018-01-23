@@ -76,6 +76,10 @@ public class ShopProductsViewModel
     loadSource(params);
   }
 
+  @Override public void loadSource(@NonNull HashMap<String, Object> map) {
+    identifier.setValue(map);
+  }
+
   @NonNull @Override
   protected LiveData<List<Product>> getSource(@NonNull HashMap<String, Object> map) {
     HashMap<String, Object> params = gymWrapper.getParams();

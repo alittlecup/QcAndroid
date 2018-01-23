@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+
+  </data>
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="270dp"
+      android:minHeight="270dp"
+      android:orientation="horizontal"
+      >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_left"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="@color/bg_grey"
+        android:overScrollMode="never"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_right"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:overScrollMode="never"
+
+        />
+
+  </LinearLayout>
+</layout>

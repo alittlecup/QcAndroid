@@ -4,14 +4,14 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.saasbase.student.views.filtertime.FilterTimesFragment;
+import cn.qingchengfit.saasbase.student.views.filtertime.FilterCustomFragment;
 import cn.qingchengfit.saasbase.student.views.followup.FilterListStringFragment;
+import cn.qingchengfit.shop.ui.inventory.ShopTimeFilterFragment;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.views.fragments.BaseFilterFragment;
 import cn.qingchengfit.views.fragments.EmptyFragment;
 import java.util.ArrayList;
 import java.util.List;
-import rx.functions.Action3;
 
 /**
  * Created by huangbaole on 2017/12/19.
@@ -19,7 +19,7 @@ import rx.functions.Action3;
 
 public class ProductInventoryFilterView extends BaseFilterFragment {
 
-  FilterTimesFragment filterTimesFragment;
+  FilterCustomFragment filterTimesFragment;
   FilterListStringFragment goodsListFragment;
 
   ProductInventoryViewModel viewModel;
@@ -50,13 +50,21 @@ public class ProductInventoryFilterView extends BaseFilterFragment {
       viewModel.getParams().put("goods_id", good.getId());
       viewModel.loadSource(viewModel.getParams());
     });
-    // TODO: 2018/1/23 时间选择器
-    filterTimesFragment = FilterTimesFragment.getInstance(1, 30);
-    filterTimesFragment.setSelectDayAction(new Action3<String, String, String>() {
-      @Override public void call(String s, String s2, String s3) {
+    filterTimesFragment = ShopTimeFilterFragment.newInstance("时间段");
+    filterTimesFragment.setOnBackFilterDataListener(
+        new FilterCustomFragment.OnBackFilterDataListener() {
+          @Override public void onSettingData(String start, String end) {
+            viewModel.getParams().put("start", start);
+            viewModel.getParams().put("end", end);
+            viewModel.loadSource(viewModel.getParams());
+          }
 
-      }
-    });
+          @Override public void onBack() {
+
+          }
+        });
+    filterTimesFragment.setSelectTime(true);
+    filterTimesFragment.limitDay = 30;
   }
 
   @Override protected String[] getTags() {

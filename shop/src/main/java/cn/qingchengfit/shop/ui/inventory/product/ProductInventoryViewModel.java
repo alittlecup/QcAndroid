@@ -84,6 +84,10 @@ public class ProductInventoryViewModel
     }
   }
 
+  @Override public void loadSource(@NonNull HashMap<String, Object> map) {
+    identifier.setValue(map);
+  }
+
   private LiveData<List<Good>> loadGoodNames(Integer id) {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("product_id", id);

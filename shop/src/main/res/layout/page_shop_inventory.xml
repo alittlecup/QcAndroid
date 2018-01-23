@@ -43,28 +43,18 @@
           android:layout_weight="1"
           android:background="@drawable/bg_click"
           android:onClick="@{(view)->viewModel.onShowFragmentByIndex(((QcFilterToggle)view).isChecked(),0)}"
-          app:ft_text_off="@string/product"
-          app:ft_text_on="@string/product"
+          app:ft_text_off="@string/all_product_inventory"
+          app:ft_text_on="@string/all_product_inventory"
           style="@style/QcFilterStyle"
           />
-      <cn.qingchengfit.widgets.QcFilterToggle
-          android:id="@+id/qft_goods"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:background="@drawable/bg_click"
-          android:onClick="@{(view)->viewModel.onShowFragmentByIndex(((QcFilterToggle)view).isChecked(),1)}"
-          app:ft_text_off="@string/goods"
-          app:ft_text_on="@string/goods"
-          style="@style/QcFilterStyle"
-          />
+
       <cn.qingchengfit.widgets.QcFilterToggle
           android:id="@+id/qft_date"
           android:layout_width="0dp"
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:background="@drawable/bg_click"
-          android:onClick="@{(view)->viewModel.onShowFragmentByIndex(((QcFilterToggle)view).isChecked(),2)}"
+          android:onClick="@{(view)->viewModel.onShowFragmentByIndex(((QcFilterToggle)view).isChecked(),1)}"
           app:ft_text_off="@string/date"
           app:ft_text_on="@string/date"
           style="@style/QcFilterStyle"

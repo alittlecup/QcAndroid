@@ -10,9 +10,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
+import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.ui.items.CommonItemFactory;
 import cn.qingchengfit.shop.ui.items.inventory.InventoryRecordItem;
+import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.shop.vo.Record;
 import java.util.HashMap;
 import java.util.List;
@@ -30,11 +32,19 @@ public class ShopInventoryViewModel
 
   public final MutableLiveData<Integer> indexEvent = new MutableLiveData<>();
   public final MutableLiveData<Boolean> fragVisible = new MutableLiveData<>();
+  private final ActionLiveEvent allProductClick = new
+
+      ActionLiveEvent();
 
   public HashMap<String, Object> getParams() {
     return params;
   }
 
+  public LiveData<List<Product>> getProducts() {
+    return products;
+  }
+
+  private final LiveData<List<Product>> products;
   private HashMap<String, Object> params = new HashMap<>();
 
   @Inject LoginStatus loginStatus;
@@ -44,15 +54,28 @@ public class ShopInventoryViewModel
   @Inject public ShopInventoryViewModel() {
     indexEvent.setValue(0);
     fragVisible.setValue(false);
+    products = Transformations.switchMap(allProductClick, index -> loadAllProductGoods());
   }
 
   public void onShowFragmentByIndex(boolean isChecked, Integer index) {
     if (isChecked) {
       fragVisible.setValue(true);
       indexEvent.setValue(index);
+      if (index == 0) {
+        allProductClick.call();
+      }
     } else {
       fragVisible.setValue(false);
     }
+  }
+
+  @Override public void loadSource(@NonNull HashMap<String, Object> map) {
+    identifier.setValue(map);
+  }
+
+  private LiveData<List<Product>> loadAllProductGoods() {
+    HashMap<String, Object> params = gymWrapper.getParams();
+    return repository.qcLoadAllProductInfo(loginStatus.staff_id(), params);
   }
 
   @NonNull @Override

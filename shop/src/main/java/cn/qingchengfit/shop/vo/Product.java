@@ -2,16 +2,19 @@ package cn.qingchengfit.shop.vo;
 
 import android.graphics.Color;
 import android.text.SpannableStringBuilder;
+import cn.qingchengfit.shop.common.DoubleListFilterFragment;
 import cn.qingchengfit.shop.ui.items.inventory.IInventoryItemData;
 import cn.qingchengfit.shop.ui.items.product.IProductItemData;
 import cn.qingchengfit.shop.util.SpanUtils;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by huangbaole on 2018/1/15.
  */
 
-public class Product implements IProductItemData, IInventoryItemData {
+public class Product
+    implements IProductItemData, IInventoryItemData, DoubleListFilterFragment.IDoubleListData {
   /**
    * {
    * "products": [
@@ -324,5 +327,19 @@ public class Product implements IProductItemData, IInventoryItemData {
 
   @Override public int getProductPriority() {
     return priority;
+  }
+
+  @Override public String getText() {
+    return name;
+  }
+
+  @Override public List<String> getChildText() {
+    List<String> childNames = new ArrayList<>();
+    if (goods != null && !goods.isEmpty()) {
+      for (Good good : goods) {
+        childNames.add(good.getName());
+      }
+    }
+    return childNames;
   }
 }

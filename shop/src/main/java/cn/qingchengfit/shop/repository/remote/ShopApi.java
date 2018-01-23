@@ -59,7 +59,7 @@ public interface ShopApi {
   /**
    * 获取库存记录
    */
-  @GET("/api/staffs/{staff_id}mall/goods/inventory/records/")
+  @GET("/api/staffs/{staff_id}/mall/goods/inventory/records/")
   Flowable<QcDataResponse<RecordListResponse>> qcLoadInventoryRecords(
       @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
@@ -80,7 +80,7 @@ public interface ShopApi {
   /**
    * 获取全部商品及规格信息
    */
-  @GET("/api/staffs/{staff_id}/mall/product-goods/?brand_id=1&shop_id=1")
+  @GET("/api/staffs/{staff_id}/mall/product-goods/")
   Flowable<QcDataResponse<ProductListResponse>> qcLoadAllProductInfo(
       @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 }

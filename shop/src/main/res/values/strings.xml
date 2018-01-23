@@ -76,6 +76,7 @@
 
   <!--inventory-->
   <string name="all_inventory_list">查看总库存记录</string>
+  <string name="all_product_inventory">全部商品</string>
   <string name="inventory_reocrd">库存记录</string>
   <string name="inventory_add">(库存增加)</string>
   <string name="inventory_reduce">库存减少</string>
