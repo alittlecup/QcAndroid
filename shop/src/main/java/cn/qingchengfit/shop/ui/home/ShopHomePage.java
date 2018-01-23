@@ -32,8 +32,8 @@ import java.util.List;
       Bundle savedInstanceState) {
     mBinding = PageShopHomeBinding.inflate(inflater, container, false);
     initToolBar();
-    mBinding.setViewModel(mViewModel);
     initView();
+    mBinding.setViewModel(mViewModel);
     return mBinding;
   }
 
@@ -45,8 +45,8 @@ import java.util.List;
   }
 
   private void initToolBar() {
-    initToolbar(mBinding.includeToolbar.toolbar);
     mBinding.setToolbarModel(new ToolbarModel("商店"));
+    initToolbar(mBinding.includeToolbar.toolbar);
   }
 
   public List<Pair<String, Fragment>> getFragmentList() {

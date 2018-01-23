@@ -80,9 +80,12 @@
   <string name="inventory_add">(库存增加)</string>
   <string name="inventory_reduce">库存减少</string>
   <string name="add_inventory">增加库存</string>
+  <string name="add_inventoty_detail">增加后库存：%d</string>
   <string name="reduce_inventory">减少库存</string>
+  <string name="reduce_inventory_detail">减少后库存：%d</string>
   <string name="add_inventory_count">增加库存数</string>
   <string name="reduce_inventory_count">减少库存数</string>
+  <string name="reduce_inventory_not_enough">当前库存不足扣除%d</string>
   <string name="add_inventory_count_input">输入增加的库存数</string>
   <string name="reduce_inventory_count_input">输入减少的库存数</string>
 

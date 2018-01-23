@@ -3,7 +3,9 @@ package cn.qingchengfit.shop.repository.remote;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.shop.repository.response.CategoryListResponse;
+import cn.qingchengfit.shop.repository.response.GoodListResponse;
 import cn.qingchengfit.shop.repository.response.ProductListResponse;
+import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -55,5 +57,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
   @Override public Flowable<QcDataResponse> qcPutCategory(String staff_id, int category_id,
       Category category) {
     return shopApi.qcPutCategory(staff_id, category_id, category);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<RecordListResponse>> qcLoadInventoryRecords(String staff_id,
+      HashMap<String, Object> params) {
+    return shopApi.qcLoadInventoryRecords(staff_id, params);
+  }
+
+  @Override public Flowable<QcDataResponse> qcUpdateInventoryRecord(String staff_id,
+      HashMap<String, Object> params) {
+    return shopApi.qcUpdateInventoryRecord(staff_id, params);
+  }
+
+  @Override public Flowable<QcDataResponse<GoodListResponse>> qcLoadGoodInfo(String staff_id,
+      HashMap<String, Object> params) {
+    return shopApi.qcLoadGoodInfo(staff_id, params);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<ProductListResponse>> qcLoadAllProductInfo(String staff_id,
+      HashMap<String, Object> params) {
+    return shopApi.qcLoadAllProductInfo(staff_id, params);
   }
 }

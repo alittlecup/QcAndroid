@@ -48,8 +48,16 @@ public class Record {
   private String total_inventory;
   private List<Stat> stat;
 
-  private class Stat {
+  public class Stat {
     private String name;
     private String inventory;
+
+    public String getName() {
+      return name;
+    }
+
+    public String getInventory() {
+      return inventory;
+    }
   }
 }

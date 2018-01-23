@@ -13,6 +13,6 @@ import dagger.Module;
 @Module public abstract class ShopModule {
   @Binds
   abstract ShopRemoteRepository bindShopRemoteService(ShopRemoteRepositoryImpl remoteResitory);
-  @Binds
-  abstract ShopRepository bindShopRepository(ShopRepositoryImpl repository);
+
+  @Binds abstract ShopRepository bindShopRepository(ShopRepositoryImpl repository);
 }

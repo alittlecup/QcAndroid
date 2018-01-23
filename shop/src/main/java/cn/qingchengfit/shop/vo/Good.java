@@ -12,6 +12,15 @@ public class Good {
   private String created_at;
   private String name;
   private List<Rule> rule;
+
+  public Product getProduct() {
+    return product;
+  }
+
+  public void setProduct(Product product) {
+    this.product = product;
+  }
+
   private Product product;
 
   public List<Rule> getRule() {

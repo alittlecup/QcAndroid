@@ -85,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="37dp"
             android:paddingLeft="11dp"
+            android:text="@{viewModel.total_inventory}"
             tools:text="总库存： 1232131231"
             />
         <android.support.v7.widget.RecyclerView

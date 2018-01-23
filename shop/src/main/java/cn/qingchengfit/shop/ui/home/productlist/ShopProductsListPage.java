@@ -99,6 +99,10 @@ public class ShopProductsListPage
       @Override public int getProductPriority() {
         return 30;
       }
+
+      @Override public boolean getProductStatus() {
+        return false;
+      }
     };
 
     items.add(new ProductListItem(data));

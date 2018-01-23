@@ -5,7 +5,9 @@ import android.arch.lifecycle.Transformations;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.common.mvvm.LiveDataReactiveStreams;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepositoryImpl;
+import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import io.reactivex.Flowable;
 import java.util.HashMap;
@@ -61,5 +63,31 @@ import javax.inject.Singleton;
           qcDataResponse.setData(qcDataResponse.getStatus() == 200);
           return qcDataResponse;
         }));
+  }
+
+  @Override public LiveData<RecordListResponse> qcLoadInventoryRecord(String staff_id,
+      HashMap<String, Object> params) {
+    return toLiveData(remoteService.qcLoadInventoryRecords(staff_id, params));
+  }
+
+  @Override public LiveData<Boolean> qcUpdateInventoryRecord(String staff_id,
+      HashMap<String, Object> params) {
+    return toLiveData(
+        remoteService.qcUpdateInventoryRecord(staff_id, params).map(qcDataResponse -> {
+          qcDataResponse.setData(qcDataResponse.getStatus() == 200);
+          return qcDataResponse;
+        }));
+  }
+
+  @Override
+  public LiveData<List<Good>> qcLoadGoodInfo(String staff_id, HashMap<String, Object> params) {
+    return Transformations.map(toLiveData(remoteService.qcLoadGoodInfo(staff_id, params)),
+        input -> input.goods);
+  }
+
+  @Override public LiveData<List<Product>> qcLoadAllProductInfo(String staff_id,
+      HashMap<String, Object> params) {
+    return Transformations.map(toLiveData(remoteService.qcLoadAllProductInfo(staff_id, params)),
+        input -> input.products);
   }
 }

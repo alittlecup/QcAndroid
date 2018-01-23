@@ -37,6 +37,10 @@ public class InventoryListItem
     return new DataBindingViewHolder<>(view, adapter);
   }
 
+  public IInventoryItemData getData() {
+    return data;
+  }
+
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemProductInventoryBinding> holder, int position, List payloads) {
     ItemProductInventoryBinding dataBinding = holder.getDataBinding();
@@ -57,6 +61,5 @@ public class InventoryListItem
         .setForegroundColor(context.getColor(R.color.text_color_gray))
         .create();
     dataBinding.inventoryCount.setText(spannableStringBuilder);
-
   }
 }
