@@ -4,12 +4,16 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.util.ArrayMap;
+import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
 import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.di.PresenterDelegate;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
@@ -81,6 +85,13 @@ public abstract class BaseDialogFragment extends DialogFragment {
         } else {
             isVisible = false;
             onInVisible();
+        }
+    }
+
+    protected void initToolbarPadding(Toolbar toolbar){
+        if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup ) {
+            ((ViewGroup) toolbar.getParent()).setPadding(0,
+              MeasureUtils.getStatusBarHeight(getContext()), 0, 0);
         }
     }
 

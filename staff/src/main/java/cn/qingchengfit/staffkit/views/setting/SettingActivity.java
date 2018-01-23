@@ -35,6 +35,7 @@ public class SettingActivity extends BaseActivity implements FragCallBack, Setti
         //component.inject(this);
 
         presenter.attachView(this);
+        presenter.onNewSps();
         presenter.getSelfInfo();
     }
 

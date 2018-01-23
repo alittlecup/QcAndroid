@@ -90,6 +90,7 @@ public class FixNotifySettingFragment extends BaseDialogFragment implements FixN
                 dismiss();
             }
         });
+        initToolbarPadding(toolbar);
     }
 
     private void initView() {

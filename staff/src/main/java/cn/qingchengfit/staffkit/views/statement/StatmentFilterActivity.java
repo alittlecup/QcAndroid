@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import butterknife.BindView;
@@ -23,7 +24,9 @@ import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.statement.filter.ClassStatmentFilterCallback;
 import cn.qingchengfit.staffkit.views.statement.filter.CourseChooseDialogFragment;
 import cn.qingchengfit.utils.BusinessUtils;
+import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.TimeDialogWindow;
@@ -58,7 +61,9 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
         setContentView(R.layout.activity_statment_filter);
         ButterKnife.bind(this);
         //((App)getApplication()).getAppCompoent().inject(this);
-
+        if (!CompatUtils.less21()) {
+            ((ViewGroup) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(this),0,0);
+        }
         //handle intent
         filterBean = getIntent().getParcelableExtra("filter");
         mFilterCoaches = getIntent().getParcelableArrayListExtra("coach");

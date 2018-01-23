@@ -84,7 +84,9 @@ public class FixPwFragment extends BaseDialogFragment implements FixPwView {
             }
         });
         toolbarTitile.setText(R.string.fix_password);
+        initToolbarPadding(toolbar);
         presenter.attachView(this);
+        presenter.onNewSps();
         checkcode.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (phoneNum.checkPhoneNum()) {

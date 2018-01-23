@@ -114,7 +114,7 @@ public class FixSelfInfoFragment extends BaseDialogFragment implements CommonPVi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fix_self_info, container, false);
         unbinder = ButterKnife.bind(this, view);
-        presneter.attachView(this);
+        delegatePresenter(presneter,this);
         toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -126,6 +126,7 @@ public class FixSelfInfoFragment extends BaseDialogFragment implements CommonPVi
             }
         });
         toolbarTitile.setText(getString(R.string.title_fix_self_info));
+        initToolbarPadding(toolbar);
         Glide.with(getContext())
             .load(PhotoUtils.getMiddle(self.getAvatar()))
             .asBitmap()

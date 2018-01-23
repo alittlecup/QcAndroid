@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.events.EventChooseImage;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.body.BrandBody;
+import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.responese.BrandResponse;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
@@ -92,6 +93,7 @@ public class BrandEditFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_brand, container, false);
         unbinder = ButterKnife.bind(this, view);
+
         initBus();
         initToolbar(toolbar);
         if (getArguments() != null) {
@@ -100,10 +102,8 @@ public class BrandEditFragment extends BaseFragment {
             if (brand != null) {
                 postBrand.name = brand.getName();
                 postBrand.photo = brand.getPhoto();
-                toolbarTitle.setText("修改品牌信息");
-                toolbar.getMenu().clear();
-                toolbar.inflateMenu(R.menu.menu_save);
-                toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                //toolbarTitle.setText("修改品牌信息");
+                mCallbackActivity.setBar(new ToolbarBean("修改品牌信息",false,null,R.menu.menu_save,new Toolbar.OnMenuItemClickListener() {
                     @Override public boolean onMenuItemClick(MenuItem item) {
                         postBrand.name = brandName.getContent();
                         if (TextUtils.isEmpty(postBrand.name)) {
@@ -133,7 +133,7 @@ public class BrandEditFragment extends BaseFragment {
 
                         return true;
                     }
-                });
+                }));
 
                 brandName.setContent(brand.getName());
                 brandId.setHint(brand.cname);
@@ -187,7 +187,9 @@ public class BrandEditFragment extends BaseFragment {
         return view;
     }
 
-
+    @Override public void initToolbar(@NonNull Toolbar toolbar) {
+        ((ViewGroup)toolbar.getParent()).setVisibility(View.GONE);
+    }
 
     private void initBus(){
         RxBusAdd(ChangeOwenerEvent.class)

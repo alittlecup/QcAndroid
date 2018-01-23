@@ -81,7 +81,9 @@ public class FixPhoneFragment extends BaseDialogFragment implements FixPwView {
             }
         });
         toolbarTitile.setText(R.string.title_change_phone);
+        initToolbarPadding(toolbar);
         presenter.attachView(this);
+        presenter.onNewSps();
         checkCode.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 onGetCode();
