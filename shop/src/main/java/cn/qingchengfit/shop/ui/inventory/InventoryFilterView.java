@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.saasbase.student.views.filtertime.FilterCustomFragment;
+import cn.qingchengfit.saasbase.student.views.filtertime.FilterTimesFragment;
 import cn.qingchengfit.shop.common.DoubleListFilterFragment;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class InventoryFilterView extends BaseFilterFragment {
 
-  FilterCustomFragment filterTimesFragment;
+  FilterTimesFragment filterTimesFragment;
   DoubleListFilterFragment productsListFragment;
 
   ShopInventoryViewModel viewModel;
@@ -49,21 +49,12 @@ public class InventoryFilterView extends BaseFilterFragment {
       viewModel.loadSource(viewModel.getParams());
     });
 
-    filterTimesFragment = ShopTimeFilterFragment.newInstance("时间段");
-    filterTimesFragment.setSelectTime(true);
-    filterTimesFragment.setOnBackFilterDataListener(
-        new FilterCustomFragment.OnBackFilterDataListener() {
-          @Override public void onSettingData(String start, String end) {
-            viewModel.getParams().put("start", start);
-            viewModel.getParams().put("end", end);
-            viewModel.loadSource(viewModel.getParams());
-          }
-
-          @Override public void onBack() {
-
-          }
-        });
-    filterTimesFragment.limitDay = 30;
+    filterTimesFragment = FilterTimesFragment.getInstance(1, 30);
+    filterTimesFragment.setSelectDayAction((s, s2, s3) -> {
+      viewModel.getParams().put("start", s);
+      viewModel.getParams().put("end", s2);
+      viewModel.loadSource(viewModel.getParams());
+    });
   }
 
   private List<DoubleListFilterFragment.IDoubleListData> addMoreData(List<Product> products) {
