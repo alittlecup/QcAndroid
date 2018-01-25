@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -349,7 +350,8 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
         pwTime.dismiss();
       }
     });
-    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, starttime.isEmpty() ? new Date()
+        : DateUtils.formatDateFromYYYYMMDD(starttime.getContent()));
   }
 
   /**
@@ -363,11 +365,23 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
     pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
+        if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()) {
+          Toast.makeText(getContext(), R.string.alert_endtime_greater_starttime, Toast.LENGTH_SHORT)
+              .show();
+          return;
+        }
+        if (date.getTime() - DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()
+            > 366 * DateUtils.DAY_TIME) {
+          Toast.makeText(getContext(), R.string.alert_batch_greater_three_month, Toast.LENGTH_SHORT)
+              .show();
+          return;
+        }
         endtime.setContent(DateUtils.Date2YYYYMMDD(date));
         pwTime.dismiss();
       }
     });
-    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, endtime.isEmpty() ? new Date()
+        : DateUtils.formatDateFromYYYYMMDD(endtime.getContent()));
   }
 
   @OnClick(R2.id.civ_to_open_time) public void onOpenTime() {

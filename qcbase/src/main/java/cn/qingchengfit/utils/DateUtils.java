@@ -166,9 +166,9 @@ public class DateUtils {
     try {
       date = formatter.parse(s);
     } catch (ParseException e) {
-      e.printStackTrace();
+      CrashUtils.sendCrash(e);
     }
-    return date;
+    return date == null ? new Date() : date ;
   }
 
   public static Date getDateFromHHmmss(String s) {

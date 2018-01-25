@@ -293,7 +293,7 @@ public class CardBuyPresenter extends BasePresenter {
         }
       }
     } else {
-      cardBuyBody.setPrice(CmStringUtils.getMoneyStr(mChosenOption.price));
+      cardBuyBody.setPrice(String.valueOf(mChosenOption.price));
       cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
     }
 

@@ -325,11 +325,13 @@ import rx.android.schedulers.AndroidSchedulers;
     pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
         starttime.setContent(DateUtils.Date2YYYYMMDD(date));
-        if (endtime.isEmpty()) endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
+        if(endtime.isEmpty())
+          endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
         pwTime.dismiss();
       }
     });
-    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, starttime.isEmpty() ? new Date()
+        : DateUtils.formatDateFromYYYYMMDD(starttime.getContent()));
   }
 
   /**
@@ -349,7 +351,7 @@ import rx.android.schedulers.AndroidSchedulers;
           return;
         }
         if (date.getTime() - DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()
-          > 92 * DateUtils.DAY_TIME) {
+          > 366 * DateUtils.DAY_TIME) {
           Toast.makeText(getContext(), R.string.alert_batch_greater_three_month, Toast.LENGTH_SHORT)
             .show();
           return;
@@ -358,7 +360,8 @@ import rx.android.schedulers.AndroidSchedulers;
         pwTime.dismiss();
       }
     });
-    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, endtime.isEmpty() ? new Date()
+        : DateUtils.formatDateFromYYYYMMDD(endtime.getContent()));
   }
 
   @OnClick(R2.id.civ_to_open_time) public void onOpenTime() {

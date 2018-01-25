@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
-import cn.qingchengfit.utils.CmStringUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -37,7 +36,7 @@ public class TotalCustomCardOptionFragment extends CustomCardOptionFragment {
       elNeedValid.setExpanded(cardOptionCustom.isLimit_days());
       civCustomValidity.setContent(String.valueOf(cardOptionCustom.getDays()));
       civChargeMoney.setContent(cardOptionCustom.getCharge());
-      civRealMoney.setContent(CmStringUtils.getMoneyStr(cardOptionCustom.getPrice()));
+      civRealMoney.setContent(String.valueOf(cardOptionCustom.getPrice()));
     }
     return view;
   }
