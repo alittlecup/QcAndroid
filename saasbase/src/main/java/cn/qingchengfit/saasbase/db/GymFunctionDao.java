@@ -1,7 +1,16 @@
-package cn.qingchengfit.model.responese;
+package cn.qingchengfit.saasbase.db;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
+import android.support.annotation.NonNull;
+import io.reactivex.Flowable;
+import java.util.List;
 
 /**
  * power by
@@ -21,41 +30,20 @@ import android.os.Parcelable;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/1/9.
+ * Created by Paper on 2018/1/23.
  */
-public class MyFunction implements Parcelable {
+@Dao
+public interface GymFunctionDao {
+  @Query("SELECT * FROM function_module") Flowable<List<FuctionModule>> getAllFuntion();
+  @Delete void deleteFunction(List<FuctionModule> list);
+  @Query("Delete FROM function_module") void deleteFunctionAll();
+  @Insert(onConflict = OnConflictStrategy.REPLACE) void insert(List<FuctionModule> modules);
+  @Update void update(List<FuctionModule> modules);
 
-    public static final Parcelable.Creator<MyFunction> CREATOR = new Parcelable.Creator<MyFunction>() {
-        @Override public MyFunction createFromParcel(Parcel source) {
-            return new MyFunction(source);
-        }
 
-        @Override public MyFunction[] newArray(int size) {
-            return new MyFunction[size];
-        }
-    };
-    public String txt;
-    public int drawableInt;
-
-    public MyFunction(String txt, int drawableInt) {
-        this.txt = txt;
-        this.drawableInt = drawableInt;
-    }
-
-    public MyFunction() {
-    }
-
-    protected MyFunction(Parcel in) {
-        this.txt = in.readString();
-        this.drawableInt = in.readInt();
-    }
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.txt);
-        dest.writeInt(this.drawableInt);
-    }
+  @Entity(tableName = "function_module")
+  static class FuctionModule {
+    @PrimaryKey @NonNull
+    public String module_name = "";
+  }
 }

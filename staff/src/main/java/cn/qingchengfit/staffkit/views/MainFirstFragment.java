@@ -9,17 +9,14 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.views.gym.GymDetailFragment;
 import cn.qingchengfit.staffkit.views.main.HomeFragment;
 import cn.qingchengfit.staffkit.views.main.HomeUnLoginFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
@@ -70,46 +67,44 @@ public class MainFirstFragment extends BaseFragment {
     void changeView() {
         if (loginStatus.isLogined()) {//登录
             RxRegiste(qcDbManager.getAllCoachService()
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
                 .throttleLast(500, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<List<CoachService>>() {
-                    @Override public void call(List<CoachService> coachServices) {
-                        if (coachServices == null || coachServices.size() == 0) {
-                            //无场馆，广告页面
+                .subscribe(coachServices -> {
+                    if (coachServices == null || coachServices.size() == 0) {
+                        //无场馆，广告页面
+                        getChildFragmentManager().beginTransaction()
+                          .replace(R.id.course_batch_frag, new HomeUnLoginFragment())
+                          .commitAllowingStateLoss();
+                    } else if (coachServices.size() == 1) {
+                        //单场馆
+                        gymWrapper.setCoachService(coachServices.get(0));
+                        gymWrapper.setBrand(
+                          new Brand.Builder().id(coachServices.get(0).brand_id()).name(coachServices.get(0).getBrand_name()).build());
+                        if (getChildFragmentManager().findFragmentByTag("gymDetail") != null) {
                             getChildFragmentManager().beginTransaction()
-                                .replace(R.id.course_batch_frag, new HomeUnLoginFragment())
-                                .commitAllowingStateLoss();
-                        } else if (coachServices.size() == 1) {
-                            //单场馆
-                            gymWrapper.setCoachService(coachServices.get(0));
-                            gymWrapper.setBrand(
-                                new Brand.Builder().id(coachServices.get(0).brand_id()).name(coachServices.get(0).getBrand_name()).build());
-                            if (getChildFragmentManager().findFragmentByTag("gymDetail") != null) {
-                                getChildFragmentManager().beginTransaction()
-                                    .show(getChildFragmentManager().findFragmentByTag("gymDetail"))
-                                    .commitAllowingStateLoss();
-                            } else {
-                                getChildFragmentManager().beginTransaction()
-                                    .replace(R.id.course_batch_frag, new GymDetailFragment(), "gymDetail")
-                                    .commitAllowingStateLoss();
-                            }
+                              .show(getChildFragmentManager().findFragmentByTag("gymDetail"))
+                              .commitAllowingStateLoss();
                         } else {
-                            //多场馆 连锁运营页面
                             getChildFragmentManager().beginTransaction()
-                                .replace(R.id.course_batch_frag, new HomeFragment())
-                                .commitAllowingStateLoss();
+                              .replace(R.id.course_batch_frag, new GymDetailFragment(), "gymDetail")
+                              .commitAllowingStateLoss();
                         }
+                    } else {
+                        //多场馆 连锁运营页面
+                        getChildFragmentManager().beginTransaction()
+                          .replace(R.id.course_batch_frag, new HomeFragment())
+                          .commitAllowingStateLoss();
                     }
-                }, new Action1<Throwable>() {
-                    @Override public void call(Throwable throwable) {
-
-                    }
-                }));
+                }, throwable -> {}));
         } else {
             getChildFragmentManager().beginTransaction()
                 .replace(R.id.course_batch_frag, new HomeUnLoginFragment())
                 .commitAllowingStateLoss();
         }
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
     }
 
     @Override public String getFragmentName() {

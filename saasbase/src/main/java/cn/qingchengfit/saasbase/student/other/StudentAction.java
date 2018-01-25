@@ -1,14 +1,12 @@
 package cn.qingchengfit.saasbase.student.other;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
-import rx.Observable;
+import io.reactivex.Flowable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -35,10 +33,6 @@ public class StudentAction {
     }
 
 
-    public Observable<QcStudentBean> getByPhone(final String phone) {
-        return qcDbManager.getStudentByPhone(phone);
-    }
-
     public void saveStudent(final List<QcStudentBean> studentBeens, final String brandid) {
         qcDbManager.delByBrandId(brandid);
         qcDbManager.saveStudent(studentBeens, brandid);
@@ -53,37 +47,37 @@ public class StudentAction {
         qcDbManager.saveStudent(studentBeens);
     }
 
-    public Observable<QcStudentBean> getStudentById(String id) {
+    public Flowable<QcStudentBean> getStudentById(String id) {
         return qcDbManager.getStudentById(id);
     }
 
-    public Observable<List<QcStudentBean>> getAllStudent() {
+    public Flowable<List<QcStudentBean>> getAllStudent() {
         return qcDbManager.getAllStudent();
     }
 
-    public Observable<List<QcStudentBean>> getStudentByBrand(String brandid) {
+    public Flowable<List<QcStudentBean>> getStudentByBrand(String brandid) {
         return qcDbManager.getStudentByBrand(brandid);
     }
 
-    public Observable<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid) {
+    public Flowable<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid) {
         return qcDbManager.getStudentByKeyWord(keyword, brandid);
     }
 
-    public Observable<List<QcStudentBean>> getStudentByKeyWord(final String keyword) {
+    public Flowable<List<QcStudentBean>> getStudentByKeyWord(final String keyword) {
 
         return qcDbManager.getStudentByKeyWord(keyword);
     }
 
-    public Observable<List<QcStudentBean>> getStudentByKeyWord(String brandid, String shopid, String keyword) {
+    public Flowable<List<QcStudentBean>> getStudentByKeyWord(String brandid, String shopid, String keyword) {
 
         return qcDbManager.getStudentByKeyWordShop(brandid, shopid, keyword);
     }
 
-    public Observable<List<QcStudentBean>> getStudentByGym(String gymid, String gymModel) {
+    public Flowable<List<QcStudentBean>> getStudentByGym(String gymid, String gymModel) {
         String shopid = gymBaseInfoAction.getShopId(gymid, gymModel);
         if (shopid == null) {
             List<QcStudentBean> emp = new ArrayList<>();
-            return Observable.just(emp);
+            return Flowable.just(emp);
         }
         return qcDbManager.getStudentByGym(shopid);
     }

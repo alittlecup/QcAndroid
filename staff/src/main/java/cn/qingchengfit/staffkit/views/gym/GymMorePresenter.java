@@ -53,18 +53,11 @@ public class GymMorePresenter extends BasePresenter {
     @Override public void attachView(PView v) {
         view = (MVPView) v;
         RxRegiste(qcDbManager.queryAllFunctions()
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
             .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<List<String>>() {
-                @Override public void call(List<String> strings) {
-                    view.onModule(strings);
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    LogUtil.e(throwable.getMessage());
-                }
-            }));
+            .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+            .subscribe(strings -> view.onModule(strings),
+              throwable -> LogUtil.e(throwable.getMessage())));
     }
 
     public interface MVPView extends CView {

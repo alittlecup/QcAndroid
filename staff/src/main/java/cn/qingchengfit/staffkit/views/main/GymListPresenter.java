@@ -7,18 +7,16 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.staffkit.rest.RestRepository;
+import io.reactivex.Flowable;
+import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -41,6 +39,7 @@ public class GymListPresenter extends BasePresenter {
     @Inject GymBaseInfoAction gymBaseInfoAction;
     private RestRepository mRestRepository;
     private GymListView mView;
+    private Disposable dispose;
 
     @Inject public GymListPresenter(RestRepository restRepository) {
         this.mRestRepository = restRepository;
@@ -64,27 +63,18 @@ public class GymListPresenter extends BasePresenter {
     }
 
     public void subscribeGymsByBrandId() {
-        RxRegiste(gymBaseInfoAction.getAllGyms().filter(new Func1<List<CoachService>, Boolean>() {
-            @Override public Boolean call(List<CoachService> list) {
-                return list != null;
-            }
-        }).flatMap(new Func1<List<CoachService>, Observable<List<CoachService>>>() {
-            @Override public Observable<List<CoachService>> call(List<CoachService> coachServices) {
-                List<CoachService> ret = new ArrayList<CoachService>();
-                for (CoachService service : coachServices) {
-                    if (service.brand_id().equals(gymWrapper.brand_id())) ret.add(service);
-                }
-                return Observable.just(ret);
-            }
-        })
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<List<CoachService>>() {
-            @Override public void call(List<CoachService> list) {
-                mView.onServiceList(list);
-            }
-        }));
+        RxRegiste(gymBaseInfoAction.getAllGyms()
+          .flatMap(services -> {
+              List<CoachService> ret = new ArrayList<CoachService>();
+              for (CoachService service : services) {
+                  if (service.brand_id().equals(gymWrapper.brand_id())) ret.add(service);
+              }
+              return Flowable.just(ret);
+          })
+            .onBackpressureDrop()
+            .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+            .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+            .subscribe(services -> mView.onServiceList(services)));
     }
 
     @Override public void attachIncomingIntent(Intent intent) {
@@ -98,6 +88,8 @@ public class GymListPresenter extends BasePresenter {
     @Override public void unattachView() {
         super.unattachView();
         mView = null;
+        if (dispose != null && !dispose.isDisposed())
+            dispose.dispose();
     }
 
     void loadData() {
@@ -106,13 +98,11 @@ public class GymListPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcDataResponse<GymList>>() {
-                @Override public void call(QcDataResponse<GymList> qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                        gymBaseInfoAction.writeGyms(qcResponse.getData().services);
-                    } else {
-                        mView.onShowError(qcResponse.getMsg());
-                    }
+            .subscribe(qcResponse -> {
+                if (ResponseConstant.checkSuccess(qcResponse)) {
+                    gymBaseInfoAction.writeGyms(qcResponse.getData().services);
+                } else {
+                    mView.onShowError(qcResponse.getMsg());
                 }
             }, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {

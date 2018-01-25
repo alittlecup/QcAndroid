@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -32,7 +31,6 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
     @Inject StudentAction studentAction;
     private MVPView view;
     private RestRepository restRepository;
-    private Subscription spFilter;
 
     @Inject public MutiChooseStudentPresenterPresenter(RestRepository restRepository) {
         this.restRepository = restRepository;
@@ -40,7 +38,6 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
 
     @Override public void unattachView() {
         super.unattachView();
-        if (spFilter != null) spFilter.unsubscribe();
     }
 
     private void handleData(List<QcStudentBean> data, String brand_id, String gymid, String gymmodel) {
@@ -144,36 +141,25 @@ public class MutiChooseStudentPresenterPresenter extends BasePresenter {
             RxRegiste(studentAction
                 .getStudentByBrand(gymWrapper.brand_id())
                 .onBackpressureBuffer()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<QcStudentBean>>() {
-                    @Override public void call(List<QcStudentBean> qcStudentBeen) {
-                        handleData(qcStudentBeen, gymWrapper.brand_id(), null, null);
-                    }
-                }));
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(qcStudentBeen -> handleData(qcStudentBeen, gymWrapper.brand_id(), null, null)));
         } else {//场馆
             RxRegiste(studentAction
                 .getStudentByGym(gymWrapper.id(), gymWrapper.model())
                 .onBackpressureBuffer()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<QcStudentBean>>() {
-                    @Override public void call(List<QcStudentBean> qcStudentBeen) {
-                        handleData(qcStudentBeen, gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model());
-                    }
-                }));
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(qcStudentBeen -> handleData(qcStudentBeen, gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model())));
         }
     }
 
     public void filter(String keyword) {
-        spFilter = studentAction
+        RxRegiste(studentAction
             .getStudentByKeyWord(keyword)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<List<QcStudentBean>>() {
-                @Override public void call(List<QcStudentBean> qcStudentBeen) {
-                    handleFilter(qcStudentBeen, "", "", "");
-                }
-            })
+            .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+            .subscribe(
+              qcStudentBeen -> handleFilter(qcStudentBeen, "", "", "")))
 
         ;
     }

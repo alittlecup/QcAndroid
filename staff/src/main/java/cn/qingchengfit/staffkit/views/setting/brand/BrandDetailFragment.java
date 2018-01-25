@@ -165,25 +165,17 @@ public class BrandDetailFragment extends BaseFragment {
                                                 .flatMap(new Func1<QcResponse, Observable<Integer>>() {
                                                     @Override public Observable<Integer> call(QcResponse qcResponse) {
                                                         if (ResponseConstant.checkSuccess(qcResponse)) {
-                                                            return qcDbManager.getAllCoachService()
-                                                                .observeOn(Schedulers.io())
-                                                                .onBackpressureBuffer()
-                                                                .subscribeOn(Schedulers.io())
-                                                                .flatMap(new Func1<List<CoachService>, Observable<Integer>>() {
-                                                                    @Override
-                                                                    public Observable<Integer> call(List<CoachService> coachServices) {
-                                                                        if (coachServices.size() > 1) {
-                                                                          RxBus.getBus()
-                                                                              .post(
-                                                                                  new EventFreshGyms());
-                                                                        }
-                                                                        return Observable.just(coachServices.size() == 1 ? 2 : 1)
-                                                                            .observeOn(AndroidSchedulers.mainThread())
-                                                                            .onBackpressureBuffer()
-                                                                            .subscribeOn(
-                                                                                Schedulers.io());
-                                                                    }
-                                                                });
+                                                            List<CoachService> coachServices = qcDbManager.getAllCoachServiceNow();
+                                                            if (coachServices.size() > 1) {
+                                                                RxBus.getBus()
+                                                                  .post(
+                                                                    new EventFreshGyms());
+                                                            }
+                                                            return Observable.just(coachServices.size() == 1 ? 2 : 1)
+                                                              .observeOn(AndroidSchedulers.mainThread())
+                                                              .onBackpressureBuffer()
+                                                              .subscribeOn(
+                                                                Schedulers.io());
                                                         } else {
                                                             return Observable.just(-1);
                                                         }

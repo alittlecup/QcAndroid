@@ -37,9 +37,9 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.Observable;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -71,11 +71,9 @@ public class GymsFragment extends BaseFragment implements FlexibleAdapter.OnItem
         initDI();
         initView();
       mFreshOb = RxBus.getBus().register(EventFreshGyms.class);
-      mFreshOb.subscribe(new Action1<EventFreshGyms>() {
-        @Override public void call(EventFreshGyms eventFreshGyms) {
-                refresh();
-            }
-        });
+      mFreshOb
+        .throttleFirst(1000, TimeUnit.MILLISECONDS)
+        .subscribe(eventFreshGyms -> refresh());
         return view;
     }
 

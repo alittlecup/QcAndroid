@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.db;
 import android.text.TextUtils;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
+import io.reactivex.Flowable;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
@@ -29,11 +30,11 @@ public class GymBaseInfoAction {
     public GymBaseInfoAction() {
     }
 
-    public  Observable<List<CoachService>> getAllGyms() {
+    public Flowable<List<CoachService>> getAllGyms() {
         return qcDbManager.getAllCoachService();
     }
 
-    public  Observable<List<CoachService>> getAllGymsByBrand(String brandId) {
+    public  Flowable<List<CoachService>> getAllGymsByBrand(String brandId) {
         return qcDbManager.getAllCoachServiceByBrand(brandId);
     }
 
@@ -106,15 +107,15 @@ public class GymBaseInfoAction {
         return coachService;
     }
 
-    public  Observable<List<CoachService>> getGymByModel(final String id, final String model) {
+    public  Flowable<CoachService> getGymByModel(final String id, final String model) {
         return qcDbManager.getGymByModel(id, model);
     }
 
-    public  Observable<List<CoachService>> getGymByShopIds(String brandid, final List<String> shopid) {
+    public  Flowable<List<CoachService>> getGymByShopIds(String brandid, final List<String> shopid) {
         return qcDbManager.getGymByShopIds(brandid, shopid);
     }
 
-    public  Observable<List<CoachService>> getGymBaseInfo() {
+    public  Flowable<List<CoachService>> getGymBaseInfo() {
         return qcDbManager.getAllCoachService();
     }
 }

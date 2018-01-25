@@ -502,21 +502,7 @@ public interface AppComponent {
     RestRepository getRestRepository();
 
     RestRepositoryV2 getTestRepository();
-
-    void inject(ScheduleActivity i);
-
-    void inject(ScheduleListFragment i);
-
-    void inject(ScoreHomeFragment activity);
-
-    void inject(ConfigFragment activity);
-
-    void inject(BaseConfigFragment activity);
-
-    void inject(ScoreRuleAddFragemnt activity);
-
-    void inject(ScoreAwardAddFragment activity);
-
+    
     @Subcomponent() public interface ChooseGymSubcomponent extends AndroidInjector<ChooseGymActivity> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseGymActivity> {
         }
@@ -3528,4 +3514,6 @@ public interface AppComponent {
         @Binds @IntoMap @FragmentKey(CourseChooseDialogFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseChooseDialogFragmentSubcomponent.Builder builder);
     }
+
+
 }

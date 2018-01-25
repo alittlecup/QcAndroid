@@ -44,7 +44,7 @@ configurations.all {
 }
 
 dependencies {
-  implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
+  api fileTree(include: ['*.jar','*.aar'], dir: 'libs')
   api 'com.jakewharton.timber:timber:4.0.1'
   api "com.google.dagger:dagger:${libs.dagger}"
   api "com.google.dagger:dagger-android:${libs.dagger}"

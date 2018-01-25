@@ -43,12 +43,31 @@ android {
 }
 
 dependencies {
-    api project(path: ':qcbase')
-    api project(path: ':recruit')
-//    api "cn.qingchengfit:qcbase:1.0.0"
-//    api ('cn.qingchengfit.recruit:recruit:1.0.1', {
-//        exclude group: 'cn.qingchengfit.widgets', module: 'qcbase'
-//    })
+//    api project(path: ':qcbase')
+//    api project(path: ':recruit')
+//    implementation "cn.qingchengfit.widgets:qcbase:1.0.2"
+    api(name: 'qcbase-release', ext: 'aar')
+    api ('cn.qingchengfit.recruit:recruit:1.0.1', {
+        exclude group: 'cn.qingchengfit.widgets', module: 'qcbase'
+    })
+    api("com.squareup.retrofit2:retrofit:${libs.retrofit}") {
+        exclude module: 'okhttp'
+    }
+    api "com.squareup.retrofit2:adapter-rxjava:${libs.retrofit}"
+    api "com.squareup.retrofit2:converter-gson:${libs.retrofit}"
+    api "com.squareup.okhttp3:okhttp:${libs.okhttp}"
+    api "com.squareup.okhttp3:logging-interceptor:${libs.okhttp}"
+
+    api "io.reactivex:rxandroid:${libs.rxandroid}"
+    api "io.reactivex:rxjava:${libs.rxjava}"
+    api 'com.trello:rxlifecycle:1.0'
+    // If you want to bind to Android-specific lifecycles
+    api 'com.trello:rxlifecycle-android:1.0'
+    // If you want pre-written Activities and Fragments you can subclass as providers
+    api 'com.trello:rxlifecycle-components:1.0'
+    api "com.google.dagger:dagger:${libs.dagger}"
+    api "com.google.dagger:dagger-android:${libs.dagger}"
+    api "com.google.dagger:dagger-android-support:${libs.dagger}"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -70,6 +89,74 @@ dependencies {
     }
     api "android.arch.lifecycle:reactivestreams:1.0.0"
     api "io.reactivex:rxjava-reactive-streams:1.2.1"
+    api 'com.jakewharton.timber:timber:4.0.1'
+    api "com.jakewharton.rxbinding:rxbinding:${libs.rxbind}"
+    api "com.jakewharton:butterknife:${libs.butterknife}"
+    api 'com.google.code.gson:gson:2.7'
+    api 'com.nineoldandroids:library:2.4.0'
+    api 'com.github.chrisbanes:PhotoView:1.2.6'
+    api 'eu.davidea:flexible-adapter:5.0.0-rc3'
+    api 'com.github.bumptech.glide:glide:3.7.0'
+    api 'com.squareup.sqlbrite:sqlbrite:1.1.1'
+    api 'com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar'
+    //图片选择库
+    api 'com.zhihu.android:matisse:0.5.0-alpha4'
+    api('com.github.afollestad.material-dialogs:core:0.8.5.5@aar') {
+        transitive = true
+    }
+    api 'eu.davidea:flexible-adapter-databinding:1.0.0-b2'
+    api 'com.umeng.analytics:analytics:6.1.2'
+    api 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.8.16'
+    //  api "me.henrytao:smooth-app-bar-layout:${libs.supportVersion}.0"
+    api 'com.google.android:flexbox:0.3.0-alpha3'
+    api 'com.github.rubensousa:gravitysnaphelper:1.1'
+//    api files('libs/Bughd_android_sdk_v1.3.7.jar')
+    annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
+    api "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
+    api 'com.getbase:floatingactionbutton:1.10.0'
+    //fab
+    api 'com.theartofdev.edmodo:android-image-cropper:2.4.5'
+    //裁剪图片
+    //  api 'com.commonsware.cwac:cam2:0.7.6'
+    api(name: 'cam2-0.7.6', ext: 'aar')
+    api 'com.github.clans:fab:1.6.4'
+    api 'org.greenrobot:eventbus:3.0.0'
+    //  api project(":zcam2-0.7.6")
+    //拍照
+    api 'me.gujun.android.taggroup:library:1.4@aar'
+    //taggroup
+    api('com.upyun:upyun-android-sdk:2.0.1') {
+        //upyun 又拍云
+        exclude group: 'com.squareup.okhttp3'
+    }
+    //  api files('libs/java-sdk-3.1.jar')
+    api('com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+')
+    api 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
+    api 'com.airbnb.android:lottie:2.0.0'
+    api ('io.socket:socket.io-client:0.9.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
+    implementation "android.arch.lifecycle:common-java8:1.0.0"
+    // Room
+    api "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    api "com.android.support:support-v4:${libs.supportVersion}"
+    api "com.android.support:support-v13:${libs.supportVersion}"
+    api "com.android.support:support-annotations:${libs.supportVersion}"
+    api("com.android.support:appcompat-v7:${libs.supportVersion}") {
+        exclude group: "android.arch.lifecycle", module: "runtime"
+    }
+    api "com.android.support:appcompat-v7:${libs.supportVersion}"
+    api "com.android.support:cardview-v7:${libs.supportVersion}"
+    api "com.android.support:design:${libs.supportVersion}"
+    api "com.android.support:percent:${libs.supportVersion}"
+    api "com.google.errorprone:error_prone_annotations:2.1.1"
+
+
+    api "io.reactivex.rxjava2:rxjava:2.1.8"
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api "android.arch.persistence.room:rxjava2:1.0.0"
 }
 
 

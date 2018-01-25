@@ -15,13 +15,12 @@ import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 import cn.qingchengfit.staffkit.views.statement.detail.StatementDetailFragment;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.DateUtils;
+import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -47,8 +46,8 @@ public class CustomStatmentPresenter extends BasePresenter {
 
     private List<CoachService> mCoachServices = new ArrayList<>();
     private CustomStatementView customStatementView;
-    private Subscription spGym;
-    private Subscription spStudent;
+    private Disposable spGym;
+    private Disposable spStudent;
 
     private String selectId = "0", selectModel, startTime, endTime, course_id, teacher_id, course_extra;
     private Subscription spCourse;
@@ -73,18 +72,18 @@ public class CustomStatmentPresenter extends BasePresenter {
         customStatementView = (CustomStatementView) v;
         startTime = DateUtils.Date2YYYYMMDD(new Date());
         endTime = DateUtils.Date2YYYYMMDD(new Date());
-        spGym = gymBaseInfoAction.getGymBaseInfo().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<CoachService>>() {
-            @Override public void call(List<CoachService> coachServices) {
-                mCoachServices.clear();
-                mCoachServices.addAll(coachServices);
+        spGym = gymBaseInfoAction.getGymBaseInfo()
+          .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+          .subscribe(coachServices -> {
+              mCoachServices.clear();
+              mCoachServices.addAll(coachServices);
 
-                List<String> gyms = new ArrayList<>();
-                for (CoachService coachService : coachServices) {
-                    gyms.add(coachService.getName());
-                }
-                customStatementView.onGetGyms(gyms);
-            }
-        });
+              List<String> gyms = new ArrayList<>();
+              for (CoachService coachService : coachServices) {
+                  gyms.add(coachService.getName());
+              }
+              customStatementView.onGetGyms(gyms);
+          });
     }
 
     @Override public void attachIncomingIntent(Intent intent) {
@@ -98,50 +97,26 @@ public class CustomStatmentPresenter extends BasePresenter {
     @Override public void unattachView() {
         super.unattachView();
         customStatementView = null;
-        if (spGym != null) spGym.unsubscribe();
-        if (spStudent != null) spStudent.unsubscribe();
+        if (spGym != null) spGym.dispose();
+        if (spStudent != null) spStudent.dispose();
         if (spCourse != null) spCourse.unsubscribe();
     }
 
     public void selectGym(int pos) {
         String id = mCoachServices.get(pos).getId();
         String model = mCoachServices.get(pos).getModel();
-        //        spGym = usecase.queryResponseDetail(id, model, new Action1<QcResponseServiceDetial>() {
-        //            @Override
-        //            public void call(QcResponseServiceDetial qcResponseServiceDetial) {
-        //                courses = qcResponseServiceDetial.data.service.courses;
-        //                Collections.sort(courses, new CourseComparator());
-        //                List<String> courseStr = new ArrayList<String>();
-        //                for (CourseTypeSample course : courses) {
-        //                    courseStr.add(course.getName());
-        //                }
-        //                customStatementView.onGetCars(courseStr);
-        //
-        //                studentBeans = qcResponseServiceDetial.data.service.users;
-        //                Collections.sort(studentBeans, new StudentComparator());
-        //                List<String> studentStr = new ArrayList<String>();
-        //                for (StudentBean studentBean : studentBeans) {
-        //                    studentStr.add(studentBean.getUsername());
-        //                }
-        //                customStatementView.onGetStudents(studentStr);
-        //            }
-        //        });
+
         selectId = id;
         selectModel = model;
-        spStudent = studentAction.getStudentByGym(id, model).subscribe(new Action1<List<QcStudentBean>>() {
-            @Override public void call(List<QcStudentBean> qcStudentBeen) {
-                List<String> stringList = new ArrayList<String>();
-                for (int i = 0; i < qcStudentBeen.size(); i++) {
-                    stringList.add(qcStudentBeen.get(i).getUsername());
-                }
-                customStatementView.onGetStudents(stringList);
-                studentBeans = qcStudentBeen;
-            }
-        }, new Action1<Throwable>() {
-            @Override public void call(Throwable throwable) {
-                CrashUtils.sendCrash(throwable);
-            }
-        });
+        spStudent = studentAction.getStudentByGym(id, model)
+          .subscribe(qcStudentBeans -> {
+              List<String> stringList = new ArrayList<String>();
+              for (int i = 0; i < qcStudentBeans.size(); i++) {
+                  stringList.add(qcStudentBeans.get(i).getUsername());
+              }
+              customStatementView.onGetStudents(stringList);
+              studentBeans = qcStudentBeans;
+          }, throwable -> CrashUtils.sendCrash(throwable));
         //        spCourse = usecase.queryCourse(id,, model, new Action1<CourseTypeSamples>() {
         //            @Override
         //            public void call(CourseTypeSamples qcResponseChooseCourses) {

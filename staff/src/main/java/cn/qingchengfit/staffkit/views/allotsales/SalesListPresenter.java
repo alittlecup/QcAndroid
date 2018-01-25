@@ -26,10 +26,9 @@ public class SalesListPresenter extends BasePresenter {
     public PresenterView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    private RestRepository restRepository;
+    @Inject RestRepository restRepository;
 
-    @Inject public SalesListPresenter(RestRepository restRepository) {
-        this.restRepository = restRepository;
+    @Inject public SalesListPresenter() {
     }
 
     @Override public void onStart() {

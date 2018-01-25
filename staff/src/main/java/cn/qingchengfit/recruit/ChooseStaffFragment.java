@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
 import cn.qingchengfit.chat.model.ChatGym;
@@ -22,7 +21,6 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.network.response.ChatGymWrap;
 import cn.qingchengfit.saas.network.GetApi;
-import cn.qingchengfit.saas.response.SuWrap;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventChoosePerson;
@@ -90,50 +88,48 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
     toolbarTitle.setText("选择工作人员");
     toolbar.getMenu().clear();
     toolbar.inflateMenu(R.menu.menu_add_txt);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        RxRegiste(qcRestRepository.createGetApi(GetApi.class)
-            .querySu(chatGym.id)
-            .onBackpressureBuffer()
-            .flatMap(new Func1<QcDataResponse<SuWrap>, Observable<List<CoachService>>>() {
-              @Override public Observable<List<CoachService>> call(
-                  final QcDataResponse<SuWrap> suWrapQcDataResponse) {
-                if (suWrapQcDataResponse.status == 200) {
-                  if (suWrapQcDataResponse.data.is_superuser) {
-                    return qcDbManager.getGymByGymId(chatGym.id);
-                  } else {
+    toolbar.setOnMenuItemClickListener(item -> {
+      RxRegiste(qcRestRepository.createGetApi(GetApi.class)
+          .querySu(chatGym.id)
+          .onBackpressureBuffer()
+          .flatMap(suWrapQcDataResponse -> {
+            if (suWrapQcDataResponse.status == 200) {
+              if (suWrapQcDataResponse.data.is_superuser) {
+                CoachService service = qcDbManager.getGymByGymIdNow(chatGym.id);
+                List<CoachService> coachServices = new ArrayList<>();
+                coachServices.add(service);
+                return Observable.just(coachServices);
+              } else {
 
-                  }
-                } else {
-                  getActivity().runOnUiThread(new Runnable() {
-                    @Override public void run() {
-                      ToastUtils.show(suWrapQcDataResponse.getMsg());
-                    }
-                  });
-                }
-                List<CoachService> ret = new ArrayList<CoachService>();
-                return Observable.just(ret);
               }
-            })
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<List<CoachService>>() {
-              @Override public void call(List<CoachService> coachServices) {
-                if (coachServices.size() > 0) {
-                  //Intent toStatement = new Intent(getActivity(), ContainerActivity.class);
-                  //toStatement.putExtra("router", GymFunctionFactory.MODULE_MANAGE_STAFF_ADD);
-                  //toStatement.putExtra("")
-                  //startActivity(toStatement);
-                  gymWrapper.setCoachService(coachServices.get(0));
-                  gymFunctionFactory.getJumpIntent(GymFunctionFactory.MODULE_MANAGE_STAFF_ADD,
-                      coachServices.get(0), null, null, ChooseStaffFragment.this);
-                } else {
-                  ToastUtils.show("找不到对应场馆");
+            } else {
+              getActivity().runOnUiThread(new Runnable() {
+                @Override public void run() {
+                  ToastUtils.show(suWrapQcDataResponse.getMsg());
                 }
+              });
+            }
+            List<CoachService> ret = new ArrayList<CoachService>();
+            return Observable.just(ret);
+          })
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<List<CoachService>>() {
+            @Override public void call(List<CoachService> coachServices) {
+              if (coachServices.size() > 0) {
+                //Intent toStatement = new Intent(getActivity(), ContainerActivity.class);
+                //toStatement.putExtra("router", GymFunctionFactory.MODULE_MANAGE_STAFF_ADD);
+                //toStatement.putExtra("")
+                //startActivity(toStatement);
+                gymWrapper.setCoachService(coachServices.get(0));
+                gymFunctionFactory.getJumpIntent(GymFunctionFactory.MODULE_MANAGE_STAFF_ADD,
+                    coachServices.get(0), null, null, ChooseStaffFragment.this);
+              } else {
+                ToastUtils.show("找不到对应场馆");
               }
-            }, new NetWorkThrowable()));
-        return false;
-      }
+            }
+          }, new NetWorkThrowable()));
+      return false;
     });
   }
 

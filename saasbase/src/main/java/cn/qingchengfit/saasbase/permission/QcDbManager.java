@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Permission;
 import cn.qingchengfit.model.base.QcStudentBean;
+import io.reactivex.Flowable;
 import java.util.List;
-import rx.Observable;
 
 /**
  * power by
@@ -30,14 +30,14 @@ import rx.Observable;
 
 public interface QcDbManager {
   //学员相关
-  Observable<List<QcStudentBean>> getAllStudent();
-  Observable<QcStudentBean> getStudentById(String id);
-  Observable<QcStudentBean> getStudentByPhone(String phone);
-  Observable<List<QcStudentBean>> getStudentByBrand(String brandid);
-  Observable<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid);
-  Observable<List<QcStudentBean>> getStudentByKeyWord(final String keyword);
-  Observable<List<QcStudentBean>> getStudentByKeyWordShop(String brandid, String shopid, final String keyword);
-  Observable<List<QcStudentBean>> getStudentByGym(String shopid);
+  Flowable<List<QcStudentBean>> getAllStudent();
+  Flowable<QcStudentBean> getStudentById(String id);
+  Flowable<QcStudentBean> getStudentByPhone(String phone);
+  Flowable<List<QcStudentBean>> getStudentByBrand(String brandid);
+  Flowable<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid);
+  Flowable<List<QcStudentBean>> getStudentByKeyWord(final String keyword);
+  Flowable<List<QcStudentBean>> getStudentByKeyWordShop(String brandid, String shopid, final String keyword);
+  Flowable<List<QcStudentBean>> getStudentByGym(String shopid);
   void delStudentByBrand(String brandid, final String id);
   void delAllStudent();
   void delStudentByGym(final String gymid, final String gymmodel, final String id);
@@ -47,14 +47,16 @@ public interface QcDbManager {
   void delByBrandId(String brandId);
 
   //场馆相关
-  Observable<List<CoachService>> getAllCoachService();
-  Observable<List<CoachService>> getAllCoachServiceByBrand(String brandId);
+  Flowable<List<CoachService>> getAllCoachService();
+  List<CoachService> getAllCoachServiceNow();
+  Flowable<List<CoachService>> getAllCoachServiceByBrand(String brandId);
   void writeGyms(final List<CoachService> services);
   CoachService getGymNow(String gymid, String gymmodel);
   CoachService getShopNameById(String brandId, String shopId);
-  Observable<List<CoachService>> getGymByModel(String id, String model);
-  Observable<List<CoachService>> getGymByGymId(String gymid);
-  Observable<List<CoachService>> getGymByShopIds(String brandid, final List<String> shopid);
+  Flowable<CoachService> getGymByModel(String id, String model);
+  Flowable<CoachService> getGymByGymId(String gymid);
+  CoachService getGymByGymIdNow(String gymid);
+  Flowable<List<CoachService>> getGymByShopIds(String brandid, final List<String> shopid);
 
   //权限
   void writePermiss(final List<Permission> permissions);
@@ -65,7 +67,7 @@ public interface QcDbManager {
   boolean checkAtLeastOne(String key);
   boolean checkNoOne(String key);
   boolean checkAll(String key);
-  Observable<List<String>> queryAllFunctions();
+  Flowable<List<String>> queryAllFunctions();
   void insertFunction(List<String> module);
 
 }

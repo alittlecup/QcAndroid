@@ -1,15 +1,6 @@
 package cn.qingchengfit.saasbase.student.presenters.home;
 
-import android.content.Intent;
 import android.text.TextUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
-
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
@@ -17,14 +8,15 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
-import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.repository.IStudentModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
-import cn.qingchengfit.saasbase.student.other.StudentAction;
 import cn.qingchengfit.utils.GymUtils;
+import java.util.HashMap;
+import java.util.List;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

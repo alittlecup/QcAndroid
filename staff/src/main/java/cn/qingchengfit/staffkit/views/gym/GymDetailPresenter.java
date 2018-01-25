@@ -74,17 +74,9 @@ public class GymDetailPresenter extends BasePresenter {
         gymDetailView = (GymDetailView) v;
         RxRegiste(qcDbManager.queryAllFunctions()
             .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<List<String>>() {
-                @Override public void call(List<String> strings) {
-                    gymDetailView.onModule(strings);
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    Timber.d(throwable.getMessage());
-                }
-            }));
+            .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+            .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+            .subscribe(strings -> gymDetailView.onModule(strings), throwable -> Timber.d(throwable.getMessage())));
     }
 
     @Override public void attachIncomingIntent(Intent intent) {

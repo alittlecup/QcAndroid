@@ -63,7 +63,6 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -200,25 +199,20 @@ public class StudentHomeFragment extends BaseFragment {
         });
 
         RxRegiste(studentAction
-            .getStudentById(studentBean.id()).onBackpressureBuffer().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcStudentBean>() {
-                @Override public void call(QcStudentBean qcStudentBean) {
-                    Glide.with(getActivity())
-                        .load(PhotoUtils.getSmall(qcStudentBean.getAvatar()))
-                        .asBitmap()
-                        .into(new CircleImgWrapper(header, getContext()));
-                    name.setText(qcStudentBean.getUsername());
-                    Glide.with(getActivity())
-                        .load(qcStudentBean.getGender() == 0 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female)
-                        .into(gender);
-                    phone.setText(qcStudentBean.getPhone());
-                    mQcStudentBean = qcStudentBean;
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-
-                }
+            .getStudentById(studentBean.id()).onBackpressureBuffer().subscribeOn(io.reactivex.schedulers.Schedulers.io())
+            .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+            .subscribe(qcStudentBean -> {
+                Glide.with(getActivity())
+                    .load(PhotoUtils.getSmall(qcStudentBean.getAvatar()))
+                    .asBitmap()
+                    .into(new CircleImgWrapper(header, getContext()));
+                name.setText(qcStudentBean.getUsername());
+                Glide.with(getActivity())
+                    .load(qcStudentBean.getGender() == 0 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female)
+                    .into(gender);
+                phone.setText(qcStudentBean.getPhone());
+                mQcStudentBean = qcStudentBean;
+            }, throwable -> {
             }));
 
         switch (statusToTab) {

@@ -43,9 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 public class StudentOperationFragment extends BaseFragment
     implements HandleClickAllotSale, HandleClickFollowUp, FlexibleAdapter.OnItemClickListener,
@@ -98,39 +95,31 @@ public class StudentOperationFragment extends BaseFragment
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     RxRegiste(gymBaseInfoAction.getGymByModel(gymWrapper.id(), gymWrapper.model())
-        .filter(new Func1<List<CoachService>, Boolean>() {
-          @Override public Boolean call(List<CoachService> list) {
-            return list != null && list.size() > 0;
-          }
-        })
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<List<CoachService>>() {
-          @Override public void call(List<CoachService> list) {
-            CoachService now = list.get(0);
-            proGym = GymUtils.getSystemEndDay(now) >= 0;
-            datas.clear();
-            datas.add(new StudentOperationItem(R.drawable.vector_student_management_sales,
-              R.string.qc_student_allotsale, proGym, true));
-            datas.add(new StudentOperationItem(R.drawable.vector_student_management_attend,
-              R.string.qc_student_attendance, proGym, true));
-            datas.add(new StudentOperationItem(R.drawable.vector_student_management_coach,
-              R.string.qc_student_allot_coach, proGym, true));
-            datas.add(new StudentOperationItem(R.drawable.vector_student_send_sms,
-              R.string.qc_student_send_sms, proGym, true));
-            datas.add(new StudentOperationItem(R.drawable.vector_student_management_follow,
-              R.string.qc_student_follow_up, proGym, true));
-            datas.add(new StudentOperationItem(R.drawable.ic_student_management_export,
-              R.string.fun_name_export, proGym, true));
-            datas.add(new StudentOperationItem(R.drawable.vd_student_transfer,
-              R.string.qc_student_follow_transfer, proGym, true));
-            datas.add(new StudentOperationItem(R.drawable.vector_student_management_birthday,
-              R.string.qc_student_birthday_notice, proGym, false));
-            datas.add(new StudentOperationItem(R.drawable.vector_student_management_tag,
-              R.string.qc_student_vip, proGym, false));
-            setRecyclerPadding(datas.size());
-            indicator.createIndicators(datas.size() / 8 + 1);
-            mCommonFlexAdapter.updateDataSet(datas, true);
-          }
+        .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+        .subscribe(now -> {
+          proGym = GymUtils.getSystemEndDay(now) >= 0;
+          datas.clear();
+          datas.add(new StudentOperationItem(R.drawable.vector_student_management_sales,
+            R.string.qc_student_allotsale, proGym, true));
+          datas.add(new StudentOperationItem(R.drawable.vector_student_management_attend,
+            R.string.qc_student_attendance, proGym, true));
+          datas.add(new StudentOperationItem(R.drawable.vector_student_management_coach,
+            R.string.qc_student_allot_coach, proGym, true));
+          datas.add(new StudentOperationItem(R.drawable.vector_student_send_sms,
+            R.string.qc_student_send_sms, proGym, true));
+          datas.add(new StudentOperationItem(R.drawable.vector_student_management_follow,
+            R.string.qc_student_follow_up, proGym, true));
+          datas.add(new StudentOperationItem(R.drawable.ic_student_management_export,
+            R.string.fun_name_export, proGym, true));
+          datas.add(new StudentOperationItem(R.drawable.vd_student_transfer,
+            R.string.qc_student_follow_transfer, proGym, true));
+          datas.add(new StudentOperationItem(R.drawable.vector_student_management_birthday,
+            R.string.qc_student_birthday_notice, proGym, false));
+          datas.add(new StudentOperationItem(R.drawable.vector_student_management_tag,
+            R.string.qc_student_vip, proGym, false));
+          setRecyclerPadding(datas.size());
+          indicator.createIndicators(datas.size() / 8 + 1);
+          mCommonFlexAdapter.updateDataSet(datas, true);
         }));
   }
 

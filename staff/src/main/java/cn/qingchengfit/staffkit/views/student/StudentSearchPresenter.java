@@ -11,9 +11,6 @@ import cn.qingchengfit.widgets.AlphabetView;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * //  ┏┓　　　┏┓
@@ -39,7 +36,6 @@ import rx.functions.Action1;
 public class StudentSearchPresenter extends BasePresenter {
 
     public PresenterView view;
-    private Subscription spFilter;
     @Inject StudentAction studentAction;
 
     @Inject public StudentSearchPresenter() {
@@ -73,20 +69,13 @@ public class StudentSearchPresenter extends BasePresenter {
     @Override public void unattachView() {
         super.unattachView();
         view = null;
-        if (spFilter != null) spFilter.unsubscribe();
     }
 
     public void filter(String keyword) {
-        if (spFilter != null) spFilter.unsubscribe();
-        spFilter = studentAction
+        RxRegiste(studentAction
             .getStudentByKeyWord(keyword)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<List<QcStudentBean>>() {
-                @Override public void call(List<QcStudentBean> qcStudentBeen) {
-                    handleData(qcStudentBeen);
-                }
-            })
-
+            .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+            .subscribe(qcStudentBeen -> handleData(qcStudentBeen)))
         ;
     }
 
