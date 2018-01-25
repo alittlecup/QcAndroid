@@ -324,8 +324,17 @@ import rx.android.schedulers.AndroidSchedulers;
       Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
     pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
+        if (!endtime.isEmpty()) {
+          if (DateUtils.formatDateFromYYYYMMDD(endtime.getContent()).getTime() - date.getTime()
+              > 366 * DateUtils.DAY_TIME) {
+            Toast.makeText(getContext(), R.string.alert_batch_greater_three_month, Toast.LENGTH_SHORT)
+                .show();
+            return;
+          }
+        }
+        if(endtime.isEmpty())
+          endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
         starttime.setContent(DateUtils.Date2YYYYMMDD(date));
-        if (endtime.isEmpty()) endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
         pwTime.dismiss();
       }
     });
@@ -349,7 +358,7 @@ import rx.android.schedulers.AndroidSchedulers;
           return;
         }
         if (date.getTime() - DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()
-          > 92 * DateUtils.DAY_TIME) {
+          > 366 * DateUtils.DAY_TIME) {
           Toast.makeText(getContext(), R.string.alert_batch_greater_three_month, Toast.LENGTH_SHORT)
             .show();
           return;
