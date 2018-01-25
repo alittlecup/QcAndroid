@@ -184,6 +184,11 @@ import rx.android.schedulers.AndroidSchedulers;
       presenter.isPrivate() ? "新增私教排期" : "新增团课排课");
     toolbar.inflateMenu(R.menu.menu_compelete);
     toolbar.setOnMenuItemClickListener(item -> {
+      if (DateUtils.interval(DateUtils.formatDateFromYYYYMMDD(endtime.getContent()),
+          DateUtils.formatDateFromYYYYMMDD(starttime.getContent())) > 366) {
+        showAlert(getResources().getString(R.string.alert_batch_greater_three_month));
+        return false;
+      }
       presenter.checkBatch();
       return true;
     });
@@ -324,17 +329,9 @@ import rx.android.schedulers.AndroidSchedulers;
       Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
     pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
-        if (!endtime.isEmpty()) {
-          if (DateUtils.formatDateFromYYYYMMDD(endtime.getContent()).getTime() - date.getTime()
-              > 366 * DateUtils.DAY_TIME) {
-            Toast.makeText(getContext(), R.string.alert_batch_greater_three_month, Toast.LENGTH_SHORT)
-                .show();
-            return;
-          }
-        }
+        starttime.setContent(DateUtils.Date2YYYYMMDD(date));
         if(endtime.isEmpty())
           endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
-        starttime.setContent(DateUtils.Date2YYYYMMDD(date));
         pwTime.dismiss();
       }
     });

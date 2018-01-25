@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -150,6 +151,11 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
+          if (DateUtils.interval(DateUtils.formatDateFromYYYYMMDD(endtime.getContent()),
+              DateUtils.formatDateFromYYYYMMDD(starttime.getContent())) > 366) {
+            showAlert(getResources().getString(R.string.alert_batch_greater_three_month));
+            return;
+          }
           presenter.buildBody();
           presenter.arrangeBatch();
         }
@@ -363,6 +369,17 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
     pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
       @Override public void onTimeSelect(Date date) {
+        if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()) {
+          Toast.makeText(getContext(), R.string.alert_endtime_greater_starttime, Toast.LENGTH_SHORT)
+              .show();
+          return;
+        }
+        if (date.getTime() - DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()
+            > 366 * DateUtils.DAY_TIME) {
+          Toast.makeText(getContext(), R.string.alert_batch_greater_three_month, Toast.LENGTH_SHORT)
+              .show();
+          return;
+        }
         endtime.setContent(DateUtils.Date2YYYYMMDD(date));
         pwTime.dismiss();
       }
