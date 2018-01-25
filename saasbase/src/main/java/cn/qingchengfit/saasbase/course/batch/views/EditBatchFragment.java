@@ -151,11 +151,6 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
-          if (DateUtils.interval(DateUtils.formatDateFromYYYYMMDD(endtime.getContent()),
-              DateUtils.formatDateFromYYYYMMDD(starttime.getContent())) > 366) {
-            showAlert(getResources().getString(R.string.alert_batch_greater_three_month));
-            return;
-          }
           presenter.buildBody();
           presenter.arrangeBatch();
         }
@@ -355,7 +350,8 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
         pwTime.dismiss();
       }
     });
-    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, starttime.isEmpty() ? new Date()
+        : DateUtils.formatDateFromYYYYMMDD(starttime.getContent()));
   }
 
   /**
@@ -384,7 +380,8 @@ public class EditBatchFragment extends SaasBaseFragment implements IBatchPresent
         pwTime.dismiss();
       }
     });
-    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, endtime.isEmpty() ? new Date()
+        : DateUtils.formatDateFromYYYYMMDD(endtime.getContent()));
   }
 
   @OnClick(R2.id.civ_to_open_time) public void onOpenTime() {

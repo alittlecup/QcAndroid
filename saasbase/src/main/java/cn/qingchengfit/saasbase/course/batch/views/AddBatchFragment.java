@@ -184,11 +184,6 @@ import rx.android.schedulers.AndroidSchedulers;
       presenter.isPrivate() ? "新增私教排期" : "新增团课排课");
     toolbar.inflateMenu(R.menu.menu_compelete);
     toolbar.setOnMenuItemClickListener(item -> {
-      if (DateUtils.interval(DateUtils.formatDateFromYYYYMMDD(endtime.getContent()),
-          DateUtils.formatDateFromYYYYMMDD(starttime.getContent())) > 366) {
-        showAlert(getResources().getString(R.string.alert_batch_greater_three_month));
-        return false;
-      }
       presenter.checkBatch();
       return true;
     });
@@ -335,7 +330,8 @@ import rx.android.schedulers.AndroidSchedulers;
         pwTime.dismiss();
       }
     });
-    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, starttime.isEmpty() ? new Date()
+        : DateUtils.formatDateFromYYYYMMDD(starttime.getContent()));
   }
 
   /**
@@ -364,7 +360,8 @@ import rx.android.schedulers.AndroidSchedulers;
         pwTime.dismiss();
       }
     });
-    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
+    pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, endtime.isEmpty() ? new Date()
+        : DateUtils.formatDateFromYYYYMMDD(endtime.getContent()));
   }
 
   @OnClick(R2.id.civ_to_open_time) public void onOpenTime() {
