@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.squareup.sqldelight'
+//apply plugin: 'com.squareup.sqldelight'
 apply plugin: 'idea'
 
 def libs = rootProject.ext.libraries;
@@ -150,6 +150,18 @@ android {
     resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
   }
 
+  configurations.all {
+    resolutionStrategy.force "com.google.code.findbugs:jsr305:3.0.1"
+    resolutionStrategy.force "com.android.support:support-v4:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:support-v13:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:support-annotations:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:appcompat-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:cardview-v7:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
+    resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
+  }
+
 }
 
 afterEvaluate {
@@ -257,7 +269,9 @@ dependencies {
     annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
     annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
-//  }
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+
+  //  }
 //  println 'no processor'
 //  } else {
 //    println "skip to run annotation processors ..."

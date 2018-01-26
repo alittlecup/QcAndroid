@@ -1,6 +1,6 @@
 apply plugin: "com.android.library"
 apply plugin: "maven"
-apply plugin: "com.squareup.sqldelight"
+//apply plugin: "com.squareup.sqldelight"
 apply plugin: "com.jakewharton.butterknife"
 
 def libs = rootProject.ext.libraries

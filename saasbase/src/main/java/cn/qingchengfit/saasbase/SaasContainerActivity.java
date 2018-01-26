@@ -6,18 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.FrameLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.bill.view.BillDetailParams;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.views.activity.BaseActivity;
-import cn.qingchengfit.widgets.R2;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -47,17 +42,13 @@ import javax.inject.Inject;
 public class SaasContainerActivity extends BaseActivity implements HasSupportFragmentInjector {
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
   @Inject SaasbaseRouterCenter routerCenter;
-  @BindView(R2.id.web_frag_layout) FrameLayout webFragLayout;
+  FrameLayout webFragLayout;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_base_frag);
-    ButterKnife.bind(this);
-    webFragLayout.setOnTouchListener(new View.OnTouchListener() {
-      @Override public boolean onTouch(View v, MotionEvent event) {
-        return true;
-      }
-    });
+    webFragLayout = findViewById(R.id.web_frag_layout);
+    webFragLayout.setOnTouchListener((v, event) -> true);
     onNewIntent(getIntent());
   }
 

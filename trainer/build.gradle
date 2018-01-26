@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.squareup.sqldelight'
+//apply plugin: 'com.squareup.sqldelight'
 
 //apply plugin: 'com.neenbedankt.android-apt'
 //def buildNumber = "1"
@@ -113,23 +113,6 @@ android {
 
       dimension 'qc'
     }
-
-    //    joinfit {
-    //      minSdkVersion 16
-    //    }
-    //    suisheng {
-    //      applicationIdSuffix ".vmsfit"
-    //      minSdkVersion 16
-    //    }
-    //    s567go {
-    //      minSdkVersion 16
-    //    }
-    //    eptc {
-    //      minSdkVersion 16
-    //    }
-    //    gravity {
-    //      minSdkVersion 16
-    //    }
   }
 
   buildTypes {
