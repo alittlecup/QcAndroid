@@ -4,6 +4,7 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -65,6 +66,16 @@ public class NotSignPresenter extends BasePresenter {
             view.onShowError(throwable.getMessage());
           }
         }));
+  }
+
+  public StudentBean convertStudentBean(NotSignStudent student){
+    StudentBean bean = new StudentBean();
+    bean.id = student.id;
+    bean.username = student.username;
+    bean.avatar = student.avatar;
+    bean.phone = student.phone;
+    bean.gender = (student.gender == 1);
+    return bean;
   }
 
   public interface MVPView extends CView{
