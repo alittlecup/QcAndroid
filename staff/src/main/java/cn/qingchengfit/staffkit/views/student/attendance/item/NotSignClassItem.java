@@ -1,9 +1,6 @@
 package cn.qingchengfit.staffkit.views.student.attendance.item;
 
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -14,7 +11,6 @@ import cn.qingchengfit.utils.CircleImgWrapper;
 import com.bumptech.glide.Glide;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import eu.davidea.flexibleadapter.items.IFilterable;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
@@ -38,14 +34,11 @@ public class NotSignClassItem extends AbstractFlexibleItem<NotSignClassItem.NotS
 
   @Override public NotSignVH createViewHolder(View view, FlexibleAdapter adapter) {
     NotSignVH holder = new NotSignVH(view, adapter);
-    holder.btnContactHim.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (contactListener != null){
-          contactListener.onContact(student.phone);
-        }
-      }
-    });
     return holder;
+  }
+
+  public NotSignStudent getStudent() {
+    return student;
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, NotSignVH holder, int position,
@@ -61,6 +54,7 @@ public class NotSignClassItem extends AbstractFlexibleItem<NotSignClassItem.NotS
     holder.imageNotSignGender.setImageResource(
         student.gender == 1 ? R.drawable.ic_gender_signal_female
             : R.drawable.ic_gender_signal_male);
+    holder.btnContactHim.setTag(position);
   }
 
   @Override public boolean equals(Object o) {
@@ -84,6 +78,14 @@ public class NotSignClassItem extends AbstractFlexibleItem<NotSignClassItem.NotS
     public NotSignVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);
       ButterKnife.bind(this, view);
+      btnContactHim.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          if (contactListener != null){
+            contactListener.onContact(
+                ((NotSignClassItem) adapter.getItem((Integer) v.getTag())).getStudent().phone);
+          }
+        }
+      });
     }
   }
 

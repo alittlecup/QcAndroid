@@ -25,6 +25,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.student.attendance.item.NotSignClassItem;
 import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
 import cn.qingchengfit.staffkit.views.student.attendance.presenter.NotSignPresenter;
+import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -34,6 +35,7 @@ import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -49,7 +51,8 @@ import static android.view.View.GONE;
  */
 
 public class AttendanceNotSignFragment extends BaseFragment
-    implements NotSignPresenter.MVPView, FilterCustomFragment.OnBackFilterDataListener {
+    implements NotSignPresenter.MVPView, FilterCustomFragment.OnBackFilterDataListener,
+    FlexibleAdapter.OnItemClickListener {
 
   @BindView(R.id.text_not_sign_filter_time) TextView textNotSignFilterTime;
   @BindView(R.id.image_not_sign_filter_time) ImageView imageNotSignFilterTime;
@@ -112,7 +115,7 @@ public class AttendanceNotSignFragment extends BaseFragment
 
     shadow.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if(fragNotSignFilter.getLayoutParams().height > 0) {
+        if (fragNotSignFilter.getLayoutParams().height > 0) {
           timeFilterFragment.setFilterAnimation(fragNotSignFilter, false);
           startShadowAnim(false);
         }
@@ -124,11 +127,11 @@ public class AttendanceNotSignFragment extends BaseFragment
     });
 
     presenter.getNotSignStudent(start, end, count);
-    adapter = new CommonFlexAdapter(itemList);
+    adapter = new CommonFlexAdapter(itemList, this);
     recyclerNotSign.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerNotSign.addItemDecoration(
-        new FlexibleItemDecoration(getContext())
-            .addItemViewType(R.layout.item_not_sign_class, MeasureUtils.dpToPx(120f, getResources()), 0, 0, 0)
+        new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_not_sign_class,
+            MeasureUtils.dpToPx(120f, getResources()), 0, 0, 0)
             .withDivider(R.drawable.divider_card_list)
             .withBottomEdge(true));
     recyclerNotSign.setAdapter(adapter);
@@ -216,12 +219,12 @@ public class AttendanceNotSignFragment extends BaseFragment
       params.height = MeasureUtils.dpToPx(432f, getResources());
       fragNotSignFilter.setLayoutParams(params);
     }
-    if (fragLayoutCount.getLayoutParams().height > 0){
+    if (fragLayoutCount.getLayoutParams().height > 0) {
       countFilterFragment.setFilterAnimation(fragLayoutCount, false);
     }
-    if (fragNotSignFilter.getLayoutParams().height == 0){
+    if (fragNotSignFilter.getLayoutParams().height == 0) {
       startShadowAnim(true);
-    }else{
+    } else {
       startShadowAnim(false);
     }
     timeFilterFragment.setFilterAnimation(fragNotSignFilter,
@@ -241,6 +244,11 @@ public class AttendanceNotSignFragment extends BaseFragment
     animation.setFillAfter(true);
     animation.setDuration(200);
     shadow.startAnimation(animation);
+    shadow.clearAnimation();
+  }
+
+  @Override public boolean isBlockTouch() {
+    return false;
   }
 
   @OnClick(R.id.layout_not_sign_count) public void onShowCountFilter() {
@@ -249,12 +257,12 @@ public class AttendanceNotSignFragment extends BaseFragment
       params.height = MeasureUtils.dpToPx(432f, getResources());
       fragLayoutCount.setLayoutParams(params);
     }
-    if (fragNotSignFilter.getLayoutParams().height > 0){
+    if (fragNotSignFilter.getLayoutParams().height > 0) {
       timeFilterFragment.setFilterAnimation(fragNotSignFilter, false);
     }
-    if (fragLayoutCount.getLayoutParams().height == 0){
+    if (fragLayoutCount.getLayoutParams().height == 0) {
       startShadowAnim(true);
-    }else{
+    } else {
       startShadowAnim(false);
     }
     countFilterFragment.setFilterAnimation(fragLayoutCount,
@@ -275,35 +283,35 @@ public class AttendanceNotSignFragment extends BaseFragment
       itemList.clear();
     }
     if (studentList.size() == 0) {
-      itemList.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe,
-          getResources().getString(R.string.text_empty_title_not_sign),
-          getResources().getString(R.string.text_empty_content_not_sign)));
+      itemList.add(new CommonNoDataItem(R.drawable.vd_img_empty_universe, "",
+          getResources().getString(R.string.text_empty_title_not_sign_no_student)));
     }
     for (NotSignStudent student : studentList) {
       itemList.add(new NotSignClassItem(student, new NotSignClassItem.OnClickContactListener() {
         @Override public void onContact(final String phone) {
-          new MaterialDialog.Builder(getContext()).autoDismiss(true)
+          new MaterialDialog.Builder(getActivity()).autoDismiss(true)
               .content(new StringBuilder().append("确定呼叫号码\n").append(phone).append("吗？").toString())
               .positiveText(R.string.common_comfirm)
               .negativeText(R.string.common_cancel)
               .autoDismiss(true)
               .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull
-                    DialogAction which) {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-                  new RxPermissions(getActivity()).request(
-                      Manifest.permission.CALL_PHONE).subscribe(new Action1<Boolean>() {
-                    @Override public void call(Boolean aBoolean) {
-                      if (aBoolean) {
-                        Uri uri = Uri.parse(new StringBuilder().append("tel:").append(phone).toString());
-                        Intent dialntent = new Intent(Intent.ACTION_DIAL, uri);
-                        dialntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(dialntent);
-                      } else {
-                        ToastUtils.show("请在应用设置中开启拨打电话权限");
-                      }
-                    }
-                  });
+                  new RxPermissions(getActivity()).request(Manifest.permission.CALL_PHONE)
+                      .subscribe(new Action1<Boolean>() {
+                        @Override public void call(Boolean aBoolean) {
+                          if (aBoolean) {
+                            Uri uri = Uri.parse(
+                                new StringBuilder().append("tel:").append(phone).toString());
+                            Intent dialntent = new Intent(Intent.ACTION_DIAL, uri);
+                            dialntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(dialntent);
+                          } else {
+                            ToastUtils.show("请在应用设置中开启拨打电话权限");
+                          }
+                        }
+                      });
                 }
               })
               .show();
@@ -327,5 +335,15 @@ public class AttendanceNotSignFragment extends BaseFragment
 
   @Override public void onBack() {
     getChildFragmentManager().popBackStackImmediate();
+  }
+
+  @Override public boolean onItemClick(int position) {
+    if (adapter.getItem(position) instanceof NotSignClassItem) {
+      Intent it = new Intent(getActivity(), StudentsDetailActivity.class);
+      it.putExtra("student", presenter.convertStudentBean(
+          ((NotSignClassItem) adapter.getItem(position)).getStudent()));
+      startActivity(it);
+    }
+    return false;
   }
 }
