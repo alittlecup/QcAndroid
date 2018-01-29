@@ -25,9 +25,13 @@ import cn.qingchengfit.widgets.CommonInputView;
   //public static String getTextString(CommonInputView inputView){
   //  return inputView.getContent();
   //}
-  @BindingAdapter(value = { "civ_lable", "civ_content" }, requireAll = false)
-  public static void setCommonInputView(CommonInputView inputView, String label, String content) {
+  @BindingAdapter(value = { "civ_lable" }) public static void setCommonInputView(
+      CommonInputView inputView, String label) {
     inputView.setLabel(label);
+  }
+
+  @BindingAdapter(value = { "civ_content" })
+  public static void setCommonInputViewContent(CommonInputView inputView, String content) {
     if (!inputView.getContent().equals(content)) {
       inputView.setContent(content);
     }

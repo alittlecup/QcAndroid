@@ -45,6 +45,7 @@
   <string name="product_pay_online">线上支付</string>
   <string name="product_pay_offline">线下支付</string>
   <string name="product_pay_card">会员卡支付</string>
+  <string name="product_pay_card_price">会员卡支付</string>
   <string name="choose_product_pay_channel">选择支付方式</string>
 
 
@@ -73,6 +74,7 @@
   <string name="add_category">新建分类</string>
   <string name="delete_category">确定删除该分类？</string>
   <string name="category_products">共%d件商品</string>
+  <string name="product_add_category">分类至（按分类展示商品，方便买家筛选）</string>
 
   <!--inventory-->
   <string name="all_inventory_list">查看总库存记录</string>

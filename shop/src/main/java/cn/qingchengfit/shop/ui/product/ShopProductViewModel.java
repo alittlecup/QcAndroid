@@ -12,12 +12,15 @@ import javax.inject.Inject;
 
 public class ShopProductViewModel extends ShopBaseViewModel {
   public final ObservableBoolean isEdit = new ObservableBoolean(true);
-  public final ActionLiveEvent payChannelEvent=new ActionLiveEvent();
+  public final ActionLiveEvent payChannelEvent = new ActionLiveEvent();
+  public final ActionLiveEvent addToCategory = new ActionLiveEvent();
+  public final ActionLiveEvent addImagesEvent = new ActionLiveEvent();
+
   @Inject public ShopProductViewModel() {
   }
 
   public void chooseImageClick() {
-
+    addImagesEvent.call();
   }
 
   public void toPayChannel() {
@@ -33,7 +36,7 @@ public class ShopProductViewModel extends ShopBaseViewModel {
   }
 
   public void toCategory() {
-
+    addToCategory.call();
   }
 
   public void toDeliverChannel() {

@@ -20,16 +20,19 @@
     <cn.qingchengfit.saasbase.student.other.MyDrawerLayout
         android:id="@+id/drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <include
-                android:id="@+id/include_toolbar"
                 layout="@layout/common_simple_toolbar"
-                bind:toolbarModel="@{toolbarModel}" />
+                android:id="@+id/include_toolbar"
+                bind:toolbarModel="@{toolbarModel}"
+                />
 
             <android.support.design.widget.CoordinatorLayout
                 android:id="@+id/scroll_root"
@@ -37,7 +40,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="?attr/actionBarSize"
                 android:background="@color/bg_grey"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
 
 
                 <android.support.design.widget.AppBarLayout
@@ -46,9 +50,10 @@
                     android:layout_height="wrap_content"
                     android:background="@color/bg_grey"
                     android:fitsSystemWindows="true"
-                    app:elevation="0dp">
+                    app:elevation="0dp"
+                    >
 
-                    <include layout="@layout/divider_grey" />
+                    <include layout="@layout/divider_grey"/>
 
                     <LinearLayout
                         android:id="@+id/ll_add_stu"
@@ -60,42 +65,48 @@
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/activity_horizontal_margin"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                        app:layout_scrollFlags="scroll">
+                        app:layout_scrollFlags="scroll"
+                        >
 
                         <cn.qingchengfit.support.widgets.CompatTextView
-                            style="@style/Qc.TextCommonGrey"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:drawablePadding="8dp"
                             android:gravity="center"
                             android:text="@string/qc_allotsale_sale_detail_add_stud"
                             android:textColor="@color/colorPrimary"
-                            app:drawableStart="@drawable/vd_add" />
+                            app:drawableStart="@drawable/vd_add"
+                            style="@style/Qc.TextCommonGrey"
+                            />
                     </LinearLayout>
 
                     <include
+                        layout="@layout/view_layout_filter"
                         android:id="@+id/include_filter"
-                        layout="@layout/view_layout_filter" />
+                        />
 
-                    <include layout="@layout/divider_grey" />
+                    <include layout="@layout/divider_grey"/>
                 </android.support.design.widget.AppBarLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    >
 
                     <android.support.v4.widget.SwipeRefreshLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:onRefreshListener="@{()->viewModel.refresh()}"
-                        app:refreshing="@{viewModel.isLoading}">
+                        app:refreshing="@{viewModel.isLoading}"
+                        >
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/recyclerview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:items="@{viewModel.items}" />
+                            app:items="@{viewModel.items}"
+                            />
 
                     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -104,12 +115,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
+                        android:visibility="invisible"
                         app:enable="@{viewModel.getSortViewModel().letterChecked}"
                         app:fastScrollerAutoHideDelayInMillis="50"
                         app:fastScrollerAutoHideEnabled="false"
-                        android:visibility="invisible"
                         app:fastScrollerBubbleEnabled="true"
-                        app:fastScrollerBubblePosition="center" />
+                        app:fastScrollerBubblePosition="center"
+                        />
                 </RelativeLayout>
             </android.support.design.widget.CoordinatorLayout>
 
@@ -118,8 +130,9 @@
 
         <FrameLayout
             android:id="@+id/frame_student_filter"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            />
     </cn.qingchengfit.saasbase.student.other.MyDrawerLayout>
 </layout>

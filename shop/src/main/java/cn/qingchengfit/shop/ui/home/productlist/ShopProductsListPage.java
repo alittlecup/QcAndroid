@@ -42,7 +42,7 @@ public class ShopProductsListPage
 
     mViewModel.getProductEvent().observe(this, aVoid -> {
       Uri uri = Uri.parse("shop://shop/shop/product");
-      routeTo(uri, new ShopProductPageParams().isUpdate(false).build());
+      routeTo(uri, new ShopProductPageParams().isUpdate(true).build());
     });
   }
 

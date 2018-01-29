@@ -21,7 +21,6 @@
         android:id="@+id/ll_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/red"
         android:orientation="vertical"
         >
       <include
@@ -33,11 +32,11 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           >
-        <!--<com.tmall.ultraviewpager.UltraViewPager-->
-            <!--android:id="@+id/view_pager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="250dp"-->
-            <!--/>-->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            />
         <android.support.design.widget.FloatingActionButton
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -48,11 +47,13 @@
             app:visibleGone="@{viewModel.isEdit}"
             />
         <RelativeLayout
+            android:id="@+id/add_image_container"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:background="@color/colorPrimary"
             android:onClick="@{view->viewModel.chooseImageClick()}"
             android:orientation="vertical"
+            android:visibility="gone"
             >
           <ImageView
               android:id="@+id/image_choose"
@@ -99,24 +100,24 @@
           style="@style/QcCivInputStyle"
           />
 
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/product_pay_way"
+
+      <cn.qingchengfit.widgets.SwitcherLayout
+          android:id="@+id/price_card_switch"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/dimen_common_input_60dp"
-          android:layout_marginTop="14dp"
-          android:background="@color/colorPrimary"
-          android:onClick="@{view->viewModel.toPayChannel()}"
-          app:civ_lable="@string/product_pay_channal"
-          app:civ_nonnull="true"
-          app:civ_showright="@{viewModel.isEdit}"
-          app:enable="@{viewModel.isEdit}"
-          style="@style/QcCivClickStyle"
+          android:layout_height="@dimen/qc_item_height_new"
+          android:background="@color/white"
+          android:clickable="false"
+          android:focusable="false"
+          app:sw_lable="会员卡支付"
+          app:sw_showdivier="true"
+          app:sw_text_color="@color/qc_text_black"
           />
-      <LinearLayout
-          android:id="@+id/ll_category_container"
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/goods_recyclerview"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
+          android:layout_marginTop="14dp"
+
           />
       <FrameLayout
           android:layout_width="match_parent"
@@ -154,6 +155,7 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/dimen_common_input_60dp"
           android:background="@color/colorPrimary"
+          android:onClick="@{view->viewModel.toCategory()}"
           app:civ_hint="@string/not_category"
           app:civ_lable="@string/category_to"
           app:civ_showright="@{viewModel.isEdit}"
