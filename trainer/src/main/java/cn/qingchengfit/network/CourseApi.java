@@ -60,7 +60,7 @@ import retrofit2.http.QueryMap;
 public interface CourseApi {
 
   //所有的团课排期
-  @GET("/api/v1/coaches/{coach_id}/batches/{batch_id}/{schedules}/?order_by=start")
+  @GET("/api/v1/coaches/{coach_id}/batches/{batch_id}/{schedules}/?order_by=start&show_all=1")
   rx.Observable<QcDataResponse<BatchSchedulesWrap>> qcGetbatchSchedules(@Path("coach_id") String coach_id,
     @Path("batch_id") String batch_id, @Path("schedules") String schedules,
     @QueryMap HashMap<String, Object> params);

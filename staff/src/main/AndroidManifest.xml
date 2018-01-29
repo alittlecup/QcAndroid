@@ -914,22 +914,7 @@
       </intent-filter>
     </activity>
 
-  <activity
-        android:name=".gym.GymConfigAcitivty"
-        android:screenOrientation="portrait"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
 
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-
-        <data
-            android:host="gym"
-            android:scheme="qcstaff"
-            />
-      </intent-filter>
-    </activity>
 
     <activity
         android:name="cn.qingchengfit.saasbase.common.views.SaasCommonActivity"

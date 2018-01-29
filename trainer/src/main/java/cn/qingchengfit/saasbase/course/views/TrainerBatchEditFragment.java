@@ -1,10 +1,6 @@
-package com.qingchengfit.fitcoach.routers;
+package cn.qingchengfit.saasbase.course.views;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import cn.qingchengfit.saasbase.course.views.BatchListTrainerFragment;
-import cn.qingchengfit.saasbase.course.views.TrainerBatchAddFragment;
-import cn.qingchengfit.saasbase.routers.courseImpl;
+import cn.qingchengfit.saasbase.course.batch.views.EditBatchFragment;
 
 /**
  * power by
@@ -27,16 +23,6 @@ import cn.qingchengfit.saasbase.routers.courseImpl;
  * Created by Paper on 2018/1/29.
  */
 
-public class CourseRouter extends courseImpl {
-  @Override public Fragment toBatchListTrainerSpanFragment(Bundle args) {
-    BatchListTrainerFragment fragment = new BatchListTrainerFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
+public class TrainerBatchEditFragment extends EditBatchFragment {
 
-  @Override public Fragment toAddBatchFragment(Bundle args) {
-    TrainerBatchAddFragment fragment = new TrainerBatchAddFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
 }

@@ -25,6 +25,7 @@ import cn.qingchengfit.saasbase.cards.event.EventBatchPayCard;
 import cn.qingchengfit.saasbase.cards.views.BatchPayCardParams;
 import cn.qingchengfit.saasbase.coach.event.EventStaffWrap;
 import cn.qingchengfit.saasbase.coach.views.TrainerChooseParams;
+import cn.qingchengfit.saasbase.common.views.UseStaffAppFragmentFragment;
 import cn.qingchengfit.saasbase.course.batch.bean.CardTplBatchShip;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.course.event.EventCourse;
@@ -176,6 +177,7 @@ public class BatchDetailCommonView extends BaseFragment {
           setSpace(eventSiteSelected.getSpaces());
         }
       });
+
     elMultiSupport.setSwitchClickListenr(view1 -> numHasChange = true);
     elMultiSupport.setOnCheckedChangeListener((compoundButton, b) -> {
       //if (b && getOrderStudentCount() > 1){
@@ -185,13 +187,18 @@ public class BatchDetailCommonView extends BaseFragment {
     });
     elPay.setOnHeaderTouchListener((view1, motionEvent) -> {
       if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-        if (gymWrapper.isPro()) {
-          if (hasOrder) {
-            showAlert(R.string.alert_batch_has_ordered);
+        if (AppUtils.getCurApp(getContext()) != 0) {//非教练APP
+          if (gymWrapper.isPro()) {
+            if (hasOrder) {
+              showAlert(R.string.alert_batch_has_ordered);
+              return true;
+            } else return false;
+          } else {
+            new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
             return true;
-          } else return false;
-        } else {
-          new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
+          }
+        }else {// 教练App
+          UseStaffAppFragmentFragment.newInstance().show(getChildFragmentManager(),"");
           return true;
         }
       }else return false;
@@ -201,7 +208,7 @@ public class BatchDetailCommonView extends BaseFragment {
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    elPay.setExpanded(true);
+    elPay.setExpanded(AppUtils.getCurApp(getActivity()) != 0);
   }
 
   public boolean isHasOrder() {

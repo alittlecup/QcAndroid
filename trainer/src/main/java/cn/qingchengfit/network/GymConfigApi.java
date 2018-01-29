@@ -1,10 +1,11 @@
-package com.qingchengfit.fitcoach.routers;
+package cn.qingchengfit.network;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import cn.qingchengfit.saasbase.course.views.BatchListTrainerFragment;
-import cn.qingchengfit.saasbase.course.views.TrainerBatchAddFragment;
-import cn.qingchengfit.saasbase.routers.courseImpl;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
+import java.util.HashMap;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
 
 /**
  * power by
@@ -27,16 +28,24 @@ import cn.qingchengfit.saasbase.routers.courseImpl;
  * Created by Paper on 2018/1/29.
  */
 
-public class CourseRouter extends courseImpl {
-  @Override public Fragment toBatchListTrainerSpanFragment(Bundle args) {
-    BatchListTrainerFragment fragment = new BatchListTrainerFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
+public interface GymConfigApi {
+  //获取某个健身房的场地列表
+  @GET("/api/v1/coaches/{coach_id}/spaces/") rx.Observable<QcDataResponse<SpaceListWrap>> qcGetGymSitesPermisson(@Path("coach_id") String coach_id,
+    @QueryMap HashMap<String, Object> params);
 
-  @Override public Fragment toAddBatchFragment(Bundle args) {
-    TrainerBatchAddFragment fragment = new TrainerBatchAddFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
+  ///**
+  // * 查询场馆配置
+  // */
+  //@GET("/api/staffs/{staff_id}/shops/configs/")
+  //rx.Observable<QcDataResponse<ShopConfigListWrap>> qcGetShopConfig(@Path("staff_id") String staff_id,
+  //  @Query("keys") String key, @QueryMap HashMap<String, Object> params);
+  //
+  ///**
+  // * 健身房所有设置
+  // * http://192.168.1.7:8000/api/staffs/3281/shops/configs/?id=5370&model=staff_gym
+  // */
+  //@PUT("/api/staffs/{staff_id}/shops/configs/")
+  //rx.Observable<QcDataResponse> saveShopConfigs(
+  //  @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params, @Body
+  //  ShopConfigBody body);
 }

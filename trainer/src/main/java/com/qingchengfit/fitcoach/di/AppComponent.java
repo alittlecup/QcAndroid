@@ -10,7 +10,7 @@ import cn.qingchengfit.chat.ConversationFriendsFragment;
 import cn.qingchengfit.chat.RecruitMessageListFragment;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
-import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
+import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.student.other.ChooseStaffFragment;
 import cn.qingchengfit.saasbase.student.views.allot.SaleDetailFragment;
 import cn.qingchengfit.staff.di.BindTrainerCourseActivity;
@@ -70,7 +70,7 @@ import dagger.multibindings.IntoMap;
  * Created by Paper on 2017/4/17.
  */
 @Component(modules ={ AppModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
-  BindTrainerCourseActivity.class,
+  BindTrainerCourseActivity.class, BindGymConfigAcitivty.class,
     AppComponent.MainMsgFragmentModule.class,
     AppComponent.ContainerModule.class,
     AppComponent.ArticleCommentsListFragmentModule.class,
@@ -91,12 +91,13 @@ import dagger.multibindings.IntoMap;
     AppComponent.SyncGymFragmentModule.class,
     AppComponent.ManageFragmentModule.class,
     AppComponent.SettingFragmentModule.class,
+    AppComponent.ChooseGymTrainerFragmentModule.class,
     AppComponent.MyCoursePlanFragmentModule.class,
     AppComponent.LoginFragmentModule.class,
     AppComponent.RegisterFragmentModule.class, AppComponent.ChooseModule.class,
     AppComponent.ConversationFriendsFragmentModule.class,
     AppComponent.ChooseStaffFragmentModule.class,
-    AppComponent.UnLoginScheduleAdFragmentModule.class, AppComponent.ChooseGymFragmentModule.class,
+    AppComponent.UnLoginScheduleAdFragmentModule.class,
     AppComponent.MainScheduleFragmentModule.class, AppComponent.GuideSetGymFragmentModule.class,
     AppComponent.RecruitMessageListFragmentModule.class
 }) public interface AppComponent {
@@ -248,10 +249,6 @@ import dagger.multibindings.IntoMap;
         }
     }
 
-    @Subcomponent() public interface ChooseGymFragmentSubcomponent extends AndroidInjector<ChooseGymFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseGymFragment> {
-        }
-    }
 
     @Subcomponent() public interface MainScheduleFragmentSubcomponent extends AndroidInjector<MainScheduleFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MainScheduleFragment> {
@@ -434,10 +431,6 @@ import dagger.multibindings.IntoMap;
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(UnLoginScheduleAdFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = ChooseGymFragmentSubcomponent.class) abstract class ChooseGymFragmentModule {
-        @Binds @IntoMap @FragmentKey(ChooseGymFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ChooseGymFragmentSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = MainScheduleFragmentSubcomponent.class) abstract class MainScheduleFragmentModule {
         @Binds @IntoMap @FragmentKey(MainScheduleFragment.class)
@@ -473,6 +466,13 @@ import dagger.multibindings.IntoMap;
     @Module(subcomponents = MyCoursePlanFragmentSubcomponent.class) abstract class MyCoursePlanFragmentModule {
         @Binds @IntoMap @FragmentKey(MyCoursePlanFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(MyCoursePlanFragmentSubcomponent.Builder builder);
+    }
+    @Subcomponent() public interface ChooseGymTrainerFragmentSubcomponent extends AndroidInjector<com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragment> {}
+    }
+    @Module(subcomponents = ChooseGymTrainerFragmentSubcomponent.class) abstract class ChooseGymTrainerFragmentModule {
+        @Binds @IntoMap @FragmentKey(com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ChooseGymTrainerFragmentSubcomponent.Builder builder);
     }
 
 }

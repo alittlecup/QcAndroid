@@ -37,6 +37,10 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
     }else return null;
   }
 
+  public BatchItemModel getBatchModel() {
+    return batchModel;
+  }
+
   public String getId() {
     return batchModel.getId();
   }

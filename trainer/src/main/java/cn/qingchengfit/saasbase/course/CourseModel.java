@@ -160,6 +160,7 @@ public class CourseModel implements ICourseModel {
    */
   @Override public Observable<QcDataResponse> qcCheckBatch(boolean isPrivate,
     ArrangeBatchBody body) {
+    body.teacher_id = null;
     return api.qcCheckBatch(loginStatus.staff_id(), isPrivate ? "private" : "group", body,
       gymWrapper.getParams());
   }
@@ -168,6 +169,7 @@ public class CourseModel implements ICourseModel {
    * 排课
    */
   @Override public Observable<QcDataResponse> qcArrangeBatch(ArrangeBatchBody body) {
+    body.teacher_id = null;
     return api.qcArrangeBatch(loginStatus.staff_id(), body, gymWrapper.getParams());
   }
 

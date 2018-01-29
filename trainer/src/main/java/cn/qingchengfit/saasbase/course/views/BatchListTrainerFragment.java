@@ -3,6 +3,7 @@ package cn.qingchengfit.saasbase.course.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,12 @@ import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
 import cn.qingchengfit.saasbase.course.batch.network.response.QcResponsePrivateDetail;
 import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanFragment;
+import cn.qingchengfit.saasbase.course.batch.views.EditBatchParams;
 import cn.qingchengfit.saasbase.course.course.views.CourseChooseParams;
 import cn.qingchengfit.saasbase.course.course.views.CourseListParams;
 import cn.qingchengfit.saasbase.course.presenters.CourseBatchDetailPresenter;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.widgets.DialogList;
@@ -33,8 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-public class BatchListTrainerFragment
-  extends BatchListTrainerSpanFragment
+public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
   implements CourseBatchDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
   FlexibleAdapter.EndlessScrollListener {
 
@@ -52,16 +54,21 @@ public class BatchListTrainerFragment
   private boolean isShow;
   private DialogList dialogList;
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    SaasbaseParamsInjector.inject(this);
+  }
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View v = super.onCreateView(inflater, container, savedInstanceState);
-    delegatePresenter(presenter,this);
+    delegatePresenter(presenter, this);
     return v;
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    toolbarTitile.setText(mType == Configs.TYPE_GROUP ? "团课排期" : "私教排期");
+    toolbarTitile.setText(mType != 1 ? "团课排期" : "私教排期");
     toolbar.inflateMenu(R.menu.menu_flow);
     toolbar.setOnMenuItemClickListener(item -> {
       if (dialogList == null) {
@@ -84,7 +91,6 @@ public class BatchListTrainerFragment
       dialogList.show();
       return true;
     });
-
   }
 
   private void showDelCourse() {
@@ -126,9 +132,9 @@ public class BatchListTrainerFragment
   }
 
   @Override protected void onFinishAnimation() {
-    if (mType == Configs.TYPE_PRIVATE){
+    if (mType == Configs.TYPE_PRIVATE) {
       presenter.queryPrivate();
-    }else {
+    } else {
       presenter.queryGroup();
     }
   }
@@ -137,23 +143,27 @@ public class BatchListTrainerFragment
    * 添加课程排期
    */
   @Override public void clickAddBatch() {
-    if ( !permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)){
+    if (!permissionModel.check(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)) {
       showAlert(cn.qingchengfit.saasbase.R.string.sorry_for_no_permission);
       return;
     }
 
-    routeTo("/choose/", CourseChooseParams.builder().mIsPrivate(false).src(TARGET).build());
+    routeTo("/choose/", CourseChooseParams.builder().mIsPrivate(mType == 1).src(TARGET).build());
   }
 
   @Override public String getFragmentName() {
     return BatchListTrainerFragment.class.getName();
   }
 
-
-
   @Override public boolean onItemClick(int position) {
     if (commonFlexAdapter.getItem(position) instanceof BatchItem) {
-      //routeTo("");// TODO: 2018/1/27 跳去课程详情
+      BatchItem batchItem = (BatchItem) commonFlexAdapter.getItem(position);
+      if (batchItem != null && batchItem.getBatchModel() != null) {
+        routeTo("course", "/batch/edit/", EditBatchParams.builder()
+          .batchId(batchItem.getId())
+          .isPrvite(mType == Configs.TYPE_PRIVATE)
+          .build());
+      }
     } else if (commonFlexAdapter.getItem(position) instanceof HideBatchItem) {
       commonFlexAdapter.toggleSelection(position);
       if (commonFlexAdapter.isSelected(position)) {
@@ -186,6 +196,7 @@ public class BatchListTrainerFragment
   }
 
   @Override public void onBatchList(List<QcResponsePrivateDetail.PrivateBatch> batch) {
+    if (srl != null) srl.setRefreshing(false);
     mDatas.clear();
     mOutdateDatas.clear();
     boolean isOutofDate = false;

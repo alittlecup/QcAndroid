@@ -7,6 +7,7 @@ import cn.qingchengfit.model.ExportModel;
 import cn.qingchengfit.model.SaasModelImpl;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
@@ -27,6 +28,7 @@ import cn.qingchengfit.staffkit.CardStudentRouters;
 import cn.qingchengfit.staffkit.card.StaffCardRouters;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.CourseModel;
+import cn.qingchengfit.staffkit.repository.GymConfigModel;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
@@ -62,6 +64,7 @@ import java.util.List;
   private IExportModel exportModel;
   private ICourseModel courseModel;
   private SaasbaseRouterCenter saasbaseRouterCenter;
+  private IGymConfigModel gymConfigModel;
   public AppModel() {
   }
 
@@ -79,6 +82,7 @@ import java.util.List;
     cardModel = new CardModel(qcrestRepository,gymWrapper,loginStatus);
     exportModel = new ExportModel(qcrestRepository,gymWrapper,loginStatus);
     courseModel = new CourseModel(qcrestRepository,gymWrapper,loginStatus);
+    gymConfigModel = new GymConfigModel(gymWrapper,loginStatus,qcrestRepository);
     this.saasbaseRouterCenter = new SaasbaseRouterCenter()
       .registe(new exportImpl())
       .registe(new gymImpl())
@@ -89,6 +93,9 @@ import java.util.List;
       .registe(new CardStudentRouters())
       .registe(new billImpl());
 
+  }
+  @Provides IGymConfigModel provideGymConfigModel(){
+    return gymConfigModel;
   }
 
   @Provides App provideApplicationContext() {

@@ -24,6 +24,7 @@ import cn.qingchengfit.saasbase.course.course.views.EditCourseFragment;
 import cn.qingchengfit.saasbase.course.course.views.JacketManagerFragment;
 import cn.qingchengfit.saasbase.course.course.views.ShopCommentsFragment;
 import cn.qingchengfit.saasbase.course.views.BatchListTrainerFragment;
+import cn.qingchengfit.saasbase.course.views.TrainerBatchAddFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 /**
@@ -47,7 +48,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2018/1/26.
  */
 @Trunk(fragments = {
-  BatchListTrainerFragment.class,
+  BatchListTrainerFragment.class, TrainerBatchAddFragment.class,
   BatchListPrivateFragment.class, BatchListGroupFragment.class, AddBatchFragment.class,
   BatchListCategoryGroupFragment.class, BatchListCategoryPrivateFragment.class,
   IBatchListCategoryFragment.class, EditBatchFragment.class, BatchScheduleListFragment.class,

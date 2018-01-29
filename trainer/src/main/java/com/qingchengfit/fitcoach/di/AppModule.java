@@ -29,6 +29,8 @@ import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.course.CourseModel;
+import cn.qingchengfit.saasbase.gymconfig.GymConfigModel;
+import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
@@ -94,6 +96,7 @@ import rx.Observable;
     private RestRepository restRepository;
     private QcRestRepository qcRestRepository;
     private ICourseModel courseModel;
+    private IGymConfigModel gymConfigModel;
     private SaasbaseRouterCenter saasbaseRouterCenter = new SaasbaseRouterCenter()
       .registe(new exportImpl())
       .registe(new gymImpl())
@@ -101,6 +104,7 @@ import rx.Observable;
       .registe(new commonImpl())
       .registe(new CourseRouter())
       .registe(new billImpl());
+
     private IPermissionModel permissionModel = new IPermissionModel() {
         @Override public boolean check(String permission) {
             return CurentPermissions.newInstance().queryPermission(permission);
@@ -124,9 +128,10 @@ import rx.Observable;
         restRepository = builder.restRepository;
         qcRestRepository = new QcRestRepository(app, Configs.Server,app.getString(R.string.oem_tag));
         courseModel = new CourseModel(qcRestRepository,gymWrapper,loginStatus);
+        gymConfigModel = new GymConfigModel(gymWrapper,loginStatus,qcRestRepository);
     }
 
-
+    @Provides IGymConfigModel provideGymConfig(){return  gymConfigModel;}
     @Provides ICourseModel provideCourseModel(){
         return courseModel;
     }

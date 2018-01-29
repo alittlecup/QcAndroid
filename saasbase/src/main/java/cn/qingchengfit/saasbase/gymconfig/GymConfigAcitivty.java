@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.gym;
+package cn.qingchengfit.saasbase.gymconfig;
 
 import cn.qingchengfit.saasbase.SaasContainerActivity;
 import cn.qingchengfit.saasbase.gymconfig.views.AddNewSiteFragment;
@@ -9,7 +9,7 @@ import cn.qingchengfit.saasbase.gymconfig.views.SiteSelectedFragment;
 import com.anbillon.flabellum.annotations.Trunk;
 
 @Trunk(fragments = {
-  GymConfigModule.class,
+  //GymConfigModule.class,
   SiteFragment.class, SiteSelectedFragment.class,OrderLimitFragment.class, MsgNotiFragment.class,
   AddNewSiteFragment.class,
 })

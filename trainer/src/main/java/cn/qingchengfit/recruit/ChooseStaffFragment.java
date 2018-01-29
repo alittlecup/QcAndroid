@@ -19,7 +19,7 @@ import cn.qingchengfit.views.BottomStudentsFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.event.EventChoosePerson;
 import com.qingchengfit.fitcoach.event.EventFresh;
-import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
+import cn.qingchengfit.saasbase.common.views.UseStaffAppFragmentFragment;
 import java.util.ArrayList;
 import java.util.List;
 import rx.functions.Action1;
@@ -70,7 +70,7 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
     toolbar.inflateMenu(R.menu.menu_add_txt);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        StaffAppFragmentFragment.newInstance().show(getChildFragmentManager(), "");
+        UseStaffAppFragmentFragment.newInstance().show(getChildFragmentManager(), "");
         return false;
       }
     });
