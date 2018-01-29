@@ -28,8 +28,8 @@ import cn.qingchengfit.saasbase.cards.bean.ImageTwoTextBean;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.network.model.Shop;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICardModel;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.utils.IntentUtils;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
@@ -66,7 +66,7 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
     @BindView(R2.id.toolbar_title) TextView toolbarTitile;
     @BindView(R2.id.recycleview) RecyclerView recycleview;
     @Inject QcRestRepository restRepository;
-    @Inject SerPermisAction serPermisAction;
+    @Inject IPermissionModel serPermisAction;
     @Inject ICardModel cardModel;
     @Inject LoginStatus loginStatus;
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();
@@ -222,47 +222,51 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
                                        ImageTwoTextBean baen =
                                            new ImageTwoTextBean(service.photo, service.name + " | " + qcResponseBrandShops.data.brand.getName(), "");
                                        baen.tags.put("pos", i + "");
+                                       List<String> shoid = new ArrayList<>();
+                                       shoid.add(service.id);
                                        if (isSimple) {
                                            baen.rightIcon = 0;
                                            baen.hiden = !service.has_permission;
+
                                            if (!StringUtils.isEmpty(permission)) {
                                                if (permission.equalsIgnoreCase(
                                                    PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+
+                                                   if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
                                                    && feature != FEATURE_ALLOTSALE) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
+                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_COSTS_CAN_WRITE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
                                                    && feature == FEATURE_ALLOTSALE) {
-                                                   baen.hiden = !serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE);
+                                                   baen.hiden = !serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,shoid);
                                                } else {
-                                                   baen.hiden = !serPermisAction.check(service.id, permission);
+                                                   baen.hiden = !serPermisAction.check( permission,shoid);
                                                }
                                            }
 
@@ -277,45 +281,45 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
                                            baen.hiden = !service.has_permission;
                                            if (!StringUtils.isEmpty(permission)) {
                                                if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
                                                    && feature != FEATURE_ALLOTSALE) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE)) {
+                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_DELETE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+                                                   if (!serPermisAction.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else if (permission.equalsIgnoreCase(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
                                                    && feature == FEATURE_ALLOTSALE) {
-                                                   if (!serPermisAction.check(service.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+                                                   if (!serPermisAction.check( PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE,shoid)) {
                                                        baen.hiden = true;
                                                    } else {
                                                        baen.hiden = false;
                                                    }
                                                } else {
-                                                   baen.hiden = !serPermisAction.check(service.id, permission);
+                                                   baen.hiden = !serPermisAction.check( permission,shoid);
                                                }
                                            }
 

@@ -213,7 +213,8 @@ public class LoginPresenter extends BasePresenter {
             @Override public void call(QcDataResponse<Login> qcResponLogin) {
 
                 if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
-                    PreferenceUtils.setPrefString(App.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);
+                    QcRestRepository.setSession(App.context,qcResponLogin.data.session_name,qcResponLogin.data.session_id);
+                    //PreferenceUtils.setPrefString(App.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);
                     PreferenceUtils.setPrefString(App.context, Configs.PREFER_PHONE, body.phone);
                     PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_ID, qcResponLogin.data.staff.getId());
 

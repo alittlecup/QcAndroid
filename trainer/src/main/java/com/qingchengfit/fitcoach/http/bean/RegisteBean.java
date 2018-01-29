@@ -21,6 +21,7 @@ public class RegisteBean {
     public String phone;
     public String city;
     public String area_code;
+    public boolean session_config = true;
 
     public RegisteBean() {
     }

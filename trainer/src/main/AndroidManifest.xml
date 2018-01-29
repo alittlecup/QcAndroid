@@ -717,6 +717,23 @@
             />
       </intent-filter>
     </activity>
+    <activity
+        android:name="cn.qingchengfit.saasbase.course.TrainerCourseActivity"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="course"
+            android:scheme="qccoach"
+            />
+      </intent-filter>
+    </activity>
+
 
     <activity
         android:name="com.tencent.qcloud.timchat.ui.qcchat.ChatActivity"

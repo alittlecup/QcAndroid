@@ -143,8 +143,8 @@ public class RegisterFragment extends BaseFragment {
                     getActivity().runOnUiThread(() -> {
                       Toast.makeText(App.AppContex, "注册成功", Toast.LENGTH_SHORT).show();
                       //                                                RxBus.getBus().send(new cn.qingchengfit.bean.LoginBean());
-                      PreferenceUtils.setPrefString(getActivity(), "session_id",
-                          qcResponLogin.data.session_id);
+                      QcRestRepository.setSession(App.AppContex,qcResponLogin.data.session_name,qcResponLogin.data.session_id);
+
                       PreferenceUtils.setPrefString(getActivity(), "user_info",
                           gson.toJson(qcResponLogin.data.user));
                       App.gUser = qcResponLogin.data.user;

@@ -13,6 +13,7 @@ import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saasbase.student.other.ChooseStaffFragment;
 import cn.qingchengfit.saasbase.student.views.allot.SaleDetailFragment;
+import cn.qingchengfit.staff.di.BindTrainerCourseActivity;
 import cn.qingchengfit.views.container.ContainerActivity;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
 import com.qingchengfit.fitcoach.App;
@@ -21,6 +22,7 @@ import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.fragment.CustomSaleFragment;
 import com.qingchengfit.fitcoach.fragment.CustomStatmentFragment;
 import com.qingchengfit.fitcoach.fragment.LoginFragment;
+import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
 import com.qingchengfit.fitcoach.fragment.RegisterFragment;
 import com.qingchengfit.fitcoach.fragment.StatementDetailFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
@@ -68,6 +70,7 @@ import dagger.multibindings.IntoMap;
  * Created by Paper on 2017/4/17.
  */
 @Component(modules ={ AppModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
+  BindTrainerCourseActivity.class,
     AppComponent.MainMsgFragmentModule.class,
     AppComponent.ContainerModule.class,
     AppComponent.ArticleCommentsListFragmentModule.class,
@@ -88,6 +91,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.SyncGymFragmentModule.class,
     AppComponent.ManageFragmentModule.class,
     AppComponent.SettingFragmentModule.class,
+    AppComponent.MyCoursePlanFragmentModule.class,
     AppComponent.LoginFragmentModule.class,
     AppComponent.RegisterFragmentModule.class, AppComponent.ChooseModule.class,
     AppComponent.ConversationFriendsFragmentModule.class,
@@ -463,5 +467,12 @@ import dagger.multibindings.IntoMap;
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RecruitMessageListFragment> {}
     }
 
+    @Subcomponent() public interface MyCoursePlanFragmentSubcomponent extends AndroidInjector<MyCoursePlanFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MyCoursePlanFragment> {}
+    }
+    @Module(subcomponents = MyCoursePlanFragmentSubcomponent.class) abstract class MyCoursePlanFragmentModule {
+        @Binds @IntoMap @FragmentKey(MyCoursePlanFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(MyCoursePlanFragmentSubcomponent.Builder builder);
+    }
 
 }

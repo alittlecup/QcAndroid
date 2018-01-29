@@ -39,8 +39,10 @@ ext {
 
 buildscript {
   repositories {
-//    maven { url "https://maven.google.com" }
-//    jcenter()
+    maven { url "https://maven.google.com" }
+    jcenter()
+        mavenCentral()
+
     maven {
       url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/maven-central/'
     }
@@ -48,7 +50,6 @@ buildscript {
       url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
     }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-//    mavenCentral()
   }
 
   dependencies {
@@ -70,12 +71,13 @@ allprojects {
     maven {
       url 'http://43.241.209.158:15004/repository/maven-releases/'
     }
-    maven {
-      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/maven-central/'
-    }
-    maven {
-      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
-    }
+    google()
+//    maven {
+//      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/maven-central/'
+//    }
+//    maven {
+//      url 'http://ec2-54-223-108-133.cn-north-1.compute.amazonaws.com.cn:3004/repository/google/'
+//    }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 
     maven { url "https://jitpack.io" }

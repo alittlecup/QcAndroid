@@ -24,22 +24,20 @@ import cn.qingchengfit.recruit.views.organization.QcAddOrganizationResponse;
 import cn.qingchengfit.recruit.views.organization.QcSearchOrganResponse;
 import cn.qingchengfit.recruit.views.organization.QcSerachGymRepsonse;
 import cn.qingchengfit.saasbase.cards.network.response.CardTplListWrap;
-import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.saasbase.course.batch.network.body.ArrangeBatchBody;
 import cn.qingchengfit.saasbase.course.batch.network.body.SingleBatchBody;
 import cn.qingchengfit.saasbase.course.course.network.body.CourseBody;
 import cn.qingchengfit.saasbase.course.course.network.body.EditJacketBody;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
-import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
 import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.report.bean.CourseReportDetail;
+import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.saasbase.report.bean.GymCardtpl;
 import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import cn.qingchengfit.saasbase.report.bean.StatementGlanceResp;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qingchengfit.fitcoach.App;
@@ -201,7 +199,7 @@ public class QcCloudClient {
                         .addHeader("Connection", "close")
                         .addHeader("X-CSRFToken", token)
                         .addHeader("Cookie",
-                            "csrftoken=" + token + ";sessionid=" + QcRestRepository.getSession(App.AppContex))
+                            "csrftoken=" + token + ";"+QcRestRepository.getSessionName(App.AppContex)+"=" + QcRestRepository.getSession(App.AppContex))
                         .addHeader("User-Agent",
                             " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(
                                 R.string.oem_tag) + "  QingchengApp/Trainer")
@@ -211,7 +209,7 @@ public class QcCloudClient {
                         .addHeader("Connection", "close")
                         .addHeader("max-age", "5")
                         .addHeader("Cache-Control", "public")
-                        .addHeader("Cookie", "sessionid=" + QcRestRepository.getSession(App.AppContex))
+                        .addHeader("Cookie", QcRestRepository.getSessionName(App.AppContex)+"=" + QcRestRepository.getSession(App.AppContex))
                         .addHeader("User-Agent",
                             " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(
                                 R.string.oem_tag) + "  QingchengApp/Trainer")
@@ -662,10 +660,10 @@ public class QcCloudClient {
             @QueryMap HashMap<String, Object> params, @Body Shop shop);
 
         //登录
-        @POST("/api/v1/coaches/login/") rx.Observable<QcResponLogin> qcLogin(@Body LoginBean loginBean);
+        @POST("/api/user/login/?session_config=true") rx.Observable<QcResponLogin> qcLogin(@Body LoginBean loginBean);
 
         //注册
-        @POST("/api/v1/coaches/register/") rx.Observable<QcResponLogin> qcRegister(@Body RegisteBean params);
+        @POST("/api/user/register/?session_config=true") rx.Observable<QcResponLogin> qcRegister(@Body RegisteBean params);
 
         //创建品牌
         @POST("/api/brands/") rx.Observable<QcResponsCreatBrand> qcCreatBrand(@Body

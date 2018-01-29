@@ -23,7 +23,7 @@ public class LoginBean {
     public String device_type;
     public String area_code;
     public boolean has_read_agreement;
-
+    public boolean session_config = true;
     public LoginBean() {
     }
 

@@ -119,8 +119,8 @@ public class LoginFragment extends BaseFragment implements CheckProtocolPresente
               if (qcResponLogin.status == ResponseResult.SUCCESS) {
 
                 if (qcResponLogin.data.coach != null && qcResponLogin.data.coach.id != null) {
-                  PreferenceUtils.setPrefString(getActivity(), "session_id",
-                      qcResponLogin.data.session_id);
+                  QcRestRepository.setSession(App.AppContex,qcResponLogin.data.session_name,qcResponLogin.data.session_id);
+
                   PreferenceUtils.setPrefString(getActivity(), "user_info",
                       gson.toJson(qcResponLogin.data.user));
                   App.gUser = qcResponLogin.data.user;

@@ -23,7 +23,6 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/11/17.
  */
-
 public class SerPermisAction {
     public static boolean checkAtLeastOne(String s) {
         return CurentPermissions.newInstance().queryPermission(s);

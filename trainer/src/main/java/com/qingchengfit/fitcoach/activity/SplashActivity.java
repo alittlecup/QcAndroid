@@ -98,16 +98,17 @@ public class SplashActivity extends BaseActivity {
       if (!TextUtils.isEmpty(ip)) Configs.Server = ip;
     }
     String u = PreferenceUtils.getPrefString(this, "user_info", "");
-
-    if (!TextUtils.isEmpty(u)) {
+    String id = PreferenceUtils.getPrefString(this, "coach", "");
+    if (!TextUtils.isEmpty(u) && !TextUtils.isEmpty(id)) {
             /*
                 已登录跳转
              */
       User gUser = new Gson().fromJson(u, User.class);
-      String id = PreferenceUtils.getPrefString(this, "coach", "");
+
+      Staff curCoach = new Gson().fromJson(id,Staff.class);
       String session_id = PreferenceUtils.getPrefString(this, "session_id", "");
 
-      loginStatus.setLoginUser(Staff.formatFromUser(gUser, id));
+      loginStatus.setLoginUser(Staff.formatFromUser(gUser, curCoach.id));
       loginStatus.setSession(session_id);
       loginStatus.setUserId(gUser.getId());
       Observable.just("")

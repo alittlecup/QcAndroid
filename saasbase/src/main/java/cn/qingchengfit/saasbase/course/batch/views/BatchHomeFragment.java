@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class BatchHomeFragment extends BaseFragment {
   @BindView(R2.id.myhome_tab) TabLayout myhomeTab;
   @BindView(R2.id.viewpager) ViewPager viewpager;
   ArrayList<Fragment> fragments = new ArrayList<>();
-  @Inject SerPermisAction serPermisAction;
+  @Inject IPermissionModel serPermisAction;
   private FragmentAdapter fragmentAdater;
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

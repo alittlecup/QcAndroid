@@ -1,8 +1,13 @@
-package cn.qingchengfit.saasbase.course.batch.bean;
+package cn.qingchengfit.saasbase.course.views;
 
-import cn.qingchengfit.model.base.Course;
-import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
-import cn.qingchengfit.utils.DateUtils;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.saasbase.course.batch.views.AddBatchFragment;
+import cn.qingchengfit.saasbase.course.batch.views.BatchDetailCommonView;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -22,32 +27,20 @@ import cn.qingchengfit.utils.DateUtils;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/11.
+ * Created by Paper on 2018/1/29.
  */
 
-public class BatchCourse extends Course implements BatchItem.BatchItemModel {
-  public int count;
-  public String from_date;
-  public String to_date;
-
-  @Override public String getAvatar() {
-    return photo;
-  }
-
-  @Override public String getTitle() {
-    return getName();
-  }
-
-  @Override public String getText() {
-    if (to_date == null) {
-      return "课程时长" + length / 60 + "分钟";
-    } else {
-      return (DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(to_date))) ? "无有效排期"
-        : (from_date + "至" + to_date + "," + count + "节课程");
+public class TrainerBatchAddFragment extends AddBatchFragment {
+  @Inject LoginStatus loginStatus;
+  @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,
+    Bundle savedInstanceState) {
+    super.onChildViewCreated(fm, f, v, savedInstanceState);
+    if (f instanceof BatchDetailCommonView) {
+      batchBaseFragment.setTrainer(loginStatus.getLoginUser());
     }
   }
 
-  @Override public boolean equals(Object o) {
-    return o instanceof BatchCourse && getId().equalsIgnoreCase(((BatchCourse) o).getId());
+  @Override public String getTrainerId() {
+    return loginStatus.staff_id();
   }
 }

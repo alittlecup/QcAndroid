@@ -107,7 +107,7 @@ import rx.android.schedulers.AndroidSchedulers;
       return true;
     }
   };
-  private BatchDetailCommonView batchBaseFragment;
+  protected BatchDetailCommonView batchBaseFragment;
   private MaterialDialog exitDialg;
 
   private DialogList openDialog;

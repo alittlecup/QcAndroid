@@ -26,8 +26,8 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.course.course.bean.CourseType;
 import cn.qingchengfit.saasbase.course.course.items.CourseItem;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.views.fragments.TitleFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -67,7 +67,7 @@ import rx.schedulers.Schedulers;
 
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
-  @Inject SerPermisAction serPermisAction;
+  @Inject IPermissionModel serPermisAction;
   @Inject ICourseModel courseApi;
   @BindView(R2.id.toolbar) Toolbar toolbar;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
@@ -99,9 +99,9 @@ import rx.schedulers.Schedulers;
     View view = inflater.inflate(R.layout.fragment_saas_course_list, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
-    if ((!mIsPrivate && !serPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING)) || (
+    if ((!mIsPrivate && !serPermisAction.checkInBrand(PermissionServerUtils.TEAMSETTING)) || (
       mIsPrivate
-        && !serPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING))) {
+        && !serPermisAction.check(PermissionServerUtils.PRISETTING))) {
       View v = inflater.inflate(R.layout.item_common_no_data, container, false);
       ImageView img = (ImageView) v.findViewById(R.id.img);
       img.setImageResource(R.drawable.ic_no_permission);
@@ -139,7 +139,7 @@ import rx.schedulers.Schedulers;
   }
 
   @Override public boolean onItemClick(int position) {
-    if ( !serPermisAction.checkAtLeastOne(mIsPrivate?PermissionServerUtils.PRISETTING_CAN_CHANGE:PermissionServerUtils.TEAMSETTING_CAN_CHANGE)){
+    if ( !serPermisAction.checkInBrand(mIsPrivate?PermissionServerUtils.PRISETTING_CAN_CHANGE:PermissionServerUtils.TEAMSETTING_CAN_CHANGE)){
       showAlert(R.string.sorry_for_no_permission);
       return true;
     }
@@ -159,7 +159,7 @@ import rx.schedulers.Schedulers;
    * 新增课程
    */
   @OnClick(R2.id.add_course_btn) public void onViewClicked() {
-    if ( !serPermisAction.checkAtLeastOne(mIsPrivate?PermissionServerUtils.PRISETTING_CAN_WRITE:PermissionServerUtils.TEAMSETTING_CAN_WRITE)){
+    if ( !serPermisAction.checkInBrand(mIsPrivate?PermissionServerUtils.PRISETTING_CAN_WRITE:PermissionServerUtils.TEAMSETTING_CAN_WRITE)){
       showAlert(R.string.sorry_for_no_permission);
       return ;
     }

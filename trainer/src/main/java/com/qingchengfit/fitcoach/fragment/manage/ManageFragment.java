@@ -28,6 +28,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.saasbase.course.batch.views.BatchListTrainerSpanParams;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -310,7 +311,7 @@ public class ManageFragment extends BaseFragment
               || CurentPermissions.newInstance()
               .queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR)) {
 
-            routeTo("course","/batches/group/list/",null);
+            routeTo("course","/batch/list/", BatchListTrainerSpanParams.builder().mType(0).build());
           } else {
             showAlert(getString(R.string.sorry_no_permission));
           }
@@ -321,7 +322,7 @@ public class ManageFragment extends BaseFragment
               || CurentPermissions.newInstance()
               .queryPermission(PermissionServerUtils.PRISETTING)) {
 
-            routeTo("course","/batches/private/list/",null);
+            routeTo("course","/batch/list/",BatchListTrainerSpanParams.builder().mType(1).build());
           } else {
             showAlert(getString(R.string.sorry_no_permission));
           }

@@ -137,8 +137,10 @@ public class BaseActivity extends AppCompatActivity {
     if (intent != null && intent.getData() != null)
       LogUtil.d("router",intent.getData().toString());
     Uri uri = intent.getData();
+    if (uri == null)
+      return;
     boolean notStack = false;
-    if (uri != null && uri.getBooleanQueryParameter("nostack",false))
+    if (uri.getBooleanQueryParameter("nostack",false))
       notStack = true;
     if (preHandle(intent)) return;
     FragmentTransaction tr = getSupportFragmentManager().beginTransaction();

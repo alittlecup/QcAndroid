@@ -1,5 +1,8 @@
 package cn.qingchengfit.saasbase.course.batch.bean;
 
+import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
+import cn.qingchengfit.utils.DateUtils;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -21,7 +24,7 @@ package cn.qingchengfit.saasbase.course.batch.bean;
  * Created by Paper on 2017/9/11.
  */
 
-public class BatchCoach {
+public class BatchCoach implements BatchItem.BatchItemModel{
   /**
    * 几种课程
    */
@@ -31,4 +34,25 @@ public class BatchCoach {
   public String from_date;
   public String to_date;
   public String id;
+
+  @Override public String getId() {
+    return id;
+  }
+
+  @Override public String getAvatar() {
+    return avatar;
+  }
+
+  @Override public String getTitle() {
+    return username;
+  }
+
+  @Override public String getText() {
+    return DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(to_date)) ? "无有效排期"
+      : (from_date + "至" + to_date + "," + courses_count + "节课程");
+  }
+
+  @Override public boolean equals(Object o) {
+    return o instanceof BatchCoach && getId().equalsIgnoreCase(((BatchCoach) o).getId());
+  }
 }

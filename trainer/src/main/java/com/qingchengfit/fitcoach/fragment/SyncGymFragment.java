@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -91,7 +92,7 @@ public class SyncGymFragment extends BaseFragment {
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(qcCoachServiceResponse -> {
-                if (qcCoachServiceResponse.status == 200) {
+                if (ResponseConstant.checkSuccess(qcCoachServiceResponse)) {
                     syncGymHint.setText(getString(R.string.hint_sync_gyms, qcCoachServiceResponse.data.services.size()));
                     repoCoachService.createServices(qcCoachServiceResponse.data.services);
                     RxBus.getBus().post(new EventLoginChange());

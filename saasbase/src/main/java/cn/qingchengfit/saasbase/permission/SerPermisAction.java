@@ -28,6 +28,7 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/11.
  */
+@Deprecated
 public class SerPermisAction {
 
   @Inject GymWrapper gymWrapper;

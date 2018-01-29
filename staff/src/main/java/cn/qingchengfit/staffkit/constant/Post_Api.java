@@ -117,7 +117,7 @@ public interface Post_Api {
      * 个人操作
      */
 
-    @POST("/api/user/login/") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
+    @POST("/api/user/login/?session_config=true") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
 
     @POST("/api/staffs/login/") Call<Login> qcLoginTest(@Body LoginBody loginBody);
 
@@ -139,7 +139,7 @@ public interface Post_Api {
         @Body Shop shop);
 
     //注册
-    @POST("/api/staffs/register/") rx.Observable<QcDataResponse<Login>> qcRegister(@Body RegisteBody params);
+    @POST("/api/user/register/?session_config=true") rx.Observable<QcDataResponse<Login>> qcRegister(@Body RegisteBody params);
 
     //获取电话验证码
     @POST("/api/send/verify/") rx.Observable<QcResponse> qcGetCode(@Body GetCodeBody account);

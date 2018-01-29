@@ -22,6 +22,7 @@ public class RegisteBody {
     public String city;
     public String area_code;
     public boolean has_read_agreement;
+    public boolean session_config = true;
 
     private RegisteBody(Builder builder) {
         setUsername(builder.username);

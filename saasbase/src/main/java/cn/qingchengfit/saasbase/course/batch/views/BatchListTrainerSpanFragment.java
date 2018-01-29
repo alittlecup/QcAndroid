@@ -1,8 +1,8 @@
-package cn.qingchengfit.saasbase.course.batch.bean;
+package cn.qingchengfit.saasbase.course.batch.views;
 
-import cn.qingchengfit.model.base.Course;
-import cn.qingchengfit.saasbase.course.batch.items.BatchItem;
-import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.saasbase.constant.Configs;
+import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 
 /**
  * power by
@@ -22,32 +22,17 @@ import cn.qingchengfit.utils.DateUtils;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/9/11.
+ * Created by Paper on 2018/1/29.
  */
+@Leaf(module = "course",path = "/batch/list/")
+public class BatchListTrainerSpanFragment extends BatchListFragment{
+  @Need public Integer mType = Configs.TYPE_GROUP;
 
-public class BatchCourse extends Course implements BatchItem.BatchItemModel {
-  public int count;
-  public String from_date;
-  public String to_date;
+  @Override public void onRefresh() {
 
-  @Override public String getAvatar() {
-    return photo;
   }
 
-  @Override public String getTitle() {
-    return getName();
-  }
-
-  @Override public String getText() {
-    if (to_date == null) {
-      return "课程时长" + length / 60 + "分钟";
-    } else {
-      return (DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(to_date))) ? "无有效排期"
-        : (from_date + "至" + to_date + "," + count + "节课程");
-    }
-  }
-
-  @Override public boolean equals(Object o) {
-    return o instanceof BatchCourse && getId().equalsIgnoreCase(((BatchCourse) o).getId());
+  @Override public boolean onItemClick(int position) {
+    return false;
   }
 }
