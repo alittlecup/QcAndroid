@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
   <data>
-    <variable
-        name="good"
-        type="cn.qingchengfit.shop.vo.Good"/>
+
   </data>
 
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,7 +22,6 @@
           android:layout_height="@dimen/dimen_common_input_60dp"
           app:civ_hint="@string/input_product_category"
           app:civ_lable="@string/type"
-          app:civ_content="@{good.name}"
           app:civ_nonnull="true"
           style="@style/QcCivInputStyle"
           />

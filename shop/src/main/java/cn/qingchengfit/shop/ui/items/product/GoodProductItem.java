@@ -65,7 +65,6 @@ public class GoodProductItem
       dataBinding.categoryName.setVisibility(View.VISIBLE);
     }
 
-    dataBinding.setGood(good);
     dataBinding.imDelete.setOnClickListener(v -> {
       if (adapter.getItemCount() == 1) {
         dataBinding.imDelete.setVisibility(View.GONE);

@@ -19,17 +19,39 @@
         bind:toolbarModel="@{toolbarModel}"
         />
     <cn.qingchengfit.widgets.SwitcherLayout
-        app:sw_lable="@string/deliver_onsale"
-        style="@style/QcSwitchLayout"
+        android:id="@+id/deliver_by_in"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:background="@color/white"
+        android:clickable="false"
+        android:focusable="false"
+        app:sw_lable="馆内购买"
+        app:sw_showdivier="true"
+        app:sw_text_color="@color/qc_text_black"
         />
     <cn.qingchengfit.widgets.SwitcherLayout
-        app:sw_lable="@string/deliver_by_self"
-        style="@style/QcSwitchLayout"
+        android:id="@+id/deliver_by_self"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:background="@color/white"
+        android:clickable="false"
+        android:focusable="false"
+        app:sw_lable="自取"
+        app:sw_showdivier="true"
+        app:sw_text_color="@color/qc_text_black"
         />
     <cn.qingchengfit.widgets.SwitcherLayout
-        app:sw_lable="@string/deliver_send"
-        style="@style/QcSwitchLayout"
+        android:id="@+id/deliver_by_send"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height_new"
+        android:background="@color/white"
+        android:clickable="false"
+        android:focusable="false"
+        app:sw_lable="配送"
+        app:sw_showdivier="true"
+        app:sw_text_color="@color/qc_text_black"
         />
+
 
   </LinearLayout>
 </layout>

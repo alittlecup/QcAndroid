@@ -11,7 +11,6 @@ import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageProductListBinding;
 import cn.qingchengfit.shop.ui.items.product.IProductItemData;
 import cn.qingchengfit.shop.ui.items.product.ProductListItem;
-import cn.qingchengfit.shop.ui.product.ShopProductPageParams;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -42,7 +41,7 @@ public class ShopProductsListPage
 
     mViewModel.getProductEvent().observe(this, aVoid -> {
       Uri uri = Uri.parse("shop://shop/shop/product");
-      routeTo(uri, new ShopProductPageParams().isUpdate(true).build());
+      routeTo(uri, null);
     });
   }
 
@@ -70,8 +69,8 @@ public class ShopProductsListPage
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerview.setAdapter(adapter);
     adapter.addListener(this);
-    List<ProductListItem> items=new ArrayList<>();
-    IProductItemData data=new IProductItemData() {
+    List<ProductListItem> items = new ArrayList<>();
+    IProductItemData data = new IProductItemData() {
       @Override public String getProductName() {
         return "Nam,e";
       }
@@ -111,7 +110,7 @@ public class ShopProductsListPage
 
   @Override public boolean onItemClick(int position) {
     Uri uri = Uri.parse("shop://shop/shop/product");
-    routeTo(uri, new ShopProductPageParams().isUpdate(true).build());
+    routeTo(uri, null);
     return false;
   }
 

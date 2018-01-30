@@ -1,5 +1,7 @@
 package cn.qingchengfit.shop.ui.product;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,17 +15,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopProductBinding;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.ui.product.bottom.ShopBottomCategoryFragment;
 import cn.qingchengfit.shop.ui.product.choosepic.MultiChoosePicFragment;
+import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPage;
+import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPageParams;
 import cn.qingchengfit.shop.ui.widget.CategoryItemView;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Good;
+import cn.qingchengfit.utils.Corner4dpImgWrapper;
+import cn.qingchengfit.utils.PhotoUtils;
+import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -37,7 +46,8 @@ import java.util.List;
  */
 @Leaf(module = "shop", path = "/shop/product") public class ShopProductPage
     extends ShopBaseFragment<PageShopProductBinding, ShopProductViewModel> {
-  @Need Boolean isUpdate = false;
+  @Need Integer productId = 0;
+  private static final int TO_DELIVER_CODE = 101;
 
   @Override protected void subscribeUI() {
     mViewModel.payChannelEvent.observe(this, aVoid -> {
@@ -50,12 +60,29 @@ import java.util.List;
     mViewModel.addImagesEvent.observe(this, aVoid -> {
       MultiChoosePicFragment multiChoosePicFragment = MultiChoosePicFragment.newInstance(null);
       multiChoosePicFragment.setUpLoadImageCallback(uris -> {
-        if (adapter != null && uris != null && !uris.isEmpty()) {
+        if (uris != null && !uris.isEmpty()) {
           initViewPager(uris);
         }
       });
       multiChoosePicFragment.show(getChildFragmentManager(), "");
     });
+    mViewModel.deliverChannelEvent.observe(this, aVoid -> {
+      Uri uri = Uri.parse("shop://shop/product/deliver");
+
+      toOtherFragmentForBack(uri,
+          new ProductDeliverPageParams().delivers(
+              (ArrayList<Integer>) mViewModel.getProduct().getDelivery_types())
+              .build(), TO_DELIVER_CODE);
+    });
+  }
+
+  private void toOtherFragmentForBack(Uri uri, Bundle params, int requestCode) {
+    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+    if (params != null) {
+      intent.putExtras(params);
+    }
+    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    startActivityForResult(intent, requestCode);
   }
 
   @Override
@@ -64,11 +91,38 @@ import java.util.List;
     mBinding = PageShopProductBinding.inflate(inflater, container, false);
     initToolBar();
     initGoodRecyclerView();
-    if (isUpdate) {
-      //mViewModel.loadProductDetail(id);
+    if (productId != 0) {
+      //mViewModel.loadProductDetail(productId);
     }
     mBinding.setViewModel(mViewModel);
+
     return mBinding;
+  }
+
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK) {
+      // TODO: 2018/1/30  返回值处理
+      if (requestCode == TO_DELIVER_CODE) {
+        ArrayList<Integer> deliver = data.getIntegerArrayListExtra("delivers");
+        dealDeliverTypes(deliver);
+      }
+    }
+  }
+
+  private void dealDeliverTypes(ArrayList<Integer> deliver) {
+    StringBuilder sb = new StringBuilder();
+    if (deliver.contains(1)) {
+      sb.append(getString(R.string.deliver_onsale)).append(" ");
+    }
+    if (deliver.contains(2)) {
+      sb.append(getString(R.string.deliver_by_self)).append(" ");
+    }
+    if (deliver.contains(3)) {
+      sb.append(getString(R.string.deliver_send)).append(" ");
+    }
+    mViewModel.getProduct().setDelivery_types(deliver);
+    mBinding.productDeliver.setContent(sb.toString());
   }
 
   CommonFlexAdapter goodsAdapter;
@@ -103,7 +157,7 @@ import java.util.List;
 
   private void initToolBar() {
 
-    if (isUpdate) {
+    if (productId != 0) {
       ToolbarModel toolbarModel = new ToolbarModel(getString(R.string.product_detail));
       toolbarModel.setMenu(R.menu.menu_edit);
       toolbarModel.setListener(new Toolbar.OnMenuItemClickListener() {
@@ -150,11 +204,18 @@ import java.util.List;
     }
 
     @NonNull @Override public Object instantiateItem(@NonNull ViewGroup container, int position) {
-      ImageView imageView = new ImageView(container.getContext());
-      Glide.with(container.getContext()).load(uris.get(position)).asBitmap().into(imageView);
-      container.addView(imageView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-          ViewGroup.LayoutParams.MATCH_PARENT));
-      return imageView;
+      FrameLayout frameLayout = (FrameLayout) LayoutInflater.from(container.getContext())
+          .inflate(R.layout.item_empty_image, null);
+      ImageView imageView = frameLayout.findViewById(R.id.image);
+      imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+      container.addView(frameLayout);
+      imageView.setTag(R.id.image, position);
+      Glide.with(imageView.getContext())
+          .load(uris.get(position))
+          .asBitmap()
+          .placeholder(cn.qingchengfit.widgets.R.color.backgroud_grey)
+          .into(imageView);
+      return frameLayout;
     }
 
     @Override
