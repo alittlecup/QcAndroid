@@ -27,7 +27,6 @@ import cn.qingchengfit.saasbase.staff.views.TrainerTabInviteListFragment;
 import cn.qingchengfit.saasbase.staff.views.TrainerTabLeaveListFragment;
 import cn.qingchengfit.saasbase.staff.views.TrainerTabListFragment;
 import com.anbillon.flabellum.annotations.Trunk;
-import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 
 /**
  * power by
@@ -49,7 +48,6 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/12/1.
  */
-@SensorsDataIgnoreTrackAppViewScreen
 @Trunk(fragments = {
   ChooseSalerFragment.class, SalersListFragment.class,
   TrainerChooseFragment.class, CoachListFragment.class, StaffDetailFragment.class, StaffHomeFragment.class,

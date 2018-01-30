@@ -234,11 +234,7 @@ public class BaseActivity extends AppCompatActivity {
         hideLoading();
         hideLoadingTransparent();
       }
-    }, new Action1<Throwable>() {
-      @Override public void call(Throwable throwable) {
-        LogUtil.e(throwable.getMessage());
-      }
-    });
+    }, throwable -> LogUtil.e(throwable.getMessage()));
   }
 
   private void checkLoading(){

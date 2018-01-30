@@ -38,7 +38,6 @@ import cn.qingchengfit.staffkit.rxbus.event.RxCompleteGuideEvent;
 import cn.qingchengfit.staffkit.rxbus.event.SaveEvent;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -49,6 +48,7 @@ import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
+import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -288,12 +288,11 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
 
         //记录创建场馆动作
         RxRegiste(gymBaseInfoAction.getAllGyms()
-            .subscribe(new BusSubscribe<List<CoachService>>() {
-                @Override public void onNext(List<CoachService> services) {
-                    SensorsUtils.track("QcSaasCreateShop")
-                      .addProperty("qc_brand_shops_count",(services.size()-1)+"")
-                      .commit(getContext());
-                }
+          .subscribeOn(Schedulers.io())
+            .subscribe(services -> {
+                SensorsUtils.track("QcSaasCreateShop")
+                  .addProperty("qc_brand_shops_count",(services.size()-1)+"")
+                  .commit(getContext());
             })
         );
 

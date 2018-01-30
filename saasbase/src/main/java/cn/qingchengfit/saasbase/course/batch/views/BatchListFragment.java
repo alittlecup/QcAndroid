@@ -30,6 +30,7 @@ import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
@@ -57,6 +58,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/1/9.
  */
+@SensorsDataTrackFragmentAppViewScreen
 public abstract class BatchListFragment extends SaasBaseFragment
     implements FlexibleAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 

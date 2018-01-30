@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import cn.qingchengfit.saasbase.routers.SaasbaseParamsInjector;
 import cn.qingchengfit.saasbase.utils.SaasErrorRecorder;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import com.sensorsdata.analytics.android.sdk.SensorsDataTrackFragmentAppViewScreen;
 import javax.inject.Inject;
 
 /**
@@ -27,7 +28,7 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/10/24.
  */
-
+@SensorsDataTrackFragmentAppViewScreen
 public class SaasBaseFragment extends BaseFragment {
   @Inject protected SaasErrorRecorder errorRecorder;
 
