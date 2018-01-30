@@ -135,12 +135,10 @@ import rx.functions.Action1;
         if (getContext() != null) {
             new RxPermissions(getActivity())
                 .request(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
-                .subscribe(new Action1<Boolean>() {
-                    @Override public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                        } else {
-                            //ToastUtils.show("您并未授予日历权限,请到设置(或者安全软件)中开启权限");
-                        }
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                    } else {
+                        //ToastUtils.show("您并未授予日历权限,请到设置(或者安全软件)中开启权限");
                     }
                 }, throwable -> {
                 });

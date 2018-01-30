@@ -220,6 +220,10 @@ public class SaleDetailFragment extends BaseFragment implements SaleCardTypeView
         }
     }
 
+    @Override protected boolean isfitSystemPadding() {
+        return false;
+    }
+
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {

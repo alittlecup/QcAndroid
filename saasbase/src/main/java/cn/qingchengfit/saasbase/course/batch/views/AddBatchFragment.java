@@ -35,6 +35,7 @@ import cn.qingchengfit.saasbase.course.batch.items.BatchLoopItem;
 import cn.qingchengfit.saasbase.course.batch.presenters.AddBatchPresenter;
 import cn.qingchengfit.saasbase.course.batch.presenters.IBatchPresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -198,7 +199,8 @@ import rx.android.schedulers.AndroidSchedulers;
     Bundle savedInstanceState) {
     super.onChildViewCreated(fm, f, v, savedInstanceState);
     if (f instanceof BatchDetailCommonView) {
-      batchBaseFragment.openPay(presenter.isPro());
+      //必须是付费用户，且不是教练App
+      batchBaseFragment.openPay(presenter.isPro() && AppUtils.getCurApp(getContext())!=0 );
     }
   }
 

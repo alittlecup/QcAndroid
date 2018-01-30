@@ -75,7 +75,7 @@ public class CourseChooseDialogFragment extends BaseDialogFragment implements Co
                 8);
         courseType.setAdapter(courseTypeAdatper);
         courseType.TEXT_SIZE = MeasureUtils.sp2px(getContext(), 16f);
-        presenter.attachView(this);
+        delegatePresenter(presenter,this);
         if (getArguments() != null) {
             presenter.setCourse(getArguments());
             presenter.changeCourse();

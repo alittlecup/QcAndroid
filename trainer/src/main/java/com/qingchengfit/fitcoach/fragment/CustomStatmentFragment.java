@@ -108,6 +108,10 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
     toolbarTitle.setText("自定义课程报表");
   }
 
+  @Override protected boolean isfitSystemPadding() {
+    return false;
+  }
+
   private void initView() {
     customStatmentCourse.setContent("所有课程");
     customStatmentStart.setContent(DateUtils.Date2YYYYMMDD(new Date()));
@@ -115,6 +119,7 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
     //        customStatmentGym.setContent("选择健身房场馆");
     //        customStatmentStudent.setContent("所有学员");
   }
+
 
   @OnClick(R.id.custom_statment_course) public void onClickCourse() {
     CourseChooseDialogFragment fragment = new CourseChooseDialogFragment();

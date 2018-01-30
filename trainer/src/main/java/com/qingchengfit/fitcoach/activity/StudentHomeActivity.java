@@ -146,6 +146,10 @@ public class StudentHomeActivity extends BaseActivity {
         });
     }
 
+    @Override protected boolean isFitSystemBar() {
+        return false;
+    }
+
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         //if (mModel.equalsIgnoreCase("service") && mModelType == 1) {
         getMenuInflater().inflate(R.menu.menu_delete, menu);

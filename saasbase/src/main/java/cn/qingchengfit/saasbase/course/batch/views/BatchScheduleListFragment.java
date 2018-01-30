@@ -169,7 +169,7 @@ public class BatchScheduleListFragment extends SaasBaseFragment implements
           //跳去单个排课页面
           routeTo("/batch/schedule/single/",
             new cn.qingchengfit.saasbase.course.batch.views.BatchSingleParams()
-              .scheduleId(presenter.getBatchId())
+              .scheduleId(batchLoop.id)
               .isPrivate(isPrivate)
               .build());
         }

@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.statement;
 
-import cn.qingchengfit.bean.StudentBean;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 
@@ -22,5 +22,5 @@ public interface ClassStatmentFilterCallback {
 
     void setCoach(Staff coach);
 
-    void setStudent(StudentBean student);
+    void setStudent(QcStudentBean student);
 }

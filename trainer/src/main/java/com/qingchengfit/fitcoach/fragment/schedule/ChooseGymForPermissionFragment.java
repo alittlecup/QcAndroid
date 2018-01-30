@@ -100,7 +100,8 @@ import rx.schedulers.Schedulers;
                             mDatas.add(new GymItem(services.get(i), !services.get(i).has_permission));
                         }
                     }
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.clear();
+                    mAdapter.updateDataSet(mDatas);
                 } else {
                     ToastUtils.showDefaultStyle(qcCoachServiceResponse.msg);
                 }

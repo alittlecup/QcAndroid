@@ -112,7 +112,8 @@ public class ListUtils {
       ret.append(stringPropertyable.getStringProperty());
       ret.append(Constants.SEPARATE_CN);
     }
-    ret.deleteCharAt(ret.length()-1);
+    if (ret.length() > 1)
+      ret.deleteCharAt(ret.length()-1);
     return ret.toString();
   }
 }

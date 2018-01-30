@@ -234,6 +234,10 @@ public class StatementDetailFragment extends BaseFragment
     }
   }
 
+  @Override protected boolean isfitSystemPadding() {
+    return false;
+  }
+
   private void initView() {
     mStatementDetailAdapter = new StatementDetailAdapter(statementBeans);
     mStatementDetailAdapter.setListener(this);

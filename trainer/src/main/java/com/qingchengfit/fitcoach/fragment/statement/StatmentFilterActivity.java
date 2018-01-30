@@ -8,13 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.bean.StudentBean;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.report.bean.CourseTypeSample;
 import cn.qingchengfit.utils.BusinessUtils;
@@ -45,7 +44,7 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
 
     private ArrayList<CourseTypeSample> mFilterCourse = new ArrayList<>();
     private ArrayList<Staff> mFilterCoaches = new ArrayList<>();
-    private ArrayList<StudentBean> mFilterUsers = new ArrayList<>();
+    private ArrayList<QcStudentBean> mFilterUsers = new ArrayList<>();
     private Observable<CourseTypeSample> ObCourse;
     private String mStart;
     private String mEnd;
@@ -195,17 +194,14 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
             case R.id.all_student://选择学员
                 List<String> users = new ArrayList<>();
                 users.add(getString(R.string.all_students));
-                users.addAll(BusinessUtils.students2strs(mFilterUsers));
-                new DialogList(this).list(users, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        if (position == 0) {
-                            allStudent.setContent(getString(R.string.all_students));
-                            filterBean.student = null;
-                        } else {
-                            allStudent.setContent(mFilterUsers.get(position - 1).username);
-                            filterBean.student = mFilterUsers.get(position - 1);
-                        }
+                users.addAll(BusinessUtils.qcstudents2strs(mFilterUsers));
+                new DialogList(this).list(users, (parent, view1, position, id) -> {
+                    if (position == 0) {
+                        allStudent.setContent(getString(R.string.all_students));
+                        filterBean.student = null;
+                    } else {
+                        allStudent.setContent(mFilterUsers.get(position - 1).username);
+                        filterBean.student = mFilterUsers.get(position - 1);
                     }
                 }).title(getString(R.string.choose_student)).show();
 
@@ -245,7 +241,7 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
 
     }
 
-    @Override public void setStudent(StudentBean student) {
+    @Override public void setStudent(QcStudentBean student) {
         filterBean.student = student;
         allStudent.setContent(student.username);
     }

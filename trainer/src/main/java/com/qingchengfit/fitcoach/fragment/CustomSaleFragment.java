@@ -146,6 +146,10 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
         return view;
     }
 
+    @Override protected boolean isfitSystemPadding() {
+        return false;
+    }
+
     private void initView() {
         //mCallbackActivity.setToolbar("自定义销售报表", false, null, 0, null);
         if (TextUtils.isEmpty(startTime)) {

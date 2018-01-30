@@ -20,7 +20,6 @@ import cn.qingchengfit.saasbase.report.bean.CourseReportOrder;
 import cn.qingchengfit.saasbase.report.bean.CourseReportSchedule;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -35,6 +34,7 @@ import com.qingchengfit.fitcoach.fragment.statement.item.CourseReverseDetailItem
 import com.qingchengfit.fitcoach.fragment.statement.presenter.CourseReversePresenter;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -87,7 +87,7 @@ import javax.inject.Inject;
     adapter = new CommonFlexAdapter(itemList, this);
     recyclerReportDetail.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerReportDetail.addItemDecoration(
-        new DividerItemDecoration(getContext(), R.drawable.divider_card_list, 5));
+        new FlexibleItemDecoration(getContext()).withBottomEdge(true).withOffset(5));
     recyclerReportDetail.setAdapter(adapter);
     return view;
   }
@@ -95,6 +95,10 @@ import javax.inject.Inject;
   private void setToolbar() {
     initToolbar(toolbar);
     toolbarTitle.setText("课程预约");
+  }
+
+  @Override protected boolean isfitSystemPadding() {
+    return false;
   }
 
   @Override public void onDestroyView() {
@@ -106,7 +110,7 @@ import javax.inject.Inject;
     for (CourseReportOrder order : courseReportDetail.orders) {
       itemList.add(new CourseReverseDetailItem(order));
     }
-    adapter.notifyDataSetChanged();
+    adapter.updateDataSet(itemList);
 
     CourseReportSchedule schedule = courseReportDetail.schedule;
     Glide.with(getContext())

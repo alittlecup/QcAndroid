@@ -131,6 +131,14 @@ public class BusinessUtils {
 
         return ret;
     }
+    public static List<String> qcstudents2strs(List<QcStudentBean> students) {
+        List<String> ret = new ArrayList<>();
+        for (int i = 0; i < students.size(); i++) {
+            ret.add(students.get(i).username);
+        }
+
+        return ret;
+    }
 
     public static List<String> teacher2Str(List<Staff> teachers) {
         List<String> ret = new ArrayList<>();

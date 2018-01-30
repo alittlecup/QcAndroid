@@ -88,6 +88,7 @@ public class StatementGlanceFragment extends Fragment {
         return view;
     }
 
+
     public void freshData() {
         HashMap<String, Object> prams = new HashMap<>();
         prams.put("id", curSystemId + "");

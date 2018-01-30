@@ -23,7 +23,7 @@ import com.google.gson.annotations.SerializedName;
     @SerializedName("avatar") public String avatar;
     @SerializedName("gender") public String gender;
     @SerializedName("head") public String head;
-    @SerializedName("cloud_user") public User user;
+    @SerializedName(value = "cloud_user",alternate = {"user"}) public User user;
     public String date_of_birth;
     public String address;
     public String joined_at;
