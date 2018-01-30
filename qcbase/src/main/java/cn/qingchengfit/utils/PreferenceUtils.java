@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 
 public class PreferenceUtils {
     public static String getPrefString(Context context, String key,
@@ -18,8 +17,6 @@ public class PreferenceUtils {
                                      final String value) {
         final SharedPreferences settings = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        if (TextUtils.isEmpty(getPrefString(context, key, ""))){
-        }
         settings.edit().putString(key, value).commit();
     }
 
