@@ -31,6 +31,8 @@
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:maxLength="12"
+        android:hint="  请输入分类名称"
         android:background="@drawable/bg_rect_allotsale_search"
         android:textSize="@dimen/min_font"
         />
@@ -40,6 +42,8 @@
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:hint="  权重"
+        android:maxLength="7"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_rect_allotsale_search"
         android:inputType="number"

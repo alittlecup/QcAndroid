@@ -22,6 +22,7 @@
           android:layout_height="@dimen/dimen_common_input_60dp"
           app:civ_hint="@string/input_product_category"
           app:civ_lable="@string/type"
+          app:civ_max_length="12"
           app:civ_nonnull="true"
           style="@style/QcCivInputStyle"
           />
@@ -30,7 +31,9 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/dimen_common_input_60dp"
           app:civ_hint="@string/input_product_price"
+          app:civ_inputnum="true"
           app:civ_lable="@string/price"
+          app:civ_max_length="6"
           app:civ_nonnull="true"
           style="@style/QcCivInputStyle"
           />
@@ -39,7 +42,9 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/dimen_common_input_60dp"
           app:civ_hint="@string/input_product_price"
+          app:civ_inputnum="true"
           app:civ_lable="@string/product_pay_card_price"
+          app:civ_max_length="6"
           app:civ_nonnull="true"
           style="@style/QcCivInputStyle"
           />
@@ -48,7 +53,9 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/dimen_common_input_60dp"
           app:civ_hint="@string/input_product_inventory"
+          app:civ_inputnum="true"
           app:civ_lable="@string/inventory"
+          app:civ_max_length="4"
           app:civ_nonnull="true"
           style="@style/QcCivInputStyle"
           />

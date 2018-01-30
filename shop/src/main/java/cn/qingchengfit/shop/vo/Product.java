@@ -82,6 +82,26 @@ public class Product
   private int total_sales;
   private int priority;
 
+  public List<String> getCard_tpl_ids() {
+    return card_tpl_ids;
+  }
+
+  public void setCard_tpl_ids(List<String> card_tpl_ids) {
+    this.card_tpl_ids = card_tpl_ids;
+  }
+
+  private List<String> card_tpl_ids;
+
+  public Boolean getSupport_card() {
+    return support_card;
+  }
+
+  public void setSupport_card(Boolean support_card) {
+    this.support_card = support_card;
+  }
+
+  private Boolean support_card;
+
   public Shop getShop() {
     return shop;
   }

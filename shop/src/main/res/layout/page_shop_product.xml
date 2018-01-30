@@ -66,7 +66,7 @@
               android:layout_centerHorizontal="true"
               android:layout_marginTop="64dp"
               android:scaleType="fitXY"
-              app:srcCompat="@drawable/product_comera"
+              app:srcCompat="@drawable/ic_product_camera"
               />
           <TextView
               android:layout_width="wrap_content"
@@ -89,6 +89,7 @@
           app:civ_hint="@string/input_product_name"
           app:civ_lable="@string/product_name"
           app:civ_nonnull="true"
+          app:civ_max_length="20"
           app:enable="@{viewModel.isEdit}"
           style="@style/QcCivInputStyle"
           />
@@ -100,6 +101,7 @@
           app:civ_hint="@string/input_product_unit"
           app:civ_lable="@string/product_unit"
           app:civ_nonnull="true"
+          app:civ_max_length="10"
           app:enable="@{viewModel.isEdit}"
           style="@style/QcCivInputStyle"
           />
@@ -134,10 +136,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginRight="15dp"
+            android:gravity="center"
             android:drawablePadding="10dp"
             android:drawableRight="@drawable/product_add"
             android:text="@string/add_product_category"
-            style="@style/QcTextStyleLargeDark"
+            style="@style/QcTextStyleMediumDark"
             />
       </FrameLayout>
 
@@ -174,6 +177,8 @@
           android:background="@color/colorPrimary"
           app:civ_hint="@string/input_product_weight"
           app:civ_lable="@string/weight"
+          app:civ_max_length="7"
+          app:civ_inputnum="true"
           app:enable="@{viewModel.isEdit}"
           style="@style/QcCivInputStyle"
           />

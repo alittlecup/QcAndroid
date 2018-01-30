@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPage;
 import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPageParams;
 import cn.qingchengfit.shop.ui.widget.CategoryItemView;
 import cn.qingchengfit.shop.util.ViewUtil;
+import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.utils.Corner4dpImgWrapper;
 import cn.qingchengfit.utils.PhotoUtils;
@@ -37,6 +39,8 @@ import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.bumptech.glide.Glide;
+import com.jakewharton.rxbinding.widget.RxTextSwitcher;
+import com.jakewharton.rxbinding.widget.RxTextView;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +59,21 @@ import java.util.List;
       routeTo(uri, null);
     });
     mViewModel.addToCategory.observe(this, aVoid -> {
-      new ShopBottomCategoryFragment().show(getChildFragmentManager(), "");
+      ShopBottomCategoryFragment shopBottomCategoryFragment = new ShopBottomCategoryFragment();
+      shopBottomCategoryFragment.setConfimAction(data -> {
+        if (data instanceof Category) {
+          mViewModel.getProduct().setCategory((Category) data);
+          mBinding.productCetefory.setContent(mViewModel.getProduct().getCategory().getName());
+        }
+      });
+      shopBottomCategoryFragment.show(getChildFragmentManager(), "");
     });
     mViewModel.addImagesEvent.observe(this, aVoid -> {
       MultiChoosePicFragment multiChoosePicFragment = MultiChoosePicFragment.newInstance(null);
       multiChoosePicFragment.setUpLoadImageCallback(uris -> {
         if (uris != null && !uris.isEmpty()) {
           initViewPager(uris);
+          mViewModel.getProduct().setImages(uris);
         }
       });
       multiChoosePicFragment.show(getChildFragmentManager(), "");
@@ -69,10 +81,9 @@ import java.util.List;
     mViewModel.deliverChannelEvent.observe(this, aVoid -> {
       Uri uri = Uri.parse("shop://shop/product/deliver");
 
-      toOtherFragmentForBack(uri,
-          new ProductDeliverPageParams().delivers(
-              (ArrayList<Integer>) mViewModel.getProduct().getDelivery_types())
-              .build(), TO_DELIVER_CODE);
+      toOtherFragmentForBack(uri, new ProductDeliverPageParams().delivers(
+          (ArrayList<Integer>) mViewModel.getProduct().getDelivery_types()).build(),
+          TO_DELIVER_CODE);
     });
   }
 
@@ -91,6 +102,7 @@ import java.util.List;
     mBinding = PageShopProductBinding.inflate(inflater, container, false);
     initToolBar();
     initGoodRecyclerView();
+    initEditListener();
     if (productId != 0) {
       //mViewModel.loadProductDetail(productId);
     }
@@ -99,10 +111,20 @@ import java.util.List;
     return mBinding;
   }
 
+  private void initEditListener() {
+    RxTextView.afterTextChangeEvents(mBinding.productName.getEditText())
+        .subscribe(it -> mViewModel.getProduct().setName(it.toString()));
+    RxTextView.afterTextChangeEvents(mBinding.productUnit.getEditText())
+        .subscribe(it -> mViewModel.getProduct().setUnit(it.toString()));
+    RxTextView.afterTextChangeEvents(mBinding.productWeight.getEditText())
+        .subscribe(it -> mViewModel.getProduct().setPriority(Integer.valueOf(it.toString())));
+    mBinding.priceCardSwitch.setOnCheckListener((buttonView, isChecked) -> mViewModel.getProduct().setSupport_card(isChecked));
+
+  }
+
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == Activity.RESULT_OK) {
-      // TODO: 2018/1/30  返回值处理
       if (requestCode == TO_DELIVER_CODE) {
         ArrayList<Integer> deliver = data.getIntegerArrayListExtra("delivers");
         dealDeliverTypes(deliver);

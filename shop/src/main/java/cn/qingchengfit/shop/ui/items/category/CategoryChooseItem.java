@@ -33,6 +33,10 @@ public class CategoryChooseItem
     return new DataBindingViewHolder<>(view, adapter);
   }
 
+  public ICategotyItemData getData() {
+    return data;
+  }
+
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemChooseCategoryBinding> holder, int position, List payloads) {
     ItemChooseCategoryBinding dataBinding = holder.getDataBinding();
