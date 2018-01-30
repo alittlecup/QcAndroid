@@ -24,6 +24,7 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CardTplOption;
 import cn.qingchengfit.model.base.PermissionServerUtils;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
@@ -122,6 +123,7 @@ import rx.functions.Action1;
   @Inject LoginStatus loginStatus;
   @Inject IPermissionModel permissionModel;
   @Need public CardTpl cardTpl;
+  @Need QcStudentBean qcStudentBean;
   @BindView(R2.id.layout_validate) LinearLayout layoutValidate;
   @BindView(R2.id.tv_card_validate_total) TextView tvCardValidateTotal;
   @BindView(R2.id.card_protocol) CommonInputView cardProtocol;
@@ -160,6 +162,11 @@ import rx.functions.Action1;
     });
     elAutoOpen.setVisibility(View.GONE);
     //civSaler.setContent(loginStatus.staff_name());
+
+    if (qcStudentBean != null){
+      civBindMenbers.setContent(qcStudentBean.username());
+      presenter.setUserIds(qcStudentBean.id());
+    }
 
     civStartTime.setNoSaved();
     civEndTime.setNoSaved();

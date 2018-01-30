@@ -312,9 +312,8 @@ import javax.inject.Inject;
             }
         }
         if (items.size() == 0 && chooseType == 3) {
-
         }
-        flexibleAdapter.updateDataSet(datas);
+        flexibleAdapter.updateDataSet(items);
     }
 
     @Override public void onShowError(String e) {

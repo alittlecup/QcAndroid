@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,7 @@ import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.responese.Shop;
-import cn.qingchengfit.saasbase.cards.bean.CardTpl;
+import cn.qingchengfit.saasbase.cards.views.ChooseCardTplForBuyCardParams;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
@@ -158,6 +159,10 @@ public class StudentHomeFragment extends BaseFragment {
                         .load(PhotoUtils.getSmall(studentBaseInfoEvent.user_student.getAvatar()))
                         .asBitmap()
                         .into(new CircleImgWrapper(header, getContext()));
+                    if (TextUtils.isEmpty(studentBaseInfoEvent.user_student.getAvatar())){
+                        header.setImageResource(studentBaseInfoEvent.user_student.getGender() == 0
+                            ? R.drawable.default_student_male : R.drawable.default_student_female);
+                    }
                     name.setText(studentBaseInfoEvent.user_student.getUsername());
                     Glide.with(getActivity())
                         .load(studentBaseInfoEvent.user_student.getGender() == 0 ? R.drawable.ic_gender_signal_male
@@ -262,7 +267,7 @@ public class StudentHomeFragment extends BaseFragment {
                 showAlert("您没有该场馆购卡权限");
                 return;
             }
-            routeTo("card","/choose/cardtpl/",null);
+            routeTo("card","/choose/cardtpl/",new ChooseCardTplForBuyCardParams().qcStudentBean(mQcStudentBean).build());
         }
     }
 

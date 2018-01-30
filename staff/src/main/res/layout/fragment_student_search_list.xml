@@ -13,12 +13,15 @@
   <LinearLayout
       android:id="@+id/searchview"
       android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
+      android:layout_height="wrap_content"
+      android:minHeight="?attr/actionBarSize"
       android:background="@color/toolbar"
       android:gravity="center_vertical"
       android:orientation="horizontal"
-      android:padding="5dp"
       android:visibility="visible"
+      android:paddingLeft="5dp"
+      android:paddingBottom="5dp"
+      android:paddingRight="5dp"
       >
 
     <FrameLayout
@@ -64,8 +67,7 @@
 
   <FrameLayout
       android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
+      android:layout_height="match_parent"
       >
 
     <android.support.v7.widget.RecyclerView

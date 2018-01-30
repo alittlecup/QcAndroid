@@ -2,8 +2,10 @@ package cn.qingchengfit.saasbase.cards.views;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
 /**
@@ -29,6 +31,8 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 @Leaf(module = "card" , path = "/choose/cardtpl/")
 public class ChooseCardTplForBuyCardFragment extends CardTplsHomeInGymFragment {
 
+  @Need QcStudentBean qcStudentBean;
+
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText("选择会员卡种类");
@@ -41,7 +45,7 @@ public class ChooseCardTplForBuyCardFragment extends CardTplsHomeInGymFragment {
     IFlexible item =fragmentList.get(viewpager.getCurrentItem()).getItem(i);
     if (item instanceof CardTplItem){
       if (((CardTplItem) item).getCardTpl().is_enable)
-        routeTo("/pay/",new cn.qingchengfit.saasbase.cards.views.CardBuyParams().cardTpl(((CardTplItem) item).getCardTpl()).build());
+        routeTo("/pay/",new cn.qingchengfit.saasbase.cards.views.CardBuyParams().cardTpl(((CardTplItem) item).getCardTpl()).qcStudentBean(qcStudentBean).build());
       else {
         showAlert("已停用的会员卡种类不能用于购买会员卡");
       }

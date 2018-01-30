@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.Gym;
@@ -176,15 +175,12 @@ public class RecruitGymDetailEmployerFragment extends BaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    ToolbarModel tbm = new ToolbarModel("场馆招聘详情");
+    ToolbarModel tbm = new ToolbarModel.Builder().title("场馆招聘详情").menu(R.menu.menu_preview).listener(
+        item -> {
+          recruitRouter.toGymDetial(gym);
+          return false;
+        }).build();
     db.setToolbarModel(tbm);
-    toolbar.inflateMenu(R.menu.menu_preview);
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        recruitRouter.toGymDetial(gym);
-        return false;
-      }
-    });
   }
 
   @Override protected void onChildViewCreated(FragmentManager fm, Fragment f, View v,

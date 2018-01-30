@@ -126,6 +126,7 @@ public class LoginFragment extends BaseFragment
   private void changeHost(){
     if (BuildConfig.DEBUG) {
       final EditText et = new EditText(getContext());
+      et.setMaxLines(1);
       String ip = PreferenceUtils.getPrefString(getContext(), "debug_ip", Constants.ServerDebug);
       if (!TextUtils.isEmpty(ip)) {
         Constants.ServerDebug = ip;
@@ -147,7 +148,7 @@ public class LoginFragment extends BaseFragment
         @Override public void onComfirmClick(List<IFlexible> dats, List<Integer> selectedPos) {
           if (selectedPos.get(0) == list.size() - 1){
             et.setText("");
-            et.setHint("请输入host");
+            et.setHint("请输入测试环境(如：cloudtest、c1等)");
           }else{
             et.setText("http://" + list.get(selectedPos.get(0)) + "/");
           }
@@ -173,13 +174,13 @@ public class LoginFragment extends BaseFragment
           if (getActivity().getApplication() instanceof App) {
             if (!TextUtils.isEmpty(et.getText())) {
               if (!et.getText().toString().contains("http")) {
-                Constants.ServerDebug = "http://" + et.getText().toString().trim() + "/";
+                Constants.ServerDebug = "http://" + et.getText().toString().trim() + ".qingchengfit.cn/";
                 PreferenceUtils.setPrefString(getContext(), "debug_ip",
-                    "http://" + et.getText().toString().trim()  + "qingchengfit.cn" + "/");
+                    Constants.ServerDebug);
               }else{
                 Constants.ServerDebug = et.getText().toString().trim();
                 PreferenceUtils.setPrefString(getContext(), "debug_ip",
-                    et.getText().toString().trim());
+                    Constants.ServerDebug);
               }
               restRepository.changeHost(Constants.ServerDebug);
               ToastUtils.show("修改成功");

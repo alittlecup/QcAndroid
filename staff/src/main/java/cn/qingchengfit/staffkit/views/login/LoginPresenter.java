@@ -33,6 +33,7 @@ import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.tencent.qcloud.sdk.Constant;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -65,13 +66,16 @@ public class LoginPresenter extends BasePresenter {
     private Context mContext;
     private LoginUsecase loginUsecase;
     private Subscription spGetSer;
+    List<Object> list = new ArrayList<>();
 
     @Inject public LoginPresenter(LoginUsecase usecase) {
         this.loginUsecase = usecase;
     }
 
     @Override public void onStart() {
-
+        String str = "";
+        List<String> sts = new ArrayList<>();
+        list.addAll(sts);
     }
 
     @Override public void onStop() {
