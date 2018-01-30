@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.event.EventTabHeaderChange;
@@ -26,7 +25,6 @@ import cn.qingchengfit.recruit.presenter.MarkResumesPresenter;
 import cn.qingchengfit.recruit.presenter.ResumePermissionPresenter;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.views.fragments.BottomListFragment;
 import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -65,14 +63,13 @@ import rx.functions.Action1;
   @BindView(R2.id.toolbar_title) TextView toolbarTitle;
   @BindView(R2.id.tv_hint) TextView tvHint;
   @BindView(R2.id.tab_strip) PagerSlidingTabImageStrip tabStrip;
-  @BindView(R2.id.btn_show_bottom) TextView btnShowBottom;
-  @BindView(R2.id.btn_mark) Button btnMark;
-  @BindView(R2.id.layout_mark_cancel) LinearLayout layoutMarkCancel;
+  LinearLayout layoutMarkCancel;
   @BindView(R2.id.vp) ViewPager vp;
   @Inject MarkResumesPresenter presenter;
   @Inject ResumePermissionPresenter permissionPresenter;
-  BottomListFragment bottomListFragment;
   private List<ResumeHandleFragment> fragments = new ArrayList<>();
+  TextView btnShowBottomMuti;
+  Button btnMark;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -82,18 +79,63 @@ import rx.functions.Action1;
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_handle_resume, container, false);
+    View view = inflater.inflate(R.layout.fragment_handler_received_resume, container, false);
     unbinder = ButterKnife.bind(this, view);
     initToolbar(toolbar);
     delegatePresenter(presenter, this);
     delegatePresenter(permissionPresenter, this);
-
+    btnShowBottomMuti = (TextView)view.findViewById(R.id.btn_show_bottom_check);
+    btnMark = view.findViewById(R.id.btn_mark);
+    layoutMarkCancel = view.findViewById(R.id.layout_mark_cancel);
+    initView();
     RxBusAdd(EventTabHeaderChange.class).subscribe(new Action1<EventTabHeaderChange>() {
       @Override public void call(EventTabHeaderChange eventTabHeaderChange) {
         tabStrip.notifyDataSetChanged();
       }
     });
     return view;
+  }
+
+  private void initView(){
+
+    btnShowBottomMuti.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        showBottom();
+      }
+    });
+
+    btnMark.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        mark();
+      }
+    });
+
+    layoutMarkCancel.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+       cancel();
+      }
+    });
+  }
+
+  private void cancel(){
+    btnMark.setVisibility(View.VISIBLE);
+    layoutMarkCancel.setVisibility(View.GONE);
+    btnShowBottomMuti.setVisibility(View.GONE);
+    for (ResumeHandleFragment fragment : fragments) {
+      fragment.setChooseMode(false);
+    }
+  }
+
+  private void showBottom(){
+    permissionPresenter.queryChangeStatePermission(job.gym.id, "resume");
+  }
+
+  private void mark(){
+    btnMark.setVisibility(View.GONE);
+    btnShowBottomMuti.setVisibility(View.VISIBLE);
+    layoutMarkCancel.setVisibility(View.VISIBLE);
+    ResumeHandleFragment f = fragments.get(vp.getCurrentItem());
+    if (f != null) f.setChooseMode(true);
   }
 
   @Override protected void onFinishAnimation() {
@@ -125,7 +167,7 @@ import rx.functions.Action1;
       }
 
       @Override public void onPageScrollStateChanged(int state) {
-        cancelSelect();
+        cancel();
       }
     });
     tabStrip.setViewPager(vp);
@@ -134,27 +176,6 @@ import rx.functions.Action1;
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
     toolbarTitle.setText(type == 0 ? "主动投递的人才" : "我邀约的人才");
-  }
-
-  @OnClick(R2.id.btn_mark) public void clickBtnMark() {
-    btnMark.setVisibility(View.GONE);
-    btnShowBottom.setVisibility(View.VISIBLE);
-    layoutMarkCancel.setVisibility(View.VISIBLE);
-    ResumeHandleFragment f = fragments.get(vp.getCurrentItem());
-    if (f != null) f.setChooseMode(true);
-  }
-
-  @OnClick(R2.id.btn_cancel) public void cancelSelect() {
-    btnMark.setVisibility(View.VISIBLE);
-    layoutMarkCancel.setVisibility(View.GONE);
-    btnShowBottom.setVisibility(View.GONE);
-    for (ResumeHandleFragment fragment : fragments) {
-      fragment.setChooseMode(false);
-    }
-  }
-
-  @OnClick(R2.id.btn_show_bottom) public void clickShowBottom() {
-    permissionPresenter.queryChangeStatePermission(job.gym.id, "resume");
   }
 
   public void markResumes(int r) {
@@ -179,7 +200,7 @@ import rx.functions.Action1;
 
   @Override public void markOk() {
     hideLoading();
-    cancelSelect();
+    cancel();
     for (int i = 0; i < fragments.size(); i++) {
       fragments.get(i).onRefresh();
     }

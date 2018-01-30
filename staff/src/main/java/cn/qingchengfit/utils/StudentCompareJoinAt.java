@@ -19,7 +19,6 @@ import java.util.Comparator;
 public class StudentCompareJoinAt implements Comparator<StudentBean> {
 
     @Override public int compare(StudentBean lhs, StudentBean rhs) {
-        //return  DateUtils.formatDateFromServer(lhs.joined_at).compareTo(DateUtils.formatDateFromServer(rhs.joined_at));
         return rhs.joined_at.compareTo(lhs.joined_at);
     }
 }

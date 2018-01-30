@@ -87,6 +87,10 @@ public class CardBuyPresenter extends BasePresenter {
     this.choseStuIds.addAll(choseStuIds);
   }
 
+  public void setUserIds(String userIds){
+    cardBuyBody.user_ids = userIds;
+  }
+
   public ArrayList<String>  getChoseStuIds() {
     return choseStuIds;
   }
@@ -157,7 +161,7 @@ public class CardBuyPresenter extends BasePresenter {
 
     //学员 选择某个学员
     RxBusAdd(EventSelectedStudent.class).onBackpressureLatest()
-      .subscribe(new BusSubscribe<EventSelectedStudent>() {
+      .subscribe( new BusSubscribe<EventSelectedStudent>() {
         @Override public void onNext(EventSelectedStudent eventSelectedStudent) {
           view.bindStudent(eventSelectedStudent.getNameStr());
           cardBuyBody.user_ids = eventSelectedStudent.getIdStr();

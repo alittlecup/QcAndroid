@@ -24,13 +24,13 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.item.CardTplItem;
 import cn.qingchengfit.saasbase.cards.presenters.CardTypeListPresenter;
 import cn.qingchengfit.saasbase.events.EventSaasFresh;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DialogUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.DialogList;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.trello.rxlifecycle.android.FragmentEvent;
@@ -62,7 +62,7 @@ import javax.inject.Inject;
  */
 
 @Leaf(module = "card", path = "/cardtpl/list/") public class CardTplsHomeInGymFragment
-  extends BaseFragment
+  extends SaasBaseFragment
   implements CardTypeListPresenter.MVPView, SwipeRefreshLayout.OnRefreshListener,
   FlexibleAdapter.OnItemClickListener {
 

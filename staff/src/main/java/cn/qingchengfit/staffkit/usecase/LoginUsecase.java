@@ -1,9 +1,10 @@
 package cn.qingchengfit.staffkit.usecase;
 
 import cn.qingchengfit.model.responese.Login;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.staffkit.rest.RestRepository;
+import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.bean.LoginBody;
 import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
@@ -27,28 +28,27 @@ import rx.schedulers.Schedulers;
  */
 public class LoginUsecase {
 
-    RestRepository restRepository;
+    @Inject QcRestRepository restRepository;
 
-    @Inject public LoginUsecase(RestRepository restRepository) {
-        this.restRepository = restRepository;
+    @Inject public LoginUsecase() {
     }
 
     public Observable<QcDataResponse<Login>> login(LoginBody loginBody) {
-      return restRepository.qcLogin(loginBody)
+      return restRepository.createPostApi(Post_Api.class).qcLogin(loginBody)
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io());
     }
 
     public Observable<QcResponse> queryCode(GetCodeBody body) {
-      return restRepository.qcQueryCode(body)
+      return restRepository.createPostApi(Post_Api.class).qcGetCode(body)
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io());
     }
 
     public Observable<QcDataResponse<Login>> registe(RegisteBody body) {
-      return restRepository.qcRegiste(body)
+      return restRepository.createPostApi(Post_Api.class).qcRegister(body)
           .observeOn(AndroidSchedulers.mainThread())
           .onBackpressureBuffer()
           .subscribeOn(Schedulers.io());

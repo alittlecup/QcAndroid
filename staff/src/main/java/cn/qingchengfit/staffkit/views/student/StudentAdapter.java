@@ -94,12 +94,14 @@ public class StudentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             studentsHolder.itemStudentName.setText(studentBean.username);
             studentsHolder.itemStudentPhonenum.setText(studentBean.phone);
             studentsHolder.itemHeaderLoop.setBackgroundDrawable(new LoopView("#00000000"));
-            if (studentBean.gender) {//男
-                studentsHolder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_male);
-            } else {
-                studentsHolder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_female);
-            }
 
+            if (studentBean.gender) {//男
+                studentsHolder.itemStudentGender.setImageResource(
+                    R.drawable.ic_gender_signal_male);
+            } else {
+                studentsHolder.itemStudentGender.setImageResource(
+                    R.drawable.ic_gender_signal_female);
+            }
             if (studentBean.isTag) {
                 if (TextUtils.equals(studentBean.head, "~")) {
                     studentsHolder.itemStudentAlpha.setText("#");
@@ -121,7 +123,9 @@ public class StudentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Glide.with(holder.itemView.getContext())
                 .load(PhotoUtils.getSmall(studentBean.avatar))
                 .asBitmap()
+                .placeholder(studentBean.gender ? R.drawable.default_student_male : R.drawable.default_student_female)
                 .into(new CircleImgWrapper(studentsHolder.itemStudentHeader, holder.itemView.getContext()));
+
         } else {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             if (isBindStudent) {

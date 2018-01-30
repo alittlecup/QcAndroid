@@ -32,6 +32,8 @@ import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;
 import cn.qingchengfit.staffkit.views.student.followup.FollowUpItem;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.StudentCompare;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -130,6 +132,7 @@ public class StudentSearchFragment extends BaseFragment
         View view = inflater.inflate(R.layout.fragment_student_search_list, container, false);
         unbinder = ButterKnife.bind(this, view);
         //presenter.attachView(this);
+
         initDI();
         initView();
         view.setOnTouchListener(this);
@@ -177,6 +180,10 @@ public class StudentSearchFragment extends BaseFragment
 
     private void initView() {
         //searchviewEt.setFocusable(true);
+        if (!CompatUtils.less21()) {
+            searchview.setPadding(MeasureUtils.dpToPx(5f, getResources()),
+                MeasureUtils.getStatusBarHeight(getContext()), MeasureUtils.dpToPx(5f, getResources()), MeasureUtils.dpToPx(5f, getResources()));
+        }
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         recycleview.setLayoutManager(mLinearLayoutManager);
         recycleview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));

@@ -132,6 +132,23 @@ public class RecruitPositionDetailFragment extends BaseFragment
 
     ToolbarModel tm = new ToolbarModel("职位详情");
     tm.setMenu(R.menu.menu_share);
+    tm.setListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        String title =
+            job.gym != null ? job.gym.getBrand_name() + job.gym.getName() + "正在招聘" + job.name + "职位"
+                : "";
+        String content = "【薪资】"
+            + RecruitBusinessUtils.getSalary(job.min_salary, job.max_salary)
+            + "\n【坐标】"
+            + job.gym.getAddressStr();
+        String pic = job.gym != null ? job.gym.photo
+            : "http://zoneke-img.b0.upaiyun.com/977ad17699c4e4212b52000ed670091a.png";
+        String url = restRepository.getHost() + "mobile/job/" + job.id + "/";
+        ShareDialogFragment.newInstance(title, content, pic, url)
+            .show(getChildFragmentManager(), "");
+        return false;
+      }
+    });
     db.setToolbarModel(tm);
     initToolbar(db.layoutToolbar.toolbar);
     RxBusAdd(EventLoginChange.class).onBackpressureLatest()
@@ -160,24 +177,6 @@ public class RecruitPositionDetailFragment extends BaseFragment
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-
-    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-      @Override public boolean onMenuItemClick(MenuItem item) {
-        String title =
-            job.gym != null ? job.gym.getBrand_name() + job.gym.getName() + "正在招聘" + job.name + "职位"
-                : "";
-        String content = "【薪资】"
-            + RecruitBusinessUtils.getSalary(job.min_salary, job.max_salary)
-            + "\n【坐标】"
-            + job.gym.getAddressStr();
-        String pic = job.gym != null ? job.gym.photo
-            : "http://zoneke-img.b0.upaiyun.com/977ad17699c4e4212b52000ed670091a.png";
-        String url = restRepository.getHost() + "mobile/job/" + job.id + "/";
-        ShareDialogFragment.newInstance(title, content, pic, url)
-            .show(getChildFragmentManager(), "");
-        return false;
-      }
-    });
   }
 
   @Override public void onEditOk() {
