@@ -57,7 +57,7 @@ public class CommonUserItem extends AbstractFlexibleItem<CommonUserItem.CommonUs
     holder.tvEnd.setText(user.getRight());
     holder.tvEnd.setTextColor(ContextCompat.getColor(holder.tvEnd.getContext(),
       user.getRightColor() > 0 ? user.getRightColor() : R.color.text_dark));
-    holder.tvTitle.setCompoundDrawables(null, null,
+    holder.tvTitle.setCompoundDrawablesWithIntrinsicBounds(null, null,
       ContextCompat.getDrawable(holder.tvTitle.getContext(),
         user.getGender() == 0 ? R.drawable.ic_gender_signal_male
           : R.drawable.ic_gender_signal_female), null);

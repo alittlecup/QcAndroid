@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 import cn.qingchengfit.model.others.ToolbarModel;
+import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.databinding.FragmentQrcodeInviteBinding;
 import cn.qingchengfit.subscribes.BusSubscribe;
@@ -55,6 +56,8 @@ import timber.log.Timber;
     Bundle savedInstanceState) {
     db = FragmentQrcodeInviteBinding.inflate(inflater);
     db.setToolbarModel(new ToolbarModel("邀请二维码"));
+    db.getToolbarModel().setMenu(R.menu.menu_compelete);
+    db.getToolbarModel().setListener(item -> {popBack();return true;});
     initToolbar(db.layoutToolbar.toolbar);
     db.btnSave.setOnClickListener(view -> {
       if (bitmap != null) {

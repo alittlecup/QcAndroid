@@ -101,7 +101,7 @@ import rx.schedulers.Schedulers;
     initToolbar(toolbar);
     if ((!mIsPrivate && !serPermisAction.checkInBrand(PermissionServerUtils.TEAMSETTING)) || (
       mIsPrivate
-        && !serPermisAction.check(PermissionServerUtils.PRISETTING))) {
+        && !serPermisAction.checkInBrand(PermissionServerUtils.PRISETTING))) {
       View v = inflater.inflate(R.layout.item_common_no_data, container, false);
       ImageView img = (ImageView) v.findViewById(R.id.img);
       img.setImageResource(R.drawable.ic_no_permission);

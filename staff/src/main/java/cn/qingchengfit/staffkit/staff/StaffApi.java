@@ -44,15 +44,15 @@ import retrofit2.http.QueryMap;
 public interface StaffApi {
 
   //获取某个健身房的教练列表
-  @GET("/api/staffs/{id}/coaches/") rx.Observable<QcDataResponse<StaffShipsListWrap>> qcGetGymCoaches(@Path("id") String id,
+  @GET("/api/v2/staffs/{id}/coaches/") rx.Observable<QcDataResponse<StaffShipsListWrap>> qcGetGymCoaches(@Path("id") String id,
     @QueryMap HashMap<String, Object> params);
 
   //获取某个健身房的离职教练列表
-  @GET("/api/staffs/{id}/coaches/?show_all=1&coach_enable=0") rx.Observable<QcDataResponse<StaffShipsListWrap>> qcGetLeaveCoaches(@Path("id") String id,
+  @GET("/api/v2/staffs/{id}/coaches/?show_all=1&coach_enable=0") rx.Observable<QcDataResponse<StaffShipsListWrap>> qcGetLeaveCoaches(@Path("id") String id,
     @QueryMap HashMap<String, Object> params, @Query("q") String keyword);
 
   //设置教练离职
-  @PUT("/api/staffs/{id}/coaches/{cid}/") rx.Observable<QcDataResponse> qcDelCoach(@Path("id") String id, @Path("cid") String cid,
+  @PUT("/api/v2/staffs/{id}/coaches/{cid}/") rx.Observable<QcDataResponse> qcDelCoach(@Path("id") String id, @Path("cid") String cid,
     @Body ManagerBody body,
     @QueryMap HashMap<String, Object> params);
 
@@ -87,7 +87,7 @@ public interface StaffApi {
   /**
    * 邀请列表
    */
-  @GET("/api/v2/staffs/{id}/staff/invitations/?show_all=1") rx.Observable<QcDataResponse<InvitationListWrap>> qcGetStaffInvitations(@Path("id") String staff_id,
+  @GET("/api/v2/staffs/{id}/staff/invitations/?show_all=1&status__in=1,3  ") rx.Observable<QcDataResponse<InvitationListWrap>> qcGetStaffInvitations(@Path("id") String staff_id,
     @QueryMap HashMap<String,Object> params);
 
  /**
@@ -111,9 +111,9 @@ public interface StaffApi {
 
 
  /**
-   * 邀请列表
+   * 邀请列表 status = 1，3 表示邀请中和已取消
    */
-  @GET("/api/v2/staffs/{id}/coach/invitations/?show_all=1") rx.Observable<QcDataResponse<InvitationListWrap>> qcGetTrainerInvitations(@Path("id") String staff_id,
+  @GET("/api/v2/staffs/{id}/coach/invitations/?show_all=1&status__in=1,3") rx.Observable<QcDataResponse<InvitationListWrap>> qcGetTrainerInvitations(@Path("id") String staff_id,
     @QueryMap HashMap<String,Object> params);
 
  /**

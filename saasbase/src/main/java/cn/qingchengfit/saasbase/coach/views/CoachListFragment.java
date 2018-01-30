@@ -23,6 +23,7 @@ import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import cn.qingchengfit.saasbase.staff.views.BaseStaffListFragment;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.utils.CrashUtils;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +96,12 @@ public class CoachListFragment extends BaseStaffListFragment {
             if (qcResponse.data.staffships != null){
               List<CommonUserItem> staffItems  = new ArrayList<>();
               for (StaffShip coach : qcResponse.data.staffships) {
-                staffItems.add(generateItem(coach));
+                try {
+                  coach.id = coach.user.id;
+                  staffItems.add(generateItem(coach));
+                }catch (Exception e){
+                  CrashUtils.sendCrash(e);
+                }
               }
               setDatas(staffItems ,1);
             }

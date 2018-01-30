@@ -38,7 +38,7 @@ public class TrainerChooseFragment extends CoachListFragment {
     IFlexible item = commonFlexAdapter.getItem(position);
     if (item instanceof StaffSelectSingleItem){
       RxBus.getBus().post(new EventStaffWrap.Builder()
-        .staff(((StaffSelectSingleItem) item).getStaff())
+        .staff(((StaffSelectSingleItem) item).getStaffForSeleted())
         .type(EventStaffWrap.TRAINER)
         .build());
     }

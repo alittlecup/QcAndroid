@@ -4,6 +4,7 @@ import android.view.View;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.common.ICommonUser;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.staff.model.StaffShip;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
 
@@ -28,26 +29,41 @@ import java.util.List;
  * Created by Paper on 2017/12/1.
  */
 
-public class StaffSelectSingleItem extends CommonUserItem{
+public class StaffSelectSingleItem extends CommonUserItem {
   public StaffSelectSingleItem(ICommonUser staff) {
     super(staff);
   }
-  public Staff getStaff(){
-    if (getUser() instanceof Staff)
-      return (Staff)getUser();
-    else return null;
+
+  public StaffShip getStaff() {
+    if (getUser() instanceof StaffShip) {
+      return (StaffShip) getUser();
+    } else {
+      return null;
+    }
+  }
+
+  public Staff getStaffForSeleted() {
+    if (getUser() instanceof StaffShip) {
+      Staff teacher = ((StaffShip) getUser()).teacher;
+      if (teacher != null) {
+        teacher.username = ((StaffShip) getUser()).username;
+        return teacher;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter, CommonUserVH holder, int position,
     List payloads) {
     super.bindViewHolder(adapter, holder, position, payloads);
-    if (adapter.isSelected(position)){
+    if (adapter.isSelected(position)) {
       holder.iconRight.setVisibility(View.VISIBLE);
       holder.iconRight.setImageResource(R.drawable.ic_green_right);
-    }else {
+    } else {
       holder.iconRight.setVisibility(View.GONE);
     }
   }
-
-
 }

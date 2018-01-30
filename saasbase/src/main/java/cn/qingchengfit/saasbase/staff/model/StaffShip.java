@@ -33,6 +33,7 @@ public class StaffShip implements Parcelable ,ICommonUser{
 
     @SerializedName("position") public StaffPosition position;
     @SerializedName("cloud_user") public Staff user;
+    public Staff teacher;
     @SerializedName("id") public String id;
     public String username;
     public String area_code;

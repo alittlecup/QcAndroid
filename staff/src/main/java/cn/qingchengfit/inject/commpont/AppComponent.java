@@ -58,12 +58,12 @@ import cn.qingchengfit.saasbase.course.course.views.EditCourseFragment;
 import cn.qingchengfit.saasbase.course.course.views.JacketManagerFragment;
 import cn.qingchengfit.saasbase.course.course.views.ShopCommentsFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
+import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
 import cn.qingchengfit.saasbase.gymconfig.views.MsgNotiFragment;
 import cn.qingchengfit.saasbase.gymconfig.views.OrderLimitFragment;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
-import cn.qingchengfit.staff.di.BindGymConfigAcitivty;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
@@ -340,7 +340,7 @@ import dagger.multibindings.IntoMap;
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
     BindStaffCardActivity.class, BindImportExportActivity.class, BindStaffStaffActivity.class,
-  BindGymConfigAcitivty.class,BindSaasCommonActivity.class,BindStaffStudentActivity.class,
+  BindSaasCommonActivity.class,BindStaffStudentActivity.class, BindGymConfigAcitivty.class,
 
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,

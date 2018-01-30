@@ -68,7 +68,7 @@
         android:background="@color/white"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:alpha="@{methods.wx_active?1f:0.5f}"
+        android:visibility="@{methods.wx_active?View.VISIBLE:View.GONE}"
         >
 
       <ImageView
