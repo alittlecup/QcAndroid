@@ -354,7 +354,7 @@
     </activity>
     <activity
         android:name=".views.login.LoginActivity"
-        android:launchMode="standard"
+        android:launchMode="singleTop"
         android:screenOrientation="portrait"
         android:theme="@style/mainStyle"
         >

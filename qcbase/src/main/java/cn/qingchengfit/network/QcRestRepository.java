@@ -10,6 +10,7 @@ import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.phrase.Phrase;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Interceptor;
@@ -80,7 +81,7 @@ public class QcRestRepository {
 
           request = request.newBuilder()
               .addHeader("X-CSRFToken", token)
-              .addHeader("Cookie", "csrftoken=" + token + ";"+getSessionName(context)+"=" + getSession(context))
+              .addHeader("Cookie", "csrftoken=" + token + ";"+getSessionCookie(context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + AppUtils.getAppVer(context)
                   + " Android  OEM:"
@@ -95,8 +96,7 @@ public class QcRestRepository {
           return response;
         } else {
           request = request.newBuilder()
-              .addHeader("Cookie",  QcRestRepository.getSessionName(
-                context)+"=" + QcRestRepository.getSession(context))
+              .addHeader("Cookie",  QcRestRepository.getSessionCookie(context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + AppUtils.getAppVer(context)
                   + " Android  OEM:"
@@ -147,6 +147,7 @@ public class QcRestRepository {
   public static String getSession(Context context) {
     String session1 = PreferenceUtils.getPrefString(context, "session_id", "");
     String session2 = PreferenceUtils.getPrefString(context, "qingcheng.session", "");
+
     if (TextUtils.isEmpty(session1) && TextUtils.isEmpty(session2)) {
       return "";
     } else {
@@ -155,10 +156,19 @@ public class QcRestRepository {
       } else if (!TextUtils.isEmpty(session2)) {
         return session2;
       } else {
-        return null;
+        return "";
       }
     }
   }
+  public static String getSessionCookie(Context context){
+    return Phrase.from("sessionid={v};{k}={v};Domain=.qingchengfit.cn")
+      .put("v",getSession(context))
+      .put("k",getSessionName(context))
+      .format()
+      .toString()
+      ;
+  }
+
   public static void setSession(Context context,String key,String value){
     PreferenceUtils.setPrefString(context,"session_key",key);
     PreferenceUtils.setPrefString(context,"session_id",value);
@@ -168,6 +178,7 @@ public class QcRestRepository {
     PreferenceUtils.setPrefString(context, "session_key", "");
     PreferenceUtils.setPrefString(context, "session_id", "");
     PreferenceUtils.setPrefString(context, "qingcheng.session", "");
+    PreferenceUtils.setPrefString(context,"session_key","");
   }
 
   public String getHost() {

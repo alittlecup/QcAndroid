@@ -94,8 +94,7 @@ public class RestRepository implements Repository {
                             .addHeader("Connection", "close")
                             .addHeader("X-CSRFToken", token)
                             .addHeader("Cookie",
-                                "csrftoken=" + token + ";"+ QcRestRepository.getSessionName(
-                                  App.context)+"=" + QcRestRepository.getSession(App.context))
+                                "csrftoken=" + token + ";"+ QcRestRepository.getSessionCookie(App.context))
                             .addHeader("User-Agent",
                                 " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.context) + " Android  OEM:" + App.context.getString(
                                     R.string.oem_tag) + "  QingchengApp/Staff")
@@ -108,8 +107,7 @@ public class RestRepository implements Repository {
                     } else {
                         request = request.newBuilder()
                             .addHeader("Connection", "close")
-                            .addHeader("Cookie", QcRestRepository.getSessionName(
-                              App.context)+"=" + QcRestRepository.getSession(App.context))
+                            .addHeader("Cookie", QcRestRepository.getSessionCookie(App.context))
                             .addHeader("User-Agent",
                                 " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.context) + " Android  OEM:" + App.context.getString(
                                     R.string.oem_tag) + "  QingchengApp/Staff")
@@ -161,14 +159,12 @@ public class RestRepository implements Repository {
 
                     request = request.newBuilder()
                         .addHeader("X-CSRFToken", token)
-                        .addHeader("Cookie", "csrftoken=" + token + ";"+ QcRestRepository.getSessionName(
-                          App.context)+"=" + QcRestRepository.getSession(App.context))
+                        .addHeader("Cookie", "csrftoken=" + token + ";"+ QcRestRepository.getSessionCookie(App.context))
                         .addHeader("User-Agent", "Android Staff")
                         .build();
                 } else {
                     request =
-                        request.newBuilder().addHeader("Cookie", QcRestRepository.getSessionName(
-                          App.context)+"=" + QcRestRepository.getSession(App.context)).addHeader("User-Agent", "Android Staff").build();
+                        request.newBuilder().addHeader("Cookie", QcRestRepository.getSessionCookie(App.context)).addHeader("User-Agent", "Android Staff").build();
                 }
                 return chain.proceed(request);
             }

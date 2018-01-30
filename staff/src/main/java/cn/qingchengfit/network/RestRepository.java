@@ -52,8 +52,7 @@ public abstract class RestRepository {
           }
           request = request.newBuilder()
               .addHeader("X-CSRFToken", token)
-              .addHeader("Cookie", "csrftoken=" + token + ";"+QcRestRepository.getSessionName(
-                App.context)+"=" + QcRestRepository.getSession(App.context))
+              .addHeader("Cookie", "csrftoken=" + token + ";"+QcRestRepository.getSessionCookie(App.context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + appVersionName()
                   + " Android  OEM:"
@@ -68,8 +67,7 @@ public abstract class RestRepository {
         } else {
 
           request = request.newBuilder()
-              .addHeader("Cookie",  QcRestRepository.getSessionName(
-                App.context)+"=" + QcRestRepository.getSession(App.context))
+              .addHeader("Cookie",  QcRestRepository.getSessionCookie(App.context))
               .addHeader("User-Agent", " FitnessTrainerAssistant/"
                   + appVersionName()
                   + " Android  OEM:"

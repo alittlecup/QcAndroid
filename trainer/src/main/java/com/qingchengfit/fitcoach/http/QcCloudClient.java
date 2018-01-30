@@ -199,7 +199,7 @@ public class QcCloudClient {
                         .addHeader("Connection", "close")
                         .addHeader("X-CSRFToken", token)
                         .addHeader("Cookie",
-                            "csrftoken=" + token + ";"+QcRestRepository.getSessionName(App.AppContex)+"=" + QcRestRepository.getSession(App.AppContex))
+                            "csrftoken=" + token + ";"+ QcRestRepository.getSessionCookie(App.AppContex))
                         .addHeader("User-Agent",
                             " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(
                                 R.string.oem_tag) + "  QingchengApp/Trainer")
@@ -209,7 +209,7 @@ public class QcCloudClient {
                         .addHeader("Connection", "close")
                         .addHeader("max-age", "5")
                         .addHeader("Cache-Control", "public")
-                        .addHeader("Cookie", QcRestRepository.getSessionName(App.AppContex)+"=" + QcRestRepository.getSession(App.AppContex))
+                        .addHeader("Cookie",  QcRestRepository.getSessionCookie(App.AppContex))
                         .addHeader("User-Agent",
                             " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(
                                 R.string.oem_tag) + "  QingchengApp/Trainer")

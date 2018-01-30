@@ -17,7 +17,6 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -112,28 +111,24 @@ public class LoginPresenter extends BasePresenter {
 
         loginBody.setDevice_type("android");
         loginBody.setPush_channel_id("");
-        loginUsecase.login(loginBody).subscribe(new Action1<QcDataResponse<Login>>() {
-            @Override public void call(QcDataResponse<Login> qcResponLogin) {
-                mLoginView.cancelLogin();
-                if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
-                    QcRestRepository.setSession(App.context,qcResponLogin.data.session_name,qcResponLogin.data.session_id);
-                    PreferenceUtils.setPrefString(App.context, Configs.PREFER_PHONE, loginBody.phone);
-                    PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_ID, qcResponLogin.data.staff.getId());
-                    App.staffId = qcResponLogin.data.staff.getId();
-                    PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, qcResponLogin.data.staff.getUsername());
-                    PreferenceUtils.setPrefString(App.context, Configs.PREFER_USER_ID, qcResponLogin.getData().user.getId());
-                    studentAction.delAllStudent();
-                    mLoginView.onShowLogining();
-                    getService(qcResponLogin);
-                } else {
-                    mLoginView.onError(qcResponLogin.msg);
-                }
+        loginUsecase.login(loginBody).subscribe(qcResponLogin -> {
+            mLoginView.cancelLogin();
+            if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
+                QcRestRepository.setSession(App.context,qcResponLogin.data.session_name,qcResponLogin.data.session_id);
+                PreferenceUtils.setPrefString(App.context, Configs.PREFER_PHONE, loginBody.phone);
+                PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_ID, qcResponLogin.data.staff.getId());
+                App.staffId = qcResponLogin.data.staff.getId();
+                PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, qcResponLogin.data.staff.getUsername());
+                PreferenceUtils.setPrefString(App.context, Configs.PREFER_USER_ID, qcResponLogin.getData().user.getId());
+                studentAction.delAllStudent();
+                mLoginView.onShowLogining();
+                getService(qcResponLogin);
+            } else {
+                mLoginView.onError(qcResponLogin.msg);
             }
-        }, new Action1<Throwable>() {
-            @Override public void call(Throwable throwable) {
-                mLoginView.cancelLogin();
-                ToastUtils.show("系统维护中...请稍后再试");
-            }
+        }, throwable -> {
+            mLoginView.cancelLogin();
+            ToastUtils.show("系统维护中...请稍后再试");
         });
     }
 
@@ -180,20 +175,16 @@ public class LoginPresenter extends BasePresenter {
                         RxBus.getBus().post(new EventLoginChange());
                     }
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    mLoginView.onError(throwable.getMessage());
-                    mLoginView.cancelLogin();
-                }
+            }, throwable -> {
+                mLoginView.onError(throwable.getMessage());
+                mLoginView.cancelLogin();
             });
     }
 
     public void queryCode(GetCodeBody phone) {
-        loginUsecase.queryCode(phone).subscribe(new Action1<QcResponse>() {
-            @Override public void call(QcResponse qcResponse) {
-                if (qcResponse.status != 200) {
-                    ToastUtils.show(qcResponse.getMsg());
-                }
+        loginUsecase.queryCode(phone).subscribe(qcResponse -> {
+            if (qcResponse.status != 200) {
+                ToastUtils.show(qcResponse.getMsg());
             }
         }, new NetWorkThrowable());
     }
@@ -213,29 +204,25 @@ public class LoginPresenter extends BasePresenter {
         if (StringUtils.isEmpty(body.getPassword())) {
             mLoginView.onError("请填写密码");
         }
-        loginUsecase.registe(body).subscribe(new Action1<QcDataResponse<Login>>() {
-            @Override public void call(QcDataResponse<Login> qcResponLogin) {
+        loginUsecase.registe(body).subscribe(qcResponLogin -> {
 
-                if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
-                    QcRestRepository.setSession(App.context,qcResponLogin.data.session_name,qcResponLogin.data.session_id);
-                    //PreferenceUtils.setPrefString(App.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);
-                    PreferenceUtils.setPrefString(App.context, Configs.PREFER_PHONE, body.phone);
-                    PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_ID, qcResponLogin.data.staff.getId());
+            if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
+                QcRestRepository.setSession(App.context,qcResponLogin.data.session_name,qcResponLogin.data.session_id);
+                //PreferenceUtils.setPrefString(App.context, Configs.PREFER_SESSION, qcResponLogin.data.session_id);
+                PreferenceUtils.setPrefString(App.context, Configs.PREFER_PHONE, body.phone);
+                PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_ID, qcResponLogin.data.staff.getId());
 
-                    App.staffId = qcResponLogin.data.staff.getId();
-                    PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, qcResponLogin.data.staff.getUsername());
-                    PreferenceUtils.setPrefString(App.context, Configs.PREFER_USER_ID, qcResponLogin.getData().user.getId());
+                App.staffId = qcResponLogin.data.staff.getId();
+                PreferenceUtils.setPrefString(App.context, Configs.PREFER_WORK_NAME, qcResponLogin.data.staff.getUsername());
+                PreferenceUtils.setPrefString(App.context, Configs.PREFER_USER_ID, qcResponLogin.getData().user.getId());
 
-                    getService(qcResponLogin);
-                } else {
-                    mLoginView.onError(qcResponLogin.getMsg());
-                }
+                getService(qcResponLogin);
+            } else {
+                mLoginView.onError(qcResponLogin.getMsg());
             }
-        }, new Action1<Throwable>() {
-            @Override public void call(Throwable throwable) {
-                ToastUtils.show("系统维护中...请稍后再试");
-                mLoginView.cancelLogin();
-            }
+        }, throwable -> {
+            ToastUtils.show("系统维护中...请稍后再试");
+            mLoginView.cancelLogin();
         });
     }
 }

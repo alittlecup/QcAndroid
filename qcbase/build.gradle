@@ -129,6 +129,7 @@ dependencies {
     // excluding org.json which is provided by Android
     exclude group: 'org.json', module: 'json'
   }
+  api 'com.squareup.phrase:phrase:1.1.0'
   testImplementation 'junit:junit:4.12'
   androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'

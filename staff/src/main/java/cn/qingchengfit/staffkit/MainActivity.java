@@ -377,13 +377,11 @@ public class MainActivity extends BaseActivity implements FragCallBack {
             });
       obLogOut = RxBus.getBus().register(EventSessionError.class)
           .observeOn(AndroidSchedulers.mainThread());
-      obLogOut.subscribe(new Action1<EventSessionError>() {
-        @Override public void call(EventSessionError eventSessionError) {
-          logout();
-          ToastUtils.show("登录过期");
-          RxBus.getBus().post(new EventLoginChange());
-          goLogin();
-        }
+      obLogOut.subscribe(eventSessionError -> {
+        logout();
+        ToastUtils.show("登录过期");
+        RxBus.getBus().post(new EventLoginChange());
+        goLogin();
       },new BusEventThrowable());
     }
 
@@ -564,6 +562,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         PushManager.stopWork(this.getApplicationContext());
         AppData.clear(this);
         TIMManager.getInstance().logout();
+        QcRestRepository.clearSession(this);
         PreferenceUtils.setPrefString(this, Configs.PREFER_SESSION, "");
         PreferenceUtils.setPrefString(this, Configs.PREFER_WORK_ID, "");
         PreferenceUtils.setPrefString(this, Configs.CUR_BRAND_ID, "");
