@@ -123,15 +123,9 @@ public class StudentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Glide.with(holder.itemView.getContext())
                 .load(PhotoUtils.getSmall(studentBean.avatar))
                 .asBitmap()
+                .placeholder(studentBean.gender ? R.drawable.default_student_male : R.drawable.default_student_female)
                 .into(new CircleImgWrapper(studentsHolder.itemStudentHeader, holder.itemView.getContext()));
 
-            if (TextUtils.isEmpty(studentBean.avatar)) {
-                if (studentBean.gender){
-                    studentsHolder.itemStudentHeader.setImageResource(R.drawable.default_student_male);
-                }else{
-                    studentsHolder.itemStudentHeader.setImageResource(R.drawable.default_student_female);
-                }
-            }
         } else {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             if (isBindStudent) {
