@@ -9,6 +9,7 @@ import cn.qingchengfit.model.responese.SignInConfig;
 import cn.qingchengfit.model.responese.SignInUrl;
 import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.ShopConfigs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -95,12 +96,7 @@ public class SignInPresenter extends BasePresenter {
                 @Override public void call(SignInUrl signInUrl) {
                     if (view != null) view.onGetSignInUrl(signInUrl);
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    Timber.e(throwable.getMessage());
-                    if (view != null) view.onFail();
-                }
-            }));
+            }, new NetWorkThrowable()));
     }
 
     public interface SignInView extends PView {

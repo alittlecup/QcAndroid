@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+  
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_gym_name"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/white"
+      app:civ_text_color="@color/qc_text_black"
+      app:civ_lable="@string/add_zq_access_name"
+      app:civ_clickable="false"
+      app:civ_hint="请输入设备名称"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_gym_address"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/white"
+      app:civ_text_color="@color/qc_text_black"
+      app:civ_lable="@string/add_zq_gym_id"
+      app:civ_clickable="false"
+      app:civ_hint="请输入9位设备号"
+      />
+
+  <TextView
+      android:id="@+id/btn_find_equip"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:text="@string/add_zq_find_equip"
+      android:gravity="center_vertical|right"
+      android:layout_marginRight="10dp"
+      style="@style/QcTextStyleStandardDark"
+      android:textColor="@color/blue"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_gym_fun"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/white"
+      app:civ_text_color="@color/qc_text_black"
+      app:civ_lable="@string/add_zq_fun"
+      app:civ_clickable="true"
+      app:civ_showright="true"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_marginTop="16dp"
+      android:background="@color/white"
+      android:text="@string/add_zq_sign_time"
+      style="@style/QcTextStyleMediumWarm"
+      android:paddingLeft="15dp"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_gym_start"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/white"
+      app:civ_lable="@string/add_zq_sign_start"
+      app:civ_text_color="@color/qc_text_black"
+      app:civ_clickable="true"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/input_gym_end"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/white"
+      app:civ_text_color="@color/qc_text_black"
+      app:civ_lable="@string/add_zq_sign_end"
+      app:civ_clickable="true"
+      app:civ_showright="true"
+      />
+
+</LinearLayout>

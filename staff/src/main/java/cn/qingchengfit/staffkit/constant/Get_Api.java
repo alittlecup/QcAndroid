@@ -121,6 +121,7 @@ import cn.qingchengfit.staffkit.train.model.TeamDetailResponse;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecordWrapper;
 import cn.qingchengfit.staffkit.views.login.CheckProtocolModel;
 import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
+import cn.qingchengfit.staffkit.views.signin.zq.model.GuardWrapper;
 import java.util.HashMap;
 import java.util.List;
 import retrofit2.Call;
@@ -961,6 +962,10 @@ public interface Get_Api {
 
     //获取未签课的学员
     @GET("/api/staffs/{staff_id}/users/checkin/records/")
-    rx.Observable<QcDataResponse<List<NotSignStudent>>> qcGetNotSignStudent(@Path("staff_id") String staffId,
+    rx.Observable<QcDataResponse<List<NotSignStudent>>> qcGetNotSignStudent(@Path("staff_id") String staffId,@QueryMap HashMap<String, Object> params);
+
+    //获取门禁
+    @GET("/api/staffs/{staff_id}/guards/")
+    rx.Observable<QcDataResponse<GuardWrapper>> qcGetAccess(@Path("staff_id") String staff_id,
         @QueryMap HashMap<String, Object> params);
 }

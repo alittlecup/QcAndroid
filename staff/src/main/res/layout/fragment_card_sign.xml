@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@color/bg_grey"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:background="@color/white"
+      android:gravity="center_horizontal"
+      android:paddingTop="30dp"
+      android:paddingBottom="30dp"
+      android:layout_marginBottom="20dp"
+      >
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/code_sign_card_tip"
+      style="@style/QcTextStyleStandardDark"
+      />
+
+  <ImageView
+      android:layout_width="136dp"
+      android:layout_height="124dp"
+      android:src="@drawable/ic_sign_in_card"
+      />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="刷卡器"
+        />
+
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+  <LinearLayout
+      android:id="@+id/input_sign_in_card_judge"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      android:paddingLeft="15dp"
+      android:paddingRight="15dp"
+      android:background="@color/white"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_card_judge_use"
+        style="@style/QcTextStyleStandardDark"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="@dimen/img_120dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_right"
+        />
+
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+  <LinearLayout
+      android:id="@+id/input_sign_in_card_bind"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      android:paddingLeft="15dp"
+      android:paddingRight="15dp"
+      android:background="@color/white"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_card_bind"
+        style="@style/QcTextStyleStandardDark"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="@dimen/img_120dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_right"
+        />
+
+  </LinearLayout>
+
+</LinearLayout>

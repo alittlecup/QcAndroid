@@ -28,6 +28,12 @@ import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffDetailFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment;
+import cn.qingchengfit.staffkit.views.signin.config.SignInCardFragment;
+import cn.qingchengfit.staffkit.views.signin.config.SignInCodeFragment;
+import cn.qingchengfit.staffkit.views.signin.zq.AddZqFragment;
+import cn.qingchengfit.staffkit.views.signin.zq.EditZqFragment;
+import cn.qingchengfit.staffkit.views.signin.zq.ZqAccessFragment;
+import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
 import cn.qingchengfit.staffkit.views.statement.glance.SaleGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.SigninGlanceFragment;
 import cn.qingchengfit.staffkit.views.statement.glance.StatementGlanceFragment;
@@ -158,6 +164,22 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 String replyId = IntentUtils.getIntentFromUri(getIntent(), "replyId");
                 String replayname = IntentUtils.getIntentFromUri(getIntent(), "replyName");
                 fragment = new ArticleCommentsListFragmentBuilder(articleid).replyId(replyId).replyName(replayname).build();
+                break;
+            case GymFunctionFactory.ZQ_ACCESS:
+                fragment = new ZqAccessFragment();
+                break;
+            case GymFunctionFactory.ADD_ZQ_ACCESS:
+                fragment = new AddZqFragment();
+                break;
+            case GymFunctionFactory.EDIT_ZQ_ACCESS:
+                fragment = EditZqFragment.newInstance(
+                    (AccessBody) getIntent().getBundleExtra("data").getParcelable("access"), getIntent().getExtras().getString("guard"));
+                break;
+            case GymFunctionFactory.SIGN_IN_CODE:
+                fragment = new SignInCodeFragment();
+                break;
+            case GymFunctionFactory.SIGN_IN_CARD:
+                fragment = new SignInCardFragment();
                 break;
         }
 

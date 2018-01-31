@@ -141,6 +141,13 @@ public class GymFunctionFactory {
     public static final String USER_PROTOCOL = "/user/protocol";
     public static final String USER_PROTOCOL_URL = "/protocol/staff/";
 
+    //智奇门禁
+    public static final String ZQ_ACCESS = "/zq/access";
+    public static final String ADD_ZQ_ACCESS = "/add/zq/access";
+    public static final String EDIT_ZQ_ACCESS = "/edit/zq/access";
+    public static final String SIGN_IN_CODE = "/sign/code";
+    public static final String SIGN_IN_CARD = "/sign/card";
+
     public static GymFuntion instanceGymFuntion(String module) {
         GymFuntion gym = new GymFuntion.Builder().moduleName(module).text(getModuleTxt(module)).img(getDrawableRes(module)).build();
         return gym;
@@ -381,7 +388,6 @@ public class GymFunctionFactory {
 
             case MODULE_SERVICE_FREE:
                 if (!serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_HELP)
-                    && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK)
                     && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_LOCKER_LINK_NEW)
                     && !serPermisAction.check(coachService.getId(), coachService.getModel(), PermissionServerUtils.CHECKIN_SCREEN)) {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);

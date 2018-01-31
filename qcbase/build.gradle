@@ -119,6 +119,8 @@ dependencies {
   api files('libs/AMap2DMap_2.9.2_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
   api files(
       'libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar')
+  api 'com.jakewharton.timber:timber:4.5.1'
+  api 'com.jakewharton.threetenabp:threetenabp:1.0.2'
   api files('libs/mid-sdk-2.20.jar')
   api('com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+')
   api 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
