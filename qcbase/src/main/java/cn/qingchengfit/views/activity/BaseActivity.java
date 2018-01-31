@@ -108,9 +108,6 @@ public class BaseActivity extends AppCompatActivity {
 
     super.onCreate(savedInstanceState);
 
-    //TODO delete  ---- by  fb
-    LogUtil.e("---- A->TAG ----", getClass().getSimpleName());
-
     try {
       if (getIntent().getParcelableExtra(Constants.EXTRA_GYM_SERVICE) != null) {
         gymWrapper.setCoachService(
