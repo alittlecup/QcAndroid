@@ -1,5 +1,6 @@
 package cn.qingchengfit.shop.ui.items.product;
 
+import android.text.InputType;
 import android.view.View;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemCategoryBinding;
@@ -37,12 +38,16 @@ public class GoodProductItem
       FlexibleAdapter adapter) {
     DataBindingViewHolder<ItemCategoryBinding> viewHolder =
         new DataBindingViewHolder<>(view, adapter);
+
     return viewHolder;
   }
 
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemCategoryBinding> holder, int position, List payloads) {
     ItemCategoryBinding dataBinding = holder.getDataBinding();
+
+    dataBinding.categoryPrice.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+    dataBinding.categoryPriceCard.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
     dataBinding.imDelete.setVisibility(View.VISIBLE);
     dataBinding.categoryName.setVisibility(View.VISIBLE);
@@ -64,7 +69,8 @@ public class GoodProductItem
       dataBinding.imDelete.setVisibility(View.VISIBLE);
       dataBinding.categoryName.setVisibility(View.VISIBLE);
     }
-
+    dataBinding.setGood(good);
+    //initData(dataBinding);
     dataBinding.imDelete.setOnClickListener(v -> {
       if (adapter.getItemCount() == 1) {
         dataBinding.imDelete.setVisibility(View.GONE);
@@ -79,6 +85,11 @@ public class GoodProductItem
       }
       ViewUtil.resetRecyclerViewHeight(adapter.getRecyclerView());
     });
+  }
+
+  public Good getGood() {
+
+    return good;
   }
 
   public void setExpend(boolean isExpend) {

@@ -7,6 +7,10 @@
         name="toolbarModel"
         type="cn.qingchengfit.model.others.ToolbarModel"
         />
+    <variable
+        name="viewModel"
+        type="cn.qingchengfit.shop.ui.product.paycardchannel.ProductPayViewModel"
+        />
 
   </data>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,21 +23,11 @@
         android:id="@+id/include_toolbar"
         bind:toolbarModel="@{toolbarModel}"
         />
-    <cn.qingchengfit.widgets.SwitcherLayout
-        app:sw_lable="@string/product_pay_online"
-        app:sw_text_color="000"
-        style="@style/QcSwitchLayout"
-        />
-    <cn.qingchengfit.widgets.SwitcherLayout
-        style="@style/QcSwitchLayout"
-        android:layout_marginTop="14dp"
-        app:sw_lable="@string/product_pay_offline"
-        />
-    <cn.qingchengfit.widgets.SwitcherLayout
-        android:layout_marginTop="14dp"
-        app:sw_lable="会员卡支付"
-        app:sw_text_color="000"
-        style="@style/QcSwitchLayout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:items="@{viewModel.items}"
         />
 
 

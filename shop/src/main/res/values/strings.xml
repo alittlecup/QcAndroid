@@ -47,6 +47,7 @@
   <string name="product_pay_card">会员卡支付</string>
   <string name="product_pay_card_price">会员卡支付</string>
   <string name="choose_product_pay_channel">选择支付方式</string>
+  <string name="choose_product_pay_card">选择会员卡</string>
 
 
   <string name="product_pay_card_prices">会员卡支付价格</string>
@@ -67,6 +68,7 @@
   <string name="deliver_onsale">馆内购买</string>
   <string name="deliver_by_self">自取</string>
   <string name="deliver_send">配送</string>
+  <string name="product_card">会员卡</string>
 
 
   <!--category-->

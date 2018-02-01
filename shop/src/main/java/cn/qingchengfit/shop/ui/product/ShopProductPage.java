@@ -9,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.telecom.Call;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,12 +29,15 @@ import cn.qingchengfit.shop.ui.product.bottom.ShopBottomCategoryFragment;
 import cn.qingchengfit.shop.ui.product.choosepic.MultiChoosePicFragment;
 import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPage;
 import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPageParams;
+import cn.qingchengfit.shop.ui.product.paycardchannel.ProductPayPageParams;
 import cn.qingchengfit.shop.ui.widget.CategoryItemView;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.shop.vo.Good;
+import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.utils.Corner4dpImgWrapper;
 import cn.qingchengfit.utils.PhotoUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
@@ -41,17 +45,19 @@ import com.anbillon.flabellum.annotations.Need;
 import com.bumptech.glide.Glide;
 import com.jakewharton.rxbinding.widget.RxTextSwitcher;
 import com.jakewharton.rxbinding.widget.RxTextView;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import org.w3c.dom.Text;
 
 /**
  * Created by huangbaole on 2017/12/18.
  */
 @Leaf(module = "shop", path = "/shop/product") public class ShopProductPage
     extends ShopBaseFragment<PageShopProductBinding, ShopProductViewModel> {
-  @Need Integer productId = 0;
   private static final int TO_DELIVER_CODE = 101;
+  private static final int TO_CARD_CODE = 102;
 
   @Override protected void subscribeUI() {
     mViewModel.payChannelEvent.observe(this, aVoid -> {
@@ -63,7 +69,7 @@ import java.util.List;
       shopBottomCategoryFragment.setConfimAction(data -> {
         if (data instanceof Category) {
           mViewModel.getProduct().setCategory((Category) data);
-          mBinding.productCetefory.setContent(mViewModel.getProduct().getCategory().getName());
+          mBinding.productCetegory.setContent(mViewModel.getProduct().getCategory().getName());
         }
       });
       shopBottomCategoryFragment.show(getChildFragmentManager(), "");
@@ -73,6 +79,7 @@ import java.util.List;
       multiChoosePicFragment.setUpLoadImageCallback(uris -> {
         if (uris != null && !uris.isEmpty()) {
           initViewPager(uris);
+          mBinding.addImageContainer.setVisibility(View.GONE);
           mViewModel.getProduct().setImages(uris);
         }
       });
@@ -85,6 +92,89 @@ import java.util.List;
           (ArrayList<Integer>) mViewModel.getProduct().getDelivery_types()).build(),
           TO_DELIVER_CODE);
     });
+    mViewModel.chooseCardEvent.observe(this, aVoid -> {
+      Uri uri = Uri.parse("shop://shop/product/paycard");
+      List<String> card_tpl_ids = mViewModel.getProduct().getCard_tpl_ids();
+      if (card_tpl_ids != null && !card_tpl_ids.isEmpty()) {
+        toOtherFragmentForBack(uri,
+            new ProductPayPageParams().ids(new ArrayList<>(card_tpl_ids)).build(), TO_CARD_CODE);
+      } else {
+        toOtherFragmentForBack(uri, null, TO_CARD_CODE);
+      }
+    });
+
+    mViewModel.saveProductEvent.observe(this, aVoid -> {
+      List<Good> goods = new ArrayList<>();
+      for (Object item : goodsAdapter.getMainItems()) {
+        if (item instanceof GoodProductItem) {
+          Good good = ((GoodProductItem) item).getGood();
+          goods.add(good);
+        }
+      }
+      // TODO: 2018/1/30 会员卡的检查
+
+      mViewModel.getProduct().setGoods(goods);
+      if (checkProductInfo(mViewModel.getProduct())) {
+        mViewModel.saveProduct();
+      }
+    });
+    mViewModel.getPostProductResult().observe(this, aBoolean -> {
+      ToastUtils.show(aBoolean ? "success" : "error");
+    });
+  }
+
+  private boolean checkProductInfo(Product product) {
+    if (TextUtils.isEmpty(product.getName())) {
+      ToastUtils.show("请输入商品名称");
+      return false;
+    }
+    if (TextUtils.isEmpty(product.getUnit())) {
+      ToastUtils.show("请输入商品单位");
+      return false;
+    }
+    if (product.getSupport_card()) {
+      if (product.getCard_tpl_ids() == null || product.getCard_tpl_ids().isEmpty()) {
+        ToastUtils.show("请选择支持的会员卡种类");
+        return false;
+      }
+    }
+    if (product.getGoods() != null && !product.getGoods().isEmpty()) {
+      for (Good good : product.getGoods()) {
+        if (TextUtils.isEmpty(good.getRmbPrices())) {
+          ToastUtils.show("请输入型号价格");
+          return false;
+        }
+
+        if (TextUtils.isEmpty(good.getName())) {
+          if (goodsAdapter.getItemCount() == 1) {
+            if (goodsAdapter.getItem(0) instanceof GoodProductItem) {
+              boolean isExpend = ((GoodProductItem) goodsAdapter.getItem(0)).isExpend();
+              if (isExpend) {
+                ToastUtils.show("请输入型号名称");
+                return false;
+              }
+            }
+          } else {
+            ToastUtils.show("请输入型号名称");
+            return false;
+          }
+        }
+
+        if (good.getInventory() == null) {
+          ToastUtils.show("请输入型号库存");
+          return false;
+        }
+        if (product.getSupport_card() && TextUtils.isEmpty(good.getCardPrices())) {
+          ToastUtils.show("请输入型号会员卡价格");
+          return false;
+        }
+      }
+    }
+    if (product.getDelivery_types() == null || product.getDelivery_types().isEmpty()) {
+      ToastUtils.show("请选择交货方式");
+      return false;
+    }
+    return true;
   }
 
   private void toOtherFragmentForBack(Uri uri, Bundle params, int requestCode) {
@@ -103,23 +193,20 @@ import java.util.List;
     initToolBar();
     initGoodRecyclerView();
     initEditListener();
-    if (productId != 0) {
-      //mViewModel.loadProductDetail(productId);
-    }
     mBinding.setViewModel(mViewModel);
 
     return mBinding;
   }
 
   private void initEditListener() {
-    RxTextView.afterTextChangeEvents(mBinding.productName.getEditText())
-        .subscribe(it -> mViewModel.getProduct().setName(it.toString()));
-    RxTextView.afterTextChangeEvents(mBinding.productUnit.getEditText())
-        .subscribe(it -> mViewModel.getProduct().setUnit(it.toString()));
-    RxTextView.afterTextChangeEvents(mBinding.productWeight.getEditText())
-        .subscribe(it -> mViewModel.getProduct().setPriority(Integer.valueOf(it.toString())));
-    mBinding.priceCardSwitch.setOnCheckListener((buttonView, isChecked) -> mViewModel.getProduct().setSupport_card(isChecked));
-
+    RxTextView.afterTextChangeEvents(mBinding.productWeight.getEditText()).subscribe(it -> {
+      String s = it.editable().toString();
+      if (TextUtils.isEmpty(s)) {
+        mViewModel.getProduct().setPriority(0);
+      } else {
+        mViewModel.getProduct().setPriority(Integer.valueOf(s));
+      }
+    });
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -128,11 +215,24 @@ import java.util.List;
       if (requestCode == TO_DELIVER_CODE) {
         ArrayList<Integer> deliver = data.getIntegerArrayListExtra("delivers");
         dealDeliverTypes(deliver);
+      } else if (requestCode == TO_CARD_CODE) {
+        ArrayList<String> ids = data.getStringArrayListExtra("card_tpls");
+        dealCardTplIds(ids);
       }
     }
   }
 
-  private void dealDeliverTypes(ArrayList<Integer> deliver) {
+  protected void dealCardTplIds(ArrayList<String> ids) {
+    if (ids == null || ids.isEmpty()) {
+      mBinding.productCardTpl.setContent("");
+      mViewModel.getProduct().setCard_tpl_ids(new ArrayList<>());
+    } else {
+      mBinding.productCardTpl.setContent(ids.size() + "种");
+      mViewModel.getProduct().setCard_tpl_ids(ids);
+    }
+  }
+
+  protected void dealDeliverTypes(ArrayList<Integer> deliver) {
     StringBuilder sb = new StringBuilder();
     if (deliver.contains(1)) {
       sb.append(getString(R.string.deliver_onsale)).append(" ");
@@ -172,38 +272,20 @@ import java.util.List;
       } else {
         goodsAdapter.setStatus(0);
       }
+      mBinding.productCardTpl.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+      mViewModel.getProduct().setSupport_card(isChecked);
       goodsAdapter.notifyDataSetChanged();
       ViewUtil.resetRecyclerViewHeight(mBinding.goodsRecyclerview);
     });
   }
 
-  private void initToolBar() {
-
-    if (productId != 0) {
-      ToolbarModel toolbarModel = new ToolbarModel(getString(R.string.product_detail));
-      toolbarModel.setMenu(R.menu.menu_edit);
-      toolbarModel.setListener(new Toolbar.OnMenuItemClickListener() {
-        @Override public boolean onMenuItemClick(MenuItem item) {
-          if (item.getItemId() == R.id.action_save) {
-            toolbarModel.setMenu(R.menu.menu_compelete);
-            mViewModel.isEdit.set(true);
-          } else if (item.getItemId() == R.id.complete) {
-            // TODO: 2018/1/17  提交修改后的商品数据
-            mViewModel.isEdit.set(false);
-          }
-          return false;
-        }
-      });
-      mBinding.setToolbarModel(toolbarModel);
-    } else {
-      mBinding.setToolbarModel(new ToolbarModel(getString(R.string.add_product)));
-    }
+  protected void initToolBar() {
     initToolbar(mBinding.includeToolbar.toolbar);
   }
 
   private PagerAdapter adapter;
 
-  private void initViewPager(List<String> uris) {
+  protected void initViewPager(List<String> uris) {
     adapter = new ImageViewAdapter(uris);
     mBinding.viewpager.setAdapter(adapter);
     mBinding.viewpager.setCurrentItem(0);

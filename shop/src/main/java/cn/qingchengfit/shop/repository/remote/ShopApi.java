@@ -6,6 +6,7 @@ import cn.qingchengfit.shop.repository.response.GoodListResponse;
 import cn.qingchengfit.shop.repository.response.ProductListResponse;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.Product;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import retrofit2.http.Body;
@@ -83,5 +84,33 @@ public interface ShopApi {
   @GET("/api/staffs/{staff_id}/mall/product-goods/")
   Flowable<QcDataResponse<ProductListResponse>> qcLoadAllProductInfo(
       @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+
+  /**
+   * 添加商品(商品上下架由商品本身的status字段表示，没有单独接口)
+   * {@link Product#status}
+   */
+  @POST("api/staffs/{staff_id}/mall/products/") Flowable<QcDataResponse> qcPostProduct(
+      @Path("staff_id") String staff_id, @Body String json);
+
+  /**
+   * 删除商品
+   */
+  @DELETE("api/staffs/{staff_id}/mall/products/{product_id}/")
+  Flowable<QcDataResponse> qcDeleteProduct(@Path("staff_id") String staff_id,
+      @Path("product_id") String product_id);
+
+  /**
+   * 修改商品
+   */
+  @PUT("api/staffs/{staff_id}/mall/products/") Flowable<QcDataResponse> qcPutProduct(
+      @Path("staff_id") String staff_id, @Body String json);
+
+  /**
+   * 获取商品信息
+   */
+  @GET("GET api/staffs/{staff_id}/mall/products/{product_id}/")
+  Flowable<QcDataResponse<Product>> qcLoadProductInfo(@Path("staff_id") String staff_id,
+      @Path("product_id") String product_id);
 }
+
 

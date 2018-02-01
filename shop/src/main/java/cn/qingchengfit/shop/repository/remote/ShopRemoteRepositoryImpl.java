@@ -7,12 +7,12 @@ import cn.qingchengfit.shop.repository.response.GoodListResponse;
 import cn.qingchengfit.shop.repository.response.ProductListResponse;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.Product;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.reactivex.Flowable;
 import java.util.HashMap;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by huangbaole on 2017/12/19.
  */
-@Singleton public class ShopRemoteRepositoryImpl implements ShopRemoteRepository {
+public class ShopRemoteRepositoryImpl implements ShopRemoteRepository {
   ShopApi shopApi;
 
   @Inject public ShopRemoteRepositoryImpl(QcRestRepository restRepository) {
@@ -79,5 +79,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
   public Flowable<QcDataResponse<ProductListResponse>> qcLoadAllProductInfo(String staff_id,
       HashMap<String, Object> params) {
     return shopApi.qcLoadAllProductInfo(staff_id, params);
+  }
+
+  @Override public Flowable<QcDataResponse> qcPostProduct(String staff_id, String json) {
+    return shopApi.qcPostProduct(staff_id, json);
+  }
+
+  @Override public Flowable<QcDataResponse> qcDeleteProduct(String staff_id, String product_id) {
+    return shopApi.qcDeleteProduct(staff_id, product_id);
+  }
+
+  @Override public Flowable<QcDataResponse> qcPutProduct(String staff_id, String json) {
+    return shopApi.qcPutProduct(staff_id, json);
+  }
+
+  @Override
+  public Flowable<QcDataResponse<Product>> qcLoadProductInfo(String staff_id, String product_id) {
+    return shopApi.qcLoadProductInfo(staff_id, product_id);
   }
 }

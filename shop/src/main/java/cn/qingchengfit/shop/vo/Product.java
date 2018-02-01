@@ -62,25 +62,25 @@ public class Product
    * }
    */
   private Shop shop;
-  private boolean status;
+  private Boolean status;
   private String off_sale_at;
   private String on_sale_at;
   private List<Integer> delivery_types;
   private String image;
   private List<String> images;
-  private int id;
+  private Integer id;
   private String unit;
   private String desc;
   private Category category;
   private List<Good> goods;
-  private boolean is_free;
+  private Boolean is_free;
   private List<String> channels;
   private String name;
   private String created_at;
   private CreateBy create_by;
-  private int month_sales;
-  private int total_sales;
-  private int priority;
+  private Integer month_sales;
+  private Integer total_sales;
+  private Integer priority;
 
   public List<String> getCard_tpl_ids() {
     return card_tpl_ids;
@@ -92,15 +92,15 @@ public class Product
 
   private List<String> card_tpl_ids;
 
-  public Boolean getSupport_card() {
+  public boolean getSupport_card() {
     return support_card;
   }
 
-  public void setSupport_card(Boolean support_card) {
+  public void setSupport_card(boolean support_card) {
     this.support_card = support_card;
   }
 
-  private Boolean support_card;
+  private boolean support_card;
 
   public Shop getShop() {
     return shop;
@@ -291,7 +291,7 @@ public class Product
     this.total_sales = total_sales;
   }
 
-  public int getPriority() {
+  public Integer getPriority() {
     return priority;
   }
 
@@ -312,13 +312,14 @@ public class Product
   }
 
   @Override public String getProductPrices() {
-    int min = Integer.MAX_VALUE;
+    double min = Integer.MAX_VALUE;
     if (goods != null && !goods.isEmpty()) {
       for (Good good : goods) {
         if (good.getRule() != null && !good.getRule().isEmpty()) {
           for (Good.Rule rule : good.getRule()) {
-            if (rule.getCost() < min) {
-              min = rule.getCost();
+            Double aDouble = Double.valueOf(rule.getCost());
+            if (aDouble < min) {
+              min = aDouble;
             }
           }
         }

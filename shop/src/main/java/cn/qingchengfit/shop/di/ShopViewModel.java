@@ -15,7 +15,7 @@ import cn.qingchengfit.shop.ui.inventory.product.UpdateInventoryViewModel;
 import cn.qingchengfit.shop.ui.product.ShopProductViewModel;
 import cn.qingchengfit.shop.ui.product.addsuccess.ProductAddSuccessViewModel;
 import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverViewModel;
-import cn.qingchengfit.shop.ui.product.paychannel.ProductPayViewModel;
+import cn.qingchengfit.shop.ui.product.paycardchannel.ProductPayViewModel;
 import cn.qingchengfit.shop.ui.product.prices.ProductPricesViewModel;
 import dagger.Binds;
 import dagger.Module;

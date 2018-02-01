@@ -15,4 +15,6 @@ import dagger.Module;
   abstract ShopRemoteRepository bindShopRemoteService(ShopRemoteRepositoryImpl remoteResitory);
 
   @Binds abstract ShopRepository bindShopRepository(ShopRepositoryImpl repository);
+
+  //@Binds abstract ICardModel bindCardModel(CardModel cardModel);
 }

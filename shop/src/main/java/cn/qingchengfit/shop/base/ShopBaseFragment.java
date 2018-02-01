@@ -57,7 +57,7 @@ public abstract class ShopBaseFragment<DB extends ViewDataBinding, VM extends Vi
   public abstract DB initDataBinding(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState);
 
-  private Class<VM> getVMClass() {
+  protected Class<VM> getVMClass() {
     Type[] actualTypeArguments =
         ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments();
     if (actualTypeArguments.length == 2) {

@@ -13,11 +13,13 @@ import cn.qingchengfit.shop.ui.home.productlist.ShopProductsListPage;
 import cn.qingchengfit.shop.ui.inventory.ShopInventoryPage;
 import cn.qingchengfit.shop.ui.inventory.product.ProductInventoryPage;
 import cn.qingchengfit.shop.ui.inventory.product.UpdateInventoryPage;
+import cn.qingchengfit.shop.ui.product.ShopProductAddPage;
+import cn.qingchengfit.shop.ui.product.ShopProductModifyPage;
 import cn.qingchengfit.shop.ui.product.ShopProductPage;
 import cn.qingchengfit.shop.ui.product.addsuccess.ProductAddSuccessPage;
 import cn.qingchengfit.shop.ui.product.bottom.ShopBottomCategoryFragment;
 import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPage;
-import cn.qingchengfit.shop.ui.product.paychannel.ProductPayPage;
+import cn.qingchengfit.shop.ui.product.paycardchannel.ProductPayPage;
 import cn.qingchengfit.shop.ui.product.prices.ProductPricesPage;
 import com.anbillon.flabellum.annotations.Trunk;
 
@@ -26,7 +28,8 @@ import com.anbillon.flabellum.annotations.Trunk;
     ShopInventoryListPage.class, ShopCategoryPage.class, ShopInventoryPage.class,
     ShopProductPage.class, ProductInventoryPage.class, UpdateInventoryPage.class,
     ProductAddSuccessPage.class, ProductPayPage.class, ProductDeliverPage.class,
-    ProductPricesPage.class, ShopBottomCategoryFragment.class
+    ProductPricesPage.class, ShopBottomCategoryFragment.class, ShopProductAddPage.class,
+    ShopProductModifyPage.class
 }) public class ShopActivity extends SaasContainerActivity {
   @Override public String getModuleName() {
     return "shop";

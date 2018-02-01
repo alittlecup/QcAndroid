@@ -11,6 +11,7 @@ import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageProductListBinding;
 import cn.qingchengfit.shop.ui.items.product.IProductItemData;
 import cn.qingchengfit.shop.ui.items.product.ProductListItem;
+import cn.qingchengfit.shop.ui.product.ShopProductModifyPageParams;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -40,7 +41,7 @@ public class ShopProductsListPage
     });
 
     mViewModel.getProductEvent().observe(this, aVoid -> {
-      Uri uri = Uri.parse("shop://shop/shop/product");
+      Uri uri = Uri.parse("shop://shop/product/add");
       routeTo(uri, null);
     });
   }
@@ -109,8 +110,8 @@ public class ShopProductsListPage
   }
 
   @Override public boolean onItemClick(int position) {
-    Uri uri = Uri.parse("shop://shop/shop/product");
-    routeTo(uri, null);
+    Uri uri = Uri.parse("shop://shop/product/modify");
+    routeTo(uri, new ShopProductModifyPageParams().productId("adfads").build());
     return false;
   }
 
