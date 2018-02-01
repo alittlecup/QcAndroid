@@ -29,7 +29,7 @@ import java.util.List;
  * Created by Paper on 2017/8/14.
  */
 
-public class CardTpl implements Parcelable {
+public class CardTpl implements Parcelable ,ICardShopChooseItemData{
   public String name;
   public String type_name;
   public int type; //1 是储值卡 2次卡 3期限卡
@@ -60,12 +60,39 @@ public class CardTpl implements Parcelable {
   public CardTpl() {
   }
 
+
+
+
   public CardTpl(String name, int type, String description, String id, String limit) {
     this.name = name;
     this.type = type;
     this.description = description;
     this.id = id;
     this.limit = limit;
+  }
+
+  protected CardTpl(Parcel in) {
+    this.name = in.readString();
+    this.type_name = in.readString();
+    this.type = in.readInt();
+    this.tpl_type = in.readInt();
+    this.description = in.readString();
+    this.costs = in.createStringArrayList();
+    this.isChoosen = in.readByte() != 0;
+    this.id = in.readString();
+    this.limit = in.readString();
+    this.color = in.readString();
+    this.is_limit = in.readByte() != 0;
+    this.month_times = in.readInt();
+    this.day_times = in.readInt();
+    this.week_times = in.readInt();
+    this.pre_times = in.readInt();
+    this.buy_limit = in.readInt();
+    this.is_enable = in.readByte() != 0;
+    this.gymid = in.readString();
+    this.gymModel = in.readString();
+    this.shops = in.createTypedArrayList(Shop.CREATOR);
+    this.options = in.createTypedArrayList(CardTplOption.CREATOR);
   }
 
   private CardTpl(Builder builder) {
@@ -285,6 +312,40 @@ public class CardTpl implements Parcelable {
 
   public void setBuy_limit(int buy_limit) {
     this.buy_limit = buy_limit;
+  }
+
+
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.name);
+    dest.writeString(this.type_name);
+    dest.writeInt(this.type);
+    dest.writeInt(this.tpl_type);
+    dest.writeString(this.description);
+    dest.writeStringList(this.costs);
+    dest.writeByte(this.isChoosen ? (byte) 1 : (byte) 0);
+    dest.writeString(this.id);
+    dest.writeString(this.limit);
+    dest.writeString(this.color);
+    dest.writeByte(this.is_limit ? (byte) 1 : (byte) 0);
+    dest.writeInt(this.month_times);
+    dest.writeInt(this.day_times);
+    dest.writeInt(this.week_times);
+    dest.writeInt(this.pre_times);
+    dest.writeInt(this.buy_limit);
+    dest.writeByte(this.is_enable ? (byte) 1 : (byte) 0);
+    dest.writeString(this.gymid);
+    dest.writeString(this.gymModel);
+    dest.writeTypedList(this.shops);
+    dest.writeTypedList(this.options);
+  }
+
+  @Override public String getShopCardTplId() {
+    return id;
+  }
+
+  @Override public String getShopCardTplName() {
+    return name;
   }
 
   public static final class Builder {

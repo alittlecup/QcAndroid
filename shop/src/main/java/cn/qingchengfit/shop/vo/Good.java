@@ -122,7 +122,19 @@ public class Good extends BaseObservable {
   private String tempCardPrice;
 
   public void setRmbPrices(String prices) {
-    if (StringUtils.isEmpty(prices)) return;
+    if (StringUtils.isEmpty(prices)) {
+      tempRMBPrice = prices;
+      return;
+    }
+    if (".".equals(prices)) {
+      tempRMBPrice = "";
+    }
+    int i = prices.lastIndexOf(".");
+    if (i != -1 && prices.length() - 1 >= 4) {
+      tempRMBPrice = prices.substring(0, i + 2);
+    } else {
+      tempRMBPrice = prices;
+    }
     notifyPropertyChanged(BR.rmbPrices);
   }
 

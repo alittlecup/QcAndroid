@@ -56,9 +56,13 @@ public class ShopProductsListPage
     return mBinding;
   }
 
+  private boolean status;
+
   private void loadData() {
     if (getArguments() != null) {
-      mViewModel.setStatus((Integer) getArguments().get("status"));
+      int status = getArguments().getInt("status");
+      this.status = status == 0;
+      mViewModel.setStatus(status);
     } else {
       LogUtil.e("TAG", "loadData: cant find this current page status");
     }
@@ -111,7 +115,8 @@ public class ShopProductsListPage
 
   @Override public boolean onItemClick(int position) {
     Uri uri = Uri.parse("shop://shop/product/modify");
-    routeTo(uri, new ShopProductModifyPageParams().productId("adfads").build());
+    routeTo(uri,
+        new ShopProductModifyPageParams().productId("adfads").productStatus(status).build());
     return false;
   }
 
