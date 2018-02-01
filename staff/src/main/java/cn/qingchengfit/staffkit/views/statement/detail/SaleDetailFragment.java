@@ -27,8 +27,8 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.QcResponseSaleDetail;
 import cn.qingchengfit.model.responese.SaleCardForm;
 import cn.qingchengfit.model.responese.SaleFilter;
@@ -100,7 +100,7 @@ public class SaleDetailFragment extends BaseFragment implements SaleCardTypeView
     private ArrayList<Integer> mFilterTradeType = new ArrayList<>();//可筛选的交易类型
     private ArrayList<Staff> mFilterSalers = new ArrayList<>();//可筛选的销售
     private ArrayList<Integer> mFilterPayMethod = new ArrayList<>();//可筛选的支付类型
-    private ArrayList<StudentBean> mFilterStudents = new ArrayList<>();//可筛选的会员
+    private ArrayList<QcStudentBean> mFilterStudents = new ArrayList<>();//可筛选的会员
     /**
      * 报表参数
      */
@@ -453,7 +453,7 @@ public class SaleDetailFragment extends BaseFragment implements SaleCardTypeView
             }
             for (int j = 0; j < history.students.size(); j++) {//学生
                 if (!mFilterStudents.contains(history.students.get(j))) {
-                    mFilterStudents.add(history.students.get(j).toStudentBean(gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model()));
+                    mFilterStudents.add(history.students.get(j));
                 }
             }
         }

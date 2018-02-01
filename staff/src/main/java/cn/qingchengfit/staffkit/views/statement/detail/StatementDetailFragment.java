@@ -28,8 +28,8 @@ import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.model.responese.ClassStatmentFilterBean;
 import cn.qingchengfit.model.responese.CourseCardForm;
@@ -105,7 +105,7 @@ public class StatementDetailFragment extends BaseFragment implements StatementDe
     private ClassStatmentFilterBean mFilter = new ClassStatmentFilterBean();
     private ArrayList<CourseTypeSample> mFilterCourse = new ArrayList<>();
     private ArrayList<Staff> mFilterCoaches = new ArrayList<>();
-    private ArrayList<StudentBean> mFilterUsers = new ArrayList<>();
+    private ArrayList<QcStudentBean> mFilterUsers = new ArrayList<>();
     /**
      * 报表参数
      */
@@ -401,14 +401,8 @@ public class StatementDetailFragment extends BaseFragment implements StatementDe
 
                 return symbol;
             }
-        }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Object>() {
-            @Override public void call(Object o) {
-                freshDate();
-            }
-        }, new Action1<Throwable>() {
-            @Override public void call(Throwable throwable) {
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(o -> freshDate(), throwable -> {
 
-            }
         });
     }
 
@@ -447,7 +441,7 @@ public class StatementDetailFragment extends BaseFragment implements StatementDe
                 for (int j = 0; j < statamentSchedule.orders.size(); j++) {
                     if (!mFilterUsers.contains(statamentSchedule.orders.get(j).user)) {
                         mFilterUsers.add(
-                            statamentSchedule.orders.get(j).user.toStudentBean(gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model()));
+                            statamentSchedule.orders.get(j).user);
                     }
                 }
             }

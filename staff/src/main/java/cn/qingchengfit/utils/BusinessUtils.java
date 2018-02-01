@@ -172,6 +172,14 @@ public class BusinessUtils {
 
         return ret;
     }
+public static List<String> qcstudents2strs(List<QcStudentBean> students) {
+        List<String> ret = new ArrayList<>();
+        for (int i = 0; i < students.size(); i++) {
+            ret.add(students.get(i).getUsername());
+        }
+
+        return ret;
+    }
 
     public static List<String> students2ids(List<QcStudentBean> students) {
         List<String> ret = new ArrayList<>();

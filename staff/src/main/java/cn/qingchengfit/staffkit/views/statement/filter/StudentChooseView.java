@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.statement.filter;
 
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.model.base.StudentBean;
+import cn.qingchengfit.model.base.QcStudentBean;
 import java.util.List;
 
 /**
@@ -18,5 +18,5 @@ import java.util.List;
  * Created by Paper on 16/6/29 2016.
  */
 public interface StudentChooseView extends PView {
-    void onCoaches(List<StudentBean> students);
+    void onCoaches(List<QcStudentBean> students);
 }

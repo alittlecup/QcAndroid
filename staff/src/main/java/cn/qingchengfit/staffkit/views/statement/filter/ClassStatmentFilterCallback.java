@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.statement.filter;
 
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 
 /**
@@ -22,5 +22,5 @@ public interface ClassStatmentFilterCallback {
 
     void setCoach(Staff coach);
 
-    void setStudent(StudentBean student);
+    void setStudent(QcStudentBean student);
 }

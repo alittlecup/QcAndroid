@@ -16,7 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.model.base.StudentBean;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.BaseDialogFragment;
 import cn.qingchengfit.staffkit.views.adapter.StringAdapter;
@@ -45,7 +45,7 @@ public class StudentsChooseDialogFragment extends BaseDialogFragment implements 
     List<String> stringList = new ArrayList<>();
     @Inject StudentChoosePresenter presenter;
     private ClassStatmentFilterCallback mCallback;
-    private List<StudentBean> students = new ArrayList<>();
+    private List<QcStudentBean> students = new ArrayList<>();
     private StringAdapter adapter;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class StudentsChooseDialogFragment extends BaseDialogFragment implements 
         return dialog;
     }
 
-    @Override public void onCoaches(List<StudentBean> students) {
+    @Override public void onCoaches(List<QcStudentBean> students) {
         this.students = students;
         stringList.clear();
         for (int i = 0; i < students.size(); i++) {

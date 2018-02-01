@@ -2,8 +2,8 @@ package cn.qingchengfit.model.responese;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.StudentBean;
 
 /**
  * power by
@@ -19,32 +19,14 @@ import cn.qingchengfit.model.base.StudentBean;
  * Created by Paper on 16/6/29 2016.
  */
 public class ClassStatmentFilterBean implements Parcelable {
-    public static final Creator<ClassStatmentFilterBean> CREATOR = new Creator<ClassStatmentFilterBean>() {
-        @Override public ClassStatmentFilterBean createFromParcel(Parcel source) {
-            return new ClassStatmentFilterBean(source);
-        }
-
-        @Override public ClassStatmentFilterBean[] newArray(int size) {
-            return new ClassStatmentFilterBean[size];
-        }
-    };
     public String start;
     public String end;
     public CourseTypeSample course;
     public int course_type = -1;
     public Staff coach;
-    public StudentBean student;
+    public QcStudentBean student;
 
     public ClassStatmentFilterBean() {
-    }
-
-    protected ClassStatmentFilterBean(Parcel in) {
-        this.start = in.readString();
-        this.end = in.readString();
-        this.course = in.readParcelable(CourseTypeSample.class.getClassLoader());
-        this.course_type = in.readInt();
-        this.coach = in.readParcelable(Staff.class.getClassLoader());
-        this.student = in.readParcelable(StudentBean.class.getClassLoader());
     }
 
     @Override public int describeContents() {
@@ -59,4 +41,24 @@ public class ClassStatmentFilterBean implements Parcelable {
         dest.writeParcelable(this.coach, flags);
         dest.writeParcelable(this.student, flags);
     }
+
+    protected ClassStatmentFilterBean(Parcel in) {
+        this.start = in.readString();
+        this.end = in.readString();
+        this.course = in.readParcelable(CourseTypeSample.class.getClassLoader());
+        this.course_type = in.readInt();
+        this.coach = in.readParcelable(Staff.class.getClassLoader());
+        this.student = in.readParcelable(QcStudentBean.class.getClassLoader());
+    }
+
+    public static final Creator<ClassStatmentFilterBean> CREATOR =
+      new Creator<ClassStatmentFilterBean>() {
+          @Override public ClassStatmentFilterBean createFromParcel(Parcel source) {
+              return new ClassStatmentFilterBean(source);
+          }
+
+          @Override public ClassStatmentFilterBean[] newArray(int size) {
+              return new ClassStatmentFilterBean[size];
+          }
+      };
 }

@@ -14,8 +14,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.QcResponseSaleDetail;
 import cn.qingchengfit.model.responese.SaleFilter;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
@@ -89,7 +89,7 @@ public class SaleFilterActivity extends BaseActivity {
     private ArrayList<Integer> mFilterTradeType = new ArrayList<>();//可筛选的交易类型
     private ArrayList<Staff> mFilterSalers = new ArrayList<>();//可筛选的销售
     private ArrayList<Integer> mFilterPayMethod = new ArrayList<>();//可筛选的支付类型
-    private ArrayList<StudentBean> mFilterStudents = new ArrayList<>();//可筛选的会员
+    private ArrayList<QcStudentBean> mFilterStudents = new ArrayList<>();//可筛选的会员
     private Observable<CardTpl> obCardtpl;
     private Observable<CardTypeEvent> obCardType;
     private TimeDialogWindow pwTime;
@@ -180,6 +180,10 @@ public class SaleFilterActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override protected boolean isFitSystemBar() {
+        return false;
     }
 
     @Override protected void onDestroy() {
@@ -307,7 +311,7 @@ public class SaleFilterActivity extends BaseActivity {
             case R.id.student:
                 final List<String> stus = new ArrayList<>();
                 stus.add(getString(R.string.all_students));
-                stus.addAll(BusinessUtils.students2strs(mFilterStudents));
+                stus.addAll(BusinessUtils.qcstudents2strs(mFilterStudents));
 
                 new DialogList(this).list(stus, new AdapterView.OnItemClickListener() {
                     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

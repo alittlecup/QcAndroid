@@ -2,8 +2,8 @@ package cn.qingchengfit.model.responese;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.StudentBean;
 
 /**
  * power by
@@ -26,36 +26,16 @@ import cn.qingchengfit.model.base.StudentBean;
  * Created by Paper on 16/7/4 2016.
  */
 public class SaleFilter implements Parcelable {
-    public static final Creator<SaleFilter> CREATOR = new Creator<SaleFilter>() {
-        @Override public SaleFilter createFromParcel(Parcel source) {
-            return new SaleFilter(source);
-        }
-
-        @Override public SaleFilter[] newArray(int size) {
-            return new SaleFilter[size];
-        }
-    };
     public String startDay;
     public String endDay;
     public int tradeType;
     public QcResponseSaleDetail.Card card;
     public Staff saler;
     public int payMethod;
-    public StudentBean student;
+    public QcStudentBean student;
     public int card_category;
 
     public SaleFilter() {
-    }
-
-    protected SaleFilter(Parcel in) {
-        this.startDay = in.readString();
-        this.endDay = in.readString();
-        this.tradeType = in.readInt();
-        this.card = in.readParcelable(QcResponseSaleDetail.Card.class.getClassLoader());
-        this.saler = in.readParcelable(Staff.class.getClassLoader());
-        this.payMethod = in.readInt();
-        this.student = in.readParcelable(StudentBean.class.getClassLoader());
-        this.card_category = in.readInt();
     }
 
     @Override public int describeContents() {
@@ -72,4 +52,25 @@ public class SaleFilter implements Parcelable {
         dest.writeParcelable(this.student, flags);
         dest.writeInt(this.card_category);
     }
+
+    protected SaleFilter(Parcel in) {
+        this.startDay = in.readString();
+        this.endDay = in.readString();
+        this.tradeType = in.readInt();
+        this.card = in.readParcelable(QcResponseSaleDetail.Card.class.getClassLoader());
+        this.saler = in.readParcelable(Staff.class.getClassLoader());
+        this.payMethod = in.readInt();
+        this.student = in.readParcelable(QcStudentBean.class.getClassLoader());
+        this.card_category = in.readInt();
+    }
+
+    public static final Creator<SaleFilter> CREATOR = new Creator<SaleFilter>() {
+        @Override public SaleFilter createFromParcel(Parcel source) {
+            return new SaleFilter(source);
+        }
+
+        @Override public SaleFilter[] newArray(int size) {
+            return new SaleFilter[size];
+        }
+    };
 }

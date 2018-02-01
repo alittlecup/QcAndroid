@@ -15,8 +15,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
-import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.ClassStatmentFilterBean;
 import cn.qingchengfit.model.responese.CourseTypeSample;
 import cn.qingchengfit.staffkit.R;
@@ -50,7 +50,7 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
 
     private ArrayList<CourseTypeSample> mFilterCourse = new ArrayList<>();
     private ArrayList<Staff> mFilterCoaches = new ArrayList<>();
-    private ArrayList<StudentBean> mFilterUsers = new ArrayList<>();
+    private ArrayList<QcStudentBean> mFilterUsers = new ArrayList<>();
     private Observable<CourseTypeSample> ObCourse;
     private String mStart;
     private String mEnd;
@@ -230,7 +230,7 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
             case R.id.all_student://选择学员
                 List<String> users = new ArrayList<>();
                 users.add(getString(R.string.all_students));
-                users.addAll(BusinessUtils.students2strs(mFilterUsers));
+                users.addAll(BusinessUtils.qcstudents2strs(mFilterUsers));
                 new DialogList(this).list(users, new AdapterView.OnItemClickListener() {
                     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         if (position == 0) {
@@ -278,7 +278,7 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
 
     }
 
-    @Override public void setStudent(StudentBean student) {
+    @Override public void setStudent(QcStudentBean student) {
         filterBean.student = student;
         allStudent.setContent(student.getUsername());
     }
