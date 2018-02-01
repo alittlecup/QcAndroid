@@ -39,6 +39,8 @@ public class BaseGymInfoPresenter extends BasePresenter {
     this.editBody.setPhoto(s);
   }
 
+  public void setContact(String contact){this.editBody.setContact(contact);}
+
   @Override public void attachView(PView v) {
     view = (MVPView) v;
     RxBusAdd(EventAddress.class).subscribe(new Action1<EventAddress>() {

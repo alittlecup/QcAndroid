@@ -99,6 +99,10 @@ import javax.inject.Inject;
     RxBusAdd(EventRecycleClick.class)
         .subscribe(new BusSubscribe<EventRecycleClick>() {
           @Override public void onNext(EventRecycleClick eventRecycleClick) {
+            if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+              showAlert(R.string.alert_permission_forbid);
+              return;
+            }
             if (eventRecycleClick.viewId == R.id.btn_charge){
               Bundle b = new Bundle();
               b.putParcelable("card",presenter.getmCard());
@@ -302,6 +306,10 @@ import javax.inject.Inject;
     if (mCard.is_active()) {
       dialogSheet.addButton("修改会员卡有效期", new View.OnClickListener() {
         @Override public void onClick(View view) {
+      if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+        showAlert(R.string.alert_permission_forbid);
+        return;
+      }
           routeTo(AppUtils.getRouterUri(getContext(), "card/modify/validate"), new CardFixValidDayParams().card(mCard).build());
           if (dialogSheet.isShowing()) {
             dialogSheet.dismiss();

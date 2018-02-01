@@ -28,15 +28,6 @@ import java.util.List;
  * Could 上的gym结构
  */
 public class Gym implements Parcelable {
-  public static final Creator<Gym> CREATOR = new Creator<Gym>() {
-    @Override public Gym createFromParcel(Parcel source) {
-      return new Gym(source);
-    }
-
-    @Override public Gym[] newArray(int size) {
-      return new Gym[size];
-    }
-  };
   public String id;
   public String photo;
   public String phone;
@@ -58,6 +49,9 @@ public class Gym implements Parcelable {
   public String area;
   public String detail_description;
   public Integer gd_district_id;//just for upload
+  public String contact;
+
+
 
   public Gym() {
   }
@@ -84,30 +78,6 @@ public class Gym implements Parcelable {
     setArea(builder.area);
     detail_description = builder.detail_description;
     gd_district_id = builder.gd_district_id;
-  }
-
-  protected Gym(Parcel in) {
-    this.id = in.readString();
-    this.photo = in.readString();
-    this.phone = in.readString();
-    this.name = in.readString();
-    this.brand_name = in.readString();
-    this.brand = in.readParcelable(Brand.class.getClassLoader());
-    this.description = in.readString();
-    this.weixin = in.readString();
-    this.address = in.readString();
-    this.system_end = in.readString();
-    this.gd_city = in.readParcelable(CityBean.class.getClassLoader());
-    this.gd_district = in.readParcelable(DistrictEntity.class.getClassLoader());
-    this.gd_lng = (Double) in.readValue(Double.class.getClassLoader());
-    this.gd_lat = (Double) in.readValue(Double.class.getClassLoader());
-    this.facilities = in.createStringArrayList();
-    this.staff_count = (Integer) in.readValue(Integer.class.getClassLoader());
-    this.member_count = (Integer) in.readValue(Integer.class.getClassLoader());
-    this.coach_count = (Integer) in.readValue(Integer.class.getClassLoader());
-    this.area = in.readString();
-    this.detail_description = in.readString();
-    this.gd_district_id = (Integer) in.readValue(Integer.class.getClassLoader());
   }
 
   public CityBean getGd_city() {
@@ -218,6 +188,10 @@ public class Gym implements Parcelable {
     return "";
   }
 
+  public void setContact(String contact) {
+    this.contact = contact;
+  }
+
   public void setBrand_name(String brand_name) {
     this.brand_name = brand_name;
   }
@@ -300,34 +274,6 @@ public class Gym implements Parcelable {
 
   public void setArea(String area) {
     this.area = area;
-  }
-
-  @Override public int describeContents() {
-    return 0;
-  }
-
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(this.id);
-    dest.writeString(this.photo);
-    dest.writeString(this.phone);
-    dest.writeString(this.name);
-    dest.writeString(this.brand_name);
-    dest.writeParcelable(this.brand, flags);
-    dest.writeString(this.description);
-    dest.writeString(this.weixin);
-    dest.writeString(this.address);
-    dest.writeString(this.system_end);
-    dest.writeParcelable(this.gd_city, flags);
-    dest.writeParcelable(this.gd_district, flags);
-    dest.writeValue(this.gd_lng);
-    dest.writeValue(this.gd_lat);
-    dest.writeStringList(this.facilities);
-    dest.writeValue(this.staff_count);
-    dest.writeValue(this.member_count);
-    dest.writeValue(this.coach_count);
-    dest.writeString(this.area);
-    dest.writeString(this.detail_description);
-    dest.writeValue(this.gd_district_id);
   }
 
   public static final class Builder {
@@ -480,4 +426,68 @@ public class Gym implements Parcelable {
       return new Gym(this);
     }
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.id);
+    dest.writeString(this.photo);
+    dest.writeString(this.phone);
+    dest.writeString(this.name);
+    dest.writeString(this.brand_name);
+    dest.writeParcelable(this.brand, flags);
+    dest.writeString(this.description);
+    dest.writeString(this.weixin);
+    dest.writeString(this.address);
+    dest.writeString(this.system_end);
+    dest.writeParcelable(this.gd_city, flags);
+    dest.writeParcelable(this.gd_district, flags);
+    dest.writeValue(this.gd_lng);
+    dest.writeValue(this.gd_lat);
+    dest.writeStringList(this.facilities);
+    dest.writeValue(this.staff_count);
+    dest.writeValue(this.member_count);
+    dest.writeValue(this.coach_count);
+    dest.writeString(this.area);
+    dest.writeString(this.detail_description);
+    dest.writeValue(this.gd_district_id);
+    dest.writeString(this.contact);
+  }
+
+  protected Gym(Parcel in) {
+    this.id = in.readString();
+    this.photo = in.readString();
+    this.phone = in.readString();
+    this.name = in.readString();
+    this.brand_name = in.readString();
+    this.brand = in.readParcelable(Brand.class.getClassLoader());
+    this.description = in.readString();
+    this.weixin = in.readString();
+    this.address = in.readString();
+    this.system_end = in.readString();
+    this.gd_city = in.readParcelable(CityBean.class.getClassLoader());
+    this.gd_district = in.readParcelable(DistrictEntity.class.getClassLoader());
+    this.gd_lng = (Double) in.readValue(Double.class.getClassLoader());
+    this.gd_lat = (Double) in.readValue(Double.class.getClassLoader());
+    this.facilities = in.createStringArrayList();
+    this.staff_count = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.member_count = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.coach_count = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.area = in.readString();
+    this.detail_description = in.readString();
+    this.gd_district_id = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.contact = in.readString();
+  }
+
+  public static final Creator<Gym> CREATOR = new Creator<Gym>() {
+    @Override public Gym createFromParcel(Parcel source) {
+      return new Gym(source);
+    }
+
+    @Override public Gym[] newArray(int size) {
+      return new Gym[size];
+    }
+  };
 }
