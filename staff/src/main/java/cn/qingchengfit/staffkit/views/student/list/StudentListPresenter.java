@@ -9,9 +9,8 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.StudentBean;
-import cn.qingchengfit.model.responese.Students;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.ResponseConstant;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.model.dbaction.StudentAction;
@@ -140,11 +139,7 @@ public class StudentListPresenter extends BasePresenter {
                         view.onFaied();
                     }
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onFaied();
-                }
-            })
+            }, throwable -> view.onFaied())
 
         );
     }
@@ -168,49 +163,41 @@ public class StudentListPresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcGetAllStudents(staffid, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
-            .flatMap(new Func1<QcDataResponse<Students>, Observable<Boolean>>() {
-                @Override public Observable<Boolean> call(QcDataResponse<Students> qcResponseAllStudent) {
-                    if (ResponseConstant.checkSuccess(qcResponseAllStudent)) {
-                        for (QcStudentBean bean : qcResponseAllStudent.data.users) {
-                            bean.setBrand_id(gymWrapper.brand_id());
-                            if (bean.getShops() != null && bean.getShops().size() > 0) {
-                                String support = "";
-                                String support_ids = "";
-                                for (int i = 0; i < bean.getShops().size(); i++) {
-                                    Shop shop = bean.getShops().get(i);
-                                    support = TextUtils.concat(support, shop.name).toString();
-                                    support_ids = TextUtils.concat(support_ids, shop.id).toString();
-                                    if (i != bean.getShops().size() - 1) {
-                                        support = TextUtils.concat(support, "，").toString();
-                                        support_ids = TextUtils.concat(support_ids, ",").toString();
-                                    }
+            .flatMap(qcResponseAllStudent -> {
+                if (ResponseConstant.checkSuccess(qcResponseAllStudent)) {
+                    for (QcStudentBean bean : qcResponseAllStudent.data.users) {
+                        bean.setBrand_id(gymWrapper.brand_id());
+                        if (bean.getShops() != null && bean.getShops().size() > 0) {
+                            String support = "";
+                            String support_ids = "";
+                            for (int i = 0; i < bean.getShops().size(); i++) {
+                                Shop shop = bean.getShops().get(i);
+                                support = TextUtils.concat(support, shop.name).toString();
+                                support_ids = TextUtils.concat(support_ids, shop.id).toString();
+                                if (i != bean.getShops().size() - 1) {
+                                    support = TextUtils.concat(support, "，").toString();
+                                    support_ids = TextUtils.concat(support_ids, ",").toString();
                                 }
-                                bean.setSupoort_gym_ids(support_ids);
-                                bean.setSupport_gym(support);
                             }
+                            bean.setSupoort_gym_ids(support_ids);
+                            bean.setSupport_gym(support);
                         }
-                        studentAction.saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
                     }
+                    studentAction.saveStudent(qcResponseAllStudent.data.users, gymWrapper.brand_id());
+                }
 
-                  return Observable.just(true)
-                      .observeOn(AndroidSchedulers.mainThread())
-                      .onBackpressureBuffer()
-                      .subscribeOn(Schedulers.io());
-                }
+              return Observable.just(true)
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .onBackpressureBuffer()
+                  .subscribeOn(Schedulers.io());
             })
-            .subscribe(new Action1<Boolean>() {
-                @Override public void call(Boolean b) {
-                    if (b) {
-                        view.onStopFresh();
-                    } else {
-                        view.onFaied();
-                    }
+            .subscribe(b -> {
+                if (b) {
+                    view.onStopFresh();
+                } else {
+                    view.onFaied();
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    Timber.e(throwable.getMessage());
-                }
-            })
+            }, throwable -> Timber.e(throwable.getMessage()))
 
         );
     }
@@ -228,10 +215,11 @@ public class StudentListPresenter extends BasePresenter {
             RxRegiste(studentAction
                 .getStudentByGym(gymWrapper.id(), gymWrapper.model())
                 .throttleLast(500, TimeUnit.MILLISECONDS)
-                .onBackpressureBuffer()
+                .onBackpressureDrop()
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(qcStudentBeen -> handleData(qcStudentBeen, gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model())));
+                .subscribe(qcStudentBeen ->
+                  handleData(qcStudentBeen, gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model())));
         }
     }
 

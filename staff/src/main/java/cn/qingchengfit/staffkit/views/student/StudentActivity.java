@@ -94,7 +94,9 @@ public class StudentActivity extends BaseActivity implements FragCallBack, HasSu
                                         })
                                         .show();
                                 } else {
-                                    getSupportFragmentManager().beginTransaction().replace(getFragId(), new StudentListFragment()).commit();
+                                    getSupportFragmentManager().beginTransaction()
+                                      .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
+                                      .replace(getFragId(), new StudentListFragment()).commit();
                                 }
                             } else {
                                 Timber.e(qcResponse.getMsg());
@@ -106,10 +108,14 @@ public class StudentActivity extends BaseActivity implements FragCallBack, HasSu
                         }
                     });
             } else {
-                getSupportFragmentManager().beginTransaction().replace(getFragId(), new StudentListFragment()).commit();
+                getSupportFragmentManager().beginTransaction()
+                  .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
+                  .replace(getFragId(), new StudentListFragment()).commit();
             }
         } else {
-            getSupportFragmentManager().beginTransaction().replace(getFragId(), new StudentListFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+              .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
+              .replace(getFragId(), new StudentListFragment()).commit();
         }
     }
 

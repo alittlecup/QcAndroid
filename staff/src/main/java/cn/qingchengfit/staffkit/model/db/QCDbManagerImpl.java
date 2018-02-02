@@ -69,18 +69,18 @@ public class QCDbManagerImpl implements QcDbManager {
     return appDatabase.studentDao().getStudentByBrand(brandid);
   }
 
-  public Flowable<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid) {
-    return appDatabase.studentDao().getStudentByKeyWord(keyword);
+  public Maybe<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid) {
+    return appDatabase.studentDao().getStudentByKeyWord(getLikeString(keyword));
   }
 
-  public Flowable<List<QcStudentBean>> getStudentByKeyWord(final String keyword) {
-    return appDatabase.studentDao().getStudentByKeyWord(keyword);
+  public Maybe<List<QcStudentBean>> getStudentByKeyWord(final String keyword) {
+    return appDatabase.studentDao().getStudentByKeyWord(getLikeString(keyword));
   }
 
   @Deprecated
-  public Flowable<List<QcStudentBean>> getStudentByKeyWordShop(String brandid, String shopid,
+  public Maybe<List<QcStudentBean>> getStudentByKeyWordShop(String brandid, String shopid,
     final String keyword) {
-    return appDatabase.studentDao().getStudentByKeyWord(keyword);
+    return appDatabase.studentDao().getStudentByKeyWord(getLikeString(keyword));
   }
 
   /**

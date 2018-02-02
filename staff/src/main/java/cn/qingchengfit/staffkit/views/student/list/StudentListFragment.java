@@ -16,7 +16,6 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -56,7 +55,6 @@ import cn.qingchengfit.utils.IntentUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -119,11 +117,7 @@ public class StudentListFragment extends FilterCommonFragment {
         getChildFragmentManager().beginTransaction().replace(R.id.frame_student_filter, filterFragment).commit();
 
         // 注册 event 刷新列表
-        RxBusAdd(EventFreshStudent.class).subscribe(new Action1<EventFreshStudent>() {
-            @Override public void call(EventFreshStudent eventFreshStudent) {
-                freshData();
-            }
-        });
+        RxBusAdd(EventFreshStudent.class).subscribe(eventFreshStudent -> freshData());
         return view;
     }
 
@@ -284,12 +278,10 @@ public class StudentListFragment extends FilterCommonFragment {
             }
         });
 
-        alphabetView.setOnTouchListener(new View.OnTouchListener() {
-            @Override public boolean onTouch(View v, MotionEvent event) {
-                AppUtils.hideKeyboard(getActivity());
-                if (searchviewEt != null && TextUtils.isEmpty(searchviewEt.getText())) searchviewCancle.performClick();
-                return true;
-            }
+        alphabetView.setOnTouchListener((v, event) -> {
+            AppUtils.hideKeyboard(getActivity());
+            if (searchviewEt != null && TextUtils.isEmpty(searchviewEt.getText())) searchviewCancle.performClick();
+            return true;
         });
 
         setUpSeachView();

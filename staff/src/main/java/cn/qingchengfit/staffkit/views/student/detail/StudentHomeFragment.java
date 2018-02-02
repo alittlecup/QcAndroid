@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -151,50 +150,49 @@ public class StudentHomeFragment extends BaseFragment {
         drawableCall.setBounds(0, 0, drawableCall.getMinimumWidth(), drawableCall.getMinimumHeight());
         Drawable drawableMsg = ContextCompat.getDrawable(getContext(), R.drawable.vector_student_message);
         drawableMsg.setBounds(0, 0, drawableMsg.getMinimumWidth(), drawableMsg.getMinimumHeight());
-        ObInfo.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<StudentBaseInfoEvent>() {
-            @Override public void call(final StudentBaseInfoEvent studentBaseInfoEvent) {
-                if (studentBaseInfoEvent.user_student != null) {
-                    Glide.with(getContext())
-                        .load(PhotoUtils.getSmall(studentBaseInfoEvent.user_student.getAvatar()))
-                        .asBitmap()
-                        .into(new CircleImgWrapper(header, getContext()));
-                    if (TextUtils.isEmpty(studentBaseInfoEvent.user_student.getAvatar())){
-                        header.setImageResource(studentBaseInfoEvent.user_student.getGender() == 0
-                            ? R.drawable.default_student_male : R.drawable.default_student_female);
-                    }
-                    name.setText(studentBaseInfoEvent.user_student.getUsername());
-                    Glide.with(getActivity())
-                        .load(studentBaseInfoEvent.user_student.getGender() == 0 ? R.drawable.ic_gender_signal_male
-                            : R.drawable.ic_gender_signal_female)
-                        .into(gender);
-                    phone.setText(studentBaseInfoEvent.user_student.getPhone());
-                }
+        ObInfo.observeOn(AndroidSchedulers.mainThread()).subscribe(studentBaseInfoEvent -> {
+            if (studentBaseInfoEvent.user_student != null) {
+                Glide.with(getContext())
+                  .load(PhotoUtils.getSmall(studentBaseInfoEvent.user_student.getAvatar()))
+                  .asBitmap()
+                  .placeholder(studentBaseInfoEvent.user_student.getGender() == 0
+                    ? R.drawable.default_student_male : R.drawable.default_student_female)
+                  .error(studentBaseInfoEvent.user_student.getGender() == 0
+                    ? R.drawable.default_student_male : R.drawable.default_student_female)
+                  .into(new CircleImgWrapper(header, getContext()));
 
-                orderPrivate.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View v) {
+                name.setText(studentBaseInfoEvent.user_student.getUsername());
+                Glide.with(getActivity())
+                  .load(studentBaseInfoEvent.user_student.getGender() == 0 ? R.drawable.ic_gender_signal_male
+                    : R.drawable.ic_gender_signal_female)
+                  .into(gender);
+                phone.setText(studentBaseInfoEvent.user_student.getPhone());
+            }
 
-                        if (serPermisAction.check(PermissionServerUtils.PRIVATE_ORDER_CAN_WRITE)) {
-                            WebActivity.startWeb(studentBaseInfoEvent.privateUrl, getContext());
-                        } else {
-                            showAlert(getString(R.string.alert_permission_forbid));
-                        }
+            orderPrivate.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+
+                    if (serPermisAction.check(PermissionServerUtils.PRIVATE_ORDER_CAN_WRITE)) {
+                        WebActivity.startWeb(studentBaseInfoEvent.privateUrl, getContext());
+                    } else {
+                        showAlert(getString(R.string.alert_permission_forbid));
                     }
-                });
-                orderGroup.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View v) {
-                        if (serPermisAction.check(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
-                            WebActivity.startWeb(studentBaseInfoEvent.groupUrl, getContext());
-                        } else {
-                            showAlert(getString(R.string.alert_permission_forbid));
-                        }
-                    }
-                });
-                if (gymWrapper.inBrand()) {
-                    studentStatus.setVisibility(View.GONE);
-                } else {
-                    studentStatus.setVisibility(View.VISIBLE);
-                    StringUtils.studentStatus(studentStatus, studentBaseInfoEvent.status);
                 }
+            });
+            orderGroup.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    if (serPermisAction.check(PermissionServerUtils.ORDERS_DAY_CAN_WRITE)) {
+                        WebActivity.startWeb(studentBaseInfoEvent.groupUrl, getContext());
+                    } else {
+                        showAlert(getString(R.string.alert_permission_forbid));
+                    }
+                }
+            });
+            if (gymWrapper.inBrand()) {
+                studentStatus.setVisibility(View.GONE);
+            } else {
+                studentStatus.setVisibility(View.VISIBLE);
+                StringUtils.studentStatus(studentStatus, studentBaseInfoEvent.status);
             }
         });
 
@@ -251,6 +249,7 @@ public class StudentHomeFragment extends BaseFragment {
             }
         });
     }
+
 
     @OnClick(R.id.buycard) public void onClick() {
 

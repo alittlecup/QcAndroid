@@ -21,7 +21,6 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -108,18 +107,12 @@ public class StudentListPresenter extends BasePresenter {
                 }
             })
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<List<QcStudentBean>>() {
-              @Override public void call(List<QcStudentBean> b) {
-                if (b == null) view.onFaied();
-                else {
-                  handleData(b);
-                }
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    Timber.e(throwable.getMessage());
-                }
-            })
+            .subscribe(b -> {
+              if (b == null) view.onFaied();
+              else {
+                handleData(b);
+              }
+              }, throwable -> Timber.e(throwable.getMessage()))
 
         );
     }

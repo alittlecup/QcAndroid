@@ -4,6 +4,7 @@ import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,16 +62,16 @@ public class StudentAction {
         return qcDbManager.getStudentByBrand(brandid);
     }
 
-    public Flowable<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid) {
+    public Maybe<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid) {
         return qcDbManager.getStudentByKeyWord(keyword, brandid);
     }
 
-    public Flowable<List<QcStudentBean>> getStudentByKeyWord(final String keyword) {
+    public Maybe<List<QcStudentBean>> getStudentByKeyWord(final String keyword) {
 
         return qcDbManager.getStudentByKeyWord(keyword);
     }
 
-    public Flowable<List<QcStudentBean>> getStudentByKeyWord(String brandid, String shopid, String keyword) {
+    public Maybe<List<QcStudentBean>> getStudentByKeyWord(String brandid, String shopid, String keyword) {
         return qcDbManager.getStudentByKeyWordShop(brandid, shopid, keyword);
     }
 

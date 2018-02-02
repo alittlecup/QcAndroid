@@ -5,6 +5,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Permission;
 import cn.qingchengfit.model.base.QcStudentBean;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 import java.util.List;
 
 /**
@@ -34,9 +35,9 @@ public interface QcDbManager {
   Flowable<QcStudentBean> getStudentById(String id);
   Flowable<QcStudentBean> getStudentByPhone(String phone);
   Flowable<List<QcStudentBean>> getStudentByBrand(String brandid);
-  Flowable<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid);
-  Flowable<List<QcStudentBean>> getStudentByKeyWord(final String keyword);
-  Flowable<List<QcStudentBean>> getStudentByKeyWordShop(String brandid, String shopid, final String keyword);
+  Maybe<List<QcStudentBean>> getStudentByKeyWord(final String keyword, String brandid);
+  Maybe<List<QcStudentBean>> getStudentByKeyWord(final String keyword);
+  Maybe<List<QcStudentBean>> getStudentByKeyWordShop(String brandid, String shopid, final String keyword);
   Flowable<List<QcStudentBean>> getStudentByGym(String shopid);
   void delStudentByBrand(String brandid, final String id);
   void delAllStudent();
