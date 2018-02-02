@@ -9,14 +9,13 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageProductListBinding;
-import cn.qingchengfit.shop.ui.items.product.IProductItemData;
 import cn.qingchengfit.shop.ui.items.product.ProductListItem;
 import cn.qingchengfit.shop.ui.product.ShopProductModifyPageParams;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -27,6 +26,10 @@ public class ShopProductsListPage
     implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener {
   CommonFlexAdapter adapter;
 
+  /**
+   * 0 已下架
+   * 1 出售中
+   */
   public static ShopProductsListPage newInstance(@IntRange(from = 0, to = 1) int status) {
     ShopProductsListPage page = new ShopProductsListPage();
     Bundle bundle = new Bundle();
@@ -61,7 +64,7 @@ public class ShopProductsListPage
   private void loadData() {
     if (getArguments() != null) {
       int status = getArguments().getInt("status");
-      this.status = status == 0;
+      this.status = status == 1;
       mViewModel.setStatus(status);
     } else {
       LogUtil.e("TAG", "loadData: cant find this current page status");
@@ -74,49 +77,18 @@ public class ShopProductsListPage
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerview.setAdapter(adapter);
     adapter.addListener(this);
-    List<ProductListItem> items = new ArrayList<>();
-    IProductItemData data = new IProductItemData() {
-      @Override public String getProductName() {
-        return "Nam,e";
-      }
-
-      @Override public String getProductImage() {
-        return "";
-      }
-
-      @Override public String getProductAddTime() {
-        return "2018-12-12 10:10:10";
-      }
-
-      @Override public String getProductPrices() {
-        return "30";
-      }
-
-      @Override public int getProductSales() {
-        return 10;
-      }
-
-      @Override public int getProductInventory() {
-        return 20;
-      }
-
-      @Override public int getProductPriority() {
-        return 30;
-      }
-
-      @Override public boolean getProductStatus() {
-        return false;
-      }
-    };
-
-    items.add(new ProductListItem(data));
-    mViewModel.items.set(items);
   }
 
   @Override public boolean onItemClick(int position) {
     Uri uri = Uri.parse("shop://shop/product/modify");
-    routeTo(uri,
-        new ShopProductModifyPageParams().productId("adfads").productStatus(status).build());
+    IFlexible item = adapter.getItem(position);
+    if (item instanceof ProductListItem) {
+      String productId = ((ProductListItem) item).getData().getProductId();
+      if (productId != null) {
+        routeTo(uri, new ShopProductModifyPageParams().productId(productId).productStatus(status).build());
+      }
+    }
+
     return false;
   }
 

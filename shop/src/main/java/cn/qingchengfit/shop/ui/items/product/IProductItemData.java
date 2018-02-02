@@ -13,6 +13,8 @@ public interface IProductItemData {
 
   String getProductPrices();
 
+  String getProductId();
+
   int getProductSales();
 
   int getProductInventory();

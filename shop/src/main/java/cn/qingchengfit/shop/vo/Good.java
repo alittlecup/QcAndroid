@@ -2,6 +2,8 @@ package cn.qingchengfit.shop.vo;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.shop.BR;
 import java.util.ArrayList;
@@ -11,8 +13,8 @@ import java.util.List;
  * Created by huangbaole on 2018/1/19.
  */
 
-public class Good extends BaseObservable {
-  private Integer id;
+public class Good extends BaseObservable implements Parcelable {
+  private String id;
   private Integer inventory;
   private String created_at;
   private String name;
@@ -39,11 +41,11 @@ public class Good extends BaseObservable {
     this.rule = rule;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -106,8 +108,8 @@ public class Good extends BaseObservable {
       tempCardPrice = "";
     }
     int i = prices.lastIndexOf(".");
-    if (i != -1 && prices.length() - 1 >= 4) {
-      tempCardPrice = prices.substring(0, i + 2);
+    if (i != -1 && prices.length() - i >= 4) {
+      tempCardPrice = prices.substring(0, i + 3);
     } else {
       tempCardPrice = prices;
     }
@@ -130,7 +132,7 @@ public class Good extends BaseObservable {
       tempRMBPrice = "";
     }
     int i = prices.lastIndexOf(".");
-    if (i != -1 && prices.length() - 1 >= 4) {
+    if (i != -1 && prices.length() - i >= 4) {
       tempRMBPrice = prices.substring(0, i + 2);
     } else {
       tempRMBPrice = prices;
@@ -176,4 +178,44 @@ public class Good extends BaseObservable {
       this.channel = channel;
     }
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.id);
+    dest.writeValue(this.inventory);
+    dest.writeString(this.created_at);
+    dest.writeString(this.name);
+    dest.writeList(this.rule);
+    dest.writeParcelable(this.product, flags);
+    dest.writeString(this.tempRMBPrice);
+    dest.writeString(this.tempCardPrice);
+  }
+
+  public Good() {
+  }
+
+  protected Good(Parcel in) {
+    this.id = in.readString();
+    this.inventory = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.created_at = in.readString();
+    this.name = in.readString();
+    this.rule = new ArrayList<Rule>();
+    in.readList(this.rule, Rule.class.getClassLoader());
+    this.product = in.readParcelable(Product.class.getClassLoader());
+    this.tempRMBPrice = in.readString();
+    this.tempCardPrice = in.readString();
+  }
+
+  public static final Parcelable.Creator<Good> CREATOR = new Parcelable.Creator<Good>() {
+    @Override public Good createFromParcel(Parcel source) {
+      return new Good(source);
+    }
+
+    @Override public Good[] newArray(int size) {
+      return new Good[size];
+    }
+  };
 }

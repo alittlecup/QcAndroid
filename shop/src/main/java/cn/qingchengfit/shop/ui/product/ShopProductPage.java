@@ -7,49 +7,32 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
-import android.telecom.Call;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import cn.qingchengfit.model.others.ToolbarModel;
-import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopProductBinding;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
 import cn.qingchengfit.shop.ui.product.bottom.ShopBottomCategoryFragment;
 import cn.qingchengfit.shop.ui.product.choosepic.MultiChoosePicFragment;
-import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPage;
 import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPageParams;
 import cn.qingchengfit.shop.ui.product.paycardchannel.ProductPayPageParams;
-import cn.qingchengfit.shop.ui.widget.CategoryItemView;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.shop.vo.Channel;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
-import cn.qingchengfit.utils.Corner4dpImgWrapper;
-import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
-import com.anbillon.flabellum.annotations.Need;
 import com.bumptech.glide.Glide;
-import com.jakewharton.rxbinding.widget.RxTextSwitcher;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
-import org.w3c.dom.Text;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -111,8 +94,6 @@ import org.w3c.dom.Text;
           goods.add(good);
         }
       }
-      // TODO: 2018/1/30 会员卡的检查
-
       mViewModel.getProduct().setGoods(goods);
       if (checkProductInfo(mViewModel.getProduct())) {
         mViewModel.saveProduct();
@@ -143,6 +124,14 @@ import org.w3c.dom.Text;
         if (TextUtils.isEmpty(good.getRmbPrices())) {
           ToastUtils.show("请输入型号价格");
           return false;
+        } else {
+          try {
+            good.setPrice(Double.valueOf(good.getRmbPrices()), Channel.RMB);
+          } catch (NumberFormatException e) {
+            ToastUtils.show("请输入正确价格");
+            return false;
+          }
+          //good.setRmbPrices(null);
         }
 
         if (TextUtils.isEmpty(good.getName())) {
@@ -167,6 +156,16 @@ import org.w3c.dom.Text;
         if (product.getSupport_card() && TextUtils.isEmpty(good.getCardPrices())) {
           ToastUtils.show("请输入型号会员卡价格");
           return false;
+        }else{
+          try {
+            if (mViewModel.getProduct().getSupport_card()) {
+              good.setPrice(Double.valueOf(good.getCardPrices()), Channel.CARD);
+            }
+          } catch (NumberFormatException e) {
+            ToastUtils.show("请输入正确价格");
+            return false;
+          }
+          //good.setCardPrices(null);
         }
       }
     }

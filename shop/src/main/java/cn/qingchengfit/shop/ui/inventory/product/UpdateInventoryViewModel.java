@@ -34,8 +34,8 @@ public class UpdateInventoryViewModel extends ShopBaseViewModel {
   public final ObservableInt offSetInventory = new ObservableInt();
   public final ObservableField<String> productName = new ObservableField<>();
   public final ObservableField<String> goodName = new ObservableField<>();
-  private final MutableLiveData<Integer> productId = new MutableLiveData<>();
-  private final MutableLiveData<Integer> goodId = new MutableLiveData<>();
+  private final MutableLiveData<String> productId = new MutableLiveData<>();
+  private final MutableLiveData<String> goodId = new MutableLiveData<>();
   public final ActionLiveEvent chooseGoodEvent = new ActionLiveEvent();
 
   public LiveData<List<Good>> getGoods() {
@@ -82,21 +82,21 @@ public class UpdateInventoryViewModel extends ShopBaseViewModel {
     chooseGoodEvent.call();
   }
 
-  private LiveData<List<Good>> loadGoodInfo(Integer id) {
+  private LiveData<List<Good>> loadGoodInfo(String id) {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("product_id", id);
     return repository.qcLoadGoodInfo(loginStatus.staff_id(), params);
   }
 
-  public void loadSource(Integer id) {
+  public void loadSource(String id) {
     productId.setValue(id);
   }
 
-  public void postRecord(Integer good_id) {
+  public void postRecord(String good_id) {
     goodId.setValue(good_id);
   }
 
-  private LiveData<Boolean> upDateInventoryRecord(Integer id) {
+  private LiveData<Boolean> upDateInventoryRecord(String id) {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("action_type", action);
     params.put("offset", Integer.valueOf(offSet.get()));

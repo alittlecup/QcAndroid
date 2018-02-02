@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageCategoryListBinding;
 import cn.qingchengfit.shop.ui.category.ShopCategoryPage;
-import cn.qingchengfit.shop.ui.items.category.CategoryListItem;
 import cn.qingchengfit.shop.vo.Category;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -36,6 +34,7 @@ public class ShopCategoryListPage
     });
     mViewModel.getLiveItems().observe(this, items -> {
       mViewModel.items.set(items);
+      mBinding.swipeRefresh.setRefreshing(false);
     });
   }
 
@@ -45,6 +44,7 @@ public class ShopCategoryListPage
     mBinding = PageCategoryListBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mViewModel);
     initRecyclerView();
+    mViewModel.loadSource("33");
     return mBinding;
   }
 
@@ -52,13 +52,7 @@ public class ShopCategoryListPage
     adapter = new CommonFlexAdapter(new ArrayList());
     mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
     mBinding.recyclerview.setAdapter(adapter);
-    Category category = new Category();
-    category.setPriority(10);
-    category.setName("健身餐");
-    category.setProduct_count(4);
-    List<CategoryListItem> items = new ArrayList<>();
-    items.add(new CategoryListItem(category, mViewModel));
-    items.add(new CategoryListItem(category, mViewModel));
-    mViewModel.items.set(items);
+
+    mBinding.swipeRefresh.setOnRefreshListener(() -> mViewModel.loadSource("2"));
   }
 }

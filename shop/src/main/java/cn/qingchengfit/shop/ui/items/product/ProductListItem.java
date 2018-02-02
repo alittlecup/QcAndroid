@@ -10,6 +10,7 @@ import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.ItemProductListBinding;
 import cn.qingchengfit.shop.ui.items.DataBindingViewHolder;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.List;
@@ -39,12 +40,15 @@ public class ProductListItem
     return new DataBindingViewHolder<>(view, adapter);
   }
 
+  public IProductItemData getData() {
+    return data;
+  }
+
   @Override public void bindViewHolder(FlexibleAdapter adapter,
       DataBindingViewHolder<ItemProductListBinding> holder, int position, List payloads) {
     ItemProductListBinding dataBinding = holder.getDataBinding();
     dataBinding.productName.setText(data.getProductName());
-    dataBinding.productAddDate.setText(
-        DateUtils.formatDateFromServer(data.getProductAddTime()).toString());
+    dataBinding.productAddDate.setText(DateUtils.getYYYYMMDDfromServer(data.getProductAddTime()));
     SpannableString spannableString = new SpannableString("￥" + data.getProductPrices() + "起");
     spannableString.setSpan(new AbsoluteSizeSpan(12, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
     spannableString.setSpan(new AbsoluteSizeSpan(18, true), 1, spannableString.length() - 1,
@@ -59,6 +63,6 @@ public class ProductListItem
         .getString(R.string.product_detail_format, data.getProductSales(),
             data.getProductInventory(), data.getProductPriority()));
     dataBinding.imageMask.setVisibility(data.getProductStatus() ? View.GONE : View.VISIBLE);
-    //PhotoUtils.smallCornner4dp(dataBinding.productImage, data.getProductImage());
+    PhotoUtils.smallCornner4dp(dataBinding.productImage, data.getProductImage());
   }
 }

@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageUpdateInventoryBinding;
-import cn.qingchengfit.shop.util.SpanUtils;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.utils.ToastUtils;
@@ -30,8 +28,8 @@ import java.util.ArrayList;
   public static final int ADD = 1;
   public static final int REDUCE = 2;
   @Need @UpdateAction Integer action;
-  @Need Integer productID;
-  private Integer good_id;
+  @Need String productID;
+  private String good_id;
 
   @Override public void onSelectItem(int pos) {
     Good good = mViewModel.getGoods().getValue().get(pos);

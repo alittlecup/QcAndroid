@@ -10,7 +10,8 @@ import dagger.Module;
 /**
  * Created by huangbaole on 2017/12/19.
  */
-@Module public abstract class ShopModule {
+@Module(includes = { BindShopActivity.class, ShopViewModel.class })
+public abstract class ShopModule {
   @Binds
   abstract ShopRemoteRepository bindShopRemoteService(ShopRemoteRepositoryImpl remoteResitory);
 

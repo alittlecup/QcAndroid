@@ -21,11 +21,11 @@ public interface ShopRemoteRepository {
   Flowable<QcDataResponse<CategoryListResponse>> qcLoadCategories(String staff_id,
       HashMap<String, Object> map);
 
-  Flowable<QcDataResponse> qcPostCategory(String staff_id, Category category);
+  Flowable<QcDataResponse> qcPostCategory(String staff_id, Category category,HashMap<String, Object> params);
 
-  Flowable<QcDataResponse> qcDeleteCategory(String staff_id, int category_id);
+  Flowable<QcDataResponse> qcDeleteCategory(String staff_id, int category_id,HashMap<String, Object> params);
 
-  Flowable<QcDataResponse> qcPutCategory(String staff_id, int category_id, Category category);
+  Flowable<QcDataResponse> qcPutCategory(String staff_id, int category_id, Category category,HashMap<String, Object> params);
 
   Flowable<QcDataResponse<RecordListResponse>> qcLoadInventoryRecords(String staff_id,
       HashMap<String, Object> params);
@@ -38,11 +38,15 @@ public interface ShopRemoteRepository {
   Flowable<QcDataResponse<ProductListResponse>> qcLoadAllProductInfo(String staff_id,
       HashMap<String, Object> params);
 
-  Flowable<QcDataResponse> qcPostProduct(String staff_id, String json);
+  Flowable<QcDataResponse> qcPostProduct(String staff_id, HashMap<String, Object> params,
+      Product json);
 
-  Flowable<QcDataResponse> qcDeleteProduct(String staff_id, String product_id);
+  Flowable<QcDataResponse> qcDeleteProduct(String staff_id, HashMap<String, Object> params,
+      String product_id);
 
-  Flowable<QcDataResponse> qcPutProduct(String staff_id, String json);
+  Flowable<QcDataResponse> qcPutProduct(String staff_id, HashMap<String, Object> params,
+      Product json);
 
-  Flowable<QcDataResponse<Product>> qcLoadProductInfo(String staff_id, String product_id);
+  Flowable<QcDataResponse<Product>> qcLoadProductInfo(String staff_id,
+      HashMap<String, Object> params, String product_id);
 }

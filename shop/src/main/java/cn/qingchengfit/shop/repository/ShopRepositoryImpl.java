@@ -21,7 +21,8 @@ import javax.inject.Inject;
 /**
  * Created by huangbaole on 2017/12/19.
  */
- public class ShopRepositoryImpl implements ShopRepository {
+
+public class ShopRepositoryImpl implements ShopRepository {
 
   @Inject ShopRemoteRepository remoteService;
   //@Inject ICardModel cardModel;
@@ -46,24 +47,28 @@ import javax.inject.Inject;
         input -> input.categories);
   }
 
-  @Override public LiveData<Boolean> qcPostCategory(String staff_id, Category category) {
-    return toLiveData(remoteService.qcPostCategory(staff_id, category).map(qcDataResponse -> {
+  @Override public LiveData<Boolean> qcPostCategory(String staff_id, Category category,
+      HashMap<String, Object> map) {
+    return toLiveData(remoteService.qcPostCategory(staff_id, category, map).map(qcDataResponse -> {
       qcDataResponse.setData(qcDataResponse.getStatus() == 200);
       return qcDataResponse;
     }));
   }
 
-  @Override public LiveData<Boolean> qcDeleteCategory(String staff_id, int category_id) {
-    return toLiveData(remoteService.qcDeleteCategory(staff_id, category_id).map(qcDataResponse -> {
-      qcDataResponse.setData(qcDataResponse.getStatus() == 200);
-      return qcDataResponse;
-    }));
+  @Override public LiveData<Boolean> qcDeleteCategory(String staff_id, int category_id,
+      HashMap<String, Object> map) {
+    return toLiveData(
+        remoteService.qcDeleteCategory(staff_id, category_id, map).map(qcDataResponse -> {
+          qcDataResponse.setData(qcDataResponse.getStatus() == 200);
+          return qcDataResponse;
+        }));
   }
 
   @Override
-  public LiveData<Boolean> qcPutCategory(String staff_id, int category_id, Category category) {
+  public LiveData<Boolean> qcPutCategory(String staff_id, int category_id, Category category,
+      HashMap<String, Object> map) {
     return toLiveData(
-        remoteService.qcPutCategory(staff_id, category_id, category).map(qcDataResponse -> {
+        remoteService.qcPutCategory(staff_id, category_id, category, map).map(qcDataResponse -> {
           qcDataResponse.setData(qcDataResponse.getStatus() == 200);
           return qcDataResponse;
         }));
@@ -95,28 +100,33 @@ import javax.inject.Inject;
         input -> input.products);
   }
 
-  @Override public LiveData<Boolean> qcPostProduct(String staff_id, String json) {
-    return toLiveData(remoteService.qcPostProduct(staff_id, json).map(qcDataResponse -> {
+  @Override public LiveData<Boolean> qcPostProduct(String staff_id, Product json,
+      HashMap<String, Object> map) {
+    return toLiveData(remoteService.qcPostProduct(staff_id, map, json).map(qcDataResponse -> {
       qcDataResponse.setData(qcDataResponse.getStatus() == 200);
       return qcDataResponse;
     }));
   }
 
-  @Override public LiveData<Boolean> qcDeleteProduct(String staff_id, String product_id) {
-    return toLiveData(remoteService.qcDeleteProduct(staff_id, product_id).map(qcDataResponse -> {
+  @Override public LiveData<Boolean> qcDeleteProduct(String staff_id, String product_id,
+      HashMap<String, Object> map) {
+    return toLiveData(
+        remoteService.qcDeleteProduct(staff_id, map, product_id).map(qcDataResponse -> {
+          qcDataResponse.setData(qcDataResponse.getStatus() == 200);
+          return qcDataResponse;
+        }));
+  }
+
+  @Override public LiveData<Boolean> qcPutProduct(String staff_id, Product json,
+      HashMap<String, Object> map) {
+    return toLiveData(remoteService.qcPutProduct(staff_id, map, json).map(qcDataResponse -> {
       qcDataResponse.setData(qcDataResponse.getStatus() == 200);
       return qcDataResponse;
     }));
   }
 
-  @Override public LiveData<Boolean> qcPutProduct(String staff_id, String json) {
-    return toLiveData(remoteService.qcPutProduct(staff_id, json).map(qcDataResponse -> {
-      qcDataResponse.setData(qcDataResponse.getStatus() == 200);
-      return qcDataResponse;
-    }));
-  }
-
-  @Override public LiveData<Product> qcLoadProductInfo(String staff_id, String product_id) {
+  @Override public LiveData<Product> qcLoadProductInfo(String staff_id, String product_id,
+      HashMap<String, Object> map) {
     //return toLiveData(remoteService.qcLoadProductInfo(staff_id, product_id));
     MutableLiveData<Product> productLiveData = new MutableLiveData<>();
     Product product = new Product();

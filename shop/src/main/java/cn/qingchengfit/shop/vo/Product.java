@@ -1,6 +1,8 @@
 package cn.qingchengfit.shop.vo;
 
 import android.graphics.Color;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.SpannableStringBuilder;
 import cn.qingchengfit.shop.common.DoubleListFilterFragment;
 import cn.qingchengfit.shop.ui.items.inventory.IInventoryItemData;
@@ -14,7 +16,8 @@ import java.util.List;
  */
 
 public class Product
-    implements IProductItemData, IInventoryItemData, DoubleListFilterFragment.IDoubleListData {
+    implements IProductItemData, IInventoryItemData, DoubleListFilterFragment.IDoubleListData,
+    Parcelable {
   /**
    * {
    * "products": [
@@ -68,7 +71,7 @@ public class Product
   private List<Integer> delivery_types;
   private String image;
   private List<String> images;
-  private Integer id;
+  private String id;
   private String unit;
   private String desc;
   private Category category;
@@ -158,11 +161,11 @@ public class Product
     this.images = images;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -328,6 +331,10 @@ public class Product
     return String.valueOf(min == Integer.MAX_VALUE ? 0 : min);
   }
 
+  @Override public String getProductId() {
+    return id;
+  }
+
   @Override public int getProductSales() {
     return total_sales;
   }
@@ -363,4 +370,73 @@ public class Product
     }
     return childNames;
   }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeParcelable(this.shop, flags);
+    dest.writeValue(this.status);
+    dest.writeString(this.off_sale_at);
+    dest.writeString(this.on_sale_at);
+    dest.writeList(this.delivery_types);
+    dest.writeString(this.image);
+    dest.writeStringList(this.images);
+    dest.writeString(this.id);
+    dest.writeString(this.unit);
+    dest.writeString(this.desc);
+    dest.writeParcelable(this.category, flags);
+    dest.writeList(this.goods);
+    dest.writeValue(this.is_free);
+    dest.writeStringList(this.channels);
+    dest.writeString(this.name);
+    dest.writeString(this.created_at);
+    dest.writeParcelable(this.create_by, flags);
+    dest.writeValue(this.month_sales);
+    dest.writeValue(this.total_sales);
+    dest.writeValue(this.priority);
+    dest.writeStringList(this.card_tpl_ids);
+    dest.writeByte(this.support_card ? (byte) 1 : (byte) 0);
+  }
+
+  public Product() {
+  }
+
+  protected Product(Parcel in) {
+    this.shop = in.readParcelable(Shop.class.getClassLoader());
+    this.status = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    this.off_sale_at = in.readString();
+    this.on_sale_at = in.readString();
+    this.delivery_types = new ArrayList<Integer>();
+    in.readList(this.delivery_types, Integer.class.getClassLoader());
+    this.image = in.readString();
+    this.images = in.createStringArrayList();
+    this.id = in.readString();
+    this.unit = in.readString();
+    this.desc = in.readString();
+    this.category = in.readParcelable(Category.class.getClassLoader());
+    this.goods = new ArrayList<Good>();
+    in.readList(this.goods, Good.class.getClassLoader());
+    this.is_free = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    this.channels = in.createStringArrayList();
+    this.name = in.readString();
+    this.created_at = in.readString();
+    this.create_by = in.readParcelable(CreateBy.class.getClassLoader());
+    this.month_sales = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.total_sales = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.priority = (Integer) in.readValue(Integer.class.getClassLoader());
+    this.card_tpl_ids = in.createStringArrayList();
+    this.support_card = in.readByte() != 0;
+  }
+
+  public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+    @Override public Product createFromParcel(Parcel source) {
+      return new Product(source);
+    }
+
+    @Override public Product[] newArray(int size) {
+      return new Product[size];
+    }
+  };
 }

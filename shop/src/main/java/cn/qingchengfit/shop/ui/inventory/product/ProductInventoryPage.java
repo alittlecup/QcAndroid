@@ -42,7 +42,10 @@ import java.util.ArrayList;
     mViewModel.fragVisible.observe(this,
         aBoolean -> mBinding.fragFilter.setVisibility(aBoolean ? View.VISIBLE : View.GONE));
 
-    mViewModel.indexEvent.observe(this, index -> filterView.showPage(index));
+    mViewModel.indexEvent.observe(this, index -> {
+      filterView.showPage(index);
+      mViewModel.loadGoodName(product.getId());
+    });
   }
 
   @Override

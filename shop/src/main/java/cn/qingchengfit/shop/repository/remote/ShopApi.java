@@ -41,21 +41,21 @@ public interface ShopApi {
    * 新增分类
    */
   @POST("/api/staffs/{staff_id}/mall/category/") Flowable<QcDataResponse> qcPostCategory(
-      @Path("staff_id") String staff_id, @Body Category category);
+      @Path("staff_id") String staff_id, @Body Category category,@QueryMap HashMap<String, Object> params);
 
   /**
    * 删除分类
    */
   @DELETE("/api/staffs/{staff_id}/mall/category/{category_id}/")
   Flowable<QcDataResponse> qcDeleteCategory(@Path("staff_id") String staff_id,
-      @Path("category_id") int category_id);
+      @Path("category_id") int category_id,@QueryMap HashMap<String, Object> params);
 
   /**
    * 修改分类
    */
   @PUT("/api/staffs/{staff_id}/mall/category/{category_id}/")
   Flowable<QcDataResponse> qcPutCategory(@Path("staff_id") String staff_id,
-      @Path("category_id") int category_id, @Body Category category);
+      @Path("category_id") int category_id, @Body Category category,@QueryMap HashMap<String, Object> params);
 
   /**
    * 获取库存记录
@@ -90,26 +90,26 @@ public interface ShopApi {
    * {@link Product#status}
    */
   @POST("api/staffs/{staff_id}/mall/products/") Flowable<QcDataResponse> qcPostProduct(
-      @Path("staff_id") String staff_id, @Body String json);
+      @Path("staff_id") String staff_id,@QueryMap HashMap<String, Object> params, @Body Product json);
 
   /**
    * 删除商品
    */
   @DELETE("api/staffs/{staff_id}/mall/products/{product_id}/")
-  Flowable<QcDataResponse> qcDeleteProduct(@Path("staff_id") String staff_id,
+  Flowable<QcDataResponse> qcDeleteProduct(@Path("staff_id") String staff_id,@QueryMap HashMap<String, Object> params,
       @Path("product_id") String product_id);
 
   /**
    * 修改商品
    */
   @PUT("api/staffs/{staff_id}/mall/products/") Flowable<QcDataResponse> qcPutProduct(
-      @Path("staff_id") String staff_id, @Body String json);
+      @Path("staff_id") String staff_id,@QueryMap HashMap<String, Object> params, @Body Product json);
 
   /**
    * 获取商品信息
    */
   @GET("GET api/staffs/{staff_id}/mall/products/{product_id}/")
-  Flowable<QcDataResponse<Product>> qcLoadProductInfo(@Path("staff_id") String staff_id,
+  Flowable<QcDataResponse<Product>> qcLoadProductInfo(@Path("staff_id") String staff_id,@QueryMap HashMap<String, Object> params,
       @Path("product_id") String product_id);
 }
 

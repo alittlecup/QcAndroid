@@ -74,7 +74,7 @@ public class InventoryFilterView extends BaseFilterFragment {
     for (Product product : products) {
       Good good = new Good();
       good.setName("全部" + product.getName() + "规格");
-      good.setId(-1);
+      good.setId("");
       product.getGoods().add(0, good);
     }
     datas.addAll(products);

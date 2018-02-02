@@ -49,7 +49,7 @@ public class ProductInventoryViewModel
   }
 
   private final LiveData<List<Good>> goodNames;
-  private final MutableLiveData<Integer> productId = new MutableLiveData<>();
+  private final MutableLiveData<String> productId = new MutableLiveData<>();
 
   public HashMap<String, Object> getParams() {
     return params;
@@ -64,7 +64,11 @@ public class ProductInventoryViewModel
     indexEvent.setValue(0);
     fragVisible.setValue(false);
     goodNames = Transformations.switchMap(productId,
-        productId -> Transformations.map(loadGoodNames(productId),input -> input));
+        productId -> Transformations.map(loadGoodNames(productId), input -> input));
+  }
+
+  public void loadGoodName(String ids) {
+    productId.setValue(ids);
   }
 
   public void onAddInventoryClick() {
@@ -88,7 +92,7 @@ public class ProductInventoryViewModel
     identifier.setValue(map);
   }
 
-  private LiveData<List<Good>> loadGoodNames(Integer id) {
+  private LiveData<List<Good>> loadGoodNames(String id) {
     HashMap<String, Object> params = gymWrapper.getParams();
     params.put("product_id", id);
     return repository.qcLoadGoodInfo(loginStatus.staff_id(), params);

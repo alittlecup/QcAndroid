@@ -99,4 +99,8 @@ public class ShopCategoryListViewModel
       onUpdatebuttonClick((Category) category);
     }
   }
+
+  @Override public void loadSource(@NonNull String s) {
+    identifier.setValue(s);
+  }
 }

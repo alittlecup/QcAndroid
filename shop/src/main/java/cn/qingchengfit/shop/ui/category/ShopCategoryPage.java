@@ -1,12 +1,14 @@
 package cn.qingchengfit.shop.ui.category;
 
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.databinding.PageShopCategoryBinding;
 import cn.qingchengfit.shop.vo.Category;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -59,7 +62,17 @@ import javax.inject.Inject;
     mViewModel.getActionEvent().observe(this, aVoid -> {
       dismiss();
     });
+    mViewModel.getAddResult().observe(this, result);
+    mViewModel.getDeleteResult().observe(this, result);
+    mViewModel.getPutResult().observe(this, result);
   }
+
+  private Observer<Boolean> result = new Observer<Boolean>() {
+    @Override public void onChanged(@Nullable Boolean aBoolean) {
+      ToastUtils.show("操作成功");
+      dismiss();
+    }
+  };
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -84,17 +97,45 @@ import javax.inject.Inject;
         mBinding.categoryTitle.setText(getString(R.string.add_category));
         mBinding.includeBottom.postive.setOnClickListener(view -> {
           Category category = new Category();
-          category.setName(mBinding.categoryName.toString());
-          category.setPriority(Integer.valueOf(mBinding.categoryWeight.toString()));
-          mViewModel.addShopCategory(category);
+          String prority = mBinding.categoryWeight.getText().toString();
+          String name = mBinding.categoryName.getText().toString();
+          if (!TextUtils.isEmpty(name)) {
+            category.setName(name);
+          } else {
+            ToastUtils.show("分类名称不能为空");
+          }
+          if (!TextUtils.isEmpty(prority)) {
+            try {
+              category.setPriority(Integer.valueOf(mBinding.categoryWeight.getText().toString()));
+              mViewModel.addShopCategory(category);
+            } catch (NumberFormatException e) {
+              ToastUtils.show("请输入数字");
+            }
+          } else {
+            ToastUtils.show("分类权重不能为空");
+          }
         });
         break;
       case 1:
         mBinding.categoryTitle.setText(getString(R.string.update_category));
         mBinding.includeBottom.postive.setOnClickListener(view -> {
-          category.setName(mBinding.categoryName.toString());
-          category.setPriority(Integer.valueOf(mBinding.categoryWeight.toString()));
-          mViewModel.updateShopCategory(category);
+          String prority = mBinding.categoryWeight.getText().toString();
+          String name = mBinding.categoryName.getText().toString();
+          if (!TextUtils.isEmpty(name)) {
+            category.setName(name);
+          } else {
+            ToastUtils.show("分类名称不能为空");
+          }
+          if (!TextUtils.isEmpty(prority)) {
+            try {
+              category.setPriority(Integer.valueOf(mBinding.categoryWeight.getText().toString()));
+              mViewModel.updateShopCategory(category);
+            } catch (NumberFormatException e) {
+              ToastUtils.show("请输入数字");
+            }
+          } else {
+            ToastUtils.show("分类权重不能为空");
+          }
         });
         break;
       case 2:

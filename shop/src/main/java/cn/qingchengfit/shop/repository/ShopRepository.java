@@ -18,11 +18,11 @@ public interface ShopRepository {
 
   LiveData<List<Category>> qcLoadCategories(String staff_id, HashMap<String, Object> map);
 
-  LiveData<Boolean> qcPostCategory(String staff_id, Category category);
+  LiveData<Boolean> qcPostCategory(String staff_id, Category category,HashMap<String, Object> map);
 
-  LiveData<Boolean> qcDeleteCategory(String staff_id, int category_id);
+  LiveData<Boolean> qcDeleteCategory(String staff_id, int category_id,HashMap<String, Object> map);
 
-  LiveData<Boolean> qcPutCategory(String staff_id, int category_id, Category category);
+  LiveData<Boolean> qcPutCategory(String staff_id, int category_id, Category category,HashMap<String, Object> map);
 
   LiveData<RecordListResponse> qcLoadInventoryRecord(String staff_id,
       HashMap<String, Object> params);
@@ -33,13 +33,13 @@ public interface ShopRepository {
 
   LiveData<List<Product>> qcLoadAllProductInfo(String staff_id, HashMap<String, Object> params);
 
-  LiveData<Boolean> qcPostProduct(String staff_id, String json);
+  LiveData<Boolean> qcPostProduct(String staff_id, Product json,HashMap<String, Object> map);
 
-  LiveData<Boolean> qcDeleteProduct(String staff_id, String product_id);
+  LiveData<Boolean> qcDeleteProduct(String staff_id, String product_id,HashMap<String, Object> map);
 
-  LiveData<Boolean> qcPutProduct(String staff_id, String json);
+  LiveData<Boolean> qcPutProduct(String staff_id, Product json,HashMap<String, Object> map);
 
-  LiveData<Product> qcLoadProductInfo(String staff_id, String product_id);
+  LiveData<Product> qcLoadProductInfo(String staff_id, String product_id,HashMap<String, Object> map);
 
   LiveData<List<ICardShopChooseItemData>> qcLoadCardTpls(String type,String isEnable);
 

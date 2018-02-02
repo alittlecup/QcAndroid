@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @Leaf(module = "shop", path = "/product/modify") public class ShopProductModifyPage
     extends ShopProductPage {
   @Need String productId;
-  @Need Boolean productStatus;
+  @Need Boolean productStatus;//true 出售中，false 已下架
 
   @Override protected Class<ShopProductViewModel> getVMClass() {
     return ShopProductViewModel.class;

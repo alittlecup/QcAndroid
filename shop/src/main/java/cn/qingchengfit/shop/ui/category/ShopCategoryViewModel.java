@@ -1,6 +1,7 @@
 package cn.qingchengfit.shop.ui.category;
 
-import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
@@ -27,9 +28,22 @@ public class ShopCategoryViewModel extends BaseViewModel {
   }
 
   private final ActionLiveEvent actionEvent = new ActionLiveEvent();
-  private final MutableLiveData<Boolean> addResult = new MutableLiveData<>();
-  private final MutableLiveData<Boolean> deleteResult = new MutableLiveData<>();
-  private final MutableLiveData<Boolean> putResult = new MutableLiveData<>();
+
+  public MediatorLiveData<Boolean> getAddResult() {
+    return addResult;
+  }
+
+  public MediatorLiveData<Boolean> getDeleteResult() {
+    return deleteResult;
+  }
+
+  public MediatorLiveData<Boolean> getPutResult() {
+    return putResult;
+  }
+
+  private final MediatorLiveData<Boolean> addResult = new MediatorLiveData<>();
+  private final MediatorLiveData<Boolean> deleteResult = new MediatorLiveData<>();
+  private final MediatorLiveData<Boolean> putResult = new MediatorLiveData<>();
 
   private Integer action;
 
@@ -38,18 +52,29 @@ public class ShopCategoryViewModel extends BaseViewModel {
 
   public void addShopCategory(Category category) {
     // TODO: 2017/12/19 添加分类
-    addResult.setValue(repository.qcPostCategory(loginStatus.staff_id(), category).getValue());
+    LiveData<Boolean> booleanLiveData = repository.qcPostCategory(loginStatus.staff_id(), category,gymWrapper.getParams());
+    addResult.addSource(booleanLiveData, aBoolean -> {
+      addResult.setValue(aBoolean);
+      addResult.removeSource(booleanLiveData);
+    });
   }
 
   public void updateShopCategory(Category category) {
     // TODO: 2017/12/19 更新分类
-    putResult.setValue(
-        repository.qcPutCategory(loginStatus.staff_id(), category.getId(), category).getValue());
+    LiveData<Boolean> booleanLiveData = repository.qcPutCategory(loginStatus.staff_id(), category.getId(),category,gymWrapper.getParams());
+    putResult.addSource(booleanLiveData, aBoolean -> {
+      putResult.setValue(aBoolean);
+      putResult.removeSource(booleanLiveData);
+    });
   }
 
   public void deleteShopCategory(int id) {
     // TODO: 2017/12/19 删除分类
-    deleteResult.setValue(repository.qcDeleteCategory(loginStatus.staff_id(), id).getValue());
+    LiveData<Boolean> booleanLiveData = repository.qcDeleteCategory(loginStatus.staff_id(),id,gymWrapper.getParams());
+    deleteResult.addSource(booleanLiveData, aBoolean -> {
+      deleteResult.setValue(aBoolean);
+      deleteResult.removeSource(booleanLiveData);
+    });
   }
 
   private void onResult() {

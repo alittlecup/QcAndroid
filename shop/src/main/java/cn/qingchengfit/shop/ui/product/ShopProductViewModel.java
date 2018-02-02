@@ -11,7 +11,6 @@ import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
 import cn.qingchengfit.shop.base.ShopBaseViewModel;
 import cn.qingchengfit.shop.repository.ShopRepository;
 import cn.qingchengfit.shop.vo.Product;
-import com.google.gson.Gson;
 import javax.inject.Inject;
 
 /**
@@ -97,7 +96,8 @@ public class ShopProductViewModel extends ShopBaseViewModel {
   }
 
   public void loadProduct(String id) {
-    LiveData<Product> productLiveData = repository.qcLoadProductInfo(loginStatus.staff_id(), id);
+    LiveData<Product> productLiveData =
+        repository.qcLoadProductInfo(loginStatus.staff_id(), id, gymWrapper.getParams());
     loadProductResult.addSource(productLiveData, product1 -> {
       loadProductResult.setValue(product1);
       loadProductResult.removeSource(productLiveData);
@@ -105,8 +105,9 @@ public class ShopProductViewModel extends ShopBaseViewModel {
   }
 
   public void saveProduct() {
-    String s = new Gson().toJson(product.get());
-    LiveData<Boolean> booleanLiveData = repository.qcPostProduct(loginStatus.staff_id(), s);
+    //String s = new Gson().toJson(product.get());
+    LiveData<Boolean> booleanLiveData =
+        repository.qcPostProduct(loginStatus.staff_id(), product.get(), gymWrapper.getParams());
     postProductResult.addSource(booleanLiveData, aBoolean -> {
       postProductResult.setValue(aBoolean);
       postProductResult.removeSource(booleanLiveData);
@@ -114,7 +115,8 @@ public class ShopProductViewModel extends ShopBaseViewModel {
   }
 
   public void deleteProduct(String id) {
-    LiveData<Boolean> booleanLiveData = repository.qcDeleteProduct(loginStatus.staff_id(), id);
+    LiveData<Boolean> booleanLiveData =
+        repository.qcDeleteProduct(loginStatus.staff_id(), id, gymWrapper.getParams());
     deleteProductResult.addSource(booleanLiveData, aBoolean -> {
       deleteProductResult.setValue(aBoolean);
       deleteProductResult.removeSource(booleanLiveData);
