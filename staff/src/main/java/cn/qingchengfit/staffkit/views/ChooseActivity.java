@@ -25,7 +25,6 @@ import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.gym.coach.ChooseTrainerFragmentBuilder;
 import cn.qingchengfit.staffkit.views.signin.config.SigninConfigCardtypeListFragmentBuilder;
 import cn.qingchengfit.staffkit.views.student.choose.MultiChooseStudentWithFilterFragmentBuilder;
 import cn.qingchengfit.staffkit.views.student.filter.ReferrerFragmentBuilder;
@@ -113,7 +112,7 @@ public class ChooseActivity extends BaseActivity implements FragCallBack {
         }
         switch (to) {
             case CHOOSE_TRAINER:
-                fragment = new ChooseTrainerFragmentBuilder().id(getIntent().getStringExtra("id")).build();
+                //fragment = new ChooseTrainerFragmentBuilder().id(getIntent().getStringExtra("id")).build();
                 break;
             case CHOOSE_SALES:
 

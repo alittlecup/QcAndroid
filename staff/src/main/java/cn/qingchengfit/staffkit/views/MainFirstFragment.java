@@ -17,7 +17,6 @@ import cn.qingchengfit.staffkit.views.main.HomeUnLoginFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -50,11 +49,7 @@ public class MainFirstFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_empty, container, false);
         changeView();
-        RxBusAdd(EventLoginChange.class).subscribe(new Action1<EventLoginChange>() {
-            @Override public void call(EventLoginChange eventLoginChange) {
-                changeView();
-            }
-        });
+        RxBusAdd(EventLoginChange.class).subscribe(eventLoginChange -> changeView(),throwable -> {});
         return view;
     }
 

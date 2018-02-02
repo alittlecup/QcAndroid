@@ -104,9 +104,7 @@ import cn.qingchengfit.staffkit.views.gym.RenewalHistoryFragment;
 import cn.qingchengfit.staffkit.views.gym.SetGymFragment;
 import cn.qingchengfit.staffkit.views.gym.WriteAddressFragment;
 import cn.qingchengfit.staffkit.views.gym.WriteDescFragment;
-import cn.qingchengfit.staffkit.views.gym.coach.ChooseTrainerFragment;
 import cn.qingchengfit.staffkit.views.gym.coach.CoachDetailFragment;
-import cn.qingchengfit.staffkit.views.gym.coach.CoachListFragment;
 import cn.qingchengfit.staffkit.views.gym.gym_web.HomePageQrCodeFragment;
 import cn.qingchengfit.staffkit.views.gym.site.AddNewSiteFragment;
 import cn.qingchengfit.staffkit.views.gym.site.ChooseSiteFragment;
@@ -352,7 +350,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.NotificationAModule.class, AppComponent.SimpleImgFragmentModule.class, AppComponent.ConversationFriendsModule.class,
     AppComponent.ChatFriendAllChooseModule.class, AppComponent.ChatChooseInGymModule.class,
     AppComponent.GymDetailShowGuideDialogModule.class,
-    AppComponent.ChooseTrainerModule.class, AppComponent.MutiChooseSiteModule.class,
+    AppComponent.MutiChooseSiteModule.class,
     AppComponent.BatchPayOnlineModule.class,  AppComponent.ChooseBrandModule.class,
     AppComponent.LoginModule.class, AppComponent.WebModule.class,// AppComponent.QRModule.class, todo 这里移除后是否有问题
     AppComponent.SimpleChooseModule.class, AppComponent.WriteDescModule.class,
@@ -487,7 +485,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.NotSignFilterFragmentModule.class, AppComponent.AttendanceNotSignFragmentModule.class,
 
   AppComponent.StaffDetailFragmentModule.class,
-  AppComponent.CoachListModule.class, AppComponent.CardProtocolModule.class, AppComponent.COurseChooseDialogFragmentModule.class,
+   AppComponent.CardProtocolModule.class, AppComponent.COurseChooseDialogFragmentModule.class,
 
 })
 
@@ -923,10 +921,7 @@ public interface AppComponent {
     /**
      * 内部管理
      */
-    @Subcomponent() public interface CoachListSubcomponent extends AndroidInjector<CoachListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CoachListFragment> {
-        }
-    }
+
 
     @Subcomponent() public interface StaffListSubcomponent extends AndroidInjector<cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<StaffListFragment> {
@@ -1177,12 +1172,6 @@ public interface AppComponent {
         }
     }
 
-
-
-    @Subcomponent() public interface ChooseTrainerSubcomponent extends AndroidInjector<ChooseTrainerFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseTrainerFragment> {
-        }
-    }
 
 
     //
@@ -2421,11 +2410,6 @@ public interface AppComponent {
             WardrobeDetailFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = CoachListSubcomponent.class) abstract class CoachListModule {
-        @Binds @IntoMap @FragmentKey(CoachListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CoachListSubcomponent.Builder builder);
-    }
-
     @Module(subcomponents = StaffListSubcomponent.class) abstract class StaffListModule {
         @Binds @IntoMap @FragmentKey(StaffListFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(StaffListSubcomponent.Builder builder);
@@ -2647,11 +2631,6 @@ public interface AppComponent {
     }
 
 
-
-    @Module(subcomponents = ChooseTrainerSubcomponent.class) abstract class ChooseTrainerModule {
-        @Binds @IntoMap @FragmentKey(ChooseTrainerFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ChooseTrainerSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = BatchPayOnlineSubcomponent.class) abstract class BatchPayOnlineModule {
         @Binds @IntoMap @FragmentKey(BatchPayOnlineFragment.class)

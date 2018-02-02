@@ -288,17 +288,11 @@ public interface Get_Api {
     @GET("/api/staffs/{id}/measures/{measure_id}/") rx.Observable<QcDataResponse<BodyTestMeasureData>> qcGetBodyTest(
         @Path("id") String staffid, @Path("measure_id") String measure_id, @QueryMap HashMap<String, Object> params);
 
-    //获取某个健身房的教练列表
-    @GET("/api/staffs/{id}/coaches/") rx.Observable<QcDataResponse<Staffs>> qcGetGymCoaches(@Path("id") String id,
-        @Query("id") String gymid, @Query("model") String model, @Query("q") String keyword);
 
     //获取某个健身房的教练列表
     @GET("/api/staffs/{id}/method/coaches/") rx.Observable<QcDataResponse<Staffs>> qcGetGymCoachesPermission(@Path("id") String id,
         @QueryMap HashMap<String, Object> params);
 
-    //获取某个健身房的教练列表
-    @GET("/api/staffs/{id}/coaches/") rx.Observable<QcDataResponse<Staffs>> qcGetAllCoaches(@Path("id") String id,
-        @Query("brand_id") String brandid, @Query("id") String gymid, @Query("model") String model);
 
     //获取某个健身房的场地列表
     @GET("/api/staffs/{id}/spaces/") rx.Observable<QcDataResponse<GymSites>> qcGetGymSites(@Path("id") String id, @Query("id") String gymid,

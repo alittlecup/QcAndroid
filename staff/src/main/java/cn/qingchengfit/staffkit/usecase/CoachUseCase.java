@@ -4,7 +4,6 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.ManagerBody;
 import cn.qingchengfit.model.responese.QcResponsePostions;
 import cn.qingchengfit.model.responese.StaffShipResponse;
-import cn.qingchengfit.model.responese.Staffs;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
@@ -35,18 +34,18 @@ public class CoachUseCase {
         this.restRepository = restRepository;
     }
 
-    public Subscription getAllCoach(String gymid, String gymModel, String keyword, Action1<QcDataResponse<Staffs>> action1) {
-        return restRepository.getGet_api()
-            .qcGetGymCoaches(App.staffId, gymid, gymModel, keyword)
-            .observeOn(AndroidSchedulers.mainThread())
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .subscribe(action1, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-
-                }
-            });
-    }
+    //public Subscription getAllCoach(String gymid, String gymModel, String keyword, Action1<QcDataResponse<Staffs>> action1) {
+    //    return restRepository.getGet_api()
+    //        .qcGetGymCoaches(App.staffId, gymid, gymModel, keyword)
+    //        .observeOn(AndroidSchedulers.mainThread())
+    //        .onBackpressureBuffer()
+    //        .subscribeOn(Schedulers.io())
+    //        .subscribe(action1, new Action1<Throwable>() {
+    //            @Override public void call(Throwable throwable) {
+    //
+    //            }
+    //        });
+    //}
 
     public Subscription getAllStaffs(String gymid, String gymModel, String keyword, Action1<QcDataResponse<StaffShipResponse>> action1) {
         return restRepository.getGet_api()

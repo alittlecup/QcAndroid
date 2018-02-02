@@ -16,7 +16,6 @@ import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.constant.ShopConfigs;
 import cn.qingchengfit.utils.LogUtil;
-import com.anbillon.flabellum.annotations.Leaf;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -24,7 +23,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-@Leaf(module = "gymconfig", path = "/notisetting/")
+//@Leaf(module = "gymconfig", path = "/notisetting/")
 public class NotiSettingChannelPresenter extends BasePresenter {
   @Inject GymWrapper gymWrapper;
   @Inject QcRestRepository qcRestRepository;

@@ -6,7 +6,6 @@ import cn.qingchengfit.model.responese.QcResponseCards;
 import cn.qingchengfit.model.responese.QcResponseServiceDetial;
 import cn.qingchengfit.model.responese.QcResponseStatementDetail;
 import cn.qingchengfit.model.responese.Sellers;
-import cn.qingchengfit.model.responese.Staffs;
 import cn.qingchengfit.model.responese.StatementGlanceResp;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.App;
@@ -175,14 +174,7 @@ public class StatementUsecase {
             });
     }
 
-    public Subscription queryCoach(String brand_id, String gymid, String gymmodel, Action1<QcDataResponse<Staffs>> action1) {
-        return restRepository.getGet_api()
-            .qcGetAllCoaches(App.staffId, brand_id, gymid, gymmodel)
-            .observeOn(AndroidSchedulers.mainThread())
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .subscribe(action1, new NetError());
-    }
+
 
     public Subscription querySalers(String brandid, String shopid, String gymid, String gymmodel,
         Action1<QcDataResponse<Sellers>> action1) {

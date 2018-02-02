@@ -7,6 +7,7 @@ import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
 import cn.qingchengfit.staffkit.repository.GymConfigModel;
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 
 /**
  * power by
@@ -32,10 +33,12 @@ import dagger.Provides;
 public class GymConfigModule {
   IGymConfigModel gymConfigModel;
 
+  @Singleton
   @Provides IGymConfigModel provideGymConfig(GymWrapper gymWrapper,LoginStatus loginStatus,QcRestRepository qcRestRepository){
     if (gymConfigModel == null)
       gymConfigModel = new GymConfigModel(gymWrapper,loginStatus,qcRestRepository);
     return gymConfigModel;
   }
+
 
 }
