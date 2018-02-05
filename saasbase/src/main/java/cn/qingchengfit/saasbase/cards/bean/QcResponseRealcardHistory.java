@@ -24,14 +24,6 @@ public class QcResponseRealcardHistory extends QcResponse {
     public List<CardHistory> card_histories;
     public int pages;
 
-    public class Data {
-        @SerializedName("total_count") public int total_count;
-        @SerializedName("pages") public int pages;
-        @SerializedName("current_page") public int current_page;
-        @SerializedName("stat") public Stat stat;
-        @SerializedName("card_histories") public List<CardHistory> card_histories;
-    }
-
     public class Stat {
         @SerializedName("total_cost") public float total_cost;
         @SerializedName("total_account") public float total_account;
