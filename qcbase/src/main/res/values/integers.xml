@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <integer name="anim_time">300</integer>
-  <integer name="loading_time">100</integer>
-  <integer name="card_flip_time_full">300</integer>
-  <integer name="card_flip_time_half">150</integer>
-
-  <integer name="grid_item_count">1</integer>
-</resources>
