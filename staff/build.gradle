@@ -1,10 +1,8 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.squareup.sqldelight'
 apply plugin: 'idea'
 
 def libs = rootProject.ext.libraries;
 def config = rootProject.ext.configuration;
-//apply plugin: 'com.antfortune.freeline'
 
 
 android {
