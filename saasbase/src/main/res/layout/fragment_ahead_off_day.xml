@@ -9,6 +9,8 @@
     android:orientation="vertical"
     >
 
+  <include layout="@layout/common_simple_toolbar"/>
+
   <TextView
       android:id="@+id/tv_hint"
       android:layout_width="match_parent"
