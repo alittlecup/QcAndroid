@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@drawable/bg_click"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="简历完善度："
+        style="@style/QcTextStyleStandardDark"
+        />
+
+    <TextView
+        android:id="@+id/tv_resume_completed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        tools:text="30%"
+        style="@style/QcTextStyleStandardDark"
+        />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_resume_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="状态:未公开"
+        style="@style/QcTextStyleStandardGrey"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/srl"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          />
+
+    </FrameLayout>
+
+  </android.support.v4.widget.SwipeRefreshLayout>
+
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:divider="@drawable/divider_linearlayout_horizon"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <Button
+        android:id="@+id/btn_open_resume"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="@drawable/bg_click"
+        android:text="公开我的简历"
+        android:textColor="@color/text_black"
+        style="@style/QcBtnNomal"
+        />
+
+    <Button
+        android:id="@+id/btn_preview_resume"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="@drawable/btn_prime"
+        android:text="预览我的简历"
+        android:textColor="@color/white"
+        />
+  </LinearLayout>
+</LinearLayout>

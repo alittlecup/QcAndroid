@@ -1,0 +1,147 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:id="@+id/layout_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      >
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?colorPrimary"
+        android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Qc.toolbarStyle"
+        app:layout_anchorGravity="center"
+        app:popupTheme="@style/ToolbarStyle.Overflow"
+        app:theme="@style/Qc.toolbarStyle"
+        app:titleTextAppearance="@style/ToolbarStyle"
+        />
+
+    <TextView
+        android:id="@+id/tv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:textColor="@color/white"
+        tools:text="取消"
+        style="@style/QcTextStyleMediumDark"
+        />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        tools:text="测试数据"
+        />
+  </RelativeLayout>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/addgym_brand"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="健身房品牌"
+      app:civ_nonnull="true"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/addgym_name"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="场馆名"
+      app:civ_nonnull="true"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/addgym_contact"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_inputnum="true"
+      app:civ_lable="联系方式"
+      app:civ_nonnull="true"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/addgym_city"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="城市"
+      app:civ_nonnull="true"
+      >
+  </cn.qingchengfit.widgets.CommonInputView>
+
+  <LinearLayout
+      android:id="@+id/decript_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:text="简介"
+        style="@style/Qc.TextCommonGrey"
+        ></TextView>
+
+    <EditText
+        android:id="@+id/workexpedit_descripe"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@color/transparent"
+        android:gravity="top"
+        android:maxLength="50"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <include layout="@layout/divider_grey"></include>
+
+  </LinearLayout>
+
+  <Button
+      android:id="@+id/addgym_addbtn"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="30dp"
+      android:text="确定添加"
+      />
+</LinearLayout>

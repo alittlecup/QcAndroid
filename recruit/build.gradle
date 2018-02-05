@@ -1,0 +1,68 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'maven'
+
+
+android {
+  compileSdkVersion 27
+  buildToolsVersion "27.0.0"
+  dataBinding {
+    enabled = true
+  }
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 25
+    versionCode 1
+    versionName "1.0"
+    vectorDrawables.useSupportLibrary true
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [fragmentArgsLib               : 'true',
+                     fragmentArgsSupportAnnotations: 'true']
+      }
+    }
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  //  resourcePrefix "recruit_"
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  implementation 'cn.qingchengfit.widgets:qcbase:1.0.10'
+  api project(path: ':qcim')
+  annotationProcessor "com.google.dagger:dagger-compiler:$dagger"
+  annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
+  testImplementation 'junit:junit:4.12'
+
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:3.0.2"
+  implementation "com.hannesdorfmann.fragmentargs:annotation:3.0.2"
+}
+
+
+group 'cn.qingchengfit.recruit'
+version '1.1.0'
+uploadArchives{
+  repositories {
+    mavenDeployer {
+      repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
+        authentication(userName: "admin", password: "admin123")
+      }
+      pom.artifactId = 'recruit'
+    }
+  }
+}

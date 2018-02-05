@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_grey"
+    android:orientation="vertical"
+    >
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+      <ImageView
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:src="@drawable/ic_exp_positon"
+
+          />
+
+      <TextView
+          android:id="@+id/workexp_detail_position"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          tools:text="教练"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+
+        >
+
+      <ImageView
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginTop="8dp"
+          android:src="@drawable/ic_exp_desc"
+
+          />
+
+      <TextView
+          android:id="@+id/workexp_detail_desc"
+
+          android:layout_width="wrap_content"
+
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="4dp"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:layout_marginTop="8dp"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/workexp_detail_group_layout"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_rect"
+        android:gravity="center_vertical"
+        >
+
+      <ImageView
+
+          android:layout_width="22dp"
+          android:layout_height="22dp"
+          android:layout_marginLeft="25dp"
+          android:layout_marginRight="25dp"
+          android:src="@drawable/ic_achievement_group"
+          />
+
+      <View
+          android:layout_width="0.5dp"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="5dp"
+          android:layout_marginTop="5dp"
+          android:background="#b6b6b6"
+          />
+
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/workexp_detail_group_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?colorPrimary"
+            tools:text="987"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="团课节数"
+            style="@style/Qc.TextCommonGrey"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/workexp_detail_group_server"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?colorPrimary"
+            tools:text="987"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务人次"
+            style="@style/Qc.TextCommonGrey"
+            />
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/workexp_detail_private_layout"
+
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_rect"
+        android:gravity="center_vertical"
+        >
+
+      <ImageView
+          android:layout_width="22dp"
+          android:layout_height="22dp"
+          android:layout_marginLeft="25dp"
+          android:layout_marginRight="25dp"
+          android:src="@drawable/ic_achievement_private"
+          />
+
+      <View
+          android:layout_width="0.5dp"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="5dp"
+          android:layout_marginTop="5dp"
+          android:background="#b6b6b6"
+          />
+
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/workexp_detail_private_count"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?colorPrimary"
+            tools:text="987"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="私教节数"
+            style="@style/Qc.TextCommonGrey"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/workexp_detail_private_server"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?colorPrimary"
+            tools:text="987"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务人次"
+            style="@style/Qc.TextCommonGrey"
+            />
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/workexp_detail_sale_layout"
+
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_rect"
+        android:gravity="center_vertical"
+        >
+
+      <ImageView
+          android:layout_width="22dp"
+          android:layout_height="22dp"
+          android:layout_marginLeft="25dp"
+          android:layout_marginRight="25dp"
+          android:src="@drawable/ic_achievement_sale"
+
+          />
+
+      <View
+          android:layout_width="0.5dp"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="5dp"
+          android:layout_marginTop="5dp"
+          android:background="#b6b6b6"
+          />
+
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center_horizontal"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/workexp_detail_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?colorPrimary"
+            tools:text="987"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="销售额(元)"
+            style="@style/Qc.TextCommonGrey"
+            />
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/divider_grey"
+        />
+  </LinearLayout>
+
+</LinearLayout>

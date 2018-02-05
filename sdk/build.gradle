@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.0"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+}
+
+group 'cn.qingchengfit.chat'
+//version rootProject.ext.chat_version
+//uploadArchives{
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri('http://43.241.209.158:15004/repository/maven-releases/')){
+//                authentication(userName: "admin", password: "admin123")
+//            }
+//            pom.artifactId = 'sdk'
+//        }
+//    }
+//}

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+  >
+  <data/>
+  <RelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clipToPadding="false"
+        android:paddingBottom="60dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        >
+
+      <LinearLayout
+          android:id="@+id/filter_layout"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/white"
+          android:clickable="true"
+          android:orientation="vertical"
+          >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:id="@+id/tv_work_year_header"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingBottom="8dp"
+              android:text="工作经验"
+              style="@style/QcTextStyleMediumDark"
+              />
+
+          <cn.qingchengfit.widgets.AutoLineGroup
+              android:id="@+id/layout_work_demand"
+              android:layout_width="match_parent"
+              android:layout_height="70dp"
+              android:gravity="start|center_vertical"
+              android:orientation="horizontal"
+              />
+
+          <include
+              layout="@layout/divider_grey_margin"
+              android:id="@+id/divider_work_exp"
+              />
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="30dp"
+              android:layout_marginTop="@dimen/activity_vertical_margin"
+              android:gravity="center_vertical"
+              android:text="性别"
+              style="@style/QcTextStyleMediumDark"
+              />
+
+          <cn.qingchengfit.widgets.AutoLineGroup
+              android:id="@+id/alg_gender"
+              android:layout_width="match_parent"
+              android:layout_height="35dp"
+              android:gravity="left|center_vertical"
+              android:orientation="horizontal"
+              />
+
+          <include layout="@layout/divider_grey_margin"/>
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="30dp"
+              android:layout_marginTop="@dimen/activity_vertical_margin"
+              android:gravity="center_vertical"
+              android:text="学历"
+              style="@style/QcTextStyleMediumDark"
+              />
+
+          <cn.qingchengfit.widgets.AutoLineGroup
+              android:id="@+id/alg_edu"
+              android:layout_width="match_parent"
+              android:layout_height="70dp"
+              android:gravity="start|center_vertical"
+              android:orientation="horizontal"
+              />
+
+          <include layout="@layout/divider_grey_margin"/>
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="30dp"
+              android:layout_marginTop="@dimen/activity_vertical_margin"
+              android:gravity="center_vertical"
+              android:text="年龄"
+              style="@style/QcTextStyleMediumDark"
+              />
+
+          <cn.qingchengfit.widgets.AutoLineGroup
+              android:id="@+id/alg_age"
+              android:layout_width="match_parent"
+              android:layout_height="70dp"
+              android:gravity="start|center_vertical"
+              android:orientation="horizontal"
+              />
+
+        </LinearLayout>
+
+        <include layout="@layout/divider_grey_margin"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingBottom="8dp"
+            android:text="身高"
+            style="@style/QcTextStyleMediumDark"
+            />
+
+        <cn.qingchengfit.widgets.AutoLineGroup
+            android:id="@+id/alg_height"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="start|center_vertical"
+            android:orientation="horizontal"
+            />
+
+        <include layout="@layout/divider_grey_margin"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="8dp"
+            android:text="体重"
+            style="@style/QcTextStyleMediumDark"
+            />
+
+        <cn.qingchengfit.widgets.AutoLineGroup
+            android:id="@+id/alg_weight"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="start|center_vertical"
+            android:orientation="horizontal"
+            />
+
+      </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_white_top_divider"
+        android:orientation="horizontal"
+        android:paddingTop="1dp"
+        >
+
+      <TextView
+          android:id="@+id/tv_student_filter_reset"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@color/white"
+          android:gravity="center"
+          android:text="重置"
+          android:textColor="@color/qc_text_black"
+          android:textSize="@dimen/common_font"
+
+          />
+
+      <include layout="@layout/divider_grey_vertical"/>
+
+      <TextView
+          android:id="@+id/tv_student_filter_confirm"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@color/qc_theme_green"
+          android:gravity="center"
+          android:text="确定"
+          android:textColor="@color/white"
+          android:textSize="@dimen/common_font"
+          />
+    </LinearLayout>
+
+  </RelativeLayout>
+</layout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:background="@color/white"
+      android:divider="@drawable/divier_linear"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <RelativeLayout
+        android:id="@+id/layout_my_resume"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg_click"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+      <ImageView
+          android:id="@+id/img_my_resume"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:layout_centerVertical="true"
+          android:layout_marginEnd="8dp"
+          android:layout_marginRight="8dp"
+          android:scaleType="fitXY"
+          />
+
+      <TextView
+
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignTop="@id/img_my_resume"
+          android:layout_toEndOf="@id/img_my_resume"
+          android:layout_toRightOf="@id/img_my_resume"
+          android:text="我的简历"
+          style="@style/QcTextStyleMediumDark"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@id/img_my_resume"
+          android:layout_toEndOf="@id/img_my_resume"
+          android:layout_toRightOf="@id/img_my_resume"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:id="@+id/tv_resume_completed_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="简历完善度"
+            style="@style/QcTextStyleXsGrey"
+            />
+
+        <TextView
+            android:id="@+id/tv_resume_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            style="@style/QcTextStyleXsGrey"
+            />
+      </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_my_jobfair"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg_click"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+
+        >
+
+      <ImageView
+
+          android:id="@+id/img_my_job_fair"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:layout_centerVertical="true"
+          android:layout_marginEnd="8dp"
+          android:layout_marginRight="8dp"
+          android:scaleType="fitXY"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignTop="@id/img_my_job_fair"
+          android:layout_toEndOf="@id/img_my_job_fair"
+          android:layout_toRightOf="@id/img_my_job_fair"
+          android:text="我的专场招聘会"
+          style="@style/QcTextStyleMediumDark"
+          />
+
+      <TextView
+          android:id="@+id/tv_job_fair"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@id/img_my_job_fair"
+          android:layout_toEndOf="@id/img_my_job_fair"
+          android:layout_toRightOf="@id/img_my_job_fair"
+          tools:text="3场进行中"
+          style="@style/QcTextStyleXsGrey"
+          />
+    </RelativeLayout>
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <android.support.v4.widget.Space
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/activity_vertical_margin"
+      />
+</LinearLayout>
