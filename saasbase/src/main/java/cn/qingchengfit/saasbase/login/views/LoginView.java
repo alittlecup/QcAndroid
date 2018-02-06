@@ -1,7 +1,7 @@
-package cn.qingchengfit.staffkit.views.login;
+package cn.qingchengfit.saasbase.login.views;
 
 import android.content.Context;
-import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.CView;
 
 /**
  * power by
@@ -16,7 +16,7 @@ import cn.qingchengfit.di.PView;
  * <p/>
  * Created by Paper on 15/11/19 2015.
  */
-public interface LoginView extends PView {
+public interface LoginView extends CView {
     //正在登录
     void onShowLogining();
 

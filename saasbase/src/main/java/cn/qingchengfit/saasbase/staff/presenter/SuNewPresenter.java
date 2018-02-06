@@ -8,7 +8,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
-import cn.qingchengfit.saasbase.network.body.GetCodeBody;
+import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.repository.PostApi;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import javax.inject.Inject;

@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.rxbus.event;
+package cn.qingchengfit.saasbase.login.event;
 
 /**
  * power by

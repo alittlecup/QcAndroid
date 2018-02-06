@@ -1,4 +1,4 @@
-package cn.qingchengfit.saasbase.network.body;
+package cn.qingchengfit.saasbase.login.bean;
 
 /**
  * power by
@@ -21,6 +21,7 @@ public class LoginBody {
     public String code;
     public String device_type;
     public String area_code;
+    public boolean has_read_agreement;
 
     public LoginBody(String username, String password) {
         this.phone = username;
@@ -41,6 +42,7 @@ public class LoginBody {
         setCode(builder.code);
         setDevice_type(builder.device_type);
         area_code = builder.area_code;
+        has_read_agreement = builder.has_read_agreement;
     }
 
     public String getUsername() {
@@ -99,6 +101,7 @@ public class LoginBody {
         private String code;
         private String device_type;
         private String area_code;
+        private boolean has_read_agreement;
 
         public Builder() {
         }
@@ -138,8 +141,14 @@ public class LoginBody {
             return this;
         }
 
+        public Builder has_read_agreement(boolean val) {
+            has_read_agreement = val;
+            return this;
+        }
+
         public LoginBody build() {
             return new LoginBody(this);
         }
     }
+
 }

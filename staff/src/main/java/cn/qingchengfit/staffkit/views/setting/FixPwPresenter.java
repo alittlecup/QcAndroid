@@ -5,8 +5,8 @@ import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.SettingUseCase;
-import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.bean.ModifyPwBody;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -80,11 +80,6 @@ public class FixPwPresenter extends BasePresenter {
     }
 
     public void onQueryCode(GetCodeBody phone) {
-        subscriptionQuery = useCase.getCode(phone, new Action1<QcResponse>() {
-            @Override public void call(QcResponse qcResponse) {
-                if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-                }
-            }
-        });
+
     }
 }

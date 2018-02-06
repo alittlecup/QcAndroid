@@ -4,7 +4,6 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.model.responese.CreatBrand;
 import cn.qingchengfit.model.responese.GymList;
-import cn.qingchengfit.model.responese.Login;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -17,10 +16,7 @@ import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
 import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
 import cn.qingchengfit.staffkit.usecase.bean.FixPhoneBody;
-import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
-import cn.qingchengfit.staffkit.usecase.bean.LoginBody;
 import cn.qingchengfit.staffkit.usecase.bean.ModifyPwBody;
-import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -61,10 +57,8 @@ public class RestRepository implements Repository {
 
     private final Get_Api get_api;
     private final Post_Api post_api;
-    private Action1<Throwable> doOnError = new Action1<Throwable>() {
-        @Override public void call(Throwable throwable) {
-            if (throwable != null) Timber.e("retrofit:" + throwable.getMessage());
-        }
+    private Action1<Throwable> doOnError = throwable -> {
+        if (throwable != null) Timber.e("retrofit:" + throwable.getMessage());
     };
 
     public RestRepository() {
@@ -170,17 +164,7 @@ public class RestRepository implements Repository {
             }
         }).addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
         Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization()
-            //                .setExclusionStrategies(new ExclusionStrategy() {
-            //                    @Override
-            //                    public boolean shouldSkipField(FieldAttributes f) {
-            //                        return f.getDeclaringClass().equals(RealmObject.class);
-            //                    }
-            //
-            //                    @Override
-            //                    public boolean shouldSkipClass(Class<?> clazz) {
-            //                        return false;
-            //                    }
-            //                })
+
             .create();
         Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(Configs.Server)
             .client(client)
@@ -206,17 +190,9 @@ public class RestRepository implements Repository {
         return post_api;
     }
 
-    @Override public Observable<QcDataResponse<Login>> qcLogin(LoginBody loginBody) {
-        return post_api.qcLogin(loginBody).doOnError(doOnError);
-    }
 
-    public Observable<QcResponse> qcQueryCode(GetCodeBody body) {
-        return post_api.qcGetCode(body).doOnError(doOnError);
-    }
 
-    public Observable<QcDataResponse<Login>> qcRegiste(RegisteBody registeBody) {
-        return post_api.qcRegister(registeBody).doOnError(doOnError);
-    }
+
 
     /**
      * 获取健身房服务列表

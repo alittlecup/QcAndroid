@@ -26,7 +26,6 @@ import cn.qingchengfit.staffkit.rxbus.event.EventToolbar;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffDetailFragment;
-import cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment;
 import cn.qingchengfit.staffkit.views.signin.config.SignInCardFragment;
 import cn.qingchengfit.staffkit.views.signin.config.SignInCodeFragment;
 import cn.qingchengfit.staffkit.views.signin.zq.AddZqFragment;
@@ -124,7 +123,7 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 break;
             case GymFunctionFactory.MODULE_MANAGE_STAFF:
                 //fragment = StaffListFragment.newInstance(App.staffId);
-                fragment = new StaffListFragment();
+                //fragment = new StaffListFragment();
                 break;
             case GymFunctionFactory.MODULE_MANAGE_STAFF_ADD:
                 fragment = StaffDetailFragment.newInstance(null);

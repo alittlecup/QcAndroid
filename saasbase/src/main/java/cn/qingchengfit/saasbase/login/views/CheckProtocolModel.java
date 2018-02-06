@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.login;
+package cn.qingchengfit.saasbase.login.views;
 
 /**
  * Created by fb on 2017/9/11.

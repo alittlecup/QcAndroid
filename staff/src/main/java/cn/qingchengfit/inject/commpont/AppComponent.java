@@ -35,6 +35,9 @@ import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
+import cn.qingchengfit.saasbase.login.LoginActivity;
+import cn.qingchengfit.saasbase.login.views.LoginFragment;
+import cn.qingchengfit.saasbase.login.views.RegisteFragment;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
@@ -112,17 +115,10 @@ import cn.qingchengfit.staffkit.views.gym.site.MutiChooseSiteFragment;
 import cn.qingchengfit.staffkit.views.gym.site.SiteDetailFragment;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffDetailFragment;
-import cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment;
-import cn.qingchengfit.staffkit.views.gym.staff.SuFragment;
-import cn.qingchengfit.staffkit.views.gym.staff.SuIdendifyFragment;
-import cn.qingchengfit.staffkit.views.gym.staff.SuNewFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.TrialProDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.UpgrateGymFragment;
-import cn.qingchengfit.staffkit.views.login.LoginActivity;
-import cn.qingchengfit.staffkit.views.login.LoginFragment;
-import cn.qingchengfit.staffkit.views.login.RegisteFragment;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.staffkit.views.main.ChooseBrandInMainFragment;
 import cn.qingchengfit.staffkit.views.main.GymsFragment;
@@ -333,8 +329,8 @@ import dagger.multibindings.IntoMap;
     AppComponent.WardrobeContinueHireModule.class, AppComponent.WardrobeReturnDialogModule.class, AppComponent.WardrobeReturnModule.class,
     AppComponent.DistrictListModule.class, AppComponent.WardrobeShortHireModule.class, AppComponent.MutiChooseStudentFragModule.class,
     AppComponent.DistrictAddModule.class, AppComponent.ChooseRegionModule.class, AppComponent.WardrobeMainModule.class,
-    AppComponent.WardrobePayBottomModule.class,  AppComponent.StaffListModule.class,
-    AppComponent.SuModule.class, AppComponent.SuIdendifyModule.class, AppComponent.SuNewModule.class, AppComponent.SiteListModule.class,
+    AppComponent.WardrobePayBottomModule.class,
+    AppComponent.SiteListModule.class,
     AppComponent.SiteDetailModule.class, AppComponent.ChooseSiteModule.class, AppComponent.MutiChooseSiteModule.class,
     AppComponent.ScheduleModule.class, AppComponent.ScheduleListModule.class, AppComponent.SignInModule.class,
     AppComponent.SignInHomeModule.class, AppComponent.SignInFragModule.class, AppComponent.SignOutModule.class,
@@ -923,25 +919,6 @@ public interface AppComponent {
      */
 
 
-    @Subcomponent() public interface StaffListSubcomponent extends AndroidInjector<cn.qingchengfit.staffkit.views.gym.staff.StaffListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<StaffListFragment> {
-        }
-    }
-
-    @Subcomponent() public interface SuSubcomponent extends AndroidInjector<SuFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SuFragment> {
-        }
-    }
-
-    @Subcomponent() public interface SuIdendifySubcomponent extends AndroidInjector<SuIdendifyFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SuIdendifyFragment> {
-        }
-    }
-
-    @Subcomponent() public interface SuNewSubcomponent extends AndroidInjector<SuNewFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SuNewFragment> {
-        }
-    }
 
     @Subcomponent() public interface SiteListSubcomponent extends AndroidInjector<SiteListFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SiteListFragment> {
@@ -2410,25 +2387,11 @@ public interface AppComponent {
             WardrobeDetailFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = StaffListSubcomponent.class) abstract class StaffListModule {
-        @Binds @IntoMap @FragmentKey(StaffListFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(StaffListSubcomponent.Builder builder);
-    }
 
-    @Module(subcomponents = SuSubcomponent.class) abstract class SuModule {
-        @Binds @IntoMap @FragmentKey(SuFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(SuSubcomponent.Builder builder);
-    }
 
-    @Module(subcomponents = SuIdendifySubcomponent.class) abstract class SuIdendifyModule {
-        @Binds @IntoMap @FragmentKey(SuIdendifyFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(SuIdendifySubcomponent.Builder builder);
-    }
 
-    @Module(subcomponents = SuNewSubcomponent.class) abstract class SuNewModule {
-        @Binds @IntoMap @FragmentKey(SuNewFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(SuNewSubcomponent.Builder builder);
-    }
+
+
 
     @Module(subcomponents = SiteListSubcomponent.class) abstract class SiteListModule {
         @Binds @IntoMap @FragmentKey(SiteListFragment.class)

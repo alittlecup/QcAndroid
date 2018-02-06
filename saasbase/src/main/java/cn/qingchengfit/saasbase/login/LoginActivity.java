@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.login;
+package cn.qingchengfit.saasbase.login;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,7 +9,10 @@ import android.support.v4.view.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.login.views.LoginFragment;
+import cn.qingchengfit.saasbase.login.views.RegisteFragment;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -20,8 +23,8 @@ import javax.inject.Inject;
 
 public class LoginActivity extends BaseActivity {
 
-  @BindView(R.id.viewpager) ViewPager viewpager;
-  @BindView(R.id.login_tabview) TabLayout loginTabview;
+  @BindView(R2.id.viewpager) ViewPager viewpager;
+  @BindView(R2.id.login_tabview) TabLayout loginTabview;
   LoadingDialog dialog;
   @Inject LoginStatus loginStatus;
 
@@ -65,9 +68,9 @@ public class LoginActivity extends BaseActivity {
 
     @Override public CharSequence getPageTitle(int position) {
       if (position == 0) {
-        return getString(R.string.login_btn_label);
+        return "登录";
       } else {
-        return getString(R.string.registe_indicat_label);
+        return "注册";
       }
     }
 

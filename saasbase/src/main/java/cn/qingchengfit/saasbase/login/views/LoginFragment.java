@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.views.login;
+package cn.qingchengfit.saasbase.login.views;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,13 +23,12 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.events.NetWorkDialogEvent;
 import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.BuildConfig;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rxbus.event.SendMsgEvent;
-import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
-import cn.qingchengfit.staffkit.usecase.bean.LoginBody;
-import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.constant.WebRouters;
+import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
+import cn.qingchengfit.saasbase.login.bean.LoginBody;
+import cn.qingchengfit.saasbase.login.event.SendMsgEvent;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -48,7 +46,6 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,20 +53,18 @@ import rx.functions.Action1;
 public class LoginFragment extends BaseFragment
     implements CheckProtocolPresenter.MVPView, LoginView {
 
-  @BindView(R.id.forgetpw_btn) ToggleButton mForgetpwBtn;
-  @BindView(R.id.login_btn) Button mLoginBtn;
+  @BindView(R2.id.forgetpw_btn) ToggleButton mForgetpwBtn;
+  @BindView(R2.id.login_btn) Button mLoginBtn;
   Observable<SendMsgEvent> RxObMsg;
-  @BindView(R.id.root_view) LinearLayout rootView;
-  @BindView(R.id.login_phone) PhoneEditText loginPhone;
-  @BindView(R.id.pw_view) PasswordView pwView;
-  @BindView(R.id.btn_agree_protocol) CheckBox btnAgreeProtocol;
-  @BindView(R.id.layout_protocol) LinearLayout layoutProtocol;
+  @BindView(R2.id.root_view) LinearLayout rootView;
+  @BindView(R2.id.login_phone) PhoneEditText loginPhone;
+  @BindView(R2.id.pw_view) PasswordView pwView;
+  @BindView(R2.id.btn_agree_protocol) CheckBox btnAgreeProtocol;
+  @BindView(R2.id.layout_protocol) LinearLayout layoutProtocol;
   @Inject CheckProtocolPresenter presenter;
   @Inject LoginPresenter loginPresenter;
   @Inject QcRestRepository restRepository;
 
-  public LoginFragment() {
-  }
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -77,54 +72,45 @@ public class LoginFragment extends BaseFragment
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_login, container, false);
+    View view = inflater.inflate(R.layout.f_login, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     delegatePresenter(loginPresenter, this);
-    loginPresenter.setContext(getContext());
+
     changeHost();
 
-    view.setOnTouchListener(new View.OnTouchListener() {
-      @Override public boolean onTouch(View v, MotionEvent event) {
-        if (getActivity() != null) AppUtils.hideKeyboard(getActivity());
-        return false;
-      }
+    view.setOnTouchListener((v, event) -> {
+      if (getActivity() != null) AppUtils.hideKeyboard(getActivity());
+      return false;
     });
-    pwView.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (loginPhone.checkPhoneNum()) {
-          pwView.blockRightClick(true);
-          RxBus.getBus().post(new SendMsgEvent());
-          loginPresenter.queryCode(new GetCodeBody.Builder().phone(loginPhone.getPhoneNum())
-              .area_code(loginPhone.getDistrictInt())
-              .build());
-        }
+    pwView.setOnClickListener(v -> {
+      if (loginPhone.checkPhoneNum()) {
+        pwView.blockRightClick(true);
+        RxBus.getBus().post(new SendMsgEvent());
+        loginPresenter.queryCode(new GetCodeBody.Builder().phone(loginPhone.getPhoneNum())
+            .area_code(loginPhone.getDistrictInt())
+            .build());
       }
     });
 
-    loginPhone.setOnEditFocusListener(new PhoneEditText.OnEditFocusListener() {
-      @Override public void onFocusChange(boolean isFocus) {
-        if (!isFocus) {
-          if (loginPhone != null && (loginPhone.getPhoneNum().length() == 11
-              || loginPhone.getPhoneNum().length() == 10)) {
-            presenter.getIsAgree(loginPhone.getPhoneNum());
-          }
+    loginPhone.setOnEditFocusListener(isFocus -> {
+      if (!isFocus) {
+        if (loginPhone != null && (loginPhone.getPhoneNum().length() == 11
+            || loginPhone.getPhoneNum().length() == 10)) {
+          presenter.getIsAgree(loginPhone.getPhoneNum());
         }
       }
     });
 
     final InternalHandler handler = new InternalHandler(getActivity());
     RxObMsg = RxBus.getBus().register(SendMsgEvent.class);
-    RxObMsg.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<SendMsgEvent>() {
-      @Override public void call(SendMsgEvent sendMsgEvent) {
-        handler.sendEmptyMessage(0);
-      }
-    });
+    RxObMsg.observeOn(AndroidSchedulers.mainThread()).subscribe(
+      sendMsgEvent -> handler.sendEmptyMessage(0));
     return view;
   }
 
   private void changeHost(){
-    if (BuildConfig.DEBUG) {
+    if (loginPresenter.isDebug()) {
       final EditText et = new EditText(getContext());
       et.setMaxLines(1);
       String ip = PreferenceUtils.getPrefString(getContext(), "debug_ip", Constants.ServerDebug);
@@ -171,7 +157,6 @@ public class LoginFragment extends BaseFragment
       mLoginBtn.setEnabled(false);
       btnChange.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
-          if (getActivity().getApplication() instanceof App) {
             if (!TextUtils.isEmpty(et.getText())) {
               if (!et.getText().toString().contains("http")) {
                 Constants.ServerDebug = "http://" + et.getText().toString().trim() + ".qingchengfit.cn/";
@@ -186,25 +171,24 @@ public class LoginFragment extends BaseFragment
               ToastUtils.show("修改成功");
             }
           }
-        }
       });
     }
   }
 
-  @OnClick(R.id.btn_agree_protocol) public void onAgree() {
+  @OnClick(R2.id.btn_agree_protocol) public void onAgree() {
     mLoginBtn.setEnabled(btnAgreeProtocol.isChecked());
   }
 
-  @OnClick(R.id.text_protocol_detail) public void onProtocol() {
-    WebActivity.startWeb(restRepository.getHost() + GymFunctionFactory.USER_PROTOCOL_URL,
+  @OnClick(R2.id.text_protocol_detail) public void onProtocol() {
+    WebActivity.startWeb(restRepository.getHost() + WebRouters.USER_PROTOCOL_URL,
         getContext());
   }
 
-  @OnClick(R.id.forgetpw_btn) public void toggle() {
+  @OnClick(R2.id.forgetpw_btn) public void toggle() {
     pwView.toggle();
   }
 
-  @OnClick(R.id.login_btn) public void onClick() {
+  @OnClick(R2.id.login_btn) public void onClick() {
     if (loginPhone.checkPhoneNum() && pwView.checkValid()) {
       loginPresenter.doLogin(new LoginBody.Builder().phone(loginPhone.getPhoneNum())
           .code(pwView.isPwMode() ? null : pwView.getCode())
@@ -215,10 +199,6 @@ public class LoginFragment extends BaseFragment
     } else {
 
     }
-  }
-
-  @Override public void onDestroyView() {
-    super.onDestroyView();
   }
 
   @Override public void onCheck(boolean isAgree) {

@@ -36,12 +36,10 @@ import cn.qingchengfit.events.EventSessionError;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.body.PushBody;
 import cn.qingchengfit.model.others.ToolbarBean;
-import cn.qingchengfit.model.responese.GymList;
 import cn.qingchengfit.model.responese.UpdateVersion;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.BusEventThrowable;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.router.BaseRouter;
@@ -208,21 +206,15 @@ public class MainActivity extends BaseActivity implements FragCallBack {
          * 全局监听刷新 场馆
          */
         mFreshCoachService = RxBus.getBus().register(EventFreshCoachService.class);
-        mFreshCoachService.subscribe(new Action1<EventFreshCoachService>() {
-            @Override public void call(EventFreshCoachService eventFreshCoachService) {
-                sp = restRepository.getGet_api()
-                    .qcGetCoachService(loginStatus.staff_id(), null)
-                    .delay(2, TimeUnit.SECONDS).onBackpressureBuffer().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<QcDataResponse<GymList>>() {
-                        @Override public void call(QcDataResponse<GymList> qcResponseGymList) {
-                            if (ResponseConstant.checkSuccess(qcResponseGymList) && qcResponseGymList.data.services != null) {
-                                gymBaseInfoAction.writeGyms(qcResponseGymList.data.services);
-                            }
-                        }
-                    });
-            }
-        });
+        mFreshCoachService.subscribe(eventFreshCoachService -> sp = restRepository.getGet_api()
+            .qcGetCoachService(loginStatus.staff_id(), null)
+            .delay(2, TimeUnit.SECONDS).onBackpressureBuffer().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(qcResponseGymList -> {
+                if (ResponseConstant.checkSuccess(qcResponseGymList) && qcResponseGymList.data.services != null) {
+                    gymBaseInfoAction.writeGyms(qcResponseGymList.data.services);
+                }
+            }));
         /*
          * 全局监听品牌
          */

@@ -33,7 +33,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
-import cn.qingchengfit.staffkit.views.login.LoginActivity;
+import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.staffkit.views.setting.FixNotifySettingFragment;
 import cn.qingchengfit.staffkit.views.setting.FixPhoneFragment;
 import cn.qingchengfit.staffkit.views.setting.FixPwFragment;

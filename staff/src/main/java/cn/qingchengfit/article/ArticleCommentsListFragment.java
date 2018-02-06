@@ -28,7 +28,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.presenters.ArticleCommentsPresenter;
 import cn.qingchengfit.staffkit.views.abstractflexibleitem.ArticleCommentItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.login.LoginActivity;
+import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ToastUtils;

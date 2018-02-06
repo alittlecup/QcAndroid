@@ -25,6 +25,7 @@
     </activity>
     <activity android:name=".cards.views.CardProtocolActivity"/>
 
+    <!-- 场馆配置 页面 -->
     <activity
         android:name="cn.qingchengfit.saasbase.gymconfig.GymConfigAcitivty"
         android:screenOrientation="portrait"
@@ -41,6 +42,22 @@
             />
       </intent-filter>
     </activity>
+
+    <!--登录页面-->
+    <activity
+        android:name="cn.qingchengfit.saasbase.login.LoginActivity"
+        android:launchMode="singleTop"
+        android:screenOrientation="portrait"
+        android:theme="@style/mainStyle"
+        >
+      <intent-filter>
+        <action android:name="cn.qingcheng.login"/>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+
   </application>
 
 

@@ -1,11 +1,10 @@
-package cn.qingchengfit.staffkit.views.login;
+package cn.qingchengfit.saasbase.login.views;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,11 +21,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.network.QcRestRepository;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rxbus.event.SendMsgEvent;
-import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
-import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
-import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
+import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.R2;
+import cn.qingchengfit.saasbase.constant.WebRouters;
+import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
+import cn.qingchengfit.saasbase.login.bean.RegisteBody;
+import cn.qingchengfit.saasbase.login.event.SendMsgEvent;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -41,24 +41,23 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
- * A simple {@link Fragment} subclass.
+ *
  */
 public class RegisteFragment extends BaseFragment implements LoginView {
 
-  @BindView(R.id.comple_gender_label) TextView compleGenderLabel;
-  @BindView(R.id.comple_gender_male) RadioButton compleGenderMale;
-  @BindView(R.id.comple_gender_female) RadioButton compleGenderFemale;
-  @BindView(R.id.comple_gender) RadioGroup compleGender;
-
-  @BindView(R.id.registe_gender) LinearLayout registeGender;
-  @BindView(R.id.registe_btn) Button registeBtn;
-  @BindView(R.id.registe_rootview) LinearLayout registeRootview;
-  @BindView(R.id.phone_num) PhoneEditText phoneNum;
-  @BindView(R.id.checkcode) PasswordView checkcode;
-  @BindView(R.id.password) PasswordView password;
-  @BindView(R.id.et_username) EditText etUsername;
-  @BindView(R.id.btn_agree_protocol) CheckBox btnAgreeProtocol;
-  @BindView(R.id.layout_protocol) LinearLayout layoutProtocol;
+  @BindView(R2.id.comple_gender_label) TextView compleGenderLabel;
+  @BindView(R2.id.comple_gender_male) RadioButton compleGenderMale;
+  @BindView(R2.id.comple_gender_female) RadioButton compleGenderFemale;
+  @BindView(R2.id.comple_gender) RadioGroup compleGender;
+  @BindView(R2.id.registe_gender) LinearLayout registeGender;
+  @BindView(R2.id.registe_btn) Button registeBtn;
+  @BindView(R2.id.registe_rootview) LinearLayout registeRootview;
+  @BindView(R2.id.phone_num) PhoneEditText phoneNum;
+  @BindView(R2.id.checkcode) PasswordView checkcode;
+  @BindView(R2.id.password) PasswordView password;
+  @BindView(R2.id.et_username) EditText etUsername;
+  @BindView(R2.id.btn_agree_protocol) CheckBox btnAgreeProtocol;
+  @BindView(R2.id.layout_protocol) LinearLayout layoutProtocol;
   private Observable<SendMsgEvent> RxObMsg;
   @Inject LoginPresenter loginPresenter;
   @Inject QcRestRepository qcRestRepository;
@@ -68,10 +67,10 @@ public class RegisteFragment extends BaseFragment implements LoginView {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_registe, container, false);
+    View view = inflater.inflate(R.layout.f_regist, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(loginPresenter, this);
-    loginPresenter.setContext(getContext());
+
     registeBtn.setEnabled(false);
     registeGender.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -117,19 +116,19 @@ public class RegisteFragment extends BaseFragment implements LoginView {
     }
   }
 
-  @OnClick(R.id.btn_agree_protocol) public void onAgree() {
+  @OnClick(R2.id.btn_agree_protocol) public void onAgree() {
     registeBtn.setEnabled(btnAgreeProtocol.isChecked());
   }
 
-  @OnClick(R.id.text_protocol_detail) public void onProtocol() {
-    WebActivity.startWeb(qcRestRepository.getHost() + GymFunctionFactory.USER_PROTOCOL_URL,
+  @OnClick(R2.id.text_protocol_detail) public void onProtocol() {
+    WebActivity.startWeb(qcRestRepository.getHost() + WebRouters.USER_PROTOCOL_URL,
         getContext());
   }
 
   /**
    * 确认注册
    */
-  @OnClick(R.id.registe_btn) public void onRegiste() {
+  @OnClick(R2.id.registe_btn) public void onRegiste() {
 
     if (phoneNum.checkPhoneNum() && checkcode.checkValid() && password.checkValid()) {
       loginPresenter.registe(

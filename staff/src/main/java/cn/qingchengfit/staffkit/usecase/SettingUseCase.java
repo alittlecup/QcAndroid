@@ -8,7 +8,6 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
 import cn.qingchengfit.staffkit.usecase.bean.FixPhoneBody;
-import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.bean.ModifyPwBody;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -63,13 +62,7 @@ public class SettingUseCase {
           .subscribe(action1);
     }
 
-    public Subscription getCode(GetCodeBody phone, Action1<QcResponse> action1) {
-      return restRepository.qcQueryCode(phone)
-          .onBackpressureBuffer()
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(action1);
-    }
+
 
     public Subscription getSelfInfo(Action1<QcDataResponse<StaffResponse>> action1) {
         return restRepository.getGet_api()

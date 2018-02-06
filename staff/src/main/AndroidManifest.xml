@@ -352,19 +352,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
-    <activity
-        android:name=".views.login.LoginActivity"
-        android:launchMode="singleTop"
-        android:screenOrientation="portrait"
-        android:theme="@style/mainStyle"
-        >
-      <intent-filter>
-        <action android:name="cn.qingcheng.login"/>
-        <action android:name="android.intent.action.VIEW"/>
 
-        <category android:name="android.intent.category.DEFAULT"/>
-      </intent-filter>
-    </activity>
     <activity
         android:name=".views.gym.GymActivity"
         android:configChanges="keyboard"

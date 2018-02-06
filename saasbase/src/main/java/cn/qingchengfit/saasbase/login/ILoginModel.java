@@ -1,11 +1,15 @@
-package cn.qingchengfit.saasbase.gymconfig;
+package cn.qingchengfit.saasbase.login;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
-import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigListWrap;
-import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
-import cn.qingchengfit.saasbase.network.response.GymList;
+import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
+import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
+import cn.qingchengfit.saasbase.login.bean.Login;
+import cn.qingchengfit.saasbase.login.bean.LoginBody;
+import cn.qingchengfit.saasbase.login.bean.RegisteBody;
+import cn.qingchengfit.saasbase.login.views.CheckProtocolModel;
+import java.util.HashMap;
 import retrofit2.http.GET;
+import retrofit2.http.QueryMap;
 
 /**
  * power by
@@ -25,15 +29,24 @@ import retrofit2.http.GET;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/12/1.
- *
- * 用来处理场馆的一些基础配置，以及一些小的，没有独立出去的场馆功能
+ * Created by Paper on 2018/2/5.
  */
-public interface IGymConfigModel {
-  rx.Observable<QcDataResponse<SpaceListWrap>> getSites();
-  rx.Observable<QcDataResponse<ShopConfigListWrap>> getConfigs(String configs);
-  rx.Observable<QcDataResponse> saveShopConfigs(ShopConfigBody body);
 
-  @GET("/api/staffs/{id}/services/") rx.Observable<QcDataResponse<GymList>> qcGetCoachService(
-    String brand_id);
+public interface ILoginModel {
+  /**
+   * 这个方法纯粹是为了保证旧的功能可用
+   */
+  void setStaffId(String staffid);
+  boolean isDebug();
+
+  rx.Observable<QcDataResponse<Login>> doLogin(LoginBody body);
+  rx.Observable<QcDataResponse<Login>> doRegiste(RegisteBody body);
+  rx.Observable<QcDataResponse> doWxtoken(LoginBody body);
+  rx.Observable<QcDataResponse> getCode(GetCodeBody body);
+  rx.Observable<QcDataResponse> checkCode(CheckCodeBody body);
+
+  //判断是否同意用户协议
+  @GET(" /api/user/check/read_agreement/")
+  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CheckProtocolModel>> qcCheckProtocol(
+    @QueryMap HashMap<String, Object> params);
 }

@@ -18,9 +18,10 @@ import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.body.ChangeBrandCreatorBody;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.login.ILoginModel;
+import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
@@ -65,6 +66,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
     @BindView(R.id.checkcode) PasswordView checkcode;
 
     @Inject RestRepository restRepository;
+    @Inject ILoginModel loginModel;
     private Brand brand;
 
     public static BrandCreatorEditFragment newInstance(Brand brand) {
@@ -128,7 +130,7 @@ public class BrandCreatorEditFragment extends BaseFragment {
         checkcode.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (phoneNum.checkPhoneNum()) {
-                    RxRegiste(restRepository.qcQueryCode(
+                    RxRegiste(loginModel.getCode(
                         new GetCodeBody.Builder().area_code(phoneNum.getDistrictInt()).phone(phoneNum.getPhoneNum()).build())
                         .onBackpressureBuffer()
                         .subscribeOn(Schedulers.io())

@@ -14,7 +14,6 @@ import cn.qingchengfit.model.body.CardtplBody;
 import cn.qingchengfit.model.body.ChangeBrandCreatorBody;
 import cn.qingchengfit.model.body.ChangeSuBody;
 import cn.qingchengfit.model.body.ChargeBody;
-import cn.qingchengfit.model.body.CheckCodeBody;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.body.CourseBody;
 import cn.qingchengfit.model.body.CreateCardBody;
@@ -44,7 +43,6 @@ import cn.qingchengfit.model.body.UpdateModule;
 import cn.qingchengfit.model.common.Shop;
 import cn.qingchengfit.model.responese.CoachResponse;
 import cn.qingchengfit.model.responese.CreatBrand;
-import cn.qingchengfit.model.responese.Login;
 import cn.qingchengfit.model.responese.QcResponsePayWx;
 import cn.qingchengfit.model.responese.QcResponseRenew;
 import cn.qingchengfit.model.responese.QcResponseSystenInit;
@@ -54,17 +52,16 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.cards.network.body.ShopsBody;
 import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
+import cn.qingchengfit.saasbase.login.bean.Login;
+import cn.qingchengfit.saasbase.login.bean.LoginBody;
 import cn.qingchengfit.saasbase.student.network.body.AddStudentBody;
 import cn.qingchengfit.staffkit.train.model.CreateGroupBody;
 import cn.qingchengfit.staffkit.train.model.OperationMemberBody;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
 import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
 import cn.qingchengfit.staffkit.usecase.bean.FixPhoneBody;
-import cn.qingchengfit.staffkit.usecase.bean.GetCodeBody;
-import cn.qingchengfit.staffkit.usecase.bean.LoginBody;
 import cn.qingchengfit.staffkit.usecase.bean.ModifyPwBody;
 import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
-import cn.qingchengfit.staffkit.usecase.bean.RegisteBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
 import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
@@ -118,7 +115,6 @@ public interface Post_Api {
      * 个人操作
      */
 
-    @POST("/api/user/login/?session_config=true") Observable<QcDataResponse<Login>> qcLogin(@Body LoginBody loginBody);
 
     @POST("/api/staffs/login/") Call<Login> qcLoginTest(@Body LoginBody loginBody);
 
@@ -139,16 +135,6 @@ public interface Post_Api {
     @PUT("/api/staffs/{id}/services/{sid}/") rx.Observable<ResponseService> qcPutService(@Path("id") String id, @Path("sid") String sid,
         @Body Shop shop);
 
-    //注册
-    @POST("/api/user/register/?session_config=true") rx.Observable<QcDataResponse<Login>> qcRegister(@Body RegisteBody params);
-
-    //获取电话验证码
-    @POST("/api/send/verify/") rx.Observable<QcResponse> qcGetCode(@Body GetCodeBody account);
-
-    /**
-     * 验证验证码
-     */
-    @POST("api/check/verify/") rx.Observable<QcResponse> qcCheckCode(@Body CheckCodeBody body);
 
     //修改密码
     @POST("/api/staffs/{id}/change/password/") rx.Observable<QcResponse> qcMoidfyPw(@Path("id") String id, @Body ModifyPwBody modifyPwBean);
