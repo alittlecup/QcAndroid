@@ -82,7 +82,7 @@ import rx.functions.Action1;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_ahead_off_day, container, false);
+    View view = inflater.inflate(R.layout.fragment_off_day_ahead, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     setToolbar();
