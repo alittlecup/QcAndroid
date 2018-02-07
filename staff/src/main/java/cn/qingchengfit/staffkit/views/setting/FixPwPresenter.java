@@ -3,14 +3,10 @@ package cn.qingchengfit.staffkit.views.setting;
 import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.SettingUseCase;
-import cn.qingchengfit.staffkit.usecase.bean.ModifyPwBody;
 import javax.inject.Inject;
 import rx.Subscription;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -67,17 +63,7 @@ public class FixPwPresenter extends BasePresenter {
         if (subscriptionQuery != null) subscriptionQuery.unsubscribe();
     }
 
-    public void onFixPw(ModifyPwBody body) {
-        subscription = useCase.fixPw(body, new Action1<QcResponse>() {
-            @Override public void call(QcResponse qcResponse) {
-                if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onSucceed();
-                } else {
-                    view.onError(qcResponse.getMsg());
-                }
-            }
-        });
-    }
+
 
     public void onQueryCode(GetCodeBody phone) {
 

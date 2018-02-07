@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data
+      >
+
+    <variable
+        name="methods"
+        type="cn.qingchengfit.saasbase.staff.beans.StaffLoginMethod"
+        />
+
+    <variable
+        name="toolbarModel"
+        type="cn.qingchengfit.model.others.ToolbarModel"
+        />
+  </data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <include
+        layout="@layout/common_simple_toolbar"
+        android:id="@+id/layout_toolbar"
+        bind:toolbarModel="@{toolbarModel}"
+        />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <RelativeLayout
+          android:id="@+id/header_layout"
+          android:layout_width="match_parent"
+          android:layout_height="90dp"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/header"
+            style="@style/QcTextStyleStandardDark"
+            />
+
+        <ImageView
+            android:id="@+id/header_img"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            tools:src="@drawable/ic_default_header"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrow_right"
+            />
+      </RelativeLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <include layout="@layout/divider_grey_margin"/>
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/username"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_lable="@string/label_username"
+          style="@style/QcCivClickStyle"
+          />
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_gender"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_content="@string/gender_male"
+          app:civ_lable="@string/gender"
+          app:civ_showright="false"
+          style="@style/QcCivClickStyle"
+          />
+
+
+      <cn.qingchengfit.widgets.CommonInputView
+          android:id="@+id/civ_city"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="城市"
+          app:civ_showdivier="false"
+          style="@style/QcCivClickStyle"
+          />
+
+      <include layout="@layout/divider_grey"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+      <TextView
+          android:text="登录方式"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:gravity="center_vertical"
+          />
+      <LinearLayout
+          android:id="@+id/layout_login_phone"
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:gravity="center_vertical"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:background="@color/white"
+          >
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/vd_loginmethod_phone"
+            />
+        <android.support.v4.widget.Space
+            android:layout_width="16dp"
+            android:layout_height="match_parent"
+            />
+        <TextView
+            style="@style/QcTextStyleStandardDark"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text='@{"手机("+methods.phone+")"}'
+            />
+        <TextView
+            style="@style/QcTextStyleStandardWarm"
+            android:text="修改"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+      </LinearLayout>
+      <include layout="@layout/divider_grey_left_right"/>
+      <LinearLayout
+          android:id="@+id/btn_bind"
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:gravity="center_vertical"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <ImageView
+            android:id="@+id/img_wx"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/vd_loginmethod_wechat"
+            />
+        <android.support.v4.widget.Space
+            android:layout_width="16dp"
+            android:layout_height="match_parent"
+            />
+        <TextView
+            style="@style/QcTextStyleStandardDark"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text='@{"微信("+methods.wx+")"}'
+            />
+        <TextView
+            style="@style/QcTextStyleStandardWarm"
+            android:text='@{methods.wx_active?"解绑":"立即绑定"}'
+            android:textColor="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+      </LinearLayout>
+    </LinearLayout>
+
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin"
+        />
+
+    <cn.qingchengfit.widgets.CommonInputView
+        android:id="@+id/civ_pw"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="修改登录密码"
+        app:civ_hint=""
+        style="@style/QcCivClickStyle"
+
+        />
+  </LinearLayout>
+</layout>

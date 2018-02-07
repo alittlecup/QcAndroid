@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <android.support.v4.widget.Space
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      />
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      style="@style/QcTextStyleMediumGrey"
+      android:text="要修改密码，请先验证绑定手机号"
+      />
+  <TextView
+      android:id="@+id/tv_phone"
+      style="@style/QcTextStyleLargeDark"
+      android:textSize="@dimen/txt_20sp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      />
+  <Button
+      android:id="@+id/tv_count"
+      style="@style/QcTextStyleStandardDark"
+      android:textColor="@color/colorPrimary"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="发送验证码"
+      android:background="@color/transparent"
+      tools:visibility="visible"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_code"
+      style="@style/QcCivInputStyle"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:visibility="gone"
+      app:civ_lable="@string/phone_code"
+      app:civ_hint="输入收到的验证码"
+      />
+  <Button
+      android:id="@+id/btn_next"
+      style="@style/QcBtnPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_vertical_margin"
+      android:enabled="false"
+      android:text="@string/next_step"
+      android:visibility="gone"
+      />
+</LinearLayout>

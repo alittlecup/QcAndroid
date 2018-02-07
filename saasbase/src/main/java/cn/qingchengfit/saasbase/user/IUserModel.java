@@ -1,7 +1,10 @@
-package cn.qingchengfit.saasbase.staff.network.response;
+package cn.qingchengfit.saasbase.user;
 
-import cn.qingchengfit.model.base.User;
-import com.google.gson.annotations.SerializedName;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import cn.qingchengfit.saasbase.user.bean.EditUserBody;
+import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
 
 /**
  * power by
@@ -21,12 +24,12 @@ import com.google.gson.annotations.SerializedName;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/27.
+ * Created by Paper on 2018/2/6.
  */
 
-public class UserWrap {
-  @SerializedName(value = "user",alternate = {"staff"})
-  public User user;
-  public String staff_id;
-
+public interface IUserModel {
+  rx.Observable<QcDataResponse<UserWrap>> getCurUser();
+  rx.Observable<QcDataResponse> editUser(String id,EditUserBody user);
+  rx.Observable<QcDataResponse> newPw(ModifyPwBody newPw);
+  rx.Observable<QcDataResponse> newPhone(FixPhoneBody phone);
 }

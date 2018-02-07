@@ -1,7 +1,15 @@
-package cn.qingchengfit.saasbase.staff.network.response;
+package cn.qingchengfit.apis;
 
-import cn.qingchengfit.model.base.User;
-import com.google.gson.annotations.SerializedName;
+import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import cn.qingchengfit.saasbase.user.bean.EditUserBody;
+import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 /**
  * power by
@@ -21,12 +29,22 @@ import com.google.gson.annotations.SerializedName;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/27.
+ * Created by Paper on 2018/2/7.
  */
 
-public class UserWrap {
-  @SerializedName(value = "user",alternate = {"staff"})
-  public User user;
-  public String staff_id;
+public interface UserApi {
+  //工作人员详情
+  @GET("/api/staffs/{id}/") rx.Observable<QcDataResponse<UserWrap>> qcGetSelfInfo(@Path("id") String id);
+
+  @PUT("/api/staffs/{id}/") rx.Observable<QcDataResponse> editSelfInfo(@Path("id") String id,@Body
+    EditUserBody body);
+
+  //修改密码
+  @POST("/api/staffs/{id}/change/password/") rx.Observable<QcDataResponse> qcMoidfyPw(@Path("id") String id, @Body
+    ModifyPwBody modifyPwBean);
+  //修改电话号码
+  @POST("/api/staffs/{id}/change/phone/") rx.Observable<QcDataResponse> qcModifyPhoneNum(@Path("id") String id,
+    @Body FixPhoneBody fixPhoneBody);
+
 
 }

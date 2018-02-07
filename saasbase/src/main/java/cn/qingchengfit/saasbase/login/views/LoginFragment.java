@@ -29,7 +29,9 @@ import cn.qingchengfit.saasbase.constant.WebRouters;
 import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.login.bean.LoginBody;
 import cn.qingchengfit.saasbase.login.event.SendMsgEvent;
+import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -38,6 +40,8 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.views.fragments.BottomListFragment;
 import cn.qingchengfit.widgets.PasswordView;
 import cn.qingchengfit.widgets.PhoneEditText;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.lang.ref.WeakReference;
@@ -64,10 +68,19 @@ public class LoginFragment extends BaseFragment
   @Inject CheckProtocolPresenter presenter;
   @Inject LoginPresenter loginPresenter;
   @Inject QcRestRepository restRepository;
-
+  @Inject IWXAPI api;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    RxBus.getBus().register(SendAuth.Resp.class)
+      .compose(bindToLifecycle())
+      .onBackpressureDrop()
+      .subscribe(new BusSubscribe<SendAuth.Resp>() {
+        @Override public void onNext(SendAuth.Resp resp) {
+          LogUtil.d("code ==== "+resp.code);
+          loginPresenter.loginWx();
+        }
+      });
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -182,6 +195,16 @@ public class LoginFragment extends BaseFragment
   @OnClick(R2.id.text_protocol_detail) public void onProtocol() {
     WebActivity.startWeb(restRepository.getHost() + WebRouters.USER_PROTOCOL_URL,
         getContext());
+  }
+  @OnClick(R2.id.btn_login_wx) public void loginWx(){
+    if (!api.isWXAppInstalled()) {
+      showAlert("您还未安装微信客户端");
+      return;
+    }
+    SendAuth.Req req = new SendAuth.Req();
+    req.scope = "snsapi_userinfo";
+    req.state = AppUtils.getCurAppName(getContext())+"_login";
+    api.sendReq(req);
   }
 
   @OnClick(R2.id.forgetpw_btn) public void toggle() {

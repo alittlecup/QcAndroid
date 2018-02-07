@@ -34,6 +34,8 @@ import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.PasswordView;
 import cn.qingchengfit.widgets.PhoneEditText;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import java.lang.ref.WeakReference;
 import javax.inject.Inject;
 import rx.Observable;
@@ -61,6 +63,7 @@ public class RegisteFragment extends BaseFragment implements LoginView {
   private Observable<SendMsgEvent> RxObMsg;
   @Inject LoginPresenter loginPresenter;
   @Inject QcRestRepository qcRestRepository;
+  @Inject IWXAPI api;
 
   public RegisteFragment() {
   }
@@ -114,6 +117,16 @@ public class RegisteFragment extends BaseFragment implements LoginView {
           .area_code(phoneNum.getDistrictInt())
           .build());
     }
+  }
+  @OnClick(R2.id.btn_login_wx) public void loginWx(){
+    if (!api.isWXAppInstalled()) {
+      showAlert("您还未安装微信客户端");
+      return;
+    }
+    SendAuth.Req req = new SendAuth.Req();
+    req.scope = "snsapi_userinfo";
+    req.state = AppUtils.getCurAppName(getContext())+"_registe";
+    api.sendReq(req);
   }
 
   @OnClick(R2.id.btn_agree_protocol) public void onAgree() {

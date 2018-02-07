@@ -67,18 +67,11 @@ public class StaffDetailFragment extends SaasBaseFragment implements StaffDetail
     initClick();
     return db.getRoot();
   }
-  //protected  void initHint(){
-  //  SpannableString ss = new SpannableString(getString(R.string.hint_login_web));
-  //  ss.setSpan(new ForegroundColorSpan(CompatUtils.getColor(getContext(), R.color.text_orange)), 4,
-  //    7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色
-  //  goToWeb.setText(ss, TextView.BufferType.SPANNABLE);
-  //}
 
 
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
     super.initToolbar(toolbar);
-    //toolbarTitle.setText("工作人员详情");
     db.setToolbarModel(new ToolbarModel("工作人员详情"));
     db.getToolbarModel().setMenu(R.menu.menu_save);
     db.getToolbarModel().setListener(item -> {
@@ -93,11 +86,6 @@ public class StaffDetailFragment extends SaasBaseFragment implements StaffDetail
       db.denyLayout.setVisibility(View.GONE);
     }else {
       db.denyLayout.setVisibility(View.VISIBLE);
-      //db.position.setOnClickListener(view -> onDeny());
-      //db.civGender.setOnClickListener(view -> onDeny());
-      //db.username.setCanClick(true);
-      //db.username.setOnClickListener(view -> onDeny());
-      //db.headerLayout.setOnClickListener(view -> onDeny());
     }
     db.denyLayout.setOnClickListener(view -> onDeny());
     db.position.setOnClickListener(view -> onPositionClicked());

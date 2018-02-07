@@ -2,7 +2,6 @@ package cn.qingchengfit.staffkit.views.schedule;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,7 +50,7 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            currenDate = getArguments().getString("date", "2016-01-01");
+            currenDate = getArguments().getString("date", "2018-01-01");
         }
     }
 
@@ -68,16 +67,9 @@ public class ScheduleListFragment extends BaseFragment implements ScheduleListVi
         mAdapter = new ScheduesAdapter(datas);
         scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
         scheduleRv.setAdapter(mAdapter);
-        scheduleRv.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override public void onRefresh() {
-                freshData();
-            }
-        });
-        mAdapter.setListener(new OnRecycleItemClickListener() {
-            @Override public void onItemClick(View v, int pos) {
-                WebActivity.startWebForResult(datas.get(pos).intent_url, getActivity(), 404);
-            }
-        });
+        scheduleRv.setOnRefreshListener(this::freshData);
+        mAdapter.setListener(
+          (v, pos) -> WebActivity.startWebForResult(datas.get(pos).intent_url, getActivity(), 404));
         freshData();
     }
 

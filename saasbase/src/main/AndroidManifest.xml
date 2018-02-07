@@ -43,12 +43,29 @@
       </intent-filter>
     </activity>
 
+
+
+    <!-- 场馆配置 页面 -->
+    <activity
+        android:name="cn.qingchengfit.saasbase.user.UserActivity"
+        android:screenOrientation="portrait"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data
+            android:host="user"
+            android:scheme="${APP_SCHAME}"
+            />
+      </intent-filter>
+    </activity>
+
     <!--登录页面-->
     <activity
         android:name="cn.qingchengfit.saasbase.login.LoginActivity"
         android:launchMode="singleTop"
         android:screenOrientation="portrait"
-        android:theme="@style/mainStyle"
         >
       <intent-filter>
         <action android:name="cn.qingcheng.login"/>

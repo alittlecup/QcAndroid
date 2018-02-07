@@ -35,6 +35,7 @@ import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
+import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.saasbase.login.views.LoginFragment;
 import cn.qingchengfit.saasbase.login.views.RegisteFragment;
@@ -136,8 +137,6 @@ import cn.qingchengfit.staffkit.views.schedule.ScheduleListFragment;
 import cn.qingchengfit.staffkit.views.setting.BrandManageActivity;
 import cn.qingchengfit.staffkit.views.setting.FixCheckinFragment;
 import cn.qingchengfit.staffkit.views.setting.FixNotifySettingFragment;
-import cn.qingchengfit.staffkit.views.setting.FixPhoneFragment;
-import cn.qingchengfit.staffkit.views.setting.FixPwFragment;
 import cn.qingchengfit.staffkit.views.setting.FixSelfInfoFragment;
 import cn.qingchengfit.staffkit.views.setting.ReportFragment;
 import cn.qingchengfit.staffkit.views.setting.brand.BrandCreatorEditFragment;
@@ -303,6 +302,7 @@ import dagger.multibindings.IntoMap;
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
     BindStaffCardActivity.class, BindImportExportActivity.class, BindStaffStaffActivity.class,
   BindGymConfigAcitivty.class,BindSaasCommonActivity.class,BindStaffStudentActivity.class,
+  BindUserActivity.class,
 
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,
@@ -311,7 +311,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.MainModule.class, AppComponent.GymsModule.class, AppComponent.SettingModule.class, AppComponent.FixSelfInfoModule.class,
      AppComponent.WebActivityForGuideModule.class, AppComponent.ChooseGymModule.class,
     AppComponent.PopFromBottomModule.class, AppComponent.StatmentFilterModule.class,
-    AppComponent.FixPwModule.class, AppComponent.FixPhoneModule.class, AppComponent.FixCheckinModule.class, AppComponent.ReportModule.class,
+  AppComponent.FixCheckinModule.class, AppComponent.ReportModule.class,
     AppComponent.FixNotifySettingModule.class, AppComponent.GymDetailModule.class, AppComponent.GymMoreModule.class,
     AppComponent.GymExpireModule.class, AppComponent.UpgrateGymModule.class, AppComponent.TrialProDialogModule.class,
     AppComponent.SaleGlanceModule.class, AppComponent.SaleDetailModule.class, AppComponent.CustomSaleModule.class,
@@ -651,15 +651,7 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface FixPwSubcomponent extends AndroidInjector<FixPwFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<FixPwFragment> {
-        }
-    }
 
-    @Subcomponent() public interface FixPhoneSubcomponent extends AndroidInjector<FixPhoneFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<FixPhoneFragment> {
-        }
-    }
 
     @Subcomponent() public interface FixCheckinSubcomponent extends AndroidInjector<FixCheckinFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<FixCheckinFragment> {
@@ -2163,15 +2155,7 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(FixSelfInfoSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = FixPwSubcomponent.class) abstract class FixPwModule {
-        @Binds @IntoMap @FragmentKey(FixPwFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(FixPwSubcomponent.Builder builder);
-    }
 
-    @Module(subcomponents = FixPhoneSubcomponent.class) abstract class FixPhoneModule {
-        @Binds @IntoMap @FragmentKey(FixPhoneFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(FixPhoneSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = FixCheckinSubcomponent.class) abstract class FixCheckinModule {
         @Binds @IntoMap @FragmentKey(FixCheckinFragment.class)

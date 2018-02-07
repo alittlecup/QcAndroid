@@ -133,13 +133,11 @@ public class FixSelfInfoFragment extends BaseDialogFragment implements CommonPVi
             .into(new CircleImgWrapper(headerImg, getContext()));
         courseTypeRg.check((self.getGender() == 0) ? R.id.gender_male : R.id.gender_female);
         username.setContent(self.getUsername());
-        courseTypeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.gender_male) {
-                    self.setGender(0);
-                } else {
-                    self.setGender(1);
-                }
+        courseTypeRg.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.gender_male) {
+                self.setGender(0);
+            } else {
+                self.setGender(1);
             }
         });
         if (self != null && self.getGd_district() != null && self.getGd_district().getId() > 0) {

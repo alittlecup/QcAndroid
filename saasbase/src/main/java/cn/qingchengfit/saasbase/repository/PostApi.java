@@ -11,8 +11,6 @@ import cn.qingchengfit.saasbase.login.bean.LoginBody;
 import cn.qingchengfit.saasbase.login.bean.RegisteBody;
 import cn.qingchengfit.saasbase.network.body.CreatBrandBody;
 import cn.qingchengfit.saasbase.network.body.FeedBackBody;
-import cn.qingchengfit.saasbase.network.body.FixPhoneBody;
-import cn.qingchengfit.saasbase.network.body.ModifyPwBody;
 import cn.qingchengfit.saasbase.network.body.SystemInitBody;
 import cn.qingchengfit.saasbase.network.response.CreatBrand;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
@@ -20,6 +18,8 @@ import cn.qingchengfit.saasbase.network.response.QcResponseSystenInit;
 import cn.qingchengfit.saasbase.qrcode.model.ScanBody;
 import cn.qingchengfit.saasbase.staff.model.body.ChangeSuBody;
 import cn.qingchengfit.saasbase.staff.model.body.ManagerBody;
+import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -47,7 +47,7 @@ public interface PostApi {
 
   //修改密码
   @POST("/api/staffs/{id}/change/password/") rx.Observable<QcResponse> qcMoidfyPw(@Path("id") String id, @Body
-      ModifyPwBody modifyPwBean);
+    ModifyPwBody modifyPwBean);
 
   //修改电话号码
   @POST("/api/staffs/{id}/change/phone/") rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") String id,

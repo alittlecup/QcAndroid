@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.usecase.bean;
+package cn.qingchengfit.saasbase.user.bean;
 
 /**
  * power by
@@ -11,23 +11,25 @@ package cn.qingchengfit.staffkit.usecase.bean;
  * 88      YP   YP 88      Y88888P 88   YD
  * <p/>
  * <p/>
- * Created by Paper on 16/2/19 2016.
+ * Created by Paper on 16/2/22 2016.
  */
-public class ModifyPwBody {
-    public String phone;
-    public String code;
-    public String password;
+public class FixPhoneBody {
+    String phone;
+    String password;
+    String code;
+    String area_code;
 
-    public ModifyPwBody(String phone, String code, String password) {
+    public FixPhoneBody(String phone, String password, String code) {
         this.phone = phone;
-        this.code = code;
         this.password = password;
+        this.code = code;
     }
 
-    private ModifyPwBody(Builder builder) {
+    private FixPhoneBody(Builder builder) {
         setPhone(builder.phone);
-        setCode(builder.code);
         setPassword(builder.password);
+        setCode(builder.code);
+        area_code = builder.area_code;
     }
 
     public String getPhone() {
@@ -38,14 +40,6 @@ public class ModifyPwBody {
         this.phone = phone;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -54,10 +48,19 @@ public class ModifyPwBody {
         this.password = password;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public static final class Builder {
         private String phone;
-        private String code;
         private String password;
+        private String code;
+        private String area_code;
 
         public Builder() {
         }
@@ -67,18 +70,23 @@ public class ModifyPwBody {
             return this;
         }
 
-        public Builder code(String val) {
-            code = val;
-            return this;
-        }
-
         public Builder password(String val) {
             password = val;
             return this;
         }
 
-        public ModifyPwBody build() {
-            return new ModifyPwBody(this);
+        public Builder code(String val) {
+            code = val;
+            return this;
+        }
+
+        public Builder area_code(String val) {
+            area_code = val;
+            return this;
+        }
+
+        public FixPhoneBody build() {
+            return new FixPhoneBody(this);
         }
     }
 }

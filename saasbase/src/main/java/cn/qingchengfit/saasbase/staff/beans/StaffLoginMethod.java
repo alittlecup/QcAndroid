@@ -32,11 +32,11 @@ public class StaffLoginMethod implements Parcelable {
   public boolean wx_active;
 
   private StaffLoginMethod(Builder builder) {
-    if (!CmStringUtils.isEmpty(builder.phone) && builder.phone.length() >= 11) {
+    if (!CmStringUtils.isEmpty(builder.phone) && builder.phone.length() >= 7) {
       phone = builder.phone.substring(0,3)+"****"+builder.phone.substring(6);
     }
     phone_active = builder.phone_active;
-    wx = builder.wx;
+    wx = builder.wx == null?"":builder.wx;
     wx_active = builder.wx_active;
   }
 

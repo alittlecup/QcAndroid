@@ -7,8 +7,6 @@ import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
-import cn.qingchengfit.staffkit.usecase.bean.FixPhoneBody;
-import cn.qingchengfit.staffkit.usecase.bean.ModifyPwBody;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,23 +34,9 @@ public class SettingUseCase {
         this.restRepository = restRepository;
     }
 
-    public Subscription fixPw(ModifyPwBody body, Action1<QcResponse> action1) {
-        return restRepository.qcFixPW(body).onBackpressureBuffer().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(action1, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
 
-                }
-            });
-    }
 
-    public Subscription fixPhone(FixPhoneBody body, Action1<QcResponse> action1) {
-      return restRepository.qcFixPhone(body)
-          .onBackpressureBuffer()
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(action1);
-    }
+
 
     public Subscription report(FeedBackBody body, Action1<QcResponse> action1) {
       return restRepository.qcReport(body)

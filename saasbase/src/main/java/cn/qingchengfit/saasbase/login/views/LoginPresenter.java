@@ -67,6 +67,10 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     list.addAll(sts);
   }
 
+  public void loginWx(){
+
+  }
+
   public void doLogin(final LoginBody loginBody) {
     mvpView.onShowLogining();
 

@@ -38,7 +38,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -178,15 +177,13 @@ public class SuNewFragment extends BaseFragment implements SuNewPresenter.MVPVie
         RxRegiste(Observable.interval(0, 1, TimeUnit.SECONDS)
             .take(60).onBackpressureBuffer().subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<Long>() {
-                @Override public void call(Long aLong) {
-                    if (pwView != null && !pwView.isPwMode()) {
-                        if (aLong >= 59) {
-                            pwView.blockRightClick(false);
-                        } else {
-                            pwView.blockRightClick(true);
-                            pwView.setRightText(String.format(getString(R.string.login_resend_msg), (int) (60 - aLong)));
-                        }
+            .subscribe(aLong -> {
+                if (pwView != null && !pwView.isPwMode()) {
+                    if (aLong >= 59) {
+                        pwView.blockRightClick(false);
+                    } else {
+                        pwView.blockRightClick(true);
+                        pwView.setRightText(String.format(getString(R.string.login_resend_msg), (int) (60 - aLong)));
                     }
                 }
             }));

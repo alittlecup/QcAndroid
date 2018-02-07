@@ -100,31 +100,6 @@
           app:civ_text_color="@color/text_dark"
           />
 
-      <include layout="@layout/divider_grey"/>
-
-      <include layout="@layout/divider_grey_margin"/>
-
-
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/setting_fixpw"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          app:civ_clickable="true"
-          app:civ_lable="@string/home_fix_pw"
-          app:civ_showright="true"
-          app:civ_text_color="@color/qc_text_black"
-          />
-
-      <cn.qingchengfit.widgets.CommonInputView
-          android:id="@+id/setting_fixphone"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/qc_item_height"
-          app:civ_clickable="true"
-          app:civ_lable="@string/home_fix_phone"
-          app:civ_showdivier="true"
-          app:civ_showright="true"
-          app:civ_text_color="@color/qc_text_black"
-          />
 
 
       <include layout="@layout/divider_grey"/>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_pw_old"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_hint="输入新密码"
+      app:civ_lable="新密码"
+      style="@style/QcCivInputStyle"
+      />
+
+  <cn.qingchengfit.widgets.CommonInputView
+      android:id="@+id/civ_pw_new"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_hint="再次输入新密码"
+      app:civ_lable="确认新密码"
+      style="@style/QcCivInputStyle"
+      />
+
+  <Button
+      android:id="@+id/btn_done"
+      style="@style/QcBtnPrimary"
+      android:text="确定"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_vertical_margin"
+      />
+</LinearLayout>

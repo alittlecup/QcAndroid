@@ -15,8 +15,6 @@ import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.Post_Api;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
 import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
-import cn.qingchengfit.staffkit.usecase.bean.FixPhoneBody;
-import cn.qingchengfit.staffkit.usecase.bean.ModifyPwBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -205,24 +203,8 @@ public class RestRepository implements Repository {
         }).doOnError(doOnError);
     }
 
-    /**
-     * 修改密码
-     */
-    public Observable<QcResponse> qcFixPW(ModifyPwBody modifyPwBody) {
-        return post_api.qcMoidfyPw(App.staffId, modifyPwBody).retry(new Func2<Integer, Throwable, Boolean>() {
-            @Override public Boolean call(Integer integer, Throwable throwable) {
-                return integer < 3 && throwable instanceof SocketTimeoutException;
-            }
-        }).doOnError(doOnError);
-    }
 
-    public Observable<QcResponse> qcFixPhone(FixPhoneBody fixPhoneBody) {
-        return post_api.qcModifyPhoneNum(App.staffId, fixPhoneBody).retry(new Func2<Integer, Throwable, Boolean>() {
-            @Override public Boolean call(Integer integer, Throwable throwable) {
-                return integer < 3 && throwable instanceof SocketTimeoutException;
-            }
-        }).doOnError(doOnError);
-    }
+
 
     public Observable<QcResponse> qcReport(FeedBackBody bean) {
         return post_api.qcFeedBack(bean).retry(new Func2<Integer, Throwable, Boolean>() {

@@ -6,6 +6,7 @@ import cn.qingchengfit.model.CardModel;
 import cn.qingchengfit.model.ExportModel;
 import cn.qingchengfit.model.LoginModel;
 import cn.qingchengfit.model.SaasModelImpl;
+import cn.qingchengfit.model.UserModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
@@ -24,9 +25,12 @@ import cn.qingchengfit.saasbase.routers.courseImpl;
 import cn.qingchengfit.saasbase.routers.exportImpl;
 import cn.qingchengfit.saasbase.routers.gymImpl;
 import cn.qingchengfit.saasbase.routers.staffImpl;
+import cn.qingchengfit.saasbase.routers.userImpl;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
+import cn.qingchengfit.saasbase.user.IUserModel;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.CardStudentRouters;
+import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.card.StaffCardRouters;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
 import cn.qingchengfit.staffkit.repository.CourseModel;
@@ -36,6 +40,8 @@ import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.staffkit.staff.StaffModel;
 import cn.qingchengfit.staffkit.student.network.StudentModel;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import dagger.Module;
 import dagger.Provides;
 import java.util.List;
@@ -54,6 +60,7 @@ import java.util.List;
  * Created by Paper on 15/11/19 2015.
  */
 @Module public class AppModel {
+  private IWXAPI api;
   private App app;
   private SerPermissionImpl serPermission;
   private LoginStatus loginStatus;
@@ -68,6 +75,8 @@ import java.util.List;
   private SaasbaseRouterCenter saasbaseRouterCenter;
   private IGymConfigModel gymConfigModel;
   private ILoginModel loginModel;
+  private IUserModel userModel;
+
   public AppModel() {
   }
 
@@ -87,7 +96,8 @@ import java.util.List;
     courseModel = new CourseModel(qcrestRepository,gymWrapper,loginStatus);
     gymConfigModel = new GymConfigModel(gymWrapper,loginStatus,qcrestRepository);
     loginModel = new LoginModel(gymWrapper,loginStatus,qcrestRepository);
-
+    userModel = new UserModel(gymWrapper,loginStatus,qcrestRepository);
+    api = WXAPIFactory.createWXAPI(app, app.getString(R.string.wechat_code));
     this.saasbaseRouterCenter = new SaasbaseRouterCenter()
       .registe(new exportImpl())
       .registe(new gymImpl())
@@ -96,12 +106,22 @@ import java.util.List;
       .registe(new commonImpl())
       .registe(new courseImpl())
       .registe(new CardStudentRouters())
+      .registe(new userImpl())
       .registe(new billImpl());
 
+
+  }
+
+  @Provides IWXAPI provideWx(){
+    return api;
   }
 
   @Provides ILoginModel providerLogin(){
     return loginModel;
+  }
+
+  @Provides IUserModel providerUserModel(){
+    return userModel;
   }
 
   @Provides IGymConfigModel provideGymConfigModel(){

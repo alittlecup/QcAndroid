@@ -7,7 +7,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.staffkit.usecase.SettingUseCase;
-import cn.qingchengfit.staffkit.usecase.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -67,17 +67,7 @@ public class FixPhonePresenter extends BasePresenter {
         if (subscriptionQuery != null) subscriptionQuery.unsubscribe();
     }
 
-    public void fixPhone(FixPhoneBody body) {
-        subcription = useCase.fixPhone(body, new Action1<QcResponse>() {
-            @Override public void call(QcResponse qcResponse) {
-                if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onSucceed();
-                } else {
-                    view.onError(qcResponse.getMsg());
-                }
-            }
-        });
-    }
+
 
     public void onQueryCode(GetCodeBody phone) {
 

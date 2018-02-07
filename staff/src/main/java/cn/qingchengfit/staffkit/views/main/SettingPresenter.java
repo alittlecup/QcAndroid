@@ -4,11 +4,8 @@ import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.responese.SettingUsecase;
-import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcDataResponse;
 import javax.inject.Inject;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -62,13 +59,11 @@ public class SettingPresenter extends BasePresenter {
     }
 
     public void getSelfInfo() {
-        usecase.getSelfInfo(new Action1<QcDataResponse<StaffResponse>>() {
-            @Override public void call(QcDataResponse<StaffResponse> qcResponseSelfInfo) {
-                if (qcResponseSelfInfo.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onSelfInfo(qcResponseSelfInfo.data.staff);
-                } else {
+        usecase.getSelfInfo(qcResponseSelfInfo -> {
+            if (qcResponseSelfInfo.getStatus() == ResponseConstant.SUCCESS) {
+                view.onSelfInfo(qcResponseSelfInfo.data.staff);
+            } else {
 
-                }
             }
         });
     }

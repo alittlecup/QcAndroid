@@ -170,6 +170,10 @@
         android:text="确定"
         >
     </Button>
-
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_vertical_margin"
+        />
+    <include layout="@layout/l_other_login_method"/>
   </LinearLayout>
 </ScrollView>

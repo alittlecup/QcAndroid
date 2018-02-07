@@ -1,7 +1,11 @@
-package cn.qingchengfit.saasbase.staff.network.response;
+package cn.qingchengfit.saasbase.user;
 
-import cn.qingchengfit.model.base.User;
-import com.google.gson.annotations.SerializedName;
+import cn.qingchengfit.saasbase.SaasContainerActivity;
+import cn.qingchengfit.saasbase.user.view.UserCaptchaFragment;
+import cn.qingchengfit.saasbase.user.view.UserEditFragment;
+import cn.qingchengfit.saasbase.user.view.UserNewPhoneFragment;
+import cn.qingchengfit.saasbase.user.view.UserNewPwFragment;
+import com.anbillon.flabellum.annotations.Trunk;
 
 /**
  * power by
@@ -21,12 +25,13 @@ import com.google.gson.annotations.SerializedName;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/10/27.
+ * Created by Paper on 2018/2/6.
  */
-
-public class UserWrap {
-  @SerializedName(value = "user",alternate = {"staff"})
-  public User user;
-  public String staff_id;
-
+@Trunk(fragments = {
+  UserCaptchaFragment.class, UserEditFragment.class, UserNewPwFragment.class, UserNewPhoneFragment.class
+})
+public class UserActivity extends SaasContainerActivity {
+  @Override public String getModuleName() {
+    return "user";
+  }
 }

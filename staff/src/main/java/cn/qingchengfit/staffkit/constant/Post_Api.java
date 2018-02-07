@@ -59,8 +59,6 @@ import cn.qingchengfit.staffkit.train.model.CreateGroupBody;
 import cn.qingchengfit.staffkit.train.model.OperationMemberBody;
 import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
 import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
-import cn.qingchengfit.staffkit.usecase.bean.FixPhoneBody;
-import cn.qingchengfit.staffkit.usecase.bean.ModifyPwBody;
 import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
 import cn.qingchengfit.staffkit.usecase.bean.User_Student;
@@ -136,12 +134,6 @@ public interface Post_Api {
         @Body Shop shop);
 
 
-    //修改密码
-    @POST("/api/staffs/{id}/change/password/") rx.Observable<QcResponse> qcMoidfyPw(@Path("id") String id, @Body ModifyPwBody modifyPwBean);
-
-    //修改电话号码
-    @POST("/api/staffs/{id}/change/phone/") rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") String id,
-        @Body FixPhoneBody fixPhoneBody);
 
     //修改信息
     @PUT("/api/staffs/{id}/") rx.Observable<QcResponse> qcModifyStaffs(@Path("id") String id, @Body Staff staffBean);
