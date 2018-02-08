@@ -4,16 +4,16 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.BuildConfig;
 import cn.qingchengfit.saasbase.login.ILoginModel;
+import cn.qingchengfit.saasbase.login.LoginApi;
 import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
 import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.login.bean.Login;
 import cn.qingchengfit.saasbase.login.bean.LoginBody;
 import cn.qingchengfit.saasbase.login.bean.RegisteBody;
 import cn.qingchengfit.saasbase.login.views.CheckProtocolModel;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.BuildConfig;
-import cn.qingchengfit.saasbase.login.LoginApi;
+import com.qingchengfit.fitcoach.App;
 import java.util.HashMap;
 import rx.Observable;
 
@@ -35,7 +35,7 @@ import rx.Observable;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2018/2/6.
+ * Created by Paper on 2018/2/8.
  */
 
 public class LoginModel implements ILoginModel {
@@ -53,7 +53,7 @@ public class LoginModel implements ILoginModel {
 
 
   @Override public void setStaffId(String staffid) {
-    App.staffId = staffid;
+    App.coachid = Integer.parseInt(staffid);
   }
 
   @Override public boolean isDebug() {

@@ -496,7 +496,7 @@ public class MainActivity extends BaseActivity implements OpenDrawerInterface {
         removeCookies(cookieManager);
         PreferenceUtils.setPrefBoolean(this, "first", true);
         Intent logout = new Intent(this, SplashActivity.class);
-        logout.putExtra("isRegiste", 0);
+        logout.putExtra("isRegiste", false);
         startActivity(logout);
         this.finish();
     }

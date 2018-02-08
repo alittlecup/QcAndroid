@@ -11,7 +11,6 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyBrifeFragment;
-import com.qingchengfit.fitcoach.fragment.ModifyInfoFragment;
 import com.qingchengfit.fitcoach.fragment.settings.ImagesFragment;
 
 /**
@@ -61,7 +60,8 @@ public class EditHomeFragment extends BaseSettingFragment {
                 fragmentCallBack.onFragmentChange(new ImagesFragment());
                 break;
             case R.id.btn_base_info:
-                fragmentCallBack.onFragmentChange(ModifyInfoFragment.newInstance("", ""));
+                routeTo("user","/edit/",null);
+                //fragmentCallBack.onFragmentChange(ModifyInfoFragment.newInstance("", ""));
                 break;
         }
     }

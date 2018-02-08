@@ -1,13 +1,15 @@
-package cn.qingchengfit.saasbase.gymconfig;
+package cn.qingchengfit.model;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.network.GymConfigApi;
+import cn.qingchengfit.api.GymConfigApi;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
 import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;
 import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigListWrap;
 import cn.qingchengfit.saasbase.gymconfig.network.response.SpaceListWrap;
+import cn.qingchengfit.saasbase.network.response.GymList;
 import java.util.HashMap;
 import rx.Observable;
 
@@ -37,5 +39,9 @@ public class GymConfigModel implements IGymConfigModel {
   @Deprecated
   @Override public Observable<QcDataResponse> saveShopConfigs(ShopConfigBody body) {
     return null;
+  }
+
+  @Override public Observable<QcDataResponse<GymList>> qcGetCoachService(String brand_id) {
+    return api.qcGetCoachService(loginStatus.staff_id());
   }
 }

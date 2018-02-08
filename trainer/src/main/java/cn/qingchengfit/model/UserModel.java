@@ -1,13 +1,15 @@
 package cn.qingchengfit.model;
 
+import cn.qingchengfit.api.UserApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.export.network.response.ExportRecordWrapper;
-import cn.qingchengfit.saasbase.repository.IExportModel;
-import cn.qingchengfit.apis.ExportApi;
-import java.util.HashMap;
+import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import cn.qingchengfit.saasbase.user.IUserModel;
+import cn.qingchengfit.saasbase.user.bean.EditUserBody;
+import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
 import rx.Observable;
 
 /**
@@ -28,33 +30,34 @@ import rx.Observable;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/11/27.
+ * Created by Paper on 2018/2/8.
  */
 
-public class ExportModel implements IExportModel {
-  QcRestRepository repository;
+public class UserModel implements IUserModel {
   GymWrapper gymWrapper;
   LoginStatus loginStatus;
-  ExportApi posApi;
+  UserApi api;
 
-  public ExportModel(QcRestRepository repository, GymWrapper gymWrapper, LoginStatus loginStatus) {
-    this.repository = repository;
+  public UserModel(GymWrapper gymWrapper, LoginStatus loginStatus,
+    QcRestRepository qcRestRepository) {
     this.gymWrapper = gymWrapper;
     this.loginStatus = loginStatus;
-    posApi = repository.createGetApi(ExportApi.class);
+    api = qcRestRepository.createGetApi(UserApi.class);
   }
 
-  @Override public Observable<QcDataResponse<ExportRecordWrapper>> qcGetExportRecord() {
-    return posApi.qcGetExportRecord(loginStatus.staff_id(), gymWrapper.getParams());
+  @Override public Observable<QcDataResponse<UserWrap>> getCurUser() {
+    return api.qcGetCoach(loginStatus.staff_id());
   }
 
-  @Override public Observable<QcDataResponse> qcSendMail(HashMap<String, Object> params) {
-    params.putAll(gymWrapper.getParams());
-    return posApi.qcSendMail(loginStatus.staff_id(), params);
+  @Override public Observable<QcDataResponse> editUser(String id, EditUserBody user) {
+    return api.qcModifyCoach(loginStatus.staff_id(), user);
   }
 
-  @Override public Observable<QcDataResponse> qcDataImport(HashMap<String, Object> params) {
-    params.putAll(gymWrapper.getParams());
-    return posApi.qcDataImport(loginStatus.staff_id(), params);
+  @Override public Observable<QcDataResponse> newPw(ModifyPwBody newPw) {
+    return api.qcMoidfyPw(loginStatus.staff_id(), newPw);
+  }
+
+  @Override public Observable<QcDataResponse> newPhone(FixPhoneBody phone) {
+    return api.qcModifyPhoneNum(loginStatus.staff_id(), phone);
   }
 }

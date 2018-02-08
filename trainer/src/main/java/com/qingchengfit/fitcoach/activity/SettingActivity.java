@@ -16,7 +16,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
 import com.qingchengfit.fitcoach.fragment.ModifyBrifeFragment;
-import com.qingchengfit.fitcoach.fragment.ModifyInfoFragment;
 import com.qingchengfit.fitcoach.fragment.RecordFragment;
 import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
 import com.qingchengfit.fitcoach.fragment.personalpage.EditHomeFragment;
@@ -44,7 +43,7 @@ public class SettingActivity extends BaseActivity
         int to = getIntent().getIntExtra("to", 0);
         switch (to) {
             case 1:
-                onFragmentChange(ModifyInfoFragment.newInstance("", ""), false);
+                //onFragmentChange(ModifyInfoFragment.newInstance("", ""), false);
                 break;
             case 3:
                 onFragmentChange(new RecordFragment(), false);

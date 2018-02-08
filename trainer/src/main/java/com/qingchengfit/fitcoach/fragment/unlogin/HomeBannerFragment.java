@@ -17,11 +17,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
-import com.qingchengfit.fitcoach.activity.LoginActivity;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +113,7 @@ public class HomeBannerFragment extends BaseFragment {
     public void onClickUseNow(){
         if (!loginStatus.isLogined()) {
             Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-            toLogin.putExtra("isRegiste", 1);
+            toLogin.putExtra("isRegiste", true);
             startActivity(toLogin);
         }else {
             startActivity(new Intent(getActivity(), GuideActivity.class));
@@ -126,7 +126,7 @@ public class HomeBannerFragment extends BaseFragment {
     @OnClick(R.id.btn_login)
     public void onLogin(){
         Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-        toLogin.putExtra("isRegiste", 0);
+        toLogin.putExtra("isRegiste", false);
         startActivity(toLogin);
     }
 

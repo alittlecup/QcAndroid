@@ -14,11 +14,11 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
+import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
-import com.qingchengfit.fitcoach.activity.LoginActivity;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -83,7 +83,7 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
     @OnClick(R.id.btn_use_now) public void onClickUseNow() {
         if (!loginStatus.isLogined()) {
             Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-            toLogin.putExtra("isRegiste", 1);
+            toLogin.putExtra("isRegiste", true);
             startActivity(toLogin);
         }else {
             startActivity(new Intent(getActivity(), GuideActivity.class));
@@ -95,7 +95,7 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
      */
     @OnClick(R.id.btn_login) public void onLogin() {
         Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-        toLogin.putExtra("isRegiste", 0);
+        toLogin.putExtra("isRegiste", false);
         startActivity(toLogin);
     }
 

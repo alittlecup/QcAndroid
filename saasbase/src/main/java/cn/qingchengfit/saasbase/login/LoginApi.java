@@ -1,13 +1,18 @@
-package cn.qingchengfit.staffkit.repository;
+package cn.qingchengfit.saasbase.login;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.export.network.response.ExportRecordWrapper;
+import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
+import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
+import cn.qingchengfit.saasbase.login.bean.Login;
+import cn.qingchengfit.saasbase.login.bean.LoginBody;
+import cn.qingchengfit.saasbase.login.bean.RegisteBody;
+import cn.qingchengfit.saasbase.login.views.CheckProtocolModel;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
+import rx.Observable;
 
 /**
  * power by
@@ -27,20 +32,27 @@ import retrofit2.http.QueryMap;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2017/11/27.
+ * Created by Paper on 2018/2/6.
  */
 
-public interface ExportApi {
-  //导出记录
-  @GET("/api/staffs/{staff_id}/export/records/")
-  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ExportRecordWrapper>> qcGetExportRecord(
-    @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
+public interface LoginApi {
 
-  //导入导出
-  @POST("/api/staffs/{staff_id}/export/do/") rx.Observable<QcDataResponse> qcDataImport(
-    @Path("staff_id") String staff_id, @Body HashMap<String, Object> body);
+  @POST("/api/user/login/?session_config=true") Observable<QcDataResponse<Login>> qcLogin(@Body
+    LoginBody loginBody);
 
-  //发送邮件
-  @POST("/api/staffs/{staff_id}/export/mail/") rx.Observable<QcDataResponse> qcSendMail(
-    @Path("staff_id") String staff_id, @Body HashMap<String, Object> body);
+  //注册
+  @POST("/api/user/register/?session_config=true") rx.Observable<QcDataResponse<Login>> qcRegister(@Body
+    RegisteBody params);
+
+  //获取电话验证码
+  @POST("/api/send/verify/") rx.Observable<QcDataResponse> qcGetCode(@Body GetCodeBody account);
+  /**
+   * 验证验证码
+   */
+  @POST("api/check/verify/") rx.Observable<QcDataResponse> qcCheckCode(@Body CheckCodeBody body);
+  //判断是否同意用户协议
+  @GET(" /api/user/check/read_agreement/")
+  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CheckProtocolModel>> qcCheckProtocol(
+    @QueryMap HashMap<String, Object> params);
+
 }

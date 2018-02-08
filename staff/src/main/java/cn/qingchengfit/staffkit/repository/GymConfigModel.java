@@ -1,5 +1,6 @@
 package cn.qingchengfit.staffkit.repository;
 
+import cn.qingchengfit.apis.GymConfigApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;

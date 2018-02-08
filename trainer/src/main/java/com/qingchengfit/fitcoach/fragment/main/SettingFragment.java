@@ -30,8 +30,6 @@ import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.fragment.AdviceFragment;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.fragment.CalSyncFragment;
-import com.qingchengfit.fitcoach.fragment.ModifyPhoneFragment;
-import com.qingchengfit.fitcoach.fragment.ModifyPwFragment;
 import com.tencent.qcloud.timchat.common.AppData;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import javax.inject.Inject;
@@ -100,7 +98,7 @@ public class SettingFragment extends BaseSettingFragment {
     }) public void onClickUs(View view) {
         switch (view.getId()) {
             case R.id.setting_modifypw:
-                fragmentCallBack.onFragmentChange(ModifyPwFragment.newInstance("", ""));
+                //fragmentCallBack.onFragmentChange(ModifyPwFragment.newInstance("", ""));
                 break;
             case R.id.setting_advice:
                 fragmentCallBack.onFragmentChange(new AdviceFragment());
@@ -111,7 +109,7 @@ public class SettingFragment extends BaseSettingFragment {
                 startActivity(toWeb);
                 break;
             case R.id.setting_modifyphone:
-                fragmentCallBack.onFragmentChange(new ModifyPhoneFragment());
+                //fragmentCallBack.onFragmentChange(new ModifyPhoneFragment());
                 break;
             case R.id.setting_calsync:
                 fragmentCallBack.onFragmentChange(CalSyncFragment.newInstance("", ""));

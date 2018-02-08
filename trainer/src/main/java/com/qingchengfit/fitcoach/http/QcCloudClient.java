@@ -65,10 +65,8 @@ import com.qingchengfit.fitcoach.http.bean.GetBatchesResponse;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.HidenBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
-import com.qingchengfit.fitcoach.http.bean.ModifyCoachInfo;
 import com.qingchengfit.fitcoach.http.bean.ModifyDes;
 import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
-import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.OneExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
@@ -690,12 +688,10 @@ public class QcCloudClient {
 
         @PUT("/api/users/{id}/") rx.Observable<QcResponse> qcModifyInfo(@Path("id") String id);
 
-        //修改教练信息
-        @PUT("/api/coaches/{id}/") rx.Observable<QcResponse> qcModifyCoach(@Path("id") int id, @Body ModifyCoachInfo coachInfo);
 
-        //修改密码
-        @POST("/api/coaches/{id}/change/password/") rx.Observable<QcResponse> qcMoidfyPw(@Path("id") int id,
-            @Body ModifyPwBean modifyPwBean);
+        ////修改密码
+        //@POST("/api/coaches/{id}/change/password/") rx.Observable<QcResponse> qcMoidfyPw(@Path("id") int id,
+        //    @Body ModifyPwBean modifyPwBean);
 
         //发送意见
         @POST("/api/feedback/") rx.Observable<QcEvaluateResponse> qcFeedBack(@Body FeedBackBean bean);
@@ -734,9 +730,9 @@ public class QcCloudClient {
         @POST("/api/organizations/") rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body
           OrganizationBean organizationBean);
 
-        //修改电话号码
-        @POST("/api/coaches/{id}/change/phone/") rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") int id,
-            @Body ModifyPhoneNum modifyPwBean);
+        ////修改电话号码
+        //@POST("/api/coaches/{id}/change/phone/") rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") int id,
+        //    @Body ModifyPhoneNum modifyPwBean);
 
         //修改个人描述
         @POST("/api/coaches/{id}/change/description/") rx.Observable<QcResponse> qcModifyDes(@Path("id") int id, @Body ModifyDes modifyDes);

@@ -153,11 +153,9 @@ public class LoginFragment extends BaseFragment
           }
         }
       });
-      et.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
-          if (!TextUtils.isEmpty(et.getText())) {
-            listFragment.show(getFragmentManager(), null);
-          }
+      et.setOnClickListener(v -> {
+        if (!TextUtils.isEmpty(et.getText())) {
+          listFragment.show(getFragmentManager(), null);
         }
       });
       final Button btnChange = new Button(getContext());

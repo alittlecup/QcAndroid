@@ -25,7 +25,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class UserWrap {
-  @SerializedName(value = "user",alternate = {"staff"})
+  @SerializedName(value = "user",alternate = {"staff","coach"})
   public User user;
   public String staff_id;
 

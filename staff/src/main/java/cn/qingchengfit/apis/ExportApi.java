@@ -1,14 +1,13 @@
-package cn.qingchengfit.model;
+package cn.qingchengfit.apis;
 
-import cn.qingchengfit.di.model.GymWrapper;
-import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.export.network.response.ExportRecordWrapper;
-import cn.qingchengfit.saasbase.repository.IExportModel;
-import cn.qingchengfit.apis.ExportApi;
 import java.util.HashMap;
-import rx.Observable;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.QueryMap;
 
 /**
  * power by
@@ -31,30 +30,17 @@ import rx.Observable;
  * Created by Paper on 2017/11/27.
  */
 
-public class ExportModel implements IExportModel {
-  QcRestRepository repository;
-  GymWrapper gymWrapper;
-  LoginStatus loginStatus;
-  ExportApi posApi;
+public interface ExportApi {
+  //导出记录
+  @GET("/api/staffs/{staff_id}/export/records/")
+  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<ExportRecordWrapper>> qcGetExportRecord(
+    @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-  public ExportModel(QcRestRepository repository, GymWrapper gymWrapper, LoginStatus loginStatus) {
-    this.repository = repository;
-    this.gymWrapper = gymWrapper;
-    this.loginStatus = loginStatus;
-    posApi = repository.createGetApi(ExportApi.class);
-  }
+  //导入导出
+  @POST("/api/staffs/{staff_id}/export/do/") rx.Observable<QcDataResponse> qcDataImport(
+    @Path("staff_id") String staff_id, @Body HashMap<String, Object> body);
 
-  @Override public Observable<QcDataResponse<ExportRecordWrapper>> qcGetExportRecord() {
-    return posApi.qcGetExportRecord(loginStatus.staff_id(), gymWrapper.getParams());
-  }
-
-  @Override public Observable<QcDataResponse> qcSendMail(HashMap<String, Object> params) {
-    params.putAll(gymWrapper.getParams());
-    return posApi.qcSendMail(loginStatus.staff_id(), params);
-  }
-
-  @Override public Observable<QcDataResponse> qcDataImport(HashMap<String, Object> params) {
-    params.putAll(gymWrapper.getParams());
-    return posApi.qcDataImport(loginStatus.staff_id(), params);
-  }
+  //发送邮件
+  @POST("/api/staffs/{staff_id}/export/mail/") rx.Observable<QcDataResponse> qcSendMail(
+    @Path("staff_id") String staff_id, @Body HashMap<String, Object> body);
 }

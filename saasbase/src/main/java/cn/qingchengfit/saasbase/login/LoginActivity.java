@@ -12,24 +12,34 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.login.views.LoginFragment;
+import cn.qingchengfit.saasbase.login.views.RegistInitFragment;
 import cn.qingchengfit.saasbase.login.views.RegisteFragment;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.widgets.LoadingDialog;
-import dagger.android.AndroidInjection;
+import com.anbillon.flabellum.annotations.Trunk;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import javax.inject.Inject;
-
-public class LoginActivity extends BaseActivity {
+@Trunk(fragments = {
+  LoginFragment.class,RegisteFragment.class, RegistInitFragment.class
+})
+public class LoginActivity extends BaseActivity implements HasSupportFragmentInjector {
+  @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
 
   @BindView(R2.id.viewpager) ViewPager viewpager;
   @BindView(R2.id.login_tabview) TabLayout loginTabview;
   LoadingDialog dialog;
   @Inject LoginStatus loginStatus;
 
+  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+    return dispatchingFragmentInjector;
+  }
   @Override protected void onCreate(Bundle savedInstanceState) {
-    AndroidInjection.inject(this);
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
@@ -49,8 +59,10 @@ public class LoginActivity extends BaseActivity {
       ToastUtils.show("已登录");
       finish();
     }
-
   }
+
+
+
 
   class LoginFragAdapter extends FragmentPagerAdapter {
 

@@ -275,7 +275,7 @@ public class ManageFragment extends BaseFragment
 
     final String curCoachId = newCcid;
     repoCoachService.readAllServices()
-        .observeOn(AndroidSchedulers.mainThread())
+        .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
         .subscribe(coachServices -> {
           if (coachServices.size() > 0) {
             gymWrapper.setCoachService(coachServices.get(0));

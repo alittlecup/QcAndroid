@@ -1,32 +1,28 @@
-package cn.qingchengfit.staffkit.model.db;
+package cn.qingchengfit.db;
 
 import android.arch.persistence.room.Room;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import cn.qingchengfit.db.AppDatabase;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.Permission;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.saasbase.db.GymFunctionDao;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
-import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.utils.LogUtil;
+import com.qingchengfit.fitcoach.App;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import rx.subjects.Subject;
 
 public class QCDbManagerImpl implements QcDbManager {
   private static final String TAG = "QCDbManager";
   AppDatabase appDatabase;
-  private ConcurrentHashMap<Object, Subject> subjectMapper = new ConcurrentHashMap<>();
 
   public QCDbManagerImpl(App application) {
-    appDatabase = Room.databaseBuilder(application, AppDatabase.class, "qc_staff")
+    appDatabase = Room.databaseBuilder(application, AppDatabase.class, "qc_coach")
       .allowMainThreadQueries()
       .build();
   }
@@ -94,6 +90,7 @@ public class QCDbManagerImpl implements QcDbManager {
       appDatabase.studentDao().delStudent(qcStudentBean);
     });
   }
+
 
   public void saveStudent(final QcStudentBean qcStudent) {
     appDatabase.studentDao().getStudentById(qcStudent.getId()).subscribe(qcStudentBean -> {

@@ -183,6 +183,8 @@ dependencies {
   annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
+  annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+
 }
 
 //apply from: 'tinkerpatch.gradle'

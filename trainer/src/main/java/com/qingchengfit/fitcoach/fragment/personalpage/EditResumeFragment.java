@@ -13,7 +13,6 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyBrifeFragment;
-import com.qingchengfit.fitcoach.fragment.ModifyInfoFragment;
 import com.qingchengfit.fitcoach.fragment.RecordFragment;
 //import com.qingchengfit.fitcoach.fragment.WorkExepSettingFragment;
 
@@ -59,7 +58,8 @@ import com.qingchengfit.fitcoach.fragment.RecordFragment;
     public void onClickFunction(View view) {
         switch (view.getId()) {
             case R.id.btn_base_info:
-                fragmentCallBack.onFragmentChange(ModifyInfoFragment.newInstance("", ""));
+                routeTo("user","/edit/",null);
+                //fragmentCallBack.onFragmentChange(ModifyInfoFragment.newInstance("", ""));
                 break;
             case R.id.btn_train_grow:
                 fragmentCallBack.onFragmentChange(new RecordFragment());

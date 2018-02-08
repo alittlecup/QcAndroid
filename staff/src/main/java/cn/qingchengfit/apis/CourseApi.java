@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.repository;
+package cn.qingchengfit.apis;
 
 import cn.qingchengfit.model.responese.CourseTypeSamples;
 import cn.qingchengfit.model.responese.QcResponseBtaches;

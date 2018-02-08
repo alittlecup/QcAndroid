@@ -19,6 +19,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -29,7 +30,6 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
-import com.qingchengfit.fitcoach.activity.LoginActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -119,7 +119,7 @@ public class MineFragmentFragment extends BaseFragment {
 
     @OnClick(R.id.btn_login) public void doLogin() {
         Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-        toLogin.putExtra("isRegiste", 0);
+        toLogin.putExtra("isRegiste", false);
         startActivity(toLogin);
     }
 
@@ -200,9 +200,10 @@ public class MineFragmentFragment extends BaseFragment {
 
         switch (view.getId()) {
             case R.id.layout_header:
-                Intent toBaseInfo = new Intent(getActivity(), SettingActivity.class);
-                toBaseInfo.putExtra("to", 1);
-                startActivity(toBaseInfo);
+                //Intent toBaseInfo = new Intent(getActivity(), SettingActivity.class);
+                //toBaseInfo.putExtra("to", 1);
+                //startActivity(toBaseInfo);
+                routeTo("user","/edit/",null);
                 break;
             case R.id.layout_my_page:
                 //我的主页

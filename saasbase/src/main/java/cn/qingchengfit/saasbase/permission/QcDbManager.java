@@ -52,6 +52,8 @@ public interface QcDbManager {
   List<CoachService> getAllCoachServiceNow();
   Flowable<List<CoachService>> getAllCoachServiceByBrand(String brandId);
   void writeGyms(final List<CoachService> services);
+  void delGyms(final List<CoachService> services);
+  void delGym(CoachService services);
   CoachService getGymNow(String gymid, String gymmodel);
   CoachService getShopNameById(String brandId, String shopId);
   Flowable<CoachService> getGymByModel(String id, String model);

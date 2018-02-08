@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -75,13 +74,11 @@ public class RegisteFragment extends BaseFragment implements LoginView {
     delegatePresenter(loginPresenter, this);
 
     registeBtn.setEnabled(false);
-    registeGender.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (compleGender.getCheckedRadioButtonId() == R.id.comple_gender_female) {
-          compleGender.check(R.id.comple_gender_male);
-        } else {
-          compleGender.check(R.id.comple_gender_female);
-        }
+    registeGender.setOnClickListener(v -> {
+      if (compleGender.getCheckedRadioButtonId() == R.id.comple_gender_female) {
+        compleGender.check(R.id.comple_gender_male);
+      } else {
+        compleGender.check(R.id.comple_gender_female);
       }
     });
 
@@ -92,17 +89,11 @@ public class RegisteFragment extends BaseFragment implements LoginView {
         handler.sendEmptyMessage(0);
       }
     });
-    view.setOnTouchListener(new View.OnTouchListener() {
-      @Override public boolean onTouch(View v, MotionEvent event) {
-        AppUtils.hideKeyboard(getActivity());
-        return false;
-      }
+    view.setOnTouchListener((v, event) -> {
+      AppUtils.hideKeyboard(getActivity());
+      return false;
     });
-    checkcode.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        getCode();
-      }
-    });
+    checkcode.setOnClickListener(v -> getCode());
     return view;
   }
 

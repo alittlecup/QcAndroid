@@ -1,8 +1,8 @@
-package cn.qingchengfit.saasbase.course;
+package cn.qingchengfit.model;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.network.CourseApi;
+import cn.qingchengfit.api.CourseApi;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;

@@ -13,7 +13,6 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -64,7 +63,7 @@ public class UnloginManageFragment extends LazyloadFragment {
 
     public void changeView() {
         if (loginStatus.isLogined()) {
-            RxRegiste(repoCoachService.readAllServices().observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
+            RxRegiste(repoCoachService.readAllServices().observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread()).subscribe(coachServices -> {
                 if (coachServices.size() == 0) {
                     //无场馆
                     stuff(homeBannerFragment, null);

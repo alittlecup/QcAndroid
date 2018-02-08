@@ -1,4 +1,4 @@
-package cn.qingchengfit.network;
+package cn.qingchengfit.api;
 
 import android.support.annotation.Nullable;
 import cn.qingchengfit.network.response.QcDataResponse;

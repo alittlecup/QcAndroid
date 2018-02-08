@@ -190,7 +190,7 @@ public class SplashActivity extends AppCompatActivity {
 
     @UiThread public void goLogin(int registe) {
         Intent toLogin = new Intent(this, LoginActivity.class);
-        toLogin.putExtra("isRegiste", registe);
+        toLogin.putExtra("isRegiste", registe == 1);
         toLogin.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(toLogin);
         this.finish();

@@ -3,6 +3,8 @@ package com.qingchengfit.fitcoach.di;
 import cn.qingchengfit.bean.CurentPermissions;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.LoginModel;
+import cn.qingchengfit.model.UserModel;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
@@ -28,9 +30,11 @@ import cn.qingchengfit.saasbase.cards.network.response.CardTplWrapper;
 import cn.qingchengfit.saasbase.cards.network.response.CardWrap;
 import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
-import cn.qingchengfit.saasbase.course.CourseModel;
-import cn.qingchengfit.saasbase.gymconfig.GymConfigModel;
+import cn.qingchengfit.model.CourseModel;
+import cn.qingchengfit.model.GymConfigModel;
 import cn.qingchengfit.saasbase.gymconfig.IGymConfigModel;
+import cn.qingchengfit.saasbase.login.ILoginModel;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.repository.ICourseModel;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
@@ -56,12 +60,15 @@ import cn.qingchengfit.saasbase.student.network.body.StudentListWrappeForFollow;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.saasbase.student.network.body.StudentTransferBean;
 import cn.qingchengfit.saasbase.student.network.body.StudentWithCoashListWrap;
+import cn.qingchengfit.saasbase.user.IUserModel;
 import com.google.gson.JsonObject;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.routers.CourseRouter;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import dagger.Module;
 import dagger.Provides;
 import java.util.HashMap;
@@ -89,6 +96,8 @@ import rx.Observable;
  * Created by Paper on 2017/4/17.
  */
 @Module public class AppModule {
+    private final IWXAPI api;
+    private final UserModel userModel;
     private LoginStatus loginStatus;
     private GymWrapper gymWrapper;
     private App app;
@@ -97,6 +106,8 @@ import rx.Observable;
     private QcRestRepository qcRestRepository;
     private ICourseModel courseModel;
     private IGymConfigModel gymConfigModel;
+    private ILoginModel loginModel;
+    private QcDbManager db;
     private SaasbaseRouterCenter saasbaseRouterCenter = new SaasbaseRouterCenter()
       .registe(new exportImpl())
       .registe(new gymImpl())
@@ -125,12 +136,24 @@ import rx.Observable;
         gymWrapper = builder.gymWrapper;
         app = builder.app;
         router = builder.router;
+        db = builder.db;
         restRepository = builder.restRepository;
         qcRestRepository = new QcRestRepository(app, Configs.Server,app.getString(R.string.oem_tag));
         courseModel = new CourseModel(qcRestRepository,gymWrapper,loginStatus);
         gymConfigModel = new GymConfigModel(gymWrapper,loginStatus,qcRestRepository);
+        loginModel = new LoginModel(gymWrapper,loginStatus,qcRestRepository);
+        userModel = new UserModel(gymWrapper,loginStatus,qcRestRepository);
+        api = WXAPIFactory.createWXAPI(app, app.getString(R.string.wechat_code));
     }
 
+    @Provides IWXAPI provideWx(){
+        return api;
+    }
+    @Provides QcDbManager provideDb(){
+        return db;
+    }
+    @Provides ILoginModel provideLoginModel(){return  loginModel;}
+    @Provides IUserModel provideUserModel(){return  userModel;}
     @Provides IGymConfigModel provideGymConfig(){return  gymConfigModel;}
     @Provides ICourseModel provideCourseModel(){
         return courseModel;
@@ -173,12 +196,18 @@ import rx.Observable;
         private App app;
         private BaseRouter router;
         private RestRepository restRepository;
+        private QcDbManager db;
 
         public Builder() {
         }
 
         public Builder loginStatus(LoginStatus val) {
             loginStatus = val;
+            return this;
+        }
+
+        public Builder db(QcDbManager val) {
+            db = val;
             return this;
         }
 

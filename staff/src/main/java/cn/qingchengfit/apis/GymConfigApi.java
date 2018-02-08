@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.repository;
+package cn.qingchengfit.apis;
 
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.gymconfig.network.response.ShopConfigBody;

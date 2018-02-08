@@ -18,6 +18,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -213,7 +214,7 @@ public class SplashActivity extends BaseActivity {
 
   @UiThread public void goLogin(int registe) {
     Intent toLogin = new Intent(this, LoginActivity.class);
-    toLogin.putExtra("isRegiste", registe);
+    toLogin.putExtra("isRegiste", registe==1);
     startActivity(toLogin);
     this.finish();
   }
@@ -234,7 +235,7 @@ public class SplashActivity extends BaseActivity {
     PushManager.stopWork(App.AppContex);
     PreferenceUtils.setPrefBoolean(this, "first", true);
     Intent logout = new Intent(this, SplashActivity.class);
-    logout.putExtra("isRegiste", 0);
+    logout.putExtra("isRegiste", false);
     startActivity(logout);
     this.finish();
   }

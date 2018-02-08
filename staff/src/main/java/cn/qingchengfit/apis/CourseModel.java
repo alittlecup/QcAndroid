@@ -1,4 +1,4 @@
-package cn.qingchengfit.staffkit.repository;
+package cn.qingchengfit.apis;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;

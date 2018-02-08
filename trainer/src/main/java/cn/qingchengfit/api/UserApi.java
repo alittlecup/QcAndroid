@@ -1,18 +1,15 @@
-package cn.qingchengfit.staffkit.repository;
+package cn.qingchengfit.api;
 
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
-import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
-import cn.qingchengfit.saasbase.login.bean.Login;
-import cn.qingchengfit.saasbase.login.bean.LoginBody;
-import cn.qingchengfit.saasbase.login.bean.RegisteBody;
-import cn.qingchengfit.saasbase.login.views.CheckProtocolModel;
-import java.util.HashMap;
+import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
+import cn.qingchengfit.saasbase.user.bean.EditUserBody;
+import cn.qingchengfit.saasbase.user.bean.FixPhoneBody;
+import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.QueryMap;
-import rx.Observable;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 /**
  * power by
@@ -32,27 +29,25 @@ import rx.Observable;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 2018/2/6.
+ * Created by Paper on 2018/2/8.
  */
 
-public interface LoginApi {
+public interface UserApi {
+  //工作人员详情
+  //@GET("/api/staffs/{id}/") rx.Observable<QcDataResponse<UserWrap>> qcGetSelfInfo(@Path("id") String id);
+  @GET("/api/coaches/{id}/") rx.Observable<QcDataResponse<UserWrap>> qcGetCoach(@Path("id") String id);
 
-  @POST("/api/user/login/?session_config=true") Observable<QcDataResponse<Login>> qcLogin(@Body
-    LoginBody loginBody);
 
-  //注册
-  @POST("/api/user/register/?session_config=true") rx.Observable<QcDataResponse<Login>> qcRegister(@Body
-    RegisteBody params);
+  //修改教练信息
+  @PUT("/api/coaches/{id}/") rx.Observable<QcDataResponse> qcModifyCoach(@Path("id") String id, @Body
+    EditUserBody coachInfo);
 
-  //获取电话验证码
-  @POST("/api/send/verify/") rx.Observable<QcDataResponse> qcGetCode(@Body GetCodeBody account);
-  /**
-   * 验证验证码
-   */
-  @POST("api/check/verify/") rx.Observable<QcDataResponse> qcCheckCode(@Body CheckCodeBody body);
-  //判断是否同意用户协议
-  @GET(" /api/user/check/read_agreement/")
-  rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CheckProtocolModel>> qcCheckProtocol(
-    @QueryMap HashMap<String, Object> params);
+  //修改密码
+  @POST("/api/coaches/{id}/change/password/") rx.Observable<QcDataResponse> qcMoidfyPw(@Path("id") String id, @Body
+    ModifyPwBody modifyPwBean);
+
+  //修改电话号码
+  @POST("/api/coaches/{id}/change/phone/") rx.Observable<QcDataResponse> qcModifyPhoneNum(@Path("id") String id,
+    @Body FixPhoneBody fixPhoneBody);
 
 }

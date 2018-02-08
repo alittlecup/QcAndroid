@@ -11,10 +11,9 @@ import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
+import io.reactivex.Flowable;
 import java.util.List;
 import javax.inject.Inject;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -44,7 +43,7 @@ public class UnLoginHomeFragment extends BaseFragment {
 
     MainScheduleFragment mainScheduleFragment;
     UnLoginScheduleAdFragment homeBannerFragment;
-    private Observable<List<CoachService>> spGetService;
+    private Flowable<List<CoachService>> spGetService;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlogin_home, container, false);
@@ -74,7 +73,7 @@ public class UnLoginHomeFragment extends BaseFragment {
             //已登录
             //if (spGetService == null) {
                 spGetService = repoCoachService.readAllServices();
-                RxRegiste(spGetService.observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
+                RxRegiste(spGetService.observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread()).subscribe(coachServices -> {
                     if (coachServices.size() == 0) {
                         //无场馆
                         stuff(homeBannerFragment, null);

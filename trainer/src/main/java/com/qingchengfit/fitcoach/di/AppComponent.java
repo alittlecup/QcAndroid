@@ -11,6 +11,8 @@ import cn.qingchengfit.chat.RecruitMessageListFragment;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
 import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
+import cn.qingchengfit.saasbase.di.BindLoginActivity;
+import cn.qingchengfit.saasbase.di.BindUserActivity;
 import cn.qingchengfit.saasbase.student.other.ChooseStaffFragment;
 import cn.qingchengfit.staff.di.BindTrainerCourseActivity;
 import cn.qingchengfit.views.container.ContainerActivity;
@@ -20,9 +22,7 @@ import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.fragment.CustomSaleFragment;
 import com.qingchengfit.fitcoach.fragment.CustomStatmentFragment;
-import com.qingchengfit.fitcoach.fragment.LoginFragment;
 import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
-import com.qingchengfit.fitcoach.fragment.RegisterFragment;
 import com.qingchengfit.fitcoach.fragment.SaleDetailFragment;
 import com.qingchengfit.fitcoach.fragment.StatementDetailFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
@@ -70,7 +70,8 @@ import dagger.multibindings.IntoMap;
  * Created by Paper on 2017/4/17.
  */
 @Component(modules ={ AppModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
-  BindTrainerCourseActivity.class, BindGymConfigAcitivty.class,
+  BindTrainerCourseActivity.class, BindGymConfigAcitivty.class, BindUserActivity.class,
+  BindLoginActivity.class,
     AppComponent.MainMsgFragmentModule.class,
     AppComponent.ContainerModule.class,
     AppComponent.ArticleCommentsListFragmentModule.class,
@@ -93,8 +94,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.SettingFragmentModule.class,
     AppComponent.ChooseGymTrainerFragmentModule.class,
     AppComponent.MyCoursePlanFragmentModule.class,
-    AppComponent.LoginFragmentModule.class,
-    AppComponent.RegisterFragmentModule.class, AppComponent.ChooseModule.class,
+  AppComponent.ChooseModule.class,
     AppComponent.ConversationFriendsFragmentModule.class,
     AppComponent.ChooseStaffFragmentModule.class,
     AppComponent.UnLoginScheduleAdFragmentModule.class,
@@ -234,15 +234,7 @@ import dagger.multibindings.IntoMap;
         }
     }
 
-    @Subcomponent() public interface RegisterFragmentSubcomponent extends AndroidInjector<RegisterFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RegisterFragment> {
-        }
-    }
 
-    @Subcomponent() public interface LoginFragmentSubcomponent extends AndroidInjector<LoginFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<LoginFragment> {
-        }
-    }
 
     @Subcomponent() public interface UnLoginScheduleAdFragmentSubcomponent extends AndroidInjector<UnLoginScheduleAdFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<UnLoginScheduleAdFragment> {
@@ -416,15 +408,7 @@ import dagger.multibindings.IntoMap;
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(SettingFragmentSubcomponent.Builder builder);
     }
 
-    @Module(subcomponents = RegisterFragmentSubcomponent.class) abstract class RegisterFragmentModule {
-        @Binds @IntoMap @FragmentKey(RegisterFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(RegisterFragmentSubcomponent.Builder builder);
-    }
 
-    @Module(subcomponents = LoginFragmentSubcomponent.class) abstract class LoginFragmentModule {
-        @Binds @IntoMap @FragmentKey(LoginFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(LoginFragmentSubcomponent.Builder builder);
-    }
 
     @Module(subcomponents = UnLoginScheduleAdFragmentSubcomponent.class) abstract class UnLoginScheduleAdFragmentModule {
         @Binds @IntoMap @FragmentKey(UnLoginScheduleAdFragment.class)

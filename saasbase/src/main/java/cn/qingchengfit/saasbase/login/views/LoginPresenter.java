@@ -68,6 +68,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
   }
 
   public void loginWx(){
+    // TODO: 2018/2/8 如果微信号没有绑定用户 ，进入注册流程
 
   }
 

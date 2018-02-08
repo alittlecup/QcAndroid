@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+  <cn.qingchengfit.widgets.CommonInputView
+      style="@style/QcCivInputStyle"
+      android:id="@+id/civ_name"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="@string/name"
+      app:civ_left_icon="@drawable/ic_login_username"
+
+
+      />
+
+   <cn.qingchengfit.widgets.CommonInputView
+       android:id="@+id/civ_gender"
+      style="@style/QcCivClickStyle"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="@string/gender"
+      app:civ_left_icon="@drawable/ic_login_gender"
+      app:civ_content="@string/gender_male"
+      />
+
+  <cn.qingchengfit.widgets.PasswordView
+      android:id="@+id/pw"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:background="@color/white"
+      app:pw_mode="true"
+      />
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <Button
+      style="@style/QcBtnPrimary"
+      android:id="@+id/btn_done"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:orientation="horizontal"
+      android:text="@string/common_comfirm"
+      android:textSize="@dimen/btn_font"
+      />
+
+</LinearLayout>

@@ -1,15 +1,12 @@
 package cn.qingchengfit.repository;
 
-import android.database.Cursor;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.saasbase.db.QcDbHelper;
+import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.utils.LogUtil;
-import com.qingcheng.model.base.CoachServiceModel;
-import com.squareup.sqlbrite.BriteDatabase;
+import io.reactivex.Flowable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import rx.Observable;
-import rx.functions.Func1;
 
 /**
  * power by
@@ -34,7 +31,7 @@ import rx.functions.Func1;
 
 public class RepoCoachServiceImpl implements RepoCoachService {
 
-    @Inject QcDbHelper helper;
+    @Inject QcDbManager db;
 
     @Inject public RepoCoachServiceImpl() {
     }
@@ -43,40 +40,21 @@ public class RepoCoachServiceImpl implements RepoCoachService {
      * 本地存储
      */
     @Override public void createService(CoachService coachService) {
-        helper.getBriteDatabase().insert(CoachService.TABLE_NAME, CoachService.FACTORY.marshal(coachService).asContentValues());
+        List<CoachService> r = new ArrayList<>();
+        r.add(coachService);
+        db.writeGyms(r);
     }
 
     @Override public void createServices(List<CoachService> coachServices) {
-        BriteDatabase.Transaction trans = helper.getBriteDatabase().newTransaction();
-        try{
-            helper.getBriteDatabase().delete(CoachService.TABLE_NAME,null);
-            for (CoachService coacheService : coachServices) {
-                helper.getBriteDatabase().insert(CoachService.TABLE_NAME,CoachService.FACTORY.marshal(coacheService).asContentValues());
-            }
-            trans.markSuccessful();
-        } catch (Exception e) {
-            LogUtil.e(e.getMessage());
-        } finally {
-            trans.end();
-        }
+        db.writeGyms(coachServices);
     }
 
-    @Override public Observable<CoachService> readServiceByIdModel(String id, String model) {
-        return helper.getBriteDatabase()
-            .createQuery(CoachServiceModel.TABLE_NAME, CoachService.FACTORY.getByIdModel(id, model).statement)
-            .mapToOne(cursor -> CoachService.FACTORY.getByIdModelMapper().map(cursor))
-            .asObservable();
+    @Override public Flowable<CoachService> readServiceByIdModel(String id, String model) {
+        return db.getGymByModel(id,model);
     }
 
-    @Override public Observable<List<CoachService>> readAllServices() {
-        return helper.getBriteDatabase()
-            .createQuery(CoachServiceModel.TABLE_NAME, CoachService.FACTORY.getAllCoachService().statement)
-            .mapToList(new Func1<Cursor, CoachService>() {
-              @Override public CoachService call(Cursor cursor) {
-                return CoachService.FACTORY.getAllCoachServiceMapper().map(cursor);
-              }
-            })
-            .asObservable();
+    @Override public Flowable<List<CoachService>> readAllServices() {
+        return db.getAllCoachService();
     }
 
     @Override public void updateService(CoachService coachService) {
@@ -88,10 +66,9 @@ public class RepoCoachServiceImpl implements RepoCoachService {
     }
 
     @Override public void deleteServiceByIdModel(String id, String model) {
-        helper.getBriteDatabase().delete(CoachService.TABLE_NAME, "id = ? and model = ?", id, model);
+        //db.
     }
 
     @Override public void deleteAllServices() {
-        helper.getBriteDatabase().execute(CoachService.DELETEALL);
     }
 }

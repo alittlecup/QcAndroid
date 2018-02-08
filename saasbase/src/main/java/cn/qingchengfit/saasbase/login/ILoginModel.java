@@ -45,6 +45,8 @@ public interface ILoginModel {
   rx.Observable<QcDataResponse> getCode(GetCodeBody body);
   rx.Observable<QcDataResponse> checkCode(CheckCodeBody body);
 
+  rx.Observable<QcDataResponse> checkPhoneBind(CheckCodeBody body);
+
   //判断是否同意用户协议
   @GET(" /api/user/check/read_agreement/")
   rx.Observable<cn.qingchengfit.network.response.QcDataResponse<CheckProtocolModel>> qcCheckProtocol(

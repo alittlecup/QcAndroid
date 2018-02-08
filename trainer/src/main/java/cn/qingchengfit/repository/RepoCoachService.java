@@ -1,8 +1,8 @@
 package cn.qingchengfit.repository;
 
 import cn.qingchengfit.model.base.CoachService;
+import io.reactivex.Flowable;
 import java.util.List;
-import rx.Observable;
 
 /**
  * power by
@@ -36,9 +36,9 @@ public interface RepoCoachService {
     /**
      * 读取数据
      */
-    Observable<CoachService> readServiceByIdModel(String id, String model);
+    Flowable<CoachService> readServiceByIdModel(String id, String model);
 
-    Observable<List<CoachService>> readAllServices();
+    Flowable<List<CoachService>> readAllServices();
 
     /**
      * 更新
