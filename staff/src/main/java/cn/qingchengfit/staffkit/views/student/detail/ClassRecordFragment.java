@@ -182,10 +182,14 @@ public class ClassRecordFragment extends BaseFragment
     shops.addAll(ss);
     //找到当前场馆
     if (TextUtils.isEmpty(layoutGymFilter.getLabel())) {
-      for (Shop shop : shops) {
-        if (shop.id.equals(gymWrapper.shop_id())) {
-          layoutGymFilter.setLabel(shop.name);
+      if(shops !=null && shops.size() > 0) {
+        for (Shop shop : shops) {
+          if (shop.id.equals(gymWrapper.shop_id())) {
+            layoutGymFilter.setLabel(shop.name);
+          }
         }
+      }else{
+        layoutGymFilter.setLabel("全部");
       }
     }
     notSignFilterFragment.initGymFilter(shops, gymWrapper.shop_id());

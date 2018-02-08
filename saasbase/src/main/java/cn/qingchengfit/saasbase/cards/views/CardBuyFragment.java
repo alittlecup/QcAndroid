@@ -299,10 +299,12 @@ import rx.functions.Action1;
     if (position < optionList.size()) {
       //已有规格 展示价格
       cardOptionCustom = optionList.get(position);
+      presenter.setOtherOption(false);
       showInputMoney(false, cardOptionCustom, cardOptionCustom.limit_days);
       setPayMoney(cardOptionCustom.price);
     } else {
       cardOptionCustom = null;
+      presenter.setOtherOption(true);
       showInputMoney(true, cardOptionCustom, false);
     }
     presenter.setmChosenOption(cardOptionCustom);
@@ -327,7 +329,7 @@ import rx.functions.Action1;
     for (CardTplOption option : options) {
       commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type, this));
     }
-    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
+    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
       commonFlexAdapter.addItem(new CardtplOptionOhterItem());
     }
     if (options.size() > 0) {

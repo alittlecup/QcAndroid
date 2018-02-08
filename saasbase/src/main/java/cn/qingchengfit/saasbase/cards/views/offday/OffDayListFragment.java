@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.OffDay;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.staff.listener.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DialogUtils;
@@ -51,6 +53,7 @@ public class OffDayListFragment
   @BindView(R2.id.rv_offday_list) RecyclerView recyclerview;
 
   @Inject OffDayListPresenter presenter;
+  @Inject IPermissionModel permissionModel;
   @Need Card card;
 
   OffDayListAdapter adapter;
@@ -68,6 +71,10 @@ public class OffDayListFragment
     toolbar.inflateMenu(R.menu.menu_add);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
+        if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_DELETE)) {
+          showAlert(R.string.alert_permission_forbid);
+          return false;
+        }
         routeTo(AppUtils.getRouterUri(getContext(), "card/add/offday"),
             new AddOffDayParams().cardId(card.getId()).build());
         return true;
@@ -80,6 +87,10 @@ public class OffDayListFragment
     adapter.setListener(new OnRecycleItemClickListener() {
       @Override public void onItemClick(View v, final int pos) {
         if (v.getId() == R.id.cancel_offday) {
+          if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_DELETE)) {
+            showAlert(R.string.alert_permission_forbid);
+            return;
+          }
           if (!datas.get(pos).cancel) {
             //删除请假
             DialogUtils.instanceDelDialog(getContext(), "是否删除请假?",

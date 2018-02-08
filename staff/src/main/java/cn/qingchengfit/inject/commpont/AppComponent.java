@@ -30,7 +30,6 @@ import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
 import cn.qingchengfit.saasbase.cards.views.CardProtocolActivity;
-import cn.qingchengfit.saasbase.cards.views.offday.AddOffDayFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
@@ -482,7 +481,7 @@ import dagger.multibindings.IntoMap;
 
   AppComponent.StaffDetailFragmentModule.class,
    AppComponent.CardProtocolModule.class, AppComponent.COurseChooseDialogFragmentModule.class,
-
+    AppComponent.FollowRecordModule.class,
 })
 
 public interface AppComponent {
@@ -584,11 +583,6 @@ public interface AppComponent {
 
     @Subcomponent() public interface WriteDescSubcomponent extends AndroidInjector<WriteDescFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<WriteDescFragment> {
-        }
-    }
-
-    @Subcomponent() public interface AddOffDaySubcomponent extends AndroidInjector<AddOffDayFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AddOffDayFragment> {
         }
     }
 
@@ -3440,6 +3434,5 @@ public interface AppComponent {
         @Binds @IntoMap @FragmentKey(CourseChooseDialogFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseChooseDialogFragmentSubcomponent.Builder builder);
     }
-
 
 }

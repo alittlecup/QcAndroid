@@ -175,13 +175,13 @@ public class CardTplDetailPresenter extends BasePresenter {
       return;
     }
     if (gymWrapper.inBrand()) {
-      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
+      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE,
           cardTpl.getShopIds())) {
         view.showAlert("抱歉，您无该功能权限");
         return;
       }
     } else {
-      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
+      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
         view.showAlert("抱歉，您无该功能权限");
         return;
       }

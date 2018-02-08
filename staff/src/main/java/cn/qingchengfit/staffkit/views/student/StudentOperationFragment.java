@@ -143,6 +143,8 @@ public class StudentOperationFragment extends BaseFragment
       if (requestCode == 2) {// 跳转分配销售
         Shop shops = (Shop) IntentUtils.getParcelable(data);
         if (shops != null) {
+          ArrayList<String> shopIds = new ArrayList<>();
+          shopIds.add(shops.id);
           if (!serPermisAction.check(shops.id, PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
             showAlert("抱歉!您无该场馆权限");
             return;
@@ -215,6 +217,10 @@ public class StudentOperationFragment extends BaseFragment
           startActivity(intent);
           break;
         case R.string.qc_student_send_sms:
+          if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+            showAlert(R.string.alert_permission_forbid);
+            return false;
+          }
           Intent toChoose = new Intent(getActivity(), SendMsgsActivity.class);
           toChoose.putExtra("to", ChooseActivity.CHOOSE_MULTI_STUDENTS);
           startActivity(toChoose);

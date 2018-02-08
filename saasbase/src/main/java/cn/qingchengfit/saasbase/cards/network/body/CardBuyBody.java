@@ -52,7 +52,7 @@ public class CardBuyBody implements Parcelable,Cloneable {
   public String staff_id;
 
   public int origin;
-
+  public boolean customize_option;
 
 
   public int checkData() {
@@ -199,7 +199,9 @@ public class CardBuyBody implements Parcelable,Cloneable {
     this.charge_type = charge_type;
   }
 
-
+  public void setCustomize_option(boolean customize_option) {
+    this.customize_option = customize_option;
+  }
 
   public void setType(Integer type) {
     this.type = type;
@@ -443,6 +445,9 @@ public class CardBuyBody implements Parcelable,Cloneable {
     dest.writeString(this.app_id);
     dest.writeByte(this.is_auto_start ? (byte) 1 : (byte) 0);
     dest.writeString(this.card_id);
+    dest.writeString(this.staff_id);
+    dest.writeInt(this.origin);
+    dest.writeByte(this.customize_option ? (byte) 1 : (byte) 0);
   }
 
   protected CardBuyBody(Parcel in) {
@@ -465,6 +470,9 @@ public class CardBuyBody implements Parcelable,Cloneable {
     this.app_id = in.readString();
     this.is_auto_start = in.readByte() != 0;
     this.card_id = in.readString();
+    this.staff_id = in.readString();
+    this.origin = in.readInt();
+    this.customize_option = in.readByte() != 0;
   }
 
   public static final Creator<CardBuyBody> CREATOR = new Creator<CardBuyBody>() {

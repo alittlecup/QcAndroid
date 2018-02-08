@@ -80,6 +80,10 @@ public class CardBuyPresenter extends BasePresenter {
     cardCate = cate;
   }
 
+  public void setOtherOption(boolean isOther){
+    cardBuyBody.setCustomize_option(isOther);
+  }
+
   public void setChoseStuIds(ArrayList<String> studentList) {
     if (studentList.size() > 0){
       choseStuIds.clear();

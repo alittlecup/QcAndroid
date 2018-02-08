@@ -111,12 +111,11 @@ public class BodyTestListFragment extends BaseFragment implements BodyTestListVi
         boolean hasP = false;
         for (int i = 0; i < studentBean.getStudentBean().getSupportIdList().size(); i++) {
             if (serPermisAction.check(studentBean.getStudentBean().getSupportIdList().get(i),
-                PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+                PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
                 hasP = true;
                 break;
             }
         }
-
         if (hasP) {
 
             getFragmentManager().beginTransaction()

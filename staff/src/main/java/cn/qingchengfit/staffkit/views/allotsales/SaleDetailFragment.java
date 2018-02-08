@@ -47,8 +47,6 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
-import static cn.qingchengfit.staffkit.views.allotsales.MultiModifyFragmentBuilder.newMultiModifyFragment;
-
 public class SaleDetailFragment extends FilterCommonFragment
     implements SaleDetailPresenter.PresenterView, View.OnClickListener {
 
@@ -91,7 +89,7 @@ public class SaleDetailFragment extends FilterCommonFragment
           @Override public boolean onMenuItemClick(MenuItem item) {
             // 跳转批量修改
             MultiModifyFragment multiModifyFragment =
-                newMultiModifyFragment(saler.getStaff(), filter,
+                MultiModifyFragmentBuilder.newMultiModifyFragment(saler.getStaff(), filter,
                     TextUtils.isEmpty(saler.getStaff().username)
                         ? MultiModifyFragment.TYPE_MULTI_ALLOT
                         : MultiModifyFragment.TYPE_MULTI_MODIFY);
@@ -213,7 +211,7 @@ public class SaleDetailFragment extends FilterCommonFragment
     switch (v.getId()) {
       case R.id.ll_add_stu:
         MultiModifyFragment fragment =
-            newMultiModifyFragment(saler.getStaff(), filter, MultiModifyFragment.TYPE_ADD_STUDENT);
+            MultiModifyFragmentBuilder.newMultiModifyFragment(saler.getStaff(), filter, MultiModifyFragment.TYPE_ADD_STUDENT);
         fragment.originList = originStuList;
         fragment.students = datas;
         getFragmentManager().beginTransaction()

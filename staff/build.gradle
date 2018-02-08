@@ -4,7 +4,6 @@ apply plugin: 'idea'
 def libs = rootProject.ext.libraries;
 def config = rootProject.ext.configuration;
 
-
 android {
 
   dataBinding {
