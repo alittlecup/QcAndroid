@@ -15,8 +15,6 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.common.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.views.CardDetailParams;
-import cn.qingchengfit.model.responese.Shop;
-import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
@@ -143,7 +141,7 @@ public class StudentsCardsFragment extends BaseFragment implements StudentsCards
     @Override public boolean onItemClick(int i) {
         if (adatper.getItem(i) instanceof CardItem) {
             Card realCard = ((CardItem) adatper.getItem(i)).getRealCard();
-            if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+            if (!serPermisAction.check(PermissionServerUtils.MANAGE_COSTS)) {
                 showAlert(R.string.alert_permission_forbid);
                 return true;
             }
