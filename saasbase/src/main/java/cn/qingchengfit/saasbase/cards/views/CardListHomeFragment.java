@@ -128,6 +128,10 @@ import javax.inject.Inject;
         @Override public void onNext(Void aVoid) {
           showSelectSheet(null, Arrays.asList("会员卡种类管理"), new AdapterView.OnItemClickListener() {
             @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+              if (!serPermisAction.check(PermissionServerUtils.CARDSETTING)) {
+                showAlert(R.string.alert_permission_forbid);
+                return;
+              }
               routeTo("card","/cardtpl/list/",null);
             }
           });

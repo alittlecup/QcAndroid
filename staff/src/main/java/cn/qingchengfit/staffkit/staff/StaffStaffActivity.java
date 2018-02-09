@@ -7,7 +7,7 @@ import cn.qingchengfit.saasbase.staff.views.ChooseSalerFragment;
 import cn.qingchengfit.saasbase.staff.views.InviteLinkFragment;
 import cn.qingchengfit.saasbase.staff.views.InviteQrCodeFragment;
 import cn.qingchengfit.saasbase.staff.views.InviteSendMsgFragment;
-import cn.qingchengfit.saasbase.staff.views.SalersListFragment;
+import cn.qingchengfit.saasbase.staff.views.NewSalersListFragment;
 import cn.qingchengfit.saasbase.staff.views.StaffAddFragment;
 import cn.qingchengfit.saasbase.staff.views.StaffDetailFragment;
 import cn.qingchengfit.saasbase.staff.views.StaffHomeFragment;
@@ -49,7 +49,7 @@ import com.anbillon.flabellum.annotations.Trunk;
  * Created by Paper on 2017/12/1.
  */
 @Trunk(fragments = {
-  ChooseSalerFragment.class, SalersListFragment.class,
+  ChooseSalerFragment.class, NewSalersListFragment.class,
   TrainerChooseFragment.class, CoachListFragment.class, StaffDetailFragment.class, StaffHomeFragment.class,
   StaffAddFragment.class, StaffReInviteFragment.class,
   StaffTabListFragment.class, StaffTabInviteListFragment.class, StaffTabLeaveListFragment.class,

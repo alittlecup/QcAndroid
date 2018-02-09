@@ -137,7 +137,7 @@ public class BodyTestFragment extends BaseFragment implements BodyTestView {
       @Override public boolean onMenuItemClick(MenuItem item) {
 
         //跳到编辑页面
-        if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+        if (serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
           getFragmentManager().beginTransaction()
             .replace(mCallbackActivity.getFragId(), ModifyBodyTestFragment.newInstance(mMeasureId))
             .addToBackStack(null)

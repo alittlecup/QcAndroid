@@ -99,7 +99,7 @@ import javax.inject.Inject;
     RxBusAdd(EventRecycleClick.class)
         .subscribe(new BusSubscribe<EventRecycleClick>() {
           @Override public void onNext(EventRecycleClick eventRecycleClick) {
-            if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+            if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
               showAlert(R.string.alert_permission_forbid);
               return;
             }
@@ -196,6 +196,10 @@ import javax.inject.Inject;
     if (item instanceof ActionDescItem) {
       switch (((ActionDescItem) item).getAction()) {
         case 1://绑定会员
+          if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+            showAlert(R.string.alert_permission_forbid);
+            return false;
+          }
           routeTo(AppUtils.getRouterUri(getContext(),"/student/choose/student/"),new ChooseAndSearchStudentParams()
             .studentIdList((ArrayList<String>) presenter.getmCard().getUserIds())
             .build());
@@ -210,6 +214,10 @@ import javax.inject.Inject;
           break;
 
         case 4://实体卡号
+          if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+            showAlert(R.string.alert_permission_forbid);
+            return false;
+          }
           routeTo("common","/input/",new CommonInputParams()
             .title("修改实体卡号")
             .hint(presenter.getmCard().getCard_no())
@@ -260,10 +268,6 @@ import javax.inject.Inject;
     dialogSheet.addButton(buttonStr, new View.OnClickListener() {
 
       @Override public void onClick(View v) {
-        if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
-          showAlert(R.string.alert_permission_forbid);
-          return;
-        }
         if (mCard.is_active()) {
           new MaterialDialog.Builder(getContext()).title(getString(R.string.unregiste_title))
               .content(getString(R.string.unregiste_text))
@@ -271,6 +275,10 @@ import javax.inject.Inject;
               .positiveText(R.string.unregiste_Comfirm)
               .onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_DELETE)) {
+                    showAlert(R.string.alert_permission_forbid);
+                    return;
+                  }
                   presenter.unRegeister();
                   dialog.dismiss();
                   if (dialogSheet.isShowing()) {
@@ -289,6 +297,10 @@ import javax.inject.Inject;
               .positiveText(R.string.resume_confirm)
               .onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                  if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+                    showAlert(R.string.alert_permission_forbid);
+                    return;
+                  }
                   presenter.resumeCard();
                   dialog.dismiss();
                   if (dialogSheet.isShowing()) {
@@ -306,11 +318,13 @@ import javax.inject.Inject;
     if (mCard.is_active()) {
       dialogSheet.addButton("修改会员卡有效期", new View.OnClickListener() {
         @Override public void onClick(View view) {
-      if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
-        showAlert(R.string.alert_permission_forbid);
-        return;
-      }
-          routeTo(AppUtils.getRouterUri(getContext(), "card/modify/validate"), new CardFixValidDayParams().card(mCard).build());
+          if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+            showAlert(R.string.alert_permission_forbid);
+            return;
+          }else {
+            routeTo(AppUtils.getRouterUri(getContext(), "card/modify/validate"),
+                new CardFixValidDayParams().card(mCard).build());
+          }
           if (dialogSheet.isShowing()) {
             dialogSheet.dismiss();
           }
