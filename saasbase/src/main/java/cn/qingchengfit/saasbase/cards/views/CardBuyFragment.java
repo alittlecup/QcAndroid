@@ -329,7 +329,7 @@ import rx.functions.Action1;
     for (CardTplOption option : options) {
       commonFlexAdapter.addItem(new CardTplOptionForBuy(option, cardTpl.type, this));
     }
-    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
+    if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
       commonFlexAdapter.addItem(new CardtplOptionOhterItem());
     }
     if (options.size() > 0) {

@@ -318,11 +318,13 @@ import javax.inject.Inject;
     if (mCard.is_active()) {
       dialogSheet.addButton("修改会员卡有效期", new View.OnClickListener() {
         @Override public void onClick(View view) {
-      if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
-        showAlert(R.string.alert_permission_forbid);
-        return;
-      }
-          routeTo(AppUtils.getRouterUri(getContext(), "card/modify/validate"), new CardFixValidDayParams().card(mCard).build());
+          if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
+            showAlert(R.string.alert_permission_forbid);
+            return;
+          }else {
+            routeTo(AppUtils.getRouterUri(getContext(), "card/modify/validate"),
+                new CardFixValidDayParams().card(mCard).build());
+          }
           if (dialogSheet.isShowing()) {
             dialogSheet.dismiss();
           }

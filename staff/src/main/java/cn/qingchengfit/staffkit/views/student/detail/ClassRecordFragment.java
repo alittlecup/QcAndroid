@@ -97,10 +97,11 @@ public class ClassRecordFragment extends BaseFragment
         return 4;
       }
     });
-    params.put("shop_ids", gymWrapper.shop_id());
+    params.put("shop_ids", "0");
     notSignFilterFragment = new NotSignFilterFragment();
     notSignFilterFragment.setOnNotSignFilterListener(this);
     commonFlexAdapter = new CommonFlexAdapter(datas, this);
+    layoutGymFilter.setLabel("全部");
     layoutTypeFilter.setLabel("全部");
     layoutStatusFilter.setLabel("全部");
     layoutTimeFilter.setLabel("全部");

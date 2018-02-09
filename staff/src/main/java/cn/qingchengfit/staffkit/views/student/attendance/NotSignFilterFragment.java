@@ -243,6 +243,9 @@ public class NotSignFilterFragment extends BaseFragment
       }
     }
     gymFilter.setItemList(itemList);
+    if (shops.size() == 0){
+      params.put(SHOP_ID, "0");
+    }
     if (!gymFilter.isAdded()) {
       getChildFragmentManager().beginTransaction().add(R.id.frag_student_filter, gymFilter, "gym").commit();
     }
