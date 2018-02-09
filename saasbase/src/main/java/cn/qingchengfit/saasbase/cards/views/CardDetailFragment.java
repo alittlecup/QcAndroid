@@ -249,10 +249,6 @@ import javax.inject.Inject;
   }
 
   @Override public void onAskOffDay() {
-    if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_CHANGE)) {
-      showAlert(R.string.alert_permission_forbid);
-      return;
-    }
     routeTo(AppUtils.getRouterUri(getContext(), "/card/offday/list"),
         new OffDayListParams().card(mCard).build());
   }
