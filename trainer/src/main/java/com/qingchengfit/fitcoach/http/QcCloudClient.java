@@ -38,6 +38,7 @@ import cn.qingchengfit.saasbase.report.bean.QcResponseStatementDetail;
 import cn.qingchengfit.saasbase.report.bean.StatementGlanceResp;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qingchengfit.fitcoach.App;
@@ -66,7 +67,6 @@ import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.HidenBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyDes;
-import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
 import com.qingchengfit.fitcoach.http.bean.OneExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
@@ -180,6 +180,10 @@ public class QcCloudClient {
     private OkHttpClient okHttpClient;
 
     public QcCloudClient() {
+        String host = "http://couldtest.qingchengfit.cn/";
+        host = PreferenceUtils.getPrefString(App.AppContex, "debug_ip",
+          host);
+
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override public void log(String message) {
                 LogUtil.d(message);
@@ -229,13 +233,13 @@ public class QcCloudClient {
             //                    }
             //                })
             .create();
-        Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(BuildConfig.DEBUG?Constants.ServerDebug:Constants.Server)
+        Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(BuildConfig.DEBUG?host:Constants.Server)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .build();
 
-        Retrofit postApiAdapter = new Retrofit.Builder().baseUrl(BuildConfig.DEBUG?Constants.ServerDebug:Constants.Server)
+        Retrofit postApiAdapter = new Retrofit.Builder().baseUrl(BuildConfig.DEBUG?host:Constants.Server)
             .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .client(client)

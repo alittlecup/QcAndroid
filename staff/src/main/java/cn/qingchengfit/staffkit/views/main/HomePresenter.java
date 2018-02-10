@@ -6,11 +6,10 @@ import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.BrandsResponse;
 import cn.qingchengfit.model.responese.HomeInfo;
-import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.rest.RestRepository;
@@ -108,12 +107,10 @@ public class HomePresenter extends BasePresenter {
         RxRegiste(restRepository.getGet_api()
             .qcPermission(App.staffId, params).onBackpressureBuffer().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponsePermission>() {
-                @Override public void call(QcResponsePermission qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse) && qcResponse.data.permissions != null) {
-                        serPermisAction.writePermiss(qcResponse.data.permissions);
-                        queryHomeInfo();
-                    }
+            .subscribe(qcResponse -> {
+                if (ResponseConstant.checkSuccess(qcResponse) && qcResponse.data.permissions != null) {
+                    serPermisAction.writePermiss(qcResponse.data.permissions);
+                    queryHomeInfo();
                 }
             }, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {

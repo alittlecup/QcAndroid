@@ -34,11 +34,9 @@ import cn.qingchengfit.saasbase.cards.views.offday.AddOffDayFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
+import cn.qingchengfit.saasbase.di.BindLoginActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
-import cn.qingchengfit.saasbase.login.LoginActivity;
-import cn.qingchengfit.saasbase.login.views.LoginFragment;
-import cn.qingchengfit.saasbase.login.views.RegisteFragment;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
@@ -302,7 +300,7 @@ import dagger.multibindings.IntoMap;
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
     BindStaffCardActivity.class, BindImportExportActivity.class, BindStaffStaffActivity.class,
   BindGymConfigAcitivty.class,BindSaasCommonActivity.class,BindStaffStudentActivity.class,
-  BindUserActivity.class,
+  BindUserActivity.class, BindLoginActivity.class,
 
 
     AppComponent.SplashModule.class, AppComponent.MainFirstModule.class, AppComponent.MainMsgModule.class,
@@ -348,7 +346,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.GymDetailShowGuideDialogModule.class,
     AppComponent.MutiChooseSiteModule.class,
     AppComponent.BatchPayOnlineModule.class,  AppComponent.ChooseBrandModule.class,
-    AppComponent.LoginModule.class, AppComponent.WebModule.class,// AppComponent.QRModule.class, todo 这里移除后是否有问题
+     AppComponent.WebModule.class,// AppComponent.QRModule.class, todo 这里移除后是否有问题
     AppComponent.SimpleChooseModule.class, AppComponent.WriteDescModule.class,
     AppComponent.CoachDetailFragmentModule.class, AppComponent.HomeUnLoginFragmentModule.class,
     AppComponent.WardrobeListFragmentModule.class, AppComponent.WardrobeDetailFragmentModule.class,
@@ -475,7 +473,6 @@ import dagger.multibindings.IntoMap;
     //导入导出
     AppComponent.ImportExportFragmentModule.class, AppComponent.ExportRecordFragmentModule.class,
     AppComponent.ExportSendEmailFragmentModule.class, AppComponent.CardImportExportFragmentModule.class,
-    AppComponent.LoginFragmentModule.class, AppComponent.RegisteFragmentModule.class,
 
     //筛选，签课
     AppComponent.NotSignFilterFragmentModule.class, AppComponent.AttendanceNotSignFragmentModule.class,
@@ -570,10 +567,7 @@ public interface AppComponent {
         }
     }
 
-    @Subcomponent() public interface LoginSubcomponent extends AndroidInjector<LoginActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<LoginActivity> {
-        }
-    }
+
 
 
 
@@ -2079,11 +2073,7 @@ public interface AppComponent {
 
   ;
 
-    @Module(subcomponents = LoginSubcomponent.class) abstract class LoginModule {
-        @Binds @IntoMap @ActivityKey(LoginActivity.class)
-        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(
-            LoginSubcomponent.Builder builder);
-    }
+
 
 
     @Module(subcomponents = SimpleChooseSubcomponent.class) abstract class SimpleChooseModule {
@@ -3347,32 +3337,7 @@ public interface AppComponent {
     }
 
 
-    @Subcomponent() public interface LoginFragmentSubcomponent
-        extends AndroidInjector<LoginFragment> {
-        @Subcomponent.Builder public abstract class Builder
-            extends AndroidInjector.Builder<LoginFragment> {
-        }
-    }
 
-    @Module(subcomponents = LoginFragmentSubcomponent.class) abstract class LoginFragmentModule {
-        @Binds @IntoMap @FragmentKey(LoginFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            LoginFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface RegisteFragmentSubcomponent
-        extends AndroidInjector<RegisteFragment> {
-        @Subcomponent.Builder public abstract class Builder
-            extends AndroidInjector.Builder<RegisteFragment> {
-        }
-    }
-
-    @Module(subcomponents = RegisteFragmentSubcomponent.class)
-    abstract class RegisteFragmentModule {
-        @Binds @IntoMap @FragmentKey(RegisteFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            RegisteFragmentSubcomponent.Builder builder);
-    }
 
     @Subcomponent() public interface NotSignFilterFragmentSubcomponent extends AndroidInjector<NotSignFilterFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<NotSignFilterFragment> {}

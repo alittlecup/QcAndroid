@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -51,13 +52,15 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
 
     @Override public void onResp(BaseResp baseResp) {
         ToastUtils.showS(baseResp.errStr);
+        LogUtil.d("errCode:"+"baseResp.errCode");
         switch (baseResp.errCode) {
             case BaseResp.ErrCode.ERR_OK: {
                 if (baseResp.getType() == RETURN_MSG_TYPE_SHARE) {
                     ToastUtils.showS("分享成功！");
                     sensorTrack();
                 }else if (baseResp.getType() == RETURN_MSG_TYPE_LOGIN){
-                    RxBus.getBus().post(((SendAuth.Resp) baseResp));
+                    SendAuth.Resp auth = (SendAuth.Resp) baseResp;
+                    RxBus.getBus().post(auth);
                 }
             }
             break;

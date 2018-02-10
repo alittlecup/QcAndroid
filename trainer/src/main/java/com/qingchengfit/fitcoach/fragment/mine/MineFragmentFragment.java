@@ -175,9 +175,9 @@ public class MineFragmentFragment extends BaseFragment {
                             tvName.setText(user.getUsername());
                             Glide.with(getContext())
                                 .load(user.getAvatar())
-                                .asBitmap()
-                                .error(App.gUser.gender == 0 ? R.drawable.default_manage_male : R.drawable.default_manager_female)
-                                .into(new CircleImgWrapper(imgHeader, getContext()));
+                              .asBitmap()
+                              .error(App.gUser.gender == 0 ? R.drawable.default_manage_male : R.drawable.default_manager_female)
+                              .into(new CircleImgWrapper(imgHeader, getContext()));
                         }
                     } else {
                         ToastUtils.show(qcCoachRespone.getMsg());

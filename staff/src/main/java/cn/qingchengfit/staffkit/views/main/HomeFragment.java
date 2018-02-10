@@ -225,20 +225,16 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
 
     private void initView() {
         //品牌切换
-        RxBusAdd(EventBrandChange.class).subscribe(new Action1<EventBrandChange>() {
-            @Override public void call(EventBrandChange eventBrandChange) {
-                initToolbar(toolbar);
-                onBgClick();
-                homePresenter.updatePermission();
-              if (gymsFragment != null) gymsFragment.refresh();
-            }
+        RxBusAdd(EventBrandChange.class).subscribe(eventBrandChange -> {
+            initToolbar(toolbar);
+            onBgClick();
+            homePresenter.updatePermission();
+            if (gymsFragment != null) gymsFragment.refresh();
         });
         refresh.setColorSchemeColors(CompatUtils.getColor(getContext(), R.color.colorPrimary));
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override public void onRefresh() {
-                homePresenter.updatePermission();
-              RxBus.getBus().post(new EventFreshGyms());
-            }
+        refresh.setOnRefreshListener(() -> {
+            homePresenter.updatePermission();
+          RxBus.getBus().post(new EventFreshGyms());
         });
         initViewOfChain();
         homePresenter.queryBrands();

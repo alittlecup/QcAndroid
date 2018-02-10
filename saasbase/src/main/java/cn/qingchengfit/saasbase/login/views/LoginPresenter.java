@@ -25,6 +25,7 @@ import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.EventFreshCoachService;
+import com.google.gson.JsonObject;
 import com.tencent.qcloud.sdk.Constant;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +68,26 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     list.addAll(sts);
   }
 
-  public void loginWx(){
-    // TODO: 2018/2/8 如果微信号没有绑定用户 ，进入注册流程
-
+  public void loginWx(String code) {
+    JsonObject body = new JsonObject();
+    body.addProperty("code", code);
+    RxRegiste(loginModel.wxLogin(body)
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse<Login>>() {
+        @Override public void onNext(QcDataResponse<Login> qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            if (!StringUtils.isEmpty(qcResponse.data.wechat_openid)) {
+              mvpView.toInit(qcResponse.data.wechat_openid);
+            } else {
+              loginDone(qcResponse);
+            }
+          } else {
+            mvpView.onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 
   public void doLogin(final LoginBody loginBody) {
@@ -85,24 +103,28 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         @Override public void onNext(QcDataResponse<Login> qcResponLogin) {
 
           if (qcResponLogin.getStatus() == ResponseConstant.SUCCESS) {
-            QcRestRepository.setSession(mvpContext, qcResponLogin.data.session_name,
-              qcResponLogin.data.session_id);
-            PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_PHONE, loginBody.phone);
-            PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_ID,
-              qcResponLogin.data.staff.getId());
-            loginModel.setStaffId(qcResponLogin.data.staff.getId());
-            PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_NAME,
-              qcResponLogin.data.staff.getUsername());
-            PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_USER_ID,
-              qcResponLogin.getData().user.getId());
-            studentAction.delAllStudent();
-            mvpView.onShowLogining();
-            getService(qcResponLogin);
+            loginDone(qcResponLogin);
           } else {
             mvpView.onError(qcResponLogin.msg);
           }
         }
       }));
+  }
+
+  void loginDone(QcDataResponse<Login> qcResponLogin) {
+    QcRestRepository.setSession(mvpContext, qcResponLogin.data.session_name,
+      qcResponLogin.data.session_id);
+    PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_PHONE,qcResponLogin.getData().user.getPhone());
+    PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_ID,
+      qcResponLogin.data.staff.getId());
+    loginModel.setStaffId(qcResponLogin.data.staff.getId());
+    PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_NAME,
+      qcResponLogin.data.staff.getUsername());
+    PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_USER_ID,
+      qcResponLogin.getData().user.getId());
+    studentAction.delAllStudent();
+    mvpView.onShowLogining();
+    getService(qcResponLogin);
   }
 
   public boolean isDebug() {
@@ -131,7 +153,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     loginStatus.setSession(qcResponLogin.data.session_id);
     loginStatus.setUserId(qcResponLogin.data.user.getId());
     RxRegiste(gymConfigModel.qcGetCoachService(null)
-      .onBackpressureBuffer()
+      .onBackpressureDrop()
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(gymListQcResponseData -> {
@@ -170,6 +192,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
       .subscribe(new NetSubscribe<QcDataResponse>() {
         @Override public void onNext(QcDataResponse qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
+
           } else {
             mvpView.onShowError(qcResponse.getMsg());
           }
@@ -192,6 +215,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     if (StringUtils.isEmpty(body.getPassword())) {
       mvpView.onError("请填写密码");
     }
+    body.session_config =true;
     RxRegiste(loginModel.doRegiste(body)
       .onBackpressureLatest()
       .subscribeOn(Schedulers.io())
@@ -199,18 +223,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
       .subscribe(new NetSubscribe<QcDataResponse<Login>>() {
         @Override public void onNext(QcDataResponse<Login> qcResponLogin) {
           if (ResponseConstant.checkSuccess(qcResponLogin)) {
-            QcRestRepository.setSession(mvpContext, qcResponLogin.data.session_name,
-              qcResponLogin.data.session_id);
-            PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_PHONE, body.phone);
-            PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_ID,
-              qcResponLogin.data.staff.getId());
-            loginModel.setStaffId(qcResponLogin.data.staff.getId());
-            PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_NAME,
-              qcResponLogin.data.staff.getUsername());
-            PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_USER_ID,
-              qcResponLogin.getData().user.getId());
-
-            getService(qcResponLogin);
+            loginDone(qcResponLogin);
           } else {
             mvpView.onShowError(qcResponLogin.getMsg());
           }

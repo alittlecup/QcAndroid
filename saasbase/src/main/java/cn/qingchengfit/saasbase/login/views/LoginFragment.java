@@ -28,6 +28,7 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.constant.WebRouters;
 import cn.qingchengfit.saasbase.login.bean.GetCodeBody;
 import cn.qingchengfit.saasbase.login.bean.LoginBody;
+import cn.qingchengfit.saasbase.login.bean.RegisteBody;
 import cn.qingchengfit.saasbase.login.event.SendMsgEvent;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.AppUtils;
@@ -47,6 +48,9 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -75,10 +79,11 @@ public class LoginFragment extends BaseFragment
     RxBus.getBus().register(SendAuth.Resp.class)
       .compose(bindToLifecycle())
       .onBackpressureDrop()
+      .delay(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<SendAuth.Resp>() {
         @Override public void onNext(SendAuth.Resp resp) {
           LogUtil.d("code ==== "+resp.code);
-          loginPresenter.loginWx();
+          loginPresenter.loginWx(resp.code);
         }
       });
   }
@@ -119,6 +124,23 @@ public class LoginFragment extends BaseFragment
     RxObMsg = RxBus.getBus().register(SendMsgEvent.class);
     RxObMsg.observeOn(AndroidSchedulers.mainThread()).subscribe(
       sendMsgEvent -> handler.sendEmptyMessage(0));
+
+    /*
+     * 注册
+     */
+    RxBusAdd(RegisteBody.class)
+      .subscribe(new BusSubscribe<RegisteBody>() {
+        @Override public void onNext(RegisteBody registeBody) {
+          loginPresenter.registe(registeBody);
+        }
+      });
+
+    RxBusAdd(LoginBody.class)
+      .subscribe(new BusSubscribe<LoginBody>() {
+        @Override public void onNext(LoginBody registeBody) {
+          loginPresenter.doLogin(registeBody);
+        }
+      });
     return view;
   }
 
@@ -166,24 +188,31 @@ public class LoginFragment extends BaseFragment
           new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
               MeasureUtils.dpToPx(50f, getResources())));
       mLoginBtn.setEnabled(false);
-      btnChange.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
-            if (!TextUtils.isEmpty(et.getText())) {
-              if (!et.getText().toString().contains("http")) {
-                Constants.ServerDebug = "http://" + et.getText().toString().trim() + ".qingchengfit.cn/";
-                PreferenceUtils.setPrefString(getContext(), "debug_ip",
-                    Constants.ServerDebug);
-              }else{
-                Constants.ServerDebug = et.getText().toString().trim();
-                PreferenceUtils.setPrefString(getContext(), "debug_ip",
-                    Constants.ServerDebug);
-              }
-              restRepository.changeHost(Constants.ServerDebug);
-              ToastUtils.show("修改成功");
+      btnChange.setOnClickListener(v -> {
+            String host = et.getText().toString();
+
+            if (!et.getText().toString().contains("http")) {
+              Constants.ServerDebug = "http://" + et.getText().toString().trim() + (isStartWithNumber(host)?"":".qingchengfit.cn/");
+              PreferenceUtils.setPrefString(getContext(), "debug_ip",
+                  Constants.ServerDebug);
+            }else{
+              Constants.ServerDebug = et.getText().toString().trim();
+              PreferenceUtils.setPrefString(getContext(), "debug_ip",
+                  Constants.ServerDebug);
             }
-          }
-      });
+            restRepository.changeHost(Constants.ServerDebug);
+            ToastUtils.show("修改成功");
+
+        });
     }
+  }
+  public static boolean isStartWithNumber(String str) {
+    Pattern pattern = Pattern.compile("[0-9]*");
+    Matcher isNum = pattern.matcher(str.charAt(0)+"");
+    if (!isNum.matches()) {
+      return false;
+    }
+    return true;
   }
 
   @OnClick(R2.id.btn_agree_protocol) public void onAgree() {
@@ -247,6 +276,20 @@ public class LoginFragment extends BaseFragment
   @Override public void onSuccess(int status) {
     getActivity().setResult(Activity.RESULT_OK);
     getActivity().finish();
+  }
+
+  /**
+   * 跳去初始化页面，这个操作太花式
+   * @param
+   */
+  @Override public void toInit(String openid) {
+    if (getActivity() != null){
+      getActivity().getSupportFragmentManager()
+        .beginTransaction()
+        .replace(R.id.frag,RegistInitFragment.newInstance(openid))
+        .addToBackStack("")
+        .commitAllowingStateLoss();
+    }
   }
 
   /**

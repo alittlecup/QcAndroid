@@ -32,6 +32,7 @@ import im.fir.sdk.FIR;
 import javax.inject.Inject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
+import timber.log.Timber;
 
 /**
  * power by
@@ -112,7 +113,9 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     AppContex = getApplicationContext();
     if (!BuildConfig.DEBUG) CrashHandler.getInstance().init(this);
     ToastUtils.init(this);
-
+    if (BuildConfig.FLAVOR.equalsIgnoreCase("dev")){
+      Timber.plant(new Timber.DebugTree());
+    }
     //初始化神策
     SensorsDataAPI.sharedInstance(this,                               // 传入 Context
       SA_SERVER_URL,                      // 数据接收的 URL

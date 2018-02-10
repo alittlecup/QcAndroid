@@ -14,6 +14,8 @@ import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.login.views.LoginFragment;
 import cn.qingchengfit.saasbase.login.views.RegistInitFragment;
 import cn.qingchengfit.saasbase.login.views.RegisteFragment;
+import cn.qingchengfit.saasbase.login.views.RegisteInitFirstFragment;
+import cn.qingchengfit.saasbase.login.views.RegisteInitSecoundFragment;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -25,7 +27,8 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import javax.inject.Inject;
 @Trunk(fragments = {
-  LoginFragment.class,RegisteFragment.class, RegistInitFragment.class
+  LoginFragment.class,RegisteFragment.class, RegistInitFragment.class, RegisteInitFirstFragment.class,
+  RegisteInitSecoundFragment.class
 })
 public class LoginActivity extends BaseActivity implements HasSupportFragmentInjector {
   @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;

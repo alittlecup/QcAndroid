@@ -14,6 +14,7 @@ import cn.qingchengfit.saasbase.login.views.CheckProtocolModel;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.saasbase.login.LoginApi;
+import com.google.gson.JsonObject;
 import java.util.HashMap;
 import rx.Observable;
 
@@ -68,8 +69,16 @@ public class LoginModel implements ILoginModel {
     return api.qcRegister(body);
   }
 
-  @Override public Observable<QcDataResponse> doWxtoken(LoginBody body) {
-    return null;
+  @Override public Observable<QcDataResponse<Login>> wxLogin(JsonObject body) {
+    return api.wxLogin(body);
+  }
+
+  @Override public Observable<QcDataResponse> unBindWx(CheckCodeBody body) {
+    return api.unBindWx(body);
+  }
+
+  @Override public Observable<QcDataResponse> bindWx(CheckCodeBody body) {
+    return api.bindWx(body);
   }
 
   @Override public Observable<QcDataResponse> getCode(GetCodeBody body) {
@@ -80,8 +89,8 @@ public class LoginModel implements ILoginModel {
     return api.qcCheckCode(body);
   }
 
-  @Override public Observable<QcDataResponse> checkPhoneBind(CheckCodeBody body) {
-    return null;
+  @Override public Observable<QcDataResponse<JsonObject>> checkPhoneBind(CheckCodeBody body) {
+    return api.checkRegiste(body);
   }
 
   @Override public Observable<QcDataResponse<CheckProtocolModel>> qcCheckProtocol(

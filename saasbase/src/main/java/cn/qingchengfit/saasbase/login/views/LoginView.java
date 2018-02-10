@@ -33,4 +33,5 @@ public interface LoginView extends CView {
      * @param status 0，全新用户 1已有场馆用户
      */
     void onSuccess(int status);
+    void toInit(String openid);
 }

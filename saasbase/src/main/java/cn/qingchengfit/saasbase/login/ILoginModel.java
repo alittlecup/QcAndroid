@@ -7,6 +7,7 @@ import cn.qingchengfit.saasbase.login.bean.Login;
 import cn.qingchengfit.saasbase.login.bean.LoginBody;
 import cn.qingchengfit.saasbase.login.bean.RegisteBody;
 import cn.qingchengfit.saasbase.login.views.CheckProtocolModel;
+import com.google.gson.JsonObject;
 import java.util.HashMap;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
@@ -41,11 +42,12 @@ public interface ILoginModel {
 
   rx.Observable<QcDataResponse<Login>> doLogin(LoginBody body);
   rx.Observable<QcDataResponse<Login>> doRegiste(RegisteBody body);
-  rx.Observable<QcDataResponse> doWxtoken(LoginBody body);
+  rx.Observable<QcDataResponse<Login>> wxLogin(JsonObject body);
+  rx.Observable<QcDataResponse> unBindWx(CheckCodeBody body);
+  rx.Observable<QcDataResponse> bindWx(CheckCodeBody body);
   rx.Observable<QcDataResponse> getCode(GetCodeBody body);
   rx.Observable<QcDataResponse> checkCode(CheckCodeBody body);
-
-  rx.Observable<QcDataResponse> checkPhoneBind(CheckCodeBody body);
+  rx.Observable<QcDataResponse<JsonObject>> checkPhoneBind(CheckCodeBody body);
 
   //判断是否同意用户协议
   @GET(" /api/user/check/read_agreement/")

@@ -173,6 +173,10 @@ public class RegisteFragment extends BaseFragment implements LoginView {
     getActivity().finish();
   }
 
+  @Override public void toInit(String openid) {
+
+  }
+
   private class InternalHandler extends Handler {
     WeakReference<Context> context;
     int count = 60;

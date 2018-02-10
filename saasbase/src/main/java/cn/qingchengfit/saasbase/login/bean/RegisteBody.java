@@ -21,8 +21,12 @@ public class RegisteBody {
     public String phone;
     public String city;
     public String area_code;
+    public String wechat_openid;
     public boolean has_read_agreement;
     public boolean session_config = true;
+
+    public RegisteBody() {
+    }
 
     private RegisteBody(Builder builder) {
         setUsername(builder.username);
@@ -32,6 +36,13 @@ public class RegisteBody {
         setPhone(builder.phone);
         setCity(builder.city);
         area_code = builder.area_code;
+        wechat_openid = builder.wechat_openid;
+        has_read_agreement = builder.has_read_agreement;
+        session_config = builder.session_config;
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
     public String getUsername() {
@@ -90,7 +101,9 @@ public class RegisteBody {
         private String phone;
         private String city;
         private String area_code;
+        private String wechat_openid;
         private boolean has_read_agreement;
+        private boolean session_config;
 
         public Builder() {
         }
@@ -130,8 +143,18 @@ public class RegisteBody {
             return this;
         }
 
+        public Builder wechat_openid(String val) {
+            wechat_openid = val;
+            return this;
+        }
+
         public Builder has_read_agreement(boolean has_read_agreement) {
             has_read_agreement = has_read_agreement;
+            return this;
+        }
+
+        public Builder session_config(boolean val) {
+            session_config = val;
             return this;
         }
 

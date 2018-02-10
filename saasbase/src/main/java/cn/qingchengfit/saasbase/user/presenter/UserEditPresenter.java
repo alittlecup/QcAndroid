@@ -5,6 +5,8 @@ import cn.qingchengfit.di.CView;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.login.ILoginModel;
+import cn.qingchengfit.saasbase.login.bean.CheckCodeBody;
 import cn.qingchengfit.saasbase.staff.network.response.UserWrap;
 import cn.qingchengfit.saasbase.user.IUserModel;
 import cn.qingchengfit.saasbase.user.bean.EditUserBody;
@@ -20,7 +22,7 @@ public class UserEditPresenter extends BasePresenter<UserEditPresenter.MVPView> 
 
   @Inject IWXAPI wxapi;
   @Inject IUserModel userModel;
-
+  @Inject ILoginModel loginModel;
   User user;
 
   @Inject public UserEditPresenter() {
@@ -70,6 +72,24 @@ public class UserEditPresenter extends BasePresenter<UserEditPresenter.MVPView> 
       }));
   }
 
+  public void bindWxtoPhone(String code) {
+    RxRegiste(loginModel.bindWx(CheckCodeBody.newBuilder()
+      .phone(user.getPhone()).area_code(user.area_code).code(code)
+      .build())
+      .onBackpressureLatest()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            getCurUser();
+          } else {
+            mvpView.onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
+  }
+
   /**
    * 绑定微信
    */
@@ -87,8 +107,21 @@ public class UserEditPresenter extends BasePresenter<UserEditPresenter.MVPView> 
   /**
    * 解绑微信
    */
-  public void unBind(){
-
+  public void unBind() {
+    RxRegiste(loginModel.unBindWx(
+      new CheckCodeBody.Builder().phone(user.phone).area_code(user.area_code).build())
+      .onBackpressureDrop()
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new NetSubscribe<QcDataResponse>() {
+        @Override public void onNext(QcDataResponse qcResponse) {
+          if (ResponseConstant.checkSuccess(qcResponse)) {
+            mvpView.onShowError("解绑成功");
+          } else {
+            mvpView.onShowError(qcResponse.getMsg());
+          }
+        }
+      }));
   }
 
   public interface MVPView extends CView {

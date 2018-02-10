@@ -9,4 +9,5 @@ public class Login {
     @SerializedName("session_name") public String session_name;
     @SerializedName("staff") public Staff staff;
     @SerializedName("user") public Personage user;
+    public String wechat_openid;
 }

@@ -14,9 +14,13 @@
       android:layout_height="@dimen/qc_item_height"
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:paddingRight="@dimen/activity_horizontal_margin"
+      android:background="@color/white"
       app:pw_show_left="false"
       app:pw_mode="true"
       />
+
+  <include layout="@layout/divider_grey_left_right"/>
+
   <cn.qingchengfit.widgets.PhoneEditText
       android:id="@+id/pet"
       android:layout_width="match_parent"

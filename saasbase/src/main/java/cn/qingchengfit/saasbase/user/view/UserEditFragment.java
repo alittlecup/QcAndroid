@@ -20,7 +20,6 @@ import cn.qingchengfit.saasbase.user.bean.EditUserBody;
 import cn.qingchengfit.saasbase.user.presenter.UserEditPresenter;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.utils.DialogUtils;
-import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.CitiesChooser;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -30,10 +29,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
-import com.trello.rxlifecycle.android.FragmentEvent;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -66,25 +63,14 @@ import rx.schedulers.Schedulers;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     citiesChooser = new CitiesChooser(getContext());
-    RxBus.getBus()
-      .register(EventTxT.class)
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribeOn(Schedulers.io())
-      .compose(bindToLifecycle())
-      .compose(doWhen(FragmentEvent.CREATE_VIEW))
-      .subscribe(new BusSubscribe<EventTxT>() {
-        @Override public void onNext(EventTxT eventTxT) {
-          db.username.setContent(eventTxT.txt);
-          presenter.editUser(EditUserBody.newBuilder().username(eventTxT.txt).build());
-        }
-      });
+
+
     RxBus.getBus().register(SendAuth.Resp.class)
       .compose(bindToLifecycle())
       .onBackpressureDrop()
       .subscribe(new BusSubscribe<SendAuth.Resp>() {
         @Override public void onNext(SendAuth.Resp resp) {
-          LogUtil.d("code ==== "+resp.code);
-          // TODO: 2018/2/7 微信授权绑定
+          presenter.bindWxtoPhone(resp.code);
         }
       });
   }
@@ -102,6 +88,14 @@ import rx.schedulers.Schedulers;
     db.btnBind.setOnClickListener(view -> bindWx());
     db.civPw.setOnClickListener(view -> routeTo("/check/code/",null));
     presenter.getCurUser();
+    RxBusAdd(EventTxT.class)
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new BusSubscribe<EventTxT>() {
+        @Override public void onNext(EventTxT eventTxT) {
+          db.username.setContent(eventTxT.txt);
+          presenter.editUser(EditUserBody.newBuilder().username(eventTxT.txt).build());
+        }
+      });
     return db.getRoot();
   }
 
@@ -166,13 +160,7 @@ import rx.schedulers.Schedulers;
    */
   void clickCity() {
     citiesChooser.setOnCityChoosenListener((provice, city, district, id) -> {
-      String content;
-      if (city.startsWith(provice)) {
-        content = provice + district;
-      } else {
-        content = provice + city + district;
-      }
-      db.civCity.setContent(content);
+      db.civCity.setContent(city);
       presenter.editUser(EditUserBody.newBuilder().gd_district_id(id + "").build());
     });
     citiesChooser.show(getView());

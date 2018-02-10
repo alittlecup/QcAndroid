@@ -76,9 +76,7 @@ public class QCDbManagerImpl implements QcDbManager {
 
   //删除会员  brandid 没用 品牌下直接在本地删除
   public void delStudentByBrand(String brandid, final String id) {
-    appDatabase.studentDao().getStudentById(id).subscribe(qcStudentBean -> {
-      appDatabase.studentDao().delStudent(qcStudentBean);
-    });
+    delAllStudent();
   }
 
   public void delAllStudent() {
@@ -90,9 +88,7 @@ public class QCDbManagerImpl implements QcDbManager {
 
   //删除会员 场馆下也直接删除
   public void delStudentByGym(final String gymid, final String gymmodel, final String id) {
-    appDatabase.studentDao().getStudentById(id).subscribe(qcStudentBean -> {
-      appDatabase.studentDao().delStudent(qcStudentBean);
-    });
+    delAllStudent();
   }
 
   public void saveStudent(final QcStudentBean qcStudent) {
@@ -142,10 +138,12 @@ public class QCDbManagerImpl implements QcDbManager {
   }
 
   public void saveStudent(List<QcStudentBean> studentBeens, String brandid) {
-    appDatabase.studentDao().getAllStudent().subscribe(qcStudentBeans -> {
-      appDatabase.studentDao().delStudentAll();
-      appDatabase.studentDao().insertStudent(studentBeens.toArray(new QcStudentBean[] {}));
-    });
+    Maybe.just("")
+      .observeOn(Schedulers.io())
+      .subscribe(s -> {
+        appDatabase.studentDao().delStudentAll();
+        appDatabase.studentDao().insertStudent(studentBeens.toArray(new QcStudentBean[] {}));
+      });
   }
 
   public void updateStudentCheckin(String avatar, String id) {
@@ -261,7 +259,7 @@ public class QCDbManagerImpl implements QcDbManager {
   }
 
   public boolean checkNoOne(String key) {
-    return appDatabase.permissonDao().getByKeyValue(false, key).size() == 0;
+    return appDatabase.permissonDao().getByKeyValue(true, key).size() == 0;
   }
 
   public boolean checkAll(String key) {

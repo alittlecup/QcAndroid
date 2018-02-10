@@ -191,6 +191,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:alpha="@{methods.wx_active?1f:0.5f}"
             android:text='@{"微信("+methods.wx+")"}'
             />
         <TextView
