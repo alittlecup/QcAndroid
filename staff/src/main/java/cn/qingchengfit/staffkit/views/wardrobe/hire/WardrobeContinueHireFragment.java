@@ -87,6 +87,10 @@ public class WardrobeContinueHireFragment extends BaseFragment implements Wardro
         mLocker = getArguments().getParcelable("l");
     }
 
+    @Override public boolean isBlockTouch() {
+        return false;
+    }
+
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wardrobe_continue_hire, container, false);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

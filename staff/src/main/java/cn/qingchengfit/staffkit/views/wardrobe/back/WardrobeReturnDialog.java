@@ -125,6 +125,7 @@ public class WardrobeReturnDialog extends BaseDialogFragment implements Wardrobe
                 if (mLocker.is_long_term_borrow)//归还长期更衣柜
                 {
                     RxBus.getBus().post(new EventContinueHire.Builder().locker(mLocker).type(EventContinueHire.BACK).build());
+                    dismiss();
                 } else {
 
                     new MaterialDialog.Builder(getActivity()).content(getString(R.string.alert_retrun_wradrobe, mLocker.name))
@@ -144,9 +145,10 @@ public class WardrobeReturnDialog extends BaseDialogFragment implements Wardrobe
                 break;
             case R.id.btn_continue_hire:
                 RxBus.getBus().post(new EventContinueHire.Builder().type(EventContinueHire.CONTINUE).locker(mLocker).build());
+                dismiss();
                 break;
         }
-        dismiss();
+
     }
 
     @Override public void onShowError(String e) {
