@@ -134,6 +134,7 @@ public class RegistInitFragment extends BaseFragment {
             } else if (x == 1) {//该手机号【已经注册】过青橙用户并且【没有绑定】微信 跳去登录
               RxBus.getBus().post(new LoginBody.Builder().area_code(registeBody.area_code)
                 .has_read_agreement(true).phone(registeBody.phone).code(registeBody.code)
+                .wechat_openid(registeBody.wechat_openid)
                 .build());
             } else {//该用户【已经注册】过青橙用户【已经绑定微信】但是与【当前微信不一致】
               showAlert("该用户已绑定其他微信号");

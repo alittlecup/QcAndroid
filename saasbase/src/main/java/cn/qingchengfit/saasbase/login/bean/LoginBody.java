@@ -22,6 +22,7 @@ public class LoginBody {
     public String device_type;
     public String area_code;
     public boolean has_read_agreement;
+    public String wechat_openid;
 
     public LoginBody(String username, String password) {
         this.phone = username;
@@ -43,6 +44,11 @@ public class LoginBody {
         setDevice_type(builder.device_type);
         area_code = builder.area_code;
         has_read_agreement = builder.has_read_agreement;
+        wechat_openid = builder.wechat_openid;
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
     public String getUsername() {
@@ -102,6 +108,7 @@ public class LoginBody {
         private String device_type;
         private String area_code;
         private boolean has_read_agreement;
+        private String wechat_openid;
 
         public Builder() {
         }
@@ -143,6 +150,11 @@ public class LoginBody {
 
         public Builder has_read_agreement(boolean val) {
             has_read_agreement = val;
+            return this;
+        }
+
+        public Builder wechat_openid(String val) {
+            wechat_openid = val;
             return this;
         }
 
