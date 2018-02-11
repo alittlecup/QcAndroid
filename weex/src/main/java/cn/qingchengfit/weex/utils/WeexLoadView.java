@@ -22,6 +22,10 @@ import java.util.Map;
  */
 
 public final class WeexLoadView {
+  public WXSDKInstance getmWXSDKInstance() {
+    return mWXSDKInstance;
+  }
+
   private WXSDKInstance mWXSDKInstance;
   private Map<String, Object> mConfigMap = new HashMap<>();
   private ViewGroup rootView;

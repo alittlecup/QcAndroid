@@ -117,8 +117,8 @@ public final class WeexUtil {
               String next = iterator.next();
               jsMap.put(next, jsonObject.getString(next));
             }
-            if (jsMap.containsKey("commodity_list.js")) {
-              openWeexActivity(jsMap.get("commodity_list.js"));
+            if (jsMap.containsKey("proxy_commodity.js")) {
+              openWeexActivity(jsMap.get("proxy_commodity.js"));
             }
           } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

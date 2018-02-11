@@ -2,12 +2,16 @@ package cn.qingchengfit.weex.utils;
 
 import android.app.Application;
 import cn.qingchengfit.weex.adapter.ImageAdapter;
+import cn.qingchengfit.weex.component.QcRichText;
+import cn.qingchengfit.weex.module.QcAnimationModule;
+import cn.qingchengfit.weex.module.QcWxModalUIModule;
 import cn.qingchengfit.weex.ui.WxPageActivity;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.appfram.navigator.IActivityNavBarSetter;
+import com.taobao.weex.common.WXException;
 
 /**
  * Weex初始化代理类
@@ -16,18 +20,22 @@ import com.taobao.weex.appfram.navigator.IActivityNavBarSetter;
 
 public class WeexDelegate {
   private static InitConfig defaultInitConfig =
-      new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
+      new InitConfig.Builder().setImgAdapter(new ImageAdapter())
+          .build();
   private static IActivityNavBarSetter activityNavBarSetter = new WxActivityNavBarSetter();
 
   /**
    * 初始化方法
+   *
    * @param application 当前的Application
    */
   public static void initWXSDKEngine(Application application) {
     initWXSDKEngine(application, defaultInitConfig);
   }
+
   /**
    * 初始化方法
+   *
    * @param application 当前的Application
    * @param initConfig 当前初始化需要的配置
    */
@@ -40,17 +48,26 @@ public class WeexDelegate {
   }
 
   /**
-   * 注册modules
+   * 注册components
    */
   private static void initComponents() {
-
+    try {
+      WXSDKEngine.registerComponent("qc-rich-text", QcRichText.class);
+    } catch (WXException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
-   * 注册components
+   * 注册modules
    */
   private static void initModules() {
-
+    try {
+      WXSDKEngine.registerModule("qcModal", QcWxModalUIModule.class);
+      WXSDKEngine.registerModule("qcAnimation", QcAnimationModule.class);
+    } catch (WXException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -59,8 +76,6 @@ public class WeexDelegate {
   private static class WxActivityNavBarSetter implements IActivityNavBarSetter {
     /**
      * 拦截push()方法，用于跳转至{@link WxPageActivity}
-     * @param param
-     * @return
      */
     @Override public boolean push(String param) {
       JSONObject jsonObject = JSON.parseObject(param);
