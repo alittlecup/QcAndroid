@@ -116,6 +116,7 @@ public class UserEditPresenter extends BasePresenter<UserEditPresenter.MVPView> 
       .subscribe(new NetSubscribe<QcDataResponse>() {
         @Override public void onNext(QcDataResponse qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
+            getCurUser();
             mvpView.onShowError("解绑成功");
           } else {
             mvpView.onShowError(qcResponse.getMsg());

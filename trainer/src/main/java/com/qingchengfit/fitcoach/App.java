@@ -12,6 +12,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -23,7 +24,6 @@ import com.qingchengfit.fitcoach.di.AppModule;
 import com.qingchengfit.fitcoach.di.DaggerAppComponent;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -134,14 +134,19 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     }
 
     Configs.APP_ID = getString(R.string.wechat_code);
-    String id = PreferenceUtils.getPrefString(this, "coach", "");
-    String session_id = PreferenceUtils.getPrefString(this, "session_id", "");
-
-    if (TextUtils.isEmpty(id)) {
-    } else {
-      Coach coach = new Gson().fromJson(id, Coach.class);
-      App.coachid = Integer.parseInt(coach.id);
+    //String id = PreferenceUtils.getPrefString(this, "coach", "");
+    //String session_id = PreferenceUtils.getPrefString(this, "session_id", "");
+    //
+    //if (TextUtils.isEmpty(id)) {
+    //} else {
+    //  Coach coach = new Gson().fromJson(id, Coach.class);
+    //  App.coachid = Integer.parseInt(coach.id);
+    //}
+    if (BuildConfig.DEBUG) {
+      String ip = cn.qingchengfit.utils.PreferenceUtils.getPrefString(this, "debug_ip", Configs.Server);
+      Configs.Server = ip;
     }
+
     AppComponent appComponent = DaggerAppComponent.builder()
       .appModule(new AppModule.Builder().app(this)
         .gymWrapper(new GymWrapper.Builder().build())
@@ -150,7 +155,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
         .router(new BaseRouter())
         .loginStatus(new LoginStatus.Builder().loginUser(
           gUser == null ? new Staff() : Staff.formatFromUser(gUser, App.coachid + ""))
-          .session(session_id)
+          .session(QcRestRepository.getSession(this))
           .userId(gUser == null ? "" : gUser.getId())
           .build())
         .build())

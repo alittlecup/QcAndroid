@@ -23,8 +23,10 @@ import cn.qingchengfit.saasbase.login.bean.RegisteBody;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.subscribes.NetSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.fragments.EventFreshCoachService;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tencent.qcloud.sdk.Constant;
 import java.util.ArrayList;
@@ -115,13 +117,18 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     QcRestRepository.setSession(mvpContext, qcResponLogin.data.session_name,
       qcResponLogin.data.session_id);
     PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_PHONE,qcResponLogin.getData().user.getPhone());
-    PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_ID,
+    if (qcResponLogin.data.staff != null)
+      PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_ID,
       qcResponLogin.data.staff.getId());
-    loginModel.setStaffId(qcResponLogin.data.staff.getId());
+    if (qcResponLogin.data.coach != null)
+      PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_COACH_ID,
+        qcResponLogin.data.coach.getId());
+    loginModel.setStaffId(AppUtils.getCurApp(mvpContext)==0?qcResponLogin.data.coach.getId():qcResponLogin.data.staff.getId());
     PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_NAME,
       qcResponLogin.data.staff.getUsername());
     PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_USER_ID,
       qcResponLogin.getData().user.getId());
+    PreferenceUtils.setPrefString(mvpContext,"user_info",new Gson().toJson(qcResponLogin.data.user));
     studentAction.delAllStudent();
     mvpView.onShowLogining();
     getService(qcResponLogin);
@@ -148,7 +155,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
    */
   public void getService(final QcDataResponse<Login> qcResponLogin) {
     Staff staff = new Staff(qcResponLogin.data.user);
-    staff.id = qcResponLogin.data.staff.getId();
+    staff.id = AppUtils.getCurApp(mvpContext) == 0? qcResponLogin.data.coach.getId():qcResponLogin.data.staff.getId();
     loginStatus.setLoginUser(staff);
     loginStatus.setSession(qcResponLogin.data.session_id);
     loginStatus.setUserId(qcResponLogin.data.user.getId());

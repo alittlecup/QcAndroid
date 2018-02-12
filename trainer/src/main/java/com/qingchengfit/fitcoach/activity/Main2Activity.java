@@ -172,7 +172,10 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
             .negativeText("取消")
             .onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    Main2Activity.this.finish();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        finishAndRemoveTask ();
+                    }else finishAffinity();
+                    System.exit(0);
                 }
             })
             .build();
@@ -498,7 +501,10 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
         //Deprecated
 
         } else if (intent.getIntExtra(ACTION, -1) == FINISH) {
-            Main2Activity.this.finish();
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+              finishAndRemoveTask ();
+          }else finishAffinity();
+          System.exit(0);
         } else if (intent.getIntExtra(ACTION, -1) == NOTIFICATION) {
             String contetn = intent.getStringExtra("url");
             Intent toWeb = new Intent(this, WebActivity.class);

@@ -221,6 +221,8 @@ public class ManageFragment extends BaseFragment
   }
 
   private void setGymInfo(CoachService coachService) {
+    if (getContext() == null)
+      return;
     title.setText(coachService.name);
     Glide.with(getContext())
         .load(coachService.photo)

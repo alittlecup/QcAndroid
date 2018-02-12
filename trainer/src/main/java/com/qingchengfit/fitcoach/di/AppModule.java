@@ -45,6 +45,7 @@ import cn.qingchengfit.saasbase.routers.commonImpl;
 import cn.qingchengfit.saasbase.routers.exportImpl;
 import cn.qingchengfit.saasbase.routers.gymImpl;
 import cn.qingchengfit.saasbase.routers.staffImpl;
+import cn.qingchengfit.saasbase.routers.userImpl;
 import cn.qingchengfit.saasbase.staff.network.response.SalerListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerTeachersListWrap;
 import cn.qingchengfit.saasbase.staff.network.response.SalerUserListWrap;
@@ -114,6 +115,7 @@ import rx.Observable;
       .registe(new staffImpl())
       .registe(new commonImpl())
       .registe(new CourseRouter())
+      .registe(new userImpl())
       .registe(new billImpl());
 
     private IPermissionModel permissionModel = new IPermissionModel() {

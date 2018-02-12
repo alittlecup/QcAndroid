@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.utils.LogUtil;
@@ -30,14 +31,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.BuildConfig;
-import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
+import io.reactivex.Maybe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -94,16 +94,14 @@ public class SplashActivity extends BaseActivity {
 
     PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,
         getString(R.string.baidu_api_release));
-    if (BuildConfig.DEBUG) {
-      String ip = PreferenceUtils.getPrefString(this, "debug_ip", "");
-      if (!TextUtils.isEmpty(ip)) Configs.Server = ip;
-    }
+
     String u = PreferenceUtils.getPrefString(this, "user_info", "");
-    String id = PreferenceUtils.getPrefString(this, cn.qingchengfit.saasbase.constant.Configs.PREFER_WORK_ID, "");
-    if (!TextUtils.isEmpty(u) && !TextUtils.isEmpty(id)) {
+    String id = PreferenceUtils.getPrefString(this, cn.qingchengfit.saasbase.constant.Configs.PREFER_COACH_ID, "");
+    if (!TextUtils.isEmpty(u) && !TextUtils.isEmpty(id) && !TextUtils.equals("0",id)) {
             /*
                 已登录跳转
              */
+            App.coachid = Integer.parseInt(id);
       User gUser = new Gson().fromJson(u, User.class);
 
       //Staff curCoach = new Gson().fromJson(id,Staff.class);
@@ -188,10 +186,18 @@ public class SplashActivity extends BaseActivity {
             /*
              *未登录 直接进入主页
              */
-      Intent toMain = new Intent(SplashActivity.this, Main2Activity.class);
-      startActivity(toMain);
-      overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
-      SplashActivity.this.finish();
+      Maybe.just("")
+        .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+        .delay(1,TimeUnit.SECONDS)
+        .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+        .subscribe(s -> {
+          QcRestRepository.clearSession(this);
+          Intent toMain = new Intent(SplashActivity.this, Main2Activity.class);
+          startActivity(toMain);
+          overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+          SplashActivity.this.finish();
+        },throwable -> {});
+
     }
   }
 
