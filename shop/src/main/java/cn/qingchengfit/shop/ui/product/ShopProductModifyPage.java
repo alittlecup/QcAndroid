@@ -2,7 +2,9 @@ package cn.qingchengfit.shop.ui.product;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import cn.qingchengfit.model.others.ToolbarModel;
 import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.vo.Product;
@@ -31,10 +33,9 @@ import java.util.ArrayList;
       changeUI(product);
     });
 
-    mViewModel.getDeleteProductResult().observe(this,aBoolean -> {
-      ToastUtils.show("delete-->"+aBoolean);
+    mViewModel.getDeleteProductResult().observe(this, aBoolean -> {
+      ToastUtils.show("delete-->" + aBoolean);
     });
-
   }
 
   private void changeUI(Product product) {
@@ -57,17 +58,22 @@ import java.util.ArrayList;
 
   }
 
-  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    View view = super.onCreateView(inflater, container, savedInstanceState);
     mViewModel.loadProduct(productId);
     mBinding.framelayoutClick.setVisibility(View.VISIBLE);
+    AppUtils.hideKeyboard(getActivity());
     initBottom();
+    return view;
   }
+
 
   private void initBottom() {
     mBinding.buttonLeft.setText(getString(R.string.delete));
-    mBinding.buttonRight.setText(productStatus ? "下架" : "上架");
-
+    mBinding.buttonRight.setText("上架");
+    //mBinding.buttonRight.setText(productStatus ? "下架" : "上架");
     mBinding.buttonLeft.setOnClickListener(v -> mViewModel.deleteProduct(productId));
     mBinding.buttonRight.setOnClickListener(v -> {
       mViewModel.getProduct().setStatus(!productStatus);

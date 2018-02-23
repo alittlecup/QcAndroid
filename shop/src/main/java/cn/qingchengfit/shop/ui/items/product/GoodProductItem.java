@@ -46,8 +46,10 @@ public class GoodProductItem
       DataBindingViewHolder<ItemCategoryBinding> holder, int position, List payloads) {
     ItemCategoryBinding dataBinding = holder.getDataBinding();
 
-    dataBinding.categoryPrice.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
-    dataBinding.categoryPriceCard.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+    dataBinding.categoryPrice.getEditText()
+        .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+    dataBinding.categoryPriceCard.getEditText()
+        .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
     dataBinding.imDelete.setVisibility(View.VISIBLE);
     dataBinding.categoryName.setVisibility(View.VISIBLE);
@@ -71,7 +73,7 @@ public class GoodProductItem
     }
     dataBinding.setGood(good);
     //initData(dataBinding);
-    dataBinding.imDelete.setOnClickListener(v -> {
+    dataBinding.imDelete.setOnClickListener((View v) -> {
       if (adapter.getItemCount() == 1) {
         dataBinding.imDelete.setVisibility(View.GONE);
         dataBinding.categoryName.setVisibility(View.GONE);
@@ -79,12 +81,14 @@ public class GoodProductItem
       } else {
         adapter.removeItem(position);
         adapter.notifyDataSetChanged();
-        if (adapter.getItemCount() == 2) {
+        if (adapter.getItemCount() == 1) {
           ((GoodProductItem) adapter.getItem(0)).setExpend(true);
         }
       }
-      ViewUtil.resetRecyclerViewHeight(adapter.getRecyclerView());
+      adapter.getRecyclerView()
+          .post(() -> ViewUtil.resetRecyclerViewHeight(adapter.getRecyclerView()));
     });
+
   }
 
   public Good getGood() {

@@ -23,8 +23,7 @@ import retrofit2.http.QueryMap;
 /**
  * Created by huangbaole on 2017/12/19.
  */
-@Singleton
-public class ShopRemoteRepositoryImpl implements ShopRemoteRepository {
+@Singleton public class ShopRemoteRepositoryImpl implements ShopRemoteRepository {
   ShopApi shopApi;
 
   @Inject public ShopRemoteRepositoryImpl(QcRestRepository restRepository) {
@@ -96,7 +95,7 @@ public class ShopRemoteRepositoryImpl implements ShopRemoteRepository {
   @Override
   public Flowable<QcDataResponse> qcDeleteProduct(String staff_id, HashMap<String, Object> params,
       String product_id) {
-    return shopApi.qcDeleteProduct(staff_id, params, product_id);
+    return shopApi.qcDeleteProduct(staff_id, product_id, params);
   }
 
   @Override
@@ -107,6 +106,6 @@ public class ShopRemoteRepositoryImpl implements ShopRemoteRepository {
 
   @Override public Flowable<QcDataResponse<Product>> qcLoadProductInfo(String staff_id,
       HashMap<String, Object> params, String product_id) {
-    return shopApi.qcLoadProductInfo(staff_id, params, product_id);
+    return shopApi.qcLoadProductInfo(staff_id, product_id, params);
   }
 }

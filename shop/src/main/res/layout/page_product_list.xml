@@ -24,6 +24,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_scrollFlags="scroll|enterAlways"
         >
 
@@ -34,7 +36,6 @@
           android:background="@drawable/bg_rect_allotsale_search"
           android:drawableLeft="@drawable/ic_allotsale_search"
           android:drawablePadding="10dp"
-          android:focusable="false"
           android:hint="@string/search_product"
           android:paddingLeft="10dp"
           android:paddingStart="10dp"

@@ -9,7 +9,6 @@ import cn.qingchengfit.saasbase.common.mvvm.LiveDataReactiveStreams;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
-import cn.qingchengfit.shop.vo.Channel;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import io.reactivex.Flowable;
@@ -127,37 +126,7 @@ public class ShopRepositoryImpl implements ShopRepository {
 
   @Override public LiveData<Product> qcLoadProductInfo(String staff_id, String product_id,
       HashMap<String, Object> map) {
-    //return toLiveData(remoteService.qcLoadProductInfo(staff_id, product_id));
-    MutableLiveData<Product> productLiveData = new MutableLiveData<>();
-    Product product = new Product();
-    product.setName("name");
-    product.setUnit("22");
-    product.setSupport_card(true);
-    ArrayList<String> arrayList = new ArrayList<>();
-    arrayList.add("333");
-    arrayList.add("333");
-    arrayList.add("333");
-    product.setCard_tpl_ids(arrayList);
-    product.setPriority(33);
-    ArrayList<Integer> list = new ArrayList<>();
-    list.add(2);
-    list.add(3);
-    product.setDelivery_types(list);
-    Category category = new Category();
-    category.setName("category");
-    product.setCategory(category);
-    product.setDesc("adsffffffffffffffdasfads");
-    List<Good> goods = new ArrayList<>();
-    Good good = new Good();
-    good.setName("good");
-    good.setPrice(33.33, Channel.CARD);
-    good.setPrice(44, Channel.RMB);
-    good.setInventory(33);
-    goods.add(good);
-    product.setGoods(goods);
-    productLiveData.setValue(product);
-
-    return productLiveData;
+    return toLiveData(remoteService.qcLoadProductInfo(staff_id, map, product_id));
   }
 
   @Override

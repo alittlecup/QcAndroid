@@ -6,6 +6,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.shop.BR;
+import cn.qingchengfit.utils.ToastUtils;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +86,7 @@ public class Good extends BaseObservable implements Parcelable {
     notifyPropertyChanged(BR.name);
   }
 
-  public double getPrice(@Channel String type) {
+  public String getPrice(@Channel String type) {
     if (rule != null && !rule.isEmpty()) {
       for (Rule rule : rule) {
         if (type.equals(rule.getChannel())) {
@@ -92,55 +94,77 @@ public class Good extends BaseObservable implements Parcelable {
         }
       }
     }
-    return -1;
+    return "";
   }
 
   @Bindable public String getCardPrices() {
-    return tempCardPrice;
+    return getPrice(Channel.CARD);
   }
 
   public void setCardPrices(String prices) {
+    String tempCardPrice = "";
     if (StringUtils.isEmpty(prices)) {
-      tempCardPrice = prices;
-      return;
-    }
-    if (".".equals(prices)) {
       tempCardPrice = "";
     }
-    int i = prices.lastIndexOf(".");
-    if (i != -1 && prices.length() - i >= 4) {
-      tempCardPrice = prices.substring(0, i + 3);
-    } else {
-      tempCardPrice = prices;
+    DecimalFormat decimalFormat = new DecimalFormat("######.##");
+    try {
+      Double aDouble = Double.valueOf(prices);
+      if (aDouble > 999999) {
+        ToastUtils.show("商品价格最大值为999999");
+        notifyPropertyChanged(BR.cardPrices);
+        return;
+      }
+      int i = prices.indexOf(".");
+      if (i != -1 && prices.length() - i > 3) {
+        tempCardPrice = decimalFormat.format(aDouble);
+      } else {
+        tempCardPrice = prices;
+      }
+    } catch (NumberFormatException e) {
+      ToastUtils.show("请输入正确价格");
+      tempCardPrice = "";
     }
+    setPrice(tempCardPrice, Channel.CARD);
     notifyPropertyChanged(BR.cardPrices);
   }
 
   @Bindable public String getRmbPrices() {
-    return tempRMBPrice;
+    return getPrice(Channel.RMB);
   }
 
   private String tempRMBPrice;
   private String tempCardPrice;
 
   public void setRmbPrices(String prices) {
+    String tempRMBPrice = "";
     if (StringUtils.isEmpty(prices)) {
-      tempRMBPrice = prices;
+      tempRMBPrice = "";
       return;
     }
-    if (".".equals(prices)) {
+    DecimalFormat decimalFormat = new DecimalFormat("######.##");
+    try {
+      Double aDouble = Double.valueOf(prices);
+      if (aDouble > 999999) {
+        ToastUtils.show("商品价格最大值为999999");
+        notifyPropertyChanged(BR.rmbPrices);
+        return;
+      }
+      int i = prices.indexOf(".");
+      if (i != -1 && prices.length() - i > 3) {
+        tempRMBPrice = decimalFormat.format(aDouble);
+      } else {
+        tempRMBPrice = prices;
+      }
+    } catch (NumberFormatException e) {
+      ToastUtils.show("请输入正确价格");
       tempRMBPrice = "";
     }
-    int i = prices.lastIndexOf(".");
-    if (i != -1 && prices.length() - i >= 4) {
-      tempRMBPrice = prices.substring(0, i + 2);
-    } else {
-      tempRMBPrice = prices;
-    }
+
+    setPrice(tempRMBPrice, Channel.RMB);
     notifyPropertyChanged(BR.rmbPrices);
   }
 
-  public void setPrice(double price, @Channel String type) {
+  public void setPrice(String price, @Channel String type) {
     if (rule != null && !rule.isEmpty()) {
       for (Rule rule : rule) {
         if (type.equals(rule.getChannel())) {
@@ -156,17 +180,27 @@ public class Good extends BaseObservable implements Parcelable {
     this.rule.add(rule);
   }
 
+  public void removeCardPrice() {
+    if (rule != null && !rule.isEmpty()) {
+      for (Rule rule : rule) {
+        if (rule.getChannel().equals(Channel.CARD)) {
+          this.rule.remove(rule);
+        }
+      }
+    }
+  }
+
   public static class Rule {
 
-    protected double cost;
+    protected String cost;
 
     @Channel private String channel;
 
-    public double getCost() {
+    public String getCost() {
       return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(String cost) {
       this.cost = cost;
     }
 

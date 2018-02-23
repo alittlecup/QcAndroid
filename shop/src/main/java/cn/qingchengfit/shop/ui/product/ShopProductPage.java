@@ -91,6 +91,10 @@ import java.util.List;
       for (Object item : goodsAdapter.getMainItems()) {
         if (item instanceof GoodProductItem) {
           Good good = ((GoodProductItem) item).getGood();
+          // 移除会员卡价格
+          if (!mViewModel.getProduct().getSupport_card()) {
+            good.removeCardPrice();
+          }
           goods.add(good);
         }
       }
@@ -124,14 +128,6 @@ import java.util.List;
         if (TextUtils.isEmpty(good.getRmbPrices())) {
           ToastUtils.show("请输入型号价格");
           return false;
-        } else {
-          try {
-            good.setPrice(Double.valueOf(good.getRmbPrices()), Channel.RMB);
-          } catch (NumberFormatException e) {
-            ToastUtils.show("请输入正确价格");
-            return false;
-          }
-          //good.setRmbPrices(null);
         }
 
         if (TextUtils.isEmpty(good.getName())) {
@@ -156,16 +152,6 @@ import java.util.List;
         if (product.getSupport_card() && TextUtils.isEmpty(good.getCardPrices())) {
           ToastUtils.show("请输入型号会员卡价格");
           return false;
-        }else{
-          try {
-            if (mViewModel.getProduct().getSupport_card()) {
-              good.setPrice(Double.valueOf(good.getCardPrices()), Channel.CARD);
-            }
-          } catch (NumberFormatException e) {
-            ToastUtils.show("请输入正确价格");
-            return false;
-          }
-          //good.setCardPrices(null);
         }
       }
     }
@@ -203,7 +189,11 @@ import java.util.List;
       if (TextUtils.isEmpty(s)) {
         mViewModel.getProduct().setPriority(0);
       } else {
-        mViewModel.getProduct().setPriority(Integer.valueOf(s));
+        try {
+          mViewModel.getProduct().setPriority(Integer.valueOf(s));
+        } catch (NumberFormatException e) {
+          ToastUtils.show("请输入正确数字");
+        }
       }
     });
   }
@@ -285,10 +275,12 @@ import java.util.List;
   private PagerAdapter adapter;
 
   protected void initViewPager(List<String> uris) {
-    adapter = new ImageViewAdapter(uris);
-    mBinding.viewpager.setAdapter(adapter);
-    mBinding.viewpager.setCurrentItem(0);
-    adapter.notifyDataSetChanged();
+    if (uris != null && !uris.isEmpty()) {
+      adapter = new ImageViewAdapter(uris);
+      mBinding.viewpager.setAdapter(adapter);
+      mBinding.viewpager.setCurrentItem(0);
+      adapter.notifyDataSetChanged();
+    }
   }
 
   private class ImageViewAdapter extends PagerAdapter {

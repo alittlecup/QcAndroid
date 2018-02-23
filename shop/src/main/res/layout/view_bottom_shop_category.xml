@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="12dp"
-
         app:items="@{viewModel.items}"
         />
 
@@ -79,14 +78,10 @@
           android:layout_weight="1"
           android:gravity="center"
           android:onClick="@{(view)-> viewModel.onConfimClick()}"
-
           android:text="@string/confirm"
           android:textSize="15sp"
           style="@style/QcBtnPrimary"
           />
-
     </LinearLayout>
-
-
   </LinearLayout>
 </layout>

@@ -4,6 +4,10 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import cn.qingchengfit.saasbase.common.di.scope.ViewModelKey;
 import cn.qingchengfit.saasbase.common.mvvm.ViewModelFactory;
+import cn.qingchengfit.shop.repository.ShopRepository;
+import cn.qingchengfit.shop.repository.ShopRepositoryImpl;
+import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;
+import cn.qingchengfit.shop.repository.remote.ShopRemoteRepositoryImpl;
 import cn.qingchengfit.shop.ui.category.ShopCategoryViewModel;
 import cn.qingchengfit.shop.ui.home.ShopHomeViewModel;
 import cn.qingchengfit.shop.ui.home.categorylist.ShopCategoryListViewModel;
@@ -26,6 +30,12 @@ import dagger.multibindings.IntoMap;
  */
 @Module public abstract class ShopViewModel {
   @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
+
+  @Binds
+  abstract ShopRemoteRepository bindShopRemoteService(ShopRemoteRepositoryImpl remoteResitory);
+
+  @Binds abstract ShopRepository bindShopRepository(ShopRepositoryImpl repository);
+
 
   @Binds @IntoMap @ViewModelKey(ShopHomeViewModel.class)
   abstract ViewModel bindShopHomeViewModel(ShopHomeViewModel shopHomeViewModel);

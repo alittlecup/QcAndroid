@@ -96,8 +96,8 @@ public interface ShopApi {
    * 删除商品
    */
   @DELETE("api/staffs/{staff_id}/mall/products/{product_id}/")
-  Flowable<QcDataResponse> qcDeleteProduct(@Path("staff_id") String staff_id,@QueryMap HashMap<String, Object> params,
-      @Path("product_id") String product_id);
+  Flowable<QcDataResponse> qcDeleteProduct(@Path("staff_id") String staff_id,
+      @Path("product_id") String product_id,@QueryMap HashMap<String, Object> params);
 
   /**
    * 修改商品
@@ -108,9 +108,9 @@ public interface ShopApi {
   /**
    * 获取商品信息
    */
-  @GET("GET api/staffs/{staff_id}/mall/products/{product_id}/")
-  Flowable<QcDataResponse<Product>> qcLoadProductInfo(@Path("staff_id") String staff_id,@QueryMap HashMap<String, Object> params,
-      @Path("product_id") String product_id);
+  @GET("api/staffs/{staff_id}/mall/products/{product_id}/")
+  Flowable<QcDataResponse<Product>> qcLoadProductInfo(@Path("staff_id") String staff_id,
+      @Path("product_id") String product_id,@QueryMap HashMap<String, Object> params);
 }
 
 

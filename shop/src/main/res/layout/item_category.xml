@@ -40,7 +40,7 @@
           app:civ_hint="@string/input_product_price"
           app:civ_inputnum="true"
           app:civ_lable="@string/price"
-          app:civ_max_length="6"
+          app:civ_max_length="10"
           app:civ_nonnull="true"
           style="@style/QcCivInputStyle"
           />
@@ -52,7 +52,7 @@
           app:civ_hint="@string/input_product_price"
           app:civ_inputnum="true"
           app:civ_lable="@string/product_pay_card_price"
-          app:civ_max_length="6"
+          app:civ_max_length="10"
           app:civ_nonnull="true"
 
           style="@style/QcCivInputStyle"
