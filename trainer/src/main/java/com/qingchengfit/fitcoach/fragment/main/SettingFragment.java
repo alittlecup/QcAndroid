@@ -18,7 +18,6 @@ import cn.qingchengfit.events.EventLoginChange;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.ShareDialogFragment;
 import com.baidu.android.pushservice.PushManager;
@@ -26,7 +25,6 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
-import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.fragment.AdviceFragment;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.fragment.CalSyncFragment;
@@ -44,7 +42,6 @@ public class SettingFragment extends BaseSettingFragment {
     @BindView(R.id.setting_advice) RelativeLayout settingAdvice;
     @BindView(R.id.setting_aboutus) RelativeLayout settingAboutus;
     FragmentManager mFragmentManager;
-    DialogSheet logoutSheet;
     @BindView(R.id.version_code) TextView versionCode;
     @Inject LoginStatus loginStatus;
     @Inject BaseRouter baseRouter;
@@ -64,21 +61,7 @@ public class SettingFragment extends BaseSettingFragment {
         mFragmentManager = getFragmentManager();
     }
 
-    public void showDialog() {
-        if (logoutSheet == null) {
-            logoutSheet = DialogSheet.builder(getContext());
-            logoutSheet.addButton("退出登录", new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    logoutSheet.dismiss();
-                    Intent it = new Intent(getActivity(), MainActivity.class);
-                    it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
-                    startActivity(it);
-                }
-            });
-        }
-        logoutSheet.show();
-    }
+
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);

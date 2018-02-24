@@ -1,12 +1,9 @@
 package com.qingchengfit.fitcoach.Utils;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+import com.baidu.android.pushservice.PushManager;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.qingchengfit.fitcoach.BuildConfig;
 import com.umeng.analytics.MobclickAgent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -70,28 +67,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * 当UncaughtException发生时会转入该函数来处理
      */
     @Override public void uncaughtException(Thread thread, Throwable ex) {
-        if (!handleException(ex) && mDefaultHandler != null) {
-            //如果用户没有处理则让系统默认的异常处理器来处理
-            mDefaultHandler.uncaughtException(thread, ex);
-        } else {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                Log.e(TAG, "error : ", e);
-            }
-            //退出程序
-            //            Looper.prepare();
-            if (App.gCanReload) {
-                Intent intent = new Intent(mContext.getApplicationContext(), MainActivity.class);
-                PendingIntent restartIntent =
-                    PendingIntent.getActivity(mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                //             退出程序
-                AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, restartIntent); // 1秒钟后重启应用
-            }
-            ((App) mContext).finishActivity();
-            //            Looper.loop();
-        }
+        if (!BuildConfig.DEBUG) MobclickAgent.reportError(App.AppContex, ex);
+        // TODO: 2018/2/12 关闭App
+        //RxBus.getBus().post(new RxCloseAppEvent());
+        PushManager.stopWork(mContext);
     }
 
     /**

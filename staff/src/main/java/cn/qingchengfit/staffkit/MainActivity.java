@@ -163,6 +163,12 @@ public class MainActivity extends BaseActivity implements FragCallBack {
         onNewIntent(getIntent());
       tabview.setupTabView(mIconSelect,mIconNormal);
     tabview.setPoint(1);
+    tabview.setListener(pos -> {
+      if (pos == 1) {
+        tabview.clearPoint(1);
+      }
+      showPage(pos);
+    });
     showPage(0);
     //聊天的初始化
 
@@ -225,14 +231,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
                 onBgClick();
             }
         });
-      tabview.setListener(new TabViewNoVp.TabSelectListener() {
-        @Override public void onTabClick(int pos) {
-          if (pos == 1) {
-            tabview.clearPoint(1);
-          }
-          showPage(pos);
-        }
-      });
+
     }
 
   private void initIM() {

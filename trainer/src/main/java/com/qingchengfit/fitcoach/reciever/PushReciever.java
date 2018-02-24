@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.bean.NewPushMsg;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.WebActivity;
@@ -12,8 +13,6 @@ import com.baidu.android.pushservice.PushMessageReceiver;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
-import com.qingchengfit.fitcoach.activity.MainActivity;
-import cn.qingchengfit.bean.NewPushMsg;
 import java.util.List;
 
 /**
@@ -87,7 +86,7 @@ public class PushReciever extends PushMessageReceiver {
                 } else {
                     Intent toMain = new Intent(context, Main2Activity.class);
                     toMain.putExtra("url", bean.url);
-                    toMain.putExtra(MainActivity.ACTION, Main2Activity.NOTIFICATION);
+                    toMain.putExtra(Main2Activity.ACTION, Main2Activity.NOTIFICATION);
                     toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(toMain);
                 }
