@@ -27,7 +27,7 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme"
-      tools:replace="android:theme"
+      tools:replace="android:label"
       >
 
     <!-- 【必须】消息收发service -->

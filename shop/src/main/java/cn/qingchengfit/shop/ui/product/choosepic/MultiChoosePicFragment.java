@@ -1,30 +1,31 @@
 package cn.qingchengfit.shop.ui.product.choosepic;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import cn.qingchengfit.shop.ui.widget.LoadingImageDialog;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
-import com.zhihu.matisse.internal.entity.Item;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Flowable;
 import java.util.ArrayList;
 import java.util.List;
+import rx.functions.Action1;
 
 /**
  * Created by huangbaole on 2018/1/24.
@@ -34,7 +35,28 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = super.onCreateView(inflater, container, savedInstanceState);
+    Window window = this.getDialog().getWindow();
+    window.setGravity(Gravity.BOTTOM);
+    window.getDecorView().setPadding(0, 0, 0, 0);
+    WindowManager.LayoutParams lp = window.getAttributes();
+    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+    lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+    window.setAttributes(lp);
+    window.setWindowAnimations(cn.qingchengfit.widgets.R.style.ButtomDialogStyle);
+
+    View view =
+        inflater.inflate(cn.qingchengfit.widgets.R.layout.dialog_pic_choose, container, false);
+
+    new RxPermissions(getActivity()).request(Manifest.permission.CAMERA,
+        Manifest.permission.READ_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
+      @Override public void call(Boolean aBoolean) {
+        if (aBoolean) {
+          chooseImages();
+        } else {
+          ToastUtils.show("请开启拍照及存储权限");
+        }
+      }
+    });
     return view;
   }
 
@@ -53,55 +75,55 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
     view.setVisibility(View.GONE);
   }
 
-  @Override public void chooseImages() {
-    ArrayList<Uri> uris = getArguments().getParcelableArrayList("uris");
-    if (uris != null && !uris.isEmpty()) {
-      ArrayList<Item> items = new ArrayList<>();
-      for (Uri uri : uris) {
-        Item item = new Item(uri);
-        item.setPath(uri.toString());
-        items.add(item);
-      }
-      chooseImages(items);
-    } else {
-      chooseImage();
-    }
+  public void chooseImages() {
+    //ArrayList<Uri> uris = getArguments().getParcelableArrayList("uris");
+    //if (uris != null && !uris.isEmpty()) {
+    //  ArrayList<Item> items = new ArrayList<>();
+    //  for (Uri uri : uris) {
+    //    Item item = new Item(uri);
+    //    item.setPath(uri.toString());
+    //    items.add(item);
+    //  }
+    //  chooseImages(items);
+    //} else {
+    //  chooseImage();
+    //}
   }
 
-  private void chooseImage() {
-    Matisse.from(MultiChoosePicFragment.this)
-        .choose(MimeType.ofAll(), false)
-        .countable(true)
-        .capture(true)
-        .dragable(true)
-        .theme(cn.qingchengfit.widgets.R.style.QcPicAppTheme)
-        .maxSelectable(5)
-        .captureStrategy(new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
-        .gridExpectedSize(getResources().getDimensionPixelSize(
-            cn.qingchengfit.widgets.R.dimen.grid_expected_size))
-        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-        .thumbnailScale(0.85f)
-        .imageEngine(new GlideEngine())
-        .forResult(CHOOSE_CAMERA);
-  }
+  //private void chooseImage() {
+  //  Matisse.from(MultiChoosePicFragment.this)
+  //      .choose(MimeType.ofAll(), false)
+  //      .countable(true)
+  //      .capture(true)
+  //      .dragable(true)
+  //      .theme(cn.qingchengfit.widgets.R.style.QcPicAppTheme)
+  //      .maxSelectable(5)
+  //      .captureStrategy(new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
+  //      .gridExpectedSize(getResources().getDimensionPixelSize(
+  //          cn.qingchengfit.widgets.R.dimen.grid_expected_size))
+  //      .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+  //      .thumbnailScale(0.85f)
+  //      .imageEngine(new GlideEngine())
+  //      .forResult(CHOOSE_CAMERA);
+  //}
 
-  public void chooseImages(ArrayList<Item> uris) {
-    Matisse.from(MultiChoosePicFragment.this)
-        .choose(MimeType.ofAll(), false)
-        .countable(true)
-        .capture(true)
-        .dragable(true)
-        .itemUris(uris)
-        .theme(cn.qingchengfit.widgets.R.style.QcPicAppTheme)
-        .maxSelectable(5)
-        .captureStrategy(new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
-        .gridExpectedSize(getResources().getDimensionPixelSize(
-            cn.qingchengfit.widgets.R.dimen.grid_expected_size))
-        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-        .thumbnailScale(0.85f)
-        .imageEngine(new GlideEngine())
-        .forResult(CHOOSE_CAMERA);
-  }
+  //public void chooseImages(ArrayList<Item> uris) {
+  //  Matisse.from(MultiChoosePicFragment.this)
+  //      .choose(MimeType.ofAll(), false)
+  //      .countable(true)
+  //      .capture(true)
+  //      .dragable(true)
+  //      .itemUris(uris)
+  //      .theme(cn.qingchengfit.widgets.R.style.QcPicAppTheme)
+  //      .maxSelectable(5)
+  //      .captureStrategy(new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
+  //      .gridExpectedSize(getResources().getDimensionPixelSize(
+  //          cn.qingchengfit.widgets.R.dimen.grid_expected_size))
+  //      .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+  //      .thumbnailScale(0.85f)
+  //      .imageEngine(new GlideEngine())
+  //      .forResult(CHOOSE_CAMERA);
+  //}
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     String filepath = "";

@@ -3,6 +3,7 @@ package cn.qingchengfit.shop.base;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.saasbase.SaasContainerActivity;
+import cn.qingchengfit.shop.di.ShopViewModel;
 import cn.qingchengfit.shop.routers.ShopRouterCenter;
 import cn.qingchengfit.shop.routers.shopImpl;
 import cn.qingchengfit.shop.ui.category.ShopCategoryPage;
@@ -29,13 +30,13 @@ import com.anbillon.flabellum.annotations.Trunk;
     ShopProductPage.class, ProductInventoryPage.class, UpdateInventoryPage.class,
     ProductAddSuccessPage.class, ProductPayPage.class, ProductDeliverPage.class,
     ProductPricesPage.class, ShopBottomCategoryFragment.class, ShopProductAddPage.class,
-    ShopProductModifyPage.class
+    ShopProductModifyPage.class, ShopViewModel.class
 }) public class ShopActivity extends SaasContainerActivity {
   @Override public String getModuleName() {
     return "shop";
   }
 
   @Override protected Fragment getRouterFragment(Intent intent) {
-    return new ShopRouterCenter(new shopImpl()).getFragment(intent.getData(), intent.getExtras());
+    return new ShopRouterCenter().registe(new shopImpl()).getFragment(intent.getData(), intent.getExtras());
   }
 }

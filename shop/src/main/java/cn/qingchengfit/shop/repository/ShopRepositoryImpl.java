@@ -16,11 +16,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Created by huangbaole on 2017/12/19.
  */
-
+@Singleton
 public class ShopRepositoryImpl implements ShopRepository {
 
   @Inject ShopRemoteRepository remoteService;

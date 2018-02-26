@@ -26,9 +26,9 @@ public class LoadingImageDialog extends Dialog {
     this.setContentView(R.layout.shop_dialog_loading);
     setCancelable(false);
     setCanceledOnTouchOutside(false);
-    imageLoading = findViewById(cn.qingchengfit.widgets.R.id.img_loading);
+    imageLoading = findViewById(R.id.img_loading);
     rotate = AnimationUtils.loadAnimation(context, cn.qingchengfit.widgets.R.anim.loading_rotate);
-    textView = findViewById(cn.qingchengfit.widgets.R.id.content_text);
+    textView = findViewById(R.id.content_text);
     textView.setText("正在上传中...");
   }
 

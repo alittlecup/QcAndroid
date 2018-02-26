@@ -1,9 +1,7 @@
 package cn.qingchengfit.testmodule;
 
 import android.app.Activity;
-import cn.qingchengfit.shop.di.BindShopActivity;
 import cn.qingchengfit.shop.di.ShopModule;
-import cn.qingchengfit.shop.di.ShopViewModel;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -13,7 +11,6 @@ import dagger.android.AndroidInjectionModule;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import dagger.multibindings.IntoMap;
-import javax.inject.Singleton;
 
 /**
  * power by
@@ -35,12 +32,10 @@ import javax.inject.Singleton;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/5/31.
  */
-@Singleton
 @Component(modules = {
         AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class,
         AppComponent.MainModule.class,
-        ShopViewModel.class,
-        BindShopActivity.class, ShopModule.class
+        ShopModule.class
         //AppComponent.RecruitModule.class,
 })
 public interface AppComponent extends AndroidInjector<TestApp> {

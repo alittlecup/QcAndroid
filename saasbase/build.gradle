@@ -28,6 +28,8 @@ android {
             }
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [APP_SCHAME        : "qcstaff"]
+
     }
     buildTypes {
         release {
