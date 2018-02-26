@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -21,7 +22,7 @@ import cn.qingchengfit.student.viewmodel.followup.FollowUpFilterViewModel;
 import cn.qingchengfit.student.viewmodel.followup.FollowUpStatusViewModel;
 import cn.qingchengfit.student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.utils.MeasureUtils;
-
+import java.util.ArrayList;
 
 /**
  * Created by huangbaole on 2017/11/6.
@@ -70,6 +71,7 @@ public class FollowUpStatusPage extends StudentBaseFragment<PageFollowupStatusBi
         mBinding.setToolbarModel(new ToolbarModel(title));
         initToolbar(mBinding.includeToolbar.toolbar);
         mBinding.setViewModel(mViewModel);
+        mBinding.recyclerViewToday.setAdapter(new CommonFlexAdapter(new ArrayList()));
         mBinding.recyclerViewToday.setLayoutManager(new LinearLayoutManager(getContext()));
         initView();
         initFragment();

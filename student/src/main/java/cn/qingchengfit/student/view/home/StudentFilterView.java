@@ -1,30 +1,20 @@
 package cn.qingchengfit.student.view.home;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.OnRebindCallback;
-import android.databinding.ViewDataBinding;
-import android.graphics.LinearGradient;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-
-import java.util.HashMap;
-
-import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.ViewStudentFilterBinding;
 import cn.qingchengfit.student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * ;
@@ -73,16 +63,11 @@ public class StudentFilterView extends StudentBaseFragment<ViewStudentFilterBind
         mBinding = ViewStudentFilterBinding.inflate(inflater, container, false);
         initRecyclerView();
         mBinding.setViewModel(mViewModel);
-        mBinding.addOnRebindCallback(new OnRebindCallback<ViewStudentFilterBinding>() {
-            @Override
-            public void onBound(ViewStudentFilterBinding binding) {
-                adapter = (CommonFlexAdapter) binding.recyclerBillFilter.getAdapter();
-            }
-        });
         return mBinding;
     }
 
     private void initRecyclerView() {
+        mBinding.recyclerBillFilter.setAdapter(adapter=new CommonFlexAdapter(new ArrayList()));
         mBinding.recyclerBillFilter.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerBillFilter.addItemDecoration(
                 new FlexibleItemDecoration(getContext()).withDivider(cn.qingchengfit.saasbase.R.drawable.divider_grey_left_margin)

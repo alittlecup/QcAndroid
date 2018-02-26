@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 
 import java.lang.annotation.Retention;
@@ -18,6 +19,7 @@ import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageFollowupStudentBinding;
 import cn.qingchengfit.student.viewmodel.followup.FollowUpStudentViewModel;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import java.util.ArrayList;
 
 /**
  * Created by huangbaole on 2017/11/20.
@@ -38,6 +40,7 @@ public class FollowUpStudentPage extends StudentBaseFragment<PageFollowupStudent
         mBinding.setToolbarModel(new ToolbarModel("会员跟进"));
         mBinding.setViewModel(mViewModel);
         initToolbar(mBinding.includeToolbar.toolbar);
+        mBinding.recyclerview.setAdapter(new CommonFlexAdapter(new ArrayList()));
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mViewModel.loadSource(mViewModel.getFilter());
         mBinding.setItemClickListener(this);

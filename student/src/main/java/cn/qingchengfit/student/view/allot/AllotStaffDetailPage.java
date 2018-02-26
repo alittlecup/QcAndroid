@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.qingchengfit.saasbase.student.items.StudentItem;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -101,28 +102,25 @@ public class AllotStaffDetailPage extends StudentBaseFragment<PageAllotStaffDeta
 
 
     private void initRecyclerView() {
+        mBinding.recyclerview.setAdapter(adapter=new CommonFlexAdapter(new ArrayList()));
+
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.fastScroller.setBarClickListener(letter -> {
-            List<AbstractFlexibleItem> itemList = mViewModel.items.get();
+            List<StudentItem> itemList = mViewModel.items.get();
             int position = 0;
             for (int i = 0; i < itemList.size(); i++) {
-                if (itemList.get(i) instanceof StickerDateItem) {
-                    if (((StickerDateItem) itemList.get(i)).getDate().equalsIgnoreCase(letter)) {
-                        position = i;
+                if (itemList.get(i).getHeader() != null) {
+                    if (itemList.get(i).getHeader() instanceof StickerDateItem) {
+                        if (((StickerDateItem) itemList.get(i).getHeader()).getDate()
+                            .equalsIgnoreCase(letter)) {
+                            position = i;
+                        }
                     }
                 }
             }
             return position;
         });
-        mBinding.addOnRebindCallback(new OnRebindCallback<PageAllotStaffDetailBinding>() {
-            @Override
-            public void onBound(PageAllotStaffDetailBinding binding) {
-                if (binding.recyclerview.getAdapter() != adapter) {
-                    adapter = (CommonFlexAdapter) binding.recyclerview.getAdapter();
-                    adapter.setFastScroller(binding.fastScroller);
-                }
-            }
-        });
+
     }
 
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -15,6 +16,7 @@ import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAttendanceAbsentBinding;
 import cn.qingchengfit.student.viewmodel.attendance.absent.AttendanceAbsentViewModel;
+import java.util.ArrayList;
 
 /**
  * Created by huangbaole on 2017/11/16.
@@ -42,6 +44,7 @@ public class AttendanceAbsentPage extends StudentBaseFragment<PageAttendanceAbse
         mBinding.setViewModel(mViewModel);
         initFragment();
         mViewModel.loadSource(new Pair<>("7", "30"));
+        mBinding.recyclerview.setAdapter(new CommonFlexAdapter(new ArrayList()));
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         return mBinding;
     }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -14,6 +15,7 @@ import cn.qingchengfit.student.R;
 import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAttendanceRankBinding;
 import cn.qingchengfit.student.viewmodel.attendance.rank.AttendanceRankViewModel;
+import java.util.ArrayList;
 
 /**
  * Created by huangbaole on 2017/11/16.
@@ -40,6 +42,7 @@ public class AttendanceRankPage extends StudentBaseFragment<PageAttendanceRankBi
         mBinding.setViewModel(mViewModel);
         initToolbar(mBinding.includeToolbar.toolbar);
         initFragment();
+        mBinding.recyclerview.setAdapter(new CommonFlexAdapter(new ArrayList()));
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mViewModel.loadSource(mViewModel.getLoadData());
         return mBinding;

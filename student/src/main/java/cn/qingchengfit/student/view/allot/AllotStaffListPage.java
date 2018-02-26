@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 
@@ -17,6 +18,7 @@ import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAllotlistBinding;
 import cn.qingchengfit.student.viewmodel.allot.AllotListViewModel;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import java.util.ArrayList;
 
 /**
  * Created by huangbaole on 2017/11/21.
@@ -42,6 +44,7 @@ public class AllotStaffListPage extends StudentBaseFragment<PageAllotlistBinding
         mBinding.setToolbarModel(new ToolbarModel(type == 0 ? "销售列表" : "教练列表"));
         mBinding.setViewModel(mViewModel);
         initToolbar(mBinding.includeToolbar.toolbar);
+        mBinding.recyclerview.setAdapter(new CommonFlexAdapter(new ArrayList()));
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.setItemClickListener(this);
         return mBinding;

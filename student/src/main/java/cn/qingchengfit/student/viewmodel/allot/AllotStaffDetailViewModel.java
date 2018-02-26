@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import cn.qingchengfit.saasbase.student.items.StudentItem;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
  */
 
 public class AllotStaffDetailViewModel extends FlexibleViewModel<List<QcStudentBean>, StaffDetailItem, Map<String, ?>> {
-    public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
+    public final ObservableField<List<StudentItem>> items = new ObservableField<>();
     public final ObservableBoolean isLoading = new ObservableBoolean(false);
     private MutableLiveData<List<String>> letters = new MutableLiveData<>();
 

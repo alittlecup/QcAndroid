@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.qingchengfit.saasbase.student.items.StudentItem;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.google.gson.Gson;
 
@@ -40,112 +41,106 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 /**
  * Created by huangbaole on 2017/12/5.
  */
-@Leaf(module = "student", path = "/home/student")
-public class StudentHomePage extends StudentBaseFragment<PageStudentHomeBinding, StudentHomeViewModel> implements FlexibleAdapter.OnItemClickListener {
+@Leaf(module = "student", path = "/home/student") public class StudentHomePage
+    extends StudentBaseFragment<PageStudentHomeBinding, StudentHomeViewModel>
+    implements FlexibleAdapter.OnItemClickListener {
 
-    CommonFlexAdapter adapter;
-    StudentFilterViewModel filterViewModel;
-    StudentFilterView filterView;
+  CommonFlexAdapter adapter;
+  StudentFilterViewModel filterViewModel;
+  StudentFilterView filterView;
 
+  @Override protected void subscribeUI() {
+    mViewModel.getLiveItems().observe(this, studentItems -> {
+      mViewModel.isLoading.set(false);
+      if (studentItems == null || studentItems.isEmpty()) return;
+      mViewModel.items.set(mViewModel.getSortViewModel().sortItems(studentItems));
+      mBinding.includeFilter.setItems(new ArrayList<>(studentItems));
+    });
+    mViewModel.getSortViewModel().getFilterEvent().observe(this, aVoid -> {
+      openDrawer();
+      filterViewModel =
+          ViewModelProviders.of(filterView, factory).get(StudentFilterViewModel.class);
+      filterViewModel.getmFilterMap().observe(this, map -> {
+        // REFACTOR: 2017/12/6 Map与Studentfilter的对决
+        if (map != null) {
+          closeDrawer();
+          mViewModel.loadSource(map);
+          filterViewModel.getmFilterMap().setValue(null);
+        }
+      });
+    });
+  }
 
-    @Override
-    protected void subscribeUI() {
-        mViewModel.getLiveItems().observe(this, studentItems -> {
-            mViewModel.isLoading.set(false);
-            if (studentItems == null || studentItems.isEmpty()) return;
-            mViewModel.items.set(mViewModel.getSortViewModel().sortItems(studentItems));
-            mBinding.includeFilter.setItems(new ArrayList<>(studentItems));
-        });
-        mViewModel.getSortViewModel().getFilterEvent().observe(this, aVoid -> {
-            openDrawer();
-            filterViewModel = ViewModelProviders.of(filterView, factory).get(StudentFilterViewModel.class);
-            filterViewModel.getmFilterMap().observe(this, map -> {
-                // REFACTOR: 2017/12/6 Map与Studentfilter的对决
-                if (map != null) {
-                    closeDrawer();
-                    mViewModel.loadSource(map);
-                    filterViewModel.getmFilterMap().setValue(null);
-                }
-            });
-        });
+  @Override
+  public PageStudentHomeBinding initDataBinding(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    mBinding = PageStudentHomeBinding.inflate(inflater, container, false);
+    initToolbar();
+    initFragment();
+    initRecyclerView();
 
+    mBinding.setViewModel(mViewModel);
+    mBinding.includeFilter.setFilter(mViewModel.getSortViewModel());
 
-    }
+    adapter.setFastScroller(mBinding.fastScroller);
+    mViewModel.loadSource(new HashMap<>());
+    return mBinding;
+  }
 
+  private void initRecyclerView() {
+    mBinding.recyclerview.setAdapter(adapter = new CommonFlexAdapter(new ArrayList()));
+    initFastScroller();
+    mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+  }
 
-    @Override
-    public PageStudentHomeBinding initDataBinding(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding = PageStudentHomeBinding.inflate(inflater, container, false);
-        initToolbar();
-        initFragment();
-        initFastScroller();
-        mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        mBinding.setItemClickListener(this);
-        mBinding.setViewModel(mViewModel);
-        mBinding.includeFilter.setFilter(mViewModel.getSortViewModel());
-        mBinding.addOnRebindCallback(new OnRebindCallback<PageStudentHomeBinding>() {
-            @Override
-            public void onBound(PageStudentHomeBinding binding) {
-                if (binding.recyclerview.getAdapter() != adapter) {
-                    adapter = (CommonFlexAdapter) binding.recyclerview.getAdapter();
-                    adapter.setFastScroller(mBinding.fastScroller);
-                }
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+  }
+
+  private void initFastScroller() {
+    mBinding.fastScroller.setBarClickListener(letter -> {
+      List<StudentItem> itemList = mViewModel.items.get();
+      int position = 0;
+      for (int i = 0; i < itemList.size(); i++) {
+        if (itemList.get(i).getHeader() != null) {
+          if (itemList.get(i).getHeader() instanceof StickerDateItem) {
+            if (((StickerDateItem) itemList.get(i).getHeader()).getDate()
+                .equalsIgnoreCase(letter)) {
+              position = i;
             }
-        });
-        mViewModel.loadSource(new HashMap<>());
-        return mBinding;
-    }
+          }
+        }
+      }
+      return position;
+    });
+  }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+  private void openDrawer() {
+    mBinding.drawer.openDrawer(GravityCompat.END);
+  }
 
-    }
+  private void closeDrawer() {
+    mBinding.drawer.closeDrawer(GravityCompat.END);
+  }
 
-    private void initFastScroller() {
-        mBinding.fastScroller.setBarClickListener(letter -> {
-            List<AbstractFlexibleItem> itemList = mViewModel.items.get();
-            int position = 0;
-            for (int i = 0; i < itemList.size(); i++) {
-                if (itemList.get(i) instanceof StickerDateItem) {
-                    if (((StickerDateItem) itemList.get(i)).getDate().equalsIgnoreCase(letter)) {
-                        position = i;
-                    }
-                }
-            }
-            return position;
-        });
-    }
+  private void initFragment() {
+    stuff(R.id.frame_student_operation, new StudentOperationView());
+    filterView = new StudentFilterView();
+    stuff(R.id.frame_student_filter, filterView);
+  }
 
-    private void openDrawer() {
-        mBinding.drawer.openDrawer(GravityCompat.END);
-    }
+  private void initToolbar() {
+    ToolbarModel toolbarModel = new ToolbarModel("会员");
+    toolbarModel.setMenu(cn.qingchengfit.saasbase.R.menu.menu_search);
+    toolbarModel.setListener(item -> {
+      ToastUtils.show("click");
+      return true;
+    });
+    mBinding.setToolbarModel(toolbarModel);
+    initToolbar(mBinding.includeToolbar.toolbar);
+  }
 
-    private void closeDrawer() {
-        mBinding.drawer.closeDrawer(GravityCompat.END);
-    }
-
-    private void initFragment() {
-        stuff(R.id.frame_student_operation, new StudentOperationView());
-        filterView = new StudentFilterView();
-        stuff(R.id.frame_student_filter, filterView);
-
-
-    }
-
-    private void initToolbar() {
-        ToolbarModel toolbarModel = new ToolbarModel("会员");
-        toolbarModel.setMenu(cn.qingchengfit.saasbase.R.menu.menu_search);
-        toolbarModel.setListener(item -> {
-            ToastUtils.show("click");
-            return true;
-        });
-        mBinding.setToolbarModel(toolbarModel);
-        initToolbar(mBinding.includeToolbar.toolbar);
-    }
-
-    @Override
-    public boolean onItemClick(int position) {
-        return false;
-    }
+  @Override public boolean onItemClick(int position) {
+    return false;
+  }
 }

@@ -10,14 +10,6 @@ import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
-
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.QcStudentBean;
@@ -25,10 +17,15 @@ import cn.qingchengfit.saasbase.common.flexble.FlexibleFactory;
 import cn.qingchengfit.saasbase.common.flexble.FlexibleItemProvider;
 import cn.qingchengfit.saasbase.common.flexble.FlexibleViewModel;
 import cn.qingchengfit.saasbase.common.mvvm.ActionLiveEvent;
+import cn.qingchengfit.saasbase.common.mvvm.SortViewModel;
+import cn.qingchengfit.saasbase.student.items.StudentItem;
 import cn.qingchengfit.student.items.ChooseStaffItem;
 import cn.qingchengfit.student.respository.StudentRespository;
-import cn.qingchengfit.saasbase.common.mvvm.SortViewModel;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.inject.Inject;
 
 /**
  * Created by huangbaole on 2017/11/23.
@@ -36,9 +33,8 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 
 public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBean>, ChooseStaffItem,  Map<String,?>> {
 
-    public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
+    public final ObservableField<List<StudentItem>> items = new ObservableField<>();
     public final ObservableBoolean isLoading = new ObservableBoolean(false);
-    public final ObservableBoolean bottomShowing = new ObservableBoolean(false);
     public final ObservableBoolean hasName = new ObservableBoolean(false);
     public final ObservableInt bottomTextCount = new ObservableInt(0);
     public final ObservableBoolean selectAllChecked = new ObservableBoolean(false);
@@ -46,7 +42,7 @@ public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBe
     public ActionLiveEvent getIsDialogShow() {
         return dialogShow;
     }
-
+    public final ActionLiveEvent sortEvent=new ActionLiveEvent();
     private final ActionLiveEvent dialogShow = new ActionLiveEvent();
 
     public MutableLiveData<String> getRouteTitle() {
@@ -126,11 +122,9 @@ public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBe
     public AllotMultiStaffViewModel() {
         sortViewModel = new SortViewModel();
         selectedDatas.setValue(new ArrayList<>());
-        sortViewModel.setListener(new SortViewModel.onSortFinishListener() {
-            @Override
-            public void onSortFinish(List<AbstractFlexibleItem> itemss) {
-                items.set(itemss);
-            }
+        sortViewModel.setListener(itemss -> {
+            items.set(itemss);
+            sortEvent.call();
         });
 
         isRemoveSuccess = Transformations.switchMap(ids, this::removeStudents);
@@ -149,19 +143,6 @@ public class AllotMultiStaffViewModel extends FlexibleViewModel<List<QcStudentBe
             params.put("seller_id", salerId);
         }
         params.put("show_all", 1);
-//        if (!TextUtils.isEmpty(filter.status)) {
-//            params.put("status", filter.status);
-//        }
-//        if (!TextUtils.isEmpty(filter.registerTimeStart) && !TextUtils.isEmpty(filter.registerTimeEnd)) {
-//            params.put("start", filter.registerTimeStart);
-//            params.put("end", filter.registerTimeEnd);
-//        }
-//        if (!TextUtils.isEmpty(filter.gender)) params.put("gender", filter.gender);
-//
-//        if (filter.referrerBean != null)
-//            params.put("recommend_user_id", filter.referrerBean.id);
-//
-//        if (filter.sourceBean != null) params.put("origin_id", filter.sourceBean.id);
 
         if(!map.isEmpty()){
             params.putAll(map);

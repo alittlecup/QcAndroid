@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -15,6 +16,7 @@ import cn.qingchengfit.student.StudentBaseFragment;
 import cn.qingchengfit.student.databinding.PageAttendanceNosignBinding;
 import cn.qingchengfit.student.viewmodel.attendance.nosign.AttendanceNosignViewModel;
 import cn.qingchengfit.utils.DateUtils;
+import java.util.ArrayList;
 
 /**
  * Created by huangbaole on 2017/11/17.
@@ -45,6 +47,7 @@ public class AttendanceNosignPage extends StudentBaseFragment<PageAttendanceNosi
         mBinding.setToolbarModel(new ToolbarModel("未签课统计"));
         initToolbar(mBinding.includeToolbar.toolbar);
         initFragment();
+        mBinding.recyclerview.setAdapter(new CommonFlexAdapter(new ArrayList()));
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mViewModel.loadSource(mViewModel.getDataHolder());
         return mBinding;

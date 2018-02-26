@@ -2,9 +2,11 @@ package cn.qingchengfit.student.di;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-
-import cn.qingchengfit.saasbase.common.mvvm.ViewModelFactory;
 import cn.qingchengfit.saasbase.common.di.scope.ViewModelKey;
+import cn.qingchengfit.saasbase.common.mvvm.ViewModelFactory;
+import cn.qingchengfit.saasbase.repository.IStudentModel;
+import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
+import cn.qingchengfit.student.respository.StudentModel;
 import cn.qingchengfit.student.respository.StudentRespository;
 import cn.qingchengfit.student.respository.StudentRespositoryImpl;
 import cn.qingchengfit.student.viewmodel.allot.AllotChooseViewModel;
@@ -23,92 +25,71 @@ import cn.qingchengfit.student.viewmodel.home.StudentHomeViewModel;
 import cn.qingchengfit.student.viewmodel.transfer.TransferStudentViewModel;
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import dagger.multibindings.IntoMap;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 /**
  * Created by huangbaole on 2017/11/15.
  */
 
-@Module
-public abstract class ViewModelModule {
+@Module public abstract class ViewModelModule {
 
+  @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
 
-    @Binds
-    abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
+  @Binds
+  abstract StudentRespository bindStudentRespository(StudentRespositoryImpl studentRespository);
 
-    @Binds
-    abstract StudentRespository bindStudentRespository(StudentRespositoryImpl studentRespository);
+  @Binds abstract IStudentModel bindStudentModel(StudentModel studentModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(AttendanceStudentViewModel.class)
-    abstract ViewModel bindAttendanceStudentViewModel(AttendanceStudentViewModel model);
+  @Binds @IntoMap @ViewModelKey(AttendanceStudentViewModel.class)
+  abstract ViewModel bindAttendanceStudentViewModel(AttendanceStudentViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(AttendanceAbsentViewModel.class)
-    abstract ViewModel bindAttendanceAbsentViewModel(AttendanceAbsentViewModel model);
+  @Binds @IntoMap @ViewModelKey(AttendanceAbsentViewModel.class)
+  abstract ViewModel bindAttendanceAbsentViewModel(AttendanceAbsentViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(AttendanceRankViewModel.class)
-    abstract ViewModel bindAttendanceRankViewModel(AttendanceRankViewModel model);
+  @Binds @IntoMap @ViewModelKey(AttendanceRankViewModel.class)
+  abstract ViewModel bindAttendanceRankViewModel(AttendanceRankViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(AttendanceNosignViewModel.class)
-    abstract ViewModel bindAttendanceNosignViewModel(AttendanceNosignViewModel model);
+  @Binds @IntoMap @ViewModelKey(AttendanceNosignViewModel.class)
+  abstract ViewModel bindAttendanceNosignViewModel(AttendanceNosignViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(TransferStudentViewModel.class)
-    abstract ViewModel bindTransferStudentViewModel(TransferStudentViewModel model);
+  @Binds @IntoMap @ViewModelKey(TransferStudentViewModel.class)
+  abstract ViewModel bindTransferStudentViewModel(TransferStudentViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(FollowUpStudentViewModel.class)
-    abstract ViewModel bindFollowUpStudentViewModel(FollowUpStudentViewModel model);
+  @Binds @IntoMap @ViewModelKey(FollowUpStudentViewModel.class)
+  abstract ViewModel bindFollowUpStudentViewModel(FollowUpStudentViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(FollowUpStatusViewModel.class)
-    abstract ViewModel bindFollowUpStatusViewModel(FollowUpStatusViewModel model);
+  @Binds @IntoMap @ViewModelKey(FollowUpStatusViewModel.class)
+  abstract ViewModel bindFollowUpStatusViewModel(FollowUpStatusViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(AllotListViewModel.class)
-    abstract ViewModel bindAllotListViewModel(AllotListViewModel model);
+  @Binds @IntoMap @ViewModelKey(AllotListViewModel.class)
+  abstract ViewModel bindAllotListViewModel(AllotListViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(AllotStaffDetailViewModel.class)
-    abstract ViewModel bindAllotStaffDetailViewModel(AllotStaffDetailViewModel model);
+  @Binds @IntoMap @ViewModelKey(AllotStaffDetailViewModel.class)
+  abstract ViewModel bindAllotStaffDetailViewModel(AllotStaffDetailViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(AllotMultiStaffViewModel.class)
-    abstract ViewModel bindAllotMultiStaffViewModel(AllotMultiStaffViewModel model);
+  @Binds @IntoMap @ViewModelKey(AllotMultiStaffViewModel.class)
+  abstract ViewModel bindAllotMultiStaffViewModel(AllotMultiStaffViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(AllotChooseViewModel.class)
-    abstract ViewModel bindAllotChooseViewModel(AllotChooseViewModel model);
+  @Binds @IntoMap @ViewModelKey(AllotChooseViewModel.class)
+  abstract ViewModel bindAllotChooseViewModel(AllotChooseViewModel model);
 
+  @Binds @IntoMap @ViewModelKey(StudentHomeViewModel.class)
+  abstract ViewModel bindStudentHomeViewModel(StudentHomeViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(StudentHomeViewModel.class)
-    abstract ViewModel bindStudentHomeViewModel(StudentHomeViewModel model);
+  @Binds @IntoMap @ViewModelKey(StudentFilterViewModel.class)
+  abstract ViewModel bindStudentFilterViewModel(StudentFilterViewModel model);
 
+  @Binds @IntoMap @ViewModelKey(FollowUpFilterViewModel.class)
+  abstract ViewModel bindFollowUpFilterViewModel(FollowUpFilterViewModel model);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(StudentFilterViewModel.class)
-    abstract ViewModel bindStudentFilterViewModel(StudentFilterViewModel model);
+  @Named("commonFilter") @Singleton @Provides  static  StudentFilter providesStudentFilter() {
+    return new StudentFilter();
+  }
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(FollowUpFilterViewModel.class)
-    abstract ViewModel bindFollowUpFilterViewModel(FollowUpFilterViewModel model);
-
+  @Named("topFilter") @Singleton @Provides static  StudentFilter providesTopStudentFilter() {
+    return new StudentFilter();
+  }
 }

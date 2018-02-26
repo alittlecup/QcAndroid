@@ -36,7 +36,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
  */
 
 public class StudentHomeViewModel extends FlexibleViewModel<List<QcStudentBean>, StudentItem, Map<String, ? extends Object>> {
-    public final ObservableField<List<AbstractFlexibleItem>> items = new ObservableField<>();
+    public final ObservableField<List<StudentItem>> items = new ObservableField<>();
     public final ObservableBoolean isLoading = new ObservableBoolean(false);
 
     public SortViewModel getSortViewModel() {
