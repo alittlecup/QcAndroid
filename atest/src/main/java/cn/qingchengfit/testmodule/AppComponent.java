@@ -2,6 +2,7 @@ package cn.qingchengfit.testmodule;
 
 import android.app.Activity;
 import cn.qingchengfit.shop.di.ShopModule;
+import cn.qingchengfit.student.di.StudentModule;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -35,7 +36,7 @@ import dagger.multibindings.IntoMap;
 @Component(modules = {
         AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class,
         AppComponent.MainModule.class,
-        ShopModule.class
+        ShopModule.class, StudentModule.class
         //AppComponent.RecruitModule.class,
 })
 public interface AppComponent extends AndroidInjector<TestApp> {

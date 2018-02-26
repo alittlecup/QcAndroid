@@ -5,14 +5,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
-import cn.qingchengfit.saasbase.repository.IStudentModel;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.saasbase.routers.SaasbaseRouterCenter;
-import cn.qingchengfit.saasbase.student.bean.FollowUpFilterModel;
-import cn.qingchengfit.saasbase.student.network.body.StudentFilter;
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Named;
-import javax.inject.Singleton;
+import java.util.List;
 
 /**
  * power by
@@ -73,22 +70,21 @@ import javax.inject.Singleton;
     return null;
   }
 
-  @Singleton @Provides FollowUpFilterModel providesFollowUpFilterModel() {
-    return new FollowUpFilterModel();
-  }
+  @Provides public IPermissionModel providesIpermissionModel(){
+    return new IPermissionModel() {
+      @Override public boolean check(String permission) {
+        return true;
+      }
 
-  @Named("commonFilter") @Singleton @Provides StudentFilter providesStudentFilter() {
-    return new StudentFilter();
-  }
+      @Override public boolean checkInBrand(String permission) {
+        return true;
+      }
 
-  @Named("topFilter") @Singleton @Provides StudentFilter providesTopStudentFilter() {
-    return new StudentFilter();
+      @Override public boolean check(String permission, List<String> shopids) {
+        return true;
+      }
+    };
   }
-
-  @Provides public IStudentModel provideStudentModel(QcRestRepository restRepository) {
-    return new StudentModel(restRepository);
-  }
-
   public static final class Builder {
     private LoginStatus loginStatus;
     private GymWrapper gymWrapper;

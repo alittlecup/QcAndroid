@@ -120,6 +120,7 @@ public class AllotStaffDetailPage extends StudentBaseFragment<PageAllotStaffDeta
             }
             return position;
         });
+        adapter.setFastScroller(mBinding.fastScroller);
 
     }
 

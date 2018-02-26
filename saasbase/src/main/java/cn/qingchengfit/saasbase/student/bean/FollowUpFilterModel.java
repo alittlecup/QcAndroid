@@ -1,14 +1,13 @@
 package cn.qingchengfit.saasbase.student.bean;
 
 import android.databinding.ObservableField;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
  * Created by huangbaole on 2017/11/7.
  */
-
+@Singleton
 public final class FollowUpFilterModel {
     public final ObservableField<String> studentStatus = new ObservableField<>("会员状态");
     public final ObservableField<String> gender = new ObservableField<>("性别");
@@ -17,7 +16,7 @@ public final class FollowUpFilterModel {
     public final ObservableField<String> salerName = new ObservableField<>("销售");
     public final ObservableField<String> topSalerName = new ObservableField<>("销售");
 
-
+@Inject
     public FollowUpFilterModel() {
 
     }

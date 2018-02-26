@@ -131,22 +131,7 @@
     <!--android:windowSoftInputMode="adjustResize"-->
     <!--/>-->
 
-    <activity
-        android:name="cn.qingchengfit.student.StudentActivity"
-        android:launchMode="singleTask"
-        >
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
 
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-
-        <data
-            android:host="student"
-            android:scheme="student"
-            />
-      </intent-filter>
-    </activity>
 
     <activity android:name="cn.qingchengfit.shop.base.ShopActivity">
       <intent-filter>

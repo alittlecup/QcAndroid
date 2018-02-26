@@ -52,6 +52,7 @@ android {
         resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
         resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
     }
+  buildToolsVersion '27.0.1'
 }
 
 dependencies {
