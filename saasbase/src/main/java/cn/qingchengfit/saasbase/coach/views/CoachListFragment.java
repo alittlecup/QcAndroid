@@ -133,7 +133,7 @@ public class CoachListFragment extends BaseStaffListFragment {
         showAlert(R.string.alert_permission_forbid);
         return;
     }
-    AddNewCoachFragment.start(CoachListFragment.this, 11, loginStatus.staff_id());
+    routeTo("/trainer/add/",null);
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

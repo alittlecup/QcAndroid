@@ -58,8 +58,7 @@ public class TrainerChooseFragment extends CoachListFragment {
     for (int i = 0; i < commonFlexAdapter.getItemCount(); i++) {
       IFlexible item = commonFlexAdapter.getItem(i);
       if (item instanceof StaffSelectSingleItem){
-        if (TextUtils.equals(selectedId,((StaffSelectSingleItem) item).getStaff().id)){
-          commonFlexAdapter.addSelection(i);
+        if (selectedId != null && ((StaffSelectSingleItem) item).getStaff() != null && TextUtils.equals(selectedId,((StaffSelectSingleItem) item).getStaff().id)){          commonFlexAdapter.addSelection(i);
           commonFlexAdapter.notifyItemChanged(i);
           break;
         }

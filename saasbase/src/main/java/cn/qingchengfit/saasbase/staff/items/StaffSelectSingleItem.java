@@ -52,7 +52,9 @@ public class StaffSelectSingleItem extends CommonUserItem {
         return null;
       }
     } else {
-      return null;
+      Staff ret =new Staff(getUser().getTitle(),getUser().getSubTitle(),getUser().getAvatar(),getUser().getGender());
+      ret.id = getUser().getId();
+      return ret;
     }
   }
 
