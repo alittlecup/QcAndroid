@@ -86,7 +86,6 @@ public class LiveDataReactiveStreams {
       }
 
       @Override public void onNext(QcDataResponse<T> item) {
-        postValue(item.data);
         if (item.status == 200) {
           postValue(item.data);
         } else {
