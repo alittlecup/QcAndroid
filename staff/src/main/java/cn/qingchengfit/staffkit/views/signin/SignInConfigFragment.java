@@ -25,7 +25,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.SignInConfigItem;
+import cn.qingchengfit.items.SignInConfigItem;
 import cn.qingchengfit.staffkit.views.adapter.SignInFlexibleAdapter;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.SwitcherLayout;

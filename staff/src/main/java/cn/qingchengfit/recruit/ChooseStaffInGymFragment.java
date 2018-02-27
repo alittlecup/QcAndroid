@@ -5,14 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.chat.ChatChooseInGymFragment;
-import cn.qingchengfit.chat.model.ChatGym;
+import cn.qingchengfit.saasbase.chat.ChatChooseInGymFragment;
+import cn.qingchengfit.saasbase.chat.model.ChatGym;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.rxbus.event.EventChoosePerson;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.ChooseStaffItem;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.PositionHeaderItem;
+import cn.qingchengfit.saasbase.items.ChooseStaffItem;
+import cn.qingchengfit.saasbase.items.PositionHeaderItem;
 import cn.qingchengfit.utils.ToastUtils;
 
 /**

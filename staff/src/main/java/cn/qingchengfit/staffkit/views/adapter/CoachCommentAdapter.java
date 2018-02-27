@@ -4,7 +4,7 @@
 //import android.support.v4.app.FragmentManager;
 //import android.support.v4.app.FragmentStatePagerAdapter;
 //import android.view.ViewGroup;
-//import cn.qingchengfit.model.responese.CourseTeacher;
+//import CourseTeacher;
 //import cn.qingchengfit.staffkit.views.course.CoachCommentDetailFragment;
 //import cn.qingchengfit.staffkit.views.custom.PagerSlidingTabImageStrip;
 //import java.util.ArrayList;

@@ -45,14 +45,14 @@ public class UnloginManageFragment extends LazyloadFragment {
         homeBannerFragment = new HomeBannerFragment();
     }
 
-    @Override protected void onCreateViewLazy(Bundle savedInstanceState) {
-        super.onCreateViewLazy(savedInstanceState);
-
-    }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlogin_home, container, false);
-        RxBusAdd(EventLoginChange.class).delay(500, TimeUnit.MILLISECONDS).subscribe(eventLoginChange -> changeView());
+        RxBusAdd(EventLoginChange.class)
+          .onBackpressureLatest()
+          .delay(500, TimeUnit.MILLISECONDS)
+          .subscribe(eventLoginChange -> changeView());
+        changeView();
         return view;
     }
 

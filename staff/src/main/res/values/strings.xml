@@ -282,7 +282,6 @@
   <string name="test_long">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</string>
   <string name="test_short">哈哈哈</string>
   <string name="choose_brand">选择品牌</string>
-  <string name="no_more_loading">已经没有更多数据</string>
   <string name="student_card">会员卡</string>
   <string name="str_space">场 地</string>
   <string name="str_share_app">我发现了一个特别好用的[健身房管理app]，推荐使用</string>
@@ -390,49 +389,8 @@
   <string name="alert_del_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有删除课程种类权限的用户才能进行删除.</string>
   <string name="notification">通知</string>
 
-  <!-- 签到 签出-->
-  <string name="sign_type_in">签到</string>
-  <string name="sign_type_out">签出</string>
-  <string name="sign_in_count">今日签到%d人次</string>
-  <string name="sign_out_count">今日签出%d人次</string>
-  <string name="sign_in_untreated_count">%d条新未处理签到,点击查看</string>
-  <string name="sign_in_untreated_phone">手机 : %s</string>
-  <string name="sign_in_untreated_card">会员卡 : %s</string>
-  <string name="sign_in_untreated_fee">费用 : %s</string>
-  <string name="sign_in_untreated_gui">更衣柜</string>
-  <string name="sign_in_untreated_ka">会员卡</string>
-  <string name="sign_in_untreated_choose">请选择更衣柜</string>
-  <string name="sign_in_untreated_choose_card">请选择会员卡</string>
-  <string name="sign_in_untreated_ignor">忽略</string>
-  <string name="sign_in_untreated_confirm">确认签到</string>
-  <string name="sign_out_untreated_confirm">确认签出</string>
-  <string name="sign_in_untreated_class">当天预约课程(%d)</string>
-  <string name="sign_out_untreated_gui">更衣柜号 : %s</string>
-  <string name="sign_out_untreated_time">签到时间 : %s</string>
-  <string name="sign_in_qrcode">签到二维码</string>
-  <string name="sign_in_manual">手动签到</string>
-  <string name="sign_in_manual_discrib">查找会员进行手动签到</string>
-  <string name="sign_in_coach">教练 : %s</string>
-  <string name="sign_in_room">场地 : %s</string>
-  <string name="sign_in_log_in">签到时间 : %s</string>
-  <string name="sign_in_log_out">签出时间 : %s</string>
-  <string name="sign_in_log_opretor">操作员 : %s</string>
-  <string name="sign_in_log_cancel">撤销</string>
-  <string name="sign_in_notice">初次使用[签到/签出]功能,请先进行签到设置</string>
-  <string name="sign_in_setting">开启通知后，会员在该场馆扫描二维码签到时\n你的手机将收到通知以便处理</string>
-  <string name="sign_in_qrcode_des">出示此二维码,让会员通过微信扫一扫等工具扫码%s</string>
-  <string name="sign_in_config_cost">每人每次签到费用(%s)</string>
-  <string name="sign_in_config_title">进场签到设置</string>
-  <string name="sign_in_detail_title">签到详情</string>
-  <string name="sign_in_log_title">签到记录</string>
 
-  <string name="qc_signin_select_card">请选择会员卡</string>
-  <string name="qc_signin_cancel_confirm">确定要撤销签到么?</string>
-  <string name="qc_signin_config_lable">分配更衣柜</string>
-  <string name="qc_signin_config_get_locker_lable">签到时分配更衣柜</string>
-  <string name="qc_signin_config_return_locker_lable">签出时自动归还更衣柜</string>
-  <string name="qc_signin_config_card_lable">设置签到会员卡</string>
-  <string name="qc_signin_footer">查看3小时内签到记录</string>
+
   <string name="wardrobe_no">更衣柜号</string>
   <string name="wardrobe_district">更衣柜区域</string>
   <string name="district_choose">区域选择</string>
@@ -482,7 +440,7 @@
     </string>
 
 
-  <string name="qc_chat_friend_select">已选择%d名联系人</string>
+
   <string name="qc_signin_log_footer">只能查看3小时内的签到/签出记录\n更多信息请查看签到/签出报表</string>
   <string name="wardrobe_all_sum">更衣柜总量 ：</string>
   <string name="no_suit_student_card">无适用会员卡</string>
@@ -502,30 +460,7 @@
   <string name="login_pw">登录密码</string>
   <string name="phone_code">手机验证码</string>
 
-  <!--销售分配-->
-  <string name="qc_allotsale_sale_detail_title">%s的名下会员</string>
-  <string name="qc_allotsale_sale_detail_notitle">未分配</string>
-  <string name="qc_allotsale_multi_modify_title">批量修改</string>
-  <string name="qc_allotsale_multi_allot_title">批量分配</string>
-  <string name="qc_allotsale_add_stud_title">添加名下会员</string>
-  <string name="qc_allotsale_modify_sale_title">修改销售</string>
 
-  <string name="qc_allotsale_sale_detail_add_stud">添加名下会员</string>
-  <string name="qc_allotsale_sale">销售：%s</string>
-
-  <string name="qc_allotsale_stucount">%s名会员</string>
-  <string name="qc_allotsale_stucount_2">名下会员(%d)</string>
-
-  <string name="qc_select_all">全选</string>
-  <string name="qc_allotsale_search_hint">搜索会员姓名/手机号</string>
-  <string name="qc_allotsale_group_search">搜索分组</string>
-  <string name="qc_allotsale_checked">已选择</string>
-  <string name="qc_allotsale_select">已选择%d名会员</string>
-  <string name="qc_allotsale_select_clear">清空选择</string>
-  <string name="qc_allotsale_remove_alert">"确认将选中会员从%s名下移除?"</string>
-  <string name="qc_allotsale_modify_sale">变更销售</string>
-  <string name="qc_allotsale_remove_stud">移除会员</string>
-  <string name="qc_allotsale_clear_alert">确认清空当前选中的会员</string>
   <!--menu-->
   <string name="qc_menu_multi_modify"><Data>批量修改</Data></string>
   <string name="qc_menu_multi_allot"><Data>批量分配</Data></string>
@@ -767,9 +702,7 @@
   <string name="label_pay_online">在线支付结算</string>
   <string name="label_card_pay">会员卡结算</string>
   <string name="common_send">发送</string>
-  <string formatted="false" name="sales_sb">销售: %s</string>
-  <string name="has_send">已发送</string>
-  <string name="draft">草稿</string>
+
   <string name="detail">详情</string>
   <string name="hide">隐藏</string>
   <string name="err_shortmsg_content_null">短信内容不能为空</string>
@@ -780,20 +713,7 @@
   <string name="has_expired">已过期</string>
   <string name="has_stop_card">已停卡</string>
   <string name="has_day_off">已请假</string>
-  <!--评论相关-->
-  <string name="activity_text_replay">回复</string>
-  <string name="title_msg">消息</string>
-  <string name="notification_system">系统通知</string>
-  <string name="notification_meetting">学习培训</string>
-  <string name="notification_checkin">签到处理</string>
-  <string name="notification_comment">收到回复</string>
-  <string name="notification_competition">赛事训练营</string>
-  <string name="notification_job">求职招聘</string>
-  <string name="notification_gym">场馆消息</string>
-  <string name="all_comments_count">全部评论(%d)</string>
-  <string name="sign_up_create_group">新建分组</string>
-  <string name="sign_up_personal">个人</string>
-  <string name="sign_up_group">分组</string>
+
 
   <string formatted="false" name="sign_up_personal_member">报名人数：%d人</string>
   <string formatted="false" name="sign_up_whole_cost">报名费用：%s元</string>

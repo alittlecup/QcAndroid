@@ -1,6 +1,6 @@
 //package cn.qingchengfit.staffkit.views.statement.custom;
 //
-//import cn.qingchengfit.model.responese.QcResponseStatementDetail;
+//import QcResponseStatementDetail;
 //import cn.qingchengfit.staff.RxUnitTestTools;
 //import cn.qingchengfit.staffkit.usecase.StatementUsecase;
 //import cn.qingchengfit.staffkit.views.statement.detail.StatementDetailPresenter;

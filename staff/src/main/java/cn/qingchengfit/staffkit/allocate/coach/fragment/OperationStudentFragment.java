@@ -44,7 +44,7 @@ import cn.qingchengfit.staffkit.allocate.coach.item.ChooseStudentItem;
 import cn.qingchengfit.staffkit.allocate.coach.presenter.OperationPresenter;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
-import cn.qingchengfit.staffkit.views.bottom.BottomStudentsFragment;
+import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.MyDrawerLayout;
 import cn.qingchengfit.staffkit.views.custom.SwitcherLayout;

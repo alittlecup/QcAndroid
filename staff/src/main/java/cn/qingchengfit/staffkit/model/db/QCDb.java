@@ -2,7 +2,7 @@ package cn.qingchengfit.staffkit.model.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import rx.functions.Func1;
 
 public class QCDb {

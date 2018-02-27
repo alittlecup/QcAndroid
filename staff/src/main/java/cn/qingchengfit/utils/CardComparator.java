@@ -1,7 +1,7 @@
 package cn.qingchengfit.utils;
 
 import android.text.TextUtils;
-import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import java.util.Comparator;
 import net.sourceforge.pinyin4j.PinyinHelper;
 

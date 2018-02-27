@@ -1,7 +1,7 @@
 package cn.qingchengfit.recruit;
 
 import cn.qingchengfit.model.base.Personage;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.PositionHeaderItem;
+import cn.qingchengfit.saasbase.items.PositionHeaderItem;
 
 /**
  * power by

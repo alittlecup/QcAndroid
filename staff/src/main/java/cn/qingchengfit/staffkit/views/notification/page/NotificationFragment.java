@@ -26,7 +26,7 @@ import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.model.responese.QcResponsePermission;
 import cn.qingchengfit.network.ResponseConstant;
@@ -36,7 +36,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.ConstantNotification;
+import cn.qingchengfit.saasbase.constant.ConstantNotification;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.EventClearAllNoti;
 import cn.qingchengfit.staffkit.rxbus.event.EventLatestNoti;
@@ -99,12 +99,12 @@ public class NotificationFragment extends BaseFragment
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private CommonFlexAdapter mAdatper;
     private int unReadCount = 0;
-    private int type;
+    private String type;
 
-    public static NotificationFragment newInstance(int type) {
+    public static NotificationFragment newInstance(String type) {
 
         Bundle args = new Bundle();
-        args.putInt("t", type);
+        args.putString("t", type);
         NotificationFragment fragment = new NotificationFragment();
         fragment.setArguments(args);
         return fragment;
@@ -112,7 +112,7 @@ public class NotificationFragment extends BaseFragment
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        type = getArguments().getInt("t");
+        type = getArguments().getString("t","");
     }
 
     public int getUnReadCount() {

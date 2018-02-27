@@ -78,7 +78,7 @@ public class RestRepository implements Repository {
                         RxBus.getBus().post(new NetWorkDialogEvent(NetWorkDialogEvent.EVENT_POST));
                       String token = "";
                       try {
-                        token = get_api.qcGetToken().execute().body().data.getToken();
+                        token = get_api.qcGetToken().execute().body().data.token;
                       } catch (Exception e) {
 
                       }
@@ -147,7 +147,7 @@ public class RestRepository implements Repository {
 
                 Request request = chain.request();
                 if (!request.method().equalsIgnoreCase("GET")) {
-                    String token = get_api.qcGetToken().execute().body().data.getToken();
+                    String token = get_api.qcGetToken().execute().body().data.token;
 
                     request = request.newBuilder()
                         .addHeader("X-CSRFToken", token)

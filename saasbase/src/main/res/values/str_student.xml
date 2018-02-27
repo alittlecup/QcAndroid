@@ -84,4 +84,13 @@
 
 
 
+    <!--销售分配-->
+    <string name="qc_allotsale_sale">销售：%s</string>
+    <string name="qc_allotsale_stucount">%s名会员</string>
+    <string name="qc_allotsale_stucount_2">名下会员(%d)</string>
+    <string name="qc_allotsale_group_search">搜索分组</string>
+    <string name="qc_allotsale_select_clear">清空选择</string>
+    <string name="qc_allotsale_remove_alert">"确认将选中会员从%s名下移除?"</string>
+
+
 </resources>

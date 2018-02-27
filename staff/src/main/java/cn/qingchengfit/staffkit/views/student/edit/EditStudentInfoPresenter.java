@@ -10,7 +10,7 @@ import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshStudent;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
-import cn.qingchengfit.staffkit.usecase.bean.User_Student;
+import cn.qingchengfit.model.base.User_Student;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.functions.Action1;

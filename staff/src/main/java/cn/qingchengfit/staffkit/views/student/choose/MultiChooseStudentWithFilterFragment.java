@@ -28,8 +28,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
+import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.bottom.BottomStudentsFragment;
 import cn.qingchengfit.staffkit.views.custom.MyDrawerLayout;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilterEvent;
@@ -43,7 +43,6 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -110,40 +109,16 @@ import rx.functions.Action1;
     etSearch.setCompoundDrawablesWithIntrinsicBounds(
         ContextCompat.getDrawable(getContext(), R.drawable.ic_search_24dp_grey), null, null, null);
     etSearch.setHint(getString(R.string.search_hint));
-    //etSearch.addTextChangedListener(new TextWatcher() {
-    //    @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    //
-    //    }
-    //
-    //    @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-    //
-    //    }
-    //
-    //    @Override public void afterTextChanged(Editable s) {
-    //        chooseStudentListFragment.localFilter(s.toString());
-    //        searchClear.setVisibility(s.length() > 0 ?View.VISIBLE:View.GONE);
-    //    }
-    //});
     RxTextView.afterTextChangeEvents(etSearch)
         .debounce(500, TimeUnit.MILLISECONDS)
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
-          @Override public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
-            chooseStudentListFragment.localFilter(etSearch.getText().toString().trim());
-            searchClear.setVisibility(
-                etSearch.getText().toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
-          }
+        .subscribe(textViewAfterTextChangeEvent -> {
+          chooseStudentListFragment.localFilter(etSearch.getText().toString().trim());
+          searchClear.setVisibility(
+              etSearch.getText().toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
         });
-    RxView.clicks(searchClear).subscribe(new Action1<Void>() {
-      @Override public void call(Void aVoid) {
-        etSearch.setText("");
-      }
-    });
-    tgFilter.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        drawer.openDrawer(GravityCompat.END);
-      }
-    });
+    RxView.clicks(searchClear).subscribe(aVoid -> etSearch.setText(""));
+    tgFilter.setOnClickListener(v1 -> drawer.openDrawer(GravityCompat.END));
     chooseStudentListFragment = new ChooseStudentListFragment();
     getChildFragmentManager().beginTransaction()
         .replace(R.id.frag_student_list, chooseStudentListFragment)

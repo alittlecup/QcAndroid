@@ -114,6 +114,8 @@ public class FlexableListFragment extends BaseFragment {
     }
 
     public void setFilterString(String filter) {
-        if (mFlexAdapter != null) mFlexAdapter.setTag("filter", filter);
+        if (mFlexAdapter != null){
+            mFlexAdapter.setSearchText(filter);
+            mFlexAdapter.setTag("filter", filter);}
     }
 }

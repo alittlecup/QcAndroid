@@ -25,14 +25,12 @@ import butterknife.Unbinder;
 import cn.qingchengfit.RxBus;
 import cn.qingchengfit.bean.EventLatestNoti;
 import cn.qingchengfit.bean.EventNotiFresh;
-import cn.qingchengfit.bean.Notification;
-import cn.qingchengfit.bean.NotificationMsg;
-import cn.qingchengfit.constant.ConstantNotification;
 import cn.qingchengfit.model.body.ClearNotiBody;
+import cn.qingchengfit.model.responese.NotificationMsg;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.constant.ConstantNotification;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.utils.LogUtil;
@@ -74,22 +72,22 @@ public class NotificationFragment extends BaseSettingFragment {
     private int unReadCount = 0;
     private LinearLayoutManager linearLayoutManager;
     private Unbinder unbinder;
-    private int type;
+    private String type;
 
     public NotificationFragment() {
     }
 
-    public static NotificationFragment newInstance(int type) {
+    public static NotificationFragment newInstance(String type) {
         Bundle args = new Bundle();
         NotificationFragment fragment = new NotificationFragment();
-        args.putInt("t", type);
+        args.putString("t", type);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        type = getArguments().getInt("t");
+        type = getArguments().getString("t");
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -240,38 +238,36 @@ public class NotificationFragment extends BaseSettingFragment {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcDataResponse<Notification>>() {
-                @Override public void call(QcDataResponse<Notification> qcNotificationResponse) {
-                    list.clear();
-                    totalPage = qcNotificationResponse.getData().pages;
-                    list.addAll(qcNotificationResponse.getData().notifications);
-                    int fistUnread = -1;
-                    if (list != null && list.size() > 0) {
-                        for (int i = 0; i < list.size(); i++) {
-                            if (!list.get(i).is_read()) {
-                                if (fistUnread < 0) fistUnread = i;
-                                unReadCount++;
-                            }
+            .subscribe(qcNotificationResponse -> {
+                list.clear();
+                totalPage = qcNotificationResponse.getData().pages;
+                list.addAll(qcNotificationResponse.getData().notifications);
+                int fistUnread = -1;
+                if (list != null && list.size() > 0) {
+                    for (int i = 0; i < list.size(); i++) {
+                        if (!list.get(i).is_read()) {
+                            if (fistUnread < 0) fistUnread = i;
+                            unReadCount++;
                         }
-                        refresh.setVisibility(View.VISIBLE);
-                        refreshNodata.setVisibility(View.GONE);
-
-                        adapter.notifyDataSetChanged();
-                        //                                recyclerview.setAdapter(adapter);
-                    } else {
-                        refresh.setVisibility(View.GONE);
-                        refreshNodata.setVisibility(View.VISIBLE);
                     }
-                    refresh.setRefreshing(false);
-                    refreshNodata.setRefreshing(false);
+                    refresh.setVisibility(View.VISIBLE);
+                    refreshNodata.setVisibility(View.GONE);
 
-                    RxBus.getBus().post(new EventNotiFresh());
-                    if (fistUnread > 0) {
-                        RxBus.getBus()
-                            .post(new EventLatestNoti(DateUtils.formatDateFromServer(
-                                qcNotificationResponse.getData().notifications.get(fistUnread).getCreated_at()).getTime(),
-                                getArguments().getInt("t")));
-                    }
+                    adapter.notifyDataSetChanged();
+                    //                                recyclerview.setAdapter(adapter);
+                } else {
+                    refresh.setVisibility(View.GONE);
+                    refreshNodata.setVisibility(View.VISIBLE);
+                }
+                refresh.setRefreshing(false);
+                refreshNodata.setRefreshing(false);
+
+                RxBus.getBus().post(new EventNotiFresh());
+                if (fistUnread > 0) {
+                    RxBus.getBus()
+                        .post(new EventLatestNoti(DateUtils.formatDateFromServer(
+                            qcNotificationResponse.getData().notifications.get(fistUnread).getCreated_at()).getTime(),
+                            getArguments().getInt("t")));
                 }
             }, new NetWorkThrowable());
     }

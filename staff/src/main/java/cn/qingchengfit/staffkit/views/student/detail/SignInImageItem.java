@@ -1,14 +1,12 @@
 package cn.qingchengfit.staffkit.views.student.detail;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.usecase.bean.SignInImg;
+import cn.qingchengfit.model.responese.SignInImg;
 import cn.qingchengfit.utils.DateUtils;
 import com.bumptech.glide.Glide;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;

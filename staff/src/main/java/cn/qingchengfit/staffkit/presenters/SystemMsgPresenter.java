@@ -1,7 +1,5 @@
 package cn.qingchengfit.staffkit.presenters;
 
-import cn.qingchengfit.chat.model.Record;
-import cn.qingchengfit.chat.model.RecordWrap;
 import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.CView;
 import cn.qingchengfit.di.PView;
@@ -9,10 +7,11 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.responese.NotificationGlance;
-import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.saasbase.chat.model.Record;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import java.util.List;
 import javax.inject.Inject;
@@ -63,23 +62,23 @@ public class SystemMsgPresenter extends BasePresenter {
             }, new NetWorkThrowable()));
     }
 
-    public void queryRecruitMsgList(){
-        RxRegiste(restRepository.getGet_api()
-            .qcGetRecruitMessageList()
-            .observeOn(AndroidSchedulers.mainThread())
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.io())
-            .subscribe(new Action1<cn.qingchengfit.network.response.QcDataResponse<RecordWrap>>() {
-                @Override public void call(
-                    cn.qingchengfit.network.response.QcDataResponse<RecordWrap> recordWrapQcResponseData) {
-                    if (ResponseConstant.checkSuccess(recordWrapQcResponseData)){
-                        view.onMessageList(recordWrapQcResponseData.data.records);
-                    }else{
-                        view.onShowError(recordWrapQcResponseData.getMsg());
-                    }
-                }
-            }, new NetWorkThrowable()));
-    }
+    //public void queryRecruitMsgList(){
+    //    RxRegiste(restRepository.getGet_api()
+    //        .qcGetRecruitMessageList()
+    //        .observeOn(AndroidSchedulers.mainThread())
+    //        .onBackpressureBuffer()
+    //        .subscribeOn(Schedulers.io())
+    //        .subscribe(new Action1<cn.qingchengfit.network.response.QcDataResponse<RecordWrap>>() {
+    //            @Override public void call(
+    //                cn.qingchengfit.network.response.QcDataResponse<RecordWrap> recordWrapQcResponseData) {
+    //                if (ResponseConstant.checkSuccess(recordWrapQcResponseData)){
+    //                    view.onMessageList(recordWrapQcResponseData.data.records);
+    //                }else{
+    //                    view.onShowError(recordWrapQcResponseData.getMsg());
+    //                }
+    //            }
+    //        }, new NetWorkThrowable()));
+    //}
 
 
     @Override public void attachView(PView v) {

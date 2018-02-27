@@ -3,7 +3,7 @@ package cn.qingchengfit.utils;
 import android.content.Context;
 import android.graphics.Color;
 import cn.qingchengfit.model.body.OptionBody;
-import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.model.responese.CardTplOption;
 import java.util.ArrayList;
 import java.util.List;

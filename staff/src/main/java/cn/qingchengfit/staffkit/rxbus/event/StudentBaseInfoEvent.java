@@ -1,6 +1,6 @@
 package cn.qingchengfit.staffkit.rxbus.event;
 
-import cn.qingchengfit.staffkit.usecase.bean.User_Student;
+import cn.qingchengfit.model.base.User_Student;
 
 /**
  * power by

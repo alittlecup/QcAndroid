@@ -2,9 +2,7 @@ package cn.qingchengfit.staffkit.views.student.attendance;
 
 import android.content.Context;
 import android.support.annotation.ColorRes;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;

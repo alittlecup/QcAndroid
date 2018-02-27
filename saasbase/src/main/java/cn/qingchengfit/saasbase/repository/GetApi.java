@@ -1,11 +1,12 @@
 package cn.qingchengfit.saasbase.repository;
 
+import cn.qingchengfit.model.responese.StaffResponse;
+import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponToken;
 import cn.qingchengfit.saasbase.network.response.GymList;
 import cn.qingchengfit.saasbase.network.response.QcResponseData;
 import cn.qingchengfit.saasbase.staff.model.StaffShipResponse;
 import cn.qingchengfit.saasbase.staff.model.Staffs;
-import cn.qingchengfit.saasbase.staff.model.body.StaffResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -33,5 +34,5 @@ public interface GetApi {
 
 
   //工作人员详情
-  @GET("/api/staffs/{id}/") rx.Observable<QcResponseData<StaffResponse>> qcGetSelfInfo(@Path("id") String id);
+  @GET("/api/staffs/{id}/") rx.Observable<QcDataResponse<StaffResponse>> qcGetSelfInfo(@Path("id") String id);
 }

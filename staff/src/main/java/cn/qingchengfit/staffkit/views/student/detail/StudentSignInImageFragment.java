@@ -26,7 +26,7 @@ import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
-import cn.qingchengfit.staffkit.usecase.bean.SignInImg;
+import cn.qingchengfit.model.responese.SignInImg;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;

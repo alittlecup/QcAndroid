@@ -28,7 +28,7 @@ import cn.qingchengfit.staffkit.train.presenter.SignUpGroupDetailPresenter;
 import cn.qingchengfit.staffkit.train.presenter.SignUpPersonalPresenter;
 import cn.qingchengfit.staffkit.train.presenter.SignUpView;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.bottom.BottomStudentsFragment;
+import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.MeasureUtils;

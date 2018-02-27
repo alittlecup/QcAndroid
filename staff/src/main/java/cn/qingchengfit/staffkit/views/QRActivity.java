@@ -17,7 +17,7 @@
 //import butterknife.OnClick;
 //import cn.qingchengfit.RxBus;
 //import cn.qingchengfit.di.model.GymWrapper;
-//import cn.qingchengfit.model.body.ScanBody;
+//import ScanBody;
 //import cn.qingchengfit.network.QcRestRepository;
 //import cn.qingchengfit.network.ResponseConstant;
 //import cn.qingchengfit.network.response.QcResponse;

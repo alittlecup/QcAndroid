@@ -25,7 +25,7 @@
 //import cn.qingchengfit.di.model.GymWrapper;
 //import cn.qingchengfit.di.model.LoginStatus;
 //import cn.qingchengfit.model.base.Staff;
-//import cn.qingchengfit.model.responese.StaffShip;
+//import StaffShip;
 //import cn.qingchengfit.saasbase.permission.SerPermisAction;
 //import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 //import cn.qingchengfit.staffkit.App;

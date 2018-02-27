@@ -12,8 +12,6 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.staffkit.constant.Get_Api;
 import cn.qingchengfit.staffkit.constant.ShopConfigs;
 import cn.qingchengfit.network.response.QcDataResponse;
-import cn.qingchengfit.staffkit.constant.Get_Api;
-import cn.qingchengfit.staffkit.constant.ShopConfigs;
 import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.utils.StringUtils;
 import java.util.Arrays;

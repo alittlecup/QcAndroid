@@ -13,9 +13,10 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.AlphabetHeaderItem;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.ChooseStudentItem;
+import cn.qingchengfit.saasbase.items.AlphabetHeaderItem;
+import cn.qingchengfit.saasbase.items.ChooseStudentItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.QcStudentComparator;
 import cn.qingchengfit.utils.QcStudentCompareJoinAt;
 import cn.qingchengfit.utils.StringUtils;
@@ -217,7 +218,10 @@ public class ChooseStudentListFragment extends BaseFragment
     }
 
     @Override public boolean onItemClick(int position) {
-        if (items.get(position) instanceof ChooseStudentItem) {
+        if (adapter.getItem(position) == null){
+            LogUtil.e(getFragmentName()+"点击超出范围");
+            return true;}
+        if (adapter.getItem(position) instanceof ChooseStudentItem) {
             adapter.toggleSelection(position);
             adapter.notifyItemChanged(position);
             if (adapter.isSelected(position)) {

@@ -25,7 +25,7 @@
 //import cn.qingchengfit.staffkit.R;
 //import cn.qingchengfit.staffkit.constant.Configs;
 //import cn.qingchengfit.staffkit.rest.RestRepository;
-//import cn.qingchengfit.model.responese.Sellers;
+//import Sellers;
 //import cn.qingchengfit.utils.IntentUtils;
 //import cn.qingchengfit.utils.PreferenceUtils;
 //import cn.qingchengfit.staffkit.views.BaseDialogFragment;

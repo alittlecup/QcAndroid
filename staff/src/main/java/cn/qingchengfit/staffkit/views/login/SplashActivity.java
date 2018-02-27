@@ -14,11 +14,10 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.responese.GymList;
-import cn.qingchengfit.model.responese.StaffResponse;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.ResponseConstant;
-import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.network.response.QcDataResponse;
+import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 import cn.qingchengfit.saasbase.login.LoginActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.BuildConfig;
@@ -47,7 +46,6 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static cn.qingchengfit.staffkit.MainActivity.IS_SIGNLE;
@@ -114,30 +112,28 @@ public class SplashActivity extends AppCompatActivity {
                 .onBackpressureBuffer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Func1<QcDataResponse<StaffResponse>, Observable<QcDataResponse<GymList>>>() {
-                    @Override public Observable<QcDataResponse<GymList>> call(QcDataResponse<StaffResponse> staffResponseQcResponseData) {
-                        if (ResponseConstant.checkSuccess(staffResponseQcResponseData)) {
-                            loginStatus.setUserId(staffResponseQcResponseData.data.staff.user_id);
-                            PreferenceUtils.getPrefString(SplashActivity.this, Configs.PREFER_USER_ID,
-                                staffResponseQcResponseData.data.staff.user_id);
-                        }else if(staffResponseQcResponseData.getStatus() == Integer.parseInt(ResponseConstant.E_Login)){
-                          logout();
-                          /*
-                           * 伪造结果返回
-                           */
-                          QcDataResponse<GymList> qcResponseData = new QcDataResponse<GymList>();
-                          qcResponseData.setData(new GymList());
-                          return Observable.just(qcResponseData).subscribeOn(Schedulers.io())
-                              .observeOn(AndroidSchedulers.mainThread());
-                        } else {
-                            ToastUtils.show("服务器错误");
-                        }
-                        return restRepository.getGet_api()
-                            .qcGetCoachService(App.staffId, null)
-                            .onBackpressureBuffer()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread());
+                .flatMap(staffResponseQcResponseData -> {
+                    if (ResponseConstant.checkSuccess(staffResponseQcResponseData)) {
+                        loginStatus.setUserId(staffResponseQcResponseData.data.staff.user_id);
+                        PreferenceUtils.getPrefString(SplashActivity.this, Configs.PREFER_USER_ID,
+                            staffResponseQcResponseData.data.staff.user_id);
+                    }else if(staffResponseQcResponseData.getStatus() == Integer.parseInt(ResponseConstant.E_Login)){
+                      logout();
+                      /*
+                       * 伪造结果返回
+                       */
+                      QcDataResponse<GymList> qcResponseData = new QcDataResponse<GymList>();
+                      qcResponseData.setData(new GymList());
+                      return Observable.just(qcResponseData).subscribeOn(Schedulers.io())
+                          .observeOn(AndroidSchedulers.mainThread());
+                    } else {
+                        ToastUtils.show("服务器错误");
                     }
+                    return restRepository.getGet_api()
+                        .qcGetCoachService(App.staffId, null)
+                        .onBackpressureBuffer()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
                 })
                 .subscribe(new Action1<QcDataResponse<GymList>>() {
                     @Override public void call(QcDataResponse<GymList> qcResponseGymList) {

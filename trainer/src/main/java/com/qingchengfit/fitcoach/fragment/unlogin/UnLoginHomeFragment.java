@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.unlogin;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,27 +46,33 @@ public class UnLoginHomeFragment extends BaseFragment {
     UnLoginScheduleAdFragment homeBannerFragment;
     private Flowable<List<CoachService>> spGetService;
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_unlogin_home, container, false);
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mainScheduleFragment = new MainScheduleFragment();
         homeBannerFragment = new UnLoginScheduleAdFragment();
-        RxBusAdd(EventLoginChange.class).subscribe(eventLoginChange -> changeLogin());
+    }
+
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_unlogin_home, container, false);
+        RxBusAdd(EventLoginChange.class)
+          .onBackpressureLatest()
+          .subscribe(eventLoginChange -> changeLogin());
         changeLogin();
         return view;
     }
 
     @Override protected void onInVisible() {
         super.onInVisible();
-        if (mainScheduleFragment.isVisible()){
-            mainScheduleFragment.setInvisible();
-        }
+        //if (mainScheduleFragment.isVisible()){
+        //    mainScheduleFragment.setInvisible();
+        //}
     }
 
     @Override protected void onVisible() {
         super.onVisible();
-        if (mainScheduleFragment.isVisible()){
-            mainScheduleFragment.setVisible();
-        }
+        //if (mainScheduleFragment.isVisible()){
+        //    mainScheduleFragment.setVisible();
+        //}
     }
 
     private void changeLogin(){

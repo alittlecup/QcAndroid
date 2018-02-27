@@ -21,8 +21,8 @@
 //import butterknife.OnClick;
 //import cn.qingchengfit.events.EventChooseImage;
 //import cn.qingchengfit.model.base.Staff;
-//import cn.qingchengfit.model.body.ManagerBody;
-//import cn.qingchengfit.model.responese.StaffPosition;
+//import ManagerBody;
+//import StaffPosition;
 //import cn.qingchengfit.staffkit.App;
 //import cn.qingchengfit.staffkit.R;
 //import cn.qingchengfit.staffkit.views.custom.PhoneEditText;

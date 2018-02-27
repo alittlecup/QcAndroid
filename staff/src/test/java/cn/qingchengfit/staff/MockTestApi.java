@@ -2,7 +2,7 @@
 //
 //import cn.qingchengfit.model.responese.Login;
 //import cn.qingchengfit.model.responese.QcResponseData;
-//import cn.qingchengfit.model.responese.Students;
+//import Students;
 //import cn.qingchengfit.staffkit.BuildConfig;
 //import cn.qingchengfit.staffkit.rest.RestRepository;
 //import org.junit.Assert;

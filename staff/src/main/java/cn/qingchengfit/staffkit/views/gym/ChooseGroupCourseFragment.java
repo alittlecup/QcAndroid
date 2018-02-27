@@ -20,8 +20,8 @@
 //import butterknife.ButterKnife;
 //import cn.qingchengfit.di.model.GymWrapper;
 //import cn.qingchengfit.di.model.LoginStatus;
-//import cn.qingchengfit.model.responese.CourseTypeSample;
-//import cn.qingchengfit.model.responese.CourseTypeSamples;
+//import CourseTypeSample;
+//import CourseTypeSamples;
 //import cn.qingchengfit.network.errors.NetWorkThrowable;
 //import cn.qingchengfit.network.ResponseConstant;
 //import cn.qingchengfit.network.response.QcDataResponse;

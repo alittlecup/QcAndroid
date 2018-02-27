@@ -17,7 +17,7 @@ import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.usecase.bean.QcScheduleBean;
+import cn.qingchengfit.model.common.QcScheduleBean;
 import java.util.ArrayList;
 import java.util.List;
 import timber.log.Timber;
@@ -253,16 +253,7 @@ public static List<String> qcstudents2strs(List<QcStudentBean> students) {
         return ret;
     }
 
-    public static List<String> qcstudentIds2ListChatExcepteSb(List<QcStudentBean> students, String id, Context context) {
-        List<String> ret = new ArrayList<>();
-        for (int i = 0; i < students.size(); i++) {
-            if (!TextUtils.equals(students.get(i).getId(), id)) {
-                ret.add(context.getString(R.string.chat_user_id_header, students.get(i).getId()));
-            }
-        }
 
-        return ret;
-    }
 
     public static List<String> coach2Strs(List<Staff> coaches) {
         List<String> ret = new ArrayList<>();

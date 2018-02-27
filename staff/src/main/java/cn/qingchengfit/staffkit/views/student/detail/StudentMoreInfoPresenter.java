@@ -23,7 +23,7 @@ import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshStudent;
 import cn.qingchengfit.staffkit.rxbus.event.StudentBaseInfoEvent;
 import cn.qingchengfit.staffkit.usecase.StudentUsecase;
-import cn.qingchengfit.staffkit.usecase.bean.User_Student;
+import cn.qingchengfit.model.base.User_Student;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.StringUtils;
 import javax.inject.Inject;

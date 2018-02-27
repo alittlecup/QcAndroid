@@ -20,11 +20,11 @@
 //import butterknife.OnClick;
 //import cn.qingchengfit.RxBus;
 //import cn.qingchengfit.model.base.CoachService;
-//import cn.qingchengfit.model.common.Rule;
+//import Rule;
 //import cn.qingchengfit.model.responese.CardTpl;
-//import cn.qingchengfit.model.responese.CardTplBatchShip;
-//import cn.qingchengfit.model.responese.CardTpls;
-//import cn.qingchengfit.model.responese.OnlineLimit;
+//import CardTplBatchShip;
+//import CardTpls;
+//import OnlineLimit;
 //import cn.qingchengfit.network.ResponseConstant;
 //import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
 //import cn.qingchengfit.network.response.QcDataResponse;

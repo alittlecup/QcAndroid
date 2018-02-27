@@ -14,19 +14,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import cn.qingchengfit.model.base.StudentBean;
+import cn.qingchengfit.saasbase.databinding.DialogFragmentAllotsaleShowSelectedBinding;
+import cn.qingchengfit.saasbase.utils.HandleClickClearAll;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.databinding.DialogFragmentAllotsaleShowSelectedBinding;
-import cn.qingchengfit.staffkit.views.HandleClickClearAll;
 import cn.qingchengfit.staffkit.views.adapter.AllotSaleChooseAdapter;
 import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.utils.IntentUtils;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import java.util.ArrayList;
 import java.util.List;
 

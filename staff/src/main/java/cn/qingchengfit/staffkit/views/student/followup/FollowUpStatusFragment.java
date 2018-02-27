@@ -38,7 +38,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.FilterFragment;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rxbus.event.EventRouter;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.TotalCountFooterItem;
+import cn.qingchengfit.saasbase.items.TotalCountFooterItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.student.StudentSearchFragment;
 import cn.qingchengfit.staffkit.views.student.detail.StudentsDetailActivity;

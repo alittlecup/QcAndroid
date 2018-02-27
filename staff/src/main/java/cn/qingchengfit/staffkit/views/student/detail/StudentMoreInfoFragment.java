@@ -19,18 +19,18 @@ import cn.qingchengfit.RxBus;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.StudentReferrerBean;
+import cn.qingchengfit.model.base.User_Student;
 import cn.qingchengfit.model.responese.StudentSourceBean;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.staff.beans.StaffLoginMethod;
 import cn.qingchengfit.saasbase.student.views.LoginMethodFragment;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.MutiChooseCoachActivity;
-import cn.qingchengfit.staffkit.allocate.coach.model.CoachBean;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rxbus.event.EditStudentEvent;
 import cn.qingchengfit.staffkit.rxbus.event.UpdateEvent;
-import cn.qingchengfit.staffkit.usecase.bean.User_Student;
 import cn.qingchengfit.staffkit.views.TitleFragment;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
 import cn.qingchengfit.staffkit.views.student.ChooseOriginActivity;
@@ -200,7 +200,7 @@ public class StudentMoreInfoFragment extends BaseFragment
     }
     tvStudentSource.setText(user_student.getOrigin());
     tvStudentReferrer.setText(user_student.getRecommend_by());
-    List<CoachBean> coaches = user_student.getCoaches();
+    List<Staff> coaches = user_student.getCoaches();
     if (coaches != null) {
       if (coaches.size() > 0) {
         coachName.setText(

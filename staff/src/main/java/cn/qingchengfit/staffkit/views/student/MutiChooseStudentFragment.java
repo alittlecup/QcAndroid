@@ -30,7 +30,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.rxbus.event.BuyCardNextEvent;
-import cn.qingchengfit.staffkit.views.bottom.BottomStudentsFragment;
+import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.staffkit.views.student.choose.ChooseStudentListFragment;
 import cn.qingchengfit.staffkit.views.student.edit.EditStudentInfoFragment;
 import cn.qingchengfit.staffkit.views.student.list.StudentListView;

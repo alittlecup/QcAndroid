@@ -2,6 +2,7 @@ package cn.qingchengfit.staffkit.allocate.coach.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.Staff;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Coach implements Parcelable {
             return new Coach[size];
         }
     };
-    public CoachBean coach;
+    public Staff coach;
     public int count;
     public List<String> user = new ArrayList<>();
 
@@ -27,7 +28,7 @@ public class Coach implements Parcelable {
     }
 
     protected Coach(Parcel in) {
-        this.coach = in.readParcelable(CoachBean.class.getClassLoader());
+        this.coach = in.readParcelable(Staff.class.getClassLoader());
         this.count = in.readInt();
         this.user = in.createStringArrayList();
     }

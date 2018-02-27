@@ -38,7 +38,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.MutiChooseCoachActivity;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.usecase.bean.User_Student;
+import cn.qingchengfit.model.base.User_Student;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
 import cn.qingchengfit.staffkit.views.custom.PhoneEditText;

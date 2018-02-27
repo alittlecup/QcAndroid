@@ -21,7 +21,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.chat.model.Record;
+import cn.qingchengfit.saasbase.chat.model.Record;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -34,11 +34,11 @@ import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.ConstantNotification;
+import cn.qingchengfit.saasbase.constant.ConstantNotification;
 import cn.qingchengfit.staffkit.presenters.SystemMsgPresenter;
 import cn.qingchengfit.staffkit.rxbus.event.EventNewPush;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.SystemMsgItem;
+import cn.qingchengfit.saasbase.items.SystemMsgItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.notification.NotificationActivity;
@@ -357,7 +357,7 @@ public class MainMsgFragment extends BaseFragment
             Long.toString(msg.getId())))) {
           //如果被删除 就不展示4
         } else {
-          items.add(new SystemMsgItem(ConstantNotification.getNotiDrawable(list.get(i).key),
+          items.add(new SystemMsgItem(list.get(i).key,
               list.get(i)));
         }
       }
@@ -366,7 +366,7 @@ public class MainMsgFragment extends BaseFragment
       recruitMsg.setTitle("点击查看简历投递和职位邀约详细消息");
       recruitMsg.setId(0x11L);
       recruitNoty.notification = recruitMsg;
-      items.add(new SystemMsgItem(R.drawable.ic_vd_notification_job, recruitNoty));
+      items.add(new SystemMsgItem(ConstantNotification.JOB_NOTIFICATION_STR, recruitNoty));
       adapter.clear();
       adapter.updateDataSet(items);
       checkNoInfo();
@@ -404,17 +404,17 @@ public class MainMsgFragment extends BaseFragment
 
   @Override public boolean onItemClick(int i) {
     if (items.get(i) instanceof SystemMsgItem) {
-      int type = ((SystemMsgItem) items.get(i)).getType();
-      if (type != R.drawable.vd_notification_comment && type != R.drawable.ic_vd_notification_job) {
+      String type = ((SystemMsgItem) items.get(i)).getType();
+      if (!TextUtils.equals(type,ConstantNotification.COMMENT_NOTIFICATION_STR) && !TextUtils.equals(type,ConstantNotification.JOB_NOTIFICATION_STR)) {
         Intent toNoti = new Intent(getActivity(), NotificationActivity.class);
         toNoti.putExtra("type", type);
         startActivity(toNoti);
-      } else if (type == R.drawable.ic_vd_notification_job) {
+      } else if (TextUtils.equals(type,ConstantNotification.COMMENT_NOTIFICATION_STR)) {
         ContainerActivity.router(GymFunctionFactory.RECRUIT_MESSAGE_LIST, getContext(),
             getString(R.string.chat_user_id_header, loginStatus.getUserId()));
       } else {
         presenter.clearNoti(
-            ConstantNotification.getCategloreStr(R.drawable.vd_notification_comment));
+            ConstantNotification.getCategloreStr(ConstantNotification.COMMENT_NOTIFICATION_STR));
         ContainerActivity.router(GymFunctionFactory.MODULE_ARTICLE_COMMENT_REPLY, getContext());
       }
     }
@@ -425,7 +425,7 @@ public class MainMsgFragment extends BaseFragment
     if (items.get(i) instanceof SystemMsgItem) {
       final NotificationMsg msg =
           ((SystemMsgItem) items.get(i)).getNotificationGlance().notification;
-      final int type = ((SystemMsgItem) items.get(i)).getType();
+      final String type = ((SystemMsgItem) items.get(i)).getType();
       DialogUtils.instanceDelDialog(getContext(), "删除该消息",
           new MaterialDialog.SingleButtonCallback() {
             @Override

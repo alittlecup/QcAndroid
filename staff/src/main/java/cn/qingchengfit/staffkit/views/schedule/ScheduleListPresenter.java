@@ -9,7 +9,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.QcSchedulesResponse;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.usecase.bean.QcScheduleBean;
+import cn.qingchengfit.model.common.QcScheduleBean;
 import cn.qingchengfit.staffkit.usecase.bean.ScheduleBean;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ScheduleCompare;

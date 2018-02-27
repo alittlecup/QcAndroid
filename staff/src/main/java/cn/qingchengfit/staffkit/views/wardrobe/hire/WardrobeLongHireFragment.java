@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.body.HireWardrobeBody;
-import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.saasbase.events.EventSelectedStudent;
 import cn.qingchengfit.saasbase.student.views.ChooseAndSearchStudentParams;

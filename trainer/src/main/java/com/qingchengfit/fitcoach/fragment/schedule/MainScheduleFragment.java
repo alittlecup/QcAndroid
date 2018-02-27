@@ -74,7 +74,6 @@ public class MainScheduleFragment extends BaseFragment {
     private ScheduleWeekFragment scheduleWeekFragment;
     private ScheduesFragment scheduesFragment;
     private GuideWindow gd1;
-  //private GuideWindow gd2;
 
     public CoachService getCoachService() {
         return mCoachService;
@@ -128,8 +127,6 @@ public class MainScheduleFragment extends BaseFragment {
         RxBusAdd(EventInit.class).subscribe(new Action1<EventInit>() {
             @Override public void call(EventInit eventInit) {
                 if (isVisible() && !eventInit.show && eventInit.pos == 2) {
-                  //if (gd2 != null && gd2.isShowing()) gd2.dismiss();
-                  //gd2 = null;
                     PreferenceUtils.setPrefBoolean(getContext(), "guide_2", true);
                 }
             }
@@ -142,15 +139,13 @@ public class MainScheduleFragment extends BaseFragment {
             return;
         if (!PreferenceUtils.getPrefBoolean(getContext(), "guide_1", false)) {
             if (gd1 == null) gd1 = new GuideWindow(getContext(), getString(R.string.hint_order_self), GuideWindow.DOWN);
-            gd1.show(studentOrder);
+            //gd1.show(studentOrder);
         } else if (!PreferenceUtils.getPrefBoolean(getContext(), "guide_2", false)) {
-          //if (gd2 == null) gd2 = new GuideWindow(getContext(), getString(R.string.hint_help_order), GuideWindow.UP);
-          //gd2.show(viewP);
         }
     }
 
     public void setInvisible(){
-        if (gd1 != null && gd1.isShowing()) gd1.dismiss();
+        //if (gd1 != null && gd1.isShowing()) gd1.dismiss();
       //if (gd2 != null && gd2.isShowing()) gd2.dismiss();
     }
 

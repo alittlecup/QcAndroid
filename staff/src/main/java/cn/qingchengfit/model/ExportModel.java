@@ -6,7 +6,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.export.network.response.ExportRecordWrapper;
 import cn.qingchengfit.saasbase.repository.IExportModel;
-import cn.qingchengfit.apis.ExportApi;
+import cn.qingchengfit.saasbase.apis.ExportApi;
 import java.util.HashMap;
 import rx.Observable;
 

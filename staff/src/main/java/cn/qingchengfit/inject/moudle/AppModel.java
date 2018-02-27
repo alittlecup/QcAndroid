@@ -33,7 +33,7 @@ import cn.qingchengfit.staffkit.CardStudentRouters;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.card.StaffCardRouters;
 import cn.qingchengfit.staffkit.model.db.QCDbManagerImpl;
-import cn.qingchengfit.apis.CourseModel;
+import cn.qingchengfit.saasbase.apis.CourseModel;
 import cn.qingchengfit.staffkit.repository.GymConfigModel;
 import cn.qingchengfit.staffkit.repository.SerPermissionImpl;
 import cn.qingchengfit.staffkit.rest.RestRepository;

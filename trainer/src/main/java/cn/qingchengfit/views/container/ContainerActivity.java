@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import cn.qingchengfit.article.ArticleCommentsListFragmentBuilder;
-import cn.qingchengfit.article.ArticleReplyFragment;
-import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
+import cn.qingchengfit.saasbase.article.ArticleCommentsListFragment;
+import cn.qingchengfit.saasbase.article.ArticleReplyFragment;
+import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import com.qingchengfit.fitcoach.R;
 
@@ -46,12 +46,11 @@ public class ContainerActivity extends AppCompatActivity {
                 String articleid = IntentUtils.getIntentFromUri(getIntent(), "news_id");
                 String replyId = IntentUtils.getIntentFromUri(getIntent(), "replyId");
                 String replayname = IntentUtils.getIntentFromUri(getIntent(), "replyName");
-                fragment = new ArticleCommentsListFragmentBuilder(articleid).replyId(replyId).replyName(replayname).build();
+                fragment = ArticleCommentsListFragment.newInstance(articleid,replyId,replayname);
               break;
           case "/recruit/message_list":
             if (getIntent().getExtras().containsKey("params")) {
-              fragment = new RecruitMessageListFragmentBuilder(
-                  (String) ((Object[]) (getIntent().getExtras().get("params")))[0]).build();
+              fragment = new RecruitMessageListFragment();
             }
                 break;
         }

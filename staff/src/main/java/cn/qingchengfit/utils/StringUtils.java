@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.widget.TextView;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.allocate.coach.model.CoachBean;
 import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.views.custom.CircleView;
 import java.util.ArrayList;
@@ -361,7 +360,7 @@ public class StringUtils {
         return ret;
     }
 
-    public static List<String> coachIds(List<CoachBean> list) {
+    public static List<String> coachIds(List<Staff> list) {
         List<String> idList = new ArrayList<>();
         if (list == null) {
             return idList;

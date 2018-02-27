@@ -25,7 +25,6 @@ import cn.qingchengfit.model.body.GymBody;
 import cn.qingchengfit.model.body.HireWardrobeBody;
 import cn.qingchengfit.model.body.ManagerBody;
 import cn.qingchengfit.model.body.OptionBody;
-import cn.qingchengfit.model.body.PostCommentBody;
 import cn.qingchengfit.model.body.PushBody;
 import cn.qingchengfit.model.body.RenewBody;
 import cn.qingchengfit.model.body.ReturnWardrobeBody;
@@ -61,7 +60,7 @@ import cn.qingchengfit.staffkit.usecase.bean.CreatBrandBody;
 import cn.qingchengfit.staffkit.usecase.bean.FeedBackBody;
 import cn.qingchengfit.staffkit.usecase.bean.OutExcelBody;
 import cn.qingchengfit.staffkit.usecase.bean.SystemInitBody;
-import cn.qingchengfit.staffkit.usecase.bean.User_Student;
+import cn.qingchengfit.model.base.User_Student;
 import cn.qingchengfit.staffkit.views.signin.zq.model.AccessBody;
 import java.util.HashMap;
 import java.util.List;
@@ -629,8 +628,6 @@ public interface Post_Api {
     @PUT("/api/staffs/{staffid}/group/message/detail/") rx.Observable<QcResponse> qcPutShortMsg(@Path("staffid") String staffid,
         @Body ShortMsgBody body, @QueryMap HashMap<String, Object> params);
 
-    //文章评论
-    @POST("/api/news/{newsid}/comment/") rx.Observable<QcResponse> qcAddComment(@Path("newsid") String news_id, @Body PostCommentBody body);
 
     //新建分组
     @POST("api/staffs/competitions/teams/") rx.Observable<QcResponse> qcPostCreateGroup(@Body CreateGroupBody createGroupBody);

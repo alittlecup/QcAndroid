@@ -1,7 +1,7 @@
 package cn.qingchengfit.recruit;
 
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.DelStudentItem;
-import cn.qingchengfit.staffkit.views.bottom.BottomStudentsFragment;
+import cn.qingchengfit.saasbase.items.DelStudentItem;
+import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.utils.ToastUtils;
 
 /**

@@ -1,6 +1,6 @@
 package cn.qingchengfit.utils;
 
-import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 
 /**
  * power by

@@ -22,16 +22,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.responese.ShortMsg;
+import cn.qingchengfit.saasbase.items.ShortMsgItem;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.presenters.ShortMsgPresentersPresenter;
 import cn.qingchengfit.staffkit.views.FlexableListFragment;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.ShortMsgItem;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
-import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,51 +119,40 @@ public class SendMsgHomeFragment extends BaseFragment implements ShortMsgPresent
                     sendedFragment.setFilterString(etSearch.getText().toString().trim());
                     allFragment.setFilterString(etSearch.getText().toString().trim());
                     scriptFragment.setFilterString(etSearch.getText().toString().trim());
-
                     presenter.queryShortMsgList(null, etSearch.getText().toString().trim());
                     searchviewClear.setVisibility(etSearch.getText().toString().trim().length() > 0 ? View.VISIBLE : View.GONE);
                 }
             });
-        RxView.clicks(searchviewClear).subscribe(new Action1<Void>() {
-            @Override public void call(Void aVoid) {
-                etSearch.setText("");
+        RxView.clicks(searchviewClear).subscribe(aVoid -> etSearch.setText(""));
+        allFragment.setItemClickListener(position -> {
+            if (mDatasAll.get(position) instanceof ShortMsgItem) {
+                ShortMsgItem item = (ShortMsgItem) mDatasAll.get(position);
+                getFragmentManager().beginTransaction()
+                    .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
+                    .addToBackStack(null)
+                    .commit();
             }
+            return false;
         });
-        allFragment.setItemClickListener(new FlexibleAdapter.OnItemClickListener() {
-            @Override public boolean onItemClick(int position) {
-                if (mDatasAll.get(position) instanceof ShortMsgItem) {
-                    ShortMsgItem item = (ShortMsgItem) mDatasAll.get(position);
-                    getFragmentManager().beginTransaction()
-                        .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
-                        .addToBackStack(null)
-                        .commit();
-                }
-                return false;
+        sendedFragment.setItemClickListener(position -> {
+            if (mDatasSended.get(position) instanceof ShortMsgItem) {
+                ShortMsgItem item = (ShortMsgItem) mDatasSended.get(position);
+                getFragmentManager().beginTransaction()
+                    .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
+                    .addToBackStack(null)
+                    .commit();
             }
+            return false;
         });
-        sendedFragment.setItemClickListener(new FlexibleAdapter.OnItemClickListener() {
-            @Override public boolean onItemClick(int position) {
-                if (mDatasSended.get(position) instanceof ShortMsgItem) {
-                    ShortMsgItem item = (ShortMsgItem) mDatasSended.get(position);
-                    getFragmentManager().beginTransaction()
-                        .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
-                        .addToBackStack(null)
-                        .commit();
-                }
-                return false;
+        scriptFragment.setItemClickListener(position -> {
+            if (mDatasScript.get(position) instanceof ShortMsgItem) {
+                ShortMsgItem item = (ShortMsgItem) mDatasScript.get(position);
+                getFragmentManager().beginTransaction()
+                    .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
+                    .addToBackStack(null)
+                    .commit();
             }
-        });
-        scriptFragment.setItemClickListener(new FlexibleAdapter.OnItemClickListener() {
-            @Override public boolean onItemClick(int position) {
-                if (mDatasScript.get(position) instanceof ShortMsgItem) {
-                    ShortMsgItem item = (ShortMsgItem) mDatasScript.get(position);
-                    getFragmentManager().beginTransaction()
-                        .replace(R.id.frag, new ShortMsgDetailFragmentBuilder(item.getShortMsg()).build())
-                        .addToBackStack(null)
-                        .commit();
-                }
-                return false;
-            }
+            return false;
         });
         viewpager.setOffscreenPageLimit(2);
         if (adapter == null) adapter = new SendMsgHomeAdapter(getChildFragmentManager());

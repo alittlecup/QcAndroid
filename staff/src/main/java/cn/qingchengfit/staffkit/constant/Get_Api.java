@@ -2,13 +2,11 @@ package cn.qingchengfit.staffkit.constant;
 
 import android.support.annotation.IntRange;
 import android.support.v4.util.ArrayMap;
-import cn.qingchengfit.chat.model.RecordWrap;
 import cn.qingchengfit.model.common.Absentces;
 import cn.qingchengfit.model.common.Attendances;
 import cn.qingchengfit.model.responese.AllLockers;
 import cn.qingchengfit.model.responese.AllotSalePreViews;
 import cn.qingchengfit.model.responese.AllotSaleStudents;
-import cn.qingchengfit.model.responese.ArticleCommentListData;
 import cn.qingchengfit.model.responese.AttendanceCharDataBean;
 import cn.qingchengfit.model.responese.BalanceConfigs;
 import cn.qingchengfit.model.responese.BalanceNotifyConfigs;
@@ -23,7 +21,6 @@ import cn.qingchengfit.model.responese.CardResponse;
 import cn.qingchengfit.model.responese.CardTplResponse;
 import cn.qingchengfit.model.responese.CardTpls;
 import cn.qingchengfit.model.responese.Cards;
-import cn.qingchengfit.model.responese.ChatFriendsData;
 import cn.qingchengfit.model.responese.ClassRecords;
 import cn.qingchengfit.model.responese.CoursePlans;
 import cn.qingchengfit.model.responese.CourseReportDetail;
@@ -111,6 +108,8 @@ import cn.qingchengfit.network.response.SmsListWrap;
 import cn.qingchengfit.network.response.WxAuthorWrap;
 import cn.qingchengfit.saasbase.cards.bean.BalanceCount;
 import cn.qingchengfit.saasbase.cards.bean.QcResponseRealcardHistory;
+import cn.qingchengfit.saasbase.chat.model.RecordWrap;
+import cn.qingchengfit.saasbase.login.views.CheckProtocolModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
 import cn.qingchengfit.staffkit.allocate.coach.model.AllocateStudentBean;
 import cn.qingchengfit.staffkit.allocate.coach.model.CoachResponseList;
@@ -119,9 +118,8 @@ import cn.qingchengfit.staffkit.train.model.SignRecord;
 import cn.qingchengfit.staffkit.train.model.SignUpDetailResponse;
 import cn.qingchengfit.staffkit.train.model.TeamDetailResponse;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecordWrapper;
-import cn.qingchengfit.saasbase.login.views.CheckProtocolModel;
-import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
 import cn.qingchengfit.staffkit.views.signin.zq.model.GuardWrapper;
+import cn.qingchengfit.staffkit.views.student.attendance.model.NotSignStudent;
 import java.util.HashMap;
 import java.util.List;
 import retrofit2.Call;
@@ -846,20 +844,8 @@ public interface Get_Api {
     @GET("/api/staffs/{staffid}/group/message/detail/") rx.Observable<QcDataResponse<ShortMsgDetail>> qcQueryShortMsgDetail(
         @Path("staffid") String id, @Query("message_id") String messageid, @QueryMap HashMap<String, Object> params);
 
-    /**
-     * 聊天相关
-     */
-    @GET("/api/im/gym/contacts/") rx.Observable<QcDataResponse<ChatFriendsData>> qcQueryChatFriends();
 
-    /*
-     *
-      *  评论相关
-     */
-    @GET("/api/news/{news_id}/comment/") rx.Observable<QcDataResponse<ArticleCommentListData>> qcQueryComments(@Path("news_id") String id,
-        @QueryMap HashMap<String, Object> params);
 
-    @GET("/api/my/news/replies/") rx.Observable<QcDataResponse<ArticleCommentListData>> qcQueryReplies(
-        @QueryMap HashMap<String, Object> params);
 
     /**
      * 报名表个人列表
@@ -916,9 +902,7 @@ public interface Get_Api {
     @GET("/api/staffs/{staff_id}/coaches/") rx.Observable<cn.qingchengfit.network.response.QcDataResponse<Staffs>> qcGetAllAllocateCoaches(
         @Path("staff_id") String staff_id, @QueryMap HashMap<String, Object> params);
 
-    //获取消息首页求职招聘信息列表
-    @GET("/api/user/job/records/")
-    rx.Observable<cn.qingchengfit.network.response.QcDataResponse<RecordWrap>> qcGetRecruitMessageList();
+
 
     //导出记录
     @GET("/api/staffs/{staff_id}/export/records/")

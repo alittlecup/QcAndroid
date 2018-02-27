@@ -14,7 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.model.responese.Locker;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;

@@ -1,6 +1,6 @@
 package cn.qingchengfit.inject.model;
 
-import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 
 /**
  * power by

@@ -1,7 +1,7 @@
 package cn.qingchengfit.staffkit.views.student.detail;
 
 import cn.qingchengfit.di.PView;
-import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import java.util.List;
 
 /**

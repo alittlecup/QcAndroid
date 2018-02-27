@@ -1,6 +1,6 @@
 package cn.qingchengfit.model;
 
-import cn.qingchengfit.apis.UserApi;
+import cn.qingchengfit.saasbase.apis.UserApi;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.QcRestRepository;

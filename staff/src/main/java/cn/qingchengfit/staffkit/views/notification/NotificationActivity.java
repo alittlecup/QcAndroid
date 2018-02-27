@@ -80,7 +80,7 @@ public class NotificationActivity extends BaseActivity implements FragCallBack {
         //    }
         //});
         getSupportFragmentManager().beginTransaction()
-            .replace(getFragId(), NotificationFragment.newInstance(getIntent().getIntExtra("type", 0)))
+            .replace(getFragId(), NotificationFragment.newInstance(getIntent().getStringExtra("type")))
             .commit();
     }
 

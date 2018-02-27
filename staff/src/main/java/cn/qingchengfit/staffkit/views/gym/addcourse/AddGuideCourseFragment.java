@@ -19,8 +19,8 @@
 //import butterknife.ButterKnife;
 //import butterknife.OnClick;
 //import cn.qingchengfit.RxBus;
-//import cn.qingchengfit.model.body.CourseBody;
-//import cn.qingchengfit.model.responese.CourseTypeSample;
+//import CourseBody;
+//import CourseTypeSample;
 //import cn.qingchengfit.staffkit.App;
 //import cn.qingchengfit.staffkit.R;
 //import cn.qingchengfit.staffkit.constant.Configs;

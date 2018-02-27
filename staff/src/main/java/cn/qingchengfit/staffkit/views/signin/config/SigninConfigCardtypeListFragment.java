@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.abstractflexibleitem.SignInConfigItem;
+import cn.qingchengfit.items.SignInConfigItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
 import cn.qingchengfit.utils.CompatUtils;

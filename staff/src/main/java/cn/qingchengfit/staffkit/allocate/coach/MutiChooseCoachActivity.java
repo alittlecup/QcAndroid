@@ -23,7 +23,6 @@ import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.allocate.coach.item.ChooseCoachItem;
 import cn.qingchengfit.staffkit.allocate.coach.model.Coach;
-import cn.qingchengfit.staffkit.allocate.coach.model.CoachBean;
 import cn.qingchengfit.staffkit.allocate.coach.presenter.MutiChooseCoachPresenter;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.custom.SpaceItemDecoration;
@@ -139,13 +138,13 @@ public class MutiChooseCoachActivity extends BaseActivity
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_complete) {
-                    ArrayList<CoachBean> resultSalers = new ArrayList<CoachBean>();
+                    ArrayList<Staff> resultSalers = new ArrayList<>();
                     String salernames = "";
                     mChoosedCoachsList.clear();
                     for (int i = 0; i < mFlexAdapter.getSelectedPositions().size(); i++) {
                         AbstractFlexibleItem flexibleItem = mDatas.get(mFlexAdapter.getSelectedPositions().get(i));
                         if (flexibleItem != null) {
-                            CoachBean coachBean = ((ChooseCoachItem) flexibleItem).getData().coach;
+                            Staff coachBean = ((ChooseCoachItem) flexibleItem).getData().coach;
                             resultSalers.add(coachBean);
                             salernames = TextUtils.concat(salernames, coachBean.username,
                                 i < mFlexAdapter.getSelectedPositions().size() - 1 ? "," : "").toString();
@@ -208,7 +207,7 @@ public class MutiChooseCoachActivity extends BaseActivity
             for (int i = 0; i < salers.size(); i++) {
                 if (salers.get(i).id != null) {
                     Coach coach = new Coach();
-                    coach.coach = new CoachBean();
+                    coach.coach = new Staff();
                     coach.coach.username = salers.get(i).username;
                     coach.coach.id = salers.get(i).id;
                     coach.coach.avatar = salers.get(i).avatar;

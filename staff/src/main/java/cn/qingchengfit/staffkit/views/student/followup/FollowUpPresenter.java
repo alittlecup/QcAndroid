@@ -128,15 +128,15 @@ public class FollowUpPresenter extends BasePresenter {
     }
 
     public void getSelfInfo() {
-        usecase.getSelfInfo(new Action1<QcDataResponse<StaffResponse>>() {
-            @Override public void call(QcDataResponse<StaffResponse> qcResponseSelfInfo) {
-                if (qcResponseSelfInfo.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onSelfInfo(qcResponseSelfInfo.data.staff);
-                } else {
-
-                }
-            }
-        });
+        //usecase.getSelfInfo(new Action1<QcDataResponse<StaffResponse>>() {
+        //    @Override public void call(QcDataResponse<StaffResponse> qcResponseSelfInfo) {
+        //        if (qcResponseSelfInfo.getStatus() == ResponseConstant.SUCCESS) {
+        //            view.onSelfInfo(qcResponseSelfInfo.data.staff);
+        //        } else {
+        //
+        //        }
+        //    }
+        //});
     }
 
     public interface PresenterView extends PView {

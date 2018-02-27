@@ -1,13 +1,11 @@
 package cn.qingchengfit.staffkit.views.wardrobe.item;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.model.common.Card;
+import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.StringUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

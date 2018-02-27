@@ -2,10 +2,10 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.chat.ConversationFriendsFragment;
 import cn.qingchengfit.recruit.ChooseStaffFragment;
 import cn.qingchengfit.recruit.model.ChatGym;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
+import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.fragments.ChooseAddressFragment;
 import com.google.gson.Gson;
@@ -72,5 +72,9 @@ public class ChooseActivity extends BaseActivity {
         .setCustomAnimations(R.anim.slide_hold,R.anim.slide_hold)
         .replace(R.id.activity_choose_address, fragment)
         .commit();
+  }
+
+  @Override protected boolean isFitSystemBar() {
+    return false;
   }
 }

@@ -10,7 +10,7 @@ import cn.qingchengfit.model.responese.QcResponseSignInImg;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.usecase.bean.SignInImg;
+import cn.qingchengfit.model.responese.SignInImg;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;

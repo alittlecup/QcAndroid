@@ -29,7 +29,7 @@ import cn.qingchengfit.saasbase.cards.network.response.NotityIsOpenConfigs;
 import cn.qingchengfit.saasbase.cards.network.response.Shops;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.saasbase.student.network.body.StudentListWrapper;
-import cn.qingchengfit.apis.CardApi;
+import cn.qingchengfit.saasbase.apis.CardApi;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import retrofit2.http.Body;

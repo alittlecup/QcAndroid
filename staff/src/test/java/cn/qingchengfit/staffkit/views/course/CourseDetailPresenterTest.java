@@ -1,10 +1,10 @@
 //package cn.qingchengfit.staffkit.views.course;
 //
-//import cn.qingchengfit.model.body.CourseBody;
+//import CourseBody;
 //import cn.qingchengfit.model.base.Brand;
 //import cn.qingchengfit.model.base.CoachService;
-//import cn.qingchengfit.model.responese.CourseType;
-//import cn.qingchengfit.model.responese.CourseTypes;
+//import CourseType;
+//import CourseTypes;
 //import cn.qingchengfit.model.responese.QcResponseData;
 //import cn.qingchengfit.staff.App;
 //import cn.qingchengfit.staff.LoginTools;

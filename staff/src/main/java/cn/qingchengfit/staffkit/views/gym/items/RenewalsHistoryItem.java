@@ -1,14 +1,12 @@
 package cn.qingchengfit.staffkit.views.gym.items;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.usecase.bean.RenewalHistory;
+import cn.qingchengfit.model.responese.RenewalHistory;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

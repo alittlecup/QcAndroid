@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -29,6 +28,7 @@ import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.saasbase.constant.Configs;
 import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.NetWorkUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -36,7 +36,6 @@ import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.widgets.GuideWindow;
 import cn.qingchengfit.widgets.TabViewNoVp;
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
@@ -56,6 +55,8 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tencent.qcloud.sdk.Constant;
+import com.tencent.qcloud.timchat.ui.qcchat.LoginProcessor;
 import im.fir.sdk.FIR;
 import im.fir.sdk.VersionCheckCallback;
 import java.io.File;
@@ -76,6 +77,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import tencent.tls.platform.TLSErrInfo;
 
 import static com.qingchengfit.fitcoach.http.QcCloudClient.getApi;
 
@@ -120,6 +122,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
   //@BindView(R.id.web_position) View webPosition;
   TextView tvNotiCount;
   private FrameLayout layoutFrag;
+  private LoginProcessor loginProcessor;
 
   public Date getChooseDate() {
     return mChooseDate;
@@ -136,6 +139,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     layoutFrag = findViewById(R.id.frag_main);
     tvNotiCount = findViewById(R.id.tv_noti_count);
     initRouter();
+
     new RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
       .subscribe(aBoolean -> {
         if (aBoolean) {
@@ -251,6 +255,37 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
     System.exit(0);
   }
 
+  private void loginIM(){
+    if (loginStatus.isLogined()){
+      try {
+        Constant.setAccountType(BuildConfig.DEBUG ? 12162 : 12165);
+        Constant.setSdkAppid(BuildConfig.DEBUG ? 1400029014 : 1400029022);
+        Constant.setXiaomiPushAppid(
+          BuildConfig.DEBUG ? "2882303761517418101" : "2882303761517418101");
+        Constant.setBussId(BuildConfig.DEBUG ? 611 : 605);
+        Constant.setXiaomiPushAppkey("5361741818101");
+        Constant.setHuaweiBussId(612);
+        if (loginProcessor == null) {
+          loginProcessor = new LoginProcessor(getApplicationContext(),
+            getString(R.string.chat_user_id_header, loginStatus.getUserId()),
+            Uri.parse(com.qingchengfit.fitcoach.Configs.Server).getHost(), new LoginProcessor.OnLoginListener() {
+            @Override public void onLoginSuccess() {
+              LogUtil.d("IM:  登录成功");
+            }
+
+            @Override public void onLoginFailed(TLSErrInfo t) {
+              LogUtil.e("IM ::::"+t.Title+"   "+ t.Msg+"   "+t.ExtraMsg);
+            }
+          });
+        }
+        if (!loginProcessor.isLogin())
+          loginProcessor.sientInstall();
+      }catch (Exception e){
+        CrashUtils.sendCrash(e);
+      }
+    }
+  }
+
   @Override protected boolean isFitSystemBar() {
     return false;
   }
@@ -306,6 +341,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
 
   @Override protected void onResume() {
     super.onResume();
+    loginIM();
     if (loginStatus.isLogined()) {
       if (spOrders != null && !spOrders.isUnsubscribed()) spOrders.unsubscribe();
       spOrders = QcCloudClient.getApi().getApi.qcGetOrderList()
@@ -409,20 +445,25 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
               .content(updateVersion.changelog)
               .positiveText("更新")
               .autoDismiss(true)
-              .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                  if (url != null) {
-                    downloadDialog.show();
-                    mDownloadThread = new AsyncDownloader();
-                    mDownloadThread.execute(url);
-                  }
+              .onPositive((dialog, which) -> {
+                if (url != null) {
+                  downloadDialog.show();
+                  mDownloadThread = new AsyncDownloader();
+                  mDownloadThread.execute(url);
                 }
+                dialog.dismiss();
               });
           if (updateVersion.version % 10 != 0) {
             builder.negativeText("下次再说");
             builder.autoDismiss(false);
             builder.canceledOnTouchOutside(false);
+            builder.onNegative((dialog, which) -> {
+                dialog.dismiss();
+            });
+          }else {
+            builder.autoDismiss(false);
+            builder.canceledOnTouchOutside(false);
+            builder.cancelable(false);
           }
 
           updateDialog = builder.build();
@@ -570,7 +611,7 @@ public class Main2Activity extends BaseActivity implements WebActivityInterface 
         if (f != null) ts.hide(f);
       }
     }
-    ts.commit();
+    ts.commitNowAllowingStateLoss();
   }
 
   public Fragment generateFragment(int position){

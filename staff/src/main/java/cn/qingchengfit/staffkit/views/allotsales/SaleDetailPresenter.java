@@ -9,13 +9,13 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.StudentBean;
 import cn.qingchengfit.model.responese.AllotSaleStudents;
+import cn.qingchengfit.model.responese.Shop;
 import cn.qingchengfit.model.responese.Student;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.usecase.bean.QcScheduleBean;
 import cn.qingchengfit.staffkit.views.student.filter.StudentFilter;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.widgets.AlphabetView;
@@ -155,7 +155,7 @@ public class SaleDetailPresenter extends BasePresenter {
                                 String support = "";
                                 String support_ids = "";
                                 for (int i = 0; i < bean.getShops().size(); i++) {
-                                    QcScheduleBean.Shop shop = bean.getShops().get(i);
+                                    Shop shop = bean.getShops().get(i);
                                     support = TextUtils.concat(support, shop.name).toString();
                                     support_ids = TextUtils.concat(support_ids, shop.id).toString();
                                     if (i != bean.getShops().size() - 1) {

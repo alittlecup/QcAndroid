@@ -4,8 +4,8 @@
 //import cn.qingchengfit.di.BasePresenter;
 //import cn.qingchengfit.di.PView;
 //import cn.qingchengfit.model.base.CoachService;
-//import cn.qingchengfit.model.body.ArrangeBatchBody;
-//import cn.qingchengfit.model.responese.QcResponseSystenInit;
+//import ArrangeBatchBody;
+//import QcResponseSystenInit;
 //import cn.qingchengfit.network.ResponseConstant;
 //import cn.qingchengfit.network.response.QcResponse;
 //import cn.qingchengfit.staffkit.App;

@@ -15,11 +15,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.RxBus;
-import cn.qingchengfit.article.ArticleCommentsListFragmentBuilder;
-import cn.qingchengfit.article.ArticleReplyFragment;
-import cn.qingchengfit.chat.RecruitMessageListFragmentBuilder;
 import cn.qingchengfit.model.others.ToolbarBean;
 import cn.qingchengfit.notisetting.view.NotiSettingHomeFragment;
+import cn.qingchengfit.saasbase.article.ArticleCommentsListFragment;
+import cn.qingchengfit.saasbase.article.ArticleReplyFragment;
+import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventToolbar;
@@ -142,8 +142,7 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 break;
             case GymFunctionFactory.RECRUIT_MESSAGE_LIST:
                 if (getIntent().getExtras().containsKey("params")) {
-                    fragment = new RecruitMessageListFragmentBuilder(
-                        (String)((Object[])(getIntent().getExtras().get("params")))[0]).build();
+                    fragment = new RecruitMessageListFragment();
                 }
                 break;
             case GymFunctionFactory.MODULE_MSG:
@@ -161,7 +160,7 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
                 String articleid = IntentUtils.getIntentFromUri(getIntent(), "news_id");
                 String replyId = IntentUtils.getIntentFromUri(getIntent(), "replyId");
                 String replayname = IntentUtils.getIntentFromUri(getIntent(), "replyName");
-                fragment = new ArticleCommentsListFragmentBuilder(articleid).replyId(replyId).replyName(replayname).build();
+                fragment = ArticleCommentsListFragment.newInstance(articleid,replyId,replayname);
                 break;
             case GymFunctionFactory.ZQ_ACCESS:
                 fragment = new ZqAccessFragment();
