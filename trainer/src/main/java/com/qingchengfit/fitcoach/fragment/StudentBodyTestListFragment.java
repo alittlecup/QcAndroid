@@ -10,13 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.bean.CurentPermissions;
+import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.VpFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
 import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
 import com.qingchengfit.fitcoach.adapter.SimpleAdapter;
-import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.bean.BodyTestBean;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,36 +66,28 @@ public class StudentBodyTestListFragment extends VpFragment {
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         unbinder = ButterKnife.bind(this, view);
-        //        add1.setVisibility(View.VISIBLE);
-        //        add2.setVisibility(View.GONE);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mAdapter = new SimpleAdapter(mDataList);
-        mAdapter.setListener(new OnRecycleItemClickListener() {
-            @Override public void onItemClick(View v, int pos) {
-                Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
-                toAdd.putExtra("id", mDataList.get(pos).id);
-                toAdd.putExtra("type", 0);
-                toAdd.putExtra("model", model);
-                toAdd.putExtra("modelid", modelid);
-                toAdd.putExtra("gender", ((StudentHomeActivity) getActivity()).getGender());
-                startActivity(toAdd);
+        mAdapter.setListener((v, pos) -> {
+            if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+                showAlert(R.string.alert_permission_forbid);
+                return;
             }
+            Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
+            toAdd.putExtra("id", mDataList.get(pos).id);
+            toAdd.putExtra("type", 0);
+            toAdd.putExtra("model", model);
+            toAdd.putExtra("modelid", modelid);
+            toAdd.putExtra("gender", ((StudentHomeActivity) getActivity()).getGender());
+            startActivity(toAdd);
         });
         recyclerView.setAdapter(mAdapter);
 
         return view;
     }
 
-    //@OnClick(R.id.add1)
-    //public void addTest(){
-    //    Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
-    //    toAdd.putExtra("type",1);
-    //    toAdd.putExtra("model",model);
-    //    toAdd.putExtra("modelid",modelid);
-    //    startActivity(toAdd);
-    //}
 
     public void setData(List<BodyTestBean> strings) {
         mDataList.clear();

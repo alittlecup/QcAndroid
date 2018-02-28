@@ -370,7 +370,7 @@ public class StudentHomeActivity extends BaseActivity {
         if (mStudentViewPager.getCurrentItem() == 1) {
             goGroup();
         } else {
-            if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+            if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
                 showAlert(R.string.alert_permission_forbid);
                 return;
             }
