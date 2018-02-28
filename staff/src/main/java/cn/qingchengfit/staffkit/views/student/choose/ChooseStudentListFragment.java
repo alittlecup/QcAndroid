@@ -27,6 +27,7 @@ import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFilterable;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -198,14 +199,27 @@ public class ChooseStudentListFragment extends BaseFragment
 
     @SuppressLint("Range") public void selectStudent(List<QcStudentBean> students) {
         if (students != null) {
+            List<Integer> sps = new ArrayList<>();
+            sps.addAll(adapter.getSelectedPositions());
             adapter.clearSelection();
-            int pos = -1;
-            for (int i = 0; i < students.size(); i++) {
-                pos = originData.indexOf(students.get(i));
-                char c = students.get(i).head.charAt(0);
-                adapter.toggleSelection(pos +  ((int)c - 96));
-                adapter.notifyItemChanged(pos + ((int)c - 96));
+            for (Integer sp : sps) {
+                adapter.notifyItemChanged(sp);
             }
+            int pos = -1;
+            for (int i = 0; i < adapter.getItemCount(); i++) {
+                IFlexible item = adapter.getItem(i);
+                if (item instanceof ChooseStudentItem && students.contains(((ChooseStudentItem)item).getUser())){
+                    adapter.addSelection(i);
+                    adapter.notifyItemChanged(i);
+                }
+
+            }
+            //for (int i = 0; i < students.size(); i++) {
+            //    pos = originData.indexOf(students.get(i));
+            //    char c = students.get(i).head.charAt(0);
+            //    adapter.toggleSelection(pos +  ((int)c - 96));
+            //    adapter.notifyItemChanged(pos + ((int)c - 96));
+            //}
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -15,16 +16,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.RxBus;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.chat.events.EventChoosePerson;
-import cn.qingchengfit.saasbase.chat.events.EventFresh;
 import cn.qingchengfit.saasbase.chat.model.ChatGym;
 import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.utils.CrashUtils;
@@ -64,6 +62,12 @@ public class ConversationFriendsFragment extends BaseFragment
   //@BindView(R.id.et_search) EditText etSearch;
   //@BindView(R.id.search_clear) ImageView searchClear;
   @Inject LoginStatus loginStatus;
+  private ChatFriendAllChooseFragment chatfrag;
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    chatfrag = new ChatFriendAllChooseFragment();
+  }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -77,7 +81,7 @@ public class ConversationFriendsFragment extends BaseFragment
   protected void initView() {
     if (getFragmentManager() != null) {
       getFragmentManager().beginTransaction()
-        .replace(R.id.chat_friend_frag, new ChatFriendAllChooseFragment())
+        .replace(R.id.chat_friend_frag, chatfrag)
         .commitAllowingStateLoss();
     }
     RxBusAdd(EventChoosePerson.class).subscribe(eventChoosePerson -> tvAllotsaleSelectCount.setText(
@@ -117,6 +121,7 @@ public class ConversationFriendsFragment extends BaseFragment
   }
 
   @Override public void onUserList(List<Staff> staffs) {
+
   }
 
   /**
@@ -144,11 +149,11 @@ public class ConversationFriendsFragment extends BaseFragment
 
   @OnClick(R2.id.ll_show_select) public void onViewClicked() {
     BottomStudentsFragment selectSutdentFragment = new BottomStudentsFragment();
-    selectSutdentFragment.setListener(new BottomStudentsFragment.BottomStudentsListener() {
-      @Override public void onBottomStudents(List<Personage> list) {
-        DirtySender.studentList.clear();
-        DirtySender.studentList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(), list));
-        RxBus.getBus().post(new EventFresh());
+    selectSutdentFragment.setListener(list -> {
+      DirtySender.studentList.clear();
+      DirtySender.studentList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(), list));
+      if (chatfrag != null && chatfrag.isAdded()){
+        chatfrag.changeSelect();
       }
     });
     selectSutdentFragment.setDatas(DirtySender.studentList);

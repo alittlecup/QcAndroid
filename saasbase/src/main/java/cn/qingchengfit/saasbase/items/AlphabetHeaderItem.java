@@ -42,7 +42,7 @@ public class AlphabetHeaderItem extends AbstractHeaderItem<AlphabetHeaderItem.Al
         TextView title;
 
         public AlphabetHeaderVH(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
+            super(view, adapter,true);
             title = view.findViewById(R.id.title);
         }
     }

@@ -35,7 +35,6 @@ import cn.qingchengfit.widgets.AlphabetLessView;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.QcLeftRightDivider;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -43,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -110,15 +108,13 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
         });
         presenter.queryChatFriend();
         showLoadingTrans();
-        RxTextView.textChangeEvents(etSearch).subscribe(new Action1<TextViewTextChangeEvent>() {
-            @Override public void call(TextViewTextChangeEvent textViewTextChangeEvent) {
-                if (textViewTextChangeEvent.text().length() > 0) {
-                    searchClear.setVisibility(View.VISIBLE);
-                    localFilter(textViewTextChangeEvent.text().toString());
-                } else {
-                    searchClear.setVisibility(View.GONE);
-                    presenter.queryChatFriend();
-                }
+        RxTextView.textChangeEvents(etSearch).subscribe(textViewTextChangeEvent -> {
+            if (textViewTextChangeEvent.text().length() > 0) {
+                searchClear.setVisibility(View.VISIBLE);
+                localFilter(textViewTextChangeEvent.text().toString());
+            } else {
+                searchClear.setVisibility(View.GONE);
+                presenter.queryChatFriend();
             }
         });
         RxBusAdd(EventFresh.class).subscribe(eventFresh -> adapter.notifyDataSetChanged());
@@ -165,8 +161,8 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
             adapter.toggleSelection(i);
             adapter.notifyItemChanged(i);
             Personage p = ((ChooseStaffItem) adapter.getItem(i)).getStaff();
-            if (DirtySender.studentList.contains(p)) {
-                DirtySender.studentList.remove(p);
+            if (DirtySender.studentList.contains(new QcStudentBean(p))) {
+                DirtySender.studentList.remove(new QcStudentBean(p));
             } else {
                 QcStudentBean studentBean = new QcStudentBean(p);
                 DirtySender.studentList.add(studentBean);
@@ -222,10 +218,24 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
                 if (DirtySender.studentList.contains(((ChooseStudentItem) adapter.getItem(i)).getUser())) adapter.addSelection(i);
             }
         }
-        adapter.showAllHeaders();
+        //adapter.showAllHeaders();
         if (adapter.getItemCount() == 0) {
             adapter.addItem(new CommonNoDataItem(0, "请在您的健身房里添加工作人员", "暂无联系人"));
         }
         adapter.notifyDataSetChanged();
     }
+
+    public void changeSelect(){
+        adapter.clearSelection();
+        for (int i = 0; i < adapter.getItemCount(); i++) {
+            if (adapter.getItem(i) instanceof ChooseStaffItem) {
+                if (DirtySender.studentList.contains(new QcStudentBean(((ChooseStaffItem) adapter.getItem(i)).getStaff()))) {adapter.addSelection(i);}
+            }
+        }
+        if (adapter.getItemCount() == 0) {
+            adapter.addItem(new CommonNoDataItem(0, "请在您的健身房里添加工作人员", "暂无联系人"));
+        }
+        adapter.notifyDataSetChanged();
+    }
+
 }

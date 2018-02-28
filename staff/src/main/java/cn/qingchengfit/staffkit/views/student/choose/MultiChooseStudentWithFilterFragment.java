@@ -26,7 +26,6 @@ import butterknife.OnClick;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.staffkit.R;
@@ -279,14 +278,14 @@ import rx.functions.Action1;
 
   @OnClick(R.id.ll_show_select) public void showSelect() {
     BottomStudentsFragment selectSutdentFragment = new BottomStudentsFragment();
-    selectSutdentFragment.setListener(new BottomStudentsFragment.BottomStudentsListener() {
-      @Override public void onBottomStudents(List<Personage> list) {
-        if (chooseStudentListFragment != null) {
-          chooseStudentListFragment.selectStudent(
-              ListUtils.transerList(new ArrayList<QcStudentBean>(), list));
-        }
-        setChosenCount();
+    selectSutdentFragment.setListener(list -> {
+      DirtySender.studentList.clear();
+      DirtySender.studentList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(), list));
+      if (chooseStudentListFragment != null && chooseStudentListFragment.isAdded()) {
+        chooseStudentListFragment.selectStudent(
+            ListUtils.transerList(new ArrayList<QcStudentBean>(), list));
       }
+      setChosenCount();
     });
     selectSutdentFragment.setDatas(DirtySender.studentList);
     selectSutdentFragment.show(getFragmentManager(), "");

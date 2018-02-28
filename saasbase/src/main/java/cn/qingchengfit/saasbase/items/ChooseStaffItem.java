@@ -8,6 +8,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.constant.DirtySender;
+import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
@@ -56,7 +57,7 @@ public class ChooseStaffItem extends AbstractFlexibleItem<ChooseStaffItem.Choose
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseStaffVH holder, int position, List payloads) {
-        holder.checkbox.setChecked(DirtySender.studentList.contains(staff));
+        holder.checkbox.setChecked(DirtySender.studentList.contains(new QcStudentBean(staff)));
         Glide.with(holder.itemView.getContext())
             .load(PhotoUtils.getSmall(staff.getAvatar()))
             .asBitmap()

@@ -115,6 +115,7 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment
   @OnClick(R2.id.tv_clear_all) public void onClick() {
     DirtySender.studentList.clear();
     datas.clear();
+    adapter.clear();
     dismiss();
   }
 
@@ -129,16 +130,16 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment
   }
 
   @Override public void onDestroyView() {
-    super.onDestroyView();
     if (listener != null) {
       List<Personage> ret = new ArrayList<>();
-      for (int i = 0; i < datas.size(); i++) {
-        if (datas.get(i) instanceof DelStudentItem) {
-          ret.add(((DelStudentItem) datas.get(i)).getUser());
+      for (int i = 0; i < adapter.getItemCount(); i++) {
+        if (adapter.getItem(i) instanceof DelStudentItem) {
+          ret.add(((DelStudentItem) adapter.getItem(i)).getUser());
         }
       }
       listener.onBottomStudents(ret);
     }
+    super.onDestroyView();
   }
 
   public BottomStudentsListener getListener() {
