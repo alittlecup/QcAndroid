@@ -36,6 +36,7 @@ import cn.qingchengfit.utils.CrashHandler;
 import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.weex.utils.WeexDelegate;
 import com.google.gson.Gson;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tencent.TIMManager;
@@ -159,30 +160,30 @@ public class App extends Application
                 SA_CONFIGURE_URL,                   // 配置分发的 URL
                 BuildConfig.DEBUG ? SensorsDataAPI.DebugMode.DEBUG_ONLY : SensorsDataAPI.DebugMode.DEBUG_OFF);
 
-            try {
-                SensorsDataAPI.sharedInstance(this).enableAutoTrack();
-                //初始化 SDK 之后，开启自动采集 Fragment 页面浏览事件
-                SensorsDataAPI.sharedInstance().trackFragmentAppViewScreen();
-                List<Class<?>> classList = new ArrayList<>();
-                classList.add(StaffCourseActivity.class);
-                classList.add(StaffStaffActivity.class);
-                classList.add(StaffCardActivity.class);
-                classList.add(GymConfigAcitivty.class);
-                SensorsDataAPI.sharedInstance(this).ignoreAutoTrackActivities(classList);
-                JSONObject properties = new JSONObject();
-                properties.put("qc_app_name", "Staff");
-                SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
-            } catch (JSONException e) {
-                Log.e("hs_bug", e.getMessage());
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e("hs_bug", e.getMessage());
-            }
-        //}
-        initX5();
-
+    try {
+      SensorsDataAPI.sharedInstance(this).enableAutoTrack();
+      //初始化 SDK 之后，开启自动采集 Fragment 页面浏览事件
+      SensorsDataAPI.sharedInstance().trackFragmentAppViewScreen();
+      List<Class<?>> classList = new ArrayList<>();
+      classList.add(StaffCourseActivity.class);
+      classList.add(StaffStaffActivity.class);
+      classList.add(StaffCardActivity.class);
+      classList.add(GymConfigAcitivty.class);
+      SensorsDataAPI.sharedInstance(this).ignoreAutoTrackActivities(classList);
+      JSONObject properties = new JSONObject();
+      properties.put("qc_app_name", "Staff");
+      SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
+    } catch (JSONException e) {
+      Log.e("hs_bug", e.getMessage());
+      e.printStackTrace();
+    } catch (Exception e) {
+      e.printStackTrace();
+      Log.e("hs_bug", e.getMessage());
     }
+    //}
+    initX5();
+    WeexDelegate.initWXSDKEngine(this);
+  }
 
     @Override protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -210,7 +211,7 @@ public class App extends Application
         appCompoent = DaggerAppComponent.builder()
             .appModel(new AppModel(this, new SerPermissionImpl(this), lb.build(),
                 new GymWrapper.Builder().build(), new RestRepository(), new BaseRouter(),
-                new QcRestRepository(this, Server, getString(R.string.oem_tag)),new QCDbManagerImpl(this)))
+                new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag)),new QCDbManagerImpl(this)))
             .staffWrapperMoudle(new StaffWrapperMoudle(new StaffWrapper()))
             .studentWrapperModule(new StudentWrapperModule(new StudentWrapper()))
             .cardTypeWrapperModule(new CardTypeWrapperModule(new CardTypeWrapper(null)))

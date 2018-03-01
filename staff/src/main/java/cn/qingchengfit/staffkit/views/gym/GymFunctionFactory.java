@@ -316,7 +316,8 @@ public class GymFunctionFactory {
                     DialogUtils.showAlert(fragment.getContext(), R.string.alert_permission_forbid);
                     return;
                 }
-                goQrScan(fragment, module, null, coachService);
+                //goQrScan(fragment, module, null, coachService);
+                fragment.routeTo("shop","/shop/home",null);
                 return;
 
             /**会员管理

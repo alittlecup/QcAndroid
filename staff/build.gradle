@@ -64,7 +64,7 @@ android {
 
   defaultConfig {
     applicationId "cn.qingchengfit.staffkit"
-    minSdkVersion 21
+    minSdkVersion 16
     targetSdkVersion 25
     versionCode config.version_code
     versionName "${config.version_name}"
@@ -252,8 +252,9 @@ task buildWithAP (dependsOn: build) {}
 
 
 dependencies {
-    implementation project(path: ':saasbase')
-//    implementation 'cn.qingchengfit.saas:sass:1.0.5'
+  implementation project(path: ':saasbase')
+  implementation project(path: ':shop')
+//  implementation 'cn.qingchengfit.chat:qcim:1.0.0'
 //  implementation 'cn.qingchengfit.chat:sdk:1.0.0'
 
   implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -275,7 +276,7 @@ dependencies {
   //支持左滑菜单的recyclerview
   implementation 'com.tubb.smrv:swipemenu-recyclerview:5.3.0'
   //图片选择库
-  implementation 'com.zhihu.android:matisse:0.5.0-alpha4'
+//  implementation 'com.zhihu.android:matisse:0.5.0-alpha4'
   //activity intent 传参数
 //  implementation 'se.emilsjolander:intentbuilder-compiler:0.14.0'
 //  annotationProcessor 'se.emilsjolander:intentbuilder-compiler:0.14.0'
