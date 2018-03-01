@@ -90,7 +90,7 @@ public class FollowUpHomeFragment extends SaasBaseFragment implements FollowUpHo
     }
     @Override
     public boolean onItemClick(int position) {
-        Uri uri=Uri.parse("student://student/follow/status");
+        Uri uri=Uri.parse("qcstaff://student/follow/status");
         routeTo(uri,new FollowUpStatusParams().title(datas.get(position).getTitle()).type(position).build());
         return false;
     }

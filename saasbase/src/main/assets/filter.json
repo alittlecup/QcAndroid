@@ -1,0 +1,44 @@
+{
+  "filters": [
+    {
+      "content": [
+        {
+          "name": "新注册",
+          "value": "0"
+        },
+        {
+          "name": "已接洽",
+          "value": "1"
+        },
+        {
+          "name": "会员",
+          "value": "2"
+        }
+      ],
+      "type": 1,
+      "name": "会员状态",
+      "key": "status_ids"
+    },
+    {
+      "content": [
+        {
+          "name": "男",
+          "value": "0"
+        },
+        {
+          "name": "女",
+          "value": "1"
+        }
+      ],
+      "type": 1,
+      "name": "性别",
+      "key": "gender"
+    },
+    {
+      "content": [],
+      "type": 2,
+      "name": "注册时间",
+      "key": "key"
+    }
+  ]
+}

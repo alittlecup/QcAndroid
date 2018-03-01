@@ -18,7 +18,6 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
-import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.student.other.MyIndicator;
 import cn.qingchengfit.saasbase.student.other.MySnapHelper;
 import cn.qingchengfit.saasbase.student.views.StudentOperationItem;
@@ -157,31 +156,31 @@ public class StudentOperationFragment extends BaseFragment
     public boolean onItemClick(int position) {
 
         if (!gymWrapper.isPro()) {
-            UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey(QRActivity.MODULE_STUDENT)).show(getFragmentManager(), "");
+            new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
             return true;
         }
         if (mCommonFlexAdapter.getItem(position) instanceof StudentOperationItem) {
             int strId = ((StudentOperationItem) mCommonFlexAdapter.getItem(position)).getStrRes();
             if (strId == R.string.qc_student_allotsale) {
-                Uri uri=Uri.parse("student://student/allot/student");
+                Uri uri=Uri.parse("qcstaff://student/allot/student");
                 routeTo(uri,null);
             } else if (strId == R.string.qc_student_allot_coach) {
-                Uri uri=Uri.parse("student://student/coach/list");
+                Uri uri=Uri.parse("qcstaff://student/coach/list");
                 routeTo(uri,null);
             } else if (strId == R.string.qc_student_follow_up) {
-                Uri uri=Uri.parse("student://student/followup/student");
+                Uri uri=Uri.parse("qcstaff://student/followup/student");
                 routeTo(uri,null);
             } else if (strId == R.string.qc_student_follow_transfer) {
-                Uri uri=Uri.parse("student://student/transfer/student");
+                Uri uri=Uri.parse("qcstaff://student/transfer/student");
                 routeTo(uri,null);
             } else if (strId == R.string.qc_student_attendance) {
-                Uri uri=Uri.parse("student://student/attendance/page");
+                Uri uri=Uri.parse("qcstaff://student/attendance/page");
                 routeTo(uri,null);
 
             } else if (strId == R.string.qc_student_send_sms) {
 
             } else if (strId == R.string.qc_student_export) {
-                Uri uri=Uri.parse("student://student/follow/home");
+                Uri uri=Uri.parse("qcstaff://student/follow/home");
                 routeTo(uri,null);
 
             } else if (strId == R.string.qc_student_birthday_notice) {

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="cn.qingchengfit.widgets.QcFilterToggle"/>
+
+        <import type="cn.qingchengfit.saasbase.student.utils.StudentBusinessUtils" />
+
+        <variable
+            name="viewModel"
+            type="cn.qingchengfit.saasbase.mvvm_student.viewmodel.followup.FollowUpStatusViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/vector_data_statistics" />
+
+            <TextView
+                style="@style/QcTextStyleSmallDark"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="趋势图" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/divider_grey" />
+
+            <cn.qingchengfit.widgets.QcRadioGroup
+                android:id="@+id/qc_radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_top_bottom_line_white"
+                android:divider="@drawable/divier_linear"
+                android:orientation="horizontal"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:showDividers="middle"
+                app:clearCheck="@{viewModel.filterVisible}">
+
+                <cn.qingchengfit.widgets.QcFilterToggle
+                    android:id="@+id/qft_saler"
+                    style="@style/QcFilterStyle"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:onClick="@{(view)->viewModel.onQcButtonFilterClick(((QcFilterToggle)view).isChecked(),5)}"
+                    android:text="@{viewModel.topSalerName}"
+                    app:ft_text_off="销售"
+                    app:ft_text_on="销售" />
+
+                <cn.qingchengfit.widgets.QcFilterToggle
+                    android:id="@+id/qft_times"
+                    style="@style/QcFilterStyle"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:onClick="@{(view)->viewModel.onQcButtonFilterClick(((QcFilterToggle)view).isChecked(),3)}"
+                    android:text="@{viewModel.topLatestDay}"
+                    app:ft_text_off="最近7天"
+                    app:ft_text_on="最近7天" />
+
+            </cn.qingchengfit.widgets.QcRadioGroup>
+
+        </LinearLayout>
+
+        <include layout="@layout/divider_grey" />
+
+        <cn.qingchengfit.saasbase.student.widget.LineCharDate
+            android:id="@+id/lineChar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:datas="@{StudentBusinessUtils.transformBean2DataByType(viewModel.datas,viewModel.getOffSetDays(),viewModel.getDataType())}" />
+    </LinearLayout>
+</layout>

@@ -192,7 +192,7 @@ public class MultiAllotSalesFragment extends SaasBaseFragment implements
 
     public void onAllotBtnClick(View view) {
         // REFACTOR: 2017/11/2 分配或者更改
-        Uri uri = Uri.parse("student://student/choose/staff");
+        Uri uri = Uri.parse("qcstaff://student/choose/staff");
         routeTo(uri, new ChooseStaffParams()
                 .title(((TextView) view).getText().toString())
                 .curId(staff.id)

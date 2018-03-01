@@ -11,7 +11,8 @@
     <string name="qc_student_vip">VIP会员</string>
     <string name="qc_student_send_sms">群发短信</string>
     <string name="qc_student_export">导入导出</string>
-
+    <string name="qc_allotsale_select">已选择%d名会员</string>
+    <string name="qc_allotsale_select_clear">清空选择</string>
     <string name="qc_allotsale_modify_sale">变更销售</string>
     <string name="qc_allotsale_remove_stud">移除会员</string>
 
@@ -44,7 +45,6 @@
     <string name="qc_allotsale_add_stud_title">添加名下会员</string>
     <string name="qc_allotsale_modify_sale_title">修改销售</string>
     <string name="qc_allotsale_sale_detail_title">%s的名下会员</string>
-    <string name="qc_allotsale_select">已选择%d名会员</string>
     <string name="qc_allotsale_clear_alert">确认清空当前选中的会员</string>
 
 

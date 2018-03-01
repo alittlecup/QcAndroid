@@ -52,7 +52,14 @@ android {
         resolutionStrategy.force "com.android.support:design:${libs.supportVersion}"
         resolutionStrategy.force "com.android.support:percent:${libs.supportVersion}"
     }
-  buildToolsVersion '27.0.1'
+    sourceSets {
+        main {
+            res.srcDirs = [
+                'src/main/res/layout/student',
+                'src/main/res'
+            ]
+        }
+    }
 }
 
 dependencies {
@@ -60,6 +67,7 @@ dependencies {
     api "cn.qingchengfit.recruit:recruit:1.1.0"
     api "cn.qingchengfit.chat:sdk:1.1.0"
     api "cn.qingchengfit.chat:qcim:1.1.0"
+
 //    implementation project(path: ":recruit")
 //    api project(path: ':recruit')
 

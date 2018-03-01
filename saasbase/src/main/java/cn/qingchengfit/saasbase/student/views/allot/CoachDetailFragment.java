@@ -69,7 +69,7 @@ public class CoachDetailFragment extends SaasBaseFragment
                 : getString(R.string.qc_allotsale_sale_detail_title, trainer.username));
         toolbarModel.setMenu(empty ? R.menu.menu_multi_allot : R.menu.menu_multi_modify);
         toolbarModel.setListener(item -> {
-            Uri uri = Uri.parse("student://student/multi/coach");
+            Uri uri = Uri.parse("qcstaff://student/multi/coach");
             routeTo(uri, new cn.qingchengfit.saasbase.student.views.allot.MultiAllotCoachParams().title(item.getTitle().toString()).trainer(trainer).build());
             return true;
         });
