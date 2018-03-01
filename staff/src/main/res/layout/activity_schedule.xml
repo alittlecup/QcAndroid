@@ -10,6 +10,7 @@
 
 
   <RelativeLayout
+      android:id="@+id/layout_toolbar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@color/toolbar"
@@ -27,15 +28,15 @@
         app:popupTheme="@style/ToolbarStyle.Overflow"
         app:theme="@style/Qc.toolbarStyle"
         app:titleTextAppearance="@style/ToolbarStyle"
-        >
+        />
 
-    </android.support.v7.widget.Toolbar>
 
     <TextView
         android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:drawableEnd="@drawable/ic_navigation_arrow_drop_down"
         android:drawableRight="@drawable/ic_navigation_arrow_drop_down"
         android:maxWidth="250dp"
@@ -46,51 +47,12 @@
         />
   </RelativeLayout>
 
-  <RelativeLayout
-      android:id="@+id/schedule_notification_layout"
-      android:layout_width="?attr/actionBarSize"
-      android:layout_height="?attr/actionBarSize"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentRight="true"
-      >
-
-    <ImageView
-        android:id="@+id/schedule_notification"
-        android:layout_width="19dp"
-        android:layout_height="19dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:src="@drawable/ic_actionbar_notification"
-        android:visibility="gone"
-        />
-
-    <TextView
-        android:id="@+id/schedule_notification_count"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="9dp"
-        android:layout_marginRight="9dp"
-        android:layout_marginTop="11dp"
-        android:background="@drawable/bg_notification"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="11sp"
-        android:visibility="gone"
-        tools:text="99"
-        />
-
-  </RelativeLayout>
 
   <LinearLayout
       android:id="@+id/schedule_calendar_header"
       android:layout_width="match_parent"
       android:layout_height="60dp"
-      android:layout_marginTop="?attr/actionBarSize"
+      android:layout_below="@id/layout_toolbar"
       android:background="@color/toolbar"
       android:orientation="horizontal"
       >

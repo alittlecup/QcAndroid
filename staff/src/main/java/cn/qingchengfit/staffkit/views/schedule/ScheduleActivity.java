@@ -75,9 +75,6 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
     private static final int REQUEST_CHOOSE_GYM = 1;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.schedule_notification) ImageView scheduleNotification;
-    @BindView(R.id.schedule_notification_count) TextView scheduleNotificationCount;
-    @BindView(R.id.schedule_notification_layout) RelativeLayout scheduleNotificationLayout;
     @BindView(R.id.schedule_calendar_ic) ImageView scheduleCalendarIc;
     @BindView(R.id.schedule_calendar) RelativeLayout scheduleCalendar;
     @BindView(R.id.schedule_tab) PagerSlidingTabStrip scheduleTab;
@@ -104,13 +101,9 @@ public class ScheduleActivity extends BaseActivity implements FragCallBack {
     }
 
     private void initView() {
-        toolbar.setNavigationIcon(R.drawable.ic_triangle_left);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        if (toolbar.getParent() instanceof ViewGroup ) {
+        toolbar.setNavigationIcon(R.drawable.ic_titlebar_back);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        if (toolbar.getParent() instanceof ViewGroup) {
             ((ViewGroup) toolbar.getParent()).setPadding(0,
               MeasureUtils.getStatusBarHeight(this), 0, 0);
         }
