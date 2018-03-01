@@ -133,7 +133,7 @@ public interface StaffApi {
    *  invitation send msg
    */
   @POST("/api/v2/staffs/{staff_id}/coach/invitations/{uuid}/sms/") rx.Observable<QcDataResponse> qcInviteTrainerSms(
-    @Path("staff_id") String staff_id,@Path("uuid") String uuid, @Body String area_code,@Body String phone,@QueryMap HashMap<String,Object> params
+    @Path("staff_id") String staff_id,@Path("uuid") String uuid, @Body SendSmsBody body,@QueryMap HashMap<String,Object> params
   );
 
 

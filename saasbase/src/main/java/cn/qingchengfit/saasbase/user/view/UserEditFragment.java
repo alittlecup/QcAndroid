@@ -170,15 +170,17 @@ import rx.android.schedulers.AndroidSchedulers;
   //用户信息填充
   public void onUserInfo(User user) {
     if (user == null) return;
-    PhotoUtils.smallCircle(db.headerImg, user.getAvatar());//todo默认头像
-    db.username.setContent(user.username);
-    db.civCity.setContent(user.getCity());
-    db.civGender.setContent(getResources().getStringArray(R.array.gender_list)[user.gender % 2]);
     db.setMethods(new StaffLoginMethod.Builder().wx_active(user.isWeixin_active())
       .wx(user.getWeixin())
       .phone_active(user.isPhone_active())
       .phone(user.getPhone())
       .build());
+    PhotoUtils.smallCircle(db.headerImg, user.getAvatar());//todo默认头像
+    db.username.setContent(user.username);
+    db.civCity.setContent(user.getCity());
+
+    db.civGender.setContent(getResources().getStringArray(R.array.gender_list)[user.gender % 2]);
+
     db.imgWx.setImageResource(TextUtils.isEmpty(user.getWeixin())?R.drawable.vd_loginmethod_wechat_disable:R.drawable.vd_loginmethod_wechat);
   }
 

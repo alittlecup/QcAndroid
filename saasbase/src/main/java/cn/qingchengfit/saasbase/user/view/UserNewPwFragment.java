@@ -18,6 +18,7 @@ import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.anbillon.flabellum.annotations.Leaf;
+import com.anbillon.flabellum.annotations.Need;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -51,6 +52,8 @@ import rx.schedulers.Schedulers;
   CommonInputView civNew;
   Button btn;
 
+  @Need String code;
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.f_user_pw, container, false);
@@ -68,7 +71,9 @@ import rx.schedulers.Schedulers;
   }
 
   void onChangePw() {
-    RxRegiste(userModel.newPw(new ModifyPwBody.Builder().password(civNew.getContent()).build())
+    RxRegiste(userModel.newPw(new ModifyPwBody.Builder()
+      .code(code)
+      .password(civNew.getContent()).build())
       .onBackpressureLatest()
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())

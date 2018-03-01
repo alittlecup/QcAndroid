@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
+import cn.qingchengfit.saasbase.staff.beans.Invitation;
 import cn.qingchengfit.saasbase.staff.model.IStaffModel;
 import javax.inject.Inject;
 
@@ -56,6 +57,10 @@ public class TrainerTabInviteListFragment extends StaffTabInviteListFragment {
       return;
     }
     routeTo("/trainer/add/",null);
+  }
+
+  @Override void reInvite(Invitation invitation) {
+    routeTo("/reinvite/",StaffReInviteParams.builder().invitation(invitation).build());
   }
 
   //@Override public boolean onItemClick(int position) {

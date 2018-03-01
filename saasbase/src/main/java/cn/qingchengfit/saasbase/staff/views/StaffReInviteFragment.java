@@ -45,6 +45,9 @@ public class StaffReInviteFragment extends StaffAddFragment {
     civName.setCanClick(true);
     civName.setOnClickListener(view -> {});
     phoneNum.setEditble(false);
+    if (invitation.getPosition() == null || invitation.getPosition().getId() == null){
+      civPosition.setVisibility(View.GONE);
+    }
     return v;
   }
 
@@ -56,7 +59,10 @@ public class StaffReInviteFragment extends StaffAddFragment {
   @Override public void onCivGenderClicked() {
   }
 
-
+  @Override public void onCivPositionClicked() {
+    if (invitation.getPosition() == null || invitation.getPosition().getId() == null){
+    }else super.onCivPositionClicked();
+  }
 
   void inflateData(){
     civGender.setHint(invitation.getGender()==0?"男":"女");

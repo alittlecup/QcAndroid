@@ -138,8 +138,14 @@ public class StaffModel implements IStaffModel {
   }
 
   @Override
-  public Observable<QcDataResponse> inviteBySms(String uuid, String area_code, String phone) {
-    return staffApi.qcInviteSms(loginStatus.staff_id(),uuid,new SendSmsBody.Builder()
+  public Observable<QcDataResponse> inviteBySms(String uuid, String area_code, String phone,boolean isCoach) {
+    if (isCoach){
+      return staffApi.qcInviteTrainerSms(loginStatus.staff_id(),uuid,new SendSmsBody.Builder()
+        .area_code(area_code)
+        .phone(phone)
+        .build(),gymWrapper.getParams());
+    }else
+      return staffApi.qcInviteSms(loginStatus.staff_id(),uuid,new SendSmsBody.Builder()
       .area_code(area_code)
       .phone(phone)
       .build(),gymWrapper.getParams());

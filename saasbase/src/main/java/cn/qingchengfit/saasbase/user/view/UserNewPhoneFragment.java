@@ -86,8 +86,8 @@ public class UserNewPhoneFragment extends BaseFragment {
           throw new RuntimeException("发送验证码失败");
         }
       }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(aLong -> {
-        pw.blockRightClick(aLong < 60);
-        pw.setRightText(aLong > 59 ? "获取验证码"
+        pw.blockRightClick(aLong < 59);
+        pw.setRightText(aLong >= 59 ? "获取验证码"
           : Phrase.from("重新发送({time}s)").put("time", 60 - aLong.intValue()).format().toString());
       }, throwable -> {
         pw.blockRightClick(false);

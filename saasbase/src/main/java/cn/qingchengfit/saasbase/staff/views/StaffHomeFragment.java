@@ -133,7 +133,7 @@ public class StaffHomeFragment extends BaseFragment implements StaffHomePresente
   }
 
   @Override public void onSu(StaffShip staff) {
-    PhotoUtils.smallCircle(db.suAvatar,staff.getAvatar(),staff.getGender() == 0 ? R.drawable.default_manage_male : R.drawable.default_manager_female,R.drawable.img_loadingimage);
+    PhotoUtils.smallCircle(db.suAvatar,staff.getAvatar(),staff.getGender() == 0 ? R.drawable.default_manage_male : R.drawable.default_manager_female,staff.getGender() == 0 ? R.drawable.default_manage_male : R.drawable.default_manager_female);
     db.suName.setText(staff.getUsername());
     db.suPhone.setText(staff.getPhone());
   }

@@ -26,10 +26,28 @@ import cn.qingchengfit.utils.CmStringUtils;
  */
 
 public class StaffLoginMethod implements Parcelable {
-  public String phone;
+  private String phone;
   public boolean phone_active;
-  public String wx;
+  private String wx;
   public boolean wx_active;
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public String getWx() {
+    if (wx == null || !wx_active)
+      return "未绑定";
+    return wx;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public void setWx(String wx) {
+    this.wx = wx;
+  }
 
   private StaffLoginMethod(Builder builder) {
     if (!CmStringUtils.isEmpty(builder.phone) && builder.phone.length() >= 7) {

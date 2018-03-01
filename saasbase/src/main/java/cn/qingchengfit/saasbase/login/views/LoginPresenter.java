@@ -116,6 +116,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
   void loginDone(QcDataResponse<Login> qcResponLogin) {
     QcRestRepository.setSession(mvpContext, qcResponLogin.data.session_name,
       qcResponLogin.data.session_id);
+    QcRestRepository.setSessionDomain(mvpContext,qcResponLogin.data.session_domain);
     PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_PHONE,qcResponLogin.getData().user.getPhone());
     if (qcResponLogin.data.staff != null)
       PreferenceUtils.setPrefString(mvpContext, Configs.PREFER_WORK_ID,

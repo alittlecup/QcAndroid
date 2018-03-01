@@ -100,10 +100,14 @@ public class StaffTabInviteListFragment extends BaseStaffListFragment {
             }));
         })
         .addButton("重新发送邀请",R.color.text_dark,view -> {
-          routeTo("/reinvite/",StaffReInviteParams.builder().invitation(invitation).build());
+          reInvite(invitation);
         })
         .show();
     }
     return true;
+  }
+
+   void reInvite(Invitation invitation){
+    routeTo("/reinvite/",StaffReInviteParams.builder().invitation(invitation).build());
   }
 }

@@ -56,13 +56,15 @@ import rx.schedulers.Schedulers;
     initToolbar(db.layoutToolbar.toolbar);
     db.setToolbarModel(new ToolbarModel.Builder().title("发送邀请短信").build());
     db.setUsername(invitation.getUsername());
+    db.phone.setPhoneNum(invitation.getPhone());
+    db.phone.setdistrictInt(invitation.getArea_code());
     RxView.clicks(db.btn)
       .throttleFirst(500, TimeUnit.MILLISECONDS)
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
           if (db.phone.checkPhoneNum()) {
             RxRegiste(staffModel.inviteBySms(invitation.getUuid(), db.phone.getDistrictInt(),
-              db.phone.getPhoneNum())
+              db.phone.getPhoneNum(),invitation.getPosition() == null || invitation.getPosition().getId() == null)
               .onBackpressureLatest()
               .subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
@@ -84,7 +86,8 @@ import rx.schedulers.Schedulers;
   @Override protected void onFinishAnimation() {
     super.onFinishAnimation();
     db.phone.requestFocus();
-    AppUtils.showKeyboard(getContext(),db.phone);
+    if (getContext() != null)
+      AppUtils.showKeyboard(getContext(),db.phone);
   }
 
   @Override public String getFragmentName() {

@@ -106,7 +106,7 @@ public class UserCaptchaFragment extends BaseFragment {
       }
     }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(aLong -> {
       tvCount.setEnabled(aLong > 59);
-      tvCount.setText(aLong > 59 ? "重新发送"
+      tvCount.setText(aLong >= 59 ? "重新发送"
         : Phrase.from("重新发送({time}s)").put("time", 60 - aLong.intValue()).format().toString());
     }, throwable -> {
       tvCount.setEnabled(true);
@@ -119,6 +119,7 @@ public class UserCaptchaFragment extends BaseFragment {
     RxRegiste(loginModel.checkCode(
       new CheckCodeBody.Builder().phone(loginStatus.getLoginUser().phone)
         .code(civCode.getContent())
+        .area_code(loginStatus.getLoginUser().area_code)
         .build())
       .onBackpressureDrop()
       .subscribeOn(Schedulers.io())
@@ -126,7 +127,7 @@ public class UserCaptchaFragment extends BaseFragment {
       .subscribe(new NetSubscribe<QcDataResponse>() {
         @Override public void onNext(QcDataResponse qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
-            routeTo("/new/pw/?nostack=true", null);
+            routeTo("/new/pw/?nostack=true", UserNewPwParams.builder().code(civCode.getContent()).build());
           } else {
             onShowError(qcResponse.getMsg());
           }

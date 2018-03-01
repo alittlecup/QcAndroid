@@ -65,7 +65,7 @@ public interface IStaffModel {
   rx.Observable<QcDataResponse> delTrainer(String id);
   rx.Observable<QcDataResponse> resumeTrainer(String id);
 
-  rx.Observable<QcDataResponse> inviteBySms(String uuid, @Body String area_code,@Body String phone);
+  rx.Observable<QcDataResponse> inviteBySms(String uuid, @Body String area_code,@Body String phone,boolean isCoach);
   rx.Observable<QcDataResponse<JsonObject>> isSelfSu();
 
 }

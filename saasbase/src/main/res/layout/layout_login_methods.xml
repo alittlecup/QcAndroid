@@ -50,7 +50,7 @@
           android:layout_width="0dp"
           android:layout_weight="1"
           android:layout_height="wrap_content"
-          android:text='@{"手机("+methods.phone+")"}'
+          android:text='@{"手机("+methods.getPhone()+")"}'
           />
       <TextView
           style="@style/QcTextStyleStandardWarm"
@@ -86,7 +86,7 @@
           android:layout_width="0dp"
           android:layout_weight="1"
           android:layout_height="wrap_content"
-          android:text='@{"微信("+methods.wx+")"}'
+          android:text='@{"微信("+methods.getWx()+")"}'
           />
 
     </LinearLayout>

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,6 +134,12 @@ import javax.inject.Inject;
    * 完成
    */
   @OnClick(R2.id.btn_done) public void onBtnDoneClicked() {
+    if(!phoneNum.checkPhoneNum())
+      return;
+    if (TextUtils.isEmpty(presenter.getBody().position_id)){
+      showAlert("请选择职位");
+      return;
+    }
     presenter.addStaff();
   }
 

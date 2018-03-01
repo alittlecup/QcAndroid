@@ -2,6 +2,7 @@ package cn.qingchengfit.saasbase.staff.views;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
@@ -51,6 +52,12 @@ import rx.schedulers.Schedulers;
 
   //新增教练邀请链接
   @Override public void onBtnDoneClicked() {
+    if(!phoneNum.checkPhoneNum())
+      return;
+    if (TextUtils.isEmpty(getName())) {
+      showAlert("请填写姓名");
+      return;
+    }
     InvitationBody body = presenter.getBody();
     body.setUsername(getName());
     body.setPhone(getPhone());
