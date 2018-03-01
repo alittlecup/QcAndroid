@@ -27,8 +27,16 @@ public final class WeexLoadView {
   }
 
   private WXSDKInstance mWXSDKInstance;
-  private Map<String, Object> mConfigMap = new HashMap<>();
+  public Map<String, Object> mConfigMap = new HashMap<>();
   private ViewGroup rootView;
+
+  private static class SingletonHolder {
+    private static final WeexLoadView INSTANCE = new WeexLoadView();
+  }
+  private WeexLoadView (){}
+  public static final WeexLoadView getInstance() {
+    return SingletonHolder.INSTANCE;
+  }
 
   /**
    * 从本地加载

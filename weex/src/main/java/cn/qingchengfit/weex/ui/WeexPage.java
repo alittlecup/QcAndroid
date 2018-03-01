@@ -45,7 +45,7 @@ public class WeexPage extends BaseFragment {
     }
     Uri mUri = Uri.parse(mBundleUrl);
 
-    new WeexLoadView().loadUri(mUri, getActivity(), weexContainer);
+    WeexLoadView.getInstance().loadUri(mUri, getActivity(), weexContainer);
 
     if (rootView.getParent() != null) {
       ((ViewGroup) rootView.getParent()).removeView(rootView);

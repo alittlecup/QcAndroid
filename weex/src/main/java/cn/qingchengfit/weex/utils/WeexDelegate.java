@@ -4,6 +4,7 @@ import android.app.Application;
 import cn.qingchengfit.weex.adapter.ImageAdapter;
 import cn.qingchengfit.weex.component.QcRichText;
 import cn.qingchengfit.weex.module.QcAnimationModule;
+import cn.qingchengfit.weex.module.QcNavigatorModule;
 import cn.qingchengfit.weex.module.QcWxModalUIModule;
 import cn.qingchengfit.weex.ui.WxPageActivity;
 import com.alibaba.fastjson.JSON;
@@ -65,6 +66,7 @@ public class WeexDelegate {
     try {
       WXSDKEngine.registerModule("qcModal", QcWxModalUIModule.class);
       WXSDKEngine.registerModule("qcAnimation", QcAnimationModule.class);
+      WXSDKEngine.registerModule("qcNavigator", QcNavigatorModule.class);
     } catch (WXException e) {
       e.printStackTrace();
     }

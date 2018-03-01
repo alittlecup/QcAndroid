@@ -192,7 +192,7 @@ public class QcWeexWebView implements IWebView {
         WXLogUtils.v("tag", "onPageFinished " + url);
         String javascript = "javascript:(function () {\n"
             + "  var style = document.createElement('style');\n"
-            + "  var content = '* {max-width: 100% !important;}';\n"
+            + "  var content = '* {max-width: 100% !important; margin:0; padding: 0;}';\n"
             + "  var contentNode = document.createTextNode(content);\n"
             + "  style.type = 'text/css';\n"
             + "  style.appendChild(contentNode);\n"
