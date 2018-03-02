@@ -32,7 +32,7 @@ import dagger.multibindings.IntoMap;
   @Binds abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
 
   @Binds
-  abstract ShopRemoteRepository bindShopRemoteService(ShopRemoteRepositoryImpl remoteResitory);
+  abstract ShopRemoteRepository bindShopRemoteService(ShopRemoteRepositoryImpl remoteRepository);
 
   @Binds abstract ShopRepository bindShopRepository(ShopRepositoryImpl repository);
 

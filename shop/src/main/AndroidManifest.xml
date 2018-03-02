@@ -14,7 +14,7 @@
 
         <data
             android:host="shop"
-            android:scheme="shop"
+            android:scheme="qcstaff"
             />
       </intent-filter>
     </activity>

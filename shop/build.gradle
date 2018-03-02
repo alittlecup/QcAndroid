@@ -43,11 +43,12 @@ android {
 
 dependencies {
   testImplementation 'junit:junit:4.12'
-  compile(project(':saasbase')){
-    exclude group: 'com.zhihu.android' , module:'matisse'
-  }
+  implementation (project(':saasbase'))
+//      {
+//    exclude group: 'com.zhihu.android' , module:'matisse'
+//  }
 
-  api project(path: ':weex')
+
 //  implementation 'cn.qingchengfit.imagepicker:matisse:1.0.1'
   annotationProcessor "com.anbillon.flabellum:flabellum-processor:${libs.flabellum}"
   annotationProcessor "com.anbillon.flabellum:dagger2:${libs.flabellum}"
