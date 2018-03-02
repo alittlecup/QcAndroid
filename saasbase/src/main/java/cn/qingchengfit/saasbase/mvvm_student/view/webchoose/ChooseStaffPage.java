@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.items.StickerDateItem;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.others.ToolbarModel;
@@ -20,6 +21,7 @@ import cn.qingchengfit.saasbase.mvvm_student.StudentBaseFragment;
 import cn.qingchengfit.saasbase.mvvm_student.view.home.StudentFilterView;
 import cn.qingchengfit.saasbase.mvvm_student.viewmodel.home.StudentFilterViewModel;
 import cn.qingchengfit.saasbase.student.items.StudentItem;
+import cn.qingchengfit.weex.module.QcNavigatorModule;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.google.gson.Gson;
@@ -29,7 +31,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.json.JSONObject;
 
 /**
  * Created by huangbaole on 2018/2/27.
@@ -104,10 +105,9 @@ import org.json.JSONObject;
       mViewModel.bottomTextCount.set(adapter.getSelectedItemCount());
     });
     mViewModel.completeClick.observe(this, aVoid -> {
-      List<QcStudentBean> selectDataBeans = getSelectDataBeans();
       Map<String, Object> members = new HashMap<>();
-      members.put("members", selectDataBeans);
-      setSelectedBack(new JSONObject(members).toString());
+      members.put("members", mViewModel.selectStudents.getValue());
+      setSelectedBack(new Gson().toJson(members));
     });
   }
 
@@ -187,8 +187,8 @@ import org.json.JSONObject;
   }
 
   private void setSelectedBack(String json) {
-    if (!TextUtils.isEmpty(web_action)) {
-      //RxBus.getBus().post(QcNavigatorModule.class, json);
+    if (TextUtils.isEmpty(web_action)) {
+      RxBus.getBus().post(QcNavigatorModule.class, json);
     } else {
       Intent intent = new Intent();
       intent.putExtra("web_action", web_action);
@@ -200,9 +200,10 @@ import org.json.JSONObject;
 
   @Override public boolean onItemClick(int position) {
     if (adapter.getMode() == SelectableAdapter.Mode.SINGLE) {
-      String student =
-          new Gson().toJson(((StudentItem) adapter.getItem(position)).getQcStudentBean());
-      setSelectedBack("{\"member\":" + student + "}");
+      QcStudentBean student=((StudentItem) adapter.getItem(position)).getQcStudentBean();
+      Map<String,Object> member=new HashMap<>();
+      member.put("member",student);
+      setSelectedBack(new Gson().toJson(member));
       return false;
     } else {
       mBinding.llBottom.setVisibility(View.VISIBLE);
@@ -217,11 +218,11 @@ import org.json.JSONObject;
   }
 
   public List<QcStudentBean> getSelectDataBeans() {
-    List<QcStudentBean> studenBeans = new ArrayList<>();
+    List<QcStudentBean> studentBeans = new ArrayList<>();
     for (Integer pos : adapter.getSelectedPositions()) {
-      studenBeans.add(((StudentItem) adapter.getItem(pos)).getQcStudentBean());
+      studentBeans.add(((StudentItem) adapter.getItem(pos)).getQcStudentBean());
     }
-    return studenBeans;
+    return studentBeans;
   }
 
   private List<String> selectId = new ArrayList<>();
@@ -234,10 +235,8 @@ import org.json.JSONObject;
     Uri uri = intent.getData();
     String multiple = uri.getQueryParameter("multiple");
     params.put("shop_id", uri.getQueryParameter("shop_id"));
-    //params.put("brand_id", uri.getQueryParameter("brand_id"));
-    params.put("brand_id", "2");
+    params.put("brand_id", uri.getQueryParameter("brand_id"));
     if (!TextUtils.isEmpty(multiple) && multiple.equals("1")) {
-      // TODO: 2018/2/28 多选
       String user_ids = uri.getQueryParameter("user_ids");
       if (!TextUtils.isEmpty(user_ids)) {
         String[] ids = user_ids.split(",");
@@ -247,7 +246,6 @@ import org.json.JSONObject;
       }
       adapter.setMode(SelectableAdapter.Mode.MULTI);
     } else {
-      // TODO: 2018/2/28 单选
       String user = uri.getQueryParameter("user_id");
       if (!TextUtils.isEmpty(user)) {
         selectId.add(user);

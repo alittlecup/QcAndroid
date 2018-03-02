@@ -41,7 +41,6 @@
             />
       </intent-filter>
     </activity>
-    <activity android:name="cn.qingchengfit.views.activity.WebActivity"/>
 
 
 
