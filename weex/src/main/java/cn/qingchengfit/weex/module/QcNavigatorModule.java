@@ -19,15 +19,7 @@ import rx.functions.Action1;
 public class QcNavigatorModule extends WXNavigatorModule {
   JSCallback curCallback;
   public QcNavigatorModule(){
-      RxBus.getBus()
-          .register(QcNavigatorModule.class,String.class)
-          .subscribeOn(rx.schedulers.Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(new Action1<String>() {
-            @Override public void call(String s) {
-              curCallback.invoke(s);
-            }
-          });
+
   }
   @JSMethod(uiThread = true)
   public void go(String path,String options, JSCallback callback) {
@@ -35,20 +27,38 @@ public class QcNavigatorModule extends WXNavigatorModule {
       JSONObject jsonObject = JSON.parseObject(options);
       String shop_id = jsonObject.getString("shop_id");
       String brand_id = jsonObject.getString("brand_id");
+      String multiple = jsonObject.getString("multiple");
       String user = jsonObject.getString("user");
       String users = jsonObject.getString("users");
       String uri="qcstaff://student/select_member/?shop_id="+shop_id+"&brand_id="+brand_id;
       if(!TextUtils.isEmpty(user)){
-        uri=uri+"&user="+user;
+        uri=uri+"&user_id="+user;
+      }
+      if(!TextUtils.isEmpty(multiple)){
+        uri=uri+"&multiple="+multiple;
       }
       if(!TextUtils.isEmpty(users)){
-        uri=uri+"&multiple=1&users="+users;
+        uri=uri+"&user_ids="+users;
       }
       Intent intent=new Intent(Intent.ACTION_VIEW,Uri.parse(uri));
       mWXSDKInstance.getContext().startActivity(intent);
-      curCallback=callback;
 
     }
+    if(curCallback==null){
+      curCallback=callback;
+      RxBus.getBus()
+          .register(QcNavigatorModule.class,String.class)
+          .subscribeOn(rx.schedulers.Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Action1<String>() {
+            @Override public void call(String s) {
+              curCallback.invoke(JSON.parse(s));
+            }
+          });
+    }
+    curCallback=callback;
+
+
   }
 
 }

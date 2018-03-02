@@ -53,8 +53,8 @@ public class WxPageActivity extends WxBaseActivity {
     String g_shop_name = gymWrapper.getCoachService().name();
     String g_shop_phone = gymWrapper.getCoachService().getPhone();
     String g_shop_logo = gymWrapper.getCoachService().getPhoto();
-    String g_brand_id = gymWrapper.getBrand().getId();
-    String g_brand_name = gymWrapper.getBrand().getName();
+    String g_brand_id = gymWrapper.getCoachService().getBrand_id();
+    String g_brand_name = gymWrapper.getCoachService().getBrand_name();
     Map<String, Object> member = new HashMap<>();
     member.put("g_shop_id", g_shop_id);
     member.put("g_shop_name", g_shop_name);

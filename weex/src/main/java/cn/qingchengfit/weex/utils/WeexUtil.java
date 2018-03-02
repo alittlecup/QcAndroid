@@ -103,7 +103,7 @@ public final class WeexUtil {
    */
   public static void loadJsMap() {
     WXHttpTask task = new WXHttpTask();
-    task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version.json";
+    task.url = "http://qcfile.b0.upaiyun.com/qc-commodity-weex/version_test.json";
     task.requestListener = new WXRequestListener() {
       @Override public void onSuccess(WXHttpTask task) {
         WXHttpResponse response = task.response;
