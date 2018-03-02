@@ -127,7 +127,7 @@ android {
                               APP_PACKAGE       : "cn.qingchengfit.staffkit",
                               file_provider     : "cn.qingchengfit.staffkit.provider"]
       ndk {
-        abiFilter "armeabi-v7a"
+        abiFilter "armeabi"
       }
       dimension "qc"
     }
