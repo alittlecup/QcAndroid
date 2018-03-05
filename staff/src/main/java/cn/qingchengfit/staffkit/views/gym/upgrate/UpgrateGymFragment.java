@@ -92,7 +92,7 @@ public class UpgrateGymFragment extends BaseFragment {
     @BindView(R.id.root_scroll) NestedScrollView rootScroll;
     @BindView(R.id.hiden_trans) View hidenTrans;
     @BindView(R.id.layout_hiden) RelativeLayout layoutHiden;
-
+    @BindView(R.id.tv_first_discount) TextView tvFirstDiscount;
     @Inject GymWrapper gymWrapper;
 
     boolean mIsPro;
@@ -141,7 +141,6 @@ public class UpgrateGymFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upgrade_gym, container, false);
         ButterKnife.bind(this, view);
-        //
         RxBus.getBus()
             .post(new ToolbarBean.Builder().title("高级版").menu(R.menu.menu_pay_history).listener(new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
@@ -164,7 +163,7 @@ public class UpgrateGymFragment extends BaseFragment {
             .text(R.string.module_op_activity_desc)
             .img(R.drawable.moudule_op_activity)
             .build()));
-        mFunDatas.add(new LinearFunItem(new GymFuntion.Builder().moduleName("工作人员管理")
+        mFunDatas.add(new LinearFunItem(new GymFuntion.Builder().moduleName("员工管理")
             .text(R.string.module_manage_staff_desc)
             .img(R.drawable.moudule_manage_staff)
             .build()));
@@ -302,22 +301,6 @@ public class UpgrateGymFragment extends BaseFragment {
             mPayAdapter = new CommonFlexAdapter(mOriDatas, mPayClickListener);
             mHidenPayAdapter = new CommonFlexAdapter(mDisCountDatas, mHidenClickListener);
         }
-        //        } else {
-        //            /**
-        //             * free版
-        //             */
-        //            tvPayTitle.setText("高级版");
-        //            tagPro.setVisibility(View.VISIBLE);
-        //            tvPayHint.setVisibility(View.GONE);
-        //            tvHidenHint.setVisibility(View.VISIBLE);
-        //            tvHideTitle.setText("优惠");
-        //            tvHidenHint.setText("单场馆累计付费12个月以上，同品牌下场馆即可享受以下优惠");
-        //
-        //
-        //            mPayAdapter = new CommonFlexAdapter(mOriDatas, mPayClickListener);
-        //            mHidenPayAdapter = new CommonFlexAdapter(mDisCountDatas, mHidenClickListener);
-        //
-        //        }
         hidenTrans.setVisibility(hasDiscount ? View.INVISIBLE : View.VISIBLE);
 
         mPayAdapter.setMode(SelectableAdapter.Mode.SINGLE);

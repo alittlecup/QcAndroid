@@ -49,7 +49,6 @@ public class PopFromBottomActivity extends BaseActivity implements FragCallBack 
         });
 
         switch (getRouter()) {
-
             case Router.BOTTOM_RENEWAL:
             default:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frag, new UpgrateGymFragment()).commit();

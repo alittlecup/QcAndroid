@@ -128,9 +128,7 @@
           tools:text="gaojiban"
           style="@style/Qc.TextCommonGrey"
           />
-
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/rv_first_pay_choose"
+      <FrameLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginBottom="10dp"
@@ -139,8 +137,30 @@
           android:layout_marginTop="10dp"
           android:background="@drawable/bg_rect"
           android:padding="0.5dp"
+          >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_first_pay_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/tv_first_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:text="首月体验价"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_10sp"
+            android:rotation="-45"
+            android:translationX="-18dp"
+            android:translationY="13dp"
+            />
+      </FrameLayout>
 
-          />
 
       <include layout="@layout/divider_grey"/>
 

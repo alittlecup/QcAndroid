@@ -133,9 +133,36 @@
           android:layout_height="wrap_content"
           android:minHeight="266.5dp"
           android:orientation="vertical"
+          android:gravity="center_vertical"
           app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways"
           >
-
+        <LinearLayout
+            android:id="@+id/layout_to_charge"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/primary_horizon_to_dark"
+            >
+          <cn.qingchengfit.support.widgets.CompatTextView
+              android:layout_width="0dp"
+              android:layout_weight="1"
+              android:textSize="@dimen/txt_15sp"
+              android:layout_height="match_parent"
+              android:textColor="#00a5ac"
+              android:text="@string/underline_pro_update_now"
+              app:drawableStart="@drawable/vd_upgrade_arrow"
+              />
+          <ImageView
+              android:id="@+id/btn_close"
+              android:layout_width="50dp"
+              android:padding="15dp"
+              android:translationX="15dp"
+              android:layout_height="match_parent"
+              app:srcCompat="@drawable/vd_close_primary_24dp"
+              />
+        </LinearLayout>
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_charts"
             android:layout_width="match_parent"
@@ -182,32 +209,32 @@
           android:background="@color/bg_grey"
           />
 
-      <TextView
-          android:id="@+id/student_preview"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:layout_marginBottom="15dp"
-          android:background="@drawable/bg_rect_prime"
-          android:paddingBottom="5dp"
-          android:paddingLeft="15dp"
-          android:paddingRight="15dp"
-          android:paddingTop="5dp"
-          android:text="@string/student_page_preview"
-          android:textColor="@color/colorPrimary"
-          app:layout_behavior="@string/appbar_scrolling_view_behavior"
-          />
+      <!--<TextView-->
+          <!--android:id="@+id/student_preview"-->
+          <!--android:layout_width="wrap_content"-->
+          <!--android:layout_height="wrap_content"-->
+          <!--android:layout_gravity="center_horizontal"-->
+          <!--android:layout_marginBottom="15dp"-->
+          <!--android:background="@drawable/bg_rect_prime"-->
+          <!--android:paddingBottom="5dp"-->
+          <!--android:paddingLeft="15dp"-->
+          <!--android:paddingRight="15dp"-->
+          <!--android:paddingTop="5dp"-->
+          <!--android:text="@string/student_page_preview"-->
+          <!--android:textColor="@color/colorPrimary"-->
+          <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+          <!--/>-->
 
-      <TextView
-          android:id="@+id/btn_how_to_use"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:drawablePadding="@dimen/little"
-          android:text="@string/how_to_use"
-          android:textColor="@color/text_grey"
-          app:layout_behavior="@string/appbar_scrolling_view_behavior"
-          />
+      <!--<TextView-->
+          <!--android:id="@+id/btn_how_to_use"-->
+          <!--android:layout_width="wrap_content"-->
+          <!--android:layout_height="wrap_content"-->
+          <!--android:layout_gravity="center_horizontal"-->
+          <!--android:drawablePadding="@dimen/little"-->
+          <!--android:text="@string/how_to_use"-->
+          <!--android:textColor="@color/text_grey"-->
+          <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+          <!--/>-->
     </LinearLayout>
 
 
@@ -226,7 +253,6 @@
       android:paddingRight="@dimen/activity_horizontal_margin"
       android:transformPivotY="0dp"
       android:visibility="gone"
-      tools:visibility="visible"
       >
 
     <ImageView

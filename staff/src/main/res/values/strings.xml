@@ -624,9 +624,9 @@
   <string name="course_time">课程时间</string>
   <string name="gym_pro">PRO</string>
   <string name="module_student_cards_desc">在线购卡、充值，支持会员卡结算</string>
-  <string name="module_op_activity_desc">丰富的运营推广功能，包括会员积分、活动、会员端页面广告、接入口碑网、注册送卡、场馆公告等，以及后续开发的更多功能</string>
+  <string name="module_op_activity_desc">全部运营推广功能，多手段获客</string>
   <string name="module_manage_staff_desc">管理工作人员并分配权限</string>
-  <string name="module_fi_card_statement_desc">可查看全部报表，包括销售报表、评分报表、会员卡报表、签到报表等</string>
+  <string name="module_fi_card_statement_desc">可查看、导出全部报表</string>
   <string name="start">开始</string>
   <string name="title_welcome_trial">欢迎试用高级版</string>
   <string name="hint_empty_fun_edit">将常用功能添加到这里</string>
@@ -847,5 +847,6 @@
   <string name="code_sign_card_tip">青橙系统支持无需驱动的USB刷卡器</string>
   <string name="sign_in_card_judge_use">如何判断刷卡器是否适用？</string>
   <string name="sign_in_card_bind">如何绑定以及刷卡签到？</string>
+  <string name="underline_pro_update_now">高级版Pro首月体验价¥%s，<u>立即升级</u></string>
 
 </resources>
