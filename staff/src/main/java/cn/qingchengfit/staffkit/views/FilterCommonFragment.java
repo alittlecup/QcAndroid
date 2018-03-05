@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -134,12 +133,10 @@ public class FilterCommonFragment extends BaseFragment implements StudentListVie
         drawer.addDrawerListener(this);
         drawer.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED, Gravity.END);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
-        alphabetView.setOnTouchListener(new View.OnTouchListener() {
-            @Override public boolean onTouch(View v, MotionEvent event) {
-                AppUtils.hideKeyboard(getActivity());
-                if (searchviewEt != null && TextUtils.isEmpty(searchviewEt.getText())) searchviewCancle.performClick();
-                return true;
-            }
+        alphabetView.setOnTouchListener((v, event) -> {
+            AppUtils.hideKeyboard(getActivity());
+            if (searchviewEt != null && TextUtils.isEmpty(searchviewEt.getText())) searchviewCancle.performClick();
+            return true;
         });
         alphabetView.setAlphaDialog(alphaTextDialog);
         alphabetView.setOnAlphabetChange(new AlphabetView.OnAlphabetChange() {
@@ -178,8 +175,7 @@ public class FilterCommonFragment extends BaseFragment implements StudentListVie
         switch (sortType) {
             case SORT_TYPE_ALPHA:
                 sortDataByAlpah(datas);
-                alphab
-                etView.setVisibility(View.VISIBLE);
+                alphabetView.setVisibility(View.VISIBLE);
                 break;
             case SORT_TYPE_REGISTER:
                 sortDataByRegister(datas);

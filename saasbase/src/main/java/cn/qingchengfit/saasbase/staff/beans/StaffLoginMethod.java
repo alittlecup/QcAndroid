@@ -51,7 +51,7 @@ public class StaffLoginMethod implements Parcelable {
 
   private StaffLoginMethod(Builder builder) {
     if (!CmStringUtils.isEmpty(builder.phone) && builder.phone.length() >= 7) {
-      phone = builder.phone.substring(0,3)+"****"+builder.phone.substring(6);
+      phone = builder.phone.substring(0,3)+"****"+builder.phone.substring(7);
     }
     phone_active = builder.phone_active;
     wx = builder.wx == null?"":builder.wx;
