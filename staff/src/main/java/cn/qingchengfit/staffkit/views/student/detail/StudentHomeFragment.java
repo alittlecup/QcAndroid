@@ -203,6 +203,8 @@ public class StudentHomeFragment extends BaseFragment {
                 Glide.with(getActivity())
                     .load(PhotoUtils.getSmall(qcStudentBean.getAvatar()))
                     .asBitmap()
+                    .placeholder(qcStudentBean.gender() == 0 ? R.drawable.default_student_male
+                        : R.drawable.default_student_female)
                     .into(new CircleImgWrapper(header, getContext()));
                 name.setText(qcStudentBean.getUsername());
                 Glide.with(getActivity())

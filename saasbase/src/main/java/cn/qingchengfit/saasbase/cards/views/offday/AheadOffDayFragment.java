@@ -55,8 +55,8 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/5/5.
  */
-@Leaf(module = "card", path = "/offday/ahead")
-public class AheadOffDayFragment extends SaasBaseFragment implements OffDayListView {
+@Leaf(module = "card", path = "/offday/ahead") public class AheadOffDayFragment
+    extends SaasBaseFragment implements OffDayListView {
 
   @Need String offDayId;
   @Need Card card;
@@ -70,6 +70,8 @@ public class AheadOffDayFragment extends SaasBaseFragment implements OffDayListV
   @BindView(R2.id.layout_valid_info) LinearLayout layoutValidInfo;
 
   @Inject OffDayListPresenter presenter;
+  @BindView(R2.id.toolbar) Toolbar toolbar;
+  @BindView(R2.id.toolbar_title) TextView toolbarTitle;
 
   private int pay_method;
 
@@ -80,34 +82,10 @@ public class AheadOffDayFragment extends SaasBaseFragment implements OffDayListV
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_ahead_off_day, container, false);
+    View view = inflater.inflate(R.layout.fragment_off_day_ahead, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
-    mCallbackActivity.setToolbar("提前销假", false, null, R.menu.menu_comfirm,
-        new Toolbar.OnMenuItemClickListener() {
-          @Override public boolean onMenuItemClick(MenuItem item) {
-            showLoading();
-            AheadOffDayBody body = new AheadOffDayBody();
-            if (epMoney.isExpanded()) {
-              if (pay_method == 0) {
-                ToastUtils.show("请选择支付方式");
-                return true;
-              }
-              body.charge_type = pay_method;
-              String money = civMoney.getContent();
-              try {
-                Float.parseFloat(money);
-              } catch (Exception e) {
-                ToastUtils.show("请填写正确的金额");
-                return true;
-              }
-              body.price = civMoney.getContent();
-            }
-            showLoading();
-            presenter.aheadOffDay(offDayId, body);
-            return true;
-          }
-        });
+    setToolbar();
     onInfo();
     RxBusAdd(PayEvent.class).subscribe(new Action1<PayEvent>() {
       @Override public void call(PayEvent payEvent) {
@@ -151,6 +129,36 @@ public class AheadOffDayFragment extends SaasBaseFragment implements OffDayListV
     return view;
   }
 
+  private void setToolbar() {
+    initToolbar(toolbar);
+    toolbarTitle.setText("提前销假");
+    toolbar.inflateMenu(R.menu.menu_comfirm);
+    toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+      @Override public boolean onMenuItemClick(MenuItem item) {
+        showLoading();
+        AheadOffDayBody body = new AheadOffDayBody();
+        if (epMoney.isExpanded()) {
+          if (pay_method == 0) {
+            ToastUtils.show("请选择支付方式");
+            return true;
+          }
+          body.charge_type = pay_method;
+          String money = civMoney.getContent();
+          try {
+            Float.parseFloat(money);
+          } catch (Exception e) {
+            ToastUtils.show("请填写正确的金额");
+            return true;
+          }
+          body.price = civMoney.getContent();
+        }
+        showLoading();
+        presenter.aheadOffDay(offDayId, body);
+        return true;
+      }
+    });
+  }
+
   void onInfo() {
     String s = DateUtils.Date2YYYYMMDD(new Date());
     int intervalDay = DateUtils.interval(card.getLock_start(), s);
@@ -166,11 +174,9 @@ public class AheadOffDayFragment extends SaasBaseFragment implements OffDayListV
     try {
       if (intervalDay > 0) {
         tvAfterPeriod.setText(
-            DateUtils.getYYYYMMDDfromServer(card.getValid_from())
-                + "至"
-                + DateUtils.Date2YYYYMMDD(DateUtils.addDay(
-                DateUtils.formatDateFromYYYYMMDD(card.getValid_to()),
-                intervalDay)));
+            DateUtils.getYYYYMMDDfromServer(card.getValid_from()) + "至" + DateUtils.Date2YYYYMMDD(
+                DateUtils.addDay(DateUtils.formatDateFromYYYYMMDD(card.getValid_to()),
+                    intervalDay)));
       }
     } catch (Exception e) {
       LogUtil.e(e.getMessage());

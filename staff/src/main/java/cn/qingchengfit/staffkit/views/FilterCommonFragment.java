@@ -178,7 +178,8 @@ public class FilterCommonFragment extends BaseFragment implements StudentListVie
         switch (sortType) {
             case SORT_TYPE_ALPHA:
                 sortDataByAlpah(datas);
-                alphabetView.setVisibility(View.VISIBLE);
+                alphab
+                etView.setVisibility(View.VISIBLE);
                 break;
             case SORT_TYPE_REGISTER:
                 sortDataByRegister(datas);

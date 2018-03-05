@@ -24,7 +24,6 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.saasbase.repository.ICardModel;
 import cn.qingchengfit.subscribes.BusSubscribe;
 import cn.qingchengfit.subscribes.NetSubscribe;
-import cn.qingchengfit.utils.CmStringUtils;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +77,10 @@ public class CardBuyPresenter extends BasePresenter {
   public void setCardCate(int cate) {
     cardBuyBody.setType(cate);
     cardCate = cate;
+  }
+
+  public void setOtherOption(boolean isOther){
+    cardBuyBody.setCustomize_option(isOther);
   }
 
   public void setChoseStuIds(ArrayList<String> studentList) {
@@ -234,7 +237,7 @@ public class CardBuyPresenter extends BasePresenter {
         }
       }
     } else {
-      cardBuyBody.setPrice(CmStringUtils.getMoneyStr(mChosenOption.price));
+      cardBuyBody.setPrice(String.valueOf(mChosenOption.price));
       cardBuyBody.setBuyAccount(mChosenOption.charge, view.startDay(), view.endDay(), mChosenOption);
     }
 

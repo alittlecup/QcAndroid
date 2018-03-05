@@ -480,6 +480,7 @@ import dagger.multibindings.IntoMap;
   AppComponent.StaffDetailFragmentModule.class,
    AppComponent.CardProtocolModule.class, AppComponent.COurseChooseDialogFragmentModule.class,
     AppComponent.SignInCodeFragmentModule.class,
+    AppComponent.FollowRecordModule.class,
 })
 
 public interface AppComponent {

@@ -51,7 +51,7 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/10/18.
  */
-@Leaf(module = "staff", path = "/saler/list/") public class SalersListFragment
+@Leaf(module = "staff", path = "/saler/list/") public class NewSalersListFragment
   extends BaseStaffListFragment {
 
   @Inject IStaffModel staffModel;

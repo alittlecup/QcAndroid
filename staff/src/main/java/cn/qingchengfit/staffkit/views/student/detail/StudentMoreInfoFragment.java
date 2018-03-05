@@ -312,6 +312,8 @@ public class StudentMoreInfoFragment extends BaseFragment
       toChooseSaler.putStringArrayListExtra(MutiChooseCoachActivity.INPUT_COACHES,
           (ArrayList<String>) StringUtils.coachIds(user_student.getCoaches()));
       startActivityForResult(toChooseSaler, RESULT_COACH);
+    }else{
+      showAlert(R.string.alert_permission_forbid);
     }
   }
 

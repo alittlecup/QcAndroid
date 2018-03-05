@@ -24,7 +24,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.inject.model.StudentWrapper;
 import cn.qingchengfit.model.responese.FollowRecord;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.rxbus.event.LoadingEvent;
@@ -78,7 +78,7 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
     @Inject FollowRecordPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
-    @Inject SerPermisAction serPermisAction;
+    @Inject IPermissionModel serPermisAction;
 
     private ChatAdatper adapter;
     private Observable<UpyunService.UpYunResult> obUpyun;
@@ -177,7 +177,7 @@ public class FollowRecordFragment extends BaseFragment implements FollowRecordVi
             }
         });
 
-        if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+        if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
             disableInput.setVisibility(View.VISIBLE);
         } else {
             disableInput.setVisibility(View.GONE);

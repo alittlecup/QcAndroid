@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import com.anbillon.flabellum.annotations.Leaf;
-import javax.inject.Inject;
 
 /**
  * Created by fb on 2018/1/9.
@@ -17,8 +15,6 @@ import javax.inject.Inject;
 
 @Leaf(module = "card", path = "/cardtpl/detail/brand/")
 public class CardTplDetailInBrandFragment extends CardTplDetailFragment {
-
-  @Inject IPermissionModel permissionModel;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
@@ -29,7 +25,7 @@ public class CardTplDetailInBrandFragment extends CardTplDetailFragment {
   }
 
   @Override public void onCheckPermission() {
-    if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
+    if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE,
         cardTpl.getShopIds())) {
       isEnable(false);
       layoutCardDetail.setOnTouchListener(new View.OnTouchListener() {

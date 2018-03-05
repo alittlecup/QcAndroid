@@ -125,7 +125,7 @@ import rx.functions.Action1;
 
   @Inject public CardTplDetailPresenter presenter;
   @Inject GymWrapper gymWrapper;
-  @Inject IPermissionModel permissionModel;
+  @Inject public IPermissionModel permissionModel;
   @Need public CardTpl cardTpl;
   CommonFlexAdapter comonAdapter;
   @BindView(R2.id.civ_input_card_desc) CommonInputView civInputCardDesc;
@@ -315,7 +315,7 @@ import rx.functions.Action1;
         }
       });
     } else {
-      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
+      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
         btnDel.setEnabled(false);
         isEnable(false);
       }
@@ -750,6 +750,10 @@ import rx.functions.Action1;
 
   @OnClick({ R2.id.pre_order_count, R2.id.during_count, R2.id.limit_bug_count })
   public void onLimit(View v) {
+    if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)){
+      showAlert(getResources().getString(R.string.alert_permission_forbid));
+      return;
+    }
     int i = v.getId();
     if (i == R.id.pre_order_count) {
       onPreOrderCount();
@@ -827,9 +831,12 @@ import rx.functions.Action1;
     if (!civInputCardname.isClickable()) {
       return false;
     } else {
+      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)){
+        showAlert(getResources().getString(R.string.alert_permission_forbid));
+        return false;
+      }
       IFlexible item = comonAdapter.getItem(i);
       if (item instanceof CardtplOptionItem) {
-
         //会员卡价格修改
         routeTo("/cardtpl/option/",
             new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption())

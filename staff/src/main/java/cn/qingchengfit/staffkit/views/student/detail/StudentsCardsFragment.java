@@ -141,7 +141,7 @@ public class StudentsCardsFragment extends BaseFragment implements StudentsCards
     @Override public boolean onItemClick(int i) {
         if (adatper.getItem(i) instanceof CardItem) {
             Card realCard = ((CardItem) adatper.getItem(i)).getRealCard();
-            if (serPermisAction.checkNoOne(PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
+            if (!serPermisAction.check(PermissionServerUtils.MANAGE_COSTS)) {
                 showAlert(R.string.alert_permission_forbid);
                 return true;
             }
