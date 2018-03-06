@@ -23,7 +23,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.http.SslError;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,15 +112,8 @@ public class QcWeexWebView implements IWebView {
     getWebView().goForward();
   }
 
-    /*@Override
-    public void setVisibility(int visibility) {
-        if (mRootView != null) {
-            mRootView.setVisibility(visibility);
-        }
-    }*/
 
   @JavascriptInterface public void sendDocumentHeight(final String hei, final String wid) {
-    Log.d("TAG", "sendDocumentHeight: " + hei + "-->" + wid);
     root.post(new Runnable() {
       @Override public void run() {
         int width = root.getWidth();
@@ -211,7 +203,6 @@ public class QcWeexWebView implements IWebView {
           WebResourceError error) {
         super.onReceivedError(view, request, error);
         if (mOnErrorListener != null) {
-          //mOnErrorListener.onError("error", "page error code:" + error.getErrorCode() + ", desc:" + error.getDescription() + ", url:" + request.getUrl());
           mOnErrorListener.onError("error", "page error");
         }
       }

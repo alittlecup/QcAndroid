@@ -156,7 +156,7 @@ public class QcWxModalUIModule extends DestroyableModule {
               .positiveText(okTitleFinal)
               .negativeText(cancelTitleFinal)
               .positiveColorRes(R.color.colorPrimary)
-              .negativeColorRes(R.color.colorPrimary)
+              .negativeColorRes(R.color.qc_text_grey)
               .autoDismiss(true)
               .content(message)
               .onPositive(new MaterialDialog.SingleButtonCallback() {

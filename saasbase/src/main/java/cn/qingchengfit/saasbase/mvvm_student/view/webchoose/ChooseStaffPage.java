@@ -156,6 +156,7 @@ import java.util.Map;
     mBinding.includeFilter.setFilter(mViewModel.getSortViewModel());
     paseUri();
     mBinding.llBottom.setVisibility(View.GONE);
+    mBinding.llDividerBottom.setVisibility(View.GONE);
     return mBinding;
   }
 
@@ -207,6 +208,7 @@ import java.util.Map;
       return false;
     } else {
       mBinding.llBottom.setVisibility(View.VISIBLE);
+      mBinding.llDividerBottom.setVisibility(View.VISIBLE);
     }
     adapter.toggleSelection(position);
     adapter.notifyDataSetChanged();

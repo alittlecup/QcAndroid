@@ -10,4 +10,7 @@
   <color name="colorPrimaryLight">@color/primary</color>
   <color name="colorPrimaryDark">#006f74</color>
   <color name="toolbar">#232428</color>
+
+  <color name="qc_text_grey">#9d9d9d</color>
+
 </resources>

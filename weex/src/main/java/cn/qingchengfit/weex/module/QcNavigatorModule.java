@@ -43,6 +43,16 @@ public class QcNavigatorModule extends WXNavigatorModule {
       Intent intent=new Intent(Intent.ACTION_VIEW,Uri.parse(uri));
       mWXSDKInstance.getContext().startActivity(intent);
 
+    }else if("charge_card".equals(path)){
+      JSONObject jsonObject = JSONObject.parseObject(options);
+      String shop_id = jsonObject.getString("shop_id");
+      String brand_id = jsonObject.getString("brand_id");
+      String card_id = jsonObject.getString("card_id");
+
+      String uri="qcstaff://card/charge_card/?card_id="+1300;
+
+      Intent intent=new Intent(Intent.ACTION_VIEW,Uri.parse(uri));
+      mWXSDKInstance.getContext().startActivity(intent);
     }
     if(curCallback==null){
       curCallback=callback;
