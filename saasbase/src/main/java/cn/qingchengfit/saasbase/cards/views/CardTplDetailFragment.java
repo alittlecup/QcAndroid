@@ -103,8 +103,8 @@ import rx.functions.Action1;
  * Created by Paper on 2017/8/23.
  */
 @Leaf(module = "card", path = "/cardtpl/detail/") public class CardTplDetailFragment
-    extends SaasBaseFragment
-    implements CardTplDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
+  extends SaasBaseFragment
+  implements CardTplDetailPresenter.MVPView, FlexibleAdapter.OnItemClickListener {
 
   private final static String PARAMS_KEY = "uuid=";
 
@@ -152,15 +152,15 @@ import rx.functions.Action1;
     comonAdapter = new CommonFlexAdapter(new ArrayList(), this);
 
     RxBus.getBus()
-        .register(EventSaasFresh.CardTplList.class)
-        .compose(this.<EventSaasFresh.CardTplList>bindToLifecycle())
-        .subscribe(new BusSubscribe<EventSaasFresh.CardTplList>() {
-          @Override public void onNext(EventSaasFresh.CardTplList cardList) {
-            if (getActivity() != null) {
-              getActivity().onBackPressed();
-            }
+      .register(EventSaasFresh.CardTplList.class)
+      .compose(this.<EventSaasFresh.CardTplList>bindToLifecycle())
+      .subscribe(new BusSubscribe<EventSaasFresh.CardTplList>() {
+        @Override public void onNext(EventSaasFresh.CardTplList cardList) {
+          if (getActivity() != null) {
+            getActivity().onBackPressed();
           }
-        });
+        }
+      });
 
     obEvent = RxBus.getBus().register(EventTxT.class);
     obEvent.subscribe(new BusSubscribe<EventTxT>() {
@@ -179,14 +179,14 @@ import rx.functions.Action1;
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+    Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cardtpl_detail, container, false);
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     presenter.setCardTpl(cardTpl);
     setToolbar();
     SmoothScrollLinearLayoutManager layoutManager =
-        new SmoothScrollLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+      new SmoothScrollLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
     //layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
     //layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
     //  @Override public int getSpanSize(int position) {
@@ -199,8 +199,8 @@ import rx.functions.Action1;
     }
     recycleview.setLayoutManager(layoutManager);
     recycleview.addItemDecoration(new FlexibleItemDecoration(getContext()).withOffset(10)
-        .withLeftEdge(true)
-        .withRightEdge(true));
+      .withLeftEdge(true)
+      .withRightEdge(true));
     recycleview.setAdapter(comonAdapter);
     expandCardProtocol.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -223,28 +223,28 @@ import rx.functions.Action1;
     return view;
   }
 
-  private void initBus(){
+  private void initBus() {
     RxBus.getBus()
-        .register(OnBackEvent.class)
-        .compose(this.<OnBackEvent>doWhen(FragmentEvent.RESUME))
-        .compose(this.<OnBackEvent>bindToLifecycle())
-        .subscribe(new BusSubscribe<OnBackEvent>() {
-          @Override public void onNext(OnBackEvent cardList) {
-            Uri toUri;
-            if(!gymWrapper.inBrand()) {
-              toUri = AppUtils.getRouterUri(getContext(), "card/cardtpl/list/");
-            }else{
-              toUri = AppUtils.getRouterUri(getContext(), "card/brand/cardtpl/list/");
-            }
-            //getActivity().getSupportFragmentManager().popBackStack(null, 1);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-              if (!getActivity().isDestroyed()) {
-                getActivity().finish();
-              }
-            }
-            routeTo(toUri, null);
+      .register(OnBackEvent.class)
+      .compose(this.<OnBackEvent>doWhen(FragmentEvent.RESUME))
+      .compose(this.<OnBackEvent>bindToLifecycle())
+      .subscribe(new BusSubscribe<OnBackEvent>() {
+        @Override public void onNext(OnBackEvent cardList) {
+          Uri toUri;
+          if (!gymWrapper.inBrand()) {
+            toUri = AppUtils.getRouterUri(getContext(), "card/cardtpl/list/");
+          } else {
+            toUri = AppUtils.getRouterUri(getContext(), "card/brand/cardtpl/list/");
           }
-        });
+          //getActivity().getSupportFragmentManager().popBackStack(null, 1);
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (!getActivity().isDestroyed()) {
+              getActivity().finish();
+            }
+          }
+          routeTo(toUri, null);
+        }
+      });
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -299,14 +299,14 @@ import rx.functions.Action1;
         cardLimit.day_times = cardTpl.getDay_times();
       }
       limitBugCount.setContent(cardTpl.getBuy_limit() == 0 ? getString(R.string.buy_card_no_limit)
-          : getString(R.string.card_count_unit, cardTpl.getBuy_limit()));
+        : getString(R.string.card_count_unit, cardTpl.getBuy_limit()));
     }
   }
 
-  public void onCheckPermission(){
+  public void onCheckPermission() {
     if (cardTpl.getShopIds().size() > 1) {
-        btnDel.setEnabled(false);
-        isEnable(false);
+      btnDel.setEnabled(false);
+      isEnable(false);
       layoutCardDetail.setOnTouchListener(new View.OnTouchListener() {
         @Override public boolean onTouch(View v, MotionEvent event) {
           layoutCardDetail.performClick();
@@ -350,14 +350,14 @@ import rx.functions.Action1;
       return;
     }
     isShouldSave = isEdit
-        || !civInputCardname.getContent().equals(cardTpl.getName())
-        || expandSettingLimit.isExpanded() != cardTpl.is_limit
-        || expandCardProtocol.isExpanded() != cardTpl.is_open_service_term;
+      || !civInputCardname.getContent().equals(cardTpl.getName())
+      || expandSettingLimit.isExpanded() != cardTpl.is_limit
+      || expandCardProtocol.isExpanded() != cardTpl.is_open_service_term;
     if (isShouldSave && toolbar.getMenu().size() <= 0) {
       toolbar.inflateMenu(R.menu.menu_save);
       toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
-          if (TextUtils.isEmpty(civInputCardname.getContent())){
+          if (TextUtils.isEmpty(civInputCardname.getContent())) {
             showAlert(R.string.e_card_name_empty);
             return false;
           }
@@ -395,14 +395,14 @@ import rx.functions.Action1;
       inputCardProtocol.setVisibility(View.GONE);
       Intent intent = new Intent(getActivity(), QRActivity.class);
       if (permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
-          cardTpl.getShopIds())) {
+        cardTpl.getShopIds())) {
         if (!gymWrapper.inBrand()) {
           intent.putExtra(QRActivity.LINK_MODULE,
-              getResources().getString(R.string.qr_code_2web_add_card_term, cardTpl.id));
+            getResources().getString(R.string.qr_code_2web_add_card_term, cardTpl.id));
         } else {
           intent.putExtra(QRActivity.LINK_MODULE,
-              getResources().getString(R.string.qr_code_2web_multi_card_add, gymWrapper.brand_id(),
-                  cardTpl.id));
+            getResources().getString(R.string.qr_code_2web_multi_card_add, gymWrapper.brand_id(),
+              cardTpl.id));
         }
       } else {
         showAlert(R.string.alert_edit_cardtype_no_permission);
@@ -436,7 +436,7 @@ import rx.functions.Action1;
       }
     } else {
       DialogUtils.showAlert(getContext(),
-          getResources().getString(R.string.delete_cardtpl_no_permission));
+        getResources().getString(R.string.delete_cardtpl_no_permission));
     }
   }
 
@@ -444,7 +444,7 @@ import rx.functions.Action1;
     toolbar.setNavigationIcon(cn.qingchengfit.widgets.R.drawable.vd_navigate_before_white_24dp);
     if (!CompatUtils.less21() && toolbar.getParent() instanceof ViewGroup && isfitSystemPadding()) {
       ((ViewGroup) toolbar.getParent()).setPadding(0, MeasureUtils.getStatusBarHeight(getContext()),
-          0, 0);
+        0, 0);
     }
     toolbar.setSaveEnabled(true);
     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -455,44 +455,44 @@ import rx.functions.Action1;
         }
         if (isShouldSave) {
           new MaterialDialog.Builder(getActivity()).content(
-              getResources().getString(R.string.edit_card_tpl_back_tips))
-              .autoDismiss(true)
-              .positiveColorRes(cn.qingchengfit.widgets.R.color.orange)
-              .negativeColorRes(cn.qingchengfit.widgets.R.color.text_black)
-              .negativeText(cn.qingchengfit.widgets.R.string.pickerview_cancel)
-              .positiveText(cn.qingchengfit.widgets.R.string.pickerview_submit)
-              .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                  if (which == DialogAction.POSITIVE) {
-                    if (TextUtils.isEmpty(civInputCardname.getContent())){
-                      showAlert(R.string.e_card_name_empty);
-                      return;
-                    }
-                    cardLimit.is_limit = expandSettingLimit.isExpanded();
-                    body.name = civInputCardname.getContent();
-                    if (cardLimit.is_limit) {
-                      body.is_limit = cardLimit.is_limit;
-                      body.day_times = cardLimit.day_times;
-                      body.buy_limit = cardLimit.buy_limit;
-                      body.pre_times = cardLimit.pre_times;
-                      body.week_times = cardLimit.week_times;
-                      body.month_times = cardLimit.month_times;
-                    }
-                    body.is_open_service_term = expandCardProtocol.isExpanded();
-                    presenter.editCardTpl(body);
+            getResources().getString(R.string.edit_card_tpl_back_tips))
+            .autoDismiss(true)
+            .positiveColorRes(cn.qingchengfit.widgets.R.color.orange)
+            .negativeColorRes(cn.qingchengfit.widgets.R.color.text_black)
+            .negativeText(cn.qingchengfit.widgets.R.string.pickerview_cancel)
+            .positiveText(cn.qingchengfit.widgets.R.string.pickerview_submit)
+            .onPositive(new MaterialDialog.SingleButtonCallback() {
+              @Override
+              public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                if (which == DialogAction.POSITIVE) {
+                  if (TextUtils.isEmpty(civInputCardname.getContent())) {
+                    showAlert(R.string.e_card_name_empty);
                     return;
                   }
+                  cardLimit.is_limit = expandSettingLimit.isExpanded();
+                  body.name = civInputCardname.getContent();
+                  if (cardLimit.is_limit) {
+                    body.is_limit = cardLimit.is_limit;
+                    body.day_times = cardLimit.day_times;
+                    body.buy_limit = cardLimit.buy_limit;
+                    body.pre_times = cardLimit.pre_times;
+                    body.week_times = cardLimit.week_times;
+                    body.month_times = cardLimit.month_times;
+                  }
+                  body.is_open_service_term = expandCardProtocol.isExpanded();
+                  presenter.editCardTpl(body);
+                  return;
                 }
-              })
-              .onNegative(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                  getActivity().onBackPressed();
-                }
-              })
-              .build()
-              .show();
+              }
+            })
+            .onNegative(new MaterialDialog.SingleButtonCallback() {
+              @Override
+              public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                getActivity().onBackPressed();
+              }
+            })
+            .build()
+            .show();
         } else {
           getActivity().onBackPressed();
         }
@@ -515,42 +515,40 @@ import rx.functions.Action1;
    */
   protected void showBottomList() {
     DialogList.builder(getContext())
-        .list(getResources().getStringArray(
-            presenter.isCardTplEnable() ? R.array.card_tpl_flow : R.array.card_tpl_flow_resume),
-            new AdapterView.OnItemClickListener() {
-              @Override
-              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {//编辑
-                  //presenter.editCardTpl();
-                  routeTo(AppUtils.getRouterUri(getContext(), "card/cardtpl/edit"),
-                      new EditCardTplParams().cardTpl(cardTpl).build());
-                } else if (position == 1) {
+      .list(getResources().getStringArray(
+        presenter.isCardTplEnable() ? R.array.card_tpl_flow : R.array.card_tpl_flow_resume),
+        new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (position == 0) {//编辑
+              //presenter.editCardTpl();
+              routeTo(AppUtils.getRouterUri(getContext(), "card/cardtpl/edit"),
+                new EditCardTplParams().cardTpl(cardTpl).build());
+            } else if (position == 1) {
 
-                }
-              }
-            })
-        .show();
+            }
+          }
+        })
+      .show();
   }
 
   public void alertDisableCardtpl() {
     DialogUtils.instanceDelDialog(getContext(), "是否确认停用",
-        "1.停用后，该会员卡种类无法用于开卡\n2.停用后，该会员卡种类无法用于排课支付\n3.不影响已发行会员卡的使用和显示",
-        new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            presenter.disable();
-          }
-        }).show();
+      "1.停用后，该会员卡种类无法用于开卡\n2.停用后，该会员卡种类无法用于排课支付\n3.不影响已发行会员卡的使用和显示",
+      new MaterialDialog.SingleButtonCallback() {
+        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+          presenter.disable();
+        }
+      }).show();
   }
 
   public void alertEnableCardtpl() {
     DialogUtils.instanceDelDialog(getContext(), "是否确认恢复",
-        new MaterialDialog.SingleButtonCallback() {
-          @Override
-          public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            presenter.enable();
-          }
-        }).show();
+      new MaterialDialog.SingleButtonCallback() {
+        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+          presenter.enable();
+        }
+      }).show();
   }
 
   /**
@@ -561,14 +559,14 @@ import rx.functions.Action1;
     tvCardId.setText("ID:" + card_tpl.getId());
     tvCardtplName.setText(card_tpl.getName());
     tvCardTplType.setText(
-        CardBusinessUtils.getCardTypeCategoryStrHead(card_tpl.getType(), getContext()));
+      CardBusinessUtils.getCardTypeCategoryStrHead(card_tpl.getType(), getContext()));
     cardview.setBackground(
-        DrawableUtils.generateBg(8, CardBusinessUtils.getDefaultCardbgColor(card_tpl.getType())));
+      DrawableUtils.generateBg(8, CardBusinessUtils.getDefaultCardbgColor(card_tpl.getType())));
     if (TextUtils.isEmpty(card_tpl.getDescription())) {
       tvCardExpandDesc.setContent("简介：无");
     } else {
       tvCardExpandDesc.setContent(
-          getResources().getString(R.string.cardtpl_description, card_tpl.getDescription()));
+        getResources().getString(R.string.cardtpl_description, card_tpl.getDescription()));
     }
     tvCardAppend.setText(card_tpl.getLimit());
     tvGymName.setText(card_tpl.getShopNames());
@@ -623,16 +621,16 @@ import rx.functions.Action1;
     Intent intent = new Intent(getActivity(), QRActivity.class);
     if (!gymWrapper.inBrand()) {
       intent.putExtra(QRActivity.LINK_MODULE,
-          QRActivity.MODULE_ADD_CARD_PROTOCOL + "?" + PARAMS_KEY + uuid);
+        QRActivity.MODULE_ADD_CARD_PROTOCOL + "?" + PARAMS_KEY + uuid);
     } else {
       try {
         intent.putExtra(QRActivity.LINK_MODULE, URLEncoder.encode(QRActivity.MULTI_CARD_TPL
-            + "?"
-            + "brand_id="
-            + gymWrapper.brand_id()
-            + "&"
-            + PARAMS_KEY
-            + uuid, "utf-8"));
+          + "?"
+          + "brand_id="
+          + gymWrapper.brand_id()
+          + "&"
+          + PARAMS_KEY
+          + uuid, "utf-8"));
       } catch (UnsupportedEncodingException e) {
         e.printStackTrace();
       }
@@ -676,27 +674,29 @@ import rx.functions.Action1;
     sb.delete(0, sb.length());
     sb.append("限制: ");
     if (cardLimit.pre_times > 0) {
-      sb.append(getResources().getString(R.string.card_limit_pre_times, tempChargeLimit(cardLimit.pre_times)));
+      sb.append(getResources().getString(R.string.card_limit_pre_times,
+        tempChargeLimit(cardLimit.pre_times)));
       sb.append(",");
     }
-    if (cardLimit.day_times > 0){
+    if (cardLimit.day_times > 0) {
       sb.append(getResources().getString(R.string.card_can_work_everyday, cardLimit.day_times));
       sb.append(",");
     }
-    if (cardLimit.week_times > 0){
+    if (cardLimit.week_times > 0) {
       sb.append(getResources().getString(R.string.card_can_work_everyweek, cardLimit.week_times));
       sb.append(",");
     }
-    if (cardLimit.month_times > 0){
+    if (cardLimit.month_times > 0) {
       sb.append(getResources().getString(R.string.card_can_work_month, cardLimit.month_times));
       sb.append(",");
     }
-    if (cardLimit.buy_limit > 0)
+    if (cardLimit.buy_limit > 0) {
       sb.append(getResources().getString(R.string.buylimit, tempChargeLimit(cardLimit.buy_limit)));
+    }
     tvCardAppend.setText(sb);
   }
 
-  private String tempChargeLimit(int i){
+  private String tempChargeLimit(int i) {
     return i == 0 ? "不限" : String.valueOf(i);
   }
 
@@ -711,9 +711,9 @@ import rx.functions.Action1;
           int circ_type = Integer.parseInt(IntentUtils.getIntentString(data, 0));
           int circ_time = Integer.parseInt(IntentUtils.getIntentString(data, 1));
           duringCount.setContent(getResources().getStringArray(R.array.class_frequent)[circ_type]
-              + ","
-              + circ_time
-              + "次");
+            + ","
+            + circ_time
+            + "次");
 
           if (circ_type == 0) {
             cardLimit.day_times = circ_time;
@@ -750,9 +750,17 @@ import rx.functions.Action1;
 
   @OnClick({ R2.id.pre_order_count, R2.id.during_count, R2.id.limit_bug_count })
   public void onLimit(View v) {
-    if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)){
-      showAlert(getResources().getString(R.string.alert_permission_forbid));
-      return;
+    if (gymWrapper.inBrand()) {
+      if (cardTpl != null && !permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE,
+        cardTpl.getShopIds())) {
+        showAlert(getResources().getString(R.string.alert_permission_forbid));
+        return;
+      }
+    } else {
+      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
+        showAlert(getResources().getString(R.string.alert_permission_forbid));
+        return;
+      }
     }
     int i = v.getId();
     if (i == R.id.pre_order_count) {
@@ -767,13 +775,13 @@ import rx.functions.Action1;
   @OnClick({ R2.id.input_card_protocol }) public void onOpenProtocol() {
     if (cardTpl != null && cardTpl.has_service_term) {
       CardProtocolActivity.startWeb(cardTpl.card_tpl_service_term.content_link, getContext(), true,
-          "", cardTpl);
+        "", cardTpl);
     }
   }
 
   @OnClick(R2.id.civ_input_card_desc) public void onDesc() {
     routeTo("common", "/input/",
-        new CommonInputParams().content(body.description).title("填加简介").hint("填写会员卡简介").build());
+      new CommonInputParams().content(body.description).title("填加简介").hint("填写会员卡简介").build());
     editInfoListener(true);
   }
 
@@ -784,15 +792,14 @@ import rx.functions.Action1;
   @OnClick(R2.id.support_gyms) public void onSupportGyms() {
     if (cardTpl != null && cardTpl.getShopIds() != null) {
       MutiChooseGymFragment.start(CardTplDetailFragment.this, false,
-          (ArrayList<String>) cardTpl.getShopIds(), PermissionServerUtils.CARDSETTING_CAN_CHANGE,
-          4);
+        (ArrayList<String>) cardTpl.getShopIds(), PermissionServerUtils.CARDSETTING_CAN_CHANGE, 4);
     } else if (!TextUtils.isEmpty(supportShopStr)) {
       MutiChooseGymFragment.start(CardTplDetailFragment.this, false,
-          (ArrayList<String>) StringUtils.Str2List(supportShopStr),
-          PermissionServerUtils.CARDSETTING_CAN_CHANGE, 4);
+        (ArrayList<String>) StringUtils.Str2List(supportShopStr),
+        PermissionServerUtils.CARDSETTING_CAN_CHANGE, 4);
     } else {
       MutiChooseGymFragment.start(CardTplDetailFragment.this, false, null,
-          PermissionServerUtils.CARDSETTING_CAN_WRITE, 4);
+        PermissionServerUtils.CARDSETTING_CAN_WRITE, 4);
     }
   }
 
@@ -831,22 +838,29 @@ import rx.functions.Action1;
     if (!civInputCardname.isClickable()) {
       return false;
     } else {
-      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)){
-        showAlert(getResources().getString(R.string.alert_permission_forbid));
-        return false;
+      if (gymWrapper.inBrand()) {
+        if (cardTpl != null && !permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE,
+          cardTpl.getShopIds())) {
+          showAlert(getResources().getString(R.string.alert_permission_forbid));
+          return true;
+        }
+      } else {
+        if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
+          showAlert(getResources().getString(R.string.alert_permission_forbid));
+          return false;
+        }
       }
       IFlexible item = comonAdapter.getItem(i);
       if (item instanceof CardtplOptionItem) {
         //会员卡价格修改
         routeTo("/cardtpl/option/",
-            new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption())
-                .build());
+          new CardTplOptionParams().cardTplOption(((CardtplOptionItem) item).getOption()).build());
       } else if (item instanceof AddCardtplStantardItem) {
         //新增会员卡价格
         routeTo("/cardtpl/option/add/",
-            new CardtplOptionAddParams().cardTplId(presenter.getCardtplId())
-                .cardCate(presenter.getCardCate())
-                .build());
+          new CardtplOptionAddParams().cardTplId(presenter.getCardtplId())
+            .cardCate(presenter.getCardCate())
+            .build());
       }
       return true;
     }

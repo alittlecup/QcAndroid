@@ -86,11 +86,11 @@ public class OffDayListFragment
 
     adapter.setListener(new OnRecycleItemClickListener() {
       @Override public void onItemClick(View v, final int pos) {
+        if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_DELETE)) {
+          showAlert(R.string.alert_permission_forbid);
+          return;
+        }
         if (v.getId() == R.id.cancel_offday) {
-          if (!permissionModel.check(PermissionServerUtils.MANAGE_COSTS_CAN_DELETE)) {
-            showAlert(R.string.alert_permission_forbid);
-            return;
-          }
           if (!datas.get(pos).cancel) {
             //删除请假
             DialogUtils.instanceDelDialog(getContext(), "是否删除请假?",
