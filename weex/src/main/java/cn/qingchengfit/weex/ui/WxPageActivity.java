@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.weex.R;
 import cn.qingchengfit.weex.utils.WeexLoadView;
@@ -62,6 +63,8 @@ public class WxPageActivity extends WxBaseActivity {
     member.put("g_shop_logo", g_shop_logo);
     member.put("g_brand_id", g_brand_id);
     member.put("g_brand_name", g_brand_name);
+    member.put("g_fitness_host",gymWrapper.getCoachService().getHost());
+    member.put("g_session_id", PreferenceUtils.getPrefString(this, "session_id", ""));
     Map<String, Object> g_user = new HashMap<>();
     g_user.put("g_user", member);
     JSONObject jsonObject = new JSONObject(g_user);
