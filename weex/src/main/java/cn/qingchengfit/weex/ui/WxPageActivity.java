@@ -64,7 +64,8 @@ public class WxPageActivity extends WxBaseActivity {
     member.put("g_brand_id", g_brand_id);
     member.put("g_brand_name", g_brand_name);
     member.put("g_fitness_host",gymWrapper.getCoachService().getHost());
-    member.put("g_session_id", PreferenceUtils.getPrefString(this, "session_id", ""));
+    member.put("g_session_value", PreferenceUtils.getPrefString(this, "session_id", ""));
+    member.put("g_session_key", PreferenceUtils.getPrefString(this, "session_key", ""));
     Map<String, Object> g_user = new HashMap<>();
     g_user.put("g_user", member);
     JSONObject jsonObject = new JSONObject(g_user);

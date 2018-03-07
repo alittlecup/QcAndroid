@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 import cn.qingchengfit.RxBus;
+import cn.qingchengfit.utils.AppUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.annotation.JSMethod;
@@ -23,6 +24,7 @@ public class QcNavigatorModule extends WXNavigatorModule {
   }
   @JSMethod(uiThread = true)
   public void go(String path,String options, JSCallback callback) {
+    String schema= AppUtils.getCurAppSchema(mWXSDKInstance.getContext());
     if("select_member".equals(path)){
       JSONObject jsonObject = JSON.parseObject(options);
       String shop_id = jsonObject.getString("shop_id");
@@ -30,7 +32,7 @@ public class QcNavigatorModule extends WXNavigatorModule {
       String multiple = jsonObject.getString("multiple");
       String user = jsonObject.getString("user");
       String users = jsonObject.getString("users");
-      String uri="qcstaff://student/select_member/?shop_id="+shop_id+"&brand_id="+brand_id;
+      String uri=schema+"://student/select_member/?shop_id="+shop_id+"&brand_id="+brand_id;
       if(!TextUtils.isEmpty(user)){
         uri=uri+"&user_id="+user;
       }
@@ -49,7 +51,7 @@ public class QcNavigatorModule extends WXNavigatorModule {
       String brand_id = jsonObject.getString("brand_id");
       String card_id = jsonObject.getString("card_id");
 
-      String uri="qcstaff://card/charge_card/?card_id="+1300;
+      String uri=schema+"://card/charge_card/?card_id="+card_id;
 
       Intent intent=new Intent(Intent.ACTION_VIEW,Uri.parse(uri));
       mWXSDKInstance.getContext().startActivity(intent);
