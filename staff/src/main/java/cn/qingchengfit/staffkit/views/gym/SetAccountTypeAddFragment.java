@@ -42,7 +42,7 @@
 //import cn.qingchengfit.staffkit.views.batch.BatchActivity;
 //import cn.qingchengfit.staffkit.views.custom.ClubCardView;
 //import cn.qingchengfit.staffkit.views.custom.DialogList;
-//import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
+//import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 //import cn.qingchengfit.utils.CompatUtils;
 //import cn.qingchengfit.utils.GymUtils;
 //import cn.qingchengfit.utils.IntentUtils;

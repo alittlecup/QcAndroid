@@ -117,7 +117,7 @@ import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffDetailFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.TrialProDialogFragment;
-import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
+import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.UpgrateGymFragment;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.staffkit.views.main.ChooseBrandInMainFragment;

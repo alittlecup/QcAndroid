@@ -27,7 +27,7 @@ import cn.qingchengfit.staffkit.views.adapter.GymMoreAdapter;
 import cn.qingchengfit.staffkit.views.gym.items.EmptyFunItem;
 import cn.qingchengfit.staffkit.views.gym.items.FunHeaderItem;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
-import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
+import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ToastUtils;

@@ -137,6 +137,7 @@
           app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways"
           >
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/layout_to_charge"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -146,6 +147,7 @@
             android:background="@drawable/primary_horizon_to_dark"
             >
           <cn.qingchengfit.support.widgets.CompatTextView
+              android:id="@+id/tv_price"
               android:layout_width="0dp"
               android:layout_weight="1"
               android:textSize="@dimen/txt_15sp"

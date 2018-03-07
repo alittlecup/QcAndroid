@@ -53,7 +53,7 @@ android {
 }
 
 dependencies {
-    api "cn.qingchengfit.widgets:qcbase:1.0.21"
+    api "cn.qingchengfit.widgets:qcbase:1.0.22"
     api "cn.qingchengfit.recruit:recruit:1.1.0"
     api "cn.qingchengfit.chat:sdk:1.1.0"
     api "cn.qingchengfit.chat:qcim:1.1.0"

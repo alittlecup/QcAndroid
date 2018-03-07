@@ -36,7 +36,7 @@ public interface GymDetailView extends PView {
 
     void setInfo(HomeStatement stats);
 
-    void setRecharge(GymDetail.Recharge recharge);
+    void setRecharge(GymDetail.Recharge recharge,boolean hasFirst,String price);
 
     void showOutDataTime();
 

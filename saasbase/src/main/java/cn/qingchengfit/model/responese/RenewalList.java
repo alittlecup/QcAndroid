@@ -26,4 +26,7 @@ import java.util.List;
 public class RenewalList {
     public boolean is_regular;//是否可以使用优惠 ture为可以，regular表示常客 一脸懵逼
     public List<RenewalPay> normal;
+    public List<RenewalPay> first_month_favorable;
+    public boolean has_first_month_favorable;
+
 }

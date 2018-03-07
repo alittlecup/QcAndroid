@@ -25,4 +25,6 @@ import cn.qingchengfit.model.base.CoachService;
 
 public class HomeDetailGym extends CoachService {
     public Object module_custom;
+    public boolean has_first_month_favorable;
+    public RenewalPay first_month_favorable_info;
 }

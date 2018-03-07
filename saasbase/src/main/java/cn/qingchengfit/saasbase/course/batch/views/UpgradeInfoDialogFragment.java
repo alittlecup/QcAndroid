@@ -8,12 +8,11 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import butterknife.OnClick;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.saasbase.R;
-import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.views.fragments.BaseDialogFragment;
 import javax.inject.Inject;
 
@@ -41,9 +40,11 @@ public class UpgradeInfoDialogFragment extends BaseDialogFragment {
 
   TextView tvTitle;
   TextView tvPrice;
+  Button btn;
 
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
+
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -52,16 +53,17 @@ public class UpgradeInfoDialogFragment extends BaseDialogFragment {
     View view = inflater.inflate(R.layout.fragment_upgrade_info, container, false);
     tvTitle = view.findViewById(R.id.tv_title);
     tvPrice = view.findViewById(R.id.tv_price);
-    tvPrice.setText(Html.fromHtml("首月体验价"));//todo 首月体验价
-
+    btn = view.findViewById(R.id.btn);
+    tvPrice.setVisibility(gymWrapper.isHasFirst()?View.VISIBLE:View.GONE);
+    tvPrice.setText(Html.fromHtml("首月体验价<font size=\"5\" color=\"red\">¥"+gymWrapper.getFirstPrice()+"</font>"));
+    btn.setText(gymWrapper.isHasFirst()?"立即升级":"立即续费");
+    view.findViewById(R.id.btn_close).setOnClickListener(view1 -> dismiss());
+    btn.setOnClickListener(view1 -> onLeftClick());
     return view;
   }
 
-  @OnClick(R2.id.btn_close) public void onClick(View view) {
-    dismiss();
-  }
 
-  @OnClick(R2.id.btn) public void onLeftClick() {
+  public void onLeftClick() {
     Intent toRenewal = new Intent(Intent.ACTION_VIEW, Uri.parse("qcstaff://bottom/"));
     toRenewal.putExtra("cn.qingchengfit.router","renewal");
     startActivity(toRenewal);

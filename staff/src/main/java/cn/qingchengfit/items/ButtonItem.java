@@ -4,7 +4,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.utils.CompatUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -57,7 +57,7 @@ public class ButtonItem extends AbstractFlexibleItem<ButtonItem.ButtonVH> {
   }
 
   public class ButtonVH extends FlexibleViewHolder {
-    Button btn;
+    TextView btn;
 
     public ButtonVH(View view, FlexibleAdapter adapter) {
       super(view, adapter);

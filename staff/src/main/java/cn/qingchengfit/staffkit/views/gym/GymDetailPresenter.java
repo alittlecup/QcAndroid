@@ -18,6 +18,7 @@ import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.GymUseCase;
+import cn.qingchengfit.subscribes.NetSubscribe;
 import cn.qingchengfit.utils.CrashUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import java.util.List;
@@ -122,16 +123,12 @@ public class GymDetailPresenter extends BasePresenter {
             .onBackpressureBuffer()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponsePermission>() {
-                @Override public void call(QcResponsePermission qcResponse) {
+            .subscribe(new NetSubscribe<QcResponsePermission>() {
+                @Override public void onNext(QcResponsePermission qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse) && qcResponse.data.permissions != null) {
                         serPermisAction.writePermiss(qcResponse.data.permissions);
                         getGymWelcome();
                     }
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-
                 }
             }));
     }
@@ -146,8 +143,15 @@ public class GymDetailPresenter extends BasePresenter {
                     gymDetailView.setInfo(qcResponseGymDetail.data.stat);
 
                     gymDetailView.studentPreview(qcResponseGymDetail.data.welcome_url, qcResponseGymDetail.data.hint_url);
-                    gymDetailView.setRecharge(qcResponseGymDetail.data.recharge);
+                    String price = "";
+                    if (qcResponseGymDetail.data.gym.first_month_favorable_info != null){
+                        price = qcResponseGymDetail.data.gym.first_month_favorable_info.favorable_price;
+                    }
+                    gymWrapper.setHasFirst(qcResponseGymDetail.data.gym.has_first_month_favorable);
+                    gymWrapper.setFirstPrice(price);
+                    gymDetailView.setRecharge(qcResponseGymDetail.data.recharge,qcResponseGymDetail.data.gym.has_first_month_favorable,price);
                     gymDetailView.onSpecialPoint(qcResponseGymDetail.data.qingcheng_activity_count);
+
                     if (qcResponseGymDetail.data.gym.module_custom != null) {
                         try {
                             qcDbManager.insertFunction((List<String>) qcResponseGymDetail.data.gym.module_custom);

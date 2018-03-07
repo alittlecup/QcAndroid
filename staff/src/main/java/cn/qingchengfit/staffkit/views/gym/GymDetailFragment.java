@@ -16,6 +16,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +44,7 @@ import cn.qingchengfit.model.responese.FollowUpDataStatistic;
 import cn.qingchengfit.model.responese.GymDetail;
 import cn.qingchengfit.model.responese.GymFuntion;
 import cn.qingchengfit.model.responese.HomeStatement;
+import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
@@ -68,12 +70,12 @@ import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.staffkit.views.custom.DialogList;
 import cn.qingchengfit.staffkit.views.gym.items.GymFuntionItem;
 import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
-import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.staffkit.views.main.SettingFragment;
 import cn.qingchengfit.staffkit.views.setting.BrandManageActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.staffkit.views.student.followup.FollowUpActivity;
+import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.GymUtils;
@@ -134,6 +136,7 @@ public class GymDetailFragment extends BaseFragment
   @BindView(R.id.recharge) Button mRechargeBtn;
   @BindView(R.id.tag_pro) ImageView tagPro;
   @BindView(R.id.layout_to_charge) LinearLayout layoutCharge;
+  @BindView(R.id.tv_price) CompatTextView tvPrice;
 
   @Inject GymDetailPresenter gymDetailPresenter;
   @Inject RestRepository restRepository;
@@ -154,6 +157,7 @@ public class GymDetailFragment extends BaseFragment
    */
   private GymExpireFragment mGymExpireDialog;
   private String mPreViewUrl;
+  private boolean firstMonthClose ;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -168,7 +172,10 @@ public class GymDetailFragment extends BaseFragment
     initToolbar(toolbar);
     initView();
     view.setOnTouchListener((v, event) -> true);
-    view.findViewById(R.id.btn_close).setOnClickListener(view1 -> {layoutCharge.setVisibility(View.GONE);});
+    view.findViewById(R.id.btn_close).setOnClickListener(view1 -> {
+      layoutCharge.setVisibility(View.GONE);
+      firstMonthClose = true;
+    });
     RxBusAdd(EventChartTitle.class).subscribe(eventChartTitle -> {
       switch (eventChartTitle.getChartType()) {
         case 1:
@@ -240,7 +247,7 @@ public class GymDetailFragment extends BaseFragment
     if (gymLayout.getVisibility() == View.VISIBLE) {
       ViewCompat.animate(gymLayout)
         .scaleY(0)
-        .setDuration(500L)
+        .setDuration(200L)
         .setListener(new ViewPropertyAnimatorListener() {
           @Override public void onAnimationStart(View view) {
           }
@@ -259,10 +266,10 @@ public class GymDetailFragment extends BaseFragment
     } else {
       gymLayout.setScaleY(0);
       gymLayout.setVisibility(View.VISIBLE);
-      ViewCompat.animate(gymLayout).scaleY(1).setDuration(500L).start();
+      ViewCompat.animate(gymLayout).scaleY(1).setDuration(200L).start();
       down.setRotation(180);
     }
-    ViewCompat.animate(down).rotationBy(180).setDuration(300).start();
+    ViewCompat.animate(down).rotationBy(180).setDuration(200).start();
   }
 
   @Override public void initToolbar(@NonNull Toolbar toolbar) {
@@ -328,7 +335,7 @@ public class GymDetailFragment extends BaseFragment
     recycleview.setLayoutManager(layoutManager);
     recycleview.setHasFixedSize(true);
     recycleview.addItemDecoration(
-      new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_button,20)
+      new FlexibleItemDecoration(getContext()).addItemViewType(R.layout.item_button, 20)
         .withTopEdge(true));
     recycleview.setAdapter(adapter);
     notifyMyFunctions();
@@ -369,7 +376,11 @@ public class GymDetailFragment extends BaseFragment
         new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE)));
     }
     datas.add(ButtonItem.newBuilder().txt("会员端界面").build());
-    //datas.add(new SimpleTextItemItem("如何使用?", Gravity.CENTER));
+    datas.add(SimpleTextItemItem.newBuilder()
+      .bg(R.color.transparent)
+      .gravity(Gravity.CENTER)
+      .text("如何使用")
+      .build());
     adapter.updateDataSet(datas);
   }
 
@@ -406,7 +417,8 @@ public class GymDetailFragment extends BaseFragment
     mCopyUrl = copy;
     mPreViewUrl = url;
   }
-  private void guideToStudentPreview(){
+
+  private void guideToStudentPreview() {
     Intent toWebForGuide = new Intent(getActivity(), WebActivityForGuide.class);
     toWebForGuide.putExtra("url", mPreViewUrl);
     toWebForGuide.putExtra("copyurl", mCopyUrl);
@@ -430,12 +442,13 @@ public class GymDetailFragment extends BaseFragment
     }
   }
 
-  @Override public void setRecharge(final GymDetail.Recharge recharge) {
+  @Override
+  public void setRecharge(final GymDetail.Recharge recharge, boolean hasFirst, String price) {
     hideLoading();
-    gymWrapper.setOutOfDate(recharge.trial_date < 0);
+    layoutCharge.setVisibility((hasFirst && !firstMonthClose)? View.VISIBLE : View.GONE);
+    tvPrice.setText(getString(R.string.underline_pro_update_now, price));
     mRechargeBtn.setOnClickListener(v -> toCharge());
-    if (getView() != null)
-      getView().findViewById(R.id.layout_to_charge).setOnClickListener(view -> toCharge());
+    layoutCharge.setOnClickListener(view -> toCharge());
   }
 
   private void toCharge() {
@@ -652,9 +665,9 @@ public class GymDetailFragment extends BaseFragment
             gymWrapper.getBrand(), new GymStatus.Builder().build(), this);
         }
       }
-    }else if (item instanceof ButtonItem){
+    } else if (item instanceof ButtonItem) {
       guideToStudentPreview();
-    }else if (item instanceof SimpleTextItemItem){
+    } else if (item instanceof SimpleTextItemItem) {
       onHowtoUse();
     }
     return true;

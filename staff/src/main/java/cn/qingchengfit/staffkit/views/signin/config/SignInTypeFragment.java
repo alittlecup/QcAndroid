@@ -26,7 +26,7 @@ import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
+import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.signin.SignInCloseFragment;
 import cn.qingchengfit.staffkit.views.signin.SignInHomeFragment;
 import cn.qingchengfit.utils.DialogUtils;

@@ -24,7 +24,7 @@ import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
 import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.staffkit.views.export.ImportExportActivity;
-import cn.qingchengfit.staffkit.views.gym.upgrate.UpgradeInfoDialogFragment;
+import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.student.attendance.AttendanceActivity;
 import cn.qingchengfit.staffkit.views.student.followup.FollowUpActivity;
 import cn.qingchengfit.staffkit.views.student.followup.RouterFollowUp;

@@ -58,7 +58,7 @@ public class LoginModel implements ILoginModel {
   }
 
   @Override public boolean isDebug() {
-    return BuildConfig.DEBUG;
+    return BuildConfig.DEBUG || BuildConfig.FLAVOR.equals("dev");
   }
 
   @Override public Observable<QcDataResponse<Login>> doLogin(LoginBody body) {

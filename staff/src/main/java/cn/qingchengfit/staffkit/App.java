@@ -130,7 +130,7 @@ public class App extends Application
         }
         context = this;
         ToastUtils.init(this);
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equalsIgnoreCase("dev")) {
             String ip = cn.qingchengfit.utils.PreferenceUtils.getPrefString(this, "debug_ip", Server);
             Server = ip;
             Configs.URL_QC_FIND = Server + "mobile/staff/discover/";

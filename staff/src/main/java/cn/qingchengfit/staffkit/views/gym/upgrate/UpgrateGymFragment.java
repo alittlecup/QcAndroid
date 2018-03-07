@@ -186,10 +186,12 @@ public class UpgrateGymFragment extends BaseFragment {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         mOriDatas.clear();
                         mDisCountDatas.clear();
+                        boolean hasFirst =(qcResponse.getData().has_first_month_favorable && qcResponse.getData().first_month_favorable != null);
+                        tvFirstDiscount.setVisibility(hasFirst?View.VISIBLE:View.GONE);
                         if (qcResponse.getData().normal != null) {
-                            for (int i = 0; i < qcResponse.getData().normal.size(); i++) {
-                                RenewalPay renewalPay = qcResponse.getData().normal.get(i);
-                                mOriDatas.add(new PayItem(renewalPay.name, null, renewalPay.price, renewalPay.times));
+                            for (int i = 0; i <(hasFirst?qcResponse.getData().first_month_favorable.size(): qcResponse.getData().normal.size()); i++) {
+                                RenewalPay renewalPay =hasFirst?qcResponse.getData().first_month_favorable.get(i): qcResponse.getData().normal.get(i);
+                                mOriDatas.add(new PayItem(renewalPay.name, (hasFirst && i ==0)?renewalPay.price:null, renewalPay.price, renewalPay.times));
                                 mDisCountDatas.add(
                                     new PayItem(renewalPay.name, renewalPay.price, renewalPay.favorable_price, renewalPay.times));
                             }
@@ -286,6 +288,7 @@ public class UpgrateGymFragment extends BaseFragment {
             hidenTrans.setVisibility(View.GONE);
             mPayAdapter = new CommonFlexAdapter(mDisCountDatas, mPayClickListener);
             mHidenPayAdapter = new CommonFlexAdapter(mOriDatas, mHidenClickListener);
+            tvHidenHint.setVisibility(View.GONE);
         } else {
             /**
              * 高级版 不足12月
@@ -296,6 +299,7 @@ public class UpgrateGymFragment extends BaseFragment {
             tvPayHint.setVisibility(View.GONE);
 
             tvHideTitle.setText("优惠");
+            tvHidenHint.setVisibility(View.VISIBLE);
             tvHidenHint.setText("单场馆累计付费12个月以上，同品牌下场馆即可享受以下优惠");
 
             mPayAdapter = new CommonFlexAdapter(mOriDatas, mPayClickListener);

@@ -134,15 +134,7 @@ public class App extends Application implements HasActivityInjector, HasSupportF
     }
 
     Configs.APP_ID = getString(R.string.wechat_code);
-    //String id = PreferenceUtils.getPrefString(this, "coach", "");
-    //String session_id = PreferenceUtils.getPrefString(this, "session_id", "");
-    //
-    //if (TextUtils.isEmpty(id)) {
-    //} else {
-    //  Coach coach = new Gson().fromJson(id, Coach.class);
-    //  App.coachid = Integer.parseInt(coach.id);
-    //}
-    if (BuildConfig.DEBUG) {
+    if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equalsIgnoreCase("dev")) {
       String ip = cn.qingchengfit.utils.PreferenceUtils.getPrefString(this, "debug_ip", Configs.Server);
       Configs.Server = ip;
     }

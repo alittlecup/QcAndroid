@@ -20,6 +20,7 @@ public class GymDetail {
     @SerializedName("recharge") public Recharge recharge;
     @SerializedName("qingcheng_activity_count") public int qingcheng_activity_count;
 
+
     public Staff superuser;
 
     public static class Recharge implements Parcelable {
