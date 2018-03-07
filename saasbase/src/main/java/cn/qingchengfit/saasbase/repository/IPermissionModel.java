@@ -29,6 +29,7 @@ public interface IPermissionModel {
    * @return
    */
   boolean check(String permission);
+  boolean checkAllGym(String permission);
   boolean checkInBrand(String permission);
   boolean check(String permission, List<String> shopids);
 }

@@ -62,10 +62,10 @@ import javax.inject.Inject;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/9/28.
  */
-@Leaf(module = "card", path = "/list/home/") public class CardListHomeFragment extends
-    SaasBaseFragment
+@Leaf(module = "card", path = "/list/home/") public class CardListHomeFragment
+  extends SaasBaseFragment
   implements CardListPresenter.MVPView, FlexibleAdapter.OnItemClickListener,
-  SwipeRefreshLayout.OnRefreshListener,FlexibleAdapter.EndlessScrollListener {
+  SwipeRefreshLayout.OnRefreshListener, FlexibleAdapter.EndlessScrollListener {
 
   CardListFragment cardListFragment;
   CardListFilterFragment filterFragment;
@@ -94,7 +94,7 @@ import javax.inject.Inject;
       .compose(this.<EventSaasFresh.CardList>doWhen(FragmentEvent.CREATE_VIEW))
       .subscribe(new BusSubscribe<EventSaasFresh.CardList>() {
         @Override public void onNext(EventSaasFresh.CardList cardList) {
-         onRefresh();
+          onRefresh();
         }
       });
   }
@@ -127,17 +127,18 @@ import javax.inject.Inject;
       .subscribe(new BusSubscribe<Void>() {
         @Override public void onNext(Void aVoid) {
           showSelectSheet(null, Arrays.asList("会员卡种类管理"), new AdapterView.OnItemClickListener() {
-            @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
               if (!serPermisAction.check(PermissionServerUtils.CARDSETTING)) {
                 showAlert(R.string.alert_permission_forbid);
                 return;
               }
-              routeTo("card","/cardtpl/list/",null);
+              routeTo("card", "/cardtpl/list/", null);
             }
           });
         }
       });
-    initSearch(tl,"输入会员姓名或手机号查找会员卡");
+    initSearch(tl, "输入会员姓名或手机号查找会员卡");
   }
 
   @Override public void onTextSearch(String text) {
@@ -150,7 +151,7 @@ import javax.inject.Inject;
       @Override public void onFilterResult(CardTpl cardTpl, int status) {
         filterTpl.setChecked(false);
         filterStatus.setChecked(false);
-        cardListFragment.initLoadMore(100,CardListHomeFragment.this);
+        cardListFragment.initLoadMore(100, CardListHomeFragment.this);
         presenter.setFilter(cardTpl.type, cardTpl.getId(), status);
       }
     });
@@ -180,18 +181,23 @@ import javax.inject.Inject;
    * 余额不足卡提醒
    */
   @OnClick(R2.id.btn_card_balance) public void onBtnCardBalanceClicked() {
-    routeTo("/balance/",null);
+    if (!serPermisAction.check(PermissionServerUtils.CARDBALANCE)) {
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
+    routeTo("/balance/", null);
   }
 
   /**
    * 会员卡导出
    */
   @OnClick(R2.id.btn_outport) public void onBtnOutportClicked() {
-    if (!serPermisAction.check(PermissionServerUtils.CARD_EXPORT)) {
+    if (!serPermisAction.check(PermissionServerUtils.CARD_EXPORT) && !serPermisAction.check(
+      PermissionServerUtils.CARD_IMPORT)) {
       showAlert(R.string.sorry_for_no_permission);
       return;
     }
-    routeTo("export","/card/",null);
+    routeTo("export", "/card/", null);
   }
 
   /**
@@ -237,24 +243,22 @@ import javax.inject.Inject;
   @Override public boolean onItemClick(int position) {
     IFlexible iFlexible = cardListFragment.getItem(position);
     if (iFlexible instanceof CardItem) {
-      routeTo("/detail/", new cn.qingchengfit.saasbase.cards.views.CardDetailParams()
-        .cardid(((CardItem) iFlexible).getRealCard().getId())
-        .build());
+      routeTo("/detail/", new cn.qingchengfit.saasbase.cards.views.CardDetailParams().cardid(
+        ((CardItem) iFlexible).getRealCard().getId()).build());
     }
     return true;
   }
 
   @Override public void onRefresh() {
-    cardListFragment.initLoadMore(100,this);
+    cardListFragment.initLoadMore(100, this);
     presenter.initpage();
     presenter.queryAllCards();
     presenter.queryBalanceCount();
   }
 
-
   @Override public void onCardCount(int count) {
-    tvCardCount.setText(getString(R.string.card_total_count_d,count));
-    cardListFragment.initLoadMore(count,this);
+    tvCardCount.setText(getString(R.string.card_total_count_d, count));
+    cardListFragment.initLoadMore(count, this);
   }
 
   @Override public void onGetBalanceCount(int count) {
@@ -266,6 +270,6 @@ import javax.inject.Inject;
   }
 
   @Override public void onLoadMore(int lastPosition, int currentPage) {
-      presenter.queryAllCards();
+    presenter.queryAllCards();
   }
 }

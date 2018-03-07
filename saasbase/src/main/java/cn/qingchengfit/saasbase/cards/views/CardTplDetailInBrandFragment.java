@@ -2,11 +2,9 @@ package cn.qingchengfit.saasbase.cards.views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.model.base.PermissionServerUtils;
-import cn.qingchengfit.saasbase.R;
 import com.anbillon.flabellum.annotations.Leaf;
 
 /**
@@ -28,15 +26,17 @@ public class CardTplDetailInBrandFragment extends CardTplDetailFragment {
     if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE,
         cardTpl.getShopIds())) {
       isEnable(false);
-      layoutCardDetail.setOnTouchListener(new View.OnTouchListener() {
-        @Override public boolean onTouch(View v, MotionEvent event) {
-          layoutCardDetail.performClick();
-          showAlert(getString(R.string.edit_cardtpl_in_brand_no_permission));
-          return true;
-        }
-      });
     }else{
       isEnable(true);
     }
+  }
+
+
+  @Override public boolean hasAddPermission() {
+    boolean ret = permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE,cardTpl.getShopIds());
+    if (!ret) {
+      showAlert("您没有会员卡新增权限");
+    }
+    return ret;
   }
 }

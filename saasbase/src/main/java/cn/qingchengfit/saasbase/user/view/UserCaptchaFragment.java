@@ -127,7 +127,9 @@ public class UserCaptchaFragment extends BaseFragment {
       .subscribe(new NetSubscribe<QcDataResponse>() {
         @Override public void onNext(QcDataResponse qcResponse) {
           if (ResponseConstant.checkSuccess(qcResponse)) {
-            routeTo("/new/pw/?nostack=true", UserNewPwParams.builder().code(civCode.getContent()).build());
+            routeTo("/new/pw/?nostack=true", UserNewPwParams.builder().code(civCode.getContent())
+              .phone(loginStatus.getLoginUser().getPhone())
+              .build());
           } else {
             onShowError(qcResponse.getMsg());
           }

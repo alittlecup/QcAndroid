@@ -210,7 +210,7 @@ public class App extends Application
         appCompoent = DaggerAppComponent.builder()
             .appModel(new AppModel(this, new SerPermissionImpl(this), lb.build(),
                 new GymWrapper.Builder().build(), new RestRepository(), new BaseRouter(),
-                new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag)),new QCDbManagerImpl(this)))
+                new QcRestRepository(this, Server, getString(R.string.oem_tag)),new QCDbManagerImpl(this)))
             .staffWrapperMoudle(new StaffWrapperMoudle(new StaffWrapper()))
             .studentWrapperModule(new StudentWrapperModule(new StudentWrapper()))
             .cardTypeWrapperModule(new CardTypeWrapperModule(new CardTypeWrapper(null)))

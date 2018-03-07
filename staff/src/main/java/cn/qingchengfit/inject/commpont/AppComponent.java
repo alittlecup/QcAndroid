@@ -2,12 +2,6 @@ package cn.qingchengfit.inject.commpont;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import cn.qingchengfit.saasbase.article.ArticleCommentsListFragment;
-import cn.qingchengfit.saasbase.article.ArticleReplyFragment;
-import cn.qingchengfit.saasbase.chat.ChatChooseInGymFragment;
-import cn.qingchengfit.saasbase.chat.ChatFriendAllChooseFragment;
-import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
-import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
 import cn.qingchengfit.inject.moudle.AppModel;
 import cn.qingchengfit.inject.moudle.CardTypeWrapperModule;
 import cn.qingchengfit.inject.moudle.RealcardModule;
@@ -29,14 +23,22 @@ import cn.qingchengfit.recruit.views.JobSearchChatActivity;
 import cn.qingchengfit.saas.di.BindSaas;
 import cn.qingchengfit.saas.views.fragments.ChooseGymFragment;
 import cn.qingchengfit.saas.views.fragments.EditGymInfoFragment;
+import cn.qingchengfit.saasbase.article.ArticleCommentsListFragment;
+import cn.qingchengfit.saasbase.article.ArticleReplyFragment;
 import cn.qingchengfit.saasbase.cards.views.CardProtocolActivity;
 import cn.qingchengfit.saasbase.cards.views.offday.AddOffDayFragment;
+import cn.qingchengfit.saasbase.chat.ChatChooseInGymFragment;
+import cn.qingchengfit.saasbase.chat.ChatFriendAllChooseFragment;
+import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
+import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
+import cn.qingchengfit.saasbase.common.bottom.BottomBuyLimitFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindLoginActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
 import cn.qingchengfit.staff.di.BindStaffStaffActivity;
@@ -83,7 +85,6 @@ import cn.qingchengfit.staffkit.views.allotsales.AllotSalesActivity;
 import cn.qingchengfit.staffkit.views.allotsales.MultiModifyFragment;
 import cn.qingchengfit.staffkit.views.allotsales.SalesListFragment;
 import cn.qingchengfit.staffkit.views.allotsales.choose.MutiChooseSalersActivity;
-import cn.qingchengfit.saasbase.common.bottom.BottomBuyLimitFragment;
 import cn.qingchengfit.staffkit.views.charts.BaseStatementChartFragment;
 import cn.qingchengfit.staffkit.views.course.CourseReverseFragment;
 import cn.qingchengfit.staffkit.views.custom.SimpleChooseFragment;
@@ -163,7 +164,9 @@ import cn.qingchengfit.staffkit.views.signin.in.SignInManualFragment;
 import cn.qingchengfit.staffkit.views.signin.out.SignOutFragment;
 import cn.qingchengfit.staffkit.views.signin.out.SignOutListFragment;
 import cn.qingchengfit.staffkit.views.signin.out.SignOutManualFragment;
+import cn.qingchengfit.staffkit.views.signin.zq.AddZqFragment;
 import cn.qingchengfit.staffkit.views.signin.zq.EditZqFragment;
+import cn.qingchengfit.staffkit.views.signin.zq.ZqAccessFragment;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.staffkit.views.statement.DataStatementFragment;
 import cn.qingchengfit.staffkit.views.statement.SaleFilterActivity;
@@ -481,6 +484,11 @@ import dagger.multibindings.IntoMap;
    AppComponent.CardProtocolModule.class, AppComponent.COurseChooseDialogFragmentModule.class,
     AppComponent.SignInCodeFragmentModule.class,
     AppComponent.FollowRecordModule.class,
+    AppComponent.QRModule.class,
+    AppComponent.ZqAccessFragmentModule.class,
+    AppComponent.EditZqFragmentModule.class,
+    AppComponent.AddZqFragmentModule.class,
+
 })
 
 public interface AppComponent {
@@ -3356,7 +3364,13 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AttendanceNotSignFragmentSubcomponent.Builder builder);
     }
 
-
+    @Subcomponent() public interface AddZqFragmentSubcomponent extends AndroidInjector<AddZqFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AddZqFragment> {}
+    }
+    @Module(subcomponents = AddZqFragmentSubcomponent.class) abstract class AddZqFragmentModule {
+        @Binds @IntoMap @FragmentKey(AddZqFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(AddZqFragmentSubcomponent.Builder builder);
+    }
 
     @Subcomponent() public interface EditZqFragmentSubcomponent extends AndroidInjector<EditZqFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<EditZqFragment> {}
@@ -3407,5 +3421,21 @@ public interface AppComponent {
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(CourseChooseDialogFragmentSubcomponent.Builder builder);
     }
 
+    @Subcomponent() public interface QRSubcomponent extends AndroidInjector<QRActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<QRActivity> {
+        }
+    }
+    @Module(subcomponents = QRSubcomponent.class) abstract class QRModule {
+        @Binds @IntoMap @ActivityKey(QRActivity.class)
+        abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(QRSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface ZqAccessFragmentSubcomponent extends AndroidInjector<ZqAccessFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ZqAccessFragment> {}
+    }
+    @Module(subcomponents = ZqAccessFragmentSubcomponent.class) abstract class ZqAccessFragmentModule {
+        @Binds @IntoMap @FragmentKey(ZqAccessFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ZqAccessFragmentSubcomponent.Builder builder);
+    }
 
 }

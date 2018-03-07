@@ -195,6 +195,10 @@ import java.util.List;
         return qcDbManager.check(gymWrapper.shop_id(),permission);
       }
 
+      @Override public boolean checkAllGym(String permission) {
+        return qcDbManager.checkAll(permission);
+      }
+
       @Override public boolean checkInBrand(String permission) {
         return qcDbManager.checkAtLeastOne(permission);
       }

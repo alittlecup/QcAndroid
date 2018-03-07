@@ -12,10 +12,10 @@ import android.widget.TextView;
 import cn.qingchengfit.network.ResponseConstant;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.SaasBaseFragment;
 import cn.qingchengfit.saasbase.user.IUserModel;
 import cn.qingchengfit.saasbase.user.bean.ModifyPwBody;
 import cn.qingchengfit.subscribes.NetSubscribe;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
@@ -44,7 +44,7 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2018/2/6.
  * 修改用户密码页面
  */
-@Leaf(module = "user", path = "/new/pw/") public class UserNewPwFragment extends BaseFragment {
+@Leaf(module = "user", path = "/new/pw/") public class UserNewPwFragment extends SaasBaseFragment {
 
   @Inject IUserModel userModel;
 
@@ -53,6 +53,7 @@ import rx.schedulers.Schedulers;
   Button btn;
 
   @Need String code;
+  @Need String phone;
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ import rx.schedulers.Schedulers;
     civNew = view.findViewById(R.id.civ_pw_new);
     civOld = view.findViewById(R.id.civ_pw_old);
     btn = view.findViewById(R.id.btn_done);
+    btn.setEnabled(false);
     civOld.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
     civNew.getEditText().setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
     civOld.addTextWatcher(tw);
@@ -72,6 +74,7 @@ import rx.schedulers.Schedulers;
 
   void onChangePw() {
     RxRegiste(userModel.newPw(new ModifyPwBody.Builder()
+      .phone(phone)
       .code(code)
       .password(civNew.getContent()).build())
       .onBackpressureLatest()

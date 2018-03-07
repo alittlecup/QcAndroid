@@ -155,7 +155,6 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     //    @BindView(R.id.qrdecoderview)
     QRCodeReaderView qrdecoderview;
 
-    @Inject QcRestRepository restRepository;
     @BindView(R2.id.toolbar) Toolbar toolbar;
     @BindView(R2.id.toolbar_title) TextView toolbarTitile;
     @BindView(R2.id.done) LinearLayout done;
@@ -165,6 +164,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     private Subscription sp;
     private AlertDialogWrapper dialog;
     @Inject GymWrapper gymWrapper;
+    @Inject QcRestRepository restRepository;
 
     /**
      * @param module Web相应模块的后缀
@@ -241,7 +241,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
         String url = "";
         if (getIntent() != null && getIntent().hasExtra(LINK_MODULE)) {
             url = getResources()
-                .getString(R.string.qr_code_2web, Configs.Server, gymWrapper.brand_id(),
+                .getString(R.string.qr_code_2web, restRepository.getHost(), gymWrapper.brand_id(),
                     gymWrapper.shop_id(), getIntent().getStringExtra(LINK_MODULE));
         } else if (getIntent() != null && getIntent().hasExtra(LINK_URL)) {
             url = getIntent().getStringExtra(LINK_URL);

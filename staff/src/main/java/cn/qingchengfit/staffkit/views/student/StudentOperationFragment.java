@@ -226,6 +226,11 @@ public class StudentOperationFragment extends BaseFragment
           startActivity(toChoose);
           break;
         case R.string.qc_student_allot_coach:
+          if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)
+            || !serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_IS_ALL)) {
+            showAlert(R.string.alert_permission_forbid);
+            return true;
+          }
           Intent i = new Intent(getActivity(), AllocateCoachActivity.class);
           startActivity(i);
           break;

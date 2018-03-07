@@ -14,7 +14,6 @@ import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.views.activity.WebActivity;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -60,12 +59,12 @@ public class CardProtocolActivity extends WebActivity{
       ((CardProtocolWebFragment)webfrag).setOnMenuClickListener(new CardProtocolWebFragment.OnMenuClickListener() {
         @Override public void onMenuClick() {
           CardTpl cardTpl = getIntent().getParcelableExtra("card_tpl");
-          if (!gymWrapper.inBrand() && permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE)) {
+          if (!gymWrapper.inBrand() && permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
             Intent intent = new Intent(CardProtocolActivity.this, QRActivity.class);
             intent.putExtra(QRActivity.LINK_MODULE, getString(R.string.qr_code_2web_modify_card,
                 cardTpl.id));
             startActivity(intent);
-          }else if (gymWrapper.inBrand() && permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE,
+          }else if (gymWrapper.inBrand() && permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE,
               cardTpl.getShopIds())){
             Intent intent = new Intent(CardProtocolActivity.this, QRActivity.class);
             intent.putExtra(QRActivity.LINK_MODULE,
@@ -89,11 +88,7 @@ public class CardProtocolActivity extends WebActivity{
     RxBus.getBus().register(OnBackEvent.class)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
-        .subscribe(new Action1<OnBackEvent>() {
-          @Override public void call(OnBackEvent onBackEvent) {
-            finish();
-          }
-        });
+        .subscribe(onBackEvent -> finish());
   }
 
 }
