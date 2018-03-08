@@ -15,4 +15,6 @@
   <string formatted="false" name="msg_help_order_noti_student">教练工作人员代约%s提醒会员</string>
   <string formatted="false" name="msg_cancle_order_noti_student">会员取消%s预约提醒会员</string>
   <string formatted="false" name="msg_send_to_substitute">当有可约名额时发送短信给排队候补会员</string>
+  <string name="str_upgrade_done">中美引力798店成功升级到高级版[pro1]\n有效期至：%s\n
+    快去探索高级版[pro2]的强大功能吧！</string>
 </resources>

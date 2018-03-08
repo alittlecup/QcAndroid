@@ -33,11 +33,13 @@ import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
 import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
 import cn.qingchengfit.saasbase.common.bottom.BottomBuyLimitFragment;
 import cn.qingchengfit.saasbase.course.batch.views.BatchPayOnlineFragment;
+import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.di.BindGymConfigAcitivty;
 import cn.qingchengfit.saasbase.di.BindImportExportActivity;
 import cn.qingchengfit.saasbase.di.BindLoginActivity;
 import cn.qingchengfit.saasbase.di.BindSaasCommonActivity;
 import cn.qingchengfit.saasbase.di.BindUserActivity;
+import cn.qingchengfit.saasbase.gymconfig.views.UpgradeDoneFragment;
 import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staff.di.BindStaffCardActivity;
 import cn.qingchengfit.staff.di.BindStaffCourseActivity;
@@ -117,7 +119,6 @@ import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffDetailFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.GymExpireFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.TrialProDialogFragment;
-import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.staffkit.views.gym.upgrate.UpgrateGymFragment;
 import cn.qingchengfit.staffkit.views.login.SplashActivity;
 import cn.qingchengfit.staffkit.views.main.ChooseBrandInMainFragment;
@@ -488,6 +489,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.ZqAccessFragmentModule.class,
     AppComponent.EditZqFragmentModule.class,
     AppComponent.AddZqFragmentModule.class,
+    AppComponent.UpgradeDoneFragmentModule.class,
 
 })
 
@@ -3436,6 +3438,14 @@ public interface AppComponent {
     @Module(subcomponents = ZqAccessFragmentSubcomponent.class) abstract class ZqAccessFragmentModule {
         @Binds @IntoMap @FragmentKey(ZqAccessFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ZqAccessFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface UpgradeDoneFragmentSubcomponent extends AndroidInjector<UpgradeDoneFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<UpgradeDoneFragment> {}
+    }
+    @Module(subcomponents = UpgradeDoneFragmentSubcomponent.class) abstract class UpgradeDoneFragmentModule {
+        @Binds @IntoMap @FragmentKey(UpgradeDoneFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(UpgradeDoneFragmentSubcomponent.Builder builder);
     }
 
 }
