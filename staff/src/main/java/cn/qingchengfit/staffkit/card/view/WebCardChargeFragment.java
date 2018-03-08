@@ -15,9 +15,11 @@ import com.anbillon.flabellum.annotations.Leaf;
 import javax.inject.Inject;
 
 /**
+ * 2018/3/2 web跳转native进行会员卡充值，1.权限的问题 2.web给的是Id
+ * 1. 权限问题由web端来做判断
+ * 2. 先通过Id load card data,然后进行跳转
  * Created by huangbaole on 2018/3/2.
  */
-// TODO: 2018/3/2 web跳转native进行会员卡充值，1.权限的问题 2.web给的是Id
 
 @Leaf(module = "card", path = "/charge_card/")
 

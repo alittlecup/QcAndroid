@@ -30,8 +30,8 @@ public class QcNavigatorModule extends WXNavigatorModule {
       String shop_id = jsonObject.getString("shop_id");
       String brand_id = jsonObject.getString("brand_id");
       String multiple = jsonObject.getString("multiple");
-      String user = jsonObject.getString("user");
-      String users = jsonObject.getString("users");
+      String user = jsonObject.getString("user_id");
+      String users = jsonObject.getString("user_ids");
       String uri=schema+"://student/select_member/?shop_id="+shop_id+"&brand_id="+brand_id;
       if(!TextUtils.isEmpty(user)){
         uri=uri+"&user_id="+user;

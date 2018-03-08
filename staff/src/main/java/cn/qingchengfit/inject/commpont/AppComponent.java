@@ -303,7 +303,7 @@ import dagger.multibindings.IntoMap;
     AppModel.class, AndroidInjectionModule.class, AndroidSupportInjectionModule.class, AppComponent.ContainterModule.class,
     BindRecruitModule.class, BindSeacherOrgModule.class, BindStaffCourseActivity.class,
     BindStaffCardActivity.class, BindImportExportActivity.class, BindStaffStaffActivity.class,
-  BindGymConfigAcitivty.class,BindSaasCommonActivity.class,BindStaffStudentActivity.class,
+  BindGymConfigAcitivty.class,BindSaasCommonActivity.class,
   BindUserActivity.class, BindLoginActivity.class,
 
 

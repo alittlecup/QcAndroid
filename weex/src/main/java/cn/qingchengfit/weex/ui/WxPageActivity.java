@@ -2,9 +2,9 @@ package cn.qingchengfit.weex.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.weex.R;
@@ -35,8 +35,8 @@ public class WxPageActivity extends WxBaseActivity {
       String uri = host
           + "/shop/"
           + gymWrapper.getCoachService().getShop_id()
-          + "/mobile/staff/commodity/?hide_title=1";
-      Log.d("TAG", "onCreate: " + uri);
+          + "/mobile/staff/commodity/?"+data.getQuery();
+      LogUtil.d("TAG", "onCreate: " + uri);
       WebActivity.startWeb(uri, this);
       finish();
       return;
