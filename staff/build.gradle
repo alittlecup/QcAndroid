@@ -220,7 +220,7 @@ dependencies {
   }
   //  compile files('libs/java-sdk-3.1.jar')//包含 到了chat sdk  这个得改
   implementation files('libs/pinyin4j-2.5.0.jar')
-
+  compile 'com.android.support:multidex:1.0.1'
   implementation "org.glassfish:javax.annotation:${libs.javax_annotation}"
   implementation 'com.flyco.banner:FlycoBanner_Lib:2.0.2@aar'
   implementation 'jp.wasabeef:recyclerview-animators:2.2.1'

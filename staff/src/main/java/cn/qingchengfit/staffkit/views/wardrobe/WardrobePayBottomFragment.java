@@ -17,6 +17,7 @@ import cn.qingchengfit.model.responese.QcResponseStudentCards;
 import cn.qingchengfit.saasbase.cards.bean.Card;
 import cn.qingchengfit.saasbase.cards.bean.CardTpl;
 import cn.qingchengfit.saasbase.cards.views.CardBuyParams;
+import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -28,6 +29,7 @@ import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
 import cn.qingchengfit.staffkit.views.wardrobe.item.NoStudentCardItemItem;
 import cn.qingchengfit.staffkit.views.wardrobe.item.PayWardrobeItem;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import dagger.android.support.AndroidSupportInjection;
@@ -192,11 +194,14 @@ public class WardrobePayBottomFragment extends BaseBottomSheetDialogFragment imp
             RxBus.getBus().post(((PayWardrobeItem) mAdapter.getItem(position)));
             dismiss();
         } else if (mAdapter.getItem(position) instanceof NoStudentCardItemItem) {
-
+            if (!gymWrapper.isPro()){
+                new UpgradeInfoDialogFragment().show(getChildFragmentManager(),"");
+                return true;
+            }
             if (!serPermisAction.check(gymWrapper.shop_id(), PermissionServerUtils.MANAGE_COSTS_CAN_WRITE)) {
                 ToastUtils.show("您没有该场馆购卡权限");
             }
-            routeTo("card","/cardtpl/choose/",null);
+            routeTo(AppUtils.getRouterUri(getContext(), "/card/choose/cardtpl/"), null);
         }
 
         return true;

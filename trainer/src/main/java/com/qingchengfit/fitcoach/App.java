@@ -95,50 +95,68 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   //
   @Override public void onCreate() {
     super.onCreate();
-    //tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
-    ////开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
-    //if (tinkerApplicationLike != null) {
-    //    TinkerPatch.init(tinkerApplicationLike)
-    //        .reflectPatchLibrary()
-    //        .fetchPatchUpdate(true)
-    //        .setPatchRollbackOnScreenOff(true)
-    //        .setPatchRestartOnSrceenOff(true);
-    //    TinkerPatch.with().fetchPatchUpdate(true);
-    //}
+
     try {
       FIR.init(this);
     } catch (Exception e) {
 
     }
     AppContex = getApplicationContext();
+    Configs.APP_ID = getString(R.string.wechat_code);
+    initDebug();
+    initBaseUser();
+    initSensor();
+    initInject();
+
+    RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
+      @Override public void handleError(Throwable e) {
+        if (e != null) {
+          LogUtil.e("rxError:" + e.getMessage() + e.getCause());
+          e.printStackTrace();
+        }
+      }
+    });
+  }
+
+  /**
+   *  初始化Debug环境
+   */
+  void initDebug(){
     if (!BuildConfig.DEBUG) CrashHandler.getInstance().init(this);
     ToastUtils.init(this);
-    if (BuildConfig.FLAVOR.equalsIgnoreCase("dev")){
+    if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equalsIgnoreCase("dev")) {
       Timber.plant(new Timber.DebugTree());
+      String ip = cn.qingchengfit.utils.PreferenceUtils.getPrefString(this, "debug_ip", Configs.Server);
+      Configs.Server = ip;
     }
-    //初始化神策
+  }
+
+  /**
+   * 初始化gUser
+   */
+  private void initBaseUser(){
+    String u = PreferenceUtils.getPrefString(this, "user_info", "");
+    if (!TextUtils.isEmpty(u)) {
+      gUser = new Gson().fromJson(u, User.class);
+    }
+  }
+
+  /**
+   * 初始化神策
+   */
+  private void initSensor(){
     SensorsDataAPI.sharedInstance(this,                               // 传入 Context
       SA_SERVER_URL,                      // 数据接收的 URL
       SA_CONFIGURE_URL,                   // 配置分发的 URL
       SA_DEBUG_MODE);
     try {
-
       SensorsDataAPI.sharedInstance(this).enableAutoTrack();
     } catch (Exception e) {
 
     }
+  }
 
-    String u = PreferenceUtils.getPrefString(this, "user_info", "");
-    if (!TextUtils.isEmpty(u)) {
-      gUser = new Gson().fromJson(u, User.class);
-    }
-
-    Configs.APP_ID = getString(R.string.wechat_code);
-    if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equalsIgnoreCase("dev")) {
-      String ip = cn.qingchengfit.utils.PreferenceUtils.getPrefString(this, "debug_ip", Configs.Server);
-      Configs.Server = ip;
-    }
-
+  void initInject(){
     AppComponent appComponent = DaggerAppComponent.builder()
       .appModule(new AppModule.Builder().app(this)
         .gymWrapper(new GymWrapper.Builder().build())
@@ -153,17 +171,9 @@ public class App extends Application implements HasActivityInjector, HasSupportF
         .build())
       .build();
     appComponent.inject(this);
-
-    ToastUtils.init(this);
-    RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
-      @Override public void handleError(Throwable e) {
-        if (e != null) {
-          LogUtil.e("rxError:" + e.getMessage() + e.getCause());
-          e.printStackTrace();
-        }
-      }
-    });
   }
+
+
 
   private void setupWebView() {
     try {
@@ -180,7 +190,6 @@ public class App extends Application implements HasActivityInjector, HasSupportF
   }
 
   public void finishActivity() {
-
     //杀死该应用进程
     android.os.Process.killProcess(android.os.Process.myPid());
   }
