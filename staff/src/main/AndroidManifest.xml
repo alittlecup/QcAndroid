@@ -914,9 +914,6 @@
     </activity>
 
 
-
-
-
     <activity
         android:name=".student.StaffStudentActivity"
         android:screenOrientation="portrait"

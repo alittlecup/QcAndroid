@@ -123,6 +123,10 @@ import rx.Observable;
             return CurentPermissions.newInstance().queryPermission(permission);
         }
 
+        @Override public boolean checkAllGym(String permission) {
+            return CurentPermissions.newInstance().queryPermission(permission);
+        }
+
         @Override public boolean checkInBrand(String permission) {
             return CurentPermissions.newInstance().queryPermission(permission);
         }
@@ -248,7 +252,6 @@ import rx.Observable;
             @Override public Observable<QcDataResponse> addStudent(AddStudentBody body) {
                 return null;
             }
-
 
 
             @Override
