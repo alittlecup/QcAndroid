@@ -83,6 +83,11 @@ public class StaffTabInviteListFragment extends BaseStaffListFragment {
         return true;
       DialogSheet.builder(getContext())
         .addButton("撤销邀请", R.color.red,view -> {
+          if (!hasCancelPermission()){
+            showAlert(R.string.sorry_for_no_permission);
+            return;
+          }
+
           RxRegiste(staffModel.cancelInvite(invitation.getId())
             .onBackpressureLatest()
             .subscribeOn(Schedulers.io())
@@ -100,11 +105,19 @@ public class StaffTabInviteListFragment extends BaseStaffListFragment {
             }));
         })
         .addButton("重新发送邀请",R.color.text_dark,view -> {
+          if (!permissionModel.check(PermissionServerUtils.MANAGE_STAFF_CAN_WRITE)){
+            showAlert(R.string.sorry_for_no_permission);
+            return;
+          }
           reInvite(invitation);
         })
         .show();
     }
     return true;
+  }
+
+  boolean hasCancelPermission(){
+    return permissionModel.check(PermissionServerUtils.MANAGE_STAFF_CAN_CHANGE);
   }
 
    void reInvite(Invitation invitation){

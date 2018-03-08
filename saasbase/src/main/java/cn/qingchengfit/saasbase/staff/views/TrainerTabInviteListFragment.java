@@ -59,7 +59,15 @@ public class TrainerTabInviteListFragment extends StaffTabInviteListFragment {
     routeTo("/trainer/add/",null);
   }
 
+  @Override boolean hasCancelPermission() {
+    return permissionModel.check(PermissionServerUtils.COACHSETTING_CAN_CHANGE);
+  }
+
   @Override void reInvite(Invitation invitation) {
+    if (!permissionModel.check(PermissionServerUtils.COACHSETTING_CAN_WRITE)){
+      showAlert(R.string.sorry_for_no_permission);
+      return;
+    }
     routeTo("/reinvite/",StaffReInviteParams.builder().invitation(invitation).build());
   }
 

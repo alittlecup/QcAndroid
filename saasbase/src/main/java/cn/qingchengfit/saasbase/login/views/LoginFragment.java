@@ -119,7 +119,6 @@ public class LoginFragment extends BaseFragment
         }
       }
     });
-
     final InternalHandler handler = new InternalHandler(getActivity());
     RxObMsg = RxBus.getBus().register(SendMsgEvent.class);
     RxObMsg.observeOn(AndroidSchedulers.mainThread()).subscribe(
