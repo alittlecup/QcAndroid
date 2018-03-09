@@ -80,7 +80,6 @@
           />
 
       <include layout="@layout/divider_grey"/>
-      <!--todo  -->
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="40dp"
@@ -214,19 +213,41 @@
             tools:text="gaojiban"
             style="@style/Qc.TextCommonGrey"
             />
-
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_hiden_hint"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_rect"
+            android:padding="0.5dp"
+            >
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_secound_pay_choose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_below="@id/tv_hiden_hint"
-            android:background="@drawable/bg_rect"
-            android:padding="0.5dp"
 
             />
+          <TextView
+              android:visibility="gone"
+              android:id="@+id/tv_first_discount_hide"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@color/red"
+              android:text="首月体验价"
+              android:paddingTop="4dp"
+              android:paddingBottom="4dp"
+              android:paddingLeft="18dp"
+              android:paddingRight="18dp"
+              android:textColor="@color/white"
+              android:textSize="@dimen/txt_10sp"
+              android:rotation="-45"
+              android:translationX="-18dp"
+              android:translationY="13dp"
+              />
+        </FrameLayout>
 
         <View
             android:id="@+id/hiden_trans"

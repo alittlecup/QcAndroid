@@ -98,6 +98,7 @@ public class UpgrateGymFragment extends BaseFragment {
   @BindView(R.id.hiden_trans) View hidenTrans;
   @BindView(R.id.layout_hiden) RelativeLayout layoutHiden;
   @BindView(R.id.tv_first_discount) TextView tvFirstDiscount;
+  @BindView(R.id.tv_first_discount_hide) TextView tvFirstDiscountHide;
   @Inject GymWrapper gymWrapper;
   @Inject LoginStatus loginStatus;
   @Inject QcRestRepository qcRestRepository;
@@ -110,6 +111,7 @@ public class UpgrateGymFragment extends BaseFragment {
   private List<AbstractFlexibleItem> mDisCountDatas = new ArrayList<>();
 
   private boolean choosehasDiscount = false;
+  private boolean has12MonDiscount = false;  //是否有满12月优惠
   private int chooseMonthTime = 12;
   private FlexibleAdapter.OnItemClickListener mPayClickListener =
     new FlexibleAdapter.OnItemClickListener() {
@@ -124,6 +126,7 @@ public class UpgrateGymFragment extends BaseFragment {
         tvPrice.setText("￥" + payItem.getPrice());
         choosehasDiscount = payItem.hasDiscount();
         chooseMonthTime = payItem.getMonthCount();
+        choosehasDiscount = has12MonDiscount;
         return false;
       }
     };
@@ -140,7 +143,7 @@ public class UpgrateGymFragment extends BaseFragment {
         tvTimeLong.setText(payItem.getStrTime());
         tvPrice.setText("￥" + payItem.getPrice());
 
-        choosehasDiscount = payItem.hasDiscount();
+        choosehasDiscount = !has12MonDiscount;
         chooseMonthTime = payItem.getMonthCount();
         return false;
       }
@@ -216,25 +219,30 @@ public class UpgrateGymFragment extends BaseFragment {
             mDisCountDatas.clear();
             boolean hasFirst = (qcResponse.getData().has_first_month_favorable
               && qcResponse.getData().first_month_favorable != null);
-            tvFirstDiscount.setVisibility(hasFirst ? View.VISIBLE : View.GONE);
+            RenewalPay renewalPay399 = null;
+            if (hasFirst) { renewalPay399 = qcResponse.getData().first_month_favorable.get(0);}
+
             if (qcResponse.getData().normal != null) {
               for (int i = 0; i < (hasFirst ? qcResponse.getData().first_month_favorable.size()
                 : qcResponse.getData().normal.size()); i++) {
-                RenewalPay renewalPay = hasFirst ? qcResponse.getData().first_month_favorable.get(i)
-                  : qcResponse.getData().normal.get(i);
+                RenewalPay renewalPay = qcResponse.getData().normal.get(i);
                 mOriDatas.add(
-                  new PayItem(renewalPay.name, (hasFirst && i == 0) ? renewalPay.price : null,
-                    renewalPay.price, renewalPay.times));
+                  new PayItem(renewalPay.name, (hasFirst && i == 0 && renewalPay399 != null) ? renewalPay.price : null,
+                    (hasFirst && i == 0 && renewalPay399 != null) ? renewalPay399.favorable_price:renewalPay.price, renewalPay.times));
                 mDisCountDatas.add(
                   new PayItem(renewalPay.name, renewalPay.price, renewalPay.favorable_price,
                     renewalPay.times));
               }
             }
+            has12MonDiscount = qcResponse.getData().is_regular;
+            tvFirstDiscount.setVisibility((hasFirst && !has12MonDiscount) ? View.VISIBLE : View.GONE);
+            tvFirstDiscountHide.setVisibility((hasFirst && has12MonDiscount) ? View.VISIBLE : View.GONE);
             initPay(qcResponse.getData().is_regular);
-          }
+          }else onShowError(qcResponse.getMsg());
         }
       }, new Action1<Throwable>() {
         @Override public void call(Throwable throwable) {
+          onShowError(throwable.getMessage());
         }
       }));
     return view;
