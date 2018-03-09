@@ -35,6 +35,7 @@ import com.baidu.android.pushservice.PushSettings;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tencent.TIMManager;
 import com.tencent.qcloud.timchat.common.AppData;
 import com.umeng.analytics.MobclickAgent;
@@ -115,6 +116,7 @@ public class SplashActivity extends AppCompatActivity {
                 .flatMap(staffResponseQcResponseData -> {
                     if (ResponseConstant.checkSuccess(staffResponseQcResponseData)) {
                         loginStatus.setUserId(staffResponseQcResponseData.data.staff.user_id);
+                      SensorsDataAPI.sharedInstance(getApplicationContext()).login(loginStatus.getUserId());
                         PreferenceUtils.getPrefString(SplashActivity.this, Configs.PREFER_USER_ID,
                             staffResponseQcResponseData.data.staff.user_id);
                     }else if(staffResponseQcResponseData.getStatus() == Integer.parseInt(ResponseConstant.E_Login)){

@@ -37,6 +37,7 @@ import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import io.reactivex.Maybe;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +111,7 @@ public class SplashActivity extends BaseActivity {
       loginStatus.setLoginUser(Staff.formatFromUser(gUser, id));
       loginStatus.setSession(session_id);
       loginStatus.setUserId(gUser.getId());
+      SensorsDataAPI.sharedInstance(getApplicationContext()).login(loginStatus.getUserId());
       Observable.just("")
           .delay(1500, TimeUnit.MILLISECONDS)
           .onBackpressureBuffer()

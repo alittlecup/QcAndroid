@@ -3,6 +3,7 @@ package cn.qingchengfit.staffkit.views.gym.upgrate;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
@@ -144,6 +145,20 @@ public class UpgrateGymFragment extends BaseFragment {
         return false;
       }
     };
+  long stayTime ;
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    SensorsUtils.track("QcSaasStudioRenewVisit").commit(getContext());
+    stayTime = System.currentTimeMillis()/1000;
+  }
+
+  @Override public void onDestroy() {
+    SensorsUtils.track("QcSaasStudioRenewLeave").commit(getContext());
+    SensorsUtils.track("QcSaasStudioRenewLeave")
+      //System.currentTimeMillis()/1000;
+      .commit(getContext());
+    super.onDestroy();
+  }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
     Bundle savedInstanceState) {
@@ -264,13 +279,13 @@ public class UpgrateGymFragment extends BaseFragment {
 
   @OnClick(R.id.btn_pay) public void onClickPay() {
     //记录场馆充值
-    SensorsUtils.track("QcSaasRecharge")
+    SensorsUtils.track("QcSaasRechargeBtnClick")
       //.addProperty("qc_saas_first_recharge_time",)//当前场馆第一次付费时间
-      //.addProperty("qc_saas_shop_status",)//当前Saas场馆的状态
-      //.addProperty("qc_saas_shop_expire_time",)//当前场馆的过期时间
-      //.addProperty("qc_saas_recharge_type",)//Saas场馆续费方式
-      //.addProperty("qc_saas_shop_has_trialed",)//Saas场馆是否续费过
-      //.addProperty("qc_saas_recharge_times",)//Saas场馆续费的月数
+      .addProperty("qc_saas_shop_status",gymWrapper.isPro()?"pro":"free")//当前Saas场馆的状态
+      .addProperty("qc_saas_shop_expire_time",gymWrapper.system_end())//当前场馆的过期时间
+      .addProperty("qc_saas_recharge_type","wxPay")//Saas场馆续费方式
+      //.addProperty("qc_saas_shop_has_trialed",gymWrapper.isHasFirst())//Saas场馆是否续费过
+      //.addProperty("qc_saas_recharge_times",chooseMonthTime)//Saas场馆续费的月数
       //.addProperty("qc_saas_recharge_price",)//Saas场馆续费的价格
       .commit(getContext());
 
