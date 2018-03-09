@@ -9,6 +9,7 @@ import cn.qingchengfit.weex.module.QcShareModule;
 import cn.qingchengfit.weex.module.QcTrackModule;
 import cn.qingchengfit.weex.module.QcWxModalUIModule;
 import cn.qingchengfit.weex.ui.WxPageActivity;
+import com.alibaba.android.bindingx.plugin.weex.BindingX;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taobao.weex.InitConfig;
@@ -48,6 +49,12 @@ public class WeexDelegate {
     WXSDKEngine.setActivityNavBarSetter(activityNavBarSetter);
     initModules();
     initComponents();
+
+    try {
+      BindingX.register();
+    } catch (WXException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
