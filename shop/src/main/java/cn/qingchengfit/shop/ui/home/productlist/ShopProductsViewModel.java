@@ -1,6 +1,7 @@
 package cn.qingchengfit.shop.ui.home.productlist;
 
 import android.arch.lifecycle.LiveData;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
@@ -28,7 +29,7 @@ public class ShopProductsViewModel
   public ActionLiveEvent getProductEvent() {
     return productEvent;
   }
-
+  public final ObservableBoolean isLoading=new ObservableBoolean(false);
   private final ActionLiveEvent productEvent = new ActionLiveEvent();
   public final ObservableField<List<ProductListItem>> items = new ObservableField<>();
 
@@ -78,6 +79,10 @@ public class ShopProductsViewModel
 
   @Override public void loadSource(@NonNull HashMap<String, Object> map) {
     identifier.setValue(map);
+  }
+  public void refresh(){
+    isLoading.set(true);
+    identifier.setValue(params);
   }
 
   @NonNull @Override

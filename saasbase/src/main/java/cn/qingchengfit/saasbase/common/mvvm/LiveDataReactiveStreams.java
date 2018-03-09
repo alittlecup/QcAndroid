@@ -4,6 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 
+import android.support.v4.widget.SwipeRefreshLayout;
+import cn.qingchengfit.RxBus;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -103,6 +105,7 @@ public class LiveDataReactiveStreams {
         } else {
           ToastUtils.show(ex.getMessage());
         }
+        RxBus.getBus().post(SwipeRefreshLayout.class,false);
       }
 
       @Override public void onComplete() {

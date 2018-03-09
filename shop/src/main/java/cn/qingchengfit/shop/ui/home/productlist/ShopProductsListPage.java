@@ -3,10 +3,14 @@ package cn.qingchengfit.shop.ui.home.productlist;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IntRange;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.items.CommonNoDataItem;
+import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageProductListBinding;
 import cn.qingchengfit.shop.ui.items.product.ProductListItem;
@@ -14,8 +18,12 @@ import cn.qingchengfit.shop.ui.product.ShopProductModifyPageParams;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
+import java.util.List;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -40,7 +48,12 @@ public class ShopProductsListPage
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
-      mViewModel.items.set(items);
+      mViewModel.isLoading.set(false);
+      if (items == null || items.isEmpty()) {
+        setEmptyView();
+      } else {
+        mViewModel.items.set(items);
+      }
     });
 
     mViewModel.getProductEvent().observe(this, aVoid -> {
@@ -56,7 +69,25 @@ public class ShopProductsListPage
     mBinding.setViewModel(mViewModel);
     initRecyclerView();
     loadData();
+    setEmptyView();
+    initRxbus();
     return mBinding;
+  }
+
+  private void initRxbus() {
+    RxRegiste(RxBus.getBus()
+        .register(SwipeRefreshLayout.class, Boolean.class)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(aBoolean -> mViewModel.isLoading.set(aBoolean)));
+  }
+
+  private void setEmptyView() {
+    CommonNoDataItem item =
+        new CommonNoDataItem(R.drawable.vd_img_empty_universe, "暂无出售中商品，赶快去添加吧～");
+    List<AbstractFlexibleItem> items = new ArrayList<>();
+    items.add(item);
+    adapter.updateDataSet(items);
   }
 
   private boolean status;
@@ -85,7 +116,8 @@ public class ShopProductsListPage
     if (item instanceof ProductListItem) {
       String productId = ((ProductListItem) item).getData().getProductId();
       if (productId != null) {
-        routeTo(uri, new ShopProductModifyPageParams().productId(productId).productStatus(status).build());
+        routeTo(uri,
+            new ShopProductModifyPageParams().productId(productId).productStatus(status).build());
       }
     }
 
@@ -96,6 +128,7 @@ public class ShopProductsListPage
     Log.d("TAG", "noMoreLoad: " + newItemsSize);
   }
 
+  //todo 加载更多的问题，是全量还是分页
   @Override public void onLoadMore(int lastPosition, int currentPage) {
     Log.d("TAG", "onLoadMore: +" + lastPosition + "--> " + currentPage);
     Integer page = (Integer) mViewModel.getParams().get("page");
