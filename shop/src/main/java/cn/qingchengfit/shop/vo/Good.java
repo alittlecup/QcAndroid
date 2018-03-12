@@ -7,7 +7,6 @@ import android.os.Parcelable;
 import cn.qingchengfit.saasbase.utils.StringUtils;
 import cn.qingchengfit.shop.BR;
 import cn.qingchengfit.utils.ToastUtils;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,8 +64,22 @@ public class Good extends BaseObservable implements Parcelable {
 
   public void setInventoryStr(String inventory) {
     if (StringUtils.isEmpty(inventory)) return;
-    this.inventory = Integer.valueOf(inventory);
-    notifyPropertyChanged(BR.inventoryStr);
+    if (!StringUtils.isEmpty(inventory)) {
+      try {
+        if (getInventoryStr().equals(inventory)) return;
+        this.inventory = Integer.valueOf(inventory);
+        if (this.inventory > 9999) {
+          this.inventory =
+              Integer.valueOf(inventory.subSequence(0, inventory.length() - 1).toString());
+          ToastUtils.show("库存最多为9999");
+        }
+      } catch (NumberFormatException ex) {
+        this.inventory =
+            Integer.valueOf(inventory.subSequence(0, inventory.length() - 1).toString());
+        ToastUtils.show("请输入正确整数库存");
+      }
+      notifyPropertyChanged(BR.inventoryStr);
+    }
   }
 
   public String getCreated_at() {
@@ -101,67 +114,8 @@ public class Good extends BaseObservable implements Parcelable {
     return getPrice(Channel.CARD);
   }
 
-  public void setCardPrices(String prices) {
-    String tempCardPrice = "";
-    if (StringUtils.isEmpty(prices)) {
-      tempCardPrice = "";
-    }
-    DecimalFormat decimalFormat = new DecimalFormat("######.##");
-    try {
-      Double aDouble = Double.valueOf(prices);
-      if (aDouble > 999999) {
-        ToastUtils.show("商品价格最大值为999999");
-        notifyPropertyChanged(BR.cardPrices);
-        return;
-      }
-      int i = prices.indexOf(".");
-      if (i != -1 && prices.length() - i > 3) {
-        tempCardPrice = decimalFormat.format(aDouble);
-      } else {
-        tempCardPrice = prices;
-      }
-    } catch (NumberFormatException e) {
-      ToastUtils.show("请输入正确价格");
-      tempCardPrice = "";
-    }
-    setPrice(tempCardPrice, Channel.CARD);
-    notifyPropertyChanged(BR.cardPrices);
-  }
-
   @Bindable public String getRmbPrices() {
     return getPrice(Channel.RMB);
-  }
-
-  private String tempRMBPrice;
-  private String tempCardPrice;
-
-  public void setRmbPrices(String prices) {
-    String tempRMBPrice = "";
-    if (StringUtils.isEmpty(prices)) {
-      tempRMBPrice = "";
-      return;
-    }
-    DecimalFormat decimalFormat = new DecimalFormat("######.##");
-    try {
-      Double aDouble = Double.valueOf(prices);
-      if (aDouble > 999999) {
-        ToastUtils.show("商品价格最大值为999999");
-        notifyPropertyChanged(BR.rmbPrices);
-        return;
-      }
-      int i = prices.indexOf(".");
-      if (i != -1 && prices.length() - i > 3) {
-        tempRMBPrice = decimalFormat.format(aDouble);
-      } else {
-        tempRMBPrice = prices;
-      }
-    } catch (NumberFormatException e) {
-      ToastUtils.show("请输入正确价格");
-      tempRMBPrice = "";
-    }
-
-    setPrice(tempRMBPrice, Channel.RMB);
-    notifyPropertyChanged(BR.rmbPrices);
   }
 
   public void setPrice(String price, @Channel String type) {
@@ -224,8 +178,6 @@ public class Good extends BaseObservable implements Parcelable {
     dest.writeString(this.name);
     dest.writeList(this.rule);
     dest.writeParcelable(this.product, flags);
-    dest.writeString(this.tempRMBPrice);
-    dest.writeString(this.tempCardPrice);
   }
 
   public Good() {
@@ -239,8 +191,6 @@ public class Good extends BaseObservable implements Parcelable {
     this.rule = new ArrayList<Rule>();
     in.readList(this.rule, Rule.class.getClassLoader());
     this.product = in.readParcelable(Product.class.getClassLoader());
-    this.tempRMBPrice = in.readString();
-    this.tempCardPrice = in.readString();
   }
 
   public static final Parcelable.Creator<Good> CREATOR = new Parcelable.Creator<Good>() {

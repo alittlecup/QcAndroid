@@ -28,7 +28,7 @@
         android:id="@+id/tabview"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/most_black"
+        android:background="@color/toolbar"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabIndicatorHeight="3dp"

@@ -105,7 +105,6 @@ public class ShopProductViewModel extends ShopBaseViewModel {
   }
 
   public void saveProduct() {
-    //String s = new Gson().toJson(product.get());
     LiveData<Boolean> booleanLiveData =
         repository.qcPostProduct(loginStatus.staff_id(), product.get(), gymWrapper.getParams());
     postProductResult.addSource(booleanLiveData, aBoolean -> {

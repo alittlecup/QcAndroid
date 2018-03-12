@@ -1,11 +1,12 @@
 package cn.qingchengfit.shop.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.saasbase.cards.bean.ICardShopChooseItemData;
 import cn.qingchengfit.saasbase.common.mvvm.LiveDataReactiveStreams;
+import cn.qingchengfit.saasbase.repository.ICardModel;
+import cn.qingchengfit.saasbase.student.other.RxHelper;
 import cn.qingchengfit.shop.repository.remote.ShopRemoteRepository;
 import cn.qingchengfit.shop.repository.response.RecordListResponse;
 import cn.qingchengfit.shop.vo.Category;
@@ -25,7 +26,7 @@ import javax.inject.Singleton;
 public class ShopRepositoryImpl implements ShopRepository {
 
   @Inject ShopRemoteRepository remoteService;
-  //@Inject ICardModel cardModel;
+  @Inject ICardModel cardModel;
 
   @Inject public ShopRepositoryImpl() {
   }
@@ -132,24 +133,10 @@ public class ShopRepositoryImpl implements ShopRepository {
 
   @Override
   public LiveData<List<ICardShopChooseItemData>> qcLoadCardTpls(String type, String isEnable) {
-    //return Transformations.map(
-    //    LiveDataReactiveStreams.fromPublisher(cardModel.qcGetCardTpls(type, isEnable)),
-    //    input -> new ArrayList<>(input.card_tpls));
-    MutableLiveData<List<ICardShopChooseItemData>> liveData = new MutableLiveData<>();
-    List<ICardShopChooseItemData> datas = new ArrayList<>();
-    for (int i = 0; i < 50; i++) {
-      int pos = i;
-      datas.add(new ICardShopChooseItemData() {
-        @Override public String getShopCardTplId() {
-          return pos + "id";
-        }
+    return Transformations.map(
+        LiveDataReactiveStreams.fromPublisher(cardModel.qcGetCardTpls(type, isEnable).compose(
+            RxHelper.schedulersTransformer())),
+        input -> new ArrayList<>(input.card_tpls));
 
-        @Override public String getShopCardTplName() {
-          return pos + "位置";
-        }
-      });
-    }
-    liveData.setValue(datas);
-    return liveData;
   }
 }

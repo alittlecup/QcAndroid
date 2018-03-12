@@ -168,7 +168,7 @@ public class BindingAdapters {
         fastScroller.setEnabled(enable);
     }
 
-    @BindingAdapter({"bind:onClick"})
+    @BindingAdapter({"android:onClick"})
     public static void setOnClickListener(View view, View.OnClickListener clickListener) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override

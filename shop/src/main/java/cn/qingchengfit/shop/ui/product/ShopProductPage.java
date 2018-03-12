@@ -74,7 +74,7 @@ import java.util.List;
           TO_DELIVER_CODE);
     });
     mViewModel.chooseCardEvent.observe(this, aVoid -> {
-      Uri uri = Uri.parse("shop://shop/product/paycard");
+      Uri uri = Uri.parse("qcstaff://shop/product/paycard");
       List<String> card_tpl_ids = mViewModel.getProduct().getCard_tpl_ids();
       if (card_tpl_ids != null && !card_tpl_ids.isEmpty()) {
         toOtherFragmentForBack(uri,
