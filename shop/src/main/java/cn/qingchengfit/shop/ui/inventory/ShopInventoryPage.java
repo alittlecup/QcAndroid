@@ -30,6 +30,9 @@ import java.util.ArrayList;
     });
     mViewModel.fragVisible.observe(this, aBoolean -> {
       mBinding.fragFilter.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
+      if(!aBoolean){
+        mBinding.qcRadioGroup.clearCheck();
+      }
     });
   }
 

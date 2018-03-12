@@ -90,24 +90,24 @@ public class BindingAdapters {
      * @param items
      * @param <T>
      */
-    @SuppressWarnings("unchecked")
-    @BindingAdapter(value = "items")
-    public static <T extends IFlexible> void setAdapter(RecyclerView recyclerView, List<T> items) {
-        RecyclerView.Adapter adapter = recyclerView.getAdapter();
-        if (adapter != null && adapter instanceof FlexibleAdapter) {
-            ((FlexibleAdapter<T>) adapter).updateDataSet(items);
-        } else {
-            adapter = new CommonFlexAdapter(items);
-            recyclerView.setAdapter(adapter);
-        }
-        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-        List mainItems = ((CommonFlexAdapter) adapter).getMainItems();
-        if (mainItems.isEmpty()) {
-            mainItems.add(new SimpleTextItemItem("暂无数据", CENTER));
-            ((CommonFlexAdapter) adapter).updateDataSet(mainItems);
-
-        }
-    }
+    //@SuppressWarnings("unchecked")
+    //@BindingAdapter(value = "items")
+    //public static <T extends IFlexible> void setAdapter(RecyclerView recyclerView, List<T> items) {
+    //    RecyclerView.Adapter adapter = recyclerView.getAdapter();
+    //    if (adapter != null && adapter instanceof FlexibleAdapter) {
+    //        ((FlexibleAdapter<T>) adapter).updateDataSet(items);
+    //    } else {
+    //        adapter = new CommonFlexAdapter(items);
+    //        recyclerView.setAdapter(adapter);
+    //    }
+    //    ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+    //    List mainItems = ((CommonFlexAdapter) adapter).getMainItems();
+    //    if (mainItems.isEmpty()) {
+    //        mainItems.add(new SimpleTextItemItem("暂无数据", CENTER));
+    //        ((CommonFlexAdapter) adapter).updateDataSet(mainItems);
+    //
+    //    }
+    //}
 
     @BindingAdapter(value = {"revert", "status"})
     public static void setAdapterTag(RecyclerView recyclerView, boolean revert, int pos) {

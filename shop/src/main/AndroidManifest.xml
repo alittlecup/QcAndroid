@@ -5,6 +5,7 @@
   <application>
     <activity
         android:name="cn.qingchengfit.shop.base.ShopActivity"
+        android:windowSoftInputMode="adjustPan"
         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>

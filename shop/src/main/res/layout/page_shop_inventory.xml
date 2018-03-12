@@ -27,6 +27,7 @@
         bind:toolbarModel="@{toolbarModel}"
         />
     <cn.qingchengfit.widgets.QcRadioGroup
+        android:id="@+id/qc_radio_group"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:background="@drawable/bg_top_bottom_line_white"

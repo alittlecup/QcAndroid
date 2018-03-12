@@ -47,6 +47,7 @@ public class InventoryFilterView extends BaseFilterFragment {
             .put("goods_id", mProducts.get(leftPos - 1).getGoods().get(rightPos - 1).getId());
       }
       viewModel.loadSource(viewModel.getParams());
+      viewModel.fragVisible.setValue(false);
     });
 
     filterTimesFragment = FilterTimesFragment.getInstance(1, 30);
@@ -54,7 +55,12 @@ public class InventoryFilterView extends BaseFilterFragment {
       viewModel.getParams().put("start", s);
       viewModel.getParams().put("end", s2);
       viewModel.loadSource(viewModel.getParams());
+      viewModel.fragVisible.setValue(false);
     });
+  }
+
+  @Override public void dismiss() {
+    viewModel.fragVisible.setValue(false);
   }
 
   private List<DoubleListFilterFragment.IDoubleListData> addMoreData(List<Product> products) {
