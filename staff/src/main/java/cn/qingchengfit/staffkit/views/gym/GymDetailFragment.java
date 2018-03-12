@@ -46,6 +46,7 @@ import cn.qingchengfit.model.responese.GymFuntion;
 import cn.qingchengfit.model.responese.HomeStatement;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
@@ -81,11 +82,13 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.SensorsUtils;
 import cn.qingchengfit.views.activity.BaseActivity;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -98,6 +101,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -171,8 +176,14 @@ public class GymDetailFragment extends BaseFragment
     delegatePresenter(gymDetailPresenter, this);
     initToolbar(toolbar);
     initView();
+    registeSensors();
     view.setOnTouchListener((v, event) -> true);
     view.findViewById(R.id.btn_close).setOnClickListener(view1 -> {
+      if (showTime >0) {
+        SensorsUtils.track("QcSaasSpecialPriceBannerClose")
+          .addProperty("qc_stay_time", System.currentTimeMillis() / 1000 - showTime)
+          .commit(getContext());
+      }
       layoutCharge.setVisibility(View.GONE);
       firstMonthClose = true;
     });
@@ -184,7 +195,7 @@ public class GymDetailFragment extends BaseFragment
             return;
           }
           Intent toStatement = new Intent(getActivity(), ContainerActivity.class);
-          toStatement.putExtra(Configs.ROUTER, GymFunctionFactory.MODULE_FINANCE_COURSE);
+          toStatement.putExtra(Configs.ROUTER, QRActivity.MODULE_FINANCE_COURSE);
           startActivity(toStatement);
 
           break;
@@ -194,7 +205,7 @@ public class GymDetailFragment extends BaseFragment
             return;
           }
           Intent toSignIn = new Intent(getActivity(), ContainerActivity.class);
-          toSignIn.putExtra(Configs.ROUTER, GymFunctionFactory.MODULE_FINANCE_SIGN_IN);
+          toSignIn.putExtra(Configs.ROUTER, QRActivity.MODULE_FINANCE_SIGN_IN);
           startActivity(toSignIn);
           break;
         case 3:
@@ -213,7 +224,7 @@ public class GymDetailFragment extends BaseFragment
             return;
           }
           Intent toSale = new Intent(getActivity(), ContainerActivity.class);
-          toSale.putExtra(Configs.ROUTER, GymFunctionFactory.MODULE_FINANCE_SALE);
+          toSale.putExtra(Configs.ROUTER, QRActivity.MODULE_FINANCE_SALE);
           startActivity(toSale);
 
           break;
@@ -373,7 +384,7 @@ public class GymDetailFragment extends BaseFragment
     int addcount = ((4 - (datas.size()) % 4) % 4);
     for (int i = 0; i < addcount; i++) {
       datas.add(
-        new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE)));
+        new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE)));
     }
     datas.add(ButtonItem.newBuilder().txt("会员端界面").build());
     datas.add(SimpleTextItemItem.newBuilder()
@@ -441,14 +452,32 @@ public class GymDetailFragment extends BaseFragment
       if (stats.new_checkin != null) mChartAdapter.setData(2, stats.new_checkin.date_counts);
     }
   }
-
+  long showTime = 0L;
   @Override
   public void setRecharge(final GymDetail.Recharge recharge, boolean hasFirst, String price) {
     hideLoading();
+    showTime = 0L;
     layoutCharge.setVisibility((hasFirst && !firstMonthClose)? View.VISIBLE : View.GONE);
+    if (hasFirst && !firstMonthClose) {
+      showTime = System.currentTimeMillis()/1000;
+      SensorsUtils.track("QcSaasSpecialPriceBannerShow").commit(getContext());
+    }
     tvPrice.setText(getString(R.string.underline_pro_update_now, price));
-    mRechargeBtn.setOnClickListener(v -> toCharge());
-    layoutCharge.setOnClickListener(view -> toCharge());
+    mRechargeBtn.setOnClickListener(v -> {
+      SensorsUtils.track("QcSaasEnterRechargePageBtnClick")
+        .addProperty("qc_saas_shop_status",gymWrapper.isPro()?"pro":"free")
+        .addProperty("qc_saas_shop_expire_date",gymWrapper.system_end())
+        .commit(getContext());
+      toCharge();
+    });
+    layoutCharge.setOnClickListener(view -> {
+      if (showTime >0) {
+        SensorsUtils.track("QcSaasEnterRechargePageBtnClick")
+          .addProperty("qc_stay_time", System.currentTimeMillis() / 1000 - showTime)
+          .commit(getContext());
+      }
+      toCharge();
+    });
   }
 
   private void toCharge() {
@@ -658,7 +687,7 @@ public class GymDetailFragment extends BaseFragment
           }
         } else {
           if (GymFunctionFactory.getModuleStatus(name) > 0 && !gymWrapper.isPro()) {
-            new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
+            UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey(name)).show(getFragmentManager(), "");
             return true;
           }
           gymFunctionFactory.getJumpIntent(name, gymWrapper.getCoachService(),
@@ -705,6 +734,20 @@ public class GymDetailFragment extends BaseFragment
       if (f != null && f instanceof BaseStatementChartFragment) {
         ((BaseStatementChartFragment) f).doData(datas);
       }
+    }
+  }
+
+  /**
+   * 记录神策的公共事件
+   */
+  void registeSensors(){
+    try {
+      JSONObject properties = new JSONObject();
+      properties.put("qc_shop_id", gymWrapper.shop_id());
+      properties.put("qc_brand_id", gymWrapper.brand_id());
+      SensorsDataAPI.sharedInstance(getContext()).registerSuperProperties(properties);
+    } catch (JSONException e) {
+      e.printStackTrace();
     }
   }
 }

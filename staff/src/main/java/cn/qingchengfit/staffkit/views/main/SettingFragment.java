@@ -247,8 +247,8 @@ public class SettingFragment extends BaseFragment implements SettingView {
         JSONObject properties =
           SensorsDataAPI.sharedInstance(getActivity().getApplicationContext()).getSuperProperties();
         if (properties == null) properties = new JSONObject();
-        properties.put("qc_user_id", bean.getId());
-        properties.put("qc_user_phone", bean.getPhone());
+        properties.put("qc_user_id", loginStatus.getUserId());
+        //properties.put("qc_user_phone", bean.getPhone());
         SensorsDataAPI.sharedInstance(getActivity().getApplicationContext())
           .registerSuperProperties(properties);
       } catch (JSONException e) {

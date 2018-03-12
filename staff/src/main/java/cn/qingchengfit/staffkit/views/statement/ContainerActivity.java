@@ -21,9 +21,9 @@ import cn.qingchengfit.saasbase.article.ArticleCommentsListFragment;
 import cn.qingchengfit.saasbase.article.ArticleReplyFragment;
 import cn.qingchengfit.saasbase.chat.RecruitMessageListFragment;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventToolbar;
-import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.gym.site.SiteListFragment;
 import cn.qingchengfit.staffkit.views.gym.staff.StaffDetailFragment;
 import cn.qingchengfit.staffkit.views.signin.config.SignInCardFragment;
@@ -101,81 +101,81 @@ public class ContainerActivity extends BaseActivity implements FragCallBack {
         }
         Fragment fragment = new Fragment();
         switch (router.toLowerCase()) {
-            case GymFunctionFactory.MODULE_SERVICE_GROUP:
+            case QRActivity.MODULE_SERVICE_GROUP:
                 //fragment = new CourseTypeBatchFragmentBuilder(false).build();
                 break;
-            case GymFunctionFactory.MODULE_SERVICE_PRIVATE:
+            case QRActivity.MODULE_SERVICE_PRIVATE:
                 //fragment = new CourseTypeBatchFragmentBuilder(true).build();
                 break;
 
-            case GymFunctionFactory.MODULE_FINANCE_SALE:
+            case QRActivity.MODULE_FINANCE_SALE:
                 fragment = new SaleGlanceFragment();
                 break;
-            case GymFunctionFactory.MODULE_FINANCE_COURSE:
+            case QRActivity.MODULE_FINANCE_COURSE:
                 fragment = new StatementGlanceFragment();
                 break;
-            case GymFunctionFactory.MODULE_FINANCE_SIGN_IN:
+            case QRActivity.MODULE_FINANCE_SIGN_IN:
                 fragment = new SigninGlanceFragment();
                 break;
-            case GymFunctionFactory.MODULE_MANAGE_COACH:
+            case QRActivity.MODULE_MANAGE_COACH:
                  //TODO: 2017/12/ 教练模块
                 //fragment = new CoachListFragment();
                 break;
-            case GymFunctionFactory.MODULE_MANAGE_STAFF:
+            case QRActivity.MODULE_MANAGE_STAFF:
                 //fragment = StaffListFragment.newInstance(App.staffId);
                 //fragment = new StaffListFragment();
                 break;
-            case GymFunctionFactory.MODULE_MANAGE_STAFF_ADD:
+            case QRActivity.MODULE_MANAGE_STAFF_ADD:
                 fragment = StaffDetailFragment.newInstance(null);
                 break;
 
-            case GymFunctionFactory.MODULE_WARDROBE:
+            case QRActivity.MODULE_WARDROBE:
                 fragment = new WardrobeMainFragment();
                 break;
-            case GymFunctionFactory.MODULE_GYM_SITE:
+            case QRActivity.MODULE_GYM_SITE:
                 fragment = new SiteListFragment();
                 break;
-            case GymFunctionFactory.MODULE_OPERATE_SCORE:
+            case QRActivity.MODULE_OPERATE_SCORE:
                 fragment = new ScoreHomeFragment();
                 break;
-            case GymFunctionFactory.MODULE_WORKSPACE_ORDER_SIGNIN:
+            case QRActivity.MODULE_WORKSPACE_ORDER_SIGNIN:
                 break;
-            case GymFunctionFactory.RECRUIT_MESSAGE_LIST:
+            case QRActivity.RECRUIT_MESSAGE_LIST:
                 if (getIntent().getExtras().containsKey("params")) {
                     fragment = new RecruitMessageListFragment();
                 }
                 break;
-            case GymFunctionFactory.MODULE_MSG:
+            case QRActivity.MODULE_MSG:
                 fragment = new NotiSettingHomeFragment();
                 break;
 
             case "/replies/":
             case "/replies":
-            case GymFunctionFactory.MODULE_ARTICLE_COMMENT_REPLY:
+            case QRActivity.MODULE_ARTICLE_COMMENT_REPLY:
                 fragment = new ArticleReplyFragment();
                 break;
             case "/comments/":
             case "/comments":
-            case GymFunctionFactory.MODULE_ARTICLE_COMMENT_LIST:
+            case QRActivity.MODULE_ARTICLE_COMMENT_LIST:
                 String articleid = IntentUtils.getIntentFromUri(getIntent(), "news_id");
                 String replyId = IntentUtils.getIntentFromUri(getIntent(), "replyId");
                 String replayname = IntentUtils.getIntentFromUri(getIntent(), "replyName");
                 fragment = ArticleCommentsListFragment.newInstance(articleid,replyId,replayname);
                 break;
-            case GymFunctionFactory.ZQ_ACCESS:
+            case QRActivity.ZQ_ACCESS:
                 fragment = new ZqAccessFragment();
                 break;
-            case GymFunctionFactory.ADD_ZQ_ACCESS:
+            case QRActivity.ADD_ZQ_ACCESS:
                 fragment = new AddZqFragment();
                 break;
-            case GymFunctionFactory.EDIT_ZQ_ACCESS:
+            case QRActivity.EDIT_ZQ_ACCESS:
                 fragment = EditZqFragment.newInstance(
                     (AccessBody) getIntent().getBundleExtra("data").getParcelable("access"), getIntent().getExtras().getString("guard"));
                 break;
-            case GymFunctionFactory.SIGN_IN_CODE:
+            case QRActivity.SIGN_IN_CODE:
                 fragment = new SignInCodeFragment();
                 break;
-            case GymFunctionFactory.SIGN_IN_CARD:
+            case QRActivity.SIGN_IN_CARD:
                 fragment = new SignInCardFragment();
                 break;
         }

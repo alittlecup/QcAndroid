@@ -48,7 +48,6 @@ import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
 import cn.qingchengfit.staffkit.views.custom.ItemDecorationAlbumColumns;
 import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
 import cn.qingchengfit.staffkit.views.gym.GridImageTextAdapter;
-import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.setting.BrandManageActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.utils.CompatUtils;
@@ -192,7 +191,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
                             return;
                         }
                         Intent toStatement = new Intent(getActivity(), ContainerActivity.class);
-                        toStatement.putExtra("router", GymFunctionFactory.MODULE_FINANCE_COURSE);
+                        toStatement.putExtra("router", QRActivity.MODULE_FINANCE_COURSE);
                         startActivity(toStatement);
                         break;
                     case 2:
@@ -200,7 +199,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
                             return;
                         }
                         Intent toSignIn = new Intent(getActivity(), ContainerActivity.class);
-                        toSignIn.putExtra("router", GymFunctionFactory.MODULE_FINANCE_SIGN_IN);
+                        toSignIn.putExtra("router", QRActivity.MODULE_FINANCE_SIGN_IN);
                         startActivity(toSignIn);
                         break;
 
@@ -209,7 +208,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
                             return;
                         }
                         Intent toSale = new Intent(getActivity(), ContainerActivity.class);
-                        toSale.putExtra("router", GymFunctionFactory.MODULE_FINANCE_SALE);
+                        toSale.putExtra("router", QRActivity.MODULE_FINANCE_SALE);
                         startActivity(toSale);
 
                         break;

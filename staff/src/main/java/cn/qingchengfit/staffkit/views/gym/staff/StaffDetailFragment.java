@@ -29,6 +29,7 @@ import cn.qingchengfit.model.body.ManagerBody;
 import cn.qingchengfit.model.responese.StaffPosition;
 import cn.qingchengfit.model.responese.StaffShip;
 import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.event.EventAddStaffDone;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
@@ -368,7 +369,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
     }
 
     @OnClick(R.id.go_to_web) public void onClickGoWeb() {
-        gymFunctionFactory.goQrScan(this, GymFunctionFactory.PERMISSION_STAFF, null, null);
+        gymFunctionFactory.goQrScan(this, QRActivity.PERMISSION_STAFF, null, null);
 
 
     }

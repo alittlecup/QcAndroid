@@ -156,9 +156,8 @@ public class UpgrateGymFragment extends BaseFragment {
   }
 
   @Override public void onDestroy() {
-    SensorsUtils.track("QcSaasStudioRenewLeave").commit(getContext());
     SensorsUtils.track("QcSaasStudioRenewLeave")
-      //System.currentTimeMillis()/1000;
+      .addProperty("QcSaasStudioRenewDuration",System.currentTimeMillis()/1000 - stayTime)
       .commit(getContext());
     super.onDestroy();
   }
@@ -286,15 +285,22 @@ public class UpgrateGymFragment extends BaseFragment {
   }
 
   @OnClick(R.id.btn_pay) public void onClickPay() {
+    String price = tvPrice.getText().toString();
+    int numPrice = -1;
+    try {
+      numPrice = Integer.parseInt(price.replace("￥",""));
+    }catch (Exception e){
+
+    }
     //记录场馆充值
     SensorsUtils.track("QcSaasRechargeBtnClick")
       //.addProperty("qc_saas_first_recharge_time",)//当前场馆第一次付费时间
       .addProperty("qc_saas_shop_status",gymWrapper.isPro()?"pro":"free")//当前Saas场馆的状态
-      .addProperty("qc_saas_shop_expire_time",gymWrapper.system_end())//当前场馆的过期时间
+      .addProperty("qc_saas_shop_expire_date",gymWrapper.system_end())//当前场馆的过期时间
       .addProperty("qc_saas_recharge_type","wxPay")//Saas场馆续费方式
-      //.addProperty("qc_saas_shop_has_trialed",gymWrapper.isHasFirst())//Saas场馆是否续费过
-      //.addProperty("qc_saas_recharge_times",chooseMonthTime)//Saas场馆续费的月数
-      //.addProperty("qc_saas_recharge_price",)//Saas场馆续费的价格
+      .addProperty("qc_saas_shop_has_trialed",gymWrapper.isHasFirst())//Saas场馆是否续费过
+      .addProperty("qc_saas_recharge_times",chooseMonthTime)//Saas场馆续费的月数
+      .addProperty("qc_saas_recharge_price",numPrice)//Saas场馆续费的价格
       .commit(getContext());
 
     showLoading();

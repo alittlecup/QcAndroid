@@ -42,6 +42,51 @@ import rx.schedulers.Schedulers;
 
 public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCodeReadListener {
 
+
+    /**
+     *
+     *
+     第一个是module_key，第二个是identifyKey，APP端使用identifyKey即可
+     *
+     课程预约 orders_day                  order_record
+     团课  teamarrange_calendar           team_course_arrange_calendar
+     私教  priarrange_calendar  private_course_arrange_calendar
+     会员  manage_members   member_setting
+     会员卡 manage_costs   card
+     代约团课 orders_day    team_course_order
+     代约私教 orders_day    private_course_order
+     签到处理 checkin_manage checkin_manage（目前web端没有这个模块）
+     入场签到 checkin_setting checkin_setting
+     商店  commodity_list commodity_list
+     提测数据模板 measuresetting    measure_setting
+     导出记录 exportsetting     export_record
+     工作人员 manage_staff    staff_setting
+     教练  coachsetting    coach_setting
+     会员积分 score_rank    score_rank
+     活动  activity_setting    activity_setting
+     接入口碑网 koubei    koubei
+     注册送会员卡 giftcard    gift_card
+     场馆公告 notice    notice_list
+     赛事训练营 training training(目前web端没有这个模块)
+     在线支付 pay_bills   pay_bills
+     课程报表 cost_report  cost_report
+     销售报表  sales_report  sales_report
+     评分报表 comments_report  comment_report
+     会员卡报表 card_report card_report
+     签到报表 checkin_report  check_in_report
+     场馆信息 studio_list   studio_setting
+     营业时间 open_time open_time(目前web端没有这个模块)
+     场地  space_setting  space_setting
+     短信  messagechannels   msg_channels
+     更衣柜  locker_setting locker_setting
+     会员端配置 shop_home_setting studio_home
+     *
+     *
+     *
+     */
+
+
+
     public static final String LINK_URL = "com.qingcheng.qr.linkurl";
     public static final String LINK_MODULE = "com.qingcheng.qr.module";
     public static final String MODULE_SETTING = "studio/setting";
@@ -152,6 +197,14 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
     public static final String CARD_TPL_ID = "card_tpl_id";
     public static final String MULTI_CARD_TPL = "card-templates/add";
 
+
+    //智奇门禁
+    public static final String ZQ_ACCESS = "/zq/access";
+    public static final String ADD_ZQ_ACCESS = "/add/zq/access";
+    public static final String EDIT_ZQ_ACCESS = "/edit/zq/access";
+    public static final String SIGN_IN_CODE = "/sign/code";
+    public static final String SIGN_IN_CARD = "/sign/card";
+
     //    @BindView(R.id.qrdecoderview)
     QRCodeReaderView qrdecoderview;
 
@@ -181,6 +234,92 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
         starter.putExtra(CARD_TPL_ID, tpl_id);
         context.startActivity(starter);
     }
+
+
+
+    public static String getIdentifyKey(String module) {
+        switch (module.toLowerCase()) {
+            case MODULE_NONE:
+                return "";
+            case MODULE_WORKSPACE_ORDER_LIST:
+                return "order_record";
+            case MODULE_WORKSPACE_GROUP:
+                return "team_course_order";
+            case MODULE_WORKSPACE_PRIVATE:
+                return "private_course_order";
+            case MODULE_WORKSPACE_ORDER_SIGNIN:
+                return "checkin_manage";
+            case MODULE_FINACE_ONLINE:
+                return "pay_bills";
+            case MODULE_FINANCE_CARD:
+                return "card_report";
+            case MODULE_FINANCE_COURSE:
+                return "cost_report";
+            case MODULE_FINANCE_MARK:
+                return "comment_report";
+            case MODULE_FINANCE_SALE:
+                return "sales_report";
+            case MODULE_FINANCE_SIGN_IN:
+                return "check_in_report";
+
+            case MODULE_OPERATE_ACTIVITY:
+                return "activity_setting";
+            case MODULE_OPERATE_AD:
+                return "ad";
+            case MODULE_OPERATE_ANOUNCE:
+                return "notice_list";
+            case MODULE_OPERATE_REGIST:
+                return "gift_card";
+            case MODULE_OPERTAT_KOUBEI:
+                return "koubei";
+            case MODULE_OPERATE_SCORE:
+                return "score_rank";
+            case MODULE_OPERATE_COMPETITION:
+                return "training";
+
+            case MODULE_MANAGE_COACH:
+                return "coach_setting";
+            case MODULE_MANAGE_STAFF:
+                return "staff_setting";
+
+            case MODULE_SERVICE_FREE:
+                return "checkin_setting";
+            case MODULE_SERVICE_GROUP:
+                return "team_course_arrange_calendar";
+            case MODULE_SERVICE_PRIVATE:
+                return "private_course_arrange_calendar";
+            case MODULE_SERVICE_SHOP:
+                return "commodity_list";
+
+            case MODULE_WARDROBE:
+                return "locker_setting";
+            case MODULE_GYM_INFO:
+                return "studio_setting";
+            case MODULE_GYM_TIME:
+                return "open_time";
+            case MODULE_GYM_SITE:
+                return "space_setting";
+            case MODULE_HOME:
+                return "studio_home";
+            case MODULE_MSG:
+                return "msg_channels";
+            case MODULE_WECHAT:
+                return "gym_wechat";
+
+            case MODULE_STUDENT:
+                return "member_setting";
+            case MODULE_STUDENT_CARDS:
+                return "card";
+            case MODULE_STUDENT_BODY_TEST:
+                return "measure_setting";
+            case REPORT_EXPORT:
+                return "export_record";
+            default:
+                return "";
+        }
+    }
+
+
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

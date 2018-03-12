@@ -24,7 +24,7 @@ import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.activity.WebActivity;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import javax.inject.Inject;
-
+import static cn.qingchengfit.saasbase.qrcode.views.QRActivity.*;
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -48,105 +48,16 @@ import javax.inject.Inject;
 
 public class GymFunctionFactory {
 
-    public static final String MODULE_NONE = "";
-    /**
-     * 工作台
-     */
-    public static final String MODULE_WORKSPACE_ORDER_LIST = "/orders/day";
-    public static final String MODULE_WORKSPACE_GROUP = "/group/order";
-    public static final String MODULE_WORKSPACE_PRIVATE = "/private/order";
-    public static final String MODULE_WORKSPACE_ORDER_SIGNIN = "/checkin/help";
 
-    /**
-     * 健身房服务
-     */
-    public static final String MODULE_SERVICE_GROUP = "/teamarrange/calendar2";
-    public static final String MODULE_SERVICE_PRIVATE = "/priarrange/calendar2";
-    public static final String MODULE_SERVICE_FREE = "/checkin/setting";
-    public static final String MODULE_SERVICE_SHOP = "/commodity/list";
-    /**
-     * 会员
-     */
-    public static final String MODULE_STUDENT = "/manage/members";
-    public static final String MODULE_STUDENT_CARDS = "/manage/costs";
-    public static final String MODULE_STUDENT_BODY_TEST = "/measure/setting";
 
-    /**
-     * 内部管理
-     */
-    public static final String MODULE_MANAGE_STAFF = "/manage/staff";
-    public static final String MODULE_MANAGE_STAFF_ADD = "/manage/staff/add/";
-    public static final String MODULE_MANAGE_COACH = "/coachsetting";
-    /**
-     * 运营推广
-     */
-    public static final String MODULE_OPERATE_SCORE = "/score/rank";
-    public static final String MODULE_OPERATE_ACTIVITY = "/activity/setting";
-    public static final String MODULE_OPERATE_AD = "/shop/home/setting";
-    public static final String MODULE_OPERTAT_KOUBEI = "/koubei";
-    public static final String MODULE_OPERATE_REGIST = "/giftcard";
-    public static final String MODULE_OPERATE_ANOUNCE = "/notice";
-    public static final String MODULE_OPERATE_COMPETITION = "/competition";
 
-    /**
-     * 财务
-     */
-    public static final String MODULE_FINACE_ONLINE = "/pay/bills";
-    public static final String MODULE_FINANCE_COURSE = "/cost/report";
-    public static final String MODULE_FINANCE_SALE = "/sales/report";
-    public static final String MODULE_FINANCE_MARK = "/comments/report";
-    public static final String MODULE_FINANCE_CARD = "/card/report";
-    public static final String MODULE_FINANCE_SIGN_IN = "/checkin/report";
 
-    /**
-     * 场馆信息
-     */
-    public static final String MODULE_GYM_INFO = "/studio/setting?mb_module=info";//场馆管理
-    public static final String MODULE_GYM_TIME = "/studio/setting?mb_module=time";
-    public static final String MODULE_GYM_SITE = "/space/setting";
-    public static final String MODULE_MSG = "/message/setting";
-    public static final String MODULE_WARDROBE = "/locker/setting";
-    public static final String MODULE_HOME = "/shop/home";
-    public static final String MODULE_WECHAT = "/shop/weixin/setting";// 微信公众号
-
-    /**
-     * article 文章回复 资讯
-     */
-    public static final String MODULE_ARTICLE_COMMENT_REPLY = "/article/comment/reply";//
-    public static final String MODULE_ARTICLE_COMMENT_LIST = "/article/comment/list";//
-
-    public static final String PERMISSION_STAFF = "/position/setting";
-    public static final String PERMISSION_TRAINER = "/coach/permission/setting";
-    public static final String SIGNIN_SCREEN = "/checkin/screen/";
-    public static final String PLANS_SETTING_GROUP = "/private/course/plans/setting";
-    public static final String PLANS_SETTING_PRIVATE = "/checkin/screen/";
-
-    //求职招聘消息列表
-    public static final String RECRUIT_MESSAGE_LIST = "/recruit/message_list";
     @Inject SerPermisAction serPermisAction;//// TODO: 2017/8/14 修改成注入
 
     @Inject
     public GymFunctionFactory() {
     }
 
-    //导入导出
-    public static final String REPORT_EXPORT = "/report/export";
-
-    public static final String STUDENT_IMPORT = "/manage/members/import";
-    public static final String STUDENT_EXPORT = "/manage/members/export";
-    public static final String CARD_IMPORT = "/cards/import";
-    public static final String CARD_EXPORT = "/cards/export";
-
-    //用户协议
-    public static final String USER_PROTOCOL = "/user/protocol";
-    public static final String USER_PROTOCOL_URL = "/protocol/staff/";
-
-    //智奇门禁
-    public static final String ZQ_ACCESS = "/zq/access";
-    public static final String ADD_ZQ_ACCESS = "/add/zq/access";
-    public static final String EDIT_ZQ_ACCESS = "/edit/zq/access";
-    public static final String SIGN_IN_CODE = "/sign/code";
-    public static final String SIGN_IN_CARD = "/sign/card";
 
     public static GymFuntion instanceGymFuntion(String module) {
         GymFuntion gym = new GymFuntion.Builder().moduleName(module).text(getModuleTxt(module)).img(getDrawableRes(module)).build();
@@ -234,6 +145,7 @@ public class GymFunctionFactory {
                 return 0;
         }
     }
+
 
     public static int getModuleStatus(String module) {
         if (module == null) return 0;

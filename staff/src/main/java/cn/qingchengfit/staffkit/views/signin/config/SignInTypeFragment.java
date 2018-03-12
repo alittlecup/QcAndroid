@@ -22,6 +22,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.body.SignInCostBody;
 import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
@@ -145,7 +146,7 @@ import javax.inject.Inject;
             x.putExtra("costs", cardCosts);
             startActivityForResult(x, ChooseActivity.SIGN_IN_CARDS);
         } else {
-            new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
+            UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey(QRActivity.MODULE_STUDENT_CARDS)).show(getFragmentManager(), "");
         }
     }
 

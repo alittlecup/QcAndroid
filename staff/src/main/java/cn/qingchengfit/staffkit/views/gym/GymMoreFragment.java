@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventFreshCoachService;
@@ -150,14 +151,15 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                                 notificationMyFuntion();
                                 notificationAllFuntion();
                             } else {
+                                String moduleName = ((GymFuntionItem) mFunAdapter.getItem(position)).getGymFuntion().getModuleName();
+
                                 if (!gymWrapper.isPro()
-                                    && GymFunctionFactory.getModuleStatus(
-                                    ((GymFuntionItem) mFunAdapter.getItem(position)).getGymFuntion().getModuleName()) > 0) {
-                                    new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
+                                    && GymFunctionFactory.getModuleStatus(moduleName) > 0) {
+                                    UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey(moduleName)).show(getFragmentManager(), "");
                                     return true;
                                 }
                                 gymFunctionFactory.getJumpIntent(
-                                    ((GymFuntionItem) mFunAdapter.getItem(position)).getGymFuntion().getModuleName(),
+                                    moduleName,
                                     gymWrapper.getCoachService(), null, null, GymMoreFragment.this);
                             }
                         }
@@ -187,80 +189,80 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 FunHeaderItem workFuntion = new FunHeaderItem("工作台");
 
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_WORKSPACE_ORDER_LIST), workFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_WORKSPACE_ORDER_LIST), workFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_WORKSPACE_GROUP), workFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_WORKSPACE_GROUP), workFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_WORKSPACE_PRIVATE), workFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_WORKSPACE_ORDER_SIGNIN),
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_WORKSPACE_PRIVATE), workFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_WORKSPACE_ORDER_SIGNIN),
                     workFuntion));
 
                 FunHeaderItem serviceFuntion = new FunHeaderItem("健身服务");
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_SERVICE_GROUP), serviceFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_SERVICE_GROUP), serviceFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_SERVICE_PRIVATE), serviceFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_SERVICE_PRIVATE), serviceFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_SERVICE_FREE), serviceFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_SERVICE_FREE), serviceFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_SERVICE_SHOP), serviceFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_SERVICE_SHOP), serviceFuntion));
 
                 FunHeaderItem studentsFuntion = new FunHeaderItem("会员管理");
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_STUDENT), studentsFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_STUDENT), studentsFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_STUDENT_CARDS), studentsFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_STUDENT_BODY_TEST),
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_STUDENT_CARDS), studentsFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_STUDENT_BODY_TEST),
                     studentsFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.REPORT_EXPORT), studentsFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.REPORT_EXPORT), studentsFuntion));
 
                 FunHeaderItem internalFuntion = new FunHeaderItem("员工管理");
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_MANAGE_STAFF), internalFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MANAGE_STAFF), internalFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_MANAGE_COACH), internalFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), internalFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), internalFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MANAGE_COACH), internalFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), internalFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), internalFuntion));
 
                 FunHeaderItem runFuntion = new FunHeaderItem("运营推广");
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_SCORE), runFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_SCORE), runFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_ACTIVITY), runFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_ACTIVITY), runFuntion));
                 //                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_AD), runFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERTAT_KOUBEI), runFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_REGIST), runFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERTAT_KOUBEI), runFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_REGIST), runFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_ANOUNCE), runFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_ANOUNCE), runFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_OPERATE_COMPETITION), runFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), runFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), runFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_OPERATE_COMPETITION), runFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), runFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), runFuntion));
 
                 FunHeaderItem financialFuntion = new FunHeaderItem("财务与报表");
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_FINACE_ONLINE), financialFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_FINACE_ONLINE), financialFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_FINANCE_COURSE), financialFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_FINANCE_COURSE), financialFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_FINANCE_SALE), financialFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_FINANCE_SALE), financialFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_FINANCE_MARK), financialFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_FINANCE_MARK), financialFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_FINANCE_CARD), financialFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_FINANCE_CARD), financialFuntion));
                 mDatas.add(
-                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_FINANCE_SIGN_IN), financialFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), financialFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), financialFuntion));
+                    new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_FINANCE_SIGN_IN), financialFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), financialFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), financialFuntion));
 
                 FunHeaderItem gymFuntion = new FunHeaderItem("场馆管理");
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_GYM_INFO), gymFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_GYM_TIME), gymFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_GYM_SITE), gymFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_MSG), gymFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_WARDROBE), gymFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_HOME), gymFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_GYM_INFO), gymFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_GYM_TIME), gymFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_GYM_SITE), gymFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_MSG), gymFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_WARDROBE), gymFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_HOME), gymFuntion));
                 //        mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_WECHAT), gymFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), gymFuntion));
-                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), gymFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), gymFuntion));
+                mDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), gymFuntion));
 
                 mAdapter = new GymMoreAdapter(mDatas, GymMoreFragment.this);
                 mAdapter.setDisplayHeadersAtStartUp(true);
@@ -302,7 +304,7 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
     private void notificationMyFuntion() {
         int addcount = ((4 - (mFunsDatas.size()) % 4) % 4);
         for (int i = 0; i < addcount; i++) {
-            mFunsDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(GymFunctionFactory.MODULE_NONE), mMyFuntions));
+            mFunsDatas.add(new GymFuntionItem(GymFunctionFactory.instanceGymFuntion(QRActivity.MODULE_NONE), mMyFuntions));
         }
         if (mFunsDatas.size() == 1) mFunsDatas.add(new EmptyFunItem());
         mFunAdapter.updateDataSet(mFunsDatas);
@@ -332,10 +334,11 @@ public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnI
                 notificationMyFuntion();
                 notificationAllFuntion();
             } else {
+                String moduleName = ((GymFuntionItem) mAdapter.getItem(position)).getGymFuntion().getModuleName();
                 if (!gymWrapper.isPro()
-                    && GymFunctionFactory.getModuleStatus(((GymFuntionItem) mAdapter.getItem(position)).getGymFuntion().getModuleName())
+                    && GymFunctionFactory.getModuleStatus(moduleName)
                     > 0) {
-                    new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
+                    UpgradeInfoDialogFragment.newInstance(moduleName).show(getFragmentManager(), "");
                     return true;
                 }
                 gymFunctionFactory.getJumpIntent(((GymFuntionItem) mAdapter.getItem(position)).getGymFuntion().getModuleName(),

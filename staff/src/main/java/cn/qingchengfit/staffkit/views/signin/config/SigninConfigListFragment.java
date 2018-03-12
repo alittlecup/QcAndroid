@@ -21,6 +21,7 @@ import cn.qingchengfit.model.responese.ScoreStatus;
 import cn.qingchengfit.model.responese.SignInCardCostBean;
 import cn.qingchengfit.network.HttpUtil;
 import cn.qingchengfit.network.ResultSubscribe;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.repository.IPermissionModel;
 import cn.qingchengfit.staffkit.App;
 import cn.qingchengfit.staffkit.R;
@@ -29,7 +30,6 @@ import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.constant.Router;
 import cn.qingchengfit.staffkit.presenters.ModuleConfigsPresenter;
 import cn.qingchengfit.staffkit.rest.RestRepositoryV2;
-import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.signin.zq.model.Guard;
 import cn.qingchengfit.staffkit.views.signin.zq.presenter.ZqAccessPresenter;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
@@ -134,17 +134,17 @@ public class SigninConfigListFragment extends BaseFragment
 
   @OnClick(R.id.input_sign_use_card)
   public void onSignUseCard(){
-    ContainerActivity.router(GymFunctionFactory.SIGN_IN_CARD, getContext());
+    ContainerActivity.router(QRActivity.SIGN_IN_CARD, getContext());
   }
 
   @OnClick(R.id.input_sign_use_qrcode)
   public void onSignUseQrCode(){
-    ContainerActivity.router(GymFunctionFactory.SIGN_IN_CODE, getContext());
+    ContainerActivity.router(QRActivity.SIGN_IN_CODE, getContext());
   }
 
   @OnClick(R.id.input_sign_use_zq)
   public void onSignUseZq(){
-    ContainerActivity.router(GymFunctionFactory.ZQ_ACCESS, getContext());
+    ContainerActivity.router(QRActivity.ZQ_ACCESS, getContext());
   }
 
   @OnClick({ R.id.layout_signin_type, R.id.layout_signin_wardrobe, R.id.layout_signin_screen })

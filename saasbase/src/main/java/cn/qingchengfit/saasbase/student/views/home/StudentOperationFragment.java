@@ -11,39 +11,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.anbillon.flabellum.annotations.Leaf;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.saasbase.R;
 import cn.qingchengfit.saasbase.R2;
 import cn.qingchengfit.saasbase.course.batch.views.UpgradeInfoDialogFragment;
-import cn.qingchengfit.saasbase.db.GymBaseInfoAction;
-import cn.qingchengfit.saasbase.permission.SerPermisAction;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.student.other.MyIndicator;
 import cn.qingchengfit.saasbase.student.other.MySnapHelper;
 import cn.qingchengfit.saasbase.student.views.StudentOperationItem;
-import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.MeasureUtils;
-import cn.qingchengfit.utils.Util;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.anbillon.flabellum.annotations.Leaf;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * StudentListFragment 顶部的会员功能界面
@@ -169,7 +157,7 @@ public class StudentOperationFragment extends BaseFragment
     public boolean onItemClick(int position) {
 
         if (!gymWrapper.isPro()) {
-            new UpgradeInfoDialogFragment().show(getFragmentManager(), "");
+            UpgradeInfoDialogFragment.newInstance(QRActivity.getIdentifyKey(QRActivity.MODULE_STUDENT)).show(getFragmentManager(), "");
             return true;
         }
         if (mCommonFlexAdapter.getItem(position) instanceof StudentOperationItem) {

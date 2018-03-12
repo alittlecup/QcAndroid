@@ -20,7 +20,6 @@ import cn.qingchengfit.staffkit.constant.Configs;
 import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
 import cn.qingchengfit.staffkit.views.export.model.ExportRecord;
 import cn.qingchengfit.staffkit.views.export.presenter.ImportExportPresenter;
-import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.utils.DialogUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.List;
@@ -73,7 +72,7 @@ public class ImportExportFragment extends BaseFragment implements ImportExportPr
         + "&model="
         + gymWrapper.model()
         + "&module="
-        + GymFunctionFactory.STUDENT_IMPORT);
+        + QRActivity.STUDENT_IMPORT);
     startActivity(toScan);
   }
 

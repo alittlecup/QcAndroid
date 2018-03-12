@@ -35,7 +35,7 @@ public class CardImportExportFragment extends ImportExportFragment {
         + "&model="
         + gymWrapper.model()
         + "&module="
-        + GymFunctionFactory.CARD_IMPORT);
+        + QRActivity.CARD_IMPORT);
     startActivity(toScan);
   }
 

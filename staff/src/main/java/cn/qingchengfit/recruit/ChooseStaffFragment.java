@@ -22,6 +22,7 @@ import cn.qingchengfit.saasbase.chat.ConversationFriendsFragment;
 import cn.qingchengfit.saasbase.chat.model.ChatGym;
 import cn.qingchengfit.saasbase.common.bottom.BottomStudentsFragment;
 import cn.qingchengfit.saasbase.permission.QcDbManager;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.saasbase.staff.event.EventAddStaffDone;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.rxbus.event.EventChoosePerson;
@@ -122,7 +123,7 @@ public class ChooseStaffFragment extends ConversationFriendsFragment {
                 //toStatement.putExtra("")
                 //startActivity(toStatement);
                 gymWrapper.setCoachService(coachServices.get(0));
-                gymFunctionFactory.getJumpIntent(GymFunctionFactory.MODULE_MANAGE_STAFF_ADD,
+                gymFunctionFactory.getJumpIntent(QRActivity.MODULE_MANAGE_STAFF_ADD,
                     coachServices.get(0), null, null, ChooseStaffFragment.this);
               } else {
                 ToastUtils.show("找不到对应场馆");

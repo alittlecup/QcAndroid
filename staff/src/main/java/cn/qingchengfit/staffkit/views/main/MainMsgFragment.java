@@ -21,7 +21,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.saasbase.chat.model.Record;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
@@ -30,17 +29,18 @@ import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.model.responese.NotificationDeleted;
 import cn.qingchengfit.model.responese.NotificationGlance;
 import cn.qingchengfit.model.responese.NotificationMsg;
+import cn.qingchengfit.saasbase.chat.model.Record;
+import cn.qingchengfit.saasbase.constant.ConstantNotification;
+import cn.qingchengfit.saasbase.items.SystemMsgItem;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.BuildConfig;
 import cn.qingchengfit.staffkit.MainActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.saasbase.constant.ConstantNotification;
 import cn.qingchengfit.staffkit.presenters.SystemMsgPresenter;
 import cn.qingchengfit.staffkit.rxbus.event.EventNewPush;
 import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.saasbase.items.SystemMsgItem;
 import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.notification.NotificationActivity;
 import cn.qingchengfit.staffkit.views.statement.ContainerActivity;
 import cn.qingchengfit.utils.DialogUtils;
@@ -410,12 +410,12 @@ public class MainMsgFragment extends BaseFragment
         toNoti.putExtra("type", type);
         startActivity(toNoti);
       } else if (TextUtils.equals(type,ConstantNotification.COMMENT_NOTIFICATION_STR)) {
-        ContainerActivity.router(GymFunctionFactory.RECRUIT_MESSAGE_LIST, getContext(),
+        ContainerActivity.router(QRActivity.RECRUIT_MESSAGE_LIST, getContext(),
             getString(R.string.chat_user_id_header, loginStatus.getUserId()));
       } else {
         presenter.clearNoti(
             ConstantNotification.getCategloreStr(ConstantNotification.COMMENT_NOTIFICATION_STR));
-        ContainerActivity.router(GymFunctionFactory.MODULE_ARTICLE_COMMENT_REPLY, getContext());
+        ContainerActivity.router(QRActivity.MODULE_ARTICLE_COMMENT_REPLY, getContext());
       }
     }
     return false;

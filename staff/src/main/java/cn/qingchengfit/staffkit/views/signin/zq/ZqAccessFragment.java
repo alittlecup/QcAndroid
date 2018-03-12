@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.items.SimpleTextItemItem;
+import cn.qingchengfit.saasbase.qrcode.views.QRActivity;
 import cn.qingchengfit.staffkit.R;
 import cn.qingchengfit.staffkit.views.gym.GymFunctionFactory;
 import cn.qingchengfit.staffkit.views.signin.zq.event.EventAddZq;
@@ -121,7 +122,7 @@ public class ZqAccessFragment extends BaseFragment
     toolbar.inflateMenu(R.menu.menu_add);
     toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {
-        ContainerActivity.router(GymFunctionFactory.ADD_ZQ_ACCESS, getContext());
+        ContainerActivity.router(QRActivity.ADD_ZQ_ACCESS, getContext());
         return false;
       }
     });
@@ -226,7 +227,7 @@ public class ZqAccessFragment extends BaseFragment
         b.putParcelable("access", createBody());
         b.putString("guard", guard.id);
         intent.putExtra("data", b);
-        intent.putExtra("router", GymFunctionFactory.EDIT_ZQ_ACCESS);
+        intent.putExtra("router", QRActivity.EDIT_ZQ_ACCESS);
         startActivity(intent);
         break;
       case 3:
