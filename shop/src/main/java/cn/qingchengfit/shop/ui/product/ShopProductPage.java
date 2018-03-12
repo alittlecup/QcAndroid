@@ -23,7 +23,6 @@ import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPageParams;
 import cn.qingchengfit.shop.ui.product.paycardchannel.ProductPayPageParams;
 import cn.qingchengfit.shop.util.ViewUtil;
 import cn.qingchengfit.shop.vo.Category;
-import cn.qingchengfit.shop.vo.Channel;
 import cn.qingchengfit.shop.vo.Good;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.utils.ToastUtils;
@@ -44,8 +43,7 @@ import java.util.List;
 
   @Override protected void subscribeUI() {
     mViewModel.payChannelEvent.observe(this, aVoid -> {
-      Uri uri = Uri.parse("shop://shop/product/paychannel");
-      routeTo(uri, null);
+      routeTo("/product/paychannel", null);
     });
     mViewModel.addToCategory.observe(this, aVoid -> {
       ShopBottomCategoryFragment shopBottomCategoryFragment = new ShopBottomCategoryFragment();
@@ -69,7 +67,7 @@ import java.util.List;
       multiChoosePicFragment.show(getChildFragmentManager(), "");
     });
     mViewModel.deliverChannelEvent.observe(this, aVoid -> {
-      Uri uri = Uri.parse("shop://shop/product/deliver");
+      Uri uri = Uri.parse("qcstaff://shop/product/deliver");
 
       toOtherFragmentForBack(uri, new ProductDeliverPageParams().delivers(
           (ArrayList<Integer>) mViewModel.getProduct().getDelivery_types()).build(),

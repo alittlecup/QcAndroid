@@ -127,7 +127,7 @@ public class BindingAdapters {
     }
 
 
-    @BindingAdapter(value = {"emptyDrawable", "emptyTitle", "emptyMsg"})
+    @BindingAdapter(value = {"emptyDrawable", "emptyTitle", "emptyMsg"},requireAll = false)
     public static void setEmptyItem(RecyclerView recyclerView, Drawable emptyDrawable, String title, String msg) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         if (adapter != null && adapter instanceof CommonFlexAdapter) {

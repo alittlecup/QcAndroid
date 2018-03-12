@@ -1,6 +1,5 @@
 package cn.qingchengfit.shop.ui.inventory.product;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -27,13 +26,11 @@ import java.util.ArrayList;
 
   @Override protected void subscribeUI() {
     mViewModel.getAddInventoryEvent().observe(this, aVoid -> {
-      Uri uri = Uri.parse("shop://shop/update/inventory");
-      routeTo(uri, new cn.qingchengfit.shop.ui.inventory.product.UpdateInventoryPageParams().action(
+      routeTo("/update/inventory", new cn.qingchengfit.shop.ui.inventory.product.UpdateInventoryPageParams().action(
           UpdateInventoryPage.ADD).productID(product.getId()).build());
     });
     mViewModel.getReduceInventoryEvent().observe(this, aVoid -> {
-      Uri uri = Uri.parse("shop://shop/update/inventory");
-      routeTo(uri, new cn.qingchengfit.shop.ui.inventory.product.UpdateInventoryPageParams().action(
+      routeTo("/update/inventory", new cn.qingchengfit.shop.ui.inventory.product.UpdateInventoryPageParams().action(
           UpdateInventoryPage.REDUCE).productID(product.getId()).build());
     });
     mViewModel.getLiveItems().observe(this, item -> {

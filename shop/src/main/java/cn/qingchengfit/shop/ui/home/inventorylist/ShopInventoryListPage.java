@@ -1,6 +1,5 @@
 package cn.qingchengfit.shop.ui.home.inventorylist;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -25,11 +24,7 @@ public class ShopInventoryListPage
 
   @Override protected void subscribeUI() {
     mViewModel.getShowAllRecord().observe(this, aVoid -> {
-      Uri uri = Uri.parse("shop://shop/shop/inventory");
-      routeTo(uri,null);
-      //Uri uri = Uri.parse("shop://shop/update/inventory");
-      //routeTo(uri,
-      //    new UpdateInventoryPageParams().action(UpdateInventoryPage.REDUCE).productID(10).build());
+      routeTo("/shop/inventory",null);
     });
     mViewModel.getLiveItems().observe(this, items -> {
       mViewModel.items.set(items);
@@ -56,8 +51,7 @@ public class ShopInventoryListPage
   @Override public boolean onItemClick(int position) {
     InventoryListItem item = (InventoryListItem) adapter.getItem(position);
     if (item.getData() instanceof Product) {
-      Uri uri = Uri.parse("shop://shop/product/inventory");
-      routeTo(uri, new ProductInventoryPageParams().product((Product) item.getData()).build());
+      routeTo("/product/inventory", new ProductInventoryPageParams().product((Product) item.getData()).build());
     }
     return false;
   }

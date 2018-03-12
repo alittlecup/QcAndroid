@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.btn_to_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse("shop://shop/shop/home");
+                Uri uri = Uri.parse("qcstaff://shop/shop/home");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }

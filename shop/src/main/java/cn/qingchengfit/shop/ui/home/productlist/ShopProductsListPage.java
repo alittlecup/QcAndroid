@@ -1,6 +1,7 @@
 package cn.qingchengfit.shop.ui.home.productlist;
 
-import android.net.Uri;
+import android.databinding.OnRebindCallback;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -57,8 +58,7 @@ public class ShopProductsListPage
     });
 
     mViewModel.getProductEvent().observe(this, aVoid -> {
-      Uri uri = Uri.parse("shop://shop/product/add");
-      routeTo(uri, null);
+      routeTo("/product/add", null);
     });
   }
 
@@ -69,8 +69,15 @@ public class ShopProductsListPage
     mBinding.setViewModel(mViewModel);
     initRecyclerView();
     loadData();
-    setEmptyView();
     initRxbus();
+    mBinding.addOnRebindCallback(new OnRebindCallback() {
+      @Override public void onBound(ViewDataBinding binding) {
+        if (adapter.isEmpty()) {
+          Log.d("TAG", "onBound: ");
+          setEmptyView();
+        }
+      }
+    });
     return mBinding;
   }
 
@@ -111,12 +118,11 @@ public class ShopProductsListPage
   }
 
   @Override public boolean onItemClick(int position) {
-    Uri uri = Uri.parse("shop://shop/product/modify");
     IFlexible item = adapter.getItem(position);
     if (item instanceof ProductListItem) {
       String productId = ((ProductListItem) item).getData().getProductId();
       if (productId != null) {
-        routeTo(uri,
+        routeTo("/product/modify",
             new ShopProductModifyPageParams().productId(productId).productStatus(status).build());
       }
     }

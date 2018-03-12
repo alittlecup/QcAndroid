@@ -116,6 +116,8 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           app:items="@{viewModel.items}"
+          app:emptyDrawable="@{@drawable/vd_img_empty_universe}"
+          app:emptyTitle="@{@string/product_empty_text}"
           />
     </android.support.v4.widget.SwipeRefreshLayout>
 
