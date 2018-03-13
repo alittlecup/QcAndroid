@@ -56,7 +56,7 @@ import java.util.List;
       shopBottomCategoryFragment.show(getChildFragmentManager(), "");
     });
     mViewModel.addImagesEvent.observe(this, aVoid -> {
-      MultiChoosePicFragment multiChoosePicFragment = MultiChoosePicFragment.newInstance(null);
+      MultiChoosePicFragment multiChoosePicFragment = MultiChoosePicFragment.newInstance(mViewModel.getProduct().getImages());
       multiChoosePicFragment.setUpLoadImageCallback(uris -> {
         if (uris != null && !uris.isEmpty()) {
           initViewPager(uris);
@@ -306,7 +306,7 @@ import java.util.List;
       Glide.with(imageView.getContext())
           .load(uris.get(position))
           .asBitmap()
-          .placeholder(cn.qingchengfit.widgets.R.color.backgroud_grey)
+          .placeholder(cn.qingchengfit.widgets.R.drawable.img_loadingimage)
           .into(imageView);
       return frameLayout;
     }

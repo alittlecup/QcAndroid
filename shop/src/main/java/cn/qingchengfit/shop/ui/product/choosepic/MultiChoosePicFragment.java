@@ -3,6 +3,7 @@ package cn.qingchengfit.shop.ui.product.choosepic;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,10 @@ import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
+import com.zhihu.matisse.internal.entity.Item;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Flowable;
 import java.util.ArrayList;
@@ -60,11 +65,11 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
     return view;
   }
 
-  public static MultiChoosePicFragment newInstance(@Nullable ArrayList<Uri> uris) {
+  public static MultiChoosePicFragment newInstance(@Nullable List<String> uris) {
     Bundle args = new Bundle();
     MultiChoosePicFragment fragment = new MultiChoosePicFragment();
     if (uris != null && !uris.isEmpty()) {
-      args.putParcelableArrayList("uris", uris);
+      args.putStringArrayList("uris", new ArrayList<>(uris));
     }
     fragment.setArguments(args);
     return fragment;
@@ -76,54 +81,54 @@ public class MultiChoosePicFragment extends ChoosePictureFragmentNewDialog {
   }
 
   public void chooseImages() {
-    //ArrayList<Uri> uris = getArguments().getParcelableArrayList("uris");
-    //if (uris != null && !uris.isEmpty()) {
-    //  ArrayList<Item> items = new ArrayList<>();
-    //  for (Uri uri : uris) {
-    //    Item item = new Item(uri);
-    //    item.setPath(uri.toString());
-    //    items.add(item);
-    //  }
-    //  chooseImages(items);
-    //} else {
-    //  chooseImage();
-    //}
+    ArrayList<String> uris = getArguments().getStringArrayList("uris");
+    if (uris != null && !uris.isEmpty()) {
+      ArrayList<Item> items = new ArrayList<>();
+      for (String uri : uris) {
+        Item item = new Item(Uri.parse(uri));
+        item.setPath(uri);
+        items.add(item);
+      }
+      chooseImages(items);
+    } else {
+      chooseImage();
+    }
   }
 
-  //private void chooseImage() {
-  //  Matisse.from(MultiChoosePicFragment.this)
-  //      .choose(MimeType.ofAll(), false)
-  //      .countable(true)
-  //      .capture(true)
-  //      .dragable(true)
-  //      .theme(cn.qingchengfit.widgets.R.style.QcPicAppTheme)
-  //      .maxSelectable(5)
-  //      .captureStrategy(new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
-  //      .gridExpectedSize(getResources().getDimensionPixelSize(
-  //          cn.qingchengfit.widgets.R.dimen.grid_expected_size))
-  //      .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-  //      .thumbnailScale(0.85f)
-  //      .imageEngine(new GlideEngine())
-  //      .forResult(CHOOSE_CAMERA);
-  //}
+  private void chooseImage() {
+    Matisse.from(MultiChoosePicFragment.this)
+        .choose(MimeType.ofImage(), false)
+        .countable(true)
+        .capture(true)
+        .dragable(true)
+        .theme(cn.qingchengfit.widgets.R.style.QcPicAppTheme)
+        .maxSelectable(5)
+        .captureStrategy(new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
+        .gridExpectedSize(getResources().getDimensionPixelSize(
+            cn.qingchengfit.widgets.R.dimen.grid_expected_size))
+        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        .thumbnailScale(0.85f)
+        .imageEngine(new GlideEngine())
+        .forResult(CHOOSE_CAMERA);
+  }
 
-  //public void chooseImages(ArrayList<Item> uris) {
-  //  Matisse.from(MultiChoosePicFragment.this)
-  //      .choose(MimeType.ofAll(), false)
-  //      .countable(true)
-  //      .capture(true)
-  //      .dragable(true)
-  //      .itemUris(uris)
-  //      .theme(cn.qingchengfit.widgets.R.style.QcPicAppTheme)
-  //      .maxSelectable(5)
-  //      .captureStrategy(new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
-  //      .gridExpectedSize(getResources().getDimensionPixelSize(
-  //          cn.qingchengfit.widgets.R.dimen.grid_expected_size))
-  //      .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-  //      .thumbnailScale(0.85f)
-  //      .imageEngine(new GlideEngine())
-  //      .forResult(CHOOSE_CAMERA);
-  //}
+  public void chooseImages(ArrayList<Item> uris) {
+    Matisse.from(MultiChoosePicFragment.this)
+        .choose(MimeType.ofImage(), false)
+        .countable(true)
+        .capture(true)
+        .dragable(true)
+        .itemUris(uris)
+        .theme(cn.qingchengfit.widgets.R.style.QcPicAppTheme)
+        .maxSelectable(5)
+        .captureStrategy(new CaptureStrategy(true, getContext().getPackageName() + ".provider"))
+        .gridExpectedSize(getResources().getDimensionPixelSize(
+            cn.qingchengfit.widgets.R.dimen.grid_expected_size))
+        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        .thumbnailScale(0.85f)
+        .imageEngine(new GlideEngine())
+        .forResult(CHOOSE_CAMERA);
+  }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     String filepath = "";

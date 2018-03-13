@@ -3,30 +3,21 @@ package cn.qingchengfit.saasbase.common.bindingadapter;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-
-import com.github.mikephil.charting.data.LineData;
-
-import java.util.Calendar;
-import java.util.List;
-
 import cn.qingchengfit.items.CommonNoDataItem;
-import cn.qingchengfit.items.SimpleTextItemItem;
 import cn.qingchengfit.saasbase.BuildConfig;
 import cn.qingchengfit.saasbase.student.widget.LineCharDate;
 import cn.qingchengfit.saasbase.student.widget.ModifiedFastScroller;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.FunnelTwoView;
 import cn.qingchengfit.widgets.QcRadioGroup;
+import com.github.mikephil.charting.data.LineData;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.items.IFlexible;
-
-import static android.view.Gravity.CENTER;
+import java.util.List;
 
 /**
  * Created by huangbaole on 2017/11/15.
@@ -87,8 +78,8 @@ public class BindingAdapters {
      * recycler的数据集合
      *
      * @param recyclerView
-     * @param items
-     * @param <T>
+     * @param
+     * @param
      */
     //@SuppressWarnings("unchecked")
     //@BindingAdapter(value = "items")
@@ -176,8 +167,8 @@ public class BindingAdapters {
                 Object tag = v.getTag(v.getId());
                 long latestTime = tag == null ? 0 : (long) tag;
 
-                long currentTime = Calendar.getInstance().getTimeInMillis();
-                if (currentTime - latestTime > 1000) {//过滤掉600毫秒内的连续点击
+                long currentTime =System.currentTimeMillis();
+                if (currentTime - latestTime > 600) {
                     v.setTag(v.getId(), currentTime);
                     if (BuildConfig.DEBUG) {
                         Log.d("TAG", "currentTime:" + (currentTime - latestTime));
