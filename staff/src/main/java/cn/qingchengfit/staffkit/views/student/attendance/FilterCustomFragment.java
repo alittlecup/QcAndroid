@@ -81,8 +81,8 @@ import java.util.Locale;
     private void initView() {
         modifySettingTitle.setText(title);
         if (isSelectTime) {
-            editAbsenceStart.setText("开始日期");
-            editAbsenceEnd.setText("结束日期");
+            editAbsenceStart.setHint("开始日期");
+            editAbsenceEnd.setHint("结束日期");
             editAbsenceStart.setKeyListener(null);
             editAbsenceEnd.setKeyListener(null);
 

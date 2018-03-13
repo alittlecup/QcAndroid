@@ -308,25 +308,6 @@ import rx.functions.Action1;
     }
   }
 
-  //public boolean hasChangePermission() {
-  //  boolean ret = true;
-  //  if (cardTpl == null){
-  //    ret = permissionModel.checkAllGym(PermissionServerUtils.CARDSETTING_CAN_CHANGE);
-  //    if (!ret) {
-  //      showAlert("您没有会员卡编辑权限");
-  //    }
-  //    return ret;
-  //  }
-  //  if (cardTpl.getShopIds().size() > 1) {
-  //    showAlert(getString(R.string.alert_edit_cardtype_link_manage));
-  //    return false;
-  //  }
-  //  ret = permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_CHANGE);
-  //  if (!ret) {
-  //    showAlert("您没有会员卡种类编辑权限");
-  //  }
-  //  return ret;
-  //}
 
   public boolean hasAddPermission() {
     boolean ret = true;
@@ -347,6 +328,25 @@ import rx.functions.Action1;
     }
     return ret;
   }
+public boolean hasAddPermission(boolean toast) {
+    boolean ret = true;
+    if (cardTpl == null){
+      ret = permissionModel.checkAllGym(PermissionServerUtils.CARDSETTING_CAN_WRITE);
+      if (!ret && toast) {
+        showAlert("您没有会员卡新增权限");
+      }
+      return ret;
+    }
+    if (cardTpl.getShopIds().size() > 1 && toast) {
+      showAlert(getString(R.string.alert_edit_cardtype_link_manage));
+      return false;
+    }
+    ret = permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE);
+    if (!ret && toast) {
+      showAlert("您没有会员卡新增权限");
+    }
+    return ret;
+  }
 
   //无权限或停用时所有选项不能点击
   protected void isEnable(boolean isEnable) {
@@ -359,7 +359,7 @@ import rx.functions.Action1;
     duringCount.setEnable(isEnable);
 
     expandSettingLimit.setEnabled(isEnable);
-    expandCardProtocol.setEnabled(permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE));
+    expandCardProtocol.setEnabled(hasAddPermission(false));
 
     for (int i = 0; i < comonAdapter.getItemCount(); i++) {
       comonAdapter.getItem(i).setEnabled(isEnable);
@@ -403,14 +403,6 @@ import rx.functions.Action1;
     }
   }
 
-  //@OnClick(R2.id.civ_input_card_name)
-  //public void onName(){
-  //  routeTo("common", "/input/",
-  //      new CommonInputParams().content(presenter.getCardName())
-  //          .title("编辑会员卡种类名称")
-  //          .hint("填写会员卡种类名称")
-  //          .build());
-  //}
 
   public void initCardProtocol() {
     if (cardTpl.has_service_term) {
@@ -762,29 +754,6 @@ import rx.functions.Action1;
     }
   }
 
-  @OnClick({ R2.id.pre_order_count, R2.id.during_count, R2.id.limit_bug_count })
-  public void onLimit(View v) {
-    if (gymWrapper.inBrand()) {
-      if (cardTpl != null && !permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE,
-        cardTpl.getShopIds())) {
-        showAlert(getResources().getString(R.string.alert_permission_forbid));
-        return;
-      }
-    } else {
-      if (!permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE)) {
-        showAlert(getResources().getString(R.string.alert_permission_forbid));
-        return;
-      }
-    }
-    int i = v.getId();
-    if (i == R.id.pre_order_count) {
-      onPreOrderCount();
-    } else if (i == R.id.during_count) {
-      onDuringCount();
-    } else if (i == R.id.limit_bug_count) {
-      onLimitCard();
-    }
-  }
 
   @OnClick({ R2.id.input_card_protocol }) public void onOpenProtocol() {
     if (cardTpl != null && cardTpl.has_service_term) {
@@ -819,7 +788,9 @@ import rx.functions.Action1;
   }
 
   //可提前预约课程数
+  @OnClick(R2.id.pre_order_count)
   public void onPreOrderCount() {
+    if (!hasAddPermission()) return;
     List<String> preList = new ArrayList<>();
     int i = 0;
     while (i < 100) {
@@ -840,12 +811,16 @@ import rx.functions.Action1;
   }
 
   //单位时间可上课程数
+  @OnClick(R2.id.during_count)
   public void onDuringCount() {
+    if (!hasAddPermission()) return;
     ClassLimitBottomFragment.start(this, 3);
   }
 
   //每个会员限购张数
+  @OnClick(R2.id.limit_bug_count)
   public void onLimitCard() {
+    if (!hasAddPermission()) return;
     BottomBuyLimitFragment.newInstance(cardLimit.buy_limit).show(getFragmentManager(), "");
   }
 

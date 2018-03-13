@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -132,12 +133,18 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
+
         if (getArguments() != null) {
             isSimple = getArguments().getBoolean("is");
             mIds = getArguments().getStringArrayList("ids");
             permission = getArguments().getString("p");
             feature = getArguments().getInt("feature");
         }
+    }
+
+    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
     }
 
     @Nullable @Override

@@ -107,6 +107,10 @@ public class CardtplAddFragment extends CardTplDetailFragment {
         });
   }
 
+  @Override public boolean hasAddPermission() {
+    return true;
+  }
+
   @Override protected void onFinishAnimation() {
   }
 

@@ -39,4 +39,12 @@ public class CardTplDetailInBrandFragment extends CardTplDetailFragment {
     }
     return ret;
   }
+
+  @Override public boolean hasAddPermission(boolean toast) {
+    boolean ret = permissionModel.check(PermissionServerUtils.CARDSETTING_CAN_WRITE,cardTpl.getShopIds());
+    if (!ret && toast) {
+      showAlert("您没有会员卡新增权限");
+    }
+    return ret;
+  }
 }
