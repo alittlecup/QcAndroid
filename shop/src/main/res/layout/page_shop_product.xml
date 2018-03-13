@@ -60,6 +60,7 @@
                 app:backgroundTint="@color/colorPrimary"
                 app:elevation="4dp"
                 app:fabSize="normal"
+                android:visibility="gone"
                 app:rippleColor="@color/colorPrimary"
                 app:srcCompat="@drawable/ic_product_camera"
                 />

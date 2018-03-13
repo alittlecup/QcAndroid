@@ -79,7 +79,8 @@ public class StudentItem extends AbstractFlexibleItem<StudentItem.StudentVH>
     holder.itemTvStudentStatus.setText(holder.itemTvStudentStatus.getContext()
         .getResources()
         .getStringArray(R.array.student_status)[qcStudentBean.getStatus() % 3]);
-    holder.itemTvStudentStatus.setCompoundDrawablesWithIntrinsicBounds(
+    holder.itemTvStudentStatus.setCompoundDrawablePadding(10);
+    holder.itemTvStudentStatus.setCompoundDrawables(
         StudentBusinessUtils.getStudentStatusDrawable(holder.itemView.getContext(),
             qcStudentBean.getStatus() % 3), null, null, null);
   }

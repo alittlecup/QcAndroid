@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.anbillon.flabellum.annotations.Leaf;
 import com.google.gson.Gson;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +48,7 @@ import java.util.Map;
 
   @Override protected void subscribeUI() {
     mViewModel.getLiveItems().observe(this, items -> {
-      if (items.isEmpty()) return;
+      if (items == null || items.isEmpty()) return;
       mViewModel.isLoading.set(false);
       mViewModel.items.set(mViewModel.getSortViewModel().sortItems(items));
       mBinding.includeFilter.setItems(new ArrayList<>(items));
@@ -171,20 +173,22 @@ import java.util.Map;
     mBinding.recyclerview.setAdapter(adapter = new CommonFlexAdapter(new ArrayList(), this));
     adapter.setFastScroller(mBinding.fastScroller);
     mBinding.fastScroller.setBarClickListener(letter -> {
-      List<StudentItem> itemList = mViewModel.items.get();
+      List<AbstractFlexibleItem> itemList = adapter.getMainItems();
       int position = 0;
       for (int i = 0; i < itemList.size(); i++) {
-        if (itemList.get(i).getHeader() != null) {
-          if (itemList.get(i).getHeader() instanceof StickerDateItem) {
-            if (((StickerDateItem) itemList.get(i).getHeader()).getDate()
-                .equalsIgnoreCase(letter)) {
-              position = i;
-            }
+        if (itemList.get(i) instanceof StickerDateItem) {
+          if (((StickerDateItem) itemList.get(i)).getDate().equalsIgnoreCase(letter)) {
+            position = i;
           }
         }
       }
       return position;
     });
+
+    RxRegiste(
+        RxBus.getBus().register(SwipeRefreshLayout.class, Boolean.class).subscribe(aBoolean -> {
+          mViewModel.isLoading.set(aBoolean);
+        }));
   }
 
   private void setSelectedBack(String json) {
@@ -201,9 +205,9 @@ import java.util.Map;
 
   @Override public boolean onItemClick(int position) {
     if (adapter.getMode() == SelectableAdapter.Mode.SINGLE) {
-      QcStudentBean student=((StudentItem) adapter.getItem(position)).getQcStudentBean();
-      Map<String,Object> member=new HashMap<>();
-      member.put("member",student);
+      QcStudentBean student = ((StudentItem) adapter.getItem(position)).getQcStudentBean();
+      Map<String, Object> member = new HashMap<>();
+      member.put("member", student);
       setSelectedBack(new Gson().toJson(member));
       return false;
     } else {

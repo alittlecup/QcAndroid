@@ -61,6 +61,7 @@ import java.util.List;
         if (uris != null && !uris.isEmpty()) {
           initViewPager(uris);
           mBinding.addImageContainer.setVisibility(View.GONE);
+          mBinding.fabToCamera.setVisibility(View.VISIBLE);
           mViewModel.getProduct().setImages(uris);
         }
       });

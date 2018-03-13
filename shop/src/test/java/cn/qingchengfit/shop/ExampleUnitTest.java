@@ -1,5 +1,9 @@
 package cn.qingchengfit.shop;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Function3;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -28,7 +32,8 @@ public class ExampleUnitTest {
     checkPrice(".");
     try {
       checkPrice("");
-      System.out.println("adfadf");return;
+      System.out.println("adfadf");
+      return;
     } finally {
       System.out.println("finially");
     }
@@ -59,5 +64,42 @@ public class ExampleUnitTest {
       }
       System.out.println(price + "-->" + format);
     }
+  }
+
+  @Test public void testRxFlow() {
+    Observable<String> a = Observable.just("a").map(new Function<String, String>() {
+      @Override public String apply(String s) throws Exception {
+        Thread.sleep(100);
+        return s.toUpperCase();
+      }
+    });
+    Observable<String> b = Observable.just("b").map(new Function<String, String>() {
+      @Override public String apply(String s) throws Exception {
+        Thread.sleep(400);
+        return s.toUpperCase();
+      }
+    });
+    Observable<String> c = Observable.just("c").map(new Function<String, String>() {
+      @Override public String apply(String s) throws Exception {
+        Thread.sleep(300);
+        return s.toUpperCase();
+      }
+    });
+
+    Observable.merge(a,b,c).subscribe(new Consumer<String>() {
+      @Override public void accept(String s) throws Exception {
+        System.out.println(s);
+      }
+    });
+    Observable.zip(a, b, c, new Function3<String, String, String, String>() {
+      @Override public String apply(String s, String s2, String s3) throws Exception {
+        return s+s2+s3;
+
+      }
+    }).subscribe(new Consumer<String>() {
+      @Override public void accept(String s) throws Exception {
+        System.out.println(s);
+      }
+    });
   }
 }

@@ -126,6 +126,7 @@ public class ChooseStaffViewModel
   }
 
   @Override protected List<ChooseStaffItem> map(@NonNull List<QcStudentBean> studentBeans) {
+
     return FlexibleItemProvider.with(new ChooseStaffItemFactory(0)).from(studentBeans);
   }
 
