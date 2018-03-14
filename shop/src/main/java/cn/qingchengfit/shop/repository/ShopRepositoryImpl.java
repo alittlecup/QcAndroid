@@ -56,7 +56,7 @@ public class ShopRepositoryImpl implements ShopRepository {
     }));
   }
 
-  @Override public LiveData<Boolean> qcDeleteCategory(String staff_id, int category_id,
+  @Override public LiveData<Boolean> qcDeleteCategory(String staff_id, String category_id,
       HashMap<String, Object> map) {
     return toLiveData(
         remoteService.qcDeleteCategory(staff_id, category_id, map).map(qcDataResponse -> {
@@ -66,7 +66,7 @@ public class ShopRepositoryImpl implements ShopRepository {
   }
 
   @Override
-  public LiveData<Boolean> qcPutCategory(String staff_id, int category_id, Category category,
+  public LiveData<Boolean> qcPutCategory(String staff_id, String category_id, Category category,
       HashMap<String, Object> map) {
     return toLiveData(
         remoteService.qcPutCategory(staff_id, category_id, category, map).map(qcDataResponse -> {

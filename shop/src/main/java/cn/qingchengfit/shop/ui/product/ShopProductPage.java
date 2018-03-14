@@ -17,6 +17,7 @@ import cn.qingchengfit.shop.R;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
 import cn.qingchengfit.shop.databinding.PageShopProductBinding;
 import cn.qingchengfit.shop.ui.items.product.GoodProductItem;
+import cn.qingchengfit.shop.ui.product.addsuccess.ProductAddSuccessPageParams;
 import cn.qingchengfit.shop.ui.product.bottom.ShopBottomCategoryFragment;
 import cn.qingchengfit.shop.ui.product.choosepic.MultiChoosePicFragment;
 import cn.qingchengfit.shop.ui.product.deliverchannel.ProductDeliverPageParams;
@@ -56,7 +57,8 @@ import java.util.List;
       shopBottomCategoryFragment.show(getChildFragmentManager(), "");
     });
     mViewModel.addImagesEvent.observe(this, aVoid -> {
-      MultiChoosePicFragment multiChoosePicFragment = MultiChoosePicFragment.newInstance(mViewModel.getProduct().getImages());
+      MultiChoosePicFragment multiChoosePicFragment =
+          MultiChoosePicFragment.newInstance(mViewModel.getProduct().getImages());
       multiChoosePicFragment.setUpLoadImageCallback(uris -> {
         if (uris != null && !uris.isEmpty()) {
           initViewPager(uris);
@@ -104,6 +106,10 @@ import java.util.List;
     });
     mViewModel.getPostProductResult().observe(this, aBoolean -> {
       ToastUtils.show(aBoolean ? "success" : "error");
+      if (aBoolean) {
+        routeTo("/add/success", new ProductAddSuccessPageParams().status(mViewModel.getProduct().getProductStatus()).build());
+        popBack();
+      }
     });
   }
 

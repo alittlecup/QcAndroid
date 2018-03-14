@@ -95,6 +95,9 @@ public class Good extends BaseObservable implements Parcelable {
   }
 
   public void setName(String name) {
+    if (this.name != null && this.name.equals(name)) {
+      return;
+    }
     this.name = name;
     notifyPropertyChanged(BR.name);
   }

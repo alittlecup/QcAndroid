@@ -14,7 +14,7 @@
   <string name="price">价格</string>
   <string name="weight">权重</string>
   <string name="category">分类</string>
-  <string name="type">型号</string>
+  <string name="shop_type">型号</string>
   <string name="inventory">库存</string>
   <string name="total_count">总共</string>
   <string name="category_default">常规</string>

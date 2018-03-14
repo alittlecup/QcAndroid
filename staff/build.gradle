@@ -123,7 +123,7 @@ android {
 
       manifestPlaceholders = [APP_NAME          : "内部测试",
                               APP_SCHAME        : "qcstaff",
-                              bdpush_authorities: "cn.qingchengfit.bdpush.internaltest",
+                              bdpush_authorities: "cn.qingchengfit.bdpush.internaltest.shop",
                               APP_PACKAGE       : "cn.qingchengfit.staffkit",
                               file_provider     : "cn.qingchengfit.staffkit.provider"]
       ndk {

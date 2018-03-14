@@ -12,5 +12,5 @@ public interface ICategotyItemData {
 
   int getCategoryProductCount();
 
-  int getId();
+  String getId();
 }

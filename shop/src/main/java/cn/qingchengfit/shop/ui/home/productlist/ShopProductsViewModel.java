@@ -50,7 +50,7 @@ public class ShopProductsViewModel
   @Inject public ShopProductsViewModel() {
     params.put("status", 0);
     params.put("order_by", ShopOrderBy.PRRORITY_UP);
-    params.put("show_all",true);
+    params.put("show_all",1);
   }
 
   public void onAddProductCall() {

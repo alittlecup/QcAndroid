@@ -148,6 +148,9 @@ import javax.inject.Inject;
         break;
     }
     mBinding.includeBottom.cancel.setOnClickListener(view -> dismiss());
+    if(!TextUtils.isEmpty(category.getName())){
+      mBinding.categoryName.setText(category.getName());
+    }
     return mBinding;
   }
 

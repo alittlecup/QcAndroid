@@ -48,14 +48,14 @@ public interface ShopApi {
    */
   @DELETE("/api/staffs/{staff_id}/mall/category/{category_id}/")
   Flowable<QcDataResponse> qcDeleteCategory(@Path("staff_id") String staff_id,
-      @Path("category_id") int category_id,@QueryMap HashMap<String, Object> params);
+      @Path("category_id") String category_id,@QueryMap HashMap<String, Object> params);
 
   /**
    * 修改分类
    */
   @PUT("/api/staffs/{staff_id}/mall/category/{category_id}/")
   Flowable<QcDataResponse> qcPutCategory(@Path("staff_id") String staff_id,
-      @Path("category_id") int category_id, @Body Category category,@QueryMap HashMap<String, Object> params);
+      @Path("category_id") String category_id, @Body Category category,@QueryMap HashMap<String, Object> params);
 
   /**
    * 获取库存记录

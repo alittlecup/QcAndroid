@@ -1,6 +1,6 @@
 package cn.qingchengfit.staff;
 
-import cn.qingchengfit.model.responese.Login;
+import cn.qingchengfit.model.responesex.Login;
 import cn.qingchengfit.staffkit.rest.RestRepository;
 import cn.qingchengfit.staffkit.usecase.bean.LoginBody;
 import java.io.IOException;

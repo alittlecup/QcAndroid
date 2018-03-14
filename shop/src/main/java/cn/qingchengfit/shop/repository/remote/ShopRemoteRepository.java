@@ -23,9 +23,9 @@ public interface ShopRemoteRepository {
 
   Flowable<QcDataResponse> qcPostCategory(String staff_id, Category category,HashMap<String, Object> params);
 
-  Flowable<QcDataResponse> qcDeleteCategory(String staff_id, int category_id,HashMap<String, Object> params);
+  Flowable<QcDataResponse> qcDeleteCategory(String staff_id, String category_id,HashMap<String, Object> params);
 
-  Flowable<QcDataResponse> qcPutCategory(String staff_id, int category_id, Category category,HashMap<String, Object> params);
+  Flowable<QcDataResponse> qcPutCategory(String staff_id, String category_id, Category category,HashMap<String, Object> params);
 
   Flowable<QcDataResponse<RecordListResponse>> qcLoadInventoryRecords(String staff_id,
       HashMap<String, Object> params);

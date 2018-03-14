@@ -20,9 +20,9 @@ public interface ShopRepository {
 
   LiveData<Boolean> qcPostCategory(String staff_id, Category category,HashMap<String, Object> map);
 
-  LiveData<Boolean> qcDeleteCategory(String staff_id, int category_id,HashMap<String, Object> map);
+  LiveData<Boolean> qcDeleteCategory(String staff_id, String category_id,HashMap<String, Object> map);
 
-  LiveData<Boolean> qcPutCategory(String staff_id, int category_id, Category category,HashMap<String, Object> map);
+  LiveData<Boolean> qcPutCategory(String staff_id, String category_id, Category category,HashMap<String, Object> map);
 
   LiveData<RecordListResponse> qcLoadInventoryRecord(String staff_id,
       HashMap<String, Object> params);

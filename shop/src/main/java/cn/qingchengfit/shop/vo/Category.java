@@ -3,13 +3,15 @@ package cn.qingchengfit.shop.vo;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.shop.ui.items.category.ICategotyItemData;
+import com.google.gson.annotations.Expose;
 
 /**
  * Created by huangbaole on 2017/12/19.
  */
 
 public class Category implements ICategotyItemData, Parcelable {
-  private int id;
+  @Expose(deserialize = false)
+  private String id;
   private String name;
   private int priority;
 
@@ -23,7 +25,7 @@ public class Category implements ICategotyItemData, Parcelable {
 
   private int product_count;
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -55,7 +57,7 @@ public class Category implements ICategotyItemData, Parcelable {
     return product_count;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
@@ -67,14 +69,14 @@ public class Category implements ICategotyItemData, Parcelable {
   }
 
   @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeInt(this.id);
+    dest.writeString(this.id);
     dest.writeString(this.name);
     dest.writeInt(this.priority);
     dest.writeInt(this.product_count);
   }
 
   protected Category(Parcel in) {
-    this.id = in.readInt();
+    this.id = in.readString();
     this.name = in.readString();
     this.priority = in.readInt();
     this.product_count = in.readInt();

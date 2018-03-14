@@ -53,13 +53,13 @@ import retrofit2.http.QueryMap;
     return shopApi.qcPostCategory(staff_id, category, params);
   }
 
-  @Override public Flowable<QcDataResponse> qcDeleteCategory(String staff_id, int category_id,
+  @Override public Flowable<QcDataResponse> qcDeleteCategory(String staff_id, String category_id,
       HashMap<String, Object> params) {
     return shopApi.qcDeleteCategory(staff_id, category_id, params);
   }
 
   @Override
-  public Flowable<QcDataResponse> qcPutCategory(String staff_id, int category_id, Category category,
+  public Flowable<QcDataResponse> qcPutCategory(String staff_id, String category_id, Category category,
       @QueryMap HashMap<String, Object> params) {
     return shopApi.qcPutCategory(staff_id, category_id, category, params);
   }
