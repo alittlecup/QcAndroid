@@ -52,7 +52,8 @@ public class ShopCategoryViewModel extends BaseViewModel {
 
   public void addShopCategory(Category category) {
     // TODO: 2017/12/19 添加分类
-    LiveData<Boolean> booleanLiveData = repository.qcPostCategory(loginStatus.staff_id(), category,gymWrapper.getShopParams());
+    category.setId(null);
+    LiveData<Boolean> booleanLiveData = repository.qcPostCategory(loginStatus.staff_id(), category,gymWrapper.getParams());
     addResult.addSource(booleanLiveData, aBoolean -> {
       addResult.setValue(aBoolean);
       addResult.removeSource(booleanLiveData);

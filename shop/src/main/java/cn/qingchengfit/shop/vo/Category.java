@@ -3,15 +3,14 @@ package cn.qingchengfit.shop.vo;
 import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.shop.ui.items.category.ICategotyItemData;
-import com.google.gson.annotations.Expose;
+
 
 /**
  * Created by huangbaole on 2017/12/19.
  */
 
 public class Category implements ICategotyItemData, Parcelable {
-  @Expose(deserialize = false)
-  private String id;
+  private  String id;
   private String name;
   private int priority;
 
