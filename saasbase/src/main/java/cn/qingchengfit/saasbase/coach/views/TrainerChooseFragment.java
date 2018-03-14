@@ -46,6 +46,10 @@ public class TrainerChooseFragment extends CoachListFragment {
     return true;
   }
 
+  @Override public int getFbIcon() {
+    return 0;
+  }
+
   @Override public void setDatas(List<? extends IFlexible> ds, int page) {
     if (TextUtils.isEmpty(selectedId)){
       commonFlexAdapter.updateDataSet(ds,true);
