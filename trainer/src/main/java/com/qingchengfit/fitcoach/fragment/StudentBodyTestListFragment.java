@@ -71,7 +71,7 @@ public class StudentBodyTestListFragment extends VpFragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mAdapter = new SimpleAdapter(mDataList);
         mAdapter.setListener((v, pos) -> {
-            if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.MANAGE_MEMBERS_CAN_WRITE)) {
+            if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS_CAN_WRITE)) {
                 showAlert(R.string.alert_permission_forbid);
                 return;
             }

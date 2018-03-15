@@ -175,10 +175,20 @@ import rx.android.schedulers.AndroidSchedulers;
    */
   public void onCivCourseTimeClicked() {
     //根据团课私教选择
-    if (isPrivate) {
-      if (timePeriodChooser == null) {
+      if (timeDialogWindow == null) {
+        timeDialogWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS);
+        chooseOpenTimeDialog.setOnTimeSelectListener(date -> {
+          civCourseTime.setContent(DateUtils.Date2HHmm(date));
+        });
       }
-    }
+      Date d = null;
+      try {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
+        d = formatter.parse(civCourseTime.getContent());
+      }catch (Exception e){
+        d = new Date();
+      }
+      timeDialogWindow.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, d);
   }
 
   /**

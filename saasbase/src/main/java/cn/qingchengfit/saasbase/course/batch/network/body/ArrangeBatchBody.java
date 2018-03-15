@@ -1,6 +1,7 @@
 package cn.qingchengfit.saasbase.course.batch.network.body;
 
 import cn.qingchengfit.saasbase.R;
+import cn.qingchengfit.saasbase.cards.network.body.ChargeBody;
 import cn.qingchengfit.saasbase.course.batch.bean.BatchOpenRule;
 import cn.qingchengfit.saasbase.course.batch.bean.Rule;
 import cn.qingchengfit.saasbase.course.batch.bean.Time_repeat;
@@ -9,7 +10,7 @@ import cn.qingchengfit.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrangeBatchBody {
+public class ArrangeBatchBody implements Cloneable{
 
 
 
@@ -153,4 +154,14 @@ public class ArrangeBatchBody {
             return new ArrangeBatchBody(this);
         }
     }
+    @Override public Object clone() {
+        ArrangeBatchBody body = null;
+        try {
+            body = (ArrangeBatchBody) super.clone();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return body;
+    }
+
 }

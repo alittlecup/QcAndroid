@@ -38,7 +38,10 @@ public class AddBatchPresenter extends IBatchPresenter {
 
   @Override public void arrangeBatch() {
     int ret = body.checkAddBatch();
-    if (ret > 0) mvpView.onShowError(ret);
+    if (ret > 0) {
+      mvpView.onShowError(ret);
+      return;
+    }
     RxRegiste(courseApi.qcArrangeBatch(body)
         .onBackpressureLatest()
         .subscribeOn(Schedulers.io())

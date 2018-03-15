@@ -15,6 +15,7 @@ import cn.qingchengfit.saasbase.gymconfig.event.EventSiteSelected;
 import cn.qingchengfit.saasbase.gymconfig.item.SiteItem;
 import cn.qingchengfit.saasbase.gymconfig.item.SiteSelectedItem;
 import cn.qingchengfit.subscribes.BusSubscribe;
+import cn.qingchengfit.utils.AppUtils;
 import com.anbillon.flabellum.annotations.Leaf;
 import com.anbillon.flabellum.annotations.Need;
 import com.jakewharton.rxbinding.view.RxMenuItem;
@@ -106,6 +107,12 @@ public class SiteSelectedFragment extends SiteFragment {
         }
       }
     }
+  }
+
+  @Override public int getFbIcon() {
+    if (AppUtils.getCurApp(getContext()) == 0){
+      return 0;
+    }else return super.getFbIcon();
   }
 
   @Override protected SiteItem generateItem(Space space) {

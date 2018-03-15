@@ -172,8 +172,9 @@ public class BatchListTrainerFragment extends BatchListTrainerSpanFragment
       } else {
         isShow = false;
         mDatas.removeAll(mOutdateDatas);
+        commonFlexAdapter.clear();
       }
-      commonFlexAdapter.notifyDataSetChanged();
+      commonFlexAdapter.updateDataSet(mDatas);
     }
     return true;
   }
