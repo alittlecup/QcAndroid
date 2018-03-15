@@ -45,6 +45,7 @@
           android:background="@drawable/bg_click"
           android:onClick="@{(view)->viewModel.onShowFragmentByIndex(((QcFilterToggle)view).isChecked(),0)}"
           app:ft_text_off="@string/all_product_inventory"
+          app:ft_color_on="@color/primary"
           app:ft_text_on="@string/all_product_inventory"
           style="@style/QcFilterStyle"
           />
@@ -57,6 +58,7 @@
           android:background="@drawable/bg_click"
           android:onClick="@{(view)->viewModel.onShowFragmentByIndex(((QcFilterToggle)view).isChecked(),1)}"
           app:ft_text_off="@string/date"
+          app:ft_color_on="@color/primary"
           app:ft_text_on="@string/date"
           style="@style/QcFilterStyle"
           />
@@ -76,6 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="37dp"
             android:paddingLeft="11dp"
+            android:paddingTop="7dp"
+            android:textColor="@color/primary"
             android:text="@{viewModel.total_inventory}"
             tools:text="总库存： 1232131231"
             />

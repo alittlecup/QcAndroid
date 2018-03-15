@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -18,12 +19,16 @@ import cn.qingchengfit.shop.ui.items.product.ProductListItem;
 import cn.qingchengfit.shop.ui.product.ShopProductModifyPageParams;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -70,6 +75,7 @@ public class ShopProductsListPage
     initRecyclerView();
     loadData();
     initRxbus();
+    initSearchProduct();
     mBinding.addOnRebindCallback(new OnRebindCallback() {
       @Override public void onBound(ViewDataBinding binding) {
         if (adapter.isEmpty()) {
@@ -79,6 +85,26 @@ public class ShopProductsListPage
       }
     });
     return mBinding;
+  }
+
+  private void initSearchProduct() {
+    RxTextView.afterTextChangeEvents(mBinding.etSearch)
+        .debounce(500, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
+          @Override public void call(TextViewAfterTextChangeEvent event) {
+            String key = event.editable().toString().trim();
+            if (!TextUtils.isEmpty(key)) {
+              mViewModel.getParams().put("q", key);
+              mViewModel.loadSource(mViewModel.getParams());
+            } else {
+              if (mViewModel.getParams().containsKey("q")) {
+                mViewModel.getParams().remove("q");
+                mViewModel.loadSource(mViewModel.getParams());
+              }
+            }
+          }
+        });
   }
 
   private void initRxbus() {

@@ -1,7 +1,9 @@
 package cn.qingchengfit.shop.ui.home.inventorylist;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import cn.qingchengfit.shop.base.ShopBaseFragment;
@@ -10,8 +12,11 @@ import cn.qingchengfit.shop.ui.inventory.product.ProductInventoryPageParams;
 import cn.qingchengfit.shop.ui.items.inventory.InventoryListItem;
 import cn.qingchengfit.shop.vo.Product;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import com.jakewharton.rxbinding.widget.RxTextView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by huangbaole on 2017/12/18.
@@ -24,7 +29,7 @@ public class ShopInventoryListPage
 
   @Override protected void subscribeUI() {
     mViewModel.getShowAllRecord().observe(this, aVoid -> {
-      routeTo("/shop/inventory",null);
+      routeTo("/shop/inventory", null);
     });
     mViewModel.getLiveItems().observe(this, items -> {
       mViewModel.items.set(items);
@@ -37,7 +42,10 @@ public class ShopInventoryListPage
     mBinding = PageInventoryListBinding.inflate(inflater, container, false);
     mBinding.setViewModel(mViewModel);
     initRecyclerView();
+    initSearchProduct();
     mViewModel.loadSource(mViewModel.getParams());
+    mBinding.allInventoryRecord.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+    mBinding.allInventoryRecord.getPaint().setAntiAlias(true);
     return mBinding;
   }
 
@@ -48,10 +56,29 @@ public class ShopInventoryListPage
     adapter.addListener(this);
   }
 
+  private void initSearchProduct() {
+    RxTextView.afterTextChangeEvents(mBinding.etSearch)
+        .debounce(500, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(event -> {
+          String key = event.toString().trim();
+          if (!TextUtils.isEmpty(key)) {
+            mViewModel.getParams().put("q", key);
+            mViewModel.loadSource(mViewModel.getParams());
+          } else {
+            if (mViewModel.getParams().containsKey("q")) {
+              mViewModel.getParams().remove("q");
+              mViewModel.loadSource(mViewModel.getParams());
+            }
+          }
+        });
+  }
+
   @Override public boolean onItemClick(int position) {
     InventoryListItem item = (InventoryListItem) adapter.getItem(position);
     if (item.getData() instanceof Product) {
-      routeTo("/product/inventory", new ProductInventoryPageParams().product((Product) item.getData()).build());
+      routeTo("/product/inventory",
+          new ProductInventoryPageParams().product((Product) item.getData()).build());
     }
     return false;
   }

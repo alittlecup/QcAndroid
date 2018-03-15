@@ -41,7 +41,7 @@ public class ShopInventoryListViewModel
   }
 
   @Inject public ShopInventoryListViewModel() {
-    params.put("show_all", true);
+    params.put("show_all", 1);
   }
 
   public void onAllInventoryListClick() {
